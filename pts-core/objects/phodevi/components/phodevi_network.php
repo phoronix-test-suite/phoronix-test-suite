@@ -23,16 +23,11 @@
 
 class phodevi_network extends phodevi_device_interface
 {
-	public static function read_property($identifier)
+	public static function properties()
 	{
-		switch($identifier)
-		{
-			case 'identifier':
-				$property = new phodevi_device_property('network_device_string', phodevi::smart_caching);
-				break;
-		}
-
-		return $property;
+		return array(
+			'identifier' => new phodevi_device_property('network_device_string', phodevi::smart_caching)
+			);
 	}
 	public static function network_device_string()
 	{

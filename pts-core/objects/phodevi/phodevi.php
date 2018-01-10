@@ -302,7 +302,7 @@ class phodevi extends phodevi_base
 				array(
 				'BIOS Version' => phodevi::read_property('motherboard', 'bios-version'),
 				'Chipset' => phodevi::read_name('chipset'),
-				'Audio' => phodevi::read_name('audoo'),
+				'Audio' => phodevi::read_name('audio'),
 				'Network' => phodevi::read_name('network'),
 				),
 			'Memory' => phodevi::read_name('memory'),
@@ -385,56 +385,59 @@ class phodevi extends phodevi_base
 	}
 	public static function read_property($device, $read_property)
 	{
+		static $properties_table = array();
 		$value = false;
 
-		if(method_exists('phodevi_' . $device, 'read_property'))
+		if(!isset($properties_table[$device]))
 		{
-			$property = call_user_func(array('phodevi_' . $device, 'read_property'), $read_property);
+			$properties_table[$device] = call_user_func(array('phodevi_' . $device, 'properties'));
+		}
 
-			if(!($property instanceof phodevi_device_property))
+		if(!isset($properties_table[$device][$read_property]))
+		{
+			echo 'NOTICE: ' . $read_property . ' does not exist for ' . $device . '.' . PHP_EOL;
+		}
+
+		if(!($properties_table[$device][$read_property] instanceof phodevi_device_property))
+		{
+			return $properties_table[$device][$read_property];
+		}
+
+		$cache_code = $properties_table[$device][$read_property]->cache_code();
+		if($cache_code != phodevi::no_caching && phodevi::$allow_phodevi_caching && isset(self::$device_cache[$device][$read_property]))
+		{
+			$value = self::$device_cache[$device][$read_property];
+		}
+		else
+		{
+			$dev_function_r = pts_arrays::to_array($properties_table[$device][$read_property]->get_device_function());
+			$dev_function = $dev_function_r[0];
+			$function_pass = array();
+
+			for($i = 1; $i < count($dev_function_r); $i++)
 			{
-				return false;
+				array_push($function_pass, $dev_function_r[$i]);
 			}
-
-			$cache_code = $property->cache_code();
-
-			if($cache_code != phodevi::no_caching && phodevi::$allow_phodevi_caching && isset(self::$device_cache[$device][$read_property]))
+			if(method_exists('phodevi_' . $device, $dev_function))
 			{
-				$value = self::$device_cache[$device][$read_property];
-			}
-			else
-			{
-				$dev_function_r = pts_arrays::to_array($property->get_device_function());
-				$dev_function = $dev_function_r[0];
-				$function_pass = array();
-
-				for($i = 1; $i < count($dev_function_r); $i++)
+				$value = call_user_func_array(array('phodevi_' . $device, $dev_function), $function_pass);
+				if(!is_array($value) && $value != null)
 				{
-					array_push($function_pass, $dev_function_r[$i]);
+					$value = pts_strings::strip_string($value);
+					if(function_exists('preg_replace'))
+					{
+						$value = preg_replace('/[^(\x20-\x7F)]*/','', $value);
+					}
 				}
 
-				if(method_exists('phodevi_' . $device, $dev_function))
+				if($cache_code != phodevi::no_caching)
 				{
-					$value = call_user_func_array(array('phodevi_' . $device, $dev_function), $function_pass);
+					self::$device_cache[$device][$read_property] = $value;
 
-					if(!is_array($value) && $value != null)
+					if($cache_code == phodevi::smart_caching)
 					{
-						$value = pts_strings::strip_string($value);
-						if(function_exists('preg_replace'))
-						{
-							$value = preg_replace('/[^(\x20-\x7F)]*/','', $value);
-						}
-					}
-
-					if($cache_code != phodevi::no_caching)
-					{
-						self::$device_cache[$device][$read_property] = $value;
-
-						if($cache_code == phodevi::smart_caching)
-						{
-							// TODO: For now just copy the smart cache to other var, but come up with better yet efficient way
-							self::$smart_cache[$device][$read_property] = $value;
-						}
+						// TODO: For now just copy the smart cache to other var, but come up with better yet efficient way
+						self::$smart_cache[$device][$read_property] = $value;
 					}
 				}
 			}

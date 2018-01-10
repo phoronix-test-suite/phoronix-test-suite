@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2016, Phoronix Media
-	Copyright (C) 2008 - 2016, Michael Larabel
+	Copyright (C) 2008 - 2018, Phoronix Media
+	Copyright (C) 2008 - 2018, Michael Larabel
 	phodevi_monitor.php: The PTS Device Interface object for the display monitor
 
 	This program is free software; you can redistribute it and/or modify
@@ -23,25 +23,14 @@
 
 class phodevi_monitor extends phodevi_device_interface
 {
-	public static function read_property($identifier)
+	public static function properties()
 	{
-		switch($identifier)
-		{
-			case 'identifier':
-				$property = new phodevi_device_property('monitor_string', phodevi::smart_caching);
-				break;
-			case 'count':
-				$property = new phodevi_device_property('monitor_count', phodevi::std_caching);
-				break;
-			case 'layout':
-				$property = new phodevi_device_property('monitor_layout', phodevi::std_caching);
-				break;
-			case 'modes':
-				$property = new phodevi_device_property('monitor_modes', phodevi::std_caching);
-				break;
-		}
-
-		return $property;
+		return array(
+			'identifier' => new phodevi_device_property('monitor_string', phodevi::smart_caching),
+			'count' => new phodevi_device_property('monitor_count', phodevi::std_caching),
+			'layout' => new phodevi_device_property('monitor_layout', phodevi::std_caching),
+			'modes' => new phodevi_device_property('monitor_modes', phodevi::std_caching)
+			);
 	}
 	public static function monitor_string()
 	{

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2017, Phoronix Media
-	Copyright (C) 2008 - 2017, Michael Larabel
+	Copyright (C) 2008 - 2018, Phoronix Media
+	Copyright (C) 2008 - 2018, Michael Larabel
 	phodevi_gpu.php: The PTS Device Interface object for the graphics processor
 
 	This program is free software; you can redistribute it and/or modify
@@ -23,52 +23,23 @@
 
 class phodevi_gpu extends phodevi_device_interface
 {
-	public static function read_property($identifier)
+	public static function properties()
 	{
-		switch($identifier)
-		{
-			case 'identifier':
-				$property = new phodevi_device_property('gpu_string', phodevi::std_caching);
-				break;
-			case 'model':
-				$property = new phodevi_device_property('gpu_model', phodevi::smart_caching);
-				break;
-			case 'frequency':
-				$property = new phodevi_device_property('gpu_frequency_string', phodevi::std_caching);
-				break;
-			case 'stock-frequency':
-				$property = new phodevi_device_property('gpu_stock_frequency', phodevi::std_caching);
-				break;
-			case 'memory-capacity':
-				$property = new phodevi_device_property('gpu_memory_size', phodevi::smart_caching);
-				break;
-			case 'oc-offset-string':
-				$property = new phodevi_device_property('gpu_oc_offset_string', phodevi::no_caching);
-				break;
-			case 'aa-level':
-				$property = new phodevi_device_property('gpu_aa_level', phodevi::no_caching);
-				break;
-			case 'af-level':
-				$property = new phodevi_device_property('gpu_af_level', phodevi::no_caching);
-				break;
-			case 'compute-cores':
-				$property = new phodevi_device_property('gpu_compute_cores', phodevi::smart_caching);
-				break;
-			case 'available-modes':
-				$property = new phodevi_device_property('gpu_available_modes', phodevi::std_caching);
-				break;
-			case 'screen-resolution':
-				$property = new phodevi_device_property('gpu_screen_resolution', phodevi::std_caching);
-				break;
-			case 'screen-resolution-string':
-				$property = new phodevi_device_property('gpu_screen_resolution_string', phodevi::std_caching);
-				break;
-			case '2d-acceleration':
-				$property = new phodevi_device_property('gpu_2d_acceleration', phodevi::std_caching);
-				break;
-		}
-
-		return $property;
+		return array(
+			'identifier' => new phodevi_device_property('gpu_string', phodevi::std_caching),
+			'model' => new phodevi_device_property('gpu_model', phodevi::smart_caching),
+			'frequency' => new phodevi_device_property('gpu_frequency_string', phodevi::std_caching),
+			'stock-frequency' => new phodevi_device_property('gpu_stock_frequency', phodevi::std_caching),
+			'memory-capacity' => new phodevi_device_property('gpu_memory_size', phodevi::smart_caching),
+			'oc-offset-string' => new phodevi_device_property('gpu_oc_offset_string', phodevi::no_caching),
+			'aa-level' => new phodevi_device_property('gpu_aa_level', phodevi::no_caching),
+			'af-level' => new phodevi_device_property('gpu_af_level', phodevi::no_caching),
+			'compute-cores' => new phodevi_device_property('gpu_compute_cores', phodevi::smart_caching),
+			'available-modes' => new phodevi_device_property('gpu_available_modes', phodevi::std_caching),
+			'screen-resolution' => new phodevi_device_property('gpu_screen_resolution', phodevi::std_caching),
+			'screen-resolution-string' => new phodevi_device_property('gpu_screen_resolution_string', phodevi::std_caching),
+			'2d-acceleration' => new phodevi_device_property('gpu_2d_acceleration', phodevi::std_caching)
+			);
 	}
 	public static function gpu_2d_acceleration()
 	{

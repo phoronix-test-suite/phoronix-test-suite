@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2017, Phoronix Media
-	Copyright (C) 2008 - 2017, Michael Larabel
+	Copyright (C) 2008 - 2018, Phoronix Media
+	Copyright (C) 2008 - 2018, Michael Larabel
 	phodevi_cpu.php: The PTS Device Interface object for the CPU / processor
 
 	This program is free software; you can redistribute it and/or modify
@@ -27,52 +27,23 @@ class phodevi_cpu extends phodevi_device_interface
 	public static $cpuinfo = false;
 	private static $cpu_flags = -1;
 
-	public static function read_property($identifier)
+	public static function properties()
 	{
-		switch($identifier)
-		{
-			case 'identifier':
-				$property = new phodevi_device_property('cpu_string', phodevi::smart_caching);
-				break;
-			case 'model':
-				$property = new phodevi_device_property('cpu_model', phodevi::smart_caching);
-				break;
-			case 'model-and-speed':
-				$property = new phodevi_device_property('cpu_model_and_speed', phodevi::smart_caching);
-				break;
-			case 'mhz-default-frequency':
-				$property = new phodevi_device_property('cpu_default_frequency_mhz', phodevi::smart_caching);
-				break;
-			case 'default-frequency':
-				$property = new phodevi_device_property(array('cpu_default_frequency', 0), phodevi::smart_caching);
-				break;
-			case 'core-count':
-				$property = new phodevi_device_property('cpu_core_count', phodevi::std_caching);
-				break;
-			case 'physical-core-count':
-				$property = new phodevi_device_property('cpu_physical_core_count', phodevi::std_caching);
-				break;
-			case 'thread-count':
-				$property = new phodevi_device_property('cpu_thread_count', phodevi::std_caching);
-				break;
-			case 'node-count':
-				$property = new phodevi_device_property('cpu_node_count', phodevi::smart_caching);
-				break;
-			case 'scaling-governor':
-				$property = new phodevi_device_property('cpu_scaling_governor', phodevi::std_caching);
-				break;
-			case 'microcode-version':
-				$property = new phodevi_device_property('cpu_microcode_version', phodevi::std_caching);
-				break;
-			case 'cache-size':
-				$property = new phodevi_device_property('cpu_cache_size', phodevi::smart_caching);
-				break;
-			case 'cache-size-string':
-				$property = new phodevi_device_property('cpu_cache_size_string', phodevi::smart_caching);
-				break;
-		}
-
-		return $property;
+		return array(
+			'identifier' => new phodevi_device_property('cpu_string', phodevi::smart_caching),
+			'model' => new phodevi_device_property('cpu_model', phodevi::smart_caching),
+			'model-and-speed' => new phodevi_device_property('cpu_model_and_speed', phodevi::smart_caching),
+			'mhz-default-frequency' => new phodevi_device_property('cpu_default_frequency_mhz', phodevi::smart_caching),
+			'default-frequency' => new phodevi_device_property(array('cpu_default_frequency', 0), phodevi::smart_caching),
+			'core-count' => new phodevi_device_property('cpu_core_count', phodevi::std_caching),
+			'physical-core-count' => new phodevi_device_property('cpu_physical_core_count', phodevi::std_caching),
+			'thread-count' => new phodevi_device_property('cpu_thread_count', phodevi::std_caching),
+			'node-count' => new phodevi_device_property('cpu_node_count', phodevi::smart_caching),
+			'scaling-governor' => new phodevi_device_property('cpu_scaling_governor', phodevi::std_caching),
+			'microcode-version' => new phodevi_device_property('cpu_microcode_version', phodevi::std_caching),
+			'cache-size' => new phodevi_device_property('cpu_cache_size', phodevi::smart_caching),
+			'cache-size-string' => new phodevi_device_property('cpu_cache_size_string', phodevi::smart_caching)
+			);
 	}
 	public static function cpu_string()
 	{

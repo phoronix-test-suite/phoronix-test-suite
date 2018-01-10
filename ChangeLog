@@ -4,8 +4,10 @@ Phoronix Test Suite (Git)
 
 pts-core: Allow local/other tests not part of OpenBenchmarking.org to be downloaded from a Phoromatic Server
 pts-core: Fixes for make-download-cache sometimes not caching tests/suites
+pts-core: Drop the pts_test_notes_manager since pts_test_run_manager already had better capabilities built-in
 phodevi: Append BIOS version to end of motherboard string
 phodevi: Strip invalid chars from BIOS version parsing
+phodevi: Reworked property handling
 
 Phoronix Test Suite 7.8.0 Milestone 1
 8 January 2018

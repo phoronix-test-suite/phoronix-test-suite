@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2017, Phoronix Media
-	Copyright (C) 2008 - 2017, Michael Larabel
+	Copyright (C) 2008 - 2018, Phoronix Media
+	Copyright (C) 2008 - 2018, Michael Larabel
 	phodevi_system.php: The PTS Device Interface object for the system software
 
 	This program is free software; you can redistribute it and/or modify
@@ -23,94 +23,37 @@
 
 class phodevi_system extends phodevi_device_interface
 {
-	public static function read_property($identifier)
+	public static function properties()
 	{
-		switch($identifier)
-		{
-			case 'username':
-				$property = new phodevi_device_property('sw_username', phodevi::std_caching);
-				break;
-			case 'hostname':
-				$property = new phodevi_device_property('sw_hostname', phodevi::smart_caching);
-				break;
-			case 'vendor-identifier':
-				$property = new phodevi_device_property('sw_vendor_identifier', phodevi::smart_caching);
-				break;
-			case 'filesystem':
-				$property = new phodevi_device_property('sw_filesystem', phodevi::no_caching);
-				break;
-			case 'virtualized-mode':
-				$property = new phodevi_device_property('sw_virtualized_mode', phodevi::smart_caching);
-				break;
-			case 'java-version':
-				$property = new phodevi_device_property('sw_java_version', phodevi::std_caching);
-				break;
-			case 'python-version':
-				$property = new phodevi_device_property('sw_python_version', phodevi::std_caching);
-				break;
-			case 'wine-version':
-				$property = new phodevi_device_property('sw_wine_version', phodevi::std_caching);
-				break;
-			case 'display-server':
-				$property = new phodevi_device_property('sw_display_server', phodevi::smart_caching);
-				break;
-			case 'display-driver':
-				$property = new phodevi_device_property(array('sw_display_driver', false), phodevi::smart_caching);
-				break;
-			case 'display-driver-string':
-				$property = new phodevi_device_property(array('sw_display_driver', true), phodevi::smart_caching);
-				break;
-			case 'dri-display-driver':
-				$property = new phodevi_device_property('sw_dri_display_driver', phodevi::smart_caching);
-				break;
-			case 'opengl-driver':
-				$property = new phodevi_device_property('sw_opengl_driver', phodevi::std_caching);
-				break;
-			case 'vulkan-driver':
-				$property = new phodevi_device_property('sw_vulkan_driver', phodevi::std_caching);
-				break;
-			case 'opencl-driver':
-				$property = new phodevi_device_property('sw_opencl_driver', phodevi::std_caching);
-				break;
-			case 'opengl-vendor':
-				$property = new phodevi_device_property('sw_opengl_vendor', phodevi::smart_caching);
-				break;
-			case 'desktop-environment':
-				$property = new phodevi_device_property('sw_desktop_environment', phodevi::smart_caching);
-				break;
-			case 'operating-system':
-				$property = new phodevi_device_property('sw_operating_system', phodevi::smart_caching);
-				break;
-			case 'os-version':
-				$property = new phodevi_device_property('sw_os_version', phodevi::smart_caching);
-				break;
-			case 'kernel':
-				$property = new phodevi_device_property('sw_kernel', phodevi::smart_caching);
-				break;
-			case 'kernel-architecture':
-				$property = new phodevi_device_property('sw_kernel_architecture', phodevi::smart_caching);
-				break;
-			case 'kernel-date':
-				$property = new phodevi_device_property('sw_kernel_date', phodevi::smart_caching);
-				break;
-			case 'kernel-string':
-				$property = new phodevi_device_property('sw_kernel_string', phodevi::smart_caching);
-				break;
-			case 'kernel-parameters':
-				$property = new phodevi_device_property('sw_kernel_parameters', phodevi::std_caching);
-				break;
-			case 'compiler':
-				$property = new phodevi_device_property('sw_compiler', phodevi::std_caching);
-				break;
-			case 'system-layer':
-				$property = new phodevi_device_property('sw_system_layer', phodevi::std_caching);
-				break;
-			case 'environment-variables':
-				$property = new phodevi_device_property('sw_environment_variables', phodevi::std_caching);
-				break;
-		}
-
-		return $property;
+		return array(
+			'username' => new phodevi_device_property('sw_username', phodevi::std_caching),
+			'hostname' => new phodevi_device_property('sw_hostname', phodevi::smart_caching),
+			'vendor-identifier' => new phodevi_device_property('sw_vendor_identifier', phodevi::smart_caching),
+			'filesystem' => new phodevi_device_property('sw_filesystem', phodevi::no_caching),
+			'virtualized-mode' => new phodevi_device_property('sw_virtualized_mode', phodevi::smart_caching),
+			'java-version' => new phodevi_device_property('sw_java_version', phodevi::std_caching),
+			'python-version' => new phodevi_device_property('sw_python_version', phodevi::std_caching),
+			'wine-version' => new phodevi_device_property('sw_wine_version', phodevi::std_caching),
+			'display-server' => new phodevi_device_property('sw_display_server', phodevi::smart_caching),
+			'display-driver' => new phodevi_device_property(array('sw_display_driver', false), phodevi::smart_caching),
+			'display-driver-string' => new phodevi_device_property(array('sw_display_driver', true), phodevi::smart_caching),
+			'dri-display-driver' => new phodevi_device_property('sw_dri_display_driver', phodevi::smart_caching),
+			'opengl-driver' => new phodevi_device_property('sw_opengl_driver', phodevi::std_caching),
+			'vulkan-driver' => new phodevi_device_property('sw_vulkan_driver', phodevi::std_caching),
+			'opencl-driver' => new phodevi_device_property('sw_opencl_driver', phodevi::std_caching),
+			'opengl-vendor' => new phodevi_device_property('sw_opengl_vendor', phodevi::smart_caching),
+			'desktop-environment' => new phodevi_device_property('sw_desktop_environment', phodevi::smart_caching),
+			'operating-system' => new phodevi_device_property('sw_operating_system', phodevi::smart_caching),
+			'os-version' => new phodevi_device_property('sw_os_version', phodevi::smart_caching),
+			'kernel' => new phodevi_device_property('sw_kernel', phodevi::smart_caching),
+			'kernel-architecture' => new phodevi_device_property('sw_kernel_architecture', phodevi::smart_caching),
+			'kernel-date' => new phodevi_device_property('sw_kernel_date', phodevi::smart_caching),
+			'kernel-string' => new phodevi_device_property('sw_kernel_string', phodevi::smart_caching),
+			'kernel-parameters' => new phodevi_device_property('sw_kernel_parameters', phodevi::std_caching),
+			'compiler' => new phodevi_device_property('sw_compiler', phodevi::std_caching),
+			'system-layer' => new phodevi_device_property('sw_system_layer', phodevi::std_caching),
+			'environment-variables' => new phodevi_device_property('sw_environment_variables', phodevi::std_caching)
+			);
 	}
 	public static function sw_username()
 	{

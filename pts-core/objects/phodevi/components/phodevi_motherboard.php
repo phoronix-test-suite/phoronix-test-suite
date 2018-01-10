@@ -23,31 +23,16 @@
 
 class phodevi_motherboard extends phodevi_device_interface
 {
-	public static function read_property($identifier)
+	public static function properties()
 	{
-		switch($identifier)
-		{
-			case 'identifier':
-				$property = new phodevi_device_property('motherboard_string', phodevi::smart_caching);
-				break;
-			case 'serial-number':
-				$property = new phodevi_device_property('serial_number', phodevi::smart_caching);
-				break;
-			case 'power-mode':
-				$property = new phodevi_device_property('power_mode', phodevi::smart_caching);
-				break;
-			case 'pci-devices':
-				$property = new phodevi_device_property('pci_devices', phodevi::smart_caching);
-				break;
-			case 'bios-version':
-				$property = new phodevi_device_property('bios_version', phodevi::smart_caching);
-				break;
-			case 'usb-devices':
-				$property = new phodevi_device_property('usb_devices', phodevi::std_caching);
-				break;
-		}
-
-		return $property;
+		return array(
+			'identifier' => new phodevi_device_property('motherboard_string', phodevi::smart_caching),
+			'serial-number' => new phodevi_device_property('serial_number', phodevi::smart_caching),
+			'power-mode' => new phodevi_device_property('power_mode', phodevi::smart_caching),
+			'pci-devices' => new phodevi_device_property('pci_devices', phodevi::smart_caching),
+			'bios-version' => new phodevi_device_property('bios_version', phodevi::smart_caching),
+			'usb-devices' => new phodevi_device_property('usb_devices', phodevi::std_caching)
+			);
 	}
 	public static function usb_devices()
 	{
