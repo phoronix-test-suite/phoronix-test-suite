@@ -62,7 +62,7 @@ class phodevi_cpu extends phodevi_device_interface
 				$property = new phodevi_device_property('cpu_scaling_governor', phodevi::std_caching);
 				break;
 			case 'microcode-version':
-				$property = new phodevi_device_property('cpu_microcode_version', phodevi::smart_caching);
+				$property = new phodevi_device_property('cpu_microcode_version', phodevi::std_caching);
 				break;
 			case 'cache-size':
 				$property = new phodevi_device_property('cpu_cache_size', phodevi::smart_caching);
