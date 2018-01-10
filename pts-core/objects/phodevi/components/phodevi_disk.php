@@ -46,17 +46,6 @@ class phodevi_disk extends phodevi_device_interface
 
 		return $property;
 	}
-	public static function device_notes()
-	{
-		$notes = array();
-
-		if(($disk_scheduler = phodevi::read_property('disk', 'scheduler')) != null)
-		{
-			array_push($notes, 'Disk Scheduler: ' . $disk_scheduler);
-		}
-
-		return $notes;
-	}
 	public static function proc_mount_options($mount_point = null, $mounts = null)
 	{
 		$mount_options = false;

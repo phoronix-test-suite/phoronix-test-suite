@@ -576,12 +576,6 @@ class pts_test_execution
 			$sub_tr->set_used_arguments($extra_arguments);
 		}
 
-		// Any device notes to add to PTS test notes area?
-		foreach(phodevi::read_device_notes($test_type) as $note)
-		{
-			pts_test_notes_manager::add_note($note);
-		}
-
 		// Result Calculation
 
 		// Ending Tasks

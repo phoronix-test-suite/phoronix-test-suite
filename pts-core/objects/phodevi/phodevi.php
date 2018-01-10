@@ -383,21 +383,6 @@ class phodevi extends phodevi_base
 		$components = array(phodevi::read_property('cpu', 'model'), phodevi::read_property('system', 'operating-system'), phodevi::read_property('system', 'compiler'), $extra);
 		return base64_encode(implode('__', $components));
 	}
-	public static function read_device_notes($device)
-	{
-		$devices = phodevi::available_hardware_devices();
-
-		if($device != null && isset($devices[$device]))
-		{
-			$notes_r = call_user_func(array('phodevi_' . $devices[$device], 'device_notes'));
-		}
-		else
-		{
-			$notes_r = array();
-		}
-
-		return is_array($notes_r) ? $notes_r : array();
-	}
 	public static function read_property($device, $read_property)
 	{
 		$value = false;

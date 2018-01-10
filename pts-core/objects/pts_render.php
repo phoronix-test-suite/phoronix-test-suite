@@ -295,14 +295,17 @@ class pts_render
 			if(isset($json['kernel-parameters']) && $json['kernel-parameters'] != null)
 			{
 				$system_attributes['Kernel'][$identifier] = $json['kernel-parameters'];
+				unset($json['kernel-parameters']);
 			}
 			if(isset($json['environment-variables']) && $json['environment-variables'] != null)
 			{
 				$system_attributes['Environment'][$identifier] = $json['environment-variables'];
+				unset($json['environment-variables']);
 			}
 			if(isset($json['compiler-configuration']) && $json['compiler-configuration'] != null)
 			{
 				$system_attributes['Compiler'][$identifier] = $json['compiler-configuration'];
+				unset($json['compiler-configuration']);
 			}
 			if(isset($json['disk-scheduler']) && isset($json['disk-mount-options']))
 			{
@@ -310,11 +313,15 @@ class pts_render
 				if(isset($json['disk-details']) && !empty($json['disk-details']))
 				{
 					$system_attributes['Disk'][$identifier] .= ' / ' . $json['disk-details'];
+					unset($json['disk-details']);
 				}
+				unset($json['disk-scheduler']);
+				unset($json['disk-mount-options']);
 			}
 			if(isset($json['cpu-scaling-governor']))
 			{
 				$system_attributes['Processor'][$identifier] = 'Scaling Governor: ' . $json['cpu-scaling-governor'];
+				unset($json['cpu-scaling-governor']);
 			}
 			if(isset($json['graphics-2d-acceleration']) || isset($json['graphics-aa']) || isset($json['graphics-af']))
 			{
@@ -324,6 +331,7 @@ class pts_render
 					if(isset($json[$check]) && !empty($json[$check]))
 					{
 						$report[] = $json[$check];
+						unset($json[$check]);
 					}
 				}
 
@@ -332,10 +340,20 @@ class pts_render
 			if(isset($json['graphics-compute-cores']))
 			{
 				$system_attributes['OpenCL'][$identifier] = 'GPU Compute Cores: ' . $json['graphics-compute-cores'];
+				unset($json['graphics-compute-cores']);
 			}
 			if(!empty($notes_string))
 			{
 				$system_attributes['System'][$identifier] = $notes_string;
+			}
+
+			foreach($json as $key => $value)
+			{
+				if(!empty($value))
+				{
+					$system_attributes[strtoupper(str_replace(array('_', '-'), ' ', $key))][$identifier] = $value;
+				}
+				unset($json[$key]);
 			}
 		}
 

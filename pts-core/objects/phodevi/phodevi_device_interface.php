@@ -37,12 +37,6 @@ abstract class phodevi_device_interface
 	{
 		return false;
 	}
-
-	public static function device_notes()
-	{
-		// Any important notes about that device subsystem (i.e. for disk the disk scheduler in use) that in the context of PTS will be reported to the test notes area when called
-		return array();
-	}
 	public static function available_sensors()
 	{
 		return array();

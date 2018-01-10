@@ -773,7 +773,7 @@ class pts_test_run_manager
 				$this->result_file->set_preset_environment_variables($this->get_preset_environment_variables());
 
 				// TODO XXX JSON In null and notes
-				$sys = new pts_result_file_system($this->results_identifier, phodevi::system_hardware(true), phodevi::system_software(true), $this->generate_json_system_attributes(), pts_client::current_user(), pts_test_notes_manager::generate_test_notes($this->tests_to_run), date('Y-m-d H:i:s'), PTS_VERSION);
+				$sys = new pts_result_file_system($this->results_identifier, phodevi::system_hardware(true), phodevi::system_software(true), $this->generate_json_system_attributes(), pts_client::current_user(), null, date('Y-m-d H:i:s'), PTS_VERSION);
 				$this->result_file->add_system($sys);
 			}
 
@@ -816,7 +816,7 @@ class pts_test_run_manager
 				}
 			}
 		}
-		if($show_all || in_array('OpenCL', $test_internal_tags))
+		if($show_all || in_array('OpenCL', $test_internal_tags) || in_array('opencl', $test_external_dependencies))
 		{
 			// So OpenCL tests were run....
 			$gpu_compute_cores = phodevi::read_property('gpu', 'compute-cores');
@@ -889,6 +889,31 @@ class pts_test_run_manager
 		if(phodevi::read_property('system', 'environment-variables'))
 		{
 			$notes['environment-variables'] = phodevi::read_property('system', 'environment-variables');
+		}
+		if($show_all || in_array('Java', $test_internal_tags) || in_array('java', $test_external_dependencies))
+		{
+			$notes['java'] = phodevi::read_property('system', 'java-version');
+		}
+		if($show_all || in_array('Python', $test_internal_tags) || in_array('python', $test_external_dependencies))
+		{
+			$notes['python'] = phodevi::read_property('system', 'python-version');
+		}
+
+		// security
+		$security = array();
+		if(pts_client::executable_in_path('getenforce'))
+		{
+			$selinux = shell_exec('getenforce 2>&1');
+			if(strpos($selinux, 'Enforcing') !== false)
+			{
+				$security[] = 'SELinux';
+			}
+		}
+
+		if(!empty($security))
+		{
+			$security = implode(', ', $security);
+			$notes['security'] = $security;
 		}
 
 		return $notes;
