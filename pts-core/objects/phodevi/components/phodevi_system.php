@@ -1906,6 +1906,14 @@ class phodevi_system extends phodevi_device_interface
 		{
 			$python_version = trim(shell_exec('python -V 2>&1'));
 		}
+		if(pts_client::executable_in_path('python3') != false)
+		{
+			$python3_version = trim(shell_exec('python3 -V 2>&1'));
+			if($python3_version != $python_version)
+			{
+				$python_version .= ' + ' . $python3_version;
+			}
+		}
 
 		return $python_version;
 	}
