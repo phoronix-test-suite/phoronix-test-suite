@@ -547,7 +547,7 @@ class phodevi_system extends phodevi_device_interface
 			{
 				foreach($check_variables as $var)
 				{
-					if(stripos($name, $var) !== false && $name != '__GL_SYNC_TO_VBLANK')
+					if(stripos($name, $var) !== false && $name != '__GL_SYNC_TO_VBLANK' && strpos($name, 'GJS') === false)
 					{
 						array_push($to_report, $name . '=' . $value);
 						break;

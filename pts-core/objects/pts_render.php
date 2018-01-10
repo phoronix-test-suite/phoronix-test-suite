@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2017, Phoronix Media
-	Copyright (C) 2008 - 2017, Michael Larabel
+	Copyright (C) 2008 - 2018, Phoronix Media
+	Copyright (C) 2008 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -288,6 +288,7 @@ class pts_render
 		foreach($result_file->get_systems() as $s)
 		{
 			$json = $s->get_json();
+			$notes_string = $s->get_notes();
 			$identifier = $s->get_identifier();
 			$identifier_count++;
 
@@ -331,6 +332,10 @@ class pts_render
 			if(isset($json['graphics-compute-cores']))
 			{
 				$system_attributes['OpenCL'][$identifier] = 'GPU Compute Cores: ' . $json['graphics-compute-cores'];
+			}
+			if(!empty($notes_string))
+			{
+				$system_attributes['System'][$identifier] = $notes_string;
 			}
 		}
 

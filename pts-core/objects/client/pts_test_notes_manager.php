@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2016, Phoronix Media
-	Copyright (C) 2009 - 2016, Michael Larabel
+	Copyright (C) 2009 - 2018, Phoronix Media
+	Copyright (C) 2009 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -40,6 +40,7 @@ class pts_test_notes_manager
 
 		$test_types = array();
 		$test_tags = array();
+		$test_dependencies = array();
 
 		foreach($test_result_objects as &$test_result)
 		{
@@ -49,13 +50,18 @@ class pts_test_notes_manager
 			{
 				pts_arrays::unique_push($test_tags, $tag);
 			}
+
+			foreach($test_result->test_profile->get_external_dependencies() as $tag)
+			{
+				pts_arrays::unique_push($test_dependencies, $tag);
+			}
 		}
 
-		if(in_array('Java', $test_tags))
+		if(in_array('Java', $test_tags) || in_array('java', $test_dependencies))
 		{
 			self::add_note(phodevi::read_property('system', 'java-version'));
 		}
-		if(in_array('Python', $test_tags))
+		if(in_array('Python', $test_tags) || in_array('python', $test_dependencies))
 		{
 			self::add_note(phodevi::read_property('system', 'python-version'));
 		}
@@ -63,7 +69,7 @@ class pts_test_notes_manager
 		{
 			self::add_note(phodevi::read_property('system', 'wine-version'));
 		}
-		if(in_array('OpenCL', $test_tags))
+		if(in_array('OpenCL', $test_tags) || in_array('opencl', $test_dependencies))
 		{
 			$cores = phodevi::read_property('gpu', 'compute-cores');
 
