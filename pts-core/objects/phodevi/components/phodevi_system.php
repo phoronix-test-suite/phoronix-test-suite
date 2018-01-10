@@ -52,7 +52,8 @@ class phodevi_system extends phodevi_device_interface
 			'kernel-parameters' => new phodevi_device_property('sw_kernel_parameters', phodevi::std_caching),
 			'compiler' => new phodevi_device_property('sw_compiler', phodevi::std_caching),
 			'system-layer' => new phodevi_device_property('sw_system_layer', phodevi::std_caching),
-			'environment-variables' => new phodevi_device_property('sw_environment_variables', phodevi::std_caching)
+			'environment-variables' => new phodevi_device_property('sw_environment_variables', phodevi::std_caching),
+			'security-features' => new phodevi_device_property('sw_security_features', phodevi::std_caching)
 			);
 	}
 	public static function sw_username()
@@ -501,6 +502,20 @@ class phodevi_system extends phodevi_device_interface
 		}
 
 		return implode(' ', array_unique($to_report));
+	}
+	public static function sw_security_features()
+	{
+		$security = array();
+		if(pts_client::executable_in_path('getenforce'))
+		{
+			$selinux = shell_exec('getenforce 2>&1');
+			if(strpos($selinux, 'Enforcing') !== false)
+			{
+				$security[] = 'SELinux';
+			}
+		}
+
+		return !empty($security) ? implode(', ',  $security) : null;
 	}
 	public static function sw_compiler()
 	{

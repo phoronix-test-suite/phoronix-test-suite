@@ -881,12 +881,12 @@ class pts_test_run_manager
 			}
 		}
 
-		if(phodevi::read_property('system', 'kernel-parameters'))
+		if($show_all || phodevi::read_property('system', 'kernel-parameters'))
 		{
 			$notes['kernel-parameters'] = phodevi::read_property('system', 'kernel-parameters');
 		}
 
-		if(phodevi::read_property('system', 'environment-variables'))
+		if($show_all || phodevi::read_property('system', 'environment-variables'))
 		{
 			$notes['environment-variables'] = phodevi::read_property('system', 'environment-variables');
 		}
@@ -899,21 +899,14 @@ class pts_test_run_manager
 			$notes['python'] = phodevi::read_property('system', 'python-version');
 		}
 
-		// security
-		$security = array();
-		if(pts_client::executable_in_path('getenforce'))
-		{
-			$selinux = shell_exec('getenforce 2>&1');
-			if(strpos($selinux, 'Enforcing') !== false)
-			{
-				$security[] = 'SELinux';
-			}
-		}
+		$notes['security'] = phodevi::read_property('system', 'security-features');
 
-		if(!empty($security))
+		foreach($notes as $key => $value)
 		{
-			$security = implode(', ', $security);
-			$notes['security'] = $security;
+			if(empty($value))
+			{
+				unset($notes[$key]);
+			}
 		}
 
 		return $notes;
