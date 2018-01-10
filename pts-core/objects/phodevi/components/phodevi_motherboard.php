@@ -484,7 +484,7 @@ class phodevi_motherboard extends phodevi_device_interface
 		$bios = phodevi::read_property('motherboard', 'bios-version');
 		if(!empty($bios) && strpos($info, $bios) === false)
 		{
-			$info .= ' (BIOS: ' . $bios . ')';
+			$info .= ' (' . $bios . ' BIOS)';
 		}
 
 		return $info;
