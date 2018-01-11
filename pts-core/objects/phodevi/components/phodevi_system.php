@@ -477,7 +477,7 @@ class phodevi_system extends phodevi_device_interface
 	}
 	public static function sw_environment_variables()
 	{
-		$check_variables = array('LIBGL', '__GL', 'DRI_', 'DEBUG');
+		$check_variables = array('LIBGL', '__GL', 'DRI_', 'DEBUG', 'FLAGS');
 		$to_report = array();
 
 		if(stripos(phodevi::read_property('system', 'opengl-driver'), 'Mesa'))
