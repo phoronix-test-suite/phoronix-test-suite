@@ -90,7 +90,7 @@ class pts_RadarOverviewGraph extends pts_graph_core
 		$this->i['identifier_size'] = 6.5;
 		$this->i['graph_height'] = $this->i['graph_width'];
 		$this->i['left_start'] = 35;
-		$this->graph_title = $result_file->get_title();
+		$this->i['graph_title'] = $result_file->get_title();
 		$this->graph_data_title = $system_identifiers;
 		$this->i['iveland_view'] = true;
 		$this->result_file = &$result_file;
@@ -105,7 +105,7 @@ class pts_RadarOverviewGraph extends pts_graph_core
 	{
 		$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->i['graph_width'], 'height' => $this->i['top_heading_height'], 'fill' => self::$c['color']['main_headers']));
 		$this->svg_dom->add_element('image', array('xlink:href' => 'https://openbenchmarking.org/static/images/pts-77x40-white.png', 'x' => 10, 'y' => round($this->i['top_heading_height'] / 40 + 1), 'width' => 77, 'height' => 40));
-		$this->svg_dom->add_text_element($this->graph_title, array('x' => 100, 'y' => (4 + self::$c['size']['headers']), 'font-size' => self::$c['size']['headers'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'start'));
+		$this->svg_dom->add_text_element($this->i['graph_title'], array('x' => 100, 'y' => (4 + self::$c['size']['headers']), 'font-size' => self::$c['size']['headers'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'start'));
 		$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => 100, 'y' => (self::$c['size']['headers'] + 16), 'font-size' => self::$c['size']['key'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'href' => 'http://www.phoronix-test-suite.com/'));
 	}
 	public function renderGraph()

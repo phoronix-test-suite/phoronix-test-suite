@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2017, Phoronix Media
-	Copyright (C) 2008 - 2017, Michael Larabel
+	Copyright (C) 2008 - 2018, Phoronix Media
+	Copyright (C) 2008 - 2018, Michael Larabel
 	pho_graph.php: The core graph object that is used by the different graphing objects.
 
 	This program is free software; you can redistribute it and/or modify
@@ -35,15 +35,8 @@ abstract class pts_graph_core
 	protected $i = array(); // internal data, pts_Graph* can read-write
 	public $svg_dom = null;
 
-	// TODO: Convert below variables to using $this->[XXX]
 	protected $graph_identifiers = array();
 	protected $graph_sub_titles = array();
-	protected $graph_title;
-	protected $graph_y_title;
-	protected $is_multi_way_comparison = false;
-	private $test_identifier = null;
-	protected $value_highlights = array();
-
 	protected $test_result;
 	protected $results;
 
@@ -74,6 +67,11 @@ abstract class pts_graph_core
 		$this->i['multi_way_comparison_invert_default'] = true;
 		$this->i['support_color_branding'] = true;
 		$this->i['notes'] = array();
+		$this->i['is_multi_way_comparison'] = false;
+		$this->i['graph_y_title'] = null;
+		$this->i['graph_title'] = null;
+		$this->i['header_link'] = null;
+		$this->i['highlight_values'] = false;
 
 		// Reset of setup besides config
 		if($result_object != null)
@@ -85,10 +83,13 @@ abstract class pts_graph_core
 				$test_version = 'v' . $test_version;
 			}
 
-			$this->graph_title = trim($result_object->test_profile->get_title() . ' ' . $test_version);
+			$this->i['graph_title'] = trim($result_object->test_profile->get_title() . ' ' . $test_version);
 
-			$this->graph_y_title = $result_object->test_profile->get_result_scale_formatted();
-			$this->test_identifier = $result_object->test_profile->get_identifier();
+			$this->i['graph_y_title'] = $result_object->test_profile->get_result_scale_formatted();
+			if(($test_identifier = $result_object->test_profile->get_identifier()))
+			{
+				$this->i['header_link'] = 'https://openbenchmarking.org/test/' . $result_object->test_profile->get_identifier();
+			}
 			$this->i['graph_proportion'] = $result_object->test_profile->get_result_proportion();
 			$this->addSubTitle($result_object->get_arguments_description());
 		}
@@ -98,11 +99,11 @@ abstract class pts_graph_core
 		{
 			// Phoromatic result tracker
 			// TODO: investigate this check as it could cause problems... bad assumption to make
-			$this->is_multi_way_comparison = true;
+			$this->i['is_multi_way_comparison'] = true;
 		}
 		else if(isset($result_object->test_result_buffer))
 		{
-			$this->is_multi_way_comparison = pts_render::multi_way_identifier_check($result_object->test_result_buffer->get_identifiers());
+			$this->i['is_multi_way_comparison'] = pts_render::multi_way_identifier_check($result_object->test_result_buffer->get_identifiers());
 		}
 
 		$this->i['graph_version'] = 'Phoronix Test Suite ' . PTS_VERSION;
@@ -117,30 +118,31 @@ abstract class pts_graph_core
 		}
 		if(isset($extra_attributes['highlight_graph_values']))
 		{
-			$this->value_highlights = $extra_attributes['highlight_graph_values'];
+			$this->i['highlight_values'] = $extra_attributes['highlight_graph_values'];
 		}
 		else if(PTS_IS_CLIENT && pts_client::read_env('GRAPH_HIGHLIGHT') != false)
 		{
-			//$this->value_highlights = pts_strings::comma_explode(pts_client::read_env('GRAPH_HIGHLIGHT'));
+			//$this->i['highlight_values'] = pts_strings::comma_explode(pts_client::read_env('GRAPH_HIGHLIGHT'));
 			// We support GRAPH_HIGHLIGHT as a series of
 			// ID, ID=colorId or ID=color values, e.g.
 			// GRAPH_HIGHLIGHT="will_be_different,group1a=1,group1b=1,blue=#0000ff"
+			$this->i['highlight_values'] = array();
 			foreach(pts_strings::comma_explode(pts_client::read_env('GRAPH_HIGHLIGHT')) as $id)
 			{
 				$split = explode('=', $id);
 				if(count($split) == 2)
 				{
-					$this->value_highlights[$split[0]] = null;
+					$this->i['highlight_values'][$split[0]] = null;
 					$color = $split[1];
 					if(is_numeric($color)) // TODO clean this up with a better color check
 					{
 						$color = self::$c['color']['paint'][$color];
-						$this->value_highlights[$split[0]] = $color;
+						$this->i['highlight_values'][$split[0]] = $color;
 					}
 				}
 				else
 				{
-					$this->value_highlights[$id] = null;
+					$this->i['highlight_values'][$id] = null;
 				}
 			}
 		}
@@ -167,7 +169,7 @@ abstract class pts_graph_core
 	protected function generate_results_var()
 	{
 		$this->results = array();
-		if($this->is_multi_way_comparison)
+		if($this->i['is_multi_way_comparison'])
 		{
 			foreach($this->test_result->test_result_buffer->buffer_items as $i => &$buffer_item)
 			{
@@ -219,7 +221,7 @@ abstract class pts_graph_core
 
 			if(count($this->results) == 1)
 			{
-				$this->is_multi_way_comparison = false;
+				$this->i['is_multi_way_comparison'] = false;
 			}
 		}
 		else if(isset($this->test_result->test_result_buffer))
@@ -515,7 +517,7 @@ abstract class pts_graph_core
 		{
 			if($this->i['graph_orientation'] == 'HORIZONTAL')
 			{
-				if($this->is_multi_way_comparison && count($this->results) > 1)
+				if($this->i['is_multi_way_comparison'] && count($this->results) > 1)
 				{
 					$longest_r = $longest_identifier;
 					$longest_r = explode(' - ', $longest_r);
@@ -567,7 +569,7 @@ abstract class pts_graph_core
 
 			if($this->i['graph_orientation'] == 'HORIZONTAL')
 			{
-				if($this->is_multi_way_comparison && count($this->results) > 1)
+				if($this->i['is_multi_way_comparison'] && count($this->results) > 1)
 				{
 					$longest_string = explode(' - ', $longest_identifier);
 					$longest_string = pts_strings::find_longest_string($longest_string);
@@ -604,7 +606,7 @@ abstract class pts_graph_core
 					}
 				}
 
-				$num_identifiers = $this->test_result->test_result_buffer->get_count() + ($this->is_multi_way_comparison ? 2 : 0);
+				$num_identifiers = $this->test_result->test_result_buffer->get_count() + ($this->i['is_multi_way_comparison'] ? 2 : 0);
 				$this->i['graph_top_end'] = $this->i['top_start'] + ($num_identifiers * $per_identifier_height);
 				// $this->i['top_end_bottom']
 				$this->i['graph_height'] = $this->i['graph_top_end'] + 25 + $bottom_heading;
@@ -665,28 +667,21 @@ abstract class pts_graph_core
 	}
 	protected function render_graph_heading($with_version = true)
 	{
-		$href = null;
-
-		if($this->test_identifier != null)
-		{
-			$href = 'https://openbenchmarking.org/test/' . $this->test_identifier;
-		}
-
 		// Default to NORMAL
 		if($this->i['iveland_view'])
 		{
 			$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->i['graph_width'], 'height' => $this->i['top_heading_height'], 'fill' => self::$c['color']['main_headers']));
 
-			if(isset($this->graph_title[36]))
+			if(isset($this->i['graph_title'][36]))
 			{
 				// If it's a long string make sure it won't run over the side...
-				while(self::text_string_width($this->graph_title, self::$c['size']['headers']) > ($this->i['graph_left_end'] - 20))
+				while(self::text_string_width($this->i['graph_title'], self::$c['size']['headers']) > ($this->i['graph_left_end'] - 20))
 				{
 					self::$c['size']['headers'] -= 0.5;
 				}
 			}
 
-			$this->svg_dom->add_text_element($this->graph_title, array('x' => 6, 'y' => (self::$c['size']['headers'] + 2), 'font-size' => self::$c['size']['headers'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'xlink:show' => 'new', 'xlink:href' => $href, 'font-weight' => 'bold'));
+			$this->svg_dom->add_text_element($this->i['graph_title'], array('x' => 6, 'y' => (self::$c['size']['headers'] + 2), 'font-size' => self::$c['size']['headers'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'xlink:show' => 'new', 'xlink:href' => $this->i['header_link'], 'font-weight' => 'bold'));
 
 			foreach($this->graph_sub_titles as $i => $sub_title)
 			{
@@ -705,7 +700,7 @@ abstract class pts_graph_core
 		}
 		else
 		{
-			$this->svg_dom->add_text_element($this->graph_title, array('x' => round($this->i['graph_left_end'] / 2), 'y' => (self::$c['size']['headers'] + 2), 'font-size' => self::$c['size']['headers'], 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'middle', 'xlink:show' => 'new', 'xlink:href' => $href));
+			$this->svg_dom->add_text_element($this->i['graph_title'], array('x' => round($this->i['graph_left_end'] / 2), 'y' => (self::$c['size']['headers'] + 2), 'font-size' => self::$c['size']['headers'], 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'middle', 'xlink:show' => 'new', 'xlink:href' => $this->i['header_link']));
 
 			foreach($this->graph_sub_titles as $i => $sub_title)
 			{
@@ -770,9 +765,9 @@ abstract class pts_graph_core
 			}
 		}
 
-		if(!empty($this->graph_y_title) && $this->i['hide_y_title'] == false)
+		if(!empty($this->i['graph_y_title']) && $this->i['hide_y_title'] == false)
 		{
-			$str = $this->graph_y_title;
+			$str = $this->i['graph_y_title'];
 			$offset = 0;
 
 			if($this->i['graph_proportion'] != null)
@@ -892,7 +887,7 @@ abstract class pts_graph_core
 	}
 	protected function graph_key_height()
 	{
-		if((count($this->results) < 2 || $this->i['show_graph_key'] == false) && !$this->is_multi_way_comparison) // TODO likely should be OR
+		if((count($this->results) < 2 || $this->i['show_graph_key'] == false) && !$this->i['is_multi_way_comparison']) // TODO likely should be OR
 		{
 			return 0;
 		}
@@ -975,9 +970,9 @@ abstract class pts_graph_core
 	protected function adjust_color($identifier, $paint_color)
 	{
 		// Adjust the color based on the identifier and the content of value_highlights
-		if(array_key_exists($identifier, $this->value_highlights) || in_array($identifier, $this->value_highlights))
+		if($this->i['highlight_values'] && (array_key_exists($identifier, $this->i['highlight_values']) || in_array($identifier, $this->i['highlight_values'])))
 		{
-			$color = $this->value_highlights[$identifier];
+			$color = $this->i['highlight_values'][$identifier];
 			$paint_color = empty($color) ? $this->darken_color($paint_color) : $color;
 		}
 		return $paint_color;

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2016, Phoronix Media
-	Copyright (C) 2010 - 2016, Michael Larabel
+	Copyright (C) 2010 - 2018, Phoronix Media
+	Copyright (C) 2010 - 2018, Michael Larabel
 	pts_OverviewGraph.php: A graping object to create an "overview" / mini graphs of a pts_result_file for pts_Graph
 
 	This program is free software; you can redistribute it and/or modify
@@ -92,8 +92,8 @@ class pts_OverviewGraph extends pts_graph_core
 		$this->i['top_start'] += 20 + (count($this->system_identifiers) / 3 * $this->i['identifier_size']);
 		$height = $this->i['top_start'] + ($this->graph_row_count * ($this->graph_row_height + 15));
 
-		$this->graph_title = $result_file->get_title();
-		$this->graph_y_title = null;
+		$this->i['graph_title'] = $result_file->get_title();
+		$this->i['graph_y_title'] = null;
 		$this->i['graph_proportion'] = 'HIB';
 		$this->i['show_background_lines'] = true;
 

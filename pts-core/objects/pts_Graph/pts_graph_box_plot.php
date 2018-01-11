@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2017, Phoronix Media
-	Copyright (C) 2008 - 2017, Michael Larabel
+	Copyright (C) 2008 - 2018, Phoronix Media
+	Copyright (C) 2008 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ class pts_graph_box_plot extends pts_graph_horizontal_bars
 	{
 		$bar_count = count($this->results);
 		$separator_height = ($a = (6 - (floor($bar_count / 2) * 2))) > 0 ? $a : 0;
-		$bar_height = floor(($this->i['identifier_height'] - ($this->is_multi_way_comparison ? 4 : 0) - $separator_height - ($bar_count * $separator_height)) / $bar_count);
+		$bar_height = floor(($this->i['identifier_height'] - ($this->i['is_multi_way_comparison'] ? 4 : 0) - $separator_height - ($bar_count * $separator_height)) / $bar_count);
 		$this->i['graph_max_value'] = $this->i['graph_max_value'] != 0 ? $this->i['graph_max_value'] : 1;
 		$work_area_width = $this->i['graph_left_end'] - $this->i['left_start'];
 
@@ -83,7 +83,7 @@ class pts_graph_box_plot extends pts_graph_horizontal_bars
 
 				$i_o = $this->calc_offset($group_offsets, $identifier);
 				$i = $this->calc_offset($id_offsets, $buffer_item->get_result_identifier());
-				$px_bound_top = $this->i['top_start'] + ($this->is_multi_way_comparison ? 5 : 0) + ($this->i['identifier_height'] * $i) + ($bar_height * $i_o) + ($separator_height * ($i_o + 1));
+				$px_bound_top = $this->i['top_start'] + ($this->i['is_multi_way_comparison'] ? 5 : 0) + ($this->i['identifier_height'] * $i) + ($bar_height * $i_o) + ($separator_height * ($i_o + 1));
 				$px_bound_bottom = $px_bound_top + $bar_height;
 				$middle_of_bar = $px_bound_top + ($bar_height / 2);
 
@@ -103,7 +103,7 @@ class pts_graph_box_plot extends pts_graph_horizontal_bars
 				$value_end_left = $this->i['left_start'] + max(1, round(($whisker_bottom / $this->i['graph_max_value']) * $work_area_width));
 				$value_end_right = $this->i['left_start'] + round(($whisker_top / $this->i['graph_max_value']) * $work_area_width);
 				// if identifier is 0, not a multi-way comparison or anything special
-				if($identifier == 0 && !$this->is_multi_way_comparison)
+				if($identifier == 0 && !$this->i['is_multi_way_comparison'])
 				{
 					// See if the result identifier matches something to be color-coded better
 					$box_color = self::identifier_to_branded_color($buffer_item->get_result_identifier(), $paint_color);

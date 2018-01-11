@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2016, Phoronix Media
-	Copyright (C) 2008 - 2016, Michael Larabel
+	Copyright (C) 2008 - 2018, Phoronix Media
+	Copyright (C) 2008 - 2018, Michael Larabel
 	pts_PassFailGraph.php: An abstract graph object extending pts_Graph for showing results in a pass/fail scenario.
 
 	This program is free software; you can redistribute it and/or modify
@@ -59,7 +59,7 @@ class pts_graph_passfail extends pts_graph_core
 
 		$identifiers_total_width = $graph_width - $main_width - 2;
 
-		$headings = pts_strings::comma_explode($this->graph_y_title);
+		$headings = pts_strings::comma_explode($this->i['graph_y_title']);
 		$identifiers_width = floor($identifiers_total_width / (count($headings) != 0 ? count($headings) : 1));
 		$headings_font_size = self::$c['size']['bars'];
 		while(($this->text_string_width(pts_strings::find_longest_string($headings), $headings_font_size) > ($identifiers_width - 2)) || $this->text_string_height($this->i['graph_max_value'], $headings_font_size) > ($line_height - 4))

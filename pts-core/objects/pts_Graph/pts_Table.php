@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2017, Phoronix Media
-	Copyright (C) 2009 - 2017, Michael Larabel
+	Copyright (C) 2009 - 2018, Phoronix Media
+	Copyright (C) 2009 - 2018, Michael Larabel
 	pts_Table.php: A charting table object for pts_Graph
 
 	This program is free software; you can redistribute it and/or modify
@@ -142,7 +142,7 @@ class pts_Table extends pts_graph_core
 		}
 
 		$this->i['top_heading_height'] = 8;
-		if($this->graph_title != null)
+		if($this->i['graph_title'] != null)
 		{
 			$this->i['top_heading_height'] += round(self::$c['size']['headers'] + (count($this->graph_sub_titles) * (self::$c['size']['sub_headers'] + 4)));
 		}
@@ -150,7 +150,7 @@ class pts_Table extends pts_graph_core
 		$table_max_value_width = ceil($this->text_string_width($this->i['graph_max_value'], $this->i['identifier_size']) * 1.02) + 2;
 
 		$table_item_width = max($table_max_value_width, $table_identifier_width) + 2;
-		$table_width = max(($table_item_width * count($this->columns)), floor($this->text_string_width($this->graph_title, 12) / $table_item_width) * $table_item_width);
+		$table_width = max(($table_item_width * count($this->columns)), floor($this->text_string_width($this->i['graph_title'], 12) / $table_item_width) * $table_item_width);
 		//$table_width = $table_item_width * count($this->columns);
 		$table_line_height = round($this->text_string_height($this->i['graph_max_value'], $this->i['identifier_size']) + 8);
 		$table_line_height_half = round($table_line_height / 2);
@@ -192,10 +192,10 @@ class pts_Table extends pts_graph_core
 		$this->svg_dom->draw_svg_line($this->i['left_start'], $v, $table_columns_end + ($table_columns_end < $this->i['graph_width'] ? $table_item_width : 0), $v, self::$c['color']['border'], $table_height + $top_identifier_height, array('stroke-dasharray' => '1,' . ($table_item_width - 1)));
 
 		// Heading
-		if($this->graph_title != null)
+		if($this->i['graph_title'] != null)
 		{
 			$this->svg_dom->add_element('rect', array('x' => 1, 'y' => 1, 'width' => ($this->i['graph_width'] - 2), 'height' => $this->i['top_heading_height'], 'fill' => self::$c['color']['main_headers']));
-			$this->svg_dom->add_text_element($this->graph_title, array('x' => 5, 'y' => (self::$c['size']['headers'] + 2), 'font-size' => self::$c['size']['headers'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'start'));
+			$this->svg_dom->add_text_element($this->i['graph_title'], array('x' => 5, 'y' => (self::$c['size']['headers'] + 2), 'font-size' => self::$c['size']['headers'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'start'));
 
 			foreach($this->graph_sub_titles as $i => $sub_title)
 			{

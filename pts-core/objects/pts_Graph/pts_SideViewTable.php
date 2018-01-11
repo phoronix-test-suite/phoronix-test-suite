@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2012 - 2016, Phoronix Media
-	Copyright (C) 2012 - 2016, Michael Larabel
+	Copyright (C) 2012 - 2018, Phoronix Media
+	Copyright (C) 2012 - 2018, Michael Larabel
 	pts_SideViewTable.php: A charting table object for pts_Graph in a side-view manner
 
 	This program is free software; you can redistribute it and/or modify
@@ -73,7 +73,7 @@ class pts_SideViewTable extends pts_graph_core
 		$top_identifier_height = max(($this->text_string_height($this->longest_column_identifier, $this->i['identifier_size']) + 8), 48);
 
 		$this->i['top_heading_height'] = 1;
-		if($this->graph_title != null)
+		if($this->i['graph_title'] != null)
 		{
 			$this->i['top_heading_height'] += round(self::$c['size']['headers'] + (count($this->graph_sub_titles) * (self::$c['size']['sub_headers'] + 4)));
 		}
@@ -137,7 +137,7 @@ class pts_SideViewTable extends pts_graph_core
 		$v = round((($top_identifier_height + $table_height) / 2) + $this->i['top_heading_height']);
 
 		// Heading
-		if($this->graph_title != null)
+		if($this->i['graph_title'] != null)
 		{
 			$this->svg_dom->add_element('rect', array('x' => 1, 'y' => 1, 'width' => ($this->i['graph_width'] - 2), 'height' => $this->i['top_heading_height'], 'fill' => self::$c['color']['main_headers']));
 

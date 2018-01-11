@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2016, Phoronix Media
-	Copyright (C) 2008 - 2016, Michael Larabel
+	Copyright (C) 2008 - 2018, Phoronix Media
+	Copyright (C) 2008 - 2018, Michael Larabel
 	pts_LineGraph.php: The line graph object that extends pts_Graph.php.
 
 	This program is free software; you can redistribute it and/or modify
@@ -57,7 +57,7 @@ class pts_graph_lines extends pts_graph_core
 		$this->i['display_select_identifiers'] = false;
 		$this->i['hide_graph_identifiers'] = !isset($extra_attributes['force_tracking_line_graph']) || !$extra_attributes['force_tracking_line_graph'];
 
-		// XXX removed on 20 January from here: $this->is_multi_way_comparison &&
+		// XXX removed on 20 January from here: $this->i['is_multi_way_comparison'] &&
 		if(isset($extra_attributes['force_tracking_line_graph']) && $extra_attributes['force_tracking_line_graph'] && is_array($this->results))
 		{
 			// need to do compacting here
@@ -132,7 +132,7 @@ class pts_graph_lines extends pts_graph_core
 			}
 		}
 
-		if($this->graph_y_title == 'Percent' && $max_value < 100 && $max_value > 80)
+		if($this->i['graph_y_title'] == 'Percent' && $max_value < 100 && $max_value > 80)
 		{
 			$this->i['graph_max_value'] = 120;
 			$this->i['mark_count'] = 6;
