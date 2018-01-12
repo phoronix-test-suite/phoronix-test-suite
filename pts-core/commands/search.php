@@ -30,48 +30,41 @@ class search implements pts_option_interface
 		pts_client::$display->generic_heading('Search');
 		$search_query = empty($r[0]) ? pts_user_io::prompt_user_input('Enter search query') : $r[0];
 
-		$test_matches = 0;
-		$test_results = null;
+		$table = array();
 		foreach(pts_search::search_test_profiles($search_query) as $test_profile)
 		{
-			$test_results .= sprintf('%-30ls - %-35ls %-9ls', pts_client::cli_just_bold($test_profile->get_identifier()), $test_profile->get_title(), $test_profile->get_test_hardware_type()) . PHP_EOL;
-			$test_matches++;
+			$table[] = array(pts_client::cli_just_bold($test_profile->get_identifier()), $test_profile->get_title(), $test_profile->get_test_hardware_type());
 		}
 
 		foreach(pts_search::search_local_test_profiles($search_query) as $test_profile)
 		{
-			$test_results .= sprintf('%-30ls - %-35ls %-9ls', pts_client::cli_just_bold($test_profile->get_identifier()), $test_profile->get_title(), $test_profile->get_test_hardware_type()) . PHP_EOL;
-			$test_matches++;
+			$table[] = array(pts_client::cli_just_bold($test_profile->get_identifier()), $test_profile->get_title(), $test_profile->get_test_hardware_type());
 		}
-		if($test_matches > 0)
+		if(count($table) > 0)
 		{
-			echo pts_client::cli_just_bold('TEST PROFILES') . PHP_EOL . $test_results . pts_strings::plural_handler($test_matches, 'Test') . ' Matching';
+			echo pts_client::cli_colored_text('TEST PROFILES', 'green', true) . PHP_EOL . pts_user_io::display_text_table($table, null, 1) . PHP_EOL . pts_client::cli_colored_text(pts_strings::plural_handler(count($table), 'Test') . ' Matching', 'gray');
 		}
 
 		// SUITE SEARCH
-		$suite_matches = 0;
-		$suite_results = null;
+		$table = array();
 		foreach(pts_search::search_test_suites($search_query) as $ts)
 		{
-			$suite_results .= sprintf('%-30ls - %-35ls %-9ls', pts_client::cli_just_bold($ts->get_identifier()), $ts->get_title(), $ts->get_suite_type()) . PHP_EOL;
-			$suite_matches++;
+			$table[] = array(pts_client::cli_just_bold($ts->get_identifier()), $ts->get_title(), $ts->get_suite_type());
 		}
-		if($suite_matches > 0)
+		if(count($table) > 0)
 		{
-			echo PHP_EOL . PHP_EOL . pts_client::cli_just_bold('TEST SUITES') . PHP_EOL . $suite_results . pts_strings::plural_handler($suite_matches, 'Suite') . ' Matching';
+			echo PHP_EOL . PHP_EOL . pts_client::cli_colored_text('TEST SUITES', 'green', true) . PHP_EOL . pts_user_io::display_text_table($table, null, 1) . PHP_EOL . pts_client::cli_colored_text(pts_strings::plural_handler(count($table), 'Suite') . ' Matching', 'gray');
 		}
 
 		// RESULT SEARCH
-		$result_matches = 0;
-		$result_results = null;
+		$table = array();
 		foreach(pts_search::search_test_results($search_query) as $rf)
 		{
-			$result_results .= sprintf('%-30ls - %-35ls', pts_client::cli_just_bold($rf->get_identifier()), $rf->get_title()) . PHP_EOL;
-			$result_matches++;
+			$table[] = array(pts_client::cli_just_bold($rf->get_identifier()), $rf->get_title());
 		}
-		if($result_matches > 0)
+		if(count($table) > 0)
 		{
-			echo PHP_EOL . PHP_EOL . pts_client::cli_just_bold('TEST RESULTS') . PHP_EOL . $result_results . pts_strings::plural_handler($result_matches, 'Test Result') . ' Matching';
+			echo PHP_EOL . PHP_EOL . pts_client::cli_colored_text('TEST RESULTS', 'green', true) . PHP_EOL . pts_user_io::display_text_table($table, null, 1) . PHP_EOL . pts_client::cli_colored_text(pts_strings::plural_handler(count($table), 'Test Result') . ' Matching', 'gray');
 		}
 
 		echo PHP_EOL . PHP_EOL;
