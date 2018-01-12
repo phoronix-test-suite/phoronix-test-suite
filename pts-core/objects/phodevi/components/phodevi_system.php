@@ -520,7 +520,7 @@ class phodevi_system extends phodevi_device_interface
 			$security[] = 'KPTI';
 		}
 
-		return !empty($security) ? implode(', ',  $security) : null;
+		return !empty($security) ? implode(', ',  $security) . ' Protection' : null;
 	}
 	public static function sw_compiler()
 	{
