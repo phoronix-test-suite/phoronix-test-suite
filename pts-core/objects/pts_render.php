@@ -351,7 +351,7 @@ class pts_render
 			{
 				if(!empty($value))
 				{
-					$system_attributes[strtoupper(str_replace(array('_', '-'), ' ', $key))][$identifier] = $value;
+					$system_attributes[ucwords(str_replace(array('_', '-'), ' ', $key))][$identifier] = $value;
 				}
 				unset($json[$key]);
 			}
