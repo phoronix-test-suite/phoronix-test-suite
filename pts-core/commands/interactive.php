@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011 - 2016, Phoronix Media
-	Copyright (C) 2011 - 2016, Michael Larabel
+	Copyright (C) 2011 - 2018, Phoronix Media
+	Copyright (C) 2011 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -29,7 +29,8 @@ class interactive implements pts_option_interface
 	{
 		pts_openbenchmarking::refresh_repository_lists();
 		pts_client::$display->generic_heading('Interactive Benchmarking');
-		echo 'System Hardware:' . PHP_EOL . phodevi::system_hardware(true) . (phodevi::read_property('motherboard', 'serial-number') != null ? PHP_EOL . 'System Serial Number: ' . phodevi::read_property('motherboard', 'serial-number') : null) . PHP_EOL . PHP_EOL . PHP_EOL;
+		echo phodevi::system_centralized_view();
+		echo PHP_EOL . (phodevi::read_property('motherboard', 'serial-number') != null ? PHP_EOL . 'System Serial Number: ' . phodevi::read_property('motherboard', 'serial-number') : null) . PHP_EOL . PHP_EOL;
 		$reboot_on_exit = false;
 
 		do
@@ -121,9 +122,7 @@ class interactive implements pts_option_interface
 					}
 					break;
 				case 'SHOW_INFO':
-					pts_client::$display->generic_heading('System Software / Hardware Information');
-					echo 'Hardware:' . PHP_EOL . phodevi::system_hardware(true) . PHP_EOL . PHP_EOL;
-					echo 'Software:' . PHP_EOL . phodevi::system_software(true) . PHP_EOL . PHP_EOL;
+					pts_client::execute_command('system_info');
 					break;
 				case 'SHOW_SENSORS':
 					pts_client::execute_command('system_sensors');
