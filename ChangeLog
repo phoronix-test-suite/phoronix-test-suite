@@ -7,6 +7,7 @@ pts-core: Fixes for make-download-cache sometimes not caching tests/suites
 pts-core: Drop the pts_test_notes_manager since pts_test_run_manager already had better capabilities built-in
 pts-core: Add dump-phodevi-properties helper to assist in debugging and porting to new platforms
 pts-core: Interactive mode improvements
+pts-core: The `phoronix-test-suite gui` has been unmaintained and can be considered deprecated
 phodevi: Append BIOS version to end of motherboard string
 phodevi: Strip invalid chars from BIOS version parsing
 phodevi: Reworked property handling
