@@ -81,10 +81,21 @@ class pts_search
 			$result_file = new pts_result_file($saved_results_identifier);
 
 			// TODO Add support for searching contained hardware/software of system
-			if(($title = $result_file->get_title()) != null && (stripos($result_file->get_title(), $search_query) !== false || stripos($result_file->get_identifier(), $search_query) !== false || stripos($result_file->get_description(), $search_query) !== false))
+			if($result_file->get_title() != null && (stripos($result_file->get_title(), $search_query) !== false || stripos($result_file->get_identifier(), $search_query) !== false || stripos($result_file->get_description(), $search_query) !== false))
 			{
 				$matches[] = $result_file;
+				continue;
 			}
+			foreach($result_file->get_systems() as $s)
+			{
+				if(stripos($s->get_identifier(), $search_query) !== false)
+				{
+					$matches[] = $result_file;
+					break;
+				}
+				//$ids[] = $s->get_identifier();
+			}
+
 		}
 		return $matches;
 	}
