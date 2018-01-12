@@ -1204,7 +1204,10 @@ class phodevi_system extends phodevi_device_interface
 		{
 			// KDE 5.x
 			$desktop_environment = 'KDE Frameworks';
-			$desktop_version = pts_strings::last_in_string(trim(shell_exec('kdeinit5 --version 2> /dev/null')));
+			if(pts_client::executable_in_path('kdeinit5'))
+			{
+				$desktop_version = pts_strings::last_in_string(trim(shell_exec('kdeinit5 --version 2> /dev/null')));
+			}
 		}
 		else if(($dde = pts_client::is_process_running('dde-desktop')))
 		{
