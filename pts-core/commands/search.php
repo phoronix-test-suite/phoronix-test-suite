@@ -32,33 +32,16 @@ class search implements pts_option_interface
 
 		$test_matches = 0;
 		$test_results = null;
-		foreach(pts_openbenchmarking::available_tests(false) as $identifier)
+		foreach(pts_search::search_test_profiles($search_query) as $test_profile)
 		{
-			$repo = substr($identifier, 0, strpos($identifier, '/'));
-			$id = substr($identifier, strlen($repo) + 1);
-			$repo_index = pts_openbenchmarking::read_repository_index($repo);
-
-			if(empty($repo_index['tests'][$id]['title']))
-			{
-				// Don't show unsupported tests
-				continue;
-			}
-			if(stripos($repo_index['tests'][$id]['title'], $search_query) !== false || stripos($id, $search_query) !== false || stripos($repo_index['tests'][$id]['description'], $search_query) !== false || in_array($search_query, $repo_index['tests'][$id]['internal_tags']) !== false || $search_query == $repo_index['tests'][$id]['test_type'])
-			{
-				$test_results .= sprintf('%-30ls - %-35ls %-9ls', pts_client::cli_just_bold($identifier), $repo_index['tests'][$id]['title'], $repo_index['tests'][$id]['test_type']) . PHP_EOL;
-				$test_matches++;
-			}
+			$test_results .= sprintf('%-30ls - %-35ls %-9ls', pts_client::cli_just_bold($test_profile->get_identifier()), $test_profile->get_title(), $test_profile->get_test_hardware_type()) . PHP_EOL;
+			$test_matches++;
 		}
 
-		foreach(pts_tests::local_tests() as $identifier)
+		foreach(pts_search::search_local_test_profiles($search_query) as $test_profile)
 		{
-			$test_profile = new pts_test_profile($identifier);
-
-			if($test_profile->get_title() != null && (stripos($test_profile->get_title(), $search_query) !== false || stripos($test_profile->get_identifier(), $search_query) !== false || stripos($test_profile->get_description(), $search_query) !== false || in_array($search_query, $test_profile->get_internal_tags()) !== false))
-			{
-				$test_results .= sprintf('%-30ls - %-35ls %-9ls', pts_client::cli_just_bold($test_profile->get_identifier()), $test_profile->get_title(), $test_profile->get_test_hardware_type()) . PHP_EOL;
-				$test_matches++;
-			}
+			$test_results .= sprintf('%-30ls - %-35ls %-9ls', pts_client::cli_just_bold($test_profile->get_identifier()), $test_profile->get_title(), $test_profile->get_test_hardware_type()) . PHP_EOL;
+			$test_matches++;
 		}
 		if($test_matches > 0)
 		{
@@ -68,14 +51,10 @@ class search implements pts_option_interface
 		// SUITE SEARCH
 		$suite_matches = 0;
 		$suite_results = null;
-		foreach(array_merge(pts_openbenchmarking::available_suites(false), pts_tests::local_suites()) as $identifier)
+		foreach(pts_search::search_test_suites($search_query) as $ts)
 		{
-			$test_suite = new pts_test_suite($identifier);
-			if($test_suite->get_title() != null && (stripos($test_suite->get_title(), $search_query) !== false || stripos($test_suite->get_identifier(), $search_query) !== false || stripos($test_suite->get_description(), $search_query) !== false))
-			{
-				$suite_results .= sprintf('%-30ls - %-35ls %-9ls', pts_client::cli_just_bold($test_suite->get_identifier()), $test_suite->get_title(), $test_suite->get_suite_type()) . PHP_EOL;
-				$suite_matches++;
-			}
+			$suite_results .= sprintf('%-30ls - %-35ls %-9ls', pts_client::cli_just_bold($ts->get_identifier()), $ts->get_title(), $ts->get_suite_type()) . PHP_EOL;
+			$suite_matches++;
 		}
 		if($suite_matches > 0)
 		{
@@ -85,16 +64,10 @@ class search implements pts_option_interface
 		// RESULT SEARCH
 		$result_matches = 0;
 		$result_results = null;
-		foreach(pts_client::saved_test_results() as $saved_results_identifier)
+		foreach(pts_search::search_test_results($search_query) as $rf)
 		{
-			$result_file = new pts_result_file($saved_results_identifier);
-
-			// TODO Add support for searching contained hardware/software of system
-			if(($title = $result_file->get_title()) != null && (stripos($result_file->get_title(), $search_query) !== false || stripos($result_file->get_identifier(), $search_query) !== false || stripos($test_suite->get_description(), $search_query) !== false))
-			{
-				$result_results .= sprintf('%-30ls - %-35ls', pts_client::cli_just_bold($result_file->get_identifier()), $result_file->get_title()) . PHP_EOL;
-				$result_matches++;
-			}
+			$result_results .= sprintf('%-30ls - %-35ls', pts_client::cli_just_bold($rf->get_identifier()), $rf->get_title()) . PHP_EOL;
+			$result_matches++;
 		}
 		if($result_matches > 0)
 		{

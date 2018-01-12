@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014 - 2015, Phoronix Media
-	Copyright (C) 2014 - 2015, Michael Larabel
+	Copyright (C) 2014 - 2018, Phoronix Media
+	Copyright (C) 2014 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -39,14 +39,10 @@ class phoromatic_search implements pts_webui_interface
 	{
 		$ret = null;
 
-		foreach(pts_openbenchmarking::available_tests() as $test)
+		foreach(pts_search::search_test_profiles($q) as $test)
 		{
 			$tp = new pts_test_profile($test);
-
-			if(stripos($test, $q) !== false || stripos($tp->get_title(), $q) === 0)
-			{
-				$ret .= '<h3>' . $tp->get_title() . '</h3><p>' . $tp->get_description() . '<br /><a href="http://openbenchmarking.org/test/' . $tp->get_identifier(false) . '">Learn More On OpenBenchmarking.org</a></p>';
-			}
+			$ret .= '<h3>' . $tp->get_title() . '</h3><p>' . $tp->get_description() . '<br /><a href="http://openbenchmarking.org/test/' . $tp->get_identifier(false) . '">Learn More On OpenBenchmarking.org</a></p>';
 		}
 
 		return $ret;
