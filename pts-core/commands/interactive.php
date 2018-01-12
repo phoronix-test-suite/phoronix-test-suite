@@ -40,7 +40,7 @@ class interactive implements pts_option_interface
 				'RUN_SUITE' => 'Run A Suite [A Collection Of Tests]',
 				'RUN_SYSTEM_TEST' => 'Run Complex System Test',
 				'SHOW_INFO' => 'Show System Hardware / Software Information',
-				'SHOW_SENSORS' => 'Show Auto-Detected System Sensors',
+				'SHOW_SENSORS' => 'Show Available System Sensors',
 				'SET_RUN_COUNT' => 'Set Test Run Repetition'
 				);
 
@@ -133,19 +133,20 @@ class interactive implements pts_option_interface
 					break;
 				case 'BACKUP_RESULTS_TO_USB':
 					pts_client::$display->generic_heading('Backing Up Test Results');
-
-					foreach(pts_file_io::glob('/media/*') as $media_dir)
+					$writable_backup_locations = array();
+					foreach(array_merge(pts_file_io::glob('/media/*'), pts_file_io::glob('/run/media/*/*')) as $media_dir)
 					{
-						if(!is_writable($media_dir))
+						if(is_writable($media_dir))
 						{
-							echo PHP_EOL . $media_dir . ' is not writable.' . PHP_EOL;
-							continue;
+							$writable_backup_locations[] = $media_dir;
 						}
-
-						echo PHP_EOL . 'Writing Test Results To: ' . $media_dir . PHP_EOL;
-						pts_file_io::copy(PTS_SAVE_RESULTS_PATH, $media_dir . '/');
-						break;
 					}
+
+					$backup_location = pts_user_io::prompt_text_menu('Select Backup Location', $writable_backup_locations);
+					$backup_location .= '/phoronix-test-suite-test-results/';
+					pts_file_io::mkdir($backup_location);
+					echo PHP_EOL . pts_client::cli_just_bold('Writing Test Results To: ') . $backup_location . PHP_EOL;
+					pts_file_io::copy(PTS_SAVE_RESULTS_PATH, $backup_location . '/');
 					break;
 			}
 			echo PHP_EOL . PHP_EOL;

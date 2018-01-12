@@ -11,6 +11,7 @@ pts-core: The `phoronix-test-suite gui` has been unmaintained and can be conside
 phodevi: Append BIOS version to end of motherboard string
 phodevi: Strip invalid chars from BIOS version parsing
 phodevi: Reworked property handling
+phodevi: KDE Plasma 5 detection improvements
 
 Phoronix Test Suite 7.8.0 Milestone 1
 8 January 2018

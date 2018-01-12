@@ -1194,11 +1194,17 @@ class phodevi_system extends phodevi_device_interface
 				$desktop_version = pts_strings::last_in_string(trim(shell_exec('mate-about --version 2> /dev/null')));
 			}
 		}
+		else if(($kde5 = pts_client::is_process_running('plasmashell')))
+		{
+			// KDE 5.x
+			$desktop_environment = 'KDE Plasma';
+			$desktop_version = pts_strings::last_in_string(trim(shell_exec('plasmashell --version 2> /dev/null')));
+		}
 		else if(($kde5 = pts_client::is_process_running('kded5')))
 		{
 			// KDE 5.x
 			$desktop_environment = 'KDE Frameworks 5';
-			$desktop_version = null; // TODO XXX
+			$desktop_version = pts_strings::last_in_string(trim(shell_exec('kdeinit5 --version 2> /dev/null')));
 		}
 		else if(($dde = pts_client::is_process_running('dde-desktop')))
 		{
