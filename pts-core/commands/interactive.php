@@ -41,7 +41,8 @@ class interactive implements pts_option_interface
 				'RUN_SYSTEM_TEST' => 'Run Complex System Test',
 				'SHOW_INFO' => 'Show System Hardware / Software Information',
 				'SHOW_SENSORS' => 'Show Available System Sensors',
-				'SET_RUN_COUNT' => 'Set Test Run Repetition'
+				'SET_RUN_COUNT' => 'Set Test Run Repetition',
+				'SEARCH' => 'Search Tests / Suites / Results'
 				);
 
 			if(count(pts_client::saved_test_results()) > 0)
@@ -109,6 +110,9 @@ class interactive implements pts_option_interface
 					break;
 				case 'SELECT_DRIVE_MOUNT':
 					self::select_drive_mount();
+					break;
+				case 'SEARCH':
+					pts_client::execute_command('search');
 					break;
 				case 'RUN_SYSTEM_TEST':
 					pts_client::$display->generic_heading('System Test');
