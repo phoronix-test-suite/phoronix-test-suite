@@ -41,6 +41,8 @@ class interactive implements pts_option_interface
 				'RUN_SYSTEM_TEST' => 'Run Complex System Test',
 				'SHOW_INFO' => 'Show System Hardware / Software Information',
 				'SHOW_SENSORS' => 'Show Available System Sensors',
+				'LIST_TESTS' => 'List Available Tests',
+				'LIST_RECOMMENDED_TESTS' => 'List Recommended Tests',
 				'SET_RUN_COUNT' => 'Set Test Run Repetition',
 				'SEARCH' => 'Search Tests / Suites / Results'
 				);
@@ -130,6 +132,12 @@ class interactive implements pts_option_interface
 					break;
 				case 'SHOW_SENSORS':
 					pts_client::execute_command('system_sensors');
+					break;
+				case 'LIST_TESTS':
+					pts_client::execute_command('list_available_tests');
+					break;
+				case 'LIST_RECOMMENDED_TESTS':
+					pts_client::execute_command('list_recommended_tests');
 					break;
 				case 'SET_RUN_COUNT':
 					$run_count = pts_user_io::prompt_user_input('Set the minimum number of times each test should repeat', false);
