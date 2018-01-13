@@ -164,7 +164,7 @@ class pts_render
 			// Removing the command fixes cases like: 1210053-BY-MYRESULTS43
 			if(isset($extra_attributes['compact_to_scalar']) || isset($extra_attributes['compact_scatter']) || $result_file->is_multi_way_comparison($result_identifiers, $extra_attributes))
 			{
-				if((isset($extra_attributes['compact_to_scalar']) || (false && $result_file->is_multi_way_comparison($result_identifiers, $extra_attributes))) && in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')))
+				if((isset($extra_attributes['compact_to_scalar']) || (false && $result_file->is_multi_way_comparison($result_identifiers, $extra_attributes))) && in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'FILLED_LINE_GRAPH')) && pts_graph_core::get_graph_config('style', 'allow_box_plots'))
 				{
 					// Convert multi-way line graph into horizontal box plot
 					$result_object->test_profile->set_display_format('HORIZONTAL_BOX_PLOT');
@@ -224,7 +224,7 @@ class pts_render
 
 						$result_object->test_profile->set_display_format('BAR_GRAPH');
 					}
-					else if($big_data_set > 0)
+					else if($big_data_set > 0 && pts_graph_core::get_graph_config('style', 'allow_box_plots'))
 					{
 						$result_object->test_profile->set_display_format('HORIZONTAL_BOX_PLOT');
 					}
@@ -242,8 +242,11 @@ class pts_render
 				$graph = new pts_graph_lines($result_object, $result_file, $extra_attributes);
 				break;
 			case 'HORIZONTAL_BOX_PLOT':
-				$graph = new pts_graph_box_plot($result_object, $result_file, $extra_attributes);
-				break;
+				if(pts_graph_core::get_graph_config('style', 'allow_box_plots'))
+				{
+					$graph = new pts_graph_box_plot($result_object, $result_file, $extra_attributes);
+					break;
+				}
 			case 'BAR_ANALYZE_GRAPH':
 			case 'BAR_GRAPH':
 				$graph = new pts_graph_horizontal_bars($result_object, $result_file, $extra_attributes);

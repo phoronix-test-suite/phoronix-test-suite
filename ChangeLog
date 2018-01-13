@@ -15,6 +15,7 @@ phodevi: Append BIOS version to end of motherboard string
 phodevi: Strip invalid chars from BIOS version parsing
 phodevi: Reworked property handling
 phodevi: KDE Plasma 5 detection improvements
+pts_Graph: Add allow_box_plots graph configuration tunable
 
 Phoronix Test Suite 7.8.0 Milestone 1
 8 January 2018

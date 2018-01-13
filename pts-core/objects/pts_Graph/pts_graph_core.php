@@ -166,6 +166,17 @@ abstract class pts_graph_core
 			$this->generate_results_var();
 		}
 	}
+	public static function get_graph_config($o1 = null, $o2 = null)
+	{
+		if(isset(self::$c[$o1][$o2]))
+		{
+			return self::$c[$o1][$o2];
+		}
+		else
+		{
+			return self::$c;
+		}
+	}
 	protected function generate_results_var()
 	{
 		$this->results = array();
@@ -300,6 +311,8 @@ abstract class pts_graph_core
 		$config['size']['identifiers'] = 10;
 		$config['size']['sub_headers'] = 11;
 		$config['size']['axis_headers'] = 10;
+
+		$config['style']['allow_box_plots'] = true;
 	}
 
 	//
