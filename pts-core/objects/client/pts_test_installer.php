@@ -530,7 +530,7 @@ class pts_test_installer
 			$compiler_extras = array(
 				'CC' => array('safeguard-names' => array('gcc', 'cc'), 'environment-variables' => 'CFLAGS'),
 				'CXX' => array('safeguard-names' => array('g++', 'c++'), 'environment-variables' => 'CXXFLAGS'),
-				'F9X' => array('safeguard-names' => array('gfortran', 'f95'), 'environment-variables' => 'F9XFLAGS')
+				'F9X' => array('safeguard-names' => array('gfortran', 'f95'), 'environment-variables' => 'FFLAGS')
 				);
 
 			foreach($compilers as $compiler_type => $compiler_path)
