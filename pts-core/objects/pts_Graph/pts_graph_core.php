@@ -313,6 +313,7 @@ abstract class pts_graph_core
 		$config['size']['axis_headers'] = 10;
 
 		$config['style']['allow_box_plots'] = true;
+		$config['style']['bar_graphs_horizontal'] = true;
 	}
 
 	//

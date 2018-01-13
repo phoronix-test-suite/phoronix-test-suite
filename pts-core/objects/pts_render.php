@@ -249,7 +249,14 @@ class pts_render
 				}
 			case 'BAR_ANALYZE_GRAPH':
 			case 'BAR_GRAPH':
-				$graph = new pts_graph_horizontal_bars($result_object, $result_file, $extra_attributes);
+				if(pts_graph_core::get_graph_config('style', 'bar_graphs_horizontal'))
+				{
+					$graph = new pts_graph_horizontal_bars($result_object, $result_file, $extra_attributes);
+				}
+				else
+				{
+					$graph = new pts_graph_vertical_bars($result_object, $result_file, $extra_attributes);
+				}
 				break;
 			case 'PASS_FAIL':
 			case 'MULTI_PASS_FAIL':
@@ -272,7 +279,14 @@ class pts_render
 						$graph = new pts_graph_box_plot($result_object, $result_file, $extra_attributes);
 						break;
 					default:
-						$graph = new pts_graph_horizontal_bars($result_object, $result_file, $extra_attributes);
+						if(pts_graph_core::get_graph_config('style', 'bar_graphs_horizontal'))
+						{
+							$graph = new pts_graph_horizontal_bars($result_object, $result_file, $extra_attributes);
+						}
+						else
+						{
+							$graph = new pts_graph_vertical_bars($result_object, $result_file, $extra_attributes);
+						}
 						break;
 				}
 				break;

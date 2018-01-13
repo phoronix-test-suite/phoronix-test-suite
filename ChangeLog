@@ -16,6 +16,7 @@ phodevi: Strip invalid chars from BIOS version parsing
 phodevi: Reworked property handling
 phodevi: KDE Plasma 5 detection improvements
 pts_Graph: Add allow_box_plots graph configuration tunable
+pts_Graph: Restore support for allowing vertical bar graphs, can be enabled by editing graph-config.json with bar_graphs_horizontal = false
 
 Phoronix Test Suite 7.8.0 Milestone 1
 8 January 2018
