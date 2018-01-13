@@ -324,6 +324,10 @@
 			<PackageName>golang</PackageName>
 		</Package>
                 <Package>
+			<GenericName>steam</GenericName>
+			<PackageName>steam</PackageName>
+		</Package>
+                <Package>
 			<GenericName>redis-server</GenericName>
 			<PackageName>redis-server</PackageName>
 		</Package>

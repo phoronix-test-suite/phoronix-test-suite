@@ -117,6 +117,7 @@ class pts_graph_vertical_bars extends pts_graph_core
 				$px_bound_right = $px_bound_left + $bar_width;
 				$title_tooltip = $buffer_item->get_result_identifier() . ': ' . $value;
 
+				/*
 				$std_error = -1;
 				if(($raw_values = $buffer_item->get_result_raw()))
 				{
@@ -136,6 +137,7 @@ class pts_graph_vertical_bars extends pts_graph_core
 					}
 				}
 				// DO SOMETHING WITH STD_ERROR TODO
+				*/
 
 				$this->svg_dom->add_element('rect', array('x' => ($px_bound_left + 1), 'y' => $value_plot_top, 'width' => $bar_width, 'height' => ($this->i['graph_top_end'] - $value_plot_top), 'fill' => $this->adjust_color($buffer_item->get_result_identifier(), $paint_color), 'stroke' => self::$c['color']['body_light'], 'stroke-width' => 1, 'xlink:title' => $title_tooltip));
 				if(($px_bound_right - $px_bound_left) < 15)
