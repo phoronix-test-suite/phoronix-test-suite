@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2017, Phoronix Media
-	Copyright (C) 2008 - 2017, Michael Larabel
+	Copyright (C) 2008 - 2018, Phoronix Media
+	Copyright (C) 2008 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -147,6 +147,26 @@ class info implements pts_option_interface
 					echo pts_user_io::display_text_list($o->get_dependency_names());
 				}
 				echo PHP_EOL;
+
+
+
+				// OpenBenchmarking.org Change-Log
+				if(stripos($o->get_identifier(), 'local/') === false)
+				{
+
+					$change_log = pts_openbenchmarking_client::fetch_repository_test_profile_changelog($o->get_identifier(false));
+
+					if(is_array($change_log) && isset($change_log['tests'][$o->get_identifier_base_name()]['changes']))
+					{
+						echo pts_client::cli_just_bold('OpenBenchmarking.org Change History') . PHP_EOL;
+						$change_log = $change_log['tests'][$o->get_identifier_base_name()]['changes'];
+						foreach($change_log as $version => $data)
+						{
+							echo pts_client::cli_colored_text('v' . $version . ' - ' . date('j F Y', $data['last_updated']), 'green', true) . PHP_EOL;
+							echo $data['commit_description'] . PHP_EOL;
+						}
+					}
+				}
 			}
 			else if($o instanceof pts_result_file)
 			{

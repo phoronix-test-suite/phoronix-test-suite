@@ -429,6 +429,11 @@ class pts_openbenchmarking_client
 
 		return is_file($index_file) ? json_decode(file_get_contents($index_file), true) : false;
 	}
+	public static function fetch_repository_test_profile_changelog($test_profile_identifier_sans_version)
+	{
+		$server_index = pts_openbenchmarking::make_openbenchmarking_request('repo_changes', array('test_profile' => $test_profile_identifier_sans_version));
+		return ($j = json_decode($server_index, true)) != false ? $j : false;
+	}
 	public static function fetch_repository_changelog_full($repo_name)
 	{
 		// Fetch the complete OpenBenchmarking.org change-log for this user/repository

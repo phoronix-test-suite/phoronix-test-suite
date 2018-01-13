@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011 - 2013, Phoronix Media
-	Copyright (C) 2011 - 2013, Michael Larabel
+	Copyright (C) 2011 - 2018, Phoronix Media
+	Copyright (C) 2011 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -65,14 +65,14 @@ class openbenchmarking_changes implements pts_option_interface
 
 			foreach($recently_updated as $test_profile => $repo_data)
 			{
-				echo sprintf('%-' . $longest_identifier_length . 'ls - %-35ls', $test_profile, $repo_data['title']) . PHP_EOL;
+				echo sprintf('%-' . $longest_identifier_length . 'ls - %-35ls', $test_profile, pts_client::cli_just_bold($repo_data['title'])) . PHP_EOL;
 				$br = explode('/', $test_profile);
 
 				if(isset($changes[$br[0]]['tests'][$br[1]]['changes']))
 				{
 					foreach($changes[$br[0]]['tests'][$br[1]]['changes'] as $test_profile_version => $data)
 					{
-						echo 'v' . $test_profile_version . ' [' . date('d M Y', $data['last_updated']) . ']' . PHP_EOL;
+						echo pts_client::cli_colored_text('v' . $test_profile_version, 'green', true) . ' [' . date('d M Y', $data['last_updated']) . ']' . PHP_EOL;
 						echo '  - ' . $data['commit_description'] . PHP_EOL;
 					}
 				}

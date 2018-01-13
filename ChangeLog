@@ -9,6 +9,7 @@ pts-core: Add dump-phodevi-properties helper to assist in debugging and porting 
 pts-core: Interactive mode improvements
 pts-core: The `phoronix-test-suite gui` has been unmaintained and can be considered deprecated
 pts-core: Add `phoronix-test-suite search` for conducting basic searches from the CLI
+pts-core: When running `phoronix-test-suite info <test profile>`, show the OpenBenchmarking.org change-log for that test profile too
 phodevi: Append BIOS version to end of motherboard string
 phodevi: Strip invalid chars from BIOS version parsing
 phodevi: Reworked property handling
