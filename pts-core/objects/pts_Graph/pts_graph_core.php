@@ -1021,7 +1021,7 @@ abstract class pts_graph_core
 			}
 			$note_height += self::$c['size']['key'];
 		}
-		$note_height += ((count(array_unique($sections))+ 3) * (self::$c['size']['key'] + 6));
+		$note_height += ((count(array_unique($sections)) + 1) * (self::$c['size']['key'] + 6));
 
 		return $note_height;
 	}

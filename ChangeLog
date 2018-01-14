@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 7.8.0 Milestone 2
+14 January 2018
 
 pts-core: Allow local/other tests not part of OpenBenchmarking.org to be downloaded from a Phoromatic Server
 pts-core: Fixes for make-download-cache sometimes not caching tests/suites
