@@ -519,6 +519,14 @@ class phodevi_system extends phodevi_device_interface
 			// Kernel Page Table Isolation
 			$security[] = 'KPTI';
 		}
+		if(is_file('/sys/devices/system/cpu/vulnerabilities/spectre_v2') && is_readable('/sys/devices/system/cpu/vulnerabilities/spectre_v2'))
+		{
+			$spectre_v2 = file_get_contents('/sys/devices/system/cpu/vulnerabilities/spectre_v2');
+			if(($x = strpos($spectre_v2, ': ')) !== false)
+			{
+				$security[] = trim(substr($spectre_v2, $x + 2));
+			}
+		}
 
 		return !empty($security) ? implode(', ',  $security) . ' Protection' : null;
 	}
