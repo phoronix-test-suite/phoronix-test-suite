@@ -514,12 +514,25 @@ class phodevi_system extends phodevi_device_interface
 				$security[] = 'SELinux';
 			}
 		}
-		if(strpos(phodevi::$vfs->dmesg, 'page tables isolation: enabled') !== false)
+
+		// Meltdown / KPTI check
+		if(is_file('/sys/devices/system/cpu/vulnerabilities/meltdown'))
+		{
+			if(pts_file_io::file_get_contents('/sys/devices/system/cpu/vulnerabilities/meltdown') == 'Mitigation: PTI')
+			{
+				// Kernel Page Table Isolation
+				$security[] = 'KPTI';
+			}
+		}
+		else if(strpos(phodevi::$vfs->dmesg, 'page tables isolation: enabled') !== false)
 		{
 			// Kernel Page Table Isolation
 			$security[] = 'KPTI';
 		}
-		if(is_file('/sys/devices/system/cpu/vulnerabilities/spectre_v2') && is_readable('/sys/devices/system/cpu/vulnerabilities/spectre_v2'))
+
+
+		// Spectre
+		if(is_file('/sys/devices/system/cpu/vulnerabilities/spectre_v2'))
 		{
 			$spectre_v2 = file_get_contents('/sys/devices/system/cpu/vulnerabilities/spectre_v2');
 			if(($x = strpos($spectre_v2, ': ')) !== false)
