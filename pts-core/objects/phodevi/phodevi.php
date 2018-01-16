@@ -321,7 +321,7 @@ class phodevi extends phodevi_base
 				'Display Server' => phodevi::read_property('system', 'display-server'),
 				'Compiler' => phodevi::read_property('system', 'compiler'),
 				'System Layer' => phodevi::read_property('system', 'system-layer'),
-				'System Layer' => phodevi::read_property('system', 'security-features'),
+				'Security' => phodevi::read_property('system', 'security-features'),
 				)
 			);
 
