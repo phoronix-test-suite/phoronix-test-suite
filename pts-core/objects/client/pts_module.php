@@ -116,7 +116,7 @@ class pts_module
 		}
 
 		$all_options = pts_module_manager::module_call($module, 'user_commands');
-		$valid = count($all_options) > 0 && ((isset($all_options[$command]) && method_exists($module, $all_options[$command])) || !empty($all_options));
+		$valid = !empty($all_options) && count($all_options) > 0 && ((isset($all_options[$command]) && method_exists($module, $all_options[$command])) || !empty($all_options));
 
 		return $valid ? array($module, $command) : false;
 	}

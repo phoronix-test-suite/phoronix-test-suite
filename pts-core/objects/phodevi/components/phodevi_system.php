@@ -541,7 +541,7 @@ class phodevi_system extends phodevi_device_interface
 			}
 		}
 
-		return !empty($security) ? implode(', ',  $security) . ' Protection' : null;
+		return !empty($security) ? implode(' + ',  $security) . ' Protection' : null;
 	}
 	public static function sw_compiler()
 	{
