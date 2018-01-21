@@ -312,6 +312,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 			}
 		}
 
+		pts_module_manager::module_process('__post_run_process', $this);
 		putenv('FORCE_TIMES_TO_RUN');
 		pts_file_io::delete($this->thread_collection_dir, null, true);
 
