@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Fix crash in stress-run when PHP PCNTL is missing
 phodevi: spectre_v2 protection reporting
 
 Phoronix Test Suite 7.8.0 Milestone 2

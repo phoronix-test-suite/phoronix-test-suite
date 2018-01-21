@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015 - 2017, Phoronix Media
-	Copyright (C) 2015 - 2017, Michael Larabel
+	Copyright (C) 2015 - 2018, Phoronix Media
+	Copyright (C) 2015 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -133,6 +133,12 @@ class pts_stress_run_manager extends pts_test_run_manager
 			$table[] = array($component . ': ', $value);
 		}
 		$this->stress_print_and_log('SYSTEM INFORMATION: ' . PHP_EOL . phodevi::system_centralized_view() . PHP_EOL . PHP_EOL);
+		if(!function_exists('pcntl_waitpid'))
+		{
+			$this->stress_print_and_log('PHP PCNTL support is to run stress tests.' . PHP_EOL);
+			return false;
+
+		}
 
 		// BEGIN THE LOOP
 		while(!empty($possible_tests_to_run))
