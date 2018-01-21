@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 pts-core: Fix crash in stress-run when PHP PCNTL is missing
 phodevi: spectre_v2 protection reporting
+phodevi: LXQt desktop detection
 
 Phoronix Test Suite 7.8.0 Milestone 2
 14 January 2018

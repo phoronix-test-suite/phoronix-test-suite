@@ -1272,6 +1272,14 @@ class phodevi_system extends phodevi_device_interface
 
 			$desktop_environment = $chrome_output;
 		}
+		else if(pts_client::is_process_running('lxqt-panel') || $desktop_session == 'lxqt')
+		{
+			//$lx_output = trim(shell_exec('lxqt-panel --version'));
+			//$version = substr($lx_output, strpos($lx_output, ' ') + 1);
+
+			$desktop_environment = 'LXQt';
+			//$desktop_version = $version;
+		}
 		else if(pts_client::is_process_running('lxsession') || $desktop_session == 'lxde')
 		{
 			$lx_output = trim(shell_exec('lxpanel --version'));

@@ -169,7 +169,17 @@ class phodevi_cpu extends phodevi_device_interface
 	}
 	public static function cpu_thread_count()
 	{
-		return phodevi::is_linux() ? phodevi_cpu::cpuinfo_thread_count() : phodevi::read_property('cpu', 'core-count');
+		$threads = null;
+		if(phodevi::is_linux())
+		{
+			$threads = phodevi_cpu::cpuinfo_thread_count();
+		}
+		else
+		{
+			$threads = phodevi::read_property('cpu', 'core-count');
+		}
+
+		return $threads;
 	}
 	public static function cpu_node_count()
 	{
