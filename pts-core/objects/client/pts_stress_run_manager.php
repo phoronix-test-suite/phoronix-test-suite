@@ -139,6 +139,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 			return false;
 
 		}
+		pts_module_manager::module_process('__pre_run_process', $this);
 
 		// BEGIN THE LOOP
 		while(!empty($possible_tests_to_run))
