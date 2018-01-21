@@ -333,6 +333,10 @@ class pts_stress_run_manager extends pts_test_run_manager
 
 		return true;
 	}
+	public function is_interactive_mode()
+	{
+		return false;
+	}
 	protected function skip_test_check(&$test)
 	{
 		$hw_subsystem_type = $test->test_profile->get_test_hardware_type();
