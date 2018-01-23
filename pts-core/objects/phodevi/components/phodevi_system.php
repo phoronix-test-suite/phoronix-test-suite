@@ -50,7 +50,7 @@ class phodevi_system extends phodevi_device_interface
 			'kernel-date' => new phodevi_device_property('sw_kernel_date', phodevi::smart_caching),
 			'kernel-string' => new phodevi_device_property('sw_kernel_string', phodevi::smart_caching),
 			'kernel-parameters' => new phodevi_device_property('sw_kernel_parameters', phodevi::std_caching),
-			'compiler' => new phodevi_device_property('sw_compiler', phodevi::std_caching),
+			'compiler' => new phodevi_device_property('sw_compiler', phodevi::no_caching),
 			'system-layer' => new phodevi_device_property('sw_system_layer', phodevi::std_caching),
 			'environment-variables' => new phodevi_device_property('sw_environment_variables', phodevi::std_caching),
 			'security-features' => new phodevi_device_property('sw_security_features', phodevi::std_caching)
