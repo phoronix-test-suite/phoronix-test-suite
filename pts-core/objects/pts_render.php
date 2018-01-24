@@ -136,6 +136,8 @@ class pts_render
 			return false;
 		}
 
+		$horizontal_bars = pts_graph_core::get_graph_config('style', 'bar_graphs_horizontal') && !isset($extra_attributes['vertical_bars']);
+
 		if($result_file != null)
 		{
 			// Cache the redundant words on identifiers so it's not re-computed on every graph
@@ -249,7 +251,7 @@ class pts_render
 				}
 			case 'BAR_ANALYZE_GRAPH':
 			case 'BAR_GRAPH':
-				if(pts_graph_core::get_graph_config('style', 'bar_graphs_horizontal'))
+				if($horizontal_bars)
 				{
 					$graph = new pts_graph_horizontal_bars($result_object, $result_file, $extra_attributes);
 				}
@@ -279,7 +281,7 @@ class pts_render
 						$graph = new pts_graph_box_plot($result_object, $result_file, $extra_attributes);
 						break;
 					default:
-						if(pts_graph_core::get_graph_config('style', 'bar_graphs_horizontal'))
+						if($horizontal_bars)
 						{
 							$graph = new pts_graph_horizontal_bars($result_object, $result_file, $extra_attributes);
 						}
