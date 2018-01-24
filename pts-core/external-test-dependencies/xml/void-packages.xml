@@ -46,7 +46,7 @@
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
-			<PackageName>gcc gcc-c++ autoconf make libgomp-devel automake</PackageName>
+			<PackageName>gcc autoconf make libgomp-devel automake</PackageName>
 		</Package>
 		<Package>
 			<GenericName>cairo-development</GenericName>
