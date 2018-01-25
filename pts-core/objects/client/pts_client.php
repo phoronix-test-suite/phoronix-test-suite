@@ -1469,8 +1469,7 @@ class pts_client
 	{
 		static $cache = null;
 
-		//if(!isset($cache[$executable]) || $ignore_paths_with)
-		if(true) // for now drop this as it's causing some problems with Phodevi, add like an ignore_cache feature?
+		if(!isset($cache[$executable]) || empty($cache[$executable]) || $ignore_paths_with)
 		{
 			$path = pts_client::read_env('PATH');
 			if(empty($path) || $path == ':')
