@@ -126,7 +126,7 @@
 		</Package>
 		<Package>
 			<GenericName>pcre</GenericName>
-			<PackageName>libpcre</PackageName>
+			<PackageName>libpcre pcre</PackageName>
 		</Package>
 		<Package>
 			<GenericName>perl</GenericName>
