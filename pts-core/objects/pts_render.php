@@ -188,7 +188,7 @@ class pts_render
 				}
 			}
 
-			if(in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH')))
+			if(in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH')) && !isset($extra_attributes['force_tracking_line_graph']))
 			{
 					// Check to see for line graphs if every result is an array of the same result (i.e. a flat line for every result).
 					// If all the results are just flat lines, you might as well convert it to a bar graph

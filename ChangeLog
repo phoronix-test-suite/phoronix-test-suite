@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 pts-core: Fix crash in stress-run when PHP PCNTL is missing
+pts_Graph: Fix when manually forcing line graphs sometimes still yielding bar graphs
 phodevi: spectre_v2 protection reporting
 phodevi: LXQt desktop detection
 phodevi: Don't cache the compiler in case external dependencies install a new compiler, etc
