@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014 - 2017, Phoronix Media
-	Copyright (C) 2014 - 2017, Michael Larabel
+	Copyright (C) 2014 - 2018, Phoronix Media
+	Copyright (C) 2014 - 2018, Michael Larabel
 	pts-web-socket: A simple WebSocket implementation, inspired by designs of https://github.com/varspool/Wrench and http://code.google.com/p/phpwebsocket/
 
 	This program is free software; you can redistribute it and/or modify
@@ -34,7 +34,7 @@ class pts_phoromatic_event_server
 				{
 					shell_exec($etherwake . ' ' . $mac . ' 2>&1');
 					$sent_wol_request = true;
-					sleep(5);
+					sleep(6);
 					break;
 				}
 			}
@@ -43,6 +43,7 @@ class pts_phoromatic_event_server
 		{
 			pts_network::send_wol_packet($ip, $mac);
 			$sent_wol_request = true;
+			sleep(6);
 		}
 
 		return $sent_wol_request;
