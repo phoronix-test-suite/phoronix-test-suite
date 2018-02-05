@@ -71,6 +71,16 @@ class info implements pts_option_interface
 				}
 
 				pts_client::$display->generic_heading($test_title);
+
+				if($o->get_license() == 'Retail' || $o->get_license() == 'Restricted')
+				{
+					echo pts_client::cli_just_bold(strtoupper('NOTE: This test profile is marked \'' . $o->get_license() . '\' and may have issues running without third-party/commercial dependencies.')) . PHP_EOL . PHP_EOL;
+				}
+				if($o->get_status() != 'Verified')
+				{
+					echo pts_client::cli_just_bold(strtoupper('NOTE: This test profile is marked \'' . $o->get_status() . '\' and may have known issues with test installation or execution.')) . PHP_EOL . PHP_EOL;
+				}
+
 				$table = array();
 				$table[] = array(pts_client::cli_just_bold('Run Identifier: '), $o->get_identifier());
 				$table[] = array(pts_client::cli_just_bold('Profile Version: '), $o->get_test_profile_version());
@@ -101,6 +111,14 @@ class info implements pts_option_interface
 				echo pts_user_io::display_text_table($table);
 
 				echo PHP_EOL . PHP_EOL . pts_client::cli_just_bold('Description: ') . $o->get_description() . PHP_EOL. PHP_EOL;
+
+				foreach(array('Pre-Install Message' => $o->get_pre_install_message(), 'Post-Install Message' => $o->get_post_install_message(), 'Pre-Run Message' => $o->get_pre_run_message(), 'Post-Run Message' => $o->get_post_run_message()) as $msg_type => $msg)
+				{
+					if($msg != null)
+					{
+						echo PHP_EOL . pts_client::cli_just_bold($msg_type . ': ') . $msg . PHP_EOL. PHP_EOL;
+					}
+				}
 
 				if($o->test_installation != false)
 				{

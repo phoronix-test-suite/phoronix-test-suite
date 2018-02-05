@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2016, Phoronix Media
-	Copyright (C) 2008 - 2016, Michael Larabel
+	Copyright (C) 2008 - 2018, Phoronix Media
+	Copyright (C) 2008 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
 class list_available_tests implements pts_option_interface
 {
 	const doc_section = 'Information';
-	const doc_description = 'This option will list all test profiles that are available from the enabled OpenBenchmarking.org repositories.';
+	const doc_description = 'This option will list all test profiles that are available from the enabled OpenBenchmarking.org repositories where supported on the system and are of a verified state.';
 
 	public static function command_aliases()
 	{
@@ -40,6 +40,11 @@ class list_available_tests implements pts_option_interface
 			$repo_index = pts_openbenchmarking::read_repository_index($repo);
 
 			if((!empty($repo_index['tests'][$id]['supported_platforms']) && !in_array(phodevi::operating_system(), $repo_index['tests'][$id]['supported_platforms'])) || empty($repo_index['tests'][$id]['title']))
+			{
+				// Don't show unsupported tests
+				continue;
+			}
+			if($repo_index['tests'][$id]['status'] != 'Verified')
 			{
 				// Don't show unsupported tests
 				continue;
