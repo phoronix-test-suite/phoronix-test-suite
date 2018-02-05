@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2017, Phoronix Media
-	Copyright (C) 2009 - 2017, Michael Larabel
+	Copyright (C) 2009 - 2018, Phoronix Media
+	Copyright (C) 2009 - 2018, Michael Larabel
 	pts_concise_display_mode.php: The batch / concise display mode
 
 	This program is free software; you can redistribute it and/or modify
@@ -158,6 +158,15 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		}
 
 		echo PHP_EOL;
+		if($test_install_request->test_profile->get_status() != 'Verified')
+		{
+			echo $this->tab . $this->tab . 'Test Profile Status: ' . pts_client::cli_just_bold($test_install_request->test_profile->get_status()) . PHP_EOL;
+		}
+		if(in_array($test_install_request->test_profile->get_license(), array('Retail', 'Restricted')))
+		{
+			echo $this->tab . $this->tab . pts_client::cli_just_bold('This test may depend upon third-party/commercial retail software for usage.') . PHP_EOL;
+		}
+
 	}
 	public function test_install_download_file($process, &$pts_test_file_download)
 	{
