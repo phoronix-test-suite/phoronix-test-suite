@@ -532,12 +532,15 @@ class phodevi_system extends phodevi_device_interface
 
 
 		// Spectre
-		if(is_file('/sys/devices/system/cpu/vulnerabilities/spectre_v2'))
+		foreach(array('spectre_v1', 'spectre_v2') as $vulns)
 		{
-			$spectre_v2 = file_get_contents('/sys/devices/system/cpu/vulnerabilities/spectre_v2');
-			if(($x = strpos($spectre_v2, ': ')) !== false)
+			if(is_file('/sys/devices/system/cpu/vulnerabilities/' . $vulns))
 			{
-				$security[] = trim(substr($spectre_v2, $x + 2));
+				$fc = file_get_contents('/sys/devices/system/cpu/vulnerabilities/' . $vulns);
+				if(($x = strpos($fc, ': ')) !== false)
+				{
+					$security[] = trim(substr($fc, $x + 2));
+				}
 			}
 		}
 
