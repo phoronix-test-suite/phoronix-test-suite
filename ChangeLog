@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 7.8.0 Milestone 3
+5 February 2018
 
 pts-core: Fix crash in stress-run when PHP PCNTL is missing
 pts-core: When installing a test that is marked deprecated/experimental/broken, ensure to convey that to the user
@@ -8,7 +9,7 @@ pts-core: When installing a test that is of license retail/restricted, ensure to
 pts-core: Don't show tests in `list-available-tests` / `list-tests` that are not verified
 pts-core: Improvements to `info` sub-command for test profiles in highlighting tests that may have problems and also show pre/post messages
 pts_Graph: Fix when manually forcing line graphs sometimes still yielding bar graphs
-phodevi: spectre_v2 protection reporting
+phodevi: spectre_v1 and spectre_v2 protection reporting
 phodevi: LXQt desktop detection
 phodevi: Don't cache the compiler in case external dependencies install a new compiler, etc
 
