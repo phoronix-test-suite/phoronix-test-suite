@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2017, Phoronix Media
-	Copyright (C) 2008 - 2017, Michael Larabel
+	Copyright (C) 2008 - 2018, Phoronix Media
+	Copyright (C) 2008 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -72,7 +72,7 @@ class pts_tests
 	{
 		$error = null;
 
-		foreach(array('fatal error', 'error:', 'error while loading', 'undefined reference', 'returned 1 exit status', 'not found', 'child process excited with status', 'error opening archive', 'failed to load') as $error_string)
+		foreach(array('fatal error', 'error:', 'error while loading', 'undefined reference', 'returned 1 exit status', 'not found', 'child process excited with status', 'error opening archive', 'failed to load', 'fatal') as $error_string)
 		{
 			if(($e = strripos($log_file, $error_string)) !== false)
 			{
