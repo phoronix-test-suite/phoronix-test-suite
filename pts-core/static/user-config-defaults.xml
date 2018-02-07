@@ -38,7 +38,7 @@
 			<LimitDynamicToTestLength>20</LimitDynamicToTestLength>
 			<StandardDeviationThreshold>3.50</StandardDeviationThreshold>
 			<ExportResultsTo></ExportResultsTo>
-			<MinimalTestTime>3</MinimalTestTime>
+			<MinimalTestTime>2</MinimalTestTime>
 		</TestResultValidation>
 		<ExternalHooks>
 			<PreTestProcess></PreTestProcess>

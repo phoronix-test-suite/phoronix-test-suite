@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2017, Phoronix Media
-	Copyright (C) 2010 - 2017, Michael Larabel
+	Copyright (C) 2010 - 2018, Phoronix Media
+	Copyright (C) 2010 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -163,10 +163,11 @@ class pts_test_result_parser
 				// Delta time
 				$result_value = $end_time - $sensor_r[3];
 
-				$minimal_test_time = pts_config::read_user_config('PhoronixTestSuite/Options/TestResultValidation/MinimalTestTime', 3);
+				$minimal_test_time = pts_config::read_user_config('PhoronixTestSuite/Options/TestResultValidation/MinimalTestTime', 2);
 				if($result_value < $minimal_test_time)
 				{
 					// The test ended too fast
+					pts_client::test_profile_debug_message('Test Run-Time Too Short: ' . $result_value);
 					$result_value = null;
 				}
 			}
