@@ -175,13 +175,13 @@ class pts_user_io
 
 			foreach(($allow_multi_select ? pts_strings::comma_explode($select_choice) : array($select_choice)) as $choice)
 			{
-				if(in_array($choice, $options_r))
-				{
-					$select[] = array_search($choice, $options_r);
-				}
-				else if(isset($key_index[$choice]))
+				if(isset($key_index[$choice]))
 				{
 					$select[] = $key_index[$choice];
+				}
+				else if(in_array($choice, $options_r))
+				{
+					$select[] = array_search($choice, $options_r);
 				}
 				else if($allow_multi_select && strpos($choice, '-') !== false)
 				{
