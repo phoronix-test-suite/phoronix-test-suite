@@ -232,6 +232,10 @@
 			<PackageName>suitesparse</PackageName>
 		</Package>
 		<Package>
+			<GenericName>openmpi-development</GenericName>
+			<PackageName>openmpi</PackageName>
+		</Package>
+		<Package>
 			<GenericName>dune</GenericName>
 			<PackageName>dune-common dune-grid dune-istl</PackageName>
 		</Package>
