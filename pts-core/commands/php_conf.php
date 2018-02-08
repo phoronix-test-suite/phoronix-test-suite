@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2016, Phoronix Media
-	Copyright (C) 2016, Michael Larabel
+	Copyright (C) 2016 - 2018, Phoronix Media
+	Copyright (C) 2016 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -77,7 +77,7 @@ class php_conf implements pts_option_interface
 		$table = array();
 		foreach($functions_to_check as $func)
 		{
-			$table[] = array($func, (function_exists($func) ? 'PRESENT' : 'MISSING'));
+			$table[] = array($func, (function_exists($func) ? pts_client::cli_just_bold('PRESENT') : 'MISSING'));
 		}
 		echo 'OPTIONAL FUNCTION CHECKS: ';
 		echo PHP_EOL . pts_user_io::display_text_table($table, null, 0) . PHP_EOL;
