@@ -314,6 +314,7 @@ class pts_tests
 			foreach(pts_arrays::to_array($passed_args) as $passed_arg)
 			{
 				$arg_soundex = soundex($passed_arg);
+				$arg_save_identifier_like = pts_test_run_manager::clean_save_name($passed_arg);
 
 				foreach(pts_openbenchmarking::linked_repositories() as $repo)
 				{
@@ -329,6 +330,10 @@ class pts_tests
 								{
 									pts_arrays::unique_push($similar_tests, array($identifier, ' [' . ucwords(substr($type, 0, -1)) . ']'));
 								}
+								else if(isset($passed_arg[3]) && strpos($identifier, $passed_arg) !== false)
+								{
+									pts_arrays::unique_push($similar_tests, array($identifier, ' [' . ucwords(substr($type, 0, -1)) . ']'));
+								}
 							}
 						}
 					}
@@ -336,7 +341,7 @@ class pts_tests
 
 				foreach(pts_client::saved_test_results() as $result)
 				{
-					if(soundex($result) == $arg_soundex)
+					if(soundex($result) == $arg_soundex || (isset($passed_arg[3]) && strpos($identifier, $arg_save_identifier_like) !== false))
 					{
 						pts_arrays::unique_push($similar_tests, array($result, ' [Test Result]'));
 					}
