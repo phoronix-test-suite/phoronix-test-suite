@@ -60,6 +60,7 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - https://github.com/gormanm/mmtests
 - https://github.com/soumith/convnet-benchmarks
 - http://apt.cs.manchester.ac.uk/projects/PAMELA/tools/SLAMBench/
+- https://haasn.xyz/posts/2017-10-05-how-to-benchmark-mpvs-raw-throughput.html
 
 ### WEB SOCKET / HTML5 USER INTERFACE WORK ###
 

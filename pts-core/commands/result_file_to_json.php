@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015, Phoronix Media
-	Copyright (C) 2015, Michael Larabel
+	Copyright (C) 2015 - 2018, Phoronix Media
+	Copyright (C) 2015 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -35,10 +35,6 @@ class result_file_to_json implements pts_option_interface
 	{
 		$result_file = new pts_result_file($r[0]);
 		echo pts_result_file_output::result_file_to_json($result_file);
-	}
-	public static function invalid_command($passed_args = null)
-	{
-		pts_tests::recently_saved_results();
 	}
 }
 

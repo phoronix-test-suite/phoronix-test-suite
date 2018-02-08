@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2013, Phoronix Media
-	Copyright (C) 2008 - 2013, Michael Larabel
+	Copyright (C) 2008 - 2018, Phoronix Media
+	Copyright (C) 2008 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -34,10 +34,6 @@ class upload_result implements pts_option_interface
 	public static function command_aliases()
 	{
 		return array('upload', 'upload_results', 'upload_result_file');
-	}
-	public static function invalid_command($passed_args = null)
-	{
-		pts_tests::recently_saved_results();
 	}
 	public static function run($r)
 	{

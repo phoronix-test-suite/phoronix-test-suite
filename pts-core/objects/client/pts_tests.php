@@ -308,49 +308,67 @@ class pts_tests
 	{
 		$showed_recent_results = self::recently_saved_results();
 
+		$similar_tests = array();
 		if(!empty($passed_args))
 		{
-			$arg_soundex = soundex($passed_args);
-			$similar_tests = array();
-
-			foreach(pts_openbenchmarking::linked_repositories() as $repo)
+			foreach(pts_arrays::to_array($passed_args) as $passed_arg)
 			{
-				$repo_index = pts_openbenchmarking::read_repository_index($repo);
+				$arg_soundex = soundex($passed_arg);
 
-				foreach(array('tests', 'suites') as $type)
+				foreach(pts_openbenchmarking::linked_repositories() as $repo)
 				{
-					if(isset($repo_index[$type]) && is_array($repo_index[$type]))
+					$repo_index = pts_openbenchmarking::read_repository_index($repo);
+
+					foreach(array('tests', 'suites') as $type)
 					{
-						foreach(array_keys($repo_index[$type]) as $identifier)
+						if(isset($repo_index[$type]) && is_array($repo_index[$type]))
 						{
-							if(soundex($identifier) == $arg_soundex)
+							foreach(array_keys($repo_index[$type]) as $identifier)
 							{
-								$similar_tests[] = array('- ' . $repo . '/' . $identifier, ' [' . ucwords(substr($type, 0, -1)) . ']');
+								if(soundex($identifier) == $arg_soundex)
+								{
+									pts_arrays::unique_push($similar_tests, array($identifier, ' [' . ucwords(substr($type, 0, -1)) . ']'));
+								}
 							}
 						}
 					}
 				}
-			}
 
-			foreach(pts_client::saved_test_results() as $result)
-			{
-				if(soundex($result) == $arg_soundex)
+				foreach(pts_client::saved_test_results() as $result)
 				{
-					$similar_tests[] = array('- ' . $result, ' [Test Result]');
+					if(soundex($result) == $arg_soundex)
+					{
+						pts_arrays::unique_push($similar_tests, array($result, ' [Test Result]'));
+					}
+				}
+
+				if(strpos($passed_arg, '-') !== false)
+				{
+					$possible_identifier = str_replace('-', '', $passed_arg);
+					if(pts_test_profile::is_test_profile($possible_identifier))
+					{
+						pts_arrays::unique_push($similar_tests, array($possible_identifier, ' [Test]'));
+					}
+				}
+				if($passed_arg != ($possible_identifier = strtolower($passed_arg)))
+				{
+					if(pts_test_profile::is_test_profile($possible_identifier))
+					{
+						pts_arrays::unique_push($similar_tests, array($possible_identifier, ' [Test]'));
+					}
 				}
 			}
-
-			if(count($similar_tests) > 0)
+		}
+		if(count($similar_tests) > 0)
+		{
+			echo pts_client::cli_just_bold('Possible Suggestions:') . PHP_EOL;
+			//$similar_tests = array_unique($similar_tests);
+			if(isset($similar_tests[12]))
 			{
-				echo 'Possible Suggestions:' . PHP_EOL;
-
-				if(isset($similar_tests[12]))
-				{
-					// lots of tests... trim it down
-					$similar_tests = array_rand($similar_tests, 12);
-				}
-				echo pts_user_io::display_text_table($similar_tests) . PHP_EOL . PHP_EOL;
+				// lots of tests... trim it down
+				$similar_tests = array_rand($similar_tests, 12);
 			}
+			echo pts_user_io::display_text_table($similar_tests, '- ') . PHP_EOL . PHP_EOL;
 		}
 
 		if($showed_recent_results == false)

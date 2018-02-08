@@ -29,10 +29,6 @@ class benchmark implements pts_option_interface
 	{
 		return array('test');
 	}
-	public static function invalid_command($passed_args = null)
-	{
-		pts_tests::invalid_command_helper($passed_args);
-	}
 	public static function argument_checks()
 	{
 		return array(

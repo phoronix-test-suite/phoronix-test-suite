@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2012 - 2016, Phoronix Media
-	Copyright (C) 2012 - 2016, Michael Larabel
+	Copyright (C) 2012 - 2018, Phoronix Media
+	Copyright (C) 2012 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -25,10 +25,6 @@ class auto_compare implements pts_option_interface
 	const doc_section = 'Testing';
 	const doc_description = 'This option will autonomously determine the most relevant test(s) to run for any selected sub-system(s). The tests to run are determined via OpenBenchmarking.org integration with the global results pool. Related test results from OpenBenchmarking.org are also merged to provide a straight-forward and effective means of carrying out a system comparison. If wishing to find comparable results for any particular test profile(s), simply pass the test profile names as additional arguments to this command.';
 
-	public static function invalid_command($passed_args = null)
-	{
-		pts_tests::invalid_command_helper($passed_args);
-	}
 	public static function run($r)
 	{
 		$compare_tests = array();

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2017, Phoronix Media
-	Copyright (C) 2017, Michael Larabel
+	Copyright (C) 2017 - 2018, Phoronix Media
+	Copyright (C) 2017 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -96,10 +96,6 @@ class winners_and_losers implements pts_option_interface
 		}
 		echo pts_user_io::display_text_table($table) . PHP_EOL;
 		echo PHP_EOL;
-	}
-	public static function invalid_command($passed_args = null)
-	{
-		pts_tests::recently_saved_results();
 	}
 }
 

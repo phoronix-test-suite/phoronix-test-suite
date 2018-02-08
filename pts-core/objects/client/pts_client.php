@@ -1274,12 +1274,8 @@ class pts_client
 					}
 
 					echo PHP_EOL . pts_client::cli_just_bold('CORRECT SYNTAX:') . PHP_EOL . 'phoronix-test-suite ' . str_replace('_', '-', $command_alias) . ' ' . implode(' ', $argument_checks) . PHP_EOL . PHP_EOL;
-
-					if(method_exists($command, 'invalid_command'))
-					{
-						call_user_func_array(array($command, 'invalid_command'), $pass_args);
-						echo PHP_EOL;
-					}
+//sort($pass_args);
+					pts_tests::invalid_command_helper($pass_args);
 
 					return false;
 				}
