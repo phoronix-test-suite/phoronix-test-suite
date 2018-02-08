@@ -211,6 +211,10 @@
 			<PackageName>boost-devel boost-thread</PackageName>
 		</Package>
 		<Package>
+			<GenericName>rust</GenericName>
+			<PackageName>rust cargo</PackageName>
+		</Package>
+		<Package>
 			<GenericName>bzip2-development</GenericName>
 			<PackageName>bzip2-devel</PackageName>
 		</Package>

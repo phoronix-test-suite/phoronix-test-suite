@@ -44,6 +44,10 @@
 			<PackageName>libpng</PackageName>
 		</Package>
 		<Package>
+			<GenericName>rust</GenericName>
+			<PackageName>rust</PackageName>
+		</Package>
+		<Package>
 			<GenericName>tiff</GenericName>
 			<PackageName>libtiff</PackageName>
 		</Package>

@@ -123,6 +123,10 @@
 			<PackageName>perl</PackageName>
 		</Package>
 		<Package>
+			<GenericName>rust</GenericName>
+			<PackageName>rust cargo</PackageName>
+		</Package>
+		<Package>
 			<GenericName>xorg-video</GenericName>
 			<PackageName>xorg-x11-libXv-devel xorg-x11-devel</PackageName>
 		</Package>

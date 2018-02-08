@@ -417,6 +417,12 @@
 			<FileCheck>suitesparse/cs.h OR cs.h, libcxsparse.so</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>rust</GenericName>
+			<Title>Rust</Title>
+			<PossibleNames>rust, rustc, cargo</PossibleNames>
+			<FileCheck>rustc, cargo</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>dune</GenericName>
 			<Title>Distributed and Unified Numerics Environment</Title>
 			<PossibleNames>libdune-common-dev</PossibleNames>

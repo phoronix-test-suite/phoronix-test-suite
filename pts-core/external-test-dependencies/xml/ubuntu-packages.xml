@@ -249,6 +249,10 @@
 			<PackageName>libc6-dev</PackageName>
 		</Package>
 		<Package>
+			<GenericName>rust</GenericName>
+			<PackageName>rustc cargo</PackageName>
+		</Package>
+		<Package>
 			<GenericName>glibc-development</GenericName>
 			<PackageName>libc6-dev-i386</PackageName>
 			<FileCheck>/usr/lib32/libc.so</FileCheck>

@@ -265,6 +265,10 @@
 			<PackageName>dev-util/meson</PackageName>
 		</Package>
 		<Package>
+			<GenericName>rust</GenericName>
+			<PackageName>dev-lang/rust dev-util/cargo</PackageName>
+		</Package>
+		<Package>
 			<GenericName>attr</GenericName>
 			<PackageName>sys-apps/attr</PackageName>
 		</Package>
