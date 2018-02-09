@@ -8,6 +8,11 @@
 			<PackageManager>yum</PackageManager>
 		</Information>
 		<Package>
+			<GenericName>common-dependencies</GenericName>
+			<PackageName>unzip</PackageName>
+			<FileCheck>unzip</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>32bit-compatibility</GenericName>
 			<PackageName>glibc.i686 libstdc++.i686 libX11.i686 libXext.i686 libXrandr.i686 libXinerama.i686 mesa-libGL.i686 openal-soft.i686</PackageName>
 			<ArchitectureSpecific>x86_64</ArchitectureSpecific>
