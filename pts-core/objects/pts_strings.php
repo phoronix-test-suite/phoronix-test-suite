@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2017, Phoronix Media
-	Copyright (C) 2010 - 2017, Michael Larabel
+	Copyright (C) 2010 - 2018, Phoronix Media
+	Copyright (C) 2010 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -427,13 +427,17 @@ class pts_strings
 			$str = str_ireplace($original_phrase, $new_phrase, $str);
 		}
 
-		$remove_phrases = array('incorporation', 'corporation', 'corp.', 'invalid', 'technologies', 'technology', 'version', ' project ', 'computer', 'To Be Filled By', 'ODM', 'O.E.M.', 'Desktop Reference Platform', 'small form factor', 'convertible', ' group', 'chipset', 'community', 'reference', 'communications', 'semiconductor', 'processor', 'host bridge', 'adapter', ' CPU', 'platform', 'international', 'express', 'graphics', ' none', 'electronics', 'integrated', 'alternate', 'quad-core', 'memory', 'series', 'network', 'motherboard', 'electric ', 'industrial ', 'serverengines', 'Manufacturer', 'x86/mmx/sse2', '/AGP/SSE/3DNOW!', '/AGP/SSE2', 'controller', '(extreme graphics innovation)', 'pci-e_gfx and ht3 k8 part', 'pci-e_gfx and ht1 k8 part', 'Northbridge only', 'dual slot', 'dual-core', 'dual core', 'microsystems', 'not specified', 'single slot', 'genuine', 'unknown device', 'systemberatung', 'gmbh', 'graphics adapter', 'video device', 'http://', 'www.', '.com', '.tw/', '/pci/sse2/3dnow!', '/pcie/sse2', '/pci/sse2', 'balloon', 'network connection', 'ethernet', 'limited.', ' system', 'compliant', 'co. ltd', 'co.', 'ltd.', 'LTD ', ' LTD', '\AE', '(r)', '(tm)', 'inc.', 'inc', '6.00 PG', ',', '\'', '_ ', '_ ', 'corp', 'product name', 'base board', 'mainboard', 'pci to pci', ' release ', 'nee ', 'default string', ' AG ', 'with Radeon HD', '/DRAM');
+		$remove_phrases = array('incorporation', 'corporation', 'corp.', 'invalid', 'technologies', 'technology', 'version', ' project ', 'computer', 'To Be Filled By', 'ODM', 'O.E.M.', 'Desktop Reference Platform', 'small form factor', 'convertible', ' group', 'chipset', 'community', 'reference', 'communications', 'semiconductor', 'processor', 'host bridge', 'adapter', ' CPU', 'platform', 'international', 'express', 'graphics', ' none', 'electronics', 'integrated', 'alternate', 'quad-core', 'memory', 'series', 'network', 'motherboard', 'electric ', 'industrial ', 'serverengines', 'Manufacturer', 'x86/mmx/sse2', '/AGP/SSE/3DNOW!', '/AGP/SSE2', 'controller', '(extreme graphics innovation)', 'pci-e_gfx and ht3 k8 part', 'pci-e_gfx and ht1 k8 part', 'Northbridge only', 'dual slot', 'dual-core', 'dual core', 'microsystems', 'not specified', 'single slot', 'genuine', 'unknown device', 'systemberatung', 'gmbh', 'graphics adapter', 'video device', 'http://', 'www.', '.com', '.tw/', '/pci/sse2/3dnow!', '/pcie/sse2', '/pci/sse2', 'balloon', 'network connection', 'ethernet', 'limited.', ' system', 'compliant', 'co. ltd', 'co.', 'ltd.', 'LTD ', ' LTD', '\AE', '(r)', '(tm)', 'inc.', 'inc', '6.00 PG', ',', '\'', '_ ', '_ ', 'corp', 'product name', 'base board', 'mainboard', 'pci to pci', ' release ', 'nee ', 'default string', ' AG ', '/DRAM');
 		$str = str_ireplace($remove_phrases, ' ', $str);
 
 		if(($w = stripos($str, 'WARNING')) !== false)
 		{
 			// to get rid of Scheisse like 'Gtk-WARNING **: Unable'
 			$str = substr($str, 0, strrpos($str, ' ', (0 - (strlen($str) - $w))));
+		}
+		if(($w = stripos($str, ' with Radeon')) !== false)
+		{
+			$str = substr($str, 0, $w);
 		}
 
 		$str = pts_strings::trim_spaces($str);
