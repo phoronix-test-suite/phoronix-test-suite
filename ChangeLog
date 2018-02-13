@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite 7.8.0 (Git)
+
+pts_Graph: Fix vertical bar graphs on many bars to be rendered
+
 Phoronix Test Suite 7.8.0 Milestone 3
 5 February 2018
 

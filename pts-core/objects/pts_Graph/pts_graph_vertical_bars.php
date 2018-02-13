@@ -140,16 +140,14 @@ class pts_graph_vertical_bars extends pts_graph_core
 				*/
 
 				$this->svg_dom->add_element('rect', array('x' => ($px_bound_left + 1), 'y' => $value_plot_top, 'width' => $bar_width, 'height' => ($this->i['graph_top_end'] - $value_plot_top), 'fill' => $this->adjust_color($buffer_item->get_result_identifier(), $paint_color), 'stroke' => self::$c['color']['body_light'], 'stroke-width' => 1, 'xlink:title' => $title_tooltip));
-				if(($px_bound_right - $px_bound_left) < 18)
+				if(($px_bound_right - $px_bound_left) > 18)
 				{
 					// The bars are too skinny to be able to plot anything on them
-					continue;
-				}
-				$x = $px_bound_left + (($px_bound_right - $px_bound_left) / 2);
-
-				if($bar_width > 24 || strlen($value) < 4)
-				{
-					$this->svg_dom->add_text_element($value, array('x' => $x, 'y' => ($value_plot_top + 2), 'font-size' => floor(self::$c['size']['bars'] * ($graph_size > 18 ? 0.9 : 0.6)), 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+					if($bar_width > 24 || strlen($value) < 4)
+					{
+						$x = $px_bound_left + (($px_bound_right - $px_bound_left) / 2);
+						$this->svg_dom->add_text_element($value, array('x' => $x, 'y' => ($value_plot_top + 2), 'font-size' => floor(self::$c['size']['bars'] * ($graph_size > 18 ? 0.9 : 0.6)), 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+					}
 				}
 				$i++;
 			}
