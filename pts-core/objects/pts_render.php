@@ -515,6 +515,32 @@ class pts_render
 				break;
 		}
 
+		// Deduplicate the footnote if it's all the same across all tests
+		$same_footnote = null;
+		foreach($json as $identifier => &$data)
+		{
+			if(isset($data['install-footnote']) && $data['install-footnote'] != null)
+			{
+				if($same_footnote === null)
+				{
+					$same_footnote = $data['install-footnote'];
+					continue;
+				}
+
+				if($data['install-footnote'] != $same_footnote)
+				{
+					$same_footnote = null;
+					break;
+				}
+			}
+		}
+
+		if($same_footnote)
+		{
+			// Show the same footnote once rather than duplicated to all tests
+			$graph->addTestNote($same_footnote);
+		}
+
 		foreach($json as $identifier => &$data)
 		{
 			$graph_identifier_note = null;
@@ -532,7 +558,7 @@ class pts_render
 				$graph->addGraphIdentifierNote($identifier, $graph_identifier_note);
 			}
 
-			if(isset($data['install-footnote']) && $data['install-footnote'] != null)
+			if($same_footnote == null && isset($data['install-footnote']) && $data['install-footnote'] != null)
 			{
 				$graph->addTestNote($identifier . ': ' . $data['install-footnote']);
 			}
