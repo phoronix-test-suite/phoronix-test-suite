@@ -43,7 +43,7 @@ class pts_graph_vertical_bars extends pts_graph_core
 	{
 		// Do some common work to this object
 		$identifier_count = count($this->graph_identifiers);
-		$this->i['identifier_width'] = floor(($this->i['graph_left_end'] - $this->i['left_start']) / $identifier_count);
+		$this->i['identifier_width'] = max(1, floor(($this->i['graph_left_end'] - $this->i['left_start']) / $identifier_count));
 		$longest_string = pts_strings::find_longest_string($this->graph_identifiers);
 		$width = $this->i['identifier_width'] - 4;
 		$this->i['identifier_size'] = $this->text_size_bounds($longest_string, $this->i['identifier_size'], $this->i['min_identifier_size'], $width);

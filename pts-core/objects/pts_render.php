@@ -366,13 +366,16 @@ class pts_render
 				$system_attributes['System'][$identifier] = $notes_string;
 			}
 
-			foreach($json as $key => $value)
+			if(!empty($json) && is_array($json))
 			{
-				if(!empty($value))
+				foreach($json as $key => $value)
 				{
-					$system_attributes[ucwords(str_replace(array('_', '-'), ' ', $key))][$identifier] = $value;
+					if(!empty($value))
+					{
+						$system_attributes[ucwords(str_replace(array('_', '-'), ' ', $key))][$identifier] = $value;
+					}
+					unset($json[$key]);
 				}
-				unset($json[$key]);
 			}
 		}
 
