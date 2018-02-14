@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite 7.8.0 (Git)
+Phoronix Test Suite 7.8.0-Folldal
+14 February 2018
 
 pts-core: Various minor fixes
 pts_Graph: Fix vertical bar graphs on many bars to be rendered
