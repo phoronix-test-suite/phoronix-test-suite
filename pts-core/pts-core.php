@@ -245,11 +245,17 @@ function pts_version_codenames()
 		'7.4' => 'Tynset',
 		'7.6' => 'Alvdal',
 		'7.8' => 'Folldal',
+		// Østfold - Norway
+		'8.0' => 'Aremark',
+		'8.2' => 'Rakkestad',
+		'8.4' => 'Skiptvet',
+		'8.6' => 'Spydeberg',
+		'8.8' => 'Hvaler',
 		);
 }
 
-pts_define('PTS_VERSION', '7.8.0');
-pts_define('PTS_CORE_VERSION', 7800);
+pts_define('PTS_VERSION', '8.0.0m0');
+pts_define('PTS_CORE_VERSION', 7900);
 pts_define('PTS_CODENAME', 'FOLLDAL');
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));
 pts_define('PTS_IS_WEB_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'WEB_CLIENT'));
