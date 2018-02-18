@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2013 - 2016, Phoronix Media
-	Copyright (C) 2013 - 2016, Michael Larabel
+	Copyright (C) 2013 - 2018, Phoronix Media
+	Copyright (C) 2013 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -288,7 +288,7 @@ function phoromatic_tracker_page_relevant()
 	{
 		do
 		{
-			if($row['UploadedResultCount'] > (($row['RunTargetSystems'] + $row['RunTargetGroups'] + 1) * 7))
+			if(is_numeric($row['RunTargetSystems']) && $row['UploadedResultCount'] > (($row['RunTargetSystems'] + $row['RunTargetGroups'] + 1) * 7))
 			{
 				return true;
 			}
@@ -339,7 +339,7 @@ function phoromatic_webui_header_logged_in()
 		}
 		$sub_results_menu[] = '<a href="/rss.php?user=' . $_SESSION['UserID'] . '&amp;v=' . sha1($_SESSION['CreatedOn']) . '">Results Feed <img src="images/rss.png" /></a>';
 
-		$pages = array('Main' => $sub_main_menu, 'Systems' => $sub_systems_menu, '<a href="/?testing">Testing</a>' => $sub_testing_menu, 'Results' => $sub_results_menu, '<form action="/?search" method="post" id="search"><input type="search" name="search" id="seach_input" size="16" /> <input type="submit" name="sa" value="Search" /></form>');
+		$pages = array('Main' => $sub_main_menu, 'Systems' => $sub_systems_menu, '<a href="/?testing">Testing</a>' => $sub_testing_menu, 'Results' => $sub_results_menu, '<form action="/?search" method="post" id="search"><input type="search" name="search" id="seach_input" size="16" /> <input type="submit" name="sa" value="Search" /><div class="search_expander"></div></form>');
 	}
 
 	foreach($pages as $title => $page)

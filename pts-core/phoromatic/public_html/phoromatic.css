@@ -5,7 +5,6 @@ body
 	margin: 0;
 	padding: 0;
 	font-family: 'Raleway', sans-serif;
-	font-weight: 300;
 	font-size: 100%;
 	color: #eee;
 }
@@ -237,7 +236,7 @@ div#pts_phoromatic_main_box_inside
 	padding: 10px 20px;
 	background: #f1f1f1;
 	border: #1F1F1F 1px solid;
-	border-radius: 14px;
+	border-radius: 3px;
 	min-height: 500px;
 	box-shadow: 1px 1px 2px #1F1F1F;
 	-moz-box-shadow: 1px 1px 2px #1F1F1F;
@@ -400,7 +399,7 @@ blockquote
 	background: #e4e4e4;
 	margin: 10px 10px 20px 10px;
 	border: #d2d2d2 1px solid;
-	border-radius: 14px;
+	border-radius: 3px;
 	padding: 10px 14px;
 }
 div.pts_phoromatic_info_box_area a, div.pts_phoromatic_info_box_area ul a, div.pts_phoromatic_info_box_area ul a li
@@ -414,7 +413,7 @@ div.pts_phoromatic_info_box_area ul
 	background: #e4e4e4;
 	margin: 10px 10px 20px 10px;
 	border: #d2d2d2 1px solid;
-	border-radius: 14px;
+	border-radius: 3px;
 	padding: 0;
 	max-height: 500px;
 	overflow-y: auto;
@@ -467,7 +466,7 @@ input, select, textarea, checkbox, button
 	background-color: #E0E0E0;
 	color: #1F1F1F;
 	padding: 5px 10px;
-	border-radius: 6px;
+	border-radius: 3px;
 	transition: all 0.3s;
 	line-height:1.8;
 }
@@ -625,7 +624,7 @@ div.phoromatic_dashboard_block hr
 div.phoromatic_overview_box
 {
 	background: #f1f1f1;
-	border-radius: 14px;
+	border-radius: 3px;
 	padding: 4px 12px;
 	margin: 10px 0;
 	border: #A4B304 1px solid;
@@ -677,6 +676,26 @@ div#pts_results_area svg
 {
 	min-width: 60%;
 	height: auto;
+}
+input#search_input
+{
+	margin: 0;
+	padding: 0;
+	width: 300px !important;
+	height: 20px;
+	border-width: 1px;
+}
+div.search_expander
+{
+	width: 500px;
+	height: 100px;
+	background: orange;
+	z-index: 100;
+	display: none;
+}
+form:hover div.search_expander
+{
+	display: none;
 }
 
 
