@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015 - 2017, Phoronix Media
-	Copyright (C) 2015 - 2017, Michael Larabel
+	Copyright (C) 2015 - 2018, Phoronix Media
+	Copyright (C) 2015 - 2018, Michael Larabel
 	perf_per_dollar.php: This module is derived from the system_monitor module
 
 	This program is free software; you can redistribute it and/or modify
@@ -24,19 +24,22 @@
 class perf_per_dollar extends pts_module_interface
 {
 	const module_name = 'Performance Per Dollar/Cost Calculator';
-	const module_version = '0.3.0';
-	const module_description = 'Setting the COST_PERF_PER_DOLLAR= environment variable to whatever value of the system cost/component you are running a comparison on will yield extra graphs that calculate the performance-per-dollar based on the test being run. The COST_PERF_PER_DOLLAR environment variable is applied just to the current test run identifier. Set the COST_PERF_PER_UNIT= environment variable if wishing to use a metric besides dollar/cost.';
+	const module_version = '0.4.0';
+	const module_description = 'Setting the COST_PERF_PER_DOLLAR= environment variable to whatever value of the system cost/component you are running a comparison on will yield extra graphs that calculate the performance-per-dollar based on the test being run. The COST_PERF_PER_DOLLAR environment variable is applied just to the current test run identifier. Set the COST_PERF_PER_UNIT= environment variable if wishing to use a metric besides dollar/cost. The COST_PERF_PER_HOUR value can be used rather than COST_PERF_PER_DOLLAR if wishing to calculate the e.g. cloud time or other compute time based on an hourly basis.';
 	const module_author = 'Michael Larabel';
 
 	private static $COST_PERF_PER_DOLLAR = 0;
+	private static $COST_PERF_PER_HOUR = 0;
 	private static $COST_PERF_PER_UNIT = 'Dollar';
 	private static $successful_test_run_request = null;
 	private static $perf_per_dollar_collection;
 	private static $result_identifier;
+	private static $TEST_RUN_TIME_START = 0;
+	private static $TEST_RUN_TIME_ELAPSED = 0;
 
 	public static function module_environmental_variables()
 	{
-		return array('COST_PERF_PER_DOLLAR', 'COST_PERF_PER_UNIT');
+		return array('COST_PERF_PER_DOLLAR', 'COST_PERF_PER_UNIT', 'COST_PERF_PER_HOUR');
 	}
 	public static function module_info()
 	{
@@ -79,7 +82,7 @@ class perf_per_dollar extends pts_module_interface
 
 				if($result != 0)
 				{
-					self::add_perf_per_graph($result_file, $result_object, $result, $scale);
+					self::add_perf_per_graph($result_file, $result_object, $result, $scale, '$' . self::$COST_PERF_PER_DOLLAR . ' reported cost.');
 				}
 			}
 		}
@@ -99,6 +102,12 @@ class perf_per_dollar extends pts_module_interface
 				self::$COST_PERF_PER_UNIT = $d;
 			}
 		}
+		else if(($d = getenv('COST_PERF_PER_HOUR')) > 0)
+		{
+			self::$COST_PERF_PER_HOUR = $d;
+			echo PHP_EOL . 'The Phoronix Test Suite will generate performance-per-dollar graphs with an assumed value of $' . $d . ' per hour.' . PHP_EOL;
+			self::$perf_per_dollar_collection = array();
+		}
 		else
 		{
 			return pts_module::MODULE_UNLOAD; // This module doesn't have anything else to do
@@ -106,10 +115,24 @@ class perf_per_dollar extends pts_module_interface
 
 		// This module won't be too useful if you're not saving the results to see the graphs
 		$test_run_manager->force_results_save();
+
+		if(self::$COST_PERF_PER_HOUR > 0)
+		{
+			// Don't want to muck up the cost estimates if needed extra run counts
+			$test_run_manager->disable_dynamic_run_count();
+		}
 	}
 	public static function __pre_run_process(&$test_run_manager)
 	{
 		self::$result_identifier = $test_run_manager->get_results_identifier();
+	}
+	public static function __pre_test_run($test_run_request)
+	{
+		self::$TEST_RUN_TIME_START = time();
+	}
+	public static function __post_test_run($test_result)
+	{
+		self::$TEST_RUN_TIME_ELAPSED = time() - self::$TEST_RUN_TIME_START;
 	}
 	public static function __post_test_run_success($test_run_request)
 	{
@@ -120,26 +143,45 @@ class perf_per_dollar extends pts_module_interface
 		if(self::$successful_test_run_request && self::$successful_test_run_request->test_profile->get_display_format() == 'BAR_GRAPH')
 		{
 			$result = 0;
+
+			if(self::$COST_PERF_PER_HOUR > 0)
+			{
+				// Cost-perf-per-hour calculation, e.g. cloud costs...
+				// self::$TEST_RUN_TIME_ELAPSED is seconds run.....
+				$cost_to_run_test = round((self::$COST_PERF_PER_HOUR / 60 / 60) * self::$TEST_RUN_TIME_ELAPSED, 2);
+
+				if($cost_to_run_test < 0.01)
+					return;
+
+				$cost_perf_value = $cost_to_run_test;
+				$footnote = '$' . self::$COST_PERF_PER_HOUR . ' reported cost per hour, test consumed ' . pts_strings::format_time(self::$TEST_RUN_TIME_ELAPSED) . ': cost approximately ' . $cost_perf_value . ' ' . strtolower(self::$COST_PERF_PER_UNIT) '.';
+			}
+			else
+			{
+				$cost_perf_value = self::$COST_PERF_PER_DOLLAR;
+				$footnote = '$' . self::$COST_PERF_PER_DOLLAR . ' reported cost.';
+			}
+
 			if(self::$successful_test_run_request->test_profile->get_result_proportion() == 'HIB')
 			{
-				$result = pts_math::set_precision(self::$successful_test_run_request->active->get_result() / self::$COST_PERF_PER_DOLLAR);
+				$result = pts_math::set_precision(self::$successful_test_run_request->active->get_result() / $cost_perf_value);
 				$scale = self::$successful_test_run_request->test_profile->get_result_scale() . ' Per ' . self::$COST_PERF_PER_UNIT;
 			}
 			else if(self::$successful_test_run_request->test_profile->get_result_proportion() == 'LIB')
 			{
-				$result = pts_math::set_precision(self::$successful_test_run_request->active->get_result() * self::$COST_PERF_PER_DOLLAR);
+				$result = pts_math::set_precision(self::$successful_test_run_request->active->get_result() * $cost_perf_value);
 				$scale = self::$successful_test_run_request->test_profile->get_result_scale() . ' x ' . self::$COST_PERF_PER_UNIT;
 			}
 
 			if($result != 0)
 			{
-				self::add_perf_per_graph($result_file, self::$successful_test_run_request, $result, $scale);
+				self::add_perf_per_graph($result_file, self::$successful_test_run_request, $result, $scale, $footnote);
 				self::$perf_per_dollar_collection[] = self::$successful_test_run_request->active->get_result();
 			}
 		}
 		self::$successful_test_run_request = null;
 	}
-	protected static function add_perf_per_graph(&$result_file, $test_result, $result, $scale)
+	protected static function add_perf_per_graph(&$result_file, $test_result, $result, $scale, $footnote = null)
 	{
 		if(empty($result))
 			return false;
@@ -151,7 +193,7 @@ class perf_per_dollar extends pts_module_interface
 		$test_result->set_used_arguments('dollar comparison ' . $test_result->get_arguments());
 		$test_result->test_profile->set_result_scale($scale);
 		$test_result->test_result_buffer = new pts_test_result_buffer();
-		$test_result->test_result_buffer->add_test_result(self::$result_identifier, $result, null, array('install-footnote' => '$' . self::$COST_PERF_PER_DOLLAR . ' reported cost.'));
+		$test_result->test_result_buffer->add_test_result(self::$result_identifier, $result, null, array('install-footnote' => $footnote));
 		$result_file->add_result($test_result);
 	}
 	public static function __event_results_process(&$test_run_manager)

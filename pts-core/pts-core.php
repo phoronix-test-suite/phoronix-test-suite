@@ -200,7 +200,8 @@ function pts_needed_extensions()
 }
 function pts_version_codenames()
 {
-	// Lots of inspiration for codenames from Norwegian municipalities
+	// Lots of inspiration for codenames often from Norwegian municipalities
+	// https://en.wikipedia.org/wiki/List_of_municipalities_of_Norway
 	return array(
 		// Sør-Trøndelag - Norway
 		'1.0' => 'Trondheim',
