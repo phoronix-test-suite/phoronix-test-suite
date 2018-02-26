@@ -465,7 +465,15 @@ class phodevi_cpu extends phodevi_device_interface
 
 		if(empty($info))
 		{
-			$info = 'Unknown';
+			if(phodevi::is_linux() && strpos(phodevi::$vfs->dmesg, 'thunderx') !== false)
+			{
+				// Haven't found a better way to detect ThunderX as not exposed via cpuinfo, etc
+				$info = 'Cavium ThunderX';
+			}
+			else
+			{
+				$info = 'Unknown';
+			}
 		}
 		else
 		{

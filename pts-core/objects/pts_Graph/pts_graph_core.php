@@ -464,9 +464,17 @@ abstract class pts_graph_core
 		{
 			$paint_color = '#850000';
 		}
-		else if(strpos($identifier, 'windows ') !== false)
+		else if(stripos($identifier, 'windows ') !== false || stripos($identifier, 'Microsoft') !== false)
 		{
-			$paint_color = '#0078d7';
+			$paint_color = '#373277';
+		}
+		else if(stripos($identifier, 'ec2 ') !== false || stripos($identifier, 'Amazon') !== false)
+		{
+			$paint_color = '#ff9900';
+		}
+		else if(stripos($identifier, 'google') !== false)
+		{
+			$paint_color = '#4885ed';
 		}
 		else
 		{

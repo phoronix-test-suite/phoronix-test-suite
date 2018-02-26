@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 perf_per_dollar: Allow calculating cloud costs / perf-per via COST_PERF_PER_HOUR= environment variable
+phodevi: Cavium ThunderX detection
 
 Phoronix Test Suite 7.8.0-Folldal
 14 February 2018
