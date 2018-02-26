@@ -945,7 +945,7 @@ class pts_test_run_manager
 				}
 				else
 				{
-					if((pts_client::read_env('DISPLAY') == false && pts_client::read_env('WAYLAND_DISPLAY') == false) && !defined('PHOROMATIC_PROCESS'))
+					if((pts_client::read_env('DISPLAY') == false && pts_client::read_env('WAYLAND_DISPLAY') == false && !phodevi::is_windows()) && !defined('PHOROMATIC_PROCESS'))
 					{
 						$txt_results = pts_user_io::prompt_bool_input('Do you want to view the text results of the testing', true);
 						if($txt_results)
