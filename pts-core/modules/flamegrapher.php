@@ -80,7 +80,7 @@ class flamegrapher extends pts_module_interface
 	{
 		// Pre-run process start perf recording
 		self::$temp_flame_dir = pts_client::create_temporary_directory('flamegraph');
-		shell_exec('perf record -a -g -F 97 -o ' . self::$temp_flame_dir . 'perf.data sleep 3');
+		$test_run_request->exec_binary_prepend='perf record -a -g -F 97 -o ' . self::$temp_flame_dir . 'perf.data ';
 	}
 	public static function __post_test_run_success($test_run_request)
 	{
