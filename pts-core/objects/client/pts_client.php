@@ -312,7 +312,7 @@ class pts_client
 	}
 	public static function supports_colored_text_output()
 	{
-		return (function_exists('posix_isatty') && posix_isatty(STDOUT)) || (PTS_IS_CLIENT && getenv('LS_COLORS'));
+		return (function_exists('posix_isatty') && posix_isatty(STDOUT)) || (PTS_IS_CLIENT && getenv('LS_COLORS')) || phodevi::is_windows();
 	}
 	public static function cli_colored_text($str, $color, $bold = false)
 	{
