@@ -159,6 +159,10 @@ class phodevi_cpu extends phodevi_device_interface
 		{
 			$physical_cores = intval(phodevi_bsd_parser::read_sysctl(array('hw.physicalcpu')));
 		}
+		else if(phodevi::is_windows())
+		{
+			$physical_cores = phodevi_windows_parser::get_wmi_object('Win32_Processor', 'NumberOfCores');
+		}
 
 		if(empty($physical_cores) || !is_numeric($physical_cores))
 		{
@@ -210,6 +214,10 @@ class phodevi_cpu extends phodevi_device_interface
 			{
 				$cache_size = substr($cache_size, 0, strpos($cache_size, ' ')) * 1024;
 			}
+		}
+		else if(phodevi::is_windows())
+		{
+			$cache_size = phodevi_windows_parser::get_wmi_object('Win32_Processor', 'L2CacheSize');
 		}
 
 		return $cache_size;
@@ -264,27 +272,29 @@ class phodevi_cpu extends phodevi_device_interface
 		// Find out the processor frequency
 		$info = null;
 		// First, the ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current
-		if(is_file('/sys/devices/system/cpu/cpu' . $cpu_core . '/cpufreq/scaling_max_freq'))
+		if(phodevi::is_linux())
 		{
-			$info = pts_file_io::file_get_contents('/sys/devices/system/cpu/cpu' . $cpu_core . '/cpufreq/scaling_max_freq');
-			$info = intval($info) / 1000000;
-
-			if($info > 9)
+			if(is_file('/sys/devices/system/cpu/cpu' . $cpu_core . '/cpufreq/scaling_max_freq'))
 			{
-				// For some reason on Linux 3.10 the scaling_max_freq is reported as 25GHz...
-				$info = null;
+				$info = pts_file_io::file_get_contents('/sys/devices/system/cpu/cpu' . $cpu_core . '/cpufreq/scaling_max_freq');
+				$info = intval($info) / 1000000;
+
+				if($info > 9)
+				{
+					// For some reason on Linux 3.10 the scaling_max_freq is reported as 25GHz...
+					$info = null;
+				}
 			}
-		}
-
-		if($info == null && isset(phodevi::$vfs->cpuinfo)) // fall back for those without cpufreq
-		{
-			$cpu_mhz = self::read_cpuinfo_line('cpu MHz');
-			$info = $cpu_mhz / 1000;
-
-			if(empty($info))
+			if($info == null && isset(phodevi::$vfs->cpuinfo)) // fall back for those without cpufreq
 			{
-				$cpu_mhz = self::read_cpuinfo_line('clock');
+				$cpu_mhz = self::read_cpuinfo_line('cpu MHz');
 				$info = $cpu_mhz / 1000;
+
+				if(empty($info))
+				{
+					$cpu_mhz = self::read_cpuinfo_line('clock');
+					$info = $cpu_mhz / 1000;
+				}
 			}
 		}
 		else if($info == null && phodevi::is_bsd())
@@ -324,15 +334,14 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 		else if($info == null && phodevi::is_windows())
 		{
-			$info = phodevi_windows_parser::read_cpuz('Processor 1', 'Stock frequency');
-			if($info != null)
+			$info = phodevi_windows_parser::get_wmi_object('win32_processor', 'MaxClockSpeed');
+			if($info != null && is_numeric($info))
 			{
-				if(($e = strpos($info, ' MHz')) !== false)
-				{
-					$info = substr($info, 0, $e);
-				}
-
 				$info = $info / 1000;
+			}
+			else
+			{
+				$info = null;
 			}
 		}
 		else if($info == null)
@@ -455,7 +464,7 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 		else if(phodevi::is_windows())
 		{
-			$info = phodevi_windows_parser::read_cpuz('Processor 1', 'Name');
+			$info = phodevi_windows_parser::get_wmi_object('win32_processor', 'Name');
 
 			if(!$info)
 			{

@@ -62,20 +62,17 @@ class phodevi_memory extends phodevi_device_interface
 		}
 		else if(phodevi::is_windows())
 		{
-			$mem_size = phodevi_windows_parser::read_cpuz('DIMM #', 'Size', true);
-
-			foreach($mem_size as $key => &$individual_size)
+			$mem_size = phodevi_windows_parser::get_wmi_object_multi('CIM_PhysicalMemory', 'Capacity');
+			$clock_speed = phodevi_windows_parser::get_wmi_object_multi('CIM_PhysicalMemory', 'ConfiguredClockSpeed');
+			$mem_manufacturer = phodevi_windows_parser::get_wmi_object_multi('CIM_PhysicalMemory', 'Manufacturer');
+			$mem_part = phodevi_windows_parser::get_wmi_object_multi('CIM_PhysicalMemory', 'PartNumber');
+			if(isset($clock_speed[0]) && is_numeric($clock_speed[0]))
 			{
-				$individual_size = pts_arrays::first_element(explode(' ', $individual_size));
-
-				if(!is_numeric($individual_size))
-				{
-					unset($mem_size[$key]);
-				}				
+				$clock_speed = array_shift($clock_speed);
 			}
 
-			$mem_type = phodevi_windows_parser::read_cpuz('Memory Type', null);
-			$mem_speed = intval(phodevi_windows_parser::read_cpuz('Memory Frequency', null)) . 'MHz';
+			$mem_type = null;
+			$mem_speed = is_numeric($clock_speed) ? $clock_speed . 'MHz' : null;
 		}
 		else if(phodevi::is_linux())
 		{
@@ -95,6 +92,14 @@ class phodevi_memory extends phodevi_device_interface
 		if(is_array($mem_type))
 		{
 			$mem_type = array_pop($mem_type);
+		}
+		if(is_array($mem_part))
+		{
+			$mem_part = array_pop($mem_part);
+		}
+		if(is_array($mem_manufacturer))
+		{
+			$mem_manufacturer = array_pop($mem_manufacturer);
 		}
 
 		if($mem_size != false && (!is_array($mem_size) || count($mem_size) != 0))
@@ -122,6 +127,11 @@ class phodevi_memory extends phodevi_device_interface
 							//unset($mem_type[$i]);
 						}
 						break;
+					default:
+						if(phodevi::is_windows() && $mem_size[$i] > 1000000)
+						{
+							$mem_size[$i] = round($mem_size[$i] / 1048576);
+						}
 				}
 			}
 
@@ -143,7 +153,7 @@ class phodevi_memory extends phodevi_device_interface
 					$mem_type = substr($mem_type, 0, $cut);
 				}
 
-				if(!in_array($mem_type, array('Other')) && (pts_strings::keep_in_string($mem_type, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_LETTER) == $mem_type || phodevi::is_windows()))
+				if(!in_array($mem_type, array('Other')) && (pts_strings::keep_in_string($mem_type, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_LETTER) == $mem_type))
 				{
 					$mem_prefix = $mem_type;
 				}
@@ -288,16 +298,14 @@ class phodevi_memory extends phodevi_device_interface
 		}
 		else if(phodevi::is_windows())
 		{
-			$info = phodevi_windows_parser::read_cpuz('Memory Size', null);
-
-			if($info != null)
+			$info = phodevi_windows_parser::get_wmi_object('win32_operatingsystem', 'TotalVisibleMemorySize');
+			if(is_numeric($info))
 			{
-				if(($e = strpos($info, ' MBytes')) !== false)
-				{
-					$info = substr($info, 0, $e);
-				}
-
-				$info = trim($info);
+				$info = ceil($info / 1000);
+			}
+			else
+			{
+				$info = null;
 			}
 		}
 		else

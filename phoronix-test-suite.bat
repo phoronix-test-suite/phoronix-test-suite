@@ -26,8 +26,6 @@ set PTS_MODE=CLIENT
 :: TODO: Other work to bring this up to sync with the *NIX phoronix-test-suite launcher
 If defined PHP_BIN goto SkipBinSearch
   
-echo "No PHP_BIN defined checking for usual locations."
-
 :: Recursively search C:Program Files (x86)\PHP\ and subdirectories for the php executable
 :: (installed location may vary depending on the installation method.)
 
@@ -38,6 +36,5 @@ If exist C:\php-gtk2\php.exe (
   )
 
 :SkipBinSearch
-cls
 
 %PHP_BIN% pts-core\phoronix-test-suite.php %*

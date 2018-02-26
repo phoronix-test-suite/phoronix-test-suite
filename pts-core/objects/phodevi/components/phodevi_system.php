@@ -998,6 +998,10 @@ class phodevi_system extends phodevi_device_interface
 				$os_version = pts_strings::keep_in_string($os_version, pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL | pts_strings::CHAR_SPACE | pts_strings::CHAR_DASH | pts_strings::CHAR_UNDERSCORE);
 			}
 		}
+		else if(phodevi::is_windows())
+		{
+			$os_version = phodevi_windows_parser::get_wmi_object('win32_operatingsystem', 'BuildNumber');
+		}
 		else
 		{
 			$os_version = php_uname('r');
@@ -1108,10 +1112,6 @@ class phodevi_system extends phodevi_device_interface
 
 			if($os == null)
 			{
-				if(phodevi::is_windows())
-				{
-					$os = trim(exec('ver'));
-				}
 				if(is_file('/etc/debian_version'))
 				{
 					$os = 'Debian ' . php_uname('s') . ' ' . ucwords(pts_file_io::file_get_contents('/etc/debian_version'));
@@ -1149,7 +1149,14 @@ class phodevi_system extends phodevi_device_interface
 		{
 			$os = phodevi_osx_parser::read_osx_system_profiler('SPSoftwareDataType', 'SystemVersion');
 		}
-
+		else if(phodevi::is_windows())
+		{
+			$os = $info = phodevi_windows_parser::get_wmi_object('win32_operatingsystem', 'caption') . ' Build ' . phodevi::read_property('system', 'os-version');
+			if(strpos($os, 'Windows') === false)
+			{
+				$os = trim(exec('ver'));
+			}
+		}	
 		if(($break_point = strpos($os, '(')) > 0)
 		{
 			$os = substr($os, 0, $break_point);

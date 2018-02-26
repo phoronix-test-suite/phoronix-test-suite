@@ -482,7 +482,7 @@ class phodevi_motherboard extends phodevi_device_interface
 		}
 		else if(phodevi::is_windows())
 		{
-			$info = phodevi_windows_parser::read_cpuz('Mainboard Model', null);
+			$info = phodevi_windows_parser::get_wmi_object('Win32_MotherboardDevice', 'Name');
 		}
 
 		if((strpos($info, 'Mac ') !== false || strpos($info, 'MacBook') !== false) && strpos($info, 'Apple') === false)

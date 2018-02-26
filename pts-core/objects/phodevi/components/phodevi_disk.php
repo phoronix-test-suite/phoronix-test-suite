@@ -263,6 +263,17 @@ class phodevi_disk extends phodevi_device_interface
 				}
 			}
 		}
+		else if(phodevi::is_windows())
+		{
+ 			$models = phodevi_windows_parser::get_wmi_object_multi('Win32_DiskDrive', 'Model');
+ 			$size = phodevi_windows_parser::get_wmi_object_multi('Win32_DiskDrive', 'Size');
+			for($i = 0; $i < count($models) && $i < count($size); $i++)
+			{
+				$s = $size[$i] / 1073741824;
+				$models[$i] = round($s) . 'GB ' . $models[$i];
+			}
+			$disks = $models;
+		}
 
 		if(count($disks) == 0)
 		{

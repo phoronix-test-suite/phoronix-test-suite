@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2018, Phoronix Media
+	Copyright (C) 2009 - 2018, Michael Larabel
 	phodevi_windows_parser.php: General parsing functions specific to the Windows OS
 
 	This program is free software; you can redistribute it and/or modify
@@ -23,6 +23,27 @@
 
 class phodevi_windows_parser
 {
+
+	public static function get_wmi_object($object, $name)
+	{
+		$wmi_output = trim(shell_exec('powershell "$obj = Get-WmiObject ' . $object . '; echo $obj.' . $name . '"'));
+		return trim($wmi_output);
+	}
+	public static function get_wmi_object_multi($object, $name)
+	{
+		$wmi_output = trim(shell_exec('powershell "Get-WmiObject ' . $object . '"'));
+		$matches = array();
+		foreach(explode("\n", $wmi_output) as $line)
+		{
+			$line = explode(' : ', $line);
+			if(trim($line[0]) == $name && isset($line[1]))
+			{
+				$matches[] = trim($line[1]);
+			}
+		}
+
+		return $matches;
+	}
 	public static function read_cpuz($section, $name, $match_multiple = false)
 	{
 		$return = $match_multiple ? array() : false;

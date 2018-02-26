@@ -470,6 +470,10 @@ class phodevi_gpu extends phodevi_device_interface
 				}
 			}
 		}
+		else if(phodevi::is_windows())
+		{
+			$resolution = array(phodevi_windows_parser::get_wmi_object('Win32_VideoController', 'CurrentHorizontalResolution'), phodevi_windows_parser::get_wmi_object('Win32_VideoController', 'CurrentVerticalResolution'));
+		}
 
 		return $resolution == false ? array(-1, -1) : $resolution;
 	}
@@ -683,6 +687,14 @@ class phodevi_gpu extends phodevi_device_interface
 			if($info[1] == 'GB')
 			{
 				$video_ram *= 1024;
+			}
+		}
+		else if(phodevi::is_windows())
+		{
+			$video_ram = phodevi_windows_parser::get_wmi_object('Win32_VideoController', 'AdapterRAM');
+			if(is_numeric($video_ram) && $video_ram > 1048576)
+			{
+				$video_ram = $video_ram / 1048576;
 			}
 		}
 		else
@@ -1232,7 +1244,7 @@ class phodevi_gpu extends phodevi_device_interface
 		}
 		else if(phodevi::is_windows())
 		{
-			$info = phodevi_windows_parser::read_cpuz('Display Adapters', 'Name');
+			$info = str_replace('(TM)', null, phodevi_windows_parser::get_wmi_object('Win32_VideoController', 'Name'));
 		}
 
 		if(empty($info) || strpos($info, 'Mesa ') !== false || strpos($info, 'Gallium ') !== false || strpos($info, ' (DRM') !== false)
