@@ -1325,11 +1325,16 @@ class pts_client
 
 		if($terminal_width == null)
 		{
-			$chars = 80;
+			$terminal_width = 80;
 
-			if(pts_client::read_env('TERMINAL_WIDTH') != false && is_numeric(pts_client::read_env('TERMINAL_WIDTH')) >= 80)
+			if(phodevi::is_windows())
 			{
-					$terminal_width = pts_client::read_env('TERMINAL_WIDTH');
+				// Powershell defaults to 120
+				$terminal_width = trim(shell_exec('powershell "(get-host).UI.RawUI.MaxWindowSize.width"'));
+			}
+			else if(pts_client::read_env('TERMINAL_WIDTH') != false && is_numeric(pts_client::read_env('TERMINAL_WIDTH')) >= 80)
+			{
+				$terminal_width = pts_client::read_env('TERMINAL_WIDTH');
 			}
 			else if(pts_client::executable_in_path('stty'))
 			{
@@ -1349,8 +1354,6 @@ class pts_client
 					$chars = $terminal_width;
 				}
 			}
-
-			$terminal_width = $chars;
 		}
 
 		return $terminal_width;
