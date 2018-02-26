@@ -117,6 +117,10 @@ class pts_test_execution
 		{
 			$execute_binary_prepend = $test_run_request->exec_binary_prepend;
 		}
+        else if(getenv('EXECUTE_BINARY_PREPEND') != false)
+        {
+			$execute_binary_prepend = getenv('EXECUTE_BINARY_PREPEND') . ' ';
+        }
 
 		if(!$cache_share_present && !$test_run_manager->DEBUG_no_test_execution_just_result_parse && $test_run_request->test_profile->is_root_required())
 		{
