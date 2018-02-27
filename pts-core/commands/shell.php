@@ -53,8 +53,13 @@ $x = phodevi::supported_sensors();
 			foreach($supported_devices as $device)
 			{
 				$sensor_object = new $sensor[2](0, $device);
-				$sensor_name = phodevi::sensor_object_name($sensor_object) . ':';
 				$sensor_value = phodevi::read_sensor($sensor_object);
+				if($sensor_value < 0)
+				{
+					continue;
+				}
+
+				$sensor_name = phodevi::sensor_object_name($sensor_object) . ':';
 				$sensor_unit = phodevi::read_sensor_object_unit($sensor_object);
 				$sensors[] = array($sensor_name, $sensor_value, $sensor_unit);
 			}
