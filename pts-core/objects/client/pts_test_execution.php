@@ -214,10 +214,21 @@ class pts_test_execution
 
 				pts_client::test_profile_debug_message('Test Run Command: ' . $test_run_command);
 
+				$host_env = $_SERVER;
+				unset($host_env['argv']);
+				$use_phoroscript = phodevi::is_windows();
+				$to_exec = 'exec';
+				if(phodevi::is_windows() && is_executable('C:\cygwin64\bin\bash.exe'))
+				{ echo 'CYGWIN';
+					$to_exec = 'C:\cygwin64\bin\bash.exe';
+					$use_phoroscript = false;
+					$host_env['PATH'] = (isset($host_env['PATH']) ? $host_env['PATH'] : null) . ';C:\cygwin64\bin';
+				}
+
 				$is_monitoring = pts_test_result_parser::system_monitor_task_check($test_run_request);
 				$test_run_time_start = microtime(true);
 
-				if(phodevi::is_windows() || pts_client::read_env('USE_PHOROSCRIPT_INTERPRETER') != false)
+				if($use_phoroscript || pts_client::read_env('USE_PHOROSCRIPT_INTERPRETER') != false)
 				{
 					$phoroscript = new pts_phoroscript_interpreter($to_execute . '/' . $execute_binary, $test_extra_runtime_variables, $to_execute);
 					$phoroscript->execute_script($pts_test_arguments);
@@ -228,10 +239,6 @@ class pts_test_execution
 					//$test_result_std_output = pts_client::shell_exec($test_run_command, $test_extra_runtime_variables);
 					$descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
 
-					$host_env = $_SERVER;
-					unset($host_env['argv']);
-
-					$to_exec = 'exec';
 					if(pts_client::executable_in_path(trim($test_prepend)))
 					{
 						$to_exec = '';

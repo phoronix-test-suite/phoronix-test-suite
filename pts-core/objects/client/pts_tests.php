@@ -204,9 +204,16 @@ class pts_tests
 			$test_profiles = array_merge($test_profiles, $test_profile->extended_test_profiles());
 		}
 
+		$use_phoroscript = phodevi::is_windows();
 		if(pts_client::executable_in_path('bash'))
 		{
 			$sh = 'bash';
+		}
+		else if(phodevi::is_windows() && is_executable('C:\cygwin64\bin\bash.exe'))
+		{ echo 'CYGWIN';
+			$sh = 'C:\cygwin64\bin\bash.exe';
+			$use_phoroscript = false;
+			$extra_vars['PATH'] = $extra_vars['PATH'] . ';C:\cygwin64\bin';
 		}
 		else
 		{
@@ -224,15 +231,31 @@ class pts_tests
 					pts_client::$display->test_run_message($print_string);
 				}
 
-				if(phodevi::is_windows() || pts_client::read_env('USE_PHOROSCRIPT_INTERPRETER') != false)
+				if($use_phoroscript || pts_client::read_env('USE_PHOROSCRIPT_INTERPRETER') != false)
 				{
 					$phoroscript = new pts_phoroscript_interpreter($run_file, $extra_vars, $test_directory);
 					$phoroscript->execute_script($pass_argument);
 					$this_result = null;
 				}
+				else if(phodevi::is_windows())
+				{ echo 'new code path';
+					$host_env = $_SERVER;
+					unset($host_env['argv']);
+					$descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
+					$test_process = proc_open($sh . ' ' . $run_file . ' ' . $pass_argument . (phodevi::is_windows() ? '' : ' 2>&1'), $descriptorspec, $pipes, $test_directory, array_merge($host_env, pts_client::environmental_variables(), $extra_vars));
+
+					if(is_resource($test_process))
+					{
+						//echo proc_get_status($test_process)['pid'];
+						$this_result = stream_get_contents($pipes[1]);
+						fclose($pipes[1]);
+						fclose($pipes[2]);
+						$return_value = proc_close($test_process);
+					}
+				}
 				else
 				{
-					$this_result = pts_client::shell_exec('cd ' .  $test_directory . ' && ' . $sh . ' ' . $run_file . ' ' . $pass_argument . ' 2>&1', $extra_vars);
+					$this_result = pts_client::shell_exec('cd ' .  $test_directory . (phodevi::is_windows() ? '; ' : ' && ') . $sh . ' ' . $run_file . ' ' . $pass_argument . (phodevi::is_windows() ? '' : ' 2>&1'), $extra_vars);
 				}
 
 				if(trim($this_result) != null)

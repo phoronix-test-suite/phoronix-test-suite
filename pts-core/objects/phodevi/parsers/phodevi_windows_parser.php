@@ -44,62 +44,6 @@ class phodevi_windows_parser
 
 		return $matches;
 	}
-	public static function read_cpuz($section, $name, $match_multiple = false)
-	{
-		$return = $match_multiple ? array() : false;
-
-		if(is_executable('C:\Program Files\CPUID\CPU-Z\cpuz.exe'))
-		{
-			static $cpuz_log = null;
-
-			if($cpuz_log == null)
-			{
-				shell_exec('"C:\Program Files\CPUID\CPU-Z\cpuz.exe" -txt=' . PTS_USER_PATH . 'cpuz');
-
-				if(is_file(PTS_USER_PATH . 'cpuz.txt'))
-				{
-					$cpuz_log = file_get_contents(PTS_USER_PATH . 'cpuz.txt');
-					unlink(PTS_USER_PATH . 'cpuz.txt');
-				}
-			}
-
-			$s = 0;
-
-			while(($match_multiple || $s == 0) && isset($cpuz_log[($s + 1)]) && ($s = strpos($cpuz_log, "\n" . $section, ($s + 1))) !== false)
-			{
-				$cpuz_section = substr($cpuz_log, $s);
-
-				if(($name != null && ($c = strpos($cpuz_section, '	' . $name)) !== false) || ($c = 0) == 0)
-				{
-					if($name == null)
-					{
-						$name = $section;
-					}
-
-					$cpuz_section = substr($cpuz_section, $c, (strpos($cpuz_section, "\r\n", $c) - $c));
-					$return_match = substr($cpuz_section, strpos($cpuz_section, $name) + strlen($name));
-
-					if(($e = strpos($return_match, '(')) !== false)
-					{
-						$return_match = substr($return_match, 0, $e);
-					}
-
-					$return_match = trim($return_match);
-
-					if($match_multiple)
-					{
-						array_push($return, $return_match);
-					}
-					else
-					{
-						$return = $return_match;
-					}
-				}
-			}
-		}
-
-		return $return;
-	}
 }
 
 ?>

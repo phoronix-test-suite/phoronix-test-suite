@@ -1496,9 +1496,20 @@ class pts_client
 
 		foreach(array_keys($extra_vars) as $key)
 		{
-			$var_string .= 'export ' . $key . '=' . str_replace(' ', '\ ', trim($extra_vars[$key])) . ';';
+			if(phodevi::is_windows())
+			{
+				$v = str_replace('"', '', trim($extra_vars[$key]));
+				if(substr($v, -1) == '\\')
+				{ echo $v;
+					$v = substr($v, 0, -1);
+				}
+				$var_string .= 'setx ' . $key . ' "' . $v . '";';
+			}
+			else
+			{
+				$var_string .= 'export ' . $key . '=' . str_replace(' ', '\ ', trim($extra_vars[$key])) . ';';
+			}
 		}
-
 		$var_string .= ' ';
 
 		return shell_exec($var_string . $exec);
