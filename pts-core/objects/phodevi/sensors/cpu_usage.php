@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2016, Phoronix Media
-	Copyright (C) 2009 - 2016, Michael Larabel
+	Copyright (C) 2009 - 2018, Phoronix Media
+	Copyright (C) 2009 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -76,7 +76,7 @@ class cpu_usage extends phodevi_sensor
 		}
 
 		// Currently per-CPU monitoring is supported on Linux only.
-		return NULL;
+		return null;
 	}
 	public function read_sensor()
 	{
@@ -93,6 +93,10 @@ class cpu_usage extends phodevi_sensor
 		else if(phodevi::is_macosx())
 		{
 			$percent = $this->cpu_usage_macosx();
+		}
+		else if(phodevi::is_windows())
+		{
+			$percent = phodevi_windows_parser::get_wmi_object('Win32_processor', 'LoadPercentage');
 		}
 
 		if(!isset($percent) || !is_numeric($percent) || $percent < 0 || $percent > 100)

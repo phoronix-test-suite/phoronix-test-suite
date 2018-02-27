@@ -626,7 +626,12 @@ class phodevi extends phodevi_base
 		// Returns the system's uptime in seconds
 		$uptime = 1;
 
-		if(is_file('/proc/uptime'))
+		if(phodevi::is_windows())
+		{
+			$uptime = trim(shell_exec('powershell "((get-date) - (gcim Win32_OperatingSystem).LastBootUpTime).TotalSeconds"'));
+			$uptime = is_numeric($uptime) && $uptime > 1 ? round($uptime) : 1;
+		}
+		else if(is_file('/proc/uptime'))
 		{
 			$uptime = pts_strings::first_in_string(pts_file_io::file_get_contents('/proc/uptime'));
 		}
@@ -682,7 +687,7 @@ class phodevi extends phodevi_base
 				$uptime = $uptime_counter;
 			}
 		}
-
+var_dump($uptime);
 		return intval($uptime);
 	}
 	public static function cpu_arch_compatible($check_against)

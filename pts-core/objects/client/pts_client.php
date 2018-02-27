@@ -736,7 +736,7 @@ class pts_client
 						$external_phodevi_cache = $external_phodevi_cache->read_object('phodevi_smart_cache');
 						$external_phodevi_cache = $external_phodevi_cache->restore_cache(null, PTS_CORE_VERSION);
 
-						if($external_phodevi_cache != false && !phodevi::is_windows()) // TODO XXX restore this after Windows Phodevi support in good shape
+						if($external_phodevi_cache != false)
 						{
 							//unset($external_phodevi_cache['system']['operating-system']);
 							//unset($external_phodevi_cache['system']['vendor-identifier']);
