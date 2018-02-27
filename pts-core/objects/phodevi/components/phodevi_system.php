@@ -1449,7 +1449,7 @@ class phodevi_system extends phodevi_device_interface
 	{
 		if(phodevi::is_windows())
 		{
-			return null;
+			return phodevi_windows_parser::get_wmi_object('Win32_VideoController', 'DriverVersion');
 		}
 
 		$display_driver = phodevi::read_property('system', 'dri-display-driver');

@@ -337,6 +337,10 @@ class phodevi_motherboard extends phodevi_device_interface
 				$serial = phodevi_linux_parser::read_sys_dmi('product_uuid');
 			}
 		}
+		else if(phodevi::is_windows())
+		{
+			$serial = phodevi_windows_parser::get_wmi_object('Win32_BaseBoard', 'SerialNumber');
+		}
 
 		return $serial;
 	}
@@ -482,7 +486,11 @@ class phodevi_motherboard extends phodevi_device_interface
 		}
 		else if(phodevi::is_windows())
 		{
-			$info = phodevi_windows_parser::get_wmi_object('Win32_MotherboardDevice', 'Name');
+			$info = trim(phodevi_windows_parser::get_wmi_object('Win32_BaseBoard', 'Manufacturer') . ' ' . phodevi_windows_parser::get_wmi_object('Win32_BaseBoard', 'Product'));
+			if(empty($info))
+			{
+				$info = phodevi_windows_parser::get_wmi_object('Win32_MotherboardDevice', 'Name');
+			}
 		}
 
 		if((strpos($info, 'Mac ') !== false || strpos($info, 'MacBook') !== false) && strpos($info, 'Apple') === false)

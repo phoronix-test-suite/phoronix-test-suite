@@ -27,7 +27,7 @@ class phodevi_windows_parser
 	public static function get_wmi_object($object, $name)
 	{
 		$wmi_output = trim(shell_exec('powershell "$obj = Get-WmiObject ' . $object . '; echo $obj.' . $name . '"'));
-		return trim($wmi_output);
+		return strpos($wmi_output, 'Invalid') == false ? trim($wmi_output) : null;
 	}
 	public static function get_wmi_object_multi($object, $name)
 	{
