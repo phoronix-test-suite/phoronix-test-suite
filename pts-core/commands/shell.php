@@ -30,7 +30,7 @@ class shell implements pts_option_interface
 		pts_openbenchmarking::refresh_repository_lists();
 		pts_client::$display->generic_heading('Interactive Shell');
 		echo phodevi::system_centralized_view();
-		echo PHP_EOL . (phodevi::read_property('motherboard', 'serial-number') != null ? PHP_EOL . 'System Serial Number: ' . phodevi::read_property('motherboard', 'serial-number') . PHP_EOL : null);
+		//echo PHP_EOL . (phodevi::read_property('motherboard', 'serial-number') != null ? PHP_EOL . 'System Serial Number: ' . phodevi::read_property('motherboard', 'serial-number') . PHP_EOL : null);
 $x = phodevi::supported_sensors();
 
 		// SENSORS
@@ -96,7 +96,7 @@ $x = phodevi::supported_sensors();
 		$blacklisted_commands = array('shell', 'quit', 'exit');
 		do
 		{
-			echo 'Phoronix Test Suite command to run or ' . pts_client::cli_colored_text('help', 'green') . ' for help, ' . pts_client::cli_colored_text('commands', 'green') . ' for possible options, ' . pts_client::cli_colored_text('exit', 'green') . ' to exit: ' . PHP_EOL;
+			echo 'Phoronix Test Suite command to run or ' . pts_client::cli_colored_text('help', 'green') . ' for help, ' . pts_client::cli_colored_text('commands', 'green') . ' for possible options, ' . pts_client::cli_colored_text('interactive', 'green') . ' for a guided experience, ' . pts_client::cli_colored_text('exit', 'green') . ' to exit: ' . PHP_EOL;
 			echo PHP_EOL . pts_client::cli_colored_text((phodevi::is_root() ? '#' : '$'), 'white') . ' ' . pts_client::cli_colored_text('phoronix-test-suite', 'gray') . ' ';
 			$input = pts_user_io::read_user_input();
 			$argv = explode(' ', $input);
