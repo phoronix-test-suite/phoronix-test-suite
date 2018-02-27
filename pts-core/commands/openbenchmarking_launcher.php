@@ -23,6 +23,7 @@
 class openbenchmarking_launcher implements pts_option_interface
 {
 	const doc_section = 'OpenBenchmarking.org';
+	const doc_skip = true;
 	const doc_description = 'This option is called automatically with the .openbenchmarking MIME file extension support for launching OpenBenchmarking.org operations.';
 
 	public static function run($r)

@@ -100,42 +100,7 @@ if(QUICK_START == false)
 pts_client::init(); // Initalize the Phoronix Test Suite (pts-core) client
 $pass_args = array();
 
-if(is_file(PTS_PATH . 'pts-core/commands/' . $sent_command . '.php') == false)
-{
-	$replaced = false;
-
-	if(pts_module::valid_run_command($sent_command))
-	{
-		$replaced = true;
-	}
-	else if(isset($argv[1]) && strpos($argv[1], '.openbenchmarking') !== false && is_readable($argv[1]))
-	{
-		$sent_command = 'openbenchmarking_launcher';
-		$argv[2] = $argv[1];
-		$argc = 3;
-		$replaced = true;
-	}
-	else
-	{
-		$aliases = pts_storage_object::read_from_file(PTS_TEMP_STORAGE, 'command_alias_list');
-		if($aliases == null)
-		{
-			$aliases = pts_documentation::client_commands_aliases();
-		}
-
-		if(isset($aliases[$sent_command]))
-		{
-			$sent_command = $aliases[$sent_command];
-			$replaced = true;
-		}
-	}
-
-	if($replaced == false)
-	{
-		// Show help command, since there are no valid commands
-		$sent_command = 'help';
-	}
-}
+pts_client::handle_sent_command($sent_command, $argv, $argc);
 
 
 pts_define('PTS_USER_LOCK', function_exists('posix_getpid') ? PTS_USER_PATH . 'run-lock-' . posix_getpid() : tempnam(PTS_USER_PATH, 'run-lock-'));

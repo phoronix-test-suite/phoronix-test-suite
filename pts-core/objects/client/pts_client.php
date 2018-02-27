@@ -1315,6 +1315,45 @@ class pts_client
 
 		pts_module_manager::module_process('__post_option_process', $command);
 	}
+	public static function handle_sent_command(&$sent_command, &$argv, &$argc)
+	{
+		if(is_file(PTS_PATH . 'pts-core/commands/' . $sent_command . '.php') == false)
+		{
+			$replaced = false;
+
+			if(pts_module::valid_run_command($sent_command))
+			{
+				$replaced = true;
+			}
+			else if(isset($argv[1]) && strpos($argv[1], '.openbenchmarking') !== false && is_readable($argv[1]))
+			{
+				$sent_command = 'openbenchmarking_launcher';
+				$argv[2] = $argv[1];
+				$argc = 3;
+				$replaced = true;
+			}
+			else
+			{
+				$aliases = pts_storage_object::read_from_file(PTS_TEMP_STORAGE, 'command_alias_list');
+				if($aliases == null)
+				{
+					$aliases = pts_documentation::client_commands_aliases();
+				}
+
+				if(isset($aliases[$sent_command]))
+				{
+					$sent_command = $aliases[$sent_command];
+					$replaced = true;
+				}
+			}
+
+			if($replaced == false)
+			{
+				// Show help command, since there are no valid commands
+				$sent_command = 'help';
+			}
+		}
+	}
 	public static function current_command()
 	{
 		return self::$current_command;
