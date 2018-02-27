@@ -38,9 +38,14 @@ class memory_usage extends phodevi_sensor
 		{
 			return self::mem_usage_linux();
 		}
-		elseif(phodevi::is_macosx())
+		else if(phodevi::is_macosx())
 		{
 			return self::mem_usage_bsd('MEMORY', 'USED');
+		}
+		else if(phodevi::is_windows())
+		{
+			$ps = trim(shell_exec('powershell "((Get-WmiObject Win32_OperatingSystem).TotalVisibleMemorySize - (Get-WmiObject Win32_OperatingSystem).FreePhysicalMemory)"'));
+			return round($ps / 1024, 2);
 		}
 	}
 	private function mem_usage_linux()
