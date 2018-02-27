@@ -23,7 +23,7 @@
 class help implements pts_option_interface
 {
 	const doc_section = 'Other';
-	const doc_description = 'This option will display the list of available Phoronix Test Suite commands.';
+	const doc_description = 'This option will display a list of available Phoronix Test Suite commands and possible parameter types.';
 
 	public static function run($r)
 	{

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2017, Phoronix Media
-	Copyright (C) 2008 - 2017, Michael Larabel
+	Copyright (C) 2008 - 2018, Phoronix Media
+	Copyright (C) 2008 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -77,6 +77,30 @@ class pts_user_io
 		}
 
 		return $list;
+	}
+	public static function display_packed_list(&$list)
+	{
+		$terminal_width = pts_client::terminal_width();
+		$longest_item = 0;
+		foreach($list as &$item)
+		{
+			if(isset($item[$longest_item + 1]))
+			{
+				$longest_item = strlen($item);
+			}
+		}
+
+		$items_per_line = floor($terminal_width / ($longest_item + 1));
+		$i = 0;
+		foreach($list as &$item)
+		{
+			echo $item . str_repeat(' ', $longest_item - strlen($item) + 1);
+			$i++;
+			if($i % $items_per_line == 0)
+			{
+				echo PHP_EOL;
+			}
+		}
 	}
 	public static function display_text_table(&$table, $prepend_to_lines = null, $extra_width_to_column = 0, $min_width = 0)
 	{
