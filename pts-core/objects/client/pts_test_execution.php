@@ -222,7 +222,7 @@ class pts_test_execution
 				{ echo 'CYGWIN';
 					$to_exec = 'C:\cygwin64\bin\bash.exe';
 					$use_phoroscript = false;
-					$host_env['PATH'] = (isset($host_env['PATH']) ? $host_env['PATH'] : null) . ';C:\cygwin64\bin';
+					$test_extra_runtime_variables['PATH'] = (isset($test_extra_runtime_variables['PATH']) ? $test_extra_runtime_variables['PATH'] : null) . ';C:\cygwin64\bin';
 				}
 
 				$is_monitoring = pts_test_result_parser::system_monitor_task_check($test_run_request);
