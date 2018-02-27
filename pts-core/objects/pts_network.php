@@ -465,6 +465,25 @@ class pts_network
 				}
 			}
 		}
+		else if(phodevi::is_windows())
+		{
+			$ipconfig = shell_exec('ipconfig');
+			$offset = 0;
+
+			while(($ipv4_pos = strpos($ipconfig, 'IPv4 Address.', $offset)) !== false)
+			{
+				$ipv4 = substr($ipconfig, $ipv4_pos);
+				$ipv4 = substr($ipv4, strpos($ipv4, ': ') + 2);
+				$ipv4 = substr($ipv4, 0, strpos($ipv4, "\n"));
+				$local_ip = trim($ipv4);
+
+				if($local_ip != '127.0.0.1' && $local_ip != null)
+				{
+					break;
+				}
+				$offset = $ipv4_pos + 3;
+			}
+		}
 		else if(pts_client::executable_in_path('hostname'))
 		{
 			$hostname_i = trim(shell_exec('hostname -I 2>&1'));
@@ -480,27 +499,41 @@ class pts_network
 	{
 		$mac = false;
 
-		if ($interface = self::get_active_network_interface())
+		if(phodevi::is_linux())
 		{
-			$addr =  "/sys/class/net/$interface/address";
-			if(is_file($addr))
+			if($interface = self::get_active_network_interface())
 			{
-				$mac = pts_file_io::file_get_contents($addr);
-			}
-		}
-
-		if (empty($mac)) {
-			foreach(pts_file_io::glob('/sys/class/net/*/operstate') as $net_device_state)
-			{
-				if(pts_file_io::file_get_contents($net_device_state) == 'up')
+				$addr =  "/sys/class/net/$interface/address";
+				if(is_file($addr))
 				{
-					$addr = dirname($net_device_state) . '/address';
-					if(is_file($addr))
+					$mac = pts_file_io::file_get_contents($addr);
+				}
+			}
+
+			if(empty($mac))
+			{
+				foreach(pts_file_io::glob('/sys/class/net/*/operstate') as $net_device_state)
+				{
+					if(pts_file_io::file_get_contents($net_device_state) == 'up')
 					{
-						$mac = pts_file_io::file_get_contents($addr);
-						break;
+						$addr = dirname($net_device_state) . '/address';
+						if(is_file($addr))
+						{
+							$mac = pts_file_io::file_get_contents($addr);
+							break;
+						}
 					}
 				}
+			}
+		}
+		else if(phodevi::is_windows())
+		{
+			$getmac = shell_exec('getmac');
+			$getmac = trim(substr($getmac, strpos($getmac, "\n", strpos($getmac, '======='))));
+			$getmac = substr($getmac, 0, strpos($getmac, ' '));
+			if(strlen($getmac) <= 17)
+			{
+				$mac = str_replace('-', ':', $getmac);
 			}
 		}
 
