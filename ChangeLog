@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Introduce basic phoronix-test-suite shell for easier PTS experience
 perf_per_dollar: Allow calculating cloud costs / perf-per via COST_PERF_PER_HOUR= environment variable
 phodevi: Cavium ThunderX detection
 
