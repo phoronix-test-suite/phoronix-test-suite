@@ -1510,9 +1510,17 @@ class pts_client
 		if(!isset($cache[$executable]) || empty($cache[$executable]) || $ignore_paths_with)
 		{
 			$path = pts_client::read_env('PATH');
+
 			if(empty($path) || $path == ':')
 			{
-				$path = '/bin:/usr/sbin:/usr/bin:/usr/local/bin:/usr/pkg/bin:/usr/games';
+				if(phodevi::is_windows())
+				{
+					$path = 'C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Users\\' . getenv('USERNAME') . '\AppData\Local\Microsoft\WindowsApps;';
+				}
+				else
+				{
+					$path = '/bin:/usr/sbin:/usr/bin:/usr/local/bin:/usr/pkg/bin:/usr/games';
+				}
 			}
 			$paths = pts_strings::trim_explode((phodevi::is_windows() ? ';' : ':'), $path);
 			$executable_path = false;
