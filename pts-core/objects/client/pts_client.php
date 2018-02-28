@@ -1381,7 +1381,7 @@ class pts_client
 
 				if(count($terminal_width) == 2 && is_numeric($terminal_width[1]) && $terminal_width[1] >= 80)
 				{
-					$chars = $terminal_width[1];
+					$terminal_width = $terminal_width[1];
 				}
 			}
 			else if(pts_client::executable_in_path('tput'))
@@ -1390,7 +1390,7 @@ class pts_client
 
 				if(is_numeric($terminal_width) && $terminal_width > 1)
 				{
-					$chars = $terminal_width;
+					$terminal_width = $terminal_width;
 				}
 			}
 		}
