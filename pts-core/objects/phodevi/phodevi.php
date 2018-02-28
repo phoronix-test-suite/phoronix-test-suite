@@ -687,7 +687,7 @@ class phodevi extends phodevi_base
 				$uptime = $uptime_counter;
 			}
 		}
-var_dump($uptime);
+
 		return intval($uptime);
 	}
 	public static function cpu_arch_compatible($check_against)
