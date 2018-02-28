@@ -387,6 +387,11 @@ class pts_openbenchmarking
 	{
 		$repos = array('local', 'pts', 'system');
 
+		if(PTS_IS_CLIENT && phodevi::is_windows())
+		{
+			$repos[] = 'windows';
+		}
+
 		if(PTS_IS_CLIENT && pts_openbenchmarking_client::user_name() != false)
 		{
 			$repos[] = pts_openbenchmarking_client::user_name();
