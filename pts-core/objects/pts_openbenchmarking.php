@@ -389,7 +389,8 @@ class pts_openbenchmarking
 
 		if(PTS_IS_CLIENT && phodevi::is_windows())
 		{
-			$repos[] = 'windows';
+			// Various windows tests for compatibility where there isn't mainline support in the test profile otherwise
+			array_unshift($repos, 'windows');
 		}
 
 		if(PTS_IS_CLIENT && pts_openbenchmarking_client::user_name() != false)
