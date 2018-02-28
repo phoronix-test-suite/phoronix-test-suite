@@ -110,7 +110,12 @@ class info implements pts_option_interface
 
 				echo pts_user_io::display_text_table($table);
 
-				echo PHP_EOL . PHP_EOL . pts_client::cli_just_bold('Description: ') . $o->get_description() . PHP_EOL. PHP_EOL;
+				echo PHP_EOL . PHP_EOL . pts_client::cli_just_bold('Description: ') . $o->get_description() . PHP_EOL;
+
+				if(stripos($o->get_identifier(0), 'local/') === false)
+				{
+					echo PHP_EOL . PHP_EOL . pts_client::cli_just_bold('OpenBenchmarking.org Test Profile: ') . 'https://openbenchmarking.org/test/' . $o->get_identifier() . PHP_EOL . PHP_EOL;
+				}
 
 				foreach(array('Pre-Install Message' => $o->get_pre_install_message(), 'Post-Install Message' => $o->get_post_install_message(), 'Pre-Run Message' => $o->get_pre_run_message(), 'Post-Run Message' => $o->get_post_run_message()) as $msg_type => $msg)
 				{
