@@ -53,17 +53,7 @@ class phodevi_chipset extends phodevi_device_interface
 		}
 		else if(phodevi::is_windows())
 		{
-			$info = phodevi_windows_parser::read_cpuz('Northbridge', null);
-
-			if($info != null)
-			{
-				if(($e = strpos($info, 'rev')) !== false)
-				{
-					$info = substr($info, 0, $e);
-				}
-
-				$info = trim($info);
-			}
+			// TODO XXX figure out
 		}
 		else if(phodevi::is_solaris())
 		{

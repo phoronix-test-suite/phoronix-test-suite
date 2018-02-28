@@ -130,7 +130,14 @@ function pts_define_directories()
 	}
 	else if(PTS_IS_CLIENT)
 	{
-		pts_define('PTS_USER_PATH', pts_core::user_home_directory() . '.phoronix-test-suite' . DIRECTORY_SEPARATOR);
+		/* if(!is_dir(pts_core::user_home_directory() . '.phoronix-test-suite') && stripos(PHP_OS, 'win') !== false && getenv('AppData'))
+		{
+			pts_define('PTS_USER_PATH', getenv('AppData') . DIRECTORY_SEPARATOR . 'phoronix-test-suite' . DIRECTORY_SEPARATOR);
+		}
+		else
+		{ */
+			pts_define('PTS_USER_PATH', pts_core::user_home_directory() . '.phoronix-test-suite' . DIRECTORY_SEPARATOR);
+		//}
 		pts_define('PTS_CORE_STORAGE', PTS_USER_PATH . 'core.pt2so');
 		pts_define('PTS_TEMP_STORAGE', PTS_USER_PATH . 'temp.pt2so');
 		pts_define('PTS_MODULE_LOCAL_PATH', PTS_USER_PATH . 'modules/');
