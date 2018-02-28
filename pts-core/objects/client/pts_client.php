@@ -1383,6 +1383,10 @@ class pts_client
 				{
 					$terminal_width = $terminal_width[1];
 				}
+				else
+				{
+					$terminal_width = 80;
+				}
 			}
 			else if(pts_client::executable_in_path('tput'))
 			{
@@ -1391,6 +1395,10 @@ class pts_client
 				if(is_numeric($terminal_width) && $terminal_width > 1)
 				{
 					$terminal_width = $terminal_width;
+				}
+				else
+				{
+					$terminal_width = 80;
 				}
 			}
 		}
