@@ -220,7 +220,7 @@ class pts_test_execution
 				$use_phoroscript = phodevi::is_windows();
 				$to_exec = 'exec';
 				if(phodevi::is_windows() && is_executable('C:\cygwin64\bin\bash.exe'))
-				{ echo 'CYGWIN';
+				{
 					$to_exec = 'C:\cygwin64\bin\bash.exe';
 					$use_phoroscript = false;
 					$test_extra_runtime_variables['PATH'] = (isset($test_extra_runtime_variables['PATH']) ? $test_extra_runtime_variables['PATH'] : null) . ';C:\cygwin64\bin';
@@ -231,6 +231,7 @@ class pts_test_execution
 
 				if($use_phoroscript || pts_client::read_env('USE_PHOROSCRIPT_INTERPRETER') != false)
 				{
+					pts_client::$display->test_run_message('Falling back to experimental PhoroScript code path...');
 					$phoroscript = new pts_phoroscript_interpreter($to_execute . '/' . $execute_binary, $test_extra_runtime_variables, $to_execute);
 					$phoroscript->execute_script($pts_test_arguments);
 					$test_result_std_output = null;

@@ -211,7 +211,7 @@ class pts_tests
 			$sh = 'bash';
 		}
 		else if(phodevi::is_windows() && is_executable('C:\cygwin64\bin\bash.exe'))
-		{ echo 'CYGWIN';
+		{
 			$sh = 'C:\cygwin64\bin\bash.exe';
 			$use_phoroscript = false;
 			$extra_vars['PATH'] = $extra_vars['PATH'] . ';C:\cygwin64\bin';
@@ -234,12 +234,13 @@ class pts_tests
 
 				if($use_phoroscript || pts_client::read_env('USE_PHOROSCRIPT_INTERPRETER') != false)
 				{
+					echo PHP_EOL . 'Falling back to experimental PhoroScript code path...' . PHP_EOL;
 					$phoroscript = new pts_phoroscript_interpreter($run_file, $extra_vars, $test_directory);
 					$phoroscript->execute_script($pass_argument);
 					$this_result = null;
 				}
 				else if(phodevi::is_windows())
-				{ echo 'new code path';
+				{
 					$host_env = $_SERVER;
 					unset($host_env['argv']);
 					$descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
