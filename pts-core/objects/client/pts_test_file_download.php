@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2018, Phoronix Media
+	Copyright (C) 2008 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -47,6 +47,12 @@ class pts_test_file_download
 		$this->location_path = array();
 		$this->platform = $platform;
 		$this->architecture = $architecture;
+
+		if(phodevi::is_windows())
+		{
+			// Windows with PHP stock binaries has problems downloading from HTTPS
+			$this->url = str_replace('https://', 'http://', $this->url);
+		}
 
 		// Check for longest file name length as the text UI takes advantage of it
 
