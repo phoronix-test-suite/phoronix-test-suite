@@ -226,6 +226,9 @@ class pts_network
 			$parameters = array();
 		}
 
+		$parameters['ssl']['verify_peer'] = false;
+		$parameters['ssl']['verify_peer_name'] = false;
+
 		if($proxy_address == false && $proxy_port == false && self::$network_proxy)
 		{
 			$proxy_address = self::$network_proxy['address'];
