@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2017, Phoronix Media
-	Copyright (C) 2009 - 2017, Michael Larabel
+	Copyright (C) 2009 - 2018, Phoronix Media
+	Copyright (C) 2009 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -61,7 +61,7 @@ class user_config_set implements pts_option_interface
 		}
 
 		pts_config::user_config_generate($new_options);
-		echo PHP_EOL . 'New user configuration file written.' . PHP_EOL . PHP_EOL;
+		echo PHP_EOL . 'New user configuration file written: ' . pts_config::get_config_file_location() . PHP_EOL . PHP_EOL;
 	}
 }
 
