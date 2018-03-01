@@ -48,7 +48,7 @@ class pts_test_file_download
 		$this->platform = $platform;
 		$this->architecture = $architecture;
 
-		if(phodevi::is_windows())
+		if(phodevi::is_windows() || !extension_loaded('openssl'))
 		{
 			// Windows with PHP stock binaries has problems downloading from HTTPS
 			$this->url = str_replace('https://', 'http://', $this->url);
