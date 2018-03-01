@@ -182,6 +182,7 @@ class pts_test_execution
 			'LOG_FILE' => $test_log_file,
 			'DISPLAY' => getenv('DISPLAY'),
 			'PATH' => getenv('PATH'),
+			'DEBUG_PATH' => getenv('PATH'),
 			));
 
 			$restored_from_cache = false;

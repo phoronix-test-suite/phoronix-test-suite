@@ -148,6 +148,7 @@ class pts_tests
 	{
 		$extra_vars = array();
 		$extra_vars['HOME'] = $test_profile->get_install_dir();
+		$extra_vars['DEBUG_HOME'] = $test_profile->get_install_dir();
 		$extra_vars['PATH'] = "\$PATH";
 		$extra_vars['LC_ALL'] = '';
 		$extra_vars['LC_NUMERIC'] = '';
