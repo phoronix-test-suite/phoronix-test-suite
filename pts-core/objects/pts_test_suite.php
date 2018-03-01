@@ -96,6 +96,13 @@ class pts_test_suite
 			}
 		}
 
+		// XInclude support
+		if(function_exists('dom_import_simplexml'))
+		{
+			$dom = dom_import_simplexml($xml);
+			$dom->ownerDocument->xinclude();
+		}
+
 		if(isset($xml->SuiteInformation))
 		{
 			$this->title = self::clean_input($xml->SuiteInformation->Title);

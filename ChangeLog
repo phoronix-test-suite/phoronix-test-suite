@@ -6,6 +6,7 @@ pts-core: Rewritten Windows support
 pts-core: Support for using Cygwin's bash interpreter on Windows systems for better test profile parsing support
 pts-core: When running on Windows, add new "windows/" OpenBenchmarking.org test repository
 pts-core: Introduce basic phoronix-test-suite shell for easier PTS experience
+pts-core: Allow XInclude support for test suites
 perf_per_dollar: Allow calculating cloud costs / perf-per via COST_PERF_PER_HOUR= environment variable
 phodevi: Cavium ThunderX detection
 
