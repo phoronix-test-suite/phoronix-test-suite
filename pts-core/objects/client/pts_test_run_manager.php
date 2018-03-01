@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2017, Phoronix Media
-	Copyright (C) 2009 - 2017, Michael Larabel
+	Copyright (C) 2009 - 2018, Phoronix Media
+	Copyright (C) 2009 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -448,7 +448,7 @@ class pts_test_run_manager
 			{
 				$subsystem_name = pts_strings::trim_search_query($components[$subsystem]);
 
-				if(phodevi::is_vendor_string($subsystem_name) && !in_array($subsystem_name, $subsystem_r))
+				if(!empty($subsystem_name) && phodevi::is_vendor_string($subsystem_name) && !in_array($subsystem_name, $subsystem_r))
 				{
 					$subsystem_r[] = $subsystem_name;
 				}
