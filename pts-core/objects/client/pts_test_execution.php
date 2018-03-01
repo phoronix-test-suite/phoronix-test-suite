@@ -314,8 +314,11 @@ class pts_test_execution
 					}
 				}
 			}
-
-			if(!in_array(($i + 1), $ignore_runs) && $exit_status_pass)
+			if(in_array(($i + 1), $ignore_runs))
+			{
+				pts_client::$display->test_run_instance_error('Ignoring run result per test profile definition.');
+			}
+			else if($exit_status_pass)
 			{
 				// if it was monitoring, active result should already be set
 				if(!$produced_monitoring_result) // XXX once single-run-multiple-outputs is supported, this check can be disabled to allow combination of results

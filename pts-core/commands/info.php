@@ -89,6 +89,7 @@ class info implements pts_option_interface
 				$table[] = array(pts_client::cli_just_bold('Software Type: '), $o->get_test_software_type());
 				$table[] = array(pts_client::cli_just_bold('License Type: '), $o->get_license());
 				$table[] = array(pts_client::cli_just_bold('Test Status: '), $o->get_status());
+				$table[] = array(pts_client::cli_just_bold('Supported Platforms: '), implode(', ', $o->get_supported_platforms()));
 				$table[] = array(pts_client::cli_just_bold('Project Web-Site: '), $o->get_project_url());
 
 				if($o->get_estimated_run_time() > 1)
