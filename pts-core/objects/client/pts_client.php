@@ -1522,6 +1522,34 @@ class pts_client
 
 		return shell_exec($var_string . $exec);
 	}
+	public static function get_path()
+	{
+		$path = pts_client::read_env('PATH');
+		if(empty($path) || $path == ':')
+		{
+			if(phodevi::is_windows())
+			{
+				$path = 'C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Users\\' . getenv('USERNAME') . '\AppData\Local\Microsoft\WindowsApps;';
+			}
+			else
+			{
+				$path = '/bin:/usr/sbin:/usr/bin:/usr/local/bin:/usr/pkg/bin:/usr/games';
+			}
+		}
+		if(phodevi::is_windows())
+		{
+			$possible_paths_to_add = array('C:\Users\\' . getenv('USERNAME') . '\AppData\Local\Programs\Python\Python36-32');
+			foreach($possible_paths_to_add as $path_check)
+			{
+				if(is_dir($path_check) && strpos($path, $path_check) == false)
+				{
+					$path .= ';' . $path_check;
+				}
+			}
+		}
+
+		return $path;
+	}
 	public static function executable_in_path($executable, $ignore_paths_with = false)
 	{
 		static $cache = null;

@@ -181,8 +181,8 @@ class pts_test_execution
 			$test_extra_runtime_variables = array_merge($extra_runtime_variables, array(
 			'LOG_FILE' => $test_log_file,
 			'DISPLAY' => getenv('DISPLAY'),
-			'PATH' => getenv('PATH'),
-			'DEBUG_PATH' => getenv('PATH'),
+			'PATH' => pts_client::get_path(),
+			'DEBUG_PATH' => pts_client::get_path(),
 			));
 
 			$restored_from_cache = false;
