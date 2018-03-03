@@ -1538,10 +1538,21 @@ class pts_client
 		}
 		if(phodevi::is_windows())
 		{
-			$possible_paths_to_add = array('C:\Users\\' . getenv('USERNAME') . '\AppData\Local\Programs\Python\Python36-32');
+			$possible_paths_to_add = array('C:\Users\\' . getenv('USERNAME') . '\AppData\Local\Programs\Python\Python36-32', 'C:\Python27', pts_file_io::glob('C:\*\ojdkbuild\java-*\bin'));
 			foreach($possible_paths_to_add as $path_check)
 			{
-				if(is_dir($path_check) && strpos($path, $path_check) == false)
+				if(is_array($path_check))
+				{
+					// if it's an array it came from glob so no need to re-check if is_dir()
+					foreach($path_check as $sub_check)
+					{
+						if(strpos($path, $sub_check) == false)
+						{
+							$path .= ';' . $sub_check;
+						}
+					}
+				}
+				else if(is_dir($path_check) && strpos($path, $path_check) == false)
 				{
 					$path .= ';' . $path_check;
 				}
@@ -1556,19 +1567,7 @@ class pts_client
 
 		if(!isset($cache[$executable]) || empty($cache[$executable]) || $ignore_paths_with)
 		{
-			$path = pts_client::read_env('PATH');
-
-			if(empty($path) || $path == ':')
-			{
-				if(phodevi::is_windows())
-				{
-					$path = 'C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Users\\' . getenv('USERNAME') . '\AppData\Local\Microsoft\WindowsApps;';
-				}
-				else
-				{
-					$path = '/bin:/usr/sbin:/usr/bin:/usr/local/bin:/usr/pkg/bin:/usr/games';
-				}
-			}
+			$path = pts_client::get_path();
 			$paths = pts_strings::trim_explode((phodevi::is_windows() ? ';' : ':'), $path);
 			$executable_path = false;
 
