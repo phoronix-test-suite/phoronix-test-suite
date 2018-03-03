@@ -1538,7 +1538,7 @@ class pts_client
 		}
 		if(phodevi::is_windows())
 		{
-			$possible_paths_to_add = array('C:\Users\\' . getenv('USERNAME') . '\AppData\Local\Programs\Python\Python36-32', 'C:\Python27', pts_file_io::glob('C:\*\ojdkbuild\java-*\bin'));
+			$possible_paths_to_add = array('C:\Users\\' . getenv('USERNAME') . '\AppData\Local\Programs\Python\Python36-32', 'C:\Python27', pts_file_io::glob('C:\*\Java\jdk-*\bin'), pts_file_io::glob('C:\*\ojdkbuild\java-*\bin'), pts_file_io::glob('C:\*\Java\jre-*\bin'));
 			foreach($possible_paths_to_add as $path_check)
 			{
 				if(is_array($path_check))
@@ -1594,6 +1594,11 @@ class pts_client
 			}
 
 			$cache[$executable] = $executable_path;
+		}
+		if($cache[$executable] == false && phodevi::is_windows() && substr($executable, -4) != '.exe')
+		{
+			// See if there is .exe match most likely, e.g. Java, Python, etc.
+			$cache[$executable] = pts_client::executable_in_path($executable . '.exe');
 		}
 
 		return $cache[$executable];
