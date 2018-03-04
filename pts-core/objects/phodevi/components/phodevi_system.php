@@ -585,7 +585,7 @@ class phodevi_system extends phodevi_device_interface
 									$v = substr($v, 0, $t);
 								}
 
-								if(pts_strings::is_version($version))
+								if(pts_strings::is_version($v))
 								{
 									$version = $v;
 								}
@@ -605,6 +605,8 @@ class phodevi_system extends phodevi_device_interface
 					}
 				}
 			}
+			// sometimes "copyright" slips into version string
+			$compilers['gcc'] = str_replace('Copyright', '', $compilers['gcc']);
 		}
 
 		if(pts_client::executable_in_path('pgcc'))
