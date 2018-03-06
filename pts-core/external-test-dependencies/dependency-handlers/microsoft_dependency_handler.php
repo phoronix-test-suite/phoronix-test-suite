@@ -24,7 +24,11 @@ class microsoft_dependency_handler implements pts_dependency_handler
 {
 	public static function startup_handler()
 	{
-		// Nothing to do
+		// Ensure OpenSSL support is enabled otherwise HTTPS downloads will fail
+		if(!extension_loaded('openssl') && is_file('C:\PHP\ext\php_openssl.dll'))
+		{
+			dl('php_openssl.dll');
+		}
 	}
 	public static function what_provides($files_needed)
 	{
