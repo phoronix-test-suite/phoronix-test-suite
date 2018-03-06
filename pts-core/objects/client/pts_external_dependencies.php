@@ -487,6 +487,7 @@ class pts_external_dependencies
 	{
 		// Do the actual installing process of packages using the distribution's package management system
 		$vendor_install_file = PTS_EXDEP_PATH . 'scripts/install-' . self::vendor_identifier('installer') . '-packages.sh';
+		$pkg_vendor = self::vendor_identifier('package-list');
 
 		// Rebuild the array index since some OS package XML tags provide multiple package names in a single string
 		$os_packages_to_install = explode(' ', implode(' ', $os_packages_to_install));
@@ -500,12 +501,15 @@ class pts_external_dependencies
 
 			echo shell_exec('sh ' . $vendor_install_file . ' ' . implode(' ', $os_packages_to_install));
 		}
+		else if(is_file(PTS_EXDEP_PATH . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php'))
+		{
+			require_once(PTS_EXDEP_PATH . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php');
+			eval("\$installed = {$pkg_vendor}_dependency_handler::install_dependencies(\$os_packages_to_install);");
+			return $installed;
+		}
 		else
 		{
-			if(phodevi::is_macosx() == false)
-			{
-				echo 'Distribution install script not found!';
-			}
+			echo 'Distribution install script not found!';
 		}
 	}
 	private static function vendor_identifier($type)

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015, Phoronix Media
-	Copyright (C) 2015, Michael Larabel
+	Copyright (C) 2015 - 2018, Phoronix Media
+	Copyright (C) 2015 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -101,6 +101,10 @@ class fedora_dependency_handler implements pts_dependency_handler
 		}
 
 		return null;
+	}
+	public static function install_dependencies($os_packages_to_install)
+	{
+		// Not needed since this OS uses a dependency install script instead...
 	}
 }
 

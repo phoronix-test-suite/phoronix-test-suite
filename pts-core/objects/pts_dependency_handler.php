@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015, Phoronix Media
-	Copyright (C) 2015, Michael Larabel
+	Copyright (C) 2015 - 2018, Phoronix Media
+	Copyright (C) 2015 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,7 +22,16 @@
 
 interface pts_dependency_handler
 {
+	//
+	// Passes a file name to the function, returned should be that distribution's package name for what provides that file
+	//
 	public static function what_provides($files_needed);
+
+	//
+	// A function called by pts_external_dependencies with a list of packages for that OS/distribution that should be installed.
+	// This function is an alternative to using a bash script in external-dependencies/scripts
+	//
+	public static function install_dependencies($os_packages_to_install);
 }
 
 ?>
