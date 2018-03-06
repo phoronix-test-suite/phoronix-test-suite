@@ -57,6 +57,10 @@ class microsoft_dependency_handler implements pts_dependency_handler
 					// R
 					$packages_needed[] = 'https://cran.r-project.org/bin/windows/base/R-3.4.3-win.exe';
 					break;
+				case 'Go':
+					// Golang
+					$packages_needed[] = 'https://dl.google.com/go/go1.10.windows-amd64.msi';
+					break;
 
 			}
 		}
