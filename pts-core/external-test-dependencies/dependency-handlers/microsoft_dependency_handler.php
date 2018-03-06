@@ -29,6 +29,22 @@ class microsoft_dependency_handler implements pts_dependency_handler
 		{
 			dl('php_openssl.dll');
 		}
+		if(!is_file('C:\cygwin64\bin\bash.exe') || !is_file('C:\cygwin64\bin\unzip.exe') || !is_file('C:\cygwin64\bin\which.exe'))
+		{
+			echo PHP_EOL . 'The Phoronix Test Suite on Windows depends upon Cygwin for a Bash interpreter and other basic commands... Setting up.' . PHP_EOL;
+			$cwd = getcwd();
+			$cygwin_location = self::get_cygwin();
+			chdir(dirname($cygwin_location));
+			echo PHP_EOL . 'Configuring Cygwin...' . PHP_EOL;
+			shell_exec(basename($cygwin_location) . ' -q -P unzip -P wget -P bc -P which');
+			chdir($cwd);
+
+			if(is_file('C:\cygwin64\etc\fstab') && stripos(file_get_contents('C:\cygwin64\etc\fstab'), 'noacl') === false)
+			{
+				// noacl is needed to not mess with file permissions
+				file_put_contents('C:\cygwin64\etc\fstab', 'none /cygdrive cygdrive binary,noacl,posix=0,user 0 0');
+			}
+		}
 	}
 	public static function what_provides($files_needed)
 	{
@@ -45,6 +61,22 @@ class microsoft_dependency_handler implements pts_dependency_handler
 			}
 		}
 		return $packages_needed;
+	}
+	protected static function file_download_location()
+	{
+		// TODO determine what logic may need to be applied or if to punt it as an option, etc
+		return getenv('USERPROFILE') . '\Downloads\\';
+	}
+	protected static function get_cygwin()
+	{
+		$cygwin_location = self::file_download_location() . 'cygwin-setup-x86_64.exe';
+		if(!is_file($cygwin_location))
+		{
+			echo 'Downloading Cygwin...';
+			pts_network::download_file('http://cygwin.com/setup-x86_64.exe', $cygwin_location);
+		}
+
+		return $cygwin_location;
 	}
 	public static function install_dependencies($os_packages_to_install)
 	{
@@ -72,7 +104,7 @@ class microsoft_dependency_handler implements pts_dependency_handler
 		$cwd = getcwd();
 		if(!empty($files_to_download))
 		{
-			$download_location =  getenv('USERPROFILE') . '\Downloads\\';
+			$download_location = self::file_download_location();
 			echo PHP_EOL . 'Files needed for download to meet external dependencies...';
 			echo PHP_EOL . 'Download Location: ' . $download_location . PHP_EOL;
 
@@ -97,12 +129,7 @@ class microsoft_dependency_handler implements pts_dependency_handler
 		if(!empty($pass_to_cygwin))
 		{
 			echo PHP_EOL . 'Cygwin dependencies needed: ' . implode(' ', $pass_to_cygwin) . PHP_EOL;
-			$cygwin_location = getenv('USERPROFILE') . '\Downloads\cygwin-setup-x86_64.exe';
-			if(!is_file($cygwin_location))
-			{
-				echo 'Downloading Cygwin...';
-				pts_network::download_file('http://cygwin.com/setup-x86_64.exe', $cygwin_location);
-			}
+			$cygwin_location = self::get_cygwin();
 			chdir(dirname($cygwin_location));
 			$cygwin_cmd = basename($cygwin_location) . ' -q ' . implode(' -P ', $pass_to_cygwin);
 			echo PHP_EOL . 'RUNNING: ' . $cygwin_cmd;
