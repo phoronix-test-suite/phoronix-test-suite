@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2017, Phoronix Media
-	Copyright (C) 2010 - 2017, Michael Larabel
+	Copyright (C) 2010 - 2018, Phoronix Media
+	Copyright (C) 2010 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -206,10 +206,12 @@ class dump_documentation implements pts_option_interface
 		$dom->saveHTMLFile(PTS_PATH . 'documentation/stubs/55_virtual_suites.html');
 
 		// Load the HTML documentation
+		$md = new pts_md_template();
 		foreach(pts_file_io::glob(PTS_PATH . 'documentation/stubs/*_*.html') as $html_file)
 		{
 			$pdf->html_to_pdf($html_file);
 			$html_doc->html_to_html($html_file);
+			$md->html_to_md($html_file);
 		}
 
 		if(!is_writable(PTS_PATH . 'documentation/'))
@@ -222,6 +224,8 @@ class dump_documentation implements pts_option_interface
 			$pdf->Output($pdf_file);
 			$html_doc->Output(PTS_PATH . 'documentation/phoronix-test-suite.html');
 			echo PHP_EOL . 'Saved To: ' . $pdf_file . PHP_EOL . PHP_EOL;
+
+			$md->Output(PTS_PATH . 'documentation/phoronix-test-suite.md');
 
 			// Also re-generate the man page
 			$man_page = '.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "' . PTS_VERSION . '"' . PHP_EOL . '.SH NAME' . PHP_EOL;
@@ -276,7 +280,16 @@ class dump_documentation implements pts_option_interface
 		$pdf->html_to_pdf(PTS_PATH . 'documentation/phoromatic.html');
 		$pdf_file = PTS_PATH . 'documentation/phoromatic.pdf';
 		$pdf->Output($pdf_file);
+
 		echo PHP_EOL . 'Saved To: ' . $pdf_file . PHP_EOL . PHP_EOL;
+
+		$md = new pts_md_template();
+		$md->html_to_md(PTS_PATH . 'documentation/phoromatic.html');
+		$md->Output(PTS_PATH . 'documentation/phoromatic.md');
+
+		$md = new pts_md_template();
+		$md->html_to_md(PTS_PATH . 'documentation/phoronix-test-suite-windows.html');
+		$md->Output(PTS_PATH . 'documentation/phoronix-test-suite-window.md');
 
 	}
 }

@@ -81,9 +81,6 @@
 <h3>openbenchmarking-changes<em>  </em>
 </h3>
 <p>This option will list recent changes to test profiles of enabled OpenBenchmarking.org repositories.</p>
-<h3>openbenchmarking-launcher<em>  </em>
-</h3>
-<p>This option is called automatically with the .openbenchmarking MIME file extension support for launching OpenBenchmarking.org operations.</p>
 <h3>openbenchmarking-login<em>  </em>
 </h3>
 <p>This option is used for controlling your Phoronix Test Suite client options for OpenBechmarking.org and syncing the client to your account.</p>
@@ -112,6 +109,9 @@
 <h3>php-conf<em>  </em>
 </h3>
 <p>This option will print information that is useful to developers when debugging problems with the Phoronix Test Suite and/or test profiles and test suites.</p>
+<h3>shell<em>  </em>
+</h3>
+<p>A simple text-driven shell interface / helper to the Phoronix Test Suite. Ideal for those that may be new to the Phoronix Test Suite</p>
 <h3>system-info<em>  </em>
 </h3>
 <p>Display the installed system hardware and software information as detected by the Phoronix Test Suite Phodevi Library.</p>
@@ -245,6 +245,9 @@
 </h3>
 <p>This option is used if you wish to analyze a result file to see which runs produced the most wins/losses of those result identifiers in the saved file.</p>
 <h1>Other</h1>
+<h3>commands<em>  </em>
+</h3>
+<p>This option will display a short list of possible Phoronix Test Suite commands.</p>
 <h3>debug-dependency-handler<em>  </em>
 </h3>
 <p>This option is used for testing the distribution-specific dependency handler for external dependencies.</p>
@@ -256,7 +259,7 @@
 <p>This option is used during the development of the Phoronix Test Suite software for testing of internal interfaces, commands, and other common code-paths. The produced numbers should only be comparable for the same version of the Phoronix Test Suite, on the same hardware/software system, conducted on the same day of testing. This isn't intended as any scientific benchmark but simply to stress common PHP code-paths and looking for hot areas to optimize, etc.</p>
 <h3>help<em>  </em>
 </h3>
-<p>This option will display the list of available Phoronix Test Suite commands.</p>
+<p>This option will display a list of available Phoronix Test Suite commands and possible parameter types.</p>
 <h3>version<em>  </em>
 </h3>
 <p>This option will display the Phoronix Test Suite client version.</p>
@@ -299,12 +302,6 @@
 <h3>gui<em>  </em>
 </h3>
 <p>Launch the Phoronix Test Suite HTML5 web user-interface in the local GUI mode (no remote web support) and attempt to auto-launch the web-browser. THIS FEATURE IS CURRENTLY EXPERIMENTAL AND NO LONGER ACTIVE DEVELOPMENT. See Phoronix Test Suite Phoromatic as an alternative web UI approach.</p>
-<h3>start-remote-gui-server<em>  </em>
-</h3>
-<p>Start the GUI web server and WebSocket server processes for remote (or local) access via the web-browser. The settings can be configured via the Phoronix Test Suite's XML configuration file.</p>
-<h3>start-ws-server<em>  </em>
-</h3>
-<p>Manually start a WebSocket server for communication by remote Phoronix Test Suite GUIs, the Phoronix Test Suite Multi-System Commander, and other functionality. This function checks the PTS_WEBSOCKET_PORT and PTS_WEBSOCKET_SERVER environment variables for configuration.</p>
 <h1>Phoromatic</h1>
 <h3>start-phoromatic-server<em>  </em>
 </h3>

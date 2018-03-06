@@ -1,4 +1,4 @@
-.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "7.8.0"
+.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "8.0.0m0"
 .SH NAME
 phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source platform for performing testing and performance evaluation.
 .SH SYNOPSIS
@@ -85,9 +85,6 @@ This option will attempt to cache the test profile/suite meta-data from OpenBenc
 .B openbenchmarking-changes
 This option will list recent changes to test profiles of enabled OpenBenchmarking.org repositories.
 .TP
-.B openbenchmarking-launcher
-This option is called automatically with the .openbenchmarking MIME file extension support for launching OpenBenchmarking.org operations.
-.TP
 .B openbenchmarking-login
 This option is used for controlling your Phoronix Test Suite client options for OpenBechmarking.org and syncing the client to your account.
 .TP
@@ -115,6 +112,9 @@ A simple text-driven interactive interface to the Phoronix Test Suite.
 .TP
 .B php-conf
 This option will print information that is useful to developers when debugging problems with the Phoronix Test Suite and/or test profiles and test suites.
+.TP
+.B shell
+A simple text-driven shell interface / helper to the Phoronix Test Suite. Ideal for those that may be new to the Phoronix Test Suite
 .TP
 .B system-info
 Display the installed system hardware and software information as detected by the Phoronix Test Suite Phodevi Library.
@@ -249,6 +249,9 @@ Open up the test results in the Phoronix Test Suite Result Viewer or on OpenBenc
 This option is used if you wish to analyze a result file to see which runs produced the most wins/losses of those result identifiers in the saved file.
 .TP
 .SH OTHER
+.B commands
+This option will display a short list of possible Phoronix Test Suite commands.
+.TP
 .B debug-dependency-handler
 This option is used for testing the distribution-specific dependency handler for external dependencies.
 .TP
@@ -259,7 +262,7 @@ This option is used during the development of the Phoronix Test Suite software f
 This option is used during the development of the Phoronix Test Suite software for testing of internal interfaces, commands, and other common code-paths. The produced numbers should only be comparable for the same version of the Phoronix Test Suite, on the same hardware/software system, conducted on the same day of testing. This isn't intended as any scientific benchmark but simply to stress common PHP code-paths and looking for hot areas to optimize, etc.
 .TP
 .B help
-This option will display the list of available Phoronix Test Suite commands.
+This option will display a list of available Phoronix Test Suite commands and possible parameter types.
 .TP
 .B version
 This option will display the Phoronix Test Suite client version.
@@ -302,12 +305,6 @@ This option can be used for setting an XML value in the Phoronix Test Suite user
 .SH WEB / GUI SUPPORT
 .B gui
 Launch the Phoronix Test Suite HTML5 web user-interface in the local GUI mode (no remote web support) and attempt to auto-launch the web-browser. THIS FEATURE IS CURRENTLY EXPERIMENTAL AND NO LONGER ACTIVE DEVELOPMENT. See Phoronix Test Suite Phoromatic as an alternative web UI approach.
-.TP
-.B start-remote-gui-server
-Start the GUI web server and WebSocket server processes for remote (or local) access via the web-browser. The settings can be configured via the Phoronix Test Suite's XML configuration file.
-.TP
-.B start-ws-server
-Manually start a WebSocket server for communication by remote Phoronix Test Suite GUIs, the Phoronix Test Suite Multi-System Commander, and other functionality. This function checks the PTS_WEBSOCKET_PORT and PTS_WEBSOCKET_SERVER environment variables for configuration.
 .TP
 .SH PHOROMATIC
 .B n
