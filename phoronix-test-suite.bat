@@ -31,9 +31,18 @@ If defined PHP_BIN goto SkipBinSearch
 
 for /f "delims=" %%i in ('dir "C:\Program Files (x86)\PHP\php.exe" /s /b') do (set PHP_BIN="%%i")
 
-If exist C:\php-gtk2\php.exe (
-  set PHP_BIN=C:\php-gtk2\php.exe
+If defined PHP_BIN goto SkipBinSearch
+
+:: Download PHP for Windows and then extract it
+If not exist PHP (
+echo "Attempting to download and setup Windows PHP release."
+If not exist php.zip (
+powershell -command "& { iwr http://windows.php.net/downloads/releases/php-7.2.3-Win32-VC15-x64.zip -OutFile php.zip }"
+)
+powershell -command "& { Expand-Archive php.zip -DestinationPath PHP }"
   )
+:: Use the newly downloaded PHP location
+set PHP_BIN=%cd%\PHP\php.exe
 
 :SkipBinSearch
 
