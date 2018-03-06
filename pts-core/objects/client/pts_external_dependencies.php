@@ -36,7 +36,6 @@ class pts_external_dependencies
 	public static function install_dependencies(&$test_profiles, $no_prompts = false, $skip_tests_with_missing_dependencies = false)
 	{
 		// PTS External Dependencies install on distribution
-
 		if(phodevi::is_macosx() || pts_client::read_env('NO_EXTERNAL_DEPENDENCIES') != false || pts_client::read_env('SKIP_EXTERNAL_DEPENDENCIES') == 1)
 		{
 			// TODO: maybe add Homebrew support on macOS?
@@ -461,29 +460,15 @@ class pts_external_dependencies
 					else if(strpos($file[$i], '/') === false)
 					{
 						// May just be a command to look for...
-						$possible_paths = array('/usr/local/bin/', '/usr/bin/');
-
-						if(getenv('PATH'))
+						if(pts_client::executable_in_path($file[$i]))
 						{
-							foreach(explode(':', getenv('PATH')) as $path)
-							{
-								$possible_paths[] = $path . '/';
-							}
-						}
-
-						foreach($possible_paths as $path)
-						{
-							if(is_file($path . $file[$i]) || is_link($path . $file[$i]))
-							{
-								$file_is_there = true;
-							}
+							$file_is_there = true;
 						}
 					}
 				}
 			}
 			$file_missing = $file_missing || !$file_is_there;
 		}
-
 		return $file_missing;
 	}
 	private static function install_packages_on_system($os_packages_to_install)
