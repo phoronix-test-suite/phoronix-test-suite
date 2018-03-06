@@ -22,6 +22,10 @@
 
 class opensuse_dependency_handler implements pts_dependency_handler
 {
+	public static function startup_handler()
+	{
+		// Nothing to do
+	}
 	public static function what_provides($files_needed)
 	{
 		$packages_needed = array();

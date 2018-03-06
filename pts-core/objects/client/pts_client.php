@@ -879,6 +879,11 @@ class pts_client
 			pts_config::user_config_generate(array(
 				'PhoronixTestSuite/Options/OpenBenchmarking/AnonymousUsageReporting' => pts_config::bool_to_string($usage_reporting)));
 		}
+
+		if(PTS_IS_CLIENT)
+		{
+			pts_external_dependencies::startup_handler();
+		}
 	}
 	public static function swap_variables($user_str, $replace_call)
 	{

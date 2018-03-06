@@ -33,6 +33,17 @@ class pts_external_dependencies
 		}
 		return false;
 	}
+	public static function startup_handler()
+	{
+		$pkg_vendor = self::vendor_identifier('package-list');
+		if(is_file(PTS_EXDEP_PATH . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php'))
+		{
+			require_once(PTS_EXDEP_PATH . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php');
+			eval("\$startup = {$pkg_vendor}_dependency_handler::startup_handler();");
+			return $startup;
+		}
+		return false;
+	}
 	public static function install_dependencies(&$test_profiles, $no_prompts = false, $skip_tests_with_missing_dependencies = false)
 	{
 		// PTS External Dependencies install on distribution

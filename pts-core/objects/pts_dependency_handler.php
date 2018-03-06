@@ -23,6 +23,11 @@
 interface pts_dependency_handler
 {
 	//
+	// This function is called when the Phoronix Test Suite client starts up for the first time to perform any **OS-specific** checks or double check any needed dependencies, etc are satisifed
+	//
+	public static function startup_handler();
+
+	//
 	// Passes a file name to the function, returned should be that distribution's package name for what provides that file
 	//
 	public static function what_provides($files_needed);
