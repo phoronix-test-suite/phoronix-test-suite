@@ -120,7 +120,9 @@ class pts_external_dependencies
 		$required_external_dependencies_copy = $required_external_dependencies;
 
 		// Find the dependencies that are actually missing from the system
-		$dependencies_to_install = self::check_dependencies_missing_from_system($required_external_dependencies);
+		$skip_warning_on_unmet_deps = false;
+		$generic_packages_needed = array();
+		$dependencies_to_install = self::check_dependencies_missing_from_system($required_external_dependencies, $generic_packages_needed, $skip_warning_on_unmet_deps);
 
 		// If it's automated and can't install without root, return true if there are no dependencies to do otherwise false
 		if($no_prompts && phodevi::is_root() == false)
@@ -156,7 +158,7 @@ class pts_external_dependencies
 		}
 
 		// There were some dependencies not supported on this OS or are missing from the distro's XML file
-		if(count($required_external_dependencies) > 0 && count($dependencies_to_install) == 0)
+		if(count($required_external_dependencies) > 0 && count($dependencies_to_install) == 0 && $skip_warning_on_unmet_deps == false)
 		{
 			$exdep_generic_parser = new pts_exdep_generic_parser();
 			$to_report = array();
@@ -191,7 +193,7 @@ class pts_external_dependencies
 
 
 		// Find the dependencies that are still missing from the system
-		if(!$no_prompts && !defined('PHOROMATIC_PROCESS'))
+		if(!$no_prompts && !defined('PHOROMATIC_PROCESS') && $skip_warning_on_unmet_deps == false)
 		{
 			$generic_packages_needed = array();
 			$required_external_dependencies = $required_external_dependencies_copy;
@@ -288,10 +290,11 @@ class pts_external_dependencies
 		$dependency_names = self::installed_dependency_names();
 		return self::generic_names_to_titles($dependency_names);
 	}
-	private static function check_dependencies_missing_from_system(&$required_test_dependencies, &$generic_names_of_packages_needed = false)
+	private static function check_dependencies_missing_from_system(&$required_test_dependencies, &$generic_names_of_packages_needed = false, &$skip_warning_on_unmet_deps = false)
 	{
 		$generic_dependencies_parser = new pts_exdep_generic_parser();
 		$vendor_dependencies_parser = new pts_exdep_platform_parser(self::vendor_identifier('package-list'));
+		$skip_warning_on_unmet_deps = $vendor_dependencies_parser->skip_warning_on_unmet_dependencies();
 		$kernel_architecture = phodevi::read_property('system', 'kernel-architecture');
 		$needed_os_packages = array();
 
