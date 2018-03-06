@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2017, Phoronix Media
-	Copyright (C) 2010 - 2017, Michael Larabel
+	Copyright (C) 2010 - 2018, Phoronix Media
+	Copyright (C) 2010 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -37,9 +37,9 @@ class pts_external_dependencies
 	{
 		// PTS External Dependencies install on distribution
 
-		if(phodevi::is_windows() || phodevi::is_macosx() || pts_client::read_env('NO_EXTERNAL_DEPENDENCIES') != false || pts_client::read_env('SKIP_EXTERNAL_DEPENDENCIES') == 1)
+		if(phodevi::is_macosx() || pts_client::read_env('NO_EXTERNAL_DEPENDENCIES') != false || pts_client::read_env('SKIP_EXTERNAL_DEPENDENCIES') == 1)
 		{
-			// Windows doesn't use any external dependencies
+			// TODO: maybe add Homebrew support on macOS?
 			return true;
 		}
 
