@@ -263,7 +263,7 @@ function pts_version_codenames()
 }
 
 pts_define('PTS_VERSION', '8.0.0m0');
-pts_define('PTS_CORE_VERSION', 7901);
+pts_define('PTS_CORE_VERSION', 7903);
 pts_define('PTS_CODENAME', 'FOLLDAL');
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));
 pts_define('PTS_IS_WEB_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'WEB_CLIENT'));

@@ -951,18 +951,6 @@ class phodevi_gpu extends phodevi_device_interface
 				}
 
 			}
-			else if(($nvidia_smi = pts_client::executable_in_path('nvidia-smi')))
-			{
-				$smi_output = shell_exec(escapeshellarg($nvidia_smi) . ' -q -d CLOCK');
-				$mem = strpos($smi_output, 'Max Clocks');
-				if($mem !== false)
-				{
-					$core_clock = substr($smi_output, stripos($smi_output, 'Graphics:', $mem) + 9);
-					$core_freq = trim(substr($core_clock, 0, strpos($core_clock, 'MHz')));
-					$mem_clock = substr($smi_output, stripos($smi_output, 'Memory:', $mem) + 8);
-					$mem_freq = trim(substr($mem_clock, 0, strpos($mem_clock, 'MHz')));
-				}
-			}
 
 			//
 			// RADEON / AMDGPU Logic
@@ -1098,6 +1086,18 @@ class phodevi_gpu extends phodevi_device_interface
 						$core_freq = $freq_mhz;
 					}
 				}
+			}
+		}
+		else if(($nvidia_smi = pts_client::executable_in_path('nvidia-smi')))
+		{
+			$smi_output = shell_exec(escapeshellarg($nvidia_smi) . ' -q -d CLOCK');
+			$mem = strpos($smi_output, 'Max Clocks');
+			if($mem !== false)
+			{
+				$core_clock = substr($smi_output, stripos($smi_output, 'Graphics', $mem) + 9);
+				$core_freq = trim(str_replace(':', '', substr($core_clock, 0, strpos($core_clock, 'MHz'))));
+				$mem_clock = substr($smi_output, stripos($smi_output, 'Memory', $mem) + 8);
+				$mem_freq = trim(str_replace(':', '', substr($mem_clock, 0, strpos($mem_clock, 'MHz'))));
 			}
 		}
 
@@ -1272,7 +1272,7 @@ class phodevi_gpu extends phodevi_device_interface
 		else if(phodevi::is_windows())
 		{
 			$windows_gpu = phodevi_windows_parser::get_wmi_object_multi('Win32_VideoController', 'Name');
-			if(count($windows_gpu) > 1 && ($x = array_search('Microsoft Basic Display', $windows_gpu)) !== false)
+			if(count($windows_gpu) > 1 && ($x = array_search('Microsoft Basic Display Adapter', $windows_gpu)) !== false)
 			{
 				unset($windows_gpu[$x]);
 			}
