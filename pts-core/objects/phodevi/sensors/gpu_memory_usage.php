@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2017, Phoronix Media
-	Copyright (C) 2017, Michael Larabel
+	Copyright (C) 2017 - 2018, Phoronix Media
+	Copyright (C) 2017 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ class gpu_memory_usage extends phodevi_sensor
 	{
 		$mem_usage = -1;
 
-		if(phodevi::is_nvidia_graphics() && ($nvidia_smi = pts_client::executable_in_path('nvidia-smi')))
+		if(($nvidia_smi = pts_client::executable_in_path('nvidia-smi')))
 		{
 			$smi_output = shell_exec($nvidia_smi . ' -q -d MEMORY 2>&1');
 			$mem = strpos($smi_output, 'Used');
