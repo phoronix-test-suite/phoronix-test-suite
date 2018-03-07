@@ -1244,7 +1244,7 @@ class phodevi_gpu extends phodevi_device_interface
 		}
 		else if(phodevi::is_windows())
 		{
-			$info = implode(' + ', explode("\n", str_replace('(TM)', null, phodevi_windows_parser::get_wmi_object('Win32_VideoController', 'Name'))));
+			$info = str_replace('(TM)', null, implode(' + ', phodevi_windows_parser::get_wmi_object_multi('Win32_VideoController', 'Name')));
 		}
 
 		if(empty($info) || strpos($info, 'Mesa ') !== false || strpos($info, 'Gallium ') !== false || strpos($info, ' (DRM') !== false)
