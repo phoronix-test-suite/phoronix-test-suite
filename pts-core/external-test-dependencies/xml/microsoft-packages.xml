@@ -14,7 +14,7 @@
 		<Package>
 			<GenericName>fortran-compiler</GenericName>
 			<PackageName>gcc-fortran libgfortran3</PackageName>
-			<FileCheck>C:\cygwin64\bin\f95.exe</FileCheck>
+			<FileCheck>C:\cygwin64\bin\f95</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>java</GenericName>
