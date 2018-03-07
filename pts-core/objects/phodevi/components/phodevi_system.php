@@ -1459,7 +1459,7 @@ class phodevi_system extends phodevi_device_interface
 				$smi_output = shell_exec(escapeshellarg($nvidia_smi) . ' -q -d CLOCK');
 				if(($v = stripos($smi_output, 'Driver Version')) !== false)
 				{
-					$nv_version = substr($smi_output, strpos($nv_version, ':', $v) + 1);
+					$nv_version = substr($smi_output, strpos($smi_output, ':', $v) + 1);
 					$nv_version = trim(substr($nv_version, 0, strpos($nv_version, "\n")));
 					if(pts_strings::is_version($nv_version))
 					{
