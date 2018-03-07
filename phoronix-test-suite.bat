@@ -26,13 +26,6 @@ set PTS_MODE=CLIENT
 :: TODO: Other work to bring this up to sync with the *NIX phoronix-test-suite launcher
 If defined PHP_BIN goto SkipBinSearch
   
-:: Recursively search C:Program Files (x86)\PHP\ and subdirectories for the php executable
-:: (installed location may vary depending on the installation method.)
-
-for /f "delims=" %%i in ('dir "C:\Program Files (x86)\PHP\php.exe" /s /b') do (set PHP_BIN="%%i")
-
-If defined PHP_BIN goto SkipBinSearch
-
 :: Download PHP for Windows and then extract it
 If not exist C:\PHP\php.exe (
 echo "Attempting to download and setup Windows PHP release."
