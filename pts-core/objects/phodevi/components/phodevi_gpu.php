@@ -678,6 +678,21 @@ class phodevi_gpu extends phodevi_device_interface
 		{
 			$video_ram = $NVIDIA / 1024;
 		}
+		else if(($nvidia_smi = pts_client::executable_in_path('nvidia-smi')))
+		{
+			$smi_output = shell_exec(escapeshellarg($nvidia_smi) . ' -q -d MEMORY');
+			$mem = strpos($smi_output, 'Total');
+			if($mem !== false)
+			{
+				$mem = substr($smi_output, strpos($smi_output, ':', $mem) + 1);
+				$mem = trim(substr($mem, 0, strpos($mem, 'MiB')));
+
+				if(is_numeric($mem) && $mem > 0)
+				{
+					$video_ram = $mem;
+				}
+			}
+		}
 		else if(phodevi::is_macosx())
 		{
 			$info = phodevi_osx_parser::read_osx_system_profiler('SPDisplaysDataType', 'VRAM');
@@ -935,6 +950,18 @@ class phodevi_gpu extends phodevi_device_interface
 					}
 				}
 
+			}
+			else if(($nvidia_smi = pts_client::executable_in_path('nvidia-smi')))
+			{
+				$smi_output = shell_exec(escapeshellarg($nvidia_smi) . ' -q -d CLOCK');
+				$mem = strpos($smi_output, 'Max Clocks');
+				if($mem !== false)
+				{
+					$core_clock = substr($smi_output, stripos($smi_output, 'Graphics:', $mem) + 9);
+					$core_freq = trim(substr($core_clock, 0, strpos($core_clock, 'MHz')));
+					$mem_clock = substr($smi_output, stripos($smi_output, 'Memory:', $mem) + 8);
+					$mem_freq = trim(substr($mem_clock, 0, strpos($mem_clock, 'MHz')));
+				}
 			}
 
 			//
@@ -1244,7 +1271,12 @@ class phodevi_gpu extends phodevi_device_interface
 		}
 		else if(phodevi::is_windows())
 		{
-			$info = str_replace('(TM)', null, implode(' + ', phodevi_windows_parser::get_wmi_object_multi('Win32_VideoController', 'Name')));
+			$windows_gpu = phodevi_windows_parser::get_wmi_object_multi('Win32_VideoController', 'Name');
+			if(count($windows_gpu) > 1 && ($x = array_search('Microsoft Basic Display', $windows_gpu)) !== false)
+			{
+				unset($windows_gpu[$x]);
+			}
+			$info = str_replace('(TM)', null, implode(' + ', $windows_gpu));
 		}
 
 		if(empty($info) || strpos($info, 'Mesa ') !== false || strpos($info, 'Gallium ') !== false || strpos($info, ' (DRM') !== false)
