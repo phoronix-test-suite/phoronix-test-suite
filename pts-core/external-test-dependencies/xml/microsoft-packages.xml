@@ -12,6 +12,11 @@
 			<FileCheck>C:\cygwin64\bin\gcc.exe</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>fortran-compiler</GenericName>
+			<PackageName>gcc-fortran libgfortran3</PackageName>
+			<FileCheck>C:\cygwin64\bin\f95.exe</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>java</GenericName>
 			<PackageName>https://github.com/ojdkbuild/ojdkbuild/releases/download/9.0.4-1/java-9-openjdk-9.0.4-1.b11.ojdkbuild.windows.x86_64.msi</PackageName>
 			<FileCheck>C:\Program Files\ojdkbuild OR C:\Program Files\Java</FileCheck>
