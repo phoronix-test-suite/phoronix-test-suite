@@ -80,7 +80,7 @@ class gpu_usage extends phodevi_sensor
 		{
 			$this->probe_radeontop = true;
 		}
-		else if(phodevi::is_nvidia_graphics())
+		else if(phodevi::is_nvidia_graphics() || pts_client::executable_in_path('nvidia-smi'))
 		{
 			$util = $this->read_nvidia_settings_gpu_utilization();
 
@@ -127,10 +127,10 @@ class gpu_usage extends phodevi_sensor
 
 	private static function nvidia_core_usage()
 	{
-		$nvidia_smi = shell_exec('nvidia-smi -a');
+		$nvidia_smi = shell_exec(escapeshellarg(pts_client::executable_in_path('nvidia-smi')) . ' -a');
 
 		$util = substr($nvidia_smi, strpos($nvidia_smi, 'Utilization'));
-		$util = substr($util, strpos($util, 'GPU'));
+		$util = substr($util, stripos($util, 'GPU'));
 		$util = substr($util, strpos($util, ':') + 1);
 		$util = trim(substr($util, 0, strpos($util, '%')));
 
