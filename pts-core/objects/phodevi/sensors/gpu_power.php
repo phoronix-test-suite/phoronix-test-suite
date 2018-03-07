@@ -36,7 +36,7 @@ class gpu_power extends phodevi_sensor
 
 		if(($nvidia_smi = pts_client::executable_in_path('nvidia-smi')))
 		{
-			$smi_output = shell_exec($nvidia_smi . ' -q -d POWER');
+			$smi_output = shell_exec(escapeshellarg($nvidia_smi) . ' -q -d POWER');
 			$power = strpos($smi_output, 'Power Draw');
 			if($power !== false)
 			{

@@ -32,7 +32,7 @@ class gpu_memory_usage extends phodevi_sensor
 
 		if(($nvidia_smi = pts_client::executable_in_path('nvidia-smi')))
 		{
-			$smi_output = shell_exec($nvidia_smi . ' -q -d MEMORY 2>&1');
+			$smi_output = shell_exec(escapeshellarg($nvidia_smi) . ' -q -d MEMORY');
 			$mem = strpos($smi_output, 'Used');
 			if($mem !== false)
 			{
