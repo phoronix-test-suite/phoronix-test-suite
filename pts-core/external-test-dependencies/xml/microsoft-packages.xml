@@ -22,6 +22,11 @@
 			<FileCheck>C:\Program Files\ojdkbuild OR C:\Program Files\Java</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>golang</GenericName>
+			<PackageName>https://dl.google.com/go/go1.10.windows-amd64.msi</PackageName>
+			<FileCheck>C:\Go</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>perl</GenericName>
 			<PackageName>http://strawberryperl.com/download/5.26.1.1/strawberry-perl-5.26.1.1-64bit.msi</PackageName>
 			<FileCheck>C:\Strawberry\perl\bin</FileCheck>
