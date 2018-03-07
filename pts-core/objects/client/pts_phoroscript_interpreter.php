@@ -231,7 +231,7 @@ class pts_phoroscript_interpreter
 					{
 						// On Windows some directories are encased in quotes for spaces in the directory names
 						array_shift($line_r);
-						$this->var_current_directory = implode(' ', $line_r);
+						$this->var_current_directory = str_replace('"', '', implode(' ', $line_r));
 					}
 					else if(is_readable($line_r[1]))
 					{
@@ -348,9 +348,10 @@ class pts_phoroscript_interpreter
 					// Set the requested current working dir while executing the command
 					$original_directory = getcwd();
 					chdir($this->var_current_directory);
+					$line = str_replace('./', '', $line);
 
 					// Execute command
-					exec($line . " 2>&1", $exec_output, $prev_exit_status);
+					exec($line, $exec_output, $prev_exit_status);
 
 					// Restore original working directory
 					chdir($original_directory);

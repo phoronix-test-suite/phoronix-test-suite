@@ -42,6 +42,10 @@ class pts_test_execution
 
 		// Do the actual test running process
 		$test_directory = $test_run_request->test_profile->get_install_dir();
+		if(phodevi::is_windows())
+		{
+			$test_directory = str_replace(array('//', '/', '\\\\'), DIRECTORY_SEPARATOR, $test_directory);
+		}
 
 		if(!is_dir($test_directory))
 		{
@@ -219,7 +223,7 @@ class pts_test_execution
 				unset($host_env['argv']);
 				$use_phoroscript = phodevi::is_windows();
 				$to_exec = 'exec';
-				if(phodevi::is_windows() && is_executable('C:\cygwin64\bin\bash.exe'))
+				if(phodevi::is_windows() && is_executable('C:\cygwin64\bin\bash.exe') && pts_file_io::file_get_contents_first_line($to_execute . '/' . $execute_binary) != '#PHOROSCRIPT')
 				{
 					$to_exec = 'C:\cygwin64\bin\bash.exe';
 					$use_phoroscript = false;

@@ -106,8 +106,13 @@ class pts_client
 		{
 			self::build_temp_cache();
 		}
+		$p = pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/EnvironmentDirectory', '~/.phoronix-test-suite/installed-tests/'));
+		if(phodevi::is_windows())
+		{
+			$p = str_replace('/', DIRECTORY_SEPARATOR, $p);
+		}
+		pts_define('PTS_TEST_INSTALL_DEFAULT_PATH', $p);
 
-		pts_define('PTS_TEST_INSTALL_DEFAULT_PATH', pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/EnvironmentDirectory', '~/.phoronix-test-suite/installed-tests/')));
 		pts_define('PTS_SAVE_RESULTS_PATH', pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Testing/ResultsDirectory', '~/.phoronix-test-suite/test-results/')));
 		self::extended_init_process();
 
@@ -282,7 +287,15 @@ class pts_client
 		else
 		{
 			if(!defined('PTS_TEST_INSTALL_DEFAULT_PATH'))
-				pts_define('PTS_TEST_INSTALL_DEFAULT_PATH', pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/EnvironmentDirectory', '~/.phoronix-test-suite/installed-tests/')));
+			{
+				$p = pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/EnvironmentDirectory', '~/.phoronix-test-suite/installed-tests/'));
+				if(phodevi::is_windows())
+				{
+					$p = str_replace('/', DIRECTORY_SEPARATOR, $p);
+				}
+
+				pts_define('PTS_TEST_INSTALL_DEFAULT_PATH', $p);
+			}
 
 			return PTS_TEST_INSTALL_DEFAULT_PATH;
 		}

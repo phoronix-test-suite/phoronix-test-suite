@@ -353,7 +353,7 @@ class pts_test_profile extends pts_test_profile_parser
 	}
 	public function get_install_dir()
 	{
-		return pts_client::test_install_root_path() . $this->identifier . '/';
+		return pts_client::test_install_root_path() . $this->identifier . DIRECTORY_SEPARATOR;
 	}
 	public function get_installer_checksum()
 	{
