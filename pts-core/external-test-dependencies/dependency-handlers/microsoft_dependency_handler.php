@@ -141,7 +141,7 @@ class microsoft_dependency_handler implements pts_dependency_handler
 			echo PHP_EOL . 'Cygwin dependencies needed: ' . implode(' ', $pass_to_cygwin) . PHP_EOL;
 			$cygwin_location = self::get_cygwin();
 			chdir(dirname($cygwin_location));
-			$cygwin_cmd = basename($cygwin_location) . ' -q ' . implode(' -P ', $pass_to_cygwin);
+			$cygwin_cmd = basename($cygwin_location) . ' -q -P ' . implode(' -P ', $pass_to_cygwin);
 			echo PHP_EOL . 'RUNNING: ' . $cygwin_cmd;
 			shell_exec($cygwin_cmd);
 
