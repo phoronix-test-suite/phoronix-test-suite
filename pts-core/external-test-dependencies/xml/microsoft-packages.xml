@@ -51,5 +51,9 @@
 			<PackageName>https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe</PackageName>
 			<FileCheck>C:\Program Files (x86)\Steam</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>p7zip</GenericName>
+			<PackageName>p7zip</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
