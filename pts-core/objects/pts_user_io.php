@@ -42,12 +42,12 @@ class pts_user_io
 		do
 		{
 			echo PHP_EOL . pts_client::cli_just_bold($question . ': ');
-			if($password && pts_client::executable_in_path('stty'))
+			if($password && pts_client::executable_in_path('stty') && !phodevi::is_windows())
 			{
 				system('stty -echo');
 			}
 			$answer = pts_user_io::read_user_input();
-			if($password && pts_client::executable_in_path('stty'))
+			if($password && pts_client::executable_in_path('stty') && !phodevi::is_windows())
 			{
 				system('stty echo');
 			}
