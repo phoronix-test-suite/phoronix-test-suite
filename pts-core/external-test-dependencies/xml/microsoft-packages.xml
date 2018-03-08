@@ -8,7 +8,7 @@
 		</Information>
 		<Package>
 			<GenericName>build-utilities</GenericName>
-			<PackageName>gcc-fortran gcc-c++ openmp mpi make automake autoconf gcc-core gcc-g++</PackageName>
+			<PackageName>gcc-fortran gcc-c++ openmp mpi make automake autoconf gcc-core gcc-g++ libiconv-devel</PackageName>
 			<FileCheck>C:\cygwin64\bin\gcc.exe</FileCheck>
 		</Package>
 		<Package>
@@ -54,6 +54,12 @@
 		<Package>
 			<GenericName>p7zip</GenericName>
 			<PackageName>p7zip</PackageName>
+			<FileCheck>C:\cygwin64\bin\7z</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>cmake</GenericName>
+			<PackageName>cmake</PackageName>
+			<FileCheck>C:\cygwin64\bin\cmake.exe</FileCheck>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
