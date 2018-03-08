@@ -1563,7 +1563,8 @@ class pts_client
 				pts_file_io::glob('C:\*\NVIDIA*\NVSMI'), // NVIDIA SMI
 				pts_file_io::glob('C:\*\R\R-*\bin'),
 				pts_file_io::glob('C:\*\Java\jdk-*\bin'), pts_file_io::glob('C:\*\ojdkbuild\java-*\bin'), pts_file_io::glob('C:\*\Java\jre-*\bin'),
-				'C:\cygwin64\bin'
+				'C:\cygwin64\bin',
+				pts_file_io::glob('C:\Program*\LLVM\bin')
 				);
 			foreach($possible_paths_to_add as $path_check)
 			{
