@@ -770,6 +770,16 @@ class pts_test_installer
 					pts_client::$display->test_install_output($install_log);
 				}
 
+				if(is_file($test_install_directory . 'install-message'))
+				{
+					// Any helpful message to convey to the user
+					$install_msg = pts_file_io::file_get_contents($test_install_directory . 'install-message');
+					if(!empty($install_msg))
+					{
+						pts_client::$display->test_install_error($install_msg);
+					}
+				}
+
 				if(is_file($test_install_directory . 'install-exit-status'))
 				{
 					// If the installer writes its exit status to ~/install-exit-status, if it's non-zero the install failed
