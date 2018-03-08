@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2017, Phoronix Media
-	Copyright (C) 2009 - 2017, Michael Larabel
+	Copyright (C) 2009 - 2018, Phoronix Media
+	Copyright (C) 2009 - 2018, Michael Larabel
 	pts_display_mode_interface.php: The interface used by display mode objects
 
 	This program is free software; you can redistribute it and/or modify
@@ -35,6 +35,7 @@ interface pts_display_mode_interface
 	public function test_run_process_start(&$test_run_manager);
 	public function test_install_start($test_identifier);
 	public function test_install_output(&$to_output);
+	public function test_install_message($msg_string);
 	public function test_install_error($error_string);
 	public function test_install_prompt($prompt_string);
 	public function test_run_configure(&$test_profile);

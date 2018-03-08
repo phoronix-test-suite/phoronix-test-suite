@@ -283,6 +283,10 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	{
 		return;
 	}
+	public function test_install_message($msg_string)
+	{
+		echo $this->tab . $this->tab . pts_client::cli_colored_text($msg_string, 'green', true) . PHP_EOL;
+	}
 	public function test_install_error($error_string)
 	{
 		echo $this->tab . $this->tab . $this->tab . pts_client::cli_colored_text($error_string, 'red', true) . PHP_EOL;

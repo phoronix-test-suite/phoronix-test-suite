@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2017, Phoronix Media
-	Copyright (C) 2009 - 2017, Michael Larabel
+	Copyright (C) 2009 - 2018, Phoronix Media
+	Copyright (C) 2009 - 2018, Michael Larabel
 	pts_concise_display_mode.php: The batch / concise display mode
 
 	This program is free software; you can redistribute it and/or modify
@@ -59,6 +59,10 @@ class pts_web_display_mode implements pts_display_mode_interface
 	public function test_run_success_inline($test_result)
 	{
 		// empty
+	}
+	public function test_install_message($msg_string)
+	{
+		return;
 	}
 	public function test_install_process($test_install_manager)
 	{

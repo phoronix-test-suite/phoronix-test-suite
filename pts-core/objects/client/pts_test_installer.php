@@ -776,7 +776,7 @@ class pts_test_installer
 					$install_msg = pts_file_io::file_get_contents($test_install_directory . 'install-message');
 					if(!empty($install_msg))
 					{
-						pts_client::$display->test_install_error($install_msg);
+						pts_client::$display->test_install_message($install_msg);
 					}
 				}
 

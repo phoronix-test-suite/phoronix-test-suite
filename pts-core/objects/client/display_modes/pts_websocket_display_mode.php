@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2015, Phoronix Media
-	Copyright (C) 2009 - 2015, Michael Larabel
+	Copyright (C) 2009 - 2018, Phoronix Media
+	Copyright (C) 2009 - 2018, Michael Larabel
 	pts_concise_display_mode.php: The batch / concise display mode
 
 	This program is free software; you can redistribute it and/or modify
@@ -47,6 +47,10 @@ class pts_websocket_display_mode implements pts_display_mode_interface
 	public function __construct()
 	{
 
+	}
+	public function test_install_message($msg_string)
+	{
+		return;
 	}
 	public function set_web_socket($ws_server, $ws_user_id)
 	{
