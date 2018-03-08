@@ -206,15 +206,15 @@ class pts_tests
 		}
 
 		$use_phoroscript = phodevi::is_windows();
-		if(pts_client::executable_in_path('bash'))
-		{
-			$sh = 'bash';
-		}
-		else if(phodevi::is_windows() && is_executable('C:\cygwin64\bin\bash.exe'))
+		if(phodevi::is_windows() && is_executable('C:\cygwin64\bin\bash.exe'))
 		{
 			$sh = 'C:\cygwin64\bin\bash.exe';
 			$use_phoroscript = false;
 			$extra_vars['PATH'] = $extra_vars['PATH'] . ';C:\cygwin64\bin';
+		}
+		else if(pts_client::executable_in_path('bash'))
+		{
+			$sh = 'bash';
 		}
 		else
 		{
