@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 8.0.0 Milestone 1
+8 March 2018
 
 pts-core: Rewritten Windows support
 pts-core: Add ~/install-message support where if a test profile installer writes there, that message will in turn be shown to the user on test install
