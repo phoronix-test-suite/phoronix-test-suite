@@ -628,7 +628,7 @@ class system_monitor extends pts_module_interface
 	// Saves average of perf-per-watt results to the result file.
 	private static function process_perf_per_watt_collection(&$test_run_manager)
 	{
-		if(count(self::$perf_per_watt_collection) > 2)
+		if(is_array(self::$perf_per_watt_collection) && count(self::$perf_per_watt_collection) > 2)
 		{
 			// Performance per watt overall
 			$avg = array_sum(self::$perf_per_watt_collection) / count(self::$perf_per_watt_collection);
