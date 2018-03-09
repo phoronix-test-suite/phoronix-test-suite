@@ -72,7 +72,7 @@ class pts_md_template
 					$list_count = 1;
 					foreach($tags->item($i)->childNodes as $j => $li)
 					{
-						$this->md .= PHP_EOL . ($name == 'ol' ? $list_count . '.' : '+') . ' ' . $li->nodeValue;
+						$this->md .= PHP_EOL . trim(($name == 'ol' ? $list_count . '.' : '+') . ' ' . $li->nodeValue);
 						$list_count++;
 					}
 					$this->md .= PHP_EOL;
@@ -87,7 +87,7 @@ class pts_md_template
 					$this->md .= PHP_EOL . '---' . PHP_EOL;
 					break;
 				case '#text':
-					$this->md .= $value;
+					$this->md .= trim($value);
 					break;
 				default:
 					echo PHP_EOL . $name . ' is unhandled.' . PHP_EOL;
@@ -115,7 +115,7 @@ class pts_md_template
 					$text .= '**' . $value . '**';
 					break;
 				case '#text':
-					$text .= $value;
+					$text .= trim($value);
 					break;
 				case 'a':
 					$text .= '[' . $value . '](' . $dom_item->childNodes->item($j)->attributes->getNamedItem('href')->nodeValue . ')';
