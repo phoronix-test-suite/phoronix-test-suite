@@ -662,10 +662,10 @@ class phodevi_system extends phodevi_device_interface
 			$compilers['pgcpp'] = 'PGI C-C++ Workstation';
 		}
 
-		if(pts_client::executable_in_path('clang'))
+		if(($clang = pts_client::executable_in_path('clang')))
 		{
 			// Clang
-			$compiler_info = shell_exec('clang --version 2> /dev/null');
+			$compiler_info = shell_exec(escapeshellarg($clang) . ' --version');
 			if(($cv_pos = stripos($compiler_info, 'clang version')) !== false)
 			{
 				// With Clang 3.0 and prior, the --version produces output where the first line is:
