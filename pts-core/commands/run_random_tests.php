@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014 - 2015, Phoronix Media
-	Copyright (C) 2014 - 2015, Michael Larabel
+	Copyright (C) 2014 - 2018, Phoronix Media
+	Copyright (C) 2014 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -134,9 +134,9 @@ class run_random_tests implements pts_option_interface
 				$batch_mode_settings['UploadResults'] = true;
 				pts_openbenchmarking_client::override_client_setting('UploadSystemLogsByDefault', true);
 			}
-			pts_test_run_manager::set_batch_mode($batch_mode_settings);
 
 			$test_run_manager = new pts_test_run_manager($batch_mode_settings, 2);
+			$test_run_manager->set_batch_mode($batch_mode_settings);
 			if($test_run_manager->initial_checks($to_test) != false)
 			{
 				if($test_run_manager->load_tests_to_run($to_test))
