@@ -607,7 +607,10 @@ class phodevi_system extends phodevi_device_interface
 				}
 			}
 			// sometimes "copyright" slips into version string
-			$compilers['gcc'] = str_replace('Copyright', '', $compilers['gcc']);
+			if(isset($compilers['gcc']))
+			{
+				$compilers['gcc'] = str_replace('Copyright', '', $compilers['gcc']);
+			}
 		}
 
 		if(pts_client::executable_in_path('pgcc'))
