@@ -3,8 +3,8 @@
 <xs:annotation>
 	<xs:documentation xml:lang="en">
 		Phoronix Test Suite / OpenBenchmarking.org XML Test Profile Specification
-		Copyright (C) 2008 - 2017, Phoronix Media
-		Copyright (C) 2008 - 2017, Michael Larabel
+		Copyright (C) 2008 - 2018, Phoronix Media
+		Copyright (C) 2008 - 2018, Michael Larabel
 	</xs:documentation>
 </xs:annotation>
 <xs:include schemaLocation="types.xsd" />
@@ -34,6 +34,8 @@
 			<xs:element name="AppendToArgumentsDescription" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="FileFormat" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="TurnCharsToSpace" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="DeleteOutputBefore" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="DeleteOutputAfter" type="xs:string" minOccurs="0" maxOccurs="1" />
 		</xs:sequence>
 		</xs:complexType>
 		</xs:element>

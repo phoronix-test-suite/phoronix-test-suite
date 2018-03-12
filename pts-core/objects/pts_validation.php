@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2017, Phoronix Media
-	Copyright (C) 2009 - 2017, Michael Larabel
+	Copyright (C) 2009 - 2018, Phoronix Media
+	Copyright (C) 2009 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -283,6 +283,8 @@ class pts_validation
 		$result_precision = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/ResultPrecision');
 		$result_args_desc = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/ArgumentsDescription');
 		$result_append_args_desc = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/AppendToArgumentsDescription');
+		$DeleteOutputBefore = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/DeleteOutputBefore');
+		$DeleteOutputAfter = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/DeleteOutputAfter');
 
 		foreach(array_keys($result_template) as $i)
 		{
@@ -306,6 +308,8 @@ class pts_validation
 			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/AppendToArgumentsDescription', $result_append_args_desc[$i]);
 			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/FileFormat', $file_format[$i]);
 			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/TurnCharsToSpace', $chars_to_space[$i]);
+			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/DeleteOutputBefore', $DeleteOutputBefore[$i]);
+			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/DeleteOutputAfter', $DeleteOutputAfter[$i]);
 		}
 
 		$result_iqc_source_file = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ImageParser/SourceImage');

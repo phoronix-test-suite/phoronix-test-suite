@@ -557,10 +557,22 @@ class pts_test_result_parser
 		else
 		{
 			// Conventional searching for matching section for finding result
+			$delete_output_before = isset($entry->DeleteOutputBefore) ? $entry->DeleteOutputBefore->__toString() : null;
+			$delete_output_after = isset($entry->DeleteOutputAfter) ? $entry->DeleteOutputAfter->__toString() : null;
 			$line_before_hint = isset($entry->LineBeforeHint) ? $entry->LineBeforeHint->__toString() : null;
 			$line_after_hint = isset($entry->LineAfterHint) ? $entry->LineAfterHint->__toString() : null;
 			$line_hint = isset($entry->LineHint) ? $entry->LineHint->__toString() : null;
 			$chars_to_space = isset($entry->TurnCharsToSpace) ? $entry->TurnCharsToSpace->__toString() : null;
+
+			if(!empty($delete_output_before) && ($x = strpos($output, $delete_output_before)) !== false)
+			{
+				$output = substr($output, $x);
+			}
+			if(!empty($delete_output_after) && ($x = strpos($output, $delete_output_after)) !== false)
+			{
+				$output = substr($output, 0, $x);
+			}
+
 			$search_key = self::determine_search_key($output, $line_hint, $line_before_hint, $line_after_hint, $template_line, $template, $template_r, $key_for_result); // SEARCH KEY
 			pts_client::test_profile_debug_message('Search Key: ' . $search_key);
 			if($search_key != null || $line_before_hint != null || $line_after_hint != null || $template_r[0] == $key_for_result)
