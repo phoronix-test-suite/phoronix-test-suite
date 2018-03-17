@@ -25,6 +25,12 @@
 # export PTS_DIR=$(readlink -f `dirname $0`)
 export PTS_DIR=`pwd`
 export PTS_MODE="CLIENT"
+if which realpath >/dev/null 2>&1 ;
+then
+	export PTS_LAUNCHER=`realpath $0`
+else
+	export PTS_LAUNCHER="$PTS_DIR/phoronix-test-suite"
+fi
 
 if [ $PTS_DIR != "`pwd`" ]
 then

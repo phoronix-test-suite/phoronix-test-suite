@@ -22,6 +22,7 @@
 @echo off
 set PTS_DIR=%cd%
 set PTS_MODE=CLIENT
+set PTS_LAUNCHER=%0
 
 :: TODO: Other work to bring this up to sync with the *NIX phoronix-test-suite launcher
 If defined PHP_BIN goto SkipBinSearch
