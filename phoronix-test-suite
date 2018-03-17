@@ -254,6 +254,10 @@ case "$1" in
 "test-module" | "debug-module" | "webui")
 	export PTS_IGNORE_MODULES=1
 	;;
+"debug-self-test")
+	export PTS_IGNORE_MODULES=1
+	export PTS_SILENT_MODE=1
+	;;
 "enterprise-setup")
 	export PTS_SILENT_MODE=1
 	;;
