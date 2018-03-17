@@ -351,6 +351,16 @@ class pts_test_profile extends pts_test_profile_parser
 	{
 		return is_file($this->get_install_dir() . 'pts-install.xml');
 	}
+	public function get_test_executable()
+	{
+		$exe = parent::get_test_executable();
+		if(!is_file($this->get_install_dir() . $exe) && phodevi::is_windows() && is_file($this->get_install_dir() . $exe . '.bat'))
+		{
+			$exe .= '.bat';
+		}
+
+		return $exe;
+	}
 	public function get_install_dir()
 	{
 		return pts_client::test_install_root_path() . $this->identifier . DIRECTORY_SEPARATOR;

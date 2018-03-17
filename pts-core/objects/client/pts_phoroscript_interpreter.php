@@ -251,6 +251,9 @@ class pts_phoroscript_interpreter
 				case 'mkdir':
 					pts_file_io::mkdir($this->var_current_directory . $line_r[1]);
 					break;
+				case 'export':
+					putenv($line_r[1]);
+					break;
 				case 'rm':
 					for($i = 1; $i < count($line_r); $i++)
 					{

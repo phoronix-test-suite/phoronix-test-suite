@@ -223,11 +223,23 @@ class pts_test_execution
 				unset($host_env['argv']);
 				$use_phoroscript = phodevi::is_windows();
 				$to_exec = 'exec';
-				if(phodevi::is_windows() && is_executable('C:\cygwin64\bin\bash.exe') && pts_file_io::file_get_contents_first_line($to_execute . '/' . $execute_binary) != '#PHOROSCRIPT')
+				$post_test_args = ' 2>&1';
+				if(phodevi::is_windows())
 				{
-					$to_exec = 'C:\cygwin64\bin\bash.exe';
-					$use_phoroscript = false;
-					$test_extra_runtime_variables['PATH'] = (isset($test_extra_runtime_variables['PATH']) ? $test_extra_runtime_variables['PATH'] : null) . ';C:\cygwin64\bin';
+					if(is_executable('C:\Windows\System32\cmd.exe') && (pts_file_io::file_get_contents_first_line($to_execute . '/' . $execute_binary) == '@echo off' || substr($execute_binary, -4) == '.bat'))
+					{
+						pts_client::$display->test_run_message('Using cmd.exe batch...');
+						$to_exec = 'C:\Windows\System32\cmd.exe';
+						$execute_binary_prepend = ' /c ';
+						$use_phoroscript = false;
+						$post_test_args = '';
+					}
+					else if(is_executable('C:\cygwin64\bin\bash.exe') && pts_file_io::file_get_contents_first_line($to_execute . '/' . $execute_binary) != '#PHOROSCRIPT')
+					{
+						$to_exec = 'C:\cygwin64\bin\bash.exe';
+						$use_phoroscript = false;
+						$test_extra_runtime_variables['PATH'] = (isset($test_extra_runtime_variables['PATH']) ? $test_extra_runtime_variables['PATH'] : null) . ';C:\cygwin64\bin';
+					}
 				}
 
 				$is_monitoring = pts_test_result_parser::system_monitor_task_check($test_run_request);
@@ -249,7 +261,7 @@ class pts_test_execution
 					{
 						$to_exec = '';
 					}
-					$test_process = proc_open($test_prepend . $to_exec . ' ' . $execute_binary_prepend . './' . $execute_binary . ' ' . $pts_test_arguments . ' 2>&1', $descriptorspec, $pipes, $to_execute, array_merge($host_env, pts_client::environmental_variables(), $test_extra_runtime_variables));
+					$test_process = proc_open($test_prepend . $to_exec . ' ' . $execute_binary_prepend . './' . $execute_binary . ' ' . $pts_test_arguments . $post_test_args, $descriptorspec, $pipes, $to_execute, array_merge($host_env, pts_client::environmental_variables(), $test_extra_runtime_variables));
 
 					if(is_resource($test_process))
 					{
