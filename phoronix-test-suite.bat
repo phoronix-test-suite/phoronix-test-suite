@@ -20,7 +20,7 @@
 
 :: Full path to root directory of the actual Phoronix Test Suite code
 @echo off
-set PTS_DIR=%cd%
+set PTS_DIR=%~dp0
 set PTS_MODE=CLIENT
 set PTS_LAUNCHER=%0
 
@@ -45,4 +45,4 @@ set PHP_BIN=C:\PHP\php.exe
 
 :SkipBinSearch
 
-%PHP_BIN% pts-core\phoronix-test-suite.php %*
+%PHP_BIN% %PTS_DIR%\pts-core\phoronix-test-suite.php %*
