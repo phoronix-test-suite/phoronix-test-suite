@@ -494,19 +494,64 @@ class pts_test_result_parser
 
 		// The actual parsing here
 		$start_result_pos = strrpos($template, $key_for_result);
+		$file_format = isset($entry->FileFormat) ? $entry->FileFormat->__toString() : null;
+		$test_results = array();
 
-		if($prefix != null && $start_result_pos === false && $template != 'csv-dump-frame-latencies' && $template != 'libframetime-output')
+		if($prefix != null && $start_result_pos === false && $template != 'csv-dump-frame-latencies' && $template != 'libframetime-output' && $file_format == null)
 		{
 			// XXX: technically the $prefix check shouldn't be needed, verify whether safe to have this check be unconditional on start_result_pos failing...
 			pts_client::test_profile_debug_message('Failed Additional Check');
 			return false;
 		}
 
-		$space_out_chars = array('(', ')', "\t");
-		$file_format = isset($entry->FileFormat) ? $entry->FileFormat->__toString() : null;
-		if(isset($file_format) && $file_format == 'CSV')
+		if(is_file($log_file))
 		{
-			$space_out_chars[] = ',';
+			if(filesize($log_file) > 52428800)
+			{
+				pts_client::test_profile_debug_message('File Too Big To Parse: ' . $log_file);
+			}
+			$output = file_get_contents($log_file);
+		}
+		else
+		{
+			pts_client::test_profile_debug_message('No Log File Found To Parse');
+			return false;
+		}
+
+		$space_out_chars = array('(', ')', "\t");
+		if(isset($file_format))
+		{
+			switch($file_format)
+			{
+				case 'CSV':
+					$space_out_chars[] = ',';
+					break;
+				case 'XML': echo $output;
+					$xml = simplexml_load_string($output, 'SimpleXMLElement', LIBXML_COMPACT | LIBXML_PARSEHUGE | LIBXML_NOCDATA);
+					$xml = json_decode(json_encode((array)$xml), true);
+					$x = $xml;
+					foreach(explode('/', $template) as $p)
+					{
+						pts_client::test_profile_debug_message('XML Trying ' . $p);
+						if(isset($x[$p]))
+						{
+							$x = $x[$p];
+						}
+						else
+						{
+							pts_client::test_profile_debug_message('XML Failed To Find ' . $p);
+							var_dump($z = array_keys($x));
+							break;
+						}
+					}
+					if(isset($x))
+					{
+						pts_client::test_profile_debug_message('XML Value Found: ' . $x);
+						$test_results[] = trim($x);
+					}
+					goto RESULTPOSTPROCESSING;
+					break;
+			}
 		}
 
 		if((isset($template[($start_result_pos - 1)]) && $template[($start_result_pos - 1)] == '/') || (isset($template[($start_result_pos + strlen($key_for_result))]) && $template[($start_result_pos + strlen($key_for_result))] == '/'))
@@ -534,21 +579,7 @@ class pts_test_result_parser
 				}
 			}
 		}
-		if(is_file($log_file))
-		{
-			if(filesize($log_file) > 52428800)
-			{
-				pts_client::test_profile_debug_message('File Too Big To Parse: ' . $log_file);
-			}
-			$output = file_get_contents($log_file);
-		}
-		else
-		{
-			pts_client::test_profile_debug_message('No Log File Found To Parse');
-			return false;
-		}
 
-		$test_results = array();
 		// Check if frame time parsing info
 		if(self::check_for_frame_time_parsing($test_results, $template, $output, $prefix))
 		{
@@ -726,6 +757,7 @@ class pts_test_result_parser
 			}
 		}
 
+		RESULTPOSTPROCESSING:
 		if(empty($test_results))
 		{
 			pts_client::test_profile_debug_message('No Test Results');
