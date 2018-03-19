@@ -690,6 +690,39 @@ class phodevi extends phodevi_base
 
 		return intval($uptime);
 	}
+	public static function reboot()
+	{
+		if(pts_client::executable_in_path('reboot'))
+		{
+			shell_exec('reboot');
+			sleep(5);
+		}
+		if(phodevi::is_windows())
+		{
+			shell_exec('shutdown /r');
+			sleep(5);
+		}
+	}
+	public static function shutdown()
+	{
+		// some systems like systemctl poweroff, others just like poweroff, but not consistent one method for all systems in testing
+		if(pts_client::executable_in_path('systemctl') && rand(0, 1) == 1)
+		{
+			// Try systemd's poweroff method first
+			shell_exec('systemctl poweroff');
+			sleep(5);
+		}
+		if(pts_client::executable_in_path('poweroff'))
+		{
+			shell_exec('poweroff');
+			sleep(5);
+		}
+		if(phodevi::is_windows())
+		{
+			shell_exec('shutdown /s');
+			sleep(5);
+		}
+	}
 	public static function cpu_arch_compatible($check_against)
 	{
 		$compatible = true;

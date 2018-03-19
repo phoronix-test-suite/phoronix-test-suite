@@ -232,10 +232,7 @@ class phoromatic extends pts_module_interface
 				switch($server_response['phoromatic']['tick_thread'])
 				{
 					case 'reboot':
-						if(pts_client::executable_in_path('reboot'))
-						{
-							shell_exec('reboot');
-						}
+						phodevi::reboot();
 						break;
 					case 'halt-testing':
 						touch(PTS_USER_PATH . 'halt-testing');
@@ -472,11 +469,7 @@ class phoromatic extends pts_module_interface
 		{
 			if(getenv('PTS_NO_REBOOT_ON_NETWORK_FAILURE') == false && PTS_IS_DAEMONIZED_SERVER_PROCESS)
 			{
-				if(pts_client::executable_in_path('reboot'))
-				{
-					shell_exec('reboot');
-					sleep(5);
-				}
+				phodevi::reboot();
 			}
 
 			return false;
@@ -513,10 +506,9 @@ class phoromatic extends pts_module_interface
 					}
 					else if(PTS_IS_DAEMONIZED_SERVER_PROCESS && $times_failed > 10)
 					{
-						if(getenv('PTS_NO_REBOOT_ON_NETWORK_FAILURE') == false && pts_client::executable_in_path('reboot'))
+						if(getenv('PTS_NO_REBOOT_ON_NETWORK_FAILURE') == false)
 						{
-							shell_exec('reboot');
-							sleep(5);
+							phodevi::reboot();
 						}
 					}
 				}
@@ -716,11 +708,7 @@ class phoromatic extends pts_module_interface
 					case 'reboot':
 						echo PHP_EOL . 'Phoromatic received a remote command to reboot.' . PHP_EOL;
 						phoromatic::update_system_status('Attempting System Reboot');
-						if(pts_client::executable_in_path('reboot'))
-						{
-							shell_exec('reboot');
-							sleep(5);
-						}
+						phodevi::reboot();
 						break;
 					case 'shutdown-if-supports-wake':
 						$supports_wol = false;
@@ -743,17 +731,7 @@ class phoromatic extends pts_module_interface
 
 						echo PHP_EOL . 'Phoromatic received a remote command to shutdown.' . PHP_EOL;
 						phoromatic::update_system_status('Attempting System Shutdown');
-						if(pts_client::executable_in_path('systemctl') && rand(0, 1) == 1) // some systems like systemctl poweroff, others just like poweroff, but not consistent one method for all systems in testing
-						{
-							// Try systemd's poweroff method first
-							shell_exec('systemctl poweroff');
-							sleep(5);
-						}
-						if(pts_client::executable_in_path('poweroff'))
-						{
-							shell_exec('poweroff');
-							sleep(5);
-						}
+						phodevi::shutdown();
 						break;
 					case 'maintenance':
 						echo PHP_EOL . 'Idling, system maintenance mode set by Phoromatic Server.' . PHP_EOL;

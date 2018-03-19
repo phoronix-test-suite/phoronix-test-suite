@@ -526,7 +526,7 @@ class pts_test_result_parser
 				case 'CSV':
 					$space_out_chars[] = ',';
 					break;
-				case 'XML': echo $output;
+				case 'XML':
 					$xml = simplexml_load_string($output, 'SimpleXMLElement', LIBXML_COMPACT | LIBXML_PARSEHUGE | LIBXML_NOCDATA);
 					$xml = json_decode(json_encode((array)$xml), true);
 					$x = $xml;

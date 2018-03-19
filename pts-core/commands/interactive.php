@@ -173,7 +173,7 @@ class interactive implements pts_option_interface
 				exec('umount /media/pts-auto-mount 2>&1');
 			}
 
-			exec('reboot');
+			phodevi::reboot();
 		}
 	}
 	private static function select_drive_mount()
