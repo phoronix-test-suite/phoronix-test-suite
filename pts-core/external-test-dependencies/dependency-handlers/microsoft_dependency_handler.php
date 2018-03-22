@@ -38,12 +38,12 @@ class microsoft_dependency_handler implements pts_dependency_handler
 			echo PHP_EOL . 'Configuring Cygwin...' . PHP_EOL;
 			shell_exec(basename($cygwin_location) . ' -q -P unzip -P wget -P bc -P which');
 			chdir($cwd);
+		}
 
-			if(is_file('C:\cygwin64\etc\fstab') && stripos(file_get_contents('C:\cygwin64\etc\fstab'), 'noacl') === false)
-			{
-				// noacl is needed to not mess with file permissions
-				file_put_contents('C:\cygwin64\etc\fstab', 'none /cygdrive cygdrive binary,noacl,posix=0,user 0 0');
-			}
+		if(is_file('C:\cygwin64\etc\fstab') && stripos(file_get_contents('C:\cygwin64\etc\fstab'), 'noacl') === false)
+		{
+			// noacl is needed to not mess with file permissions
+			file_put_contents('C:\cygwin64\etc\fstab', 'none /cygdrive cygdrive binary,noacl,posix=0,user 0 0');
 		}
 	}
 	public static function what_provides($files_needed)
