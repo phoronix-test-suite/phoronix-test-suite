@@ -267,10 +267,10 @@
 			<GenericName>opencv</GenericName>
 			<PackageName>opencv</PackageName>
 		</Package>
-		<Package>
-                        <GenericName>perl-digest-md5</GenericName>
-                        <PackageName>perl-digest-md5-file perl6-digest-md5</PackageName>
-                </Package>
+                <Package>
+			<GenericName>golang</GenericName>
+			<PackageName>go</PackageName>
+		</Package>
 		<Package>
 			<GenericName>python-scipy</GenericName>
 			<PackageName>python2-scipy</PackageName>

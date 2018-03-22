@@ -540,7 +540,6 @@ class pts_test_result_parser
 						else
 						{
 							pts_client::test_profile_debug_message('XML Failed To Find ' . $p);
-							var_dump($z = array_keys($x));
 							break;
 						}
 					}
