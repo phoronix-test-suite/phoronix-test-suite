@@ -247,7 +247,7 @@ class pts_test_execution
 
 				if($use_phoroscript || pts_client::read_env('USE_PHOROSCRIPT_INTERPRETER') != false)
 				{
-					pts_client::$display->test_run_message('Falling back to experimental PhoroScript code path...');
+					pts_client::$display->test_run_message('Making use of PhoroScript code path...');
 					$phoroscript = new pts_phoroscript_interpreter($to_execute . '/' . $execute_binary, $test_extra_runtime_variables, $to_execute);
 					$phoroscript->execute_script($pts_test_arguments);
 					$test_result_std_output = null;
