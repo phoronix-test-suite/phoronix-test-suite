@@ -113,7 +113,7 @@ class pts_render
 				$normalize_against = false;
 			}
 
-			$result_object->normalize_buffer_values($normalize_against);
+			$result_object->normalize_buffer_values($normalize_against, $extra_attributes);
 		}
 		if(isset($extra_attributes['sort_result_buffer_values']))
 		{

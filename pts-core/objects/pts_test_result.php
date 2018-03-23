@@ -225,7 +225,7 @@ class pts_test_result
 
 		return $winner;
 	}
-	public function normalize_buffer_values($normalize_against = false)
+	public function normalize_buffer_values($normalize_against = false, $extra_attributes = null)
 	{
 		if($this->test_profile->get_display_format() != 'BAR_GRAPH') // BAR_ANALYZE_GRAPH is currently unsupported
 		{
@@ -241,7 +241,7 @@ class pts_test_result
 			foreach($keys as $k)
 			{
 				$identifier_r = pts_strings::trim_explode(': ', $this->test_result_buffer->buffer_items[$k]->get_result_identifier());
-				$position = 1;
+				$position = isset($extra_attributes['multi_way_comparison_invert_default']) ? 0 : 1;
 
 				if(!isset($key_sets[$identifier_r[$position]]))
 				{
