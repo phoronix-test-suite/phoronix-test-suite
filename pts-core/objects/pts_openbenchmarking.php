@@ -114,6 +114,23 @@ class pts_openbenchmarking
 
 		return $is_id;
 	}
+	public static function result_uploads_from_this_ip()
+	{
+		$results = array();
+
+		if(pts_network::internet_support_available())
+		{
+			$json_response = pts_openbenchmarking::make_openbenchmarking_request('result_uploads_from_this_ip');
+			$json_response = json_decode($json_response, true);
+
+			if(is_array($json_response) && isset($json_response['uploads']['public_ids']))
+			{
+				$results = $json_response['uploads']['public_ids'];
+			}
+		}
+
+		return $results;
+	}
 	public static function clone_openbenchmarking_result(&$id, $return_xml = false)
 	{
 		if(!pts_network::internet_support_available())

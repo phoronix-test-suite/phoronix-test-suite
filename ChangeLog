@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 pts-core: Add DeleteOutputBefore and DeleteOutputAfter options to the result parser
 pts-core: Fix for run-random-tests sub-command
 pts-core: Native XML result parsing support via FileFormat = XML in the result parser for test profiles
+pts-core: Add openbenchmarking-uploads sub-command for reporting recent result uploads from the local IP
 phodevi: reboot/shutdown support on Windows
 
 Phoronix Test Suite 8.0.0 Milestone 1

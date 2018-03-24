@@ -333,6 +333,22 @@ class pts_tests
 	{
 		$showed_recent_results = self::recently_saved_results();
 
+		if(count($result_uploads = pts_openbenchmarking::result_uploads_from_this_ip()) > 0)
+		{
+			echo PHP_EOL . pts_client::cli_just_bold('Recent OpenBenchmarking.org Results From This IP:') . PHP_EOL;
+			$t = array();
+			foreach($result_uploads as $id => $title)
+			{
+				$t[] = array(pts_client::cli_colored_text($id, 'gray', true), $title);
+
+				if(count($t) == 6)
+				{
+					break;
+				}
+			}
+			echo pts_user_io::display_text_table($t, '- ') . PHP_EOL . PHP_EOL;
+		}
+
 		$similar_tests = array();
 		if(!empty($passed_args))
 		{
