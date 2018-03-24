@@ -422,7 +422,7 @@ class pts_tests
 			echo 'See available tests to run by visiting OpenBenchmarking.org or running:' . PHP_EOL . PHP_EOL;
 			echo '    phoronix-test-suite list-tests' . PHP_EOL . PHP_EOL;
 			echo 'Tests can be installed by running:' . PHP_EOL . PHP_EOL;
-			echo '    phoronix-test-suite install <test-name>' . PHP_EOL;
+			echo '    phoronix-test-suite install <test-name>' . PHP_EOL . PHP_EOL;
 		}
 	}
 	public static function recently_saved_results()

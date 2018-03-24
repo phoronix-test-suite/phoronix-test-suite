@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2017, Phoronix Media
-	Copyright (C) 2008 - 2017, Michael Larabel
+	Copyright (C) 2008 - 2018, Phoronix Media
+	Copyright (C) 2008 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -145,6 +145,7 @@ class pts_config
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/Password', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/WebSocketPort', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/AdvertiseServiceZeroConf', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/AdvertiseServiceOpenBenchmarkRelay', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Server/PhoromaticStorage', $read_config);
 
 		$config_file = pts_config::get_config_file_location();

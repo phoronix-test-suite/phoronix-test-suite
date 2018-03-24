@@ -108,6 +108,8 @@
 			<p>The default port to use when running a WebSocket server. If no port is assigned or <em>RANDOM</em> is set, a random port will be chosen.</p>
 			<h3>AdvertiseServiceZeroConf: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Server/AdvertiseServiceZeroConf" /></span></h3>
 			<p>If this option is set to <em>TRUE</em> when starting a Phoromatic Server instance, the software will attempt to broadcast its service using zeroconf networking (Avahi on Linux assuming <em>avahi-publish</em> is present).</p>
+			<h3>AdvertiseServiceOpenBenchmarkRelay: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Server/AdvertiseServiceOpenBenchmarkRelay" /></span></h3>
+			<p>If this option is set to <em>TRUE</em> when starting a Phoromatic Server instance, the software will broadcast the local IP/port of the server to a private OpenBenchmarking.org service so that if any other user on the local IP block from the same global IP address is in search of a Phoromatic Server, the IP address will be relayed. This is an alternative or complementary to the zero-conf/Avahi option above to help systems running the Phoronix Test Suite client on a LAN discover a Phoromatic Server for easy setup and/or download cache support for faster test setup/installation.</p>
 			<h3>PhoromaticStorage: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Server/PhoromaticStorage" /></span></h3>
 			<p>The location for the Phoromatic Server to store test results of connected systems, account information, etc. The default location is <em>~/.phoronix-test-suite/phoromatic/</em>.</p>
 		</div>

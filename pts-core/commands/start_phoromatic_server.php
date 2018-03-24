@@ -253,6 +253,12 @@ class start_phoromatic_server implements pts_option_interface
 			}
 		}
 
+		// Zeroconf via OpenBenchmarking.org
+		if(pts_config::read_user_config('PhoronixTestSuite/Options/Server/AdvertiseServiceOpenBenchmarkRelay', 'TRUE') && pts_network::internet_support_available())
+		{echo 11111;
+			echo pts_openbenchmarking::make_openbenchmarking_request('phoromatic_server_relay', array('local_ip' => pts_network::get_local_ip(), 'local_port' => $web_port));
+		}
+
 		// Wait for input to shutdown process..
 		if(!PTS_IS_DAEMONIZED_SERVER_PROCESS)
 		{

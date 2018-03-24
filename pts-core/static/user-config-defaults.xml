@@ -69,6 +69,7 @@
 			<Password></Password>
 			<WebSocketPort>RANDOM</WebSocketPort>
 			<AdvertiseServiceZeroConf>TRUE</AdvertiseServiceZeroConf>
+			<AdvertiseServiceOpenBenchmarkRelay>TRUE</AdvertiseServiceOpenBenchmarkRelay>
 			<PhoromaticStorage>~/.phoronix-test-suite/phoromatic/</PhoromaticStorage>
 		</Server>
 	</Options>
