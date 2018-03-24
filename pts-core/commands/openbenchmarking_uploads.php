@@ -27,7 +27,7 @@ class openbenchmarking_uploads implements pts_option_interface
 
 	public static function run($r)
 	{
-		if(false && count($result_uploads = pts_openbenchmarking::result_uploads_from_this_ip()) > 0)
+		if(count($result_uploads = pts_openbenchmarking::result_uploads_from_this_ip()) > 0)
 		{
 			echo PHP_EOL . pts_client::cli_just_bold('Recent Results Uploaded From This IP:') . PHP_EOL;
 			$t = array();
