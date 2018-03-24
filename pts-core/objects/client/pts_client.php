@@ -808,6 +808,21 @@ class pts_client
 				}
 			}
 
+			// OpenBenchmarking.org relay zero conf
+			if(pts_network::internet_support_available())
+			{
+				$ob_relay = pts_openbenchmarking::possible_phoromatic_servers();
+				foreach($ob_relay as $s)
+				{
+					$local_ip = pts_network::get_local_ip();
+
+					if(substr($local_ip, 0, strrpos($local_ip, '.')) == substr($s[0], 0, strrpos($s[0], '.')))
+					{
+						$possible_relays[] = array($s[0], $s[1]);
+					}
+				}
+			}
+
 			foreach($possible_servers as $possible_server)
 			{
 				// possible_server[0] is the Phoromatic Server IP
