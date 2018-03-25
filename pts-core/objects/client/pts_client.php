@@ -818,7 +818,7 @@ class pts_client
 
 					if(substr($local_ip, 0, strrpos($local_ip, '.')) == substr($s[0], 0, strrpos($s[0], '.')))
 					{
-						$possible_relays[] = array($s[0], $s[1]);
+						$possible_servers[] = array($s[0], $s[1]);
 					}
 				}
 			}
