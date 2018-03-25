@@ -192,6 +192,15 @@ class pts_phoromatic_event_server
 					}
 				}
 			}
+			if($is_first_run || $last_ob_relay_ping < (time() - 86400))
+			{
+				$last_ob_relay_ping = time();
+				// Zeroconf via OpenBenchmarking.org
+				if(pts_config::read_user_config('PhoronixTestSuite/Options/Server/AdvertiseServiceOpenBenchmarkRelay', 'TRUE') && pts_network::internet_support_available())
+				{
+					pts_openbenchmarking::make_openbenchmarking_request('phoromatic_server_relay', array('local_ip' => pts_network::get_local_ip(), 'local_port' => $web_port));
+				}
+			}
 			phoromatic_server::close_database();
 			sleep((60 - date('s') + 1));
 			$is_first_run = false;
