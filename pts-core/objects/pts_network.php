@@ -489,8 +489,9 @@ class pts_network
 		}
 		else if(pts_client::executable_in_path('hostname'))
 		{
-			$hostname_i = trim(shell_exec('hostname -I 2>&1'));
-			if(strpos($hostname_i, ' ') === false)
+			$hostname_i = explode(' ', trim(shell_exec('hostname -I 2>&1')));
+			$hostname_i = array_shift($hostname_i);
+			if(count(explode('.', $hostname_i)) == 4)
 			{
 				$local_ip = $hostname_i;
 			}
