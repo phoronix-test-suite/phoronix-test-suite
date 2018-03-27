@@ -36,7 +36,7 @@ class microsoft_dependency_handler implements pts_dependency_handler
 			$cygwin_location = self::get_cygwin();
 			chdir(dirname($cygwin_location));
 			echo PHP_EOL . 'Configuring Cygwin...' . PHP_EOL;
-			shell_exec(basename($cygwin_location) . ' -q -P unzip -P wget -P bc -P which');
+			shell_exec(basename($cygwin_location) . ' -q -P unzip -P wget -P bc -P which -W');
 			chdir($cwd);
 		}
 
@@ -141,7 +141,7 @@ class microsoft_dependency_handler implements pts_dependency_handler
 			echo PHP_EOL . 'Cygwin dependencies needed: ' . implode(' ', $pass_to_cygwin) . PHP_EOL;
 			$cygwin_location = self::get_cygwin();
 			chdir(dirname($cygwin_location));
-			$cygwin_cmd = basename($cygwin_location) . ' -q -P ' . implode(' -P ', $pass_to_cygwin);
+			$cygwin_cmd = basename($cygwin_location) . ' -q -P ' . implode(' -P ', $pass_to_cygwin) . ' -W';
 			echo PHP_EOL . 'RUNNING: ' . $cygwin_cmd;
 			shell_exec($cygwin_cmd);
 
