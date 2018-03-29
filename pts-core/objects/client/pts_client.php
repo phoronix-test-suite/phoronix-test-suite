@@ -128,7 +128,7 @@ class pts_client
 		$directory_check = array(
 			PTS_TEST_INSTALL_DEFAULT_PATH,
 			PTS_SAVE_RESULTS_PATH,
-			PTS_MODULE_LOCAL_PATH,
+			pts_module::module_local_path(),
 			PTS_MODULE_DATA_PATH,
 			PTS_DOWNLOAD_CACHE_PATH,
 			PTS_OPENBENCHMARKING_SCRATCH_PATH,

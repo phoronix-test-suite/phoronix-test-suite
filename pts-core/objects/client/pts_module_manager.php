@@ -34,13 +34,13 @@ class pts_module_manager
 	public static function load_module($module)
 	{
 		// Load the actual file needed that contains the module
-		return (is_file(pts_module::module_path() . $module . '.php') && include_once(pts_module::module_path() . $module . '.php')) || (is_file(PTS_MODULE_LOCAL_PATH . $module . '.php') && include_once(PTS_MODULE_LOCAL_PATH . $module . '.php'));
+		return (is_file(pts_module::module_path() . $module . '.php') && include_once(pts_module::module_path() . $module . '.php')) || (is_file(pts_module::module_local_path() . $module . '.php') && include_once(pts_module::module_local_path() . $module . '.php'));
 	}
 	public static function list_available_modules()
 	{
 		$modules = array();
 
-		foreach(array_merge(pts_file_io::glob(pts_module::module_path() . '*.php'), pts_file_io::glob(PTS_MODULE_LOCAL_PATH . '*.php')) as $module)
+		foreach(array_merge(pts_file_io::glob(pts_module::module_path() . '*.php'), pts_file_io::glob(pts_module::module_local_path() . '*.php')) as $module)
 		{
 			$modules[] = basename($module, '.php');
 		}
@@ -256,7 +256,7 @@ class pts_module_manager
 		}
 		else
 		{
-			$modules = array_merge(pts_file_io::glob(pts_module::module_path() . '*.php'), pts_file_io::glob(PTS_MODULE_LOCAL_PATH . '*.php'));
+			$modules = array_merge(pts_file_io::glob(pts_module::module_path() . '*.php'), pts_file_io::glob(pts_module::module_local_path() . '*.php'));
 		}
 		$module_names = array();
 

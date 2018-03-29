@@ -37,9 +37,13 @@ class pts_module
 	{
 		return PTS_CORE_PATH . 'modules/';
 	}
+	public static function module_local_path()
+	{
+		return PTS_USER_PATH . 'modules/';
+	}
 	public static function is_module($name)
 	{
-		return is_file(PTS_MODULE_LOCAL_PATH . $name . ".php") || is_file(pts_module::module_path() . $name . ".php");
+		return is_file(pts_module::module_local_path() . $name . '.php') || is_file(pts_module::module_path() . $name . '.php');
 	}
 	public static function module_config_save($module_name, $set_options = null)
 	{
