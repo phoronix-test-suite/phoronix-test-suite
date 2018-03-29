@@ -114,7 +114,7 @@ class pts_result_file
 	{
 		$dom = new DOMDocument();
 		$dom->loadXML($this->get_xml());
-		return $dom->schemaValidate(PTS_OPENBENCHMARKING_PATH . 'schemas/result-file.xsd');
+		return $dom->schemaValidate(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/result-file.xsd');
 	}
 	public function __toString()
 	{

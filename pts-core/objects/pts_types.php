@@ -211,7 +211,7 @@ class pts_types
 	{
 		$values = array();
 		$dom = new DOMDocument();
-		$dom->load(PTS_OPENBENCHMARKING_PATH . 'schemas/types.xsd');
+		$dom->load(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/types.xsd');
 		$types = $dom->getElementsByTagName('schema')->item(0)->getElementsByTagName('simpleType');
 
 		for($i = 0; $i < $types->length; $i++)

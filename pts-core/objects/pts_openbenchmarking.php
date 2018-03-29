@@ -58,6 +58,10 @@ class pts_openbenchmarking
 			'screen_resolution' => array('gpu', 'screen-resolution-string')
 			);
 	}
+	public static function openbenchmarking_standards_path()
+	{
+		return PTS_CORE_PATH . 'openbenchmarking.org/';
+	}
 	public static function is_valid_gsid_format($gsid)
 	{
 		$gsid_valid = false;

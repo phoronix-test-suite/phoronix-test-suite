@@ -20,6 +20,8 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+pts_define('PTS_COMMAND_PATH', PTS_CORE_PATH . 'commands/');
+
 class pts_client
 {
 	public static $display = false;

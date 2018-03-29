@@ -174,7 +174,7 @@ class pts_validation
 
 			$dom = new DOMDocument();
 			$dom->load($download_xml_file);
-			$valid = $dom->schemaValidate(PTS_OPENBENCHMARKING_PATH . 'schemas/test-profile-downloads.xsd');
+			$valid = $dom->schemaValidate(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/test-profile-downloads.xsd');
 
 			if($valid == false)
 			{
@@ -231,7 +231,7 @@ class pts_validation
 
 			$dom = new DOMDocument();
 			$dom->load($parser_file);
-			$valid = $dom->schemaValidate(PTS_OPENBENCHMARKING_PATH . 'schemas/results-parser.xsd');
+			$valid = $dom->schemaValidate(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/results-parser.xsd');
 
 			if($valid == false)
 			{

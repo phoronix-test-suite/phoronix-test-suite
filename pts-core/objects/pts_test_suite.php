@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2017, Phoronix Media
-	Copyright (C) 2008 - 2017, Michael Larabel
+	Copyright (C) 2008 - 2018, Phoronix Media
+	Copyright (C) 2008 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -214,7 +214,7 @@ class pts_test_suite
 		{
 			$dom->loadXML($this->raw_xml);
 		}
-		return $dom->schemaValidate(PTS_OPENBENCHMARKING_PATH . 'schemas/test-suite.xsd');
+		return $dom->schemaValidate(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/test-suite.xsd');
 	}
 	protected static function clean_input($value)
 	{
