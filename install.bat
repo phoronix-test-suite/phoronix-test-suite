@@ -30,4 +30,4 @@ md %destination%
 :: for /F "delims=" %%i in ('dir /b') do (rmdir "%%i" /s/q || del "%%i" /s/q)
 
 xcopy %cd% %destination% /E
-
+echo Phoronix Test Suite installed to %destination%
