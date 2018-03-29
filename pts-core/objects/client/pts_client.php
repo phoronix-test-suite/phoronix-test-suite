@@ -20,8 +20,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-pts_define('PTS_COMMAND_PATH', PTS_CORE_PATH . 'commands/');
-
 class pts_client
 {
 	public static $display = false;
@@ -103,11 +101,6 @@ class pts_client
 		}
 
 		self::core_storage_init_process();
-
-		if(!is_file(PTS_TEMP_STORAGE))
-		{
-			self::build_temp_cache();
-		}
 		$p = pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/EnvironmentDirectory', '~/.phoronix-test-suite/installed-tests/'));
 		if(phodevi::is_windows())
 		{
@@ -613,20 +606,6 @@ class pts_client
 			}
 		}
 	}
-	private static function build_temp_cache()
-	{
-		$pso = pts_storage_object::recover_from_file(PTS_TEMP_STORAGE);
-
-		if($pso == false)
-		{
-			$pso = new pts_storage_object();
-		}
-
-		$pso->add_object('environmental_variables_for_modules', pts_module_manager::modules_environmental_variables());
-		$pso->add_object('command_alias_list', pts_documentation::client_commands_aliases());
-
-		$pso->save_to_file(PTS_TEMP_STORAGE);
-	}
 	private static function core_storage_init_process()
 	{
 		$pso = pts_storage_object::recover_from_file(PTS_CORE_STORAGE);
@@ -712,7 +691,8 @@ class pts_client
 				pts_openbenchmarking_client::update_gsid();
 			}
 
-			pts_client::build_temp_cache();
+			$pso->add_object('environmental_variables_for_modules', pts_module_manager::modules_environmental_variables());
+			$pso->add_object('command_alias_list', pts_documentation::client_commands_aliases());
 		}
 		$pso->add_object('last_core_version', PTS_CORE_VERSION); // PTS version last run
 		$pso->add_object('last_php_version', PTS_PHP_VERSION); // PHP version last run
@@ -1374,7 +1354,7 @@ class pts_client
 			}
 			else
 			{
-				$aliases = pts_storage_object::read_from_file(PTS_TEMP_STORAGE, 'command_alias_list');
+				$aliases = pts_storage_object::read_from_file(PTS_CORE_STORAGE, 'command_alias_list');
 				if($aliases == null)
 				{
 					$aliases = pts_documentation::client_commands_aliases();

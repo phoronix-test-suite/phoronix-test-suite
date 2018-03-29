@@ -285,7 +285,7 @@ class pts_module_manager
 	public static function detect_modules_to_load()
 	{
 		// Auto detect modules to load
-		$env_vars = pts_storage_object::read_from_file(PTS_TEMP_STORAGE, 'environmental_variables_for_modules');
+		$env_vars = pts_storage_object::read_from_file(PTS_CORE_STORAGE, 'environmental_variables_for_modules');
 
 		if($env_vars == false)
 		{

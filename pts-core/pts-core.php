@@ -120,7 +120,6 @@ function pts_define_directories()
 
 		pts_define('PTS_USER_PATH', '/var/lib/phoronix-test-suite/');
 		pts_define('PTS_CORE_STORAGE', PTS_USER_PATH . 'core.pt2so');
-		pts_define('PTS_TEMP_STORAGE', PTS_USER_PATH . 'temp.pt2so');
 		pts_define('PTS_MODULE_LOCAL_PATH', PTS_USER_PATH . 'modules/');
 		pts_define('PTS_MODULE_DATA_PATH', PTS_USER_PATH . 'modules-data/');
 		pts_define('PTS_DOWNLOAD_CACHE_PATH', '/var/cache/phoronix-test-suite/download-cache/');
@@ -139,7 +138,6 @@ function pts_define_directories()
 			pts_define('PTS_USER_PATH', pts_core::user_home_directory() . '.phoronix-test-suite' . DIRECTORY_SEPARATOR);
 		//}
 		pts_define('PTS_CORE_STORAGE', PTS_USER_PATH . 'core.pt2so');
-		pts_define('PTS_TEMP_STORAGE', PTS_USER_PATH . 'temp.pt2so');
 		pts_define('PTS_MODULE_LOCAL_PATH', PTS_USER_PATH . 'modules/');
 		pts_define('PTS_MODULE_DATA_PATH', PTS_USER_PATH . 'modules-data/');
 		pts_define('PTS_DOWNLOAD_CACHE_PATH', PTS_USER_PATH . 'download-cache/');
@@ -259,7 +257,7 @@ function pts_version_codenames()
 }
 
 pts_define('PTS_VERSION', '8.0.0m2');
-pts_define('PTS_CORE_VERSION', 7920);
+pts_define('PTS_CORE_VERSION', 7921);
 pts_define('PTS_CODENAME', 'AREMARK');
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));
 pts_define('PTS_IS_WEB_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'WEB_CLIENT'));
