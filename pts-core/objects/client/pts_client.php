@@ -301,6 +301,10 @@ class pts_client
 			return PTS_TEST_INSTALL_DEFAULT_PATH;
 		}
 	}
+	public static function download_cache_path()
+	{
+		return pts_strings::add_trailing_slash(pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
+	}
 	public static function user_run_save_variables()
 	{
 		static $runtime_variables = null;

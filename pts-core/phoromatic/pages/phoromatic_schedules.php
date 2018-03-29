@@ -301,7 +301,7 @@ class phoromatic_schedules implements pts_webui_interface
 					$main .= '<hr /><h2>Add A Test</h2>';
 					$main .= '<form action="?schedules/' . $PATH[0] . '" name="add_test" id="add_test" method="post">';
 					$main .= '<select name="add_to_schedule_select_test" id="add_to_schedule_select_test" onchange="phoromatic_schedule_test_details(\'\');">';
-					$dc = pts_strings::add_trailing_slash(pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
+					$dc = pts_client::download_cache_path();
 					$dc_exists = is_file($dc . 'pts-download-cache.json');
 					if($dc_exists)
 					{

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014 - 2015, Phoronix Media
-	Copyright (C) 2014 - 2015, Michael Larabel
+	Copyright (C) 2014 - 2018, Phoronix Media
+	Copyright (C) 2014 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -122,7 +122,7 @@ class phoromatic_admin_config implements pts_webui_interface
 				{
 					$new_dc_dir = pts_strings::add_trailing_slash($_POST['new_dc_path']);
 
-					if(pts_file_io::copy(pts_strings::add_trailing_slash(pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH))), $new_dc_dir))
+					if(pts_file_io::copy(pts_client::download_cache_path(), $new_dc_dir))
 					{
 						pts_config::user_config_generate(array('CacheDirectory' => $new_dc_dir));
 						header('Location: /?admin');
@@ -256,7 +256,7 @@ class phoromatic_admin_config implements pts_webui_interface
 
 		$main .= '<hr /><h2>Download Cache Location</h2>';
 		$main .= '<p>The download cache is where the Phoronix Test Suite is able to make an archive of files needed by test profiles. The Phoromatic Server is then able to allow Phoronix Test Suite client systems on the intranet. To add test files to this cache on the Phoromatic Server, run <strong>phoronix-test-suite make-download-cache <em>&lt;the test identifers you wish to download and cache&gt;</em></strong>.</p>';
-		$main .= '<p><strong>Current Download Cache Path:</strong> ' . pts_strings::add_trailing_slash(pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH))) . '</p>';
+		$main .= '<p><strong>Current Download Cache Path:</strong> ' . pts_client::download_cache_path() . '</p>';
 		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="update_dc_path" method="post">';
 		$main .= '<p><input type="text" name="new_dc_path" value="' . (isset($_POST['new_dc_path']) ? $_POST['new_dc_path'] : null) . '" /></p>';
 		$main .= '<p><input name="submit" value="Update Download Cache Location" type="submit" /></p>';
