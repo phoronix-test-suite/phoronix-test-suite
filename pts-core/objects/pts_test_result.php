@@ -241,7 +241,7 @@ class pts_test_result
 			foreach($keys as $k)
 			{
 				$identifier_r = pts_strings::trim_explode(': ', $this->test_result_buffer->buffer_items[$k]->get_result_identifier());
-				$position = isset($extra_attributes['multi_way_comparison_invert_default']) ? 0 : 1;
+				$position = !isset($extra_attributes['multi_way_comparison_invert_default']) ? 0 : 1;
 
 				if(!isset($key_sets[$identifier_r[$position]]))
 				{
@@ -285,7 +285,7 @@ class pts_test_result
 				{
 					foreach($keys as $k)
 					{
-						if($this->test_result_buffer->buffer_items[$k]->get_result_value() > $divide_value)
+						if($this->test_result_buffer->buffer_items[$k]->get_result_value() < $divide_value || $divide_value == -1)
 						{
 							$divide_value = $this->test_result_buffer->buffer_items[$k]->get_result_value();
 						}
