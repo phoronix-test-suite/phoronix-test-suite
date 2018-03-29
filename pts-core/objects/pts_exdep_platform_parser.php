@@ -30,7 +30,7 @@ class pts_exdep_platform_parser
 
 		if(PTS_IS_CLIENT)
 		{
-			$xml = PTS_EXDEP_PATH . 'xml/' . $identifier . '-packages.xml';
+			$xml = pts_exdep_generic_parser::get_external_dependency_path() . 'xml/' . $identifier . '-packages.xml';
 			$xml_options = LIBXML_COMPACT | LIBXML_PARSEHUGE;
 			$xml = simplexml_load_file($xml, 'SimpleXMLElement', $xml_options);
 

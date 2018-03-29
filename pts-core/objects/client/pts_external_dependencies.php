@@ -25,9 +25,9 @@ class pts_external_dependencies
 	public static function packages_that_provide($file)
 	{
 		$pkg_vendor = self::vendor_identifier('package-list');
-		if($file != null && is_file(PTS_EXDEP_PATH . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php'))
+		if($file != null && is_file(pts_exdep_generic_parser::get_external_dependency_path() . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php'))
 		{
-			require_once(PTS_EXDEP_PATH . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php');
+			require_once(pts_exdep_generic_parser::get_external_dependency_path() . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php');
 			eval("\$provides = {$pkg_vendor}_dependency_handler::what_provides(\$file);");
 			return $provides;
 		}
@@ -36,9 +36,9 @@ class pts_external_dependencies
 	public static function startup_handler()
 	{
 		$pkg_vendor = self::vendor_identifier('package-list');
-		if(is_file(PTS_EXDEP_PATH . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php'))
+		if(is_file(pts_exdep_generic_parser::get_external_dependency_path() . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php'))
 		{
-			require_once(PTS_EXDEP_PATH . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php');
+			require_once(pts_exdep_generic_parser::get_external_dependency_path() . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php');
 			eval("\$startup = {$pkg_vendor}_dependency_handler::startup_handler();");
 			return $startup;
 		}
@@ -485,7 +485,7 @@ class pts_external_dependencies
 	private static function install_packages_on_system($os_packages_to_install)
 	{
 		// Do the actual installing process of packages using the distribution's package management system
-		$vendor_install_file = PTS_EXDEP_PATH . 'scripts/install-' . self::vendor_identifier('installer') . '-packages.sh';
+		$vendor_install_file = pts_exdep_generic_parser::get_external_dependency_path() . 'scripts/install-' . self::vendor_identifier('installer') . '-packages.sh';
 		$pkg_vendor = self::vendor_identifier('package-list');
 
 		// Rebuild the array index since some OS package XML tags provide multiple package names in a single string
@@ -500,9 +500,9 @@ class pts_external_dependencies
 
 			echo shell_exec('sh ' . $vendor_install_file . ' ' . implode(' ', $os_packages_to_install));
 		}
-		else if(is_file(PTS_EXDEP_PATH . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php'))
+		else if(is_file(pts_exdep_generic_parser::get_external_dependency_path() . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php'))
 		{
-			require_once(PTS_EXDEP_PATH . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php');
+			require_once(pts_exdep_generic_parser::get_external_dependency_path() . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php');
 			eval("\$installed = {$pkg_vendor}_dependency_handler::install_dependencies(\$os_packages_to_install);");
 			return $installed;
 		}
@@ -518,10 +518,10 @@ class pts_external_dependencies
 		switch($type)
 		{
 			case 'package-list':
-				$file_check_success = is_file(PTS_EXDEP_PATH . 'xml/' . $os_vendor . '-packages.xml');
+				$file_check_success = is_file(pts_exdep_generic_parser::get_external_dependency_path() . 'xml/' . $os_vendor . '-packages.xml');
 				break;
 			case 'installer':
-				$file_check_success = is_file(PTS_EXDEP_PATH . 'scripts/install-' . $os_vendor . '-packages.sh');
+				$file_check_success = is_file(pts_exdep_generic_parser::get_external_dependency_path() . 'scripts/install-' . $os_vendor . '-packages.sh');
 				break;
 		}
 

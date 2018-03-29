@@ -164,7 +164,6 @@ function pts_define_directories()
 	pts_define('PTS_MODULE_PATH', PTS_CORE_PATH . 'modules/');
 	pts_define('PTS_CORE_STATIC_PATH', PTS_CORE_PATH . 'static/');
 	pts_define('PTS_COMMAND_PATH', PTS_CORE_PATH . 'commands/');
-	pts_define('PTS_EXDEP_PATH', PTS_CORE_PATH . 'external-test-dependencies/');
 	pts_define('PTS_OPENBENCHMARKING_PATH', PTS_CORE_PATH . 'openbenchmarking.org/');
 
 	if(is_dir('/usr/local/share/phoronix-test-suite/'))

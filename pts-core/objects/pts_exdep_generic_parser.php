@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2012 - 2017, Phoronix Media
-	Copyright (C) 2012 - 2017, Michael Larabel
+	Copyright (C) 2012 - 2018, Phoronix Media
+	Copyright (C) 2012 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ class pts_exdep_generic_parser
 		if(PTS_IS_CLIENT)
 		{
 			$xml_options = LIBXML_COMPACT | LIBXML_PARSEHUGE;
-			$xml = simplexml_load_file(PTS_EXDEP_PATH . 'xml/generic-packages.xml', 'SimpleXMLElement', $xml_options);
+			$xml = simplexml_load_file(pts_exdep_generic_parser::get_external_dependency_path() . 'xml/generic-packages.xml', 'SimpleXMLElement', $xml_options);
 
 			if(isset($xml->ExternalDependencies) && isset($xml->ExternalDependencies->Package))
 			{
@@ -45,6 +45,10 @@ class pts_exdep_generic_parser
 				}
 			}
 		}
+	}
+	public static function get_external_dependency_path()
+	{
+		return PTS_CORE_PATH . 'external-test-dependencies/';
 	}
 	public function get_package_format($title = null, $file_check = null, $possible_packages = null)
 	{
@@ -68,7 +72,7 @@ class pts_exdep_generic_parser
 	}
 	public function get_vendors_list()
 	{
-		$package_files = pts_file_io::glob(PTS_EXDEP_PATH . 'xml/*-packages.xml');
+		$package_files = pts_file_io::glob(pts_exdep_generic_parser::get_external_dependency_path() . 'xml/*-packages.xml');
 
 		foreach($package_files as &$file)
 		{
