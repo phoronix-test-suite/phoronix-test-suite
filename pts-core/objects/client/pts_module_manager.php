@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2017, Phoronix Media
-	Copyright (C) 2009 - 2017, Michael Larabel
+	Copyright (C) 2009 - 2018, Phoronix Media
+	Copyright (C) 2009 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -34,13 +34,13 @@ class pts_module_manager
 	public static function load_module($module)
 	{
 		// Load the actual file needed that contains the module
-		return (is_file(PTS_MODULE_PATH . $module . '.php') && include_once(PTS_MODULE_PATH . $module . '.php')) || (is_file(PTS_MODULE_LOCAL_PATH . $module . '.php') && include_once(PTS_MODULE_LOCAL_PATH . $module . '.php'));
+		return (is_file(pts_module::module_path() . $module . '.php') && include_once(pts_module::module_path() . $module . '.php')) || (is_file(PTS_MODULE_LOCAL_PATH . $module . '.php') && include_once(PTS_MODULE_LOCAL_PATH . $module . '.php'));
 	}
 	public static function list_available_modules()
 	{
 		$modules = array();
 
-		foreach(array_merge(pts_file_io::glob(PTS_MODULE_PATH . '*.php'), pts_file_io::glob(PTS_MODULE_LOCAL_PATH . '*.php')) as $module)
+		foreach(array_merge(pts_file_io::glob(pts_module::module_path() . '*.php'), pts_file_io::glob(PTS_MODULE_LOCAL_PATH . '*.php')) as $module)
 		{
 			$modules[] = basename($module, '.php');
 		}
@@ -252,11 +252,11 @@ class pts_module_manager
 	{
 		if($only_system_modules)
 		{
-			$modules = pts_file_io::glob(PTS_MODULE_PATH . '*.php');
+			$modules = pts_file_io::glob(pts_module::module_path() . '*.php');
 		}
 		else
 		{
-			$modules = array_merge(pts_file_io::glob(PTS_MODULE_PATH . '*.php'), pts_file_io::glob(PTS_MODULE_LOCAL_PATH . '*.php'));
+			$modules = array_merge(pts_file_io::glob(pts_module::module_path() . '*.php'), pts_file_io::glob(PTS_MODULE_LOCAL_PATH . '*.php'));
 		}
 		$module_names = array();
 

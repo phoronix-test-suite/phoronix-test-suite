@@ -161,7 +161,6 @@ function pts_define_directories()
 	}
 
 	// Misc Locations
-	pts_define('PTS_MODULE_PATH', PTS_CORE_PATH . 'modules/');
 	pts_define('PTS_CORE_STATIC_PATH', PTS_CORE_PATH . 'static/');
 	pts_define('PTS_COMMAND_PATH', PTS_CORE_PATH . 'commands/');
 	pts_define('PTS_OPENBENCHMARKING_PATH', PTS_CORE_PATH . 'openbenchmarking.org/');
