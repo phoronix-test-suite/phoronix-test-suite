@@ -29,7 +29,7 @@ class backup extends pts_module_interface
 
 	public static function user_commands()
 	{
-		return array('create' => 'create_backup');
+		return array('create' => 'create_backup', 'restore' => 'restore_backup');
 	}
 	public static function create_backup($r)
 	{
@@ -101,6 +101,15 @@ class backup extends pts_module_interface
 		pts_compression::zip_archive_create($backup_location, $backup_temp_dir);
 		echo pts_client::cli_just_bold('Backup File Written To: ') . $backup_location;
 		//pts_file_io::delete($root_backup_temp_dir, null, true);
+	}
+	public static function restore_backup($r)
+	{
+		if(!isset($r[0]) || !is_file($r[0]))
+		{
+			echo PHP_EOL . pts_client::cli_just_bold('You must pass the name/path of the backup file to restore.') . PHP_EOL . PHP_EOL;
+			return false;
+		}
+		$backup_archive = $r[0];
 	}
 	protected static function dir_checks($dir, $remove_base_dir, &$checksums = array())
 	{

@@ -59,21 +59,21 @@ class make_download_cache implements pts_option_interface
 		foreach(pts_tests::partially_installed_tests() as $test)
 		{
 			$test_profile = new pts_test_profile($test);
-			echo PHP_EOL . 'Checking Downloads For: ' . $test . PHP_EOL;
+			echo PHP_EOL . pts_client::cli_just_bold('Checking Downloads For: ') . $test . PHP_EOL;
 
 			foreach(pts_test_install_request::read_download_object_list($test_profile, false) as $file)
 			{
 				$cached_valid = false;
 				if(is_file($dc_write_directory . $file->get_filename()) && $file->check_file_hash($dc_write_directory . $file->get_filename()))
 				{
-					echo '   Previously Cached: ' . $file->get_filename() . PHP_EOL;
+					echo pts_client::cli_just_bold('   Previously Cached: ') . $file->get_filename() . PHP_EOL;
 					$cached_valid = true;
 				}
 				else if(is_dir($test_profile->get_install_dir()))
 				{
 					if(is_file($test_profile->get_install_dir() . $file->get_filename()) && $file->check_file_hash($test_profile->get_install_dir() . $file->get_filename()))
 					{
-						echo '   Caching: ' . $file->get_filename() . PHP_EOL;
+						echo pts_client::cli_just_bold('   Caching: ') . $file->get_filename() . PHP_EOL;
 						if(copy($test_profile->get_install_dir() . $file->get_filename(), $dc_write_directory . $file->get_filename()))
 						{
 							$cached_valid = true;
