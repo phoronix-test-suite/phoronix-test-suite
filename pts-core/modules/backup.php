@@ -84,7 +84,9 @@ class backup extends pts_module_interface
 		file_put_contents($backup_temp_dir . 'pts-backup-manifest.txt', $manifest);
 
 		pts_compression::zip_archive_create($backup_location, $backup_temp_dir);
-		echo pts_client::cli_just_bold('Backup File Written To: ') . $backup_location;
+		echo pts_client::cli_just_bold('Backup File Written To: ') . $backup_location . PHP_EOL;
+		echo pts_client::cli_just_bold('SHA1: ') . sha1_file($backup_location) . PHP_EOL;
+		echo pts_client::cli_just_bold('File Size: ') . round(filesize($backup_location) / 1000000, 1) . ' MB' . PHP_EOL;
 		pts_file_io::delete($root_backup_temp_dir, null, true);
 	}
 	protected static function backup_map()
@@ -114,6 +116,8 @@ class backup extends pts_module_interface
 			return false;
 		}
 		$backup_archive = $r[0];
+		echo pts_client::cli_just_bold('Backup File: ') . $backup_archive . PHP_EOL;
+		echo pts_client::cli_just_bold('SHA1: ') . sha1_file($backup_archive) . PHP_EOL;
 		$root_restore_temp_dir = pts_client::create_temporary_directory();
 		$s = pts_compression::zip_archive_extract($backup_archive, $root_restore_temp_dir);
 		if(!$s)
@@ -134,6 +138,7 @@ class backup extends pts_module_interface
 			$r = explode(': ', $line);
 			$manifest_files[$r[0]] = $r[1];
 		}
+		// XXX decide how exactly we want to do with manifest_files
 
 		if(is_file($restore_dir . 'phoronix-test-suite.xml'))
 		{
