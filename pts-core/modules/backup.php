@@ -66,22 +66,7 @@ class backup extends pts_module_interface
 		pts_file_io::mkdir(($backup_temp_dir = $root_backup_temp_dir . 'pts-backup' . DIRECTORY_SEPARATOR));
 		$backup_manifest = array();
 
-		$to_backup = array(
-			// User configuration
-			pts_config::get_config_file_location() => 'phoronix-test-suite.xml',
-			// test results
-			PTS_SAVE_RESULTS_PATH => 'test-results',
-			// test profiles
-			PTS_TEST_PROFILE_PATH => 'test-profiles',
-			// test suites
-			PTS_TEST_SUITE_PATH => 'test-suites',
-			// modules data
-			pts_module::module_data_path() => 'modules-data',
-			// Phoromatic
-			phoromatic_server::phoromatic_path() => 'phoromatic-storage',
-			// Download Cache
-			pts_client::download_cache_path() => 'download-cache',
-			);
+		$to_backup = self::backup_map();
 
 		echo PHP_EOL;
 		foreach($to_backup as $source => $dest)
@@ -100,7 +85,26 @@ class backup extends pts_module_interface
 
 		pts_compression::zip_archive_create($backup_location, $backup_temp_dir);
 		echo pts_client::cli_just_bold('Backup File Written To: ') . $backup_location;
-		//pts_file_io::delete($root_backup_temp_dir, null, true);
+		pts_file_io::delete($root_backup_temp_dir, null, true);
+	}
+	protected static function backup_map()
+	{
+		return array(
+			// User configuration
+			pts_config::get_config_file_location() => 'phoronix-test-suite.xml',
+			// test results
+			PTS_SAVE_RESULTS_PATH => 'test-results',
+			// test profiles
+			PTS_TEST_PROFILE_PATH => 'test-profiles',
+			// test suites
+			PTS_TEST_SUITE_PATH => 'test-suites',
+			// modules data
+			pts_module::module_data_path() => 'modules-data',
+			// Phoromatic
+			phoromatic_server::phoromatic_path() => 'phoromatic-storage',
+			// Download Cache
+			pts_client::download_cache_path() => 'download-cache',
+			);
 	}
 	public static function restore_backup($r)
 	{
@@ -110,6 +114,50 @@ class backup extends pts_module_interface
 			return false;
 		}
 		$backup_archive = $r[0];
+		$root_restore_temp_dir = pts_client::create_temporary_directory();
+		$s = pts_compression::zip_archive_extract($backup_archive, $root_restore_temp_dir);
+		if(!$s)
+		{
+			echo PHP_EOL . 'There was a problem extracting the ZIP archive.' . PHP_EOL;
+			return false;
+		}
+		$restore_dir = $root_restore_temp_dir . DIRECTORY_SEPARATOR . 'pts-backup' . DIRECTORY_SEPARATOR;
+		if(!is_dir($restore_dir) || !is_file($restore_dir . 'pts-backup-manifest.txt'))
+		{
+			echo PHP_EOL . 'This does not appear to be a valid PTS backup as no pts-backup found.' . PHP_EOL;
+			return false;
+		}
+
+		$manifest_files = array();
+		foreach(explode(PHP_EOL, pts_file_io::file_get_contents($restore_dir . 'pts-backup-manifest.txt')) as $line)
+		{
+			$r = explode(': ', $line);
+			$manifest_files[$r[0]] = $r[1];
+		}
+
+		if(is_file($restore_dir . 'phoronix-test-suite.xml'))
+		{
+			$restore_conf = pts_user_io::prompt_bool_input('Do you want to restore the user configuration file specifying paths, etc?', false);
+			if($restore_conf)
+			{
+				pts_file_io::copy($restore_dir . 'phoronix-test-suite.xml', pts_config::get_config_file_location());
+			}
+		}
+
+		$backup_map = self::backup_map();
+		foreach($backup_map as $dest => $source)
+		{
+			if(is_dir($restore_dir . $source) || is_file($restore_dir . $source))
+			{
+				$s = pts_file_io::copy($restore_dir . $source, $dest);
+				if($s)
+					echo PHP_EOL . pts_client::cli_just_bold('Restored: ') . $source . PHP_EOL;
+				else
+					echo PHP_EOL . 'Failed to restore ' . $source . PHP_EOL;
+			}
+		}
+
+		pts_file_io::delete($root_restore_temp_dir, null, true);
 	}
 	protected static function dir_checks($dir, $remove_base_dir, &$checksums = array())
 	{
