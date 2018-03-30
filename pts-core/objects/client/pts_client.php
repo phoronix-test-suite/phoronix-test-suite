@@ -75,6 +75,7 @@ class pts_client
 	public static function init()
 	{
 		pts_core::init();
+		pts_define('PTS_COMMAND_PATH', PTS_CORE_PATH . 'commands/');
 
 		if(defined('QUICK_START') && QUICK_START)
 		{

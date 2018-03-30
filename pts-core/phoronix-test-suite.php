@@ -97,7 +97,7 @@ if(QUICK_START == false)
 {
 	pts_client::program_requirement_checks(true);
 }
-pts_define('PTS_COMMAND_PATH', PTS_CORE_PATH . 'commands/');
+
 pts_client::init(); // Initalize the Phoronix Test Suite (pts-core) client
 $pass_args = array();
 
