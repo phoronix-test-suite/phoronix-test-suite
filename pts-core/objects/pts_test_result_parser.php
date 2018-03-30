@@ -490,8 +490,6 @@ class pts_test_result_parser
 				$key_for_result = '#_' . $prefix . 'RESULT_#';
 				break;
 		}
-		pts_client::test_profile_debug_message('Result Key: ' . $key_for_result);
-
 		// The actual parsing here
 		$start_result_pos = strrpos($template, $key_for_result);
 		$file_format = isset($entry->FileFormat) ? $entry->FileFormat->__toString() : null;
@@ -500,9 +498,10 @@ class pts_test_result_parser
 		if($prefix != null && $start_result_pos === false && $template != 'csv-dump-frame-latencies' && $template != 'libframetime-output' && $file_format == null)
 		{
 			// XXX: technically the $prefix check shouldn't be needed, verify whether safe to have this check be unconditional on start_result_pos failing...
-			pts_client::test_profile_debug_message('Failed Additional Check');
+			//pts_client::test_profile_debug_message('Failed Additional Check');
 			return false;
 		}
+		pts_client::test_profile_debug_message('Result Key: ' . $key_for_result);
 
 		if(is_file($log_file))
 		{
@@ -604,7 +603,7 @@ class pts_test_result_parser
 			}
 
 			$search_key = self::determine_search_key($output, $line_hint, $line_before_hint, $line_after_hint, $template_line, $template, $template_r, $key_for_result); // SEARCH KEY
-			pts_client::test_profile_debug_message('Search Key: ' . $search_key);
+
 			if($search_key != null || $line_before_hint != null || $line_after_hint != null || $template_r[0] == $key_for_result)
 			{
 				$is_multi_match = !empty($multi_match) && $multi_match != 'NONE';

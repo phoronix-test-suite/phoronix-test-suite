@@ -341,6 +341,7 @@ class pts_client
 			'gray' => '1;30', // gray not bold doesn't look good in all consoles
 			'blue' => $attribute . ';34',
 			'green' => $attribute . ';32',
+			'yellow' => $attribute . ';33',
 			'red' => $attribute . ';31',
 			'cyan' => $attribute . ';36',
 			);
@@ -989,6 +990,14 @@ class pts_client
 
 		if(pts_client::is_debug_mode())
 		{
+			if(($x = strpos($message, ': ')) !== false)
+			{
+				$message = pts_client::cli_colored_text(substr($message, 0, $x + 1), 'yellow', true) . pts_client::cli_colored_text(substr($message, $x + 1), 'yellow', false);
+			}
+			else
+			{
+				$message = pts_client::cli_colored_text($message, 'yellow', false);
+			}
 			pts_client::$display->test_run_instance_error($message);
 			$reported = true;
 		}
