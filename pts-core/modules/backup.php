@@ -147,6 +147,9 @@ class backup extends pts_module_interface
 		$backup_map = self::backup_map();
 		foreach($backup_map as $dest => $source)
 		{
+			if($source == 'phoronix-test-suite.xml')
+				continue;
+
 			if(is_dir($restore_dir . $source) || is_file($restore_dir . $source))
 			{
 				$s = pts_file_io::copy($restore_dir . $source, $dest);
