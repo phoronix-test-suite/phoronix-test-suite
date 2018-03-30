@@ -151,7 +151,7 @@ class backup extends pts_module_interface
 			{
 				$s = pts_file_io::copy($restore_dir . $source, $dest);
 				if($s)
-					echo PHP_EOL . pts_client::cli_just_bold('Restored: ') . $source . PHP_EOL;
+					echo PHP_EOL . pts_client::cli_just_bold('Restored: ') . $source . ' to ' . $dest . PHP_EOL;
 				else
 					echo PHP_EOL . 'Failed to restore ' . $source . PHP_EOL;
 			}
