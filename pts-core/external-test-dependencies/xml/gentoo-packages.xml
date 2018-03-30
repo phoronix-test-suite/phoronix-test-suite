@@ -300,5 +300,9 @@
 			<GenericName>python-sklearn</GenericName>
 			<PackageName>sci-libs/scikits_learn</PackageName>
 		</Package>
+		<Package>
+			<GenericName>V8</GenericName>
+			<PackageName>dev-lang/v8</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

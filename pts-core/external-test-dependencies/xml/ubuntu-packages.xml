@@ -353,5 +353,9 @@
 			<PackageName>python-sklearn</PackageName>
 			<FileCheck>/usr/lib/python2.7/dist-packages/sklearn/</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>V8</GenericName>
+			<PackageName>libv8-dev</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

@@ -488,5 +488,11 @@
 			<PossibleNames>python-sklearn</PossibleNames>
 			<FileCheck>/usr/lib/python2.7/dist-packages/scikit_learn-0.17.egg-info</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>V8</GenericName>
+			<Title>V8 JavaScript Engine</Title>
+			<PossibleNames>libv8-dev, v8</PossibleNames>
+			<FileCheck>v8.h, libv8.so</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

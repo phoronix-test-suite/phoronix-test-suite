@@ -298,5 +298,9 @@
 			<GenericName>python-scipy</GenericName>
 			<PackageName>python2-scipy python3-scipy</PackageName>
 		</Package>
+		<Package>
+			<GenericName>V8</GenericName>
+			<PackageName>v8</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
