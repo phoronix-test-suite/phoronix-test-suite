@@ -120,7 +120,6 @@ function pts_define_directories()
 
 		pts_define('PTS_USER_PATH', '/var/lib/phoronix-test-suite/');
 		pts_define('PTS_CORE_STORAGE', PTS_USER_PATH . 'core.pt2so');
-		pts_define('PTS_MODULE_DATA_PATH', PTS_USER_PATH . 'modules-data/');
 		pts_define('PTS_DOWNLOAD_CACHE_PATH', '/var/cache/phoronix-test-suite/download-cache/');
 		pts_define('PTS_OPENBENCHMARKING_SCRATCH_PATH', '/var/cache/phoronix-test-suite/openbenchmarking.org/');
 		pts_define('PTS_TEST_PROFILE_PATH', PTS_USER_PATH . 'test-profiles/');
@@ -137,7 +136,6 @@ function pts_define_directories()
 			pts_define('PTS_USER_PATH', pts_core::user_home_directory() . '.phoronix-test-suite' . DIRECTORY_SEPARATOR);
 		//}
 		pts_define('PTS_CORE_STORAGE', PTS_USER_PATH . 'core.pt2so');
-		pts_define('PTS_MODULE_DATA_PATH', PTS_USER_PATH . 'modules-data/');
 		pts_define('PTS_DOWNLOAD_CACHE_PATH', PTS_USER_PATH . 'download-cache/');
 		pts_define('PTS_OPENBENCHMARKING_SCRATCH_PATH', PTS_USER_PATH . 'openbenchmarking.org/');
 		pts_define('PTS_TEST_PROFILE_PATH', PTS_USER_PATH . 'test-profiles/');

@@ -129,7 +129,7 @@ class pts_client
 			PTS_TEST_INSTALL_DEFAULT_PATH,
 			PTS_SAVE_RESULTS_PATH,
 			pts_module::module_local_path(),
-			PTS_MODULE_DATA_PATH,
+			pts_module::module_data_path(),
 			PTS_DOWNLOAD_CACHE_PATH,
 			PTS_OPENBENCHMARKING_SCRATCH_PATH,
 			PTS_TEST_PROFILE_PATH,

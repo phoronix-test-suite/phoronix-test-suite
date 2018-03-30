@@ -28,7 +28,7 @@ class pts_module
 
 	public static function save_dir()
 	{
-		$prefix_dir = PTS_MODULE_DATA_PATH;
+		$prefix_dir = pts_module::module_data_path();
 		pts_file_io::mkdir($prefix_dir);
 
 		return $prefix_dir . str_replace('_', '-', self::module_name()) . '/';
@@ -41,6 +41,10 @@ class pts_module
 	{
 		return PTS_USER_PATH . 'modules/';
 	}
+	public static function module_data_path()
+	{
+		return PTS_USER_PATH . 'modules-data/';
+	}
 	public static function is_module($name)
 	{
 		return is_file(pts_module::module_local_path() . $name . '.php') || is_file(pts_module::module_path() . $name . '.php');
@@ -48,12 +52,12 @@ class pts_module
 	public static function module_config_save($module_name, $set_options = null)
 	{
 		// Validate the config files, update them (or write them) if needed, and other configuration file tasks
-		pts_file_io::mkdir(PTS_MODULE_DATA_PATH . $module_name);
+		pts_file_io::mkdir(pts_module::module_data_path() . $module_name);
 		$settings_to_write = array();
 
-		if(is_file(PTS_MODULE_DATA_PATH . $module_name . "/module-settings.xml"))
+		if(is_file(pts_module::module_data_path() . $module_name . "/module-settings.xml"))
 		{
-			$module_config_parser = new nye_XmlReader(PTS_MODULE_DATA_PATH . $module_name . "/module-settings.xml");
+			$module_config_parser = new nye_XmlReader(pts_module::module_data_path() . $module_name . "/module-settings.xml");
 			$option_identifier = $module_config_parser->getXMLArrayValues('PhoronixTestSuite/ModuleSettings/Option/Identifier');
 			$option_value = $module_config_parser->getXMLArrayValues('PhoronixTestSuite/ModuleSettings/Option/Value');
 
@@ -76,7 +80,7 @@ class pts_module
 			$config->addXmlNode('PhoronixTestSuite/ModuleSettings/Option/Value', $value);
 		}
 
-		$config->saveXMLFile(PTS_MODULE_DATA_PATH . $module_name . "/module-settings.xml");
+		$config->saveXMLFile(pts_module::module_data_path() . $module_name . "/module-settings.xml");
 	}
 	public static function is_module_setup()
 	{
@@ -133,7 +137,7 @@ class pts_module
 		$module_name = self::module_name();
 		$value = false;
 
-		$module_config_parser = new nye_XmlReader(PTS_MODULE_DATA_PATH . $module_name . "/module-settings.xml");
+		$module_config_parser = new nye_XmlReader(pts_module::module_data_path() . $module_name . "/module-settings.xml");
 		$option_identifier = $module_config_parser->getXMLArrayValues('PhoronixTestSuite/ModuleSettings/Option/Identifier');
 		$option_value = $module_config_parser->getXMLArrayValues('PhoronixTestSuite/ModuleSettings/Option/Value');
 
@@ -166,7 +170,7 @@ class pts_module
 		$module_name = self::module_name();
 		$options = array();
 
-		$module_config_parser = new nye_XmlReader(PTS_MODULE_DATA_PATH . $module_name . "/module-settings.xml");
+		$module_config_parser = new nye_XmlReader(pts_module::module_data_path() . $module_name . "/module-settings.xml");
 		$option_identifier = $module_config_parser->getXMLArrayValues('PhoronixTestSuite/ModuleSettings/Option/Identifier');
 		$option_value = $module_config_parser->getXMLArrayValues('PhoronixTestSuite/ModuleSettings/Option/Value');
 
