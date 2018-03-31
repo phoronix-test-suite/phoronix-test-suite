@@ -62,7 +62,7 @@ class backup extends pts_module_interface
 		echo PHP_EOL . 'Making download-cache to cache downloaded test files...' . PHP_EOL;
 		pts_client::execute_command('make_download_cache');
 
-		$root_backup_temp_dir = pts_client::create_temporary_directory();
+		$root_backup_temp_dir = pts_client::create_temporary_directory(null, true);
 		pts_file_io::mkdir(($backup_temp_dir = $root_backup_temp_dir . 'pts-backup' . DIRECTORY_SEPARATOR));
 		$backup_manifest = array();
 
@@ -118,7 +118,7 @@ class backup extends pts_module_interface
 		$backup_archive = $r[0];
 		echo pts_client::cli_just_bold('Backup File: ') . $backup_archive . PHP_EOL;
 		echo pts_client::cli_just_bold('SHA1: ') . sha1_file($backup_archive) . PHP_EOL;
-		$root_restore_temp_dir = pts_client::create_temporary_directory();
+		$root_restore_temp_dir = pts_client::create_temporary_directory(null, true);
 		$s = pts_compression::zip_archive_extract($backup_archive, $root_restore_temp_dir);
 		if(!$s)
 		{
