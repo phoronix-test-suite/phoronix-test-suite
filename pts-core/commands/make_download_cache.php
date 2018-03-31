@@ -32,6 +32,7 @@ class make_download_cache implements pts_option_interface
 
 		// Determine cache location
 		$dc_write_directory = pts_client::download_cache_path();
+		pts_file_io::mkdir($dc_write_directory);
 		echo PHP_EOL . 'Download Cache Directory: ' . $dc_write_directory . PHP_EOL;
 
 		if($dc_write_directory == null || !is_writable($dc_write_directory))
