@@ -33,6 +33,12 @@ class validate_test_profile implements pts_option_interface
 			pts_validation::validate_test_profile($test_profile);
 		}
 	}
+	public static function argument_checks()
+	{
+		return array(
+		new pts_argument_check(0, array('pts_test_profile', 'is_test_profile'), null)
+		);
+	}
 }
 
 ?>

@@ -3,8 +3,8 @@
 <xs:annotation>
 	<xs:documentation xml:lang="en">
 		Phoronix Test Suite / OpenBenchmarking.org XML Test Profile Specification
-		Copyright (C) 2008 - 2017, Phoronix Media
-		Copyright (C) 2008 - 2017, Michael Larabel
+		Copyright (C) 2008 - 2018, Phoronix Media
+		Copyright (C) 2008 - 2018, Michael Larabel
 	</xs:documentation>
 </xs:annotation>
 <xs:include schemaLocation="types.xsd" />
@@ -14,20 +14,76 @@
 		<xs:element name="TestInformation" minOccurs="0" maxOccurs="1">
 		<xs:complexType>
 		<xs:sequence>
-			<xs:element name="Title" type="TitleString" minOccurs="0" maxOccurs="1" />
-			<xs:element name="AppVersion" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="Description" type="DescriptionString" minOccurs="0" maxOccurs="1" />
-			<xs:element name="ResultScale" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="Proportion" type="Proportion" minOccurs="0" maxOccurs="1" />
-			<xs:element name="ResultQuantifier" type="ResultQuantifier" minOccurs="0" maxOccurs="1" />
-			<xs:element name="DisplayFormat" type="DisplayFormat" minOccurs="0" maxOccurs="1" />
-			<xs:element name="SubTitle" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="Executable" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="TimesToRun" type="TimesToRun" minOccurs="0" maxOccurs="1" />
-			<xs:element name="IgnoreRuns" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="InstallationAgreement" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="PreInstallMessage" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="PostInstallMessage" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="Title" type="TitleString" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The title of the test profile / the program under test. The title is shown on the test profile, the test results/graphs, etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AppVersion" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The AppVersion is the application/program version, if relevant, for the workload being tested. This is used for showing on the test results and elsewhere while the actual test profile is versioned separately.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Description" type="DescriptionString" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>A summary of the program/application being benchmarked or a description of what the test profile is testing.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ResultScale" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The result scale string, if relevant for the test, e.g. Frames Per Second, MB/s, GFLOPS, Seconds, etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Proportion" type="Proportion" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>HIB or LIB are relevant values for the Proportion to indicate if higher results are better (HIB) or lower is better (LIB).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ResultQuantifier" type="ResultQuantifier" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The ResultQuantifier is used for specifying what to do with the results from multiple test runs. The default behavior if not specified is AVG to average the results of multiple runs to determine the final result. Other supported options are MAX for reporting the maximum result of multiple test runs or MIN for reporting the minimum result of multiple runs, rather than the average.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DisplayFormat" type="DisplayFormat" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The DisplayFormat is used to determine the kind of result provided / how to display the result. By default if not specified the value is BAR_GRAPH and is the most practical display format for a majority of the test cases. Other options are PASS_FAIL, MULTI_PASS_FAIL, NO_RESULT, IMAGE_COMPARISON, LINE_GRAPH, and FILLED_LINE_GRAPH for representing other result data types.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SubTitle" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The SubTitle is a description string that is displayed underneath the title on test result graphs if the test profile has no options or other information to show in that place. The SubTitle is most often a short description of what's being tested.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Executable" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>The Executable is the name of the bash/shell script file to be called from the root/home directory of the test profile installation to actually run the test. By default if this tag is not set, the name of the test profile itself is assumed to be the script file to call.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TimesToRun" type="TimesToRun" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>TimesToRun specifies the default behavior for how many times the test profile should run before determining the average/min/max results (see ResultQuantifier for those alternatives). Test profiles commonly run their tests at least three times for accuracy while some longer-running programs may opt to run their test just once.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IgnoreRuns" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>IgnoreRuns can be used by test profiles running their test case multiple times via TimesToRun. The value specified is the run number to ignore and to not save/utilize the result of this run. IgnoreRuns is commonly used with a value of 1 if wanting to ignore the first test run for purposes of warming up a cache, generating a data-set on first run, or other use-cases where you may want to ignore the result of a program on its first run.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InstallationAgreement" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>InstallationAgreement can be a string of text to be shown as an installation agreement or if a HTTP/HTTPS URL is specified, the text of that URL will be fetched and displayed to the user. After displaying the arbitrary text, the user will be prompted if they agree to the text. If the user agrees, the installation will proceed otherwise the test profile installation will be aborted.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PreInstallMessage" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>PreInstallMessage allows for arbitrary text to be presented to the user prior to running the test installation process. This can be notes about any steps that may need to be manually done for installing/running a test or other useful information to the user.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PostInstallMessage" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>PostInstallMessage allows for any arbitrary static text to be presented to the user after running the test installation process.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 		</xs:complexType>
 		</xs:element>
@@ -35,27 +91,111 @@
 		<xs:element name="TestProfile">
 		<xs:complexType>
 		<xs:sequence>
-			<xs:element name="Version" type="VersionString" />
-			<xs:element name="SupportedPlatforms" type="PlatformString" minOccurs="0" maxOccurs="1"  />
-			<xs:element name="SoftwareType" type="SoftwareType" minOccurs="0" maxOccurs="1"  />
-			<xs:element name="TestType" type="TestType" minOccurs="0" maxOccurs="1" />
-			<xs:element name="License" type="License" minOccurs="0" maxOccurs="1" />
-			<xs:element name="Status" type="ProfileStatus" minOccurs="0" maxOccurs="1" />
-			<xs:element name="SupportedArchitectures" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="ExternalDependencies" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="Extends" type="TestExtends" minOccurs="0" maxOccurs="1" />
-			<xs:element name="RequiresRoot" type="Boolean" minOccurs="0" maxOccurs="1" />
-			<xs:element name="EnvironmentSize" type="xs:decimal" minOccurs="0" maxOccurs="1" />
-			<xs:element name="EnvironmentTestingSize" type="xs:decimal" minOccurs="0" maxOccurs="1" />
-			<xs:element name="EstimatedTimePerRun" type="PositiveInteger" minOccurs="0" maxOccurs="1" />
-			<xs:element name="ProjectURL" type="URLString" minOccurs="0" maxOccurs="1" />
-			<xs:element name="RequiresCoreVersionMin" type="CoreVersion" minOccurs="0" maxOccurs="1" />
-			<xs:element name="RequiresCoreVersionMax" type="CoreVersion" minOccurs="0" maxOccurs="1" />
-			<xs:element name="InternalTags" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="Maintainer" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="AllowResultsSharing" type="Boolean" minOccurs="0" maxOccurs="1" />
-			<xs:element name="AutoSaveResults" type="Boolean" minOccurs="0" maxOccurs="1" />
-			<xs:element name="SystemDependencies" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="Version" type="VersionString">
+				<xs:annotation>
+					<xs:documentation>Version is used to specify the version of the test profile itself, separate from the version of the application/workload under test. The Version string is expected to be formatted in an X.Y.Z format. Whenever modifying the test profile, the version must always be bumped so the user is aware there were test profile changes. If only the Z number is bumped, it's implied that the changes are minimal and do not affect the outcome of the test for purposes of comparing test results. The Z number is commonly used when just updating the test XML descriptions, updating URLs, etc. When the X or Y version is bumped, it tells the Phoronix Test Suite that it's a larger change and the test results of that new version should not be compared to any previous test profile revision.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SupportedPlatforms" type="PlatformString" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>SupportedPlatforms is used for listing the supported software platforms / operating systems that the test profile is compatible with. Recognized options include Linux, Windows, BSD, MacOSX, and Solaris. Multiple platforms can be specified when delimited by a common and space.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SoftwareType" type="SoftwareType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>SoftwareType is used for indicating the category to which the test profile falls under. Supported options include BaseTestProfile (uncommon, for use with the Cascading Test Profiles / TestExtends functionality), Utility, Simulator, Scientific, Benchmark, Application, or Game. The SoftwareType is mostly used for reference purposes and sorting of results and display purposes.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TestType" type="TestType" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>TestType is used for indicating the computer subsystem that the test workload utilizes. Supported options include System, Processor, Disk, Graphics, Memory, Network, and Other.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="License" type="License" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>License is used for indicating to the user what type of software/code license the program under test utilizes. Supported options are Free, Non-Free, Retail, and Restricted. Free indicates open-source/free software, Non-Free is used for commercial freeware / closed-source software, Retail is for commercial software where you likely need to own a copy of the program for the test profile to work, and restricted is intended for internal/restricted software that is likely not publicly available.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Status" type="ProfileStatus" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Status is used for indicating the status of the test profile if it's Verified (official/expected to be working), Unverified (may have problems), Private (intended only for private use), Broken (known to be in a broken state), Experimental, or Deprecated (no longer maintained/relevant/supported).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SupportedArchitectures" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>SupportedArchitectures is used for specifying the CPU architecture's supported by the program under test. This option is commonly just used for closed-source/binary-only programs that may be limited to running on a particular architecture. Common values are x86 and x86_64. Multiple supported architectures can be specified when delimited by a comma.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ExternalDependencies" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>ExternalDependencies is used for specifying any external dependencies the test profile may need for correct installation/execution. This is generally used for specifying if a compiler toolchain is needed, Python, PHP, various build dependencies, etc. A list of supported external dependencies can be found via the Phoronix Test Suite documentation or by looking in pts-core/external-dependencies/xml/. Multiple external dependencies can be specified by delimiting each dependency with a comma.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Extends" type="TestExtends" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Extends is an uncommon option relied upon for Cascading Test Profiles if one test profile is dependent upon another test profile's test installation or inheriting its test profile XML values, etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RequiresRoot" type="Boolean" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>RequiresRoot allows a value of TRUE or FALSE if the test requires root/administrator rights for successfully running the test. By default the value is assumed to FALSE. If TRUE, the Phoronix Test Suite will attempt to prompt the user at run-time for their root/sudo password to run the test with elevated permissions if the user is not current root/administrator.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EnvironmentSize" type="xs:decimal" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>EnvironmentSize is used for indicating the approximate size of the installed test. Integer and floating point values are supported and assumed to be Megabytes. This is for informational purposes and the Phoronix Test Suite does check the amount of free disk space of the system prior to installing a test to verify sufficient storage capacity.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EnvironmentTestingSize" type="xs:decimal" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>EnvironmentTestingSize is used for indicating the approximate size of the test during execution if it's to be greater than the EnvironmentSize. This is mainly useful for disk/storage benchmarks that may generate large files temporarily during the benchmarking process, so the Phoronix Test Suite can ensure there is sufficient free space on the disk prior to execution. The value is specified in Megabytes.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EstimatedTimePerRun" type="PositiveInteger" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>This option can be used for specifying the number of seconds each test run is expected to take. EstimatedTimePerRun is used for informational purposes to let the user know approximately how long the test execution may take. If this value is not specified, the Phoronix Test Suite relies upon statistics collected by OpenBenchmarking.org for determining the average test time for a given test profile as well as how long the test profile has taken to run previous times on the same system.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ProjectURL" type="URLString" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>ProjectURL allows for an informational URL for indicating the upstream software under test if the user would like to learn more about the program/application/software.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RequiresCoreVersionMin" type="CoreVersion" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>RequiresCoreVersionMin is used if the test profile depends upon Phoronix Test Suite test profile features recently introduced. The value is the Phoronix Test Suite core version number, e.g. Phoronix Test Suite 7.8 has a version number of 7800. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RequiresCoreVersionMax" type="CoreVersion" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>RequiresCoreVersionMax is used if the test profile relies upon functionality the Phoronix Test Suite may have deprecated or removed. The value is the Phoronix Test Suite core version number, e.g. Phoronix Test Suite 7.8 has a version number of 7800. RequiresCoreVersionMax is an uncommon setting with the Phoronix Test Suite tending to not intentionally break compatibility with any existing test profiles/features.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InternalTags" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>InternalTags is used for specifying run-time hints about the program under test with arbitrary values like OpenMP, SMP, Python, and other values that can be detected when searching for a test profile.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Maintainer" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Maintainer is used to indicate the person(s) responsible for maintaining the test profile.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AllowResultsSharing" type="Boolean" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>AllowResultsSharing is assumed to be TRUE by default and can be set to FALSE if the user should not share these results publicly. The behavior is if a test profile has AllowResultsSharing to FALSE, the Phoronix Test Suite will not prompt the user whether they would like to upload the results to OpenBenchmarking.org.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AutoSaveResults" type="Boolean" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>Rather than prompting the user whether they would like to save the test results, setting AutoSaveResults to TRUE will force the user to save the test results. This option shouldn't be needed unless the test profile's results are only logical if viewed on a graph.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SystemDependencies" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation>SystemDependencies is a newer alternative to ExternalDependencies but is only supported on select platforms. SystemDependencies attempts to manage the external dependencies automatically if on a platform where the package manager can handle reverse dependency solving or for example on Debian/Ubuntu operating systems if apt-file is installed. The value is a list of program binary names, header files, or libraries to pass to the respective reverse dependency solver of the host operating system in trying to meet any dependencies needed to run this test profile.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 		</xs:complexType>
 		</xs:element>
@@ -66,11 +206,31 @@
 			<xs:element name="Default" minOccurs="0" maxOccurs="1">
 			<xs:complexType>
 			<xs:sequence>
-				<xs:element name="Arguments" type="xs:string" minOccurs="0" maxOccurs="1" />
-				<xs:element name="PostArguments" type="xs:string" minOccurs="0" maxOccurs="1" />
-				<xs:element name="AllowCacheShare" type="Boolean" minOccurs="0" maxOccurs="1" />
-				<xs:element name="MinimumLength" type="xs:decimal" minOccurs="0" maxOccurs="1" />
-				<xs:element name="MaximumLength" type="xs:decimal" minOccurs="0" maxOccurs="1" />
+				<xs:element name="Arguments" type="xs:string" minOccurs="0" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Arguments is a static list of parameters to always be passed to the test profile's script at run-time. Arguments are the first arguments to be passed to the test profile script followed by any test run option parameters.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="PostArguments" type="xs:string" minOccurs="0" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>PostArguments is a static list of parameters to always be passed to the test profile's script at run-time that will be passed at the end of the string, following any test run options.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="AllowCacheShare" type="Boolean" minOccurs="0" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>If a test profile by default outputs information covering all possible test options that may be present, AllowCacheShare can be set to TRUE to indicate the test result can be shared/used by any other invocation of the test profile run in a given result file. This is an uncommon option.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="MinimumLength" type="xs:decimal" minOccurs="0" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>MinimumLength can be used to specify the time (in seconds) any test profile run will need at a minimum for indicating a successful run. If the test is to always need to run at least 60 seconds and MininLength is set to 60, if a test run ends prior to that threshold (e.g. the process was killed), the test result will not be recorded.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="MaximumLength" type="xs:decimal" minOccurs="0" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>MaximumLength can be used to specify the time (in seconds) that the test profile should finish within if relevant. If the test run takes longer than this value, the test result value is not recorded.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
 			</xs:sequence>
 			</xs:complexType>
 			</xs:element>
@@ -78,11 +238,31 @@
 			<xs:element name="Option" minOccurs="0" maxOccurs="unbounded">
 			<xs:complexType>
 			<xs:sequence>
-				<xs:element name="DisplayName" type="xs:string" />
-				<xs:element name="Identifier" type="xs:string" minOccurs="0" maxOccurs="1" />
-				<xs:element name="ArgumentPrefix" type="xs:string" minOccurs="0" maxOccurs="1" />
-				<xs:element name="ArgumentPostfix" type="xs:string" minOccurs="0" maxOccurs="1" />
-				<xs:element name="DefaultEntry" type="xs:string" minOccurs="0" maxOccurs="1" />
+				<xs:element name="DisplayName" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>The name of a test option, as presented to the user, such as resolution, test type, etc.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Identifier" type="xs:string" minOccurs="0" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>An internal identifier to associate with the test run option.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ArgumentPrefix" type="xs:string" minOccurs="0" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Any string that should be statically passed prior to the test run script prior to the selected option's value.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="ArgumentPostfix" type="xs:string" minOccurs="0" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>Any string that should be statically passed to the test run script immediately after the selected option's value.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="DefaultEntry" type="xs:string" minOccurs="0" maxOccurs="1">
+					<xs:annotation>
+						<xs:documentation>The default option number to use (or most common) in case the user does not select one of the options to run. This is an uncommon option.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
 
 				<xs:element name="Menu" minOccurs="0" maxOccurs="1">
 				<xs:complexType>
@@ -91,9 +271,21 @@
 					<xs:element name="Entry" maxOccurs="unbounded" minOccurs="1">
 					<xs:complexType>
 					<xs:sequence>
-						<xs:element name="Name" type="xs:string" minOccurs="0" maxOccurs="1" />
-						<xs:element name="Value" type="xs:string" minOccurs="0" maxOccurs="1" />
-						<xs:element name="Message" type="xs:string" minOccurs="0" maxOccurs="1" />
+						<xs:element name="Name" type="xs:string" minOccurs="0" maxOccurs="1">
+							<xs:annotation>
+								<xs:documentation>The name of the option, which is then displayed as part of the sub-title on result graphs and used for identifying the test run.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Value" type="xs:string" minOccurs="0" maxOccurs="1">
+							<xs:annotation>
+								<xs:documentation>The value that will be passed to the test run script as part of the arguments/parameters.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Message" type="xs:string" minOccurs="0" maxOccurs="1">
+							<xs:annotation>
+								<xs:documentation>Message allows passing any arbitrary string to the Phoronix Test Suite for displaying next to the Name when showing possible test options.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
 					</xs:sequence>
 					</xs:complexType>
 					</xs:element>
