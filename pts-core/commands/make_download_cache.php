@@ -120,7 +120,7 @@ class make_download_cache implements pts_option_interface
 		$cached_tests = array();
 		foreach(pts_openbenchmarking::available_tests(true, true) as $test)
 		{
-			if(pts_test_install_request:: test_files_in_install_dir($test) == false)
+			if(pts_test_install_request::test_files_in_install_dir($test) == false)
 			{
 				continue;
 			}
