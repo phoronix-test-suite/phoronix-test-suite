@@ -29,17 +29,26 @@ class inspect_test_profile implements pts_option_interface
 	{
 		foreach(pts_types::identifiers_to_test_profile_objects($r, true, true) as $test_profile)
 		{
-			pts_client::$display->generic_heading($test_profile);
-			$doc = new DOMDocument();
-			$doc->loadXML(file_get_contents(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/test-profile.xsd'));
-			$xpath = new DOMXPath($doc);
-			$xpath->registerNamespace('xs', 'http://www.w3.org/2001/XMLSchema');
+			pts_client::$display->generic_heading($test_profile . ' - test-definition.xml');
+			self::process_xsd_display_chart(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/test-profile.xsd', $test_profile);
+			pts_client::$display->generic_heading($test_profile . ' - downloads.xml');
+			self::process_xsd_display_chart(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/test-profile-downloads.xsd', $test_profile);
+		}
+	}
+	protected static function process_xsd_display_chart($xsd_file, $obj = null)
+	{
+		$doc = new DOMDocument();
+		if(is_file($xsd_file))
+		{
+			$doc->loadXML(file_get_contents($xsd_file));
+		}
+		$xpath = new DOMXPath($doc);
+		$xpath->registerNamespace('xs', 'http://www.w3.org/2001/XMLSchema');
 
-			$ev = $xpath->evaluate('/xs:schema/xs:element');
-			foreach($ev as $e)
-			{
-				self::display_elements($test_profile, $xpath, $e);
-			}
+		$ev = $xpath->evaluate('/xs:schema/xs:element');
+		foreach($ev as $e)
+		{
+			self::display_elements($obj, $xpath, $e);
 		}
 	}
 	protected static function display_elements($o, $xpath, $el, $depth = 0)

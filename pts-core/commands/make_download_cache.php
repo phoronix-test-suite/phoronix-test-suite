@@ -62,7 +62,7 @@ class make_download_cache implements pts_option_interface
 			$test_profile = new pts_test_profile($test);
 			echo PHP_EOL . pts_client::cli_just_bold('Checking Downloads For: ') . $test . PHP_EOL;
 
-			foreach(pts_test_install_request::read_download_object_list($test_profile, false) as $file)
+			foreach($test_profile->get_downloads() as $file)
 			{
 				$cached_valid = false;
 				if(is_file($dc_write_directory . $file->get_filename()) && $file->check_file_hash($dc_write_directory . $file->get_filename()))

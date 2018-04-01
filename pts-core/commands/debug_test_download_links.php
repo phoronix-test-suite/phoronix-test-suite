@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2015, Phoronix Media
-	Copyright (C) 2010 - 2015, Michael Larabel
+	Copyright (C) 2010 - 2018, Phoronix Media
+	Copyright (C) 2010 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@ class debug_test_download_links implements pts_option_interface
 		{
 			echo 'Checking: ' . $test_profile . PHP_EOL;
 
-			foreach(pts_test_install_request::read_download_object_list($test_profile) as $test_file_download)
+			foreach($test_profile->get_downloads() as $test_file_download)
 			{
 				foreach($test_file_download->get_download_url_array() as $url)
 				{

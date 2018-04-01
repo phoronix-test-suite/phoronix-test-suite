@@ -88,7 +88,16 @@ class pts_test_profile extends pts_test_profile_parser
 	{
 		$estimated_size = 0;
 
-		foreach(pts_test_install_request::read_download_object_list($this->identifier) as $download_object)
+		if(PTS_IS_CLIENT)
+		{
+			$downloads = pts_test_install_request::read_download_object_list($this->identifier);
+		}
+		else
+		{
+			$downloads = $this->get_downloads();
+		}
+
+		foreach($downloads as $download_object)
 		{
 			$estimated_size += $download_object->get_filesize();
 		}
@@ -435,6 +444,34 @@ class pts_test_profile extends pts_test_profile_parser
 		$file = trim(str_replace('"', "'", $file));
 		$simple_xml = simplexml_load_string($file);
 		return json_encode($simple_xml);
+	}
+	public function get_downloads()
+	{
+		$download_xml_file = $this->get_file_download_spec();
+		$downloads = array();
+		if($download_xml_file != null)
+		{
+			$xml_options = LIBXML_COMPACT | LIBXML_PARSEHUGE;
+			$xml = simplexml_load_file($download_xml_file, 'SimpleXMLElement', $xml_options);
+
+			if($xml->Downloads && $xml->Downloads->Package)
+			{
+				foreach($xml->Downloads->Package as $pkg)
+				{
+					$pkg_url = isset($pkg->URL) ? $pkg->URL->__toString() : null;
+					$pkg_md5 = isset($pkg->MD5) ? $pkg->MD5->__toString() : null;
+					$pkg_sha256 = isset($pkg->SHA256) ? $pkg->SHA256->__toString() : null;
+					$pkg_filename = isset($pkg->FileName) ? $pkg->FileName->__toString() : null;
+					$pkg_filesize = isset($pkg->FileSize) ? $pkg->FileSize->__toString() : null;
+					$pkg_architecture = isset($pkg->ArchitectureSpecific) ? $pkg->ArchitectureSpecific->__toString() : null;
+					$pkg_platforms = isset($pkg->PlatformSpecific) ? $pkg->PlatformSpecific->__toString() : null;
+					$pkg_architecture = isset($pkg->ArchitectureSpecific) ? $pkg->ArchitectureSpecific->__toString() : null;
+					$downloads[] = new pts_test_file_download($pkg_url, $pkg_filename, $pkg_filesize, $pkg_md5, $pkg_sha256, $pkg_platforms, $pkg_architecture);
+				}
+			}
+		}
+
+		return $downloads;
 	}
 }
 

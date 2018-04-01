@@ -65,51 +65,30 @@ class pts_test_install_request
 	}
 	public function generate_download_object_list($do_file_checks = true)
 	{
-		$download_xml_file = $this->test_profile->get_file_download_spec();
-
-		if($download_xml_file != null)
+		foreach($this->test_profile->get_downloads() as $download)
 		{
-			$xml_options = LIBXML_COMPACT | LIBXML_PARSEHUGE;
-			$xml = simplexml_load_file($download_xml_file, 'SimpleXMLElement', $xml_options);
-
-			if($xml->Downloads && $xml->Downloads->Package)
+			// Check for platform compatibility
+			$platforms = $download->get_platform_array();
+			if(!empty($platforms) && $do_file_checks)
 			{
-				foreach($xml->Downloads->Package as $pkg)
+				if(!in_array(phodevi::operating_system(), $platforms) && !(phodevi::is_bsd() && in_array('Linux', $platforms) && (pts_client::executable_in_path('kldstat') && strpos(shell_exec('kldstat -n linux 2>&1'), 'linux.ko') != false)))
 				{
-					// Check for platform compatibility
-					$pkg_platforms = isset($pkg->PlatformSpecific) ? $pkg->PlatformSpecific->__toString() : null;
-					if(!empty($pkg_platforms) && $do_file_checks)
-					{
-						$platforms = pts_strings::comma_explode($pkg_platforms);
-						if(!in_array(phodevi::operating_system(), $platforms) && !(phodevi::is_bsd() && in_array('Linux', $platforms) && (pts_client::executable_in_path('kldstat') && strpos(shell_exec('kldstat -n linux 2>&1'), 'linux.ko') != false)))
-						{
-							// This download does not match the operating system
-							continue;
-						}
-					}
-
-					// Check for architecture compatibility
-					$pkg_architecture = isset($pkg->ArchitectureSpecific) ? $pkg->ArchitectureSpecific->__toString() : null;
-					if(!empty($pkg_architecture) && $do_file_checks)
-					{
-						$architectures = pts_strings::comma_explode($pkg_architecture);
-
-						if(phodevi::cpu_arch_compatible($architectures) == false)
-						{
-							// This download does not match the CPU architecture
-							continue;
-						}
-					}
-
-					$pkg_url = isset($pkg->URL) ? $pkg->URL->__toString() : null;
-					$pkg_md5 = isset($pkg->MD5) ? $pkg->MD5->__toString() : null;
-					$pkg_sha256 = isset($pkg->SHA256) ? $pkg->SHA256->__toString() : null;
-					$pkg_filename = isset($pkg->FileName) ? $pkg->FileName->__toString() : null;
-					$pkg_filesize = isset($pkg->FileSize) ? $pkg->FileSize->__toString() : null;
-					$pkg_architecture = isset($pkg->ArchitectureSpecific) ? $pkg->ArchitectureSpecific->__toString() : null;
-					$this->test_files[] = new pts_test_file_download($pkg_url, $pkg_filename, $pkg_filesize, $pkg_md5, $pkg_sha256, $pkg_platforms, $pkg_architecture);
+					// This download does not match the operating system
+					continue;
 				}
 			}
+
+			// Check for architecture compatibility
+			$architectures = $download->get_architecture_array();
+			if(!empty($architectures) && $do_file_checks)
+			{
+				if(phodevi::cpu_arch_compatible($architectures) == false)
+				{
+					// This download does not match the CPU architecture
+					continue;
+				}
+			}
+			$this->test_files[] = $download;
 		}
 	}
 	public static function test_files_available_locally(&$test_profile, $include_extended_test_profiles = true)

@@ -193,7 +193,7 @@ class pts_validation
 			$files_missing = 0;
 			$file_count = 0;
 
-			foreach(pts_test_install_request::read_download_object_list($test_profile) as $download)
+			foreach($test_profile->get_downloads() as $download)
 			{
 				foreach($download->get_download_url_array() as $url)
 				{
