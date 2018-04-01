@@ -236,30 +236,33 @@
 			</xs:element>
 
 			<xs:element name="Option" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation id="get_test_option_objects">
+						<xs:documentation></xs:documentation>
+					</xs:annotation>
 			<xs:complexType>
 			<xs:sequence>
 				<xs:element name="DisplayName" type="xs:string">
-					<xs:annotation>
+					<xs:annotation id="get_name">
 						<xs:documentation>The name of a test option, as presented to the user, such as resolution, test type, etc.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 				<xs:element name="Identifier" type="xs:string" minOccurs="0" maxOccurs="1">
-					<xs:annotation>
+					<xs:annotation id="get_identifier">
 						<xs:documentation>An internal identifier to associate with the test run option.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 				<xs:element name="ArgumentPrefix" type="xs:string" minOccurs="0" maxOccurs="1">
-					<xs:annotation>
+					<xs:annotation id="get_option_prefix">
 						<xs:documentation>Any string that should be statically passed prior to the test run script prior to the selected option's value.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 				<xs:element name="ArgumentPostfix" type="xs:string" minOccurs="0" maxOccurs="1">
-					<xs:annotation>
+					<xs:annotation id="get_option_postfix">
 						<xs:documentation>Any string that should be statically passed to the test run script immediately after the selected option's value.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 				<xs:element name="DefaultEntry" type="xs:string" minOccurs="0" maxOccurs="1">
-					<xs:annotation>
+					<xs:annotation id="get_default_entry">
 						<xs:documentation>The default option number to use (or most common) in case the user does not select one of the options to run. This is an uncommon option.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
@@ -269,20 +272,23 @@
 				<xs:sequence>
 
 					<xs:element name="Entry" maxOccurs="unbounded" minOccurs="1">
+					<xs:annotation id="get_options_array">
+						<xs:documentation></xs:documentation>
+					</xs:annotation>
 					<xs:complexType>
 					<xs:sequence>
 						<xs:element name="Name" type="xs:string" minOccurs="0" maxOccurs="1">
-							<xs:annotation>
+							<xs:annotation id="0">
 								<xs:documentation>The name of the option, which is then displayed as part of the sub-title on result graphs and used for identifying the test run.</xs:documentation>
 							</xs:annotation>
 						</xs:element>
 						<xs:element name="Value" type="xs:string" minOccurs="0" maxOccurs="1">
-							<xs:annotation>
+							<xs:annotation id="1">
 								<xs:documentation>The value that will be passed to the test run script as part of the arguments/parameters.</xs:documentation>
 							</xs:annotation>
 						</xs:element>
 						<xs:element name="Message" type="xs:string" minOccurs="0" maxOccurs="1">
-							<xs:annotation>
+							<xs:annotation id="2">
 								<xs:documentation>Message allows passing any arbitrary string to the Phoronix Test Suite for displaying next to the Name when showing possible test options.</xs:documentation>
 							</xs:annotation>
 						</xs:element>

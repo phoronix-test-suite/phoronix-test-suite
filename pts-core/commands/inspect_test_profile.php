@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2018, Phoronix Media
+	Copyright (C) 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -42,15 +42,30 @@ class inspect_test_profile implements pts_option_interface
 			}
 		}
 	}
-	protected static function display_elements(&$o, $xpath, $el, $depth = 0)
+	protected static function display_elements($o, $xpath, $el, $depth = 0)
 	{
 		if($el->getElementsByTagName('*')->length > 0 && $el->getElementsByTagName('*')->item(0)->nodeName == 'xs:annotation' && $el->getElementsByTagName('*')->item(0)->getElementsByTagName('documentation')->length > 0)
 		{
 			echo str_repeat('     ', $depth) . pts_client::cli_just_bold($el->getAttribute('name'));
-			if(($id = $el->getElementsByTagName('*')->item(0)->getAttribute('id')) != null && is_callable(array($o, $id)))
+			if(($id = $el->getElementsByTagName('*')->item(0)->getAttribute('id')) != null && (is_callable(array($o, $id)) || (is_array($o) && isset($o[$id]))))
 			{
-				$val = call_user_func(array($o, $id));
-				if(is_array($val))
+				if(is_object($o))
+				{
+					$class = get_class($o);
+					$val = call_user_func(array($o, $id));
+				}
+				else if(is_array($o))
+				{
+					$class = null;
+					$val = $o[$id];
+				}
+
+				if($el->getAttribute('maxOccurs') == 'unbounded')
+				{
+					$o = $val;
+					$val = null;
+				}
+				else if(is_array($val))
 				{
 					$val = '{ ' . implode(', ', call_user_func(array($o, $id))) . ' }';
 				}
@@ -79,7 +94,10 @@ class inspect_test_profile implements pts_option_interface
 			{
 				echo str_repeat('     ', $depth) . pts_client::cli_just_bold('Characteristics: ') . implode(', ', $characteristics) . PHP_EOL;
 			}
-
+			if(!empty($id) && !empty($class))
+			{
+				echo str_repeat('     ', $depth) . pts_client::cli_colored_text('API: ', 'gray', true) . pts_client::cli_colored_text($class . '->' . $id . '()', 'gray', false) . PHP_EOL;
+			}
 			echo str_repeat('     ', $depth) .  trim($el->getElementsByTagName('annotation')->item('0')->getElementsByTagName('documentation')->item(0)->nodeValue) . PHP_EOL;
 		}
 		else
@@ -88,9 +106,22 @@ class inspect_test_profile implements pts_option_interface
 		}
 
 		$els = $xpath->evaluate('xs:complexType/xs:sequence/xs:element', $el);
-		foreach($els as $e)
+		if(is_array($o))
 		{
-			self::display_elements($o, $xpath, $e, ($depth + 1));
+			foreach($o as $j)
+			{
+				foreach($els as $e)
+				{
+					self::display_elements($j, $xpath, $e, ($depth + 1));
+				}
+			}
+		}
+		else
+		{
+			foreach($els as $e)
+			{
+				self::display_elements($o, $xpath, $e, ($depth + 1));
+			}
 		}
 		echo PHP_EOL;
 	}
