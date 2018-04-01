@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 pts-core: Add "V8" external dependency for V8 JavaScript engine
 pts-core: Add initial AdvertiseServiceOpenBenchmarkRelay support
+pts-core: Add new inspect-test-profile sub-command
 
 Phoronix Test Suite 8.0.0 Milestone 2
 24 March 2018
