@@ -14,28 +14,116 @@
 		<xs:element name="ResultsParser" minOccurs="0" maxOccurs="unbounded">
 		<xs:complexType>
 		<xs:sequence>
-			<xs:element name="OutputTemplate" type="xs:string" />
-			<xs:element name="MatchToTestArguments" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="ResultKey" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="LineHint" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="LineBeforeHint" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="LineAfterHint" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="ResultBeforeString" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="ResultAfterString" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="StripFromResult" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="StripResultPostfix" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="MultiMatch" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="DivideResultBy" type="PositiveInteger" minOccurs="0" maxOccurs="1" />
-			<xs:element name="MultiplyResultBy" type="PositiveInteger" minOccurs="0" maxOccurs="1" />
-			<xs:element name="ResultScale" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="ResultProportion" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="ResultPrecision" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="ArgumentsDescription" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="AppendToArgumentsDescription" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="FileFormat" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="TurnCharsToSpace" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="DeleteOutputBefore" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="DeleteOutputAfter" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="OutputTemplate" type="xs:string">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MatchToTestArguments" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ResultKey" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LineHint" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LineBeforeHint" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LineAfterHint" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ResultBeforeString" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ResultAfterString" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StripFromResult" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StripResultPostfix" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MultiMatch" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DivideResultBy" type="PositiveInteger" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MultiplyResultBy" type="PositiveInteger" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ResultScale" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ResultProportion" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ResultPrecision" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ArgumentsDescription" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AppendToArgumentsDescription" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FileFormat" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TurnCharsToSpace" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DeleteOutputBefore" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DeleteOutputAfter" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 		</xs:complexType>
 		</xs:element>
@@ -43,12 +131,36 @@
 		<xs:element name="ImageParser" minOccurs="0" maxOccurs="unbounded">
 		<xs:complexType>
 		<xs:sequence>
-			<xs:element name="SourceImage" type="xs:string" />
-			<xs:element name="MatchToTestArguments" type="xs:string" minOccurs="0" maxOccurs="1" />
-			<xs:element name="ImageX" type="PositiveInteger" minOccurs="0" maxOccurs="1" />
-			<xs:element name="ImageY" type="PositiveInteger" minOccurs="0" maxOccurs="1" />
-			<xs:element name="ImageWidth" type="PositiveInteger" minOccurs="0" maxOccurs="1" />
-			<xs:element name="ImageHeight" type="PositiveInteger" minOccurs="0" maxOccurs="1" />
+			<xs:element name="SourceImage" type="xs:string">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MatchToTestArguments" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ImageX" type="PositiveInteger" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ImageY" type="PositiveInteger" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ImageWidth" type="PositiveInteger" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ImageHeight" type="PositiveInteger" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 		</xs:complexType>
 		</xs:element>
@@ -56,9 +168,21 @@
 		<xs:element name="SystemMonitor" minOccurs="0" maxOccurs="unbounded">
 		<xs:complexType>
 		<xs:sequence>
-			<xs:element name="Sensor" type="xs:string" />
-			<xs:element name="PollingFrequency" type="PositiveInteger" minOccurs="0" maxOccurs="1" />
-			<xs:element name="Report" type="MonitorReporting" minOccurs="0" maxOccurs="1" />
+			<xs:element name="Sensor" type="xs:string">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PollingFrequency" type="PositiveInteger" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Report" type="MonitorReporting" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 		</xs:complexType>
 		</xs:element>
@@ -66,7 +190,11 @@
 		<xs:element name="ExtraData" minOccurs="0" maxOccurs="unbounded">
 		<xs:complexType>
 		<xs:sequence>
-			<xs:element name="Identifier" type="xs:string" />
+			<xs:element name="Identifier" type="xs:string">
+				<xs:annotation>
+					<xs:documentation></xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 		</xs:complexType>
 		</xs:element>

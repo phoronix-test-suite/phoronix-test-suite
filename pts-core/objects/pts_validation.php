@@ -349,6 +349,105 @@ class pts_validation
 
 		return $xml_writer;
 	}
+	public static function process_xsd_display_chart($xsd_file, $obj = null)
+	{
+		$doc = new DOMDocument();
+		if(is_file($xsd_file))
+		{
+			$doc->loadXML(file_get_contents($xsd_file));
+		}
+		$xpath = new DOMXPath($doc);
+		$xpath->registerNamespace('xs', 'http://www.w3.org/2001/XMLSchema');
+
+		$ev = $xpath->evaluate('/xs:schema/xs:element');
+		foreach($ev as $e)
+		{
+			pts_validation::xsd_display_elements_cli($obj, $xpath, $e);
+		}
+	}
+	public static function xsd_display_elements_cli($o, $xpath, $el, $depth = 0)
+	{
+		if($el->getElementsByTagName('*')->length > 0 && $el->getElementsByTagName('*')->item(0)->nodeName == 'xs:annotation' && $el->getElementsByTagName('*')->item(0)->getElementsByTagName('documentation')->length > 0)
+		{
+			echo str_repeat('     ', $depth) . pts_client::cli_just_bold($el->getAttribute('name'));
+			if(($id = $el->getElementsByTagName('*')->item(0)->getAttribute('id')) != null && (is_callable(array($o, $id)) || (is_array($o) && isset($o[$id]))))
+			{
+				if(is_object($o))
+				{
+					$class = get_class($o);
+					$val = call_user_func(array($o, $id));
+				}
+				else if(is_array($o))
+				{
+					$class = null;
+					$val = $o[$id];
+				}
+
+				if($el->getAttribute('maxOccurs') == 'unbounded')
+				{
+					$o = $val;
+					$val = null;
+				}
+				else if(is_array($val))
+				{
+					$val = '{ ' . implode(', ', call_user_func(array($o, $id))) . ' }';
+				}
+				else if($val === true)
+				{
+					$val = 'TRUE';
+				}
+				else if($val === false)
+				{
+					$val = 'FALSE';
+				}
+
+				if(!empty($val))
+				{
+					echo ': ' . pts_client::cli_colored_text($val, 'cyan');
+				}
+			}
+			echo PHP_EOL;
+
+			$characteristics = array();
+			if($el->getAttribute('minOccurs') > 0)
+			{
+				$characteristics[] = 'Required Tag';
+			}
+			if(count($characteristics) > 0)
+			{
+				echo str_repeat('     ', $depth) . pts_client::cli_just_bold('Characteristics: ') . implode(', ', $characteristics) . PHP_EOL;
+			}
+			if(!empty($id) && !empty($class))
+			{
+				echo str_repeat('     ', $depth) . pts_client::cli_colored_text('API: ', 'gray', true) . pts_client::cli_colored_text($class . '->' . $id . '()', 'gray', false) . PHP_EOL;
+			}
+			echo str_repeat('     ', $depth) .  trim($el->getElementsByTagName('annotation')->item('0')->getElementsByTagName('documentation')->item(0)->nodeValue) . PHP_EOL;
+		}
+		else
+		{
+			echo str_repeat('     ', $depth) . pts_client::cli_colored_text($el->getAttribute('name'), 'yellow', true) . PHP_EOL;
+		}
+
+		$els = $xpath->evaluate('xs:complexType/xs:sequence/xs:element', $el);
+		if(is_array($o))
+		{
+			foreach($o as $j)
+			{
+				foreach($els as $e)
+				{
+					self::xsd_display_elements_cli($j, $xpath, $e, ($depth + 1));
+				}
+			}
+		}
+		else
+		{
+			foreach($els as $e)
+			{
+				self::xsd_display_elements_cli($o, $xpath, $e, ($depth + 1));
+			}
+		}
+		echo PHP_EOL;
+	}
 }
 
 ?>
