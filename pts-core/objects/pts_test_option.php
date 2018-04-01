@@ -84,7 +84,7 @@ class pts_test_option
 	}
 	public function add_option($name, $value, $message)
 	{
-		$this->options[] = array($name, $value, $message);
+		$this->options[] = array('NAME' => $name, 'VALUE' => $value, 'MESSAGE' => $message);
 	}
 	public function get_options_array()
 	{
@@ -115,15 +115,15 @@ class pts_test_option
 	}
 	public function get_option_name($index)
 	{
-		return isset($this->options[$index][0]) ? $this->options[$index][0] : null;
+		return isset($this->options[$index]['NAME']) ? $this->options[$index]['NAME'] : null;
 	}
 	public function get_option_value($index)
 	{
-		return isset($this->options[$index][1]) ? $this->options[$index][1] : null;
+		return isset($this->options[$index]['VALUE']) ? $this->options[$index]['VALUE'] : null;
 	}
 	public function get_option_message($index)
 	{
-		return isset($this->options[$index][2]) ? $this->options[$index][2] : null;
+		return isset($this->options[$index]['MESSAGE']) ? $this->options[$index]['MESSAGE'] : null;
 	}
 	public function option_count()
 	{

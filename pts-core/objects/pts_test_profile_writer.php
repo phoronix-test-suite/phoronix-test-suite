@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2015, Phoronix Media
-	Copyright (C) 2010 - 2015, Michael Larabel
+	Copyright (C) 2010 - 2018, Phoronix Media
+	Copyright (C) 2010 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -113,9 +113,9 @@ class pts_test_profile_writer
 
 			foreach($option->get_options_array() as $item)
 			{
-				$this->xml_writer->addXmlNode('PhoronixTestSuite/TestSettings/Option/Menu/Entry/Name', $item[0]);
-				$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/TestSettings/Option/Menu/Entry/Value', $item[1]);
-				$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/TestSettings/Option/Menu/Entry/Message', $item[2]);
+				$this->xml_writer->addXmlNode('PhoronixTestSuite/TestSettings/Option/Menu/Entry/Name', $item['NAME']);
+				$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/TestSettings/Option/Menu/Entry/Value', $item['VALUE']);
+				$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/TestSettings/Option/Menu/Entry/Message', $item['MESSAGE']);
 			}
 		}
 

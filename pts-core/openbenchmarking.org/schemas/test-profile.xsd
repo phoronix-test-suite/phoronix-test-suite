@@ -278,17 +278,17 @@
 					<xs:complexType>
 					<xs:sequence>
 						<xs:element name="Name" type="xs:string" minOccurs="0" maxOccurs="1">
-							<xs:annotation id="0">
+							<xs:annotation id="NAME">
 								<xs:documentation>The name of the option, which is then displayed as part of the sub-title on result graphs and used for identifying the test run.</xs:documentation>
 							</xs:annotation>
 						</xs:element>
 						<xs:element name="Value" type="xs:string" minOccurs="0" maxOccurs="1">
-							<xs:annotation id="1">
+							<xs:annotation id="VALUE">
 								<xs:documentation>The value that will be passed to the test run script as part of the arguments/parameters.</xs:documentation>
 							</xs:annotation>
 						</xs:element>
 						<xs:element name="Message" type="xs:string" minOccurs="0" maxOccurs="1">
-							<xs:annotation id="2">
+							<xs:annotation id="MESSAGE">
 								<xs:documentation>Message allows passing any arbitrary string to the Phoronix Test Suite for displaying next to the Name when showing possible test options.</xs:documentation>
 							</xs:annotation>
 						</xs:element>
