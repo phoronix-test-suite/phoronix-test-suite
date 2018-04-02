@@ -451,8 +451,7 @@ class pts_test_profile extends pts_test_profile_parser
 		$downloads = array();
 		if($download_xml_file != null)
 		{
-			$xml_options = LIBXML_COMPACT | LIBXML_PARSEHUGE;
-			$xml = simplexml_load_file($download_xml_file, 'SimpleXMLElement', $xml_options);
+			$xml = simplexml_load_file($download_xml_file, 'SimpleXMLElement', LIBXML_COMPACT | LIBXML_PARSEHUGE);
 
 			if($xml->Downloads && $xml->Downloads->Package)
 			{
@@ -472,6 +471,77 @@ class pts_test_profile extends pts_test_profile_parser
 		}
 
 		return $downloads;
+	}
+	public function get_results_definition($limit = null)
+	{
+		$results_definition_file = $this->get_file_parser_spec();
+		$results_definition = new pts_test_profile_results_definition();
+		if($results_definition_file != null)
+		{
+			$xml = simplexml_load_file($results_definition_file, 'SimpleXMLElement', LIBXML_COMPACT | LIBXML_PARSEHUGE);
+
+			if($xml->SystemMonitor && ($limit == null || $limit == 'SystemMonitor'))
+			{
+				foreach($xml->SystemMonitor as $i)
+				{
+					$s = isset($i->Sensor) ? $i->Sensor->__toString() : null;
+					$p = isset($i->PollingFrequency) ? $i->PollingFrequency->__toString() : null;
+					$r = isset($i->Report) ? $i->Report->__toString() : null;
+					$results_definition->add_system_monitor_definition($s, $p, $r);
+				}
+			}
+			if($xml->ExtraData && ($limit == null || $limit == 'ExtraData'))
+			{
+				foreach($xml->ExtraData as $i)
+				{
+					$results_definition->add_extra_data_definition((isset($i->Identifier) ? $i->Identifier->__toString() : null));
+				}
+			}
+			if($xml->ImageParser && ($limit == null || $limit == 'ImageParser'))
+			{
+				foreach($xml->ImageParser as $i)
+				{
+					$s = isset($i->SourceImage) ? $i->SourceImage->__toString() : null;
+					$m = isset($i->MatchToTestArguments) ? $i->MatchToTestArguments->__toString() : null;
+					$x = isset($i->ImageX) ? $i->ImageX->__toString() : null;
+					$y = isset($i->ImageY) ? $i->ImageY->__toString() : null;
+					$w = isset($i->ImageWidth) ? $i->ImageWidth->__toString() : null;
+					$h = isset($i->ImageHeight) ? $i->ImageHeight->__toString() : null;
+					$results_definition->add_image_parser_definition($s, $m, $x, $y, $w, $h);
+				}
+			}
+			if($xml->ResultsParser && ($limit == null || $limit == 'ResultsParser'))
+			{
+				foreach($xml->ResultsParser as $i)
+				{
+					$ot = isset($i->OutputTemplate) ? $i->OutputTemplate->__toString() : null;
+					$mtta = isset($i->MatchToTestArguments) ? $i->MatchToTestArguments->__toString() : null;
+					$rk = isset($i->ResultKey) ? $i->ResultKey->__toString() : null;
+					$lh = isset($i->LineHint) ? $i->LineHint->__toString() : null;
+					$lbh = isset($i->LineBeforeHint) ? $i->LineBeforeHint->__toString() : null;
+					$lah = isset($i->LineAfterHint) ? $i->LineAfterHint->__toString() : null;
+					$rbs = isset($i->ResultBeforeString) ? $i->ResultBeforeString->__toString() : null;
+					$ras = isset($i->ResultAfterString) ? $i->ResultAfterString->__toString() : null;
+					$sfr = isset($i->StripFromResult) ? $i->StripFromResult->__toString() : null;
+					$srp = isset($i->StripResultPostfix) ? $i->StripResultPostfix->__toString() : null;
+					$mm = isset($i->MultiMatch) ? $i->MultiMatch->__toString() : null;
+					$drb = isset($i->DivideResultBy) ? $i->DivideResultBy->__toString() : null;
+					$mrb = isset($i->MultiplyResultBy) ? $i->MultiplyResultBy->__toString() : null;
+					$rs = isset($i->ResultScale) ? $i->ResultScale->__toString() : null;
+					$rpro = isset($i->ResultProportion) ? $i->ResultProportion->__toString() : null;
+					$rpre = isset($i->ResultPrecision) ? $i->ResultPrecision->__toString() : null;
+					$ad = isset($i->ArgumentsDescription) ? $i->ArgumentsDescription->__toString() : null;
+					$atad = isset($i->AppendToArgumentsDescription) ? $i->AppendToArgumentsDescription->__toString() : null;
+					$ff = isset($i->FileFormat) ? $i->FileFormat->__toString() : null;
+					$tcts = isset($i->TurnCharsToSpace) ? $i->TurnCharsToSpace->__toString() : null;
+					$dob = isset($i->DeleteOutputBefore) ? $i->DeleteOutputBefore->__toString() : null;
+					$doa = isset($i->DeleteOutputAfter) ? $i->DeleteOutputAfter->__toString() : null;
+					$results_definition->add_result_parser_definition($ot, $mtta, $rk, $lh, $lbh, $lah, $rbs, $ras, $sfr, $srp, $mm, $drb, $mrb, $rs, $rpro, $rpre, $ad, $atad, $ff, $tcts, $dob, $doa);
+				}
+			}
+		}
+
+		return $results_definition;
 	}
 }
 
