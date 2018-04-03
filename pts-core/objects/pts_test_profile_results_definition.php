@@ -127,7 +127,7 @@ class pts_test_profile_results_definition_image_parser
 	{
 		return $this->source_image;
 	}
-	public function get_match_to_test_args()
+	public function get_match_to_image_args()
 	{
 		return $this->match_to_test_args;
 	}

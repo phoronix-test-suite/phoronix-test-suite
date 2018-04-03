@@ -33,6 +33,8 @@ class inspect_test_profile implements pts_option_interface
 			pts_validation::process_xsd_display_chart(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/test-profile.xsd', $test_profile);
 			pts_client::$display->generic_heading($test_profile . ' - downloads.xml');
 			pts_validation::process_xsd_display_chart(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/test-profile-downloads.xsd', $test_profile);
+			pts_client::$display->generic_heading($test_profile . ' - results-definition.xml');
+			pts_validation::process_xsd_display_chart(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/results-parser.xsd', $test_profile);
 		}
 	}
 	public static function argument_checks()

@@ -376,6 +376,12 @@ class pts_validation
 				{
 					$class = get_class($o);
 					$val = call_user_func(array($o, $id));
+
+					if(is_object($val))
+					{
+						$o = $val;
+						$val = null;
+					}
 				}
 				else if(is_array($o))
 				{

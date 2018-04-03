@@ -337,7 +337,7 @@ class pts_test_result_parser
 		$definitions = $test_run_request->test_profile->get_results_definition('ImageParser');
 		foreach($definitions->get_system_monitor_definitions() as $entry)
 		{
-			$match_test_arguments = $entry->get_match_to_test_args();
+			$match_test_arguments = $entry->get_match_to_image_args();
 			if(!empty($match_test_arguments) && strpos($pts_test_arguments, $match_test_arguments) === false)
 			{
 				// This is not the ResultsParser XML section to use as the MatchToTestArguments does not match the PTS test arguments
