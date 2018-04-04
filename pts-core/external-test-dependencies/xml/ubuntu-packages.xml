@@ -357,5 +357,9 @@
 			<GenericName>V8</GenericName>
 			<PackageName>libv8-dev</PackageName>
 		</Package>
+		<Package>
+			<GenericName>ruby</GenericName>
+			<PackageName>ruby</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

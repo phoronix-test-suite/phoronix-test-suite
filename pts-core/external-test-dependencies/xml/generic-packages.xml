@@ -494,5 +494,11 @@
 			<PossibleNames>libv8-dev, v8</PossibleNames>
 			<FileCheck>v8.h, libv8.so</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>Ruby</GenericName>
+			<Title>Ruby</Title>
+			<PossibleNames>ruby</PossibleNames>
+			<FileCheck>ruby</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

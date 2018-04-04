@@ -302,5 +302,9 @@
 			<GenericName>V8</GenericName>
 			<PackageName>v8</PackageName>
 		</Package>
+		<Package>
+			<GenericName>ruby</GenericName>
+			<PackageName>ruby</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
