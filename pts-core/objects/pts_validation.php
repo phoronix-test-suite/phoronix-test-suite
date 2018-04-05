@@ -494,7 +494,20 @@ class pts_validation
 				if(isset($types[$type]))
 				{
 					$enums = $types[$type]->get_enums();
-					echo str_repeat('     ', $depth) . pts_client::cli_just_bold('Possible Values: ') . implode(', ', $enums) . PHP_EOL;
+					if(!empty($enums))
+					{
+						echo str_repeat('     ', $depth) . pts_client::cli_colored_text('Possible Values: ', 'gray', true) . implode(', ', $enums) . PHP_EOL;
+					}
+					$min_value = $types[$type]->get_min_value();
+					if($min_value > -1)
+					{
+						echo str_repeat('     ', $depth) . pts_client::cli_colored_text('Minimum Value: ', 'gray', true) . $min_value . PHP_EOL;
+					}
+					$max_value = $types[$type]->get_max_value();
+					if($max_value > 0)
+					{
+						echo str_repeat('     ', $depth) . pts_client::cli_colored_text('Maximum Value: ', 'gray', true) . $max_value . PHP_EOL;
+					}
 				}
 			}
 			if(count($characteristics) > 0)
@@ -503,7 +516,7 @@ class pts_validation
 			}
 			if(!empty($id) && !empty($class))
 			{
-				echo str_repeat('     ', $depth) . pts_client::cli_colored_text('API: ', 'gray', true) . pts_client::cli_colored_text($class . '->' . $id . '()', 'gray', false) . PHP_EOL;
+				echo str_repeat('     ', $depth) . pts_client::cli_colored_text('API: ', 'gray', true) . $class . '->' . $id . '()' . PHP_EOL;
 			}
 			echo str_repeat('     ', $depth) .  trim($el->getElementsByTagName('annotation')->item('0')->getElementsByTagName('documentation')->item(0)->nodeValue) . PHP_EOL;
 		}

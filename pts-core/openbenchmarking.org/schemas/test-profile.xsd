@@ -46,7 +46,7 @@
 			</xs:element>
 			<xs:element name="DisplayFormat" type="DisplayFormat" minOccurs="0" maxOccurs="1">
 				<xs:annotation id="get_display_format">
-					<xs:documentation>The DisplayFormat is used to determine the kind of result provided / how to display the result. By default if not specified the value is BAR_GRAPH and is the most practical display format for a majority of the test cases. Other options are PASS_FAIL, MULTI_PASS_FAIL, NO_RESULT, IMAGE_COMPARISON, LINE_GRAPH, and FILLED_LINE_GRAPH for representing other result data types.</xs:documentation>
+					<xs:documentation>The DisplayFormat is used to determine the kind of result provided / how to display the result. By default if not specified the value is BAR_GRAPH and is the most practical display format for a majority of the test cases.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="SubTitle" type="xs:string" minOccurs="0" maxOccurs="1">
