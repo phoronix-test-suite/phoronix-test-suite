@@ -24,7 +24,7 @@ class backup extends pts_module_interface
 {
 	const module_name = 'Backup Creation + Restore';
 	const module_version = '1.0.0';
-	const module_description = 'This is a module for creating backups of the Phoronix Test Suite / Phoromatic and allows for restoring of created backups. The backup will be in ZIP format. If only a path is specified, the file-name will be auto-generated with a current time-stamp.';
+	const module_description = 'This is a module for creating backups of the Phoronix Test Suite / Phoromatic and allows for restoring of created backups. The backup will be in ZIP or TAR format. If only a path is specified, the file-name will be auto-generated with a current time-stamp.';
 	const module_author = 'Phoronix Media';
 
 	public static function user_commands()
@@ -47,9 +47,10 @@ class backup extends pts_module_interface
 		{
 			$backup_location .= 'pts-backup-' . date('Y-m-d-H-i-s');
 		}
-		if(substr($backup_location, -4) != '.zip')
+		$file_extension = phodevi::is_windows() ? 'zip' : 'tar';
+		if(substr($backup_location, -4) != '.' . $file_extension)
 		{
-			$backup_location .= '.zip';
+			$backup_location .= '.' . $file_extension;
 		}
 		echo PHP_EOL . pts_client::cli_just_bold('Proposed Backup File:') . ' ' . $backup_location . PHP_EOL . PHP_EOL;
 
@@ -82,8 +83,14 @@ class backup extends pts_module_interface
 
 		$manifest = self::dir_checks($backup_temp_dir, $backup_temp_dir);
 		file_put_contents($backup_temp_dir . 'pts-backup-manifest.txt', $manifest);
-
-		pts_compression::zip_archive_create($backup_location, $backup_temp_dir);
+		if($file_extension == 'zip')
+		{
+			pts_compression::zip_archive_create($backup_location, $backup_temp_dir);
+		}
+		else
+		{
+			pts_compression::compress_to_archive($backup_temp_dir, $backup_location);
+		}
 		echo pts_client::cli_just_bold('Backup File Written To: ') . $backup_location . PHP_EOL;
 		echo pts_client::cli_just_bold('SHA1: ') . sha1_file($backup_location) . PHP_EOL;
 		echo pts_client::cli_just_bold('File Size: ') . round(filesize($backup_location) / 1000000, 1) . ' MB' . PHP_EOL;
@@ -118,11 +125,24 @@ class backup extends pts_module_interface
 		$backup_archive = $r[0];
 		echo pts_client::cli_just_bold('Backup File: ') . $backup_archive . PHP_EOL;
 		echo pts_client::cli_just_bold('SHA1: ') . sha1_file($backup_archive) . PHP_EOL;
-		$root_restore_temp_dir = pts_client::create_temporary_directory(null, true);
-		$s = pts_compression::zip_archive_extract($backup_archive, $root_restore_temp_dir);
+		if(substr($backup_archive, -4) == '.zip')
+		{
+			$root_restore_temp_dir = pts_client::create_temporary_directory(null, true);
+			$s = pts_compression::zip_archive_extract($backup_archive, $root_restore_temp_dir);
+		}
+		else if(substr($backup_archive, -4) == '.tar')
+		{
+			$root_restore_temp_dir = dirname($backup_archive);
+			$s = pts_compression::archive_extract($backup_archive);
+		}
+		else
+		{
+			echo PHP_EOL . 'Unknown file type.' . PHP_EOL;
+			return false;
+		}
 		if(!$s)
 		{
-			echo PHP_EOL . 'There was a problem extracting the ZIP archive.' . PHP_EOL;
+			echo PHP_EOL . 'There was a problem extracting the archive.' . PHP_EOL;
 			return false;
 		}
 		$restore_dir = $root_restore_temp_dir . DIRECTORY_SEPARATOR . 'pts-backup' . DIRECTORY_SEPARATOR;
@@ -165,7 +185,7 @@ class backup extends pts_module_interface
 			}
 		}
 
-		pts_file_io::delete($root_restore_temp_dir, null, true);
+		pts_file_io::delete($root_restore_temp_dir . DIRECTORY_SEPARATOR . 'pts-backup', null, true);
 	}
 	protected static function dir_checks($dir, $remove_base_dir, &$checksums = array())
 	{
