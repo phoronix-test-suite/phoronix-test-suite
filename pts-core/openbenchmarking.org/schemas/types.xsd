@@ -3,8 +3,8 @@
 <xs:annotation>
 	<xs:documentation xml:lang="en">
 		Phoronix Test Suite / OpenBenchmarking.org
-		Copyright (C) 2008 - 2017, Phoronix Media
-		Copyright (C) 2008 - 2017, Michael Larabel
+		Copyright (C) 2008 - 2018, Phoronix Media
+		Copyright (C) 2008 - 2018, Michael Larabel
 	</xs:documentation>
 </xs:annotation>
 <xs:simpleType name="ResultTitleString">

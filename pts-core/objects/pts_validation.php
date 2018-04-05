@@ -349,7 +349,76 @@ class pts_validation
 
 		return $xml_writer;
 	}
-	public static function process_xsd_display_chart($xsd_file, $obj = null)
+	public static function process_xsd_types()
+	{
+		$doc = new DOMDocument();
+		$xsd_file = pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/types.xsd';
+		if(is_file($xsd_file))
+		{
+			$doc->loadXML(file_get_contents($xsd_file));
+		}
+		$xpath = new DOMXPath($doc);
+		$xpath->registerNamespace('xs', 'http://www.w3.org/2001/XMLSchema');
+
+		$types = array();
+		foreach($xpath->evaluate('/xs:schema/xs:simpleType') as $e)
+		{
+			$name = $e->getAttribute('name');
+			$type = $e->getElementsByTagName('restriction')->item(0)->getAttribute('base');
+			switch($type)
+			{
+				case 'xs:integer':
+					$type = 'INT';
+					break;
+				case 'xs:string':
+					$type = 'STRING';
+					break;
+			}
+			if($e->getElementsByTagName('restriction')->item(0)->getElementsByTagName('minLength')->length > 0)
+			{
+				$min_length = $e->getElementsByTagName('restriction')->item(0)->getElementsByTagName('minLength')->item(0)->getAttribute('value');
+			}
+			else
+			{
+				$min_length = -1;
+			}
+			if($e->getElementsByTagName('restriction')->item(0)->getElementsByTagName('maxLength')->length > 0)
+			{
+				$max_length = $e->getElementsByTagName('restriction')->item(0)->getElementsByTagName('maxLength')->item(0)->getAttribute('value');
+			}
+			else
+			{
+				$max_length = -1;
+			}
+			if($e->getElementsByTagName('restriction')->item(0)->getElementsByTagName('minInclusive')->length > 0)
+			{
+				$min_value = $e->getElementsByTagName('restriction')->item(0)->getElementsByTagName('minInclusive')->item(0)->getAttribute('value');
+			}
+			else
+			{
+				$min_value = -1;
+			}
+			if($e->getElementsByTagName('restriction')->item(0)->getElementsByTagName('maxInclusive')->length > 0)
+			{
+				$max_value = $e->getElementsByTagName('restriction')->item(0)->getElementsByTagName('maxInclusive')->item(0)->getAttribute('value');
+			}
+			else
+			{
+				$max_value = -1;
+			}
+
+			$enums = array();
+			for($i = 0; $i < $e->getElementsByTagName('restriction')->item(0)->getElementsByTagName('enumeration')->length; $i++)
+			{
+				$enums[] = $e->getElementsByTagName('restriction')->item(0)->getElementsByTagName('enumeration')->item($i)->getAttribute('value');
+			}
+
+
+			$types[$name] = new pts_input_type_restrictions($name, $type, $min_length, $max_length, $min_value, $max_value, $enums);
+		}
+		return $types;
+	}
+	public static function process_xsd_display_chart($xsd_file, $obj = null, $types = null)
 	{
 		$doc = new DOMDocument();
 		if(is_file($xsd_file))
@@ -362,10 +431,10 @@ class pts_validation
 		$ev = $xpath->evaluate('/xs:schema/xs:element');
 		foreach($ev as $e)
 		{
-			pts_validation::xsd_display_elements_cli($obj, $xpath, $e);
+			pts_validation::xsd_display_elements_cli($obj, $xpath, $e, 0, $types);
 		}
 	}
-	public static function xsd_display_elements_cli($o, $xpath, $el, $depth = 0)
+	public static function xsd_display_elements_cli($o, $xpath, $el, $depth = 0, $types = null)
 	{
 		if($el->getElementsByTagName('*')->length > 0 && $el->getElementsByTagName('*')->item(0)->nodeName == 'xs:annotation' && $el->getElementsByTagName('*')->item(0)->getElementsByTagName('documentation')->length > 0)
 		{
@@ -419,6 +488,15 @@ class pts_validation
 			{
 				$characteristics[] = 'Required Tag';
 			}
+			if($el->getAttribute('type') != null)
+			{
+				$type = $el->getAttribute('type');
+				if(isset($types[$type]))
+				{
+					$enums = $types[$type]->get_enums();
+					echo str_repeat('     ', $depth) . pts_client::cli_just_bold('Possible Values: ') . implode(', ', $enums) . PHP_EOL;
+				}
+			}
 			if(count($characteristics) > 0)
 			{
 				echo str_repeat('     ', $depth) . pts_client::cli_just_bold('Characteristics: ') . implode(', ', $characteristics) . PHP_EOL;
@@ -441,7 +519,7 @@ class pts_validation
 			{
 				foreach($els as $e)
 				{
-					self::xsd_display_elements_cli($j, $xpath, $e, ($depth + 1));
+					self::xsd_display_elements_cli($j, $xpath, $e, ($depth + 1), $types);
 				}
 			}
 		}
@@ -449,7 +527,7 @@ class pts_validation
 		{
 			foreach($els as $e)
 			{
-				self::xsd_display_elements_cli($o, $xpath, $e, ($depth + 1));
+				self::xsd_display_elements_cli($o, $xpath, $e, ($depth + 1), $types);
 			}
 		}
 		echo PHP_EOL;
