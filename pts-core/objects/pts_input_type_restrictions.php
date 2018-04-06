@@ -29,6 +29,7 @@ class pts_input_type_restrictions
 	private $min_value;
 	private $max_value;
 	private $enums;
+	private $required;
 
 	public function __construct($name, $type, $min_length, $max_length, $min_value, $max_value, $enums)
 	{
@@ -63,6 +64,26 @@ class pts_input_type_restrictions
 	public function get_enums()
 	{
 		return $this->enums;
+	}
+	public function set_required($is_required)
+	{
+		$this->required = $is_required;
+	}
+	public function is_required()
+	{
+		return $this->required;
+	}
+	public function is_valid($input)
+	{
+
+	}
+	public function cli_input()
+	{
+
+	}
+	public function html_input()
+	{
+
 	}
 }
 ?>
