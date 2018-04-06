@@ -319,7 +319,7 @@ if(PTS_IS_CLIENT && ini_get('date.timezone') == null)
 	else if(strtoupper(substr(PHP_OS, 0, 3)) == 'WIN')
 	{
 		$tz = trim(shell_exec('powershell "(Get-TimeZone).BaseUtcOffset.Hours"'));
-		$tz = timezone_name_from_abbr('', ($tz * 60 * 60), 0);
+		$tz = is_numeric($tz) ? timezone_name_from_abbr('', ($tz * 60 * 60), 0) : null;
 	}
 
 	if($tz == null || !in_array($tz, timezone_identifiers_list()))
