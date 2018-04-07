@@ -44,7 +44,7 @@ class list_available_tests implements pts_option_interface
 				// Don't show unsupported tests
 				continue;
 			}
-			if($repo_index['tests'][$id]['status'] != 'Verified')
+			if(!empty($repo_index['tests'][$id]['status']) && $repo_index['tests'][$id]['status'] != 'Verified')
 			{
 				// Don't show unsupported tests
 				continue;
