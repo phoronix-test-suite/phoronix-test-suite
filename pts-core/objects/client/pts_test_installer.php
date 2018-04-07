@@ -484,6 +484,14 @@ class pts_test_installer
 			// Handle Fortran for this external dependency
 			$compilers['F9X'] = array(pts_strings::first_in_string(pts_client::read_env('F9X'), ' '), pts_strings::first_in_string(pts_client::read_env('F95'), ' '), 'gfortran', 'f90', 'f95', 'fortran');
 		}
+		if(!pts_client::executable_in_path('python'))
+		{
+			$compilers['PY2'] = array('python2', 'python2.7', 'python2.6');
+		}
+		if(!pts_client::executable_in_path('python3'))
+		{
+			$compilers['PY3'] = array('python3.7', 'python3.6', 'python3.5', 'python3.4');
+		}
 
 		if(empty($compilers))
 		{
@@ -530,7 +538,9 @@ class pts_test_installer
 			$compiler_extras = array(
 				'CC' => array('safeguard-names' => array('gcc', 'cc'), 'environment-variables' => 'CFLAGS'),
 				'CXX' => array('safeguard-names' => array('g++', 'c++'), 'environment-variables' => 'CXXFLAGS'),
-				'F9X' => array('safeguard-names' => array('gfortran', 'f95'), 'environment-variables' => 'FFLAGS')
+				'F9X' => array('safeguard-names' => array('gfortran', 'f95'), 'environment-variables' => 'FFLAGS'),
+				'PY2' => array('safeguard-names' => array('python'), 'environment-variables' => ''),
+				'PY3' => array('safeguard-names' => array('python3'), 'environment-variables' => '')
 				);
 
 			foreach($compilers as $compiler_type => $compiler_path)
