@@ -41,7 +41,8 @@
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
-			<PackageName>autoconf</PackageName>
+			<PackageName>autoconf gmake</PackageName>
+			<FileCheck>gmake</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>nasm</GenericName>
