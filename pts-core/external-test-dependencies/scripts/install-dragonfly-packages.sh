@@ -1,5 +1,4 @@
 #!/bin/sh
 
-#dports pkg
-pkg install -y $*
+sudo pkg install -y $*
 
