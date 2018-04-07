@@ -350,6 +350,11 @@ class phodevi_motherboard extends phodevi_device_interface
 		if(phodevi::is_bsd())
 		{
 			$bios_version = phodevi_bsd_parser::read_kenv('smbios.system.version');
+
+			if($bios_version == 'System Version')
+			{
+				$bios_version = null;
+			}
 		}
 		else if(phodevi::is_linux())
 		{
@@ -383,21 +388,22 @@ class phodevi_motherboard extends phodevi_device_interface
 			$product = phodevi_bsd_parser::read_kenv('smbios.system.product');
 			$version = phodevi_bsd_parser::read_kenv('smbios.system.version'); // for at least Lenovo ThinkPads this is where it displays ThinkPad model
 
-			if($vendor != null && ($product != null || $version != null) && pts_strings::has_alpha($vendor))
+			if($vendor != null && ($product != null || $version != null) && pts_strings::has_alpha($vendor) && strpos($product, 'System') === false)
 			{
 				$info = $vendor . ' ' . $product . ' ' . $version;
+var_dump($product); var_dump($vendor);
 			}
 			else if(($vendor = phodevi_bsd_parser::read_sysctl('hw.vendor')) != false && ($version = phodevi_bsd_parser::read_sysctl(array('hw.version', 'hw.product'))) != false)
 			{
 				$info = trim($vendor . ' ' . $version);
 			}
-			else if(($acpi = phodevi_bsd_parser::read_sysctl('dev.acpi.0.%desc')) != false && strpos($acpi, ' ') != null)
-			{
-				$info = trim($acpi);
-			}
 			else if(($product = phodevi_bsd_parser::read_kenv('smbios.planar.product')))
 			{
 				$info = trim(phodevi_bsd_parser::read_kenv('smbios.planar.maker') . ' ' . $product);
+			}
+			else if(($acpi = phodevi_bsd_parser::read_sysctl('dev.acpi.0.%desc')) != false && strpos($acpi, ' ') != null)
+			{
+				$info = trim($acpi);
 			}
 		}
 		else if(phodevi::is_linux())
