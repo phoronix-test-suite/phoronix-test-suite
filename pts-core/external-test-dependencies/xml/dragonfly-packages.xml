@@ -22,6 +22,7 @@
                 <Package>
 			<GenericName>golang</GenericName>
 			<PackageName>go</PackageName>
+			<FileCheck>/usr/local/bin/go</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>java</GenericName>
