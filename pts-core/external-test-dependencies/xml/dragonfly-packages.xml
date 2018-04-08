@@ -208,7 +208,7 @@
 			<PackageName>redis</PackageName>
 		</Package>
 		<Package>
-			<GenericName>gnupg</GenericName>
+			<GenericName>gpg</GenericName>
 			<PackageName>gnupg</PackageName>
 		</Package>
 	</ExternalDependencies>
