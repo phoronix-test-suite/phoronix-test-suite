@@ -181,6 +181,7 @@
 		<Package>
 			<GenericName>python-sklearn</GenericName>
 			<PackageName>py27-scikit-learn</PackageName>
+			<FileCheck>/usr/local/lib/python2.7/site-packages/sklearn</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>python-scipy</GenericName>
