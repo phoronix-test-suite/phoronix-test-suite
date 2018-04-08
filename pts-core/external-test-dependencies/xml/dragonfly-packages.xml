@@ -212,5 +212,9 @@
 			<GenericName>gpg</GenericName>
 			<PackageName>gnupg</PackageName>
 		</Package>
+		<Package>
+			<GenericName>Rscript</GenericName>
+			<PackageName>R</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
