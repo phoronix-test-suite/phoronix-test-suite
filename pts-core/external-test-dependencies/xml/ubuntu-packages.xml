@@ -361,5 +361,13 @@
 			<GenericName>ruby</GenericName>
 			<PackageName>ruby</PackageName>
 		</Package>
+		<Package>
+			<GenericName>gimp</GenericName>
+			<PackageName>gimp</PackageName>
+		</Package>
+		<Package>
+			<GenericName>darktable</GenericName>
+			<PackageName>darktable</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

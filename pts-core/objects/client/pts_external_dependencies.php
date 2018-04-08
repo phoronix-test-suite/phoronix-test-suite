@@ -25,13 +25,22 @@ class pts_external_dependencies
 	public static function packages_that_provide($file)
 	{
 		$pkg_vendor = self::vendor_identifier('package-list');
+		$provides = false;
 		if($file != null && is_file(pts_exdep_generic_parser::get_external_dependency_path() . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php'))
 		{
 			require_once(pts_exdep_generic_parser::get_external_dependency_path() . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php');
 			eval("\$provides = {$pkg_vendor}_dependency_handler::what_provides(\$file);");
-			return $provides;
 		}
-		return false;
+
+		if(empty($provides))
+		{
+			// Fallback to see if it's defined by the XML data
+			$f = array($file => '');
+			$t = false;
+			$x = true;
+			$provides = self::check_dependencies_missing_from_system($f, $t, $x);
+		}
+		return !empty($provides) && is_array($provides) ? $provides : false;
 	}
 	public static function startup_handler()
 	{
@@ -324,6 +333,10 @@ class pts_external_dependencies
 					// If the OS/platform-specific package didn't supply a file check list, obtain it from the generic listing
 					$generic_package_data = $generic_dependencies_parser->get_package_data($package);
 					$add_dependency = empty($generic_package_data['file_check']) || self::file_missing_check($generic_package_data['file_check']);
+				}
+				else
+				{
+					$add_dependency = true;
 				}
 
 				if($add_dependency && $arch_compliant && $package_data['os_package'] != null)

@@ -175,5 +175,29 @@
 			<GenericName>python-scipy</GenericName>
 			<PackageName>py27-scipy</PackageName>
 		</Package>
+		<Package>
+			<GenericName>gimp</GenericName>
+			<PackageName>gimp</PackageName>
+		</Package>
+		<Package>
+			<GenericName>darktable</GenericName>
+			<PackageName>darktable</PackageName>
+		</Package>
+		<Package>
+			<GenericName>fio</GenericName>
+			<PackageName>fio</PackageName>
+		</Package>
+		<Package>
+			<GenericName>iozone</GenericName>
+			<PackageName>iozone</PackageName>
+		</Package>
+		<Package>
+			<GenericName>redis</GenericName>
+			<PackageName>redis</PackageName>
+		</Package>
+		<Package>
+			<GenericName>gnupg</GenericName>
+			<PackageName>gnupg</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
