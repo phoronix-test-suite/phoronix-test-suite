@@ -482,7 +482,7 @@ class pts_test_installer
 		if($test_install_request === false || in_array('fortran-compiler', $external_dependencies))
 		{
 			// Handle Fortran for this external dependency
-			$compilers['F9X'] = array(pts_strings::first_in_string(pts_client::read_env('F9X'), ' '), pts_strings::first_in_string(pts_client::read_env('F95'), ' '), 'gfortran', 'f90', 'f95', 'fortran');
+			$compilers['F9X'] = array(pts_strings::first_in_string(pts_client::read_env('F9X'), ' '), pts_strings::first_in_string(pts_client::read_env('F95'), ' '), 'gfortran', 'f90', 'f95', 'fortran', 'gfortran9', 'gfortran8', 'gfortran6', 'gfortran6');
 		}
 		if(!pts_client::executable_in_path('python'))
 		{

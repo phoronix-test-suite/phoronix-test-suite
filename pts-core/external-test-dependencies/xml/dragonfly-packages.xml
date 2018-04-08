@@ -168,6 +168,7 @@
 		<Package>
 			<GenericName>openmpi-development</GenericName>
 			<PackageName>openmpi</PackageName>
+			<FileCheck>/usr/local/openmpi</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>git</GenericName>
