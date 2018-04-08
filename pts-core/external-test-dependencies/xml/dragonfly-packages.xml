@@ -22,6 +22,7 @@
                 <Package>
 			<GenericName>golang</GenericName>
 			<PackageName>go</PackageName>
+			<FileCheck>/usr/local/bin/go</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>java</GenericName>
@@ -40,8 +41,17 @@
 			<PackageName>openssl</PackageName>
 		</Package>
 		<Package>
+			<GenericName>ruby</GenericName>
+			<PackageName>ruby</PackageName>
+		</Package>
+		<Package>
+                        <GenericName>perl-digest-md5</GenericName>
+                        <PackageName>p5-Digest-MD5</PackageName>
+                </Package>
+		<Package>
 			<GenericName>build-utilities</GenericName>
-			<PackageName>autoconf</PackageName>
+			<PackageName>autoconf automake gmake openmp bash</PackageName>
+			<FileCheck>autoconf, gmake, bash</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>nasm</GenericName>
@@ -158,6 +168,7 @@
 		<Package>
 			<GenericName>openmpi-development</GenericName>
 			<PackageName>openmpi</PackageName>
+			<FileCheck>/usr/local/openmpi</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>git</GenericName>
@@ -174,6 +185,7 @@
 		<Package>
 			<GenericName>python-scipy</GenericName>
 			<PackageName>py27-scipy</PackageName>
+			<FileCheck>/usr/local/lib/python2.7/site-packages/scipy</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>gimp</GenericName>
