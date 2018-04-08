@@ -1304,6 +1304,12 @@ class phodevi_system extends phodevi_device_interface
 			$desktop_environment = 'LXDE';
 			$desktop_version = $version;
 		}
+		else if(pts_client::is_process_running('lumina-desktop'))
+		{
+			// Lumina Desktop Environment
+			$desktop_environment = 'Lumina';
+			$desktop_version = str_replace('"', '', trim(shell_exec('lumina-desktop --version 2>&1')));
+		}
 		else if(pts_client::is_process_running('xfce4-session') || pts_client::is_process_running('xfce-mcs-manager') || $desktop_session == 'xfce')
 		{
 			// Xfce 4.x

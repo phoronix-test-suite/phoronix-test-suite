@@ -1453,7 +1453,7 @@ class pts_client
 		{
 			// Checks if process is running on the system
 			$ps = shell_exec('ps -ax 2>&1');
-			$running = strpos($ps, ' ' . strtolower($process)) != false ? 'TRUE' : null;
+			$running = strpos($ps, strtolower($process)) != false ? 'TRUE' : null;
 		}
 		else
 		{
