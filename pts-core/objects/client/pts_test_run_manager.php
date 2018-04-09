@@ -681,7 +681,7 @@ class pts_test_run_manager
 
 		return true;
 	}
-	public static function process_json_report_attributes(&$test_run_request, $time_test_elapsed = 0)
+	public static function process_json_report_attributes(&$test_run_request)
 	{
 		// XXX : add to attributes JSON here
 		$json_report_attributes = null;
@@ -704,11 +704,6 @@ class pts_test_run_manager
 		if(($t = $test_run_request->active->get_max_result()) != 0)
 		{
 			$json_report_attributes['max-result'] = $t;
-		}
-		if(!empty($time_test_elapsed) && $time_test_elapsed > 0)
-		{
-			// Time in seconds that the test took in total
-			$json_report_attributes['time-consumed'] = pts_math::set_precision($time_test_elapsed, 2);
 		}
 
 		return $json_report_attributes;
