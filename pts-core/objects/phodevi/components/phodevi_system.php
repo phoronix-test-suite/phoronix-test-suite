@@ -517,31 +517,45 @@ class phodevi_system extends phodevi_device_interface
 		}
 
 		// Meltdown / KPTI check
-		if(is_file('/sys/devices/system/cpu/vulnerabilities/meltdown'))
+		if(phodevi::is_linux())
 		{
-			if(pts_file_io::file_get_contents('/sys/devices/system/cpu/vulnerabilities/meltdown') == 'Mitigation: PTI')
+			if(is_file('/sys/devices/system/cpu/vulnerabilities/meltdown'))
+			{
+				if(pts_file_io::file_get_contents('/sys/devices/system/cpu/vulnerabilities/meltdown') == 'Mitigation: PTI')
+				{
+					// Kernel Page Table Isolation
+					$security[] = 'KPTI';
+				}
+			}
+			else if(strpos(phodevi::$vfs->dmesg, 'page tables isolation: enabled') !== false)
 			{
 				// Kernel Page Table Isolation
 				$security[] = 'KPTI';
 			}
-		}
-		else if(strpos(phodevi::$vfs->dmesg, 'page tables isolation: enabled') !== false)
-		{
-			// Kernel Page Table Isolation
-			$security[] = 'KPTI';
-		}
 
 
-		// Spectre
-		foreach(array('spectre_v1', 'spectre_v2') as $vulns)
-		{
-			if(is_file('/sys/devices/system/cpu/vulnerabilities/' . $vulns))
+			// Spectre
+			foreach(array('spectre_v1', 'spectre_v2') as $vulns)
 			{
-				$fc = file_get_contents('/sys/devices/system/cpu/vulnerabilities/' . $vulns);
-				if(($x = strpos($fc, ': ')) !== false)
+				if(is_file('/sys/devices/system/cpu/vulnerabilities/' . $vulns))
 				{
-					$security[] = trim(substr($fc, $x + 2));
+					$fc = file_get_contents('/sys/devices/system/cpu/vulnerabilities/' . $vulns);
+					if(($x = strpos($fc, ': ')) !== false)
+					{
+						$security[] = trim(substr($fc, $x + 2));
+					}
 				}
+			}
+		}
+		else if(phodevi::is_bsd())
+		{
+			if(phodevi_bsd_parser::read_sysctl('vm.pmap.pti') == '1')
+			{
+				$security[] = 'KPTI';
+			}
+			if(phodevi_bsd_parser::read_sysctl('hw.ibrs_active') == '1')
+			{
+				$security[] = 'IBRS';
 			}
 		}
 
