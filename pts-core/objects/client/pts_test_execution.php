@@ -612,7 +612,7 @@ class pts_test_execution
 
 		// Ending Tasks
 		pts_client::$display->display_interrupt_message($test_run_request->test_profile->get_post_run_message());
-		$test_successful = self::calculate_end_result_post_processing($test_run_manager, $test_run_request); // Process results
+		$test_successful = self::calculate_end_result_post_processing($test_run_manager, $test_run_request, $time_test_elapsed); // Process results
 
 		// End Finalize
 		pts_module_manager::module_process('__post_test_run', $test_run_request);
@@ -630,7 +630,7 @@ class pts_test_execution
 		pts_client::release_lock($lock_file);
 		return $test_successful;
 	}
-	protected static function calculate_end_result_post_processing(&$test_run_manager, &$root_tr)
+	protected static function calculate_end_result_post_processing(&$test_run_manager, &$root_tr, $time_elapsed = 0)
 	{
 		$test_successful = false;
 		$generated_result_count = 0;
@@ -785,7 +785,7 @@ class pts_test_execution
 						}
 
 						$test_result->test_result_buffer = new pts_test_result_buffer();
-						$test_result->test_result_buffer->add_test_result($test_run_manager->get_results_identifier(), $test_result->active->get_result(), $test_result->active->get_values_as_string(), pts_test_run_manager::process_json_report_attributes($test_result), $test_result->active->get_min_result(), $test_result->active->get_max_result());
+						$test_result->test_result_buffer->add_test_result($test_run_manager->get_results_identifier(), $test_result->active->get_result(), $test_result->active->get_values_as_string(), pts_test_run_manager::process_json_report_attributes($test_result, $time_elapsed), $test_result->active->get_min_result(), $test_result->active->get_max_result());
 						$added_comparison_hash = $test_run_manager->result_file->add_result($test_result);
 						$generated_result_count++;
 
@@ -801,7 +801,7 @@ class pts_test_execution
 					{
 						// Not a saved result
 						$test_result->test_result_buffer = new pts_test_result_buffer();
-						$test_result->test_result_buffer->add_test_result('Result', $test_result->active->get_result(), $test_result->active->get_values_as_string(), pts_test_run_manager::process_json_report_attributes($test_result), $test_result->active->get_min_result(), $test_result->active->get_max_result());
+						$test_result->test_result_buffer->add_test_result('Result', $test_result->active->get_result(), $test_result->active->get_values_as_string(), pts_test_run_manager::process_json_report_attributes($test_result, $time_elapsed), $test_result->active->get_min_result(), $test_result->active->get_max_result());
 						$temp_result_file = new pts_result_file(null);
 						$added_comparison_hash = $temp_result_file->add_result($test_result);
 						$results_comparison = clone $temp_result_file->get_result($added_comparison_hash);
