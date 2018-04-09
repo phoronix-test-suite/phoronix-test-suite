@@ -275,7 +275,7 @@ class pts_test_execution
 				}
 
 				$test_run_time = microtime(true) - $test_run_time_start;
-				$test_run_request->test_run_times[] = $test_run_time;
+				$test_run_request->test_run_times[] = pts_math::set_precision($test_run_time, 2);
 
 				$exit_status_pass = true;
 				if(is_file($test_directory . 'test-exit-status'))
@@ -768,6 +768,8 @@ class pts_test_execution
 			else if($test_result instanceof pts_test_result && $test_result->active)
 			{
 				$end_result = $test_result->active->get_result();
+
+				$test_result->test_run_times = $root_tr->test_run_times;
 
 				// removed count($result) > 0 in the move to pts_test_result
 				if(((is_numeric($end_result) && $end_result > 0) || (!is_numeric($end_result) && isset($end_result[3]))))

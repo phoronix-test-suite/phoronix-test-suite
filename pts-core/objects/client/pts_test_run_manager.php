@@ -705,6 +705,10 @@ class pts_test_run_manager
 		{
 			$json_report_attributes['max-result'] = $t;
 		}
+		if(!empty($test_run_request->test_run_times))
+		{
+			$json_report_attributes['test-run-times'] = implode(':', $test_run_request->test_run_times);
+		}
 
 		return $json_report_attributes;
 	}
