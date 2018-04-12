@@ -22,6 +22,15 @@
 
 class pts_tests
 {
+	public static $extra_env_vars = null;
+	public static function add_extra_env_var($name, $value)
+	{
+		self::$extra_env_vars[$name] = $value;
+	}
+	public static function clear_extra_env_vars()
+	{
+		self::$extra_env_vars = array();
+	}
 	public static function installed_tests()
 	{
 		$cleaned_tests = array();
@@ -147,6 +156,12 @@ class pts_tests
 	public static function extra_environmental_variables(&$test_profile)
 	{
 		$extra_vars = array();
+
+		if(is_array(self::$extra_env_vars))
+		{
+			$extra_vars = self::$extra_env_vars;
+		}
+
 		$extra_vars['HOME'] = $test_profile->get_install_dir();
 		$extra_vars['DEBUG_HOME'] = $test_profile->get_install_dir();
 		$extra_vars['PATH'] = "\$PATH";

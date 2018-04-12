@@ -563,6 +563,7 @@ class phoromatic extends pts_module_interface
 					$just_started = false;
 				}
 
+				pts_tests::clear_extra_env_vars();
 				if(isset($json['phoromatic']['pre_set_sys_env_vars']) && !empty($json['phoromatic']['pre_set_sys_env_vars']))
 				{
 					// pre_set_sys_env_vars was added during PTS 5.8 development
@@ -573,6 +574,7 @@ class phoromatic extends pts_module_interface
 						if(count($var) == 2)
 						{
 							putenv($var[0] . '=' . $var[1]);
+							pts_tests::add_extra_env_var($var[0], $var[1]);
 						}
 					}
 				}
