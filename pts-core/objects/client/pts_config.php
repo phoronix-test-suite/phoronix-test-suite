@@ -100,6 +100,7 @@ class pts_config
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/General/DefaultDisplayMode', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/General/PhoromaticServers', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/General/FullOutput', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/General/ColoredConsole', $read_config);
 
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Modules/LoadModules', $read_config);
 

@@ -13,6 +13,7 @@
 			<DefaultDisplayMode>DEFAULT</DefaultDisplayMode>
 			<PhoromaticServers></PhoromaticServers>
 			<FullOutput>FALSE</FullOutput>
+			<ColoredConsole>AUTO</ColoredConsole>
 		</General>
 		<Modules>
 			<LoadModules>toggle_screensaver, update_checker, perf_tips, ob_auto_compare</LoadModules>
