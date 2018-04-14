@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Improvements for BSD / FreeBSD support
 pts-core: Add "V8" external dependency for V8 JavaScript engine
 pts-core: Add initial AdvertiseServiceOpenBenchmarkRelay support
 pts-core: Add new inspect-test-profile sub-command

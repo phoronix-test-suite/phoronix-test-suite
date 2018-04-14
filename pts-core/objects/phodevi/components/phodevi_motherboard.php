@@ -391,7 +391,6 @@ class phodevi_motherboard extends phodevi_device_interface
 			if($vendor != null && ($product != null || $version != null) && pts_strings::has_alpha($vendor) && strpos($product, 'System') === false)
 			{
 				$info = $vendor . ' ' . $product . ' ' . $version;
-var_dump($product); var_dump($vendor);
 			}
 			else if(($vendor = phodevi_bsd_parser::read_sysctl('hw.vendor')) != false && ($version = phodevi_bsd_parser::read_sysctl(array('hw.version', 'hw.product'))) != false)
 			{

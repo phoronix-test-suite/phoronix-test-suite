@@ -557,6 +557,14 @@ class phodevi_system extends phodevi_device_interface
 			{
 				$security[] = 'IBRS';
 			}
+			if(phodevi_bsd_parser::read_sysctl('machdep.spectre_mitigation') == '1')
+			{
+				$security[] = 'Spectre Mitigation';
+			}
+			if(phodevi_bsd_parser::read_sysctl('machdep.meltdown_mitigation') == '1')
+			{
+				$security[] = 'Meltdown Mitigation';
+			}
 		}
 
 		return !empty($security) ? implode(' + ',  $security) . ' Protection' : null;
