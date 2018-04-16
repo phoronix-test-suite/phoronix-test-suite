@@ -549,6 +549,7 @@ class phodevi_system extends phodevi_device_interface
 		}
 		else if(phodevi::is_bsd())
 		{
+			// FreeBSD
 			if(phodevi_bsd_parser::read_sysctl('vm.pmap.pti') == '1')
 			{
 				$security[] = 'KPTI';
@@ -557,6 +558,8 @@ class phodevi_system extends phodevi_device_interface
 			{
 				$security[] = 'IBRS';
 			}
+
+			// DragonFlyBSD
 			if(phodevi_bsd_parser::read_sysctl('machdep.spectre_mitigation') == '1')
 			{
 				$security[] = 'Spectre Mitigation';

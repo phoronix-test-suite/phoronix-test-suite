@@ -1,4 +1,4 @@
-.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "8.0.0m2"
+.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "8.0.0m3"
 .SH NAME
 phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source platform for performing testing and performance evaluation.
 .SH SYNOPSIS
@@ -187,13 +187,16 @@ This option will check all download links within the specified test profile(s) t
 .B download-test-files [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This will download the selected test file(s) to the Phoronix Test Suite download cache but will not install the tests.
 .TP
+.B inspect-test-profile [Test]
+This option can be used for inspecting a Phoronix Test Suite test profile with providing inside details on test profiles for debugging / evaluation / learning purposes.
+.TP
 .B result-file-to-suite [Test Result]
 This option will guide the user through the process of generating their own test suite, which they can then run, that is based upon an existing test results file.
 .TP
 .B validate-result-file
 This option can be used for validating a Phoronix Test Suite result file as being compliant against the OpenBenchmarking.org specification.
 .TP
-.B validate-test-profile
+.B validate-test-profile [Test]
 This option can be used for validating a Phoronix Test Suite test profile as being compliant against the OpenBenchmarking.org specification.
 .TP
 .B validate-test-suite

@@ -147,11 +147,13 @@ This option is intended for use by test profile writers and is used for debuggin
 This option will check all download links within the specified test profile(s) to ensure there are no broken URLs.
 #### download-test-files  [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This will download the selected test file(s) to the Phoronix Test Suite download cache but will not install the tests.
+#### inspect-test-profile  [Test]
+This option can be used for inspecting a Phoronix Test Suite test profile with providing inside details on test profiles for debugging / evaluation / learning purposes.
 #### result-file-to-suite  [Test Result]
 This option will guide the user through the process of generating their own test suite, which they can then run, that is based upon an existing test results file.
 #### validate-result-file
 This option can be used for validating a Phoronix Test Suite result file as being compliant against the OpenBenchmarking.org specification.
-#### validate-test-profile
+#### validate-test-profile  [Test]
 This option can be used for validating a Phoronix Test Suite test profile as being compliant against the OpenBenchmarking.org specification.
 #### validate-test-suite
 This option can be used for validating a Phoronix Test Suite test suite as being compliant against the OpenBenchmarking.org specification.
@@ -244,6 +246,11 @@ Start the Phoromatic web server for controlling local Phoronix Test Suite client
 The following list is the modules included with the Phoronix Test Suite that are intended to extend the functionality of pts-core. Some of these options have commands that can be run directly in a similiar manner to the other Phoronix Test Suite user commands. Some modules are just meant to be loaded directly by adding the module name to the LoadModules tag in ~/.phoronix-test-suite/user-config.xml or via the PTS_MODULES environment variable. A list of available modules is also available by running*phoronix-test-suite list-modules.*
 
 ---
+
+### Backup Creation + Restore
+This is a module for creating backups of the Phoronix Test Suite / Phoromatic and allows for restoring of created backups. The backup will be in ZIP or TAR format. If only a path is specified, the file-name will be auto-generated with a current time-stamp.
+phoronix-test-suite backup.create
+phoronix-test-suite backup.restore
 
 ### Dummy Module
 This is a simple module intended for developers to just demonstrate some of the module functions.
@@ -662,6 +669,94 @@ This is a collection of test profiles found within the specified OpenBenchmarkin
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing opencl.
 #### Cuda Tests  system/cuda
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing cuda.
+#### All SYSTEM Tests  system/all
+This is a collection of all test profiles found within the specified OpenBenchmarking.org repository.
+#### Installed Tests  system/installed
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository that are already installed on the system under test.
+#### Linux Operating System Tests  system/linux
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Linux Operating System.
+#### Solaris Operating System Tests  system/solaris
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Solaris Operating System.
+#### BSD Operating System Tests  system/bsd
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the BSD Operating System.
+#### MacOSX Operating System Tests  system/macosx
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the MacOSX Operating System.
+#### Windows Operating System Tests  system/windows
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Windows Operating System.
+#### Hurd Operating System Tests  system/hurd
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Hurd Operating System.
+#### System Subsystem Tests  system/system
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the System sub-system.
+#### Processor Subsystem Tests  system/processor
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Processor sub-system.
+#### Disk Subsystem Tests  system/disk
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Disk sub-system.
+#### Graphics Subsystem Tests  system/graphics
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Graphics sub-system.
+#### Memory Subsystem Tests  system/memory
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Memory sub-system.
+#### Network Subsystem Tests  system/network
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Network sub-system.
+#### Other Subsystem Tests  system/other
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Other sub-system.
+#### Utility Tests  system/utility
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Utility software test.
+#### Simulator Tests  system/simulator
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Simulator software test.
+#### Scientific Tests  system/scientific
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Scientific software test.
+#### Benchmark Tests  system/benchmark
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Benchmark software test.
+#### Application Tests  system/application
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Application software test.
+#### Game Tests  system/game
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Game software test.
+#### Opencl Tests  system/opencl
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing opencl.
+#### Cuda Tests  system/cuda
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing cuda.
+#### All WINDOWS Tests  windows/all
+This is a collection of all test profiles found within the specified OpenBenchmarking.org repository.
+#### Installed Tests  windows/installed
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository that are already installed on the system under test.
+#### Linux Operating System Tests  windows/linux
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Linux Operating System.
+#### Solaris Operating System Tests  windows/solaris
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Solaris Operating System.
+#### BSD Operating System Tests  windows/bsd
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the BSD Operating System.
+#### MacOSX Operating System Tests  windows/macosx
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the MacOSX Operating System.
+#### Windows Operating System Tests  windows/windows
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Windows Operating System.
+#### Hurd Operating System Tests  windows/hurd
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Hurd Operating System.
+#### System Subsystem Tests  windows/system
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the System sub-system.
+#### Processor Subsystem Tests  windows/processor
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Processor sub-system.
+#### Disk Subsystem Tests  windows/disk
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Disk sub-system.
+#### Graphics Subsystem Tests  windows/graphics
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Graphics sub-system.
+#### Memory Subsystem Tests  windows/memory
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Memory sub-system.
+#### Network Subsystem Tests  windows/network
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Network sub-system.
+#### Other Subsystem Tests  windows/other
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Other sub-system.
+#### Utility Tests  windows/utility
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Utility software test.
+#### Simulator Tests  windows/simulator
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Simulator software test.
+#### Scientific Tests  windows/scientific
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Scientific software test.
+#### Benchmark Tests  windows/benchmark
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Benchmark software test.
+#### Application Tests  windows/application
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Application software test.
+#### Game Tests  windows/game
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Game software test.
 
 # Component Testing
 
