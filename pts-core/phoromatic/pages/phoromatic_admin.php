@@ -194,7 +194,7 @@ class phoromatic_admin implements pts_webui_interface
 		<h3>Reply-To Email Address:</h3>
 		<p><input type="text" name="email_all_reply_to" /></p>
 		<h3>Subject:</h3>
-		<p><input type="password" name="email_all_subject" /></p>
+		<p><input type="text" name="email_all_subject" /></p>
 		<h3>Message:</h3>
 		<p> <textarea rows="4" cols="50" name="email_all_message"></textarea></p>
 		<p><input type="submit" value="Send Email" /></p>
