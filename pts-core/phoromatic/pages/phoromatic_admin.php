@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014 - 2015, Phoronix Media
-	Copyright (C) 2014 - 2015, Michael Larabel
+	Copyright (C) 2014 - 2018, Phoronix Media
+	Copyright (C) 2014 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -53,7 +53,18 @@ class phoromatic_admin implements pts_webui_interface
 		{
 			$new_account = create_new_phoromatic_account($_POST['register_username'], $_POST['register_password'], $_POST['register_password_confirm'], $_POST['register_email'], (isset($_POST['seed_accountid']) ? $_POST['seed_accountid'] : null));
 		}
+		else if(isset($_POST['email_all_subject']) && isset($_POST['email_all_message']) && !empty($_POST['email_all_message']))
+		{
+			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_users ORDER BY UserName ASC');
+			$result = $stmt->execute();
 
+			while($row = $result->fetchArray())
+			{
+				$user = $row['UserName'];
+				$email = $row['email'];
+				phoromatic_server::send_email($email, $_POST['email_all_subject'], $_POST['email_all_reply_to'], $_POST['email_all_message']);
+			}
+		}
 		$main .= '<h1>Phoromatic Server Administration</h1>';
 
 		$main .= '<hr /><h2>Server Information</h2>';
@@ -177,6 +188,17 @@ class phoromatic_admin implements pts_webui_interface
 
 		$main .= '<hr /><h2>Phoromatic Server Log</h2>';
 		$main .= '<p><textarea style="width: 80%; height: 400px;">' . $server_log  . '</textarea></p>';
+
+		$main .= '<hr /><h2>Email All Users</h2>';
+		$main .= '<form name="email_all" id="email_all" action="?admin" method="post">
+		<h3>Reply-To Email Address:</h3>
+		<p><input type="text" name="email_all_reply_to" /></p>
+		<h3>Subject:</h3>
+		<p><input type="password" name="email_all_subject" /></p>
+		<h3>Message:</h3>
+		<p> <textarea rows="4" cols="50" name="email_all_message"></textarea></p>
+		<p><input type="submit" value="Send Email" /></p>
+		</form>';
 
 		echo phoromatic_webui_header_logged_in();
 		echo phoromatic_webui_main($main, phoromatic_webui_right_panel_logged_in());

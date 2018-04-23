@@ -124,7 +124,7 @@ class pts_ResultFileTable extends pts_Table
 				}
 			}
 
-			if($result_object->test_profile->get_identifier() == null)
+			if(false && $result_object->test_profile->get_identifier() == null)
 			{
 				if($result_object->test_profile->get_display_format() == 'BAR_GRAPH')
 				{
