@@ -64,6 +64,7 @@ class phoromatic_admin implements pts_webui_interface
 				$email = $row['email'];
 				phoromatic_server::send_email($email, $_POST['email_all_subject'], $_POST['email_all_reply_to'], $_POST['email_all_message']);
 			}
+			echo '<h2>Emails sent to all Phoromatic users.</h2>';
 		}
 		$main .= '<h1>Phoromatic Server Administration</h1>';
 
