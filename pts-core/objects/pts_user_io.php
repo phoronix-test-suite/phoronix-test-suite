@@ -152,14 +152,28 @@ class pts_user_io
 
 			$answer = pts_strings::string_bool($auto_answer);
 		}*/
-		$question .= ' (' . ($default == true ? 'Y/n' : 'y/N') . '): ';
+		switch($default)
+		{
+			case true:
+				$def = 'Y/n';
+				break;
+			case false:
+				$def = 'y/N';
+				break;
+			case -1:
+			default:
+				$def = 'y/n';
+				break;
+		}
+
+		$question .= ' (' . $def . '): ';
 
 		do
 		{
 			pts_client::$display->generic_prompt(pts_client::cli_just_bold($question));
 			$input = strtolower(pts_user_io::read_user_input());
 		}
-		while($input != 'y' && $input != 'n' && $input != '');
+		while($input != 'y' && $input != 'n' && ($input != '' || $default != -1));
 		switch($input)
 		{
 			case 'y':

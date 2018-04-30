@@ -895,7 +895,7 @@ class pts_client
 				echo wordwrap($user_agreement, 65);
 				$agree = pts_user_io::prompt_bool_input('Do you agree to these terms and wish to proceed', true);
 
-				$usage_reporting = $agree ? pts_user_io::prompt_bool_input('Enable anonymous usage / statistics reporting', true) : -1;
+				$usage_reporting = $agree ? pts_user_io::prompt_bool_input('Enable anonymous usage / statistics reporting', -1) : -1;
 			}
 
 			if($agree)

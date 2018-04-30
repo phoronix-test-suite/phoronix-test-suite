@@ -976,7 +976,7 @@ class pts_test_run_manager
 				}
 				else if(!$this->auto_mode)
 				{
-					$upload_results = pts_user_io::prompt_bool_input('Would you like to upload the results to OpenBenchmarking.org', true);
+					$upload_results = pts_user_io::prompt_bool_input('Would you like to upload the results to OpenBenchmarking.org', -1);
 				}
 				else
 				{

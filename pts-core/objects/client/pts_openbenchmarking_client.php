@@ -74,7 +74,7 @@ class pts_openbenchmarking_client
 				}
 				else
 				{
-					$upload_system_logs = pts_user_io::prompt_bool_input('Would you like to attach the system logs (lspci, dmesg, lsusb, etc) to the test result', true, 'UPLOAD_SYSTEM_LOGS');
+					$upload_system_logs = pts_user_io::prompt_bool_input('Would you like to attach the system logs (lspci, dmesg, lsusb, etc) to the test result', -1, 'UPLOAD_SYSTEM_LOGS');
 				}
 			}
 		}
