@@ -185,7 +185,7 @@ class pts_user_io
 					break;
 			}
 		}
-		while($answer == -1);
+		while($answer === -1);
 
 		return $answer;
 	}
