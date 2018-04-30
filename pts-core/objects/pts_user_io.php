@@ -167,24 +167,26 @@ class pts_user_io
 
 		$question .= ' (' . $def . '): ';
 
+		$answer = -1;
 		do
 		{
 			pts_client::$display->generic_prompt(pts_client::cli_just_bold($question));
 			$input = strtolower(pts_user_io::read_user_input());
+			switch($input)
+			{
+				case 'y':
+					$answer = true;
+					break;
+				case 'n':
+					$answer = false;
+					break;
+				default:
+					$answer = $default;
+					break;
+			}
 		}
-		while($input != 'y' && $input != 'n' && ($input != '' || $default != -1));
-		switch($input)
-		{
-			case 'y':
-				$answer = true;
-				break;
-			case 'n':
-				$answer = false;
-				break;
-			default:
-				$answer = $default;
-				break;
-		}
+		while($answer == -1);
+
 		return $answer;
 	}
 	public static function prompt_text_menu($user_string, $options_r, $allow_multi_select = false, $return_index = false, $line_prefix = null)
