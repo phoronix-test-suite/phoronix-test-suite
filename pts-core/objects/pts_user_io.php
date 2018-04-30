@@ -152,18 +152,17 @@ class pts_user_io
 
 			$answer = pts_strings::string_bool($auto_answer);
 		}*/
-		switch($default)
+		if($default === true)
 		{
-			case true:
-				$def = 'Y/n';
-				break;
-			case false:
-				$def = 'y/N';
-				break;
-			case -1:
-			default:
-				$def = 'y/n';
-				break;
+			$def = 'Y/n';
+		}
+		else if($default === false)
+		{
+			$def = 'y/N';
+		}
+		else
+		{
+			$def = 'y/n';
 		}
 
 		$question .= ' (' . $def . '): ';
