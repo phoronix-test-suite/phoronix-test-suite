@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2016, Phoronix Media
-	Copyright (C) 2008 - 2016, Michael Larabel
+	Copyright (C) 2008 - 2018, Phoronix Media
+	Copyright (C) 2008 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -98,8 +98,21 @@ class phoromatic_results implements pts_webui_interface
 					$time_str = '1 month';
 					$time_limit = strtotime('- ' . $time_str);
 				}
-
-				$result_limit = isset($_POST['result_limit']) && is_numeric($_POST['result_limit']) && $_POST['result_limit'] > 9 ? $_POST['result_limit'] : 50;
+				if(isset($_POST['result_limit']))
+				{
+					if(is_numeric($_POST['result_limit']) && $_POST['result_limit'] > 9)
+					{
+						$result_limit = $_POST['result_limit'];
+					}
+					else
+					{
+						$result_limit = 0;
+					}
+				}
+				else
+				{
+					$result_limit = 100;
+				}
 
 				$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" method="post"><div style="text-align: left; font-weight: bold;">Show Results For <select id="result_time_limit" name="time">';
 
@@ -123,50 +136,83 @@ class phoromatic_results implements pts_webui_interface
 					$main .= '<option value="' . $val . '"' . ($time_str == $val ? ' selected="selected"' : null) . '>Past ' . $str . '</option>';
 				}
 
-				$main .= '</select> Search For <input type="text" name="search" value="' . (isset($_POST['search']) ? $_POST['search'] : null) . '" /> &nbsp; Limit Results To <select id="result_limit" name="result_limit">';
-				for($i = 25; $i <= 150; $i += 25)
+				$main .= '</select> Search For <input type="text" name="search" value="' . (isset($_POST['search']) ? $_POST['search'] : null) . '" /> &nbsp; Containing Tests <input type="text" name="containing_tests" value="' . (isset($_POST['containing_tests']) ? $_POST['containing_tests'] : null) . '" /> &nbsp; Containing Hardware <input type="text" name="containing_hardware" value="' . (isset($_POST['containing_hardware']) ? $_POST['containing_hardware'] : null) . '" /> &nbsp; Containing Software <input type="text" name="containing_software" value="' . (isset($_POST['containing_software']) ? $_POST['containing_software'] : null) . '" /> &nbsp; Limit Results To <select id="result_limit" name="result_limit">';
+				for($i = 100; $i <= 500; $i += 100)
 				{
 					$main .= '<option value="' . $i . '"' . ($result_limit == $i ? ' selected="selected"' : null) . '>' . $i . '</option>';
 				}
-
+				$main .= '<option value=""' . (isset($_POST['result_limit']) && empty($result_limit) ? ' selected="selected"' : null) . '>No Limit</option>';
 				$main .= '</select> &nbsp; <input type="submit" value="Update" /></div></form>';
 
 				$main .= '<h1>Account Test Results</h1>';
 				$main .= '<div class="pts_phoromatic_info_box_area">';
 				$search_for = (!isset($_POST['search']) || empty($_POST['search']) ? null : 'AND (Title LIKE :search OR Description LIKE :search OR UploadID IN (SELECT UploadID FROM phoromatic_results_systems WHERE AccountID = :account_id AND (Software LIKE :search OR Hardware LIKE :search)))');
+				if(isset($_POST['containing_hardware']) && !empty($_POST['containing_hardware']))
+				{
+					$search_for .= ' AND UploadID IN (SELECT UploadID FROM phoromatic_results_systems WHERE AccountID = :account_id AND Hardware LIKE :containing_hardware)';
+				}
+				if(isset($_POST['containing_software']) && !empty($_POST['containing_software']))
+				{
+					$search_for .= ' AND UploadID IN (SELECT UploadID FROM phoromatic_results_systems WHERE AccountID = :account_id AND Software LIKE :containing_software)';
+				}
 				$main .= '<div style="margin: 0 5%;"><ul style="max-height: 100%;"><li><h1>Recent Test Results</h1></li>';
 
 				if(isset($PATH[1]) && $PATH[0] == 'hash')
 				{
 					// Find matching comparison hashes
-					$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed FROM phoromatic_results WHERE AccountID = :account_id ' . $search_for. ' AND ComparisonHash = :comparison_hash ORDER BY UploadTime DESC LIMIT ' . $result_limit);
+					$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed, AccountID, UploadID FROM phoromatic_results WHERE AccountID = :account_id ' . $search_for. ' AND ComparisonHash = :comparison_hash ORDER BY UploadTime DESC');
 					$stmt->bindValue(':comparison_hash', $PATH[1]);
 				}
 				else if(isset($PATH[1]) && $PATH[0] == 'ticket')
 				{
 					// Find matching ticket results
-					$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed FROM phoromatic_results WHERE AccountID = :account_id ' . $search_for. ' AND BenchmarkTicketID = :ticket_id ORDER BY UploadTime DESC LIMIT ' . $result_limit);
+					$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed, AccountID, UploadID FROM phoromatic_results WHERE AccountID = :account_id ' . $search_for. ' AND BenchmarkTicketID = :ticket_id ORDER BY UploadTime DESC');
 					$stmt->bindValue(':ticket_id', $PATH[1]);
 				}
 				else
 				{
-					$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed FROM phoromatic_results WHERE AccountID = :account_id ' . $search_for. ' ORDER BY UploadTime DESC LIMIT ' . $result_limit);
+					$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed, AccountID, UploadID FROM phoromatic_results WHERE AccountID = :account_id ' . $search_for. ' ORDER BY UploadTime DESC');
 				}
 
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 				$stmt->bindValue(':search', (isset($_POST['search']) ? '%' . $_POST['search'] . '%' : null));
+				$stmt->bindValue(':containing_hardware', (isset($_POST['containing_hardware']) ? '%' . $_POST['containing_hardware'] . '%' : null));
+				$stmt->bindValue(':containing_software', (isset($_POST['containing_software']) ? '%' . $_POST['containing_software'] . '%' : null));
 				$test_result_result = $stmt->execute();
 				$results = 0;
+				$containing_tests = $_POST['containing_tests'];
+
 				while($test_result_row = $test_result_result->fetchArray())
 				{
 					if(strtotime($test_result_row['UploadTime']) < $time_limit)
 					{
 						break;
 					}
-					if($results > 150)
+					if(!empty($result_limit) && $result_limit > 1 && $result_limit == $results)
 					{
 						break;
 					}
+
+					if(!empty($containing_tests))
+					{
+						$composite_xml = phoromatic_server::phoromatic_account_result_path($test_result_row['AccountID'], $test_result_row['UploadID']) . 'composite.xml';
+						$result_file = new pts_result_file($composite_xml);
+						$contains_test_match = false;
+						foreach($result_file->get_contained_test_profiles() as $test_profile)
+						{
+							if(stripos($test_profile->get_identifier(), $containing_tests) !== false || stripos($test_profile->get_title(), $containing_tests) !== false)
+							{
+								$contains_test_match = true;
+								break;
+							}
+						}
+
+						if(!$contains_test_match)
+						{
+							continue;
+						}
+					}
+
 					$main .= '<a onclick=""><li id="result_select_' . $test_result_row['PPRID'] . '"><input type="checkbox" id="result_compare_checkbox_' . $test_result_row['PPRID'] . '" onclick="javascript:phoromatic_checkbox_toggle_result_comparison(\'' . $test_result_row['PPRID'] . '\');" onchange="return false;"></input> <span onclick="javascript:phoromatic_window_redirect(\'?result/' . $test_result_row['PPRID'] . '\');">' . $test_result_row['Title'] . '</span><br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td><td>' . $test_result_row['TimesViewed'] . ' Times Viewed</td></table></li></a>';
 					$results++;
 				}
@@ -194,10 +240,6 @@ class phoromatic_results implements pts_webui_interface
 					do
 					{
 						if(strtotime($test_result_row['UploadTime']) < $time_limit)
-						{
-							break;
-						}
-						if($results > 150)
 						{
 							break;
 						}
