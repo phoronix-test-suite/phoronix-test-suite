@@ -141,7 +141,7 @@ elif [ -x /usr/bin/yum ]
 then
 	# Red Hat / Fedora / etc
 	echo "The command to likely run for your operating system is: "
-	echo "# yum install php-cli php-xml"
+	echo "# yum install php-cli php-xml php-json"
 	echo " "
 elif [ -x /usr/bin/pkg_radd ]
 then
