@@ -675,6 +675,39 @@ class pts_result_file
 			unset($result_file);
 		}
 	}
+	public function contains_system_hardware($search)
+	{
+		foreach($this->get_system_hardware() as $h)
+		{
+			if(stripos($h, $search) !== false)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	public function contains_system_software($search)
+	{
+		foreach($this->get_system_software() as $s)
+		{
+			if(stripos($s, $search) !== false)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	public function contains_test($search)
+	{
+		foreach($this->get_contained_test_profiles() as $test_profile)
+		{
+			if(stripos($test_profile->get_identifier(), $search) !== false || stripos($test_profile->get_title(), $search) !== false)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 }
 
 ?>

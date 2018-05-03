@@ -3,7 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 phoromatic: Add a "email all users" option to the rootadmin page
-phoromatic: Improve search functionality on results page
+phoromatic: Improve search functionality on results page, allow boolean expressions, date ranges, many other search features
 pts-core: Basic changes, should be all that's needed for EU GDPR safeguards
 
 Phoronix Test Suite 8.0.0 Milestone 3

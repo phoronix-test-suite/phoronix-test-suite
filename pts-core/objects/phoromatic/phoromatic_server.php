@@ -516,6 +516,21 @@ class phoromatic_server
 
 		return $group_names[$account_id];
 	}
+	public static function account_created_on($account_id)
+	{
+		static $created_dates;
+
+		if(!isset($created_dates[$account_id]) || empty($created_dates[$account_id]))
+		{
+			$stmt = phoromatic_server::$db->prepare('SELECT CreatedOn FROM phoromatic_accounts WHERE AccountID = :account_id');
+			$stmt->bindValue(':account_id', $account_id);
+			$result = $stmt->execute();
+			$row = $result ? $result->fetchArray() : false;
+			$created_dates[$account_id] = isset($row['CreatedOn']) ? $row['CreatedOn'] : null;
+		}
+
+		return $created_dates[$account_id];
+	}
 	public static function recently_active_systems($account_id)
 	{
 		$systems = array();
