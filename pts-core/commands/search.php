@@ -31,18 +31,31 @@ class search implements pts_option_interface
 		$search_query = empty($r[0]) ? pts_user_io::prompt_user_input('Enter search query') : $r[0];
 
 		$table = array();
+		$tests = array();
 		foreach(pts_search::search_test_profiles($search_query) as $test_profile)
 		{
 			$table[] = array(pts_client::cli_just_bold($test_profile->get_identifier()), $test_profile->get_title(), $test_profile->get_test_hardware_type());
+			$tests[] = $test_profile->get_identifier();
 		}
 
 		foreach(pts_search::search_local_test_profiles($search_query) as $test_profile)
 		{
 			$table[] = array(pts_client::cli_just_bold($test_profile->get_identifier()), $test_profile->get_title(), $test_profile->get_test_hardware_type());
+			$tests[] = $test_profile->get_identifier();
 		}
 		if(count($table) > 0)
 		{
 			echo pts_client::cli_colored_text('TEST PROFILES', 'green', true) . PHP_EOL . pts_user_io::display_text_table($table, null, 1) . PHP_EOL . pts_client::cli_colored_text(pts_strings::plural_handler(count($table), 'Test') . ' Matching', 'gray');
+
+			$table = array();
+			foreach(pts_search::search_test_results_for_tests($tests) as $rf)
+			{
+				$table[] = array(pts_client::cli_just_bold($rf->get_identifier()), $rf->get_title());
+			}
+			if(!empty($table))
+			{
+				echo PHP_EOL . PHP_EOL . pts_client::cli_colored_text('TEST RESULTS CONTAINING MATCHING TEST PROFILE(S)', 'green', true) . PHP_EOL . pts_user_io::display_text_table($table, null, 1) . PHP_EOL . pts_client::cli_colored_text(pts_strings::plural_handler(count($table), 'Result') . ' Matching', 'gray');
+			}
 		}
 
 		// SUITE SEARCH

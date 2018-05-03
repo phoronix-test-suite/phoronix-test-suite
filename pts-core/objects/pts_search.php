@@ -80,8 +80,12 @@ class pts_search
 		{
 			$result_file = new pts_result_file($saved_results_identifier);
 
-			// TODO Add support for searching contained hardware/software of system
 			if($result_file->get_title() != null && (stripos($result_file->get_title(), $search_query) !== false || stripos($result_file->get_identifier(), $search_query) !== false || stripos($result_file->get_description(), $search_query) !== false))
+			{
+				$matches[] = $result_file;
+				continue;
+			}
+			if($result_file->contains_system_hardware($search_query) || $result_file->contains_system_software($search_query))
 			{
 				$matches[] = $result_file;
 				continue;
@@ -94,6 +98,24 @@ class pts_search
 					break;
 				}
 				//$ids[] = $s->get_identifier();
+			}
+
+		}
+		return $matches;
+	}
+	public static function search_test_results_for_tests($test_profile_identifiers)
+	{
+		$matches = array();
+		foreach(pts_client::saved_test_results() as $saved_results_identifier)
+		{
+			$result_file = new pts_result_file($saved_results_identifier);
+			foreach($test_profile_identifiers as $test_check)
+			{
+				if($result_file->contains_test($test_check))
+				{
+					$matches[] = $result_file;
+					break;
+				}
 			}
 
 		}
