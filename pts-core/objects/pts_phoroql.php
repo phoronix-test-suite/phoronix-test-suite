@@ -91,9 +91,11 @@ class pts_phoroql
 			switch($words[$i])
 			{
 				case 'AND':
+				case '&&':
 					self::add_expression($tree, 'AND', $forming, $not);
 					break;
 				case 'OR':
+				case '||':
 					self::add_expression($tree, 'OR', $forming, $not);
 					break;
 				case 'NOT':
