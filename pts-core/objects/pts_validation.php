@@ -420,6 +420,74 @@ class pts_validation
 	}
 	public static function process_xsd_display_chart($xsd_file, $obj = null, $types = null)
 	{
+		$nodes = self::generate_xsd_element_objects($xsd_file, $obj, $types);
+		self::xsd_display_cli_from_objects($nodes);
+	}
+	public static function xsd_to_cli_creator($xsd_file, $new_test_profile, $types = null)
+	{
+		$nodes = self::generate_xsd_element_objects($xsd_file, null, $types);
+		self::xsd_nodes_to_cli_prompts($nodes, $new_test_profile);
+	}
+	public static function xsd_nodes_to_cli_prompts($nodes, $new_test_profile)
+	{
+		foreach($nodes as $path => $node)
+		{
+			if($node->get_documentation() == null)
+			{
+				continue;
+			}
+
+			echo pts_client::cli_just_bold($node->get_name());
+
+			/*
+			if($node->get_value() != null)
+			{
+				echo ': ' . pts_client::cli_colored_text($node->get_value(), 'cyan');
+			}
+			*/
+
+			echo PHP_EOL;
+			$enums = array();
+			$min_value = -1;
+			$max_value = -1;
+			if($node->get_input_type_restrictions() != null)
+			{
+				$type = $node->get_input_type_restrictions();
+				$enums = $type->get_enums();
+				if(!empty($enums))
+				{
+					echo pts_client::cli_colored_text('Possible Values: ', 'gray', true) . implode(', ', $enums) . PHP_EOL;
+				}
+				$min_value = $type->get_min_value();
+				if($min_value > -1)
+				{
+					echo pts_client::cli_colored_text('Minimum Value: ', 'gray', true) . $min_value . PHP_EOL;
+				}
+				$max_value = $type->get_max_value();
+				if($max_value > 0)
+				{
+					echo pts_client::cli_colored_text('Maximum Value: ', 'gray', true) . $max_value . PHP_EOL;
+				}
+			}
+			/*if($node->get_api() != null)
+			{
+				echo pts_client::cli_colored_text('API: ', 'gray', true) . $node->get_api()[0] . '->' . $node->get_api()[1] . '()' . PHP_EOL;
+			}*/
+			if($node->get_documentation() != null)
+			{
+				echo $node->get_documentation() . PHP_EOL;
+			}
+
+			if(!empty($enums))
+			{
+				$selected_value = pts_user_io::prompt_text_menu('Select from the supported options', $enums, false, false, null);
+			}
+
+			echo PHP_EOL;
+		}
+	}
+	protected static function generate_xsd_element_objects($xsd_file, $obj = null, $types = null)
+	{
 		$doc = new DOMDocument();
 		if(is_file($xsd_file))
 		{
@@ -432,11 +500,10 @@ class pts_validation
 		$ev = $xpath->evaluate('/xs:schema/xs:element');
 		foreach($ev as $e)
 		{
-			//pts_validation::xsd_display_elements_cli($obj, $xpath, $e, 0, $types);
 			self::xsd_elements_to_objects($nodes, $obj, $xpath, $e, $types, '');
 		}
 
-		self::xsd_display_cli_from_objects($nodes);
+		return $nodes;
 	}
 	public static function xsd_elements_to_objects(&$append_to_array, $o, $xpath, $el, $types, $path)
 	{
@@ -578,116 +645,6 @@ class pts_validation
 			}
 			echo PHP_EOL;
 		}
-	}
-
-
-
-
-
-
-	// OLD IMPLEMENTATION BELOW
-	public static function xsd_display_elements_cli($o, $xpath, $el, $depth = 0, $types = null)
-	{
-		if($el->getElementsByTagName('*')->length > 0 && $el->getElementsByTagName('*')->item(0)->nodeName == 'xs:annotation' && $el->getElementsByTagName('*')->item(0)->getElementsByTagName('documentation')->length > 0)
-		{
-			echo str_repeat('     ', $depth) . pts_client::cli_just_bold($el->getAttribute('name'));
-			if(($id = $el->getElementsByTagName('*')->item(0)->getAttribute('id')) != null && (is_callable(array($o, $id)) || (is_array($o) && isset($o[$id]))))
-			{
-				if(is_object($o))
-				{
-					$class = get_class($o);
-					$val = call_user_func(array($o, $id));
-
-					if(is_object($val))
-					{
-						$o = $val;
-						$val = null;
-					}
-				}
-				else if(is_array($o))
-				{
-					$class = null;
-					$val = $o[$id];
-				}
-
-				if($el->getAttribute('maxOccurs') == 'unbounded')
-				{
-					$o = $val;
-					$val = null;
-				}
-				else if(is_array($val))
-				{
-					$val = '{ ' . implode(', ', call_user_func(array($o, $id))) . ' }';
-				}
-				else if($val === true)
-				{
-					$val = 'TRUE';
-				}
-				else if($val === false)
-				{
-					$val = 'FALSE';
-				}
-
-				if(!empty($val))
-				{
-					echo ': ' . pts_client::cli_colored_text($val, 'cyan');
-				}
-			}
-			echo PHP_EOL;
-
-			if($el->getAttribute('type') != null)
-			{
-				$type = $el->getAttribute('type');
-				if(isset($types[$type]))
-				{
-					$types[$type]->set_required($el->getAttribute('minOccurs') > 0);
-					$enums = $types[$type]->get_enums();
-					if(!empty($enums))
-					{
-						echo str_repeat('     ', $depth) . pts_client::cli_colored_text('Possible Values: ', 'gray', true) . implode(', ', $enums) . PHP_EOL;
-					}
-					$min_value = $types[$type]->get_min_value();
-					if($min_value > -1)
-					{
-						echo str_repeat('     ', $depth) . pts_client::cli_colored_text('Minimum Value: ', 'gray', true) . $min_value . PHP_EOL;
-					}
-					$max_value = $types[$type]->get_max_value();
-					if($max_value > 0)
-					{
-						echo str_repeat('     ', $depth) . pts_client::cli_colored_text('Maximum Value: ', 'gray', true) . $max_value . PHP_EOL;
-					}
-				}
-			}
-			if(!empty($id) && !empty($class))
-			{
-				echo str_repeat('     ', $depth) . pts_client::cli_colored_text('API: ', 'gray', true) . $class . '->' . $id . '()' . PHP_EOL;
-			}
-			echo str_repeat('     ', $depth) .  trim($el->getElementsByTagName('annotation')->item('0')->getElementsByTagName('documentation')->item(0)->nodeValue) . PHP_EOL;
-		}
-		else
-		{
-			echo str_repeat('     ', $depth) . pts_client::cli_colored_text($el->getAttribute('name'), 'yellow', true) . PHP_EOL;
-		}
-
-		$els = $xpath->evaluate('xs:complexType/xs:sequence/xs:element', $el);
-		if(is_array($o))
-		{
-			foreach($o as $j)
-			{
-				foreach($els as $e)
-				{
-					self::xsd_display_elements_cli($j, $xpath, $e, ($depth + 1), $types);
-				}
-			}
-		}
-		else
-		{
-			foreach($els as $e)
-			{
-				self::xsd_display_elements_cli($o, $xpath, $e, ($depth + 1), $types);
-			}
-		}
-		echo PHP_EOL;
 	}
 }
 
