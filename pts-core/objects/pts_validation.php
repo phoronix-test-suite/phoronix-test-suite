@@ -511,12 +511,25 @@ class pts_validation
 		{
 			$name = $el->getAttribute('name');
 			$value = null;
-			if(($id = $el->getElementsByTagName('*')->item(0)->getAttribute('id')) != null && (is_callable(array($o, $id)) || (is_array($o) && isset($o[$id]))))
+			$get_api = null;
+			$set_api = null;
+			$default_value = null;
+			$nodes_to_match = array('set' => 'set_api', 'get' => 'get_api', 'default' => 'default_value');
+			$cnodes = $el->getElementsByTagName('*');
+			for($i = 0; $i < $cnodes->length; $i++)
+			{
+				if(isset($nodes_to_match[$cnodes->item($i)->nodeName]))
+				{
+					${$nodes_to_match[$cnodes->item($i)->nodeName]} = $cnodes->item($i)->nodeValue;
+				}
+			}
+
+			if($get_api != null && (is_callable(array($o, $get_api)) || (is_array($o) && isset($o[$get_api]))))
 			{
 				if(is_object($o))
 				{
 					$class = get_class($o);
-					$val = call_user_func(array($o, $id));
+					$val = call_user_func(array($o, $get_api));
 
 					if(is_object($val))
 					{
@@ -527,7 +540,7 @@ class pts_validation
 				else if(is_array($o))
 				{
 					$class = null;
-					$val = $o[$id];
+					$val = $o[$get_api];
 				}
 
 				if($el->getAttribute('maxOccurs') == 'unbounded')
@@ -537,7 +550,7 @@ class pts_validation
 				}
 				else if(is_array($val))
 				{
-					$val = '{ ' . implode(', ', call_user_func(array($o, $id))) . ' }';
+					$val = '{ ' . implode(', ', call_user_func(array($o, $get_api))) . ' }';
 				}
 				else if($val === true)
 				{
@@ -566,12 +579,12 @@ class pts_validation
 			}
 
 			$api = null;
-			if(!empty($id) && !empty($class))
+			if(!empty($get_api) && !empty($class))
 			{
-				$api = array($class, $id);
+				$api = array($class, $get_api);
 			}
 			$documentation = trim($el->getElementsByTagName('annotation')->item('0')->getElementsByTagName('documentation')->item(0)->nodeValue);
-			$append_to_array[$path . '/' . $name] = new pts_element_node($name, $value, $input_type_restrictions, $api, $documentation);
+			$append_to_array[$path . '/' . $name] = new pts_element_node($name, $value, $input_type_restrictions, $api, $documentation, $set_api, $default_value);
 		}
 		else
 		{
@@ -637,7 +650,15 @@ class pts_validation
 			}
 			if($node->get_api() != null)
 			{
-				echo str_repeat('     ', $depth) . pts_client::cli_colored_text('API: ', 'gray', true) . $node->get_api()[0] . '->' . $node->get_api()[1] . '()' . PHP_EOL;
+				echo str_repeat('     ', $depth) . pts_client::cli_colored_text('Get API: ', 'gray', true) . $node->get_api()[0] . '->' . $node->get_api()[1] . '()' . PHP_EOL;
+			}
+			if($node->get_api_setter() != null)
+			{
+				echo str_repeat('     ', $depth) . pts_client::cli_colored_text('Set API: ', 'gray', true) . $node->get_api_setter() . '()' . PHP_EOL;
+			}
+			if($node->get_default_value() != null)
+			{
+				echo str_repeat('     ', $depth) . pts_client::cli_colored_text('Default Value: ', 'gray', true) . $node->get_default_value() . PHP_EOL;
 			}
 			if($node->get_documentation() != null)
 			{

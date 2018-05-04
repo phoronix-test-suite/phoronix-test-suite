@@ -15,43 +15,83 @@
 		<xs:complexType>
 		<xs:sequence>
 			<xs:element name="Package" minOccurs="1" maxOccurs="unbounded">
-					<xs:annotation id="get_downloads">
+					<xs:annotation>
+						<xs:appinfo>
+							<get>get_downloads</get>
+							<set></set>
+							<default></default>
+						</xs:appinfo>
 						<xs:documentation></xs:documentation>
 					</xs:annotation>
 			<xs:complexType>
 			<xs:sequence>
 				<xs:element name="URL" type="xs:string">
-					<xs:annotation id="get_download_url_string">
+					<xs:annotation>
+						<xs:appinfo>
+							<get>get_download_url_string</get>
+							<set></set>
+							<default></default>
+						</xs:appinfo>
 						<xs:documentation>The URL of the file to download. Multiple URLs (mirrors) can be delimited by a comma and a space. If no URL is specified but just a file-name, it will only check download caches for the file (i.e. if an internal test file/download and not a file publicly available).</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 				<xs:element name="MD5" type="xs:string" minOccurs="0" maxOccurs="1">
-					<xs:annotation id="get_md5">
+					<xs:annotation>
+						<xs:appinfo>
+							<get>get_md5</get>
+							<set></set>
+							<default></default>
+						</xs:appinfo>
 						<xs:documentation>The MD5 checksum of the file to be downloaded. The MD5 checksum is primarily relied upon by older versions of the Phoronix Test Suite while the Phoronix Test Suite clients of the past few years default to the SHA256 comparison; the MD5 is useful for supporting legacy clients.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 				<xs:element name="SHA256" type="xs:string" minOccurs="0" maxOccurs="1">
-					<xs:annotation id="get_sha256">
+					<xs:annotation>
+						<xs:appinfo>
+							<get>get_sha256</get>
+							<set></set>
+							<default></default>
+						</xs:appinfo>
 						<xs:documentation>The SHA256 checksum of the file to be downloaded.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 				<xs:element name="FileName" type="xs:string" minOccurs="0" maxOccurs="1">
-					<xs:annotation id="get_filename">
+					<xs:annotation>
+						<xs:appinfo>
+							<get>get_filename</get>
+							<set></set>
+							<default></default>
+						</xs:appinfo>
 						<xs:documentation>The file-name to save the file as. The FileName is optional and mainly used if the default file-name when downloading from a given URL is not accurate (i.e. an obfuscated download URL).</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 				<xs:element name="FileSize" type="FileSize" minOccurs="0" maxOccurs="1">
-					<xs:annotation id="get_filesize">
+					<xs:annotation>
+						<xs:appinfo>
+							<get>get_filesize</get>
+							<set></set>
+							<default></default>
+						</xs:appinfo>
 						<xs:documentation>FileSize specifies in bytes the size of the file to be downloaded, for display and estimated download time purposes.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 				<xs:element name="PlatformSpecific" type="xs:string" minOccurs="0" maxOccurs="1">
-					<xs:annotation id="get_platform_string">
+					<xs:annotation>
+						<xs:appinfo>
+							<get>get_platform_string</get>
+							<set></set>
+							<default></default>
+						</xs:appinfo>
 						<xs:documentation>If the file download is limited to a particular operating system / software plarform, it can be specified via PlatformSpecific. E.g. if there are separate files needed for supporting the test profile on Linux and Windows. Multiple platforms can be specified via a comma and space.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 				<xs:element name="ArchitectureSpecific" type="xs:string" minOccurs="0" maxOccurs="1">
-					<xs:annotation id="get_architecture_string">
+					<xs:annotation>
+						<xs:appinfo>
+							<get>get_architecture_string</get>
+							<set></set>
+							<default></default>
+						</xs:appinfo>
 						<xs:documentation>If the file download is limited to a particular CPU architecture, it can be specified via ArchitectureSpecific. E.g. if there are separate files needed for supporting the test profile on x86 and x86_64. Multiple architectures can be specified via a comma and space.</xs:documentation>
 					</xs:annotation>
 				</xs:element>

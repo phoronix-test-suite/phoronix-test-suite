@@ -26,15 +26,19 @@ class pts_element_node
 	protected $value;
 	protected $input_type_restrictions;
 	protected $api;
+	protected $api_setter;
 	protected $documentation;
+	protected $default_value;
 
-	public function __construct($name, $value = null, $input_type_restrictions = null, $api = null, $documentation = null)
+	public function __construct($name, $value = null, $input_type_restrictions = null, $api = null, $documentation = null, $api_setter = null, $default_value = null)
 	{
 		$this->name = $name;
 		$this->value = $value;
 		$this->input_type_restrictions = $input_type_restrictions;
 		$this->api = $api;
 		$this->documentation = $documentation;
+		$this->api_setter = $api_setter;
+		$this->default_value = $default_value;
 	}
 	public function get_name()
 	{
@@ -52,9 +56,17 @@ class pts_element_node
 	{
 		return $this->api;
 	}
+	public function get_api_setter()
+	{
+		return $this->api_setter;
+	}
 	public function get_documentation()
 	{
 		return $this->documentation;
+	}
+	public function get_default_value()
+	{
+		return $this->default_value;
 	}
 }
 ?>

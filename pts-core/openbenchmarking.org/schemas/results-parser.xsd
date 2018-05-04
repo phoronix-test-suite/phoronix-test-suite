@@ -9,124 +9,244 @@
 </xs:annotation>
 <xs:include schemaLocation="types.xsd" />
 <xs:element name="PhoronixTestSuite">
-			<xs:annotation id="get_results_definition">
+			<xs:annotation>
+				<xs:appinfo>
+					<get>get_results_definition</get>
+					<set></set>
+					<default></default>
+				</xs:appinfo>
 				<xs:documentation></xs:documentation>
 			</xs:annotation>
 <xs:complexType>
 <xs:sequence>
 		<xs:element name="ResultsParser" minOccurs="0" maxOccurs="unbounded">
-			<xs:annotation id="get_result_parser_definitions">
+			<xs:annotation>
+				<xs:appinfo>
+					<get>get_result_parser_definitions</get>
+					<set></set>
+					<default></default>
+				</xs:appinfo>
 				<xs:documentation></xs:documentation>
 			</xs:annotation>
 		<xs:complexType>
 		<xs:sequence>
 			<xs:element name="OutputTemplate" type="xs:string">
-				<xs:annotation id="get_output_template">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_output_template</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>OutputTemplate is the main template for the Phoronix Test Suite to parse for determining where the numerical result is located within the standard output / log file after a test run. In the most basic tests, it's simply a matter of copying the line containing the numerical result from a sample run and replacing the actual result with #_RESULT_# and from there the Phoronix Test Suite will attempt to use that as a template for parsing the test result when executed by the Phoronix Test Suite.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="MatchToTestArguments" type="xs:string" minOccurs="0" maxOccurs="1">
-				<xs:annotation id="get_match_to_test_args">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_match_to_test_args</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>MatchToTestArguments is used if trying to match a given ResultParser block to a set of test arguments as defined in the test definition.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="ResultKey" type="xs:string" minOccurs="0" maxOccurs="1">
-				<xs:annotation id="get_result_key">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_result_key</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>By default the result key used for matching in the OutputTemplate is #_RESULT_#, but if ResultKey is set to PTS_TEST_ARGUMENTS it will use e.g. formatted #_THE_RUNTIME_SELECTED_ARGUMENTS_# or the other valid option is PTS_USER_SET_ARGUMENTS for just containing any user-specified test options selected from the test definition options.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="LineHint" type="xs:string" minOccurs="0" maxOccurs="1">
-				<xs:annotation id="get_line_hint">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_line_hint</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>LineHint can be used for hinting to the Phoronix Test Suite test parser on which line in the result file the result can be found that matches to the OutputTemplate. E.g. if the result file line always says "Final Score", "Benchmark Result", "Elapsed Time" or related string, it could be set here for ensuring the Phoronix Test Suite finds the correct result value in the case of complex log files.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="LineBeforeHint" type="xs:string" minOccurs="0" maxOccurs="1">
-				<xs:annotation id="get_line_before_hint">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_line_before_hint</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>LineBeforeHint can be used for hinting to the Phoronix Test Suite test parser on which line in the result file the result can be found that matches to the OutputTemplate, if on the line before the actual result is some unique string such as "Result File Below:" or "------", etc for ensuring the Phoronix Test Suite finds the correct result value in the case of complex log files.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="LineAfterHint" type="xs:string" minOccurs="0" maxOccurs="1">
-				<xs:annotation id="get_line_after_hint">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_line_after_hint</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>LineAfterHint can be used for hinting to the Phoronix Test Suite test parser on which line in the result file the result can be found that matches to the OutputTemplate, if on the line after the actual result is some unique string such as "Log File Ended" or "End of Test", etc for ensuring the Phoronix Test Suite finds the correct result value in the case of complex log files.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="ResultBeforeString" type="xs:string" minOccurs="0" maxOccurs="1">
-				<xs:annotation id="get_result_before_string">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_result_before_string</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>ResultBeforeString can be used for hinting to the test parser a unique string to search for that indicates it is immediately before the actual test result. Common examples include "Result:", "Time:" etc, if the OutputTemplate alone isn't unique enough for the test parser to generate the correct match.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="ResultAfterString" type="xs:string" minOccurs="0" maxOccurs="1">
-				<xs:annotation id="get_result_after_string">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_result_after_string</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>ResultAfterString can be used for hinting to the test parser a unique string to search for that indicates it is immediately after the actual test result. Common examples include "FPS", "Seconds" etc, if the OutputTemplate alone isn't unique enough for the test parser to generate the correct match.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="StripFromResult" type="xs:string" minOccurs="0" maxOccurs="1">
-				<xs:annotation id="get_strip_from_result">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_strip_from_result</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>StripFromResult will strip any strings out of the detected result, such as if the result file has commas in numerical positions to remove.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="StripResultPostfix" type="xs:string" minOccurs="0" maxOccurs="1">
-				<xs:annotation id="get_strip_result_postfix">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_strip_result_postfix</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>StripFromPostfix will strip any string at the end of the detected result, such as if "s" or "fps" are appended directly to the result without a space, you can list their value here to be removed.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="MultiMatch" type="xs:string" minOccurs="0" maxOccurs="1">
-				<xs:annotation id="get_multi_match">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_multi_match</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>If MultiMatch is set to MULTI, the test parser will attempt to find multiple test result matches within the single log file.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="DivideResultBy" type="PositiveInteger" minOccurs="0" maxOccurs="1">
-				<xs:annotation id="get_divide_result_by">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_divide_result_by</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>DivideResultBy allows for specifying a number by which the detected result will be divided by, if wishing to convert between different units.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="MultiplyResultBy" type="PositiveInteger" minOccurs="0" maxOccurs="1">
-				<xs:annotation id="get_multiply_result_by">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_multiply_result_by</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>MultiplyResultBy allows for specifying a number by which the detected result will be multiplied by, if wishing to convert between different units.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="ResultScale" type="xs:string" minOccurs="0" maxOccurs="1">
-				<xs:annotation id="get_result_scale">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_result_scale</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>If the test profile outputs multiple results where the result scale may differ from what is defined in the test definition, the result scale for this matched test result can be specified here.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="ResultProportion" type="xs:string" minOccurs="0" maxOccurs="1">
-				<xs:annotation id="get_result_proportion">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_result_proportion</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>If the test profile outputs multiple results where the result proportion may differ from what is defined in the test definition, the result proportion for this matched test result can be specified here.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="ResultPrecision" type="xs:string" minOccurs="0" maxOccurs="1">
-				<xs:annotation id="get_result_precision">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_result_precision</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>If the test profile outputs multiple results where the result precision may differ from what is defined in the test definition, the result precision for this matched test result can be specified here.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="ArgumentsDescription" type="xs:string" minOccurs="0" maxOccurs="1">
-				<xs:annotation id="get_arguments_description">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_arguments_description</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>If you wish to override what is shown as the ArgumentsDescription for the given test run, its value can be specified here.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="AppendToArgumentsDescription" type="xs:string" minOccurs="0" maxOccurs="1">
-				<xs:annotation id="get_append_to_arguments_description">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_append_to_arguments_description</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>If you wish to append information to the arguments description string, it can be specified here.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="FileFormat" type="xs:string" minOccurs="0" maxOccurs="1">
-				<xs:annotation id="get_file_format">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_file_format</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>Valid options for FileFormat are CSV or XML for making it easier for the result parser to interpret the comma separated values or XML data.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="TurnCharsToSpace" type="xs:string" minOccurs="0" maxOccurs="1">
-				<xs:annotation id="get_turn_chars_to_space">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_turn_chars_to_space</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>For complex result file outputs, specifiying any string here will turn any matching strings into spaces by the result parser.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="DeleteOutputBefore" type="xs:string" minOccurs="0" maxOccurs="1">
-				<xs:annotation id="get_delete_output_before">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_delete_output_before</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>If wishing to trim the log file that will be parsed for the test result, a unique string can be specified here and the result parser will drop any text before the match.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="DeleteOutputAfter" type="xs:string" minOccurs="0" maxOccurs="1">
-				<xs:annotation id="get_delete_output_after">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_delete_output_after</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>If wishing to trim the log file that will be parsed for the test result, a unique string can be specified here and the result parser will drop any text after the match.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
@@ -135,38 +255,73 @@
 		</xs:element>
 
 		<xs:element name="ImageParser" minOccurs="0" maxOccurs="unbounded">
-			<xs:annotation id="get_image_parser_definitions">
+			<xs:annotation>
+				<xs:appinfo>
+					<get>get_image_parser_definitions</get>
+					<set></set>
+					<default></default>
+				</xs:appinfo>
 				<xs:documentation></xs:documentation>
 			</xs:annotation>
 		<xs:complexType>
 		<xs:sequence>
 			<xs:element name="SourceImage" type="xs:string">
-				<xs:annotation id="get_source_image">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_source_image</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>If the test profile is supplying an image result, the SourceImage is the path/filename of the image to utilize. The path/filename should be relative to the test profile installation's root directory and include any file extension.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="MatchToTestArguments" type="xs:string" minOccurs="0" maxOccurs="1">
-				<xs:annotation id="get_match_to_image_args">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_match_to_image_args</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>MatchToTestArguments is used if trying to match a given ResultParser block to a set of test arguments as defined in the test definition.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="ImageX" type="PositiveInteger" minOccurs="0" maxOccurs="1">
-				<xs:annotation id="get_image_x">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_image_x</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>If capturing a subset of the image, specify the X coordinate here.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="ImageY" type="PositiveInteger" minOccurs="0" maxOccurs="1">
-				<xs:annotation id="get_image_y">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_image_y</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>If capturing a subset of the image, specify the Y coordinate here.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="ImageWidth" type="PositiveInteger" minOccurs="0" maxOccurs="1">
-				<xs:annotation id="get_image_width">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_image_width</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>The width of the image to capture.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="ImageHeight" type="PositiveInteger" minOccurs="0" maxOccurs="1">
-				<xs:annotation id="get_image_height">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_image_height</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>The height of the image to capture.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
@@ -175,23 +330,43 @@
 		</xs:element>
 
 		<xs:element name="SystemMonitor" minOccurs="0" maxOccurs="unbounded">
-			<xs:annotation id="get_system_monitor_definitions">
+			<xs:annotation>
+				<xs:appinfo>
+					<get>get_system_monitor_definitions</get>
+					<set></set>
+					<default></default>
+				</xs:appinfo>
 				<xs:documentation></xs:documentation>
 			</xs:annotation>
 		<xs:complexType>
 		<xs:sequence>
 			<xs:element name="Sensor" type="xs:string">
-				<xs:annotation id="get_sensor">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_sensor</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>Sensor can be either a Phodevi sensor name to utilize or is most commonly sys.time to record the time needed to run the test. Sys.time will return the time in seconds needed to run the test.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="PollingFrequency" type="PositiveInteger" minOccurs="0" maxOccurs="1">
-				<xs:annotation id="get_polling_frequency">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_polling_frequency</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>By default for hardware sensors the polling frequency is every two seconds but can be adjusted here.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Report" type="MonitorReporting" minOccurs="0" maxOccurs="1">
-				<xs:annotation id="get_report">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_report</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>Report options are ALL, MAX, MIN, or AVG for how to report the collected sensor data.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
@@ -200,13 +375,23 @@
 		</xs:element>
 
 		<xs:element name="ExtraData" minOccurs="0" maxOccurs="unbounded">
-			<xs:annotation id="get_extra_data_definitions">
+			<xs:annotation>
+				<xs:appinfo>
+					<get>get_extra_data_definitions</get>
+					<set></set>
+					<default></default>
+				</xs:appinfo>
 				<xs:documentation></xs:documentation>
 			</xs:annotation>
 		<xs:complexType>
 		<xs:sequence>
 			<xs:element name="Identifier" type="xs:string">
-				<xs:annotation id="get_identifier">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_identifier</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
 					<xs:documentation>This is a rarely used result parsing feature limited to select tests. Valid options are libframetime-output, csv-dump-frame-latencies, com-speeds-frame-latency-totals, and cpu-frames-space-delimited.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
