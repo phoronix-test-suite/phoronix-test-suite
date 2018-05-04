@@ -1,16 +1,16 @@
 Phoronix Test Suite User Agreement & Notices:
 
-- The Phoronix Test Suite is open-source and licensed under the GNU GPLv3. However, some tests supported by the Phoronix Test Suite are not open-source software or available for free of charge.
+- The Phoronix Test Suite is open-source and licensed under the GNU GPLv3. A copy of the GPLv3 license is included with this software or can also be found at https://www.gnu.org/licenses/gpl-3.0.en.html. However, some tests supported by the Phoronix Test Suite are not open-source software or commercial software packages.
 
 - The Phoronix Test Suite contains tests which may stress your system and in some cases could exhibit stability problems of the system's hardware or software configuration. The Phoronix Test Suite is provided WITHOUT ANY WARRANTY. In no event shall OpenBenchmarking.org, Phoromatic, Phoronix Media, the Phoronix Test Suite, or any associated stakeholder be liable to any party for any direct or indirect damages for any use of OpenBenchmarking.org -- including, without limitation, any lost profits, business interruption, loss of programs, loss of programmed data, or otherwise.
 
-- For enterprise support, sponsorship, or other professional inquiries, contact phoronix@phoronix.com. Community support can be found in the Phoronix Forums at http://www.phoronix.com/forums/.
+- For enterprise/commercial support, sponsorship, or other professional inquiries, contact commercial@phoronix-test-suite.com. Community support can be found in the Phoronix Forums at https://www.phoronix.com/forums/.
 
-- If you opt to submit your test results to OpenBenchmarking.org, the final results as well as basic hardware and software details (what is shown in the results viewer) will be shared and publicly accessible through http://www.openbenchmarking.org/.
+- If you opt to submit your test results to OpenBenchmarking.org, the final results as well as basic hardware and software details (what is shown in the results viewer) will be shared and publicly accessible through https://www.openbenchmarking.org/ and optionally relevant system details like dmesg and /proc/cpuinfo.
 
 - Public bug reports, feature requests, and other issues can be brought up in the Phoronix Test Suite forums, mailing list, or a direct email to Phoronix Media.
 
-Anonymous Usage Reporting / Statistics: If enabling the anonymous usage reporting / statistics feature, some information about the Phoronix Test Suite runs will be submitted to OpenBenchmarking.org. This information is used for analytical purposes, including but not limited to, determining the most popular tests / suites and calculating average run-times for different test profiles. The test results are not reported in this process nor the installed software / hardware information, but ambient information about the testing process. This information is stored anonymously. More information on this feature is available with the included documentation.
+Anonymous Usage Reporting / Statistics: If enabling the anonymous usage reporting / statistics feature, some information about the Phoronix Test Suite runs will be submitted to OpenBenchmarking.org. This information is used for analytical purposes, including the determining of the most popular tests / suites and calculating average run-times for different test profiles. The test results are not reported in this process nor the installed software / hardware information, but ambient information about the testing process. This information is stored anonymously. More information on this feature is available with the included documentation.
 
-For more information on the Phoronix Test Suite and its features, visit http://www.phoronix-test-suite.com/ or view the included documentation.
+For more information on the Phoronix Test Suite and its features, visit http://www.phoronix-test-suite.com/ or view the included documentation or by contacting support@phoronix-test-suite.com.
 
