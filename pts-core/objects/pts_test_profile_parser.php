@@ -401,7 +401,7 @@ class pts_test_profile_parser
 	{
 		$test_options = array();
 
-		if($this->xml->TestSettings && $this->xml->TestSettings->Option)
+		if($this->xml && $this->xml->TestSettings && $this->xml->TestSettings->Option)
 		{
 			foreach($this->xml->TestSettings->Option as $option)
 			{

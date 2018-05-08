@@ -20,6 +20,7 @@
 						<get>get_title</get>
 						<set></set>
 						<default></default>
+						<flags>TEST_REQUIRES</flags>
 					</xs:appinfo>
 					<xs:documentation>The title of the test profile / the program under test. The title is shown on the test profile, the test results/graphs, etc.</xs:documentation>
 				</xs:annotation>
@@ -40,6 +41,7 @@
 						<get>get_description</get>
 						<set></set>
 						<default></default>
+						<flags>TEST_REQUIRES</flags>
 					</xs:appinfo>
 					<xs:documentation>A summary of the program/application being benchmarked or a description of what the test profile is testing.</xs:documentation>
 				</xs:annotation>
@@ -50,8 +52,9 @@
 						<get>get_result_scalue</get>
 						<set></set>
 						<default></default>
+						<flags>TEST_REQUIRES</flags>
 					</xs:appinfo>
-					<xs:documentation>The result scale string, if relevant for the test, e.g. Frames Per Second, MB/s, GFLOPS, Seconds, etc.</xs:documentation>
+					<xs:documentation>The result scale string, if relevant for the test. Common result scales include Frames Per Second, MB/s, GFLOPS, Seconds, etc.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="Proportion" type="Proportion" minOccurs="0" maxOccurs="1">
@@ -60,8 +63,9 @@
 						<get>get_result_proportion</get>
 						<set></set>
 						<default></default>
+						<flags>TEST_REQUIRES</flags>
 					</xs:appinfo>
-					<xs:documentation>HIB or LIB are relevant values for the Proportion to indicate if higher results are better (HIB) or lower is better (LIB).</xs:documentation>
+					<xs:documentation>HIB or LIB are relevant values for the Proportion to indicate if higher results are better (HIB) or lower is better (LIB) depending upon result scale.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="ResultQuantifier" type="ResultQuantifier" minOccurs="0" maxOccurs="1">
@@ -120,6 +124,7 @@
 						<get>get_runs_to_ignore</get>
 						<set></set>
 						<default></default>
+						<flags>UNCOMMON</flags>
 					</xs:appinfo>
 					<xs:documentation>IgnoreRuns can be used by test profiles running their test case multiple times via TimesToRun. The value specified is the run number to ignore and to not save/utilize the result of this run. IgnoreRuns is commonly used with a value of 1 if wanting to ignore the first test run for purposes of warming up a cache, generating a data-set on first run, or other use-cases where you may want to ignore the result of a program on its first run.</xs:documentation>
 				</xs:annotation>
@@ -130,6 +135,7 @@
 						<get>get_installation_agreement_message</get>
 						<set></set>
 						<default></default>
+						<flags>UNCOMMON</flags>
 					</xs:appinfo>
 					<xs:documentation>InstallationAgreement can be a string of text to be shown as an installation agreement or if a HTTP/HTTPS URL is specified, the text of that URL will be fetched and displayed to the user. After displaying the arbitrary text, the user will be prompted if they agree to the text. If the user agrees, the installation will proceed otherwise the test profile installation will be aborted.</xs:documentation>
 				</xs:annotation>
@@ -140,6 +146,7 @@
 						<get>get_pre_install_message</get>
 						<set></set>
 						<default></default>
+						<flags>UNCOMMON</flags>
 					</xs:appinfo>
 					<xs:documentation>PreInstallMessage allows for arbitrary text to be presented to the user prior to running the test installation process. This can be notes about any steps that may need to be manually done for installing/running a test or other useful information to the user.</xs:documentation>
 				</xs:annotation>
@@ -150,6 +157,7 @@
 						<get>get_post_install_message</get>
 						<set></set>
 						<default></default>
+						<flags>UNCOMMON</flags>
 					</xs:appinfo>
 					<xs:documentation>PostInstallMessage allows for any arbitrary static text to be presented to the user after running the test installation process.</xs:documentation>
 				</xs:annotation>
@@ -167,6 +175,7 @@
 						<get>get_test_profile_version</get>
 						<set></set>
 						<default>1.0.0</default>
+						<flags>TEST_REQUIRES</flags>
 					</xs:appinfo>
 					<xs:documentation>Version is used to specify the version of the test profile itself, separate from the version of the application/workload under test. The Version string is expected to be formatted in an X.Y.Z format. Whenever modifying the test profile, the version must always be bumped so the user is aware there were test profile changes. If only the Z number is bumped, it's implied that the changes are minimal and do not affect the outcome of the test for purposes of comparing test results. The Z number is commonly used when just updating the test XML descriptions, updating URLs, etc. When the X or Y version is bumped, it tells the Phoronix Test Suite that it's a larger change and the test results of that new version should not be compared to any previous test profile revision.</xs:documentation>
 				</xs:annotation>
@@ -177,6 +186,7 @@
 						<get>get_supported_platforms</get>
 						<set></set>
 						<default></default>
+						<flags>TEST_REQUIRES</flags>
 					</xs:appinfo>
 					<xs:documentation>SupportedPlatforms is used for listing the supported software platforms / operating systems that the test profile is compatible with. Recognized options include Linux, Windows, BSD, MacOSX, and Solaris. Multiple platforms can be specified when delimited by a common and space.</xs:documentation>
 				</xs:annotation>
@@ -187,6 +197,7 @@
 						<get>get_test_software_type</get>
 						<set></set>
 						<default></default>
+						<flags>TEST_REQUIRES</flags>
 					</xs:appinfo>
 					<xs:documentation>SoftwareType is used for indicating the category to which the test profile falls under. Supported options include BaseTestProfile (uncommon, for use with the Cascading Test Profiles / TestExtends functionality), Utility, Simulator, Scientific, Benchmark, Application, or Game. The SoftwareType is mostly used for reference purposes and sorting of results and display purposes.</xs:documentation>
 				</xs:annotation>
@@ -197,6 +208,7 @@
 						<get>get_test_hardware_type</get>
 						<set></set>
 						<default></default>
+						<flags>TEST_REQUIRES</flags>
 					</xs:appinfo>
 					<xs:documentation>TestType is used for indicating the computer subsystem that the test workload utilizes. Supported options include System, Processor, Disk, Graphics, Memory, Network, and Other.</xs:documentation>
 				</xs:annotation>
@@ -207,6 +219,7 @@
 						<get>get_license</get>
 						<set></set>
 						<default></default>
+						<flags>TEST_REQUIRES</flags>
 					</xs:appinfo>
 					<xs:documentation>License is used for indicating to the user what type of software/code license the program under test utilizes. Supported options are Free, Non-Free, Retail, and Restricted. Free indicates open-source/free software, Non-Free is used for commercial freeware / closed-source software, Retail is for commercial software where you likely need to own a copy of the program for the test profile to work, and restricted is intended for internal/restricted software that is likely not publicly available.</xs:documentation>
 				</xs:annotation>
@@ -217,6 +230,7 @@
 						<get>get_status</get>
 						<set></set>
 						<default></default>
+						<flags>TEST_REQUIRES</flags>
 					</xs:appinfo>
 					<xs:documentation>Status is used for indicating the status of the test profile if it's Verified (official/expected to be working), Unverified (may have problems), Private (intended only for private use), Broken (known to be in a broken state), Experimental, or Deprecated (no longer maintained/relevant/supported).</xs:documentation>
 				</xs:annotation>
@@ -247,6 +261,7 @@
 						<get>get_test_extension</get>
 						<set></set>
 						<default></default>
+						<flags>UNCOMMON</flags>
 					</xs:appinfo>
 					<xs:documentation>Extends is an uncommon option relied upon for Cascading Test Profiles if one test profile is dependent upon another test profile's test installation or inheriting its test profile XML values, etc.</xs:documentation>
 				</xs:annotation>
@@ -277,6 +292,7 @@
 						<get>get_environment_testing_size</get>
 						<set></set>
 						<default></default>
+						<flags>UNCOMMON</flags>
 					</xs:appinfo>
 					<xs:documentation>EnvironmentTestingSize is used for indicating the approximate size of the test during execution if it's to be greater than the EnvironmentSize. This is mainly useful for disk/storage benchmarks that may generate large files temporarily during the benchmarking process, so the Phoronix Test Suite can ensure there is sufficient free space on the disk prior to execution. The value is specified in Megabytes.</xs:documentation>
 				</xs:annotation>
@@ -287,6 +303,7 @@
 						<get>get_estimated_run_time</get>
 						<set></set>
 						<default></default>
+						<flags>UNCOMMON</flags>
 					</xs:appinfo>
 					<xs:documentation>This option can be used for specifying the number of seconds each test run is expected to take. EstimatedTimePerRun is used for informational purposes to let the user know approximately how long the test execution may take. If this value is not specified, the Phoronix Test Suite relies upon statistics collected by OpenBenchmarking.org for determining the average test time for a given test profile as well as how long the test profile has taken to run previous times on the same system.</xs:documentation>
 				</xs:annotation>
@@ -307,6 +324,7 @@
 						<get>requires_core_version_min</get>
 						<set></set>
 						<default></default>
+						<flags>UNCOMMON</flags>
 					</xs:appinfo>
 					<xs:documentation>RequiresCoreVersionMin is used if the test profile depends upon Phoronix Test Suite test profile features recently introduced. The value is the Phoronix Test Suite core version number, e.g. Phoronix Test Suite 7.8 has a version number of 7800. </xs:documentation>
 				</xs:annotation>
@@ -317,6 +335,7 @@
 						<get>requires_core_version_max</get>
 						<set></set>
 						<default></default>
+						<flags>UNCOMMON</flags>
 					</xs:appinfo>
 					<xs:documentation>RequiresCoreVersionMax is used if the test profile relies upon functionality the Phoronix Test Suite may have deprecated or removed. The value is the Phoronix Test Suite core version number, e.g. Phoronix Test Suite 7.8 has a version number of 7800. RequiresCoreVersionMax is an uncommon setting with the Phoronix Test Suite tending to not intentionally break compatibility with any existing test profiles/features.</xs:documentation>
 				</xs:annotation>
@@ -327,6 +346,7 @@
 						<get>get_internal_tags_raw</get>
 						<set></set>
 						<default></default>
+						<flags>UNCOMMON</flags>
 					</xs:appinfo>
 					<xs:documentation>InternalTags is used for specifying run-time hints about the program under test with arbitrary values like OpenMP, SMP, Python, and other values that can be detected when searching for a test profile.</xs:documentation>
 				</xs:annotation>
@@ -337,6 +357,7 @@
 						<get>get_maintainer</get>
 						<set></set>
 						<default></default>
+						<flags>TEST_REQUIRES</flags>
 					</xs:appinfo>
 					<xs:documentation>Maintainer is used to indicate the person(s) responsible for maintaining the test profile.</xs:documentation>
 				</xs:annotation>
@@ -346,7 +367,8 @@
 					<xs:appinfo>
 						<get>allow_results_sharing</get>
 						<set></set>
-						<default></default>
+						<default>TRUE</default>
+						<flags>UNCOMMON</flags>
 					</xs:appinfo>
 					<xs:documentation>AllowResultsSharing is assumed to be TRUE by default and can be set to FALSE if the user should not share these results publicly. The behavior is if a test profile has AllowResultsSharing to FALSE, the Phoronix Test Suite will not prompt the user whether they would like to upload the results to OpenBenchmarking.org.</xs:documentation>
 				</xs:annotation>
@@ -357,6 +379,7 @@
 						<get>do_auto_save_results</get>
 						<set></set>
 						<default></default>
+						<flags>UNCOMMON</flags>
 					</xs:appinfo>
 					<xs:documentation>Rather than prompting the user whether they would like to save the test results, setting AutoSaveResults to TRUE will force the user to save the test results. This option shouldn't be needed unless the test profile's results are only logical if viewed on a graph.</xs:documentation>
 				</xs:annotation>
@@ -407,6 +430,7 @@
 							<get>allow_cache_share</get>
 							<set></set>
 							<default></default>
+							<flags>UNCOMMON</flags>
 						</xs:appinfo>
 						<xs:documentation>If a test profile by default outputs information covering all possible test options that may be present, AllowCacheShare can be set to TRUE to indicate the test result can be shared/used by any other invocation of the test profile run in a given result file. This is an uncommon option.</xs:documentation>
 					</xs:annotation>
@@ -417,6 +441,7 @@
 							<get>get_min_length</get>
 							<set></set>
 							<default></default>
+							<flags>UNCOMMON</flags>
 						</xs:appinfo>
 						<xs:documentation>MinimumLength can be used to specify the time (in seconds) any test profile run will need at a minimum for indicating a successful run. If the test is to always need to run at least 60 seconds and MininLength is set to 60, if a test run ends prior to that threshold (e.g. the process was killed), the test result will not be recorded.</xs:documentation>
 					</xs:annotation>
@@ -427,6 +452,7 @@
 							<get>get_max_length</get>
 							<set></set>
 							<default></default>
+							<flags>UNCOMMON</flags>
 						</xs:appinfo>
 						<xs:documentation>MaximumLength can be used to specify the time (in seconds) that the test profile should finish within if relevant. If the test run takes longer than this value, the test result value is not recorded.</xs:documentation>
 					</xs:annotation>

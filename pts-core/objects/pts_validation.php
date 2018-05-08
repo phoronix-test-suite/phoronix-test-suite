@@ -423,16 +423,21 @@ class pts_validation
 		$nodes = self::generate_xsd_element_objects($xsd_file, $obj, $types);
 		self::xsd_display_cli_from_objects($nodes);
 	}
-	public static function xsd_to_cli_creator($xsd_file, $new_test_profile, $types = null)
+	public static function xsd_to_cli_creator($xsd_file, &$new_object, $types = null)
 	{
 		$nodes = self::generate_xsd_element_objects($xsd_file, null, $types);
-		self::xsd_nodes_to_cli_prompts($nodes, $new_test_profile);
+		self::xsd_nodes_to_cli_prompts($nodes, $new_object);
 	}
-	public static function xsd_nodes_to_cli_prompts($nodes, $new_test_profile)
+	public static function xsd_nodes_to_cli_prompts($nodes, &$new_object)
 	{
 		foreach($nodes as $path => $node)
 		{
 			if($node->get_documentation() == null)
+			{
+				continue;
+			}
+
+			if(in_array('UNCOMMON', $node->get_flags_array()))
 			{
 				continue;
 			}
@@ -477,11 +482,44 @@ class pts_validation
 			{
 				echo $node->get_documentation() . PHP_EOL;
 			}
+			if($node->get_default_value() != null)
+			{
+				echo pts_client::cli_colored_text('Default Value: ', 'gray', true) . $node->get_default_value() . PHP_EOL;
+			}
 
+			$do_require = in_array('TEST_REQUIRES', $node->get_flags_array());
 			if(!empty($enums))
 			{
-				$selected_value = pts_user_io::prompt_text_menu('Select from the supported options', $enums, false, false, null);
+				$input = pts_user_io::prompt_text_menu('Select from the supported options', $enums, false, false, null);
 			}
+			else
+			{
+				do
+				{
+					$input_passes = true;
+					$input = pts_user_io::prompt_user_input($path, !($do_require && $node->get_default_value() == null), false);
+
+					if($do_require && $min_value > 0 && strlen($input) < $min_value)
+					{
+						echo 'Minimum length of ' . $min_value . ' is required.';
+						$input_passes = false;
+					}
+					if($do_require && $max_value > 0 && strlen($input) > $max_value)
+					{
+						echo 'Maximum length of ' . $max_value . ' is supported.';
+						$input_passes = false;
+					}
+
+				}
+				while(!$input_passes);
+
+				if(empty($input) && $node->get_default_value() != null)
+				{
+					$input = $node->get_default_value();
+				}
+			}
+
+			$new_object->xs(str_replace('PhoronixTestSuite/', '', $path), $input);
 
 			echo PHP_EOL;
 		}
@@ -514,7 +552,8 @@ class pts_validation
 			$get_api = null;
 			$set_api = null;
 			$default_value = null;
-			$nodes_to_match = array('set' => 'set_api', 'get' => 'get_api', 'default' => 'default_value');
+			$flags = null;
+			$nodes_to_match = array('set' => 'set_api', 'get' => 'get_api', 'default' => 'default_value', 'flags' => 'flags');
 			$cnodes = $el->getElementsByTagName('*');
 			for($i = 0; $i < $cnodes->length; $i++)
 			{
@@ -584,7 +623,7 @@ class pts_validation
 				$api = array($class, $get_api);
 			}
 			$documentation = trim($el->getElementsByTagName('annotation')->item('0')->getElementsByTagName('documentation')->item(0)->nodeValue);
-			$append_to_array[$path . '/' . $name] = new pts_element_node($name, $value, $input_type_restrictions, $api, $documentation, $set_api, $default_value);
+			$append_to_array[$path . '/' . $name] = new pts_element_node($name, $value, $input_type_restrictions, $api, $documentation, $set_api, $default_value, $flags);
 		}
 		else
 		{

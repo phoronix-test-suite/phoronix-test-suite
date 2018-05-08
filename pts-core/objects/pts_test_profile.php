@@ -33,7 +33,7 @@ class pts_test_profile extends pts_test_profile_parser
 			$this->set_override_values($override_values);
 		}
 
-		if($normal_init && PTS_IS_CLIENT && is_file($this->get_install_dir() . 'pts-install.xml'))
+		if($normal_init && PTS_IS_CLIENT && $this->identifier != null && is_file($this->get_install_dir() . 'pts-install.xml'))
 		{
 			$this->test_installation = new pts_installed_test($this);
 		}

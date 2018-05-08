@@ -27,8 +27,6 @@
 </xs:simpleType>
 <xs:simpleType name="Boolean">
 	<xs:restriction base="xs:string">
-		<xs:enumeration value="True" />
-		<xs:enumeration value="False" />
 		<xs:enumeration value="TRUE" />
 		<xs:enumeration value="FALSE" />
 	</xs:restriction>
