@@ -468,20 +468,7 @@ class pts_test_profile extends pts_test_profile_parser
 				}
 			}
 		}
-		else if(isset($this->overrides['Downloads/Package/URL']) && is_array($this->overrides['Downloads/Package/URL']))
-		{
-			for($i = 0; $i < count($this->overrides['Downloads/Package/URL']); $i++)
-			{
-				$pkg_url = $this->overrides['Downloads/Package/URL'][$i];
-				$pkg_md5 = $this->overrides['Downloads/Package/MD5'][$i];
-				$pkg_sha256 = $this->overrides['Downloads/Package/SHA256'][$i];
-				$pkg_filename = $this->overrides['Downloads/Package/FileName'][$i];
-				$pkg_filesize = $this->overrides['Downloads/Package/FileSize'][$i];
-				$pkg_architecture = $this->overrides['Downloads/Package/ArchitectureSpecific'][$i];
-				$pkg_platforms = $this->overrides['Downloads/Package/PlatformSpecific'][$i];
-				$downloads[] = new pts_test_file_download($pkg_url, $pkg_filename, $pkg_filesize, $pkg_md5, $pkg_sha256, $pkg_platforms, $pkg_architecture);
-			}
-		}
+
 		return $downloads;
 	}
 	public function get_results_definition($limit = null)

@@ -518,14 +518,8 @@ class pts_validation
 					$input = $node->get_default_value();
 				}
 			}
-			if($new_object instanceof nye_XmlWriter)
-			{
-				$new_object->addXmlNodeWNE($path, trim($input));
-			}
-			else
-			{
-				$new_object->xs(str_replace('PhoronixTestSuite/', '', $path), $input, in_array('UNBOUNDED', $node->get_flags_array()));
-			}
+
+			$new_object->addXmlNodeWNE($path, trim($input));
 
 			echo PHP_EOL;
 		}

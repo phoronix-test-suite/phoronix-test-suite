@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2016, Phoronix Media
-	Copyright (C) 2008 - 2016, Michael Larabel
+	Copyright (C) 2008 - 2018, Phoronix Media
+	Copyright (C) 2008 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -121,20 +121,9 @@ class pts_test_profile_parser
 	{
 		$this->block_test_extension_support = true;
 	}
-	public function xs($xpath, &$value, $stack_array = false)
+	public function xs($xpath, &$value)
 	{
-		if($stack_array)
-		{
-			if(!isset($this->overrides[$xpath]))
-			{
-				$this->overrides[$xpath] = array();
-			}
-			$this->overrides[$xpath][] = $value;
-		}
-		else
-		{
-			$this->overrides[$xpath] = $value;
-		}
+		$this->overrides[$xpath] = $value;
 	}
 	public function xg($xpath, $default_on_null = null)
 	{
