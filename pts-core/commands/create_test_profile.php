@@ -58,30 +58,30 @@ class create_test_profile implements pts_option_interface
 		pts_file_io::mkdir(PTS_TEST_PROFILE_PATH . $tp_identifier);
 
 		$types = pts_validation::process_xsd_types();
-		$test_profile = new pts_test_profile();
 
-		/*
 		pts_client::$display->generic_heading('test-definition.xml Creation');
-		pts_validation::xsd_to_cli_creator(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/test-profile.xsd', $test_profile, $types);
-		$test_profile_writer = new pts_test_profile_writer();
-		$test_profile_writer->rebuild_test_profile($test_profile);
-		$test_profile_writer->save_xml(PTS_TEST_PROFILE_PATH . $tp_identifier . '/test-definition.xml');
+		$writer = new nye_XmlWriter();
+		pts_validation::xsd_to_cli_creator(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/test-profile.xsd', $writer, $types);
+		$writer->saveXMLFile(PTS_TEST_PROFILE_PATH . $tp_identifier . '/test-definition.xml');
 		echo 'Generated: ' . PTS_TEST_PROFILE_PATH . $tp_identifier . '/test-definition.xml' . PHP_EOL;
-*/
+
 		pts_client::$display->generic_heading('downloads.xml Creation');
+		$writer = new nye_XmlWriter();
 		do
 		{
-			pts_validation::xsd_to_cli_creator(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/test-profile-downloads.xsd', $test_profile, $types);
+			pts_validation::xsd_to_cli_creator(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/test-profile-downloads.xsd', $writer, $types);
 		}
 		while(pts_user_io::prompt_bool_input('Add another file/download?', -1));
-		$writer = new pts_test_profile_downloads_writer();
-		$writer->rebuild_download_file($test_profile);
-		$writer->save_xml(PTS_TEST_PROFILE_PATH . $tp_identifier . '/downloads.xml');
+		$writer->saveXMLFile(PTS_TEST_PROFILE_PATH . $tp_identifier . '/downloads.xml');
 		echo 'Generated: ' . PTS_TEST_PROFILE_PATH . $tp_identifier . '/downloads.xml' . PHP_EOL;
 
-		return;
+		/*
 		pts_client::$display->generic_heading('results-definition.xml Creation');
-		pts_validation::xsd_to_cli_creator(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/results-parser.xsd', $test_profile, $types);
+		$writer = new nye_XmlWriter();
+		pts_validation::xsd_to_cli_creator(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/results-parser.xsd', $writer, $types);
+		$writer->saveXMLFile(PTS_TEST_PROFILE_PATH . $tp_identifier . '/results-definition.xml');
+		echo 'Generated: ' . PTS_TEST_PROFILE_PATH . $tp_identifier . '/results-definition.xml' . PHP_EOL;
+		*/
 
 	}
 }
