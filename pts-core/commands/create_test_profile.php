@@ -32,7 +32,7 @@ class create_test_profile implements pts_option_interface
 		do
 		{
 			$is_valid = true;
-			$input = pts_user_io::prompt_user_input('Enter an identifier/name for the test profile: ', false, false);
+			$input = pts_user_io::prompt_user_input('Enter an identifier/name for the test profile', false, false);
 			$input = pts_strings::keep_in_string(str_replace(' ', '-', strtolower($input)), pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH);
 
 			if(pts_test_profile::is_test_profile($input))
@@ -59,16 +59,27 @@ class create_test_profile implements pts_option_interface
 
 		$types = pts_validation::process_xsd_types();
 		$test_profile = new pts_test_profile();
+
+		/*
 		pts_client::$display->generic_heading('test-definition.xml Creation');
 		pts_validation::xsd_to_cli_creator(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/test-profile.xsd', $test_profile, $types);
 		$test_profile_writer = new pts_test_profile_writer();
 		$test_profile_writer->rebuild_test_profile($test_profile);
 		$test_profile_writer->save_xml(PTS_TEST_PROFILE_PATH . $tp_identifier . '/test-definition.xml');
 		echo 'Generated: ' . PTS_TEST_PROFILE_PATH . $tp_identifier . '/test-definition.xml' . PHP_EOL;
+*/
+		pts_client::$display->generic_heading('downloads.xml Creation');
+		do
+		{
+			pts_validation::xsd_to_cli_creator(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/test-profile-downloads.xsd', $test_profile, $types);
+		}
+		while(pts_user_io::prompt_bool_input('Add another file/download?', -1));
+		$writer = new pts_test_profile_downloads_writer();
+		$writer->rebuild_download_file($test_profile);
+		$writer->save_xml(PTS_TEST_PROFILE_PATH . $tp_identifier . '/downloads.xml');
+		echo 'Generated: ' . PTS_TEST_PROFILE_PATH . $tp_identifier . '/downloads.xml' . PHP_EOL;
 
 		return;
-		pts_client::$display->generic_heading('downloads.xml Creation');
-		pts_validation::xsd_to_cli_creator(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/test-profile-downloads.xsd', $test_profile, $types);
 		pts_client::$display->generic_heading('results-definition.xml Creation');
 		pts_validation::xsd_to_cli_creator(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/results-parser.xsd', $test_profile, $types);
 

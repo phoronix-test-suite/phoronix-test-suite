@@ -519,7 +519,7 @@ class pts_validation
 				}
 			}
 
-			$new_object->xs(str_replace('PhoronixTestSuite/', '', $path), $input);
+			$new_object->xs(str_replace('PhoronixTestSuite/', '', $path), $input, in_array('UNBOUNDED', $node->get_flags_array()));
 
 			echo PHP_EOL;
 		}
@@ -545,6 +545,8 @@ class pts_validation
 	}
 	public static function xsd_elements_to_objects(&$append_to_array, $o, $xpath, $el, $types, $path)
 	{
+		static $unbounded;
+
 		if($el->getElementsByTagName('*')->length > 0 && $el->getElementsByTagName('*')->item(0)->nodeName == 'xs:annotation' && $el->getElementsByTagName('*')->item(0)->getElementsByTagName('documentation')->length > 0)
 		{
 			$name = $el->getAttribute('name');
@@ -616,7 +618,17 @@ class pts_validation
 					$input_type_restrictions = $types[$type];
 				}
 			}
-
+			if(is_array($unbounded))
+			{
+				foreach($unbounded as $ub_check)
+				{
+					if(strpos($path, $ub_check) !== false)
+					{
+						$flags .= ' UNBOUNDED';
+						break;
+					}
+				}
+			}
 			$api = null;
 			if(!empty($get_api) && !empty($class))
 			{
@@ -630,6 +642,12 @@ class pts_validation
 			$name = $el->getAttribute('name');
 			$append_to_array[$path . '/' . $name] = new pts_element_node($name);
 		}
+
+		if($el->getAttribute('maxOccurs') == 'unbounded')
+		{
+			$unbounded[$path . '/' . $name] =  $path . '/' . $name;
+		}
+
 		$els = $xpath->evaluate('xs:complexType/xs:sequence/xs:element', $el);
 		if(is_array($o) && !empty($o))
 		{

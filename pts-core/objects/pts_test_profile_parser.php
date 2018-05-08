@@ -121,9 +121,20 @@ class pts_test_profile_parser
 	{
 		$this->block_test_extension_support = true;
 	}
-	public function xs($xpath, &$value)
+	public function xs($xpath, &$value, $stack_array = false)
 	{
-		$this->overrides[$xpath] = $value;
+		if($stack_array)
+		{
+			if(!isset($this->overrides[$xpath]))
+			{
+				$this->overrides[$xpath] = array();
+			}
+			$this->overrides[$xpath][] = $value;
+		}
+		else
+		{
+			$this->overrides[$xpath] = $value;
+		}
 	}
 	public function xg($xpath, $default_on_null = null)
 	{
