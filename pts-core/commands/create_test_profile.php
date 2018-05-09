@@ -54,16 +54,17 @@ class create_test_profile implements pts_option_interface
 		while(!$is_valid);
 
 		$tp_identifier = 'local/'. $input;
-		echo 'Creating test profile: ' . $tp_identifier . PHP_EOL;
-		pts_file_io::mkdir(PTS_TEST_PROFILE_PATH . $tp_identifier);
+		$tp_path = PTS_TEST_PROFILE_PATH . $tp_identifier;
+		echo 'Creating test profile: ' . $tp_identifier . ' @ ' . $tp_path . PHP_EOL;
+		pts_file_io::mkdir($tp_path);
 
 		$types = pts_validation::process_xsd_types();
 
 		pts_client::$display->generic_heading('test-definition.xml Creation');
 		$writer = new nye_XmlWriter();
 		pts_validation::xsd_to_cli_creator(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/test-profile.xsd', $writer, $types);
-		$writer->saveXMLFile(PTS_TEST_PROFILE_PATH . $tp_identifier . '/test-definition.xml');
-		echo 'Generated: ' . PTS_TEST_PROFILE_PATH . $tp_identifier . '/test-definition.xml' . PHP_EOL;
+		$writer->saveXMLFile($tp_path . '/test-definition.xml');
+		echo 'Generated: ' . $tp_path . '/test-definition.xml' . PHP_EOL;
 
 		pts_client::$display->generic_heading('downloads.xml Creation');
 		$writer = new nye_XmlWriter();
@@ -72,17 +73,101 @@ class create_test_profile implements pts_option_interface
 			pts_validation::xsd_to_cli_creator(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/test-profile-downloads.xsd', $writer, $types);
 		}
 		while(pts_user_io::prompt_bool_input('Add another file/download?', -1));
-		$writer->saveXMLFile(PTS_TEST_PROFILE_PATH . $tp_identifier . '/downloads.xml');
-		echo 'Generated: ' . PTS_TEST_PROFILE_PATH . $tp_identifier . '/downloads.xml' . PHP_EOL;
+		$writer->saveXMLFile($tp_path . '/downloads.xml');
+		echo 'Generated: ' . $tp_path . '/downloads.xml' . PHP_EOL;
 
 		/*
 		pts_client::$display->generic_heading('results-definition.xml Creation');
 		$writer = new nye_XmlWriter();
 		pts_validation::xsd_to_cli_creator(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/results-parser.xsd', $writer, $types);
-		$writer->saveXMLFile(PTS_TEST_PROFILE_PATH . $tp_identifier . '/results-definition.xml');
-		echo 'Generated: ' . PTS_TEST_PROFILE_PATH . $tp_identifier . '/results-definition.xml' . PHP_EOL;
+		$writer->saveXMLFile($tp_path . '/results-definition.xml');
+		echo 'Generated: ' . $tp_path . '/results-definition.xml' . PHP_EOL;
 		*/
 
+		$test_profile = new pts_test_profile($tp_identifier);
+		$result_scale = $test_profile->get_result_scale();
+		$test_executable = $test_profile->get_test_executable();
+
+		if(!is_file($tp_path . '/install.sh'))
+		{
+			$sample_install_sh = '#!/bin/sh' . PHP_EOL . '# Auto-generated install.sh script for starting/helping the test profile creation process...' . PHP_EOL . PHP_EOL;
+
+			$download_extract_helpers = array();
+			foreach($test_profile->get_downloads() as $file)
+			{
+				$file = $file->get_filename();
+				switch(substr($file, strrpos($file, '.') + 1))
+				{
+					case 'zip':
+						$download_extract_helpers[] = 'unzip -o ' . $file;
+						break;
+					case 'gz':
+					case 'bz2':
+					case 'xz':
+					case 'tar':
+						$download_extract_helpers[] = 'tar -xvf ' . $file;
+						break;
+					case 'exe':
+					case 'msi':
+					case 'run':
+						$download_extract_helpers[] = './' . $file;
+						break;
+				}
+			}
+
+			if(!empty($download_extract_helpers))
+			{
+				$sample_install_sh . '# Presumably you want to extract/run the downloaded files for setting up the test case...' . PHP_EOL;
+				$sample_install_sh .= implode(PHP_EOL, $download_extract_helpers) . PHP_EOL;
+			}
+
+			$sample_install_sh .= PHP_EOL . 'echo "#!/bin/sh' . PHP_EOL;
+			$sample_install_sh .= '# the actual running/execution of the test, etc... This is called at run-time.' . PHP_EOL;
+			$sample_install_sh .= '# The program under test and/or any parsing/wrapper scripts should then pipe the results to \$LOG_FILE for parsing.' . PHP_EOL;
+			$sample_install_sh .= '# Passed to the script as arguments are any of the test arguments/options as defined by the test-definition.xml.' . PHP_EOL;
+			$sample_install_sh .= PHP_EOL . '# Editing the test profile\'s results-definition.xml controls how the Phoronix Test Suite will capture the program\'s result.' . PHP_EOL;
+			$sample_install_sh .= '# STATIC EXAMPLE below coordinated with the stock result-definition.xml.' . PHP_EOL;
+			$sample_install_sh .= 'echo \"Program Output...\nProgram Output....\nResult: 55.5\" > \$LOG_FILE' . PHP_EOL;
+			$sample_install_sh .= 'echo \$? > ~/test-exit-status' . PHP_EOL;
+			$sample_install_sh .= PHP_EOL . '" > ~/' . $test_executable . PHP_EOL;
+			$sample_install_sh .= 'chmod +x ~/' . $test_executable . PHP_EOL;
+
+			$sample_install_sh .= PHP_EOL . '# Check out the `phoronix-test-suite debug-run` command when trying to debug your install/run behavior' . PHP_EOL;
+
+			file_put_contents($tp_path . '/install.sh', $sample_install_sh);
+		}
+
+		if(!is_file($tp_path . '/results-definition.xml'))
+		{
+			file_put_contents($tp_path . '/results-definition.xml', '<?xml version="1.0"?>
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Result: #_RESULT_#</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>');
+		}
+
+		if(!is_file($tp_path . '/pre.sh'))
+		{
+			file_put_contents($tp_path . '/pre.sh', '#!/bin/sh
+# pre.sh is called prior to running the test, if needed to setup any sample data / create a test file / seed a cache / related pre-run tasks');
+		}
+
+		if(!is_file($tp_path . '/interim.sh'))
+		{
+			file_put_contents($tp_path . '/interim.sh', '#!/bin/sh
+# interim.sh is called in between test runs for when a test profile is set via TimesToRun to execute multiple times. This is useful for restoring a program\'s state or any other changes that need to be made in between runs.');
+		}
+
+		if(!is_file($tp_path . '/post.sh'))
+		{
+			file_put_contents($tp_path . '/post.sh', '#!/bin/sh
+# post.sh is called after the test has been run, if needed to flush any cache / temporary files, clean-up anything, etc.');
+		}
+
+		// extract downloads
+		// do basic output for creating benchmark file
+		// done?
 	}
 }
 

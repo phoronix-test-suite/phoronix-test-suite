@@ -30,7 +30,8 @@
 						<xs:appinfo>
 							<get>get_download_url_string</get>
 							<set></set>
-							<default>TEST_REQUIRES</default>
+							<default></default>
+							<flags>TEST_REQUIRES</flags>
 						</xs:appinfo>
 						<xs:documentation>The URL of the file to download. Multiple URLs (mirrors) can be delimited by a comma and a space. If no URL is specified but just a file-name, it will only check download caches for the file (i.e. if an internal test file/download and not a file publicly available).</xs:documentation>
 					</xs:annotation>
@@ -40,7 +41,8 @@
 						<xs:appinfo>
 							<get>get_md5</get>
 							<set></set>
-							<default>TEST_REQUIRES</default>
+							<default></default>
+							<flags>TEST_REQUIRES</flags>
 						</xs:appinfo>
 						<xs:documentation>The MD5 checksum of the file to be downloaded. The MD5 checksum is primarily relied upon by older versions of the Phoronix Test Suite while the Phoronix Test Suite clients of the past few years default to the SHA256 comparison; the MD5 is useful for supporting legacy clients.</xs:documentation>
 					</xs:annotation>
@@ -50,7 +52,8 @@
 						<xs:appinfo>
 							<get>get_sha256</get>
 							<set></set>
-							<default>TEST_REQUIRES</default>
+							<default></default>
+							<flags>TEST_REQUIRES</flags>
 						</xs:appinfo>
 						<xs:documentation>The SHA256 checksum of the file to be downloaded.</xs:documentation>
 					</xs:annotation>
