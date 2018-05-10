@@ -38,8 +38,7 @@ class phoromatic_search implements pts_webui_interface
 	protected static function search_test_profiles($q)
 	{
 		$ret = null;
-
-		foreach(pts_search::search_test_profiles($q) as $test)
+		foreach(pts_search::search_local_test_profiles($q) as $test)
 		{
 			$tp = new pts_test_profile($test);
 			$ret .= '<h3>' . $tp->get_title() . '</h3><p>' . $tp->get_description() . '<br /><a href="http://openbenchmarking.org/test/' . $tp->get_identifier(false) . '">Learn More On OpenBenchmarking.org</a></p>';

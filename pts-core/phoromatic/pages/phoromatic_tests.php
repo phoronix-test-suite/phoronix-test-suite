@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015, Phoronix Media
-	Copyright (C) 2015, Michael Larabel
+	Copyright (C) 2015 - 2018, Phoronix Media
+	Copyright (C) 2015 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -63,8 +63,9 @@ class phoromatic_tests implements pts_webui_interface
 			{
 				$main .= '<p>No results found on this Phoromatic Server for the ' . $tp->get_title() . ' test profile.</p>';
 			}
-			else if($recent_result_count > 5)
+			else if(false && $recent_result_count > 5)
 			{
+				// TODO XXX below code is borked
 				$stmt = phoromatic_server::$db->prepare('SELECT UploadID, SystemID, UploadTime FROM phoromatic_results WHERE AccountID = :account_id AND UploadID IN (SELECT DISTINCT UploadID FROM phoromatic_results_results WHERE AccountID = :account_id AND TestProfile LIKE :tp) ORDER BY UploadTime DESC LIMIT 1000');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 				$stmt->bindValue(':tp', $tp_identifier . '%');
@@ -125,7 +126,7 @@ class phoromatic_tests implements pts_webui_interface
 				$cache_json = json_decode($cache_json, true);
 			}
 			$test_counts_for_account = phoromatic_server::test_result_count_for_test_profiles($_SESSION['AccountID']);
-			foreach(pts_openbenchmarking::available_tests() as $test)
+			foreach(array_merge(pts_tests::local_tests(), pts_openbenchmarking::available_tests()) as $test)
 			{
 				$cache_checked = false;
 				if($dc_exists)
@@ -160,7 +161,8 @@ class phoromatic_tests implements pts_webui_interface
 				}
 
 				$main .= '<h1 style="margin-bottom: 0;"><a href="/?tests/' . $tp->get_identifier(false) . '">' . $tp->get_title() . '</a></h1>';
-				$main .= '<p style="font-size: 90%;"><strong>' . $tp->get_test_hardware_type() . '</strong> <em>-</em> ' . $test_count . ' Results On This Account' . ' </p>';
+				$main .= '<p><strong>' . $tp->get_identifier() . '</strong> <em>-</em> ' . $tp->get_description() . '<br />';
+				$main .= '<strong>' . $tp->get_test_hardware_type() . '</strong> ' . ($test_count > 0 ? '<em>-</em> ' . $test_count . ' Results On This Account' : '') . ' </p>';
 			}
 		}
 
