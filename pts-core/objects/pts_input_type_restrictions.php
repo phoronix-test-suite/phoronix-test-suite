@@ -30,8 +30,9 @@ class pts_input_type_restrictions
 	private $max_value;
 	private $enums;
 	private $required;
+	private $multi_enum_select;
 
-	public function __construct($name, $type, $min_length, $max_length, $min_value, $max_value, $enums)
+	public function __construct($name = '', $type = '', $min_length = '', $max_length = '', $min_value = -1, $max_value = '', $enums = '')
 	{
 		$this->name = $name;
 		$this->type = $type;
@@ -40,6 +41,11 @@ class pts_input_type_restrictions
 		$this->min_value = $min_value;
 		$this->max_value = $max_value;
 		$this->enums = $enums;
+		$this->multi_enum_select = false;
+	}
+	public function get_name()
+	{
+		return $this->name;
 	}
 	public function get_type()
 	{
@@ -65,6 +71,10 @@ class pts_input_type_restrictions
 	{
 		return $this->enums;
 	}
+	public function set_enums($enums)
+	{
+		$this->enums = $enums;
+	}
 	public function set_required($is_required)
 	{
 		$this->required = $is_required;
@@ -72,6 +82,14 @@ class pts_input_type_restrictions
 	public function is_required()
 	{
 		return $this->required;
+	}
+	public function set_multi_enum_select($bo = false)
+	{
+		$this->multi_enum_select = $bo;
+	}
+	public function multi_enum_select()
+	{
+		return $this->multi_enum_select;
 	}
 	public function is_valid($input)
 	{

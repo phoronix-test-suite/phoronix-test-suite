@@ -49,7 +49,7 @@
 			<xs:element name="ResultScale" type="xs:string" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:appinfo>
-						<get>get_result_scalue</get>
+						<get>get_result_scale</get>
 						<set></set>
 						<default></default>
 						<flags>TEST_REQUIRES</flags>
@@ -187,8 +187,9 @@
 						<set></set>
 						<default></default>
 						<flags>TEST_REQUIRES</flags>
+						<dynamic_list_multi>pts_types.known_operating_systems</dynamic_list_multi>
 					</xs:appinfo>
-					<xs:documentation>SupportedPlatforms is used for listing the supported software platforms / operating systems that the test profile is compatible with. Recognized options include Linux, Windows, BSD, MacOSX, and Solaris. Multiple platforms can be specified when delimited by a common and space.</xs:documentation>
+					<xs:documentation>SupportedPlatforms is used for listing the supported software platforms / operating systems that the test profile is compatible with. Currently recognized options include Linux, Windows, BSD, MacOSX, and Solaris. Multiple platforms can be specified when delimited by a common and space. If no restrictions, the tag can be blank.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="SoftwareType" type="SoftwareType" minOccurs="0" maxOccurs="1">
@@ -241,8 +242,9 @@
 						<get>get_supported_architectures</get>
 						<set></set>
 						<default></default>
+						<dynamic_list_multi>pts_types.known_architectures</dynamic_list_multi>
 					</xs:appinfo>
-					<xs:documentation>SupportedArchitectures is used for specifying the CPU architecture's supported by the program under test. This option is commonly just used for closed-source/binary-only programs that may be limited to running on a particular architecture. Common values are x86 and x86_64. Multiple supported architectures can be specified when delimited by a comma.</xs:documentation>
+					<xs:documentation>SupportedArchitectures is used for specifying the CPU architecture's supported by the program under test. This option is commonly just used for closed-source/binary-only programs that may be limited to running on a particular architecture. Common values are x86 and x86_64. Multiple supported architectures can be specified when delimited by a comma. If no restrictions, the tag can be blank.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="ExternalDependencies" type="xs:string" minOccurs="0" maxOccurs="1">
@@ -251,6 +253,7 @@
 						<get>get_external_dependencies</get>
 						<set></set>
 						<default></default>
+						<dynamic_list_multi>pts_types.all_possible_external_dependencies</dynamic_list_multi>
 					</xs:appinfo>
 					<xs:documentation>ExternalDependencies is used for specifying any external dependencies the test profile may need for correct installation/execution. This is generally used for specifying if a compiler toolchain is needed, Python, PHP, various build dependencies, etc. A list of supported external dependencies can be found via the Phoronix Test Suite documentation or by looking in pts-core/external-dependencies/xml/. Multiple external dependencies can be specified by delimiting each dependency with a comma.</xs:documentation>
 				</xs:annotation>
@@ -271,12 +274,12 @@
 					<xs:appinfo>
 						<get>is_root_required</get>
 						<set></set>
-						<default></default>
+						<default>FALSE</default>
 					</xs:appinfo>
 					<xs:documentation>RequiresRoot allows a value of TRUE or FALSE if the test requires root/administrator rights for successfully running the test. By default the value is assumed to FALSE. If TRUE, the Phoronix Test Suite will attempt to prompt the user at run-time for their root/sudo password to run the test with elevated permissions if the user is not current root/administrator.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="EnvironmentSize" type="xs:decimal" minOccurs="0" maxOccurs="1">
+			<xs:element name="EnvironmentSize" type="PositiveDecimal" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:appinfo>
 						<get>get_environment_size</get>
@@ -286,7 +289,7 @@
 					<xs:documentation>EnvironmentSize is used for indicating the approximate size of the installed test. Integer and floating point values are supported and assumed to be Megabytes. This is for informational purposes and the Phoronix Test Suite does check the amount of free disk space of the system prior to installing a test to verify sufficient storage capacity.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element name="EnvironmentTestingSize" type="xs:decimal" minOccurs="0" maxOccurs="1">
+			<xs:element name="EnvironmentTestingSize" type="PositiveDecimal" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:appinfo>
 						<get>get_environment_testing_size</get>
@@ -435,7 +438,7 @@
 						<xs:documentation>If a test profile by default outputs information covering all possible test options that may be present, AllowCacheShare can be set to TRUE to indicate the test result can be shared/used by any other invocation of the test profile run in a given result file. This is an uncommon option.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
-				<xs:element name="MinimumLength" type="xs:decimal" minOccurs="0" maxOccurs="1">
+				<xs:element name="MinimumLength" type="PositiveDecimall" minOccurs="0" maxOccurs="1">
 					<xs:annotation>
 						<xs:appinfo>
 							<get>get_min_length</get>
@@ -446,7 +449,7 @@
 						<xs:documentation>MinimumLength can be used to specify the time (in seconds) any test profile run will need at a minimum for indicating a successful run. If the test is to always need to run at least 60 seconds and MininLength is set to 60, if a test run ends prior to that threshold (e.g. the process was killed), the test result will not be recorded.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
-				<xs:element name="MaximumLength" type="xs:decimal" minOccurs="0" maxOccurs="1">
+				<xs:element name="MaximumLength" type="PositiveDecimal" minOccurs="0" maxOccurs="1">
 					<xs:annotation>
 						<xs:appinfo>
 							<get>get_max_length</get>

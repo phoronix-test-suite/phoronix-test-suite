@@ -84,6 +84,7 @@
 							<get>get_platform_string</get>
 							<set></set>
 							<default></default>
+							<dynamic_list_multi>pts_types.known_operating_systems</dynamic_list_multi>
 						</xs:appinfo>
 						<xs:documentation>If the file download is limited to a particular operating system / software plarform, it can be specified via PlatformSpecific. E.g. if there are separate files needed for supporting the test profile on Linux and Windows. Multiple platforms can be specified via a comma and space.</xs:documentation>
 					</xs:annotation>
@@ -94,6 +95,7 @@
 							<get>get_architecture_string</get>
 							<set></set>
 							<default></default>
+							<dynamic_list_multi>pts_types.known_architectures</dynamic_list_multi>
 						</xs:appinfo>
 						<xs:documentation>If the file download is limited to a particular CPU architecture, it can be specified via ArchitectureSpecific. E.g. if there are separate files needed for supporting the test profile on x86 and x86_64. Multiple architectures can be specified via a comma and space.</xs:documentation>
 					</xs:annotation>

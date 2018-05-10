@@ -50,6 +50,20 @@ class pts_types
 	{
 		return array(array('Linux'), array('Solaris', 'Sun'), array('BSD', 'DragonFly'), array('MacOSX', 'Darwin'), array('Windows'), array('Hurd', 'GNU'));
 	}
+	public static function known_architectures()
+	{
+		return array('x86_64', 'i686', 'arm', 'ppc', 'sparc', 'ppc64', 'aarch64', '');
+	}
+	public static function known_operating_systems()
+	{
+		return array('Linux', 'Windows', 'BSD', 'MacOSX', 'Solaris', '');
+	}
+	public static function all_possible_external_dependencies()
+	{
+		$possible_deps = PTS_IS_CLIENT ? pts_external_dependencies::all_dependency_names() : array();
+		$possible_deps[] = '';
+		return $possible_deps;
+	}
 	public static function identifiers_to_test_profile_objects($identifiers, $include_extensions = false, $remove_duplicates = true, &$archive_unknown_objects = false)
 	{
 		$test_profiles = array();

@@ -455,13 +455,17 @@ class pts_validation
 			$enums = array();
 			$min_value = -1;
 			$max_value = -1;
+			$type_restrict = null;
 			if($node->get_input_type_restrictions() != null)
 			{
 				$type = $node->get_input_type_restrictions();
+				$type_restrict = $type->get_type();
+				// echo 'xx' . $type->get_name() . ' ' . $type->get_type() . 'xx' . PHP_EOL;
 				$enums = $type->get_enums();
 				if(!empty($enums))
 				{
 					echo pts_client::cli_colored_text('Possible Values: ', 'gray', true) . implode(', ', $enums) . PHP_EOL;
+					echo pts_client::cli_colored_text('Multiple Selections Allowed: ', 'gray', true) . ($type->multi_enum_select() ? 'YES' : 'NO') . PHP_EOL;
 				}
 				$min_value = $type->get_min_value();
 				if($min_value > -1)
@@ -490,7 +494,7 @@ class pts_validation
 			$do_require = in_array('TEST_REQUIRES', $node->get_flags_array());
 			if(!empty($enums))
 			{
-				$input = pts_user_io::prompt_text_menu('Select from the supported options', $enums, false, false, null);
+				$input = pts_user_io::prompt_text_menu('Select from the supported options', $enums, $type->multi_enum_select(), false, null);
 			}
 			else
 			{
@@ -507,6 +511,16 @@ class pts_validation
 					if($do_require && $max_value > 0 && strlen($input) > $max_value)
 					{
 						echo 'Maximum length of ' . $max_value . ' is supported.';
+						$input_passes = false;
+					}
+					if(!empty($input) && $type_restrict == 'INT' && !is_numeric($input))
+					{
+						echo 'Input must be a valid integer number.';
+						$input_passes = false;
+					}
+					if(!empty($input) && $type_restrict == 'xs:decimal' && !is_numeric($input))
+					{
+						echo 'Input must be a valid number.';
 						$input_passes = false;
 					}
 
@@ -555,7 +569,8 @@ class pts_validation
 			$set_api = null;
 			$default_value = null;
 			$flags = null;
-			$nodes_to_match = array('set' => 'set_api', 'get' => 'get_api', 'default' => 'default_value', 'flags' => 'flags');
+			$dynamic_list_multi = '';
+			$nodes_to_match = array('set' => 'set_api', 'get' => 'get_api', 'default' => 'default_value', 'flags' => 'flags', 'dynamic_list_multi' => 'dynamic_list_multi');
 			$cnodes = $el->getElementsByTagName('*');
 			for($i = 0; $i < $cnodes->length; $i++)
 			{
@@ -608,7 +623,7 @@ class pts_validation
 				}
 			}
 
-			$input_type_restrictions = null;
+			$input_type_restrictions =  new pts_input_type_restrictions();
 			if($el->getAttribute('type') != null)
 			{
 				$type = $el->getAttribute('type');
@@ -635,6 +650,23 @@ class pts_validation
 				$api = array($class, $get_api);
 			}
 			$documentation = trim($el->getElementsByTagName('annotation')->item('0')->getElementsByTagName('documentation')->item(0)->nodeValue);
+
+			if(empty($input_type_restrictions->get_enums()) && !empty($dynamic_list_multi))
+			{
+				$dynamic_list_multi = explode('.', $dynamic_list_multi);
+				if(count($dynamic_list_multi) == 2 && is_callable(array($dynamic_list_multi[0], $dynamic_list_multi[1])))
+				{
+					$dynamic_list_multi_enums = call_user_func(array($dynamic_list_multi[0], $dynamic_list_multi[1]));
+
+					if(is_array($dynamic_list_multi_enums))
+					{
+						$input_type_restrictions->set_enums($dynamic_list_multi_enums);
+						$input_type_restrictions->set_multi_enum_select(true);
+					}
+				}
+
+			}
+
 			$append_to_array[$path . '/' . $name] = new pts_element_node($name, $value, $input_type_restrictions, $api, $documentation, $set_api, $default_value, $flags);
 		}
 		else
@@ -769,7 +801,7 @@ class pts_validation
 			$sample_install_sh .= '# Passed to the script as arguments are any of the test arguments/options as defined by the test-definition.xml.' . PHP_EOL;
 			$sample_install_sh .= PHP_EOL . '# Editing the test profile\'s results-definition.xml controls how the Phoronix Test Suite will capture the program\'s result.' . PHP_EOL;
 			$sample_install_sh .= '# STATIC EXAMPLE below coordinated with the stock result-definition.xml.' . PHP_EOL;
-			$sample_install_sh .= 'echo \"Program Output...\nProgram Output....\nResult: 55.5\" > \$LOG_FILE' . PHP_EOL;
+			$sample_install_sh .= 'echo \"Result: 55.5\" > \$LOG_FILE' . PHP_EOL;
 			$sample_install_sh .= 'echo \$? > ~/test-exit-status' . PHP_EOL;
 			$sample_install_sh .= PHP_EOL . '" > ~/' . $test_executable . PHP_EOL;
 			$sample_install_sh .= 'chmod +x ~/' . $test_executable . PHP_EOL;

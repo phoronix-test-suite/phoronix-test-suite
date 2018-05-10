@@ -159,6 +159,11 @@
 		<xs:minInclusive value="1" />
 	</xs:restriction>
 </xs:simpleType>
+<xs:simpleType name="PositiveDecimal">
+	<xs:restriction base="xs:decimal">
+		<xs:minInclusive value="0" />
+	</xs:restriction>
+</xs:simpleType>
 <xs:simpleType name="CoreVersion">
 	<xs:restriction base="xs:integer">
 		<xs:minInclusive value="2950" />
