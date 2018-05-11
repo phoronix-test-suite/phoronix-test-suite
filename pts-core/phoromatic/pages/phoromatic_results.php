@@ -248,7 +248,11 @@ class phoromatic_results implements pts_webui_interface
 					$results = 0;
 					do
 					{
-						if(strtotime($test_result_row['UploadTime']) < $time_limit)
+						if(strtotime($test_result_row['UploadTime']) > $time_end)
+						{
+							continue;
+						}
+						if(strtotime($test_result_row['UploadTime']) < $time_start)
 						{
 							break;
 						}
