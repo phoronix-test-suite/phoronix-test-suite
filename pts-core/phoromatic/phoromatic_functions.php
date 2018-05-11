@@ -112,7 +112,7 @@ function phoromatic_init_web_page_setup()
 	}
 
 	define('PHOROMATIC_SERVER', true);
-	if(PTS_IS_DEV_BUILD)
+	if(defined('PTS_IS_DEV_BUILD') && PTS_IS_DEV_BUILD)
 	{
 		error_reporting(E_ALL);
 	}
