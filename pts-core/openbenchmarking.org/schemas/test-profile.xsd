@@ -438,7 +438,7 @@
 						<xs:documentation>If a test profile by default outputs information covering all possible test options that may be present, AllowCacheShare can be set to TRUE to indicate the test result can be shared/used by any other invocation of the test profile run in a given result file. This is an uncommon option.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
-				<xs:element name="MinimumLength" type="PositiveDecimall" minOccurs="0" maxOccurs="1">
+				<xs:element name="MinimumLength" type="PositiveDecimal" minOccurs="0" maxOccurs="1">
 					<xs:annotation>
 						<xs:appinfo>
 							<get>get_min_length</get>

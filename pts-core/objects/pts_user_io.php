@@ -211,7 +211,7 @@ class pts_user_io
 			}
 			if($allow_multi_select)
 			{
-				echo pts_client::cli_colored_text('** Multiple items can be selected when delimited by a comma. **', 'gray') . PHP_EOL;
+				echo $line_prefix . pts_client::cli_colored_text('** Multiple items can be selected, delimit by a comma. **', 'gray') . PHP_EOL;
 			}
 			echo $line_prefix . pts_client::cli_just_bold($user_string . ': ');
 			$select_choice = pts_user_io::read_user_input();
