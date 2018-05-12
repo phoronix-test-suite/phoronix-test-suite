@@ -62,7 +62,7 @@
 					<xs:appinfo>
 						<get>get_result_proportion</get>
 						<set></set>
-						<default></default>
+						<default>HIB</default>
 						<flags>TEST_REQUIRES</flags>
 					</xs:appinfo>
 					<xs:documentation>HIB or LIB are relevant values for the Proportion to indicate if higher results are better (HIB) or lower is better (LIB) depending upon result scale.</xs:documentation>
@@ -74,6 +74,7 @@
 						<get>get_result_quantifier</get>
 						<set></set>
 						<default>AVG</default>
+						<flags>UNCOMMON</flags>
 					</xs:appinfo>
 					<xs:documentation>The ResultQuantifier is used for specifying what to do with the results from multiple test runs. The default behavior if not specified is AVG to average the results of multiple runs to determine the final result. Other supported options are MAX for reporting the maximum result of multiple test runs or MIN for reporting the minimum result of multiple runs, rather than the average.</xs:documentation>
 				</xs:annotation>
@@ -84,6 +85,7 @@
 						<get>get_display_format</get>
 						<set></set>
 						<default>BAR_GRAPH</default>
+						<flags>UNCOMMON</flags>
 					</xs:appinfo>
 					<xs:documentation>The DisplayFormat is used to determine the kind of result provided / how to display the result. By default if not specified the value is BAR_GRAPH and is the most practical display format for a majority of the test cases.</xs:documentation>
 				</xs:annotation>
@@ -197,7 +199,7 @@
 					<xs:appinfo>
 						<get>get_test_software_type</get>
 						<set></set>
-						<default></default>
+						<default>Application</default>
 						<flags>TEST_REQUIRES</flags>
 					</xs:appinfo>
 					<xs:documentation>SoftwareType is used for indicating the category to which the test profile falls under. Supported options include BaseTestProfile (uncommon, for use with the Cascading Test Profiles / TestExtends functionality), Utility, Simulator, Scientific, Benchmark, Application, or Game. The SoftwareType is mostly used for reference purposes and sorting of results and display purposes.</xs:documentation>
@@ -275,6 +277,7 @@
 						<get>is_root_required</get>
 						<set></set>
 						<default>FALSE</default>
+						<flags>UNCOMMON</flags>
 					</xs:appinfo>
 					<xs:documentation>RequiresRoot allows a value of TRUE or FALSE if the test requires root/administrator rights for successfully running the test. By default the value is assumed to FALSE. If TRUE, the Phoronix Test Suite will attempt to prompt the user at run-time for their root/sudo password to run the test with elevated permissions if the user is not current root/administrator.</xs:documentation>
 				</xs:annotation>
@@ -381,7 +384,7 @@
 					<xs:appinfo>
 						<get>do_auto_save_results</get>
 						<set></set>
-						<default></default>
+						<default>FALSE</default>
 						<flags>UNCOMMON</flags>
 					</xs:appinfo>
 					<xs:documentation>Rather than prompting the user whether they would like to save the test results, setting AutoSaveResults to TRUE will force the user to save the test results. This option shouldn't be needed unless the test profile's results are only logical if viewed on a graph.</xs:documentation>
@@ -432,7 +435,7 @@
 						<xs:appinfo>
 							<get>allow_cache_share</get>
 							<set></set>
-							<default></default>
+							<default>FALSE</default>
 							<flags>UNCOMMON</flags>
 						</xs:appinfo>
 						<xs:documentation>If a test profile by default outputs information covering all possible test options that may be present, AllowCacheShare can be set to TRUE to indicate the test result can be shared/used by any other invocation of the test profile run in a given result file. This is an uncommon option.</xs:documentation>

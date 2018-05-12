@@ -402,6 +402,23 @@ blockquote
 	border-radius: 3px;
 	padding: 10px 14px;
 }
+div.pts_phoromatic_create_test_option_area_uncommon
+{
+	padding: 0 0 10px;
+}
+div.pts_phoromatic_create_test_option_area_uncommon h3
+{
+	color: #999;
+}
+div.pts_phoromatic_create_test_option_area_uncommon p
+{
+	display: none;
+}
+div.pts_phoromatic_create_test_option_area_uncommon:hover p
+{
+	display: block;
+	font-size: 90%;
+}
 div.pts_phoromatic_info_box_area a, div.pts_phoromatic_info_box_area ul a, div.pts_phoromatic_info_box_area ul a li
 {
 	color: #272727;

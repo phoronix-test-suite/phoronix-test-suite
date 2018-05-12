@@ -33,7 +33,7 @@ class create_test_profile implements pts_option_interface
 		{
 			$is_valid = true;
 			$input = pts_user_io::prompt_user_input('Enter an identifier/name for the test profile', false, false);
-			$input = pts_strings::keep_in_string(str_replace(' ', '-', strtolower($input)), pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH);
+			$input = pts_validation::string_to_sanitized_test_profile_base($input);
 
 			if(pts_test_profile::is_test_profile($input))
 			{

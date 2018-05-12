@@ -418,11 +418,6 @@ class pts_validation
 		}
 		return $types;
 	}
-	public static function process_xsd_display_chart($xsd_file, $obj = null, $types = null)
-	{
-		$nodes = self::generate_xsd_element_objects($xsd_file, $obj, $types);
-		self::xsd_display_cli_from_objects($nodes);
-	}
 	public static function xsd_to_cli_creator($xsd_file, &$new_object, $types = null)
 	{
 		$nodes = self::generate_xsd_element_objects($xsd_file, null, $types);
@@ -537,6 +532,109 @@ class pts_validation
 
 			echo PHP_EOL;
 		}
+	}
+	public static function xsd_to_html_creator($xsd_file, $types = null)
+	{
+		$nodes = self::generate_xsd_element_objects($xsd_file, null, $types);
+		return self::xsd_nodes_to_html_prompts($nodes);
+	}
+	public static function xsd_nodes_to_html_prompts($nodes)
+	{
+		$html = null;
+
+		foreach($nodes as $path => $node)
+		{
+			if($node->get_documentation() == null)
+			{
+				continue;
+			}
+
+			$uncommon = in_array('UNCOMMON', $node->get_flags_array());
+			$html .= '<div style="" class="' . ($uncommon ? 'pts_phoromatic_create_test_option_area_uncommon' : 'pts_phoromatic_create_test_option_area') . '" id="' . str_replace('/', '', $path) . '">';
+			$html .= '<h3>' . $node->get_name() . ($uncommon ? ' <sup> Uncommon Option; Hover To Expand</sup>' : '') . '</h3>' . PHP_EOL;
+
+			$enums = array();
+			$min_value = -1;
+			$max_value = -1;
+			$type_restrict = null;
+			if($node->get_input_type_restrictions() != null)
+			{
+				$html .= '<p>';
+				$type = $node->get_input_type_restrictions();
+				$type_restrict = $type->get_type();
+				$enums = $type->get_enums();
+				$min_value = $type->get_min_value();
+				if($min_value > 0)
+				{
+					$html .= '<strong>Minimum Value: </strong>' . $min_value;
+				}
+				$max_value = $type->get_max_value();
+				if($max_value > 0)
+				{
+					$html .= '<strong>Maximum Value: </strong>' . $max_value;
+				}
+				$html .= '</p>';
+			}
+			if($node->get_documentation() != null)
+			{
+				$html .= '<p>' . str_replace($node->get_name(), '<em>' . $node->get_name() . '</em>', $node->get_documentation()) . '</p>';
+			}
+
+			$do_require = in_array('TEST_REQUIRES', $node->get_flags_array());
+			$html .= '<p>';
+			if(!empty($enums))
+			{
+				$html .= '<select name="' . $path . '" ' . ($type->multi_enum_select() ? ' multiple' : '') . ($do_require ? ' required' : '') . '>' . PHP_EOL;
+				foreach($enums as $enum)
+				{
+					$html .= '<option value="' . $enum . '"' . ($node->get_default_value() == $enum ? 'selected="selected"' : null) . '>' . $enum . '</option>';
+				}
+				$html .= '</select>';
+			}
+			else
+			{
+				if($type_restrict == 'INT' || $type_restrict == 'xs:decimal')
+				{
+					$html .= '<input type="number" name="' . $path . '" value="' . $node->get_default_value() . '" min="1" ' . ($do_require ? ' required' : '') . ' />';
+				}
+				else
+				{
+					$html .= '<input type="text" name="' . $path . '" value="' . $node->get_default_value() . '" ' . ($do_require ? ' required' : '') . ' />';
+				}
+			}
+
+			$html .= '</p>';
+			$html .= '</div>';
+		}
+
+		return $html;
+	}
+	public static function xsd_to_var_array_generate_xml($xsd_file, $types, &$array_to_check, &$writer)
+	{
+		foreach(self::generate_xsd_element_objects($xsd_file, null, $types) as $path => $node)
+		{
+			$do_require = in_array('TEST_REQUIRES', $node->get_flags_array());
+			$value = isset($array_to_check[$path]) ? $array_to_check[$path] : null;
+			if(empty($value))
+			{
+				$value = $node->get_default_value();
+			}
+			if(empty($value))
+			{
+				continue;
+			}
+			if($do_require && empty($value))
+			{
+				//return 'The ' . $path . ' value cannot be empty.';
+			}
+			$writer->addXmlNodeWNE($path, trim($value));
+		}
+
+		return true;
+	}
+	public static function string_to_sanitized_test_profile_base($input)
+	{
+		return pts_strings::keep_in_string(str_replace(' ', '-', strtolower($input)), pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH);;
 	}
 	protected static function generate_xsd_element_objects($xsd_file, $obj = null, $types = null)
 	{
@@ -700,6 +798,11 @@ class pts_validation
 				self:: xsd_elements_to_objects($append_to_array, $o, $xpath, $e, $types, $path);
 			}
 		}
+	}
+	public static function process_xsd_display_chart($xsd_file, $obj = null, $types = null)
+	{
+		$nodes = self::generate_xsd_element_objects($xsd_file, $obj, $types);
+		self::xsd_display_cli_from_objects($nodes);
 	}
 	public static function xsd_display_cli_from_objects($nodes)
 	{
