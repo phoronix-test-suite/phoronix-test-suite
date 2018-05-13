@@ -1,0 +1,72 @@
+<html>
+<head>
+<Title>Creating Test Profiles</Title>
+</head>
+<body>
+<h1>Creating A New Phoronix Test Suite / OpenBenchmarking.org Test Profile</h1>
+<p>A test profile itself consists of a main XML file containing the test's meta-data (<em>test-definition.xml</em>), an XML file if needed to specify required files, download URLs and their MD5/SHA256 hashes and file sizes (<em>downloads.xml</em>), and the <em>install.sh</em> script for installing the test and generating the run-script for execution by the Phoronix Test Suite at run-time. There are also other potential files like <em>pre.sh</em>, <em>interim.sh</em>, and <em>post.sh</em> for execution at pre-run, interim-run, and post-run stages by the Phoronix Test Suite. With the script files comprising test profiles, there is also the option of post-fixing them with e.g. <em>_linux</em> or <em>_windows</em> if wishing to supply different script files based upon the operating system being run during testing, if the setup steps may differ greatly based upon MacOS/Windows/Linux/BSD/Solaris platforms.</p>
+<p>Traditionally the easiest way to learn/understand test profile development has been by looking at looking at a basic test like <em>c-ray</em>, <em>tesseract</em> or the hundreds of others that are publicly available. Simply run for example <em>phoronix-test-suite benchmark tesseract</em> and then look at the test profile's contents either via the default locations in <em>~/.phoronix-test-suite/test-profiles</em> or <em>/var/lib/phoronix-test-suite/test-profiles/</em> if running as root on non-Windows platforms.</p>
+<h2>Versioning Mandate</h2>
+<p>The Phoronix Test Suite / OpenBenchmarking.org philosophy <em>mandates that with any change, a new version of the test profile be tagged</em>. This is done for reproducibility and being able to ensure the exact test profile state when a set of tests are conducted. Test profiles are versioned in a <strong>test-X.Y.Z</strong> format where <em>X</em> or <em>Y</em> are bumped whenever a change is made to the test profile that makes the results incomparable to a previous version of the tests (e.g. updating against a new upstream code-base, adjusting the parameters to what is benchmarked, etc). The Phoronix Test Suite then knows not to attempt any comparisons with an incompatible version difference or to go and fetch that specific version of the package. The <em>Z</em> is bumped when just making non-important changes such as just updating the test's meta-data, changing download URLs, etc. This is easy to enforce with the OpenBenchmarking.org infrastructure rather than having to worry about non-human-friendly Git hashes as test profile versions or having to create Git tags after every commit. The test profile version can optionally be specified when running a test, e.g. <em>phoronix-test-suite benchmark scimark2-1.2.1</em> instead of <em>phoronix-test-suite benchmark scimark2</em>, which would by default choose the latest available test profile version from OpenBenchmarking.org or the latest version on any local Phoromatic Server. The test profile versions are also always written out as part of the Phoronix Test Suite result XML data.</p>
+<h2>Writing A Sample Program</h2>
+<p>Writing a test profile for the Phoronix Test Suite is a relatively quick and easy process for anyone familiar with common Linux commands and the basics of XML. To help you understand the design of the Phoronix Test Suite, this guide covers the steps needed to write a testing profile for a very simple application.</p>
+<p>The first step in the profile writing process is to, well, have a piece of software you'd like to use with the Phoronix Test Suite. This software can be closed-source or open-source and be virtually anything as long as it is compatible with an operating system that is supported by the Phoronix Test Suite.</p>
+<p>For this guide, the piece of software being used for demonstration is just a simple C++ program that calculates Pi to 8,765,4321 digits using the Leibniz formula. Below is this sample piece of software intended just for demonstration purposes.</p>
+<blockquote>#include &lt;iostream&gt;<br>
+#include &lt;math.h&gt;</p>
+<p>int main()<br>
+{<br>
+double pi = 0;</p>
+<p> for(long int i = 1; i &lt;= 87654321; i++)<br>
+pi += (double) pow(-1, i + 1) / (2 * i - 1);</p>
+<p> pi *= 4;<br>
+std::cout &lt;&lt; &quot;Done Calculating Pi...&quot; &lt;&lt; endl;<br>
+return 0;<br>
+}</blockquote>
+<p>The first step in the actual profile writing process is to name it. If you're  looking to ultimately push this profile to be included in the Phoronix Test Suite, its name must be all lower case and consist of just alpha-numeric characters, but can contain dashes (-). A more advanced test profile capability is operating system prefixes, and if using those there is an underscore separating the prefix from the normal profile name. For this sample profile, we're calling it <em>sample-program</em> and the file-name would be <em>sample-program/test-definition.xml</em>. Our (very basic) profile is showcased below.</p>
+<blockquote>&lt;PhoronixTestSuite&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;TestProfile&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Version&gt;1.1.0&lt;/Version&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;TestType&gt;Processor&lt;/TestType&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;SoftwareType&gt;Utility&lt;/SoftwareType&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;License&gt;FREE&lt;/License&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Status&gt;PRIVATE&lt;/Status&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Maintainer&gt;Phoronix Media&lt;/Maintainer&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/TestProfile&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;TestInformation&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Title&gt;Sample Pi Program&lt;/Title&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;TimesToRun&gt;3&lt;/TimesToRun&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ResultScale&gt;Seconds&lt;/ResultScale&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Proportion&gt;LIB&lt;/Proportion&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Description&gt;A simple C++ program that calculates Pi to 8,765,4321 digits using the Leibniz formula. This test can be used for showcasing how to write a basic test profile.&lt;/Description&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;ExternalDependencies&gt;build-utilities&lt;/ExternalDependencies&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/TestInformation&gt;<br>
+&lt;/PhoronixTestSuite&gt;</blockquote>
+<p>This XML profile is what interfaces with the Phoronix Test Suite and provides all the needed information about the test as well as other attributes. For a complete listing of all the supported profile options, look at the specification files in the documentation folder. In the case of <em>sample-program</em>, it lets the Phoronix Test Suite know that it's composed of free software, is designed to test the processor, is intended for private use only, and this profile is maintained by Phoronix Media. In addition, it tells the Phoronix Test Suite to execute this program three times and as no result quantifier is set, the average of the three runs will be taken. This profile also tells the Phoronix Test Suite that the generic <em>build-utilities</em> package is needed, which will attempt to ensure that default system C/C++ compiler and the standard development utilities/libraries are installed on your Linux distribution. This is needed as the C++ source-code will need to be built from source.</p>
+<p>The next step is to write the <em>install.sh</em> file, which once called by the Phoronix Test Suite is intended to install the test locally for benchmarking purposes. The <em>install.sh</em> file is technically optional, but is generally used by all tests. Note: The first argument supplied to the install script is the directory that the test needs to be installed to. The <em>install.sh</em> file (in our instance) is to be placed inside <em>test-profiles/sample-program</em>. Below is the <em>install.sh</em> for the <em>sample-program</em>.</p>
+<blockquote>#!/bin/sh<br /><br />
+tar -xjf sample-pi-program-1.tar.bz2<br />
+g++ sample-pi-program.cpp -o sample-pi-program<br />
+echo &quot;#!/bin/sh<br />
+./sample-pi-program 2&gt;&amp;1<br />
+&quot; &gt; sample-program<br>
+chmod +x sample-program</blockquote>
+<p>This install file builds the code with GCC, and then creates a small script that is run by the Phoronix Test Suite. Where does the source-code come into play? Well, it needs to be downloaded now from a web server. The Phoronix Test Suite has built-in support for managing downloads from multiple servers in a random over, fall-back support if one mirror is done, and verification of MD5 check-sums. Below is the <em>downloads.xml</em> file for <em>sample-program</em> that covers all of this.</p>
+<blockquote>&lt;PhoronixTestSuite&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Downloads&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;Package&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;URL&gt;http://www.phoronix-test-suite.com/benchmark-files/sample-pi-program.cpp&lt;/URL&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;MD5&gt;e90fb790df8d1544696a1439c9b5bd8d&lt;/MD5&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/Package&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/Downloads&gt;<br>
+&lt;/PhoronixTestSuite&gt;</blockquote>
+<p>The final step in the profile writing process is to write a parser to strip all information but the reported result from the standard output or <em>$LOG_FILE</em>. In the case of a test profile just measuring how long it takes to run, it is as simple as a <em>results-definition.xml</em> looking like:</p>
+<blockquote>&lt;?xml version="1.0"?&gt;<br>
+&lt;PhoronixTestSuite&gt;<br>
+  &lt;SystemMonitor&gt;<br>
+    &lt;Sensor&gt;sys.time&lt;/Sensor&gt;<br>
+  &lt;/SystemMonitor&gt;<br>
+&lt;/PhoronixTestSuite&gt;</blockquote>
+<p>After that, with all the files in their correct locations, just run: <em>phoronix-test-suite benchmark sample-program</em>. The Phoronix Test Suite should now handle the rest by installing the test, running the test, and recording the results (if you so choose). There is no additional work that needs to be done for the results to be recorded in the results viewer or even reporting the results to OpenBenchmarking.org. An up-to-date version of this test profile can be run via <em>phoronix-test-suite benchmark sample-program</em> and then by looking at the test profile source via <em>~/.phoronix-test-suite/test-profiles/pts/sample-program*</em> or within <em>/var/lib/phoronix-test-suite/test-profiles/pts/</em> if running as root.</p>
+</body>
+</html>

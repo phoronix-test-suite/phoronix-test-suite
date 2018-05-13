@@ -137,6 +137,8 @@ This option provides command-line searching abilities for test profiles / test s
 ## Asset Creation
 #### build-suite
 This option will guide the user through the process of generating their own test suite, which they can then run. Optionally, passed as arguments can be the test(s) or suite(s) to add to the suite to be created, instead of being prompted through the process.
+#### create-test-profile
+This option can be used for creating a Phoronix Test Suite test profile by answering questions about the test for constructing the test profile XML meta-data and handling other boiler-plate basics for getting started in developing new tests.
 #### debug-benchmark  [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option is intended for use by test profile writers and is identical to the <em>run</em> option but will yield more information during the run process that can be used to debug issues with a test profile or to verify the test profile is functioning correctly.
 #### debug-install  [Test | Suite | OpenBenchmarking ID | Test Result]  ...
@@ -669,52 +671,62 @@ This is a collection of test profiles found within the specified OpenBenchmarkin
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing opencl.
 #### Cuda Tests  system/cuda
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing cuda.
-#### All SYSTEM Tests  system/all
+#### All PTS Tests  pts/all
 This is a collection of all test profiles found within the specified OpenBenchmarking.org repository.
-#### Installed Tests  system/installed
+#### Installed Tests  pts/installed
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository that are already installed on the system under test.
-#### Linux Operating System Tests  system/linux
+#### Linux Operating System Tests  pts/linux
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Linux Operating System.
-#### Solaris Operating System Tests  system/solaris
+#### Solaris Operating System Tests  pts/solaris
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Solaris Operating System.
-#### BSD Operating System Tests  system/bsd
+#### BSD Operating System Tests  pts/bsd
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the BSD Operating System.
-#### MacOSX Operating System Tests  system/macosx
+#### MacOSX Operating System Tests  pts/macosx
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the MacOSX Operating System.
-#### Windows Operating System Tests  system/windows
+#### Windows Operating System Tests  pts/windows
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Windows Operating System.
-#### Hurd Operating System Tests  system/hurd
+#### Hurd Operating System Tests  pts/hurd
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Hurd Operating System.
-#### System Subsystem Tests  system/system
+#### System Subsystem Tests  pts/system
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the System sub-system.
-#### Processor Subsystem Tests  system/processor
+#### Processor Subsystem Tests  pts/processor
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Processor sub-system.
-#### Disk Subsystem Tests  system/disk
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Disk sub-system.
-#### Graphics Subsystem Tests  system/graphics
+#### Graphics Subsystem Tests  pts/graphics
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Graphics sub-system.
-#### Memory Subsystem Tests  system/memory
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Memory sub-system.
-#### Network Subsystem Tests  system/network
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Network sub-system.
-#### Other Subsystem Tests  system/other
+#### Other Subsystem Tests  pts/other
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Other sub-system.
-#### Utility Tests  system/utility
+#### Utility Tests  pts/utility
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Utility software test.
-#### Simulator Tests  system/simulator
+#### Simulator Tests  pts/simulator
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Simulator software test.
-#### Scientific Tests  system/scientific
+#### Scientific Tests  pts/scientific
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Scientific software test.
-#### Benchmark Tests  system/benchmark
+#### Benchmark Tests  pts/benchmark
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Benchmark software test.
-#### Application Tests  system/application
+#### Application Tests  pts/application
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Application software test.
-#### Game Tests  system/game
+#### Game Tests  pts/game
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Game software test.
-#### Opencl Tests  system/opencl
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing opencl.
-#### Cuda Tests  system/cuda
+#### Smp Tests  pts/smp
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing smp.
+#### Cuda Tests  pts/cuda
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing cuda.
+#### Python Tests  pts/python
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing python.
+#### Go Tests  pts/go
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing go.
+#### Mpi Tests  pts/mpi
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing mpi.
+#### Openmp Tests  pts/openmp
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing openmp.
+#### Vdpau Tests  pts/vdpau
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing vdpau.
+#### Video Tests  pts/video
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing video.
+#### Responsiveness Tests  pts/responsiveness
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing responsiveness.
+#### Openmpi Tests  pts/openmpi
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing openmpi.
 #### All WINDOWS Tests  windows/all
 This is a collection of all test profiles found within the specified OpenBenchmarking.org repository.
 #### Installed Tests  windows/installed
@@ -775,22 +787,67 @@ When any disk tests are executed, the Phoronix Test Suite will attempt to log th
 ## Overview
 The Phoronix Test Suite now features its own built-in Phoromatic server and client implementations. See the*phoromatic.pdf*/*phoromatic.html*documentation for more information on this advanced capability.
 
-# PTS Desktop Live
+# Creating Test Profiles
 
-## PTS Desktop Live 2010.1 "Anzhofen"
-PTS Desktop Live and PTS Netbook Live are Linux-based operating systems designed to provide a free software platform for carrying out system tests and hardware benchmarks in an automated, reproducible, and effective manner. The Phoronix Test Suite operating systems are designed around the[Phoronix Test Suite](http://www.phoronix-test-suite.com/)with the operating system itself consisting of a stripped down Linux environment, then built upon that is the Phoronix Test Suite with its test profiles and suites. This is not a standard Linux desktop with the normal throng of packages.
-Testing with PTS Desktop Live is intended to be via a Live DVD or Live USB (i.e. flash drive or memory card) environment. PTS Netbook Live is similar to PTS Desktop Live but designed for testing on lightweight x86 systems and netbooks. Both PTS Desktop Live and PTS Netbook Live make it very easy to deploy the Phoronix Test Suite across an array of systems, isolates any software differences when seeking to perform hardware comparisons, and is designed to be very easy to carry out these Linux benchmarks even for a first-time Linux user.
-The inaugural release of this operating system was PTS Desktop Live 2009.3 (codenamed "Gernlinden") and was based upon the Phoronix Test Suite 2.0 release. The Gernlinden release shipped with more than 50 open-source test profiles and all needed files being located on the disc image. PTS Desktop Live uses the GTK2 GUI dialog for the Phoronix Test Suite by default, but the CLI options are also accessible. PTS Desktop Live also features optimizations to the Linux kernel and related components for use on the latest high-end hardware and other performance related tweaking. PTS Netbook Live features optimizations for the Intel Atom processor.
-The mission of the Phoronix Test Suite and related products will not be achieved until it has made Linux benchmarking incredibly robust and innovative, drop dead easy to perform nearly any kind of benchmark, and when it out-paces other leading operating systems for its benchmarking abilities. These operating systems are being updated quarterly in conjunction with new Phoronix Test Suite releases. The Phoronix Test Suite will continue to be supported under all other Linux distributions, OpenSolaris, Mac OS X, Windows, and *BSD operating systems, but this is just another addition on top of that.
-PTS Desktop Live is designed to run on x86_64 compatible systems with 2GB or more of system memory (ideally 4GB+ if you wish to run many of the tests in a live environment) being highly recommended along with a modern CPU and graphics processor. No proprietary graphics drivers are shipped with PTS Desktop Live at this time, so depending upon the hardware you may not have OpenGL acceleration to run the few graphics-related tests that are included with this release. Only graphics drivers are provided for ATI/AMD, NVIDIA, and Intel hardware. An Internet connection is not required but is needed for communication with OpenBenchmarking.org and for utilizing some of the other Phoronix Test Suite features.
-PTS Netbook Live is designed for netbooks and nettop computers with an Intel Atom processor.
+## Creating A New Phoronix Test Suite / OpenBenchmarking.org Test Profile
+A test profile itself consists of a main XML file containing the test's meta-data (*test-definition.xml*), an XML file if needed to specify required files, download URLs and their MD5/SHA256 hashes and file sizes (*downloads.xml*), and the*install.sh*script for installing the test and generating the run-script for execution by the Phoronix Test Suite at run-time. There are also other potential files like*pre.sh*,*interim.sh*, and*post.sh*for execution at pre-run, interim-run, and post-run stages by the Phoronix Test Suite. With the script files comprising test profiles, there is also the option of post-fixing them with e.g.*_linux*or*_windows*if wishing to supply different script files based upon the operating system being run during testing, if the setup steps may differ greatly based upon MacOS/Windows/Linux/BSD/Solaris platforms.
+Traditionally the easiest way to learn/understand test profile development has been by looking at looking at a basic test like*c-ray*,*tesseract*or the hundreds of others that are publicly available. Simply run for example*phoronix-test-suite benchmark tesseract*and then look at the test profile's contents either via the default locations in*~/.phoronix-test-suite/test-profiles*or*/var/lib/phoronix-test-suite/test-profiles/*if running as root on non-Windows platforms.
 
-### Quick Start Guide
-When the operating system has fully booted, the end-user agreement for the Phoronix Test Suite will be displayed, followed by initializing the main GTK user interface for the Phoronix Test Suite. The Phoronix Test Suite has more than 100 test profiles while there are about 50 test profiles featured within live environment, which are free software, do not pose significant install size problems, and are suitable for benchmarking from a live environment. By default, PTS Desktop Live and PTS Netbook Live will only show the test profiles and suites where all of the needed test files and dependencies ship with this open-source operating system. However, to access any of the test profiles that may require downloading additional files or external dependencies, use the*View*menu to toggle the different options. The system's hardware and software information can also be viewed in a graphical window from this menu.
-From the*Available Tests*tab, any test/suite can be selected to view more information. If you wish to install the test, simply click on the install button while waiting shortly for it to install. Afterwards, the test can be run by selecting it again and clicking on the run/benchmark button. If you have a[OpenBenchmarking.org](http://www.openbenchmarking.org/)account, you can login from the*File*menu while Phoronix Test Suite settings are adjustable from the*Edit*menu.
-When the testing has completed, the graphical user interface will reappear. Via the buttons that appear at the top of the interface, the test results can then be opened within the web browser. Depending upon the test profile, it may also be possible to immediately compare the test result(s) against a set of reference systems. If the completed test(s) do have reference results available, a list of the comparable systems are shown, so that you can click on one or more of these reference systems to see how the given system performs in comparison. Results from OpenBenchmarking.org can also be compared with any of the test results.
-Assuming you did not launch any commands from the terminal to alter the disk(s) or its contents or carry out any other changes; PTS Desktop Live will have not touched your data or the installed operating system(s). If you wish to archive any of your test results, upload the results to OpenBenchmarking.org. Alternatively, when going to the*Test Results*tab and selecting a test, the*File*menu presents options for exporting results to text, CSV, and PDF files. The contents of the*~/.phoronix-test-suite/test-results/*folder can also be backed up for preserving the test results.
-If you wish to use the Phoronix Test Suite from the command-line, open a terminal and run*phoronix-test-suite*.
+### Versioning Mandate
+The Phoronix Test Suite / OpenBenchmarking.org philosophy*mandates that with any change, a new version of the test profile be tagged*. This is done for reproducibility and being able to ensure the exact test profile state when a set of tests are conducted. Test profiles are versioned in a**test-X.Y.Z**format where*X*or*Y*are bumped whenever a change is made to the test profile that makes the results incomparable to a previous version of the tests (e.g. updating against a new upstream code-base, adjusting the parameters to what is benchmarked, etc). The Phoronix Test Suite then knows not to attempt any comparisons with an incompatible version difference or to go and fetch that specific version of the package. The*Z*is bumped when just making non-important changes such as just updating the test's meta-data, changing download URLs, etc. This is easy to enforce with the OpenBenchmarking.org infrastructure rather than having to worry about non-human-friendly Git hashes as test profile versions or having to create Git tags after every commit. The test profile version can optionally be specified when running a test, e.g.*phoronix-test-suite benchmark scimark2-1.2.1*instead of*phoronix-test-suite benchmark scimark2*, which would by default choose the latest available test profile version from OpenBenchmarking.org or the latest version on any local Phoromatic Server. The test profile versions are also always written out as part of the Phoronix Test Suite result XML data.
+
+### Writing A Sample Program
+Writing a test profile for the Phoronix Test Suite is a relatively quick and easy process for anyone familiar with common Linux commands and the basics of XML. To help you understand the design of the Phoronix Test Suite, this guide covers the steps needed to write a testing profile for a very simple application.
+The first step in the profile writing process is to, well, have a piece of software you'd like to use with the Phoronix Test Suite. This software can be closed-source or open-source and be virtually anything as long as it is compatible with an operating system that is supported by the Phoronix Test Suite.
+For this guide, the piece of software being used for demonstration is just a simple C++ program that calculates Pi to 8,765,4321 digits using the Leibniz formula. Below is this sample piece of software intended just for demonstration purposes.
+#include <iostream>
+#include <math.h>
+The first step in the actual profile writing process is to name it. If you're  looking to ultimately push this profile to be included in the Phoronix Test Suite, its name must be all lower case and consist of just alpha-numeric characters, but can contain dashes (-). A more advanced test profile capability is operating system prefixes, and if using those there is an underscore separating the prefix from the normal profile name. For this sample profile, we're calling it*sample-program*and the file-name would be*sample-program/test-definition.xml*. Our (very basic) profile is showcased below.
+<PhoronixTestSuite>
+     <TestProfile>
+          <Version>1.1.0</Version>
+          <TestType>Processor</TestType>
+          <SoftwareType>Utility</SoftwareType>
+          <License>FREE</License>
+          <Status>PRIVATE</Status>
+          <Maintainer>Phoronix Media</Maintainer>
+     </TestProfile>
+     <TestInformation>
+          <Title>Sample Pi Program</Title>
+          <TimesToRun>3</TimesToRun>
+          <ResultScale>Seconds</ResultScale>
+          <Proportion>LIB</Proportion>
+          <Description>A simple C++ program that calculates Pi to 8,765,4321 digits using the Leibniz formula. This test can be used for showcasing how to write a basic test profile.</Description>
+          <ExternalDependencies>build-utilities</ExternalDependencies>
+     </TestInformation>
+</PhoronixTestSuite>
+This XML profile is what interfaces with the Phoronix Test Suite and provides all the needed information about the test as well as other attributes. For a complete listing of all the supported profile options, look at the specification files in the documentation folder. In the case of*sample-program*, it lets the Phoronix Test Suite know that it's composed of free software, is designed to test the processor, is intended for private use only, and this profile is maintained by Phoronix Media. In addition, it tells the Phoronix Test Suite to execute this program three times and as no result quantifier is set, the average of the three runs will be taken. This profile also tells the Phoronix Test Suite that the generic*build-utilities*package is needed, which will attempt to ensure that default system C/C++ compiler and the standard development utilities/libraries are installed on your Linux distribution. This is needed as the C++ source-code will need to be built from source.
+The next step is to write the*install.sh*file, which once called by the Phoronix Test Suite is intended to install the test locally for benchmarking purposes. The*install.sh*file is technically optional, but is generally used by all tests. Note: The first argument supplied to the install script is the directory that the test needs to be installed to. The*install.sh*file (in our instance) is to be placed inside*test-profiles/sample-program*. Below is the*install.sh*for the*sample-program*.
+#!/bin/sh
+
+tar -xjf sample-pi-program-1.tar.bz2
+g++ sample-pi-program.cpp -o sample-pi-program
+echo "#!/bin/sh
+./sample-pi-program 2>&1
+" > sample-program
+chmod +x sample-program
+This install file builds the code with GCC, and then creates a small script that is run by the Phoronix Test Suite. Where does the source-code come into play? Well, it needs to be downloaded now from a web server. The Phoronix Test Suite has built-in support for managing downloads from multiple servers in a random over, fall-back support if one mirror is done, and verification of MD5 check-sums. Below is the*downloads.xml*file for*sample-program*that covers all of this.
+<PhoronixTestSuite>
+     <Downloads>
+          <Package>
+               <URL>http://www.phoronix-test-suite.com/benchmark-files/sample-pi-program.cpp</URL>
+               <MD5>e90fb790df8d1544696a1439c9b5bd8d</MD5>
+          </Package>
+     </Downloads>
+</PhoronixTestSuite>
+The final step in the profile writing process is to write a parser to strip all information but the reported result from the standard output or*$LOG_FILE*. In the case of a test profile just measuring how long it takes to run, it is as simple as a*results-definition.xml*looking like:
+<?xml version="1.0"?>
+<PhoronixTestSuite>
+<SystemMonitor>
+<Sensor>sys.time</Sensor>
+</SystemMonitor>
+</PhoronixTestSuite>
+After that, with all the files in their correct locations, just run:*phoronix-test-suite benchmark sample-program*. The Phoronix Test Suite should now handle the rest by installing the test, running the test, and recording the results (if you so choose). There is no additional work that needs to be done for the results to be recorded in the results viewer or even reporting the results to OpenBenchmarking.org. An up-to-date version of this test profile can be run via*phoronix-test-suite benchmark sample-program*and then by looking at the test profile source via*~/.phoronix-test-suite/test-profiles/pts/sample-program**or within*/var/lib/phoronix-test-suite/test-profiles/pts/*if running as root.
 
 # Development Credits
 The Phoronix Test Suite is based upon the extensive testing and internal tools developed by[Phoronix.com](http://www.phoronix.com/)since 2004 along with support from leading tier-one computer hardware and software vendors. The principal architects of the Phoronix Test Suite are[Michael Larabel](http://www.michaellarabel.com/)and Matthew Tippett. The phoronix-test-suite, pts_Graph, Phoromatic, Phodevi, tandem_Xml, and nye_Xml are some of the related open-source projects provided by[Phoronix Media](http://www.phoronix-media.com/).

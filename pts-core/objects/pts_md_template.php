@@ -81,6 +81,7 @@ class pts_md_template
 					$this->md .= $this->html_text_interpret($dom_item);
 					break;
 				case 'p':
+				case 'blockquote':
 					$this->md .= $this->html_text_interpret($dom_item) . PHP_EOL;
 					break;
 				case 'hr':
@@ -119,6 +120,9 @@ class pts_md_template
 					break;
 				case 'a':
 					$text .= '[' . $value . '](' . $dom_item->childNodes->item($j)->attributes->getNamedItem('href')->nodeValue . ')';
+					break;
+				case 'br':
+					$text .= PHP_EOL;
 					break;
 				default:
 					echo "UNSUPPORTED: $name: $value\n";

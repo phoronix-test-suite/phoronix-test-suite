@@ -137,6 +137,7 @@ class pts_pdf_template extends FPDF
 					$this->Ln();
 					break;
 				case 'p':
+				case 'blockquote':
 					$this->SetFont('Arial', null, 11);
 					$this->SetLeftMargin(20);
 					$this->SetTextColor(0, 0, 0);
@@ -184,7 +185,8 @@ class pts_pdf_template extends FPDF
 			}
 
 			if($name != 'a')
-			{
+			{ echo $value;
+				$value = str_replace('&nbsp;', ' ', $value);
 				$this->Write(5, $value, null);
 			}
 		}
