@@ -114,14 +114,14 @@ class phoromatic_results implements pts_webui_interface
 				{
 					$time_end = strtotime(date('Y-m-d') . ' 23:59:59');
 				}
-				$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" method="post"><div style="text-align: left; font-weight: bold;">Results From <input id="time_start" name="time_start" type="date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" min="' . $min_date . '" value="' . (isset($_POST['time_start']) ? $_POST['time_start'] : date('Y-m-d', $default_start_date)) . '" max="' . date('Y-m-d') . '" /> To  <input id="time_end" name="time_end" type="date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" min="' . $min_date . '" value="' . (isset($_POST['time_end']) ? $_POST['time_end'] : date('Y-m-d')) . '" max="' . date('Y-m-d') . '" /> &nbsp; With Tests: <input type="text" name="containing_tests" value="' . (isset($_POST['containing_tests']) ? $_POST['containing_tests'] : null) . '" /> With Hardware: <input type="text" name="containing_hardware" value="' . (isset($_POST['containing_hardware']) ? $_POST['containing_hardware'] : null) . '" /> With System Software: <input type="text" name="containing_software" value="' . (isset($_POST['containing_software']) ? $_POST['containing_software'] : null) . '" /> Search For <input type="text" name="search" value="' . (isset($_POST['search']) ? $_POST['search'] : null) . '" /> Limit Results To <select id="result_limit" name="result_limit">';
+				$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" method="post"><div style="text-align: left; font-weight: bold;">Results From <input id="time_start" name="time_start" type="date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" min="' . $min_date . '" value="' . (isset($_POST['time_start']) ? $_POST['time_start'] : date('Y-m-d', $default_start_date)) . '" max="' . date('Y-m-d') . '" /> To  <input id="time_end" name="time_end" type="date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" min="' . $min_date . '" value="' . (isset($_POST['time_end']) ? $_POST['time_end'] : date('Y-m-d')) . '" max="' . date('Y-m-d') . '" /> &nbsp; With Tests: <input type="text" name="containing_tests" id="containing_tests" value="' . (isset($_POST['containing_tests']) ? $_POST['containing_tests'] : null) . '" /> With Hardware: <input type="text" name="containing_hardware" id="containing_hardware" value="' . (isset($_POST['containing_hardware']) ? $_POST['containing_hardware'] : null) . '" /> With System Software: <input type="text" name="containing_software" id="containing_software" value="' . (isset($_POST['containing_software']) ? $_POST['containing_software'] : null) . '" /> Search For <input type="text" name="search" id="search_for" value="' . (isset($_POST['search']) ? $_POST['search'] : null) . '" /> Limit Results To <select id="result_limit" name="result_limit">';
 				for($i = 100; $i <= 500; $i += 100)
 				{
 					$main .= '<option value="' . $i . '"' . ($result_limit == $i ? ' selected="selected"' : null) . '>' . $i . '</option>';
 				}
 				$main .= '<option value=""' . (isset($_POST['result_limit']) && empty($result_limit) ? ' selected="selected"' : null) . '>No Limit</option>';
 
-				$main .= '</select> &nbsp; <input type="reset" value="Reset" />';
+				$main .= '</select> &nbsp; <input type="button" value="Reset" onclick="phoromatic_clear_results_search_fields();" />';
 				$main .= ' &nbsp; <input type="submit" value="Update" /></div></form>';
 				$main .= '<p style="font-size: 90%;">** <em>AND</em>, <em>OR</em>, and <em>NOT</em> search operators supported for tests/hardware/software search fields. **</p>';
 				$main .= '<h1>Account Test Results</h1>';
@@ -130,7 +130,7 @@ class phoromatic_results implements pts_webui_interface
 				if(isset($_POST['containing_hardware']) && !empty($_POST['containing_hardware']))
 				{
 					$hw_advanced_query = stripos($_POST['containing_hardware'], ' AND ') !== false || stripos($_POST['containing_hardware'], ' OR ') !== false || stripos($_POST['containing_hardware'], ' NOT ') !== false;
-					if($hw_advanced_query)
+					if($hw_advanced_query || true)
 					{
 						$hw_advanced_query = pts_phoroql::search_query_to_tree($_POST['containing_hardware']);
 					}
@@ -142,7 +142,7 @@ class phoromatic_results implements pts_webui_interface
 				if(isset($_POST['containing_software']) && !empty($_POST['containing_software']))
 				{
 					$sw_advanced_query = strpos($_POST['containing_software'], ' AND ') !== false || strpos($_POST['containing_software'], ' OR ') !== false || strpos($_POST['containing_software'], ' NOT ') !== false;
-					if($sw_advanced_query)
+					if($sw_advanced_query || true)
 					{
 						$sw_advanced_query = pts_phoroql::search_query_to_tree($_POST['containing_software']);
 					}

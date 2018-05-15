@@ -1,3 +1,10 @@
+function phoromatic_clear_results_search_fields()
+{
+	document.getElementById("containing_tests").value = "";
+	document.getElementById("containing_hardware").value = "";
+	document.getElementById("containing_software").value = "";
+	document.getElementById("search_for").value = "";
+}
 function phoromatic_toggle_checkboxes_on_page(global_checkbox)
 {
 	var inputs = document.getElementsByTagName("input");
