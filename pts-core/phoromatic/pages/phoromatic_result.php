@@ -317,6 +317,8 @@ class phoromatic_result implements pts_webui_interface
 			{
 				$main .= '<h1>' . ($result_file->get_title() != null ? $result_file->get_title() : 'Phoromatic Results') . '</h1>';
 				$main .= '<p>' . $result_file->get_description() . '</p>';
+
+				$main .= '<p><strong>Uploaded On:</strong> ' . $upload_times[0] . '</p>';
 			}
 			$main .= phoromatic_annotate_entry('RESULT', implode(',', $upload_ids), 'TOP');
 

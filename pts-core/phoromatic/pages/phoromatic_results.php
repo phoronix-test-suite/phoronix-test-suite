@@ -114,20 +114,22 @@ class phoromatic_results implements pts_webui_interface
 				{
 					$time_end = strtotime(date('Y-m-d') . ' 23:59:59');
 				}
-				$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" method="post"><div style="text-align: left; font-weight: bold;">Results From <input id="time_start" name="time_start" type="date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" min="' . $min_date . '" value="' . (isset($_POST['time_start']) ? $_POST['time_start'] : date('Y-m-d', $default_start_date)) . '" max="' . date('Y-m-d') . '" /> To  <input id="time_end" name="time_end" type="date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" min="' . $min_date . '" value="' . (isset($_POST['time_end']) ? $_POST['time_end'] : date('Y-m-d')) . '" max="' . date('Y-m-d') . '" /> &nbsp; Containing Tests <input type="text" name="containing_tests" value="' . (isset($_POST['containing_tests']) ? $_POST['containing_tests'] : null) . '" /> With Hardware <input type="text" name="containing_hardware" value="' . (isset($_POST['containing_hardware']) ? $_POST['containing_hardware'] : null) . '" /> With System Software <input type="text" name="containing_software" value="' . (isset($_POST['containing_software']) ? $_POST['containing_software'] : null) . '" /> Search For <input type="text" name="search" value="' . (isset($_POST['search']) ? $_POST['search'] : null) . '" /> Limit Results To <select id="result_limit" name="result_limit">';
+				$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" method="post"><div style="text-align: left; font-weight: bold;">Results From <input id="time_start" name="time_start" type="date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" min="' . $min_date . '" value="' . (isset($_POST['time_start']) ? $_POST['time_start'] : date('Y-m-d', $default_start_date)) . '" max="' . date('Y-m-d') . '" /> To  <input id="time_end" name="time_end" type="date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" min="' . $min_date . '" value="' . (isset($_POST['time_end']) ? $_POST['time_end'] : date('Y-m-d')) . '" max="' . date('Y-m-d') . '" /> &nbsp; With Tests: <input type="text" name="containing_tests" value="' . (isset($_POST['containing_tests']) ? $_POST['containing_tests'] : null) . '" /> With Hardware: <input type="text" name="containing_hardware" value="' . (isset($_POST['containing_hardware']) ? $_POST['containing_hardware'] : null) . '" /> With System Software: <input type="text" name="containing_software" value="' . (isset($_POST['containing_software']) ? $_POST['containing_software'] : null) . '" /> Search For <input type="text" name="search" value="' . (isset($_POST['search']) ? $_POST['search'] : null) . '" /> Limit Results To <select id="result_limit" name="result_limit">';
 				for($i = 100; $i <= 500; $i += 100)
 				{
 					$main .= '<option value="' . $i . '"' . ($result_limit == $i ? ' selected="selected"' : null) . '>' . $i . '</option>';
 				}
 				$main .= '<option value=""' . (isset($_POST['result_limit']) && empty($result_limit) ? ' selected="selected"' : null) . '>No Limit</option>';
-				$main .= '</select> &nbsp; <input type="submit" value="Update" /></div></form>';
 
+				$main .= '</select> &nbsp; <input type="reset" value="Reset" />';
+				$main .= ' &nbsp; <input type="submit" value="Update" /></div></form>';
+				$main .= '<p style="font-size: 90%;">** <em>AND</em>, <em>OR</em>, and <em>NOT</em> search operators supported for tests/hardware/software search fields. **</p>';
 				$main .= '<h1>Account Test Results</h1>';
 				$main .= '<div class="pts_phoromatic_info_box_area">';
 				$search_for = (!isset($_POST['search']) || empty($_POST['search']) ? null : 'AND (Title LIKE :search OR Description LIKE :search OR UploadID IN (SELECT UploadID FROM phoromatic_results_systems WHERE AccountID = :account_id AND (Software LIKE :search OR Hardware LIKE :search)))');
 				if(isset($_POST['containing_hardware']) && !empty($_POST['containing_hardware']))
 				{
-					$hw_advanced_query = strpos($_POST['containing_hardware'], ' AND ') !== false || strpos($_POST['containing_hardware'], ' OR ') !== false || strpos($_POST['containing_hardware'], ' NOT ') !== false;
+					$hw_advanced_query = stripos($_POST['containing_hardware'], ' AND ') !== false || stripos($_POST['containing_hardware'], ' OR ') !== false || stripos($_POST['containing_hardware'], ' NOT ') !== false;
 					if($hw_advanced_query)
 					{
 						$hw_advanced_query = pts_phoroql::search_query_to_tree($_POST['containing_hardware']);
@@ -237,9 +239,11 @@ class phoromatic_results implements pts_webui_interface
 				$main .= '</div>';
 
 				$result_share_opt = phoromatic_server::read_setting('force_result_sharing') ? '1 = 1' : 'AccountID IN (SELECT AccountID FROM phoromatic_account_settings WHERE LetOtherGroupsViewResults = "1")';
-				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed, AccountID FROM phoromatic_results WHERE ' . $result_share_opt . ' AND AccountID != :account_id ' . $search_for. ' ORDER BY UploadTime DESC LIMIT ' . $result_limit);
+				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed, AccountID, UploadID FROM phoromatic_results WHERE ' . $result_share_opt . ' AND AccountID != :account_id ' . $search_for. ' ORDER BY UploadTime DESC');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 				$stmt->bindValue(':search', (isset($_POST['search']) ? '%' . $_POST['search'] . '%' : null));
+				$stmt->bindValue(':containing_hardware', (isset($_POST['containing_hardware']) ? '%' . $_POST['containing_hardware'] . '%' : null));
+				$stmt->bindValue(':containing_software', (isset($_POST['containing_software']) ? '%' . $_POST['containing_software'] . '%' : null));
 				$test_result_result = $stmt->execute();
 				if(!empty($test_result_result) && ($test_result_row = $test_result_result->fetchArray()))
 				{
@@ -256,6 +260,38 @@ class phoromatic_results implements pts_webui_interface
 						{
 							break;
 						}
+						if(!empty($result_limit) && $result_limit > 1 && $result_limit == $results)
+						{
+							break;
+						}
+
+						$composite_xml = phoromatic_server::phoromatic_account_result_path($test_result_row['AccountID'], $test_result_row['UploadID']) . 'composite.xml';
+						$result_file = new pts_result_file($composite_xml);
+
+						if(isset($_POST['containing_hardware']) && !empty($_POST['containing_hardware']) && $hw_advanced_query)
+						{
+							//if(!$result_file->contains_system_hardware($_POST['containing_hardware']))
+							if(!pts_phoroql::evaluate_search_tree($hw_advanced_query, 'AND', array($result_file, 'contains_system_hardware')))
+							{
+								continue;
+							}
+						}
+						if(isset($_POST['containing_software']) && !empty($_POST['containing_software']) && $sw_advanced_query)
+						{
+							if(!pts_phoroql::evaluate_search_tree($sw_advanced_query, 'AND', array($result_file, 'contains_system_software')))
+							{
+								continue;
+							}
+						}
+
+						if(!empty($containing_tests))
+						{
+							if(!pts_phoroql::evaluate_search_tree($containing_tests, 'AND', array($result_file, 'contains_test')))
+							{
+								continue;
+							}
+						}
+
 						$main .= '<a onclick=""><li id="result_select_' . $test_result_row['PPRID'] . '"><input type="checkbox" id="result_compare_checkbox_' . $test_result_row['PPRID'] . '" onclick="javascript:phoromatic_checkbox_toggle_result_comparison(\'' . $test_result_row['PPRID'] . '\');" onchange="return false;"></input> <span onclick="javascript:phoromatic_window_redirect(\'?result/' . $test_result_row['PPRID'] . '\');">' . $test_result_row['Title'] . '</span><br /><table><tr><td><strong>' . phoromatic_account_id_to_group_name($test_result_row['AccountID']) . '</strong></td><td>' . phoromatic_system_id_to_name($test_result_row['SystemID'], $test_result_row['AccountID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td><td>' . $test_result_row['TimesViewed'] . ' Times Viewed</td></table></li></a>';
 						$results++;
 					}

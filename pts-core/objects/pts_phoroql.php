@@ -73,7 +73,6 @@ class pts_phoroql
 	{
 		// TODO: very basic right now, work out nested expressions, etc
 		$tree = array();
-		$reserved_words = array('AND', 'OR', 'NOT'); // XXX
 		$forming = '';
 		$not = false;
 
