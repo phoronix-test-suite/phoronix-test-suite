@@ -474,12 +474,36 @@ class phodevi_cpu extends phodevi_device_interface
 
 		if(empty($info))
 		{
-			if(phodevi::is_linux() && strpos(phodevi::$vfs->dmesg, 'thunderx') !== false)
+			if(phodevi::is_linux())
 			{
-				// Haven't found a better way to detect ThunderX as not exposed via cpuinfo, etc
-				$info = 'Cavium ThunderX';
+				if(strpos(phodevi::$vfs->dmesg, 'thunderx') !== false)
+				{
+					// Haven't found a better way to detect ThunderX as not exposed via cpuinfo, etc
+					$info = 'Cavium ThunderX';
+				}
+				$isa = phodevi_linux_parser::read_cpuinfo('isa');
+				$uarch = phodevi_linux_parser::read_cpuinfo('uarch');
+				if(!empty($isa))
+				{
+					$isa = array_pop($isa);
+				}
+				if(!empty($uarch))
+				{
+					$isa = array_pop($uarch);
+				}
+
+				if(stripos($isa, 'rv') !== false && strpos($uarch, 'sifive') !== false)
+				{
+					$info = 'SiFive RISC-V';
+				}
+				else if(!empty($isa))
+				{
+					$info = $isa;
+				}
 			}
-			else
+
+
+			if(empty($info))
 			{
 				$info = 'Unknown';
 			}

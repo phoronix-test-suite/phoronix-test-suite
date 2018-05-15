@@ -119,7 +119,7 @@ class pts_md_template
 					$text .= trim($value);
 					break;
 				case 'a':
-					$text .= '[' . $value . '](' . $dom_item->childNodes->item($j)->attributes->getNamedItem('href')->nodeValue . ')';
+					$text .= ' [' . $value . '](' . $dom_item->childNodes->item($j)->attributes->getNamedItem('href')->nodeValue . ') ';
 					break;
 				case 'br':
 					$text .= PHP_EOL;
