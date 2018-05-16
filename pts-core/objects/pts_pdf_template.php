@@ -185,7 +185,7 @@ class pts_pdf_template extends FPDF
 			}
 
 			if($name != 'a')
-			{ echo $value;
+			{
 				$value = str_replace('&nbsp;', ' ', $value);
 				$this->Write(5, $value, null);
 			}
