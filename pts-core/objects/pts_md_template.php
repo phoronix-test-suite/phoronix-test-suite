@@ -81,7 +81,7 @@ class pts_md_template
 					$this->md .= trim($this->html_text_interpret($dom_item));
 					break;
 				case 'blockquote':
-					$this->md .= PHP_EOL . '> ' . str_replace("\n", "\n\n> ", $value) . PHP_EOL . PHP_EOL;
+					$this->md .= PHP_EOL . '> ' . str_replace("\n", "\n\n> ", htmlentities($value)) . PHP_EOL . PHP_EOL;
 					break;
 				case 'p':
 					$this->md .= trim($this->html_text_interpret($dom_item)) . PHP_EOL;
