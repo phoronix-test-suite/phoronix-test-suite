@@ -45,6 +45,10 @@ class pts_test_profile_downloads_writer
 	}
 	public function add_download($url_string, $md5 = null, $sha256 = null, $file_name = null, $file_size = null, $platform_specific = null, $architecture_specific = null)
 	{
+		if(empty($url_string))
+		{
+			$url_string = $file_name;
+		}
 		$this->xml_writer->addXmlNode('PhoronixTestSuite/Downloads/Package/URL', $url_string);
 		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Downloads/Package/MD5', $md5);
 		$this->xml_writer->addXmlNodeWNE('PhoronixTestSuite/Downloads/Package/SHA256', $sha256);

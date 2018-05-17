@@ -42,26 +42,46 @@ class phoromatic_caches implements pts_webui_interface
 				<h2>Test Profile Download Cache</h2>
 				<p>Below are a list of files for verification/debugging purposes that are currently cached by the Phoromatic Server and available for Phoronix Test Suite client systems to download. These are files that are needed by various test profiles in the Phoronix Test Suite. To add more data to this Phoromatic Server cache, from the server run <strong>phoronix-test-suite make-download-cache</strong> while passing the names of any tests/suites you wish to have download and generate a cache for so they can be made available to the Phoronix Test Suite clients on your network.</p>';
 
-		$dc = pts_client::download_cache_path();
-		$dc_exists = is_file($dc . 'pts-download-cache.json');
-		if($dc_exists)
+		if(($dc = phoromatic_server::find_download_cache()))
 		{
-			$cache_json = file_get_contents($dc . 'pts-download-cache.json');
-			$cache_json = json_decode($cache_json, true);
-		}
-		if(is_file($dc . 'pts-download-cache.json'))
-		{
-			if($cache_json && isset($cache_json['phoronix-test-suite']['download-cache']))
+			$dc_path = dirname($dc) . '/';
+
+			if(is_writable($dc_path))
+			{
+				if(isset($_POST['dc_submit']))
+				{
+					$dc_upload_file = basename($_FILES['dc_upload']['name']);
+					if(is_file($dc_path . $dc_upload_file))
+					{
+						$main .= '<p>ERROR: Upload of ' . $dc_upload_file . ' failed; file already exists.</p>';
+					}
+					else
+					{
+						if(move_uploaded_file($_FILES['dc_upload']['tmp_name'], $dc_path . $dc_upload_file))
+						{
+							$main .= '<p>File uploaded: ' . $dc_upload_file . '</p>';
+						} else {
+							$main .= '<p>ERROR: Upload of ' . $dc_upload_file . ' failed.</p>';
+						}
+					}
+				}
+				$main .= '<form action="/?caches" method="post" enctype="multipart/form-data"><p align="center">Add file to download cache: <input type="file" name="dc_upload" id="dc_upload" /> <input type="submit" value="Upload" name="dc_submit"></p></form>';
+			}
+
+			$dc_items = phoromatic_server::download_cache_items();
+
+			if(!empty($dc_items))
 			{
 				$total_file_size = 0;
-				$main .= '<table style="margin: 0 auto;"><tr><th>File</th><th>Size</th></tr>';
-				foreach($cache_json['phoronix-test-suite']['download-cache'] as $file_name => $inf)
+				$main .= '<table style="margin: 0 auto;"><tr><th>File</th><th>Size</th><th>SHA256</th></tr>';
+				foreach($dc_items as $file_name => $info)
 				{
-					$total_file_size += $cache_json['phoronix-test-suite']['download-cache'][$file_name]['file_size'];
-					$main .= '<tr><td>' . $file_name . '</td><td>' . round(max(0.1, $cache_json['phoronix-test-suite']['download-cache'][$file_name]['file_size']  / 1000000), 1) . 'MB</td></tr>';
+					$total_file_size += $info['file_size'];
+					$main .= '<tr><td><a href="/download-cache.php?m=1&download=' . $file_name . '">' . $file_name . '</a></td><td>' . round(max(0.1, $info['file_size']  / 1000000), 1) . 'MB</td><td>' . $info['sha256'] . '</td></tr>';
 				}
 				$main .= '</table>';
-				$main .= '<p><strong>' . count($cache_json['phoronix-test-suite']['download-cache']) . ' Files / ' . round($total_file_size / 1000000) . ' MB Cache Size</strong></p>';
+				$main .= '<p><strong>' . count($dc_items) . ' Files / ' . round($total_file_size / 1000000) . ' MB Cache Size</strong><br />';
+				$main .= '<strong>Download Cache Location:</strong> ' . $dc . '</p>';
 			}
 		}
 		else

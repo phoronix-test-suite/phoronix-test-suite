@@ -160,9 +160,18 @@ class phoromatic_tests implements pts_webui_interface
 					}
 				}
 
-				$main .= '<h1 style="margin-bottom: 0;"><a href="/?tests/' . $tp->get_identifier(false) . '">' . $tp->get_title() . '</a></h1>';
+				if(!PHOROMATIC_USER_IS_VIEWER)
+				{
+					$test_edit = (strpos($tp->get_identifier(), 'local/') !== false ? '<a href="/?create_test/' . $tp->get_identifier() . '">Edit Test</a> - <a href="/?create_test/' . $tp->get_identifier() . '&delete" onclick="return confirm(\'Are you sure you want to delete this test?\');">Delete Test</a>' : '' );
+				}
+				else
+				{
+					$test_edit = null;
+				}
+
+				$main .= '<h1 style="margin-bottom: 0;"><a href="/?tests/' . $tp->get_identifier() . '">' . $tp->get_title() . '</a></h1>';
 				$main .= '<p><strong>' . $tp->get_identifier() . '</strong> <em>-</em> ' . $tp->get_description() . '<br />';
-				$main .= '<strong>' . $tp->get_test_hardware_type() . '</strong> ' . ($test_count > 0 ? '<em>-</em> ' . $test_count . ' Results On This Account' : '') . (strpos($tp->get_identifier(), 'local/') !== false ? '<a href="/?create_test/' . $tp->get_identifier() . '">Edit Test</a>' : '' ) . ' </p>';
+				$main .= '<strong>' . $tp->get_test_hardware_type() . '</strong> ' . ($test_count > 0 ? '<em>-</em> ' . $test_count . ' Results On This Account' : '') . $test_edit . ' </p>';
 			}
 		}
 

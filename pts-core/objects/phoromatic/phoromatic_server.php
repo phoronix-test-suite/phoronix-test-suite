@@ -53,28 +53,69 @@ class phoromatic_server
 	}
 	public static function find_download_cache()
 	{
-		if(is_file(PTS_DOWNLOAD_CACHE_PATH . 'pts-download-cache.json'))
+		static $dc_file = false;
+
+		if($dc_file == false)
 		{
-			$dc_file = PTS_DOWNLOAD_CACHE_PATH . 'pts-download-cache.json';
-		}
-		else if(is_file('/var/cache/phoronix-test-suite/download-cache/pts-download-cache.json'))
-		{
-			$dc_file = '/var/cache/phoronix-test-suite/download-cache/pts-download-cache.json';
-		}
-		else if(is_file(PTS_SHARE_PATH . 'download-cache/pts-download-cache.json'))
-		{
-			$dc_file = PTS_SHARE_PATH . 'download-cache/pts-download-cache.json';
-		}
-		else
-		{
-			$dc = pts_client::download_cache_path();
-			if(is_file($dc . 'pts-download-cache.json'))
+			if(($dc = pts_client::download_cache_path()) && is_file($dc . 'pts-download-cache.json'))
 			{
 				$dc_file = $dc . 'pts-download-cache.json';
+			}
+			else if(is_file(PTS_DOWNLOAD_CACHE_PATH . 'pts-download-cache.json'))
+			{
+				$dc_file = PTS_DOWNLOAD_CACHE_PATH . 'pts-download-cache.json';
+			}
+			else if(is_file('/var/cache/phoronix-test-suite/download-cache/pts-download-cache.json'))
+			{
+				$dc_file = '/var/cache/phoronix-test-suite/download-cache/pts-download-cache.json';
+			}
+			else if(is_file(PTS_SHARE_PATH . 'download-cache/pts-download-cache.json'))
+			{
+				$dc_file = PTS_SHARE_PATH . 'download-cache/pts-download-cache.json';
 			}
 		}
 
 		return $dc_file;
+	}
+	public static function download_cache_items()
+	{
+		$items = array();
+
+		if(($dc = phoromatic_server::find_download_cache()))
+		{
+			$cache_json = file_get_contents($dc);
+			$cache_json = json_decode($cache_json, true);
+
+			if($cache_json && isset($cache_json['phoronix-test-suite']['download-cache']))
+			{
+				foreach($cache_json['phoronix-test-suite']['download-cache'] as $file_name => $info)
+				{
+					$items[$file_name] = $info;
+				}
+			}
+
+			// looking for files added but not in the JSON cache, a.k.a. files uploaded but not make-download-cache run since
+			foreach(pts_file_io::glob(dirname($dc) . '/*') as $file_in_dir)
+			{
+				$f = basename($file_in_dir);
+				if($f == 'pts-download-cache.json')
+				{
+					continue;
+				}
+				if(!isset($items[$f]))
+				{
+					$items[$f] = array(
+					'file_name' => $f,
+					'file_size' => filesize($file_in_dir),
+					'associated_tests' => array(),
+					'md5' => md5_file($file_in_dir),
+					'sha256' => hash_file('sha256', $file_in_dir),
+					);
+				}
+			}
+			ksort($items);
+		}
+		return $items;
 	}
 	public static function is_phoromatic_account_path($account_id)
 	{

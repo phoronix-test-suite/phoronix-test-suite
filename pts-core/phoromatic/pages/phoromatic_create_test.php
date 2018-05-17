@@ -76,15 +76,57 @@ class phoromatic_create_test implements pts_webui_interface
 				$writer->saveXMLFile($tp_path . '/test-definition.xml');
 			}
 
-			//$writer = new nye_XmlWriter();
-			//$writer->saveXMLFile($tp_path . '/downloads.xml');
+			$writer = new nye_XmlWriter();
+			$ret = pts_validation::xsd_to_var_array_generate_xml(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/test-profile-downloads.xsd', $types, $_POST, $writer);
+			$writer->saveXMLFile($tp_path . '/downloads.xml');
 
 			if($passed)
 			{
 				pts_validation::generate_test_profile_file_templates($tp_identifier, $tp_path);
-				header('Location: /?create_test/local/' . $tp_identifier . '-' . $tp->get_test_profile_version());
+				header('Location: /?create_test/' . $tp_identifier . '-' . $tp->get_test_profile_version());
 			}
 
+		}
+		if(isset($_POST['dc_select_item']))
+		{
+			$to_add = false;
+
+			foreach(phoromatic_server::download_cache_items() as $file_name => $info)
+			{
+				if($file_name == $_POST['dc_select_item'])
+				{
+					$to_add = $info;
+					break;
+				}
+			}
+
+			if($to_add)
+			{
+				$identifier_item = isset($PATH[1]) ? $PATH[0] . '/' . $PATH[1] : false;
+				if($identifier_item && pts_test_profile::is_test_profile($identifier_item))
+				{
+					$tp = new pts_test_profile($identifier_item);
+					$tdw = new pts_test_profile_downloads_writer();
+					$tdw->rebuild_download_file($tp);
+					$tdw->add_download($info['file_name'], $info['md5'], $info['sha256'], $info['file_name'], $info['file_size'], null, null);
+					$tp_path = PTS_TEST_PROFILE_PATH . $tp->get_identifier(false) . '-' . $tp->get_test_profile_version();
+					$tdw->save_xml($tp_path . '/downloads.xml');
+				}
+			}
+		}
+
+		if(strpos($PATH[1], '&delete') !== false)
+		{
+			$identifier_item = isset($PATH[1]) ? $PATH[0] . '/' . str_replace('&delete', '', $PATH[1]) : false;
+			if($identifier_item && pts_test_profile::is_test_profile($identifier_item))
+			{
+				$tp = new pts_test_profile($identifier_item);
+				if($tp->get_identifier() != null)
+				{
+					pts_file_io::delete($tp->get_resource_dir(), null, true);
+					header('Location: /?tests');
+				}
+			}
 		}
 
 
@@ -117,7 +159,24 @@ class phoromatic_create_test implements pts_webui_interface
 				{
 					$contents = htmlentities($contents, ENT_COMPAT | ENT_XML1, 'UTF-8', false);
 				}
-				$main .= '<textarea style="min-height: 160px; height: auto; width: 100%;" rows="' . ceil(count(explode("\n", $contents)) * 1.05) . '" name="' . $file_name . '">' . $contents . '</textarea>';
+				$main .= '<p><textarea style="min-height: 160px; height: auto; width: 100%;" rows="' . ceil(count(explode("\n", $contents)) * 1.05) . '" name="' . $file_name . '">' . $contents . '</textarea></p>';
+				if($file_name == 'downloads.xml' && phoromatic_server::find_download_cache())
+				{
+					$dc_items = phoromatic_server::download_cache_items();
+
+					if(!empty($dc_items))
+					{
+						$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="add_dc_file" id="add_dc_file" method="post">Add File From Download Cache: <select name="dc_select_item">';
+						foreach($dc_items as $file_name => $info)
+						{
+							$main .= '<option value="' . $file_name . '">' . $file_name . '</option>';
+						}
+						$main .= '</select> <input type="submit" value="Add File" /></form>';
+					}
+					$main .= '<a href="/?caches">Manage Download Cache</a>';
+				}
+
+				$main .= '</p>';
 			}
 			$main .= '<input name="submit" value="Save Test Profile" type="submit" /></form>';
 			goto RENDER_PAGE;
