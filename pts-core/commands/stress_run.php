@@ -73,7 +73,7 @@ class stress_run implements pts_option_interface
 			echo PHP_EOL . pts_client::cli_just_bold('TOTAL_LOOP_TIME:') . ' Set the TOTAL_LOOP_TIME environment variable if wishing to specify (in minutes) how long to run the stress-run process.' . PHP_EOL . PHP_EOL;
 			$total_loop_time = false;
 		}
-		pts_test_installer::standard_install($to_run);
+		//pts_test_installer::standard_install($to_run);
 		/*
 		if(count($to_run) < $tests_to_run_concurrently)
 		{
