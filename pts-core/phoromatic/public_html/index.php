@@ -105,8 +105,6 @@ if(substr($PAGE_REQUEST, 0, 2) == 'r_' || isset($_GET['download']))
 <meta name="keywords" content="Phoronix Test Suite, open-source benchmarking, Linux benchmarking, automated testing" />
 <meta name="Description" content="Phoronix Test Suite local control server." />
 <link rel="shortcut icon" href="favicon.ico" />
-<link href='https://fonts.googleapis.com/css?family=Quicksand:700' rel='stylesheet' type='text/css'/>
-<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'/>
 <?php
 
 if(isset($_SESSION['UserID']))

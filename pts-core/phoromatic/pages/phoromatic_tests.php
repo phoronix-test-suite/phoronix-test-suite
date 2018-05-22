@@ -126,7 +126,7 @@ class phoromatic_tests implements pts_webui_interface
 				$cache_json = json_decode($cache_json, true);
 			}
 			$test_counts_for_account = phoromatic_server::test_result_count_for_test_profiles($_SESSION['AccountID']);
-			foreach(array_merge(pts_tests::local_tests(), pts_openbenchmarking::available_tests()) as $test)
+			foreach(array_merge(pts_tests::local_tests(), pts_openbenchmarking::available_tests(false)) as $test)
 			{
 				$cache_checked = false;
 				if($dc_exists)

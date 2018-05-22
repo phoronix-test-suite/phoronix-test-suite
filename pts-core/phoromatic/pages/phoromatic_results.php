@@ -190,7 +190,7 @@ class phoromatic_results implements pts_webui_interface
 					}
 					if(strtotime($test_result_row['UploadTime']) < $time_start)
 					{
-						break;
+						//break;
 					}
 					if(!empty($result_limit) && $result_limit > 1 && $result_limit == $results)
 					{
@@ -258,7 +258,7 @@ class phoromatic_results implements pts_webui_interface
 						}
 						if(strtotime($test_result_row['UploadTime']) < $time_start)
 						{
-							break;
+							//break;
 						}
 						if(!empty($result_limit) && $result_limit > 1 && $result_limit == $results)
 						{

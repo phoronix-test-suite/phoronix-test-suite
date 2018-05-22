@@ -123,6 +123,12 @@ class pts_test_install_request
 	}
 	public static function test_files_in_cache(&$test_profile, $include_extended_test_profiles = true, $skip_hash_checks = false)
 	{
+		// TODO XXX: rework this check into something more versatile for tests that could have files in cache
+		if(!is_file(PTS_TEST_PROFILE_PATH . $test_profile . '/test-definition.xml'))
+		{
+			return false;
+		}
+
 		$install_request = new pts_test_install_request($test_profile);
 
 		$remote_files = false;
