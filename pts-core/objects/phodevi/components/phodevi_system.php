@@ -543,7 +543,7 @@ class phodevi_system extends phodevi_device_interface
 					if(($x = strpos($fc, ': ')) !== false)
 					{
 						$fc = trim(substr($fc, $x + 2));
-						$fc = str_replace('Speculative Store Bypass', 'SSB');
+						$fc = str_replace('Speculative Store Bypass', 'SSB', $fc);
 						$security[] = $fc;
 					}
 				}
