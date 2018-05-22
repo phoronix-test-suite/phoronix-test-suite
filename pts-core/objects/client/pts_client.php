@@ -704,7 +704,7 @@ class pts_client
 
 		if(FIRST_RUN_ON_PTS_UPGRADE)
 		{
-			if($requested_gsid == false)
+			if($requested_gsid == false && pts_network::internet_support_available())
 			{
 				pts_openbenchmarking_client::update_gsid();
 			}

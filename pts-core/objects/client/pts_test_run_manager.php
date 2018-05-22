@@ -57,6 +57,7 @@ class pts_test_run_manager
 	protected $batch_mode = false;
 	protected $auto_mode = false;
 	public $DEBUG_no_test_execution_just_result_parse = false;
+	public $benchmark_log = null;
 
 	public function __construct($batch_mode = false, $auto_mode = false)
 	{
@@ -72,6 +73,7 @@ class pts_test_run_manager
 
 		// 1/true is normal auto mode, 2 = auto + default benchmark mode
 		$this->auto_mode = $auto_mode;
+		$this->benchmark_log = new pts_logger(null, 'phoronix-test-suite-benchmark.log');
 
 		pts_module_manager::module_process('__run_manager_setup', $this);
 	}
@@ -289,6 +291,7 @@ class pts_test_run_manager
 		$this->file_name_title = $save_name;
 		$this->force_save_results = true;
 		$this->result_file = new pts_result_file($this->file_name);
+		$this->benchmark_log->log('SAVE IDENTIFIER: ' . $this->file_name);
 		$this->is_new_result_file = $this->result_file->get_system_count() == 0;
 	}
 	public function set_results_identifier($identifier)
@@ -481,6 +484,7 @@ class pts_test_run_manager
 		}
 
 		$this->results_identifier = $results_identifier;
+		$this->benchmark_log->log('RESULTS IDENTIFIER: ' . $results_identifier);
 
 		return $results_identifier;
 	}
@@ -652,6 +656,7 @@ class pts_test_run_manager
 			}
 		}
 
+		$this->benchmark_log->log('Executing Test: ' . $test_run_request->test_profile->get_identifier());
 		$test_successful = pts_test_execution::run_test($this, $test_run_request);
 
 		if(pts_file_io::unlink(PTS_USER_PATH . 'halt-testing'))
@@ -917,6 +922,7 @@ class pts_test_run_manager
 	}
 	public function post_execution_process()
 	{
+		$this->benchmark_log->log('Test Run Process Ended');
 		if($this->do_save_results())
 		{
 			if($this->result_file->get_test_count() == 0 && $this->is_new_result_file)
