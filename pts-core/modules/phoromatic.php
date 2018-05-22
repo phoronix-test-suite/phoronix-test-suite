@@ -776,7 +776,7 @@ class phoromatic extends pts_module_interface
 		if(is_file($log_file) && filemtime($log_file) > (time() - 1200))
 		{
 			$log_file = pts_file_io::file_get_contents($log_file);
-			$log_fle = substr($log_file, strrpos($log_file, PHP_EOL) + 1);
+			$log_file = substr($log_file, strrpos($log_file, PHP_EOL) + 1);
 			if(($x = strpos($log_file, ']')) !== false)
 			{
 				$log_file = substr($log_file, ($x + 1));
