@@ -535,7 +535,7 @@ class phodevi_system extends phodevi_device_interface
 
 
 			// Spectre
-			foreach(array('spectre_v1', 'spectre_v2') as $vulns)
+			foreach(array('spectre_v1', 'spectre_v2', 'spec_store_bypass') as $vulns)
 			{
 				if(is_file('/sys/devices/system/cpu/vulnerabilities/' . $vulns))
 				{

@@ -50,7 +50,7 @@
                 </Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
-			<PackageName>autoconf automake gmake openmp bash</PackageName>
+			<PackageName>autoconf automake gmake bash</PackageName>
 			<FileCheck>autoconf, gmake, bash</FileCheck>
 		</Package>
 		<Package>

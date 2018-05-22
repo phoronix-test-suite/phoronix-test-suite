@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+phodevi: Add spec_store_bypass / Spectre Variant 4 reporting
+
 Phoronix Test Suite 8.0.0 Milestone 4
 16 May 2018
 
