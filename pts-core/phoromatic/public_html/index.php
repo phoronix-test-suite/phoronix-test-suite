@@ -22,6 +22,7 @@
 
 include('../phoromatic_functions.php');
 phoromatic_init_web_page_setup();
+pts_network::client_startup();
 
 interface pts_webui_interface
 {

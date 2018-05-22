@@ -320,7 +320,7 @@ function phoromatic_webui_header_logged_in()
 			$sub_systems_menu[] = 'Component Table';
 		}
 
-		$sub_main_menu[] = '<a href="?tests">Test Profiles</a>';
+		//$sub_main_menu[] = '<a href="?tests">Test Profiles</a>';
 		if(isset($_SESSION['AdminLevel']) && $_SESSION['AdminLevel'] < 4)
 		{
 			$sub_main_menu[] = 'Users';

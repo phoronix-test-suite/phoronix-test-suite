@@ -558,7 +558,10 @@ class pts_openbenchmarking
 
 			if(PTS_IS_CLIENT && !is_file($file))
 			{
-				trigger_error('Unable to to obtain ' . $qualified_identifier . ' from OpenBenchmarking.org. If this issue persists please contact support@phoronix-test-suite.com.' . PHP_EOL, E_USER_ERROR);
+				if(!defined('PHOROMATIC_SERVER'))
+				{
+					trigger_error('Unable to to obtain ' . $qualified_identifier . ' from OpenBenchmarking.org. If this issue persists please contact support@phoronix-test-suite.com.' . PHP_EOL, E_USER_ERROR);
+				}
 				return false;
 			}
 		}
@@ -774,7 +777,10 @@ class pts_openbenchmarking
 
 			if(PTS_IS_CLIENT && !is_file($file))
 			{
-				trigger_error('Unable to to obtain to obtain ' . $qualified_identifier . ' from OpenBenchmarking.org.  If this issue persists please contact support@phoronix-test-suite.com.' . PHP_EOL, E_USER_ERROR);
+				if(!defined('PHOROMATIC_SERVER'))
+				{
+					trigger_error('Unable to to obtain to obtain ' . $qualified_identifier . ' from OpenBenchmarking.org.  If this issue persists please contact support@phoronix-test-suite.com.' . PHP_EOL, E_USER_ERROR);
+				}
 				return false;
 			}
 		}
