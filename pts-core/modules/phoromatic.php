@@ -737,7 +737,7 @@ class phoromatic extends pts_module_interface
 						break;
 					case 'maintenance':
 						echo PHP_EOL . 'Idling, system maintenance mode set by Phoromatic Server.' . PHP_EOL;
-						phoromatic::update_system_status('Maintenance Mode');
+						phoromatic::update_system_status('Maintenance Mode' . self::check_for_separate_pts_thread_process());
 						sleep(60);
 						break;
 					case 'idle':
@@ -746,7 +746,7 @@ class phoromatic extends pts_module_interface
 							self::run_client_update_script($json['phoromatic']['client_update_script']);
 						}
 						//echo PHP_EOL . 'Idling, waiting for task.' . PHP_EOL;
-						phoromatic::update_system_status('Idling, Waiting For Task');
+						phoromatic::update_system_status('Idling, Waiting For Task' . self::check_for_separate_pts_thread_process());
 						break;
 					case 'exit':
 						echo PHP_EOL . 'Phoromatic received a remote command to exit.' . PHP_EOL;
@@ -768,6 +768,23 @@ class phoromatic extends pts_module_interface
 		}
 
 		pts_client::release_lock(PTS_USER_PATH . 'phoromatic_lock');
+	}
+	private static function check_for_separate_pts_thread_process()
+	{
+		$report = null;
+		$log_file = pts_logger::default_log_file_path() . 'phoronix-test-suite-benchmark.log';
+		if(is_file($log_file) && filemtime($log_file) > (time() - 1200))
+		{
+			$log_file = pts_file_io::file_get_contents($log_file);
+			$log_fle = substr($log_file, strrpos($log_file, PHP_EOL) + 1);
+			if(($x = strpos($log_file, ']')) !== false)
+			{
+				$log_file = substr($log_file, ($x + 1));
+			}
+			$report .= '; Separate Process: ' . trim($log_file);
+		}
+
+		return $report;
 	}
 	private static function upload_test_result(&$result_file, $upload_system_logs = true, $schedule_id = 0, $save_identifier = null, $trigger = null, $elapsed_time = 0, $benchmark_ticket_id = null)
 	{

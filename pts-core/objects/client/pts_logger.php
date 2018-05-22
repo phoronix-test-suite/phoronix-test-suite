@@ -29,10 +29,7 @@ class pts_logger
 	{
 		if($log_file == null)
 		{
-			if(is_writable('/var/log') && (PTS_MODE == 'WEB_CLIENT' || defined('PHOROMATIC_SERVER') || defined('PTS_IS_DAEMONIZED_SERVER_PROCESS') || getenv('PTS_SERVER_PROCESS')))
-				$log_file = '/var/log/';
-			else
-				$log_file = PTS_USER_PATH;
+			$log_file = self::default_log_file_path();
 
 			if($file_name != null)
 			{
@@ -57,6 +54,15 @@ class pts_logger
 
 		if(is_writable($log_file))
 			$this->log_file = $log_file;
+	}
+	public function default_log_file_path()
+	{
+		if(is_writable('/var/log') && (PTS_MODE == 'WEB_CLIENT' || defined('PHOROMATIC_SERVER') || defined('PTS_IS_DAEMONIZED_SERVER_PROCESS') || getenv('PTS_SERVER_PROCESS')))
+			$log_file = '/var/log/';
+		else
+			$log_file = PTS_USER_PATH;
+
+		return $log_file;
 	}
 	public function clear_log()
 	{
