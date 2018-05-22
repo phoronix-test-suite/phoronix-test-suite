@@ -701,12 +701,12 @@ class pts_network
 	}
 	public static function find_zeroconf_phoromatic_servers($find_multiple = false)
 	{
+		$hosts = $find_multiple ? array() : null;
+
 		if(!pts_network::network_support_available())
 		{
-			return null;
+			return $hosts;
 		}
-
-		$hosts = $find_multiple ? array() : null;
 
 		if(PTS_IS_CLIENT && pts_client::executable_in_path('avahi-browse'))
 		{
