@@ -542,7 +542,9 @@ class phodevi_system extends phodevi_device_interface
 					$fc = file_get_contents('/sys/devices/system/cpu/vulnerabilities/' . $vulns);
 					if(($x = strpos($fc, ': ')) !== false)
 					{
-						$security[] = trim(substr($fc, $x + 2));
+						$fc = trim(substr($fc, $x + 2));
+						$fc = str_replace('Speculative Store Bypass', 'SSB');
+						$security[] = $fc;
 					}
 				}
 			}
