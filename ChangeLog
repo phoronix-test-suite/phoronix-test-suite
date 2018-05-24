@@ -2,6 +2,8 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+phoromatic: Better handling when the Phoromatic Server is run without an Internet connection or Internet disabled
+phoromatic: A wide variety of other Phoromatic Server optimizations and improvements
 phodevi: Add spec_store_bypass / Spectre Variant 4 reporting
 
 Phoronix Test Suite 8.0.0 Milestone 4

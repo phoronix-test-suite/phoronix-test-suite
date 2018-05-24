@@ -1925,6 +1925,12 @@ class pts_client
 				{
 					$error_string = 'Undefined: ' . substr($error_string, ($x + 2));
 				}
+				else if(strpos($error_string, 'Unable to find the socket transport') !== false)
+				{
+					$error_string = 'PHP OpenSSL support is needed to handle HTTPS downloads.';
+					$error_file = null;
+					$error_line = null;
+				}
 				else
 				{
 					$ignore_errors = array(
