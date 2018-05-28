@@ -336,7 +336,11 @@ class phodevi_system extends phodevi_device_interface
 		else if(phodevi::is_windows())
 		{
 			// TODO could use better detection to verify if C: or the desired disk under test... but most of the time will be NTFS anyways
-			return trim(shell_exec('powershell "(Get-Volume)[1].FileSystemType"'));
+			$fs = trim(shell_exec('powershell "(Get-Volume)[1].FileSystemType"'));
+			if(empty($fs) || $fs == 'Unknown')
+			{
+				$fs = trim(shell_exec('powershell "(Get-Volume)[0].FileSystemType"'));
+			}
 		}
 
 		if(empty($fs))
