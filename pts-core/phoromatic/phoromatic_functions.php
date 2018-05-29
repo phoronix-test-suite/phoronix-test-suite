@@ -329,10 +329,10 @@ function phoromatic_webui_header_logged_in()
 		array_push($sub_main_menu, 'Settings', '<a href="?account_activity">Account Activity</a>', 'Logout');
 		$sub_testing_menu[] = '<a href="?schedules">Test Schedules</a>';
 
-			array_push($sub_tests_menu, '<a href="?create_test">Create New Test Profile</a>');
-
 		if(!PHOROMATIC_USER_IS_VIEWER)
 		{
+			array_push($sub_tests_menu, '<a href="?create_test">Create New Test Profile</a>');
+			array_push($sub_tests_menu, '<a href="?build_suite">Build Test Suite</a>');
 			array_push($sub_testing_menu, '<a href="?sched">Create A Schedule</a>', '<a href="?benchmark">Run A Benchmark</a>');
 		}
 

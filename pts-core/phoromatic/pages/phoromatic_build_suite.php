@@ -172,23 +172,26 @@ class phoromatic_build_suite implements pts_webui_interface
 				$cache_json = file_get_contents($dc . 'pts-download-cache.json');
 				$cache_json = json_decode($cache_json, true);
 			}
-			foreach(pts_openbenchmarking::available_tests(false, true) as $test)
+			foreach(array_merge(pts_tests::local_tests(), pts_openbenchmarking::available_tests(false, true)) as $test)
 			{
 				$cache_checked = false;
-				if($dc_exists)
+				if(phoromatic_server::read_setting('show_local_tests_only'))
 				{
-					if($cache_json && isset($cache_json['phoronix-test-suite']['cached-tests']))
+					if($dc_exists)
 					{
-						$cache_checked = true;
-						if(!in_array($test, $cache_json['phoronix-test-suite']['cached-tests']))
+						if($cache_json && isset($cache_json['phoronix-test-suite']['cached-tests']))
 						{
-							continue;
+							$cache_checked = true;
+							if(!in_array($test, $cache_json['phoronix-test-suite']['cached-tests']))
+							{
+								continue;
+							}
 						}
 					}
-				}
-				if(!$cache_checked && phoromatic_server::read_setting('show_local_tests_only') && pts_test_install_request::test_files_in_cache($test, true, true) == false)
-				{
-					continue;
+					if(!$cache_checked && phoromatic_server::read_setting('show_local_tests_only') && pts_test_install_request::test_files_in_cache($test, true, true) == false)
+					{
+						continue;
+					}
 				}
 				$main .= '<option value="' . $test . '">' . $test . '</option>';
 			}

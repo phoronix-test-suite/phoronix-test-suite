@@ -145,9 +145,24 @@ class phoromatic_create_test implements pts_webui_interface
 		if($identifier_item && pts_test_profile::is_test_profile($identifier_item))
 		{
 			$tp = new pts_test_profile($identifier_item);
+			$main .= '<h1>Test Profile Editor: ' . $tp->get_identifier() . '</h1>';
+
+			if(phoromatic_server::find_download_cache())
+			{
+				$main .= '<h3>Add File From Download Cache To Test</h3>';
+				$dc_items = phoromatic_server::download_cache_items();
+				if(!empty($dc_items))
+				{
+					$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="add_dc_file" id="add_dc_file" method="post"><a href="/?caches">Manage Download Cache</a> - Add File From Download Cache: <select name="dc_select_item">';
+					foreach($dc_items as $file_name => $info)
+					{
+						$main .= '<option value="' . $file_name . '">' . $file_name . '</option>';
+					}
+					$main .= '</select> <input type="submit" value="Add File" /></form>';
+				}
+			}
 
 			$main .= '<form action="?create_test/' . $tp->get_identifier() . '" name="create_test" id="create_test" method="post" enctype="multipart/form-data"><input type="hidden" name="tp_update" value="' . $tp->get_identifier() . '" />';
-			$main .= '<h1>Test Profile Editor: ' . $tp->get_identifier() . '</h1>';
 
 			foreach(pts_file_io::glob($tp->get_resource_dir() . '/*') as $file)
 			{
@@ -160,23 +175,7 @@ class phoromatic_create_test implements pts_webui_interface
 					$contents = htmlentities($contents, ENT_COMPAT | ENT_XML1, 'UTF-8', false);
 				}
 				$main .= '<p><textarea style="min-height: 160px; height: auto; width: 100%;" rows="' . ceil(count(explode("\n", $contents)) * 1.05) . '" name="' . $file_name . '">' . $contents . '</textarea></p>';
-				if($file_name == 'downloads.xml' && phoromatic_server::find_download_cache())
-				{
-					$dc_items = phoromatic_server::download_cache_items();
-
-					if(!empty($dc_items))
-					{
-						$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="add_dc_file" id="add_dc_file" method="post">Add File From Download Cache: <select name="dc_select_item">';
-						foreach($dc_items as $file_name => $info)
-						{
-							$main .= '<option value="' . $file_name . '">' . $file_name . '</option>';
-						}
-						$main .= '</select> <input type="submit" value="Add File" /></form>';
-					}
-					$main .= '<a href="/?caches">Manage Download Cache</a>';
-				}
-
-				$main .= '</p>';
+					$main .= '</p>';
 			}
 			$main .= '<input name="submit" value="Save Test Profile" type="submit" /></form>';
 			goto RENDER_PAGE;

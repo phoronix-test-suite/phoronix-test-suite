@@ -308,7 +308,7 @@ class phoromatic_schedules implements pts_webui_interface
 						$cache_json = file_get_contents($dc . 'pts-download-cache.json');
 						$cache_json = json_decode($cache_json, true);
 					}
-					foreach(pts_openbenchmarking::available_tests(false, true) as $test)
+					foreach(array_merge(pts_tests::local_tests(), pts_openbenchmarking::available_tests(false, true)) as $test)
 					{
 						if(phoromatic_server::read_setting('show_local_tests_only'))
 						{
