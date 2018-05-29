@@ -46,7 +46,7 @@
 		</Package>
 		<Package>
 			<GenericName>libpng-development</GenericName>
-			<PackageName>libpng14-devel</PackageName>
+			<PackageName>libpng16-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
