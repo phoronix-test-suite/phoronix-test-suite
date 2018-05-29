@@ -46,7 +46,7 @@
 		</Package>
 		<Package>
 			<GenericName>libpng-development</GenericName>
-			<PackageName>libpng-devel</PackageName>
+			<PackageName>libpng14-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
@@ -112,7 +112,7 @@
 		</Package>
 		<Package>
 			<GenericName>jpeg-development</GenericName>
-			<PackageName>libjpeg-devel</PackageName>
+			<PackageName>libjpeg62-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>libaio-development</GenericName>
@@ -196,7 +196,7 @@
 		</Package>
 		<Package>
 			<GenericName>boost-development</GenericName>
-			<PackageName>boost-devel</PackageName>
+			<PackageName></PackageName>
 		</Package>
 		<Package>
 			<GenericName>bzip2-development</GenericName>
