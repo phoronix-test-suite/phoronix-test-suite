@@ -221,6 +221,12 @@ then
 	echo "The command to likely run for your operating system is: "
 	echo "# opkg install php7-cli php7-mod-dom php7-mod-zip php7-mod-json php7-mod-simplexml"
 	echo " "
+elif [ -x /usr/bin/equo ]
+then
+	# Sabayon
+	echo "The command to likely run for your operating system is: "
+	echo "# equo install php"
+	echo " "
 elif [ -x /usr/bin/emerge ]
 then
 	# Gentoo

@@ -252,8 +252,8 @@ function pts_version_codenames()
 		);
 }
 
-pts_define('PTS_VERSION', '8.0.0m4');
-pts_define('PTS_CORE_VERSION', 7940);
+pts_define('PTS_VERSION', '8.0.0m5');
+pts_define('PTS_CORE_VERSION', 7950);
 pts_define('PTS_CODENAME', 'AREMARK');
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));
 pts_define('PTS_IS_WEB_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'WEB_CLIENT'));

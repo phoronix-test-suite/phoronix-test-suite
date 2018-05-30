@@ -431,7 +431,7 @@ Below are a list of the operating systems that currently have external dependenc
 ---
 
 
-Alpine LinuxAmazonAngstromArch LinuxCentOSClearOSClearOS Core ServerDebianDragonFlyBSDFedoraFluxbuntuGNU KFreeBSDGentooGoobuntuHPJoli CloudLinaroLinux Embedded Development EnvironmentLinux MintMEPISMac OS XMacPortsMageiaMandrivaMeeGoMicrosoft WindowsMidnightBSDMoblinMythbuntuNetBSDNexenta CoreOLPCOpenIndianaOpenMandrivaOpenSolarisOpenSuSEOptwareOracle ServerPCLinuxOSPTS Desktop LivePTS Linux LivePalmPardus LinuxRed Hat EnterpriseRed Hat Enterprise ServerSUSESUSE LinuxScientificScientificSLSolusSolus LinuxUbuntuVoid LinuxZenwalkgNewSense
+Alpine LinuxAmazonAngstromArch LinuxCentOSClearOSClearOS Core ServerDebianDragonFlyBSDFedoraFluxbuntuGNU KFreeBSDGentooGoobuntuHPJoli CloudLinaroLinux Embedded Development EnvironmentLinux MintMEPISMac OS XMacPortsMageiaMandrivaMeeGoMicrosoft WindowsMidnightBSDMoblinMythbuntuNetBSDNexenta CoreOLPCOpenIndianaOpenMandrivaOpenSolarisOpenSuSEOptwareOracle ServerPCLinuxOSPTS Desktop LivePTS Linux LivePalmPardus LinuxRed Hat EnterpriseRed Hat Enterprise ServerSUSESUSE LinuxScientificScientificSLSolusSolus LinuxTermuxUbuntuVoid LinuxZenwalkgNewSense
 # Configuration
 
 ## User Files & Folders
@@ -671,62 +671,52 @@ This is a collection of test profiles found within the specified OpenBenchmarkin
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing opencl.
 #### Cuda Tests  system/cuda
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing cuda.
-#### All PTS Tests  pts/all
+#### All SYSTEM Tests  system/all
 This is a collection of all test profiles found within the specified OpenBenchmarking.org repository.
-#### Installed Tests  pts/installed
+#### Installed Tests  system/installed
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository that are already installed on the system under test.
-#### Linux Operating System Tests  pts/linux
+#### Linux Operating System Tests  system/linux
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Linux Operating System.
-#### Solaris Operating System Tests  pts/solaris
+#### Solaris Operating System Tests  system/solaris
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Solaris Operating System.
-#### BSD Operating System Tests  pts/bsd
+#### BSD Operating System Tests  system/bsd
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the BSD Operating System.
-#### MacOSX Operating System Tests  pts/macosx
+#### MacOSX Operating System Tests  system/macosx
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the MacOSX Operating System.
-#### Windows Operating System Tests  pts/windows
+#### Windows Operating System Tests  system/windows
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Windows Operating System.
-#### Hurd Operating System Tests  pts/hurd
+#### Hurd Operating System Tests  system/hurd
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Hurd Operating System.
-#### System Subsystem Tests  pts/system
+#### System Subsystem Tests  system/system
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the System sub-system.
-#### Processor Subsystem Tests  pts/processor
+#### Processor Subsystem Tests  system/processor
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Processor sub-system.
-#### Graphics Subsystem Tests  pts/graphics
+#### Disk Subsystem Tests  system/disk
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Disk sub-system.
+#### Graphics Subsystem Tests  system/graphics
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Graphics sub-system.
-#### Other Subsystem Tests  pts/other
+#### Memory Subsystem Tests  system/memory
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Memory sub-system.
+#### Network Subsystem Tests  system/network
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Network sub-system.
+#### Other Subsystem Tests  system/other
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Other sub-system.
-#### Utility Tests  pts/utility
+#### Utility Tests  system/utility
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Utility software test.
-#### Simulator Tests  pts/simulator
+#### Simulator Tests  system/simulator
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Simulator software test.
-#### Scientific Tests  pts/scientific
+#### Scientific Tests  system/scientific
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Scientific software test.
-#### Benchmark Tests  pts/benchmark
+#### Benchmark Tests  system/benchmark
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Benchmark software test.
-#### Application Tests  pts/application
+#### Application Tests  system/application
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Application software test.
-#### Game Tests  pts/game
+#### Game Tests  system/game
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Game software test.
-#### Smp Tests  pts/smp
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing smp.
-#### Cuda Tests  pts/cuda
+#### Opencl Tests  system/opencl
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing opencl.
+#### Cuda Tests  system/cuda
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing cuda.
-#### Python Tests  pts/python
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing python.
-#### Go Tests  pts/go
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing go.
-#### Mpi Tests  pts/mpi
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing mpi.
-#### Openmp Tests  pts/openmp
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing openmp.
-#### Vdpau Tests  pts/vdpau
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing vdpau.
-#### Video Tests  pts/video
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing video.
-#### Responsiveness Tests  pts/responsiveness
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing responsiveness.
-#### Openmpi Tests  pts/openmpi
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing openmpi.
 #### All WINDOWS Tests  windows/all
 This is a collection of all test profiles found within the specified OpenBenchmarking.org repository.
 #### Installed Tests  windows/installed
