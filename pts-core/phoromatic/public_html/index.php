@@ -99,7 +99,7 @@ if(substr($PAGE_REQUEST, 0, 2) == 'r_' || isset($_GET['download']))
 <html>
 <head>
 <script src="/phoromatic.js?<?php echo date('Ymd') . PTS_CORE_VERSION; ?>" type="text/javascript"></script>
-<title>Phoronix Test Suite - Phoromatic - <?php echo $page_class::page_title(); ?></title>
+<title>Phoronix Test Suite <?php echo PTS_VERSION; ?> - Phoromatic - <?php echo $page_class::page_title(); ?></title>
 <link href="/phoromatic.css?<?php echo date('Ymd') . PTS_CORE_VERSION; ?>" rel="stylesheet" type="text/css" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
