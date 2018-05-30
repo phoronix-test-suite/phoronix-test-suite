@@ -864,6 +864,10 @@ class pts_validation
 		$test_profile = new pts_test_profile($tp_identifier);
 		$result_scale = $test_profile->get_result_scale();
 		$test_executable = $test_profile->get_test_executable();
+		if($test_executable == null)
+		{
+			$test_executable = $test_profile->get_identifier_base_name();
+		}
 
 		if(!is_file($tp_path . '/install.sh'))
 		{
