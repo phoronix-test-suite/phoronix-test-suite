@@ -1677,7 +1677,7 @@ class pts_test_run_manager
 			}
 			else if($test_profile->get_test_executable_dir() == null)
 			{
-				pts_client::$display->test_run_error('The test executable for ' . $test_profile . ' could not be located.');
+				pts_client::$display->test_run_error('The test executable for ' . $test_profile . ' could not be located. Looking for ' . $test_profile->get_test_executable() . ' in ' . $test_profile->get_install_dir());
 				$valid_test_profile = false;
 			}
 
