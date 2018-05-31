@@ -50,7 +50,8 @@ class phoromatic_create_test implements pts_webui_interface
 				$pfs = str_replace('.', '_', $permitted_file);
 				if(isset($_POST[$pfs]))
 				{
-					file_put_contents($tp_path . '/' . $permitted_file, $_POST[$pfs]);
+					$fc = str_replace("\n", PHP_EOL, $_POST[$pfs]);
+					file_put_contents($tp_path . '/' . $permitted_file, $fc);
 				}
 			}
 			header('Location: /?create_test/' . $tp->get_identifier(false) . '-' . $tp->get_test_profile_version());
