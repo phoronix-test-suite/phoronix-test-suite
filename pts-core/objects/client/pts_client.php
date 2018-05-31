@@ -1052,6 +1052,8 @@ class pts_client
 			$result_file = new pts_result_file($test_results_identifier);
 		}
 
+		$result_file->avoid_duplicate_identifiers();
+
 		$generated_graphs = array();
 		$generated_graph_tables = false;
 

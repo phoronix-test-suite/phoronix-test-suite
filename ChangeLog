@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Avoid duplicate test identifiers on graphs
 phodevi: Improved X.Org Server version detection
 
 Phoronix Test Suite 8.0.0 Milestone 5

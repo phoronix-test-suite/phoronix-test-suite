@@ -230,7 +230,7 @@ class phoromatic_result implements pts_webui_interface
 					$result_file->merge($result_files, $attributes);
 				}
 			}
-
+			$result_file->avoid_duplicate_identifiers();
 			$extra_attributes = array();
 
 			if(isset($_GET['upload_to_openbenchmarking']))

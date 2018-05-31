@@ -192,6 +192,18 @@ class pts_result_file
 		}
 		return $ids;
 	}
+	public function is_system_identifier_in_result_file($identifier)
+	{
+		foreach($this->get_systems() as $s)
+		{
+			if($s->get_identifier() == $identifier)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
 	public function get_system_count()
 	{
 		// XXX this is deprecated
@@ -451,6 +463,24 @@ class pts_result_file
 		$simple_xml = simplexml_load_string($file);
 		return json_encode($simple_xml);
 	}
+	public function avoid_duplicate_identifiers()
+	{
+		// avoid duplicate test identifiers
+		foreach(pts_arrays::duplicates_in_array($this->get_system_identifiers()) as $duplicate)
+		{
+			while($this->is_system_identifier_in_result_file($duplicate))
+			{
+				$i = 0;
+				do
+				{
+					$i++;
+					$new_identifier = $duplicate . ' #' . $i;
+				}
+				while($this->is_system_identifier_in_result_file($new_identifier));
+				$this->rename_run($duplicate, $new_identifier);
+			}
+		}
+	}
 	public function rename_run($from, $to)
 	{
 		if($from == null)
@@ -460,6 +490,7 @@ class pts_result_file
 				foreach($this->systems as &$s)
 				{
 					$s->set_identifier($to);
+					break;
 				}
 			}
 		}
@@ -470,6 +501,7 @@ class pts_result_file
 				if($s->get_identifier() == $from)
 				{
 					$s->set_identifier($to);
+					break;
 				}
 			}
 		}
