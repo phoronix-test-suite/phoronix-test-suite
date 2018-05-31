@@ -97,7 +97,7 @@
 		</Package>
 		<Package>
 			<GenericName>portaudio-development</GenericName>
-			<PackageName>libportaudio-dev</PackageName>
+			<PackageName>portaudio19-dev</PackageName>
 		</Package>
 		<Package>
 			<GenericName>fortran-compiler</GenericName>
