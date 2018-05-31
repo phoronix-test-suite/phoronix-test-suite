@@ -1444,8 +1444,18 @@ class phodevi_system extends phodevi_device_interface
 				}
 
 			}
+			$xorg_log = isset(phodevi::$vfs->xorg_log) ? phodevi::$vfs->xorg_log : false;
+			if($xorg_log && ($x = strpos($xorg_log, 'X.Org X Server ')) !== false)
+			{
+				$xorg_log = substr($xorg_log, ($x + strlen('X.Org X Server ')));
+				$xorg_log = substr($xorg_log, 0, strpos($xorg_log, PHP_EOL));
 
-			if(($x_bin = (is_executable('/usr/libexec/Xorg.bin') ? '/usr/libexec/Xorg.bin' : false)) || ($x_bin = pts_client::executable_in_path('Xorg')) || ($x_bin = pts_client::executable_in_path('X')))
+				if(pts_strings::is_version($xorg_log))
+				{
+					array_push($display_servers, 'X Server ' . $xorg_log);
+				}
+			}
+			else if(($x_bin = (is_executable('/usr/libexec/Xorg.bin') ? '/usr/libexec/Xorg.bin' : false)) || ($x_bin = pts_client::executable_in_path('Xorg')) || ($x_bin = pts_client::executable_in_path('X')))
 			{
 				// Find graphics subsystem version
 				$info = shell_exec($x_bin . ' ' . (phodevi::is_solaris() ? ':0' : '') . ' -version 2>&1');
