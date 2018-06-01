@@ -411,7 +411,7 @@ class pts_openbenchmarking
 
 				if(!isset($reported_read_failure_notice[$repo_name]) && PTS_IS_CLIENT)
 				{
-					trigger_error('Failed To Fetch OpenBenchmarking.org Repository Data: ' . $repo_name, E_USER_WARNING);
+					trigger_error('Failed To Fetch OpenBenchmarking.org Repository Data: ' . $repo_name . '. If this issue persists, contact support@phoronix-test-suite.com.', E_USER_WARNING);
 					$reported_read_failure_notice[$repo_name] = true;
 				}
 			}
