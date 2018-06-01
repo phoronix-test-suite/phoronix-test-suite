@@ -4,6 +4,7 @@
 	<ExternalDependencies>
 		<Information>
 			<Name>NetBSD</Name>
+			<PackageManager>pkg_add</PackageManager>
 		</Information>
 		<Package>
 			<GenericName>32bit-compatibility</GenericName>
