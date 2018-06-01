@@ -31,9 +31,13 @@
 			<PackageName>png</PackageName>
 			<FileCheck>/usr/pkg/include/png.h</FileCheck>
 		</Package>
+                <Package>
+			<GenericName>golang</GenericName>
+			<PackageName>go</PackageName>
+		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
-			<PackageName>gcc</PackageName>
+			<PackageName>gcc gmake automake autoconf bash</PackageName>
 			<FileCheck>/usr/bin/gcc</FileCheck>
 		</Package>
 		<Package>
