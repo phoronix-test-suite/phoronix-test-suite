@@ -194,7 +194,7 @@ class pts_openbenchmarking_client
 		}
 		if(isset($json_response['openbenchmarking']['upload']['url']))
 		{
-			echo PHP_EOL . 'Results Uploaded To: ' . $json_response['openbenchmarking']['upload']['url'] . PHP_EOL;
+			echo PHP_EOL . pts_client::cli_just_bold('Results Uploaded To: ') . $json_response['openbenchmarking']['upload']['url'] . PHP_EOL;
 			pts_module_manager::module_process('__event_openbenchmarking_upload', $json_response);
 		}
 		//$json['openbenchmarking']['upload']['id']
