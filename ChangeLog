@@ -2,6 +2,8 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Various macOS support tweaks/improvements
+pts-core: Add external dependency support for Brew macOS package manager
 pts-core: Avoid duplicate test identifiers on graphs
 phodevi: Improved X.Org Server version detection
 
