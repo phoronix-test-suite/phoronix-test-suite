@@ -1490,7 +1490,7 @@ class phodevi_system extends phodevi_device_interface
 				array_push($display_servers, 'GNOME Shell Wayland');
 			}
 
-			if(empty($display_servers) && getenv('WAYLAND_DISPLAY') != false)
+			if(getenv('WAYLAND_DISPLAY') != false)
 			{
 				array_push($display_servers, 'Wayland');
 			}
