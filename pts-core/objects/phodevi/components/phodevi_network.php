@@ -54,7 +54,7 @@ class phodevi_network extends phodevi_device_interface
  			$network = phodevi_windows_parser::get_wmi_object_multi('Win32_NetworkAdapter', 'Name');
 			foreach($network as $i => &$n)
 			{
-				if(stripos($n, 'debug') !== false || stripos($n, 'pseudo') !== false)
+				if(stripos($n, 'debug') !== false || stripos($n, 'pseudo') !== false || strpos($n, 'WAN ') !== false)
 				{
 					unset($network[$i]);
 				}
