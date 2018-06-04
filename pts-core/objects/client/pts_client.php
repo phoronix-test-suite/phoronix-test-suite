@@ -1576,7 +1576,7 @@ class pts_client
 			}
 			else
 			{
-				$var_string .= 'export ' . $key . '=' . str_replace(' ', '\ ', trim($extra_vars[$key])) . ';';
+				$var_string .= 'export ' . $key . '="' . str_replace(' ', '\ ', trim($extra_vars[$key])) . '";';
 			}
 		}
 		$var_string .= ' ';

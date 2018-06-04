@@ -164,7 +164,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		}
 		if(in_array($test_install_request->test_profile->get_license(), array('Retail', 'Restricted')))
 		{
-			echo $this->tab . $this->tab . pts_client::cli_just_bold('This test may depend upon third-party/commercial retail software for usage.') . PHP_EOL;
+			echo $this->tab . $this->tab . pts_client::cli_just_bold('This test may depend upon third-party/commercial retail software.') . PHP_EOL;
 		}
 
 	}
