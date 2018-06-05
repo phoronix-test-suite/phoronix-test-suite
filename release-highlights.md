@@ -1,5 +1,20 @@
 # Phoronix Test Suite Release History
 
+Phoronix Test Suite 8.0
+======
+#### Release Date: 5 June 2018 | Codename: Aremark
+* Rewritten and overhauled Windows 10 / Windows Server 2016 support, now considered officially supported
+* Much improved BSD operating system support
+* Minor macOS support improvements, including optional support for the Brew package manager
+* Initial support for Termux for possible Android support in the future
+* New sub-commands `phoronix-test-suite create-test-profile` and `phoronix-test-suite inspect-test-profile` and `phoronix-test-suite openbenchmarking-uploads` and `phoronix-test-suite shell`
+* Much improved result search functionality from the Phoromatic Server
+* The ability to create new test profiles from the Phoromatic Server web interface
+* Better handling when Internet connection support is absent
+* SiFive RISC-V CPU detection, Cavium ThunderX, Spectre V4 reporting and other hardware/software reporting improvements in Phodevi
+* An integrated backup module for easily backing up and restoring of all PTS/Phoromatic data on a system
+
+
 Phoronix Test Suite 7.8
 ======
 #### Release Date: 14 February 2018 | Codename: Folldal

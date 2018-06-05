@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 8.0.0-Aremark
+5 June 2018
 
 pts-core: Various macOS support tweaks/improvements
 pts-core: Add external dependency support for Brew macOS package manager
