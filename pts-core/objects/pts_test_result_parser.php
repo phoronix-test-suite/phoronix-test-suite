@@ -318,7 +318,7 @@ class pts_test_result_parser
 								$frame_all_times[] = $inp;
 							}
 							else
-							{ var_dump($inp);
+							{
 								// hitting the end
 								break;
 							}

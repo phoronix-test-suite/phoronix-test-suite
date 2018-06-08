@@ -35,7 +35,7 @@ class backup extends pts_module_interface
 	{
 		if(!isset($r[0]) || empty($r[0]))
 		{
-			echo PHP_EOL . pts_client::cli_just_bold('ERROR:') . 'You must pass the name of the backup file to create and/or any absolute path for the said file you would like to create.' . PHP_EOL . PHP_EOL;
+			echo PHP_EOL . pts_client::cli_just_bold('ERROR: ') . 'You must pass the name of the backup file to create and/or any absolute path for the said file you would like to create.' . PHP_EOL . PHP_EOL;
 			return false;
 		}
 		$backup_location = $r[0];
