@@ -304,6 +304,26 @@ class pts_test_result_parser
 							}
 						}
 					}
+				case 'csv-individual-frame-times':
+					// Thrones of Britannia on Linux uses at least this method
+					$log_file = pts_file_io::file_get_contents($test_log_file);
+					$frame_all_times = array();
+					if(($x = strpos($log_file, 'individual frame times (ms):')) !== false)
+					{
+						$log_file = trim(str_replace(PHP_EOL, ' ', substr($log_file, $x + strlen('individual frame times (ms): '))));
+						foreach(explode(', ', $log_file) as $inp)
+						{
+							if(is_numeric($inp) && $inp > 0)
+							{
+								$frame_all_times[] = $inp;
+							}
+							else
+							{ var_dump($inp);
+								// hitting the end
+								break;
+							}
+						}
+					}
 					break;
 			}
 			if(isset($frame_all_times[60]))
