@@ -46,9 +46,9 @@ echo phoromatic_webui_header(array(''), '');
 $result_ids = isset($_GET['ut']) ? explode(',', $_GET['ut']) : false;
 if(!$result_ids)
 {
-	if(($x = strpos($_SERVER['REQUEST_URI'], '?result/')) !== false)
+	if(($x = strpos($_SERVER['QUERY_STRING'], 'result/')) !== false)
 	{
-		$x = substr($_SERVER['REQUEST_URI'], $x + strlen('?result/'));
+		$x = substr($_SERVER['QUERY_STRING'], $x + strlen('result/'));
 		$result_ids = explode(',', $x);
 	}
 }
