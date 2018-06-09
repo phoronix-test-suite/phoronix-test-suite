@@ -905,7 +905,7 @@ class phoromatic extends pts_module_interface
 			$res = phoromatic::upload_to_remote_server(array(
 				'r' => 'stress_log_upload',
 				'bid' => self::$benchmark_ticket_id,
-				'l' => $stress_log
+				'l' => pts_user_io::strip_ansi_escape_sequences($stress_log)
 				));
 
 			$times_tried++;
