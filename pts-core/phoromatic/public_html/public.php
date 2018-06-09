@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2018, Phoronix Media
+	Copyright (C) 2008 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -44,6 +44,14 @@ phoromatic_server::prepare_database();
 
 echo phoromatic_webui_header(array(''), '');
 $result_ids = isset($_GET['ut']) ? explode(',', $_GET['ut']) : false;
+if(!$result_ids)
+{
+	if(($x = strpos($_SERVER['REQUEST_URI'], '?result/')) !== false)
+	{
+		$x = substr($_SERVER['REQUEST_URI'], $x + strlen('?result/'));
+		$result_ids = explode(',', $x);
+	}
+}
 $account_id = false;
 
 $main = null;
@@ -287,7 +295,7 @@ else
 }
 
 
-echo $main;
+echo phoromatic_webui_main($main);
 
 echo phoromatic_webui_footer();
 ?>

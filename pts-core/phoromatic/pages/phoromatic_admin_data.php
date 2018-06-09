@@ -139,7 +139,7 @@ class phoromatic_admin_data implements pts_webui_interface
 	$main .= '<a onclick="javascript:phoromatic_generate_comparison(\'public.php?ut=\');"><div id="phoromatic_result_compare_info_box" style="background: #1976d2; border: 1px solid #000;"></div></a> <a onclick="javascript:phoromatic_delete_results(\'?admin_data/delete/result/\'); return false;"><div id="phoromatic_result_delete_box" style="background: #1976d2; border: 1px solid #000;">Delete Selected Results</div></a>';
 		$main .= '<div class="pts_phoromatic_info_box_area">';
 		$main .= '<div style="height: 500px;"><ul style="max-height: 100%;"><li><h1>Recent Test Results</h1></li>';
-		$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed, AccountID, UploadID FROM phoromatic_results ORDER BY UploadTime DESC');
+		$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID, ScheduleID, PPRID, UploadTime, TimesViewed, AccountID, UploadID FROM phoromatic_results ORDER BY UploadTime DESC LIMIT 100');
 		$test_result_result = $stmt->execute();
 		$results = 0;
 		while($test_result_row = $test_result_result->fetchArray())
