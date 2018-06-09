@@ -218,7 +218,7 @@ class phoromatic_systems implements pts_webui_interface
 					{
 						$main .= '<tr id="system_var_' . $i . '">';
 						$main .= '<td><span style="font-weight: 800; font-size: 16px;">.</span><input name="system_var_names[]" value="' . $var[0]. '" readonly /></td>';
-						$main .= '<td><input name="system_var_values[]" value="' . $var[1]. '" readonly /></td>';
+						$main .= '<td><input name="system_var_values[]" value="' . $var[1]. '" /></td>';
 						$main .= '</tr>';
 					}
 				}
