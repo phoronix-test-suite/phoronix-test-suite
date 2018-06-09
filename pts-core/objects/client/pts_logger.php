@@ -75,6 +75,7 @@ class pts_logger
 		if($this->log_file == null)
 			return;
 
+		$message = pts_user_io::strip_ansi_escape_sequences($message);
 		file_put_contents($this->log_file, ($date_prefix ? '[' . date('M ' . str_pad(date('j'), 2, ' ', STR_PAD_LEFT) . ' H:i:s Y') . '] ' : null) . $message . PHP_EOL, FILE_APPEND);
 	}
 	public function get_log_file_size()
