@@ -748,6 +748,21 @@ class phodevi extends phodevi_base
 	{
 		return phodevi::is_vendor_string($product) && !pts_strings::has_in_istring($product, array('VBOX', 'QEMU', 'Virtual', 'Family', '440BX', 'VMware', ' Gen', 'Core IGP'));
 	}
+	public static function os_under_test($force_override = false, $force_value = null)
+	{
+		static $os_under_test = null;
+		if($force_override && !empty($force_value))
+		{
+			$os_under_test = $force_value;
+		}
+		else if($os_under_test == null)
+		{
+			$os_under_test = self::operating_system();
+		}
+
+		// The operating system under test
+		return $os_under_test;
+	}
 	public static function operating_system()
 	{
 		return self::$operating_system;

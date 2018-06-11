@@ -233,7 +233,7 @@ class pts_test_profile extends pts_test_profile_parser
 		}
 		else if($this->is_test_platform_supported() == false)
 		{
-			PTS_IS_CLIENT && $report_warnings && pts_client::$display->test_run_error($this->get_identifier() . ' is not supported by this operating system: ' . phodevi::operating_system());
+			PTS_IS_CLIENT && $report_warnings && pts_client::$display->test_run_error($this->get_identifier() . ' is not supported by this operating system: ' . phodevi::os_under_test());
 			$test_supported = false;
 		}
 		else if($this->is_core_version_supported() == false)
@@ -310,7 +310,7 @@ class pts_test_profile extends pts_test_profile_parser
 
 		$platforms = $this->get_supported_platforms();
 
-		if(!empty($platforms) && !in_array(phodevi::operating_system(), $platforms))
+		if(!empty($platforms) && !in_array(phodevi::os_under_test(), $platforms))
 		{
 			if(phodevi::is_bsd() && in_array('Linux', $platforms) && (pts_client::executable_in_path('kldstat') && strpos(shell_exec('kldstat -n linux 2>&1'), 'linux.ko') != false))
 			{
@@ -349,7 +349,7 @@ class pts_test_profile extends pts_test_profile_parser
 		$test_dir = $this->get_install_dir();
 		$execute_binary = $this->get_test_executable();
 
-		if(is_executable($test_dir . $execute_binary) || (phodevi::is_windows() && is_file($test_dir . $execute_binary)))
+		if(is_file($test_dir . $execute_binary)) // previously was: (is_executable($test_dir . $execute_binary) || (phodevi::is_windows() && is_file($test_dir . $execute_binary))
 		{
 			$to_execute = $test_dir;
 		}
@@ -381,7 +381,7 @@ class pts_test_profile extends pts_test_profile_parser
 	public function get_file_installer()
 	{
 		$test_resources_location = $this->get_resource_dir();
-		$os_postfix = '_' . strtolower(phodevi::operating_system());
+		$os_postfix = '_' . strtolower(phodevi::os_under_test());
 
 		if(is_file($test_resources_location . 'install' . $os_postfix . '.sh'))
 		{

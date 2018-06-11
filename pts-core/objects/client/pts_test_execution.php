@@ -212,6 +212,11 @@ class pts_test_execution
 
 			if(!$test_run_manager->DEBUG_no_test_execution_just_result_parse && $restored_from_cache == false)
 			{
+				if(!is_executable($to_execute . '/' . $execute_binary) && pts_client::executable_in_path('chmod'))
+				{
+					shell_exec('chmod +x ' . $to_execute . '/' . $execute_binary);
+				}
+
 				$test_prepend = getenv('TEST_EXEC_PREPEND') != null ? getenv('TEST_EXEC_PREPEND') . ' ': null;
 				pts_client::$display->test_run_instance_header($test_run_request);
 				sleep(1);

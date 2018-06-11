@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2016, Phoronix Media
-	Copyright (C) 2016, Michael Larabel
+	Copyright (C) 2016 - 2018, Phoronix Media
+	Copyright (C) 2016 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@ class list_not_installed_tests implements pts_option_interface
 			$id = substr($identifier, strlen($repo) + 1);
 			$repo_index = pts_openbenchmarking::read_repository_index($repo);
 
-			if((!empty($repo_index['tests'][$id]['supported_platforms']) && !in_array(phodevi::operating_system(), $repo_index['tests'][$id]['supported_platforms'])) || empty($repo_index['tests'][$id]['title']))
+			if((!empty($repo_index['tests'][$id]['supported_platforms']) && !in_array(phodevi::os_under_test(), $repo_index['tests'][$id]['supported_platforms'])) || empty($repo_index['tests'][$id]['title']))
 			{
 				// Don't show unsupported tests
 				continue;
