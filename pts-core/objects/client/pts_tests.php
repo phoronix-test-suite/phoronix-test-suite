@@ -23,6 +23,8 @@
 class pts_tests
 {
 	public static $extra_env_vars = null;
+	protected static $override_test_script_execution_handler = false;
+
 	public static function add_extra_env_var($name, $value)
 	{
 		self::$extra_env_vars[$name] = $value;
@@ -212,7 +214,7 @@ class pts_tests
 		$result = null;
 		$test_directory = $test_profile->get_install_dir();
 		pts_file_io::mkdir($test_directory, 0777, true);
-		$os_postfix = '_' . strtolower(phodevi::operating_system());
+		$os_postfix = '_' . strtolower(phodevi::os_under_test());
 		$test_profiles = array($test_profile);
 
 		if($use_ctp)
@@ -247,7 +249,11 @@ class pts_tests
 					pts_client::$display->test_run_message($print_string);
 				}
 
-				if($use_phoroscript || pts_client::read_env('USE_PHOROSCRIPT_INTERPRETER') != false)
+				if(self::$override_test_script_execution_handler && is_callable(self::$override_test_script_execution_handler))
+				{
+					$this_result = call_user_func(self::$override_test_script_execution_handler, $test_directory, $sh, $run_file, $pass_argument, $extra_vars);
+				}
+				else if($use_phoroscript || pts_client::read_env('USE_PHOROSCRIPT_INTERPRETER') != false)
 				{
 					echo PHP_EOL . 'Falling back to experimental PhoroScript code path...' . PHP_EOL;
 					$phoroscript = new pts_phoroscript_interpreter($run_file, $extra_vars, $test_directory);
@@ -283,6 +289,15 @@ class pts_tests
 		}
 
 		return $result;
+	}
+	public static function override_script_test_execution_handler($to_call)
+	{
+		if(is_callable($to_call))
+		{
+			self::$override_test_script_execution_handler = $to_call;
+			return true;
+		}
+		return false;
 	}
 	public static function update_test_install_xml(&$test_profile, $this_duration = 0, $is_install = false, $compiler_data = null, $install_footnote = null)
 	{

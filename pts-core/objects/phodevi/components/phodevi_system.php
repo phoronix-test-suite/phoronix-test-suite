@@ -2004,13 +2004,13 @@ class phodevi_system extends phodevi_device_interface
 	{
 		$wine_version = null;
 
-		if(pts_client::executable_in_path('wine') != false)
-		{
-			$wine_version = trim(shell_exec('wine --version 2>&1'));
-		}
-		else if(($use_wine = getenv('USE_WINE')) !== false && is_executable($use_wine))
+		if(($use_wine = getenv('USE_WINE')) !== false && (is_executable($use_wine) || ($use_wine = pts_client::executable_in_path($use_wine)) !== false))
 		{
 			$wine_version = trim(shell_exec($use_wine . ' --version 2>&1'));
+		}
+		else if(pts_client::executable_in_path('wine') != false)
+		{
+			$wine_version = trim(shell_exec('wine --version 2>&1'));
 		}
 		else if(pts_client::executable_in_path('winecfg.exe') != false && pts_client::read_env('WINE_VERSION'))
 		{

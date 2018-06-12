@@ -39,7 +39,7 @@ class list_available_tests implements pts_option_interface
 			$id = substr($identifier, strlen($repo) + 1);
 			$repo_index = pts_openbenchmarking::read_repository_index($repo);
 
-			if((!empty($repo_index['tests'][$id]['supported_platforms']) && !in_array(phodevi::operating_system(), $repo_index['tests'][$id]['supported_platforms'])) || empty($repo_index['tests'][$id]['title']))
+			if((!empty($repo_index['tests'][$id]['supported_platforms']) && !in_array(phodevi::os_under_test(), $repo_index['tests'][$id]['supported_platforms'])) || empty($repo_index['tests'][$id]['title']))
 			{
 				// Don't show unsupported tests
 				continue;
