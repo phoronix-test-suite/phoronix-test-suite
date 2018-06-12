@@ -113,10 +113,10 @@ class use_wine extends pts_module_interface
 				}
 			}
 
-			if($words_in_line[0] == 'msiexec')
+			if($words_in_line[0] == 'msiexec' || $words_in_line[0] == 'msiexec.exe')
 			{
 				// At least in my tests with unigine-valley, calling its msiexec line didn't work and just silently failed... so let's turn that into running the Wine command.
-				$line = str_replace('msiexec', self::$wine_bin, $line);
+				$line = str_replace(array('msiexec.exe', 'msiexec'), self::$wine_bin, $line);
 
 				// Remove potential garbage from line...
 				$line = str_replace(array('/package', '/passive'), '', $line);
