@@ -84,6 +84,12 @@ class use_wine extends pts_module_interface
 		$new_script = '';
 		foreach(explode(PHP_EOL, pts_file_io::file_get_contents($run_file)) as $line)
 		{
+			if($line == null)
+			{
+				continue;
+			}
+
+			$words_in_line = pts_strings::trim_explode(' ', $line);
 			if($words_in_line[0] == 'wine')
 			{
 				// if 'wine' is already found in the test profile, assume test is already customized for Wine usage
@@ -92,13 +98,6 @@ class use_wine extends pts_module_interface
 				$new_script = pts_file_io::file_get_contents($run_file);
 				break;
 			}
-
-			if($line == null)
-			{
-				continue;
-			}
-
-			$words_in_line = pts_strings::trim_explode(' ', $line);
 
 			// Replace /cygdrive/c/ with $WINEPREFIX/drive_c/
 			if (stripos($line, '/cygdrive/c/') !== false)
