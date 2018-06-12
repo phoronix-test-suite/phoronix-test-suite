@@ -108,8 +108,16 @@ class use_wine extends pts_module_interface
 				// Get rid of quotes for now... maybe have to change this...
 				$cd_dir = str_replace('"', '', $cd_dir);
 
-				// Map the drive
-				$cd_dir = str_replace('C:\\', '$HOME/.wine/drive_c/', $cd_dir);
+				// Map the drive. Using "dosdevices/c:" would be nicer, but the colon makes
+				// this an escaping pain.
+				if (getenv("WINEPREFIX") !== false)
+				{
+					$cd_dir = str_replace('C:\\', '$WINEPREFIX/drive_c/', $cd_dir);
+				}
+				else
+				{
+					$cd_dir = str_replace('C:\\', '$HOME/.wine/drive_c/', $cd_dir);
+				}
 
 				$cd_dir = str_replace('\\ ', ' ', $cd_dir);
 				$cd_dir = str_replace('\\(', '(', $cd_dir);
