@@ -238,5 +238,9 @@
 			<PackageName>libgmp3</PackageName>
 			<FileCheck>/usr/include/gmp.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>wine</GenericName>
+			<PackageName>wine</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

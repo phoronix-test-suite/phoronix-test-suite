@@ -495,10 +495,16 @@
 			<FileCheck>v8.h, libv8.so</FileCheck>
 		</Package>
 		<Package>
-			<GenericName>Ruby</GenericName>
+			<GenericName>ruby</GenericName>
 			<Title>Ruby</Title>
 			<PossibleNames>ruby</PossibleNames>
 			<FileCheck>ruby</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>wine</GenericName>
+			<Title>Wine</Title>
+			<PossibleNames>wine</PossibleNames>
+			<FileCheck>wine</FileCheck>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

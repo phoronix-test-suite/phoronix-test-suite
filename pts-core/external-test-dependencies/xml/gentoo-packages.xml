@@ -308,5 +308,9 @@
 			<GenericName>ruby</GenericName>
 			<PackageName>dev-lang/ruby</PackageName>
 		</Package>
+		<Package>
+			<GenericName>wine</GenericName>
+			<PackageName>virtual/wine</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

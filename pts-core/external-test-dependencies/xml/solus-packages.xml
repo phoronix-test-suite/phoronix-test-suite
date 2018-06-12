@@ -277,5 +277,9 @@
 			<PackageName>scikit-learn</PackageName>
 			<FileCheck>/usr/lib/python2.7/site-packages/sklearn</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>wine</GenericName>
+			<PackageName>wine</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

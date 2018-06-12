@@ -306,5 +306,9 @@
 			<GenericName>ruby</GenericName>
 			<PackageName>ruby</PackageName>
 		</Package>
+		<Package>
+			<GenericName>wine</GenericName>
+			<PackageName>wine</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

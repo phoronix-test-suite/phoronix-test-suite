@@ -369,5 +369,9 @@
 			<GenericName>darktable</GenericName>
 			<PackageName>darktable</PackageName>
 		</Package>
+		<Package>
+			<GenericName>wine</GenericName>
+			<PackageName>wine</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

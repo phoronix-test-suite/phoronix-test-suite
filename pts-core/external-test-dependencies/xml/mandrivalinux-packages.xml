@@ -263,5 +263,9 @@
                         <GenericName>perl-digest-md5</GenericName>
                         <PackageName>perl-Digest-MD5</PackageName>
                 </Package>
+		<Package>
+			<GenericName>wine</GenericName>
+			<PackageName>wine</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
