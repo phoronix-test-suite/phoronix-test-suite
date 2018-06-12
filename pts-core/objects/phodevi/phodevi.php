@@ -371,7 +371,7 @@ class phodevi extends phodevi_base
 	public static function system_id_string()
 	{
 		$extra = null;
-		foreach(array('CC', 'CXX', 'CFLAGS', 'CPPFLAGS', 'CXXFLAGS') as $env)
+		foreach(array('CC', 'CXX', 'CFLAGS', 'CPPFLAGS', 'CXXFLAGS', 'USE_WINE') as $env)
 		{
 			$val = getenv($env);
 
