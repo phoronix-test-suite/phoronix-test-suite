@@ -79,7 +79,7 @@ class phodevi_system extends phodevi_device_interface
 		{
 			$layer = $wine;
 		}
-		else if(($wine = phodevi::read_property('system', 'wine-version')) && getenv('USE_WINE'))
+		else if(($wine = phodevi::read_property('system', 'wine-version')) && (getenv('USE_WINE') || getenv('WINE_VERSION')))
 		{
 			$layer = $wine;
 		}
@@ -2004,7 +2004,7 @@ class phodevi_system extends phodevi_device_interface
 	{
 		$wine_version = null;
 
-		if(($use_wine = getenv('USE_WINE')) !== false && (is_executable($use_wine) || ($use_wine = pts_client::executable_in_path($use_wine)) !== false))
+		if((($use_wine = getenv('USE_WINE')) !== false || ($use_wine = getenv('WINE_VERSION')) !== false) && (is_executable($use_wine) || ($use_wine = pts_client::executable_in_path($use_wine)) !== false))
 		{
 			$wine_version = trim(shell_exec($use_wine . ' --version 2>&1'));
 		}
