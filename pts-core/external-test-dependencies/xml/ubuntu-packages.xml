@@ -73,7 +73,7 @@
 		</Package>
 		<Package>
 			<GenericName>tiff</GenericName>
-			<PackageName>libtiff-dev</PackageName>
+			<PackageName>libtiff5-dev</PackageName>
 		</Package>
 		<Package>
 			<GenericName>bison</GenericName>
