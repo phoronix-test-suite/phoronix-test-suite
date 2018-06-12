@@ -23,6 +23,8 @@
 
 class phodevi_system extends phodevi_device_interface
 {
+	public static $report_wine_override = false;
+
 	public static function properties()
 	{
 		return array(
@@ -51,7 +53,7 @@ class phodevi_system extends phodevi_device_interface
 			'kernel-string' => new phodevi_device_property('sw_kernel_string', phodevi::smart_caching),
 			'kernel-parameters' => new phodevi_device_property('sw_kernel_parameters', phodevi::std_caching),
 			'compiler' => new phodevi_device_property('sw_compiler', phodevi::no_caching),
-			'system-layer' => new phodevi_device_property('sw_system_layer', phodevi::std_caching),
+			'system-layer' => new phodevi_device_property('sw_system_layer', phodevi::no_caching),
 			'environment-variables' => new phodevi_device_property('sw_environment_variables', phodevi::std_caching),
 			'security-features' => new phodevi_device_property('sw_security_features', phodevi::std_caching)
 			);
@@ -79,7 +81,7 @@ class phodevi_system extends phodevi_device_interface
 		{
 			$layer = $wine;
 		}
-		else if(($wine = phodevi::read_property('system', 'wine-version')) && (getenv('USE_WINE') || getenv('WINE_VERSION')))
+		else if((getenv('USE_WINE') || getenv('WINE_VERSION') || self::$report_wine_override) && ($wine = phodevi::read_property('system', 'wine-version')))
 		{
 			$layer = $wine;
 		}
