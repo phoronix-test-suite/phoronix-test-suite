@@ -85,6 +85,19 @@ class use_wine extends pts_module_interface
 
 			$words_in_line = pts_strings::trim_explode(' ', $line);
 
+			// Replace /cygdrive/c/ with $WINEPREFIX/drive_c/
+			if (stripos($line, '/cygdrive/c/') !== false)
+			{
+				if (getenv("WINEPREFIX") !== false)
+				{
+					$line = str_replace('/cygdrive/c/', '$WINEPREFIX/drive_c/', $line);
+				}
+				else
+				{
+					$line = str_replace('/cygdrive/c/', '$HOME/.wine/drive_c/', $line);
+				}
+			}
+
 			if($words_in_line[0] == 'msiexec')
 			{
 				// At least in my tests with unigine-valley, calling its msiexec line didn't work and just silently failed... so let's turn that into running the Wine command.
