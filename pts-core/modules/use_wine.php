@@ -60,9 +60,15 @@ class use_wine extends pts_module_interface
 		// Set $wine_bin to the Wine binary specified via USE_WINE
 		self::$wine_bin = $use_wine;
 	}
-	public static function test_script_handler($test_directory, $shell, $run_file, $pass_argument, $extra_vars)
+	public static function test_script_handler($test_directory, $shell, $run_file, $pass_argument, $extra_vars, $test_profile)
 	{
 		// Rather than conventional PTS code paths, whenever a pre/install/post/interim test profile script is to be executed, this function will now be called by PTS for its execution
+
+		if(in_array('wine', $test_profile->get_external_dependencies()))
+		{
+			// The test is a wine-focused test already, so don't try to further re-customize it...
+			return -1;
+		}
 
 		// Let's make a temporary file in test_directory so we can modify the script before execution....
 		$new_run_file = dirname($run_file) . '/' . 'wine_' . basename($run_file);
@@ -78,6 +84,15 @@ class use_wine extends pts_module_interface
 		$new_script = '';
 		foreach(explode(PHP_EOL, pts_file_io::file_get_contents($run_file)) as $line)
 		{
+			if($words_in_line[0] == 'wine')
+			{
+				// if 'wine' is already found in the test profile, assume test is already customized for Wine usage
+
+				// reset $new_script to original script
+				$new_script = pts_file_io::file_get_contents($run_file);
+				break;
+			}
+
 			if($line == null)
 			{
 				continue;
