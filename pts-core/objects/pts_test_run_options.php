@@ -216,7 +216,7 @@ class pts_test_run_options
 			}
 		}
 	}
-	public static function auto_process_test_option($test_identifier, $option_identifier, &$option_names, &$option_values, &$option_messages)
+	public static function auto_process_test_option(&$test_profile, $option_identifier, &$option_names, &$option_values, &$option_messages)
 	{
 		// Some test items have options that are dynamically built
 		switch($option_identifier)
@@ -414,7 +414,28 @@ class pts_test_run_options
 
 				for($i = 0; $i < count($names) && $i < count($values); $i++)
 				{
-					if(is_dir($values[$i]) && is_writable($removable_media[$i]))
+					if(is_dir($values[$i]) && is_writable($values[$i]))
+					{
+						$option_names[] = $names[$i];
+						$option_values[] = $values[$i];
+					}
+				}
+				break;
+			case 'renderer':
+				if(PTS_IS_CLIENT == false)
+				{
+					return;
+				}
+
+				$names = $option_names;
+				$values = $option_values;
+				$option_names = array();
+				$option_values = array();
+
+				for($i = 0; $i < count($names) && $i < count($values); $i++)
+				{
+					// Only show Direct3D renderer options when running on Windows or similar (i.e. Wine)
+					if(stripos($names[$i], 'Direct3D') !== false || phodevi::os_under_test() == 'Windows' || in_array('wine', $test_profile->get_external_dependencies()))
 					{
 						$option_names[] = $names[$i];
 						$option_values[] = $values[$i];

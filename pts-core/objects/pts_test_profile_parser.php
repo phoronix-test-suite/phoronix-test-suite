@@ -421,7 +421,7 @@ class pts_test_profile_parser
 
 				if($auto_process)
 				{
-					pts_test_run_options::auto_process_test_option($this->identifier, $option->Identifier, $names, $values, $messages);
+					pts_test_run_options::auto_process_test_option($this, $option->Identifier, $names, $values, $messages);
 				}
 
 				$user_option = new pts_test_option($option->Identifier->__toString(), $option->DisplayName->__toString());
