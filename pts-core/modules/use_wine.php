@@ -93,6 +93,11 @@ class use_wine extends pts_module_interface
 				// Remove potential garbage from line...
 				$line = str_replace(array('/package', '/passive'), '', $line);
 			}
+			else if($words_in_line[0] == 'cmd')
+			{
+				$line = self::$wine_bin . ' ' . $line;
+				$line = str_replace('cmd /c', '', $line);
+			}
 			else if($words_in_line[0] == 'cd' && stripos($line, 'C:\\') !== false)
 			{
 				// Try to map a Windows C:\ path into correct directory for Wine...
@@ -123,6 +128,11 @@ class use_wine extends pts_module_interface
 			else if(stripos($words_in_line[0], '.exe') !== false || stripos($words_in_line[0], '.msi') !== false)
 			{
 				// Append wine to start of string that appears to be calling an EXE/MSI executable...
+				$line = self::$wine_bin . ' ' . $line;
+				$line = str_replace('cmd /c', '', $line);
+			}
+			else if($words_in_line[0] == './\\$@')
+			{
 				$line = self::$wine_bin . ' ' . $line;
 			}
 
