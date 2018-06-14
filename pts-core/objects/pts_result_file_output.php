@@ -71,7 +71,7 @@ class pts_result_file_output
 		pts_result_file_analyzer::system_components_to_table($table_data, $columns, $rows, $hw);
 		pts_result_file_analyzer::system_components_to_table($table_data, $columns, $rows, $sw);
 
-		$csv_output .= ' ';
+		$csv_output .= ' ' . $delimiter;
 
 		foreach($columns as $column)
 		{
@@ -81,7 +81,7 @@ class pts_result_file_output
 
 		foreach($rows as $i => $row)
 		{
-			$csv_output .= $row;
+			$csv_output .= $row . $delimiter;
 
 			foreach($columns as $column)
 			{
