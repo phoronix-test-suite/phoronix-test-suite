@@ -48,7 +48,7 @@ class make_download_cache implements pts_option_interface
 			if(count($test_profiles) > 0)
 			{
 				echo PHP_EOL . 'Downloading Test Files For: ' . implode(' ', $test_profiles);
-				pts_test_installer::only_download_test_files($test_profiles, $dc_write_directory);
+				pts_test_installer::only_download_test_files($test_profiles, $dc_write_directory, true);
 			}
 		}
 

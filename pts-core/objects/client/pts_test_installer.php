@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2017, Phoronix Media
-	Copyright (C) 2010 - 2017, Michael Larabel
+	Copyright (C) 2010 - 2018, Phoronix Media
+	Copyright (C) 2010 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -198,7 +198,7 @@ class pts_test_installer
 		while(($test_install_request = $test_install_manager->next_in_install_queue()) != false)
 		{
 			//pts_client::$display->test_install_start($test_install_request->test_profile->get_identifier());
-			pts_test_installer::download_test_files($test_install_request, $to_dir);
+			pts_test_installer::download_test_files($test_install_request, $to_dir, true);
 		}
 	}
 	protected static function download_test_files(&$test_install_request, $download_location = false, $no_prompts = false)
