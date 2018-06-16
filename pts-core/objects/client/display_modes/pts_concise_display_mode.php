@@ -206,6 +206,8 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		$download_size_string = $pts_test_file_download->get_filesize() > 0 ? ' [' . self::bytes_to_download_size($pts_test_file_download->get_filesize()) . 'MB]' : null;
 		$offset_length = pts_client::terminal_width() > 1 ? pts_client::terminal_width() : pts_test_file_download::$longest_file_name_length;
 		$offset_length = $offset_length - strlen($download_string) - strlen($download_size_string) - 2;
+		// now that strlen() is done, rebuild string with bold
+		$download_string = $this->tab . $this->tab . pts_client::cli_just_bold($process_string . ': ') . $pts_test_file_download->get_filename();
 
 		if($offset_length < 2)
 		{
