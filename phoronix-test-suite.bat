@@ -45,4 +45,4 @@ set PHP_BIN=C:\PHP\php.exe
 
 :SkipBinSearch
 
-%PHP_BIN% %PTS_DIR%\pts-core\phoronix-test-suite.php %*
+%PHP_BIN% "%PTS_DIR%\pts-core\phoronix-test-suite.php" %*
