@@ -392,16 +392,9 @@ class pts_external_dependencies
 			{
 				$present = true;
 			}
-			else
+			else if(pts_client::executable_in_path($file))
 			{
-				foreach(array('/usr/bin/', '/bin/', '/usr/sbin') as $possible_path)
-				{
-					if(is_file($possible_path . $file))
-					{
-						$present = true;
-						break;
-					}
-				}
+				$present = true;
 			}
 
 			if(!$present)
