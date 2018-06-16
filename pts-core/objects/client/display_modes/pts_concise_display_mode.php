@@ -158,7 +158,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		}
 
 		echo PHP_EOL;
-		if($test_install_request->test_profile->get_status() != 'Verified')
+		if($test_install_request->test_profile->get_status() != 'Verified' && $test_install_request->test_profile->get_status() != '')
 		{
 			echo $this->tab . $this->tab . 'Test Profile Status: ' . pts_client::cli_just_bold($test_install_request->test_profile->get_status()) . PHP_EOL;
 		}
