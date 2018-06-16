@@ -212,7 +212,7 @@ class pts_test_execution
 
 			if(!$test_run_manager->DEBUG_no_test_execution_just_result_parse && $restored_from_cache == false)
 			{
-				if(!is_executable($to_execute . '/' . $execute_binary) && pts_client::executable_in_path('chmod'))
+				if(!phodevi::is_windows() && !is_executable($to_execute . '/' . $execute_binary) && pts_client::executable_in_path('chmod'))
 				{
 					shell_exec('chmod +x ' . $to_execute . '/' . $execute_binary);
 				}
