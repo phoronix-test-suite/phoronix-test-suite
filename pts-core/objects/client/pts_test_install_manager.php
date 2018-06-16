@@ -52,14 +52,14 @@ class pts_test_install_manager
 
 		return $added;
 	}
-	public function generate_download_file_lists()
+	public function generate_download_file_lists($do_file_checks = true)
 	{
 		pts_client::$display->test_install_progress_start('Determining File Requirements');
 		$test_count = count($this->tests_to_install);
 
 		foreach($this->tests_to_install as $i => &$test_install_request)
 		{
-			$test_install_request->generate_download_object_list();
+			$test_install_request->generate_download_object_list($do_file_checks);
 			pts_client::$display->test_install_progress_update(($i / $test_count));
 		}
 		pts_client::$display->test_install_progress_completed();

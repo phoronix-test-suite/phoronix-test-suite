@@ -172,7 +172,7 @@ class pts_test_installer
 			}
 		}
 	}
-	public static function only_download_test_files(&$test_profiles, $to_dir = null)
+	public static function only_download_test_files(&$test_profiles, $to_dir = null, $do_file_checks = true)
 	{
 		// Setup the install manager and add the tests
 		$test_install_manager = new pts_test_install_manager();
@@ -191,7 +191,7 @@ class pts_test_installer
 		}
 
 		// Let the pts_test_install_manager make some estimations, etc...
-		$test_install_manager->generate_download_file_lists();
+		$test_install_manager->generate_download_file_lists($do_file_checks);
 		$test_install_manager->check_download_caches_for_files();
 
 		// Begin the download process
