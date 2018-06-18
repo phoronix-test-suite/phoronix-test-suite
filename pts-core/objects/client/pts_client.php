@@ -1707,7 +1707,7 @@ class pts_client
 					$windows_browsers = array(
 						'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe',
 						'C:\Program Files (x86)\Mozilla Firefox\firefox.exe',
-						'C:\Program Files\internet explorer\iexplore.exe'
+						//'C:\Program Files\internet explorer\iexplore.exe'
 						);
 
 					foreach($windows_browsers as $browser_test)
@@ -1718,13 +1718,31 @@ class pts_client
 							break;
 						}
 					}
-					$browser = escapeshellarg($browser);
+
+					if(!empty($browser))
+					{
+						$browser = escapeshellarg($browser);
+					}
+
 					if(substr($URL, 0, 1) == '\\')
 					{
 						$URL = 'file:///C:' . str_replace('/', '\\', $URL);
 					}
+					else if(substr($URL, 0, 2) == 'C:')
+					{
+						$URL = 'file:///' . str_replace('//', '/', str_replace('\\', '/', $URL));
+					}
 
-					shell_exec($browser . ' "' . $URL . '"');
+
+					if(empty($browser))
+					{
+						// should allow the browser to be opened in Edge
+						shell_exec('start ' . $URL . '');
+					}
+					else
+					{
+						shell_exec($browser . ' "' . $URL . '"');
+					}
 					return;
 				}
 				else
