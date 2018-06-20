@@ -9,7 +9,7 @@ elif [ `whoami` = "ec2-user" ]; then
 	sudo yum -y --skip-broken install $*
 else
 	echo "Please enter your SUDO password below:" 1>&2 
-        read -s -p "Password: " passwd
+	read -s -p "Password: " passwd
 	if ! echo $passwd | sudo -S -p '' yum -y --skip-broken install $*; then
         	echo "Please enter your ROOT password below:" 1>&2
 		su root -c "yum -y --skip-broken install $*"
