@@ -28,6 +28,7 @@ class use_wine extends pts_module_interface
 	const module_author = 'Michael Larabel';
 
 	protected static $wine_bin = false;
+	protected static $original_os_under_test = null;
 	public static function module_environmental_variables()
 	{
 		return array('USE_WINE');
@@ -55,10 +56,27 @@ class use_wine extends pts_module_interface
 		}
 
 		// Override the operating system string that is queried by test download/installation code for determining the OS-specific code paths in test profiles...
+		self::$original_os_under_test = phodevi::os_under_test();
 		phodevi::os_under_test(true, 'Windows');
 
 		// Set $wine_bin to the Wine binary specified via USE_WINE
 		self::$wine_bin = $use_wine;
+	}
+	public static function __pre_test_run(&$test_run_request)
+	{
+		// Restore the os_under_test back to the original OS type so it will use its native test script if it's explicitly using Wine...
+		if(in_array('wine', $test_run_request->test_profile->get_external_dependencies()))
+		{
+			phodevi::os_under_test(true, self::$original_os_under_test);
+		}
+	}
+	public static function __post_test_run(&$test_run_request)
+	{
+		// Reset the Wine override
+		if(in_array('wine', $test_run_request->test_profile->get_external_dependencies()))
+		{
+			phodevi::os_under_test(true, 'Windows');
+		}
 	}
 	public static function test_script_handler($test_directory, $shell, $run_file, $pass_argument, $extra_vars, $test_profile)
 	{
