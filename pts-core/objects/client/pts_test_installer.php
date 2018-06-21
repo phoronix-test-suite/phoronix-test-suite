@@ -704,7 +704,6 @@ class pts_test_installer
 	protected static function install_test_process(&$test_install_request, $no_prompts)
 	{
 		// Install a test
-		$identifier = $test_install_request->test_profile->get_identifier();
 		$test_install_directory = $test_install_request->test_profile->get_install_dir();
 		pts_file_io::mkdir(dirname($test_install_directory));
 		pts_file_io::mkdir($test_install_directory);
@@ -833,7 +832,7 @@ class pts_test_installer
 					}
 				}
 
-				pts_module_manager::module_process('__post_test_install', $identifier);
+				pts_module_manager::module_process('__post_test_install', $test_install_request);
 				$installed = true;
 
 				if(pts_config::read_bool_config('PhoronixTestSuite/Options/Installation/RemoveDownloadFiles', 'FALSE'))

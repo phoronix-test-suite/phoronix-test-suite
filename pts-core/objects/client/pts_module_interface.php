@@ -118,7 +118,7 @@ class pts_module_interface
 	}
 	public static function __post_test_install($obj = null)
 	{
-		// Passed as the first argument to this function is the test identifier for the name of the test just installed
+		// Passed as the first argument to this function is the test install request for the test just installed
 		return;
 	}
 	public static function __post_install_process($obj = null)
