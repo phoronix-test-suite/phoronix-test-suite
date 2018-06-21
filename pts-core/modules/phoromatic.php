@@ -1047,7 +1047,7 @@ class phoromatic extends pts_module_interface
 				));
 		}
 	}
-	public static function __pre_test_install($test_identifier)
+	public static function __pre_test_install(&$test_install_request)
 	{
 	/*	if(self::$has_run_server_setup_func == false)
 		{
@@ -1065,7 +1065,7 @@ class phoromatic extends pts_module_interface
 
 		if(time() > ($last_update_time + 30))
 		{
-			phoromatic::update_system_status('Installing: ' . $test_identifier);
+			phoromatic::update_system_status('Installing: ' . $test_install_request->test_profile->get_identifier());
 			$last_update_time = time();
 		}
 	}
