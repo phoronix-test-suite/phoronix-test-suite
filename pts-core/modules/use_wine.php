@@ -62,6 +62,22 @@ class use_wine extends pts_module_interface
 		// Set $wine_bin to the Wine binary specified via USE_WINE
 		self::$wine_bin = $use_wine;
 	}
+	public static function __pre_test_install(&$test_install_request)
+	{
+		// Restore the os_under_test back to the original OS type so it will use its native test script if it's explicitly using Wine...
+		if(in_array('wine', $test_install_request->test_profile->get_external_dependencies()))
+		{
+			phodevi::os_under_test(true, self::$original_os_under_test);
+		}
+	}
+	public static function __post_test_install(&$test_install_request)
+	{
+		// Reset the Wine override
+		if(in_array('wine', $test_install_request->test_profile->get_external_dependencies()))
+		{
+			phodevi::os_under_test(true, 'Windows');
+		}
+	}
 	public static function __pre_test_run(&$test_run_request)
 	{
 		// Restore the os_under_test back to the original OS type so it will use its native test script if it's explicitly using Wine...
