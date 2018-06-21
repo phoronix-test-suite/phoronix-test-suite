@@ -536,6 +536,12 @@ class pts_test_run_manager
 				$this->test_run_pos = $i;
 				$continue_test_flag = $this->process_test_run_request($i);
 
+				if($continue_test_flag === 'SKIP')
+				{
+					$continue_test_flag = true;
+					continue;
+				}
+
 				if(pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/RemoveTestInstallOnCompletion', 'FALSE'))
 				{
 					// Remove the installed test if it's no longer needed in this run queue
@@ -667,7 +673,7 @@ class pts_test_run_manager
 		else if(pts_file_io::unlink(PTS_USER_PATH . 'skip-test'))
 		{
 			// Just skip the current test and do not save the results, but continue testing
-			return true;
+			return 'SKIP';
 		}
 		else if(pts_client::read_env('LIMIT_ELAPSED_TEST_TIME') > 0 && (PTS_INIT_TIME + (pts_client::read_env('LIMIT_ELAPSED_TEST_TIME') * 60)) > time())
 		{

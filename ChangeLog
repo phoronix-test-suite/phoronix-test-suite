@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 pts-core: Add "wine" external dependency support
+pts-core: Fix skip-test behavior
 phoromatic: Various minor fixes and enhancements
 phodevi: Add USE_WINE environment variable check, point it towards the wine binary you wish to test
 
