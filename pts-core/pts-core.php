@@ -252,8 +252,8 @@ function pts_version_codenames()
 		);
 }
 
-pts_define('PTS_VERSION', '8.0.0');
-pts_define('PTS_CORE_VERSION', 8001);
+pts_define('PTS_VERSION', '8.0.1');
+pts_define('PTS_CORE_VERSION', 8010);
 pts_define('PTS_CODENAME', 'AREMARK');
 pts_define('PTS_RELEASE_DATE', '20180605');
 

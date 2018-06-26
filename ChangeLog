@@ -1,9 +1,11 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 8.0.1-Aremark
+26 June 2018
 
 pts-core: Add "wine" external dependency support
 pts-core: Fix skip-test behavior
+pts-core: Web browser handling improvements on Windows, other Windows updates
 phoromatic: Various minor fixes and enhancements
 phodevi: Add USE_WINE environment variable check, point it towards the wine binary you wish to test
 

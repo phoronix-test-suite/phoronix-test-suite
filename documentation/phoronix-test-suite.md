@@ -337,6 +337,10 @@ This module utilizes the following environmental variables: HALT_SCREENSAVER.
 ### Update Checker
 This module checks to see if the Phoronix Test Suite -- and its tests and suites -- are up to date.
 
+### Utilize Wine On Linux Benchmarking
+This module when activated via the USE_WINE environment variable on Linux systems will override the test profile OS target to Windows and attempt to run the (Windows) tests under Wine, if installed on the system. USE_WINE can be either set to the name of the desired wine command or the absolute path to the wine binary you wish to use for benchmarking.
+This module utilizes the following environmental variables: USE_WINE.
+
 ### System Event Watchdog
 This module has support for stopping/interrupting tests if various system issues occur, like a temperature sensor exceeds a defined threshold.
 This module utilizes the following environmental variables: WATCHDOG_SENSOR, WATCHDOG_SENSOR_THRESHOLD.
