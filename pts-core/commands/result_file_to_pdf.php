@@ -33,7 +33,7 @@ class result_file_to_pdf implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		if(!function_exists('getimagesizefromstring'))
+		if(!function_exists('getimagesizefromstring') || !extension_loaded('gd'))
 		{
 			echo 'PHP GD support is required for this command.' . PHP_EOL . PHP_EOL;
 			return false;
