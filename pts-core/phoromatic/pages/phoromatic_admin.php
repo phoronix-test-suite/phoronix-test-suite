@@ -51,7 +51,7 @@ class phoromatic_admin implements pts_webui_interface
 		}
 		else if(isset($_POST['change_user_password']))
 		{
-			$account_salt = phoromatic_server::$db->querySingle('SELECT Salt FROM phoromatic_accounts WHERE UserName = \'' . $_POST['change_user_password'] . '\'');
+			$account_salt = phoromatic_server::$db->querySingle('SELECT Salt FROM phoromatic_accounts WHERE AccountID = (SELECT AccountID FROM phoromatic_users WHERE UserName = \'' . $_POST['change_user_password'] . '\')');
 
 			if($account_salt != null)
 			{
