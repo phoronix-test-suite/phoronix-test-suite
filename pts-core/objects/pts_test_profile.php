@@ -199,6 +199,11 @@ class pts_test_profile extends pts_test_profile_parser
 	public function get_estimated_run_time()
 	{
 		// get estimated run-time (in seconds)
+		if($this->no_fallbacks_on_null)
+		{
+			return parent::get_estimated_run_time();
+		}
+
 		if($this->test_installation != false && is_numeric($this->test_installation->get_average_run_time()) && $this->test_installation->get_average_run_time() > 0)
 		{
 			$estimated_run_time = $this->test_installation->get_average_run_time();

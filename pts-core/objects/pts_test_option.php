@@ -54,6 +54,10 @@ class pts_test_option
 			$this->default_entry = $default_node;
 		}
 	}
+	public function get_option_identifier()
+	{
+		return $this->identifier;
+	}
 	public function get_identifier()
 	{
 		return $this->identifier;

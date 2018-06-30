@@ -144,9 +144,13 @@ class pts_validation
 		}
 
 		// Rewrite the main XML file to ensure it is properly formatted, elements are ordered according to the schema, etc...
-		$test_profile_writer = new pts_test_profile_writer();
-		$test_profile_writer->rebuild_test_profile($test_profile);
-		$test_profile_writer->save_xml($test_profile->get_file_location());
+		$writer = new nye_XmlWriter();
+		$types = pts_validation::process_xsd_types();
+		$ret = pts_validation::xsd_to_rebuilt_xml(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/test-profile.xsd', $types, $test_profile, $writer);
+		$writer->saveXMLFile($test_profile->get_file_location());
+		//$test_profile_writer = new pts_test_profile_writer();
+		//$test_profile_writer->rebuild_test_profile($test_profile);
+		//$test_profile_writer->save_xml($test_profile->get_file_location());
 
 		// Now re-create the pts_test_profile object around the rewritten XML
 		$test_profile = new pts_test_profile($test_profile->get_identifier());
@@ -632,6 +636,36 @@ class pts_validation
 
 		return true;
 	}
+	public static function xsd_to_rebuilt_xml($xsd_file, $types, &$test_profile, &$writer)
+	{
+		$test_profile->no_fallbacks_on_null = true;
+		foreach(self::generate_xsd_element_objects($xsd_file, $test_profile, $types) as $path => $node)
+		{
+			$do_require = in_array('TEST_REQUIRES', $node->get_flags_array());
+			$value = $node->get_value();
+var_dump($value);
+			if($value == $node->get_default_value() && in_array('UNCOMMON', $node->get_flags_array()))
+			{
+				continue;
+			}
+			//if(empty($value))
+			//{
+			//	$value = $node->get_default_value();
+			//}
+			if(empty($value))
+			{
+				continue;
+			}
+			//if($do_require && empty($value))
+			//{
+				//return 'The ' . $path . ' value cannot be empty.';
+			//}
+			$writer->addXmlNodeWNE($path, trim($value));
+		}
+		$test_profile->no_fallbacks_on_null = false;
+
+		return true;
+	}
 	public static function string_to_sanitized_test_profile_base($input)
 	{
 		return pts_strings::keep_in_string(str_replace(' ', '-', strtolower($input)), pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH);;
@@ -704,7 +738,7 @@ class pts_validation
 				}
 				else if(is_array($val))
 				{
-					$val = '{ ' . implode(', ', call_user_func(array($o, $get_api))) . ' }';
+					$val = implode(', ', call_user_func(array($o, $get_api)));
 				}
 				else if($val === true)
 				{

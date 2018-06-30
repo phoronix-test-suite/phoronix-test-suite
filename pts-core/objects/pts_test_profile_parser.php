@@ -29,6 +29,7 @@ class pts_test_profile_parser
 	private $tp_extends;
 	protected $block_test_extension_support = false;
 	private $file_location = false;
+	public $no_fallbacks_on_null = false;
 
 	public function __construct($read = null, $normal_init = true)
 	{
@@ -168,7 +169,7 @@ class pts_test_profile_parser
 			}
 		}
 
-		if($r == null)
+		if($r == null && (!$this->no_fallbacks_on_null || $default_on_null == 'TRUE'))
 		{
 			$r = $default_on_null;
 		}
@@ -343,7 +344,7 @@ class pts_test_profile_parser
 	}
 	public function allow_cache_share()
 	{
-		return pts_strings::string_bool($this->xg('TestSettings/Default/AllowCacheShare', 'FALSE'));
+		return pts_strings::string_bool($this->xg('TestSettings/Default/AllowCacheShare'));
 	}
 	public function allow_results_sharing()
 	{
