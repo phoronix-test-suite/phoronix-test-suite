@@ -49,6 +49,26 @@ class phoromatic_admin implements pts_webui_interface
 			$result = $stmt->execute();
 			$main .= '<h2>Disabled Account: ' . $_POST['disable_user'] . '</h2>';
 		}
+		else if(isset($_POST['change_user_password']))
+		{
+			$account_salt = phoromatic_server::$db->querySingle('SELECT Salt FROM phoromatic_accounts WHERE UserName = \'' . $_POST['change_user_password'] . '\'');
+
+			if($account_salt != null)
+			{
+				if(strlen($_POST['new_user_password']) < 6)
+				{
+					phoromatic_error_page('Oops!', 'Please go back and ensure the supplied password is at least six characters long.');
+					return false;
+				}
+
+				$new_salted_password = hash('sha256', $account_salt . $_POST['new_user_password']);
+				$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_users SET Password = :new_password WHERE UserName = :user_name');
+				$stmt->bindValue(':new_password', $new_salted_password);
+				$stmt->bindValue(':user_name', $_POST['change_user_password']);
+				$result = $stmt->execute();
+				$main .= '<h2>Updated Password For Account: ' . $_POST['change_user_password'] . '</h2>';
+			}
+		}
 		else if(isset($_POST['register_username']) && isset($_POST['register_password']) && isset($_POST['register_password_confirm']) && isset($_POST['register_email']))
 		{
 			$new_account = create_new_phoromatic_account($_POST['register_username'], $_POST['register_password'], $_POST['register_password_confirm'], $_POST['register_email'], (isset($_POST['seed_accountid']) ? $_POST['seed_accountid'] : null));
@@ -155,6 +175,18 @@ class phoromatic_admin implements pts_webui_interface
 			}
 		}
 		$main .= '</select></p><p><input name="submit" value="Disable User" type="submit" /></p></form>';
+
+		$main .= '<hr /><h2>Change User Password</h2>';
+		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="change_user_pass" id="change_user_pass" method="post"><p><select name="change_user_password">';
+		foreach($user_list as $user_name => $user_level)
+		{
+			if($user_level > 0)
+			{
+				$main .= '<option value="' . $user_name . '">' . $user_name . '</option>';
+			}
+		}
+		$main .= '<p><input type="password" name="new_user_password" /> <sup>2</sup></p></select></p><p><input name="submit" value="Override User Password" type="submit" /></p></form>';
+
 		$main .= '<hr /><h2>Create New Account Group</h2>';
 		$main .= '<form name="register_form" id="register_form" action="?admin" method="post" onsubmit="return phoromatic_initial_registration(this);">
 		<h3>Username</h3>
