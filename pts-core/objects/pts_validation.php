@@ -169,9 +169,10 @@ class pts_validation
 
 		if(empty($download_xml_file) == false)
 		{
-			$writer = new pts_test_profile_downloads_writer();
-			$writer->rebuild_download_file($test_profile);
-			$writer->save_xml($download_xml_file);
+			$writer = new nye_XmlWriter();
+			$types = pts_validation::process_xsd_types();
+			$ret = pts_validation::xsd_to_rebuilt_xml(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/test-profile-downloads.xsd', $types, $test_profile, $writer);
+			$writer->saveXMLFile($download_xml_file);
 
 			$dom = new DOMDocument();
 			$dom->load($download_xml_file);
