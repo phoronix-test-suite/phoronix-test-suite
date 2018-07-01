@@ -470,7 +470,7 @@
 			<xs:element name="Option" minOccurs="0" maxOccurs="unbounded">
 					<xs:annotation>
 						<xs:appinfo>
-							<get>get_test_option_objects</get>
+							<get>get_test_option_objects_array</get>
 							<set></set>
 							<default></default>
 						</xs:appinfo>
@@ -521,7 +521,7 @@
 				<xs:element name="DefaultEntry" type="xs:string" minOccurs="0" maxOccurs="1">
 					<xs:annotation>
 						<xs:appinfo>
-							<get>get_default_entry</get>
+							<get>get_option_default_raw</get>
 							<set></set>
 							<default></default>
 						</xs:appinfo>

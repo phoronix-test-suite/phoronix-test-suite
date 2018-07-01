@@ -429,8 +429,9 @@ class pts_validation
 	}
 	public static function xsd_nodes_to_cli_prompts($nodes, &$new_object)
 	{
-		foreach($nodes as $path => $node)
+		foreach($nodes as $node)
 		{
+			$path = $node->get_path();
 			if($node->get_documentation() == null)
 			{
 				continue;
@@ -546,8 +547,9 @@ class pts_validation
 	{
 		$html = null;
 
-		foreach($nodes as $path => $node)
+		foreach($nodes as $node)
 		{
+			$path = $node->get_path();
 			if($node->get_documentation() == null)
 			{
 				continue;
@@ -615,9 +617,10 @@ class pts_validation
 	}
 	public static function xsd_to_var_array_generate_xml($xsd_file, $types, &$array_to_check, &$writer)
 	{
-		foreach(self::generate_xsd_element_objects($xsd_file, null, $types) as $path => $node)
+		foreach(self::generate_xsd_element_objects($xsd_file, null, $types) as $node)
 		{
 			$do_require = in_array('TEST_REQUIRES', $node->get_flags_array());
+			$path = $node->get_path();
 			$value = isset($array_to_check[$path]) ? $array_to_check[$path] : null;
 			if(empty($value))
 			{
@@ -631,7 +634,7 @@ class pts_validation
 			{
 				//return 'The ' . $path . ' value cannot be empty.';
 			}
-			$writer->addXmlNodeWNE($path, trim($value));
+			$writer->addXmlNodeWNE($path, $value);
 		}
 
 		return true;
@@ -639,11 +642,12 @@ class pts_validation
 	public static function xsd_to_rebuilt_xml($xsd_file, $types, &$test_profile, &$writer)
 	{
 		$test_profile->no_fallbacks_on_null = true;
-		foreach(self::generate_xsd_element_objects($xsd_file, $test_profile, $types) as $path => $node)
+		foreach(self::generate_xsd_element_objects($xsd_file, $test_profile, $types) as $node)
 		{
 			$do_require = in_array('TEST_REQUIRES', $node->get_flags_array());
 			$value = $node->get_value();
-var_dump($value);
+			$path = $node->get_path();
+
 			if($value == $node->get_default_value() && in_array('UNCOMMON', $node->get_flags_array()))
 			{
 				continue;
@@ -660,7 +664,7 @@ var_dump($value);
 			//{
 				//return 'The ' . $path . ' value cannot be empty.';
 			//}
-			$writer->addXmlNodeWNE($path, trim($value));
+			$writer->addXmlNodeWNE($path, $value);
 		}
 		$test_profile->no_fallbacks_on_null = false;
 
@@ -706,7 +710,7 @@ var_dump($value);
 			$cnodes = $el->getElementsByTagName('*');
 			for($i = 0; $i < $cnodes->length; $i++)
 			{
-				if(isset($nodes_to_match[$cnodes->item($i)->nodeName]))
+				if(isset($nodes_to_match[$cnodes->item($i)->nodeName]) && ${$nodes_to_match[$cnodes->item($i)->nodeName]} == null)
 				{
 					${$nodes_to_match[$cnodes->item($i)->nodeName]} = $cnodes->item($i)->nodeValue;
 				}
@@ -799,12 +803,14 @@ var_dump($value);
 
 			}
 
-			$append_to_array[$path . '/' . $name] = new pts_element_node($name, $value, $input_type_restrictions, $api, $documentation, $set_api, $default_value, $flags);
+			$append_to_array[] = new pts_element_node($name, $value, $input_type_restrictions, $api, $documentation, $set_api, $default_value, $flags, $path . '/' . $name);
 		}
 		else
 		{
 			$name = $el->getAttribute('name');
-			$append_to_array[$path . '/' . $name] = new pts_element_node($name);
+			$new_el = new pts_element_node($name);
+			$new_el->set_path($path . '/' . $name);
+			$append_to_array[] = $new_el;
 		}
 
 		if($el->getAttribute('maxOccurs') == 'unbounded')
@@ -816,6 +822,7 @@ var_dump($value);
 		if(is_array($o) && !empty($o))
 		{
 			$path .= (!empty($path) ? '/' : '') . $name;
+
 			foreach($o as $j)
 			{
 				foreach($els as $e)
@@ -840,8 +847,9 @@ var_dump($value);
 	}
 	public static function xsd_display_cli_from_objects($nodes)
 	{
-		foreach($nodes as $path => $node)
+		foreach($nodes as $node)
 		{
+			$path = $node->get_path();
 			$depth = count(explode('/', $path)) - 1;
 			if($node->get_documentation() == null)
 			{

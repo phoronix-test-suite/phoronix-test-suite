@@ -30,8 +30,9 @@ class pts_element_node
 	protected $documentation;
 	protected $default_value;
 	protected $flags;
+	protected $path;
 
-	public function __construct($name, $value = null, $input_type_restrictions = null, $api = null, $documentation = null, $api_setter = null, $default_value = null, $flags = null)
+	public function __construct($name, $value = null, $input_type_restrictions = null, $api = null, $documentation = null, $api_setter = null, $default_value = null, $flags = null, $path = null)
 	{
 		$this->name = $name;
 		$this->value = $value;
@@ -41,6 +42,7 @@ class pts_element_node
 		$this->api_setter = $api_setter;
 		$this->default_value = $default_value;
 		$this->flags = $flags;
+		$this->path = $path;
 	}
 	public function get_name()
 	{
@@ -77,6 +79,14 @@ class pts_element_node
 	public function get_flags_array()
 	{
 		return explode(' ', $this->flags);
+	}
+	public function set_path($path)
+	{
+		$this->path = $path;
+	}
+	public function get_path()
+	{
+		return $this->path;
 	}
 }
 ?>

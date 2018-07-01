@@ -398,6 +398,10 @@ class pts_test_profile_parser
 	{
 		return $this->xg('TestProfile/RequiresCoreVersionMax', 9990);
 	}
+	public function get_test_option_objects_array()
+	{
+		return $this->get_test_option_objects(false);
+	}
 	public function get_test_option_objects($auto_process = true)
 	{
 		$test_options = array();

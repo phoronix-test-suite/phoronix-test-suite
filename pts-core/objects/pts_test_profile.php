@@ -473,7 +473,6 @@ class pts_test_profile extends pts_test_profile_parser
 				}
 			}
 		}
-
 		return $downloads;
 	}
 	public function get_results_definition($limit = null)
