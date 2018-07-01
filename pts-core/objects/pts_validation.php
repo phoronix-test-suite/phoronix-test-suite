@@ -148,9 +148,6 @@ class pts_validation
 		$types = pts_validation::process_xsd_types();
 		$ret = pts_validation::xsd_to_rebuilt_xml(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/test-profile.xsd', $types, $test_profile, $writer);
 		$writer->saveXMLFile($test_profile->get_file_location());
-		//$test_profile_writer = new pts_test_profile_writer();
-		//$test_profile_writer->rebuild_test_profile($test_profile);
-		//$test_profile_writer->save_xml($test_profile->get_file_location());
 
 		// Now re-create the pts_test_profile object around the rewritten XML
 		$test_profile = new pts_test_profile($test_profile->get_identifier());
