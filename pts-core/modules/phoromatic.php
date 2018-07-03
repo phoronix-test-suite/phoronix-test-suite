@@ -465,6 +465,7 @@ class phoromatic extends pts_module_interface
 		$server_setup = self::setup_server_addressing($args);
 		//$http_comm = new phoromatic_client_comm_http();
 
+		/*
 		if(!$server_setup)
 		{
 			if(getenv('PTS_NO_REBOOT_ON_NETWORK_FAILURE') == false && PTS_IS_DAEMONIZED_SERVER_PROCESS)
@@ -474,6 +475,7 @@ class phoromatic extends pts_module_interface
 
 			return false;
 		}
+		*/
 
 		$times_failed = 0;
 		$has_success = false;
