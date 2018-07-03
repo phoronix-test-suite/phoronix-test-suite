@@ -252,10 +252,10 @@ function pts_version_codenames()
 		);
 }
 
-pts_define('PTS_VERSION', '8.0.1');
-pts_define('PTS_CORE_VERSION', 8010);
-pts_define('PTS_CODENAME', 'AREMARK');
-pts_define('PTS_RELEASE_DATE', '20180605');
+pts_define('PTS_VERSION', '8.2.0m0');
+pts_define('PTS_CORE_VERSION', 8100);
+pts_define('PTS_CODENAME', 'RAKKESTAD');
+pts_define('PTS_RELEASE_DATE', '20180701');
 
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));
 pts_define('PTS_IS_WEB_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'WEB_CLIENT'));
