@@ -7,11 +7,6 @@
 			<PackageManager>pacman</PackageManager>
 		</Information>
 		<Package>
-			<GenericName>common-dependencies</GenericName>
-			<PackageName>mesa-demos</PackageName>
-			<FileCheck>glxinfo</FileCheck>
-		</Package>
-		<Package>
 			<GenericName>gtk-development</GenericName>
 			<PackageName>gtk2</PackageName>
 		</Package>
@@ -106,7 +101,7 @@
 		</Package>
 		<Package>
 			<GenericName>zlib-development</GenericName>
-			<PackageName>zlib1</PackageName>
+			<PackageName>zlib</PackageName>
 		</Package>
 		<Package>
 			<GenericName>jpeg-development</GenericName>
@@ -115,6 +110,10 @@
 		<Package>
 			<GenericName>bc</GenericName>
 			<PackageName>bc</PackageName>
+		</Package>
+		<Package>
+			<GenericName>freeimage</GenericName>
+			<PackageName>freeimage</PackageName>
 		</Package>
 		<Package>
 			<GenericName>perl</GenericName>
