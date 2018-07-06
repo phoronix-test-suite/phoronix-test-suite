@@ -36,7 +36,7 @@ class sys_power extends phodevi_sensor
 	{
 		$unit = null;
 
-		if(self::$battery_sys || self::$tegra_power)
+		if(self::$battery_sys || self::$tegra_power || self::$windows_battery)
 		{
 			$unit = 'Milliwatts';
 		}
