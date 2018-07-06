@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2017, Phoronix Media
-	Copyright (C) 2009 - 2017, Michael Larabel
+	Copyright (C) 2009 - 2018, Phoronix Media
+	Copyright (C) 2009 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@ class sys_power extends phodevi_sensor
 	private static $tegra_power = false;
 	private static $wattsup_meter = false;
 	private static $ipmitool = false;
+	private static $windows_battery = false;
 
 	public static function get_unit()
 	{
@@ -52,6 +53,14 @@ class sys_power extends phodevi_sensor
 	}
 	public function support_check()
 	{
+		if(phodevi::is_windows())
+		{
+			if(self::windows_wmi_battery_status_discharge() > 0)
+			{
+				self::$windows_battery = true;
+			}
+			return true;
+		}
 		$test = self::sys_battery_power();
 		if(is_numeric($test) && $test != -1)
 		{
@@ -121,6 +130,22 @@ class sys_power extends phodevi_sensor
 		else if(self::$ipmitool)
 		{
 			return phodevi_linux_parser::read_ipmitool_sensor('Node Power');
+		}
+		else if(self::$windows_battery)
+		{
+			return self::windows_wmi_battery_status_discharge();
+		}
+	}
+	private static function windows_wmi_battery_status_discharge()
+	{
+		$output = trim(shell_exec('(Get-WmiObject -Namespace "root\wmi" BatteryStatus).DischargeRate'));
+		if(!empty($output) && is_numeric($output) && $output > 0)
+		{
+			return $output;
+		}
+		else
+		{
+			return -1;
 		}
 	}
 	private static function watts_up_power_meter()
