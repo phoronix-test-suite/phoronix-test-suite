@@ -25,9 +25,9 @@ set PTS_MODE=CLIENT
 set PTS_LAUNCHER=%0
 
 :: See if php was setup via Cygwin64, the benefit there is allowing access to PCNTL extensions, etc
-If exist C:\cygwin64\bin\php.exe (
-set PHP_BIN=C:\cygwin64\bin\php.exe
-)
+:: If exist C:\cygwin64\bin\php.exe (
+:: set PHP_BIN=C:\cygwin64\bin\php.exe
+:: )
 
 :: TODO: Other work to bring this up to sync with the *NIX phoronix-test-suite launcher
 If defined PHP_BIN goto SkipBinSearch
