@@ -129,10 +129,15 @@ class phodevi_cpu extends phodevi_device_interface
 				$info = phodevi_osx_parser::read_osx_system_profiler('SPHardwareDataType', 'TotalNumberOfCores');
 			}
 		}
-		else if(phodevi::is_windows())
+
+		if(phodevi::is_windows())
 		{
 			// Should be hit by the first NUMBER_OF_PROCESSORS env check...
-			//$info = getenv('NUMBER_OF_PROCESSORS');
+			$logical_cores = array_sum(phodevi_windows_parser::get_wmi_object('Win32_Processor', 'NumberOfLogicalProcessors', true));
+			if($logical_cores > $info || !is_numeric($info))
+			{
+				$info = $logical_cores;
+			}
 		}
 
 		if($info == null && isset(phodevi::$vfs->cpuinfo))
@@ -161,7 +166,7 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 		else if(phodevi::is_windows())
 		{
-			$physical_cores = phodevi_windows_parser::get_wmi_object('Win32_Processor', 'NumberOfCores');
+			$physical_cores = array_sum(phodevi_windows_parser::get_wmi_object('Win32_Processor', 'NumberOfCores', true));
 		}
 
 		if(empty($physical_cores) || !is_numeric($physical_cores))
@@ -465,7 +470,11 @@ class phodevi_cpu extends phodevi_device_interface
 		else if(phodevi::is_windows())
 		{
 			$info = phodevi_windows_parser::get_wmi_object('win32_processor', 'Name');
-
+			$cpu_count = count(phodevi_windows_parser::get_wmi_object('Win32_Processor', 'DeviceID', true));
+			if($cpu_count > 1)
+			{
+				$info = $cpu_count . ' x ' . $info;
+			}
 			if(!$info)
 			{
 				$info = getenv('PROCESSOR_IDENTIFIER');
