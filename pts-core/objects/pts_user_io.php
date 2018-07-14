@@ -22,6 +22,8 @@
 
 class pts_user_io
 {
+	public static $readline_completion_possibilities = null;
+
 	public static function read_user_input()
 	{
 		return trim(fgets(STDIN));
@@ -189,6 +191,28 @@ class pts_user_io
 
 		return $answer;
 	}
+	public static function readline_completion_handler($input)
+	{
+		$possibilities = array();
+		$readline_info = readline_info();
+		$input = substr($readline_info['line_buffer'], 0, $readline_info['end']);
+		$input_length = strlen($input);
+
+		if(is_array(self::$readline_completion_possibilities))
+		{
+			foreach(self::$readline_completion_possibilities as $possibility)
+			{
+				if(substr($possibility, 0, $input_length) == $input)
+				{
+					$possibilities[] = substr($possibility, $input_length);
+				}
+			}
+		}
+
+		//$possibilities[] = '';
+		sort($possibilities);
+		return $possibilities;
+	}
 	public static function prompt_text_menu($user_string, $options_r, $allow_multi_select = false, $return_index = false, $line_prefix = null)
 	{
 		$option_count = count($options_r);
@@ -213,8 +237,18 @@ class pts_user_io
 			{
 				echo $line_prefix . pts_client::cli_colored_text('** Multiple items can be selected, delimit by a comma. **', 'gray') . PHP_EOL;
 			}
-			echo $line_prefix . pts_client::cli_just_bold($user_string . ': ');
-			$select_choice = pts_user_io::read_user_input();
+
+			if(function_exists('readline') && function_exists('readline_completion_function'))
+			{
+				pts_user_io::$readline_completion_possibilities = array_merge($options_r, array_keys($key_index));
+				readline_completion_function(array('pts_user_io', 'readline_completion_handler'));
+				$select_choice = readline($line_prefix . $user_string . ': ');
+			}
+			else
+			{
+				echo $line_prefix . pts_client::cli_just_bold($user_string . ': ');
+				$select_choice = pts_user_io::read_user_input();
+			}
 
 			foreach(($allow_multi_select ? pts_strings::comma_explode($select_choice) : array($select_choice)) as $choice)
 			{

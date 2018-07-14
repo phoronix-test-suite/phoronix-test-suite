@@ -1427,7 +1427,7 @@ class pts_client
 				// Powershell defaults to 120
 				$terminal_width = trim(shell_exec('powershell "(get-host).UI.RawUI.MaxWindowSize.width"'));
 			}
-			else if(pts_client::read_env('TERMINAL_WIDTH') != false && is_numeric(pts_client::read_env('TERMINAL_WIDTH')) >= 80)
+			else if(pts_client::read_env('TERMINAL_WIDTH') != false && is_numeric(pts_client::read_env('TERMINAL_WIDTH')) >= 20)
 			{
 				$terminal_width = pts_client::read_env('TERMINAL_WIDTH');
 			}
@@ -1460,6 +1460,40 @@ class pts_client
 		}
 
 		return $terminal_width;
+	}
+	public static function terminal_height()
+	{
+		static $terminal_height = null;
+
+		if($terminal_height == null)
+		{
+			$terminal_height = 12;
+
+			if(phodevi::is_windows())
+			{
+				$terminal_height = trim(shell_exec('powershell "(get-host).UI.RawUI.MaxWindowSize.height"'));
+			}
+			else if(pts_client::executable_in_path('stty'))
+			{
+				$th = explode(' ', trim(shell_exec('stty size 2>&1')));
+
+				if(count($th) == 2 && is_numeric($th[0]) && $th[0] >= 1)
+				{
+					$terminal_height = $th[1];
+				}
+			}
+			else if(pts_client::executable_in_path('tput'))
+			{
+				$th = trim(shell_exec('tput lines 2>&1'));
+
+				if(is_numeric($th) && $th > 1)
+				{
+					$terminal_height = $th;
+				}
+			}
+		}
+
+		return $terminal_height;
 	}
 	public static function is_process_running($process)
 	{
