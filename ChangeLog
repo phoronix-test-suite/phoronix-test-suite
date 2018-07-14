@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 pts-core: Add readline-based autocompletion support for text-based menu selection lists
+pts-core: Add readline-based autocompletion support for the result file save name for trying to match existing result file identifiers
 phoromatic: From rootadmin allow the rootadmin to override/reset a user account password
 phodevi: Windows battery reporting discharge rate support
 phodevi: Improved multi CPU socket reporting on Windows

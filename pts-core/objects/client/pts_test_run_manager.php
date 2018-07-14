@@ -336,8 +336,17 @@ class pts_test_run_manager
 					echo PHP_EOL . 'The name of the saved file must have between 2 and 126 characters in length.' . PHP_EOL;
 				}
 
-				pts_client::$display->generic_prompt(pts_client::cli_just_bold('Enter a name to save these results under: '));
-				$save_name = pts_user_io::read_user_input();
+				if(function_exists('readline') && function_exists('readline_completion_function'))
+				{
+					pts_user_io::$readline_completion_possibilities = pts_tests::test_results_by_date();
+					readline_completion_function(array('pts_user_io', 'readline_completion_handler'));
+					$save_name = readline('Enter a name for the result file: ');
+				}
+				else
+				{
+					pts_client::$display->generic_prompt(pts_client::cli_just_bold('Enter a name for the result file: '));
+					$save_name = pts_user_io::read_user_input();
+				}
 			}
 		}
 
