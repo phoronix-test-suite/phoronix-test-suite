@@ -263,6 +263,7 @@ class pts_validation
 	}
 	public static function rebuild_result_parser_file($xml_file)
 	{
+		// TODO XXX this should be automated off the XSD file from PTS ~8.0 work
 		$xml_writer = new nye_XmlWriter();
 		$xml_parser = new nye_XmlReader($xml_file);
 		$result_template = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/OutputTemplate');
@@ -282,6 +283,7 @@ class pts_validation
 		$result_multiply_by = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/MultiplyResultBy');
 		$result_scale = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/ResultScale');
 		$result_proportion = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/ResultProportion');
+		$result_display_format = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/DisplayFormat');
 		$result_precision = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/ResultPrecision');
 		$result_args_desc = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/ArgumentsDescription');
 		$result_append_args_desc = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/AppendToArgumentsDescription');
@@ -304,7 +306,8 @@ class pts_validation
 			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/DivideResultBy', $result_divide_by[$i]);
 			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/MultiplyResultBy', $result_multiply_by[$i]);
 			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/ResultScale', $result_scale[$i]);
-			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/ResultProportion', $result_proportion[$i]);
+			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/ResultProportion', $result_display_format[$i]);
+			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/DisplayFormat', $result_proportion[$i]);
 			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/ResultPrecision', $result_precision[$i]);
 			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/ArgumentsDescription', $result_args_desc[$i]);
 			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/AppendToArgumentsDescription', $result_append_args_desc[$i]);
