@@ -184,6 +184,11 @@
 			<FileCheck>qmake-qt4, qt4/Qt/qgl.h</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>qt5-development</GenericName>
+			<PackageName>qml-module-qtquick2 qtdeclarative5-dev qt5-default qtbase5-dev</PackageName>
+			<FileCheck>qmake</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>autoconf</GenericName>
 			<PackageName>autoconf</PackageName>
 		</Package>

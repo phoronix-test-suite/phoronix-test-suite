@@ -248,6 +248,12 @@
 			<FileCheck>qmake OR qmake-qt4</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>qt5-development</GenericName>
+			<Title>Qt5 Development Files</Title>
+			<PossibleNames>libqt5-dev, qt5-devel</PossibleNames>
+			<FileCheck>qmake</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>autoconf</GenericName>
 			<Title>Autoconf</Title>
 			<PossibleNames>autoconf</PossibleNames>

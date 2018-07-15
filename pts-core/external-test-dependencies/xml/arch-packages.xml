@@ -145,6 +145,10 @@
 			<PackageName>qt4</PackageName>
 		</Package>
 		<Package>
+			<GenericName>qt5-development</GenericName>
+			<PackageName>qt5-base qt5-examples</PackageName>
+		</Package>
+		<Package>
 			<GenericName>autoconf</GenericName>
 			<PackageName>autoconf</PackageName>
 			<FileCheck>/usr/bin/autoconf</FileCheck>
