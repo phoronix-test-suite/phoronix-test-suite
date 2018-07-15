@@ -21,6 +21,8 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+// TODO XXX possibly simply a lot of this with xml_parse_into_struct
+
 class nye_XmlReader
 {
 	protected $tag_fallback = false; // Fallback value if tag is not present

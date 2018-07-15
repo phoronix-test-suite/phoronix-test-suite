@@ -324,5 +324,9 @@
 			<GenericName>wine</GenericName>
 			<PackageName>wine</PackageName>
 		</Package>
+		<Package>
+			<GenericName>mongodb</GenericName>
+			<PackageName>mongodb</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

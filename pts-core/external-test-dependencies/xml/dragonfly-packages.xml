@@ -216,5 +216,9 @@
 			<GenericName>Rscript</GenericName>
 			<PackageName>R</PackageName>
 		</Package>
+		<Package>
+			<GenericName>mongodb</GenericName>
+			<PackageName>mongodb</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

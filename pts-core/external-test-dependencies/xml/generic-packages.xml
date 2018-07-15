@@ -506,5 +506,11 @@
 			<PossibleNames>wine</PossibleNames>
 			<FileCheck>wine</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>mongodb</GenericName>
+			<Title>MongoDB</Title>
+			<PossibleNames>mongodb</PossibleNames>
+			<FileCheck>mongo</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
