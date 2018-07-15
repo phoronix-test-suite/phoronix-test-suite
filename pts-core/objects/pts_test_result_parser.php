@@ -396,8 +396,6 @@ class pts_test_result_parser
 	protected static function parse_result_process(&$test_run_request, $log_file, $pts_test_arguments, $extra_arguments, $prefix = null)
 	{
 		$produced_result = false;
-		$is_pass_fail_test = in_array($test_run_request->test_profile->get_display_format(), array('PASS_FAIL', 'MULTI_PASS_FAIL'));
-		$is_numeric_check = !$is_pass_fail_test;
 
 		if($prefix != null && substr($prefix, -1) != '_')
 		{
@@ -408,6 +406,12 @@ class pts_test_result_parser
 		foreach($definitions->get_result_parser_definitions() as $entry)
 		{
 			$tr = clone $test_run_request;
+			if($entry->get_display_format() != null)
+			{
+				$tr->test_profile->set_display_format($entry->get_display_format());
+			}
+			$is_pass_fail_test = in_array($tr->test_profile->get_display_format(), array('PASS_FAIL', 'MULTI_PASS_FAIL'));
+			$is_numeric_check = !$is_pass_fail_test;
 			$test_result = self::parse_result_process_entry($tr, $log_file, $pts_test_arguments, $extra_arguments, $prefix, $entry, $is_pass_fail_test, $is_numeric_check);
 			if($test_result != false)
 			{
@@ -797,6 +801,10 @@ class pts_test_result_parser
 			if($e->get_result_proportion() != null)
 			{
 				$test_run_request->test_profile->set_result_proportion($e->get_result_proportion());
+			}
+			if($e->get_display_format() != null)
+			{
+				$test_run_request->test_profile->set_display_format($e->get_display_format());
 			}
 			if($e->get_result_precision() != null)
 			{

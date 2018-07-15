@@ -58,9 +58,9 @@ class pts_test_profile_results_definition
 	{
 		return $this->image_parsers;
 	}
-	public function add_result_parser_definition($ot, $mtta, $rk, $lh, $lbh, $lah, $rbs, $ras, $sfr, $srp, $mm, $drb, $mrb, $rs, $rpro, $rpre, $ad, $atad, $ff, $tcts, $dob, $doa)
+	public function add_result_parser_definition($ot, $mtta, $rk, $lh, $lbh, $lah, $rbs, $ras, $sfr, $srp, $mm, $drb, $mrb, $rs, $rpro, $rpre, $ad, $atad, $ff, $tcts, $dob, $doa, $df)
 	{
-		$this->result_parsers[] = new pts_test_profile_results_definition_result_parser($ot, $mtta, $rk, $lh, $lbh, $lah, $rbs, $ras, $sfr, $srp, $mm, $drb, $mrb, $rs, $rpro, $rpre, $ad, $atad, $ff, $tcts, $dob, $doa);
+		$this->result_parsers[] = new pts_test_profile_results_definition_result_parser($ot, $mtta, $rk, $lh, $lbh, $lah, $rbs, $ras, $sfr, $srp, $mm, $drb, $mrb, $rs, $rpro, $rpre, $ad, $atad, $ff, $tcts, $dob, $doa, $df);
 	}
 	public function get_result_parser_definitions()
 	{
@@ -172,8 +172,9 @@ class pts_test_profile_results_definition_result_parser
 	private $turn_chars_to_space;
 	private $delete_output_before;
 	private $delete_output_after;
+	private $display_format;
 
-	public function __construct($ot, $mtta, $rk, $lh, $lbh, $lah, $rbs, $ras, $sfr, $srp, $mm, $drb, $mrb, $rs, $rpro, $rpre, $ad, $atad, $ff, $tcts, $dob, $doa)
+	public function __construct($ot, $mtta, $rk, $lh, $lbh, $lah, $rbs, $ras, $sfr, $srp, $mm, $drb, $mrb, $rs, $rpro, $rpre, $ad, $atad, $ff, $tcts, $dob, $doa, $df)
 	{
 		$this->output_template = $ot;
 		$this->match_to_test_args = $mtta;
@@ -197,6 +198,7 @@ class pts_test_profile_results_definition_result_parser
 		$this->turn_chars_to_space = $tcts;
 		$this->delete_output_before = $dob;
 		$this->delete_output_after = $doa;
+		$this->display_format = $df;
 	}
 	public function get_output_template()
 	{
@@ -285,6 +287,10 @@ class pts_test_profile_results_definition_result_parser
 	public function get_delete_output_after()
 	{
 		return $this->delete_output_after;
+	}
+	public function get_display_format()
+	{
+		return $this->display_format;
 	}
 }
 ?>

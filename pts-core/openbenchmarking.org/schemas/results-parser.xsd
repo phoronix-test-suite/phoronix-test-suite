@@ -180,6 +180,16 @@
 					<xs:documentation>If the test profile outputs multiple results where the result proportion may differ from what is defined in the test definition, the result proportion for this matched test result can be specified here.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="DisplayFormat" type="DisplayFormat" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_display_format</get>
+						<set></set>
+						<flags>UNCOMMON</flags>
+					</xs:appinfo>
+					<xs:documentation>The DisplayFormat is used to determine the kind of result provided / how to display the result. By default if not specified the value is BAR_GRAPH and is the most practical display format for a majority of the test cases.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="ResultPrecision" type="xs:string" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:appinfo>

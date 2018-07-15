@@ -539,7 +539,8 @@ class pts_test_profile extends pts_test_profile_parser
 					$tcts = isset($i->TurnCharsToSpace) ? $i->TurnCharsToSpace->__toString() : null;
 					$dob = isset($i->DeleteOutputBefore) ? $i->DeleteOutputBefore->__toString() : null;
 					$doa = isset($i->DeleteOutputAfter) ? $i->DeleteOutputAfter->__toString() : null;
-					$results_definition->add_result_parser_definition($ot, $mtta, $rk, $lh, $lbh, $lah, $rbs, $ras, $sfr, $srp, $mm, $drb, $mrb, $rs, $rpro, $rpre, $ad, $atad, $ff, $tcts, $dob, $doa);
+					$df = isset($i->DisplayFormat) ? $i->DisplayFormat->__toString() : null;
+					$results_definition->add_result_parser_definition($ot, $mtta, $rk, $lh, $lbh, $lah, $rbs, $ras, $sfr, $srp, $mm, $drb, $mrb, $rs, $rpro, $rpre, $ad, $atad, $ff, $tcts, $dob, $doa, $df);
 				}
 			}
 		}
