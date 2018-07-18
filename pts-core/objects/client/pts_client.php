@@ -1501,10 +1501,10 @@ class pts_client
 		if(phodevi::is_linux() && pts_client::executable_in_path('ps'))
 		{
 			// Checks if process is running on the system
-			$running = shell_exec('ps -C ' . strtolower($process) . ' 2>&1');
-			if(strpos($running, 'unrecognized option') === false)
+			$ps = shell_exec('ps -C ' . strtolower($process) . ' 2>&1');
+			if(strpos($ps, 'unrecognized option') === false)
 			{
-				$running = trim(str_replace(array('PID', 'TTY', 'TIME', 'CMD'), '', $running));
+				$running = trim(str_replace(array('PID', 'TTY', 'TIME', 'CMD'), '', $ps));
 			}
 		}
 		else if(phodevi::is_solaris())
