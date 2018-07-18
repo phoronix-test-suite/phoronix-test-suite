@@ -1497,11 +1497,15 @@ class pts_client
 	}
 	public static function is_process_running($process)
 	{
+		$running = null;
 		if(phodevi::is_linux() && pts_client::executable_in_path('ps'))
 		{
 			// Checks if process is running on the system
 			$running = shell_exec('ps -C ' . strtolower($process) . ' 2>&1');
-			$running = trim(str_replace(array('PID', 'TTY', 'TIME', 'CMD'), '', $running));
+			if(strpos($running, 'unrecognized option') === false)
+			{
+				$running = trim(str_replace(array('PID', 'TTY', 'TIME', 'CMD'), '', $running));
+			}
 		}
 		else if(phodevi::is_solaris())
 		{
@@ -1514,10 +1518,6 @@ class pts_client
 			// Checks if process is running on the system
 			$ps = shell_exec('ps -ax 2>&1');
 			$running = strpos($ps, strtolower($process)) != false ? 'TRUE' : null;
-		}
-		else
-		{
-			$running = null;
 		}
 
 		return !empty($running);

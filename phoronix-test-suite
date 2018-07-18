@@ -195,7 +195,7 @@ elif [ -x /sbin/apk ]
 then
 	# Alpine Linux
 	echo "The command to likely run for your operating system is: "
-	echo "# apk add php7 php7-dom php7-zip php7-json"
+	echo "# apk add php7 php7-dom php7-zip php7-json php7-simplexml"
 	echo " "
 elif [ -x /usr/bin/urpmi ]
 then
