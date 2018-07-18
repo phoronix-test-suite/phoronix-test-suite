@@ -694,7 +694,7 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 		else
 		{
-			$physical_id = self::read_cpuinfo_line('physical id');
+			$physical_id = self::read_cpuinfo_line('physical id', false);
 			$physical_id = (!empty($physical_id) || !is_numeric($physical_id) ? 0 : $physical_id) + 1;
 			$core_count = $physical_id * $core_count;
 		}
