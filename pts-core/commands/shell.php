@@ -38,78 +38,16 @@ class shell implements pts_option_interface
 		//echo PHP_EOL . (phodevi::read_property('motherboard', 'serial-number') != null ? PHP_EOL . 'System Serial Number: ' . phodevi::read_property('motherboard', 'serial-number') . PHP_EOL : null);
 		echo PHP_EOL;
 
-		// SENSORS
-		$terminal_width = pts_client::terminal_width();
-		$sensors = array();
-		foreach(phodevi::supported_sensors(array('cpu_usage', 'cpu_temp', 'sys_temp', 'sys_power', 'gpu_usage', 'gpu_temp', 'memory_usage')) as $sensor)
-		{
-			$supported_devices = call_user_func(array($sensor[2], 'get_supported_devices'));
-
-			if($sensor == array('cpu', 'usage', 'cpu_usage'))
-			{
-				$supported_devices = array('summary');
-			}
-			else if($supported_devices === null)
-			{
-				$supported_devices = array(null);
-			}
-
-
-			foreach($supported_devices as $device)
-			{
-				$sensor_object = new $sensor[2](0, $device);
-				$sensor_value = phodevi::read_sensor($sensor_object);
-				if($sensor_value < 0 || empty($sensor_value))
-				{
-					continue;
-				}
-
-				$sensor_name = phodevi::sensor_object_name($sensor_object) . ':';
-				$sensor_unit = phodevi::read_sensor_object_unit($sensor_object);
-				$sensors[] = array($sensor_name, $sensor_value, $sensor_unit);
-			}
-		}
-		if(($uptime = phodevi::system_uptime()) > 0)
-		{
-			$sensors[] = array('System Uptime', round($uptime / 60), 'Minutes');
-		}
-		$longest = array();
-		foreach($sensors as $ar)
-		{
-			foreach($ar as $i => $item)
-			{
-				if(!isset($longest[$i]) || strlen($item) >= $longest[$i])
-				{
-					$longest[$i] = strlen($item) + 1;
-				}
-			}
-		}
-		$sensor_length = array_sum($longest);
-		$sensors_per_line = floor($terminal_width / $sensor_length);
-
-		$i = 0;
-		foreach($sensors as $sensor_data)
-		{
-			echo str_repeat(' ', $longest[0] - strlen($sensor_data[0])) . pts_client::cli_just_bold($sensor_data[0]) . ' ' . $sensor_data[1] . str_repeat(' ', $longest[1] - strlen($sensor_data[1])) . pts_client::cli_colored_text($sensor_data[2], 'gray') . str_repeat(' ', $longest[2] - strlen($sensor_data[2]));
-
-			$i++;
-			if($i == $sensors_per_line)
-			{
-				$i = 0;
-				echo PHP_EOL;
-			}
-		}
-
-		echo PHP_EOL;
-		// END OF SENSORS
 		$autocompletion = false;
 		if(function_exists('readline') && function_exists('readline_completion_function'))
 		{
 			$autocompletion = 'Tab auto-completion support available.';
 		}
+
 		$blacklisted_commands = array('shell', 'quit', 'exit');
 		do
 		{
+			self::sensor_overview();
 			echo PHP_EOL . 'Phoronix Test Suite command to run or ' . pts_client::cli_colored_text('help', 'green') . ' for help, ' . pts_client::cli_colored_text('commands', 'green') . ' for possible options, ' . pts_client::cli_colored_text('interactive', 'green') . ' for a guided experience, ' . pts_client::cli_colored_text('system-info', 'green') . ' to view system hardware/software information, ' . pts_client::cli_colored_text('exit', 'green') . ' to exit. ' . ($autocompletion ? $autocompletion : '') . PHP_EOL;
 			echo PHP_EOL . pts_client::cli_colored_text((phodevi::is_root() ? '#' : '$'), 'white') . ' ' . pts_client::cli_colored_text('phoronix-test-suite', 'gray') . ' ';
 			if($autocompletion)
@@ -155,7 +93,75 @@ class shell implements pts_option_interface
 		}
 		while($sent_command != 'exit' && $sent_command != 'quit');
 	}
-	public static function shell_auto_completion_handler($input)
+	protected static function sensor_overview()
+	{
+		// SENSORS
+		$terminal_width = pts_client::terminal_width();
+		$sensors = array();
+		foreach(phodevi::supported_sensors(array('cpu_usage', 'cpu_temp', 'sys_temp', 'sys_power', 'gpu_usage', 'gpu_temp', 'memory_usage')) as $sensor)
+		{
+			$supported_devices = call_user_func(array($sensor[2], 'get_supported_devices'));
+
+			if($sensor == array('cpu', 'usage', 'cpu_usage'))
+			{
+				$supported_devices = array('summary');
+			}
+			else if($supported_devices === null)
+			{
+				$supported_devices = array(null);
+			}
+
+
+			foreach($supported_devices as $device)
+			{
+				$sensor_object = new $sensor[2](0, $device);
+				$sensor_value = phodevi::read_sensor($sensor_object);
+				if($sensor_value < 0 || empty($sensor_value))
+				{
+					continue;
+				}
+
+				$sensor_name = phodevi::sensor_object_name($sensor_object) . ':';
+				$sensor_unit = phodevi::read_sensor_object_unit($sensor_object);
+				$sensors[] = array($sensor_name, $sensor_value, $sensor_unit);
+			}
+		}
+		if(($uptime = phodevi::system_uptime()) > 0)
+		{
+			$sensors[] = array('System Uptime', round($uptime / 60), 'Minute' . ($uptime > 89 ? 's' : ''));
+		}
+		$longest = array();
+		foreach($sensors as $ar)
+		{
+			foreach($ar as $i => $item)
+			{
+				if(!isset($longest[$i]) || strlen($item) >= $longest[$i])
+				{
+					$longest[$i] = strlen($item) + 1;
+				}
+			}
+		}
+		$sensor_length = array_sum($longest);
+		$sensors_per_line = floor($terminal_width / $sensor_length);
+
+		echo PHP_EOL;
+		$i = 0;
+		foreach($sensors as $sensor_data)
+		{
+			echo str_repeat(' ', $longest[0] - strlen($sensor_data[0])) . pts_client::cli_just_bold($sensor_data[0]) . ' ' . $sensor_data[1] . str_repeat(' ', $longest[1] - strlen($sensor_data[1])) . pts_client::cli_colored_text($sensor_data[2], 'gray') . str_repeat(' ', $longest[2] - strlen($sensor_data[2]));
+
+			$i++;
+			if($i == $sensors_per_line)
+			{
+				$i = 0;
+				echo PHP_EOL;
+			}
+		}
+
+		echo PHP_EOL;
+		// END OF SENSORS
+	}
+	protected static function shell_auto_completion_handler($input)
 	{
 		$possibilities = array();
 		$readline_info = readline_info();
