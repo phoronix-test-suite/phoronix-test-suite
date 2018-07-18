@@ -165,7 +165,7 @@ class shell implements pts_option_interface
 	{
 		$possibilities = array();
 		$readline_info = readline_info();
-		$input = substr($readline_info['line_buffer'], 0, $readline_info['end']);
+		$input = isset($readline_info['end']) ? substr($readline_info['line_buffer'], 0, $readline_info['end']) : $readline_info['line_buffer'];
 		$input_length = strlen($input);
 		$possible_sub_commands = pts_client::possible_sub_commands();
 
