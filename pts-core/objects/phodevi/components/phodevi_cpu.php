@@ -675,11 +675,6 @@ class phodevi_cpu extends phodevi_device_interface
 	}
 	public static function cpuinfo_core_count()
 	{
-		if(pts_client::executable_in_path('lscpu'))
-		{
-			$lscpu = trim(shell_exec('lscpu -p | egrep -v \'^#\' | sort -u -t, -k 2,4 | wc -l'));
-		}
-
 		$core_count = self::read_cpuinfo_line('cpu cores');
 
 		if($core_count == false || !is_numeric($core_count))
@@ -697,9 +692,14 @@ class phodevi_cpu extends phodevi_device_interface
 		{
 			$core_count = self::cpuinfo_thread_count();
 		}
-		if(is_numeric($lscpu) && $lscpu > $core_count)
+
+		if(pts_client::executable_in_path('lscpu'))
 		{
-			$core_count = $lscpu;
+			$lscpu = trim(shell_exec('lscpu -p | egrep -v \'^#\' | sort -u -t, -k 2,4 | wc -l'));
+			if(is_numeric($lscpu) && $lscpu > $core_count)
+			{
+				$core_count = $lscpu;
+			}
 		}
 
 		return $core_count;
