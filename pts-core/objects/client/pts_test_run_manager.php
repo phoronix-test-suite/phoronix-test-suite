@@ -293,6 +293,7 @@ class pts_test_run_manager
 		$this->result_file = new pts_result_file($this->file_name);
 		$this->benchmark_log->log('SAVE IDENTIFIER: ' . $this->file_name);
 		$this->is_new_result_file = $this->result_file->get_system_count() == 0;
+		return $this->file_name;
 	}
 	public function set_results_identifier($identifier)
 	{
@@ -302,7 +303,7 @@ class pts_test_run_manager
 	{
 		if($this->file_name != null)
 		{
-			return;
+			return $this->file_name;
 		}
 
 		// Prompt to save a file when running a test
@@ -340,7 +341,7 @@ class pts_test_run_manager
 				{
 					pts_user_io::$readline_completion_possibilities = pts_tests::test_results_by_date();
 					readline_completion_function(array('pts_user_io', 'readline_completion_handler'));
-					$save_name = readline('Enter a name for the result file: ');
+					$save_name = readline(pts_client::$display->get_tab() . 'Enter a name for the result file: ');
 				}
 				else
 				{
@@ -350,10 +351,15 @@ class pts_test_run_manager
 			}
 		}
 
-		$this->set_save_name($save_name);
+		return $this->set_save_name($save_name);
 	}
 	public function prompt_results_identifier()
 	{
+		if(!empty($this->results_identifier))
+		{
+			return $this->results_identifier;
+		}
+
 		// Prompt for a results identifier
 		$results_identifier = null;
 		$show_identifiers = array();
@@ -435,6 +441,7 @@ class pts_test_run_manager
 		}
 
 		$this->results_identifier = $results_identifier;
+		return $this->results_identifier;
 	}
 	public function auto_generate_results_identifier()
 	{

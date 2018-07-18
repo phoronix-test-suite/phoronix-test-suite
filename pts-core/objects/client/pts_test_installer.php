@@ -732,8 +732,8 @@ class pts_test_installer
 
 			if($test_install_request->test_profile->get_file_installer() != false)
 			{
-				self::create_compiler_mask($test_install_request);
 				pts_module_manager::module_process('__pre_test_install', $test_install_request);
+				self::create_compiler_mask($test_install_request);
 				pts_client::$display->test_install_begin($test_install_request);
 
 				$pre_install_message = $test_install_request->test_profile->get_pre_install_message();
