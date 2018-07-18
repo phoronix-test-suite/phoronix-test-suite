@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2017, Phoronix Media
-	Copyright (C) 2009 - 2017, Michael Larabel
+	Copyright (C) 2009 - 2018, Phoronix Media
+	Copyright (C) 2009 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -90,6 +90,57 @@ class pts_argument_check
 		$type = '[' . $type . ']' . (($this->get_argument_index() === 'VARIABLE_LENGTH') ? '  ...' : null);
 
 		return $type;
+	}
+	protected static function available_tests()
+	{
+		$ob_tests = pts_openbenchmarking::available_tests(false);
+		$base_tests = array();
+
+		foreach($ob_tests as $t)
+		{
+			$base_tests[] = substr($t, strpos($t, '/') + 1);
+		}
+
+		return array_merge($base_tests, $ob_tests);
+	}
+	public function possible_values()
+	{
+		$possible_values = array();
+
+		if($this->get_function_check() == array('pts_types', 'is_result_file'))
+		{
+			$possible_values = pts_client::saved_test_results();
+		}
+		else if($this->get_function_check() == array('pts_types', 'identifier_to_object'))
+		{
+			$possible_values = array_merge(self::available_tests(), pts_client::saved_test_results(), pts_tests::all_suites(), pts_openbenchmarking::result_uploads_from_this_ip());
+		}
+		else if($this->get_function_check() == array('pts_types', 'is_test_or_suite'))
+		{
+			$possible_values = array_merge(self::available_tests(), pts_tests::all_suites());
+		}
+		else if($this->get_function_check() == array('pts_test_profile', 'is_test_profile'))
+		{
+			$possible_values = self::available_tests();
+		}
+		else if($this->get_function_check() == array('pts_test_suite', 'is_suite'))
+		{
+			$possible_values = pts_tests::all_suites();
+		}
+		else if($this->get_function_check() == array('pts_openbenchmarking', 'is_openbenchmarking_result_id'))
+		{
+			$possible_values = pts_openbenchmarking::result_uploads_from_this_ip();
+		}
+		else if($this->get_function_check() == array('pts_result_file', 'is_test_result_file'))
+		{
+			$possible_values = pts_client::saved_test_results();
+		}
+		else if($this->get_function_check() == array('pts_module', 'is_module'))
+		{
+			$possible_values = pts_module_manager::available_modules();
+		}
+
+		return $possible_values;
 	}
 }
 

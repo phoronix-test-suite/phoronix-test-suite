@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2016, Phoronix Media
-	Copyright (C) 2009 - 2016, Michael Larabel
+	Copyright (C) 2009 - 2018, Phoronix Media
+	Copyright (C) 2009 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -48,7 +48,7 @@ class pts_documentation
 	}
 	public static function client_commands_array()
 	{
-		$options = array('Test Installation' => array(), 'Testing' => array(), 'Batch Testing' => array(), 'OpenBenchmarking.org' => array(), 'System' => array(), 'Information' => array(), 'Asset Creation' => array(), 'Result Management' => array(), 'Result Analytics' => array(), 'Other' => array());
+		$options = array('System' => array(), 'Test Installation' => array(), 'Testing' => array(), 'Batch Testing' => array(), 'OpenBenchmarking.org' => array(), 'Information' => array(), 'Asset Creation' => array(), 'Result Management' => array(), 'Result Analytics' => array(), 'Other' => array());
 
 		foreach(pts_file_io::glob(PTS_COMMAND_PATH . '*.php') as $option_php_file)
 		{
@@ -88,6 +88,49 @@ class pts_documentation
 		}
 
 		return $options;
+	}
+	public static function client_commands_possible_values()
+	{
+		static $commands_possible_values = null;
+
+		if(empty($commands_possible_values))
+		{
+			foreach(pts_file_io::glob(PTS_COMMAND_PATH . '*.php') as $option_php_file)
+			{
+				$option_php = basename($option_php_file, '.php');
+				$name = str_replace('_', '-', $option_php);
+
+				if(!in_array(pts_strings::first_in_string($name, '-'), array('task')))
+				{
+					include_once($option_php_file);
+
+					$reflect = new ReflectionClass($option_php);
+					$constants = $reflect->getConstants();
+
+					$args = null;
+					if(method_exists($option_php, 'argument_checks'))
+					{
+						$args = call_user_func(array($option_php, 'argument_checks'));
+					}
+					$command_aliases = array();
+					if(method_exists($option_php, 'command_aliases'))
+					{
+						$command_aliases = call_user_func(array($option_php, 'command_aliases'));
+					}
+					$command_aliases[] = $name;
+					if(isset($args[0]) && $args[0] instanceof pts_argument_check)
+					{
+						$arg_possible_values = $args[0]->possible_values();
+						foreach($command_aliases as $alias)
+						{
+							$commands_possible_values[$alias] = $arg_possible_values;
+						}
+					}
+				}
+			}
+		}
+
+		return $commands_possible_values;
 	}
 	public static function basic_description()
 	{

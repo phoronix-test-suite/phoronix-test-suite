@@ -79,6 +79,10 @@ class pts_tests
 
 		return $local_suites;
 	}
+	public static function all_suites()
+	{
+		return array_merge(pts_openbenchmarking::available_suites(false), pts_tests::local_suites());
+	}
 	public static function scan_for_error($log_file, $strip_string)
 	{
 		$error = null;

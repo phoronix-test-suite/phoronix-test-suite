@@ -47,6 +47,25 @@ class pts_client
 		chmod($lock_file, 0644);
 		return self::$lock_pointers[$lock_file] != false && flock(self::$lock_pointers[$lock_file], LOCK_EX | LOCK_NB);
 	}
+	public static function possible_sub_commands()
+	{
+		static $options = null;
+
+		if(empty($options))
+		{
+			$options = array();
+			foreach(pts_file_io::glob(PTS_COMMAND_PATH . '*.php') as $option_php)
+			{
+				$name = str_replace('_', '-', basename($option_php, '.php'));
+				if(!in_array(pts_strings::first_in_string($name, '-'), array('dump', 'debug', 'task')))
+				{
+					$options[] = $name;
+				}
+			}
+		}
+
+		return $options;
+	}
 	public static function is_locked($lock_file)
 	{
 		$fp = fopen($lock_file, 'w');
@@ -1409,6 +1428,12 @@ class pts_client
 				$sent_command = 'help';
 			}
 		}
+		else
+		{
+			$replaced = true;
+		}
+
+		return $replaced;
 	}
 	public static function current_command()
 	{

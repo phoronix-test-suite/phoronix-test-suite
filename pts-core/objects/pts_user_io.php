@@ -204,7 +204,7 @@ class pts_user_io
 			{
 				if(substr($possibility, 0, $input_length) == $input)
 				{
-					$possibilities[] = substr($possibility, $input_length);
+					$possibilities[] = $possibility;
 				}
 			}
 		}

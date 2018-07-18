@@ -25,10 +25,15 @@ class shell implements pts_option_interface
 	const doc_section = 'System';
 	const doc_description = 'A simple text-driven shell interface / helper to the Phoronix Test Suite. Ideal for those that may be new to the Phoronix Test Suite';
 
+	protected static $auto_completion_cache = null;
+
 	public static function run($r)
 	{
-		pts_openbenchmarking::refresh_repository_lists();
 		pts_client::$display->generic_heading('Interactive Shell');
+		echo 'Generating Shell Cache...' . PHP_EOL;
+		self::$auto_completion_cache = pts_documentation::client_commands_possible_values();
+		echo 'Refreshing OpenBenchmarking.org Repository Cache...' . PHP_EOL;
+		pts_openbenchmarking::refresh_repository_lists();
 		echo phodevi::system_centralized_view();
 		//echo PHP_EOL . (phodevi::read_property('motherboard', 'serial-number') != null ? PHP_EOL . 'System Serial Number: ' . phodevi::read_property('motherboard', 'serial-number') . PHP_EOL : null);
 		echo PHP_EOL;
@@ -36,7 +41,7 @@ class shell implements pts_option_interface
 		// SENSORS
 		$terminal_width = pts_client::terminal_width();
 		$sensors = array();
-		foreach(phodevi::supported_sensors(array('cpu_usage', 'cpu_temp', 'sys_temp', 'gpu_usage', 'gpu_temp', 'memory_usage')) as $sensor)
+		foreach(phodevi::supported_sensors(array('cpu_usage', 'cpu_temp', 'sys_temp', 'sys_power', 'gpu_usage', 'gpu_temp', 'memory_usage')) as $sensor)
 		{
 			$supported_devices = call_user_func(array($sensor[2], 'get_supported_devices'));
 
@@ -54,7 +59,7 @@ class shell implements pts_option_interface
 			{
 				$sensor_object = new $sensor[2](0, $device);
 				$sensor_value = phodevi::read_sensor($sensor_object);
-				if($sensor_value < 0)
+				if($sensor_value < 0 || empty($sensor_value))
 				{
 					continue;
 				}
@@ -63,6 +68,10 @@ class shell implements pts_option_interface
 				$sensor_unit = phodevi::read_sensor_object_unit($sensor_object);
 				$sensors[] = array($sensor_name, $sensor_value, $sensor_unit);
 			}
+		}
+		if(($uptime = phodevi::system_uptime()) > 0)
+		{
+			$sensors[] = array('System Uptime', round($uptime / 60), 'Minutes');
 		}
 		$longest = array();
 		foreach($sensors as $ar)
@@ -93,12 +102,25 @@ class shell implements pts_option_interface
 
 		echo PHP_EOL;
 		// END OF SENSORS
+		$autocompletion = false;
+		if(function_exists('readline') && function_exists('readline_completion_function'))
+		{
+			$autocompletion = 'Tab auto-completion support available.';
+		}
 		$blacklisted_commands = array('shell', 'quit', 'exit');
 		do
 		{
-			echo PHP_EOL . 'Phoronix Test Suite command to run or ' . pts_client::cli_colored_text('help', 'green') . ' for help, ' . pts_client::cli_colored_text('commands', 'green') . ' for possible options, ' . pts_client::cli_colored_text('interactive', 'green') . ' for a guided experience, ' . pts_client::cli_colored_text('exit', 'green') . ' to exit: ' . PHP_EOL;
+			echo PHP_EOL . 'Phoronix Test Suite command to run or ' . pts_client::cli_colored_text('help', 'green') . ' for help, ' . pts_client::cli_colored_text('commands', 'green') . ' for possible options, ' . pts_client::cli_colored_text('interactive', 'green') . ' for a guided experience, ' . pts_client::cli_colored_text('system-info', 'green') . ' to view system hardware/software information, ' . pts_client::cli_colored_text('exit', 'green') . ' to exit. ' . ($autocompletion ? $autocompletion : '') . PHP_EOL;
 			echo PHP_EOL . pts_client::cli_colored_text((phodevi::is_root() ? '#' : '$'), 'white') . ' ' . pts_client::cli_colored_text('phoronix-test-suite', 'gray') . ' ';
-			$input = pts_user_io::read_user_input();
+			if($autocompletion)
+			{
+				readline_completion_function(array('shell', 'shell_auto_completion_handler'));
+				$input = readline();
+			}
+			else
+			{
+				$input = pts_user_io::read_user_input();
+			}
 			$argv = explode(' ', $input);
 			if($argv[0] == 'phoronix-test-suite')
 			{
@@ -108,17 +130,63 @@ class shell implements pts_option_interface
 			$sent_command = strtolower(str_replace('-', '_', (isset($argv[0]) ? $argv[0] : null)));
 			if(!in_array($sent_command, $blacklisted_commands))
 			{
-				pts_client::handle_sent_command($sent_command, $argv, $argc);
-				$pass_args = array();
-				for($i = 1; $i < $argc; $i++)
-				{
-					$pass_args[] = $argv[$i];
-				}
+				$passed = pts_client::handle_sent_command($sent_command, $argv, $argc);
 
-				pts_client::execute_command($sent_command, $pass_args); // Run command
+				if(!$passed)
+				{
+					echo PHP_EOL . pts_client::cli_colored_text('Unsupported command: ' . $argv[0], 'red', true) . PHP_EOL;
+				}
+				else
+				{
+					if($autocompletion)
+					{
+						readline_add_history($input);
+					}
+
+					$pass_args = array();
+					for($i = 1; $i < $argc; $i++)
+					{
+						$pass_args[] = $argv[$i];
+					}
+
+					pts_client::execute_command($sent_command, $pass_args); // Run command
+				}
 			}
 		}
-		while($sent_command != 'exit');
+		while($sent_command != 'exit' && $sent_command != 'quit');
+	}
+	public static function shell_auto_completion_handler($input)
+	{
+		$possibilities = array();
+		$readline_info = readline_info();
+		$input = substr($readline_info['line_buffer'], 0, $readline_info['end']);
+		$input_length = strlen($input);
+		$possible_sub_commands = pts_client::possible_sub_commands();
+
+		$argv = explode(' ', trim($input));
+
+		if(count($argv) == 1 && !isset(self::$auto_completion_cache[$argv[0]]))
+		{
+			foreach($possible_sub_commands as $possibility)
+			{
+				if(substr($possibility, 0, $input_length) === $input)
+				{
+					$possibilities[] = $possibility;
+				}
+			}
+		}
+		else
+		{
+			$targeted_sub_command = $argv[0];
+			if(isset(self::$auto_completion_cache[$argv[0]]))
+			{
+				$possibilities = self::$auto_completion_cache[$argv[0]];
+			}
+		}
+
+		//$possibilities[] = '';
+		sort($possibilities);
+		return $possibilities;
 	}
 }
 
