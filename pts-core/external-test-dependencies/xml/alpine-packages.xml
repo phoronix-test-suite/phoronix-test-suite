@@ -9,8 +9,8 @@
 		</Information>
 		<Package>
 			<GenericName>common-dependencies</GenericName>
-			<PackageName>unzip</PackageName>
-			<FileCheck>unzip</FileCheck>
+			<PackageName>unzip bash</PackageName>
+			<FileCheck>unzip bash</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>gtk-development</GenericName>
@@ -38,15 +38,11 @@
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
-			<PackageName>gcc make build-base automake autoconf</PackageName>
+			<PackageName>gcc make build-base automake autoconf linux-headers</PackageName>
 		</Package>
 		<Package>
 			<GenericName>cairo-development</GenericName>
 			<PackageName>cairo</PackageName>
-		</Package>
-		<Package>
-			<GenericName>xorg-development</GenericName>
-			<PackageName>xorg-server</PackageName>
 		</Package>
 		<Package>
 			<GenericName>tiff</GenericName>
@@ -174,7 +170,7 @@
 		</Package>
 		<Package>
 			<GenericName>python</GenericName>
-			<PackageName>python</PackageName>
+			<PackageName>python python3</PackageName>
 		</Package>
 		<Package>
 			<GenericName>yasm</GenericName>
