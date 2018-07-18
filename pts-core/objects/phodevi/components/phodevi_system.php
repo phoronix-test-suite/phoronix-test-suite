@@ -322,7 +322,8 @@ class phodevi_system extends phodevi_device_interface
 				$fs_checks = array(
 					'squashfs' => 'SquashFS',
 					'aufs' => 'AuFS',
-					'unionfs' => 'UnionFS'
+					'unionfs' => 'UnionFS',
+					'overlay' => 'overlayfs',
 					);
 
 				foreach($fs_checks as $fs_module => $fs_name)
