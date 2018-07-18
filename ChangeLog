@@ -4,9 +4,11 @@ Phoronix Test Suite (Git)
 
 pts-core: Add readline-based autocompletion support for text-based menu selection lists
 pts-core: Add readline-based autocompletion support for the result file save name for trying to match existing result file identifiers
+pts-core: Various Alpine Linux external dependency updates
 phoromatic: From rootadmin allow the rootadmin to override/reset a user account password
 phodevi: Windows battery reporting discharge rate support
 phodevi: Improved multi CPU socket reporting on Windows
+phodevi: Various hardware/software detection improvements when running within Docker/containers
 
 Phoronix Test Suite 8.0.1-Aremark
 26 June 2018
