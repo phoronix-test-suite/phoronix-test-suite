@@ -45,7 +45,6 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - http://sourceforge.net/projects/ffsb/
 - http://www.ratgpu.com/
 - http://panthema.net/2013/pmbw/
-- http://parsec.cs.princeton.edu/parsec3-doc.htm
 - http://www.capsl.udel.edu/splash/Download.html
 - stephentu/silo
 - https://code.google.com/p/smhasher/wiki/SMHasher
@@ -58,6 +57,7 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - https://github.com/soumith/convnet-benchmarks
 - http://apt.cs.manchester.ac.uk/projects/PAMELA/tools/SLAMBench/
 - https://haasn.xyz/posts/2017-10-05-how-to-benchmark-mpvs-raw-throughput.html
+- suitesparse http://faculty.cse.tamu.edu/davis/suitesparse.html
 
 ### WEB SOCKET / HTML5 USER INTERFACE WORK ###
 

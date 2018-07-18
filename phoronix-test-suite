@@ -53,18 +53,12 @@ then
 elif [ -x /usr/bin/php7 ] || [ -x /usr/local/bin/php7 ] || [ -x /usr/pkg/bin/php7 ]
 then
 	export PHP_BIN="php7"
-elif [ -x /usr/bin/php5 ] || [ -x /usr/local/bin/php5 ] || [ -x /usr/pkg/bin/php5 ]
-then
-	export PHP_BIN="php5"
 elif [ -x /usr/bin/php ] || [ -x /usr/pkg/bin/php ]
 then
 	export PHP_BIN="php"
 elif [ -x /usr/php7/bin/php ]
 then
 	export PHP_BIN="/usr/php7/bin/php"
-elif [ -x /usr/php5/bin/php ]
-then
-	export PHP_BIN="/usr/php5/bin/php"
 elif [ -x /usr/php/bin/php ]
 then
 	export PHP_BIN="/usr/php/bin/php"
@@ -92,6 +86,12 @@ then
 elif which php7 >/dev/null 2>&1 ;
 then
 	export PHP_BIN="php7"
+elif [ -x /usr/php5/bin/php ]
+then
+	export PHP_BIN="/usr/php5/bin/php"
+elif [ -x /usr/bin/php5 ] || [ -x /usr/local/bin/php5 ] || [ -x /usr/pkg/bin/php5 ]
+then
+	export PHP_BIN="php5"
 elif which php5 >/dev/null 2>&1 ;
 then
 	export PHP_BIN="php5"
@@ -147,7 +147,7 @@ elif [ -x /usr/bin/pkg_radd ]
 then
 	# BSD
 	echo "The command to likely run for your operating system is: "
-	echo "# pkg_radd php5 php5-json php5-zip php5-dom"
+	echo "# pkg_radd php7 php7-json php7-zip php7-dom"
 	echo " "
 elif [ -x /usr/bin/pacman ]
 then
@@ -195,7 +195,7 @@ elif [ -x /sbin/apk ]
 then
 	# Alpine Linux
 	echo "The command to likely run for your operating system is: "
-	echo "# apk add php5 php5-dom php5-zip php5-json"
+	echo "# apk add php7 php7-dom php7-zip php7-json"
 	echo " "
 elif [ -x /usr/bin/urpmi ]
 then
