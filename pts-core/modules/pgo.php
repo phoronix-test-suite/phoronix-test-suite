@@ -58,7 +58,16 @@ class pgo extends pts_module_interface
 
 		// force install of tests with PGO generation bits...
 		self::$phase = 'GENERATE_PGO';
+
+		// at least some say serial make ends up being better for PGO generation to not confuse the PGO process, the below override ensures -j 1
+		pts_client::override_pts_env_var('NUM_CPU_CORES', 1);
+		pts_client::override_pts_env_var('NUM_CPU_JOBS', 1);
+
 		pts_test_installer::standard_install(array($save_name), true);
+
+		// restore env vars about CPU core/jobs count
+		pts_client::unset_pts_env_var_override('NUM_CPU_CORES');
+		pts_client::unset_pts_env_var_override('NUM_CPU_JOBS');
 
 		// run the tests one time each, not saving the results, in order to generate the PGO profiles...
 		putenv('FORCE_TIMES_TO_RUN=1');

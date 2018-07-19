@@ -30,6 +30,7 @@ class pts_client
 	protected static $phoromatic_servers = array();
 	protected static $debug_mode = false;
 	protected static $full_output = false;
+	protected static $override_pts_env_vars = array();
 
 	public static function create_lock($lock_file)
 	{
@@ -292,7 +293,15 @@ class pts_client
 			}
 		}
 
-		return $env_variables;
+		return array_merge($env_variables, self::$override_pts_env_vars);
+	}
+	public static function override_pts_env_var($name, $value)
+	{
+		self::$override_pts_env_vars[$name] = $value;
+	}
+	public static function unset_pts_env_var_override($name)
+	{
+		return isset(self::$override_pts_env_vars[$name]) ? unset(self::$override_pts_env_vars[$name]) : false;
 	}
 	public static function test_install_root_path()
 	{
