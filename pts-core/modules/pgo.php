@@ -77,7 +77,11 @@ class pgo extends pts_module_interface
 
 		// force re-install of tests, in process set PGO using bits -fprofile-dir=/data/pgo -fprofile-use=/data/pgo -fprofile-correction
 		self::$phase = 'USE_PGO';
+		pts_client::override_pts_env_var('NUM_CPU_CORES', 1);
+		pts_client::override_pts_env_var('NUM_CPU_JOBS', 1);
 		pts_test_installer::standard_install(array($save_name), true);
+		pts_client::unset_pts_env_var_override('NUM_CPU_CORES');
+		pts_client::unset_pts_env_var_override('NUM_CPU_JOBS');
 
 		// run the tests saving results with " - PGO" postfix
 		$run_manager = new pts_test_run_manager(array('UploadResults' => false, 'SaveResults' => true, 'PromptForTestDescription' => false, 'RunAllTestCombinations' => false, 'PromptSaveName' => true, 'PromptForTestIdentifier' => true, 'OpenBrowser' => true), true);
