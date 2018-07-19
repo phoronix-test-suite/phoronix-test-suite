@@ -301,7 +301,10 @@ class pts_client
 	}
 	public static function unset_pts_env_var_override($name)
 	{
-		return isset(self::$override_pts_env_vars[$name]) ? unset(self::$override_pts_env_vars[$name]) : false;
+		if(isset(self::$override_pts_env_vars[$name]))
+		{
+			unset(self::$override_pts_env_vars[$name]);
+		}
 	}
 	public static function test_install_root_path()
 	{
