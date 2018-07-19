@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright (C) 2008 - 2017, Michael Larabel -->
+<!-- Copyright (C) 2008 - 2018, Michael Larabel -->
 <application>
  <id type="desktop">phoronix-test-suite.desktop</id>
  <licence>CC0</licence>
+ <metadata_license>FSFAP</metadata_license>
+ <project_license>GPL-3.0</project_license>
  <name>Phoronix Test Suite</name>
  <summary>The Phoronix Test Suite is an open-source, cross-platform automated benchmarking utility</summary>
  <description>
