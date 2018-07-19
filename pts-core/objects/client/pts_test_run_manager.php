@@ -52,6 +52,7 @@ class pts_test_run_manager
 	protected $dynamic_run_count_export_script;
 	protected $multi_test_stress_run = false;
 	protected $allow_test_cache_share = true;
+	protected $skip_post_execution_options = false;
 
 	protected static $test_run_process_active = false;
 	protected $batch_mode = false;
@@ -100,6 +101,10 @@ class pts_test_run_manager
 	public function auto_upload_to_openbenchmarking($do = true)
 	{
 		$this->auto_upload_to_openbenchmarking = ($do == true);
+	}
+	public function do_skip_post_execution_options()
+	{
+		$this->skip_post_execution_options = true;
 	}
 	public function increase_run_count_check(&$active_result_buffer, $scheduled_times_to_run, $latest_test_run_time)
 	{
@@ -950,7 +955,7 @@ class pts_test_run_manager
 	public function post_execution_process()
 	{
 		$this->benchmark_log->log('Test Run Process Ended');
-		if($this->do_save_results())
+		if($this->do_save_results() && !$this->skip_post_execution_options)
 		{
 			if($this->result_file->get_test_count() == 0 && $this->is_new_result_file)
 			{

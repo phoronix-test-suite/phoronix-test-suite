@@ -44,9 +44,10 @@ class pgo extends pts_module_interface
 		self::$stock_cxxflags = getenv('CXXFLAGS');
 
 		// make the initial run manager, collect the result file data we'll need, and run the tests pre-PGO...
-		$run_manager = new pts_test_run_manager(array('UploadResults' => false, 'SaveResults' => true, 'PromptForTestDescription' => false, 'RunAllTestCombinations' => false, 'PromptSaveName' => true, 'PromptForTestIdentifier' => true, 'OpenBrowser' => false));
+		$run_manager = new pts_test_run_manager();
 		$save_name = $run_manager->prompt_save_name();
 		$result_identifier = $run_manager->prompt_results_identifier();
+		$run_manager->do_skip_post_execution_options();
 
 		// Also force a fresh install before doing any of the PGO-related args...
 		self::$phase = 'PRE_PGO';
@@ -57,23 +58,23 @@ class pgo extends pts_module_interface
 
 		// force install of tests with PGO generation bits...
 		self::$phase = 'GENERATE_PGO';
-		pts_test_installer::standard_install($to_run, true);
+		pts_test_installer::standard_install(array($save_name), true);
 
 		// run the tests one time each, not saving the results, in order to generate the PGO profiles...
 		putenv('FORCE_TIMES_TO_RUN=1');
 		$run_manager = new pts_test_run_manager(array('SaveResults' => false, 'RunAllTestCombinations' => false), true);
-		$run_manager->standard_run($to_run);
+		$run_manager->standard_run(array($save_name));
 		putenv('FORCE_TIMES_TO_RUN'); // unset
 
 		// force re-install of tests, in process set PGO using bits -fprofile-dir=/data/pgo -fprofile-use=/data/pgo -fprofile-correction
 		self::$phase = 'USE_PGO';
-		pts_test_installer::standard_install($to_run, true);
+		pts_test_installer::standard_install(array($save_name), true);
 
 		// run the tests saving results with " - PGO" postfix
 		$run_manager = new pts_test_run_manager(array('UploadResults' => false, 'SaveResults' => true, 'PromptForTestDescription' => false, 'RunAllTestCombinations' => false, 'PromptSaveName' => true, 'PromptForTestIdentifier' => true, 'OpenBrowser' => true), true);
 		$run_manager->set_save_name($save_name, false);
 		$run_manager->set_results_identifier($result_identifier . ' - PGO');
-		$run_manager->standard_run($to_run);
+		$run_manager->standard_run(array($save_name));
 
 		// remove PGO files
 		pts_file_io::delete(self::$pgo_storage_dir);
