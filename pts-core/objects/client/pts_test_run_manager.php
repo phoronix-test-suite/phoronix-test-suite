@@ -428,7 +428,7 @@ class pts_test_run_manager
 					pts_client::$display->generic_prompt(pts_client::cli_just_bold('Enter a unique name to describe this test run / configuration: '));
 					if(function_exists('readline') && function_exists('readline_completion_function'))
 					{
-						pts_user_io::$readline_completion_possibilities = array_merge(phodevi::system_hardware(false), phodevi::system_software(false));
+						pts_user_io::$readline_completion_possibilities = array_map(array('pts_strings', 'trim_search_query'), array_merge(phodevi::system_hardware(false), phodevi::system_software(false)));
 						readline_completion_function(array('pts_user_io', 'readline_completion_handler'));
 						$results_identifier = readline();
 					}
