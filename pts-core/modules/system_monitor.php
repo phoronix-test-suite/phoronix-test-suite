@@ -46,7 +46,7 @@ class system_monitor extends pts_module_interface
 	private static $cgroup_enabled_controllers = array();
 
 	private static $test_run_try_number = null;
-	private static $sensor_monitoring_frequency = 2;
+	private static $sensor_monitoring_frequency = 1;
 	private static $test_run_timer = 0;
 	private static $perf_per_watt_collection;
 
