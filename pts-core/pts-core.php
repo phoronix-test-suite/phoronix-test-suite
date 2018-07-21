@@ -193,6 +193,7 @@ function pts_needed_extensions()
 		array(0, function_exists('posix_getpwuid'), 'POSIX', 'POSIX support is highly recommended.'),
 		array(0, function_exists('curl_init'), 'CURL', 'CURL is recommended for an enhanced download experience.'),
 		array(0, function_exists('socket_create_listen'), 'Sockets', 'Sockets is needed when running the Phoromatic Server.'),
+		array(0, function_exists('readline'), 'Readline', 'Readline support is useful for tab-based auto-completion support.'),
 		);
 }
 function pts_version_codenames()
