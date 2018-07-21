@@ -20,6 +20,20 @@ The following options are currently supported by the Phoronix Test Suite client.
 
 ---
 
+## System
+#### diagnostics
+This option will print information that is useful to developers when debugging problems with the Phoronix Test Suite and/or test profiles and test suites.
+#### interactive
+A simple text-driven interactive interface to the Phoronix Test Suite.
+#### php-conf
+This option will print information that is useful to developers when debugging problems with the Phoronix Test Suite and/or test profiles and test suites.
+#### shell
+A simple text-driven shell interface / helper to the Phoronix Test Suite. Ideal for those that may be new to the Phoronix Test Suite
+#### system-info
+Display the installed system hardware and software information as detected by the Phoronix Test Suite Phodevi Library.
+#### system-sensors
+Display the installed system hardware and software sensors in real-time as detected by the Phoronix Test Suite Phodevi Library.
+
 ## Test Installation
 #### force-install  [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option will force the installation (or re-installation) of a test or suite. The arguments and process is similar to the install option but even if the test is installed, the entire installation process will automatically be executed. This option is generally used when debugging a test installation problem.
@@ -89,20 +103,6 @@ This option is used for uploading a test result to OpenBenchmarking.org.
 This option can be used for uploading a test profile to your account on OpenBenchmarking.org. By uploading your test profile to OpenBenchmarking.org, others are then able to browse and access this test suite for easy distribution in a seamless manner by other Phoronix Test Suite clients.
 #### upload-test-suite
 This option can be used for uploading a test suite to your account on OpenBenchmarking.org. By uploading your test suite to OpenBenchmarking.org, others are then able to browse and access this test suite for easy distribution.
-
-## System
-#### diagnostics
-This option will print information that is useful to developers when debugging problems with the Phoronix Test Suite and/or test profiles and test suites.
-#### interactive
-A simple text-driven interactive interface to the Phoronix Test Suite.
-#### php-conf
-This option will print information that is useful to developers when debugging problems with the Phoronix Test Suite and/or test profiles and test suites.
-#### shell
-A simple text-driven shell interface / helper to the Phoronix Test Suite. Ideal for those that may be new to the Phoronix Test Suite
-#### system-info
-Display the installed system hardware and software information as detected by the Phoronix Test Suite Phodevi Library.
-#### system-sensors
-Display the installed system hardware and software sensors in real-time as detected by the Phoronix Test Suite Phodevi Library.
 
 ## Information
 #### info  [Test | Suite | OpenBenchmarking ID | Test Result]
@@ -296,6 +296,10 @@ This module utilizes the following environmental variables: COST_PERF_PER_DOLLAR
 This module alerts the user if the system configuration may not be the right one for achieving the best performance with the target benchmark(s). This initial version of the module actually cares only about the BFQ I/O scheduler and powersave governor checks.
 phoronix-test-suite perf_tips.show
 This module utilizes the following environmental variables: SUPPRESS_PERF_TIPS.
+
+### Benchmarking Compiler PGO Impact
+This module makes it easy to test a compiler PGO (Profile Guided Optimization) performance impact by running a test without PGO optimizations, capturing the PGO profile, rebuilding the tests with the PGO profile generated, and then repeat the benchmarks.
+phoronix-test-suite pgo.benchmark
 
 ### Phoromatic Client
 The Phoromatic client is used for connecting to a Phoromatic server (Phoromatic.com or a locally run server) to facilitate the automatic running of tests, generally across multiple test nodes in a routine manner. For more details visit http://www.phoromatic.com/. This module is intended to be used with Phoronix Test Suite 5.2+ clients and servers.

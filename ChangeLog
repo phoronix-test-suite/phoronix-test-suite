@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 8.2.0 Milestone 1
+21 July 2018
 
 pts-core: Add readline-based autocompletion support for text-based menu selection lists
 pts-core: Add readline-based autocompletion support for the result file save name for trying to match existing result file identifiers

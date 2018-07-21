@@ -1,4 +1,4 @@
-.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "8.0.1"
+.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "8.2.0m1"
 .SH NAME
 phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source platform for performing testing and performance evaluation.
 .SH SYNOPSIS
@@ -8,6 +8,25 @@ phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source plat
 .SH DESCRIPTION
 The **Phoronix Test Suite** is the most comprehensive testing and benchmarking platform available for Linux, Solaris, OS X, and BSD operating systems. The Phoronix Test Suite allows for carrying out tests in a fully automated manner from test installation to execution and reporting. All tests are meant to be easily reproducible, easy-to-use, and support fully automated execution. The Phoronix Test Suite is open-source under the GNU GPLv3 license and is developed by Phoronix Media in cooperation with partners.
 .SH OPTIONS
+.TP
+.SH SYSTEM
+.B diagnostics
+This option will print information that is useful to developers when debugging problems with the Phoronix Test Suite and/or test profiles and test suites.
+.TP
+.B interactive
+A simple text-driven interactive interface to the Phoronix Test Suite.
+.TP
+.B php-conf
+This option will print information that is useful to developers when debugging problems with the Phoronix Test Suite and/or test profiles and test suites.
+.TP
+.B shell
+A simple text-driven shell interface / helper to the Phoronix Test Suite. Ideal for those that may be new to the Phoronix Test Suite
+.TP
+.B system-info
+Display the installed system hardware and software information as detected by the Phoronix Test Suite Phodevi Library.
+.TP
+.B system-sensors
+Display the installed system hardware and software sensors in real-time as detected by the Phoronix Test Suite Phodevi Library.
 .TP
 .SH TEST INSTALLATION
 .B force-install [Test | Suite | OpenBenchmarking ID | Test Result]  ...
@@ -105,25 +124,6 @@ This option can be used for uploading a test profile to your account on OpenBenc
 .TP
 .B upload-test-suite
 This option can be used for uploading a test suite to your account on OpenBenchmarking.org. By uploading your test suite to OpenBenchmarking.org, others are then able to browse and access this test suite for easy distribution.
-.TP
-.SH SYSTEM
-.B diagnostics
-This option will print information that is useful to developers when debugging problems with the Phoronix Test Suite and/or test profiles and test suites.
-.TP
-.B interactive
-A simple text-driven interactive interface to the Phoronix Test Suite.
-.TP
-.B php-conf
-This option will print information that is useful to developers when debugging problems with the Phoronix Test Suite and/or test profiles and test suites.
-.TP
-.B shell
-A simple text-driven shell interface / helper to the Phoronix Test Suite. Ideal for those that may be new to the Phoronix Test Suite
-.TP
-.B system-info
-Display the installed system hardware and software information as detected by the Phoronix Test Suite Phodevi Library.
-.TP
-.B system-sensors
-Display the installed system hardware and software sensors in real-time as detected by the Phoronix Test Suite Phodevi Library.
 .TP
 .SH INFORMATION
 .B info [Test | Suite | OpenBenchmarking ID | Test Result]
