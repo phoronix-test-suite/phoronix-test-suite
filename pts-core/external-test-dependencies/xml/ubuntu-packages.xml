@@ -55,7 +55,7 @@
 		</Package>
 		<Package>
 			<GenericName>openssl-development</GenericName>
-			<PackageName>libssl-dev</PackageName>
+			<PackageName>libssl1.0-dev</PackageName>
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
