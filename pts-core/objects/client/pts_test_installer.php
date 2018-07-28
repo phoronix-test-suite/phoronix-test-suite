@@ -223,6 +223,8 @@ class pts_test_installer
 		pts_file_io::mkdir($download_location);
 		$module_pass = array($identifier, $test_install_request->get_download_objects());
 		pts_module_manager::module_process('__pre_test_download', $module_pass);
+		$objects_completed = 0;
+		$fail_if_no_downloads = false;
 
 		foreach($test_install_request->get_download_objects() as $download_package)
 		{
@@ -249,6 +251,7 @@ class pts_test_installer
 			{
 				case 'IN_DESTINATION_DIR':
 					pts_client::$display->test_install_download_file('FILE_FOUND', $download_package);
+					$objects_completed++;
 					continue;
 				case 'REMOTE_DOWNLOAD_CACHE':
 					$download_tries = 0;
@@ -282,6 +285,7 @@ class pts_test_installer
 
 					if(is_file($download_destination))
 					{
+						$objects_completed++;
 						continue;
 					}
 				case 'MAIN_DOWNLOAD_CACHE':
@@ -297,6 +301,7 @@ class pts_test_installer
 							// SymLinkFilesFromCache is disabled by default
 							pts_client::$display->test_install_download_file('LINK_FROM_CACHE', $download_package);
 							symlink($download_cache_file, $download_destination);
+							$objects_completed++;
 						}
 						else
 						{
@@ -332,12 +337,17 @@ class pts_test_installer
 
 						if(is_file($download_destination))
 						{
+							$objects_completed++;
 							continue;
 						}
 					}
 				default:
 					$package_urls = $download_package->get_download_url_array();
-
+					if(!is_file($download_destination) && empty($package_urls))
+					{
+						self::test_install_error(null, $test_install_request, $package_filename . ' must be manually placed in the Phoronix Test Suite download-cache.');
+						$fail_if_no_downloads = true;
+					}
 					// Download the file
 					if(!is_file($download_destination) && count($package_urls) > 0 && $package_urls[0] != null)
 					{
@@ -385,6 +395,7 @@ class pts_test_installer
 								if(is_file($download_destination_temp))
 								{
 									rename($download_destination_temp, $download_destination);
+									$objects_completed++;
 								}
 
 								if($download_package->get_filesize() > 0 && $download_end != $download_start)
@@ -462,7 +473,7 @@ class pts_test_installer
 
 		pts_module_manager::module_process('__post_test_download', $identifier);
 
-		return true;
+		return !$fail_if_no_downloads || $objects_completed > 0;
 	}
 	public static function create_compiler_mask(&$test_install_request)
 	{
