@@ -254,7 +254,7 @@ function pts_version_codenames()
 }
 
 pts_define('PTS_VERSION', '8.2.0m1');
-pts_define('PTS_CORE_VERSION', 8110);
+pts_define('PTS_CORE_VERSION', 8111);
 pts_define('PTS_CODENAME', 'RAKKESTAD');
 pts_define('PTS_RELEASE_DATE', '20180721');
 
