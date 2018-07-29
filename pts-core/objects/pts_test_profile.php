@@ -529,6 +529,7 @@ class pts_test_profile extends pts_test_profile_parser
 					$srp = isset($i->StripResultPostfix) ? $i->StripResultPostfix->__toString() : null;
 					$mm = isset($i->MultiMatch) ? $i->MultiMatch->__toString() : null;
 					$drb = isset($i->DivideResultBy) ? $i->DivideResultBy->__toString() : null;
+					$drd = isset($i->DivideResultDivisor) ? $i->DivideResultDivisor->__toString() : null;
 					$mrb = isset($i->MultiplyResultBy) ? $i->MultiplyResultBy->__toString() : null;
 					$rs = isset($i->ResultScale) ? $i->ResultScale->__toString() : null;
 					$rpro = isset($i->ResultProportion) ? $i->ResultProportion->__toString() : null;
@@ -540,7 +541,7 @@ class pts_test_profile extends pts_test_profile_parser
 					$dob = isset($i->DeleteOutputBefore) ? $i->DeleteOutputBefore->__toString() : null;
 					$doa = isset($i->DeleteOutputAfter) ? $i->DeleteOutputAfter->__toString() : null;
 					$df = isset($i->DisplayFormat) ? $i->DisplayFormat->__toString() : null;
-					$results_definition->add_result_parser_definition($ot, $mtta, $rk, $lh, $lbh, $lah, $rbs, $ras, $sfr, $srp, $mm, $drb, $mrb, $rs, $rpro, $rpre, $ad, $atad, $ff, $tcts, $dob, $doa, $df);
+					$results_definition->add_result_parser_definition($ot, $mtta, $rk, $lh, $lbh, $lah, $rbs, $ras, $sfr, $srp, $mm, $drb, $mrb, $rs, $rpro, $rpre, $ad, $atad, $ff, $tcts, $dob, $doa, $df, $drd);
 				}
 			}
 		}

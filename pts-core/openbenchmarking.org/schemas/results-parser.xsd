@@ -150,6 +150,16 @@
 					<xs:documentation>DivideResultBy allows for specifying a number by which the detected result will be divided by, if wishing to convert between different units.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="DivideResultDivisor" type="PositiveInteger" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_divide_result_divisor</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
+					<xs:documentation>DivideResultDivisor allows for specifying a divisor for dviding the test result as a multiple.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="MultiplyResultBy" type="PositiveInteger" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:appinfo>

@@ -58,9 +58,9 @@ class pts_test_profile_results_definition
 	{
 		return $this->image_parsers;
 	}
-	public function add_result_parser_definition($ot, $mtta, $rk, $lh, $lbh, $lah, $rbs, $ras, $sfr, $srp, $mm, $drb, $mrb, $rs, $rpro, $rpre, $ad, $atad, $ff, $tcts, $dob, $doa, $df)
+	public function add_result_parser_definition($ot, $mtta, $rk, $lh, $lbh, $lah, $rbs, $ras, $sfr, $srp, $mm, $drb, $mrb, $rs, $rpro, $rpre, $ad, $atad, $ff, $tcts, $dob, $doa, $df, $drd)
 	{
-		$this->result_parsers[] = new pts_test_profile_results_definition_result_parser($ot, $mtta, $rk, $lh, $lbh, $lah, $rbs, $ras, $sfr, $srp, $mm, $drb, $mrb, $rs, $rpro, $rpre, $ad, $atad, $ff, $tcts, $dob, $doa, $df);
+		$this->result_parsers[] = new pts_test_profile_results_definition_result_parser($ot, $mtta, $rk, $lh, $lbh, $lah, $rbs, $ras, $sfr, $srp, $mm, $drb, $mrb, $rs, $rpro, $rpre, $ad, $atad, $ff, $tcts, $dob, $doa, $df, $drd);
 	}
 	public function get_result_parser_definitions()
 	{
@@ -162,6 +162,7 @@ class pts_test_profile_results_definition_result_parser
 	private $strip_result_postfix;
 	private $multi_match;
 	private $divide_result_by;
+	private $divide_result_divisor;
 	private $multiply_result_by;
 	private $result_scale;
 	private $result_proportion;
@@ -174,7 +175,7 @@ class pts_test_profile_results_definition_result_parser
 	private $delete_output_after;
 	private $display_format;
 
-	public function __construct($ot, $mtta, $rk, $lh, $lbh, $lah, $rbs, $ras, $sfr, $srp, $mm, $drb, $mrb, $rs, $rpro, $rpre, $ad, $atad, $ff, $tcts, $dob, $doa, $df)
+	public function __construct($ot, $mtta, $rk, $lh, $lbh, $lah, $rbs, $ras, $sfr, $srp, $mm, $drb, $mrb, $rs, $rpro, $rpre, $ad, $atad, $ff, $tcts, $dob, $doa, $df, $drd)
 	{
 		$this->output_template = $ot;
 		$this->match_to_test_args = $mtta;
@@ -188,6 +189,7 @@ class pts_test_profile_results_definition_result_parser
 		$this->strip_result_postfix = $srp;
 		$this->multi_match = $mm;
 		$this->divide_result_by = $drb;
+		$this->divide_result_divisor = $drd;
 		$this->multiply_result_by = $mrb;
 		$this->result_scale = $rs;
 		$this->result_proportion = $rpro;
@@ -247,6 +249,10 @@ class pts_test_profile_results_definition_result_parser
 	public function get_divide_result_by()
 	{
 		return $this->divide_result_by;
+	}
+	public function get_divide_result_divisor()
+	{
+		return $this->divide_result_divisor;
 	}
 	public function get_multiply_result_by()
 	{

@@ -720,6 +720,7 @@ class pts_test_result_parser
 
 		$multiply_by = $e->get_multiply_result_by();
 		$divide_by = $e->get_divide_result_by();
+		$divide_divisor = $e->get_divide_result_divisor();
 
 		foreach($test_results as $x => &$test_result)
 		{
@@ -744,6 +745,10 @@ class pts_test_result_parser
 			if($divide_by != null && is_numeric($divide_by) && $divide_by != 0)
 			{
 				$test_result = $test_result / $divide_by;
+			}
+			if($divide_divisor != null && is_numeric($divide_divisor) && $divide_divisor != 0)
+			{
+				$test_result = $divide_divisor / $test_result;
 			}
 			if($multiply_by != null && is_numeric($multiply_by) && $multiply_by != 0)
 			{

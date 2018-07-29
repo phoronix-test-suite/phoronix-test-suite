@@ -280,6 +280,7 @@ class pts_validation
 		$chars_to_space = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/TurnCharsToSpace');
 		$file_format = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/FileFormat');
 		$result_divide_by = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/DivideResultBy');
+		$result_divide_divisor = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/DivideResultDivisor');
 		$result_multiply_by = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/MultiplyResultBy');
 		$result_scale = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/ResultScale');
 		$result_proportion = $xml_parser->getXMLArrayValues('PhoronixTestSuite/ResultsParser/ResultProportion');
@@ -304,6 +305,7 @@ class pts_validation
 			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/StripResultPostfix', $strip_result_postfix[$i]);
 			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/MultiMatch', $multi_match[$i]);
 			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/DivideResultBy', $result_divide_by[$i]);
+			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/DivideResultDivisor', $result_divide_divisor[$i]);
 			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/MultiplyResultBy', $result_multiply_by[$i]);
 			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/ResultScale', $result_scale[$i]);
 			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/ResultsParser/ResultProportion', $result_proportion[$i]);
