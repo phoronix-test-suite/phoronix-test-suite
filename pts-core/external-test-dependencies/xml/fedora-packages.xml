@@ -9,8 +9,8 @@
 		</Information>
 		<Package>
 			<GenericName>common-dependencies</GenericName>
-			<PackageName>unzip</PackageName>
-			<FileCheck>unzip</FileCheck>
+			<PackageName>unzip bzip2</PackageName>
+			<FileCheck>unzip, bzip2</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>32bit-compatibility</GenericName>
@@ -64,7 +64,7 @@
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
-			<PackageName>gcc gcc-c++ make autoconf automake glibc-static patch</PackageName>
+			<PackageName>gcc gcc-c++ make autoconf automake glibc-static patch expat-devel</PackageName>
 			<FileCheck>gcc, c++</FileCheck>
 		</Package>
 		<Package>
