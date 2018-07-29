@@ -266,6 +266,12 @@
 			<FileCheck>libtool OR libtoolize</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>libevent</GenericName>
+			<Title>Libevent</Title>
+			<PossibleNames>libevent, libevent-dev</PossibleNames>
+			<FileCheck>event.h</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>popt</GenericName>
 			<Title>Popt</Title>
 			<PossibleNames>popt, popt-devel, libpopt-dev</PossibleNames>

@@ -230,6 +230,10 @@
 			<GenericName>redis-server</GenericName>
 			<PackageName>redis</PackageName>
 		</Package>
+		<Package>
+			<GenericName>libevent</GenericName>
+			<PackageName>libevent</PackageName>
+		</Package>
                 <Package>
 			<GenericName>opencv</GenericName>
 			<PackageName>opencv</PackageName>

@@ -305,6 +305,10 @@
 			<PackageName>dev-lang/v8</PackageName>
 		</Package>
 		<Package>
+			<GenericName>libevent</GenericName>
+			<PackageName>dev-libs/libevent</PackageName>
+		</Package>
+		<Package>
 			<GenericName>ruby</GenericName>
 			<PackageName>dev-lang/ruby</PackageName>
 		</Package>

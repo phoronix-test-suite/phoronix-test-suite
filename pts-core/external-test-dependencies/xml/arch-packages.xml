@@ -243,6 +243,10 @@
 			<PackageName>openmpi</PackageName>
 		</Package>
 		<Package>
+			<GenericName>libevent</GenericName>
+			<PackageName>libevent</PackageName>
+		</Package>
+		<Package>
 			<GenericName>dune</GenericName>
 			<PackageName>dune-common dune-grid dune-istl</PackageName>
 		</Package>

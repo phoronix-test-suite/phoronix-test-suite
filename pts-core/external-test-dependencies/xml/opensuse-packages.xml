@@ -307,6 +307,10 @@
 			<PackageName>ruby</PackageName>
 		</Package>
 		<Package>
+			<GenericName>libevent</GenericName>
+			<PackageName>libevent-devel</PackageName>
+		</Package>
+		<Package>
 			<GenericName>wine</GenericName>
 			<PackageName>wine</PackageName>
 		</Package>

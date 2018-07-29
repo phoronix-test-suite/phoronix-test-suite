@@ -197,6 +197,10 @@
 			<PackageName>libtool</PackageName>
 		</Package>
 		<Package>
+			<GenericName>libevent</GenericName>
+			<PackageName>libevent-dev</PackageName>
+		</Package>
+		<Package>
 			<GenericName>ncurses-development</GenericName>
 			<PackageName>libncurses5-dev</PackageName>
 		</Package>
