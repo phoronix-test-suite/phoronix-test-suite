@@ -263,7 +263,7 @@
 			<GenericName>libtool</GenericName>
 			<Title>Libtool</Title>
 			<PossibleNames>libtool</PossibleNames>
-			<FileCheck>libtool</FileCheck>
+			<FileCheck>libtool OR libtoolize</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>popt</GenericName>
