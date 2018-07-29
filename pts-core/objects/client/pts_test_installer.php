@@ -53,6 +53,12 @@ class pts_test_installer
 			trigger_error('The test installation directory is not writable.' . PHP_EOL . 'Location: ' . pts_client::test_install_root_path(), E_USER_ERROR);
 			return false;
 		}
+		$mount_options = phodevi::read_property('disk', 'mount-options');
+		if(isset($mount_options['mount-options']) && strpos($mount_options['mount-options'], 'noexec') !== false)
+		{
+			trigger_error('The test installation directory is on a file-system mounted with the \'noexec\' mount option. Re-mount the file-system appropriately or change the Phoronix Test Suite user configuration file to point to an alternative mount point.' . PHP_EOL . 'Location: ' . pts_client::test_install_root_path(), E_USER_ERROR);
+			return false;
+		}
 
 		pts_test_installer::start_install($test_profiles, $unknown_tests, $force_install, $no_prompts);
 		pts_client::release_lock($lock_path);
