@@ -175,7 +175,7 @@ class pts_tests
 		$extra_vars['LC_NUMERIC'] = '';
 		$extra_vars['LC_CTYPE'] = '';
 		$extra_vars['LC_MESSAGES'] = '';
-		$extra_vars['LANG'] = '';
+		$extra_vars['LANG'] = 'en_US.utf8';
 		$extra_vars['PHP_BIN'] = PHP_BIN;
 
 		// Safe-guards to try to ensure more accurate testing
