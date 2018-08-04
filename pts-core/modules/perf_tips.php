@@ -20,6 +20,11 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+// Possibilities:
+// vm.dirty_ratio
+// noatime / nobarrier
+// transparent_hugepages
+
 class pts_perf_tip_msg
 {
 	public $message;
