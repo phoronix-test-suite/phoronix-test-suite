@@ -258,7 +258,7 @@ class pts_test_installer
 				case 'IN_DESTINATION_DIR':
 					pts_client::$display->test_install_download_file('FILE_FOUND', $download_package);
 					$objects_completed++;
-					continue;
+					continue 2;
 				case 'REMOTE_DOWNLOAD_CACHE':
 					$download_tries = 0;
 					do
@@ -292,7 +292,7 @@ class pts_test_installer
 					if(is_file($download_destination))
 					{
 						$objects_completed++;
-						continue;
+						continue 2;
 					}
 				case 'MAIN_DOWNLOAD_CACHE':
 				case 'LOCAL_DOWNLOAD_CACHE':
@@ -344,7 +344,7 @@ class pts_test_installer
 						if(is_file($download_destination))
 						{
 							$objects_completed++;
-							continue;
+							continue 2;
 						}
 					}
 				default:
