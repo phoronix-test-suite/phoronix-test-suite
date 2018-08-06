@@ -208,8 +208,7 @@ abstract class pts_graph_core
 						$date = $identifier[0];
 						break;
 					default:
-						continue;
-						break;
+						continue 2;
 				}
 				/*if(in_array($buffer_item->get_result_identifier(), $this->graph_identifiers))
 				{

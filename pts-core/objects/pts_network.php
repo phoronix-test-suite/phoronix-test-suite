@@ -501,6 +501,20 @@ class pts_network
 			}
 		}
 
+		if(empty($local_ip) && function_exists('net_get_interfaces'))
+		{
+			// The below code should work as of net_get_interfaces() as of PHP 7.3 in cross-platform manner
+			$net_interfaces = net_get_interfaces();
+			foreach($net_interfaces as $interface => $interface_info)
+			{
+				if(isset($interface_info['unicast'][1]['address']) && !empty($interface_info['unicast'][1]['address']) && $interface_info['unicast'][1]['address'] != '127.0.0.1')
+				{
+					$local_ip = $interface_info['unicast'][1]['address'];
+					break;
+				}
+			}
+		}
+
 		return $local_ip;
 	}
 	public static function get_network_mac()

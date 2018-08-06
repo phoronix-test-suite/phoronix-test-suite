@@ -25,7 +25,7 @@
 					</xs:annotation>
 			<xs:complexType>
 			<xs:sequence>
-				<xs:element name="URL" type="xs:string">
+				<xs:element name="URL" type="xs:string" minOccurs="0" maxOccurs="1">
 					<xs:annotation>
 						<xs:appinfo>
 							<get>get_download_url_string</get>
