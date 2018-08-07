@@ -250,6 +250,8 @@ class pts_result_file_output
 		$pdf->Ln(15);
 		$pdf->WriteBigHeaderCenter($result_file->get_title());
 		$pdf->WriteText($result_file->get_description());
+		$pdf->Ln(15);
+		$pdf->WriteText('This file was automatically generated via the Phoronix Test Suite benchmarking software.');
 
 		$pdf->AddPage();
 		$pdf->Ln(15);
@@ -258,11 +260,17 @@ class pts_result_file_output
 		//$pdf->SetKeywords(implode(', ', $identifiers));
 
 		$pdf->WriteHeader('Test Systems:');
-		foreach($result_file->get_systems() as $s)
+		$systems = $result_file->get_systems();
+		for($i = 0; $i < count($systems); $i++)
 		{
-			$pdf->WriteMiniHeader($s->get_identifier());
-			$pdf->WriteText($s->get_hardware());
-			$pdf->WriteText($s->get_software());
+			$pdf->WriteMiniHeader($systems[$i]->get_identifier());
+			if(isset($systems[($i + 1)]) && $systems[($i + 1)]->get_hardware() == $systems[$i]->get_hardware() && $systems[($i + 1)]->get_software() == $systems[$i]->get_software())
+			{
+				continue;
+			}
+
+			$pdf->WriteText($systems[$i]->get_hardware());
+			$pdf->WriteText($systems[$i]->get_software());
 		}
 
 		$pdf->AddPage();
@@ -290,7 +298,7 @@ class pts_result_file_output
 			$placement++;
 			$i++;
 		}
-		$pdf->WriteText('This file was automatically generated via the Phoronix Test Suite open-source benchmarking software.');
+		$pdf->WriteText('This file was automatically generated via the Phoronix Test Suite benchmarking software.');
 		ob_get_clean();
 		$pdf->Output($dest, $output_name);
 	}
