@@ -184,19 +184,26 @@ class pts_result_file_output
 
 			$max_value = 0;
 			$min_value = pts_arrays::first_element($buffers)->get_result_value();
+			$longest_result = 0;
 			foreach($buffers as &$buffer_item)
 			{
-				if($buffer_item->get_result_value() > $max_value)
+				$v = $buffer_item->get_result_value();
+				if(isset($v[$longest_result]))
 				{
-					$max_value = $buffer_item->get_result_value();
+					$longest_result = strlen($v);
 				}
-				else if($buffer_item->get_result_value() < $min_value)
+
+				if($v > $max_value)
 				{
-					$min_value = $buffer_item->get_result_value();
+					$max_value = $v;
+				}
+				else if($v < $min_value)
+				{
+					$min_value = $v;
 				}
 			}
 
-			$longest_result = strlen($max_value) + 1;
+			$longest_result++;
 			foreach($buffers as &$buffer_item)
 			{
 				$val = $buffer_item->get_result_value();

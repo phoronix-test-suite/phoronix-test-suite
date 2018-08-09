@@ -6,6 +6,7 @@ pts-core: Add DivideResultDivisor to result parser
 pts-core: Add libevent as possible external dependency
 pts-core: Alert the user when the test install directory is on a file-system mounted with 'noexec'
 pts-core: Optional support with PHP 7.3+ to also obtain network info using net_get_interfaces()
+pts-core: Fix possible alignment issue with value/spacer on outputting text-based result graphs
 
 Phoronix Test Suite 8.2.0 Milestone 1
 21 July 2018
