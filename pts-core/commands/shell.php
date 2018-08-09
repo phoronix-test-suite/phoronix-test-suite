@@ -72,7 +72,14 @@ class shell implements pts_option_interface
 
 				if(!$passed)
 				{
-					echo PHP_EOL . pts_client::cli_colored_text('Unsupported command: ' . $argv[0], 'red', true) . PHP_EOL;
+					if(empty($argv[0]))
+					{
+						echo PHP_EOL . pts_client::cli_colored_text('Enter command to run.', 'red', true) . PHP_EOL;
+					}
+					else
+					{
+						echo PHP_EOL . pts_client::cli_colored_text('Unsupported command: ' . $argv[0], 'red', true) . PHP_EOL;
+					}
 				}
 				else
 				{

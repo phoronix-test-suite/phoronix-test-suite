@@ -342,16 +342,16 @@ class pts_test_run_manager
 					echo PHP_EOL . 'The name of the saved file must have between 2 and 126 characters in length.' . PHP_EOL;
 				}
 
-				pts_client::$display->generic_prompt(pts_client::cli_just_bold('Enter a name for the result file: '));
+				$prompt = 'Enter a name for the result file: ';
 				if(function_exists('readline') && function_exists('readline_completion_function'))
 				{
 					pts_user_io::$readline_completion_possibilities = pts_tests::test_results_by_date();
 					readline_completion_function(array('pts_user_io', 'readline_completion_handler'));
-					$save_name = readline();
+					$save_name = readline($prompt);
 				}
 				else
 				{
-					$save_name = pts_user_io::read_user_input();
+					$save_name = pts_user_io::read_user_input($prompt);
 				}
 			}
 		}
@@ -425,16 +425,16 @@ class pts_test_run_manager
 				}
 				else
 				{
-					pts_client::$display->generic_prompt(pts_client::cli_just_bold('Enter a unique name to describe this test run / configuration: '));
+					$prompt = 'Enter a unique name to describe this test run / configuration: ';
 					if(function_exists('readline') && function_exists('readline_completion_function'))
 					{
 						pts_user_io::$readline_completion_possibilities = array_map(array('pts_strings', 'trim_search_query'), array_merge(phodevi::system_hardware(false), phodevi::system_software(false)));
 						readline_completion_function(array('pts_user_io', 'readline_completion_handler'));
-						$results_identifier = readline();
+						$results_identifier = readline($prompt);
 					}
 					else
 					{
-						$results_identifier = pts_user_io::read_user_input();
+						$results_identifier = pts_user_io::read_user_input($prompt);
 					}
 					$results_identifier = self::clean_results_identifier($results_identifier);
 				}

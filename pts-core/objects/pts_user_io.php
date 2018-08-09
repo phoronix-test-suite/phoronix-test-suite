@@ -24,8 +24,9 @@ class pts_user_io
 {
 	public static $readline_completion_possibilities = null;
 
-	public static function read_user_input()
+	public static function read_user_input($prompt = null)
 	{
+		echo $prompt;
 		return trim(fgets(STDIN));
 	}
 	public static function strip_ansi_escape_sequences($output)
