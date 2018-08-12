@@ -22,11 +22,12 @@
 class ob_auto_compare extends pts_module_interface
 {
 	const module_name = 'OpenBenchmarking.org Auto Comparison';
-	const module_version = '1.0.0';
+	const module_version = '1.1.0';
 	const module_description = 'This module prints comparable OpenBenchmarking.org results in the command-line for reference purposes as tests are being run. OpenBenchmarking.org is automatically queried for results to show based on the test comparison hash and the system type (mobile, desktop, server, cloud, workstation, etc). No other system information or result data is transmitted..';
 	const module_author = 'Michael Larabel';
 
 	private static $response_time = 0;
+	protected static $current_result_file = null;
 
 	public static function user_commands()
 	{
@@ -40,12 +41,13 @@ class ob_auto_compare extends pts_module_interface
 			return;
 		}
 		$result_file = new pts_result_file($r[0]);
+		self::$current_result_file = $r[0];
 		foreach($result_file->get_result_objects() as $result_object)
 		{
 			echo trim($result_object->test_profile->get_title() . ' ' . $result_object->test_profile->get_app_version() . PHP_EOL . $result_object->get_arguments_description()) . PHP_EOL;
 			echo 'COMPARISON HASH:' .  $result_object->get_comparison_hash(true, false) . PHP_EOL;
 			echo 'SYSTEM TYPE: ' . phodevi_base::determine_system_type(phodevi::system_hardware(), phodevi::system_software()) . PHP_EOL;
-			$auto_comparison_result_file = self::request_compare_from_ob($result_object->get_comparison_hash(), phodevi_base::determine_system_type(phodevi::system_hardware(), phodevi::system_software()));
+			$auto_comparison_result_file = self::request_compare($result_object, phodevi_base::determine_system_type(phodevi::system_hardware(), phodevi::system_software()));
 
 			if($auto_comparison_result_file instanceof pts_result_file)
 			{
@@ -64,9 +66,49 @@ class ob_auto_compare extends pts_module_interface
 			echo PHP_EOL . PHP_EOL;
 		}
 	}
+	protected static function request_compare(&$result_object, $system_type)
+	{
+		$result_file = null;
+		if(pts_network::internet_support_available())
+		{
+			$comparison_hash = $result_object->get_comparison_hash();
+			$result_file = self::request_compare_from_ob($comparison_hash, $system_type);
+		}
+
+		if(empty($result_file) || !($result_file instanceof pts_result_file))
+		{
+			$comparison_hash = $result_object->get_comparison_hash(true, false);
+			$result_file = self::request_compare_from_local_results($comparison_hash);
+		}
+
+		return $result_file;
+	}
+	protected static function request_compare_from_local_results($comparison_hash)
+	{
+		$saved_results = pts_client::saved_test_results();
+		shuffle($saved_results);
+
+		foreach($saved_results as $tr)
+		{
+			$result_file = new pts_result_file($tr);
+
+			if(self::$current_result_file != null && self::$current_result_file == $result_file->get_identifier())
+			{
+				continue;
+			}
+
+			if($result_file->get_result($comparison_hash) != false)
+			{
+				$result_file->set_reference_id($result_file->get_identifier());
+				return $result_file;
+			}
+		}
+
+		return null;
+	}
 	protected static function request_compare_from_ob($comparison_hash, $system_type)
 	{
-		if(!pts_network::internet_support_available() || self::$response_time > 12)
+		if(!pts_network::internet_support_available() || self::$response_time > 8)
 		{
 			// If no network or OB requests are being slow...
 			return false;
@@ -98,13 +140,14 @@ class ob_auto_compare extends pts_module_interface
 		{
 			return pts_module::MODULE_UNLOAD;
 		}
+		self::$current_result_file = $test_run_manager->get_file_name();
 	}
 	public static function __test_run_success_inline_result($result_object)
 	{
 		// Passed is a copy of the successful pts_test_result after showing other inline metrics
 		if($result_object->test_result_buffer->get_count() < 3)
 		{
-			$auto_comparison_result_file = self::request_compare_from_ob($result_object->get_comparison_hash(), phodevi_base::determine_system_type(phodevi::system_hardware(), phodevi::system_software()));
+			$auto_comparison_result_file = self::request_compare($result_object, phodevi_base::determine_system_type(phodevi::system_hardware(), phodevi::system_software()));
 
 			if($auto_comparison_result_file instanceof pts_result_file)
 			{

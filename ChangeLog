@@ -11,6 +11,7 @@ pts-core: When Internet is not available and running list-tests, only show tests
 pts-core: Rework `list-recommended-tests` to make use of download count information exposed via OB index repository data rather than needing to make fresh web query
 pts-core: Show "popular tests" in the invalid command helper
 pts-core: Allow stress-run to be triggered from interactive mode
+pts-core: Allow comparing dynamic in-line result comparisons against local results when no Internet results matching or Internet not available
 
 Phoronix Test Suite 8.2.0 Milestone 1
 21 July 2018
