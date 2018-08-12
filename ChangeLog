@@ -8,6 +8,7 @@ pts-core: Alert the user when the test install directory is on a file-system mou
 pts-core: Optional support with PHP 7.3+ to also obtain network info using net_get_interfaces()
 pts-core: Fix possible alignment issue with value/spacer on outputting text-based result graphs
 pts-core: When Internet is not available and running list-tests, only show tests that are available via caches unless `list-all-tests` is run
+pts-core: Rework `list-recommended-tests` to make use of download count information exposed via OB index repository data rather than needing to make fresh web query
 
 Phoronix Test Suite 8.2.0 Milestone 1
 21 July 2018

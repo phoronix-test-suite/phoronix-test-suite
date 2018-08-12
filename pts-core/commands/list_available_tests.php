@@ -33,7 +33,6 @@ class list_available_tests implements pts_option_interface
 	{
 		pts_client::$display->generic_heading('Available Tests');
 		$only_show_available_cached_tests = pts_client::get_sent_command() != 'list_all_tests' && pts_network::internet_support_available() == false;
-		//$only_show_available_cached_tests = true; // XXX hack test
 
 		if($only_show_available_cached_tests)
 		{

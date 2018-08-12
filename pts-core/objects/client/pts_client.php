@@ -410,6 +410,15 @@ class pts_client
 
 		return "\033[1m$str\033[0m";
 	}
+	public static function cli_just_italic($str)
+	{
+		if(!self::supports_colored_text_output())
+		{
+			return $str;
+		}
+
+		return "\e[3m$str\e[23m";
+	}
 	public static function save_test_result($save_to = null, $save_results = null, $render_graphs = true, $result_identifier = null)
 	{
 		// Saves PTS result file
@@ -1358,10 +1367,10 @@ class pts_client
 					}
 					else
 					{
-						trigger_error('Phoronix Test Suite Argument Missing.', E_USER_ERROR);
+						trigger_error('Phoronix Test Suite Argument Missing', E_USER_ERROR);
 					}
 
-					echo PHP_EOL . pts_client::cli_just_bold('CORRECT SYNTAX:') . PHP_EOL . 'phoronix-test-suite ' . str_replace('_', '-', $command_alias) . ' ' . implode(' ', $argument_checks) . PHP_EOL . PHP_EOL;
+					echo PHP_EOL . pts_client::cli_just_bold('CORRECT SYNTAX:') . PHP_EOL . 'phoronix-test-suite ' . str_replace('_', '-', $command_alias) . ' ' . pts_client::cli_just_italic(implode(' ', $argument_checks)) . PHP_EOL . PHP_EOL;
 //sort($pass_args);
 					pts_tests::invalid_command_helper($pass_args);
 

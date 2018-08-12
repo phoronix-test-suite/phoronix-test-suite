@@ -25,27 +25,63 @@ class list_recommended_tests implements pts_option_interface
 	const doc_section = 'OpenBenchmarking.org';
 	const doc_description = 'This option will list recommended test profiles for benchmarking sorted by hardware sub-system. The recommended tests are determined via querying OpenBenchmarking.org and determining the most popular tests for a given environment based upon the number of times a test profile has been downloaded, the number of test results available on OpenBenchmarking.org for a given test profile, the age of the test profile, and other weighted factors.';
 
+	public static function compare_test_json_download_counts($a, $b)
+	{
+		$a = $a['downloads'];
+		$b = $b['downloads'];
+
+		if($a == $b)
+		{
+			return 0;
+		}
+
+		return ($a > $b) ? -1 : 1;
+	}
 	public static function run($r)
 	{
 		pts_client::$display->generic_heading('Recommended OpenBenchmarking.org Test Profiles');
-		$test_count = 0;
-		$recommendation_index = pts_openbenchmarking::make_openbenchmarking_request('recommended_tests_index');
-		$recommendation_index = json_decode($recommendation_index, true);
 
-		foreach($recommendation_index['recommended_tests'] as $subsystem => $tests)
+
+		$tests = array();
+		foreach(pts_openbenchmarking::available_tests(false) as $identifier)
 		{
-			pts_client::$display->generic_heading($subsystem . ' Tests');
-			foreach($tests as $test)
+			$repo = substr($identifier, 0, strpos($identifier, '/'));
+			$id = substr($identifier, strlen($repo) + 1);
+			$repo_index = pts_openbenchmarking::read_repository_index($repo);
+			if((!empty($repo_index['tests'][$id]['supported_platforms']) && !in_array(phodevi::os_under_test(), $repo_index['tests'][$id]['supported_platforms'])) || empty($repo_index['tests'][$id]['title']))
 			{
-				echo sprintf('%-32ls - %-35ls', $test['test_profile'], $test['title']) . PHP_EOL;
+				// Don't show unsupported tests
+				continue;
+			}
+			if(!empty($repo_index['tests'][$id]['status']) && $repo_index['tests'][$id]['status'] != 'Verified')
+			{
+				// Don't show unsupported tests
+				continue;
 			}
 
-			$test_count++;
+			if($repo_index['tests'][$id]['last_updated'] < (time() - (60 * 60 * 24 * 365)))
+			{
+				// Don't show tests not actively maintained
+				continue;
+			}
+
+			if(!isset($tests[$repo_index['tests'][$id]['test_type']]))
+			{
+				$tests[$repo_index['tests'][$id]['test_type']] = array();
+			}
+
+			$tests[$repo_index['tests'][$id]['test_type']][$identifier] = $repo_index['tests'][$id];
 		}
 
-		if($test_count == 0)
+		foreach($tests as $subsystem => $test_json)
 		{
-			echo PHP_EOL . 'No tests found. Please check that you have Internet connectivity to download test profile data from OpenBenchmarking.org. The Phoronix Test Suite has documentation on configuring the network setup, proxy settings, and PHP network options. Please contact Phoronix Media if you continuing to experience problems.' . PHP_EOL . PHP_EOL;
+			uasort($test_json, array('list_recommended_tests', 'compare_test_json_download_counts'));
+			$test_json = array_slice($test_json, 0, 10);
+			pts_client::$display->generic_heading($subsystem . ' Tests');
+			foreach($test_json as $identifier => $test_individual_json)
+			{
+				echo sprintf('%-30ls - %-39ls', $identifier, $test_individual_json['title']) . PHP_EOL;
+			}
 		}
 	}
 }
