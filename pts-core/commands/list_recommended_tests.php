@@ -25,22 +25,9 @@ class list_recommended_tests implements pts_option_interface
 	const doc_section = 'OpenBenchmarking.org';
 	const doc_description = 'This option will list recommended test profiles for benchmarking sorted by hardware sub-system. The recommended tests are determined via querying OpenBenchmarking.org and determining the most popular tests for a given environment based upon the number of times a test profile has been downloaded, the number of test results available on OpenBenchmarking.org for a given test profile, the age of the test profile, and other weighted factors.';
 
-	public static function compare_test_json_download_counts($a, $b)
-	{
-		$a = $a['downloads'];
-		$b = $b['downloads'];
-
-		if($a == $b)
-		{
-			return 0;
-		}
-
-		return ($a > $b) ? -1 : 1;
-	}
 	public static function run($r)
 	{
 		pts_client::$display->generic_heading('Recommended OpenBenchmarking.org Test Profiles');
-
 
 		$tests = array();
 		foreach(pts_openbenchmarking::available_tests(false) as $identifier)
@@ -75,7 +62,7 @@ class list_recommended_tests implements pts_option_interface
 
 		foreach($tests as $subsystem => $test_json)
 		{
-			uasort($test_json, array('list_recommended_tests', 'compare_test_json_download_counts'));
+			uasort($test_json, array('pts_openbenchmarking_client', 'compare_test_json_download_counts'));
 			$test_json = array_slice($test_json, 0, 10);
 			pts_client::$display->generic_heading($subsystem . ' Tests');
 			foreach($test_json as $identifier => $test_individual_json)

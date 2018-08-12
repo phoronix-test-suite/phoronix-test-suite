@@ -371,6 +371,34 @@ class pts_tests
 	public static function invalid_command_helper($passed_args)
 	{
 		$showed_recent_results = self::recently_saved_results();
+		$recommended_tests = array_keys(pts_openbenchmarking_client::most_popular_tests(20));
+
+		if(count($recommended_tests) > 3)
+		{
+			$longest_test = strlen(pts_strings::find_longest_string($recommended_tests)) + 3;
+			$terminal_width = pts_client::terminal_width();
+			$tests_per_line = floor($terminal_width / $longest_test);
+			shuffle($recommended_tests);
+			$recommended_tests = array_slice($recommended_tests, 0, min(count($recommended_tests), $tests_per_line * 2));
+
+			echo PHP_EOL . pts_client::cli_just_bold('Popular Tests:') . PHP_EOL;
+			$i = 0;
+			foreach($recommended_tests as $test)
+			{
+				if($i == 0)
+				{
+					echo '   ';
+				}
+				echo $test . str_repeat(' ', $longest_test - strlen($test));
+
+				$i++;
+				if($i == $tests_per_line)
+				{
+					$i = 0;
+					echo PHP_EOL;
+				}
+			}
+		}
 
 		if(count($result_uploads = pts_openbenchmarking::result_uploads_from_this_ip()) > 0)
 		{

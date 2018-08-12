@@ -518,6 +518,70 @@ class pts_openbenchmarking_client
 
 		return isset($json['openbenchmarking']['gsid']) ? $json['openbenchmarking']['gsid'] : false;
 	}
+	public static function compare_test_json_download_counts($a, $b)
+	{
+		$a = $a['downloads'];
+		$b = $b['downloads'];
+
+		if($a == $b)
+		{
+			return 0;
+		}
+
+		return ($a > $b) ? -1 : 1;
+	}
+	public static function most_popular_tests($limit = 10)
+	{
+		$only_show_available_cached_tests = pts_network::internet_support_available() == false;
+		$tests = array();
+		foreach(pts_openbenchmarking::available_tests(false) as $identifier)
+		{
+			$repo = substr($identifier, 0, strpos($identifier, '/'));
+			$id = substr($identifier, strlen($repo) + 1);
+			$repo_index = pts_openbenchmarking::read_repository_index($repo);
+			if((!empty($repo_index['tests'][$id]['supported_platforms']) && !in_array(phodevi::os_under_test(), $repo_index['tests'][$id]['supported_platforms'])) || empty($repo_index['tests'][$id]['title']))
+			{
+				// Don't show unsupported tests
+				continue;
+			}
+			if(!empty($repo_index['tests'][$id]['status']) && $repo_index['tests'][$id]['status'] != 'Verified')
+			{
+				// Don't show unsupported tests
+				continue;
+			}
+			if($repo_index['tests'][$id]['last_updated'] < (time() - (60 * 60 * 24 * 365)))
+			{
+				// Don't show tests not actively maintained
+				continue;
+			}
+			if($only_show_available_cached_tests)
+			{
+				$version = array_shift($repo_index['tests'][$id]['versions']);
+				if(!pts_openbenchmarking::is_test_profile_downloaded($identifier . '-' . $version))
+				{
+					// Without Internet, won't be able to download test, so don't show it
+					continue;
+				}
+				$test_profile = new pts_test_profile($identifier . '-' . $version);
+				if(pts_test_install_request::test_files_available_via_cache($test_profile) == false)
+				{
+					// Without Internet, only show tests where files are local or in an available cache
+					continue;
+				}
+			}
+			if($repo_index['tests'][$id]['test_type'] == 'Graphics' && pts_client::read_env('DISPLAY') == false && pts_client::read_env('WAYLAND_DISPLAY') == false && phodevi::is_windows() == false && phodevi::is_macosx() == false)
+			{
+				// Don't show graphics tests if no display active
+				continue;
+
+			}
+
+			$tests[$id] = $repo_index['tests'][$id];
+		}
+
+		uasort($tests, array('pts_openbenchmarking_client', 'compare_test_json_download_counts'));
+		return array_slice($tests, 0, $limit);
+	}
 }
 
 ?>
