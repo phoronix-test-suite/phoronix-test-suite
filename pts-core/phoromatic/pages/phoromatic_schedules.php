@@ -323,7 +323,7 @@ class phoromatic_schedules implements pts_webui_interface
 									}
 								}
 							}
-							if(!$cache_checked && pts_test_install_request::test_files_in_cache($test, true, true) == false)
+							if(!$cache_checked && pts_test_install_request::test_files_available_on_local_system($test) == false)
 							{
 								continue;
 							}

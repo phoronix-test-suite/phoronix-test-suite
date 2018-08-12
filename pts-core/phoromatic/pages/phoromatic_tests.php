@@ -140,7 +140,7 @@ class phoromatic_tests implements pts_webui_interface
 						}
 					}
 				}
-				if(!$cache_checked && phoromatic_server::read_setting('show_local_tests_only') && pts_test_install_request::test_files_in_cache($test, true, true) == false)
+				if(!$cache_checked && phoromatic_server::read_setting('show_local_tests_only') && pts_test_install_request::test_files_available_on_local_system($test) == false)
 				{
 					continue;
 				}

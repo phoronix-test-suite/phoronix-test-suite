@@ -498,6 +498,10 @@ class pts_openbenchmarking
 
 		return $index_file;
 	}
+	public static function is_test_profile_downloaded($qualified_identifier)
+	{
+		return is_file(PTS_TEST_PROFILE_PATH . $qualified_identifier . '/test-definition.xml');
+	}
 	public static function download_test_profile($qualified_identifier, $download_location = null, $cache_check = false)
 	{
 		if(empty($download_location))

@@ -31,6 +31,7 @@ class pts_client
 	protected static $debug_mode = false;
 	protected static $full_output = false;
 	protected static $override_pts_env_vars = array();
+	protected static $sent_command = null;
 
 	public static function create_lock($lock_file)
 	{
@@ -1402,8 +1403,13 @@ class pts_client
 
 		pts_module_manager::module_process('__post_option_process', $command);
 	}
+	public static function get_sent_command()
+	{
+		return self::$sent_command;
+	}
 	public static function handle_sent_command(&$sent_command, &$argv, &$argc)
 	{
+		self::$sent_command = $sent_command;
 		if(is_file(PTS_PATH . 'pts-core/commands/' . $sent_command . '.php') == false)
 		{
 			$replaced = false;

@@ -92,7 +92,7 @@ class pts_webui_tests implements pts_webui_interface
 					continue;
 				}
 			}
-			if($local_only && pts_test_install_request::test_files_available_locally($test_profile) == false)
+			if($local_only && pts_test_install_request::test_files_available_via_cache($test_profile) == false)
 			{
 				continue;
 			}
