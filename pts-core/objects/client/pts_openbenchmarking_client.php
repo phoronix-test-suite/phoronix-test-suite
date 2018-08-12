@@ -534,7 +534,8 @@ class pts_openbenchmarking_client
 	{
 		$only_show_available_cached_tests = pts_network::internet_support_available() == false;
 		$tests = array();
-		foreach(pts_openbenchmarking::available_tests(false) as $identifier)
+
+		foreach(pts_openbenchmarking::available_tests(false, false, false, false, $only_show_available_cached_tests) as $identifier)
 		{
 			$repo = substr($identifier, 0, strpos($identifier, '/'));
 			$id = substr($identifier, strlen($repo) + 1);
@@ -553,21 +554,6 @@ class pts_openbenchmarking_client
 			{
 				// Don't show tests not actively maintained
 				continue;
-			}
-			if($only_show_available_cached_tests)
-			{
-				$version = array_shift($repo_index['tests'][$id]['versions']);
-				if(!pts_openbenchmarking::is_test_profile_downloaded($identifier . '-' . $version))
-				{
-					// Without Internet, won't be able to download test, so don't show it
-					continue;
-				}
-				$test_profile = new pts_test_profile($identifier . '-' . $version);
-				if(pts_test_install_request::test_files_available_via_cache($test_profile) == false)
-				{
-					// Without Internet, only show tests where files are local or in an available cache
-					continue;
-				}
 			}
 			if($repo_index['tests'][$id]['test_type'] == 'Graphics' && pts_client::read_env('DISPLAY') == false && pts_client::read_env('WAYLAND_DISPLAY') == false && phodevi::is_windows() == false && phodevi::is_macosx() == false)
 			{

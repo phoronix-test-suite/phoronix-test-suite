@@ -1659,7 +1659,7 @@ class pts_test_run_manager
 
 		return strcmp($a_comp, $b_comp);
 	}
-	public function test_profile_system_compatibility_check(&$test_profile, $report_errors = false)
+	public static function test_profile_system_compatibility_check(&$test_profile, $report_errors = false, $is_batch_mode = false)
 	{
 		$valid_test_profile = true;
 		$test_type = $test_profile->get_test_hardware_type();
@@ -1698,7 +1698,7 @@ class pts_test_run_manager
 			$report_errors && pts_client::$display->test_run_error('Due to a pre-set environment variable, skipping ' . $test_profile);
 			$valid_test_profile = false;
 		}
-		else if($test_profile->is_root_required() && $this->batch_mode && phodevi::is_root() == false)
+		else if($test_profile->is_root_required() && $is_batch_mode && phodevi::is_root() == false)
 		{
 			$report_errors && pts_client::$display->test_run_error('Cannot run ' . $test_profile . ' in batch mode as root access is required.');
 			$valid_test_profile = false;
@@ -1720,7 +1720,7 @@ class pts_test_run_manager
 		{
 			$valid_test_profile = true;
 
-			if($this->test_profile_system_compatibility_check($test_profile, true) == false)
+			if(self::test_profile_system_compatibility_check($test_profile, true, $this->batch_mode) == false)
 			{
 				$valid_test_profile = false;
 			}

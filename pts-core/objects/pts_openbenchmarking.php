@@ -650,7 +650,7 @@ class pts_openbenchmarking
 
 		return null;
 	}
-	public static function available_tests($download_tests = true, $all_versions = false, $append_versions = false, $show_deprecated_tests = false)
+	public static function available_tests($download_tests = true, $all_versions = false, $append_versions = false, $show_deprecated_tests = false, $only_show_available_cached_tests = false)
 	{
 		$available_tests = array();
 
@@ -684,6 +684,21 @@ class pts_openbenchmarking
 						{
 							if(self::download_test_profile($repo . '/' . $identifier . '-' . $version) == false)
 							{
+								continue;
+							}
+						}
+
+						if($only_show_available_cached_tests)
+						{
+							if(!pts_openbenchmarking::is_test_profile_downloaded($identifier . '-' . $version))
+							{
+								// Without Internet, won't be able to download test, so don't show it
+								continue;
+							}
+							$test_profile = new pts_test_profile($identifier . '-' . $version);
+							if(pts_test_install_request::test_files_available_via_cache($test_profile) == false)
+							{
+								// Without Internet, only show tests where files are local or in an available cache
 								continue;
 							}
 						}

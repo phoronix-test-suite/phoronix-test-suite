@@ -381,7 +381,7 @@ class pts_tests
 			shuffle($recommended_tests);
 			$recommended_tests = array_slice($recommended_tests, 0, min(count($recommended_tests), $tests_per_line * 2));
 
-			echo PHP_EOL . pts_client::cli_just_bold('Popular Tests:') . PHP_EOL;
+			echo pts_client::cli_just_bold('Popular Tests:') . PHP_EOL;
 			$i = 0;
 			foreach($recommended_tests as $test)
 			{
@@ -408,12 +408,12 @@ class pts_tests
 			{
 				$t[] = array(pts_client::cli_colored_text($id, 'gray', true), $title);
 
-				if(count($t) == 6)
+				if(count($t) == 5)
 				{
 					break;
 				}
 			}
-			echo pts_user_io::display_text_table($t, '- ') . PHP_EOL . PHP_EOL;
+			echo pts_user_io::display_text_table($t, '   ') . PHP_EOL . PHP_EOL;
 		}
 
 		$similar_tests = array();
@@ -508,7 +508,7 @@ class pts_tests
 				$recent_result = sprintf('%-' . $res_length . 'ls [%-ls]', $recent_result, ($days == 0 ? 'Today' : pts_strings::days_ago_format_string($days) . ' old'));
 			}
 			echo PHP_EOL . pts_client::cli_just_bold('Recently Saved Test Results:') . PHP_EOL;
-			echo pts_user_io::display_text_list($recent_results) . PHP_EOL;
+			echo pts_user_io::display_text_list($recent_results, '   ') . PHP_EOL;
 			return true;
 		}
 

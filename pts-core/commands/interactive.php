@@ -35,15 +35,16 @@ class interactive implements pts_option_interface
 
 		do
 		{
+			$only_show_available_cached_tests = pts_network::internet_support_available() == false;
 			$options = array(
-				'RUN_TEST' => 'Run A Test',
+				'RUN_TEST' => 'Run A Test / Benchmark',
 				'RUN_SUITE' => 'Run A Suite [A Collection Of Tests]',
-				'RUN_SYSTEM_TEST' => 'Run Complex System Test',
+				'RUN_STRESS_TEST' => 'Run A Stress Test [Concurrent Benchmarks For Heavy System Load]',
 				'SHOW_INFO' => 'Show System Hardware / Software Information',
 				'SHOW_SENSORS' => 'Show Available System Sensors',
 				'LIST_TESTS' => 'List Available Tests',
 				'LIST_RECOMMENDED_TESTS' => 'List Recommended Tests',
-				'SET_RUN_COUNT' => 'Set Test Run Repetition',
+			//	'SET_RUN_COUNT' => 'Set Test Run Repetition',
 				'SEARCH' => 'Search Tests / Suites / Results'
 				);
 
@@ -58,13 +59,18 @@ class interactive implements pts_option_interface
 			switch($response)
 			{
 				case 'RUN_TEST':
-					$supported_tests = pts_openbenchmarking::available_tests();
+					$supported_tests = pts_openbenchmarking::available_tests(!$only_show_available_cached_tests, false, false, false, $only_show_available_cached_tests);
 					$supported_tests = pts_types::identifiers_to_test_profile_objects($supported_tests, false, true);
 					$longest_title_length = 0;
 
 					foreach($supported_tests as $i => &$test_profile)
 					{
-						if($test_profile->get_title() == null)
+						if($test_profile->get_title() == null || $test_profile->get_license() == 'Retail')
+						{
+							unset($supported_tests[$i]);
+							continue;
+						}
+						if(!pts_test_run_manager::test_profile_system_compatibility_check($test_profile))
 						{
 							unset($supported_tests[$i]);
 							continue;
@@ -84,7 +90,7 @@ class interactive implements pts_option_interface
 					$supported_tests = $t;
 					asort($supported_tests);
 
-					$tests_to_run = pts_user_io::prompt_text_menu('Select Test', $supported_tests, true, true);
+					$tests_to_run = pts_user_io::prompt_text_menu('Select Test(s)', $supported_tests, true, true);
 					$tests_to_run = explode(',', $tests_to_run);
 					pts_test_installer::standard_install($tests_to_run);
 					$run_manager = new pts_test_run_manager(false, 2);
@@ -93,6 +99,49 @@ class interactive implements pts_option_interface
 					{
 						pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $run_manager->get_file_name() . '/index.html', null, true, true);
 					}
+					break;
+				case 'RUN_STRESS_TEST':
+					$supported_tests = pts_openbenchmarking::available_tests(!$only_show_available_cached_tests, false, false, false, $only_show_available_cached_tests);
+					$supported_tests = pts_types::identifiers_to_test_profile_objects($supported_tests, false, true);
+					$longest_title_length = 0;
+
+					foreach($supported_tests as $i => &$test_profile)
+					{
+						if($test_profile->get_title() == null || $test_profile->get_license() == 'Retail')
+						{
+							unset($supported_tests[$i]);
+							continue;
+						}
+						if(!pts_test_run_manager::test_profile_system_compatibility_check($test_profile))
+						{
+							unset($supported_tests[$i]);
+							continue;
+						}
+
+						$longest_title_length = max($longest_title_length, strlen($test_profile->get_title()));
+					}
+
+					$t = array();
+					foreach($supported_tests as $i => &$test_profile)
+					{
+						if($test_profile instanceof pts_test_profile)
+						{
+							$t[$test_profile->get_identifier()] = sprintf('%-' . ($longest_title_length + 1) . 'ls - %-10ls', $test_profile->get_title(), $test_profile->get_test_hardware_type());
+						}
+					}
+					$supported_tests = $t;
+					asort($supported_tests);
+
+					$tests_to_run = pts_user_io::prompt_text_menu('Select Test(s)', $supported_tests, true, true);
+					$tests_to_run = explode(',', $tests_to_run);
+
+					$concurrent_runs = pts_user_io::prompt_user_input('Number of tests to run concurrently');
+					putenv('PTS_CONCURRENT_TEST_RUNS=' . trim($concurrent_runs));
+					$minutes_loop_time = pts_user_io::prompt_user_input('Number of minutes to stress run');
+					putenv('TOTAL_LOOP_TIME=' . trim($minutes_loop_time));
+
+					pts_test_installer::standard_install($tests_to_run);
+					pts_client::execute_command('stress_run', $tests_to_run);
 					break;
 				case 'RUN_SUITE':
 					$possible_suites = pts_openbenchmarking::available_suites();
@@ -115,17 +164,6 @@ class interactive implements pts_option_interface
 					break;
 				case 'SEARCH':
 					pts_client::execute_command('search');
-					break;
-				case 'RUN_SYSTEM_TEST':
-					pts_client::$display->generic_heading('System Test');
-					$system_tests = array('apache', 'c-ray', 'ramspeed', 'postmark');
-					pts_test_installer::standard_install($system_tests);
-					$run_manager = new pts_test_run_manager(false, 2);
-					$run_manager->standard_run($system_tests);
-					if($run_manager != false)
-					{
-						pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $run_manager->get_file_name() . '/index.html', null, true, true);
-					}
 					break;
 				case 'SHOW_INFO':
 					pts_client::execute_command('system_info');
