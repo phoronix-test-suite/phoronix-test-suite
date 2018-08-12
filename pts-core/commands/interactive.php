@@ -38,8 +38,8 @@ class interactive implements pts_option_interface
 			$only_show_available_cached_tests = pts_network::internet_support_available() == false;
 			$options = array(
 				'RUN_TEST' => 'Run A Test / Benchmark',
-				'RUN_SUITE' => 'Run A Suite [A Collection Of Tests]',
-				'RUN_STRESS_TEST' => 'Run A Stress Test [Concurrent Benchmarks For Heavy System Load]',
+				'RUN_SUITE' => 'Run A Suite      [A Collection Of Tests]',
+				'RUN_STRESS_TEST' => 'Run A Stress Test      [Concurrent Benchmarks For Heavy System Load]',
 				'SHOW_INFO' => 'Show System Hardware / Software Information',
 				'SHOW_SENSORS' => 'Show Available System Sensors',
 				'LIST_TESTS' => 'List Available Tests',

@@ -32,6 +32,7 @@ class search implements pts_option_interface
 
 		$table = array();
 		$tests = array();
+		$results_found = false;
 		foreach(pts_search::search_test_profiles($search_query) as $test_profile)
 		{
 			$table[] = array(pts_client::cli_just_bold($test_profile->get_identifier()), $test_profile->get_title(), $test_profile->get_test_hardware_type());
@@ -45,6 +46,7 @@ class search implements pts_option_interface
 		}
 		if(count($table) > 0)
 		{
+			$results_found = true;
 			echo pts_client::cli_colored_text('TEST PROFILES', 'green', true) . PHP_EOL . pts_user_io::display_text_table($table, null, 1) . PHP_EOL . pts_client::cli_colored_text(pts_strings::plural_handler(count($table), 'Test') . ' Matching', 'gray');
 
 			$table = array();
@@ -66,6 +68,7 @@ class search implements pts_option_interface
 		}
 		if(count($table) > 0)
 		{
+			$results_found = true;
 			echo PHP_EOL . PHP_EOL . pts_client::cli_colored_text('TEST SUITES', 'green', true) . PHP_EOL . pts_user_io::display_text_table($table, null, 1) . PHP_EOL . pts_client::cli_colored_text(pts_strings::plural_handler(count($table), 'Suite') . ' Matching', 'gray');
 		}
 
@@ -77,7 +80,13 @@ class search implements pts_option_interface
 		}
 		if(count($table) > 0)
 		{
+			$results_found = true;
 			echo PHP_EOL . PHP_EOL . pts_client::cli_colored_text('TEST RESULTS', 'green', true) . PHP_EOL . pts_user_io::display_text_table($table, null, 1) . PHP_EOL . pts_client::cli_colored_text(pts_strings::plural_handler(count($table), 'Test Result') . ' Matching', 'gray');
+		}
+
+		if(!$results_found)
+		{
+			echo PHP_EOL . pts_client::cli_just_bold('No Search Matches Found');
 		}
 
 		echo PHP_EOL . PHP_EOL;
