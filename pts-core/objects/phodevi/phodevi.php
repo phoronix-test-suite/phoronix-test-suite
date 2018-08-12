@@ -185,6 +185,37 @@ class phodevi extends phodevi_base
 		$sensor = array($sensor_object->get_type(), $sensor_object->get_sensor(), get_class($sensor_object));
 		return self::read_sensor_unit($sensor);
 	}
+	public static function read_sensor_object_unit_short(&$sensor_object)
+	{
+		$sensor_unit = self::read_sensor_object_unit($sensor_object);
+
+		switch($sensor_unit)
+		{
+			case 'Celsius':
+				$sensor_unit = 'C';
+				break;
+			case 'Percent':
+				$sensor_unit = '%';
+				break;
+			case 'Megabytes':
+				$sensor_unit = 'MB';
+				break;
+			case 'Megahertz':
+				$sensor_unit = 'MHz';
+				break;
+			case 'Volts':
+				$sensor_unit = 'V';
+				break;
+			case 'Kilobytes/seconds':
+				$sensor_unit = 'KBps';
+				break;
+			case 'Millivolts':
+				$sensor_unit = 'mV';
+				break;
+		}
+
+		return $sensor_unit;
+	}
 	public static function read_sensor_unit($sensor)
 	{
 		return call_user_func(array(self::$sensors[$sensor[0]][$sensor[1]], 'get_unit'));

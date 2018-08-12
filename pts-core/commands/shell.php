@@ -129,13 +129,13 @@ class shell implements pts_option_interface
 				}
 
 				$sensor_name = phodevi::sensor_object_name($sensor_object) . ':';
-				$sensor_unit = phodevi::read_sensor_object_unit($sensor_object);
+				$sensor_unit = phodevi::read_sensor_object_unit_short($sensor_object);
 				$sensors[] = array($sensor_name, $sensor_value, $sensor_unit);
 			}
 		}
 		if(($uptime = phodevi::system_uptime()) > 0)
 		{
-			$sensors[] = array('System Uptime', round($uptime / 60), 'Minute' . ($uptime > 89 ? 's' : ''));
+			$sensors[] = array('System Uptime', round($uptime / 60), 'M');
 		}
 		$longest = array();
 		foreach($sensors as $ar)
