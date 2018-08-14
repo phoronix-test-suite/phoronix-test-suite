@@ -12,6 +12,7 @@ pts-core: Rework `list-recommended-tests` to make use of download count informat
 pts-core: Show "popular tests" in the invalid command helper
 pts-core: Allow stress-run to be triggered from interactive mode
 pts-core: Allow comparing dynamic in-line result comparisons against local results when no Internet results matching or Internet not available
+phodevi: Reporting of L1TF / Level 1 Terminal Fault vulnerability
 
 Phoronix Test Suite 8.2.0 Milestone 1
 21 July 2018
