@@ -36,7 +36,7 @@ class microsoft_dependency_handler implements pts_dependency_handler
 			$cwd = getcwd();
 			$cygwin_location = self::get_cygwin();
 			chdir(dirname($cygwin_location));
-			echo PHP_EOL . 'Configuring Cygwin...' . PHP_EOL;
+			echo PHP_EOL . 'Configuring Cygwin for handling of some portable test scripts, extracting .tar.gz/xz files, and other script helpers... More details on the Phoronix Test Suite for Windows @ https://github.com/phoronix-test-suite/phoronix-test-suite/blob/master/documentation/phoronix-test-suite-window.md ' . PHP_EOL;
 			shell_exec(basename($cygwin_location) . ' -q -P unzip -P wget -P bc -P which -W');
 			chdir($cwd);
 		}

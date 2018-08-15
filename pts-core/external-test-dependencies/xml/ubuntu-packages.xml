@@ -214,7 +214,7 @@
 		</Package>
 		<Package>
 			<GenericName>curl</GenericName>
-			<PackageName>libcurl3 curl libcurl4-openssl-dev</PackageName>
+			<PackageName>curl libcurl4-openssl-dev</PackageName>
 		</Package>
 		<Package>
 			<GenericName>fftw3-development</GenericName>
