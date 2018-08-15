@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 8.2.0 Milestone 2
+15 August 2018
 
 pts-core: Add DivideResultDivisor to result parser
 pts-core: Add libevent as possible external dependency

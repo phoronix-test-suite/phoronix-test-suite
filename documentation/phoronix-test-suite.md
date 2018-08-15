@@ -110,7 +110,7 @@ This option will show details about the supplied test, suite, virtual suite, or 
 #### list-available-suites
 This option will list all test suites that are available from the enabled OpenBenchmarking.org repositories.
 #### list-available-tests
-This option will list all test profiles that are available from the enabled OpenBenchmarking.org repositories where supported on the system and are of a verified state.
+This option will list all test profiles that are available from the enabled OpenBenchmarking.org repositories where supported on the system and are of a verified state. If the system has no Internet access, it will only list the test profiles where the necesary test assets are available locally on the system or on an available network cache, unless using the list-all-tests option to override this behavior.
 #### list-available-virtual-suites
 This option will list all available virtual test suites that can be dynamically created based upon the available tests from enabled OpenBenchmarking.org repositories.
 #### list-installed-dependencies
