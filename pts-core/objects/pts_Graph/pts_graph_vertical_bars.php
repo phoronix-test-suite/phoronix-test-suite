@@ -96,6 +96,12 @@ class pts_graph_vertical_bars extends pts_graph_core
 		$bar_count = count($this->results);
 		$separator_width = ($a = (8 - (floor($bar_count / 2) * 2))) > 0 ? $a : 0;
 		$bar_width = floor(($this->i['identifier_width'] - $separator_width - ($bar_count * $separator_width)) / $bar_count);
+		$bar_font_size_ratio = 1;
+
+		while(floor($bar_width * 0.8) < self::text_string_width($this->i['graph_max_value'] + 0.01, floor(self::$c['size']['bars'] * $bar_font_size_ratio)) && $bar_font_size_ratio >= 0.6)
+		{
+			$bar_font_size_ratio -= 0.1;
+		}
 
 		$i_o = 0;
 		foreach($this->results as $identifier => &$group)
@@ -140,13 +146,13 @@ class pts_graph_vertical_bars extends pts_graph_core
 				*/
 
 				$this->svg_dom->add_element('rect', array('x' => ($px_bound_left + 1), 'y' => $value_plot_top, 'width' => $bar_width, 'height' => ($this->i['graph_top_end'] - $value_plot_top), 'fill' => $this->adjust_color($buffer_item->get_result_identifier(), $paint_color), 'stroke' => self::$c['color']['body_light'], 'stroke-width' => 1, 'xlink:title' => $title_tooltip));
-				if(($px_bound_right - $px_bound_left) > 18)
+				if(($px_bound_right - $px_bound_left) > 10)
 				{
 					// The bars are too skinny to be able to plot anything on them
-					if($bar_width > self::text_string_width($value, floor(self::$c['size']['bars'] * 0.9)))
+					if($bar_font_size_ratio >= 0.6)
 					{
 						$x = $px_bound_left + (($px_bound_right - $px_bound_left) / 2);
-						$this->svg_dom->add_text_element($value, array('x' => $x, 'y' => ($value_plot_top + 2), 'font-size' => floor(self::$c['size']['bars'] * 0.9), 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
+						$this->svg_dom->add_text_element($value, array('x' => $x, 'y' => ($value_plot_top + 2), 'font-size' => floor(self::$c['size']['bars'] * $bar_font_size_ratio), 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 					}
 				}
 				$i++;
