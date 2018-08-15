@@ -368,34 +368,47 @@ class pts_tests
 
 		$xml_writer->saveXMLFile($test_profile->get_install_dir() . 'pts-install.xml');
 	}
-	public static function invalid_command_helper($passed_args)
+	public static function invalid_command_helper($passed_args, &$argument_checks)
 	{
-		$showed_recent_results = self::recently_saved_results();
-		$recommended_tests = array_keys(pts_openbenchmarking_client::most_popular_tests(20));
-
-		if(count($recommended_tests) > 3)
+		$supports_passing_a_test = false;
+		foreach($argument_checks as $check)
 		{
-			$longest_test = strlen(pts_strings::find_longest_string($recommended_tests)) + 3;
-			$terminal_width = pts_client::terminal_width();
-			$tests_per_line = floor($terminal_width / $longest_test);
-			shuffle($recommended_tests);
-			$recommended_tests = array_slice($recommended_tests, 0, min(count($recommended_tests), $tests_per_line * 2));
-
-			echo pts_client::cli_just_bold('Popular Tests:') . PHP_EOL;
-			$i = 0;
-			foreach($recommended_tests as $test)
+			if($check->get_function_check_type() == 'Test' || strpos($check->get_function_check_type(), 'Test |') !== false)
 			{
-				if($i == 0)
-				{
-					echo '   ';
-				}
-				echo $test . str_repeat(' ', $longest_test - strlen($test));
+				$supports_passing_a_test = true;
+			}
+		}
 
-				$i++;
-				if($i == $tests_per_line)
+		$showed_recent_results = self::recently_saved_results();
+
+		if($supports_passing_a_test)
+		{
+			$recommended_tests = array_keys(pts_openbenchmarking_client::most_popular_tests(20));
+
+			if(count($recommended_tests) > 3)
+			{
+				$longest_test = strlen(pts_strings::find_longest_string($recommended_tests)) + 3;
+				$terminal_width = pts_client::terminal_width();
+				$tests_per_line = floor($terminal_width / $longest_test);
+				shuffle($recommended_tests);
+				$recommended_tests = array_slice($recommended_tests, 0, min(count($recommended_tests), $tests_per_line * 2));
+
+				echo pts_client::cli_just_bold('Popular Tests:') . PHP_EOL;
+				$i = 0;
+				foreach($recommended_tests as $test)
 				{
-					$i = 0;
-					echo PHP_EOL;
+					if($i == 0)
+					{
+						echo '   ';
+					}
+					echo $test . str_repeat(' ', $longest_test - strlen($test));
+
+					$i++;
+					if($i == $tests_per_line)
+					{
+						$i = 0;
+						echo PHP_EOL;
+					}
 				}
 			}
 		}

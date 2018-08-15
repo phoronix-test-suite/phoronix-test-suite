@@ -44,7 +44,7 @@ class pts_argument_check
 	{
 		return $this->function_return_key;
 	}
-	public function __toString()
+	public function get_function_check_type()
 	{
 		if($this->get_function_check() == array('pts_types', 'is_result_file'))
 		{
@@ -86,6 +86,11 @@ class pts_argument_check
 		{
 			$type = 'Unknown Object';
 		}
+		return $type;
+	}
+	public function __toString()
+	{
+		$type = $this->get_function_check_type();
 
 		$type = '[' . $type . ']' . (($this->get_argument_index() === 'VARIABLE_LENGTH') ? '  ...' : null);
 
