@@ -112,7 +112,7 @@ class pts_test_run_manager
 		$avg_test_run_time = array_sum($test_run_request->test_run_times) / count($test_run_request->test_run_times);
 
 		// First make sure this test doesn't take too long to run where we don't want dynamic handling
-		if(floor($latest_test_run_time / 60) > $this->dynamic_run_count_on_length_or_less)
+		if(floor($avg_test_run_time / 60) > $this->dynamic_run_count_on_length_or_less)
 		{
 			// For tests taking an enormous amount of time, by default don't increase run count...
 			return false;
