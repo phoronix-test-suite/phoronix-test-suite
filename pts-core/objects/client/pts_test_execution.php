@@ -410,7 +410,7 @@ class pts_test_execution
 					// Dynamically increase run count if needed for statistical significance or other reasons
 					$first_tr = array_slice($test_run_request->generated_result_buffers, 0, 1);
 					$first_tr = array_shift($first_tr);
-					$increase_run_count = $test_run_manager->increase_run_count_check($first_tr->active, $defined_times_to_run, $test_run_time); // XXX maybe check all generated buffers to see if to extend?
+					$increase_run_count = $test_run_manager->increase_run_count_check($test_run_request, $first_tr->active, $defined_times_to_run); // XXX maybe check all generated buffers to see if to extend?
 
 					if($increase_run_count === -1)
 					{

@@ -106,11 +106,15 @@ class pts_test_run_manager
 	{
 		$this->skip_post_execution_options = true;
 	}
-	public function increase_run_count_check(&$active_result_buffer, $scheduled_times_to_run, $latest_test_run_time)
+	public function increase_run_count_check(&$test_run_request, &$active_result_buffer, $scheduled_times_to_run)
 	{
+		// Compute average time taking per test run (in seconds)
+		$avg_test_run_time = array_sum($test_run_request->test_run_times) / count($test_run_request->test_run_times);
+
 		// First make sure this test doesn't take too long to run where we don't want dynamic handling
 		if(floor($latest_test_run_time / 60) > $this->dynamic_run_count_on_length_or_less)
 		{
+			// For tests taking an enormous amount of time, by default don't increase run count...
 			return false;
 		}
 
@@ -130,17 +134,28 @@ class pts_test_run_manager
 			$last_run_count = $times_already_ran;
 			$run_std_devs[$last_run_count] = $std_dev;
 
+			if($avg_test_run_time < 120)
+			{
+				// If test run time is 2 minutes or less, safely use a 3x multiple for how many times to run for statistical accuracy...
+				$maximum_times_to_run = $scheduled_times_to_run * 3;
+			}
+			else
+			{
+				// For longer running tests, just consider going up to 2x original expected run count
+				$maximum_times_to_increase_multiple = $scheduled_times_to_run * 2;
+			}
+
 			// If we haven't reached scheduled times to run x 2, increase count straight away
-			if($times_already_ran < ($scheduled_times_to_run * 2))
+			if($times_already_ran < $maximum_times_to_run)
 			{
 				return true;
 			}
-			else if($times_already_ran < ($scheduled_times_to_run * 3))
+			else if($times_already_ran < ($maximum_times_to_run + $scheduled_times_to_run))
 			{
-				// More aggressive determination whether to still keep increasing the run count
-				$first_and_now_diff = pts_arrays::first_element($run_std_devs) - pts_arrays::last_element($run_std_devs);
+				// More aggressive determination whether to still keep increasing the run count beyond the expected maximum...
+				$first_and_now_diff = abs(pts_arrays::first_element($run_std_devs) - pts_arrays::last_element($run_std_devs));
 
-				// Increasing the run count at least looks to be helping...
+				// Increasing the run count at least if it looks to be helping...
 				if($first_and_now_diff > (pts_arrays::first_element($run_std_devs) / 2))
 				{
 					// If we are at least making progress in the right direction, increase the run count some more

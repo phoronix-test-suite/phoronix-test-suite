@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+pts-core: Minor updates to logic for determining how many times to dynamically increase run count on high variance results
+
 Phoronix Test Suite 8.2.0 Milestone 2
 15 August 2018
 
