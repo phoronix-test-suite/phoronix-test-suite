@@ -196,7 +196,10 @@ class pts_user_io
 	{
 		$possibilities = array();
 		$readline_info = readline_info();
-		$input = substr($readline_info['line_buffer'], 0, $readline_info['end']);
+		if(isset($readline_info['end']))
+		{
+			$input = substr($readline_info['line_buffer'], 0, $readline_info['end']);
+		}
 		$input_length = strlen($input);
 
 		if(is_array(self::$readline_completion_possibilities))

@@ -114,6 +114,7 @@ class pts_test_run_manager
 		// First make sure this test doesn't take too long to run where we don't want dynamic handling
 		if(floor($avg_test_run_time / 60) > $this->dynamic_run_count_on_length_or_less)
 		{
+			// The default value to not deal with dynamic run counts is when greater than 1 hour (60 minutes)
 			// For tests taking an enormous amount of time, by default don't increase run count...
 			return false;
 		}
