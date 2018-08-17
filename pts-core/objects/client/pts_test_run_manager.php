@@ -110,6 +110,8 @@ class pts_test_run_manager
 	}
 	public function increase_run_count_check(&$test_run_request, &$active_result_buffer, $scheduled_times_to_run)
 	{
+		// returning false here will not yield extra test run, returning true will yield additional test run, returning -1 will abort/not-save current test result
+
 		// Compute average time taking per test run (in seconds)
 		$avg_test_run_time = array_sum($test_run_request->test_run_times) / count($test_run_request->test_run_times);
 
@@ -125,17 +127,17 @@ class pts_test_run_manager
 		$std_dev = pts_math::percent_standard_deviation($active_result_buffer->results);
 		if($std_dev >= $this->dynamic_run_count_std_deviation_threshold)
 		{
-			static $last_run_count = 128; // just a number that should always cause the first check below to be true
-			static $run_std_devs;
-			$times_already_ran = count($active_result_buffer->results);
+			static $test_run_pos; // keeping track of run index for what test in the run queue we are at
+			static $run_std_devs; // an array of standard deviations up to this point for the current test
+			$times_already_ran = count($active_result_buffer->results); // times test has ran so far
 
-			if($times_already_ran <= $last_run_count)
+			if($this->test_run_pos != $test_run_pos)
 			{
 				// We're now onto a new test so clear out the array
+				$test_run_pos = $this->test_run_pos;
 				$run_std_devs = array();
 			}
-			$last_run_count = $times_already_ran;
-			$run_std_devs[$last_run_count] = $std_dev;
+			$run_std_devs[$times_already_ran] = $std_dev;
 
 			if($avg_test_run_time < 120)
 			{
@@ -156,10 +158,10 @@ class pts_test_run_manager
 			else if($times_already_ran < ($maximum_times_to_run + $scheduled_times_to_run))
 			{
 				// More aggressive determination whether to still keep increasing the run count beyond the expected maximum...
-				$first_and_now_diff = abs(pts_arrays::first_element($run_std_devs) - pts_arrays::last_element($run_std_devs));
+				$first_and_last_diff_in_deviation = abs(pts_arrays::first_element($run_std_devs) - pts_arrays::last_element($run_std_devs));
 
 				// Increasing the run count at least if it looks to be helping...
-				if($first_and_now_diff > (pts_arrays::first_element($run_std_devs) / 2))
+				if($first_and_last_diff_in_deviation < (pts_arrays::first_element($run_std_devs) / 2))
 				{
 					// If we are at least making progress in the right direction, increase the run count some more
 					return true;
