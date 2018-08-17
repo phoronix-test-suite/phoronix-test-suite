@@ -53,6 +53,7 @@ class pts_test_run_manager
 	protected $multi_test_stress_run = false;
 	protected $allow_test_cache_share = true;
 	protected $skip_post_execution_options = false;
+	protected $drop_noisy_results = false;
 
 	protected static $test_run_process_active = false;
 	protected $batch_mode = false;
@@ -66,6 +67,7 @@ class pts_test_run_manager
 		$this->dynamic_run_count_on_length_or_less = 60; //pts_config::read_user_config('PhoronixTestSuite/Options/TestResultValidation/LimitIncreasingRunCountForTestsOverLength', 60);
 		$this->dynamic_run_count_std_deviation_threshold = pts_config::read_user_config('PhoronixTestSuite/Options/TestResultValidation/StandardDeviationThreshold', 3.50);
 		$this->dynamic_run_count_export_script = pts_config::read_user_config('PhoronixTestSuite/Options/TestResultValidation/ExportResultsTo', null);
+		$this->drop_noisy_results = pts_config::read_bool_config('PhoronixTestSuite/Options/TestResultValidation/DropNoisyResults', 'FALSE');
 
 		if($batch_mode)
 		{
@@ -186,6 +188,13 @@ class pts_test_run_manager
 					// Return was 0 or something else, results are valid, or was some other exit status
 					break;
 			}
+		}
+
+		// see if we should be dropping noisy results
+		if($this->drop_noisy_results && $std_dev > 25.0)
+		{
+			// drop the result from being saved as the noise level exceeds threshold
+			return -1;
 		}
 
 		// No reason to increase the run count with none of the previous checks requesting otherwise

@@ -40,6 +40,7 @@
 			<StandardDeviationThreshold>3.50</StandardDeviationThreshold>
 			<ExportResultsTo></ExportResultsTo>
 			<MinimalTestTime>2</MinimalTestTime>
+			<DropNoisyResults>FALSE</DropNoisyResults>
 		</TestResultValidation>
 		<ExternalHooks>
 			<PreTestProcess></PreTestProcess>

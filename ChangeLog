@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 pts-core: Minor updates to logic for determining how many times to dynamically increase run count on high variance results
+pts-core: Add DropNoisyResults option if wishing to not save results that have too high of deviation between runs
 
 Phoronix Test Suite 8.2.0 Milestone 2
 15 August 2018

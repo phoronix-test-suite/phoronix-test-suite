@@ -414,6 +414,7 @@ class pts_test_execution
 
 					if($increase_run_count === -1)
 					{
+						self::test_run_error($test_run_manager, $test_run_request, 'This run will not be saved due to noisy result.');
 						$abort_testing = true;
 					}
 					else if($increase_run_count == true)
