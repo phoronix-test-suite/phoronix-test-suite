@@ -147,7 +147,7 @@ class pts_test_run_manager
 			else
 			{
 				// For longer running tests, just consider going up to 2x original expected run count
-				$maximum_times_to_increase_multiple = $scheduled_times_to_run * 2;
+				$maximum_times_to_run = $scheduled_times_to_run * 2;
 			}
 
 			// If we haven't reached scheduled times to run x 2, increase count straight away
