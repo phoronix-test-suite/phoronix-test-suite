@@ -55,9 +55,9 @@ class pts_graph_horizontal_bars extends pts_graph_core
 			$middle_of_vert += $this->i['identifier_height'];
 			if($this->i['is_multi_way_comparison'])
 			{
-				foreach(explode(' - ', $identifier) as $i => $identifier_line)
+				foreach(array_reverse(explode(' - ', $identifier)) as $i => $identifier_line)
 				{
-					$x = 8;
+					$x = 8 + ($i * (1.2 * $this->i['identifier_size']));
 					$this->svg_dom->add_text_element($identifier_line, array('x' => $x, 'y' => $middle_of_vert, 'text-anchor' => 'middle', 'transform' => 'rotate(90 ' . $x . ' ' . $middle_of_vert . ')'), $g);
 				}
 			}

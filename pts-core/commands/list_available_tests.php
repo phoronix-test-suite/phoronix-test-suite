@@ -23,7 +23,7 @@
 class list_available_tests implements pts_option_interface
 {
 	const doc_section = 'Information';
-	const doc_description = 'This option will list all test profiles that are available from the enabled OpenBenchmarking.org repositories where supported on the system and are of a verified state. If the system has no Internet access, it will only list the test profiles where the necesary test assets are available locally on the system or on an available network cache, unless using the list-all-tests option to override this behavior.';
+	const doc_description = 'This option will list all test profiles that are available from the enabled OpenBenchmarking.org repositories where supported on the system and are of a verified state. If the system has no Internet access, it will only list the test profiles where the necesary test assets are available locally on the system or on an available network cache, unless using the list-all-tests option to override this behavior. The list-all-tests option will also show tests that are deprecated, etc';
 
 	public static function command_aliases()
 	{
@@ -32,7 +32,8 @@ class list_available_tests implements pts_option_interface
 	public static function run($r)
 	{
 		pts_client::$display->generic_heading('Available Tests');
-		$only_show_available_cached_tests = pts_client::get_sent_command() != 'list_all_tests' && pts_network::internet_support_available() == false;
+		$list_all_tests = pts_client::get_sent_command() == 'list_all_tests';
+		$only_show_available_cached_tests = !$list_all_tests && pts_network::internet_support_available() == false;
 
 		if($only_show_available_cached_tests)
 		{
@@ -50,7 +51,7 @@ class list_available_tests implements pts_option_interface
 				// Don't show unsupported tests
 				continue;
 			}
-			if(!empty($repo_index['tests'][$id]['status']) && $repo_index['tests'][$id]['status'] != 'Verified')
+			if($list_all_tests == false && !empty($repo_index['tests'][$id]['status']) && $repo_index['tests'][$id]['status'] != 'Verified')
 			{
 				// Don't show unsupported tests
 				continue;
