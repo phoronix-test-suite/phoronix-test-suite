@@ -485,6 +485,11 @@ class phodevi_system extends phodevi_device_interface
 			}
 		}
 
+		if(empty($virtualized) && is_file('/.dockerenv'))
+		{
+			$virtualized = 'Docker';
+		}
+
 		return $virtualized;
 	}
 	public static function sw_environment_variables()
