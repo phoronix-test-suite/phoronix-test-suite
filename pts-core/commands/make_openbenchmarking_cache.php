@@ -54,7 +54,14 @@ class make_openbenchmarking_cache implements pts_option_interface
 			$repo_index = pts_openbenchmarking::read_repository_index($repo);
 
 			echo $i . '/' . $total_count . ': ' . ($repo_index['tests'][$test]['title'] != null ? $repo_index['tests'][$test]['title'] . ' [' . $repo_index['tests'][$test]['test_type'] . ']' : null) . PHP_EOL;
-			foreach($repo_index['tests'][$test]['versions'] as $version)
+			$versions = $repo_index['tests'][$test]['versions'];
+
+			if($r[0] == 'lean')
+			{
+				$versions = array(array_shift($versions));
+			}
+
+			foreach($versions as $version)
 			{
 				$qualified_identifier = $repo . '/' . $test . '-' . $version;
 				echo $qualified_identifier;
