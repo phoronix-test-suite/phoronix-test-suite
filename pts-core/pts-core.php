@@ -101,6 +101,10 @@ function pts_define($name, $value = null)
 	{
 		return $defines;
 	}
+	else if(isset($defines[$name]))
+	{
+		return false;
+	}
 
 	$defines[$name] = $value;
 	define($name, $value);
@@ -110,6 +114,11 @@ function pts_define_directories()
 	// User's home directory for storing results, module files, test installations, etc.
 	pts_define('PTS_CORE_PATH', PTS_PATH . 'pts-core/');
 	pts_define('PTS_IS_DAEMONIZED_SERVER_PROCESS', PTS_IS_CLIENT && is_writable('/var/lib/') && is_writable('/etc') ? true : false);
+
+	if(($user_path_override = getenv('PTS_USER_PATH_OVERRIDE')) != false && is_dir($user_path_override))
+	{
+		pts_define('PTS_USER_PATH', $user_path_override);
+	}
 
 	if(PTS_IS_DAEMONIZED_SERVER_PROCESS)
 	{
