@@ -7,6 +7,7 @@ pts-core: Show deprecated tests too when running list-all-tests
 pts-core: Add DropNoisyResults option if wishing to not save results that have too high of deviation between runs
 pts-core: Add PTS_DOWNLOAD_CACHE_OVERRIDE environment variable option on make-download-cache
 pts-core: Add PTS_USER_PATH_OVERRIDE environment variable to override PTS_USER_PATH on initialization
+pts-core: Add PTS_DOWNLOAD_CACHING_PLATFORM_LIMIT environment variable for make-download-cache
 
 Phoronix Test Suite 8.2.0 Milestone 2
 15 August 2018

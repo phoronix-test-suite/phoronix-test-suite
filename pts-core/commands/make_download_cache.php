@@ -52,7 +52,7 @@ class make_download_cache implements pts_option_interface
 			if(count($test_profiles) > 0)
 			{
 				echo PHP_EOL . 'Downloading Test Files For: ' . implode(' ', $test_profiles);
-				pts_test_installer::only_download_test_files($test_profiles, $dc_write_directory, false);
+				pts_test_installer::only_download_test_files($test_profiles, $dc_write_directory, getenv('PTS_DOWNLOAD_CACHING_PLATFORM_LIMIT') !== false);
 			}
 		}
 
@@ -66,7 +66,19 @@ class make_download_cache implements pts_option_interface
 			$test_profile = new pts_test_profile($test);
 			echo PHP_EOL . pts_client::cli_just_bold('Checking Downloads For: ') . $test . PHP_EOL;
 
-			foreach($test_profile->get_downloads() as $file)
+			if(getenv('PTS_DOWNLOAD_CACHING_PLATFORM_LIMIT') !== false)
+			{
+				// Don't get all download files but just those for the given platform
+				$tr = new pts_test_install_request($test_profile);
+				$tr->generate_download_object_list(true);
+				$downloads = $tr->get_download_objects();
+			}
+			else
+			{
+				$downloads = $test_profile->get_downloads();
+			}
+
+			foreach($downloads as $file)
 			{
 				$cached_valid = false;
 				if(is_file($dc_write_directory . $file->get_filename()) && $file->check_file_hash($dc_write_directory . $file->get_filename()))
