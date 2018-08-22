@@ -34,8 +34,8 @@ class build_suite implements pts_option_interface
 		$suite_maintainer = pts_user_io::prompt_user_input('Enter suite maintainer name');
 		$suite_description = pts_user_io::prompt_user_input('Enter suite description');
 
-		$possible_suites = pts_openbenchmarking::available_suites();
-		$possible_tests = pts_openbenchmarking::available_tests();
+		$possible_suites = pts_openbenchmarking::available_suites(false);
+		$possible_tests = pts_openbenchmarking::available_tests(false);
 
 		$new_suite = new pts_test_suite();
 		$new_suite->set_title($suite_name);
