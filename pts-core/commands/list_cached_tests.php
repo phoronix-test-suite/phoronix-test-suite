@@ -20,27 +20,14 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class list_available_tests implements pts_option_interface
+class list_cached_tests implements pts_option_interface
 {
 	const doc_section = 'Information';
-	const doc_description = 'This option will list all test profiles that are available from the enabled OpenBenchmarking.org repositories where supported on the system and are of a verified state. If the system has no Internet access, it will only list the test profiles where the necesary test assets are available locally on the system or on an available network cache, unless using the list-all-tests option to override this behavior. The list-all-tests option will also show tests that are deprecated, etc';
+	const doc_description = 'This option will list all test profiles where any needed test profiles are already cached or available from the local system under test. This is primarily useful if testing offline/behind-the-firewall and other use-cases where wanting to rely only upon local data.';
 
-	public static function command_aliases()
-	{
-		return array('list_tests', 'list_all_tests', 'list_supported_tests');
-	}
 	public static function run($r)
 	{
-		pts_client::$display->generic_heading('Available Tests');
-		$list_all_tests = pts_client::get_sent_command() == 'list_all_tests';
-		$only_show_available_cached_tests = !$list_all_tests && pts_network::internet_support_available() == false;
-
-		if($only_show_available_cached_tests)
-		{
-			echo 'Internet support is not available/enabled, so the Phoronix Test Suite is only listing test profiles where any necessary test assets are already downloaded to the system or available via a network download cache. To override this behavior, use the ' . pts_client::cli_just_bold('phoronix-test-suite list-all-tests') . ' option.' . PHP_EOL . PHP_EOL;
-			pts_client::execute_command('list_cached_tests');
-			return true;
-		}
+		pts_client::$display->generic_heading('Cached Tests');
 
 		$test_count = 0;
 		foreach(pts_openbenchmarking::available_tests(false) as $identifier)
@@ -53,37 +40,28 @@ class list_available_tests implements pts_option_interface
 				// Don't show unsupported tests
 				continue;
 			}
-			if($list_all_tests == false && !empty($repo_index['tests'][$id]['status']) && $repo_index['tests'][$id]['status'] != 'Verified')
-			{
-				// Don't show unsupported tests
-				continue;
-			}
 
-			if($only_show_available_cached_tests)
+			$show = false;
+			foreach($repo_index['tests'][$id]['versions'] as $version)
 			{
-				$show = false;
-				foreach($repo_index['tests'][$id]['versions'] as $version)
+				if(!pts_openbenchmarking::is_test_profile_downloaded($identifier . '-' . $version))
 				{
-					if(!pts_openbenchmarking::is_test_profile_downloaded($identifier . '-' . $version))
-					{
-						// Without Internet, won't be able to download test, so don't show it
-						continue;
-					}
-					$test_profile = new pts_test_profile($identifier . '-' . $version);
-					if(pts_test_install_request::test_files_available_via_cache($test_profile) == false)
-					{
-						// Without Internet, only show tests where files are local or in an available cache
-						continue;
-					}
-
-					$show = true;
-					$identifier .= '-' . $version;
-					break;
-				}
-				if($show == false)
-				{
+					// Without Internet, won't be able to download test, so don't show it
 					continue;
 				}
+				$test_profile = new pts_test_profile($identifier . '-' . $version);
+				if(pts_test_install_request::test_files_available_via_cache($test_profile) == false)
+				{
+					// only show tests where files are local or in an available cache
+					continue;
+				}
+				$show = true;
+				$identifier .= '-' . $version;
+				break;
+			}
+			if($show == false)
+			{
+				continue;
 			}
 
 			echo sprintf('%-30ls - %-39ls %-9ls', $identifier, $repo_index['tests'][$id]['title'], $repo_index['tests'][$id]['test_type']) . PHP_EOL;
@@ -93,6 +71,11 @@ class list_available_tests implements pts_option_interface
 		foreach(pts_tests::local_tests() as $identifier)
 		{
 			$test_profile = new pts_test_profile($identifier);
+			if(pts_test_install_request::test_files_available_via_cache($test_profile) == false)
+			{
+				// only show tests where files are local or in an available cache
+				continue;
+			}
 
 			if($test_profile->get_title() != null && $test_profile->is_supported(false))
 			{
