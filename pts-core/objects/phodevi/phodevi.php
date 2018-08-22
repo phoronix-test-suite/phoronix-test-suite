@@ -848,6 +848,12 @@ class phodevi extends phodevi_base
 	}
 	public static function is_display_server_active()
 	{
+		if(phodevi::read_property('system', 'system-layer') == 'Docker')
+		{
+			// hopefully temp workaround XXX TODO
+			return false;
+		}
+
 		return pts_client::read_env('DISPLAY') != false || pts_client::read_env('WAYLAND_DISPLAY') != false || phodevi::is_windows() || phodevi::is_macosx();
 	}
 }
