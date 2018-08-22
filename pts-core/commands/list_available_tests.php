@@ -57,6 +57,11 @@ class list_available_tests implements pts_option_interface
 				// Don't show unsupported tests
 				continue;
 			}
+			if($repo_index['tests'][$id]['test_type'] == 'Graphics' && !phodevi::is_display_server_active())
+			{
+				// Don't display graphics tests that can't run
+				continue;
+			}
 
 			echo sprintf('%-30ls - %-39ls %-9ls', $identifier, $repo_index['tests'][$id]['title'], $repo_index['tests'][$id]['test_type']) . PHP_EOL;
 			$test_count++;

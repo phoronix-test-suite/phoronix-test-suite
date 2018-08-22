@@ -555,7 +555,7 @@ class pts_openbenchmarking_client
 				// Don't show tests not actively maintained
 				continue;
 			}
-			if($repo_index['tests'][$id]['test_type'] == 'Graphics' && pts_client::read_env('DISPLAY') == false && pts_client::read_env('WAYLAND_DISPLAY') == false && phodevi::is_windows() == false && phodevi::is_macosx() == false)
+			if($repo_index['tests'][$id]['test_type'] == 'Graphics' && !phodevi::is_display_server_active())
 			{
 				// Don't show graphics tests if no display active
 				continue;

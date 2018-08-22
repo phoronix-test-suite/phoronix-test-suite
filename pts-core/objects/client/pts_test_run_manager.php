@@ -1031,7 +1031,7 @@ class pts_test_run_manager
 				}
 				else
 				{
-					if((pts_client::read_env('DISPLAY') == false && pts_client::read_env('WAYLAND_DISPLAY') == false && !phodevi::is_windows() && !phodevi::is_macosx()) && !defined('PHOROMATIC_PROCESS'))
+					if(phodevi::is_display_server_active() && !defined('PHOROMATIC_PROCESS'))
 					{
 						$txt_results = pts_user_io::prompt_bool_input('Do you want to view the text results of the testing', true);
 						if($txt_results)
@@ -1699,7 +1699,7 @@ class pts_test_run_manager
 		{
 			$valid_test_profile = false;
 		}
-		else if($test_type == 'Graphics' && pts_client::read_env('DISPLAY') == false && pts_client::read_env('WAYLAND_DISPLAY') == false && phodevi::is_windows() == false && phodevi::is_macosx() == false)
+		else if($test_type == 'Graphics' && !phodevi::is_display_server_active())
 		{
 			$report_errors && pts_client::$display->test_run_error('No display server was found, cannot run ' . $test_profile);
 			$valid_test_profile = false;

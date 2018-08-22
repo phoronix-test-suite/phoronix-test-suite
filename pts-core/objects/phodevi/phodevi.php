@@ -846,6 +846,10 @@ class phodevi extends phodevi_base
 	{
 		return phodevi::read_property('system', 'username') == 'root';
 	}
+	public static function is_display_server_active()
+	{
+		return pts_client::read_env('DISPLAY') != false || pts_client::read_env('WAYLAND_DISPLAY') != false || phodevi::is_windows() || phodevi::is_macosx();
+	}
 }
 
 phodevi::create_vfs();
