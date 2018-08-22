@@ -40,6 +40,11 @@ class list_cached_tests implements pts_option_interface
 				// Don't show unsupported tests
 				continue;
 			}
+			if($repo_index['tests'][$id]['test_type'] == 'Graphics' && !phodevi::is_display_server_active())
+			{
+				// Don't display graphics tests that can't run
+				continue;
+			}
 
 			$show = false;
 			foreach($repo_index['tests'][$id]['versions'] as $version)

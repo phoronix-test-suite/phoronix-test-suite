@@ -145,8 +145,8 @@ class run_random_tests implements pts_option_interface
 					$test_run_manager->auto_save_results($title, null, 'Various open-source benchmarks by the ' . pts_core::program_title(true) . '.', true);
 					$test_run_manager->auto_generate_results_identifier();
 					echo PHP_EOL;
-					pts_client::$display->generic_sub_heading('Result File: ' . $test_run_manager->get_file_name());
-					pts_client::$display->generic_sub_heading('Result Identifier: ' . $test_run_manager->get_results_identifier());
+					pts_client::$display->generic_sub_heading(pts_client::cli_just_bold('Result File: ') . $test_run_manager->get_file_name());
+					pts_client::$display->generic_sub_heading(pts_client::cli_just_bold('Result Identifier: ') . $test_run_manager->get_results_identifier());
 
 					// BENCHMARK
 					$test_run_manager->pre_execution_process();
