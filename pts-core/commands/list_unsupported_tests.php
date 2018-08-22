@@ -45,7 +45,7 @@ class list_unsupported_tests implements pts_option_interface
 
 			if($unsupported)
 			{
-				echo sprintf('%-28ls - %-30ls %-9ls', $identifier, $unsupported, $repo_index['tests'][$id]['test_type']) . PHP_EOL;
+				echo sprintf('%-28ls - %-30ls', $identifier, $unsupported) . PHP_EOL;
 			}
 		}
 

@@ -20,19 +20,16 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class list_available_tests implements pts_option_interface
+class list_all_tests implements pts_option_interface
 {
 	const doc_section = 'Information';
-	const doc_description = 'This option will list all test profiles that are available from the enabled OpenBenchmarking.org repositories where supported on the system and are of a verified state. If the system has no Internet access, it will only list the test profiles where the necesary test assets are available locally on the system or on an available network cache (the same behavior as using the list-cached-tests sub-command), unless using the list-all-tests option to override this behavior.';
+	const doc_description = 'This option will list all test profiles that are available from the enabled OpenBenchmarking.org repositories. Unlike the other test listing options, list-all-tests will show deprecated tests, potentially broken tests, or other tests not recommended for all environments. The only check in place is ensuring the test profiles are at least compatible with the operating system in use.';
 
-	public static function command_aliases()
-	{
-		return array('list_tests', 'list_supported_tests');
-	}
 	public static function run($r)
 	{
 		pts_client::$display->generic_heading('Available Tests');
-		$only_show_available_cached_tests = pts_network::internet_support_available() == false;
+		$list_all_tests = pts_client::get_sent_command() == 'list_all_tests';
+		$only_show_available_cached_tests = !$list_all_tests && pts_network::internet_support_available() == false;
 
 		if($only_show_available_cached_tests)
 		{
@@ -52,7 +49,7 @@ class list_available_tests implements pts_option_interface
 				// Don't show unsupported tests
 				continue;
 			}
-			if(!empty($repo_index['tests'][$id]['status']) && $repo_index['tests'][$id]['status'] != 'Verified')
+			if($list_all_tests == false && !empty($repo_index['tests'][$id]['status']) && $repo_index['tests'][$id]['status'] != 'Verified')
 			{
 				// Don't show unsupported tests
 				continue;
