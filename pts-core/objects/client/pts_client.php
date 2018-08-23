@@ -1764,7 +1764,7 @@ class pts_client
 	}
 	public static function display_web_page($URL, $alt_text = null, $default_open = true, $auto_open = false)
 	{
-		if(phodevi::is_display_server_active() || defined('PHOROMATIC_PROCESS'))
+		if(!phodevi::is_display_server_active() || defined('PHOROMATIC_PROCESS'))
 		{
 			return;
 		}
