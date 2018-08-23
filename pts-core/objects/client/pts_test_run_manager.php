@@ -1031,7 +1031,7 @@ class pts_test_run_manager
 				}
 				else
 				{
-					if(phodevi::is_display_server_active() && !defined('PHOROMATIC_PROCESS'))
+					if(!phodevi::is_display_server_active() && !defined('PHOROMATIC_PROCESS'))
 					{
 						$txt_results = pts_user_io::prompt_bool_input('Do you want to view the text results of the testing', true);
 						if($txt_results)
