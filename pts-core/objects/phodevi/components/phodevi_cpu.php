@@ -501,7 +501,7 @@ class phodevi_cpu extends phodevi_device_interface
 					$isa = array_pop($uarch);
 				}
 
-				if(stripos($isa, 'rv') !== false && strpos($uarch, 'sifive') !== false)
+				if(!empty($uarch) && stripos($isa, 'rv') !== false && strpos($uarch, 'sifive') !== false)
 				{
 					$info = 'SiFive RISC-V';
 				}
