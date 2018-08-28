@@ -869,7 +869,7 @@ class pts_client
 				{
 					$local_ip = pts_network::get_local_ip();
 					$local_ip_segments = explode('.', $local_ip);
-					$s_segments = explode('.', $s);
+					$s_segments = explode('.', $s[0]);
 
 					if($s_segments[0] == $local_ip_segments[0] && $s_segments[1] == $local_ip_segments[1])
 					{
