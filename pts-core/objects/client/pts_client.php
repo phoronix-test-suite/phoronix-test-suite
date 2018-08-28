@@ -868,8 +868,10 @@ class pts_client
 				foreach($ob_relay as $s)
 				{
 					$local_ip = pts_network::get_local_ip();
+					$local_ip_segments = explode('.', $local_ip);
+					$s_segments = explode('.', $s);
 
-					if(substr($local_ip, 0, strrpos($local_ip, '.')) == substr($s[0], 0, strrpos($s[0], '.')))
+					if($s_segments[0] == $local_ip_segments[0] && $s_segments[1] == $local_ip_segments[1])
 					{
 						$possible_servers[] = array($s[0], $s[1]);
 					}

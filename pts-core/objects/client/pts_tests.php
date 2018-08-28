@@ -410,6 +410,7 @@ class pts_tests
 						echo PHP_EOL;
 					}
 				}
+				echo PHP_EOL;
 			}
 		}
 
