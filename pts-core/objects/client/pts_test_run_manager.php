@@ -1241,6 +1241,7 @@ class pts_test_run_manager
 				if($stop_and_install)
 				{
 					pts_test_installer::standard_install($tests_missing);
+					$to_run_objects = array_merge($to_run_objects, $tests_missing);
 					$this->cleanup_tests_to_run($to_run_objects);
 				}
 			}
