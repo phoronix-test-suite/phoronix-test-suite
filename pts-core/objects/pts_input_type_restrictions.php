@@ -71,6 +71,10 @@ class pts_input_type_restrictions
 	{
 		return $this->enums;
 	}
+	public function is_enums_empty()
+	{
+		return empty($this->enums);
+	}
 	public function set_enums($enums)
 	{
 		$this->enums = $enums;

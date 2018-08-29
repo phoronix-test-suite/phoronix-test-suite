@@ -790,7 +790,7 @@ class pts_validation
 			}
 			$documentation = trim($el->getElementsByTagName('annotation')->item('0')->getElementsByTagName('documentation')->item(0)->nodeValue);
 
-			if(empty($input_type_restrictions->get_enums()) && !empty($dynamic_list_multi))
+			if($input_type_restrictions->is_enums_empty() && !empty($dynamic_list_multi))
 			{
 				$dynamic_list_multi = explode('.', $dynamic_list_multi);
 				if(count($dynamic_list_multi) == 2 && is_callable(array($dynamic_list_multi[0], $dynamic_list_multi[1])))
