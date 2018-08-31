@@ -39,6 +39,8 @@ class pts_test_result
 	public $exec_binary_prepend = null;
 	public $test_result_standard_output = null;
 
+	protected $already_normalized = false;
+
 	public function __construct($test_profile)
 	{
 		$this->test_profile = clone $test_profile;
@@ -231,6 +233,11 @@ class pts_test_result
 		{
 			return false;
 		}
+		if($this->already_normalized)
+		{
+			return false;
+		}
+		$this->already_normalized = true;
 
 		$is_multi_way = pts_render::multi_way_identifier_check($this->test_result_buffer->get_identifiers());
 		$keys = array_keys($this->test_result_buffer->buffer_items);
@@ -279,13 +286,14 @@ class pts_test_result
 					}
 				}
 			}
+
 			if($divide_value == -1)
 			{
 				if($is_multi_way) // find the largest value to use as divide value
 				{
 					foreach($keys as $k)
 					{
-						if($this->test_result_buffer->buffer_items[$k]->get_result_value() < $divide_value || $divide_value == -1)
+						if($this->test_result_buffer->buffer_items[$k]->get_result_value() > $divide_value || $divide_value == -1)
 						{
 							$divide_value = $this->test_result_buffer->buffer_items[$k]->get_result_value();
 						}

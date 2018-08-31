@@ -490,24 +490,36 @@ class phodevi_cpu extends phodevi_device_interface
 					// Haven't found a better way to detect ThunderX as not exposed via cpuinfo, etc
 					$info = 'Cavium ThunderX';
 				}
-				$isa = phodevi_linux_parser::read_cpuinfo('isa');
-				$uarch = phodevi_linux_parser::read_cpuinfo('uarch');
-				if(!empty($isa))
+				else if(is_file('/sys/devices/system/cpu/cpu0/cpufreq/scaling_driver'))
 				{
-					$isa = array_pop($isa);
-				}
-				if(!empty($uarch))
-				{
-					$isa = array_pop($uarch);
+					$scaling_driver = file_get_contents('/sys/devices/system/cpu/cpu0/cpufreq/scaling_driver');
+					if(strpos($scaling_driver, 'meson_') !== false)
+					{
+						$info = 'Amlogic';
+					}
 				}
 
-				if(!empty($uarch) && stripos($isa, 'rv') !== false && strpos($uarch, 'sifive') !== false)
+				if(empty($info))
 				{
-					$info = 'SiFive RISC-V';
-				}
-				else if(!empty($isa))
-				{
-					$info = $isa;
+					$isa = phodevi_linux_parser::read_cpuinfo('isa');
+					$uarch = phodevi_linux_parser::read_cpuinfo('uarch');
+					if(!empty($isa))
+					{
+						$isa = array_pop($isa);
+					}
+					if(!empty($uarch))
+					{
+						$isa = array_pop($uarch);
+					}
+
+					if(!empty($uarch) && stripos($isa, 'rv') !== false && strpos($uarch, 'sifive') !== false)
+					{
+						$info = 'SiFive RISC-V';
+					}
+					else if(!empty($isa))
+					{
+						$info = $isa;
+					}
 				}
 			}
 
