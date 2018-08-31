@@ -1341,7 +1341,7 @@ class phodevi_system extends phodevi_device_interface
 		}
 		else if(pts_client::is_process_running('lxsession') || $desktop_session == 'lxde')
 		{
-			$lx_output = trim(shell_exec('lxpanel --version'));
+			$lx_output = trim(shell_exec('lxpanel --version 2>&1'));
 			$version = substr($lx_output, strpos($lx_output, ' ') + 1);
 
 			$desktop_environment = 'LXDE';
