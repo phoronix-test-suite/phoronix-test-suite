@@ -23,8 +23,12 @@
 class force_install implements pts_option_interface
 {
 	const doc_section = 'Test Installation';
-	const doc_description = 'This option will force the installation (or re-installation) of a test or suite. The arguments and process is similar to the install option but even if the test is installed, the entire installation process will automatically be executed. This option is generally used when debugging a test installation problem.';
+	const doc_description = 'This option will force the installation (or re-installation) of a test or suite. The arguments and process is similar to the install option but even if the test is installed, the entire installation process will automatically be executed. This option is generally used when debugging a test installation problem or wishing to re-install test(s) due to compiler or other environmental changes.';
 
+	public static function command_aliases()
+	{
+		return array('reinstall', 're-install');
+	}
 	public static function argument_checks()
 	{
 		return array(

@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 pts-core: Fix behavior of "Would you like to stop and install these tests now"
+pts-core: Add reinstall / re-install aliases to force-install
 phodevi: Amlogic SoC detection based on meson_cpufreq driver
 phodevi: Rockchip SoC fallback detection
 
