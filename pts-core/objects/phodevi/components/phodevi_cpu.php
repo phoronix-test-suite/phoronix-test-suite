@@ -490,6 +490,11 @@ class phodevi_cpu extends phodevi_device_interface
 					// Haven't found a better way to detect ThunderX as not exposed via cpuinfo, etc
 					$info = 'Cavium ThunderX';
 				}
+				else if(strpos(phodevi::$vfs->dmesg, 'rockchip-cpuinfo') !== false)
+				{
+					// Haven't found a better way to detect Rockchip as not exposed via cpuinfo, etc
+					$info = 'Rockchip';
+				}
 				else if(is_file('/sys/devices/system/cpu/cpu0/cpufreq/scaling_driver'))
 				{
 					$scaling_driver = file_get_contents('/sys/devices/system/cpu/cpu0/cpufreq/scaling_driver');
