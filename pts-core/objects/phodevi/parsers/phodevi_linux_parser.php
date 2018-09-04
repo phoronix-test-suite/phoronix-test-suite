@@ -544,6 +544,15 @@ class phodevi_linux_parser
 
 		return $cpuinfo_matches;
 	}
+	public static function read_cpuinfo_single($attribute, $cpuinfo = false)
+	{
+		$cpuinfo = self::read_cpuinfo($attribute, $cpuinfo);
+		if(!empty($cpu_info))
+		{
+			return array_pop($cpuinfo);
+		}
+		return null;
+	}
 	public static function read_lsb_distributor_id()
 	{
 		$vendor = phodevi_linux_parser::read_lsb('Distributor ID');

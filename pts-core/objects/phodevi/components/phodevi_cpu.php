@@ -485,10 +485,10 @@ class phodevi_cpu extends phodevi_device_interface
 		{
 			if(phodevi::is_linux())
 			{
-				$implementer = phodevi_linux_parser::read_cpuinfo('CPU implementer');
+				$implementer = phodevi_linux_parser::read_cpuinfo_single('CPU implementer');
 				if($implementer == '0x41')
 				{
-					$architecture = phodevi_linux_parser::read_cpuinfo('CPU architecture');
+					$architecture = phodevi_linux_parser::read_cpuinfo_single('CPU architecture');
 					switch($architecture)
 					{
 						case '7':
@@ -499,7 +499,7 @@ class phodevi_cpu extends phodevi_device_interface
 							$info = 'ARMVv8';
 							break;
 					}
-					$part = phodevi_linux_parser::read_cpuinfo('CPU part');
+					$part = phodevi_linux_parser::read_cpuinfo_single('CPU part');
 					switch($part)
 					{
 						case '0xc07':
@@ -573,16 +573,8 @@ class phodevi_cpu extends phodevi_device_interface
 
 				if(empty($info))
 				{
-					$isa = phodevi_linux_parser::read_cpuinfo('isa');
-					$uarch = phodevi_linux_parser::read_cpuinfo('uarch');
-					if(!empty($isa))
-					{
-						$isa = array_pop($isa);
-					}
-					if(!empty($uarch))
-					{
-						$isa = array_pop($uarch);
-					}
+					$isa = phodevi_linux_parser::read_cpuinfo_single('isa');
+					$uarch = phodevi_linux_parser::read_cpuinfo_single('uarch');
 
 					if(!empty($uarch) && stripos($isa, 'rv') !== false && strpos($uarch, 'sifive') !== false)
 					{
