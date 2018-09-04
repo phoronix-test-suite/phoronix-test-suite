@@ -547,7 +547,7 @@ class phodevi_linux_parser
 	public static function read_cpuinfo_single($attribute, $cpuinfo = false)
 	{
 		$cpuinfo = self::read_cpuinfo($attribute, $cpuinfo);
-		if(!empty($cpu_info))
+		if(!empty($cpuinfo))
 		{
 			return array_pop($cpuinfo);
 		}
