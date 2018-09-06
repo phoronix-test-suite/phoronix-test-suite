@@ -24,6 +24,8 @@ class cpu_power extends phodevi_sensor
 {
 	const SENSOR_TYPE = 'cpu';
 	const SENSOR_SENSES = 'power';
+	static $cpu_energy = 0;
+	static $last_time = 0;
 
 	public function read_sensor()
 	{
@@ -73,6 +75,43 @@ class cpu_power extends phodevi_sensor
 			if(is_numeric($in_power1_input) && $in_power1_input > 1)
 			{
 				$cpu_power = $in_power1_input;
+			}
+		}
+		else if(is_readable('/sys/class/powercap/intel-rapl/intel-rapl:0/energy_uj'))
+		{
+			$rapl_base_path = "/sys/class/powercap/intel-rapl/intel-rapl:";
+			$total_energy = 0;
+			for($x = 0; $x <= 128; $x++)
+			{
+				$rapl_base_path_1 = $rapl_base_path . $x;
+				if(is_readable($rapl_base_path_1))
+				{
+					$energy_uj = pts_file_io::file_get_contents($rapl_base_path_1 . '/energy_uj');
+					if(is_numeric($energy_uj))
+					{
+						$total_energy += $energy_uj;
+					}
+				}
+				else
+				{
+					break;
+				}
+			}
+
+			if($total_energy > 1)
+			{
+				if(self::$cpu_energy == 0)
+				{
+					self::$cpu_energy = $total_energy;
+					self::$last_time = time();
+					$cpu_power = 0;
+				}
+				else
+				{
+					$cpu_power = ($total_energy - self::$cpu_energy) / (time() - self::$last_time) / 1000000;
+				}
+				self::$last_time = time();
+				self::$cpu_energy = $total_energy;
 			}
 		}
 
