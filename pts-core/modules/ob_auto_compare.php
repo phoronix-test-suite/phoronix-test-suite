@@ -3,7 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2017, Michael Larabel
+	Copyright (C) 2017 - 2018, Phoronix Media
+	Copyright (C) 2017 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,7 +23,7 @@
 class ob_auto_compare extends pts_module_interface
 {
 	const module_name = 'OpenBenchmarking.org Auto Comparison';
-	const module_version = '1.1.0';
+	const module_version = '1.2.0';
 	const module_description = 'This module prints comparable OpenBenchmarking.org results in the command-line for reference purposes as tests are being run. OpenBenchmarking.org is automatically queried for results to show based on the test comparison hash and the system type (mobile, desktop, server, cloud, workstation, etc). No other system information or result data is transmitted..';
 	const module_author = 'Michael Larabel';
 
@@ -69,16 +70,16 @@ class ob_auto_compare extends pts_module_interface
 	protected static function request_compare(&$result_object, $system_type)
 	{
 		$result_file = null;
-		if(pts_network::internet_support_available())
-		{
-			$comparison_hash = $result_object->get_comparison_hash();
-			$result_file = self::request_compare_from_ob($comparison_hash, $system_type);
-		}
-
-		if(empty($result_file) || !($result_file instanceof pts_result_file))
+		if(true) // default to see if local comparison first
 		{
 			$comparison_hash = $result_object->get_comparison_hash(true, false);
 			$result_file = self::request_compare_from_local_results($comparison_hash);
+		}
+
+		if(empty($result_file) && pts_network::internet_support_available())
+		{
+			$comparison_hash = $result_object->get_comparison_hash();
+			$result_file = self::request_compare_from_ob($comparison_hash, $system_type);
 		}
 
 		return $result_file;
@@ -157,7 +158,7 @@ class ob_auto_compare extends pts_module_interface
 				$ro->test_result_buffer->buffer_values_reverse();
 				echo PHP_EOL.pts_client::cli_just_bold('    OpenBenchmarking.org Dynamic Comparison: ');
 				echo pts_result_file_output::test_result_to_text($ro, pts_client::terminal_width(), true, $result_object->test_result_buffer->get_identifiers());
-				echo PHP_EOL . pts_client::cli_just_bold('    Result Perspective:') . ' https://openbenchmarking.org/result/' . $auto_comparison_result_file->get_reference_id() . PHP_EOL;
+				echo PHP_EOL . pts_client::cli_just_bold('    Result Perspective:') . ' ' . (pts_openbenchmarking::is_string_openbenchmarking_result_id_compliant($auto_comparison_result_file->get_reference_id()) ? 'https://openbenchmarking.org/result/' : ) . $auto_comparison_result_file->get_reference_id() . PHP_EOL;
 			}
 		}
 	}

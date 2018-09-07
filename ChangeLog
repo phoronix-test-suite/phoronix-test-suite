@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 pts-core: Fix behavior of "Would you like to stop and install these tests now"
 pts-core: Add reinstall / re-install aliases to force-install
+ob_auto_compare: Default first to trying to do an automated local result comparison
 phodevi: Amlogic SoC detection based on meson_cpufreq driver
 phodevi: Rockchip SoC fallback detection
 phodevi: Embedded ARM Cortex / ARM part model detection
