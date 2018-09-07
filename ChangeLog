@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 8.2.0 Milestone 4
+7 September 2018
 
 pts-core: Fix behavior of "Would you like to stop and install these tests now"
 pts-core: Add reinstall / re-install aliases to force-install
