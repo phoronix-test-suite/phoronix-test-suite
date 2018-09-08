@@ -342,6 +342,10 @@ class pts_test_profile_parser
 	{
 		return pts_strings::string_bool($this->xg('TestProfile/RequiresRoot', 'FALSE'));
 	}
+	public function is_display_required()
+	{
+		return pts_strings::string_bool($this->xg('TestProfile/RequiresDisplay', 'FALSE')) || $this->get_test_hardware_type() == 'Graphics';
+	}
 	public function allow_cache_share()
 	{
 		return pts_strings::string_bool($this->xg('TestSettings/Default/AllowCacheShare'));

@@ -1700,7 +1700,7 @@ class pts_test_run_manager
 		{
 			$valid_test_profile = false;
 		}
-		else if($test_type == 'Graphics' && !phodevi::is_display_server_active())
+		else if($test_profile->is_display_required() && !phodevi::is_display_server_active())
 		{
 			$report_errors && pts_client::$display->test_run_error('No display server was found, cannot run ' . $test_profile);
 			$valid_test_profile = false;

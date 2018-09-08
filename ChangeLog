@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+pts-core: Add RequiresDisplay test profile property to indicate if the test profile explicitly requires a monitor / display server to work
+
 Phoronix Test Suite 8.2.0 Milestone 4
 7 September 2018
 

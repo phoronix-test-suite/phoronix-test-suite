@@ -282,6 +282,17 @@
 					<xs:documentation>RequiresRoot allows a value of TRUE or FALSE if the test requires root/administrator rights for successfully running the test. By default the value is assumed to FALSE. If TRUE, the Phoronix Test Suite will attempt to prompt the user at run-time for their root/sudo password to run the test with elevated permissions if the user is not current root/administrator.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="RequiresDisplay" type="Boolean" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>is_display_required</get>
+						<set></set>
+						<default>FALSE</default>
+						<flags>UNCOMMON</flags>
+					</xs:appinfo>
+					<xs:documentation>RequiresDisplay allows a value of TRUE or FALSE if the test requires a display server / monitor to be attached for the test to run, i.e. the test requires the ability to launch a GUI window or similar in order for the test to execute. By default the value is assumed to FALSE unless the TestType is set to 'Graphics' and then it is assumed to be TRUE for GPU tests. If TRUE, the Phoronix Test Suite will skip tests from execution if no display server is believed to be running.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="EnvironmentSize" type="PositiveDecimal" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:appinfo>
