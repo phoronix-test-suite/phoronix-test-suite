@@ -196,7 +196,7 @@ class phoromatic_build_suite implements pts_webui_interface
 				$main .= '<option value="' . $test . '">' . $test . '</option>';
 			}
 			$main .= '</select>';
-			$main .= '<p align="right"><input name="submit" value="Create Suite" type="submit" onclick="return pts_rmm_validate_suite();" /></p>';
+			$main .= '<p align="right"><input name="submit" value="' . ($suite->get_title() != null ? 'Edit' : 'Create') .' Suite" type="submit" onclick="return pts_rmm_validate_suite();" /></p>';
 		}
 
 		echo '<div id="pts_phoromatic_main_area">' . $main . '</div>';

@@ -73,14 +73,19 @@ class phoromatic_r_add_test_build_suite_details implements pts_webui_interface
 				}
 				else
 				{
-					echo '<input name="' . $test_prefix . $o->get_identifier() . '_selected" id="' . $test_prefix . $o->get_identifier() . '_selected" type="hidden" value="' . $o->get_name() . ': ' . $o->get_option_name(0) . '" />';
 					echo '<p><select name="' . $test_prefix . $o->get_identifier() . '" id="' . $test_prefix . $o->get_identifier() . '" onChange="phoromatic_test_select_update_selected_name(this);" onload="phoromatic_test_select_update_selected_name(this);">';
 
 					$opts = array();
+					$selected_index = 0;
 					for($j = 0; $j < $option_count; $j++)
 					{
 						$v = $o->format_option_value_from_input($o->get_option_value($j));
-						echo '<option value="' . $v . '" ' . (isset($_GET['tpa']) && strpos($_GET['tpa'], $o->get_option_name($j)) !== false ? 'selected="selected"' : null) . '>' . $o->get_option_name($j) . '</option>';
+						$selected = isset($_GET['tpa']) && strpos($_GET['tpa'], $o->get_option_name($j)) !== false;
+						if($selected)
+						{
+							$selected_index = $j;
+						}
+						echo '<option value="' . $v . '" ' . ($selected ? 'selected="selected"' : null) . '>' . $o->get_option_name($j) . '</option>';
 						$opts[] = $o->get_name() . ': ' . $o->get_option_name($j) . '::' . $v;
 					}
 					if($j > 1)
@@ -89,6 +94,7 @@ class phoromatic_r_add_test_build_suite_details implements pts_webui_interface
 					}
 
 					echo '</select></p>';
+					echo '<input name="' . $test_prefix . $o->get_identifier() . '_selected" id="' . $test_prefix . $o->get_identifier() . '_selected" type="hidden" value="' . $o->get_name() . ': ' . $o->get_option_name($selected_index) . '" />';
 				}
 			}
 		}
