@@ -293,6 +293,17 @@
 					<xs:documentation>RequiresDisplay allows a value of TRUE or FALSE if the test requires a display server / monitor to be attached for the test to run, i.e. the test requires the ability to launch a GUI window or similar in order for the test to execute. By default the value is assumed to FALSE unless the TestType is set to 'Graphics' and then it is assumed to be TRUE for GPU tests. If TRUE, the Phoronix Test Suite will skip tests from execution if no display server is believed to be running.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="RequiresNetwork" type="Boolean" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>is_network_required</get>
+						<set></set>
+						<default>FALSE</default>
+						<flags>UNCOMMON</flags>
+					</xs:appinfo>
+					<xs:documentation>RequiresNetwork allows a value of TRUE or FALSE if the test requires a working network connection to successfully run the test. By default the value is assumed to FALSE. If TRUE, the Phoronix Test Suite will attempt to prompt the user at run-time if a network connection is needed for the test but the Phoronix Test Suite has networking support disabled or no network connection appears to be working. If the TestType of the test profile is 'Network', this value is assumed to be TRUE.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="EnvironmentSize" type="PositiveDecimal" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:appinfo>

@@ -1705,6 +1705,11 @@ class pts_test_run_manager
 			$report_errors && pts_client::$display->test_run_error('No display server was found, cannot run ' . $test_profile);
 			$valid_test_profile = false;
 		}
+		else if($test_profile->is_network_required() && !pts_network::network_support_available())
+		{
+			$report_errors && pts_client::$display->test_run_error('No network connection was found or is disabled, cannot run ' . $test_profile);
+			$valid_test_profile = false;
+		}
 		else if($test_type == 'Graphics' && in_array($display_driver, array('vesa', 'nv', 'cirrus')) && stripos($gpu, 'LLVM') === false)
 		{
 			// These display drivers end up being in known configurations without 3D hardware support so unless an LLVM-based string is reported as the GPU, don't advertise 3D tests

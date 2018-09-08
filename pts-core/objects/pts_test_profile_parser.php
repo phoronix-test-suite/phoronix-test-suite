@@ -346,6 +346,10 @@ class pts_test_profile_parser
 	{
 		return pts_strings::string_bool($this->xg('TestProfile/RequiresDisplay', 'FALSE')) || ($this->xg('TestProfile/RequiresDisplay') == null && $this->get_test_hardware_type() == 'Graphics');
 	}
+	public function is_network_required()
+	{
+		return pts_strings::string_bool($this->xg('TestProfile/RequiresNetwork', 'FALSE')) || $this->get_test_hardware_type() == 'Network';
+	}
 	public function allow_cache_share()
 	{
 		return pts_strings::string_bool($this->xg('TestSettings/Default/AllowCacheShare'));
