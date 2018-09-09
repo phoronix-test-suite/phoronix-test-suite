@@ -1702,28 +1702,28 @@ class pts_test_run_manager
 		}
 		else if($test_profile->is_display_required() && !phodevi::is_display_server_active())
 		{
-			$report_errors && pts_client::$display->test_run_error('No display server was found, cannot run ' . $test_profile);
+			$report_errors && pts_client::$display->test_run_error('No display server was found, skipping ' . $test_profile);
 			$valid_test_profile = false;
 		}
 		else if($test_profile->is_network_required() && !pts_network::network_support_available())
 		{
-			$report_errors && pts_client::$display->test_run_error('No network connection was found or is disabled, cannot run ' . $test_profile);
+			$report_errors && pts_client::$display->test_run_error('No network connection was found or is disabled, skipping ' . $test_profile);
 			$valid_test_profile = false;
 		}
 		else if($test_profile->is_internet_required() && !pts_network::internet_support_available())
 		{
-			$report_errors && pts_client::$display->test_run_error('No Internet connection was found or is disabled, cannot run ' . $test_profile);
+			$report_errors && pts_client::$display->test_run_error('No Internet connection was found or is disabled, skipping ' . $test_profile);
 			$valid_test_profile = false;
 		}
 		else if($test_type == 'Graphics' && in_array($display_driver, array('vesa', 'nv', 'cirrus')) && stripos($gpu, 'LLVM') === false)
 		{
 			// These display drivers end up being in known configurations without 3D hardware support so unless an LLVM-based string is reported as the GPU, don't advertise 3D tests
-			$report_errors && pts_client::$display->test_run_error('3D acceleration support not available, cannot run ' . $test_profile);
+			$report_errors && pts_client::$display->test_run_error('3D acceleration support not available, skipping ' . $test_profile);
 			$valid_test_profile = false;
 		}
 		else if($test_type == 'Disk' && stripos(phodevi::read_property('system', 'filesystem'), 'SquashFS') !== false)
 		{
-			$report_errors && pts_client::$display->test_run_error('Running on a RAM-based live file-system, cannot run ' . $test_profile);
+			$report_errors && pts_client::$display->test_run_error('Running on a RAM-based live file-system, skipping ' . $test_profile);
 			$valid_test_profile = false;
 		}
 		else if(pts_client::read_env('NO_' . strtoupper($test_type) . '_TESTS') ||($skip_tests && (in_array($test_profile, $skip_tests) || in_array($test_type, $skip_tests) || in_array($test_profile->get_identifier(false), $skip_tests) || in_array($test_profile->get_identifier_base_name(), $skip_tests))))
@@ -1738,13 +1738,13 @@ class pts_test_run_manager
 		}
 		else if($test_profile->is_root_required() && $is_batch_mode && phodevi::is_root() == false)
 		{
-			$report_errors && pts_client::$display->test_run_error('Cannot run ' . $test_profile . ' in batch mode as root access is required.');
+			$report_errors && pts_client::$display->test_run_error('Running in batch mode as a user but this test requires root access, skipping ' . $test_profile);
 			$valid_test_profile = false;
 		}
 
 		if($valid_test_profile == false && pts_client::read_env('SKIP_ALL_TEST_SUPPORT_CHECKS'))
 		{
-			$report_errors && pts_client::$display->test_run_error('SKIP_ALL_TEST_SUPPORT_CHECKS is set for ' . $test_profile . '.');
+			$report_errors && pts_client::$display->test_run_error('SKIP_ALL_TEST_SUPPORT_CHECKS is set for ' . $test_profile);
 			$valid_test_profile = true;
 		}
 

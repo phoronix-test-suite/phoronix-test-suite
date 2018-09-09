@@ -44,6 +44,18 @@ class pts_test_installer
 		$unknown_tests = array();
 		$test_profiles = pts_types::identifiers_to_test_profile_objects($items_to_install, true, true, $unknown_tests);
 
+		if($force_install == false)
+		{
+			foreach($test_profiles as $i => $tp)
+			{
+				$valid = pts_test_run_manager::test_profile_system_compatibility_check($tp, true);
+				if($valid == false)
+				{
+					unset($test_profiles[$i]);
+				}
+			}
+		}
+
 		// Any external dependencies?
 		pts_external_dependencies::install_dependencies($test_profiles, $no_prompts, $skip_tests_with_missing_dependencies);
 
