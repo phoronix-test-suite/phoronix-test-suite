@@ -545,7 +545,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function triggered_system_error($level, $message, $file, $line)
 	{
-		$error_msg = PHP_EOL . '[' . $level . '] ';
+		$error_msg = PHP_EOL . $this->tab . '[' . $level . '] ';
 		if(strpos($message, PHP_EOL) === false)
 		{
 			$error_msg .= $message . ' ';
