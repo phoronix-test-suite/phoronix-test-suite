@@ -106,6 +106,7 @@ class pts_tests
 				if(isset($log_file[8]) && !isset($log_file[144]) && strpos($log_file, PHP_EOL) === false)
 				{
 					$error = $log_file;
+					break;
 				}
 			}
 		}
