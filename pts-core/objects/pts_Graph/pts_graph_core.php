@@ -182,6 +182,7 @@ abstract class pts_graph_core
 		$this->results = array();
 		if($this->i['is_multi_way_comparison'])
 		{
+			$this->test_result->test_result_buffer->adjust_precision();
 			foreach($this->test_result->test_result_buffer->buffer_items as $i => &$buffer_item)
 			{
 				if($buffer_item->get_result_value() === null)
@@ -236,6 +237,7 @@ abstract class pts_graph_core
 		}
 		else if(isset($this->test_result->test_result_buffer))
 		{
+			$this->test_result->test_result_buffer->adjust_precision();
 			foreach($this->test_result->test_result_buffer->buffer_items as $i => &$buffer_item)
 			{
 				if($buffer_item->get_result_value() === null)

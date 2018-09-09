@@ -371,6 +371,25 @@ class pts_test_result_buffer
 			}
 		}
 	}
+	public function adjust_precision($precision = 'auto')
+	{
+		if($precision == 'auto')
+		{
+			// For very large results, little point in keeping the precision...
+			if($this->get_min_value() > 400)
+			{
+				$precision = 0;
+			}
+		}
+		if(is_numeric($precision))
+		{
+			foreach($this->buffer_items as &$buffer_item)
+			{
+				$buffer_item->reset_result_value(pts_math::set_precision($buffer_item->get_result_value(), $precision));
+			}
+
+		}
+	}
 	public function get_values()
 	{
 		$values = array();
