@@ -8,6 +8,7 @@ pts-core: Add RequiresInternet test profile property to indicate if the test pro
 pts-core: Don't install tests where the current run-time checks will fail
 phodevi: Improve CPU thread count detection when running under LXC
 phodevi: More robust DMI decode ignore value handling
+phodevi: Add extra fallback detection for LXC in system-layer
 
 Phoronix Test Suite 8.2.0 Milestone 4
 7 September 2018

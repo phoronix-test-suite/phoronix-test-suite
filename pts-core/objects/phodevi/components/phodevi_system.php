@@ -485,9 +485,16 @@ class phodevi_system extends phodevi_device_interface
 			}
 		}
 
-		if(empty($virtualized) && is_file('/.dockerenv'))
+		if(empty($virtualized))
 		{
-			$virtualized = 'Docker';
+			if(is_file('/.dockerenv'))
+			{
+				$virtualized = 'Docker';
+			}
+			else if(is_file('/dev/lxc/console'))
+			{
+				$virtualized = 'lxc';
+			}
 		}
 
 		return $virtualized;
@@ -588,7 +595,7 @@ class phodevi_system extends phodevi_device_interface
 			}
 		}
 
-		return !empty($security) ? implode(' + ',  $security) . ' Protection' : null;
+		return !empty($security) ? implode(' + ',  $security) : null;
 	}
 	public static function sw_compiler()
 	{
