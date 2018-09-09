@@ -376,7 +376,7 @@ class pts_test_result_buffer
 		if($precision == 'auto')
 		{
 			// For very large results, little point in keeping the precision...
-			if($this->get_min_value() > 400)
+			if($this->get_min_value() >= 100)
 			{
 				$precision = 0;
 			}
