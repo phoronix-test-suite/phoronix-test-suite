@@ -385,7 +385,10 @@ class pts_test_result_buffer
 		{
 			foreach($this->buffer_items as &$buffer_item)
 			{
-				$buffer_item->reset_result_value(pts_math::set_precision($buffer_item->get_result_value(), $precision));
+				if(is_numeric(($val = $buffer_item->get_result_value())))
+				{
+					$buffer_item->reset_result_value(pts_math::set_precision($val, $precision));
+				}
 			}
 
 		}
