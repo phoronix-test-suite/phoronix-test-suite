@@ -833,7 +833,7 @@ class pts_test_run_manager
 		}
 		else if(count($to_run) == 0)
 		{
-			trigger_error('You must enter at least one test, suite, or result identifier to run.', E_USER_ERROR);
+			//trigger_error('You must enter at least one test, suite, or result identifier to run.', E_USER_ERROR);
 			return false;
 		}
 

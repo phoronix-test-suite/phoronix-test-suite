@@ -54,6 +54,7 @@ class pts_test_installer
 					unset($test_profiles[$i]);
 				}
 			}
+
 		}
 
 		// Any external dependencies?
@@ -79,12 +80,6 @@ class pts_test_installer
 	}
 	public static function start_install(&$test_profiles, &$unknown_tests = null, $force_install = false, $no_prompts = false)
 	{
-		if(count($test_profiles) == 0)
-		{
-			trigger_error('No Tests Found For Installation.', E_USER_ERROR);
-			return false;
-		}
-
 		// Setup the install manager and add the tests
 		$test_install_manager = new pts_test_install_manager();
 		$install_table = array();
