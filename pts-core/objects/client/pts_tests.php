@@ -507,7 +507,7 @@ class pts_tests
 			echo '    phoronix-test-suite install <test-name>' . PHP_EOL . PHP_EOL;
 		}
 	}
-	public static function recently_saved_results()
+	public static function recently_saved_results($extra_space = null)
 	{
 		$recent_results = pts_tests::test_results_by_date();
 
@@ -522,8 +522,8 @@ class pts_tests
 				$days = floor(($current_time - $m_time) / 86400);
 				$recent_result = sprintf('%-' . $res_length . 'ls [%-ls]', $recent_result, ($days == 0 ? 'Today' : pts_strings::days_ago_format_string($days) . ' old'));
 			}
-			echo PHP_EOL . pts_client::cli_just_bold('Recently Saved Test Results:') . PHP_EOL;
-			echo pts_user_io::display_text_list($recent_results, '   ') . PHP_EOL;
+			echo PHP_EOL . $extra_space . pts_client::cli_just_bold('Recently Saved Test Results:') . PHP_EOL;
+			echo pts_user_io::display_text_list($recent_results, $extra_space . '   ') . PHP_EOL;
 			return true;
 		}
 

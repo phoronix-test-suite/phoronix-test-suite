@@ -353,7 +353,7 @@ class pts_test_run_manager
 			// Be of help to the user by showing recently saved test results
 			if($save_name == null)
 			{
-				pts_tests::recently_saved_results();
+				pts_tests::recently_saved_results('    ');
 
 			}
 			$save_name_length = strlen($save_name);
@@ -369,7 +369,7 @@ class pts_test_run_manager
 					echo PHP_EOL . 'The name of the saved file must have between 2 and 126 characters in length.' . PHP_EOL;
 				}
 
-				$prompt = 'Enter a name for the result file: ';
+				$prompt = '    Enter a name for the result file: ';
 				if(function_exists('readline') && function_exists('readline_completion_function'))
 				{
 					pts_user_io::$readline_completion_possibilities = pts_tests::test_results_by_date();
@@ -452,7 +452,7 @@ class pts_test_run_manager
 				}
 				else
 				{
-					$prompt = 'Enter a unique name to describe this test run / configuration: ';
+					$prompt = '    Enter a unique name to describe this test run / configuration: ';
 					if(function_exists('readline') && function_exists('readline_completion_function'))
 					{
 						pts_user_io::$readline_completion_possibilities = array_map(array('pts_strings', 'trim_search_query'), array_merge(phodevi::system_hardware(false), phodevi::system_software(false)));
