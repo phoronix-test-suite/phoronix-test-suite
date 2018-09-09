@@ -142,7 +142,7 @@ class phodevi_cpu extends phodevi_device_interface
 
 		if($info == null && isset(phodevi::$vfs->cpuinfo))
 		{
-			$info = self::cpuinfo_core_count();
+			$info = self::cpuinfo_thread_count();
 		}
 
 		return (is_numeric($info) && $info > 0 ? $info : 1);
