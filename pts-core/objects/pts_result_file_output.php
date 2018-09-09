@@ -177,7 +177,7 @@ class pts_result_file_output
 		$identifiers = $result_object->test_result_buffer->get_identifiers();
 		$longest_identifier_length = strlen(pts_strings::find_longest_string($identifiers)) + 2;
 
-		$this->test_result->test_result_buffer->adjust_precision();
+		$result_object->test_result_buffer->adjust_precision();
 		foreach($result_object->test_result_buffer as &$buffers)
 		{
 			if(empty($buffers))
