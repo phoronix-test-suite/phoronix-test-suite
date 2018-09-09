@@ -160,7 +160,7 @@ class phodevi_linux_parser
 
 		if((phodevi::is_root() || is_readable('/dev/mem')) && pts_client::executable_in_path('dmidecode'))
 		{
-			$ignore = pts_arrays::to_array($ignore);
+			$ignore = array_map('strtolower', pts_arrays::to_array($ignore));
 
 			$dmidecode = shell_exec('dmidecode --type ' . $type . ' 2>&1');
 			$sub_type = "\n" . $sub_type . "\n";
@@ -181,7 +181,7 @@ class phodevi_linux_parser
 					{
 						$dmidecode_r = pts_strings::colon_explode($dmidecode_elements[$i]);
 
-						if($dmidecode_r[0] == $object && isset($dmidecode_r[1]) && !in_array($dmidecode_r[1], $ignore))
+						if($dmidecode_r[0] == $object && isset($dmidecode_r[1]) && !in_array(strtolower($dmidecode_r[1]), $ignore))
 						{
 							array_push($value, $dmidecode_r[1]);
 							$found_in_section = true;
