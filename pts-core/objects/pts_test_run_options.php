@@ -350,7 +350,7 @@ class pts_test_run_options
 
 				foreach($all_devices as $i => &$device)
 				{
-					if(is_numeric(substr($device, -1)))
+					if(is_numeric(substr($device, -1)) && strpos($device, '/dev/md') === false)
 					{
 						unset($all_devices[$i]);
 					}
