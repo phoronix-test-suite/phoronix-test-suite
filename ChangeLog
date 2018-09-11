@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 8.2.0-Rakkestad
+11 September 2018
 
 pts-core: Add RequiresDisplay test profile property to indicate if the test profile explicitly requires a monitor / display server to work
 pts-core: Add RequiresNetwork test profile property to indicate if the test profile needs a working network connection

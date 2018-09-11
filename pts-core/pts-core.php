@@ -262,9 +262,9 @@ function pts_version_codenames()
 		);
 }
 
-pts_define('PTS_VERSION', '8.2.0m4');
-pts_define('PTS_CORE_VERSION', 8140);
-pts_define('PTS_RELEASE_DATE', '20180907');
+pts_define('PTS_VERSION', '8.2.0');
+pts_define('PTS_CORE_VERSION', 8200);
+pts_define('PTS_RELEASE_DATE', '20180911');
 pts_define('PTS_CODENAME', 'RAKKESTAD');
 
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));
