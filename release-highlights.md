@@ -1,5 +1,18 @@
 # Phoronix Test Suite Release History
 
+Phoronix Test Suite 8.2
+======
+#### Release Date: 11 September 2018 | Codename: Rakkestad
+* Official Docker benchmarking image of the Phoronix Test Suite for reference benchmarking based on Clear Linux and available as "phoronix/pts" on Docker
+* Various ARM hardware detection improvements
+* CPU power reporting support using Intel RAPL
+* New sub-commands `phoronix-test-suite list-cached-tests` and `phoronix-test-suite list-all-tests`
+* New DropNoisyResults user configuration option if not wanting to save "noisy" results (high variance)
+* L1TF / Foreshadow mitigation reporting on Linux systems
+* Initial Readline-based tab-based text completion support for different TUI fields
+* New "pgo" module for easily carrying out benchmarks to analyze Profile-Guided Optimizations (PGO) compiler performance
+* Various usability enhancements
+
 Phoronix Test Suite 8.0
 ======
 #### Release Date: 5 June 2018 | Codename: Aremark
