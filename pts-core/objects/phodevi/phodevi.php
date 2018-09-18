@@ -844,7 +844,7 @@ class phodevi extends phodevi_base
 	}
 	public static function is_root()
 	{
-		return phodevi::read_property('system', 'username') == 'root';
+		return phodevi::read_property('system', 'username') == 'root' || is_writable('/root');
 	}
 	public static function is_display_server_active()
 	{
