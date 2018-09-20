@@ -549,18 +549,13 @@ class phodevi_gpu extends phodevi_device_interface
 			}
 		}
 
-		if(count($available_modes) <= 2)
+		if(true) // XXX can remove this if it turns out to be fine
 		{
 			// Fallback to providing stock modes
 			$stock_modes = array(
 				array(800, 600),
 				array(1024, 768),
-				array(1280, 800),
 				array(1280, 1024),
-				array(1400, 900),
-				array(1400, 1050),
-				array(1600, 900),
-				array(1680, 1050),
 				array(1600, 1200),
 				array(1920, 1080),
 				array(1920, 1200),
