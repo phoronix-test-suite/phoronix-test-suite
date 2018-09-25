@@ -60,6 +60,13 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - suitesparse http://faculty.cse.tamu.edu/davis/suitesparse.html
 - ospray/ospray
 - Microsoft/X-Mem
+- https://www2.mrc-lmb.cam.ac.uk/relion/index.php?title=Benchmarks_%26_computer_hardware
+- kripke
+- nekbone
+- https://github.com/u39kun/deep-learning-benchmark
+- AMG
+- CORAL-2 benchmarks
+- CompuBench (Windows)
 
 ### WEB SOCKET / HTML5 USER INTERFACE WORK ###
 

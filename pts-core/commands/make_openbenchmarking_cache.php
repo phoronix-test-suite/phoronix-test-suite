@@ -56,7 +56,7 @@ class make_openbenchmarking_cache implements pts_option_interface
 			echo $i . '/' . $total_count . ': ' . ($repo_index['tests'][$test]['title'] != null ? $repo_index['tests'][$test]['title'] . ' [' . $repo_index['tests'][$test]['test_type'] . ']' : null) . PHP_EOL;
 			$versions = $repo_index['tests'][$test]['versions'];
 
-			if($r[0] == 'lean')
+			if(isset($r[0]) && $r[0] == 'lean')
 			{
 				$versions = array(array_shift($versions));
 			}
