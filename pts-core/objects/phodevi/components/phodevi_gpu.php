@@ -1474,7 +1474,18 @@ class phodevi_gpu extends phodevi_device_interface
 
 		if(!empty($info) && $video_ram > 64 && strpos($info, $video_ram) == false) // assume more than 64MB of vRAM
 		{
-			$info .= ' ' . $video_ram . 'MB';
+			if($video_ram < 1024)
+			{
+				$info .= ' ' . $video_ram . 'MB';
+			}
+			else
+			{
+				$video_ram = round($video_ram / 1024) . 'GB';
+				if(strpos($info, $video_ram) == false)
+				{
+					$info .= ' ' . $video_ram;
+				}
+			}
 		}
 
 		if(empty($info) && is_dir('/sys/class/drm/card0/device/driver/pvrsrvkm'))

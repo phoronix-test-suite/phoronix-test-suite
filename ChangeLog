@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+phodevi: Report vRAM size on GPU model string in GB when over 1GB
+
 Phoronix Test Suite 8.2.0-Rakkestad
 11 September 2018
 
