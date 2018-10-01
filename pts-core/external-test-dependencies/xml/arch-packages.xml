@@ -302,5 +302,9 @@
 			<GenericName>mongodb</GenericName>
 			<PackageName>mongodb</PackageName>
 		</Package>
+		<Package>
+			<GenericName>node-npm</GenericName>
+			<PackageName>npm</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

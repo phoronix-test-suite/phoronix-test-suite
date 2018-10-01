@@ -188,5 +188,9 @@
 			<GenericName>git</GenericName>
 			<PackageName>git-core</PackageName>
 		</Package>
+		<Package>
+			<GenericName>node-npm</GenericName>
+			<PackageName>npm</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

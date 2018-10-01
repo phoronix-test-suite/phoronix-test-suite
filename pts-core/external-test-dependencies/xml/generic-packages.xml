@@ -524,5 +524,11 @@
 			<PossibleNames>mongodb</PossibleNames>
 			<FileCheck>mongo</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>node-npm</GenericName>
+			<Title>Node.js + NPM</Title>
+			<PossibleNames>npm, nodejs</PossibleNames>
+			<FileCheck>npm</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

@@ -267,5 +267,9 @@
 			<GenericName>wine</GenericName>
 			<PackageName>wine</PackageName>
 		</Package>
+		<Package>
+			<GenericName>node-npm</GenericName>
+			<PackageName>npm</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

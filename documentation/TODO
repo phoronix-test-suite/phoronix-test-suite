@@ -67,6 +67,9 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - AMG
 - CORAL-2 benchmarks
 - CompuBench (Windows)
+https://github.com/cart/amethyst-bunnymark
+rav1e (not yet multithreaded as of Oct 2018)
+gnzlbg/aobench
 
 ### WEB SOCKET / HTML5 USER INTERFACE WORK ###
 
