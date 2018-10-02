@@ -283,7 +283,7 @@ class pts_client
 			'OS_TYPE' => phodevi::os_under_test(),
 			'THIS_RUN_TIME' => PTS_INIT_TIME,
 			'DEBUG_REAL_HOME' => pts_core::user_home_directory(),
-			'DEBUG_PATH' => str_replace(';', ':', getenv('PATH')),
+			'DEBUG_PATH' => pts_client::get_path(),
 			'SYSTEM_TYPE_ID' => phodevi_base::determine_system_type(phodevi::system_hardware(), phodevi::system_software()),
 			'SYSTEM_TYPE' => phodevi_base::system_type_to_string(phodevi_base::determine_system_type(phodevi::system_hardware(), phodevi::system_software())),
 			'TERMINAL_WIDTH' => pts_client::terminal_width(),
@@ -1724,6 +1724,10 @@ class pts_client
 		}
 		return $path;
 	}
+	public static function get_path_separator()
+	{
+		return phodevi::is_windows() ? ';' : ':';
+	}
 	public static function executable_in_path($executable, $ignore_paths_with = false)
 	{
 		static $cache = null;
@@ -1731,7 +1735,7 @@ class pts_client
 		if(!isset($cache[$executable]) || empty($cache[$executable]) || $ignore_paths_with)
 		{
 			$path = pts_client::get_path();
-			$paths = pts_strings::trim_explode((phodevi::is_windows() ? ';' : ':'), $path);
+			$paths = pts_strings::trim_explode(pts_client::get_path_separator(), $path);
 			$executable_path = false;
 
 			foreach($paths as $path)

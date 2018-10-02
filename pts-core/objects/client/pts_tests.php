@@ -193,7 +193,7 @@ class pts_tests
 
 			if(is_dir($this_test_profile->get_install_dir()))
 			{
-				$extra_vars['PATH'] = $this_test_profile->get_install_dir() . ':' . $extra_vars['PATH'];
+				$extra_vars['PATH'] = $this_test_profile->get_install_dir() . pts_client::get_path_separator() . $extra_vars['PATH'];
 				$extra_vars['TEST_' . strtoupper(str_replace('-', '_', $this_test_profile->get_identifier_base_name()))] = $this_test_profile->get_install_dir();
 			}
 		}
@@ -207,7 +207,7 @@ class pts_tests
 		if(isset($extra_vars_append['PATH']))
 		{
 			// Special case variable where you likely want the two merged rather than overwriting
-			$extra_vars['PATH'] = $extra_vars_append['PATH'] . (substr($extra_vars_append['PATH'], -1) != ':' ? ':' : null) . $extra_vars['PATH'];
+			$extra_vars['PATH'] = $extra_vars_append['PATH'] . (substr($extra_vars_append['PATH'], -1) != pts_client::get_path_separator() ? pts_client::get_path_separator() : null) . $extra_vars['PATH'];
 			unset($extra_vars_append['PATH']);
 		}
 
