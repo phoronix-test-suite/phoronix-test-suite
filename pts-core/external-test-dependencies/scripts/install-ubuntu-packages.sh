@@ -9,6 +9,7 @@ elif [ `whoami` != "root" ] && [ ! -z "$DISPLAY" ]; then
 	elif [ -x /usr/bin/sudo ]; then
 		ROOT="/usr/bin/sudo"
 	fi
+	$ROOT -- su -c "apt-get -y --ignore-missing install $*"
 elif [ -z "$DISPLAY" ]; then
 	sudo -- apt-get -y --ignore-missing install $*
 else
@@ -20,6 +21,4 @@ fi
 	# aptitude is nice since it doesn't fail if a non-existant package is hit
 	# See: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=503215
 #	$ROOT -- "aptitude -y install $*"
-#else
-	$ROOT -- su -c "apt-get -y --ignore-missing install $*"
 #fi
