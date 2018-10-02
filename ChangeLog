@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 phodevi: Report vRAM size on GPU model string in GB when over 1GB
+pts-core: At run-time also report if test is deprecated/broken
 pts-core: Add "node-npm" as an external dependency for Node.js + NPM
 
 Phoronix Test Suite 8.2.0-Rakkestad
