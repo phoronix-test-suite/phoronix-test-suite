@@ -23,7 +23,7 @@
 		</Package>
 		<Package>
 			<GenericName>golang</GenericName>
-			<PackageName>https://dl.google.com/go/go1.10.windows-amd64.msi</PackageName>
+			<PackageName>https://dl.google.com/go/go1.11.windows-amd64.msi</PackageName>
 			<FileCheck>C:\Go</FileCheck>
 		</Package>
 		<Package>
@@ -43,7 +43,7 @@
 		</Package>
 		<Package>
 			<GenericName>git</GenericName>
-			<PackageName>https://github.com/git-for-windows/git/releases/download/v2.18.0.windows.1/Git-2.18.0-64-bit.exe</PackageName>
+			<PackageName>https://github.com/git-for-windows/git/releases/download/v2.19.0.windows.1/Git-2.19.0-64-bit.exe</PackageName>
 			<FileCheck>C:\Program Files\Git</FileCheck>
 		</Package>
 		<Package>
@@ -60,6 +60,21 @@
 			<GenericName>cmake</GenericName>
 			<PackageName>cmake</PackageName>
 			<FileCheck>C:\cygwin64\bin\cmake.exe</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>node-npm</GenericName>
+			<PackageName>https://nodejs.org/dist/v10.11.0/node-v10.11.0-x64.msi</PackageName>
+			<FileCheck>C:\Program Files\nodejs</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>tesseract</GenericName>
+			<PackageName>https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v4.0.0-beta.4.20180912.exe</PackageName>
+			<FileCheck>C:\Program Files (x86)\Tesseract-OCR</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>rust</GenericName>
+			<PackageName>https://static.rust-lang.org/dist/rust-1.29.1-x86_64-pc-windows-msvc.msi</PackageName>
+			<FileCheck>rustc.exe</FileCheck>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

@@ -36,7 +36,6 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 - SIPP [http://sipp.sourceforge.net/]
 - oclGaussCrack [https://hashcat.net/oclGaussCrack/]
 - http://hashcat.net/oclhashcat/
-- Handbrake [http://handbrake.fr/]
 - libMicro [https://github.com/portante/libMicro]
 - http://markjstock.org/pages/rad_bench.html
 - https://code.google.com/p/pyrit/
@@ -70,6 +69,10 @@ PHORONIX TEST SUITE PUBLIC TODO LIST:
 https://github.com/cart/amethyst-bunnymark
 rav1e (not yet multithreaded as of Oct 2018)
 gnzlbg/aobench
+https://github.com/mpicbg-scicomp/gearshifft
+https://github.com/hyperledger/caliper
+BRL_CAD
+dav1d
 
 ### WEB SOCKET / HTML5 USER INTERFACE WORK ###
 
