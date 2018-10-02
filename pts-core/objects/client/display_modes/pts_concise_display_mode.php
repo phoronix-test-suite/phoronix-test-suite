@@ -328,7 +328,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		if($test_result->test_profile->get_status() != 'Verified' && $test_result->test_profile->get_status() != '')
 		{
-			array_push($display_table, array($this->tab . pts_client::cli_just_italic('Test Profile Status:'), pts_client::cli_just_italic($test_result->test_profile->get_status()));
+			array_push($display_table, array($this->tab . pts_client::cli_just_italic('Test Profile Status:'), pts_client::cli_just_italic($test_result->test_profile->get_status())));
 		}
 
 		array_push($display_table, array($this->tab . 'Estimated Trial Run Count:', $this->expected_trial_run_count));
