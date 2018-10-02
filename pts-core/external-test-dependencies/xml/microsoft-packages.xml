@@ -76,5 +76,9 @@
 			<PackageName>https://static.rust-lang.org/dist/rust-1.29.1-x86_64-pc-windows-msvc.msi</PackageName>
 			<FileCheck>rustc.exe</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>opencv</GenericName>
+			<PackageName>https://github.com/opencv/opencv/releases/download/3.4.3/opencv-3.4.3-vc14_vc15.exe</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
