@@ -201,19 +201,6 @@ class phodevi_monitor extends phodevi_device_interface
 						break;
 				}
 			}
-			else if(phodevi::is_ati_graphics() && phodevi::is_linux())
-			{
-				$amdpcsdb_enabled_monitors = phodevi_linux_parser::read_amd_pcsdb('SYSTEM/BUSID-*/DDX,EnableMonitor');
-				$amdpcsdb_enabled_monitors = pts_arrays::to_array($amdpcsdb_enabled_monitors);
-
-				foreach($amdpcsdb_enabled_monitors as $enabled_monitor)
-				{
-					foreach(pts_strings::comma_explode($enabled_monitor) as $monitor_connection)
-					{
-						$monitor_count++;
-					}
-				}
-			}
 			else
 			{
 				$monitor_count = 1;
@@ -249,35 +236,6 @@ class phodevi_monitor extends phodevi_device_interface
 				else if($monitor_position_x == 0 && $monitor_position_y > 0)
 				{
 					array_push($monitor_layout, ($hit_0_0 ? 'LOWER' : 'UPPER'));
-				}
-			}
-
-			if(count($monitor_layout) == 1)
-			{
-				// Something went wrong with xdpy information, go to fallback support
-				if(phodevi::is_ati_graphics() && phodevi::is_linux())
-				{
-					$amdpcsdb_monitor_layout = phodevi_linux_parser::read_amd_pcsdb('SYSTEM/BUSID-*/DDX,DesktopSetup');
-					$amdpcsdb_monitor_layout = pts_arrays::to_array($amdpcsdb_monitor_layout);
-
-					foreach($amdpcsdb_monitor_layout as $card_monitor_configuration)
-					{
-						switch($card_monitor_configuration)
-						{
-							case 'horizontal':
-								array_push($monitor_layout, 'RIGHT');
-								break;
-							case 'horizontal,reverse':
-								array_push($monitor_layout, 'LEFT');
-								break;
-							case 'vertical':
-								array_push($monitor_layout, 'ABOVE');
-								break;
-							case 'vertical,reverse':
-								array_push($monitor_layout, 'BELOW');
-								break;
-						}
-					}
 				}
 			}
 		}

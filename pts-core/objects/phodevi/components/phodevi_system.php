@@ -1543,11 +1543,7 @@ class phodevi_system extends phodevi_device_interface
 
 		if(empty($display_driver))
 		{
-			if(phodevi::is_ati_graphics() && phodevi::is_linux())
-			{
-				$display_driver = 'fglrx';
-			}
-			else if(phodevi::is_nvidia_graphics() || is_file('/proc/driver/nvidia/version'))
+			if(phodevi::is_nvidia_graphics() || is_file('/proc/driver/nvidia/version'))
 			{
 				$display_driver = 'nvidia';
 			}
@@ -1675,18 +1671,6 @@ class phodevi_system extends phodevi_device_interface
 			if(!empty($driver_version) && $with_version && $driver_version != '0.0.0')
 			{
 				$display_driver .= ' ' . $driver_version;
-
-				// XXX: The below check is disabled since the Catalyst Version no longer seems reliably reported (circa Catalyst 13.x)
-				if(false && phodevi::is_ati_graphics() && strpos($display_driver, 'fglrx') !== false)
-				{
-					$catalyst_version = phodevi_linux_parser::read_amd_pcsdb('AMDPCSROOT/SYSTEM/LDC,Catalyst_Version');
-
-					if($catalyst_version != null && $catalyst_version > 10.1 && $catalyst_version != 10.5 && $catalyst_version != 11.8)
-					{
-						// This option was introduced around Catalyst 10.5 but seems to not be updated properly until Catalyst 10.11/10.12
-						$display_driver .= ' Catalyst ' . $catalyst_version . '';
-					}
-				}
 			}
 		}
 

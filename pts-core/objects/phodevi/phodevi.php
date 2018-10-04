@@ -572,7 +572,7 @@ class phodevi extends phodevi_base
 		}
 
 		// OpenGL / graphics detection
-		$graphics_detection = array('NVIDIA', array('ATI', 'AMD', 'fglrx'), array('Mesa', 'SGI'));
+		$graphics_detection = array('NVIDIA', array('Mesa', 'SGI'), array('AMD'));
 		$opengl_driver = phodevi::read_property('system', 'opengl-vendor') . ' ' . phodevi::read_property('system', 'opengl-driver') . ' ' . phodevi::read_property('system', 'dri-display-driver');
 		$opengl_driver = trim(str_replace('Corporation', null, $opengl_driver)); // Prevents a possible false positive for ATI being in CorporATIon
 
@@ -830,12 +830,6 @@ class phodevi extends phodevi_base
 	{
 		self::detect_graphics();
 		return self::$graphics['mesa'];
-	}
-	public static function is_ati_graphics()
-	{
-		// Detection for fglrx / old AMD blob driver, newer AMDGPU-PRO / AMDGPU should go to is_mesa_graphics
-		self::detect_graphics();
-		return self::$graphics['ati'] && pts_client::executable_in_path('amdcccle');;
 	}
 	public static function is_nvidia_graphics()
 	{

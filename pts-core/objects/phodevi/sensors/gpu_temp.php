@@ -35,10 +35,6 @@ class gpu_temp extends phodevi_sensor
 		{
 			$temp_c = phodevi_parser::read_nvidia_extension('GPUCoreTemp');
 		}
-		else if(phodevi::is_ati_graphics() && phodevi::is_linux())
-		{
-			$temp_c = phodevi_linux_parser::read_ati_overdrive('Temperature');
-		}
 
 		if($temp_c == -1 || empty($temp_c))
 		{

@@ -38,10 +38,6 @@ class gpu_fanspeed extends phodevi_sensor
 			// nvidia-settings --describe GPUFanTarget 
 			$fan_speed = phodevi_parser::read_nvidia_extension('[fan:0]/GPUCurrentFanSpeed');
 		}
-		else if(phodevi::is_ati_graphics() && phodevi::is_linux())
-		{
-			$fan_speed = phodevi_linux_parser::read_ati_overdrive('FanSpeed');
-		}
 
 		return $fan_speed;
 	}

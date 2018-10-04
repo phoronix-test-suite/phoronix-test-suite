@@ -42,16 +42,6 @@ class gpu_freq extends phodevi_sensor
 			$core_freq = isset($nv_freq[0]) ? $nv_freq[0] : 0;
 			$mem_freq = isset($nv_freq[1]) ? $nv_freq[1] : 0;
 		}
-		else if(phodevi::is_ati_graphics() && phodevi::is_linux()) // ATI GPU
-		{
-			$od_clocks = phodevi_linux_parser::read_ati_overdrive('CurrentClocks');
-
-			if(is_array($od_clocks) && count($od_clocks) >= 2) // ATI OverDrive
-			{
-				$core_freq = array_shift($od_clocks);
-				$mem_freq = array_pop($od_clocks);
-			}
-		}
 		else if(phodevi::is_linux())
 		{
 			if(isset(phodevi::$vfs->radeon_pm_info))

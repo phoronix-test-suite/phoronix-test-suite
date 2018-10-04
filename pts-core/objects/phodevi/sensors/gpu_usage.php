@@ -28,7 +28,6 @@ class gpu_usage extends phodevi_sensor
 	const SENSOR_SENSES = 'usage';
 	const SENSOR_UNIT = 'Percent';
 
-	private $probe_ati_overdrive = false;
 	private $probe_radeontop = false;
 	private $probe_nvidia_smi = false;
 	private $probe_nvidia_settings = false;
@@ -50,11 +49,7 @@ class gpu_usage extends phodevi_sensor
 	{
 		$gpu_usage = -1;
 
-		if($this->probe_ati_overdrive)
-		{
-			$gpu_usage = self::ati_overdrive_core_usage();
-		}
-		else if($this->probe_nvidia_settings)
+		if($this->probe_nvidia_settings)
 		{
 			$gpu_usage = self::read_nvidia_settings_gpu_utilization();
 		}
@@ -72,11 +67,7 @@ class gpu_usage extends phodevi_sensor
 
 	private function set_probe_mode()
 	{
-		if(phodevi::is_ati_graphics() && phodevi::is_linux())
-		{
-			$this->probe_ati_overdrive = true;
-		}
-		else if(phodevi::is_mesa_graphics() && pts_client::executable_in_path('radeontop'))
+		if(phodevi::is_mesa_graphics() && pts_client::executable_in_path('radeontop'))
 		{
 			$this->probe_radeontop = true;
 		}
@@ -119,12 +110,6 @@ class gpu_usage extends phodevi_sensor
 
 		return false;
 	}
-
-	private static function ati_overdrive_core_usage()
-	{
-		return phodevi_linux_parser::read_ati_overdrive('GPUload');
-	}
-
 	private static function nvidia_core_usage()
 	{
 		$nvidia_smi = shell_exec(escapeshellarg(pts_client::executable_in_path('nvidia-smi')) . ' -a');

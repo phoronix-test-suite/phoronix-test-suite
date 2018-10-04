@@ -50,18 +50,9 @@ class graphics_override extends pts_module_interface
 			shell_exec("nvidia-settings --assign " . $attribute . "=" . $value . " 2>&1");
 		}
 	}
-	public static function set_amd_pcsdb($attribute, $value)
-	{
-		// Sets a value for AMD's PCSDB, Persistent Configuration Store Database
-		if(phodevi::is_ati_graphics() && phodevi::is_linux() && !empty($value))
-		{
-			$DISPLAY = substr(pts_client::read_env("DISPLAY"), 1, 1);
-			$info = shell_exec("DISPLAY=:" . $DISPLAY . " aticonfig --set-pcs-val=" . $attribute . "," . $value . "  2>&1");
-		}
-	}
 	public static function __pre_run_process()
 	{
-		if(!(phodevi::is_nvidia_graphics() || (phodevi::is_ati_graphics() && phodevi::is_linux())))
+		if(!(phodevi::is_nvidia_graphics())
 		{
 			echo "\nNo supported driver found for graphics_override module!\n";
 			return pts_module::MODULE_UNLOAD; // Not using a supported driver, quit the module
@@ -100,34 +91,6 @@ class graphics_override extends pts_module_interface
 					self::set_nvidia_extension("FSAAAppControlled", 0);
 				}
 			}
-			else if(phodevi::is_ati_graphics())
-			{
-				self::$preset_aa = phodevi_linux_parser::read_amd_pcsdb("OpenGL,AntiAliasSamples");
-				self::$preset_aa_control = phodevi_linux_parser::read_amd_pcsdb("OpenGL,AAF");
-
-				switch($force_aa)
-				{
-					case 2:
-						$ati_aa = "0x00000002";
-						break;
-					case 4:
-						$ati_aa = "0x00000004";
-						break;
-					case 8:
-						$ati_aa = "0x00000008";
-						break;
-					case 16:
-						echo "\nThe ATI fglrx driver currently does not support 16x AA! Defaulting to 8x AA!\n";
-						$ati_aa = "0x00000008";
-						break;
-				}
-
-				if(isset($ati_aa))
-				{
-					self::set_amd_pcsdb("OpenGL,AntiAliasSamples", $ati_aa);
-					self::set_amd_pcsdb("OpenGL,AAF", "0x00000000");
-				}
-			}
 		}
 
 		if($force_af !== FALSE && in_array($force_af, self::$supported_af_levels))
@@ -160,31 +123,6 @@ class graphics_override extends pts_module_interface
 					self::set_nvidia_extension("LogAnisoAppControlled", 0);
 				}
 			}
-			else if(phodevi::is_ati_graphics())
-			{
-				self::$preset_af = phodevi_linux_parser::read_amd_pcsdb("OpenGL,AnisoDegree");
-
-				switch($force_af)
-				{
-					case 2:
-						$ati_af = "0x00000002";
-						break;
-					case 4:
-						$ati_af = "0x00000004";
-						break;
-					case 8:
-						$ati_af = "0x00000008";
-						break;
-					case 16:
-						$ati_af = "0x00000010";
-						break;
-				}
-
-				if(isset($ati_af))
-				{
-					self::set_amd_pcsdb("OpenGL,AnisoDegree", $ati_af);
-				}
-			}
 		}
 	}
 	public static function __post_option_process()
@@ -200,18 +138,6 @@ class graphics_override extends pts_module_interface
 			{
 				self::set_nvidia_extension("LogAniso", self::$preset_af);
 				self::set_nvidia_extension("LogAnisoAppControlled", self::$preset_af_control);
-			}
-		}
-		else if(phodevi::is_ati_graphics())
-		{
-			if(self::$preset_aa !== FALSE)
-			{
-				self::set_amd_pcsdb("OpenGL,AntiAliasSamples", self::$preset_aa);
-				self::set_amd_pcsdb("OpenGL,AAF", self::$preset_aa_control);
-			}
-			if(self::$preset_af !== FALSE)
-			{
-				self::set_amd_pcsdb("OpenGL,AnisoDegree", self::$preset_af);
 			}
 		}
 	}

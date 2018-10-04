@@ -148,77 +148,6 @@ class phodevi_gpu extends phodevi_device_interface
 					break;
 			}
 		}
-		else if(phodevi::is_ati_graphics() && phodevi::is_linux())
-		{
-			$ati_fsaa = phodevi_linux_parser::read_amd_pcsdb('OpenGL,AntiAliasSamples');
-			$ati_fsaa_filter = phodevi_linux_parser::read_amd_pcsdb('OpenGL,AAF');
-
-			if(!empty($ati_fsaa))
-			{
-				if($ati_fsaa_filter == '0x00000000')
-				{
-					// Filter: Box
-					switch($ati_fsaa)
-					{
-						case '0x00000002':
-							$aa_level = '2x Box';
-							break;
-						case '0x00000004':
-							$aa_level = '4x Box';
-							break;
-						case '0x00000008':
-							$aa_level = '8x Box';
-							break;
-					}
-				}
-				else if($ati_fsaa_filter == '0x00000001')
-				{
-					// Filter: Narrow-tent
-					switch($ati_fsaa)
-					{
-						case '0x00000002':
-							$aa_level = '4x Narrow-tent';
-							break;
-						case '0x00000004':
-							$aa_level = '8x Narrow-tent';
-							break;
-						case '0x00000008':
-							$aa_level = '12x Narrow-tent';
-							break;
-					}
-				}
-				else if($ati_fsaa_filter == '0x00000002')
-				{
-					// Filter: Wide-tent
-					switch($ati_fsaa)
-					{
-						case '0x00000002':
-							$aa_level = '6x Wide-tent';
-							break;
-						case '0x00000004':
-							$aa_level = '8x Wide-tent';
-							break;
-						case '0x00000008':
-							$aa_level = '16x Wide-tent';
-							break;
-					}
-
-				}
-				else if($ati_fsaa_filter == '0x00000003')
-				{
-					// Filter: Edge-detect
-					switch($ati_fsaa)
-					{
-						case '0x00000004':
-							$aa_level = '12x Edge-detect';
-							break;
-						case '0x00000008':
-							$aa_level = '24x Edge-detect';
-							break;
-					}
-				}
-			}
-		}
 		else if(phodevi::is_mesa_graphics())
 		{
 			$gallium_msaa = getenv('GALLIUM_MSAA');
@@ -262,29 +191,6 @@ class phodevi_gpu extends phodevi_device_interface
 				case 4:
 					$af_level = '16x';
 					break;
-			}
-		}
-		else if(phodevi::is_ati_graphics() && phodevi::is_linux())
-		{
-			$ati_af = phodevi_linux_parser::read_amd_pcsdb('OpenGL,AnisoDegree');
-
-			if(!empty($ati_af))
-			{
-				switch($ati_af)
-				{
-					case '0x00000002':
-						$af_level = '2x';
-						break;
-					case '0x00000004':
-						$af_level = '4x';
-						break;
-					case '0x00000008':
-						$af_level = '8x';
-						break;
-					case '0x00000010':
-						$af_level = '16x';
-						break;
-				}
 			}
 		}
 		else if(getenv('__GL_LOG_MAX_ANISO'))
@@ -849,15 +755,6 @@ class phodevi_gpu extends phodevi_device_interface
 				$mem_freq = max($mem_freq, $clock_freqs_current[1]);
 			}
 		}
-		else if(phodevi::is_ati_graphics() && phodevi::is_linux()) // ATI GPU
-		{
-			$od_clocks = phodevi_linux_parser::read_ati_overdrive('CurrentPeak');
-
-			if(is_array($od_clocks) && count($od_clocks) >= 2) // ATI OverDrive
-			{
-				list($core_freq, $mem_freq) = $od_clocks;
-			}
-		}
 		else if(phodevi::is_linux()) // More liberally attempt open-source freq detection than phodevi::is_mesa_graphics()
 		{
 			if(is_file('/sys/class/drm/card0/device/performance_level'))
@@ -1107,51 +1004,7 @@ class phodevi_gpu extends phodevi_device_interface
 		$info = phodevi_parser::read_glx_renderer();
 		$video_ram = phodevi::read_property('gpu', 'memory-capacity');
 
-		if(phodevi::is_ati_graphics() && phodevi::is_linux())
-		{
-			$crossfire_status = phodevi_linux_parser::read_amd_pcsdb('SYSTEM/Crossfire/chain/*,Enable');
-			$crossfire_status = pts_arrays::to_array($crossfire_status);
-			$crossfire_card_count = 0;
-
-			for($i = 0; $i < count($crossfire_status); $i++)
-			{
-				if($crossfire_status[$i] == '0x00000001')
-				{
-					$crossfire_card_count += 2; // For now assume each chain is 2 cards, but proper way would be NumSlaves + 1
-				}
-			}			
-
-			$adapters = phodevi_linux_parser::read_amd_graphics_adapters();
-
-			if(count($adapters) > 0)
-			{
-				$video_ram = $video_ram > 64 ? ' ' . $video_ram . 'MB' : null; // assume more than 64MB of vRAM
-
-				if($crossfire_card_count > 1 && $crossfire_card_count <= count($adapters))
-				{
-					$unique_adapters = array_unique($adapters);
-
-					if(count($unique_adapters) == 1)
-					{
-						if(strpos($adapters[0], 'X2') > 0 && $crossfire_card_count > 1)
-						{
-							$crossfire_card_count -= 1;
-						}
-
-						$info = $crossfire_card_count . ' x ' . $adapters[0] . $video_ram . ' CrossFire';
-					}
-					else
-					{
-						$info = implode(', ', $unique_adapters) . ' CrossFire';
-					}
-				}
-				else
-				{
-					$info = $adapters[0] . $video_ram;
-				}
-			}
-		}
-		else if(phodevi::is_macosx())
+		if(phodevi::is_macosx())
 		{
 			$system_profiler_info = implode(' + ', phodevi_osx_parser::read_osx_system_profiler('SPDisplaysDataType', 'ChipsetModel', true));
 
