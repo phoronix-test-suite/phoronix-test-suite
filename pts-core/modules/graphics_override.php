@@ -52,7 +52,7 @@ class graphics_override extends pts_module_interface
 	}
 	public static function __pre_run_process()
 	{
-		if(!(phodevi::is_nvidia_graphics())
+		if(!phodevi::is_nvidia_graphics())
 		{
 			echo "\nNo supported driver found for graphics_override module!\n";
 			return pts_module::MODULE_UNLOAD; // Not using a supported driver, quit the module
