@@ -453,7 +453,7 @@ abstract class pts_graph_core
 		{
 			$paint_color = '#77b900';
 		}
-		else if(strpos($identifier, 'radeon') !== false || strpos($identifier, 'amd ') !== false || stripos($identifier, 'EPYC') !== false || strpos($identifier, 'opteron ') !== false || strpos($identifier, 'fx-') !== false || strpos($identifier, 'firepro ') !== false || strpos($identifier, 'ryzen ') !== false || strpos($identifier, 'threadripper ') !== false || strpos($identifier, 'a10-') !== false)
+		else if(strpos($identifier, 'radeon') !== false || strpos($identifier, 'amd ') !== false || stripos($identifier, 'EPYC') !== false || strpos($identifier, 'opteron ') !== false || strpos($identifier, 'fx-') !== false || strpos($identifier, 'firepro ') !== false || strpos($identifier, 'ryzen ') !== false || strpos($identifier, 'threadripper ') !== false || strpos($identifier, 'a10-') !== false || strpos($identifier, 'athlon ') !== false)
 		{
 			$paint_color = '#f1052d';
 		}
