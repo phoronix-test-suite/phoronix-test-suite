@@ -167,7 +167,7 @@ class system_monitor extends pts_module_interface
 			self::process_perf_per_watt($result_file);
 		}
 
-		if(self::$individual_monitoring != false)
+		if(self::$individual_monitoring != false && self::$successful_test_run_request)
 		{
 			foreach(self::$to_monitor as $sensor)
 			{
