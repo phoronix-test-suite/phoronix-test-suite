@@ -133,7 +133,15 @@ if(QUICK_START == false)
 // Read passed arguments
 for($i = 2; $i < $argc && isset($argv[$i]); $i++)
 {
-	$pass_args[] = $argv[$i];
+	if(($x = strpos($argv[$i], '=')) !== false && substr($argv[$i], 0, $x) == strtoupper(substr($argv[$i], 0, $x)))
+	{
+		// Likely trying to pass an environment variable, so just go ahead and set it...
+		putenv($argv[$i]);
+	}
+	else
+	{
+		$pass_args[] = $argv[$i];
+	}
 }
 
 if(QUICK_START == false)
