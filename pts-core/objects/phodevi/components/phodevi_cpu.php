@@ -496,7 +496,7 @@ class phodevi_cpu extends phodevi_device_interface
 							break;
 						case '8':
 						case 'AArch64':
-							$info = 'ARMVv8';
+							$info = 'ARMv8';
 							break;
 					}
 					$part = phodevi_linux_parser::read_cpuinfo_single('CPU part');
