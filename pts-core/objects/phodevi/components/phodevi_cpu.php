@@ -486,7 +486,7 @@ class phodevi_cpu extends phodevi_device_interface
 			if(phodevi::is_linux())
 			{
 				$implementer = phodevi_linux_parser::read_cpuinfo_single('CPU implementer');
-				if($implementer == '0x41')
+				if($implementer == '0x41' || $implementer == '0x50')
 				{
 					$architecture = phodevi_linux_parser::read_cpuinfo_single('CPU architecture');
 					switch($architecture)
