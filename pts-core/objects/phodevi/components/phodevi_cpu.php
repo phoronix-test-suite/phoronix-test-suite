@@ -158,7 +158,12 @@ class phodevi_cpu extends phodevi_device_interface
 		else if(phodevi::is_bsd())
 		{
 			// hw.cpu_topology_core_ids works at least on DragonFly BSD
+			$phys_ids = intval(phodevi_bsd_parser::read_sysctl(array('hw.cpu_topology_phys_ids')));
 			$physical_cores = intval(phodevi_bsd_parser::read_sysctl(array('hw.cpu_topology_core_ids')));
+			if($phys_ids > 0 && ($phys_ids * $physical_cores) <= phodevi::read_property('cpu', 'thread-count'))
+			{
+				$physical_cores = $phys_ids * $physical_cores;
+			}
 		}
 		else if(phodevi::is_macosx())
 		{
