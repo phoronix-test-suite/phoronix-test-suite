@@ -1499,7 +1499,7 @@ class phodevi_system extends phodevi_device_interface
 					}
 				}
 
-				array_push($display_servers, trim('X Server ' . $info));
+				array_push($display_servers, trim('X Server ' . $version));
 			}
 			if(pts_client::is_process_running('surfaceflinger'))
 			{
