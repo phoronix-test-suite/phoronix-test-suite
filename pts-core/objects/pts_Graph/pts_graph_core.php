@@ -442,18 +442,18 @@ abstract class pts_graph_core
 	}
 	protected function identifier_to_branded_color($identifier, $fallback_color = null)
 	{
-		if($this->i['support_color_branding'] == false || !isset($identifier[6]))
+		if($this->i['support_color_branding'] == false || !isset($identifier[5]))
 		{
 			return $fallback_color;
 		}
 
 		// See if the result identifier matches something to be color-coded better
 		$identifier = strtolower($identifier) . ' ';
-		if(strpos($identifier, 'geforce') !== false || strpos($identifier, 'nvidia') !== false || strpos($identifier, 'quadro') !== false)
+		if(strpos($identifier, 'geforce') !== false || strpos($identifier, 'nvidia') !== false || strpos($identifier, 'quadro') !== false || strpos($identifier, 'rtx ') !== false || strpos($identifier, 'gtx ') !== false)
 		{
 			$paint_color = '#77b900';
 		}
-		else if(strpos($identifier, 'radeon') !== false || strpos($identifier, 'amd ') !== false || stripos($identifier, 'EPYC') !== false || strpos($identifier, 'opteron ') !== false || strpos($identifier, 'fx-') !== false || strpos($identifier, 'firepro ') !== false || strpos($identifier, 'ryzen ') !== false || strpos($identifier, 'threadripper ') !== false || strpos($identifier, 'a10-') !== false || strpos($identifier, 'athlon ') !== false)
+		else if(strpos($identifier, 'radeon') !== false || strpos($identifier, 'amd ') !== false || stripos($identifier, 'EPYC') !== false || strpos($identifier, 'opteron ') !== false || strpos($identifier, 'fx-') !== false || strpos($identifier, 'firepro ') !== false || strpos($identifier, 'ryzen ') !== false || strpos($identifier, 'threadripper ') !== false || strpos($identifier, 'a10-') !== false || strpos($identifier, 'athlon ') !== false || strpos($identifier, 'r9 ') !== false || strpos($identifier, 'rx ') !== false)
 		{
 			$paint_color = '#f1052d';
 		}

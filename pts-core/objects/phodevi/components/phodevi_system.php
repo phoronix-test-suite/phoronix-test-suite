@@ -1483,21 +1483,23 @@ class phodevi_system extends phodevi_device_interface
 
 				if($pos === false || getenv('DISPLAY') == false)
 				{
-					$info = null;
+					$version = null;
 				}
 				else if(($pos = strrpos($info, '(')) === false)
 				{
-					$info = trim(substr($info, strrpos($info, ' ')));
+					$version = trim(substr($info, strrpos($info, ' ')));
 				}
 				else
 				{
-					$info = trim(substr($info, strrpos($info, 'Server') + 6));
+					$version = trim(substr($info, strrpos($info, 'Server') + 6));
+
+					if(!pts_strings::is_version($version))
+					{
+						$version = null;
+					}
 				}
 
-				if($info != null)
-				{
-					array_push($display_servers, 'X Server ' . $info);
-				}
+				array_push($display_servers, trim('X Server ' . $info));
 			}
 			if(pts_client::is_process_running('surfaceflinger'))
 			{
