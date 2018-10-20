@@ -1485,7 +1485,7 @@ class phodevi_system extends phodevi_device_interface
 				{
 					$version = null;
 				}
-				else if(($pos = strrpos($info, '(')) === false)
+				else if(($pos = strrpos($info, '(')) === false && strrpos($info, 'Server') === false)
 				{
 					$version = trim(substr($info, strrpos($info, ' ')));
 				}
