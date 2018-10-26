@@ -1732,6 +1732,16 @@ class phodevi_system extends phodevi_device_interface
 				$info = substr(phodevi::$vfs->vulkaninfo, $pos + 20);
 				$info = trim(substr($info, 0, strpos($info, "\n")));
 			}
+			else if(($pos = strpos(phodevi::$vfs->vulkaninfo, 'apiVersion')) !== false)
+			{
+				$apiv = substr(phodevi::$vfs->vulkaninfo, $pos);
+				$apiv = trim(substr($apiv, 0, strpos($apiv, ")\n")));
+				$apiv = trim(substr($apiv, strpos($apiv, '(') + 1));
+				if(pts_strings::is_version($apiv))
+				{
+					$info = $apiv;
+				}
+			}
 		}
 		/*
 		if($info == null)

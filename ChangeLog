@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 pts-core: Allow passing PTS environment variables as arguments to PTS and then just have PTS set them in the environment
 pts-core: Add dry-run test option
+phodevi: Vulkan driver reporting fix
 
 Phoronix Test Suite 8.4.0 Milestone 1
 8 October 2018
