@@ -304,6 +304,41 @@ class pts_test_result_parser
 							}
 						}
 					}
+					break;
+				case 'valve-source-frame-times':
+					// Counter-Strike: GO At least
+					$log_file = pts_file_io::file_get_contents($test_log_file);
+					$frame_all_times = array();
+					if(($x = strpos($log_file, 'demo tick,frame start time,frame start delta')) !== false)
+					{
+						$log_file = substr($log_file, $x);
+						foreach(explode(PHP_EOL, $log_file) as $line)
+						{
+							$line = explode(',', $line);
+							if(isset($line[2]) && is_numeric($line[2]) && $line[2] > 0)
+							{
+								$frame_all_times[] = $line[2] * 1000;
+							}
+						}
+					}
+					break;
+				case 'csv-f1-frame-times':
+					// F1 2018
+					$log_file = pts_file_io::file_get_contents($test_log_file);
+					$frame_all_times = array();
+					if(($x = strpos($log_file, 'Frame,Time (ms)')) !== false)
+					{
+						$log_file = substr($log_file, $x);
+						foreach(explode(PHP_EOL, $log_file) as $line)
+						{
+							$line = explode(',', $line);
+							if(isset($line[1]) && is_numeric($line[1]) && $line[1] > 0)
+							{
+								$frame_all_times[] = $line[2];
+							}
+						}
+					}
+					break;
 				case 'csv-individual-frame-times':
 					// Thrones of Britannia on Linux uses at least this method
 					$log_file = pts_file_io::file_get_contents($test_log_file);
