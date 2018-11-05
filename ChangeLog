@@ -1,9 +1,11 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 8.4.0 Milestone 2
+5 November 2018
 
 pts-core: Allow passing PTS environment variables as arguments to PTS and then just have PTS set them in the environment
 pts-core: Add dry-run test option
+pts-core: Various result parser additions to help parsing of CSV frame-time data for more test profiles (games)
 phodevi: Vulkan driver reporting fix
 
 Phoronix Test Suite 8.4.0 Milestone 1

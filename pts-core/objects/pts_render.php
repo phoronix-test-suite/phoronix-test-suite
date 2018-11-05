@@ -225,7 +225,7 @@ class pts_render
 
 						$result_object->test_profile->set_display_format('BAR_GRAPH');
 					}
-					else if($big_data_set > 0 && pts_graph_core::get_graph_config('style', 'allow_box_plots'))
+					else if($big_data_set > 0 && pts_graph_core::get_graph_config('style', 'allow_box_plots') && !isset($extra_attributes['no_box_plots']))
 					{
 						$result_object->test_profile->set_display_format('HORIZONTAL_BOX_PLOT');
 					}
