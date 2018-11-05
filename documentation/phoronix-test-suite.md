@@ -77,6 +77,8 @@ This option is used to configure the batch mode options for the Phoronix Test Su
 This option will install the selected test(s) (if needed) and will proceed to run the test(s) in the defaults mode. This option is equivalent to running phoronix-test-suite with the install option followed by the default-run option.
 #### default-run  [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option will run the selected test(s). The name of the test or suite must be supplied or the OpenBenchmarking.org ID or saved local file name. Multiple arguments can be supplied to run additional tests at the same time and save the results in a suite-like fashion. Unlike the normal run option, the default-run will not prompt the user to select from the available test options but will instead use the default options as automatically set by pts-core or the test profile. Use batch-run to automatically test all of the available options.
+#### dry-run  [Test | Suite | OpenBenchmarking ID | Test Result]  ...
+This option and its arguments pre-set the Phoronix Test Suite batch run mode with enforcing of defaults to not save any results and other behavior intended for a dry/test run. This option is primarily intended for testing/evaluation purposes.
 #### internal-run  [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option and its arguments pre-set the Phoronix Test Suite batch run mode with sane values for carrying out benchmarks in a semi-automated manner and without uploading any of the result data to the public OpenBenchmarking.org.
 
@@ -621,14 +623,14 @@ This is a collection of test profiles found within the specified OpenBenchmarkin
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing smp.
 #### Cuda Tests  pts/cuda
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing cuda.
+#### Openmp Tests  pts/openmp
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing openmp.
 #### Python Tests  pts/python
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing python.
 #### Go Tests  pts/go
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing go.
 #### Mpi Tests  pts/mpi
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing mpi.
-#### Openmp Tests  pts/openmp
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing openmp.
 #### Vdpau Tests  pts/vdpau
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing vdpau.
 #### Video Tests  pts/video
