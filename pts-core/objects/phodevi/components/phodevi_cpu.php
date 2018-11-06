@@ -154,6 +154,25 @@ class phodevi_cpu extends phodevi_device_interface
 		if(phodevi::is_linux())
 		{
 			$physical_cores = phodevi_cpu::cpuinfo_core_count();
+
+			if(empty($physical_cores))
+			{
+				if(isset(phodevi::$vfs->lscpu) && ($t = strpos(phodevi::$vfs->lscpu, 'Core(s) per socket:')))
+				{
+					$lscpu = substr(phodevi::$vfs->lscpu, $t + strlen('Core(s) per socket:') + 1);
+					$lscpu = substr($lscpu, 0, strpos($lscpu, PHP_EOL));
+					$cores_per_socket = trim($lscpu);
+
+					if($cores_per_socket > 1 && ($t = strpos(phodevi::$vfs->lscpu, 'Socket(s):')))
+					{
+						$lscpu = substr(phodevi::$vfs->lscpu, $t + strlen('Socket(s):') + 1);
+						$lscpu = substr($lscpu, 0, strpos($lscpu, PHP_EOL));
+						$sockets = trim($lscpu);
+						$physical_cores = $cores_per_socket * $sockets;
+					}
+				}
+
+			}
 		}
 		else if(phodevi::is_bsd())
 		{
