@@ -334,7 +334,7 @@ class pts_test_result_parser
 							$line = explode(',', $line);
 							if(isset($line[1]) && is_numeric($line[1]) && $line[1] > 0)
 							{
-								$frame_all_times[] = $line[2];
+								$frame_all_times[] = $line[1];
 							}
 						}
 					}
