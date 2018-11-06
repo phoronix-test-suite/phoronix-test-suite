@@ -238,6 +238,16 @@ class phodevi_cpu extends phodevi_device_interface
 		if(phodevi::is_linux())
 		{
 			$cache_size = self::cpuinfo_cache_size();
+			if(empty($cache_size) && isset(phodevi::$vfs->lscpu) && ($t = strpos(phodevi::$vfs->lscpu, 'L3 cache:')))
+			{
+					$lscpu = substr(phodevi::$vfs->lscpu, $t + strlen('L3 cache:') + 1);
+					$lscpu = substr($lscpu, 0, strpos($lscpu, PHP_EOL));
+					$lscpu = trim($lscpu);
+					if(substr($lscpu, -1) == 'K')
+					{
+						$cache_size = substr($lscpu, 0, -1);
+					}
+			}
 		}
 		else if(phodevi::is_macosx())
 		{

@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 phodevi: Improved physical CPU core detection for architectures like POWER
+phodevi: Improved CPU cache size detection
 
 Phoronix Test Suite 8.4.0 Milestone 2
 5 November 2018
