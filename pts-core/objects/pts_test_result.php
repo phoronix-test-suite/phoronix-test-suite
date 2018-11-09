@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2017, Phoronix Media
-	Copyright (C) 2008 - 2017, Michael Larabel
+	Copyright (C) 2008 - 2018, Phoronix Media
+	Copyright (C) 2008 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -64,6 +64,10 @@ class pts_test_result
 	{
 		$this->used_arguments_description = $arguments_description;
 	}
+	public function remove_from_used_arguments_description($remove_string)
+	{
+		$this->used_arguments_description = str_replace($remove_string, '', $this->used_arguments_description);
+	}
 	public function append_to_arguments_description($arguments_description)
 	{
 		if(strpos(' ' . $this->used_arguments_description . ' ', ' ' . $arguments_description . ' ') === false)
@@ -80,7 +84,7 @@ class pts_test_result
 				}
 			}
 
-			$this->used_arguments_description .= ($this->used_arguments_description != null ? ' ' : null) . $arguments_description;
+			$this->used_arguments_description .= ($this->used_arguments_description != null && $arguments_description[0] != ' ' ? ' ' : null) . $arguments_description;
 		}
 	}
 	public function set_result_precision($precision = 2)

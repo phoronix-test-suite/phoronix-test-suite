@@ -438,7 +438,8 @@ class pts_test_result_parser
 		}
 
 		$definitions = $test_run_request->test_profile->get_results_definition('ResultsParser');
-		foreach($definitions->get_result_parser_definitions() as $entry)
+		$all_parser_entries = $definitions->get_result_parser_definitions();
+		foreach($all_parser_entries as $entry)
 		{
 			$tr = clone $test_run_request;
 			if($entry->get_display_format() != null)
@@ -447,16 +448,16 @@ class pts_test_result_parser
 			}
 			$is_pass_fail_test = in_array($tr->test_profile->get_display_format(), array('PASS_FAIL', 'MULTI_PASS_FAIL'));
 			$is_numeric_check = !$is_pass_fail_test;
-			$test_result = self::parse_result_process_entry($tr, $log_file, $pts_test_arguments, $extra_arguments, $prefix, $entry, $is_pass_fail_test, $is_numeric_check);
+			$test_result = self::parse_result_process_entry($tr, $log_file, $pts_test_arguments, $extra_arguments, $prefix, $entry, $is_pass_fail_test, $is_numeric_check, $all_parser_entries);
 			if($test_result != false)
 			{
 				// Result found
 				if($is_numeric_check)
 				{
 					// Check if this test reports a min result value
-					$min_result = self::parse_result_process_entry($tr, $log_file, $pts_test_arguments, $extra_arguments, 'MIN_', $entry, $is_pass_fail_test, $is_numeric_check);
+					$min_result = self::parse_result_process_entry($tr, $log_file, $pts_test_arguments, $extra_arguments, 'MIN_', $entry, $is_pass_fail_test, $is_numeric_check, $all_parser_entries);
 					// Check if this test reports a max result value
-					$max_result = self::parse_result_process_entry($tr, $log_file, $pts_test_arguments, $extra_arguments, 'MAX_', $entry, $is_pass_fail_test, $is_numeric_check);
+					$max_result = self::parse_result_process_entry($tr, $log_file, $pts_test_arguments, $extra_arguments, 'MAX_', $entry, $is_pass_fail_test, $is_numeric_check, $all_parser_entries);
 				}
 				self::gen_result_active_handle($test_run_request, $tr)->add_trial_run_result($test_result, $min_result, $max_result);
 				$produced_result = true;
@@ -465,7 +466,7 @@ class pts_test_result_parser
 
 		return $produced_result;
 	}
-	protected static function parse_result_process_entry(&$test_run_request, $log_file, $pts_test_arguments, $extra_arguments, $prefix, &$e, $is_pass_fail_test, $is_numeric_check)
+	protected static function parse_result_process_entry(&$test_run_request, $log_file, $pts_test_arguments, $extra_arguments, $prefix, &$e, $is_pass_fail_test, $is_numeric_check, &$all_parser_entries)
 	{
 		$test_result = false;
 		$match_test_arguments = $e->get_match_to_test_args();
@@ -856,6 +857,14 @@ class pts_test_result_parser
 			}
 			if($e->get_append_to_arguments_description() != null)
 			{
+				foreach($all_parser_entries as $parser_entry)
+				{
+					if($parser_entry->get_append_to_arguments_description() != null)
+					{
+						$test_run_request->remove_from_used_arguments_description(' - ' . $parser_entry->get_append_to_arguments_description());
+					}
+				}
+
 				$test_run_request->append_to_arguments_description(' - ' . $e->get_append_to_arguments_description());
 			}
 		}
