@@ -269,7 +269,7 @@
 		</Package>
 		<Package>
 			<GenericName>python</GenericName>
-			<PackageName>python python3-pip</PackageName>
+			<PackageName>python python-pip python3-pip</PackageName>
 		</Package>
 		<Package>
 			<GenericName>python-boost-development</GenericName>
@@ -286,7 +286,7 @@
 		</Package>
 		<Package>
 			<GenericName>yasm</GenericName>
-			<PackageName>yasm</PackageName>
+			<PackageName>yasm nasm</PackageName>
 		</Package>
 		<Package>
 			<GenericName>gmp-library</GenericName>
