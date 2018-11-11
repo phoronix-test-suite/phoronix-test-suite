@@ -848,7 +848,13 @@ abstract class pts_graph_core
 			$tick_width = round(($left_end - $left_start) / $this->i['mark_count']);
 			$display_value = $this->i['graph_min_value'];
 
-			$g = $this->svg_dom->make_g(array('font-size' => self::$c['size']['tick_mark'], 'fill' => self::$c['color']['text'], 'text-anchor' => 'middle'));
+			$tick_font_size = self::$c['size']['tick_mark'];
+			while($this->i['graph_max_value'] > 100000 && self::text_string_width($this->i['graph_max_value'], $tick_font_size) + 4 > $tick_width)
+			{
+				$tick_font_size--;
+			}
+
+			$g = $this->svg_dom->make_g(array('font-size' => $tick_font_size, 'fill' => self::$c['color']['text'], 'text-anchor' => 'middle'));
 			$g_lines = $this->svg_dom->make_g(array('stroke' => self::$c['color']['body'], 'stroke-width' => 1));
 			for($i = 0; $i < $this->i['mark_count']; $i++)
 			{
