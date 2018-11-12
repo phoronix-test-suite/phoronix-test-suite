@@ -183,7 +183,7 @@ class pts_user_io
 				case 'n':
 					$answer = false;
 					break;
-				default:
+				case '':
 					$answer = $default;
 					break;
 			}
