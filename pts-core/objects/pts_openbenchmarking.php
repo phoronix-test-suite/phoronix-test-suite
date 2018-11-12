@@ -336,26 +336,29 @@ class pts_openbenchmarking
 				$repo_index = json_decode(file_get_contents($index_file), true);
 				$generated_time = $repo_index['main']['generated'];
 
-				// Refreshing the indexes once every few days should be suffice
-				// Refresh approximately every three days by default
-				$index_cache_ttl = 3;
-				if(PTS_IS_CLIENT && ($config_ttl = pts_config::read_user_config('PhoronixTestSuite/Options/OpenBenchmarking/IndexCacheTTL')))
+				if($force_refresh == false)
 				{
-					if($config_ttl === 0)
+					// Refreshing the indexes once every few days should be suffice
+					// Refresh approximately every three days by default
+					$index_cache_ttl = 3;
+					if(PTS_IS_CLIENT && ($config_ttl = pts_config::read_user_config('PhoronixTestSuite/Options/OpenBenchmarking/IndexCacheTTL')))
 					{
-						// if the value is 0, only rely upon manual refreshes
+						if($config_ttl === 0)
+						{
+							// if the value is 0, only rely upon manual refreshes
+							continue;
+						}
+						else if(is_numeric($config_ttl) && $config_ttl >= 1)
+						{
+							$index_cache_ttl = $config_ttl;
+						}
+					}
+
+					if($generated_time > (time() - (86400 * $index_cache_ttl)) && (!defined('FIRST_RUN_ON_PTS_UPGRADE') || FIRST_RUN_ON_PTS_UPGRADE == false))
+					{
+						// The index is new enough
 						continue;
 					}
-					else if(is_numeric($config_ttl) && $config_ttl >= 1)
-					{
-						$index_cache_ttl = $config_ttl;
-					}
-				}
-
-				if($generated_time > (time() - (86400 * $index_cache_ttl)) && $force_refresh == false && (!defined('FIRST_RUN_ON_PTS_UPGRADE') || FIRST_RUN_ON_PTS_UPGRADE == false))
-				{
-					// The index is new enough
-					continue;
 				}
 
 				$old_index = $repo_index;

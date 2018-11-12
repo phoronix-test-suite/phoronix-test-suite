@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 pts-core: Various external dependency updates
 pts-core: Expose NUM_CPU_PHYSICAL_CORES to test profiles as alternative to NUM_CPU_CORES (logical count)
+pts-core: Fix possible situation of openbenchmarking-refresh not updating when IndexCacheTTL is set to 0
 pts_Graph: Fix for sometimes tick marker text overlapping
 phodevi: Improved physical CPU core detection for architectures like POWER
 phodevi: Improved CPU cache size detection
