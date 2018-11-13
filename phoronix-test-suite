@@ -135,7 +135,7 @@ elif [ -x /usr/bin/dnf ]
 then
 	# Modern Fedora
 	echo "The command to likely run for your operating system is: "
-	echo "# dnf install php-cli php-xml"
+	echo "# dnf install php-cli php-xml php-json"
 	echo " "
 elif [ -x /usr/bin/yum ]
 then
@@ -213,7 +213,7 @@ elif [ -x /usr/sbin/mport ]
 then
 	# MidnightBSD
 	echo "The command to likely run for your operating system is: "
-	echo "# mport install php70 php70-dom php70-zip php70-json php70-simplexml"
+	echo "# mport install php71 php71-dom php71-zip php71-json php71-simplexml"
 	echo " "
 elif [ -x /bin/opkg ]
 then
