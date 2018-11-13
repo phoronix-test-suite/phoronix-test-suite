@@ -233,10 +233,31 @@ class pts_result_file_output
 
 				if($color_output && PTS_IS_CLIENT)
 				{
+					// See if should bold the line
 					if($highlight_result == $buffer_item->get_result_identifier())
-						$result_line = pts_client::cli_just_bold($result_line);
+					{
+						$do_bold = true;
+					}
 					else if(is_array($highlight_result) && in_array($buffer_item->get_result_identifier(), $highlight_result))
+					{
+						$do_bold = true;
+					}
+
+					// Determine if color
+					$brand_color = pts_render::identifier_to_brand_color($buffer_item->get_result_identifier(), null);
+					if($brand_color != null)
+					{
+						$brand_color = pts_client::hex_color_to_string($brand_color);
+					}
+
+					if($brand_color)
+					{
+						$result_line = pts_client::cli_colored_text($result_line, $brand_color, $do_bold);
+					}
+					else if($do_bold)
+					{
 						$result_line = pts_client::cli_just_bold($result_line);
+					}
 				}
 
 				$result_output .= PHP_EOL . $result_line;

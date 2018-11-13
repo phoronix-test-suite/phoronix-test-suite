@@ -379,6 +379,12 @@ class pts_client
 
 		return $supported;
 	}
+	public static function hex_color_to_string($hex)
+	{
+		$colors = array();
+		list($colors['red'], $colors['green'], $colors['blue']) = sscanf($hex, "#%02x%02x%02x");
+		return array_search(max($colors), $colors);
+	}
 	public static function cli_colored_text($str, $color, $bold = false)
 	{
 		if(!self::supports_colored_text_output() || empty($color))
@@ -391,10 +397,12 @@ class pts_client
 			'black' => $attribute . ';30',
 			'gray' => '1;30', // gray not bold doesn't look good in all consoles
 			'blue' => $attribute . ';34',
+			'magenta' => $attribute . ';35',
 			'green' => $attribute . ';32',
 			'yellow' => $attribute . ';33',
 			'red' => $attribute . ';31',
 			'cyan' => $attribute . ';36',
+			'white' => $attribute . ';37',
 			);
 
 		if(!isset($colors[$color]))

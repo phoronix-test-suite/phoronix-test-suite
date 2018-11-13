@@ -447,40 +447,7 @@ abstract class pts_graph_core
 			return $fallback_color;
 		}
 
-		// See if the result identifier matches something to be color-coded better
-		$identifier = strtolower($identifier) . ' ';
-		if(strpos($identifier, 'geforce') !== false || strpos($identifier, 'nvidia') !== false || strpos($identifier, 'quadro') !== false || strpos($identifier, 'rtx ') !== false || strpos($identifier, 'gtx ') !== false)
-		{
-			$paint_color = '#77b900';
-		}
-		else if(strpos($identifier, 'radeon') !== false || strpos($identifier, 'amd ') !== false || stripos($identifier, 'EPYC') !== false || strpos($identifier, 'opteron ') !== false || strpos($identifier, 'fx-') !== false || strpos($identifier, 'firepro ') !== false || strpos($identifier, 'ryzen ') !== false || strpos($identifier, 'threadripper ') !== false || strpos($identifier, 'a10-') !== false || strpos($identifier, 'athlon ') !== false || strpos($identifier, 'r9 ') !== false || strpos($identifier, 'rx ') !== false)
-		{
-			$paint_color = '#f1052d';
-		}
-		else if(strpos($identifier, 'intel ') !== false || strpos($identifier, 'xeon ') !== false || strpos($identifier, 'core i') !== false || strpos($identifier, 'pentium') !== false || strpos($identifier, 'celeron') !== false)
-		{
-			$paint_color = '#0b5997';
-		}
-		else if(strpos($identifier, 'bsd') !== false)
-		{
-			$paint_color = '#850000';
-		}
-		else if(stripos($identifier, 'windows ') !== false || stripos($identifier, 'Microsoft') !== false)
-		{
-			$paint_color = '#373277';
-		}
-		else if(stripos($identifier, 'ec2 ') !== false || stripos($identifier, 'Amazon') !== false)
-		{
-			$paint_color = '#ff9900';
-		}
-		else if(stripos($identifier, 'google') !== false)
-		{
-			$paint_color = '#4885ed';
-		}
-		else
-		{
-			$paint_color = $fallback_color;
-		}
+		$paint_color = pts_render::identifier_to_brand_color($identifier, $fallback_color);
 
 		if($paint_color != $fallback_color && strpos($identifier, ' - '))
 		{
