@@ -157,21 +157,23 @@ class pts_result_file_output
 
 		return $result_output;
 	}
-	public static function test_result_to_text(&$result_object, $terminal_width = 80, $color_output = false, $highlight_result = null)
+	public static function test_result_to_text(&$result_object, $terminal_width = 80, $stylize_output = false, $highlight_result = null)
 	{
 		$result_output = null;
 
 		if($result_object->test_profile->get_result_scale() != null)
 		{
-			$result_output .= PHP_EOL . '    ' . $result_object->test_profile->get_result_scale();
+			$scale_line = '    ' . $result_object->test_profile->get_result_scale();
 			if($result_object->test_profile->get_result_proportion() == 'LIB')
 			{
-				$result_output .= ' < Lower Is Better';
+				$scale_line .= ' < Lower Is Better';
 			}
 			else if($result_object->test_profile->get_result_proportion() == 'HIB')
 			{
-				$result_output .= ' > Higher Is Better';
+				$scale_line .= ' > Higher Is Better';
 			}
+
+			$result_output .= PHP_EOL . ($stylize_output && PTS_IS_CLIENT ? pts_client::cli_just_italic($scale_line) : $scale_line);
 		}
 
 		$identifiers = $result_object->test_result_buffer->get_identifiers();
@@ -244,7 +246,7 @@ class pts_result_file_output
 					$result_line .= str_repeat('=', round(($val / $max_value) * ($terminal_width - $current_line_length)));
 				}
 
-				if($color_output && PTS_IS_CLIENT)
+				if($stylize_output && PTS_IS_CLIENT)
 				{
 					$do_bold = false;
 					// See if should bold the line
