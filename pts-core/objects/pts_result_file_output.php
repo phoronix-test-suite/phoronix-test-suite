@@ -233,6 +233,7 @@ class pts_result_file_output
 
 				if($color_output && PTS_IS_CLIENT)
 				{
+					$do_bold = false;
 					// See if should bold the line
 					if($highlight_result == $buffer_item->get_result_identifier())
 					{
