@@ -204,6 +204,19 @@ class pts_result_file_output
 				}
 			}
 
+			// First run through the items to see if it makes sense applying colors (e.g. multiple matches)
+			$do_color = 0;
+			foreach($buffers as &$buffer_item)
+			{
+				$brand_color = pts_render::identifier_to_brand_color($buffer_item->get_result_identifier(), null);
+				if($brand_color != null)
+				{
+					// Quite simple handling, could do better
+					$do_color++;
+				}
+			}
+			$do_color = $do_color > 1 ? true : false;
+
 			$longest_result++;
 			foreach($buffers as &$buffer_item)
 			{
@@ -245,10 +258,17 @@ class pts_result_file_output
 					}
 
 					// Determine if color
-					$brand_color = pts_render::identifier_to_brand_color($buffer_item->get_result_identifier(), null);
-					if($brand_color != null)
+					if($do_color)
 					{
-						$brand_color = pts_client::hex_color_to_string($brand_color);
+						$brand_color = pts_render::identifier_to_brand_color($buffer_item->get_result_identifier(), null);
+						if($brand_color != null)
+						{
+							$brand_color = pts_client::hex_color_to_string($brand_color);
+						}
+					}
+					else
+					{
+						$brand_color = false;
 					}
 
 					if($brand_color)
