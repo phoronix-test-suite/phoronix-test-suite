@@ -300,6 +300,13 @@ class pts_render
 	}
 	public static function identifier_to_brand_color($identifier, $fallback_color = null)
 	{
+		static $cache;
+
+		if(isset($cache[$identifier]))
+		{
+			return $cache[$identifier] != null ? $cache[$identifier] : $fallback_color;
+		}
+
 		// See if the result identifier matches something to be color-coded better
 		$i = strtolower($identifier) . ' ';
 		if(strpos($i, 'geforce') !== false || strpos($i, 'nvidia') !== false || strpos($i, 'quadro') !== false || strpos($i, 'rtx ') !== false || strpos($i, 'gtx ') !== false)
@@ -334,6 +341,8 @@ class pts_render
 		{
 			$paint_color = $fallback_color;
 		}
+
+		$cache[$identifier] = $paint_color != $fallback_color ? $paint_color : null;
 
 		return $paint_color;
 	}
