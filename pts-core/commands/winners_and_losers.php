@@ -81,6 +81,7 @@ class winners_and_losers implements pts_option_interface
 		arsort($winners);
 		arsort($losers);
 
+		echo  pts_client::cli_colored_text('TESTS COUNTED: ', 'cyan', true) . $tests_counted . PHP_EOL . PHP_EOL;
 		echo  pts_client::cli_colored_text('WINS:', 'green', true) . PHP_EOL;
 		$table = array();
 		foreach($winners as $identifier => $count)

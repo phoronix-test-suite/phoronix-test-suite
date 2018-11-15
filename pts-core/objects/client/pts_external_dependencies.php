@@ -443,7 +443,7 @@ class pts_external_dependencies
 					if(substr($file[$i], -2) == '.h' || substr($file[$i], -4) == '.hpp')
 					{
 						// May just be a relative header file to look for...
-						$possible_paths = array('/usr/local/include/', '/usr/target/include/', '/usr/include/', '/usr/include/x86_64-linux-gnu/');
+						$possible_paths = array('/usr/local/include/', '/usr/target/include/', '/usr/include/', '/usr/include/x86_64-linux-gnu/', '/usr/include/powerpc64le-linux-gnu/');
 						foreach($possible_paths as $path)
 						{
 							if(is_file($path . $file[$i]) || is_link($path . $file[$i]))
@@ -455,7 +455,7 @@ class pts_external_dependencies
 					else if(strpos($file[$i], '.so') !== false || substr($file[$i], -2) == '.a')
 					{
 						// May just be a relative shared library to look for...
-						$possible_paths = array('/usr/local/lib/', '/usr/lib/', '/usr/lib64/', '/usr/lib/x86_64-linux-gnu/', '/usr/lib/i386-linux-gnu/', '/usr/lib/arm-linux-gnueabihf/');
+						$possible_paths = array('/usr/local/lib/', '/usr/lib/', '/usr/lib64/', '/usr/lib/x86_64-linux-gnu/', '/usr/lib/i386-linux-gnu/', '/usr/lib/arm-linux-gnueabihf/', '/usr/lib/powerpc64le-linux-gnu/');
 
 						if(getenv('LD_LIBRARY_PATH'))
 						{
