@@ -423,6 +423,17 @@
 					<xs:documentation>Rather than prompting the user whether they would like to save the test results, setting AutoSaveResults to TRUE will force the user to save the test results. This option shouldn't be needed unless the test profile's results are only logical if viewed on a graph.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="RemoveInstallDirectoryOnReinstall" type="Boolean" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>do_remove_test_install_directory_on_reinstall</get>
+						<set></set>
+						<default>TRUE</default>
+						<flags>UNCOMMON</flags>
+					</xs:appinfo>
+					<xs:documentation>By default when a test is re-installed, the Phoronix Test Suite will first delete all files within that directory to ensure a clean environment. If the test script can sanely handle an install without deleting the files first, this tag can be used with the FALSE value. This option is primarily useful if having a test that takes a long time to install/build while the test profile setup process can cleanly and gracefully re-install that would shorten that install/build time.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="SystemDependencies" type="xs:string" minOccurs="0" maxOccurs="1">
 				<xs:annotation>
 					<xs:appinfo>

@@ -334,6 +334,10 @@ class pts_test_profile_parser
 	{
 		return pts_strings::string_bool($this->xg('TestProfile/AutoSaveResults', 'FALSE'));
 	}
+	public function do_remove_test_install_directory_on_reinstall()
+	{
+		return pts_strings::string_bool($this->xg('TestProfile/RemoveInstallDirectoryOnReinstall', 'TRUE'));
+	}
 	public function get_result_quantifier()
 	{
 		return $this->xg('TestInformation/ResultQuantifier');

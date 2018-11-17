@@ -894,7 +894,7 @@ class pts_test_installer
 		$identifier = $test_install_request->test_profile->get_identifier();
 		pts_file_io::mkdir($test_install_request->test_profile->get_install_dir());
 
-		if($remove_old_files)
+		if($remove_old_files && $test_install_request->test_profile->do_remove_test_install_directory_on_reinstall())
 		{
 			// Remove any (old) files that were installed
 			$ignore_files = array('pts-install.xml', 'install-failed.log');
