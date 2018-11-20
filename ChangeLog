@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 8.4.0 Milestone 3
+20 November 2018
 
 pts-core: Various external dependency updates
 pts-core: Expose NUM_CPU_PHYSICAL_CORES to test profiles as alternative to NUM_CPU_CORES (logical count)
