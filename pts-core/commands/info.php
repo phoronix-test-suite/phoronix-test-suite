@@ -218,6 +218,11 @@ class info implements pts_option_interface
 				echo pts_client::cli_just_bold('Title: ') . $o->get_title() . PHP_EOL . pts_client::cli_just_bold('Identifier: ') . $o->get_identifier() . PHP_EOL;
 				echo PHP_EOL . pts_client::cli_just_bold('Test Result Identifiers:') . PHP_EOL;
 				echo pts_user_io::display_text_list($o->get_system_identifiers());
+				$system_count = count($o->get_system_identifiers());
+				if($system_count > 8)
+				{
+					echo pts_client::cli_just_italic($system_count . ' Systems') . PHP_EOL;
+				}
 
 				$test_titles = array();
 				foreach($o->get_result_objects() as $result_object)
