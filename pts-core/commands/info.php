@@ -193,24 +193,27 @@ class info implements pts_option_interface
 				}
 
 				// Recent Test Results With This Test
-				$o_identifier = $o->get_identifier(false);
-				$table = array();
-				foreach(pts_client::saved_test_results() as $saved_results_identifier)
+				if(!defined('PHOROMATIC_PROCESS'))
 				{
-					$result_file = new pts_result_file($saved_results_identifier);
-					foreach($result_file->get_result_objects() as $result_object)
+					$o_identifier = $o->get_identifier(false);
+					$table = array();
+					foreach(pts_client::saved_test_results() as $saved_results_identifier)
 					{
-						if($result_object->test_profile->get_identifier(false) == $o_identifier)
+						$result_file = new pts_result_file($saved_results_identifier);
+						foreach($result_file->get_result_objects() as $result_object)
 						{
-							$table[] = array(pts_client::cli_just_bold($result_file->get_identifier()), $result_file->get_title());
-							break;
+							if($result_object->test_profile->get_identifier(false) == $o_identifier)
+							{
+								$table[] = array(pts_client::cli_just_bold($result_file->get_identifier()), $result_file->get_title());
+								break;
+							}
 						}
 					}
-				}
-				if(!empty($table))
-				{
-					echo PHP_EOL . pts_client::cli_just_bold('Results Containing This Test') . PHP_EOL;
-					echo pts_user_io::display_text_table($table);
+					if(!empty($table))
+					{
+						echo PHP_EOL . pts_client::cli_just_bold('Results Containing This Test') . PHP_EOL;
+						echo pts_user_io::display_text_table($table);
+					}
 				}
 			}
 			else if($o instanceof pts_result_file)
