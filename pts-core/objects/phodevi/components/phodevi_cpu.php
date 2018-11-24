@@ -328,8 +328,10 @@ class phodevi_cpu extends phodevi_device_interface
 					$info = null;
 				}
 			}
-			if($info == null && isset(phodevi::$vfs->cpuinfo)) // fall back for those without cpufreq
+			if($info == null && isset(phodevi::$vfs->cpuinfo) && phodevi::read_property('system', 'kernel-architecture') != 'x86_64') // fall back for those without cpufreq
 			{
+				// Don't use this code path for x86_64 since for those systems the /sys reporting should work
+				// and when that isn't the case, CPUFreq not loaded and thus reported here is usually dynamic frequency
 				$cpu_mhz = self::read_cpuinfo_line('cpu MHz');
 				$info = $cpu_mhz / 1000;
 
