@@ -445,6 +445,12 @@ class pts_strings
 		// Fixes an AMD string issue like 'FX -4100' due to stripping (TM) from in between characters, possibly other cases too
 		$str = str_replace(' -', '-', $str);
 
+		if(stripos($str, ' + ') === false)
+		{
+			// Remove any duplicate words
+			$str = implode(' ', array_unique(explode(' ', $str)));
+		}
+
 		return $str;
 	}
 	public static function has_element_in_string($haystack, $array_to_check)
