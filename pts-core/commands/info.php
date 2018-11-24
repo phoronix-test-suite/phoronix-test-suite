@@ -175,7 +175,7 @@ class info implements pts_option_interface
 
 
 				// OpenBenchmarking.org Change-Log
-				if(stripos($o->get_identifier(), 'local/') === false)
+				if(stripos($o->get_identifier(), 'local/') === false && !defined('PHOROMATIC_PROCESS'))
 				{
 
 					$change_log = pts_openbenchmarking_client::fetch_repository_test_profile_changelog($o->get_identifier(false));
