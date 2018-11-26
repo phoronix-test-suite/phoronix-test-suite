@@ -1,5 +1,5 @@
 # Phoronix Test Suite 8.4.0
-http://www.phoronix-test-suite.com/
+https://www.phoronix-test-suite.com/
 
 The **Phoronix Test Suite** is the most comprehensive testing and benchmarking
 platform available for Linux, Solaris, OS X, and BSD operating systems. The
