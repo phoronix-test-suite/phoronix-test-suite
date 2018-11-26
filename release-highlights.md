@@ -1,5 +1,13 @@
 # Phoronix Test Suite Release History
 
+Phoronix Test Suite 8.4
+======
+#### Release Date: 26 November 2018 | Codename: Skiptvet
+* Improvements to the text-based/CLI graphs
+* Improvements to CSV frame-time parsing
+* Various Phodevi hardware/software detection refinements, including better IBM POWER9 detection
+* Various fixes and other minor refinements, external dependency updates
+
 Phoronix Test Suite 8.2
 ======
 #### Release Date: 11 September 2018 | Codename: Rakkestad
