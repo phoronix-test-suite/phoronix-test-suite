@@ -444,6 +444,7 @@ class pts_strings
 
 		// Fixes an AMD string issue like 'FX -4100' due to stripping (TM) from in between characters, possibly other cases too
 		$str = str_replace(' -', '-', $str);
+		$str = str_replace('- ', ' ', $str);
 
 		if(stripos($str, ' + ') === false)
 		{
