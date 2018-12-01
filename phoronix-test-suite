@@ -21,9 +21,11 @@
 #	along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
-# Remove the current dir from PATH, as it causes infinitely resursive shell scripts.
-
-PATH="`echo $PATH | sed -e s/:[\.]:/:/g -e s/:[\.]// -e  s/[\.]://`"
+if which sed >/dev/null 2>&1 ;
+then
+	# Remove the current dir from PATH if present, as it causes infinitely resursive shell scripts.
+	PATH="`echo $PATH | sed -e s/:[\.]:/:/g -e s/:[\.]// -e  s/[\.]://`"
+fi
 
 # Full path to root directory of the actual Phoronix Test Suite code
 # export PTS_DIR=$(readlink -f `dirname $0`)
