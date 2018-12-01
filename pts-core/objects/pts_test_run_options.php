@@ -59,10 +59,10 @@ class pts_test_run_options
 		{
 			$option_identifier = $o->get_identifier();
 
-			if(!empty($preset_selections_values) && isset($preset_selections[$identifier_short][$option_identifier]))
+			if(!empty($preset_selections_values) && isset($preset_selections_values[$identifier_short][$option_identifier]))
 			{
-				$text_args[] = pts_strings::explode(',', $preset_selections[$identifier_short][$option_identifier]);
-				$user_args[] = pts_strings::explode(',', $preset_selections[$identifier_short][$option_identifier]);
+				$text_args[] = explode(',', $preset_selections_values[$identifier_short][$option_identifier]);
+				$user_args[] = explode(',', $preset_selections_values[$identifier_short][$option_identifier]);
 			}
 			else if($o->option_count() == 0)
 			{
