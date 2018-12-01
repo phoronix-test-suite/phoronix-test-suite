@@ -45,7 +45,7 @@ class pts_test_option
 	}
 	public function set_option_default($default_node)
 	{
-		if($default_node == null)
+		if($default_node == null || $default_node == "0")
 			$default_node = 1;
 
 		$default_node--;
