@@ -61,8 +61,19 @@ class pts_test_run_options
 
 			if(!empty($preset_selections_values) && isset($preset_selections_values[$identifier_short][$option_identifier]))
 			{
-				$text_args[] = explode(',', $preset_selections_values[$identifier_short][$option_identifier]);
-				$user_args[] = explode(',', $preset_selections_values[$identifier_short][$option_identifier]);
+				$b = explode(',', $preset_selections_values[$identifier_short][$option_identifier]);
+				foreach($b as &$a)
+				{
+					$a = $o->format_option_display_from_input($a);
+				}
+				$text_args[] = $b;
+
+				$b = explode(',', $preset_selections_values[$identifier_short][$option_identifier]);
+				foreach($b as &$a)
+				{
+					$a = $o->format_option_value_from_input($a);
+				}
+				$user_args[] = $b;
 			}
 			else if($o->option_count() == 0)
 			{
