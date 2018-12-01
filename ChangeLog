@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+pts-core: Allow PRESET_OPTIONS env var to be used when in batch mode
+
 Phoronix Test Suite 8.4.0-Skiptvet
 26 November 2018
 

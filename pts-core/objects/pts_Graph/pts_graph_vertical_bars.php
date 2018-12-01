@@ -100,7 +100,7 @@ class pts_graph_vertical_bars extends pts_graph_core
 
 		while(floor($bar_width * 0.8) < self::text_string_width($this->i['graph_max_value'] + 0.01, floor(self::$c['size']['bars'] * $bar_font_size_ratio)) && $bar_font_size_ratio >= 0.6)
 		{
-			$bar_font_size_ratio -= 0.1;
+			$bar_font_size_ratio -= 0.05;
 		}
 
 		$i_o = 0;
@@ -149,7 +149,7 @@ class pts_graph_vertical_bars extends pts_graph_core
 				if(($px_bound_right - $px_bound_left) > 10)
 				{
 					// The bars are too skinny to be able to plot anything on them
-					if($bar_font_size_ratio >= 0.6)
+					if($bar_font_size_ratio >= 0.5)
 					{
 						$x = $px_bound_left + (($px_bound_right - $px_bound_left) / 2);
 						$this->svg_dom->add_text_element($value, array('x' => $x, 'y' => ($value_plot_top + 2), 'font-size' => floor(self::$c['size']['bars'] * $bar_font_size_ratio), 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));

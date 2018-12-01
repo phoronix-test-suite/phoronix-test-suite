@@ -22,7 +22,7 @@
 
 class pts_test_run_options
 {
-	public static function prompt_user_options(&$test_profile, $preset_selections = null)
+	public static function prompt_user_options(&$test_profile, $preset_selections = null, $no_prompts = false)
 	{
 		$user_args = array();
 		$text_args = array();
@@ -62,6 +62,10 @@ class pts_test_run_options
 					$value = $preset_selections[$identifier_full][$option_identifier];
 					echo PHP_EOL . '    Using Pre-Set Run Option: ' . $value . PHP_EOL;
 				}
+				else if($no_prompts)
+				{
+					$value = null;
+				}
 				else
 				{
 					echo PHP_EOL . $o->get_name() . PHP_EOL;
@@ -83,6 +87,10 @@ class pts_test_run_options
 				{
 					$bench_choice = $preset_selections[$identifier_full][$option_identifier];
 					echo PHP_EOL . '    Using Pre-Set Run Option: ' . $bench_choice . PHP_EOL;
+				}
+				else if($no_prompts)
+				{
+					$bench_choice = array_keys($option_names);
 				}
 				else
 				{
