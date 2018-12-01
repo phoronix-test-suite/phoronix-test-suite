@@ -1489,7 +1489,7 @@ class pts_test_run_manager
 		}
 		else if($this->batch_mode && (pts_client::read_env('PRESET_OPTIONS') || pts_client::read_env('PRESET_OPTIONS_VALUES')))
 		{
-			list($test_arguments, $test_arguments_description) = pts_test_run_options::batch_user_options($test_profile, null, true);
+			list($test_arguments, $test_arguments_description) = pts_test_run_options::prompt_user_options($test_profile, null, true);
 		}
 		else if($this->auto_mode == 2)
 		{
