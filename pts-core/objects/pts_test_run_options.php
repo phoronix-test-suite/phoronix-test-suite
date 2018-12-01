@@ -36,6 +36,16 @@ class pts_test_run_options
 			// Multiple preset options can be delimited with the PRESET_OPTIONS environment variable via a semicolon ;
 			$preset_selections = pts_client::parse_value_string_double_identifier($cli_presets_env);
 		}
+		if(($cli_presets_env_values = pts_client::read_env('PRESET_OPTIONS_VALUES')) != false)
+		{
+			// To specify test options externally from an environment variable
+			// i.e. PRESET_OPTIONS_VALUES='stream.run-type=Add' ./phoronix-test-suite benchmark stream
+			// The string format is <test-name>.<test-option-name-from-XML-file>=<test-option-value>
+			// The test-name can either be the short/base name (e.g. stream) or the full identifier (pts/stream) without version postfix
+			// Multiple preset options can be delimited with the PRESET_OPTIONS environment variable via a semicolon ;
+			$preset_selections_values = pts_client::parse_value_string_double_identifier($cli_presets_env_values);
+		}
+
 
 		$identifier_short = $test_profile->get_identifier_base_name();
 		$identifier_full = $test_profile->get_identifier(false);
@@ -49,7 +59,12 @@ class pts_test_run_options
 		{
 			$option_identifier = $o->get_identifier();
 
-			if($o->option_count() == 0)
+			if(!empty($preset_selections_values) && isset($preset_selections[$identifier_short][$option_identifier]))
+			{
+				$text_args[] = pts_strings::explode(',', $preset_selections[$identifier_short][$option_identifier]);
+				$user_args[] = pts_strings::explode(',', $preset_selections[$identifier_short][$option_identifier]);
+			}
+			else if($o->option_count() == 0)
 			{
 				// User inputs their option as there is nothing to select
 				if(isset($preset_selections[$identifier_short][$option_identifier]))
