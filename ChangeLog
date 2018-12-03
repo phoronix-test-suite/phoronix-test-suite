@@ -6,6 +6,7 @@ pts-core: Ensure "." doesn't get set in PATH when launching phoronix-test-suite
 pts-core: Allow PRESET_OPTIONS env var to be used when in batch mode
 pts-core: FreeBSD updates
 pts-core: Add PRESET_OPTIONS_VALUES environment variable that is similar to PRESET_OPTIONS but for explicit values
+phodevi: Improved Radeon AMDGPU frequency detection/reporting
 
 Phoronix Test Suite 8.4.0-Skiptvet
 26 November 2018

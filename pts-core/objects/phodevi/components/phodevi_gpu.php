@@ -899,6 +899,37 @@ class phodevi_gpu extends phodevi_device_interface
 					}
 				}
 			}
+			if($core_freq == null && is_file('/sys/class/drm/card0/device/pp_dpm_sclk'))
+			{
+				$pp = trim(file_get_contents('/sys/class/drm/card0/device/pp_dpm_sclk'));
+				$pp = explode("\n", $pp);
+				$pp = array_pop($pp);
+				if(($x = strpos($pp, ': ')) !== false)
+				{
+					$pp = substr($pp, $x + 2);
+				}
+				$pp = str_replace('Mhz', '', $pp);
+				if(is_numeric($pp))
+				{
+					$core_freq = $pp;
+
+					if(is_file('/sys/class/drm/card0/device/pp_dpm_mclk'))
+					{
+						$pp = trim(file_get_contents('/sys/class/drm/card0/device/pp_dpm_mclk'));
+						$pp = explode("\n", $pp);
+						$pp = array_pop($pp);
+						if(($x = strpos($pp, ': ')) !== false)
+						{
+							$pp = substr($pp, $x + 2);
+						}
+						$pp = str_replace('Mhz', '', $pp);
+						if(is_numeric($pp))
+						{
+							$mem_freq = $pp;
+						}
+					}
+				}
+			}
 			if($core_freq == null && isset(phodevi::$vfs->dmesg) && strrpos(phodevi::$vfs->dmesg, ' sclk:'))
 			{
 				// Attempt to read the LAST power level reported to dmesg, this is the current way for Radeon DPM on Linux 3.11+
