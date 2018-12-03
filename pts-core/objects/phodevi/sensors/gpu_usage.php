@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2015, Phoronix Media
-	Copyright (C) 2009 - 2015, Michael Larabel
+	Copyright (C) 2009 - 2018, Phoronix Media
+	Copyright (C) 2009 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -60,6 +60,10 @@ class gpu_usage extends phodevi_sensor
 		else if($this->probe_radeontop)
 		{
 			$gpu_usage = self::radeontop_gpu_usage();
+		}
+		else if(is_file('/sys/class/drm/card0/device/gpu_busy_percent'))
+		{
+			$gpu_usage = pts_file_io::file_get_contents('/sys/class/drm/card0/device/gpu_busy_percent');
 		}
 
 		return $gpu_usage;
