@@ -39,6 +39,14 @@ class gpu_voltage extends phodevi_sensor
 				$sensor = -1;
 			}
 		}
+		else if(is_file('/sys/class/drm/card0/device/hwmon/hwmon0/in0_label') && pts_file_io::file_get_contents('/sys/class/drm/card0/device/hwmon/hwmon0/in0_label') == 'vddgfx' && is_file('/sys/class/drm/card0/device/hwmon/hwmon0/in0_input'))
+		{
+			$sensor = pts_file_io::file_get_contents('/sys/class/drm/card0/device/hwmon/hwmon0/in0_input');
+			if(!is_numeric($sensor))
+			{
+				$sensor = -1;
+			}
+		}
 		else if(isset(phodevi::$vfs->radeon_pm_info))
 		{
 			// For Radeon power management it should be exposed on a line like:
