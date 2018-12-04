@@ -72,10 +72,9 @@ class gpu_power extends phodevi_sensor
 				}
 			}
 		}
-		else if(is_readable('/sys/class/drm/card0/device/hwmon/hwmon1/power1_average'))
+		else if($power1_average = phodevi_linux_parser::read_sysfs_node('/sys/class/drm/card0/device/hwmon/hwmon*/power1_average', 'POSITIVE_NUMERIC'))
 		{
 			// AMDGPU path
-			$power1_average = pts_file_io::file_get_contents('/sys/class/drm/card0/device/hwmon/hwmon1/power1_average');
 			if(is_numeric($power1_average))
 			{
 				$power1_average = $power1_average / 1000000;
