@@ -129,7 +129,11 @@ class pts_user_io
 
 				if(($c + 1) != $rc_count)
 				{
-					$formatted_table .= str_repeat(' ', (max($min_width, 1 + $extra_width_to_column + $column_widths[$c]) - strlen($table[$r][$c])));
+					$m = (max($min_width, 1 + $extra_width_to_column + $column_widths[$c]) - strlen($table[$r][$c]));
+					if($m > 0)
+					{
+						$formatted_table .= str_repeat(' ', $m);
+					}
 				}
 			}
 
