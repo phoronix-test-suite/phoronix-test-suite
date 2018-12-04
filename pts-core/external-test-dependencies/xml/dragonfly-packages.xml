@@ -224,5 +224,9 @@
 			<GenericName>node-npm</GenericName>
 			<PackageName>npm</PackageName>
 		</Package>
+		<Package>
+			<GenericName>rust</GenericName>
+			<PackageName>rust</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
