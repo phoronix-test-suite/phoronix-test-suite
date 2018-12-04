@@ -585,7 +585,7 @@ class phodevi_system extends phodevi_device_interface
 			}
 
 			// DragonFlyBSD
-			if(($spectre = phodevi_bsd_parser::read_sysctl('machdep.spectre_mitigation')) != '0' && !empty($spectre))
+			if(($spectre = phodevi_bsd_parser::read_sysctl('machdep.spectre_mitigation')) != '0' && $spectre != 'NONE' && !empty($spectre))
 			{
 				$security[] = 'Spectre ' . $spectre . ' Mitigation';
 			}

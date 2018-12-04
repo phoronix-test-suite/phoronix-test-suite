@@ -13,6 +13,7 @@ phodevi: Updated gpu_power sensor for AMDGPU driver
 phodevi: Updated gpu_fanspeed sensor for AMDGPU driver
 phodevi: Updated gpu_freq sensor for AMDGPU driver
 phodevi: Improved physical CPU core detection on DragonFlyBSD 5.4
+phodevi: Improved Spectre detection on DragonFlyBSD 5.4
 
 Phoronix Test Suite 8.4.0-Skiptvet
 26 November 2018
