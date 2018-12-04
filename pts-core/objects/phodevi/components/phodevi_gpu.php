@@ -908,7 +908,7 @@ class phodevi_gpu extends phodevi_device_interface
 				{
 					$pp = substr($pp, $x + 2);
 				}
-				$pp = str_replace('Mhz', '', $pp);
+				$pp = trim(str_replace(array('*', 'Mhz'), '', $pp));
 				if(is_numeric($pp))
 				{
 					$core_freq = $pp;
@@ -922,7 +922,7 @@ class phodevi_gpu extends phodevi_device_interface
 						{
 							$pp = substr($pp, $x + 2);
 						}
-						$pp = str_replace('Mhz', '', $pp);
+						$pp = trim(str_replace(array('*', 'Mhz'), '', $pp));
 						if(is_numeric($pp))
 						{
 							$mem_freq = $pp;
