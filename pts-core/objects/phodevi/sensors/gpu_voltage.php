@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2015, Phoronix Media
-	Copyright (C) 2009 - 2015, Michael Larabel
+	Copyright (C) 2009 - 2018, Phoronix Media
+	Copyright (C) 2009 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -31,7 +31,15 @@ class gpu_voltage extends phodevi_sensor
 		$sensor = -1;
 
 		// TODO XXX: Nouveau driver exposes GPU voltage on at least some cards via performance_level
-		if(isset(phodevi::$vfs->radeon_pm_info))
+		if(is_file('/sys/class/drm/card0/device/hwmon/hwmon1/in0_label') && pts_file_io::file_get_contents('/sys/class/drm/card0/device/hwmon/hwmon1/in0_label') == 'vddgfx' && is_file('/sys/class/drm/card0/device/hwmon/hwmon1/in0_input'))
+		{
+			$sensor = pts_file_io::file_get_contents('/sys/class/drm/card0/device/hwmon/hwmon1/in0_input');
+			if(!is_numeric($sensor))
+			{
+				$sensor = -1;
+			}
+		}
+		else if(isset(phodevi::$vfs->radeon_pm_info))
 		{
 			// For Radeon power management it should be exposed on a line like:
 			// voltage: 1140 mV
