@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2017, Phoronix Media
-	Copyright (C) 2009 - 2017, Michael Larabel
+	Copyright (C) 2009 - 2018, Phoronix Media
+	Copyright (C) 2009 - 2018, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -69,6 +69,20 @@ class gpu_power extends phodevi_sensor
 					}
 
 					$gpu_power = $power;
+				}
+			}
+		}
+		else if(is_readable('/sys/class/drm/card0/device/hwmon/hwmon1/power1_average'))
+		{
+			// AMDGPU path
+			$power1_average = pts_file_io::file_get_contents('/sys/class/drm/card0/device/hwmon/hwmon1/power1_average');
+			if(is_numeric($power1_average))
+			{
+				$power1_average = $power1_average / 1000000;
+				if($power1_average > 10 && $power1_average < 600)
+				{
+					self::$unit = 'Watts';
+					$gpu_power = $power1_average;
 				}
 			}
 		}
