@@ -41,7 +41,7 @@ class gpu_fanspeed extends phodevi_sensor
 		else if($fan1_input = phodevi_linux_parser::read_sysfs_node('/sys/class/drm/card0/device/hwmon/hwmon*/fan1_input', 'POSITIVE_NUMERIC'))
 		{
 			// AMDGPU path
-			$fan_speed = round(fan1_input / phodevi_linux_parser::read_sysfs_node('/sys/class/drm/card0/device/hwmon/hwmon*/fan1_max', 'POSITIVE_NUMERIC') * 100, 2);
+			$fan_speed = round($fan1_input / phodevi_linux_parser::read_sysfs_node('/sys/class/drm/card0/device/hwmon/hwmon*/fan1_max', 'POSITIVE_NUMERIC') * 100, 2);
 		}
 
 		return $fan_speed;
