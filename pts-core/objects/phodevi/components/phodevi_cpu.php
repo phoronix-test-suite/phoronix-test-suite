@@ -181,11 +181,24 @@ class phodevi_cpu extends phodevi_device_interface
 		else if(phodevi::is_bsd())
 		{
 			// hw.cpu_topology_core_ids works at least on DragonFly BSD
-			$phys_ids = intval(phodevi_bsd_parser::read_sysctl(array('hw.cpu_topology_phys_ids')));
-			$physical_cores = intval(phodevi_bsd_parser::read_sysctl(array('hw.cpu_topology_core_ids')));
-			if($phys_ids > 0 && ($phys_ids * $physical_cores) <= phodevi::read_property('cpu', 'thread-count') && $physical_cores % 2 == 0)
+			$ht_ids = intval(phodevi_bsd_parser::read_sysctl(array('hw.cpu_topology_ht_ids')));
+			if($ht_ids == 2)
 			{
-				$physical_cores = $phys_ids * $physical_cores;
+				$info = intval(phodevi_bsd_parser::read_sysctl(array('hw.ncpu')));
+
+				if(empty($info))
+				{
+					$physical_cores = $info / 2;
+				}
+			}
+			else
+			{
+				$phys_ids = intval(phodevi_bsd_parser::read_sysctl(array('hw.cpu_topology_phys_ids')));
+				$physical_cores = intval(phodevi_bsd_parser::read_sysctl(array('hw.cpu_topology_core_ids')));
+				if($phys_ids > 0 && ($phys_ids * $physical_cores) <= phodevi::read_property('cpu', 'thread-count') && $physical_cores % 2 == 0)
+				{
+					$physical_cores = $phys_ids * $physical_cores;
+				}
 			}
 		}
 		else if(phodevi::is_macosx())
