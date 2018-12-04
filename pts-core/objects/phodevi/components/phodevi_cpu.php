@@ -186,7 +186,7 @@ class phodevi_cpu extends phodevi_device_interface
 			{
 				$info = intval(phodevi_bsd_parser::read_sysctl(array('hw.ncpu')));
 
-				if(empty($info))
+				if($info > 1)
 				{
 					$physical_cores = $info / 2;
 				}
