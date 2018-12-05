@@ -86,12 +86,12 @@ class phodevi_cpu extends phodevi_device_interface
 	{
 		$info = null;
 
-		if(($n = getenv('PTS_NPROC')) && is_numeric($n))
+		if(($n = getenv('PTS_NPROC')) && is_numeric($n) && $n > 0)
 		{
 			// PTS_NPROC can be used for overriding the number of exposed cores/threads to tests
 			$info = $n;
 		}
-		else if(($n = getenv('NUMBER_OF_PROCESSORS')) && is_numeric($n))
+		else if(($n = getenv('NUMBER_OF_PROCESSORS')) && is_numeric($n) && $n > 0)
 		{
 			// Should be used by Windows they have NUMBER_OF_PROCESSORS set and use this as an easy way to override CPUs exposed
 			$info = $m;
