@@ -119,8 +119,8 @@ if [ "X$PHP_BIN" = "X" ]
 then
 	cat <<'EOT'
 
-PHP 5.3 or newer or PHP 7 must be installed for the Phoronix Test Suite
-The PHP command-line package is commonly called php-cli, php5-cli, or php.
+PHP must be installed for the Phoronix Test Suite
+The PHP command-line package is commonly called php-cli, php7-cli, or php.
 For more information visit: http://www.phoronix-test-suite.com/
 
 EOT
@@ -167,7 +167,7 @@ then
 	echo "The command to likely run for your operating system is: "
 	echo "# pkg install php72 php72-dom php72-zip php72-json php72-simplexml php72-openssl"
 	echo " "
-elif [ -x /usr/local/swupd ]
+elif [ -x /usr/bin/swupd ]
 then
 	# Clear Linux
 	echo "The command to likely run for your operating system is: "
