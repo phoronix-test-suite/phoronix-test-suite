@@ -121,7 +121,7 @@ then
 
 PHP must be installed for the Phoronix Test Suite
 The PHP command-line package is commonly called php-cli, php7-cli, or php.
-For more information visit: http://www.phoronix-test-suite.com/
+For more information visit: https://www.phoronix-test-suite.com/
 
 EOT
 
