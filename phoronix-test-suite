@@ -255,7 +255,7 @@ then
 	cat <<'EOT'
 
 To run the Phoronix Test Suite locally you must first change directories to phoronix-test-suite/ 
-or install the program using the install-sh script. For support visit: http://www.phoronix-test-suite.com/
+or install the program using the install-sh script. For support visit: https://www.phoronix-test-suite.com/
 
 EOT
 exit
