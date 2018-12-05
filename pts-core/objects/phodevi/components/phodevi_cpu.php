@@ -86,7 +86,12 @@ class phodevi_cpu extends phodevi_device_interface
 	{
 		$info = null;
 
-		if(($n = getenv('PTS_NPROC')) && is_numeric($n) && $n > 0)
+		if(($n = getenv('NUM_CPU_CORES')) && is_numeric($n) && $n > 0)
+		{
+			// NUM_CPU_CORES can be used for overriding the number of exposed cores/threads to tests, matches the name of the env var set by PTS to test scripts
+			$info = $n;
+		}
+		else if(($n = getenv('PTS_NPROC')) && is_numeric($n) && $n > 0)
 		{
 			// PTS_NPROC can be used for overriding the number of exposed cores/threads to tests
 			$info = $n;
