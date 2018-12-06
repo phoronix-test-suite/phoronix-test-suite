@@ -170,7 +170,7 @@ class phodevi_disk extends phodevi_device_interface
 
 				foreach(explode(PHP_EOL, $camcontrol) as $line)
 				{
-					if(substr($line, 0, 1) == '<' && ($model_end = strpos($line, '>')) !== false && strpos($line, 'DVD') === false && strpos($line, 'ATAPI') === false)
+					if(substr($line, 0, 1) == '<' && ($model_end = strpos($line, '>')) !== false && strpos($line, 'DVD') === false && strpos($line, 'ATAPI') === false && strpos($line, ' Console') === false)
 					{
 						$disk = self::prepend_disk_vendor(substr($line, 1, ($model_end - 1)));
 						$disk = trim(str_replace(array('SATA'), null, $disk));
