@@ -203,7 +203,6 @@ class phodevi_disk extends phodevi_device_interface
 		}
 		else if(phodevi::is_linux())
 		{
-			$disks_formatted = array();
 			$disks = array();
 
 			foreach(array_merge(pts_file_io::glob('/sys/block/sd*'), pts_file_io::glob('/sys/block/mmcblk*'), pts_file_io::glob('/sys/block/nvme*'), pts_file_io::glob('/sys/block/vd*')) as $sdx)
@@ -238,28 +237,8 @@ class phodevi_disk extends phodevi_device_interface
 
 					if($disk_size > 0)
 					{
-						array_push($disks_formatted, $disk_model);
+						array_push($disks, $disk_model);
 					}
-				}
-			}
-
-			for($i = 0; $i < count($disks_formatted); $i++)
-			{
-				if(!empty($disks_formatted[$i]))
-				{
-					$times_found = 1;
-
-					for($j = ($i + 1); $j < count($disks_formatted); $j++)
-					{
-						if($disks_formatted[$i] == $disks_formatted[$j])
-						{
-							$times_found++;
-							$disks_formatted[$j] = '';
-						}
-					}
-
-					$disk = ($times_found > 1 ? $times_found . ' x '  : null) . $disks_formatted[$i];
-					array_push($disks, $disk);
 				}
 			}
 		}
@@ -296,6 +275,29 @@ class phodevi_disk extends phodevi_device_interface
 		}
 		else
 		{
+			$disks_formatted = $disks;
+			$disks = array();
+
+			for($i = 0; $i < count($disks_formatted); $i++)
+			{
+				if(!empty($disks_formatted[$i]))
+				{
+					$times_found = 1;
+
+					for($j = ($i + 1); $j < count($disks_formatted); $j++)
+					{
+						if($disks_formatted[$i] == $disks_formatted[$j])
+						{
+							$times_found++;
+							$disks_formatted[$j] = '';
+						}
+					}
+
+					$disk = ($times_found > 1 ? $times_found . ' x '  : null) . $disks_formatted[$i];
+					array_push($disks, $disk);
+				}
+			}
+
 			$disks = implode(' + ', $disks);
 		}
 
