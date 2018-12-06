@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Workaround for RHEL 7.6 PHP having buggy CURL that is causing seg faults
 pts-core: Ensure "." doesn't get set in PATH when launching phoronix-test-suite
 pts-core: Allow PRESET_OPTIONS env var to be used when in batch mode
 pts-core: FreeBSD updates
