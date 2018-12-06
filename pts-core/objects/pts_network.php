@@ -110,7 +110,7 @@ class pts_network
 			$download = str_replace('https://', 'http://', $download);
 		}
 
-		if(PTS_IS_CLIENT && strpos(phodevi::read_property('system', 'operating-system'), ' 7') !== false && function_exists('curl_init') && stripos(PTS_PHP_VERSION, 'hiphop') === false)
+		if(PTS_IS_CLIENT && strpos(phodevi::read_property('system', 'operating-system'), ' 7') === false && function_exists('curl_init') && stripos(PTS_PHP_VERSION, 'hiphop') === false)
 		{
 			// XXX: RHEL/EL 7.6 PHP packages introduced a segv when using CURL... Until that's resolved, just blacklist " 7"
 			// as unknown when it will be fixed, but at least there is non-CURL codepath supported fine
