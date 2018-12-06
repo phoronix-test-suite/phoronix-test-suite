@@ -12,5 +12,5 @@ Phoronix Test Suite User Agreement & Notices:
 
 Anonymous Usage Reporting / Statistics: If enabling the anonymous usage reporting / statistics feature, some information about the Phoronix Test Suite runs will be submitted to OpenBenchmarking.org. This information is used for analytical purposes, including the determining of the most popular tests / suites and calculating average run-times for different test profiles. The test results are not reported in this process nor the installed software / hardware information, but ambient information about the testing process. This information is stored anonymously. More information on this feature is available with the included documentation.
 
-For more information on the Phoronix Test Suite and its features, visit http://www.phoronix-test-suite.com/ or view the included documentation or by contacting support@phoronix-test-suite.com.
+For more information on the Phoronix Test Suite and its features, visit https://www.phoronix-test-suite.com/ or view the included documentation or by contacting support@phoronix-test-suite.com.
 

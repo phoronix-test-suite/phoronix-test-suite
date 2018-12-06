@@ -347,7 +347,7 @@ class phodevi_cpu extends phodevi_device_interface
 					$info = null;
 				}
 			}
-			if($info == null && isset(phodevi::$vfs->cpuinfo) && (phodevi::read_property('system', 'kernel-architecture') != 'x86_64' || phodevi::read_property('system', 'system-layer') != null)) // fall back for those without cpufreq
+			if($info == null && isset(phodevi::$vfs->cpuinfo) && phodevi::read_property('system', 'kernel-architecture') != 'x86_64') // fall back for those without cpufreq
 			{
 				// Don't use this code path for x86_64 since for those systems the /sys reporting should work
 				// and when that isn't the case, CPUFreq not loaded and thus reported here is usually dynamic frequency
