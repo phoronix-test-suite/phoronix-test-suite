@@ -50,12 +50,8 @@
                 </Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
-			<PackageName>autoconf automake gmake bash</PackageName>
-			<FileCheck>autoconf, gmake, bash</FileCheck>
-		</Package>
-		<Package>
-			<GenericName>pkg-config</GenericName>
-			<PackageName>pkgconf</PackageName>
+			<PackageName>autoconf automake gmake bash pkgconf</PackageName>
+			<FileCheck>autoconf, gmake, bash, pkgconf</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>nasm</GenericName>
