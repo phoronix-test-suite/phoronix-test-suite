@@ -1338,7 +1338,7 @@ class phodevi_gpu extends phodevi_device_interface
 			}
 		}
 
-		if(stripos($info, 'NVIDIA') === false && (stripos($info, 'Quadro') !== false || stripos($info, 'GeForce') !== false))
+		if(stripos($info, 'NVIDIA') === false && (stripos($info, 'Quadro') !== false || stripos($info, 'GeForce') !== false || substr($info, 0, 2) == 'NV'))
 		{
 			$info = 'NVIDIA' . ' ' . $info;
 		}
