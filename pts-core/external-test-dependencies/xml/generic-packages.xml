@@ -266,6 +266,12 @@
 			<FileCheck>libtool OR libtoolize</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>pkg-config</GenericName>
+			<Title>Pkg-config</Title>
+			<PossibleNames>pkg-config</PossibleNames>
+			<FileCheck>pkg-config</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>libevent</GenericName>
 			<Title>Libevent</Title>
 			<PossibleNames>libevent, libevent-dev</PossibleNames>
