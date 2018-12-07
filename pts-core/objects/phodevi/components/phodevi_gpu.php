@@ -1158,7 +1158,7 @@ class phodevi_gpu extends phodevi_device_interface
 			$info = str_replace('(TM)', null, implode(' + ', $windows_gpu));
 		}
 
-		if(empty($info) || strpos($info, 'Mesa ') !== false || strpos($info, 'Gallium ') !== false || strpos($info, ' (DRM') !== false)
+		if(empty($info) || strpos($info, 'Mesa ') !== false || strpos($info, 'Gallium ') !== false || strpos($info, 'DRM ') !== false)
 		{
 			if(($x = strpos($info, ' on ')) !== false)
 			{
