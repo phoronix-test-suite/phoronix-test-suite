@@ -344,7 +344,7 @@ class phodevi_system extends phodevi_device_interface
 		{
 			// TODO could use better detection to verify if C: or the desired disk under test... but most of the time will be NTFS anyways
 			$fs = trim(shell_exec('powershell "(Get-Volume)[1].FileSystemType"'));
-			if(empty($fs) || $fs == 'Unknown')
+			if(empty($fs) || $fs == 'Unknown' || $fs == 'FAT32')
 			{
 				$fs = trim(shell_exec('powershell "(Get-Volume)[0].FileSystemType"'));
 			}
