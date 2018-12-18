@@ -563,6 +563,11 @@ class pts_result_file
 			$this->add_result($result);
 		}
 	}
+	public function result_hash_exists(&$result_object)
+	{
+		$ch = $result_object->get_comparison_hash(true, false);
+		return isset($this->result_objects[$ch]) && isset($this->result_objects[$ch]->test_result_buffer);
+	}
 	public function add_result(&$result_object)
 	{
 		$ch = $result_object->get_comparison_hash(true, false);

@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+pts-core: No longer clear test profile identifiers on secondary saved results
+
 Phoronix Test Suite 8.4.1-Skiptvet
 9 December 2018
 

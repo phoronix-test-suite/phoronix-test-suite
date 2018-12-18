@@ -787,9 +787,14 @@ class pts_test_execution
 					{
 						if($generated_result_count >= 1)
 						{
-							// No reason to have more than one identifier
-							// TODO XXX may want to rethink this behavior, we'll see...
+							// Prior to PTS 8.6, secondary result graphs wouldn't have their test profile identifier set but would be null
+							// With PTS 8.6+, the identifier is now preserved... Except with below logic for preserving compatibility with older result files, only clear the identifier if comparing against an old result file having a match for no identifier set
+							$ti_backup = $test_result->test_profile->get_identifier();
 							$test_result->test_profile->set_identifier('');
+							if(!$test_run_manager->result_file->result_hash_exists($test_result))
+							{
+								$test_result->test_profile->set_identifier($ti_backup);
+							}
 						}
 
 						$test_result->test_result_buffer = new pts_test_result_buffer();
