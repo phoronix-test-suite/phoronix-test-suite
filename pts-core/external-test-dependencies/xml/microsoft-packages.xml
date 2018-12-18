@@ -18,17 +18,17 @@
 		</Package>
 		<Package>
 			<GenericName>java</GenericName>
-			<PackageName>https://github.com/ojdkbuild/ojdkbuild/releases/download/10.0.1-1/java-10-openjdk-10.0.1-1.b10.ojdkbuild.windows.x86_64.msi</PackageName>
+			<PackageName>https://github.com/ojdkbuild/ojdkbuild/releases/download/11.0.1-1/java-11-openjdk-11.0.1.13-1.ojdkbuild.windows.x86_64.msi</PackageName>
 			<FileCheck>C:\Program Files\ojdkbuild OR C:\Program Files\Java</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>golang</GenericName>
-			<PackageName>https://dl.google.com/go/go1.11.windows-amd64.msi</PackageName>
+			<PackageName>https://dl.google.com/go/go1.11.4.windows-amd64.msi</PackageName>
 			<FileCheck>C:\Go</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>perl</GenericName>
-			<PackageName>http://strawberryperl.com/download/5.28.0.1/strawberry-perl-5.28.0.1-64bit.msi</PackageName>
+			<PackageName>http://strawberryperl.com/download/5.28.1.1/strawberry-perl-5.28.1.1-64bit.msi</PackageName>
 			<FileCheck>C:\Strawberry\perl\bin</FileCheck>
 		</Package>
 		<Package>
@@ -38,12 +38,12 @@
 		</Package>
 		<Package>
 			<GenericName>python</GenericName>
-			<PackageName>https://www.python.org/ftp/python/3.7.0/python-3.7.0-amd64.exe https://www.python.org/ftp/python/2.7.15/python-2.7.15.amd64.msi python2</PackageName>
+			<PackageName>https://www.python.org/ftp/python/3.7.1/python-3.7.1-amd64.exe https://www.python.org/ftp/python/2.7.15/python-2.7.15.amd64.msi python2</PackageName>
 			<FileCheck>C:\Python27</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>git</GenericName>
-			<PackageName>https://github.com/git-for-windows/git/releases/download/v2.19.0.windows.1/Git-2.19.0-64-bit.exe</PackageName>
+			<PackageName>https://github.com/git-for-windows/git/releases/download/v2.20.1.windows.1/Git-2.20.1-64-bit.exe</PackageName>
 			<FileCheck>C:\Program Files\Git</FileCheck>
 		</Package>
 		<Package>
@@ -63,17 +63,17 @@
 		</Package>
 		<Package>
 			<GenericName>node-npm</GenericName>
-			<PackageName>https://nodejs.org/dist/v10.11.0/node-v10.11.0-x64.msi</PackageName>
+			<PackageName>https://nodejs.org/dist/latest-v11.x/node-v11.5.0-x64.msi</PackageName>
 			<FileCheck>C:\Program Files\nodejs</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>tesseract</GenericName>
-			<PackageName>https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v4.0.0-beta.4.20180912.exe</PackageName>
+			<PackageName>https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-v4.0.0.20181030.exe</PackageName>
 			<FileCheck>C:\Program Files (x86)\Tesseract-OCR</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>rust</GenericName>
-			<PackageName>https://static.rust-lang.org/dist/rust-1.29.1-x86_64-pc-windows-msvc.msi</PackageName>
+			<PackageName>https://static.rust-lang.org/dist/rust-beta-x86_64-pc-windows-msvc.msi</PackageName>
 			<FileCheck>rustc.exe</FileCheck>
 		</Package>
 		<Package>
