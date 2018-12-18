@@ -354,7 +354,7 @@
 			<GenericName>python</GenericName>
 			<Title>Python</Title>
 			<PossibleNames>python</PossibleNames>
-			<FileCheck>python</FileCheck>
+			<FileCheck>python OR python3 OR python2</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>python-boost-development</GenericName>
