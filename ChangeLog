@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 pts-core: No longer clear test profile identifiers on secondary saved results
+pts-core: Minor fixes
 phodevi: Update for Microsoft Windows Server 2019
 
 Phoronix Test Suite 8.4.1-Skiptvet
