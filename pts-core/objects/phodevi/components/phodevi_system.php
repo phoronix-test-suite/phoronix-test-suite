@@ -1344,7 +1344,10 @@ class phodevi_system extends phodevi_device_interface
 			//$version = substr($lx_output, strpos($lx_output, ' ') + 1);
 
 			$desktop_environment = 'LXQt';
-			//$desktop_version = $version;
+			if(pts_client::executable_in_path('lxqt-about'))
+			{
+				$desktop_version = pts_strings::last_in_string(trim(shell_exec('lxqt-about --version | grep liblxqt 2> /dev/null')));
+			}
 		}
 		else if(pts_client::is_process_running('lxsession') || $desktop_session == 'lxde')
 		{

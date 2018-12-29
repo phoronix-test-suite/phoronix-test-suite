@@ -660,7 +660,7 @@ class pts_validation
 			//	$value = $node->get_default_value();
 			//}
 			if(empty($value) && $value !== '0')
-			{s
+			{
 				continue;
 			}
 			//if($do_require && empty($value))
