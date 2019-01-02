@@ -105,10 +105,11 @@ class pts_user_io
 			}
 		}
 	}
-	public static function display_text_table(&$table, $prepend_to_lines = null, $extra_width_to_column = 0, $min_width = 0)
+	public static function display_text_table(&$table, $prepend_to_lines = null, $extra_width_to_column = 0, $min_width = 0, $border = false)
 	{
 		$column_widths = array();
-		$formatted_table = $prepend_to_lines;
+		$formatted_table = null;
+		$longest_line = 0;
 
 		for($r = 0; $r < count($table); $r++)
 		{
@@ -123,24 +124,34 @@ class pts_user_io
 
 		for($r = 0, $r_count = count($table); $r < $r_count; $r++)
 		{
+			$line = null;
 			for($c = 0, $rc_count = count($table[$r]); $c < $rc_count; $c++)
 			{
-				$formatted_table .= $table[$r][$c];
-
-				if(($c + 1) != $rc_count)
+				if($border)
 				{
-					$m = (max($min_width, 1 + $extra_width_to_column + $column_widths[$c]) - strlen($table[$r][$c]));
-					if($m > 0)
-					{
-						$formatted_table .= str_repeat(' ', $m);
-					}
+					$line .= '| ';
+				}
+
+				$line .= $table[$r][$c];
+
+				$m = (max($min_width, 1 + $extra_width_to_column + $column_widths[$c]) - strlen($table[$r][$c]));
+				if($m > 0)
+				{
+					$line .= str_repeat(' ', $m);
 				}
 			}
-
-			if(($r + 1) != $r_count)
+			$line = $prepend_to_lines . $line;
+			if($border)
 			{
-				$formatted_table .= PHP_EOL . $prepend_to_lines;
+				$line = $line . '|';
 			}
+			$longest_line = max($longest_line, strlen($line));
+			$formatted_table .= $line . PHP_EOL;
+		}
+
+		if($border)
+		{
+			$formatted_table = str_repeat('-', $longest_line) . PHP_EOL . $formatted_table . str_repeat('-', $longest_line) . PHP_EOL;
 		}
 
 		return $formatted_table;
