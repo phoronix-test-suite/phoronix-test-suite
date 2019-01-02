@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2018, Phoronix Media
-	Copyright (C) 2008 - 2018, Michael Larabel
+	Copyright (C) 2008 - 2019, Phoronix Media
+	Copyright (C) 2008 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -422,7 +422,7 @@ class pts_result_file
 	{
 		return isset($this->result_objects[$ch]) ? $this->result_objects[$ch] : false;
 	}
-	public function get_result_objects($select_indexes = -1, $read_only_objects = false)
+	public function get_result_objects($select_indexes = -1)
 	{
 		if($select_indexes != -1 && $select_indexes !== null)
 		{
@@ -548,7 +548,7 @@ class pts_result_file
 			$result->test_result_buffer->remove($remove);
 		}
 	}
-	public function add_to_result_file(&$result_file)
+	public function add_to_result_file(&$result_file, $only_merge_results_already_present = false)
 	{
 		foreach($result_file->get_systems() as $s)
 		{
@@ -560,7 +560,7 @@ class pts_result_file
 
 		foreach($result_file->get_result_objects() as $result)
 		{
-			$this->add_result($result);
+			$this->add_result($result, $only_merge_results_already_present);
 		}
 	}
 	public function result_hash_exists(&$result_object)
@@ -568,7 +568,7 @@ class pts_result_file
 		$ch = $result_object->get_comparison_hash(true, false);
 		return isset($this->result_objects[$ch]) && isset($this->result_objects[$ch]->test_result_buffer);
 	}
-	public function add_result(&$result_object)
+	public function add_result(&$result_object, $only_if_result_already_present = false)
 	{
 		$ch = $result_object->get_comparison_hash(true, false);
 		if(isset($this->result_objects[$ch]) && isset($this->result_objects[$ch]->test_result_buffer))
@@ -583,7 +583,7 @@ class pts_result_file
 				$this->result_objects[$ch]->test_result_buffer->add_buffer_item($bi);
 			}
 		}
-		else
+		else if($only_if_result_already_present == false)
 		{
 			$this->result_objects[$ch] = $result_object;
 		}

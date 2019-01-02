@@ -35,7 +35,6 @@ Phoronix Test Suite 8.0
 * SiFive RISC-V CPU detection, Cavium ThunderX, Spectre V4 reporting and other hardware/software reporting improvements in Phodevi
 * An integrated backup module for easily backing up and restoring of all PTS/Phoromatic data on a system
 
-
 Phoronix Test Suite 7.8
 ======
 #### Release Date: 14 February 2018 | Codename: Folldal
@@ -45,7 +44,6 @@ Phoronix Test Suite 7.8
 * Reworked Phodevi property handler and other Phodevi improvements
 * Restored support for vertical bar graphs in pts_Graph
 * Spectre and Meltdown CPU vulnerability reporting
-
 
 Phoronix Test Suite 7.6
 ======

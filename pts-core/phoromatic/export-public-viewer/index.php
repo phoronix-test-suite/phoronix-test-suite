@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2013 - 2016, Phoronix Media
-	Copyright (C) 2013 - 2016, Michael Larabel
+	Copyright (C) 2013 - 2019, Phoronix Media
+	Copyright (C) 2013 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -451,7 +451,7 @@ if(isset($_REQUEST['result_overview_table']) || $result_file->get_test_count() <
 }
 
 echo '<div id="pts_results_area">';
-foreach($result_file->get_result_objects((isset($_REQUEST['show_only_changed_results']) ? 'ONLY_CHANGED_RESULTS' : -1), true) as $i => $result_object)
+foreach($result_file->get_result_objects((isset($_REQUEST['show_only_changed_results']) ? 'ONLY_CHANGED_RESULTS' : -1)) as $i => $result_object)
 {
 	if(stripos($result_object->get_arguments_description(), 'frame time') !== false)
 		continue;

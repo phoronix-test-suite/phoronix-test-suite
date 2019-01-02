@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2018, Phoronix Media
-	Copyright (C) 2008 - 2018, Michael Larabel
+	Copyright (C) 2008 - 2019, Phoronix Media
+	Copyright (C) 2008 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -106,6 +106,18 @@ class pts_test_result
 	public function get_arguments_description()
 	{
 		return $this->used_arguments_description;
+	}
+	public function get_arguments_description_shortened()
+	{
+		$shortened = explode(' - ', $this->used_arguments_description);
+		foreach($shortened as &$part)
+		{
+			if(($x = strpos($part, ': ')) !== false)
+			{
+				$part = substr($part, $x + 2);
+			}
+		}
+		return implode(' - ', $shortened);
 	}
 	public function get_comparison_hash($show_version_and_attributes = true, $raw_output = true)
 	{
