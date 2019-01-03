@@ -146,16 +146,12 @@ class pts_user_io
 				$line = $line . '|';
 			}
 			$longest_line = max($longest_line, strlen($line));
-			$formatted_table .= PHP_EOL . $line;
+			$formatted_table .= ($r == 0 ? '' : PHP_EOL) . $line;
 		}
 
 		if($border)
 		{
 			$formatted_table = str_repeat('-', $longest_line) . PHP_EOL . $formatted_table . PHP_EOL . str_repeat('-', $longest_line) . PHP_EOL;
-		}
-		else
-		{
-			$formatted_table = trim($formatted_table);
 		}
 
 		return $formatted_table;
