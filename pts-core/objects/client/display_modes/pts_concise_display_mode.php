@@ -364,7 +364,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	public function test_run_instance_header(&$test_result)
 	{
 		$this->trial_run_count_current++;
-		echo $this->tab . $this->tab . 'Started Run ' . $this->trial_run_count_current . ' @ ' . date('H:i:s') . PHP_EOL;
+		echo PHP_EOL . $this->tab . $this->tab . 'Started Run ' . $this->trial_run_count_current . ' @ ' . date('H:i:s');
 
 		if($this->expected_trial_run_count > 1 && $this->trial_run_count_current > $this->expected_trial_run_count)
 		{
