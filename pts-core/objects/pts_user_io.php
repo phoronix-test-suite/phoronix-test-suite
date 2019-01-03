@@ -153,6 +153,10 @@ class pts_user_io
 		{
 			$formatted_table = str_repeat('-', $longest_line) . PHP_EOL . $formatted_table . PHP_EOL . str_repeat('-', $longest_line) . PHP_EOL;
 		}
+		else
+		{
+			$formatted_table = trim($formatted_table);
+		}
 
 		return $formatted_table;
 	}
