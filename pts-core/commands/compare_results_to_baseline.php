@@ -65,7 +65,9 @@ class compare_results_to_baseline implements pts_option_interface
 			$ro->normalize_buffer_values('Baseline');
 			$result = $ro->test_result_buffer->get_value_from_identifier('Result');
 			if(empty($result))
+			{
 				continue;
+			}
 			$table[] = array($ro->test_profile->get_identifier(false), $ro->get_arguments_description_shortened(), round($result, 3));
 		}
 		echo PHP_EOL . pts_user_io::display_text_table($table, null, 0, 0, true) . PHP_EOL;
