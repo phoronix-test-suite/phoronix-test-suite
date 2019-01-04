@@ -87,6 +87,13 @@ class pts_test_result_buffer_item
 	{
 		$a = $a->get_result_value();
 		$b = $b->get_result_value();
+		if(strpos($a, ',') != false && strpos($b, ',') != false)
+		{
+			$a = explode(',', $a);
+			$b = explode(',', $b);
+			$a = array_sum($a) / count($a);
+			$b = array_sum($b) / count($b);
+		}
 
 		if($a == $b)
 		{

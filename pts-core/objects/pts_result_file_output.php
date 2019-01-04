@@ -160,7 +160,6 @@ class pts_result_file_output
 	public static function test_result_to_text(&$result_object, $terminal_width = 80, $stylize_output = false, $highlight_result = null)
 	{
 		$result_output = null;
-
 		if($result_object->test_profile->get_result_scale() != null)
 		{
 			$scale_line = '    ' . $result_object->test_profile->get_result_scale();
@@ -177,7 +176,7 @@ class pts_result_file_output
 		}
 
 		$identifiers = $result_object->test_result_buffer->get_identifiers();
-		$longest_identifier_length = strlen(pts_strings::find_longest_string($identifiers)) + 2;
+		$longest_identifier_length = strlen(pts_strings::find_longest_string($identifiers)) + 1;
 
 		$result_object->test_result_buffer->adjust_precision();
 		foreach($result_object->test_result_buffer as &$buffers)
@@ -196,7 +195,13 @@ class pts_result_file_output
 					$longest_result = strlen($v);
 				}
 
-				if($v > $max_value)
+				if(stripos($v, ',') !== false)
+				{
+					$v = explode(',', $v);
+					$max_value = max($max_value, max($v) * 1.03);
+					$min_value = min($min_value, min($v));
+				}
+				else if($v > $max_value)
 				{
 					$max_value = $v;
 				}
@@ -207,17 +212,17 @@ class pts_result_file_output
 			}
 
 			// First run through the items to see if it makes sense applying colors (e.g. multiple matches)
-			$do_color = 0;
+			$buffer_count = 0;
 			foreach($buffers as &$buffer_item)
 			{
 				$brand_color = pts_render::identifier_to_brand_color($buffer_item->get_result_identifier(), null);
 				if($brand_color != null)
 				{
 					// Quite simple handling, could do better
-					$do_color++;
+					$buffer_count++;
 				}
 			}
-			$do_color = $do_color > 1 ? true : false;
+			$do_color = $buffer_count > 1 ? true : false;
 
 			$longest_result++;
 			foreach($buffers as &$buffer_item)
@@ -233,11 +238,52 @@ class pts_result_file_output
 				if(stripos($val, ',') !== false)
 				{
 					// LINE GRAPH
-					$vals = explode(',', $val);
-					$val = 'MIN: ' . pts_math::set_precision(min($vals), 1) . '  AVG: ' . pts_math::set_precision(array_sum($vals) / count($vals), 1) . '  MAX: ' . pts_math::set_precision(max($vals), 1);
-					$result_line .= $val;
-					if($terminal_width > (strlen($result_line) * 3))
+					$values = explode(',', $val);
+					$precision = ($max_value > 100 || ($min_value > 29 && $max_value > 79) ? 0 : 1);
+					$result_line .= 'MIN: ' . pts_math::set_precision(min($values), $precision) . '  AVG: ' . pts_math::set_precision(array_sum($values) / count($values), $precision) . '  MAX: ' . pts_math::set_precision(max($values), $precision) . ' ';
+
+					if($terminal_width > (strlen($result_line) * 3) && $buffer_count > 1)
 					{
+						$box_plot = str_repeat(' ', ($terminal_width - strlen($result_line)));
+						$box_plot_size = strlen($box_plot);
+						$box_plot = str_split($box_plot);
+
+						// BOX PLOT
+						$whisker_bottom = pts_math::find_percentile($values, 0.02);
+						$whisker_top = pts_math::find_percentile($values, 0.98);
+						$unique_values = array_unique($values);
+						foreach($unique_values as &$val)
+						{
+							if(($val < $whisker_bottom || $val > $whisker_top) && $val > 0.1)
+							{
+								$x = floor($val / $max_value * $box_plot_size);
+								if(isset($box_plot[$x]))
+									$box_plot[$x] = '.';
+							}
+						}
+						$whisker_start_char = round($whisker_bottom / $max_value * $box_plot_size);
+						$whisker_end_char = round($whisker_top / $max_value * $box_plot_size);
+
+						for($i = $whisker_start_char; $i <= $whisker_end_char && $i < ($box_plot_size - 1); $i++)
+						{
+							$box_plot[$i] = '-';
+						}
+						$box_plot[$whisker_start_char] = '|';
+						$box_plot[$whisker_end_char] = '|';
+
+						$box_left = round((pts_math::find_percentile($values, 0.25) / $max_value) * $box_plot_size);
+						$box_middle = round((pts_math::find_percentile($values, 0.5) / $max_value) * $box_plot_size);
+						$box_right = round((pts_math::find_percentile($values, 0.75) / $max_value) * $box_plot_size);
+						for($i = $box_left; $i <= $box_right; $i++)
+						{
+							$box_plot[$i] = '#';
+						}
+						$box_plot[$box_middle] = 'X';
+
+						// END OF BOX PLOT
+						$box_plot[0] = '|';
+						$box_plot[($box_plot_size - 1)] = '|';
+						$result_line .= substr(implode('', $box_plot), 0, $box_plot_size);
 					}
 				}
 				else if(is_numeric($val))
