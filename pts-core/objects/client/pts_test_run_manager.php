@@ -1020,6 +1020,16 @@ class pts_test_run_manager
 			pts_module_manager::module_process('__event_results_saved', $this);
 			//echo PHP_EOL . 'Results Saved To: ; . PTS_SAVE_RESULTS_PATH . $this->get_file_name() . ;/composite.xml' . PHP_EOL;
 
+			if($this->result_file->get_test_count() > 4)
+			{
+				if($this->result_file->get_system_count() > 2)
+				{
+					// Display winners and losers
+					echo pts_result_file_analyzer::display_results_wins_losses($this->result_file, $this->get_results_identifier());
+				}
+
+			}
+
 			if(!$this->auto_mode)
 			{
 				if($this->batch_mode)

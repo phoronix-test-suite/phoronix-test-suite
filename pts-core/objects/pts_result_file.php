@@ -206,8 +206,7 @@ class pts_result_file
 	}
 	public function get_system_count()
 	{
-		// XXX this is deprecated
-		return count($this->get_systems());
+		return count($this->systems);
 	}
 	public function set_title($new_title)
 	{

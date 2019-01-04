@@ -117,7 +117,12 @@ class pts_user_io
 			{
 				if(!isset($column_widths[$c]) || isset($table[$r][$c][$column_widths[$c]]))
 				{
-					$column_widths[$c] = strlen($table[$r][$c]);
+					$str = $table[$r][$c];
+					if(function_exists('preg_replace'))
+					{
+						$str = preg_replace('#\\x1b[[][^A-Za-z]*[A-Za-z]#', '', $str);
+					}
+					echo ' ' . $column_widths[$c] = strlen($str);
 				}
 			}
 		}
@@ -133,8 +138,12 @@ class pts_user_io
 				}
 
 				$line .= $table[$r][$c];
-
-				$m = (max($min_width, 1 + $extra_width_to_column + $column_widths[$c]) - strlen($table[$r][$c]));
+					$str = $table[$r][$c];
+					if(function_exists('preg_replace'))
+					{
+						$str = preg_replace('#\\x1b[[][^A-Za-z]*[A-Za-z]#', '', $str);
+					}
+				$m = (max($min_width, 1 + $extra_width_to_column + $column_widths[$c]) - strlen($str));
 				if($m > 0)
 				{
 					$line .= str_repeat(' ', $m);
