@@ -22,7 +22,7 @@
 
 class pts_result_file_analyzer
 {
-	public static function display_results_wins_losses(&$result_file, $highlight_result_identifier = null)
+	public static function display_results_wins_losses(&$result_file, $highlight_result_identifier = null, $prepend_lines = '   ')
 	{
 		$output = null;
 		$result_file_identifiers_count = $result_file->get_system_count();
@@ -63,9 +63,9 @@ class pts_result_file_analyzer
 		arsort($wins);
 		arsort($losses);
 
-		$output .= pts_client::cli_colored_text('TOTAL RESULT COUNT: ', 'cyan', true) . $result_file->get_test_count() . PHP_EOL;
-		$output .= pts_client::cli_colored_text('TESTS COUNTED: ', 'cyan', true) . $tests_counted . PHP_EOL . PHP_EOL;
-		$output .= pts_client::cli_colored_text('WINS:', 'green', true) . PHP_EOL;
+		$output .= $prepend_lines . pts_client::cli_colored_text('TOTAL RESULT COUNT: ', 'cyan', true) . $result_file->get_test_count() . PHP_EOL;
+		$output .= $prepend_lines . pts_client::cli_colored_text('TESTS COUNTED: ', 'cyan', true) . $tests_counted . PHP_EOL . PHP_EOL;
+		$output .= $prepend_lines . pts_client::cli_colored_text('WINS:', 'green', true) . PHP_EOL;
 		$table = array();
 		$highlight_row = -1;
 		foreach($wins as $identifier => $count)
@@ -77,8 +77,8 @@ class pts_result_file_analyzer
 				$highlight_row = count($table) - 1;
 			}
 		}
-		$output .= pts_user_io::display_text_table($table, null, 0, 0, false, $highlight_row) . PHP_EOL;
-		$output .= PHP_EOL .  pts_client::cli_colored_text('LOSSES: ', 'red', true) . PHP_EOL;
+		$output .= pts_user_io::display_text_table($table, $prepend_lines, 0, 0, false, $highlight_row) . PHP_EOL;
+		$output .= PHP_EOL . $prepend_lines . pts_client::cli_colored_text('LOSSES: ', 'red', true) . PHP_EOL;
 		$table = array();
 		$highlight_row = -1;
 		foreach($losses as $identifier => $count)
@@ -90,7 +90,7 @@ class pts_result_file_analyzer
 				$highlight_row = count($table) - 1;
 			}
 		}
-		$output .= pts_user_io::display_text_table($table, '   ', 0, 0, false, $highlight_row) . PHP_EOL;
+		$output .= pts_user_io::display_text_table($table, $prepend_lines, 0, 0, false, $highlight_row) . PHP_EOL;
 		return $output;
 	}
 	public static function display_results_baseline_two_way_compare(&$result_file, $drop_flat_results = false, $border_table = false, $rich_text = false)
