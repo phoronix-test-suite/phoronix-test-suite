@@ -263,7 +263,7 @@ function pts_version_codenames()
 }
 
 pts_define('PTS_VERSION', '8.6.0m0');
-pts_define('PTS_CORE_VERSION', 8500);
+pts_define('PTS_CORE_VERSION', 8502);
 pts_define('PTS_RELEASE_DATE', '20181209');
 pts_define('PTS_CODENAME', 'Spydeberg');
 

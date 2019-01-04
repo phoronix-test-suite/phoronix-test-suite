@@ -244,6 +244,39 @@ class pts_openbenchmarking_client
 
 		return $available_tests;
 	}
+	public static function recently_added_tests($limit = -1)
+	{
+		$available_tests = array();
+
+		foreach(pts_openbenchmarking::linked_repositories() as $repo)
+		{
+			$repo_index = pts_openbenchmarking::read_repository_index($repo);
+
+			if(isset($repo_index['tests']) && is_array($repo_index['tests']))
+			{
+				foreach(array_keys($repo_index['tests']) as $identifier)
+				{
+					if($repo_index['tests'][$identifier]['title'] == null)
+					{
+						continue;
+					}
+
+					$version = array_shift($repo_index['tests'][$identifier]['versions']);
+					$add_time = $repo_index['tests'][$identifier]['first_added'];
+					$available_tests[$add_time] = $repo . '/' . $identifier . '-' . $version;
+				}
+			}
+		}
+
+		krsort($available_tests);
+
+		if($limit > 0)
+		{
+			$available_tests = array_slice($available_tests, 0, $limit, true);
+		}
+
+		return $available_tests;
+	}
 	public static function popular_tests($limit = -1, $test_type = null)
 	{
 		$available_tests = array();

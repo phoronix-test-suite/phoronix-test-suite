@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011 - 2018, Phoronix Media
-	Copyright (C) 2011 - 2018, Michael Larabel
+	Copyright (C) 2011 - 2019, Phoronix Media
+	Copyright (C) 2011 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -25,6 +25,10 @@ class openbenchmarking_changes implements pts_option_interface
 	const doc_section = 'OpenBenchmarking.org';
 	const doc_description = 'This option will list recent changes to test profiles of enabled OpenBenchmarking.org repositories.';
 
+	public static function command_aliases()
+	{
+		return array('recently_updated_tests');
+	}
 	public static function run($r)
 	{
 		pts_client::$display->generic_heading('Recently Updated OpenBenchmarking.org Tests');
