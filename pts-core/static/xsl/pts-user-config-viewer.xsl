@@ -61,6 +61,10 @@
 			<p>This option sets the directory where test results will be saved by the Phoronix Test Suite. The full path to the directory on the local file-system should be specified, though <em>~</em> is a valid character for denoting the user's home directory. The default value is <em>~/.phoronix-test-suite/test-results/</em>.</p>
 			<h3>AlwaysUploadResultsToOpenBenchmarking: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Testing/AlwaysUploadResultsToOpenBenchmarking" /></span></h3>
 			<p>This option defines whether test results should always be uploaded to OpenBenchmarking.org upon their completion. If this value is set to <em>FALSE</em>, the user will be prompted each time whether the results should be uploaded to OpenBenchmarking.org, unless running in batch mode where the value is pre-defined. The default value is <em>FALSE</em>.</p>
+			<h3>AutoSortRunQueue: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Testing/AutoSortRunQueue" /></span></h3>
+			<p>This option defines whether the Phoronix Test Suite should sort the queue of tests to run based upon their title and category of tests. If <em>FALSE</em>, the run queue won't be sorted and they will be run in the order they were added.</p>
+			<h3>ShowPostRunStatistics: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Testing/ShowPostRunStatistics" /></span></h3>
+			<p>If <em>TRUE</em>, the Phoronix Test Suite will show various test run statistics / comparison data based upon the test results / result file being tested after the testing has finished.</p>
 
 			<h1>TestResultValidation Options</h1>
 			<h3>DynamicRunCount: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/TestResultValidation/DynamicRunCount" /></span></h3>
@@ -113,7 +117,7 @@
 			<h3>PhoromaticStorage: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Server/PhoromaticStorage" /></span></h3>
 			<p>The location for the Phoromatic Server to store test results of connected systems, account information, etc. The default location is <em>~/.phoronix-test-suite/phoromatic/</em>.</p>
 		</div>
-		<div style="text-align: center; font-size: 12px;">Copyright &#xA9; 2008 - 2014 by <a href="http://www.phoronix-media.com/" style="text-decoration: none; color: #000;">Phoronix Media</a>.</div>
+		<div style="text-align: center; font-size: 12px;">Copyright &#xA9; 2008 - 2019 by <a href="http://www.phoronix-media.com/" style="text-decoration: none; color: #000;">Phoronix Media</a>.</div>
 	</body>
 </html>
 </xsl:template>

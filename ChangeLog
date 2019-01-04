@@ -6,6 +6,8 @@ pts-core: No longer clear test profile identifiers on secondary saved results
 pts-core: Add compare-results-to-baseline sub-command for comparing one result file (baseline) against a set of results for text look at relative perf
 pts-core: Minor fixes
 pts-core: Show wins and losses summary after testing on large result files
+pts-core: On two-way result files, after test completion show comparison of current result against previous result (baseline)
+pts-core: Add ShowPostRunStatistics user configuration XML option to toggle whether various test statistics are printed at the end of testing
 phodevi: LXQt desktop version reporting
 phodevi: Update for Microsoft Windows Server 2019
 

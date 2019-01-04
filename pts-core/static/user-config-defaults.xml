@@ -33,6 +33,7 @@
 			<ResultsDirectory>~/.phoronix-test-suite/test-results/</ResultsDirectory>
 			<AlwaysUploadResultsToOpenBenchmarking>FALSE</AlwaysUploadResultsToOpenBenchmarking>
 			<AutoSortRunQueue>TRUE</AutoSortRunQueue>
+			<ShowPostRunStatistics>TRUE</ShowPostRunStatistics>
 		</Testing>
 		<TestResultValidation>
 			<DynamicRunCount>TRUE</DynamicRunCount>

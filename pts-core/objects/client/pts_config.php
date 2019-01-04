@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2018, Phoronix Media
-	Copyright (C) 2008 - 2018, Michael Larabel
+	Copyright (C) 2008 - 2019, Phoronix Media
+	Copyright (C) 2008 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -118,6 +118,7 @@ class pts_config
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Testing/ResultsDirectory', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Testing/AlwaysUploadResultsToOpenBenchmarking', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Testing/AutoSortRunQueue', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Testing/ShowPostRunStatistics', $read_config);
 
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/TestResultValidation/DynamicRunCount', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/TestResultValidation/LimitDynamicToTestLength', $read_config);
