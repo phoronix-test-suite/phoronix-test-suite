@@ -58,19 +58,7 @@ class compare_results_to_baseline implements pts_option_interface
 		$result->rename_run(null, 'Result');
 
 		$baseline->add_to_result_file($result, true);
-		$table = array(array('Test', 'Configuration', 'Relative'));
-
-		foreach($baseline->get_result_objects() as $ro)
-		{
-			$ro->normalize_buffer_values('Baseline');
-			$result = $ro->test_result_buffer->get_value_from_identifier('Result');
-			if(empty($result))
-			{
-				continue;
-			}
-			$table[] = array($ro->test_profile->get_identifier(false), $ro->get_arguments_description_shortened(), round($result, 3));
-		}
-		echo PHP_EOL . pts_user_io::display_text_table($table, null, 0, 0, true) . PHP_EOL;
+		echo pts_result_file_analyzer::display_results_baseline_two_way_compare($baseline, false, true);
 	}
 }
 

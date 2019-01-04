@@ -1022,6 +1022,10 @@ class pts_test_run_manager
 
 			if($this->result_file->get_test_count() > 4)
 			{
+				if($this->result_file->get_system_count() == 2)
+				{
+					echo pts_result_file_analyzer::display_results_baseline_two_way_compare($this->result_file, true, false, true);
+				}
 				if($this->result_file->get_system_count() > 2)
 				{
 					// Display winners and losers

@@ -105,7 +105,7 @@ class pts_user_io
 			}
 		}
 	}
-	public static function display_text_table(&$table, $prepend_to_lines = null, $extra_width_to_column = 0, $min_width = 0, $border = false, $bold_row = -1)
+	public static function display_text_table(&$table, $prepend_to_lines = null, $extra_width_to_column = 0, $min_width = 0, $border = false, $bold_row = -1, $color_rows = false)
 	{
 		$column_widths = array();
 		$formatted_table = null;
@@ -146,7 +146,11 @@ class pts_user_io
 				$line = $line . '|';
 			}
 			$longest_line = max($longest_line, strlen($line));
-			if($r == $bold_row)
+			if($color_rows && isset($color_rows[$r]))
+			{
+				$line = pts_client::cli_colored_text($line, $color_rows[$r], ($r == $bold_row));
+			}
+			else if($r == $bold_row)
 			{
 				$line = pts_client::cli_just_bold($line);
 			}

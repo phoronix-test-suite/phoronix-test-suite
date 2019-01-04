@@ -116,6 +116,10 @@ class pts_test_result
 			{
 				$part = substr($part, $x + 2);
 			}
+			if(isset($part[18]) && strpos($part, ' ') != false && function_exists('preg_replace'))
+			{
+				$part = preg_replace('/\b(\w)|./', '$1', $part);
+			}
 		}
 		return implode(' - ', $shortened);
 	}

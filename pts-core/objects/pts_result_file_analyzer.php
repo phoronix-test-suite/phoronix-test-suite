@@ -93,6 +93,47 @@ class pts_result_file_analyzer
 		$output .= pts_user_io::display_text_table($table, null, 0, 0, false, $highlight_row) . PHP_EOL;
 		return $output;
 	}
+	public static function display_results_baseline_two_way_compare(&$result_file, $drop_flat_results = false, $border_table = false, $rich_text = false)
+	{
+		$table = array(array('Test', 'Configuration', 'Relative'));
+		$color_rows = array();
+
+		foreach($result_file->get_result_objects() as $ro)
+		{
+			if($drop_flat_results)
+			{
+				$ro->remove_unchanged_results(0.3);
+			}
+
+			$buffer_identifiers = $ro->test_result_buffer->get_identifiers();
+			if(count($buffer_identifiers) != 2)
+			{
+				continue;
+			}
+
+			$ro->normalize_buffer_values(pts_arrays::first_element($buffer_identifiers));
+			$result = $ro->test_result_buffer->get_value_from_identifier(pts_arrays::last_element($buffer_identifiers));
+			if(empty($result))
+			{
+				continue;
+			}
+			$result = round($result, 3);
+			if($drop_flat_results && $result == 1)
+			{
+				continue;
+			}
+			if($rich_text && ($result < 0.97 || $result > 1.03))
+			{
+				$color_rows[count($table)] = $result < 1 ? 'red' : 'green';
+			}
+			$table[] = array($ro->test_profile->get_identifier_base_name(), $ro->get_arguments_description_shortened(), $result);
+		}
+		if($rich_text)
+		{
+			$bold_row = 0;
+		}
+		return count($table) < 2 ? null : PHP_EOL . pts_user_io::display_text_table($table, null, 0, 0, $border_table, $bold_row, $color_rows);
+	}
 	public static function analyze_result_file_intent(&$result_file, &$flagged_results = -1, $return_all_changed_indexes = false)
 	{
 		$identifiers = array();
