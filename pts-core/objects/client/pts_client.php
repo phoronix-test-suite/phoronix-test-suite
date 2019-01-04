@@ -954,7 +954,7 @@ class pts_client
 			if($prompt_in_method == false || $usage_reporting == -1)
 			{
 				pts_client::$display->generic_heading('User Agreement');
-				echo wordwrap($user_agreement, 65);
+				echo wordwrap($user_agreement, (pts_client::terminal_width() - 2));
 				$agree = pts_user_io::prompt_bool_input('Do you agree to these terms and wish to proceed', -1);
 
 				$usage_reporting = $agree ? pts_user_io::prompt_bool_input('Enable anonymous usage / statistics reporting', -1) : -1;
