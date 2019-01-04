@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2018, Phoronix Media
-	Copyright (C) 2010 - 2018, Michael Larabel
+	Copyright (C) 2010 - 2019, Phoronix Media
+	Copyright (C) 2010 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,6 +22,63 @@
 
 class pts_result_file_analyzer
 {
+	public static function display_results_wins_losses(&$result_file)
+	{
+		$result_file_identifiers_count = count($result_file->get_system_identifiers());
+		$wins = array();
+		$losses = array();
+		$tests_counted = 0;
+
+		foreach($result_file->get_result_objects() as $result)
+		{
+			if($result->test_result_buffer->get_count() != $result_file_identifiers_count)
+			{
+				continue;
+			}
+
+			$tests_counted++;
+			$winner = $result->get_result_first();
+			$loser = $result->get_result_last();
+
+			if(!isset($wins[$winner]))
+			{
+				$wins[$winner] = 1;
+			}
+			else
+			{
+				$wins[$winner]++;
+			}
+
+			if(!isset($losses[$loser]))
+			{
+				$losses[$loser] = 1;
+			}
+			else
+			{
+				$losses[$loser]++;
+			}
+		}
+
+		arsort($wins);
+		arsort($losses);
+
+		echo  pts_client::cli_colored_text('TOTAL RESULT COUNT: ', 'cyan', true) . $result_file->get_test_count() . PHP_EOL;
+		echo  pts_client::cli_colored_text('TESTS COUNTED: ', 'cyan', true) . $tests_counted . PHP_EOL . PHP_EOL;
+		echo  pts_client::cli_colored_text('WINS:', 'green', true) . PHP_EOL;
+		$table = array();
+		foreach($wins as $identifier => $count)
+		{
+			$table[] = array($identifier . ': ', $count, ' [' . pts_math::set_precision($count / $tests_counted * 100, 1) . '%]');
+		}
+		echo pts_user_io::display_text_table($table) . PHP_EOL;
+		echo PHP_EOL .  pts_client::cli_colored_text('LOSSES: ', 'red', true) . PHP_EOL;
+		$table = array();
+		foreach($losses as $identifier => $count)
+		{
+			$table[] = array($identifier . ': ', $count, ' [' . pts_math::set_precision($count / $tests_counted * 100, 1) . '%]');
+		}
+		echo pts_user_io::display_text_table($table) . PHP_EOL;
+	}
 	public static function analyze_result_file_intent(&$result_file, &$flagged_results = -1, $return_all_changed_indexes = false)
 	{
 		$identifiers = array();
