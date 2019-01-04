@@ -105,7 +105,7 @@ class pts_user_io
 			}
 		}
 	}
-	public static function display_text_table(&$table, $prepend_to_lines = null, $extra_width_to_column = 0, $min_width = 0, $border = false)
+	public static function display_text_table(&$table, $prepend_to_lines = null, $extra_width_to_column = 0, $min_width = 0, $border = false, $bold_row = -1)
 	{
 		$column_widths = array();
 		$formatted_table = null;
@@ -117,12 +117,7 @@ class pts_user_io
 			{
 				if(!isset($column_widths[$c]) || isset($table[$r][$c][$column_widths[$c]]))
 				{
-					$str = $table[$r][$c];
-					if(function_exists('preg_replace'))
-					{
-						$str = preg_replace('#\\x1b[[][^A-Za-z]*[A-Za-z]#', '', $str);
-					}
-					echo ' ' . $column_widths[$c] = strlen($str);
+					$column_widths[$c] = strlen($table[$r][$c]);
 				}
 			}
 		}
@@ -138,12 +133,8 @@ class pts_user_io
 				}
 
 				$line .= $table[$r][$c];
-					$str = $table[$r][$c];
-					if(function_exists('preg_replace'))
-					{
-						$str = preg_replace('#\\x1b[[][^A-Za-z]*[A-Za-z]#', '', $str);
-					}
-				$m = (max($min_width, 1 + $extra_width_to_column + $column_widths[$c]) - strlen($str));
+
+				$m = (max($min_width, 1 + $extra_width_to_column + $column_widths[$c]) - strlen($table[$r][$c]));
 				if($m > 0)
 				{
 					$line .= str_repeat(' ', $m);
@@ -155,6 +146,10 @@ class pts_user_io
 				$line = $line . '|';
 			}
 			$longest_line = max($longest_line, strlen($line));
+			if($r == $bold_row)
+			{
+				$line = pts_client::cli_just_bold($line);
+			}
 			$formatted_table .= ($r == 0 ? '' : PHP_EOL) . $line;
 		}
 

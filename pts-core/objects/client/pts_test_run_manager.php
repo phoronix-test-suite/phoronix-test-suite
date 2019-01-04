@@ -1027,7 +1027,6 @@ class pts_test_run_manager
 					// Display winners and losers
 					echo pts_result_file_analyzer::display_results_wins_losses($this->result_file, $this->get_results_identifier());
 				}
-
 			}
 
 			if(!$this->auto_mode)

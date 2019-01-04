@@ -22,7 +22,7 @@
 
 class pts_result_file_analyzer
 {
-	public static function display_results_wins_losses(&$result_file, $highlight_result_identifier = 'FreeBSD1 12.0')
+	public static function display_results_wins_losses(&$result_file, $highlight_result_identifier = null)
 	{
 		$output = null;
 		$result_file_identifiers_count = $result_file->get_system_count();
@@ -67,30 +67,30 @@ class pts_result_file_analyzer
 		$output .= pts_client::cli_colored_text('TESTS COUNTED: ', 'cyan', true) . $tests_counted . PHP_EOL . PHP_EOL;
 		$output .= pts_client::cli_colored_text('WINS:', 'green', true) . PHP_EOL;
 		$table = array();
+		$highlight_row = -1;
 		foreach($wins as $identifier => $count)
 		{
-			$add = array($identifier . ': ', $count, ' [' . pts_math::set_precision($count / $tests_counted * 100, 1) . '%]');
+			$table[] = array($identifier . ': ', $count, ' [' . pts_math::set_precision($count / $tests_counted * 100, 1) . '%]');
+
 			if($highlight_result_identifier && $highlight_result_identifier == $identifier)
 			{
-				$add[0] = pts_client::cli_just_bold($add[0]);
-				$add[1] = pts_client::cli_just_bold($add[1]);
+				$highlight_row = count($table) - 1;
 			}
-			$table[] = $add;
 		}
-		$output .= pts_user_io::display_text_table($table) . PHP_EOL;
+		$output .= pts_user_io::display_text_table($table, null, 0, 0, false, $highlight_row) . PHP_EOL;
 		$output .= PHP_EOL .  pts_client::cli_colored_text('LOSSES: ', 'red', true) . PHP_EOL;
 		$table = array();
+		$highlight_row = -1;
 		foreach($losses as $identifier => $count)
 		{
-			$add = array($identifier . ': ', $count, ' [' . pts_math::set_precision($count / $tests_counted * 100, 1) . '%]');
+			$table[] = array($identifier . ': ', $count, ' [' . pts_math::set_precision($count / $tests_counted * 100, 1) . '%]');
+
 			if($highlight_result_identifier && $highlight_result_identifier == $identifier)
 			{
-				$add[0] = pts_client::cli_just_bold($add[0]);
-				$add[1] = pts_client::cli_just_bold($add[1]);
+				$highlight_row = count($table) - 1;
 			}
-			$table[] = $add;
 		}
-		$output .= pts_user_io::display_text_table($table) . PHP_EOL;
+		$output .= pts_user_io::display_text_table($table, null, 0, 0, false, $highlight_row) . PHP_EOL;
 		return $output;
 	}
 	public static function analyze_result_file_intent(&$result_file, &$flagged_results = -1, $return_all_changed_indexes = false)
