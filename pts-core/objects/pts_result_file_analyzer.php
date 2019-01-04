@@ -90,7 +90,7 @@ class pts_result_file_analyzer
 				$highlight_row = count($table) - 1;
 			}
 		}
-		$output .= pts_user_io::display_text_table($table, null, 0, 0, false, $highlight_row) . PHP_EOL;
+		$output .= pts_user_io::display_text_table($table, '   ', 0, 0, false, $highlight_row) . PHP_EOL;
 		return $output;
 	}
 	public static function display_results_baseline_two_way_compare(&$result_file, $drop_flat_results = false, $border_table = false, $rich_text = false)

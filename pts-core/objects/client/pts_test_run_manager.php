@@ -1029,7 +1029,7 @@ class pts_test_run_manager
 				if($this->result_file->get_system_count() > 2)
 				{
 					// Display winners and losers
-					echo pts_result_file_analyzer::display_results_wins_losses($this->result_file, $this->get_results_identifier());
+					echo pts_result_file_analyzer::display_results_wins_losses($this->result_file, $this->get_results_identifier()) . PHP_EOL;
 				}
 			}
 
