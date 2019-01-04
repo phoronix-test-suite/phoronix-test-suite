@@ -125,7 +125,7 @@ class pts_result_file_output
 
 		return $csv_output;
 	}
-	public static function result_file_to_text(&$result_file, $terminal_width = 80)
+	public static function result_file_to_text(&$result_file, $terminal_width = 80, $stylize_output = false)
 	{
 		$result_output = null;
 
@@ -151,7 +151,7 @@ class pts_result_file_output
 		foreach($result_file->get_result_objects() as $result_object)
 		{
 			$result_output .= trim($result_object->test_profile->get_title() . ' ' . $result_object->test_profile->get_app_version() . PHP_EOL . $result_object->get_arguments_description());
-			$result_output .= self::test_result_to_text($result_object, $terminal_width);
+			$result_output .= self::test_result_to_text($result_object, $terminal_width, $stylize_output);
 			$result_output .= PHP_EOL . PHP_EOL;
 		}
 
@@ -223,23 +223,24 @@ class pts_result_file_output
 			foreach($buffers as &$buffer_item)
 			{
 				$val = $buffer_item->get_result_value();
-
-				if(stripos($val, ',') !== false)
-				{
-					$vals = explode(',', $val);
-					$val = 'MIN: ' . min($vals) . ' / AVG: ' . round(array_sum($vals) / count($vals), 2) . ' / MAX: ' . max($vals);
-				}
-
 				$result_line = '    ' . $buffer_item->get_result_identifier() . ' ';
 				$result_length_offset = $longest_identifier_length - strlen($buffer_item->get_result_identifier());
 				if($result_length_offset > 0)
 				{
 					$result_line .= str_repeat('.', $result_length_offset) . ' ';
 				}
-				$result_line .= $val;
 
-				if(is_numeric($val))
+				if(stripos($val, ',') !== false)
 				{
+					// LINE GRAPH
+					$vals = explode(',', $val);
+					$val = 'MIN: ' . pts_math::set_precision(min($vals), 1) . '  AVG: ' . pts_math::set_precision(array_sum($vals) / count($vals), 1) . '  MAX: ' . pts_math::set_precision(max($vals), 1);
+					$result_line .= $val;
+				}
+				else if(is_numeric($val))
+				{
+					// STANDARD NUMERIC RESULT
+					$result_line .= $val;
 					$repeat_length = $longest_result - strlen($val);
 					$result_line .= ($repeat_length >= 0 ? str_repeat(' ', $repeat_length) : null)  . '|';
 					$current_line_length = strlen($result_line);
