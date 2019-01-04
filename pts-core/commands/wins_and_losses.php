@@ -38,7 +38,7 @@ class wins_and_losses implements pts_option_interface
 	public static function run($args)
 	{
 		$result_file = new pts_result_file($args[0]);
-		echo  pts_client::cli_colored_text($result_file->get_title(), 'gray', true) . PHP_EOL;
+		echo '   ' . pts_client::cli_colored_text($result_file->get_title(), 'gray', true) . PHP_EOL . PHP_EOL;
 
 		if($result_file->get_system_count() < 2)
 		{
@@ -47,7 +47,6 @@ class wins_and_losses implements pts_option_interface
 		}
 
 		echo pts_result_file_analyzer::display_results_wins_losses($result_file);
-		echo PHP_EOL;
 	}
 }
 
