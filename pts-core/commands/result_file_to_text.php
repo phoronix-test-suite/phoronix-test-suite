@@ -36,7 +36,6 @@ class result_file_to_text implements pts_option_interface
 		$result_file = new pts_result_file($r[0]);
 		$result_output = pts_result_file_output::result_file_to_text($result_file, pts_client::terminal_width(), true);
 		echo $result_output;
-echo pts_client::terminal_width();
 	}
 }
 

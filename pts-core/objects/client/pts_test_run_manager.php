@@ -1024,7 +1024,8 @@ class pts_test_run_manager
 			{
 				if($this->result_file->get_system_count() == 2)
 				{
-					echo pts_result_file_analyzer::display_results_baseline_two_way_compare($this->result_file, true, false, true);
+					echo pts_client::cli_just_bold('Result Highlights') . PHP_EOL;
+					echo pts_result_file_analyzer::display_results_baseline_two_way_compare($this->result_file, true, false, true) . PHP_EOL . PHP_EOL;
 				}
 				if($this->result_file->get_system_count() > 2)
 				{

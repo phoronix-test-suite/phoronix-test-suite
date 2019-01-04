@@ -236,6 +236,9 @@ class pts_result_file_output
 					$vals = explode(',', $val);
 					$val = 'MIN: ' . pts_math::set_precision(min($vals), 1) . '  AVG: ' . pts_math::set_precision(array_sum($vals) / count($vals), 1) . '  MAX: ' . pts_math::set_precision(max($vals), 1);
 					$result_line .= $val;
+					if($terminal_width > (strlen($result_line) * 3))
+					{
+					}
 				}
 				else if(is_numeric($val))
 				{
