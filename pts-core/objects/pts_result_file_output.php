@@ -159,9 +159,15 @@ class pts_result_file_output
 	public static function test_result_to_text(&$result_object, $terminal_width = 80, $stylize_output = false, $highlight_result = null, $show_title = true)
 	{
 		$result_output = null;
+		static $last_title_shown = null;
 		if($show_title)
 		{
-			$result_output .= PHP_EOL . '    ' . trim($result_object->test_profile->get_title() . ' ' . $result_object->test_profile->get_app_version() . PHP_EOL . $result_object->get_arguments_description());
+			if($last_title_shown != $result_object->test_profile->get_title())
+			{
+				$result_output .= PHP_EOL . '    ' . trim($result_object->test_profile->get_title() . ' ' . $result_object->test_profile->get_app_version();
+				$last_title_shown = $result_object->test_profile->get_title();
+			}
+			$result_output .= . PHP_EOL . $result_object->get_arguments_description());
 		}
 		if($result_object->test_profile->get_result_scale() != null)
 		{
