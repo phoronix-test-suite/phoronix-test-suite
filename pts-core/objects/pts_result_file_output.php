@@ -271,8 +271,6 @@ class pts_result_file_output
 						{
 							$box_plot[$i] = '-';
 						}
-						$box_plot[$whisker_start_char] = '|';
-						$box_plot[$whisker_end_char] = '|';
 
 						$box_left = round((pts_math::find_percentile($values, 0.25) / $max_value) * $box_plot_size);
 						$box_middle = round((pts_math::find_percentile($values, 0.5) / $max_value) * $box_plot_size);
@@ -281,6 +279,8 @@ class pts_result_file_output
 						{
 							$box_plot[$i] = '#';
 						}
+						$box_plot[$whisker_start_char] = '|';
+						$box_plot[$whisker_end_char] = '|';
 						$box_plot[$box_middle] = 'X';
 
 						// END OF BOX PLOT
