@@ -12,6 +12,7 @@ pts-core: Add recently-added-tests sub-command to show newly added test profiles
 pts-core: Allow outputting line graphs to terminal interface as basic box plot graphs
 phodevi: LXQt desktop version reporting
 phodevi: Update for Microsoft Windows Server 2019
+system_monitor: Allow outputting system monitor graphs to terminal interface inline
 
 Phoronix Test Suite 8.4.1-Skiptvet
 9 December 2018

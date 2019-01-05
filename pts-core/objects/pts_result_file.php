@@ -589,6 +589,11 @@ class pts_result_file
 
 		return $ch;
 	}
+	public function add_result_return_object(&$result_object, $only_if_result_already_present = false)
+	{
+		$ch = $this->add_result($result_object, $only_if_result_already_present);
+		return isset($this->result_objects[$ch]) ? $this->result_objects[$ch] : false;
+	}
 	public function get_xml($to = null, $force_nice_formatting = false)
 	{
 		$xml_writer = new nye_XmlWriter(null, $force_nice_formatting);

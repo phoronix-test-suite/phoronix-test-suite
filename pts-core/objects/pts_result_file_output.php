@@ -242,7 +242,7 @@ class pts_result_file_output
 					$precision = ($max_value > 100 || ($min_value > 29 && $max_value > 79) ? 0 : 1);
 					$result_line .= 'MIN: ' . pts_math::set_precision(min($values), $precision) . '  AVG: ' . pts_math::set_precision(array_sum($values) / count($values), $precision) . '  MAX: ' . pts_math::set_precision(max($values), $precision) . ' ';
 
-					if($terminal_width > (strlen($result_line) * 3) && $buffer_count > 1)
+					if($terminal_width > (strlen($result_line) * 2) && $buffer_count > 1)
 					{
 						$box_plot = str_repeat(' ', ($terminal_width - strlen($result_line)));
 						$box_plot_size = strlen($box_plot);
