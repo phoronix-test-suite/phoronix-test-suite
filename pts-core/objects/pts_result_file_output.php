@@ -188,6 +188,7 @@ class pts_result_file_output
 		$longest_identifier_length = strlen(pts_strings::find_longest_string($identifiers)) + 1;
 
 		$result_object->test_result_buffer->adjust_precision();
+		$is_line_graph = false;
 		foreach($result_object->test_result_buffer as &$buffers)
 		{
 			if(empty($buffers))
@@ -209,6 +210,7 @@ class pts_result_file_output
 					$v = explode(',', $v);
 					$max_value = max($max_value, max($v) * 1.03);
 					$min_value = min($min_value, min($v));
+					$is_line_graph = true;
 				}
 				else if($v > $max_value)
 				{
@@ -244,7 +246,7 @@ class pts_result_file_output
 					$result_line .= str_repeat('.', $result_length_offset) . ' ';
 				}
 
-				if(stripos($val, ',') !== false)
+				if($is_line_graph)
 				{
 					// LINE GRAPH
 					$values = explode(',', $val);
