@@ -41,6 +41,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	private $expected_trial_run_count = 0;
 	private $trial_run_count_current = 0;
 	private $current_saved_test_identifier = null;
+	private $current_test = null;
 
 	public function __construct()
 	{
@@ -309,6 +310,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	public function test_run_start(&$test_run_manager, &$test_result)
 	{
 		$this->current_saved_test_identifier = $test_run_manager->get_results_identifier();
+		$this->current_test = $test_result->test_profile->get_identifier();
 		$test_title_string = $test_result->test_profile->get_title() . ($test_result->test_profile->get_app_version() != null ? ' ' . $test_result->test_profile->get_app_version() : null) . ':' . PHP_EOL . $this->tab . $test_result->test_profile->get_identifier();
 
 		if(($test_description = $test_result->get_arguments_description()) != false)
@@ -505,7 +507,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		$test_result = clone $test_result_orig;
 		$test_result->sort_results_by_performance();
 		$test_result->test_result_buffer->buffer_values_reverse();
-		echo pts_result_file_output::test_result_to_text($test_result, pts_client::terminal_width(), true, $this->current_saved_test_identifier, ($test_result->test_profile->get_identifier() == null));
+		echo pts_result_file_output::test_result_to_text($test_result, pts_client::terminal_width(), true, $this->current_saved_test_identifier, ($test_result->test_profile->get_identifier() == null || $this->current_test != $test_result->test_profile->get_identifier()));
 		echo PHP_EOL;
 	}
 	public function test_run_error($error_string)
