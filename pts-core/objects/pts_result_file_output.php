@@ -161,7 +161,7 @@ class pts_result_file_output
 		$result_output = null;
 		if($show_title)
 		{
-			$result_output .= trim($result_object->test_profile->get_title() . ' ' . $result_object->test_profile->get_app_version() . PHP_EOL . $result_object->get_arguments_description());
+			$result_output .= PHP_EOL . '    ' . trim($result_object->test_profile->get_title() . ' ' . $result_object->test_profile->get_app_version() . PHP_EOL . $result_object->get_arguments_description());
 		}
 		if($result_object->test_profile->get_result_scale() != null)
 		{
