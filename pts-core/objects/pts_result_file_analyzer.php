@@ -32,7 +32,7 @@ class pts_result_file_analyzer
 
 		foreach($result_file->get_result_objects() as $result)
 		{
-			if($result->test_result_buffer->get_count() != $result_file_identifiers_count)
+			if($result->test_result_buffer->get_count() != $result_file_identifiers_count || $result->test_profile->get_identifier() == null)
 			{
 				continue;
 			}
