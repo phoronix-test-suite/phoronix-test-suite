@@ -60,6 +60,11 @@ class pts_result_file_analyzer
 			}
 		}
 
+		if(empty($wins) || empty($losses))
+		{
+			return;
+		}
+
 		arsort($wins);
 		arsort($losses);
 

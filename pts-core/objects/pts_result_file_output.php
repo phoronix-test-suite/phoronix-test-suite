@@ -164,10 +164,10 @@ class pts_result_file_output
 		{
 			if($last_title_shown != $result_object->test_profile->get_title())
 			{
-				$result_output .= PHP_EOL . '    ' . trim($result_object->test_profile->get_title() . ' ' . $result_object->test_profile->get_app_version();
+				$result_output .= PHP_EOL . '    ' . trim($result_object->test_profile->get_title() . ' ' . $result_object->test_profile->get_app_version());
 				$last_title_shown = $result_object->test_profile->get_title();
 			}
-			$result_output .= . PHP_EOL . $result_object->get_arguments_description());
+			$result_output .= PHP_EOL . '    ' . $result_object->get_arguments_description();
 		}
 		if($result_object->test_profile->get_result_scale() != null)
 		{
