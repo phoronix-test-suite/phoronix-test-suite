@@ -245,7 +245,7 @@ class phodevi_memory extends phodevi_device_interface
 			}
 		}
 
-		return trim($mem_string);
+		return trim(str_replace('Unknown ', '', $mem_string));
 	}
 	public static function memory_capacity()
 	{
