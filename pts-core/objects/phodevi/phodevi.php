@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2018, Phoronix Media
-	Copyright (C) 2009 - 2018, Michael Larabel
+	Copyright (C) 2009 - 2019, Phoronix Media
+	Copyright (C) 2009 - 2019, Michael Larabel
 	phodevi.php: The object for interacting with the PTS device framework
 
 	This program is free software; you can redistribute it and/or modify
@@ -370,23 +370,49 @@ class phodevi extends phodevi_base
 					{
 						if(!empty($value))
 						{
-							$tabled[] = array(pts_client::cli_just_bold($key) . ':' . str_repeat(' ', (16 - strlen($key))), $value);
-							//$sys_string .= '      ' . strtoupper($key) . ':' . $value . PHP_EOL;
+							if(isset($value[64]) && strpos($value, ' + ') !== false)
+							{
+								$values = explode(' + ', $value);
+								$tabled[] = array(pts_client::cli_just_bold($key) . ':' . str_repeat(' ', (16 - strlen($key))), array_shift($values));
+								foreach($values as $value)
+								{
+									$tabled[] = array(pts_client::cli_just_bold(' '), '+ ' . $value);
+								}
+							}
+							else
+							{
+								$tabled[] = array(pts_client::cli_just_bold($key) . ':' . str_repeat(' ', (16 - strlen($key))), $value);
+								//$sys_string .= '      ' . strtoupper($key) . ':' . $value . PHP_EOL;
+							}
 						}
 					}
 				}
 				else if(true || !empty($in)) // TODO this check not needed anymore?
 				{
-				if(($x = strpos($in, ' (')))
-				{
-					$in = substr($in, 0, $x);
-				}
+					if(($x = strpos($in, ' (')))
+					{
+						$in = substr($in, 0, $x);
+					}
 
 					if(!empty($tabled))
 					{
 						$sys_string .= pts_user_io::display_text_table($tabled, '    ', 0, 17) . PHP_EOL;
 					}
-					$sys_string .= PHP_EOL . '  ' . pts_client::cli_colored_text(strtoupper($key), 'gray', true) . ': ' . str_repeat(' ', (18 - strlen($key))) . pts_client::cli_colored_text($in, 'green', true) . PHP_EOL;
+
+					if(isset($in[80]) && strpos($in, ' + ') !== false)
+					{
+						$values = explode(' + ', $in);
+						$sys_string .= PHP_EOL . '  ' . pts_client::cli_colored_text(strtoupper($key), 'gray', true) . ': ' . str_repeat(' ', (18 - strlen($key))) . pts_client::cli_colored_text(array_shift($values), 'green', true);
+						foreach($values as $value)
+						{
+							$sys_string .= PHP_EOL . str_repeat(' ', 22) . pts_client::cli_colored_text('+ ' . $value, 'green', true);
+						}
+						$sys_string .= PHP_EOL;
+					}
+					else
+					{
+						$sys_string .= PHP_EOL . '  ' . pts_client::cli_colored_text(strtoupper($key), 'gray', true) . ': ' . str_repeat(' ', (18 - strlen($key))) . pts_client::cli_colored_text($in, 'green', true) . PHP_EOL;
+					}
 				}
 
 			}

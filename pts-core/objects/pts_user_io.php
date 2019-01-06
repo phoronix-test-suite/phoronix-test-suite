@@ -122,10 +122,10 @@ class pts_user_io
 			}
 		}
 
-		for($r = 0, $r_count = count($table); $r < $r_count; $r++)
+		for($r = 0; $r < count($table); $r++)
 		{
 			$line = null;
-			for($c = 0, $rc_count = count($table[$r]); $c < $rc_count; $c++)
+			for($c = 0; $c < count($table[$r]); $c++)
 			{
 				if($border)
 				{
