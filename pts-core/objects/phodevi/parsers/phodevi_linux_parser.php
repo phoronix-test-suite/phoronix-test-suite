@@ -472,7 +472,7 @@ class phodevi_linux_parser
 
 			if(($pos = strpos($pci_info, $desc[$i])) !== false)
 			{
-				$sub_pci_info = str_replace(array('[AMD]', '[AMD/ATI]'), null, substr($pci_info, $pos + strlen($desc[$i])));
+				$sub_pci_info = str_replace(array('[AMD]', '[AMD/ATI]', ' Limited'), null, substr($pci_info, $pos + strlen($desc[$i])));
 				$EOL = strpos($sub_pci_info, "\n");
 
 				if($clean_string)
@@ -542,7 +542,7 @@ class phodevi_linux_parser
 			while(($pos = strpos($pci_info, $desc[$i], $pos)) !== false)
 			{
 				$pos += strlen($desc[$i]);
-				$sub_pci_info = str_replace(array('[AMD]', '[AMD/ATI]'), null, substr($pci_info, $pos));
+				$sub_pci_info = str_replace(array('[AMD]', '[AMD/ATI]', ' Limited'), null, substr($pci_info, $pos));
 				$EOL = strpos($sub_pci_info, "\n");
 
 				if($clean_string)
