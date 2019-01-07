@@ -307,8 +307,8 @@ class pts_result_file_output
 						$box_plot[$box_middle] = 'X';
 
 						// END OF BOX PLOT
-						$box_plot[0] = '[';
-						$box_plot[($box_plot_size - 1)] = ']';
+						//$box_plot[0] = '[';
+						//$box_plot[($box_plot_size - 1)] = ']';
 						$result_line .= substr(implode('', $box_plot), 0, $box_plot_size);
 					}
 				}
