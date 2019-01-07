@@ -244,6 +244,7 @@ class pts_result_file_output
 				$largest_min_value = pts_math::set_precision($largest_min_value, $precision);
 				$min_value = pts_math::set_precision($min_value, $precision);
 				$largest_min_length = strlen($largest_min_value);
+				$max_value_length = strlen(pts_math::set_precision($max_value, $precision));
 			}
 			foreach($buffers as &$buffer_item)
 			{
@@ -260,9 +261,12 @@ class pts_result_file_output
 					// LINE GRAPH
 					$values = explode(',', $val);
 					$formatted_min = pts_math::set_precision(min($values), $precision);
+					$formatted_avg = pts_math::set_precision(array_sum($values) / count($values), $precision);
 					$min_value_offset = $largest_min_length - strlen($formatted_min);
 					$min_value_offset = $min_value_offset > 0 ? str_repeat(' ', $min_value_offset) : null;
-					$result_line .= 'MIN: ' . $formatted_min . $min_value_offset . '  AVG: ' . pts_math::set_precision(array_sum($values) / count($values), $precision) . '  MAX: ' . pts_math::set_precision(max($values), $precision) . ' ';
+					$avg_value_offset = $max_value_length - strlen($formatted_avg);
+					$avg_value_offset = $avg_value_offset > 0 ? str_repeat(' ', $avg_value_offset) : null;
+					$result_line .= 'MIN: ' . $formatted_min . $min_value_offset . '  AVG: ' . $formatted_avg . $avg_value_offset . '  MAX: ' . pts_math::set_precision(max($values), $precision) . ' ';
 
 					if($terminal_width > (strlen($result_line) * 2) && $buffer_count > 1)
 					{
