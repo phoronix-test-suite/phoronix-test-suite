@@ -275,30 +275,7 @@ class phodevi_disk extends phodevi_device_interface
 		}
 		else
 		{
-			$disks_formatted = $disks;
-			$disks = array();
-
-			for($i = 0; $i < count($disks_formatted); $i++)
-			{
-				if(!empty($disks_formatted[$i]))
-				{
-					$times_found = 1;
-
-					for($j = ($i + 1); $j < count($disks_formatted); $j++)
-					{
-						if($disks_formatted[$i] == $disks_formatted[$j])
-						{
-							$times_found++;
-							$disks_formatted[$j] = '';
-						}
-					}
-
-					$disk = ($times_found > 1 ? $times_found . ' x '  : null) . $disks_formatted[$i];
-					array_push($disks, $disk);
-				}
-			}
-
-			$disks = implode(' + ', $disks);
+			$disks = pts_arrays::array_to_cleansed_item_string($disks);
 		}
 
 		return $disks;

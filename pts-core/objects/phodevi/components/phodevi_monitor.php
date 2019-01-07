@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2018, Phoronix Media
-	Copyright (C) 2008 - 2018, Michael Larabel
+	Copyright (C) 2008 - 2019, Phoronix Media
+	Copyright (C) 2008 - 2019, Michael Larabel
 	phodevi_monitor.php: The PTS Device Interface object for the display monitor
 
 	This program is free software; you can redistribute it and/or modify
@@ -77,7 +77,7 @@ class phodevi_monitor extends phodevi_device_interface
 			// but fglrx/catalyst as of late 2013 is in habit of reporting monitors twice
 			$monitor = array_unique($monitor);
 
-			$monitor = implode(' + ', $monitor);
+			$monitor = pts_arrays::array_to_cleansed_item_string($monitor);
 		}
 		else if(isset(phodevi::$vfs->xorg_log))
 		{
@@ -100,7 +100,7 @@ class phodevi_monitor extends phodevi_device_interface
 			// but fglrx/catalyst as of late 2013 is in habit of reporting monitors twice
 			$monitor = array_unique($monitor);
 
-			$monitor = implode(' + ', $monitor);
+			$monitor = pts_arrays::array_to_cleansed_item_string($monitor);
 		}
 
 		if($monitor == null && phodevi::is_linux())
