@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 8.6.0 Milestone 1
+7 January 2019
 
 pts-core: No longer clear test profile identifiers on secondary saved results
 pts-core: Add compare-results-to-baseline sub-command for comparing one result file (baseline) against a set of results for text look at relative perf
