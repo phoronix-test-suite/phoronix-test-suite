@@ -542,7 +542,7 @@ class phodevi_linux_parser
 			while(($pos = strpos($pci_info, $desc[$i], $pos)) !== false)
 			{
 				$pos += strlen($desc[$i]);
-				$sub_pci_info = str_replace(array('[AMD]', '[AMD/ATI]', ' Limited', ' Wireless', '(1)', '(2)', '(3)', '(4)', '(5)', '(6)', '(7)', '(8)', '(9)'), null, substr($pci_info, $pos));
+				$sub_pci_info = str_replace(array('[AMD]', '[AMD/ATI]', ' Limited', ' Connection', ' Wireless', '(1)', '(2)', '(3)', '(4)', '(5)', '(6)', '(7)', '(8)', '(9)'), null, substr($pci_info, $pos));
 				$EOL = strpos($sub_pci_info, "\n");
 
 				if($clean_string)
