@@ -10,6 +10,7 @@ pts-core: On two-way result files, after test completion show comparison of curr
 pts-core: Add ShowPostRunStatistics user configuration XML option to toggle whether various test statistics are printed at the end of testing
 pts-core: Add recently-added-tests sub-command to show newly added test profiles / alternative to openbenchmarking-changes/recently-updated-tests
 pts-core: Allow outputting line graphs to terminal interface as basic box plot graphs
+phodevi: Improve Linux multiple network device reporting
 phodevi: LXQt desktop version reporting
 phodevi: Update for Microsoft Windows Server 2019
 system_monitor: Allow outputting system monitor graphs to terminal interface inline

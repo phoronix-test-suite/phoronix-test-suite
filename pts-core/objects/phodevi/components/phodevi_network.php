@@ -63,14 +63,11 @@ class phodevi_network extends phodevi_device_interface
 		}
 		else if(phodevi::is_linux())
 		{
-			foreach(array('Ethernet controller', 'Network controller') as $controller)
-			{
-				$pci = phodevi_linux_parser::read_pci($controller);
+			$pci = phodevi_linux_parser::read_pci_multi(array('Ethernet controller', 'Network controller'));
 
-				if(!empty($pci))
-				{
-					array_push($network, $pci);
-				}
+			if(!empty($pci))
+			{
+				$network = $pci;
 			}
 		}
 

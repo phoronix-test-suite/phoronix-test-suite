@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2017, Phoronix Media
-	Copyright (C) 2008 - 2017, Michael Larabel
+	Copyright (C) 2008 - 2019, Phoronix Media
+	Copyright (C) 2008 - 2019, Michael Larabel
 	phodevi_linux_parser.php: General parsing functions specific to Linux
 
 	This program is free software; you can redistribute it and/or modify
@@ -501,6 +501,76 @@ class phodevi_linux_parser
 				if(($strlen = strlen($sub_pci_info)) >= 6 && $strlen < 128)
 				{
 					$info = pts_strings::strip_string($sub_pci_info);
+				}
+			}
+		}
+
+		return $info;
+	}
+	public static function read_pci_multi($desc, $clean_string = true)
+	{
+		// Read PCI bus information
+		static $pci_info = null;
+		$info = array();
+		$desc = pts_arrays::to_array($desc);
+
+		if($pci_info == null)
+		{
+			if(!is_executable('/usr/bin/lspci') && is_executable('/sbin/lspci'))
+			{
+				$lspci_cmd = '/sbin/lspci';
+			}
+			else if(($lspci = pts_client::executable_in_path('lspci')))
+			{
+				$lspci_cmd = $lspci;
+			}
+			else
+			{
+				return false;
+			}
+
+			$pci_info = shell_exec($lspci_cmd . ' 2> /dev/null');
+		}
+
+		for($i = 0; $i < count($desc); $i++)
+		{
+			if(substr($desc[$i], -1) != ':')
+			{
+				$desc[$i] .= ':';
+			}
+			$pos = 0;
+			while(($pos = strpos($pci_info, $desc[$i], $pos)) !== false)
+			{
+				$pos += strlen($desc[$i]);
+				$sub_pci_info = str_replace(array('[AMD]', '[AMD/ATI]'), null, substr($pci_info, $pos));
+				$EOL = strpos($sub_pci_info, "\n");
+
+				if($clean_string)
+				{
+					if(($temp = strpos($sub_pci_info, '/')) < $EOL && $temp > 0)
+					{
+						if(($temp = strpos($sub_pci_info, ' ', ($temp + 2))) < $EOL && $temp > 0)
+						{
+							$EOL = $temp;
+						}
+					}
+
+					if(($temp = strpos($sub_pci_info, '(')) < $EOL && $temp > 0)
+					{
+						$EOL = $temp;
+					}
+
+					if(($temp = strpos($sub_pci_info, '[')) < $EOL && $temp > 0)
+					{
+						$EOL = $temp;
+					}
+				}
+
+				$sub_pci_info = trim(substr($sub_pci_info, 0, $EOL));
+
+				if(($strlen = strlen($sub_pci_info)) >= 6 && $strlen < 128)
+				{
+					$info[] = pts_strings::strip_string($sub_pci_info);
 				}
 			}
 		}

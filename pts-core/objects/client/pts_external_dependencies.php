@@ -494,7 +494,7 @@ class pts_external_dependencies
 		$pkg_vendor = self::vendor_identifier('package-list');
 
 		// Rebuild the array index since some OS package XML tags provide multiple package names in a single string
-		$os_packages_to_install = explode(' ', implode(' ', $os_packages_to_install));
+		$os_packages_to_install = array_unique(explode(' ', implode(' ', $os_packages_to_install)));
 
 		if(is_file($vendor_install_file))
 		{
