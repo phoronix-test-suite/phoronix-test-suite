@@ -2,7 +2,7 @@
 https://www.phoronix-test-suite.com/
 
 The **Phoronix Test Suite** is the most comprehensive testing and benchmarking
-platform available for Linux, Solaris, OS X, and BSD operating systems. The
+platform available for Linux, Solaris, macOS, and BSD operating systems. The
 Phoronix Test Suite allows for carrying out tests in a fully automated manner
 from test installation to execution and reporting. All tests are meant to be
 easily reproducible, easy-to-use, and support fully automated execution. The
@@ -50,7 +50,7 @@ the Phoronix Test Suite website.
 
 ## Installation & Setup
 
-The Phoronix Test Suite is supported on Linux, *BSD, Solaris, Mac OS X, and
+The Phoronix Test Suite is supported on Linux, *BSD, Solaris, macOS, and
 Windows systems. However, the most full-featured and well supported operating
 system for conducting the tests is Linux with some non-basic functionality not
 being available under all platforms. The Phoronix Test Suite software/framework
