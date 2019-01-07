@@ -2,12 +2,12 @@
 https://www.phoronix-test-suite.com/
 
 The **Phoronix Test Suite** is the most comprehensive testing and benchmarking
-platform available for Linux, Solaris, OS X, and BSD operating systems. The
-Phoronix Test Suite allows for carrying out tests in a fully automated manner
-from test installation to execution and reporting. All tests are meant to be
-easily reproducible, easy-to-use, and support fully automated execution. The
-Phoronix Test Suite is open-source under the GNU GPLv3 license and is developed
-by Phoronix Media in cooperation with partners.
+platform available for Linux, Solaris, macOS, Windows, and BSD operating
+systems. The Phoronix Test Suite allows for carrying out tests in a fully
+automated manner from test installation to execution and reporting. All tests
+are meant to be easily reproducible, easy-to-use, and support fully automated
+execution. The Phoronix Test Suite is open-source under the GNU GPLv3 license
+and is developed by Phoronix Media in cooperation with partners.
 
 The Phoronix Test Suite itself is an open-source framework for conducting
 automated tests along with reporting of test results, detection of installed
@@ -50,13 +50,12 @@ the Phoronix Test Suite website.
 
 ## Installation & Setup
 
-The Phoronix Test Suite is supported on Linux, *BSD, Solaris, Mac OS X, and
-Windows systems. However, the most full-featured and well supported operating
-system for conducting the tests is Linux with some non-basic functionality not
-being available under all platforms. The Phoronix Test Suite software/framework
-is compatible with all major CPU architectures (e.g. i686, x86_64, ARM,
-PowerPC), but not all of the test profiles/suites are compatible with all
-architectures.
+The Phoronix Test Suite is supported on Linux, *BSD, Solaris, macOS, and Windows
+systems. However, the most full-featured and well supported operating system for
+conducting the tests is Linux with some non-basic functionality not being
+available under all platforms. The Phoronix Test Suite software/framework is
+compatible with all major CPU architectures (e.g. i686, x86_64, ARM, PowerPC),
+but not all of the test profiles/suites are compatible with all architectures.
 
 The Phoronix Test Suite can be installed for system-wide usage or run locally
 without installation from the extracted tar.gz/zip package. The only hard
