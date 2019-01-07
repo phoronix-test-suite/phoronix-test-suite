@@ -196,6 +196,7 @@ class pts_result_file_output
 
 			$max_value = 0;
 			$min_value = pts_arrays::first_element($buffers)->get_result_value();
+			$largest_min_value = 0;
 			$longest_result = 0;
 			foreach($buffers as &$buffer_item)
 			{
@@ -210,6 +211,7 @@ class pts_result_file_output
 					$v = explode(',', $v);
 					$max_value = max($max_value, max($v) * 1.03);
 					$min_value = min($min_value, min($v));
+					$largest_min_value = max($largest_min_value, min($v));
 					$is_line_graph = true;
 				}
 				else if($v > $max_value)
@@ -236,6 +238,13 @@ class pts_result_file_output
 			$do_color = $buffer_count > 1 ? true : false;
 
 			$longest_result++;
+			$precision = ($max_value > 100 || ($min_value > 29 && $max_value > 79) ? 0 : 1);
+			if($is_line_graph)
+			{
+				$largest_min_value = pts_math::set_precision($largest_min_value, $precision);
+				$min_value = pts_math::set_precision($min_value, $precision);
+				$largest_min_length = strlen($largest_min_value);
+			}
 			foreach($buffers as &$buffer_item)
 			{
 				$val = $buffer_item->get_result_value();
@@ -250,8 +259,10 @@ class pts_result_file_output
 				{
 					// LINE GRAPH
 					$values = explode(',', $val);
-					$precision = ($max_value > 100 || ($min_value > 29 && $max_value > 79) ? 0 : 1);
-					$result_line .= 'MIN: ' . pts_math::set_precision(min($values), $precision) . '  AVG: ' . pts_math::set_precision(array_sum($values) / count($values), $precision) . '  MAX: ' . pts_math::set_precision(max($values), $precision) . ' ';
+					$formatted_min = pts_math::set_precision(min($values), $precision);
+					$min_value_offset = $largest_min_length - strlen($formatted_min);
+					$min_value_offset = $min_value_offset > 0 ? str_repeat(' ', $min_value_offset) : null;
+					$result_line .= 'MIN: ' . $formatted_min . $min_value_offset . '  AVG: ' . pts_math::set_precision(array_sum($values) / count($values), $precision) . '  MAX: ' . pts_math::set_precision(max($values), $precision) . ' ';
 
 					if($terminal_width > (strlen($result_line) * 2) && $buffer_count > 1)
 					{
