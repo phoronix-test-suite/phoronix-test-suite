@@ -1,4 +1,4 @@
-.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "8.4.1"
+.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "8.6.0m1"
 .SH NAME
 phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source platform for performing testing and performance evaluation.
 .SH SYNOPSIS
@@ -119,6 +119,9 @@ This option will list the OpenBenchmarking.org repositories currently linked to 
 .B openbenchmarking-uploads
 This option will list any recent test result uploads from the system's IP address to OpenBenchmarking.org.
 .TP
+.B recently-added-tests
+This option will list the most recently added (newest) test profiles.
+.TP
 .B upload-result [Test Result]
 This option is used for uploading a test result to OpenBenchmarking.org.
 .TP
@@ -221,6 +224,9 @@ This option will generate a candlestick graph showing the distribution of result
 .B auto-sort-result-file [Test Result]
 This option is used if you wish to automatically attempt to sort the results by their result identifier string.
 .TP
+.B compare-results-to-baseline [Test Result] [Test Result]
+This option will allows you to specify a result as a baseline (first parameter) and a second result file (second parameter) that will offer some analysis for showing how the second result compares to the first in matching tests.
+.TP
 .B edit-result-file [Test Result]
 This option is used if you wish to edit the title and description of an existing result file.
 .TP
@@ -263,7 +269,7 @@ This option will read a saved test results file and output the system hardware a
 .B show-result [Test Result]
 Open up the test results in the Phoronix Test Suite Result Viewer or on OpenBenchmarking.org.
 .TP
-.B winners-and-losers [Test Result]
+.B wins-and-losses [Test Result]
 This option is used if you wish to analyze a result file to see which runs produced the most wins/losses of those result identifiers in the saved file.
 .TP
 .SH OTHER
@@ -341,5 +347,5 @@ https://www.phoronix.com/
 .br
 https://www.phoronix.com/forums/
 .SH AUTHORS
-Copyright 2008 - 2018 by Phoronix Media, Michael Larabel.
+Copyright 2008 - 2019 by Phoronix Media, Michael Larabel.
 .TP
