@@ -30,9 +30,15 @@ class pts_result_file_analyzer
 		$losses = array();
 		$tests_counted = 0;
 
+		$possible_evaluate_result_count = 0;
 		foreach($result_file->get_result_objects() as $result)
 		{
-			if($result->test_result_buffer->get_count() != $result_file_identifiers_count || $result->test_profile->get_identifier() == null)
+			if($result->test_profile->get_identifier() == null)
+			{
+				continue;
+			}
+			$possible_evaluate_result_count++;
+			if($result->test_result_buffer->get_count() < 2 || $result->test_result_buffer->get_count() < floor($result_file_identifiers_count / 2))
 			{
 				continue;
 			}
@@ -93,7 +99,7 @@ class pts_result_file_analyzer
 			}
 		}
 		$output .= pts_user_io::display_text_table($table, $prepend_lines, 0, 0, false, $highlight_row) . PHP_EOL;
-		$output .= $prepend_lines . pts_client::cli_colored_text('TESTS COUNTED: ', 'cyan', true) . ($tests_counted == $result_file->get_test_count() ? $tests_counted : $tests_counted . ' of ' . $result_file->get_test_count()) .  PHP_EOL;
+		$output .= $prepend_lines . pts_client::cli_colored_text('TESTS COUNTED: ', 'cyan', true) . ($tests_counted == $possible_evaluate_result_count ? $tests_counted : $tests_counted . ' of ' . $possible_evaluate_result_count) .  PHP_EOL;
 		return $output;
 	}
 	public static function display_results_baseline_two_way_compare(&$result_file, $drop_flat_results = false, $border_table = false, $rich_text = false)
