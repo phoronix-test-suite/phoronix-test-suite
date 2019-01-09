@@ -193,6 +193,8 @@ This option is used if you wish to change the name of the identifier in a test r
 This option is used if you wish to change the name of the saved name of a result file.
 #### reorder-result-file  [Test Result]
 This option is used if you wish to manually change the order in which test results are shown in the Phoronix Test Suite Results Viewer and the contained graphs. The user must specify a saved results file and then they will be prompted to select the results identifiers one at a time in the order they would like them to be displayed from left to right.
+#### result-file-stats  [Test Result]
+This option is used if you wish to analyze a result file by seeing various statistics on the result data for result files containing at least two sets of data.
 #### result-file-to-csv  [Test Result]
 This option will read a saved test results file and output the system hardware and software information along with the results to a CSV output. The CSV (Comma Separated Values) output can then be loaded into a spreadsheet for easy viewing.
 #### result-file-to-json  [Test Result]
@@ -411,11 +413,10 @@ Running *install-sh* from the root directory of the Phoronix Test Suite will ins
 
 ### Debian/Ubuntu Installation
 Debian/Ubuntu users are able to follow the Generic Installation instructions or can obtain a Debian Package from the Phoronix Test Suite web-site. The package contains the *phoronix-test-suite* executable in */usr/bin/* , the Phoronix Test Suite files in */usr/share/phoronix-test-suite/* , and the documentation in */usr/share/doc/phoronix-test-suite/* .
-A phoronix-test-suite package can also be found in the official Ubuntu universe repository beginning with the Ubuntu 9.04 (Jaunty) release, but it may be out of date compared to the latest upstream version.
 On Ubuntu 13.04 and newer if you experience an issue of system sensor monitoring not working, other multi-process tasks, or related issues reported as PHP PCNTL missing, the pcntl functions need to be removed from the *disable_functions* line within the */etc/php5/cli/php.ini* file. This may also affect other Linux distribution support too if the vendor disables access to the PCNTL functions.
 
 ### Fedora / Red Hat Installation
-The Phoronix Test Suite can be installed on Fedora, Red Hat Enterprise Linux, and CentOS systems using the generic installation method. Alternatively, a *phoronix-test-suite* package is available in recent versions of the Fedora repository and in the EPEL (Extra Packages for Enterprise Linux) repository for Red Hat Enterprise Linux. At this time, however, the Fedora-supplied package is vastly out of date.
+The Phoronix Test Suite can be installed on Fedora, Red Hat Enterprise Linux, and CentOS systems using the generic installation method. Alternatively, a *phoronix-test-suite* package is available in recent versions of the Fedora repository and in the EPEL (Extra Packages for Enterprise Linux) repository for Red Hat Enterprise Linux. However, at times this package may be out-of-date compared to upstream stable.
 
 ### Gentoo Installation
 Gentoo ebuild's for the Phoronix Test Suite have been created by users and can be currently found in the [Gentoo BugZilla](http://bugs.gentoo.org/show_bug.cgi?id=216656) .
