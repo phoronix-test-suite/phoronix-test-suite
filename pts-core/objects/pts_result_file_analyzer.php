@@ -95,7 +95,7 @@ class pts_result_file_analyzer
 				continue;
 			}
 			$rs = $result->test_profile->get_result_scale();
-			if(strpos($rs, '/') === false && stripos($rs, ' per ') === false && stripos($rs, 'FPS') === false)
+			if(strpos($rs, '/') === false && stripos($rs, ' per ') === false && stripos($rs, 'FPS') === false && stripos($rs, 'bps') === false && stripos($rs, 'iops') === false)
 			{
 				// Harmonic mean is relevant for tests of rates, MB/s, FPS, ns/day, etc.
 				continue;
@@ -134,7 +134,7 @@ class pts_result_file_analyzer
 				{
 					$parsed[$identifier] = pts_math::harmonic_mean($values);
 				}
-				if(empty($parsed))
+				if(empty($parsed) || count($parsed) < 2)
 				{
 					continue;
 				}
