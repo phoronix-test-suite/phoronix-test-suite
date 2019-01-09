@@ -22,6 +22,164 @@
 
 class pts_result_file_analyzer
 {
+	public static function generate_geometric_mean_result(&$result_file)
+	{
+		$results = array();
+		foreach($result_file->get_result_objects() as $result)
+		{
+			if($result->test_profile->get_identifier() == null || $result->test_profile->get_display_format() != 'BAR_GRAPH')
+			{
+				continue;
+			}
+
+			foreach($result->test_result_buffer->get_buffer_items() as $buffer_item)
+			{
+				$r = $buffer_item->get_result_value();
+				if($result->test_profile->get_result_proportion() == 'LIB')
+				{
+					$r = (1 / $r) * 100;
+				}
+
+				$ri = $buffer_item->get_result_identifier();
+
+				if(!isset($results[$ri]))
+				{
+					$results[$ri] = array();
+				}
+				$results[$ri][] = $r;
+			}
+		}
+
+		foreach($results as $identifier => $values)
+		{
+			if(count($values) < 4)
+			{
+				// If small result file with not a lot of data, don't bother showing...
+				unset($results[$identifier]);
+			}
+		}
+
+		if(!empty($results))
+		{
+			$test_profile = new pts_test_profile();
+			$test_result = new pts_test_result($test_profile);
+			$test_result->test_profile->set_test_title('Geometric Mean Of All Test Results');
+			$test_result->test_profile->set_identifier(null);
+			$test_result->test_profile->set_version(null);
+			$test_result->test_profile->set_result_proportion(null);
+			$test_result->test_profile->set_display_format('BAR_GRAPH');
+			$test_result->test_profile->set_result_scale('Geometric Mean');
+			$test_result->test_profile->set_result_proportion('HIB');
+			$test_result->set_used_arguments_description('Result Composite');
+			$test_result->set_used_arguments('Geometric-Mean');
+			$test_result->test_result_buffer = new pts_test_result_buffer();
+			foreach($results as $identifier => $values)
+			{
+				$values = pts_math::geometric_mean($values);
+				$test_result->test_result_buffer->add_test_result($identifier, pts_math::set_precision($values, 3));
+			}
+			$test_result->sort_results_by_performance();
+			$test_result->test_result_buffer->buffer_values_reverse();
+			return $test_result;
+		}
+
+		return false;
+	}
+	public static function generate_harmonic_mean_result(&$result_file)
+	{
+		$results = array();
+		foreach($result_file->get_result_objects() as $result)
+		{
+			if($result->test_profile->get_identifier() == null || $result->test_profile->get_display_format() != 'BAR_GRAPH' || $result->test_profile->get_result_proportion() == 'LIB')
+			{
+				continue;
+			}
+			$rs = $result->test_profile->get_result_scale();
+			if(strpos($rs, '/') === false && stripos($rs, ' per ') === false && stripos($rs, 'FPS') === false)
+			{
+				// Harmonic mean is relevant for tests of rates, MB/s, FPS, ns/day, etc.
+				continue;
+			}
+			foreach($result->test_result_buffer->get_buffer_items() as $buffer_item)
+			{
+				$ri = $buffer_item->get_result_identifier();
+
+				if(!isset($results[$rs][$ri]))
+				{
+					$results[$rs][$ri] = array();
+				}
+				$results[$rs][$ri][] = $buffer_item->get_result_value();
+			}
+		}
+
+		foreach($results as $result_scale => $group)
+		{
+			foreach($group as $identifier => $values)
+			{
+				if(count($values) < 4)
+				{
+					// If small result file with not a lot of data, don't bother showing...
+					unset($results[$result_scale][$identifier]);
+				}
+			}
+		}
+
+		if(!empty($results))
+		{
+			$test_results = array();
+			foreach($results as $result_scale => $group)
+			{
+				$parsed = array();
+				foreach($group as $identifier => $values)
+				{
+					$parsed[$identifier] = pts_math::harmonic_mean($values);
+				}
+				if(empty($parsed))
+				{
+					continue;
+				}
+
+				$test_profile = new pts_test_profile();
+				$test_result = new pts_test_result($test_profile);
+				$test_result->test_profile->set_test_title('Harmonic Mean Of ' . $result_scale . ' Test Results');
+				$test_result->test_profile->set_identifier(null);
+				$test_result->test_profile->set_version(null);
+				$test_result->test_profile->set_result_proportion(null);
+				$test_result->test_profile->set_display_format('BAR_GRAPH');
+				$test_result->test_profile->set_result_scale($result_scale);
+				$test_result->test_profile->set_result_proportion('HIB');
+				$test_result->set_used_arguments_description('Harmonic Mean');
+				$test_result->set_used_arguments('Harmonic-Mean - ' . $result_scale);
+				$test_result->test_result_buffer = new pts_test_result_buffer();
+				foreach($parsed as $identifier => $values)
+				{
+					$test_result->test_result_buffer->add_test_result($identifier, pts_math::set_precision($values, 3));
+				}
+				$test_result->sort_results_by_performance();
+				$test_result->test_result_buffer->buffer_values_reverse();
+				$test_results[] = $test_result;
+			}
+			return $test_results;
+		}
+
+		return array();
+	}
+	public static function display_result_file_stats_pythagorean_means(&$result_file)
+	{
+		$ret = null;
+		$geometric_mean = pts_result_file_analyzer::generate_geometric_mean_result($result_file);
+		if($geometric_mean)
+		{
+			$ret .= pts_result_file_output::test_result_to_text($geometric_mean, pts_client::terminal_width(), true, null, true);
+		}
+		foreach(pts_result_file_analyzer::generate_harmonic_mean_result($result_file) as $harmonic_mean_result)
+		{
+			$ret .= PHP_EOL . pts_result_file_output::test_result_to_text($harmonic_mean_result, pts_client::terminal_width(), true, null, true);
+		}
+		$ret .= PHP_EOL;
+
+		return $ret;
+	}
 	public static function display_results_wins_losses(&$result_file, $highlight_result_identifier = null, $prepend_lines = '   ')
 	{
 		$output = null;
@@ -109,6 +267,10 @@ class pts_result_file_analyzer
 
 		foreach($result_file->get_result_objects() as $ro)
 		{
+			if($ro->test_profile->get_display_format() != 'BAR_GRAPH')
+			{
+				continue;
+			}
 			if($drop_flat_results)
 			{
 				$ro->remove_unchanged_results(0.3);

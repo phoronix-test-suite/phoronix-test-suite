@@ -1032,6 +1032,11 @@ class pts_test_run_manager
 					// Display winners and losers
 					echo PHP_EOL . pts_result_file_analyzer::display_results_wins_losses($this->result_file, $this->get_results_identifier(), '    ') . PHP_EOL;
 				}
+
+				if($this->result_file->get_system_count() > 1)
+				{
+					echo pts_result_file_analyzer::display_result_file_stats_pythagorean_means($this->result_file);
+				}
 			}
 
 			if(!$this->auto_mode)

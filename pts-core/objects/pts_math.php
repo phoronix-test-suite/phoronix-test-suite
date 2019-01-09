@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2016, Phoronix Media
-	Copyright (C) 2009 - 2016, Michael Larabel
+	Copyright (C) 2009 - 2019, Phoronix Media
+	Copyright (C) 2009 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -24,23 +24,18 @@ class pts_math
 {
 	public static function geometric_mean($values)
 	{
+		// default
 		return pow(array_product($values), (1 / count($values)));
 	}
 	public static function harmonic_mean($values)
 	{
-		$b = 0;
-		$c = 0;
-
-		foreach($values as $value)
+		// useful for rates / all same result types
+		$sum = 0;
+		foreach($values as $v)
 		{
-			if($value != 0)
-			{
-				$b += 1 / $value;
-				$c++;
-			}
+			$sum += 1 / $v;
 		}
-
-		return $b != 0 ? $c / $b : 0;
+		return (1 / $sum) * count($values);
 	}
 	public static function standard_error($values)
 	{

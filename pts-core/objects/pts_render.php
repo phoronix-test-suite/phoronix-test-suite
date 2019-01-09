@@ -658,79 +658,25 @@ class pts_render
 	}
 	public static function generate_overview_object(&$overview_table, $overview_type)
 	{
-		switch($overview_type)
-		{
-			case 'GEOMETRIC_MEAN':
-				$title = 'Geometric Mean';
-				$math_call = array('pts_math', 'geometric_mean');
-				break;
-			case 'HARMONIC_MEAN':
-				$title = 'Harmonic Mean';
-				$math_call = array('pts_math', 'harmonic_mean');
-				break;
-			case 'AGGREGATE_SUM':
-				$title = 'Aggregate Sum';
-				$math_call = 'array_sum';
-				break;
-			default:
-				return false;
-
-		}
-		$result_buffer = new pts_test_result_buffer();
-
+		// TODO XXX this can be removed once OpenBenchmarking.org upgrades its PTS to new pts_result_file_analyzer APIs
 		if($overview_table instanceof pts_result_file)
 		{
-			list($days_keys1, $days_keys, $shred) = pts_ResultFileTable::result_file_to_result_table($overview_table);
-
-			foreach($shred as $system_key => &$system)
+			switch($overview_type)
 			{
-				$to_show = array();
-
-				foreach($system as &$days)
-				{
-					$days = $days->get_value();
-				}
-
-				$to_show[] = pts_math::set_precision(call_user_func($math_call, $system), 2);
-				$result_buffer->add_test_result($system_key, implode(',', $to_show), null);
-			}
-		}
-		else
-		{
-			$days_keys = null;
-			foreach($overview_table as $system_key => &$system)
-			{
-				if($days_keys == null)
-				{
-					// Rather messy and inappropriate way of getting the days keys
-					$days_keys = array_keys($system);
+				case 'GEOMETRIC_MEAN':
+					return pts_result_file_analyzer::generate_geometric_mean_result($overview_table);
 					break;
-				}
-			}
+				case 'HARMONIC_MEAN':
+					break;
+				case 'AGGREGATE_SUM':
+					break;
+				default:
+					return false;
 
-			foreach($overview_table as $system_key => &$system)
-			{
-				$to_show = array();
-
-				foreach($system as &$days)
-				{
-					$to_show[] = call_user_func($math_call, $days);
-				}
-
-				$result_buffer->add_test_result($system_key, implode(',', $to_show), null);
 			}
 		}
 
-		$test_profile = new pts_test_profile(null, null, false);
-		$test_profile->set_test_title($title);
-		$test_profile->set_result_scale($title);
-		$test_profile->set_display_format('BAR_GRAPH');
-
-		$test_result = new pts_test_result($test_profile);
-		$test_result->set_used_arguments_description('Analytical Overview');
-		$test_result->set_test_result_buffer($result_buffer);
-
-		return $test_result;
+		return false;
 	}
 	public static function multi_way_identifier_check($identifiers)
 	{
