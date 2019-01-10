@@ -25,9 +25,10 @@ class pts_result_file_analyzer
 	public static function generate_geometric_mean_result(&$result_file)
 	{
 		$results = array();
+		$system_count = $result_file->get_system_count();
 		foreach($result_file->get_result_objects() as $result)
 		{
-			if($result->test_profile->get_identifier() == null || $result->test_profile->get_display_format() != 'BAR_GRAPH')
+			if($result->test_profile->get_identifier() == null || $result->test_profile->get_display_format() != 'BAR_GRAPH' || $system_count > $result->test_result_buffer->get_count())
 			{
 				continue;
 			}
@@ -88,9 +89,10 @@ class pts_result_file_analyzer
 	public static function generate_harmonic_mean_result(&$result_file)
 	{
 		$results = array();
+		$system_count = $result_file->get_system_count();
 		foreach($result_file->get_result_objects() as $result)
 		{
-			if($result->test_profile->get_identifier() == null || $result->test_profile->get_display_format() != 'BAR_GRAPH' || $result->test_profile->get_result_proportion() == 'LIB')
+			if($result->test_profile->get_identifier() == null || $result->test_profile->get_display_format() != 'BAR_GRAPH' || $result->test_profile->get_result_proportion() == 'LIB' || $system_count > $result->test_result_buffer->get_count())
 			{
 				continue;
 			}

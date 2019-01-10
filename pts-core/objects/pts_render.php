@@ -659,24 +659,7 @@ class pts_render
 	public static function generate_overview_object(&$overview_table, $overview_type)
 	{
 		// TODO XXX this can be removed once OpenBenchmarking.org upgrades its PTS to new pts_result_file_analyzer APIs
-		if($overview_table instanceof pts_result_file)
-		{
-			switch($overview_type)
-			{
-				case 'GEOMETRIC_MEAN':
-					return pts_result_file_analyzer::generate_geometric_mean_result($overview_table);
-					break;
-				case 'HARMONIC_MEAN':
-					break;
-				case 'AGGREGATE_SUM':
-					break;
-				default:
-					return false;
-
-			}
-		}
-
-		return false;
+		// EOL 9 JANUARY 2019
 	}
 	public static function multi_way_identifier_check($identifiers)
 	{
