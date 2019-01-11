@@ -663,7 +663,7 @@ class pts_test_run_manager
 				echo PHP_EOL . PHP_EOL . 'The following tests failed to properly run:' . PHP_EOL . PHP_EOL;
 				foreach($this->failed_tests_to_run as &$run_request)
 				{
-					echo "\t- " . $run_request->test_profile->get_identifier() . ($run_request->get_arguments_description() != null ? ': ' . $run_request->get_arguments_description() : null) . PHP_EOL;
+					echo '    - ' . $run_request->test_profile->get_identifier() . ($run_request->get_arguments_description() != null ? ': ' . $run_request->get_arguments_description() : null) . PHP_EOL;
 				}
 				echo PHP_EOL;
 			}
@@ -1030,7 +1030,7 @@ class pts_test_run_manager
 				if($this->result_file->get_system_count() > 2)
 				{
 					// Display winners and losers
-					echo PHP_EOL . pts_result_file_analyzer::display_results_wins_losses($this->result_file, $this->get_results_identifier(), '    ') . PHP_EOL;
+					echo pts_result_file_analyzer::display_results_wins_losses($this->result_file, $this->get_results_identifier(), '    ') . PHP_EOL;
 				}
 
 				if($this->result_file->get_system_count() > 1)

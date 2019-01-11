@@ -30,6 +30,7 @@ class pts_result_file_analyzer
 		{
 			if($result->test_profile->get_identifier() == null || $result->test_profile->get_display_format() != 'BAR_GRAPH' || $system_count > $result->test_result_buffer->get_count())
 			{
+				// Skip data where it's not a proper test, not a singular data value, or not all systems ran within the result file
 				continue;
 			}
 
@@ -38,6 +39,7 @@ class pts_result_file_analyzer
 				$r = $buffer_item->get_result_value();
 				if($result->test_profile->get_result_proportion() == 'LIB')
 				{
+					// convert to HIB
 					$r = (1 / $r) * 100;
 				}
 
@@ -94,6 +96,7 @@ class pts_result_file_analyzer
 		{
 			if($result->test_profile->get_identifier() == null || $result->test_profile->get_display_format() != 'BAR_GRAPH' || $result->test_profile->get_result_proportion() == 'LIB' || $system_count > $result->test_result_buffer->get_count())
 			{
+				// Skip data where it's not a proper test, not a singular data value, or not all systems ran within the result file, or lower is better for results
 				continue;
 			}
 			$rs = $result->test_profile->get_result_scale();
@@ -303,7 +306,7 @@ class pts_result_file_analyzer
 		}
 
 		$bold_row = $rich_text ? 0 : -1;
-		return count($table) < 2 ? null : PHP_EOL . pts_user_io::display_text_table($table, null, 0, 0, $border_table, $bold_row, $color_rows);
+		return count($table) < 1 ? null : PHP_EOL . pts_user_io::display_text_table($table, null, 0, 0, $border_table, $bold_row, $color_rows);
 	}
 	public static function analyze_result_file_intent(&$result_file, &$flagged_results = -1, $return_all_changed_indexes = false)
 	{
