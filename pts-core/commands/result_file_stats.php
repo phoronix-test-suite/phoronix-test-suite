@@ -27,7 +27,7 @@ class result_file_stats implements pts_option_interface
 
 	public static function command_aliases()
 	{
-		return array('winners_and_losers');
+		return array('winners_and_losers', 'result_stats');
 	}
 	public static function argument_checks()
 	{

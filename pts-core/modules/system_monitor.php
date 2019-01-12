@@ -635,7 +635,7 @@ class system_monitor extends pts_module_interface
 		if(is_array(self::$perf_per_watt_collection) && count(self::$perf_per_watt_collection) > 2)
 		{
 			// Performance per watt overall
-			$avg = array_sum(self::$perf_per_watt_collection) / count(self::$perf_per_watt_collection);
+			$avg = pts_math::geometric_mean(self::$perf_per_watt_collection);
 			$test_profile = new pts_test_profile();
 			$test_result = new pts_test_result($test_profile);
 			$test_result->test_profile->set_test_title('Meta Performance Per Watt');
@@ -648,7 +648,7 @@ class system_monitor extends pts_module_interface
 			$test_result->set_used_arguments_description('Performance Per Watt');
 			$test_result->set_used_arguments('Per-Per-Watt');
 			$test_result->test_result_buffer = new pts_test_result_buffer();
-			$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision($avg));
+			$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision($avg, 4));
 			$test_run_manager->result_file->add_result($test_result);
 		}
 	}
