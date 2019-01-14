@@ -208,7 +208,8 @@
 		</Package>
 		<Package>
 			<GenericName>python</GenericName>
-			<PackageName>python</PackageName>
+			<PackageName>python python-pip</PackageName>
+			<FileCheck>pip3</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>yasm</GenericName>

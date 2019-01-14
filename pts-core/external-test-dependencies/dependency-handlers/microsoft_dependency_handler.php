@@ -131,6 +131,8 @@ class microsoft_dependency_handler implements pts_dependency_handler
 				else
 				{
 					echo 'Downloading...' . PHP_EOL;
+					$download_package = new pts_test_file_download($url);
+					pts_client::$display->test_install_download_file('DOWNLOAD', $download_package);
 					pts_network::download_file($url, $download_destination);
 				}
 				echo 'Executing...' . PHP_EOL;

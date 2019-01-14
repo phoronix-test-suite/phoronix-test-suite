@@ -222,7 +222,7 @@
 		</Package>
 		<Package>
 			<GenericName>blas-development</GenericName>
-			<PackageName>libblas-dev</PackageName>
+			<PackageName>libblas-dev libopenblas-base libopenblas-dev</PackageName>
 		</Package>
 		<Package>
 			<GenericName>lapack-development</GenericName>
