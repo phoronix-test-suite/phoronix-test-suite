@@ -123,7 +123,7 @@ class microsoft_dependency_handler implements pts_dependency_handler
 			foreach($files_to_download as $url)
 			{
 				$download_destination = $download_location . basename($url);
-				echo $url . PHP_EOL . ' - ' . $download_destination . PHP_EOL;
+				echo '        ' . $url . ' - ' . $download_destination . PHP_EOL;
 				if(is_file($download_destination))
 				{
 					echo 'File Already Present' . PHP_EOL;
