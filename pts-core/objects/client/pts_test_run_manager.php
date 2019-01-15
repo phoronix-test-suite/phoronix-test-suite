@@ -31,6 +31,7 @@ class pts_test_run_manager
 	protected $last_test_run_index = 0;
 	protected $test_run_pos = 0;
 	protected $test_run_count = 0;
+	protected $loop_run_pos = 1;
 
 	protected $file_name = null;
 	protected $file_name_title = null;
@@ -555,7 +556,7 @@ class pts_test_run_manager
 	}
 	public function get_test_run_position()
 	{
-		return $this->test_run_pos + 1;
+		return ($this->get_test_count() * ($this->loop_run_pos - 1)) + $this->test_run_pos + 1;
 	}
 	public function get_test_run_count_reported()
 	{
@@ -589,6 +590,7 @@ class pts_test_run_manager
 
 		for($loop = 1; $loop <= $total_loop_count && $continue_test_flag; $loop++)
 		{
+			$this->loop_run_pos = $loop;
 			for($i = 0; $i < $tests_to_run_count && $continue_test_flag; $i++)
 			{
 				$this->test_run_pos = $i;
