@@ -155,11 +155,29 @@ class pts_user_io
 				$line = pts_client::cli_just_bold($line);
 			}
 			$formatted_table .= ($r == 0 ? '' : PHP_EOL) . $line;
+			if($r == 0 && $border)
+			{
+				$line = null;
+				for($c = 0; $c < count($table[$r]); $c++)
+				{
+					if($border)
+					{
+						$line .= '| ';
+					}
+
+					//$line .= $table[$r][$c];
+
+					$m = (max($min_width, 1 + $extra_width_to_column + $column_widths[$c]));
+					$line .= str_repeat('-', $m - 1) . ' ';
+				}
+				$formatted_table .= PHP_EOL . $line . '|';
+			}
 		}
 
 		if($border)
 		{
-			$formatted_table = str_repeat('-', $longest_line) . PHP_EOL . $formatted_table . PHP_EOL . str_repeat('-', $longest_line) . PHP_EOL;
+			$formatted_table = PHP_EOL. PHP_EOL . $formatted_table . PHP_EOL;
+			//$formatted_table = str_repeat('-', $longest_line) . PHP_EOL . $formatted_table . PHP_EOL . str_repeat('-', $longest_line) . PHP_EOL;
 		}
 
 		return $formatted_table;
