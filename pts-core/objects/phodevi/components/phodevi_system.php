@@ -1196,7 +1196,7 @@ class phodevi_system extends phodevi_device_interface
 				}
 			}
 		}
-		else if(stripos($vendor, $version) === false)
+		else if($version != null && stripos($vendor, $version) === false)
 		{
 			$os = $vendor . ' ' . $version;
 		}
