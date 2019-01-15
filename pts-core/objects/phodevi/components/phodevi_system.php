@@ -91,6 +91,15 @@ class phodevi_system extends phodevi_device_interface
 			$layer = phodevi::read_property('system', 'virtualized-mode');
 		}
 
+		if(empty($layer) && is_file('/proc/version'))
+		{
+			if(stripos(file_get_contents('/proc/version'), 'Microsoft') !== false && stripos(file_get_contents('/proc/mounts'), 'lxfs') !== false)
+			{
+				// Microsoft Windows Subsystem for Linux
+				$layer = 'WSL';
+			}
+		}
+
 		return $layer;
 	}
 	public static function sw_hostname()
