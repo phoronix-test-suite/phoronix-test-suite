@@ -1037,7 +1037,7 @@ class pts_test_run_manager
 
 				if($this->result_file->get_system_count() > 1)
 				{
-					echo pts_result_file_analyzer::display_result_file_stats_pythagorean_means($this->result_file);
+					echo pts_result_file_analyzer::display_result_file_stats_pythagorean_means($this->result_file, $this->get_results_identifier());
 				}
 			}
 
