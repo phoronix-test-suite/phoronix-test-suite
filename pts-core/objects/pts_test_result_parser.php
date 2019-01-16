@@ -895,7 +895,7 @@ class pts_test_result_parser
 		{
 			$search_key = null; // doesn't really matter what this value is
 		}
-		else if($line_after_hint != null && $line_hint != null strpos($template, $line_hint) !== false)
+		else if($line_after_hint != null && $line_hint != null && strpos($template, $line_hint) !== false)
 		{
 			$search_key = null; // doesn't really matter what this value is
 		}
