@@ -265,7 +265,7 @@ class pts_result_file_analyzer
 		$output .= $prepend_lines . pts_client::cli_colored_text('TESTS COUNTED: ', 'cyan', true) . ($tests_counted == $possible_evaluate_result_count ? $tests_counted : $tests_counted . ' of ' . $possible_evaluate_result_count) .  PHP_EOL;
 		return $output;
 	}
-	public static function display_results_baseline_two_way_compare(&$result_file, $drop_flat_results = false, $border_table = false, $rich_text = false)
+	public static function display_results_baseline_two_way_compare(&$result_file, $drop_flat_results = false, $border_table = false, $rich_text = false, $prepend_to_lines = null)
 	{
 		$table = array(array('Test', 'Configuration', 'Relative'));
 		$color_rows = array();
@@ -306,7 +306,7 @@ class pts_result_file_analyzer
 		}
 
 		$bold_row = $rich_text ? 0 : -1;
-		return count($table) < 1 ? null : PHP_EOL . pts_user_io::display_text_table($table, null, 0, 0, $border_table, $bold_row, $color_rows);
+		return count($table) < 1 ? null : PHP_EOL . pts_user_io::display_text_table($table, $prepend_to_lines, 0, 0, $border_table, $bold_row, $color_rows);
 	}
 	public static function analyze_result_file_intent(&$result_file, &$flagged_results = -1, $return_all_changed_indexes = false)
 	{
