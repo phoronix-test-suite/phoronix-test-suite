@@ -7,6 +7,7 @@ pts-core: Add result-file-stats sub-command to show more test result statistics
 pts-core: Show geometric mean and harmonic mean data at end of benchmarking process when relevant as part of post-run stats
 pts-core: Improved formatting of file download text user interface for downloading of dependencies on Microsoft Windows
 pts-core: Fix Loop 'Test i of n' Reporting
+pts-core: A few warning fixes for PHP 7.3+
 phodevi: Report Windows Subsystem for Linux (WSL) to the system layer string
 
 Phoronix Test Suite 8.6.0 Milestone 1
