@@ -306,7 +306,7 @@ class pts_result_file_analyzer
 		}
 
 		$bold_row = $rich_text ? 0 : -1;
-		return count($table) < 1 ? null : PHP_EOL . pts_user_io::display_text_table($table, $prepend_to_lines, 0, 0, $border_table, $bold_row, $color_rows);
+		return count($table) < 2 ? null : PHP_EOL . pts_user_io::display_text_table($table, $prepend_to_lines, 0, 0, $border_table, $bold_row, $color_rows);
 	}
 	public static function analyze_result_file_intent(&$result_file, &$flagged_results = -1, $return_all_changed_indexes = false)
 	{
