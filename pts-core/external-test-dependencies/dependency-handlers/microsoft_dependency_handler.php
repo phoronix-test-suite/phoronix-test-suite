@@ -123,7 +123,7 @@ class microsoft_dependency_handler implements pts_dependency_handler
 			foreach($files_to_download as $url)
 			{
 				$download_destination = $download_location . basename($url);
-				echo '        ' . $url . ' - ' . $download_destination . PHP_EOL;
+			//	echo '        ' . $url . ' - ' . $download_destination . PHP_EOL;
 				if(is_file($download_destination))
 				{
 					echo 'File Already Present' . PHP_EOL;
@@ -135,7 +135,7 @@ class microsoft_dependency_handler implements pts_dependency_handler
 					pts_client::$display->test_install_download_file('DOWNLOAD', $download_package);
 					pts_network::download_file($url, $download_destination);
 				}
-				echo 'Executing...' . PHP_EOL;
+				//echo 'Executing...' . PHP_EOL;
 				shell_exec(basename($url));
 			}
 		}

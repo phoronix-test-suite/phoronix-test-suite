@@ -8,6 +8,7 @@ pts-core: Show geometric mean and harmonic mean data at end of benchmarking proc
 pts-core: Improved formatting of file download text user interface for downloading of dependencies on Microsoft Windows
 pts-core: Fix Loop 'Test i of n' Reporting
 pts-core: A few warning fixes for PHP 7.3+
+pts-core: External dependency handling support for OpenMandriva Lx 4.0 (transitioned from urpmi to DNF)
 phodevi: Report Windows Subsystem for Linux (WSL) to the system layer string
 
 Phoronix Test Suite 8.6.0 Milestone 1
