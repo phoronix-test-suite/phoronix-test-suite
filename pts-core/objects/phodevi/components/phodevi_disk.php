@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2018, Phoronix Media
-	Copyright (C) 2008 - 2018, Michael Larabel
+	Copyright (C) 2008 - 2019, Phoronix Media
+	Copyright (C) 2008 - 2019, Michael Larabel
 	phodevi_disk.php: The PTS Device Interface object for the system disk(s)
 
 	This program is free software; you can redistribute it and/or modify
@@ -205,7 +205,7 @@ class phodevi_disk extends phodevi_device_interface
 		{
 			$disks = array();
 
-			foreach(array_merge(pts_file_io::glob('/sys/block/sd*'), pts_file_io::glob('/sys/block/mmcblk*'), pts_file_io::glob('/sys/block/nvme*'), pts_file_io::glob('/sys/block/vd*')) as $sdx)
+			foreach(array_merge(pts_file_io::glob('/sys/block/nvme*'), pts_file_io::glob('/sys/block/sd*'), pts_file_io::glob('/sys/block/mmcblk*'), pts_file_io::glob('/sys/block/vd*')) as $sdx)
 			{
 				if(strpos($sdx, 'boot') !== false)
 				{

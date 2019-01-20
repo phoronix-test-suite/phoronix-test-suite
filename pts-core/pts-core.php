@@ -262,9 +262,9 @@ function pts_version_codenames()
 		);
 }
 
-pts_define('PTS_VERSION', '8.6.0m1');
-pts_define('PTS_CORE_VERSION', 8510);
-pts_define('PTS_RELEASE_DATE', '20190107');
+pts_define('PTS_VERSION', '8.6.0m2');
+pts_define('PTS_CORE_VERSION', 8520);
+pts_define('PTS_RELEASE_DATE', '20190119');
 pts_define('PTS_CODENAME', 'Spydeberg');
 
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));

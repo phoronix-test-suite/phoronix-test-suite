@@ -1030,7 +1030,7 @@ class pts_test_run_manager
 					if($highlights)
 					{
 						echo '    ' . pts_client::cli_just_bold('Result Highlights') . PHP_EOL;
-						echo $highlights . PHP_EOL . PHP_EOL;
+						echo $highlights . PHP_EOL;
 					}
 				}
 				if($this->result_file->get_system_count() > 2)
