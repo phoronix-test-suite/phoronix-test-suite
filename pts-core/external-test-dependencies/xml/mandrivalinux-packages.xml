@@ -4,7 +4,7 @@
 	<ExternalDependencies>
 		<Information>
 			<Name>Mandriva</Name>
-			<Aliases>Mageia, OpenMandriva</Aliases>
+			<Aliases>Mageia, OpenMandriva, OpenMandrivaLinux</Aliases>
 			<PackageManager>urpmi</PackageManager>
 		</Information>
 		<Package>
@@ -53,8 +53,8 @@
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
-			<PackageName>task-c-devel task-c++-devel</PackageName>
-			<FileCheck>/usr/bin/gcc, /usr/bin/bison, /usr/bin/flex</FileCheck>
+			<PackageName>clang automake autoconf bison flex</PackageName>
+			<FileCheck>/usr/bin/clang, /usr/bin/bison, /usr/bin/flex</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>xorg-development</GenericName>

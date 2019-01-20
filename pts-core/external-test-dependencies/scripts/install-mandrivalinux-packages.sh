@@ -3,5 +3,11 @@
 # Mandriva package installation
 
 echo "Please enter your root password below:" 1>&2
-su - root -c "urpmi --auto $*"
+
+if which dnf >/dev/null 2>&1 ;
+then
+    su - root -c "dnf -y install $*"
+elif
+	su - root -c "urpmi --auto $*"
+fi
 exit
