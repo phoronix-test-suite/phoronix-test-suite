@@ -36,8 +36,9 @@ class pts_result_file
 	private $preset_environment_variables = null;
 	private $systems = null;
 	private $is_tracker = -1;
+	private $last_modified = null;
 
-	public function __construct($result_file, $read_only_result_objects = false)
+	public function __construct($result_file, $read_only_result_objects = false, $parse_only_qualified_result_objects = false)
 	{
 		$this->save_identifier = $result_file;
 		$this->extra_attributes = array();
@@ -68,6 +69,7 @@ class pts_result_file
 			$this->internal_tags = self::clean_input($xml->Generated->InternalTags);
 			$this->reference_id = self::clean_input($xml->Generated->ReferenceID);
 			$this->preset_environment_variables = self::clean_input($xml->Generated->PreSetEnvironmentVariables);
+			$this->last_modified = $xml->Generated->LastModified;
 		}
 
 		if(isset($xml->System))
@@ -83,6 +85,11 @@ class pts_result_file
 		{
 			foreach($xml->Result as $result)
 			{
+				if($parse_only_qualified_result_objects && ($result->Identifier == null || $result->Identifier->__toString() == null))
+				{
+					continue;
+				}
+
 				$test_profile = new pts_test_profile(($result->Identifier != null ? $result->Identifier->__toString() : null), null, !$read_only_result_objects);
 				$test_profile->set_test_title($result->Title->__toString());
 				$test_profile->set_version($result->AppVersion->__toString());
@@ -109,6 +116,10 @@ class pts_result_file
 	public function get_file_location()
 	{
 		return $this->file_location;
+	}
+	public function get_last_modified()
+	{
+		return $this->last_modified;
 	}
 	public function validate()
 	{

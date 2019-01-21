@@ -140,6 +140,24 @@ class pts_file_io
 
 		return $success;
 	}
+	public static function recursively_find_files_in_directory($dir, &$found_files, $file_extension = null)
+	{
+		$tree = glob(rtrim($dir, '/') . '/*');
+		if(is_array($tree))
+		{
+			foreach($tree as $file)
+			{
+				if(is_dir($file))
+				{
+					self::recursively_find_files_in_directory($file, $found_files, $file_extension);
+				}
+				else if(is_file($file) && ($file_extension == null || substr($file, 0 - strlen($file_extension)) == $file_extension))
+				{
+					$found_files[] = $file;
+				}
+			}
+		}
+	}
 }
 
 ?>
