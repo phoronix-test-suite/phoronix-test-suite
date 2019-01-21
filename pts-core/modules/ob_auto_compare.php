@@ -239,7 +239,7 @@ class ob_auto_compare extends pts_module_interface
 							{
 								// print to left
 								$string_to_print = $component . ': ' . $value . ' ^';
-								$write_pos = ($this_result_pos - strlen($string_to_print));
+								$write_pos = ($this_result_pos - strlen($string_to_print) + 1);
 							}
 							else if($this_result_pos + strlen($string_to_show) < $terminal_width)
 							{
@@ -299,7 +299,7 @@ class ob_auto_compare extends pts_module_interface
 						$line = rtrim(implode('', $line_r));
 						if(!empty($line))
 						{
-							echo '     ' . $line . PHP_EOL;
+							echo '    ' . $line . PHP_EOL;
 						}
 					}
 				}
