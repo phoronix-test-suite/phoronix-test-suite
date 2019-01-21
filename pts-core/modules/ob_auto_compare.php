@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2017 - 2018, Phoronix Media
-	Copyright (C) 2017 - 2018, Michael Larabel
+	Copyright (C) 2017 - 2019, Phoronix Media
+	Copyright (C) 2017 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -70,7 +70,8 @@ class ob_auto_compare extends pts_module_interface
 	protected static function request_compare(&$result_object, $system_type)
 	{
 		$result_file = null;
-		if(true) // default to see if local comparison first
+//XXX reset check
+		if(false) // default to see if local comparison first
 		{
 			$comparison_hash = $result_object->get_comparison_hash(true, false);
 			$result_file = self::request_compare_from_local_results($comparison_hash);
@@ -79,7 +80,7 @@ class ob_auto_compare extends pts_module_interface
 		if(empty($result_file) && pts_network::internet_support_available())
 		{
 			$comparison_hash = $result_object->get_comparison_hash();
-			$result_file = self::request_compare_from_ob($comparison_hash, $system_type);
+			$result_file = self::request_compare_from_ob($result_object, $comparison_hash, $system_type);
 		}
 
 		return $result_file;
@@ -97,6 +98,10 @@ class ob_auto_compare extends pts_module_interface
 			{
 				continue;
 			}
+			if($result_file->get_system_count() < 2)
+			{
+				continue;
+			}
 
 			if($result_file->get_result($comparison_hash) != false)
 			{
@@ -107,7 +112,7 @@ class ob_auto_compare extends pts_module_interface
 
 		return null;
 	}
-	protected static function request_compare_from_ob($comparison_hash, $system_type)
+	protected static function request_compare_from_ob(&$result_object, $comparison_hash, $system_type)
 	{
 		if(!pts_network::internet_support_available() || self::$response_time > 8)
 		{
@@ -115,25 +120,99 @@ class ob_auto_compare extends pts_module_interface
 			return false;
 		}
 
+		$rf = null;
 		$ob_request_time = time();
-		$json_response = pts_openbenchmarking::make_openbenchmarking_request('auto_compare_via_hash', array('comparison_hash' => $comparison_hash, 'system_type' => $system_type));
+		$ch = $result_object->get_comparison_hash(true, false);
+		$test_profile = $result_object->test_profile->get_identifier(false);
+		$json_response = pts_openbenchmarking::make_openbenchmarking_request('auto_compare_via_hash', array('comparison_hash' => $comparison_hash, 'system_type' => $system_type, 'test_profile' => $test_profile, 'comparison_hash_string' => $ch));
 		self::$response_time = time() - $ob_request_time;
 
-
+//echo PHP_EOL . 'ch: ' . $ch . ' b: ' . base64_encode($test_profile) . PHP_EOL;
 		$json_response = json_decode($json_response, true);
 
-		if(is_array($json_response) && isset($json_response['openbenchmarking']['result']['composite_xml']))
+		if(is_array($json_response))
 		{
-			$composite_xml = $json_response['openbenchmarking']['result']['composite_xml'];
-			if(!empty($composite_xml))
+			if(isset($json_response['openbenchmarking']['result']['composite_xml']))
 			{
-				$result_file = new pts_result_file($composite_xml);
-				$result_file->set_reference_id($json_response['openbenchmarking']['result']['public_id']);
-				return $result_file;
+				$composite_xml = $json_response['openbenchmarking']['result']['composite_xml'];
+				if(!empty($composite_xml))
+				{
+					$result_file = new pts_result_file($composite_xml);
+					$result_file->set_reference_id($json_response['openbenchmarking']['result']['public_id']);
+					$rf = $result_file;
+				}
+			}
+
+			$active_result = is_object($result_object->active) ? $result_object->active->get_result() : null;
+			if(is_numeric($active_result) && $active_result > 0 && isset($json_response['openbenchmarking']['result']['ae']['percentiles']) && !empty($json_response['openbenchmarking']['result']['ae']['percentiles']) && isset($json_response['openbenchmarking']['result']['ae']['samples']))
+			{
+//echo 2222 . PHP_EOL;
+				$percentiles = $json_response['openbenchmarking']['result']['ae']['percentiles'];
+				$sample_count = $json_response['openbenchmarking']['result']['ae']['samples'];
+
+				$box_plot = str_repeat(' ', pts_client::terminal_width() - 4);
+				$box_plot_size = strlen($box_plot);
+				$box_plot = str_split($box_plot);
+				$max_value = array_pop($percentiles);
+
+				// BOX PLOT
+				$whisker_bottom = $percentiles[2];
+				$whisker_top = $percentiles[98];
+				$whisker_start_char = round($whisker_bottom / $max_value * $box_plot_size);
+				$whisker_end_char = round($whisker_top / $max_value * $box_plot_size);
+
+				for($i = $whisker_start_char; $i <= $whisker_end_char && $i < ($box_plot_size - 1); $i++)
+				{
+					$box_plot[$i] = '-';
+				}
+
+				$box_left = floor(($percentiles[25] / $max_value) * $box_plot_size);
+				$box_middle = round(($percentiles[50] / $max_value) * $box_plot_size);
+				$box_right = ceil(($percentiles[75] / $max_value) * $box_plot_size);
+				for($i = $box_left; $i <= $box_right; $i++)
+				{
+					$box_plot[$i] = '#';
+				}
+				$box_plot[$whisker_start_char] = '|';
+				$box_plot[$whisker_end_char] = '|';
+				$box_plot[$box_middle] = '!';
+
+				$this_result = round($active_result / $max_value * $box_plot_size);
+				$box_plot[$this_result] = pts_client::cli_colored_text('X', 'red', true);
+
+				// END OF BOX PLOT
+				if($result_object->test_profile->get_result_proportion() == 'LIB')
+				{
+					$box_plot = array_reverse($box_plot);
+				}
+				$box_plot[0] = '[';
+				$box_plot[($box_plot_size - 1)] = ']';
+
+				$this_result_percentile = -1;
+				foreach($percentiles as $percentile => $v)
+				{
+					if($v < $active_result)
+					{
+						$this_result_percentile = $percentile - 1;
+					}
+				}
+				if($result_object->test_profile->get_result_proportion() == 'LIB')
+				{
+					$this_result_percentile = 100 - $this_result_percentile;
+				}
+
+				if($active_result < $max_value)
+				{
+					echo '    ' . implode('', $box_plot) . PHP_EOL;
+
+//var_dump($json_response['openbenchmarking']['result']['ae']['reference_results']);
+
+					echo '    ' . pts_client::cli_just_italic('A score of ' . pts_client::cli_just_bold($active_result) . ' compared to ' . $sample_count . ' samples from OpenBenchmarking.org where the median result is ' . pts_client::cli_just_bold($percentiles[50]) . ' would put this run in the ' . pts_client::cli_just_bold(pts_strings::number_suffix_handler($this_result_percentile)) . ' percentile.') . PHP_EOL;
+				}
 			}
 		}
 
-		return null;
+		return $rf;
 	}
 	public static function __pre_run_process($test_run_manager)
 	{

@@ -681,6 +681,27 @@ class pts_strings
 
 		return implode(($standard_version ? ', ' : null), $formatted_time);
 	}
+	public static function number_suffix_handler($n)
+	{
+		$suffix = 'th';
+		$n = $n % 100;
+		if($n < 11 || $n > 13)
+		{
+			switch($n % 10)
+			{
+				case 1:
+					$suffix = 'st';
+					break;
+				case 2:
+					$suffix = 'nd';
+					break;
+				case 3:
+					$suffix = 'rd';
+					break;
+			}
+		}
+	    return $n . $suffix;
+	}
 	public static function plural_handler($count, $base)
 	{
 		return $count . ' ' . $base . ($count != 1 ? 's' : null);
