@@ -127,7 +127,6 @@ class ob_auto_compare extends pts_module_interface
 		$json_response = pts_openbenchmarking::make_openbenchmarking_request('auto_compare_via_hash', array('comparison_hash' => $comparison_hash, 'system_type' => $system_type, 'test_profile' => $test_profile, 'comparison_hash_string' => $ch));
 		self::$response_time = time() - $ob_request_time;
 
-//echo PHP_EOL . 'ch: ' . $ch . ' b: ' . base64_encode($test_profile) . PHP_EOL;
 		$json_response = json_decode($json_response, true);
 
 		if(is_array($json_response))
@@ -146,14 +145,15 @@ class ob_auto_compare extends pts_module_interface
 			$active_result = is_object($result_object->active) ? $result_object->active->get_result() : null;
 			if(is_numeric($active_result) && $active_result > 0 && isset($json_response['openbenchmarking']['result']['ae']['percentiles']) && !empty($json_response['openbenchmarking']['result']['ae']['percentiles']) && isset($json_response['openbenchmarking']['result']['ae']['samples']))
 			{
-//echo 2222 . PHP_EOL;
 				$percentiles = $json_response['openbenchmarking']['result']['ae']['percentiles'];
 				$sample_count = $json_response['openbenchmarking']['result']['ae']['samples'];
 
-				$box_plot = str_repeat(' ', pts_client::terminal_width() - 4);
+				$terminal_width = pts_client::terminal_width();
+				$box_plot = str_repeat(' ', $terminal_width - 4);
 				$box_plot_size = strlen($box_plot);
 				$box_plot = str_split($box_plot);
 				$max_value = array_pop($percentiles);
+				$results_at_pos = array(0, 1, ($box_plot_size - 1));
 
 				// BOX PLOT
 				$whisker_bottom = $percentiles[2];
@@ -176,9 +176,6 @@ class ob_auto_compare extends pts_module_interface
 				$box_plot[$whisker_start_char] = '|';
 				$box_plot[$whisker_end_char] = '|';
 				$box_plot[$box_middle] = '!';
-
-				$this_result = round($active_result / $max_value * $box_plot_size);
-				$box_plot[$this_result] = pts_client::cli_colored_text('X', 'red', true);
 
 				// END OF BOX PLOT
 				if($result_object->test_profile->get_result_proportion() == 'LIB')
@@ -203,11 +200,103 @@ class ob_auto_compare extends pts_module_interface
 
 				if($active_result < $max_value)
 				{
+					$box_plot_complement = array();
+					for($i = 0; $i < 5; $i++)
+					{
+						$box_plot_complement[$i] = str_repeat(' ', $terminal_width - 4);
+						$box_plot_complement[$i] = str_split($box_plot_complement[$i]);
+
+					}
+					if($terminal_width >= 95 && !empty($json_response['openbenchmarking']['result']['ae']['reference_results']))
+					{
+						$reference_results_added = -1;
+						foreach(array_merge(array('This Result (' . pts_strings::number_suffix_handler($this_result_percentile) . ' Percentile)' => $active_result), $json_response['openbenchmarking']['result']['ae']['reference_results']) as $component => $value)
+						{
+							$this_result_pos = round($value / $max_value * $box_plot_size);
+							if(in_array($this_result_pos, $results_at_pos))
+							{
+								continue;
+							}
+							$results_at_pos[] = $this_result_pos;
+							$results_at_pos[] = $this_result_pos - 1;
+							$results_at_pos[] = $this_result_pos - 2;
+							$results_at_pos[] = $this_result_pos - 3;
+							$results_at_pos[] = $this_result_pos + 1;
+							$reference_results_added++;
+
+							if($result_object->test_profile->get_result_proportion() == 'LIB')
+							{
+								$this_result_pos = $box_plot_size - $this_result_pos;
+							}
+
+							$string_to_show = $component . ': ' . $value;
+							if($this_result_pos - strlen($string_to_show) - 3 > 4)
+							{
+								// print to left
+								$string_to_print = $component . ': ' . $value . ' ^';
+								$write_pos = ($this_result_pos - strlen($string_to_print));
+							}
+							else if($this_result_pos + strlen($string_to_show) < $terminal_width)
+							{
+
+								// print to right of line
+								$string_to_print = '^ ' . $component . ': ' . $value;
+								$write_pos = $this_result_pos;
+								$box_plot_complement[$reference_results_added][$this_result_pos] = '^ ' . $component . ': ' . $value;
+							}
+							else
+							{
+								$write_pos = 0;
+								$referemce_results_added--;
+							}
+
+							if($write_pos > 0)
+							{
+								if(strpos($component, 'This Result') !== false)
+								{
+									$string_to_print = pts_client::cli_colored_text($string_to_print, 'cyan', true);
+									$box_plot[$this_result_pos] = pts_client::cli_colored_text('X', 'cyan', true);
+								}
+								else if(($brand_color = pts_render::identifier_to_brand_color($component, null)) != null)
+								{
+									$brand_color = pts_client::hex_color_to_string($brand_color);
+									$string_to_print = pts_client::cli_colored_text($string_to_print, $brand_color, false);
+								}
+								else
+								{
+									$brand_color = null;
+								}
+
+								$box_plot_complement[$reference_results_added][$write_pos] = $string_to_print;
+								if(in_array($box_plot[$this_result_pos], array(' ', '-', '#')))
+								{
+									$box_plot[$this_result_pos] = pts_client::cli_colored_text('*', $brand_color, false);
+								}
+							}
+
+							if($reference_results_added == 4)
+							{
+								break;
+							}
+						}
+					}
+					else
+					{
+						$this_result = round($active_result / $max_value * $box_plot_size);
+						$box_plot[$this_result] = pts_client::cli_colored_text('X', 'cyan', true);
+					}
+
+					echo PHP_EOL;
+					echo '    ' . pts_client::cli_just_italic('Result compared to ' . $sample_count . ' OpenBenchmarking.org samples; median: ' . pts_client::cli_just_bold($percentiles[50]) . '. Box plut of sampling:') . PHP_EOL;
 					echo '    ' . implode('', $box_plot) . PHP_EOL;
-
-//var_dump($json_response['openbenchmarking']['result']['ae']['reference_results']);
-
-					echo '    ' . pts_client::cli_just_italic('A score of ' . pts_client::cli_just_bold($active_result) . ' compared to ' . $sample_count . ' samples from OpenBenchmarking.org where the median result is ' . pts_client::cli_just_bold($percentiles[50]) . ' would put this run in the ' . pts_client::cli_just_bold(pts_strings::number_suffix_handler($this_result_percentile)) . ' percentile.') . PHP_EOL;
+					foreach($box_plot_complement as $line_r)
+					{
+						$line = rtrim(implode('', $line_r));
+						if(!empty($line))
+						{
+							echo '     ' . $line . PHP_EOL;
+						}
+					}
 				}
 			}
 		}
