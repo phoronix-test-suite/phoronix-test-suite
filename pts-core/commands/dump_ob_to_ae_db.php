@@ -39,9 +39,6 @@ class dump_ob_to_ae_db implements pts_option_interface
 		}
 
 		$ae = new pts_ae_data($storage_dir);
-
-$ae->rebuild_composite_listing();
-return;
 		$xml_files = array();
 		pts_file_io::recursively_find_files_in_directory($dir_to_recursively_scan, $xml_files, '.xml');
 
