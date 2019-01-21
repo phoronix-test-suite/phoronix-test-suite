@@ -188,9 +188,10 @@ class ob_auto_compare extends pts_module_interface
 				$this_result_percentile = -1;
 				foreach($percentiles as $percentile => $v)
 				{
-					if($v < $active_result)
+					if($v > $active_result)
 					{
 						$this_result_percentile = $percentile - 1;
+						break;
 					}
 				}
 				if($result_object->test_profile->get_result_proportion() == 'LIB')
