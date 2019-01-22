@@ -104,6 +104,10 @@ class dump_ob_to_ae_db implements pts_option_interface
 								$component = 'Network';
 								$related_component = 'OS';
 								break;
+							case 'Memory':
+								$component = 'Memory';
+								$related_component = 'Processor';
+								break;
 							default:
 								$component = 'Processor';
 								$related_component = 'OS';
