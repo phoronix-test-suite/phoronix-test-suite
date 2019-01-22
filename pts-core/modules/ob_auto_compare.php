@@ -217,6 +217,10 @@ class ob_auto_compare extends pts_module_interface
 						$reference_results_added = -1;
 						foreach(array_merge(array('This Result (' . pts_strings::number_suffix_handler($this_result_percentile) . ' Percentile)' => $active_result), $json_response['openbenchmarking']['result']['ae']['reference_results']) as $component => $value)
 						{
+							if($value > $max_value)
+							{
+								continue;
+							}
 							$this_result_pos = round($value / $max_value * $box_plot_size);
 							if(in_array($this_result_pos, $results_at_pos))
 							{
