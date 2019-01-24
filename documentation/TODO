@@ -76,6 +76,9 @@ RedShift demo
 https://wiki.fysik.dtu.dk/gpaw/devel/benchmarks.html
 - More AV1 IVF sample files: http://download.opencontent.netflix.com/?prefix=AV1/Chimera/
 SPECFEM3D https://www.nvidia.com/en-us/data-center/gpu-accelerated-applications/specfem3d-globe/
+Ashes of the Singularity Escalation (January 2019 black screen)
+hitman2 on steam play benchmarks nicely but no sign of benchmark logs
+shadow of the tomb raider, can't figure out any CLI switches
 
 ### WEB SOCKET / HTML5 USER INTERFACE WORK ###
 

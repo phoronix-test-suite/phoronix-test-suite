@@ -1187,6 +1187,7 @@ class pts_test_run_manager
 					else if($test_profile->is_test_installed() == false)
 					{
 						$tests_missing[] = $test_profile;
+						continue;
 					}
 					else
 					{
@@ -1219,6 +1220,7 @@ class pts_test_run_manager
 					if($test_profile->is_test_installed() == false)
 					{
 						$tests_missing[] = $test_profile;
+						continue;
 					}
 					else
 					{
