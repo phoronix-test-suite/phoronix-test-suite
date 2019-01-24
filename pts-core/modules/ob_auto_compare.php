@@ -215,7 +215,8 @@ class ob_auto_compare extends pts_module_interface
 					if($terminal_width >= 95 && !empty($json_response['openbenchmarking']['result']['ae']['reference_results']))
 					{
 						$reference_results_added = -1;
-						foreach(array_merge(array('This Result (' . pts_strings::number_suffix_handler($this_result_percentile) . ' Percentile)' => $active_result), $json_response['openbenchmarking']['result']['ae']['reference_results']) as $component => $value)
+						$this_percentile = pts_strings::number_suffix_handler($this_result_percentile);
+						foreach(array_merge(array('This Result' . ($this_percentile > 0 && $this_percentile < 100 ? ' (' . $this_percentile . ' Percentile)' : null) => $active_result), $json_response['openbenchmarking']['result']['ae']['reference_results']) as $component => $value)
 						{
 							if($value > $max_value)
 							{

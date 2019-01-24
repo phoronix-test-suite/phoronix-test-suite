@@ -79,6 +79,8 @@ SPECFEM3D https://www.nvidia.com/en-us/data-center/gpu-accelerated-applications/
 Ashes of the Singularity Escalation (January 2019 black screen)
 hitman2 on steam play benchmarks nicely but no sign of benchmark logs
 shadow of the tomb raider, can't figure out any CLI switches
+filebench
+flowgrind
 
 ### WEB SOCKET / HTML5 USER INTERFACE WORK ###
 
