@@ -122,7 +122,7 @@ class ob_auto_compare extends pts_module_interface
 		if(!empty(self::$archived_percentiles))
 		{
 			$tab = '    ';
-			echo PHP_EOL . PHP_EOL . $tab . pts_client::cli_colored_text('Percentile Classification Of Current Benchmark Run', 'blue', true) . PHP_EOL;
+			echo PHP_EOL . $tab . pts_client::cli_colored_text('Percentile Classification Of Current Benchmark Run', 'blue', true) . PHP_EOL;
 			foreach(self::$archived_percentiles as $subsystem => $results)
 			{
 				echo $tab . pts_client::cli_just_bold(strtoupper($subsystem)) . PHP_EOL;
