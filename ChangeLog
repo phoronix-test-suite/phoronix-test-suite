@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Add __event_post_run_stats module hook
 pts-core: Inline display of result distributions from OpenBenchmarking.org on applicable results
 pts-core: Don't try to run tests from result file or suite that were not installed
 phodevi: Better reporting of NVMe drive strings on BSDs

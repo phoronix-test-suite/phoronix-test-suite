@@ -1024,6 +1024,7 @@ class pts_test_run_manager
 
 			if($this->result_file->get_test_count() > 4 && pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/ShowPostRunStatistics', 'TRUE'))
 			{
+				pts_module_manager::module_process('__event_post_run_stats', $this);
 				if($this->result_file->get_system_count() == 2)
 				{
 					$highlights = pts_result_file_analyzer::display_results_baseline_two_way_compare($this->result_file, true, false, true, '    ');
