@@ -49,10 +49,12 @@ class dump_ob_to_ae_db implements pts_option_interface
 			$systems = $rf->get_systems();
 			$system_data = array();
 			$timestamps = array();
+			$system_types = array();
 			foreach($systems as $system)
 			{
 				$system_data[$system->get_identifier()] = array_map(array('pts_strings', 'trim_search_query'), array_merge(pts_result_file_analyzer::system_component_string_to_array($system->get_hardware()), pts_result_file_analyzer::system_component_string_to_array($system->get_software())));
 				$timestamps[$system->get_identifier()] = strtotime($system->get_timestamp());
+				$system_types[$system->get_identifier()] = phodevi_base::determine_system_type($system->get_hardware(), $system->get_software());
 			}
 
 			foreach($rf->get_result_objects() as $ro)
@@ -120,7 +122,7 @@ class dump_ob_to_ae_db implements pts_option_interface
 						}
 						$component_value = $system_data[$system_identifier][$component];
 						$related_component_value = isset($system_data[$system_identifier][$related_component]) ? $system_data[$system_identifier][$related_component] : null;
-						$ae->insert_result_into_analytic_results($comparison_hash, $result_reference, $component_value, $component, $related_component_value, $related_component, $result, $timestamps[$system_identifier]);
+						$ae->insert_result_into_analytic_results($comparison_hash, $result_reference, $component_value, $component, $related_component_value, $related_component, $result, $timestamps[$system_identifier], $system_types[$system_identifier]);
 						$inserts++;
 					}
 

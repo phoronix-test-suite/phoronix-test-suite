@@ -783,43 +783,31 @@ class pts_test_execution
 					pts_module_manager::module_process('__post_test_run_success', $test_result);
 					$test_successful = true;
 
-					if($test_run_manager->get_results_identifier() != null)
+					if($generated_result_count >= 1)
 					{
-						if($generated_result_count >= 1)
+						// Prior to PTS 8.6, secondary result graphs wouldn't have their test profile identifier set but would be null
+						// With PTS 8.6+, the identifier is now preserved... Except with below logic for preserving compatibility with older result files, only clear the identifier if comparing against an old result file having a match for no identifier set
+						$ti_backup = $test_result->test_profile->get_identifier();
+						$test_result->test_profile->set_identifier('');
+						if(!$test_run_manager->result_file->result_hash_exists($test_result))
 						{
-							// Prior to PTS 8.6, secondary result graphs wouldn't have their test profile identifier set but would be null
-							// With PTS 8.6+, the identifier is now preserved... Except with below logic for preserving compatibility with older result files, only clear the identifier if comparing against an old result file having a match for no identifier set
-							$ti_backup = $test_result->test_profile->get_identifier();
-							$test_result->test_profile->set_identifier('');
-							if(!$test_run_manager->result_file->result_hash_exists($test_result))
-							{
-								$test_result->test_profile->set_identifier($ti_backup);
-							}
+							$test_result->test_profile->set_identifier($ti_backup);
 						}
-
-						$test_result->test_result_buffer = new pts_test_result_buffer();
-						$test_result->test_result_buffer->add_test_result($test_run_manager->get_results_identifier(), $test_result->active->get_result(), $test_result->active->get_values_as_string(), pts_test_run_manager::process_json_report_attributes($test_result), $test_result->active->get_min_result(), $test_result->active->get_max_result());
-						$added_comparison_hash = $test_run_manager->result_file->add_result($test_result);
-						$generated_result_count++;
-
-						// The merged data, get back the merged test_result object
-						$results_comparison = clone $test_run_manager->result_file->get_result($added_comparison_hash);
-						if($results_comparison && $results_comparison->test_result_buffer->get_count() > 1)
-						{
-							pts_client::$display->test_run_success_inline($results_comparison);
-						}
-						pts_module_manager::module_process('__test_run_success_inline_result', $results_comparison);
 					}
-					else
+
+					$test_result->test_result_buffer = new pts_test_result_buffer();
+					$rid = $test_run_manager->get_results_identifier() != null ? $test_run_manager->get_results_identifier() : 'Result';
+					$test_result->test_result_buffer->add_test_result($rid, $test_result->active->get_result(), $test_result->active->get_values_as_string(), pts_test_run_manager::process_json_report_attributes($test_result), $test_result->active->get_min_result(), $test_result->active->get_max_result());
+					$added_comparison_hash = $test_run_manager->result_file->add_result($test_result);
+					$generated_result_count++;
+
+					// The merged data, get back the merged test_result object
+					$results_comparison = clone $test_run_manager->result_file->get_result($added_comparison_hash);
+					if($results_comparison && $results_comparison->test_result_buffer->get_count() > 1)
 					{
-						// Not a saved result
-						$test_result->test_result_buffer = new pts_test_result_buffer();
-						$test_result->test_result_buffer->add_test_result('Result', $test_result->active->get_result(), $test_result->active->get_values_as_string(), pts_test_run_manager::process_json_report_attributes($test_result), $test_result->active->get_min_result(), $test_result->active->get_max_result());
-						$temp_result_file = new pts_result_file(null);
-						$added_comparison_hash = $temp_result_file->add_result($test_result);
-						$results_comparison = clone $temp_result_file->get_result($added_comparison_hash);
-						pts_module_manager::module_process('__test_run_success_inline_result', $results_comparison);
+						pts_client::$display->test_run_success_inline($results_comparison);
 					}
+					pts_module_manager::module_process('__test_run_success_inline_result', $results_comparison);
 				}
 			}
 		}

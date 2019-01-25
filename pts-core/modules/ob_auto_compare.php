@@ -30,6 +30,9 @@ class ob_auto_compare extends pts_module_interface
 	private static $response_time = 0;
 	protected static $current_result_file = null;
 
+	private static $longest_args_string_length = 0;
+	private static $archived_percentiles = array();
+
 	public static function user_commands()
 	{
 		return array('debug' => 'debug_result_file');
@@ -66,21 +69,22 @@ class ob_auto_compare extends pts_module_interface
 
 			echo PHP_EOL . PHP_EOL;
 		}
+		self::show_post_run_ob_percentile_summary();
 	}
 	protected static function request_compare(&$result_object, $system_type)
 	{
 		$result_file = null;
-//XXX reset check
-		if(false) // default to see if local comparison first
-		{
-			$comparison_hash = $result_object->get_comparison_hash(true, false);
-			$result_file = self::request_compare_from_local_results($comparison_hash);
-		}
 
-		if(empty($result_file) && pts_network::internet_support_available())
+		if(pts_network::internet_support_available())
 		{
 			$comparison_hash = $result_object->get_comparison_hash();
 			$result_file = self::request_compare_from_ob($result_object, $comparison_hash, $system_type);
+		}
+
+		if(empty($result_file)) // default to see if local comparison first
+		{
+			$comparison_hash = $result_object->get_comparison_hash(true, false);
+			$result_file = self::request_compare_from_local_results($comparison_hash);
 		}
 
 		return $result_file;
@@ -111,6 +115,28 @@ class ob_auto_compare extends pts_module_interface
 		}
 
 		return null;
+	}
+	protected static function show_post_run_ob_percentile_summary()
+	{
+		// self::$archived_percentiles[$result_object->test_profile->get_test_hardware_type()][$result_object->test_profile->get_title()][$result_object->get_arguments_description()] = $this_result_percentile;
+		if(!empty(self::$archived_percentiles))
+		{
+			$tab = '    ';
+			echo PHP_EOL . PHP_EOL . $tab . pts_client::cli_colored_text('Percentile Classification Of Current Benchmark Run', 'blue', true) . PHP_EOL;
+			foreach(self::$archived_percentiles as $subsystem => $results)
+			{
+				echo $tab . pts_client::cli_just_bold(strtoupper($subsystem)) . PHP_EOL;
+				foreach($results as $test => $tests)
+				{
+					echo $tab . $tab . pts_client::cli_colored_text($test, 'cyan', true) . PHP_EOL;
+					foreach($tests as $args => $values)
+					{
+						echo $tab . $tab . $tab . $args . ': ' . str_repeat(' ', self::$longest_args_string_length + 1 - strlen($args)) . pts_client::cli_just_bold(pts_strings::number_suffix_handler($values)) . PHP_EOL;
+					}
+				}
+			}
+			echo $tab . $tab . $tab . str_repeat(' ', self::$longest_args_string_length + 3) . pts_client::cli_just_italic('OpenBenchmarking.org Percentile') . PHP_EOL;
+		}
 	}
 	protected static function request_compare_from_ob(&$result_object, $comparison_hash, $system_type)
 	{
@@ -143,6 +169,11 @@ class ob_auto_compare extends pts_module_interface
 			}
 
 			$active_result = is_object($result_object->active) ? $result_object->active->get_result() : null;
+			if(empty($active_result) && $result_object->test_result_buffer->get_count() == 1)
+			{
+				$v = $result_object->test_result_buffer->get_values();
+				$active_result = array_pop($v);
+			}
 			if(is_numeric($active_result) && $active_result > 0 && isset($json_response['openbenchmarking']['result']['ae']['percentiles']) && !empty($json_response['openbenchmarking']['result']['ae']['percentiles']) && isset($json_response['openbenchmarking']['result']['ae']['samples']))
 			{
 				$percentiles = $json_response['openbenchmarking']['result']['ae']['percentiles'];
@@ -201,6 +232,12 @@ class ob_auto_compare extends pts_module_interface
 						$this_result_percentile = $percentile - 1;
 						break;
 					}
+				}
+
+				if($this_result_percentile > 0 && $this_result_percentile < 100)
+				{
+					self::$archived_percentiles[$result_object->test_profile->get_test_hardware_type()][$result_object->test_profile->get_title()][$result_object->get_arguments_description()] = $this_result_percentile;
+					self::$longest_args_string_length = max(self::$longest_args_string_length, strlen($result_object->get_arguments_description()));
 				}
 
 				if($active_result < $max_value)
@@ -320,6 +357,14 @@ class ob_auto_compare extends pts_module_interface
 			return pts_module::MODULE_UNLOAD;
 		}
 		self::$current_result_file = $test_run_manager->get_file_name();
+		self::$archived_percentiles = array();
+	}
+	public static function __event_post_run_stats($test_run_manager)
+	{
+		if($test_run_manager->result_file->get_system_count() == 1 && $test_run_manager->result_file->get_test_count() > 3 && !empty(self::$archived_percentiles))
+		{
+			self::show_post_run_ob_percentile_summary();
+		}
 	}
 	public static function __test_run_success_inline_result($result_object)
 	{

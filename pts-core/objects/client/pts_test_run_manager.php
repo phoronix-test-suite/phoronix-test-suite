@@ -69,6 +69,7 @@ class pts_test_run_manager
 		$this->dynamic_run_count_std_deviation_threshold = pts_config::read_user_config('PhoronixTestSuite/Options/TestResultValidation/StandardDeviationThreshold', 3.50);
 		$this->dynamic_run_count_export_script = pts_config::read_user_config('PhoronixTestSuite/Options/TestResultValidation/ExportResultsTo', null);
 		$this->drop_noisy_results = pts_config::read_bool_config('PhoronixTestSuite/Options/TestResultValidation/DropNoisyResults', 'FALSE');
+		$this->result_file = new pts_result_file(null);
 
 		if($batch_mode)
 		{
@@ -300,14 +301,11 @@ class pts_test_run_manager
 	}
 	public function result_already_contains_identifier()
 	{
-		if($this->result_file)
+		foreach($this->result_file->get_systems() as $s)
 		{
-			foreach($this->result_file->get_systems() as $s)
+			if($s->get_identifier() == $this->results_identifier)
 			{
-				if($s->get_identifier() == $this->results_identifier)
-				{
-					return true;
-				}
+				return true;
 			}
 		}
 
@@ -679,11 +677,6 @@ class pts_test_run_manager
 	{
 		$result = false;
 
-		if($this->result_file && $this->result_file->get_test_count() > 0)
-		{
-			$this->result_file->get_xml(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/composite.xml');
-		}
-
 		if(is_object($run_index))
 		{
 			$test_run_request = $run_index;
@@ -843,23 +836,23 @@ class pts_test_run_manager
 	}
 	public function pre_execution_process()
 	{
+		if($this->is_new_result_file || $this->result_already_contains_identifier() == false)
+		{
+			$this->result_file->set_title($this->file_name_title);
+			$this->result_file->set_description($this->run_description);
+			$this->result_file->set_notes($this->get_notes());
+			$this->result_file->set_internal_tags($this->get_internal_tags());
+			$this->result_file->set_reference_id($this->get_reference_id());
+			$this->result_file->set_preset_environment_variables($this->get_preset_environment_variables());
+
+			// TODO XXX JSON In null and notes
+			$json_attr = $this->generate_json_system_attributes();
+			$sys = new pts_result_file_system($this->results_identifier, phodevi::system_hardware(true), phodevi::system_software(true), $json_attr, pts_client::current_user(), null, date('Y-m-d H:i:s'), PTS_VERSION);
+			$this->result_file->add_system($sys);
+		}
+
 		if($this->do_save_results())
 		{
-			if($this->is_new_result_file || $this->result_already_contains_identifier() == false)
-			{
-				$this->result_file->set_title($this->file_name_title);
-				$this->result_file->set_description($this->run_description);
-				$this->result_file->set_notes($this->get_notes());
-				$this->result_file->set_internal_tags($this->get_internal_tags());
-				$this->result_file->set_reference_id($this->get_reference_id());
-				$this->result_file->set_preset_environment_variables($this->get_preset_environment_variables());
-
-				// TODO XXX JSON In null and notes
-				$json_attr = $this->generate_json_system_attributes();
-				$sys = new pts_result_file_system($this->results_identifier, phodevi::system_hardware(true), phodevi::system_software(true), $json_attr, pts_client::current_user(), null, date('Y-m-d H:i:s'), PTS_VERSION);
-				$this->result_file->add_system($sys);
-			}
-
 			pts_client::setup_test_result_directory($this->get_file_name());
 		}
 	}
@@ -1001,6 +994,29 @@ class pts_test_run_manager
 	public function post_execution_process()
 	{
 		$this->benchmark_log->log('Test Run Process Ended');
+		if($this->result_file->get_test_count() > 3 && pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/ShowPostRunStatistics', 'TRUE'))
+		{
+			pts_module_manager::module_process('__event_post_run_stats', $this);
+			if($this->result_file->get_system_count() == 2)
+			{
+				$highlights = pts_result_file_analyzer::display_results_baseline_two_way_compare($this->result_file, true, false, true, '    ');
+				if($highlights)
+				{
+					echo '    ' . pts_client::cli_just_bold('Result Highlights') . PHP_EOL;
+					echo $highlights . PHP_EOL;
+				}
+			}
+			if($this->result_file->get_system_count() > 2)
+			{
+				// Display winners and losers
+				echo pts_result_file_analyzer::display_results_wins_losses($this->result_file, $this->get_results_identifier(), '    ') . PHP_EOL;
+			}
+			if($this->result_file->get_system_count() > 1)
+			{
+				echo pts_result_file_analyzer::display_result_file_stats_pythagorean_means($this->result_file, $this->get_results_identifier());
+			}
+		}
+
 		if($this->do_save_results() && !$this->skip_post_execution_options)
 		{
 			if($this->result_file->get_test_count() == 0 && $this->is_new_result_file)
@@ -1021,30 +1037,6 @@ class pts_test_run_manager
 			pts_client::save_test_result($this->get_file_name() . '/composite.xml', $this->result_file->get_xml(), true, $this->results_identifier);
 			pts_module_manager::module_process('__event_results_saved', $this);
 			//echo PHP_EOL . 'Results Saved To: ; . PTS_SAVE_RESULTS_PATH . $this->get_file_name() . ;/composite.xml' . PHP_EOL;
-
-			if($this->result_file->get_test_count() > 4 && pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/ShowPostRunStatistics', 'TRUE'))
-			{
-				pts_module_manager::module_process('__event_post_run_stats', $this);
-				if($this->result_file->get_system_count() == 2)
-				{
-					$highlights = pts_result_file_analyzer::display_results_baseline_two_way_compare($this->result_file, true, false, true, '    ');
-					if($highlights)
-					{
-						echo '    ' . pts_client::cli_just_bold('Result Highlights') . PHP_EOL;
-						echo $highlights . PHP_EOL;
-					}
-				}
-				if($this->result_file->get_system_count() > 2)
-				{
-					// Display winners and losers
-					echo pts_result_file_analyzer::display_results_wins_losses($this->result_file, $this->get_results_identifier(), '    ') . PHP_EOL;
-				}
-
-				if($this->result_file->get_system_count() > 1)
-				{
-					echo pts_result_file_analyzer::display_result_file_stats_pythagorean_means($this->result_file, $this->get_results_identifier());
-				}
-			}
 
 			if(!$this->auto_mode)
 			{
