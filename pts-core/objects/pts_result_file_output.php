@@ -195,7 +195,7 @@ class pts_result_file_output
 				continue;
 
 			$max_value = 0;
-			$min_value = pts_arrays::first_element($buffers)->get_result_value();
+			$min_value = -1;
 			$largest_min_value = 0;
 			$longest_result = 0;
 			foreach($buffers as &$buffer_item)
@@ -210,7 +210,7 @@ class pts_result_file_output
 				{
 					$v = explode(',', $v);
 					$max_value = max($max_value, max($v) * 1.03);
-					$min_value = min($min_value, min($v));
+					$min_value = $min_value == -1 ? min($v) : min($min_value, min($v));
 					$largest_min_value = max($largest_min_value, min($v));
 					$is_line_graph = true;
 				}
