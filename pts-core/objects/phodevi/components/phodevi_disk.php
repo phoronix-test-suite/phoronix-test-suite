@@ -139,6 +139,7 @@ class phodevi_disk extends phodevi_device_interface
 		else if(phodevi::is_bsd())
 		{
 			$i = 0;
+			// On some systems, the first drive seems to be at dev.ad.8 rather than starting at dev.ad.0
 			do
 			{
 				$disk = phodevi_bsd_parser::read_sysctl('dev.ad.' . $i . '.%desc');
@@ -149,20 +150,35 @@ class phodevi_disk extends phodevi_device_interface
 				}
 				$i++;
 			}
-			while(($disk != false || $i < 9) && $i < 128);
+			while(($disk != false || $i < 9) && $i < 64);
 			$i = 0;
-			do
-			{
-				$disk = phodevi_bsd_parser::read_sysctl('dev.nvme.' . $i . '.%desc');
 
-				if($disk != false && strpos($disk, 'DVD') === false && $disk != false && strpos($disk, ' Console') === false && strpos($disk, 'ATAPI') === false)
+			if(pts_client::executable_in_path('nvmecontrol'))
+			{
+				$nvmecontrol = shell_exec('nvmecontrol devlist 2>&1');
+				while(($p = strpos($nvmecontrol, ': ')) !== false)
 				{
-					array_push($disks, $disk);
+					$nvmecontrol = substr($nvmecontrol, $p + 2);
+					$line = substr($nvmecontrol, 0, strpos($nvmecontrol, PHP_EOL));
+					array_push($disks, trim($line));
 				}
-				$i++;
 			}
-			while(($disk != false || $i < 9) && $i < 128);
-			// On some systems, the first drive seems to be at dev.ad.8 rather than starting at dev.ad.0
+
+			if(empty($disks))
+			{
+				// This means of NVMe device reporting tends to just yield "Generic NVMe Device" string
+				do
+				{
+					$disk = phodevi_bsd_parser::read_sysctl('dev.nvme.' . $i . '.%desc');
+
+					if($disk != false && strpos($disk, 'DVD') === false && $disk != false && strpos($disk, ' Console') === false && strpos($disk, 'ATAPI') === false)
+					{
+						array_push($disks, $disk);
+					}
+					$i++;
+				}
+				while(($disk != false || $i < 9) && $i < 64);
+			}
 
 			if(empty($disks) && pts_client::executable_in_path('camcontrol'))
 			{
