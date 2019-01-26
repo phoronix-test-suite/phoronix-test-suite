@@ -173,6 +173,11 @@ class pts_test_execution
 					pts_client::test_profile_debug_message('Log File: ' . $test_log_file);
 				}
 			}
+			else if(phodevi::is_windows() && strpos($test_directory, ' ') !== false)
+			{
+				// On Windows systems with a space in the directory, to workaround some scripts easiest just punting the log file into temp dir
+				$test_log_file = sys_get_temp_dir() . '\\' . basename($test_identifier) . '-' . $runtime_identifier . '-' . ($i + 1) . '.log';
+			}
 			else
 			{
 				$test_log_file = $test_directory . basename($test_identifier) . '-' . $runtime_identifier . '-' . ($i + 1) . '.log';
@@ -245,6 +250,7 @@ class pts_test_execution
 						$use_phoroscript = false;
 						$test_extra_runtime_variables['PATH'] = (isset($test_extra_runtime_variables['PATH']) ? $test_extra_runtime_variables['PATH'] : null) . ';C:\cygwin64\bin';
 					}
+					$execute_binary = '"' . $execute_binary . '"';
 				}
 
 				$is_monitoring = pts_test_result_parser::system_monitor_task_check($test_run_request);
@@ -266,7 +272,20 @@ class pts_test_execution
 					{
 						$to_exec = '';
 					}
-					$test_process = proc_open($test_prepend . $to_exec . ' ' . $execute_binary_prepend . './' . $execute_binary . ' ' . $pts_test_arguments . $post_test_args, $descriptorspec, $pipes, $to_execute, array_merge($host_env, pts_client::environmental_variables(), $test_extra_runtime_variables));
+
+					$terv = $test_extra_runtime_variables;
+					if(phodevi::is_windows())
+					{
+						foreach($terv as $terv_i => &$value)
+						{
+							if((is_dir($value) || is_file($value) || $terv_i == 'LOG_FILE') && strpos($value, ' ') !== false)
+							{
+								$value = '"' . $value . '"';
+							}
+						}
+					}
+
+					$test_process = proc_open($test_prepend . $to_exec . ' ' . $execute_binary_prepend . './' . $execute_binary . ' ' . $pts_test_arguments . $post_test_args, $descriptorspec, $pipes, $to_execute, array_merge($host_env, pts_client::environmental_variables(), $terv));
 
 					if(is_resource($test_process))
 					{
