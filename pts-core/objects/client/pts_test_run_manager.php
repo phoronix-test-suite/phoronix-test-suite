@@ -677,6 +677,11 @@ class pts_test_run_manager
 	{
 		$result = false;
 
+		if($this->result_file && $this->do_save_results() && $this->result_file->get_test_count() > 0)
+		{
+			$this->result_file->get_xml(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/composite.xml');
+		}
+
 		if(is_object($run_index))
 		{
 			$test_run_request = $run_index;
