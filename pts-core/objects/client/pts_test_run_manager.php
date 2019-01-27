@@ -301,15 +301,17 @@ class pts_test_run_manager
 	}
 	public function result_already_contains_identifier()
 	{
+		$contains = false;
 		foreach($this->result_file->get_systems() as $s)
 		{
 			if($s->get_identifier() == $this->results_identifier)
 			{
-				return true;
+				$contains = true;
+				break;
 			}
 		}
 
-		return false;
+		return $contains;
 	}
 	public function set_save_name($save_name, $is_new_save = true)
 	{
@@ -677,7 +679,7 @@ class pts_test_run_manager
 	{
 		$result = false;
 
-		if($this->result_file && $this->do_save_results() && $this->result_file->get_test_count() > 0)
+		if($this->do_save_results() && $this->result_file->get_test_count() > 0)
 		{
 			$this->result_file->get_xml(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/composite.xml');
 		}
@@ -703,7 +705,7 @@ class pts_test_run_manager
 			return;
 		}
 
-		if($this->result_file instanceof pts_result_file && $this->result_file->has_matching_test_and_run_identifier($test_run_request, $this->get_results_identifier()))
+		if($this->result_file->has_matching_test_and_run_identifier($test_run_request, $this->get_results_identifier()))
 		{
 			// There already is a match for this test in this particular result buffer
 			return true;
@@ -1031,11 +1033,6 @@ class pts_test_run_manager
 			}
 
 			pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/test-logs/active/', null, true);
-
-			if($this->is_new_result_file || $this->result_already_contains_identifier() == false)
-			{
-				// nothing to do here now
-			}
 
 			echo PHP_EOL;
 			pts_module_manager::module_process('__event_results_process', $this);

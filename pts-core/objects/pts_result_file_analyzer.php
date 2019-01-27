@@ -22,7 +22,7 @@
 
 class pts_result_file_analyzer
 {
-	public static function generate_geometric_mean_result(&$result_file)
+	public static function generate_geometric_mean_result($result_file)
 	{
 		$results = array();
 		$system_count = $result_file->get_system_count();
@@ -88,7 +88,7 @@ class pts_result_file_analyzer
 
 		return false;
 	}
-	public static function generate_harmonic_mean_result(&$result_file)
+	public static function generate_harmonic_mean_result($result_file)
 	{
 		$results = array();
 		$system_count = $result_file->get_system_count();
@@ -169,7 +169,7 @@ class pts_result_file_analyzer
 
 		return array();
 	}
-	public static function display_result_file_stats_pythagorean_means(&$result_file, $highlight_identifier = null)
+	public static function display_result_file_stats_pythagorean_means($result_file, $highlight_identifier = null)
 	{
 		$ret = null;
 		$geometric_mean = pts_result_file_analyzer::generate_geometric_mean_result($result_file);
@@ -185,7 +185,7 @@ class pts_result_file_analyzer
 
 		return $ret;
 	}
-	public static function display_results_wins_losses(&$result_file, $highlight_result_identifier = null, $prepend_lines = '   ')
+	public static function display_results_wins_losses($result_file, $highlight_result_identifier = null, $prepend_lines = '   ')
 	{
 		$output = null;
 		$result_file_identifiers_count = $result_file->get_system_count();
@@ -265,7 +265,7 @@ class pts_result_file_analyzer
 		$output .= $prepend_lines . pts_client::cli_colored_text('TESTS COUNTED: ', 'cyan', true) . ($tests_counted == $possible_evaluate_result_count ? $tests_counted : $tests_counted . ' of ' . $possible_evaluate_result_count) .  PHP_EOL;
 		return $output;
 	}
-	public static function display_results_baseline_two_way_compare(&$result_file, $drop_flat_results = false, $border_table = false, $rich_text = false, $prepend_to_lines = null)
+	public static function display_results_baseline_two_way_compare($result_file, $drop_flat_results = false, $border_table = false, $rich_text = false, $prepend_to_lines = null)
 	{
 		$table = array(array('Test', 'Configuration', 'Relative'));
 		$color_rows = array();
