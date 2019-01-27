@@ -150,19 +150,19 @@ class pts_result_file_output
 
 		foreach($result_file->get_result_objects() as $result_object)
 		{
-			$result_output .= self::test_result_to_text($result_object, $terminal_width, $stylize_output);
+			$result_output .= self::test_result_to_text($result_object, $terminal_width, $stylize_output, null, true, true);
 			$result_output .= PHP_EOL . PHP_EOL;
 		}
 
 		return $result_output;
 	}
-	public static function test_result_to_text(&$result_object, $terminal_width = 80, $stylize_output = false, $highlight_result = null, $show_title = true)
+	public static function test_result_to_text(&$result_object, $terminal_width = 80, $stylize_output = false, $highlight_result = null, $show_title = true, $always_force_title = false)
 	{
 		$result_output = null;
 		static $last_title_shown = null;
 		if($show_title)
 		{
-			if($last_title_shown != $result_object->test_profile->get_title())
+			if($always_force_title || $last_title_shown != $result_object->test_profile->get_title())
 			{
 				$result_output .= PHP_EOL . '    ' . trim($result_object->test_profile->get_title() . ' ' . $result_object->test_profile->get_app_version());
 				$last_title_shown = $result_object->test_profile->get_title();
