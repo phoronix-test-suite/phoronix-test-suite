@@ -229,7 +229,7 @@ class phodevi extends phodevi_base
 	public static function sensor_object_identifier(&$sensor_object)
 	{
 		$sensor = array($sensor_object->get_type(), $sensor_object->get_sensor(), get_class($sensor_object));
-		return self::sensor_identifier($sensor) . '.' . $sensor_object->get_instance();
+		return self::sensor_identifier($sensor) . ($sensor_object->get_instance() != 0 ? '.' . $sensor_object->get_instance() : null);
 	}
 	public static function sensor_identifier($sensor)
 	{
