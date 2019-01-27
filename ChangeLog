@@ -1,11 +1,12 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 8.6.0 Milestone 3
+27 January 2019
 
 pts-core: Better handling on Windows when there are space(s) in the paths
 pts-core: Add __event_post_run_stats module hook
 pts-core: Inline display of result distributions from OpenBenchmarking.org on applicable results
-pts-core: Don't try to run tests from result file or suite that were not installed
+pts-core: Don't try to run tests from result file(s) or suite(s) that were not installed
 pts-core: More accurate time reporting when result files are passed to `phoronix-test-suite estimate-run-time`
 phodevi: Better reporting of NVMe drive strings on BSDs
 
