@@ -236,8 +236,8 @@ class ob_auto_compare extends pts_module_interface
 
 				if($this_result_percentile > 0 && $this_result_percentile < 100)
 				{
-					self::$archived_percentiles[$result_object->test_profile->get_test_hardware_type()][$result_object->test_profile->get_title()][$result_object->get_arguments_description()] = $this_result_percentile;
-					self::$longest_args_string_length = max(self::$longest_args_string_length, strlen($result_object->get_arguments_description()));
+					self::$archived_percentiles[$result_object->test_profile->get_test_hardware_type()][$result_object->test_profile->get_title()][$result_object->get_arguments_description_shortened()] = $this_result_percentile;
+					self::$longest_args_string_length = max(self::$longest_args_string_length, strlen($result_object->get_arguments_description_shortened()));
 				}
 
 				if($active_result < $max_value)

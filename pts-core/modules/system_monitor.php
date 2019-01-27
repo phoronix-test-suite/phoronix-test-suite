@@ -580,7 +580,7 @@ class system_monitor extends pts_module_interface
 	private static function process_perf_per_watt(&$result_file)
 	{
 		$sensor = array('sys', 'power');
-		$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_identifier($sensor) . '.0', self::$individual_test_run_offsets[phodevi::sensor_identifier($sensor) . '.0']);
+		$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_identifier($sensor), self::$individual_test_run_offsets[phodevi::sensor_identifier($sensor)]);
 
 		if(count($sensor_results) > 2 && self::$successful_test_run_request)
 		{
