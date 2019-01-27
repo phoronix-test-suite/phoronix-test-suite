@@ -96,7 +96,7 @@ class ob_auto_compare extends pts_module_interface
 
 		foreach($saved_results as $tr)
 		{
-			$result_file = new pts_result_file($tr);
+			$result_file = new pts_result_file($tr, true, true);
 
 			if(self::$current_result_file != null && self::$current_result_file == $result_file->get_identifier())
 			{
