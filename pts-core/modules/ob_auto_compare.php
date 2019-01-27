@@ -71,7 +71,7 @@ class ob_auto_compare extends pts_module_interface
 		}
 		self::show_post_run_ob_percentile_summary();
 	}
-	protected static function request_compare(&$result_object, $system_type)
+	protected static function request_compare($result_object, $system_type)
 	{
 		$result_file = null;
 

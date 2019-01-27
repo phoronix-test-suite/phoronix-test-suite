@@ -1001,8 +1001,25 @@ class pts_test_run_manager
 	public function post_execution_process()
 	{
 		$this->benchmark_log->log('Test Run Process Ended');
+		if($this->do_save_results() && !$this->skip_post_execution_options)
+		{
+			// Save the results
+			if($this->result_file->get_test_count() == 0 && $this->is_new_result_file)
+			{
+				pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $this->get_file_name());
+				return false;
+			}
+
+			pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/test-logs/active/', null, true);
+
+			echo PHP_EOL;
+			pts_module_manager::module_process('__event_results_process', $this);
+			pts_client::save_test_result($this->get_file_name() . '/composite.xml', $this->result_file->get_xml(), true, $this->results_identifier);
+			pts_module_manager::module_process('__event_results_saved', $this);
+		}
 		if($this->result_file->get_test_count() > 3 && pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/ShowPostRunStatistics', 'TRUE'))
 		{
+			// Show any post run statistics
 			pts_module_manager::module_process('__event_post_run_stats', $this);
 			if($this->result_file->get_system_count() == 2)
 			{
@@ -1026,18 +1043,7 @@ class pts_test_run_manager
 
 		if($this->do_save_results() && !$this->skip_post_execution_options)
 		{
-			if($this->result_file->get_test_count() == 0 && $this->is_new_result_file)
-			{
-				pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $this->get_file_name());
-				return false;
-			}
-
-			pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/test-logs/active/', null, true);
-
-			echo PHP_EOL;
-			pts_module_manager::module_process('__event_results_process', $this);
-			pts_client::save_test_result($this->get_file_name() . '/composite.xml', $this->result_file->get_xml(), true, $this->results_identifier);
-			pts_module_manager::module_process('__event_results_saved', $this);
+			// See if the results should be displayed
 			//echo PHP_EOL . 'Results Saved To: ; . PTS_SAVE_RESULTS_PATH . $this->get_file_name() . ;/composite.xml' . PHP_EOL;
 
 			if(!$this->auto_mode)

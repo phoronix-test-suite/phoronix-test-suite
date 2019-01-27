@@ -156,7 +156,7 @@ class pts_result_file_output
 
 		return $result_output;
 	}
-	public static function test_result_to_text(&$result_object, $terminal_width = 80, $stylize_output = false, $highlight_result = null, $show_title = true, $always_force_title = false)
+	public static function test_result_to_text($result_object, $terminal_width = 80, $stylize_output = false, $highlight_result = null, $show_title = true, $always_force_title = false)
 	{
 		$result_output = null;
 		static $last_title_shown = null;
