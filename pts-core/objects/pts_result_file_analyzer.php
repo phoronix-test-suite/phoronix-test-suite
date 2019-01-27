@@ -276,19 +276,20 @@ class pts_result_file_analyzer
 			{
 				continue;
 			}
+			$analyze_ro = clone $ro;
 			if($drop_flat_results)
 			{
-				$ro->remove_unchanged_results(0.3);
+				$analyze_ro->remove_unchanged_results(0.3);
 			}
 
-			$buffer_identifiers = $ro->test_result_buffer->get_identifiers();
+			$buffer_identifiers = $analyze_ro->test_result_buffer->get_identifiers();
 			if(count($buffer_identifiers) != 2)
 			{
 				continue;
 			}
 
-			$ro->normalize_buffer_values(pts_arrays::first_element($buffer_identifiers));
-			$result = $ro->test_result_buffer->get_value_from_identifier(pts_arrays::last_element($buffer_identifiers));
+			$analyze_ro->normalize_buffer_values(pts_arrays::first_element($buffer_identifiers));
+			$result = $analyze_ro->test_result_buffer->get_value_from_identifier(pts_arrays::last_element($buffer_identifiers));
 			if(empty($result))
 			{
 				continue;
@@ -302,7 +303,7 @@ class pts_result_file_analyzer
 			{
 				$color_rows[count($table)] = $result < 1 ? 'red' : 'green';
 			}
-			$table[] = array($ro->test_profile->get_identifier_base_name(), $ro->get_arguments_description_shortened(), $result);
+			$table[] = array($analyze_ro->test_profile->get_identifier_base_name(), $analyze_ro->get_arguments_description_shortened(), $result);
 		}
 
 		$bold_row = $rich_text ? 0 : -1;
