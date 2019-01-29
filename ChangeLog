@@ -1,5 +1,10 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+pts-core: Other small tweaks and fixes
+ob_auto_compare: Allow showing more results in the embedded percentile graphs
+
 Phoronix Test Suite 8.6.0 Milestone 3
 27 January 2019
 
