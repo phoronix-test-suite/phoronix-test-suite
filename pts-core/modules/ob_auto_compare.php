@@ -131,7 +131,7 @@ class ob_auto_compare extends pts_module_interface
 					echo $tab . $tab . pts_client::cli_colored_text($test, 'cyan', true) . PHP_EOL;
 					foreach($tests as $args => $values)
 					{
-						echo $tab . $tab . $tab . $args . (!empty($args) ? ':' : '') . ' ' . str_repeat(' ', self::$longest_args_string_length + 1 - strlen($args)) . pts_client::cli_just_bold(pts_strings::number_suffix_handler($values)) . PHP_EOL;
+						echo $tab . $tab . $tab . $args . (!empty($args) ? ':' : ' ') . ' ' . str_repeat(' ', self::$longest_args_string_length + 1 - strlen($args)) . pts_client::cli_just_bold(pts_strings::number_suffix_handler($values)) . PHP_EOL;
 					}
 				}
 			}
@@ -174,6 +174,9 @@ class ob_auto_compare extends pts_module_interface
 				$v = $result_object->test_result_buffer->get_values();
 				$active_result = array_pop($v);
 			}
+// xxxxxx
+//$v = $result_object->test_result_buffer->get_values();
+//$active_result = array_pop($v);
 			if(is_numeric($active_result) && $active_result > 0 && isset($json_response['openbenchmarking']['result']['ae']['percentiles']) && !empty($json_response['openbenchmarking']['result']['ae']['percentiles']) && isset($json_response['openbenchmarking']['result']['ae']['samples']))
 			{
 				$percentiles = $json_response['openbenchmarking']['result']['ae']['percentiles'];
@@ -237,7 +240,7 @@ class ob_auto_compare extends pts_module_interface
 				if($this_result_percentile > 0 && $this_result_percentile < 100)
 				{
 					self::$archived_percentiles[$result_object->test_profile->get_test_hardware_type()][$result_object->test_profile->get_title()][$result_object->get_arguments_description_shortened()] = $this_result_percentile;
-					self::$longest_args_string_length = max(self::$longest_args_string_length, strlen($result_object->get_arguments_description_shortened()), strlen($result_object->test_profile->get_title()) - 4);
+					self::$longest_args_string_length = max(self::$longest_args_string_length, strlen($result_object->get_arguments_description_shortened()), strlen($result_object->test_profile->get_title()) - 3);
 				}
 
 				if($active_result < $max_value)
@@ -294,7 +297,7 @@ class ob_auto_compare extends pts_module_interface
 							else
 							{
 								$write_pos = 0;
-								$referemce_results_added--;
+								$reference_results_added--;
 							}
 
 							if($write_pos > 0)

@@ -50,7 +50,7 @@ class pts_ae_data
 		{
 			case 0:
 				// Create
-				$this->db->exec('CREATE TABLE `analytics_results` (	`ID`	INTEGER PRIMARY KEY AUTOINCREMENT, `ResultReference` TEXT,  `ComparisonHash`	TEXT,	`Component`	INTEGER, `RelatedComponent`	INTEGER, `DateTime`	INTEGER, `SystemType`	TEXT, `Result`	REAL NOT NULL);');
+				$this->db->exec('CREATE TABLE `analytics_results` (	`ID`	INTEGER PRIMARY KEY AUTOINCREMENT, `ResultReference` TEXT,  `ComparisonHash`	TEXT,	`Component`	INTEGER, `RelatedComponent`	INTEGER, `DateTime`	INTEGER, `SystemType`	TEXT, `SystemLayer`	TEXT, `Result`	REAL NOT NULL);');
 				$this->db->exec('CREATE INDEX `comp_hashes` ON `analytics_results` (`ComparisonHash`,`Result`);');
 				$this->db->exec('CREATE INDEX `result_and_component_search` ON `analytics_results` (`ComparisonHash`,`Component`,`Result`);');
 				$this->db->exec('CREATE TABLE `components` (`ComponentID`	INTEGER PRIMARY KEY AUTOINCREMENT,`Component`	TEXT UNIQUE,`Category`	INTEGER,`TimesAppeared`	INTEGER);');
@@ -78,9 +78,9 @@ class pts_ae_data
 		$stmt->bindValue(':hib', ($result_object->test_profile->get_result_proportion() == 'HIB' ? 1 : 0));
 		$result = $stmt->execute();
 	}
-	public function insert_result_into_analytic_results($comparison_hash, $result_reference, $component, $category, $related_component, $related_category, $result, $datetime, $system_type)
+	public function insert_result_into_analytic_results($comparison_hash, $result_reference, $component, $category, $related_component, $related_category, $result, $datetime, $system_type, $system_layer)
 	{
-		$stmt = $this->db->prepare('INSERT OR IGNORE INTO analytics_results (ComparisonHash, ResultReference, Component, RelatedComponent, Result, DateTime, SystemType) VALUES (:ch, :rr, :c, :rc, :r, :dt, :st)');
+		$stmt = $this->db->prepare('INSERT OR IGNORE INTO analytics_results (ComparisonHash, ResultReference, Component, RelatedComponent, Result, DateTime, SystemType, SystemLayer) VALUES (:ch, :rr, :c, :rc, :r, :dt, :st, :sl)');
 		$stmt->bindValue(':ch', $comparison_hash);
 		$stmt->bindValue(':rr', $result_reference);
 		$stmt->bindValue(':c', $this->component_to_component_id($component, $category));
@@ -88,6 +88,7 @@ class pts_ae_data
 		$stmt->bindValue(':r', $result);
 		$stmt->bindValue(':dt', $datetime);
 		$stmt->bindValue(':st', $system_type);
+		$stmt->bindValue(':sl', $system_layer);
 		$result = $stmt->execute();
 	}
 	public function component_to_component_id($component, $category)
@@ -287,7 +288,7 @@ class pts_ae_data
 	}
 	public function get_results_array_by_comparison_hash($ch, &$first_appeared, &$last_appeared, &$component_results, &$component_dates, &$system_types)
 	{
-		$stmt = $this->db->prepare('SELECT Result, DateTime, Component, RelatedComponent, SystemType FROM analytics_results WHERE ComparisonHash = :ch');
+		$stmt = $this->db->prepare('SELECT Result, DateTime, Component, RelatedComponent, SystemType, SystemLayer FROM analytics_results WHERE ComparisonHash = :ch');
 		$stmt->bindValue(':ch', $ch);
 		$result = $stmt ? $stmt->execute() : false;
 		$results = array();
@@ -309,6 +310,11 @@ class pts_ae_data
 				$last_appeared = $dt;
 			}
 			$results[] = $row['Result'];
+			if(!empty($row['SystemLayer']))
+			{
+				continue;
+			}
+
 			$c = $this->component_id_to_component($row['Component']);
 			$rc = $this->component_id_to_component($row['RelatedComponent']);
 			if(!isset($component_results[$c][$rc]))
