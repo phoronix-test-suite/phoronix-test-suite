@@ -174,9 +174,11 @@ class ob_auto_compare extends pts_module_interface
 				$v = $result_object->test_result_buffer->get_values();
 				$active_result = array_pop($v);
 			}
-// xxxxxx
-//$v = $result_object->test_result_buffer->get_values();
-//$active_result = array_pop($v);
+
+			// XXX DEBUG XXX
+			//$v = $result_object->test_result_buffer->get_values();
+			//$active_result = array_pop($v);
+
 			if(is_numeric($active_result) && $active_result > 0 && isset($json_response['openbenchmarking']['result']['ae']['percentiles']) && !empty($json_response['openbenchmarking']['result']['ae']['percentiles']) && isset($json_response['openbenchmarking']['result']['ae']['samples']))
 			{
 				$percentiles = $json_response['openbenchmarking']['result']['ae']['percentiles'];

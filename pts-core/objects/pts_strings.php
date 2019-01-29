@@ -86,7 +86,7 @@ class pts_strings
 	{
 		return function_exists('ctype_upper') ? ctype_upper($string) : ($string == strtoupper($string));
 	}
-	public static function trim_search_query($value)
+	public static function trim_search_query($value, $remove_multipliers = false)
 	{
 		$search_break_characters = array('@', '(', '/', '+', '[', '<', '*', '"');
 		for($i = 0, $x = strlen($value); $i < $x; $i++)
@@ -104,10 +104,13 @@ class pts_strings
 		}
 
 		// Remove multiplier if prepended to string
-		$multiplier = strpos($value, ' x ');
-		if($multiplier !== false && is_numeric(substr($value, 0, $multiplier)))
+		if($remove_multipliers)
 		{
-			$value = substr($value, ($multiplier + 3));
+			$multiplier = strpos($value, ' x ');
+			if($multiplier !== false && is_numeric(substr($value, 0, $multiplier)))
+			{
+				$value = substr($value, ($multiplier + 3));
+			}
 		}
 
 		$value = str_replace('& ', null, $value);
