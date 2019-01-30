@@ -140,7 +140,7 @@ class ob_auto_compare extends pts_module_interface
 	}
 	protected static function request_compare_from_ob(&$result_object, $comparison_hash, $system_type)
 	{
-		if(!pts_network::internet_support_available() || self::$response_time > 8)
+		if(!pts_network::internet_support_available() || self::$response_time > 10)
 		{
 			// If no network or OB requests are being slow...
 			return false;

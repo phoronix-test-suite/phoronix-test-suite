@@ -9,7 +9,7 @@
 		</Information>
 		<Package>
 			<GenericName>common-dependencies</GenericName>
-			<PackageName>dmidecode Mesa-demo-x</PackageName>
+			<PackageName>Mesa-demo-x</PackageName>
 			<FileCheck>glxinfo</FileCheck>
 		</Package>
 		<Package>
