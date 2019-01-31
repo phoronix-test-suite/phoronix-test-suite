@@ -310,7 +310,7 @@ class pts_ae_data
 				$last_appeared = $dt;
 			}
 			$results[] = $row['Result'];
-			if(!empty($row['SystemLayer']))
+			if(!empty($row['SystemLayer']) || strlen($row['Component']) < 3)
 			{
 				continue;
 			}

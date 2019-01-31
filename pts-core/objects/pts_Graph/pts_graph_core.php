@@ -968,7 +968,7 @@ abstract class pts_graph_core
 		// Adjust the color based on the identifier and the content of value_highlights
 		if($this->i['highlight_values'] && (array_key_exists($identifier, $this->i['highlight_values']) || in_array($identifier, $this->i['highlight_values'])))
 		{
-			$color = $this->i['highlight_values'][$identifier];
+			$color = isset($this->i['highlight_values'][$identifier]) ? $this->i['highlight_values'][$identifier] : null;
 			$paint_color = empty($color) ? $this->darken_color($paint_color) : $color;
 		}
 		return $paint_color;
