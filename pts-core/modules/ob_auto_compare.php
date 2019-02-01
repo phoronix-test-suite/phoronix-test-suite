@@ -210,7 +210,7 @@ class ob_auto_compare extends pts_module_interface
 					$box_plot[$i] = '#';
 				}
 				$box_plot[$whisker_start_char] = '|';
-				$box_plot[$whisker_end_char] = '|';
+				$box_plot[min($whisker_end_char, ($box_plot_size - 1))] = '|';
 				$box_plot[$box_middle] = '!';
 
 				// END OF BOX PLOT
