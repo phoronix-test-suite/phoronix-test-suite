@@ -258,7 +258,7 @@ class ob_auto_compare extends pts_module_interface
 					{
 						$reference_results_added = 0;
 						$this_percentile = pts_strings::number_suffix_handler($this_result_percentile);
-						foreach(array_merge(array('This Result' . ($this_percentile > 0 && $this_percentile < 100 ? ' (' . $this_percentile . ' Percentile)' : null) => $active_result), $json_response['openbenchmarking']['result']['ae']['reference_results']) as $component => $value)
+						foreach(array_merge(array('This Result' . ($this_percentile > 0 && $this_percentile < 100 ? ' (' . $this_percentile . ' Percentile)' : null) => ($active_result > 99 ? round($active_result) : $active_result)), $json_response['openbenchmarking']['result']['ae']['reference_results']) as $component => $value)
 						{
 							if($value > $max_value)
 							{
