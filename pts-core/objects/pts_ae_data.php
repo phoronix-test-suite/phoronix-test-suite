@@ -239,7 +239,7 @@ class pts_ae_data
 			$comparison_components = array_slice($comparison_components, 0, 50);
 			foreach($comparison_components as $component => &$values)
 			{
-				$values = round(array_sum($values) / count($values), 2);
+				$values = round(array_sum($values) / count($values), ($peak > 60 ? 0 : 2));
 			}
 
 			if($row['HigherIsBetter'] == '1')
