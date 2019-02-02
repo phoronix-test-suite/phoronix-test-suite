@@ -181,6 +181,8 @@ class pts_ae_data
 				$percentiles[$i] = pts_math::find_percentile($results, ($i * 0.01));
 			}
 
+			$peak = max($results);
+
 			$component_data = array();
 			$comparison_components = array();
 			foreach($component_results as $component => $d)
@@ -216,7 +218,7 @@ class pts_ae_data
 					{
 						continue;
 					}
-					$component_data[$component][$related_component]['avg'] = round(array_sum($data) / count($data), 2);
+					$component_data[$component][$related_component]['avg'] = round(array_sum($data) / count($data), ($peak > 60 ? 0 : 2));
 					$component_data[$component][$related_component]['samples'] = count($data);
 					$component_data[$component][$related_component]['first_appeared'] = $component_dates[$component][$related_component]['first_appeared'];
 					$component_data[$component][$related_component]['last_appeared'] = $component_dates[$component][$related_component]['last_appeared'];
