@@ -254,7 +254,7 @@
 		</Package>
 		<Package>
 			<GenericName>yasm</GenericName>
-			<PackageName>yasm</PackageName>
+			<PackageName>yasm nasm</PackageName>
 		</Package>
 		<Package>
 			<GenericName>lib3ds</GenericName>

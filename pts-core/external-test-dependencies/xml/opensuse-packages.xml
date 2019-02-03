@@ -320,7 +320,7 @@
 		</Package>
 		<Package>
 			<GenericName>node-npm</GenericName>
-			<PackageName>nodejs</PackageName>
+			<PackageName>npm</PackageName>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
