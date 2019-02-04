@@ -1499,7 +1499,7 @@ class pts_client
 			{
 				$terminal_width = explode(' ', trim(shell_exec('stty size 2>&1')));
 
-				if(count($terminal_width) == 2 && is_numeric($terminal_width[1]) && $terminal_width[1] >= 80)
+				if(count($terminal_width) == 2 && is_numeric($terminal_width[1]) && $terminal_width[1] >= 40)
 				{
 					$terminal_width = $terminal_width[1];
 				}
