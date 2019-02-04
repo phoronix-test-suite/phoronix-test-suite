@@ -1,5 +1,14 @@
 # Phoronix Test Suite Release History
 
+Phoronix Test Suite 8.6
+======
+#### Release Date: 5 February 2019 | Codename: Spydeberg
+* CLI/terminal inline box plot graphing support
+* New OpenBenchmarking.org auto-compare view based upon result percentiles from all public data
+* New `phoronix-test-suite result-file-stats` sub-command
+* New post-run statistics displayed upon test completion
+* Various Windows and BSD hardware/support updates, among other Phodevi additions
+
 Phoronix Test Suite 8.4
 ======
 #### Release Date: 26 November 2018 | Codename: Skiptvet
