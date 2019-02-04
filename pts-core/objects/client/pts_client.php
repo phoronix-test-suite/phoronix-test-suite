@@ -291,10 +291,17 @@ class pts_client
 			'C_CXX_FLAGS_DEFAULT' => '-O3 -march=native' // mostly for future use
 			);
 
-			if(!pts_client::executable_in_path('cc') && pts_client::executable_in_path('gcc') && getenv('CC') == false)
+			if(!pts_client::executable_in_path('cc') && getenv('CC') == false)
 			{
 				// This helps some test profiles build correctly if they don't do a cc check internally
-				$env_variables['CC'] = 'gcc';
+				if(pts_client::executable_in_path('gcc'))
+				{
+					$env_variables['CC'] = 'gcc';
+				}
+				else if(pts_client::executable_in_path('clang'))
+				{
+					$env_variables['CC'] = 'clang';
+				}
 			}
 		}
 
