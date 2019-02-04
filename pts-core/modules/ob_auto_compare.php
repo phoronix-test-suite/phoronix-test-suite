@@ -140,7 +140,8 @@ class ob_auto_compare extends pts_module_interface
 	}
 	protected static function request_compare_from_ob(&$result_object, $comparison_hash, $system_type)
 	{
-		if(!pts_network::internet_support_available() || self::$response_time > 10)
+		$terminal_width = pts_client::terminal_width();
+		if(!pts_network::internet_support_available() || self::$response_time > 10 || $terminal_width < 60)
 		{
 			// If no network or OB requests are being slow...
 			return false;
@@ -184,7 +185,6 @@ class ob_auto_compare extends pts_module_interface
 				$percentiles = $json_response['openbenchmarking']['result']['ae']['percentiles'];
 				$sample_count = $json_response['openbenchmarking']['result']['ae']['samples'];
 
-				$terminal_width = pts_client::terminal_width();
 				$box_plot = str_repeat(' ', $terminal_width - 4);
 				$box_plot_size = strlen($box_plot);
 				$box_plot = str_split($box_plot);
