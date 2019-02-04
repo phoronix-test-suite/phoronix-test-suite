@@ -254,7 +254,7 @@ class ob_auto_compare extends pts_module_interface
 						$box_plot_complement[$i] = str_split($box_plot_complement[$i]);
 
 					}
-					if($terminal_width >= 95 && !empty($json_response['openbenchmarking']['result']['ae']['reference_results']))
+					if(!empty($json_response['openbenchmarking']['result']['ae']['reference_results']))
 					{
 						$reference_results_added = 0;
 						$this_percentile = pts_strings::number_suffix_handler($this_result_percentile);
