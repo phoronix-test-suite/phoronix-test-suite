@@ -588,6 +588,12 @@ class pts_test_installer
 				}
 				*/
 
+				// Since GCC POWER doesn't support -march=, in the compiler mask we can change it to -mcpu= before passed to the actual compiler
+				if(strpos(phodevi::read_property('system', 'kernel-architecture'), 'ppc') !== false && pts_client::executable_in_path('sed'))
+				{
+					$env_var_check .= 'COMPILER_OPTIONS=`echo $COMPILER_OPTIONS | sed -e "s/\-march=/-mcpu=/g"`';
+				}
+
 				if(is_executable('/bin/bash'))
 				{
 					$shebang = '/bin/bash';
