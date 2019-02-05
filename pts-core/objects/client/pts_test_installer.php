@@ -591,7 +591,7 @@ class pts_test_installer
 				// Since GCC POWER doesn't support -march=, in the compiler mask we can change it to -mcpu= before passed to the actual compiler
 				if(strpos(phodevi::read_property('system', 'kernel-architecture'), 'ppc') !== false && pts_client::executable_in_path('sed'))
 				{
-					$env_var_check .= 'COMPILER_OPTIONS=`echo $COMPILER_OPTIONS | sed -e "s/\-march=/-mcpu=/g"`';
+					$env_var_check .= 'COMPILER_OPTIONS=`echo "$COMPILER_OPTIONS" | sed -e "s/\-march=/-mcpu=/g"`' . PHP_EOL;
 				}
 
 				if(is_executable('/bin/bash'))
@@ -617,7 +617,7 @@ class pts_test_installer
 					'COMPILER_OPTIONS="$@"' . PHP_EOL .
 					$env_var_check . PHP_EOL .
 					'echo $COMPILER_OPTIONS >> ' . $mask_dir . $compiler_type . '-options-' . $compiler_name . PHP_EOL .
-					$compiler_path . ' "$COMPILER_OPTIONS"' . PHP_EOL .
+					$compiler_path . ' $COMPILER_OPTIONS' . PHP_EOL .
 					PHP_EOL);
 
 				// Make executable
