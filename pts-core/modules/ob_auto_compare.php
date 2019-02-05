@@ -254,108 +254,95 @@ class ob_auto_compare extends pts_module_interface
 						$box_plot_complement[$i] = str_split($box_plot_complement[$i]);
 
 					}
-					if(!empty($json_response['openbenchmarking']['result']['ae']['reference_results']))
+
+					$reference_results_added = 0;
+					$this_percentile = pts_strings::number_suffix_handler($this_result_percentile);
+					foreach(array_merge(array('This Result' . ($this_percentile > 0 && $this_percentile < 100 ? ' (' . $this_percentile . ' Percentile)' : null) => ($active_result > 99 ? round($active_result) : $active_result)), (is_array($json_response['openbenchmarking']['result']['ae']['reference_results']) ? $json_response['openbenchmarking']['result']['ae']['reference_results'] : array())) as $component => $value)
 					{
-						$reference_results_added = 0;
-						$this_percentile = pts_strings::number_suffix_handler($this_result_percentile);
-						foreach(array_merge(array('This Result' . ($this_percentile > 0 && $this_percentile < 100 ? ' (' . $this_percentile . ' Percentile)' : null) => ($active_result > 99 ? round($active_result) : $active_result)), $json_response['openbenchmarking']['result']['ae']['reference_results']) as $component => $value)
+						if($value > $max_value)
 						{
-							if($value > $max_value)
-							{
-								continue;
-							}
-							$this_result_pos = round($value / $max_value * $box_plot_size);
-							if(in_array($this_result_pos, $results_at_pos) || (strpos($component, 'This Result') === false && !in_array($box_plot[$this_result_pos], array(' ', '-', '#'))))
-							{
-								continue;
-							}
-							$results_at_pos[] = $this_result_pos;
-							$results_at_pos[] = $this_result_pos - 1;
-							$results_at_pos[] = $this_result_pos - 2;
-							$results_at_pos[] = $this_result_pos - 3;
-							$results_at_pos[] = $this_result_pos + 1;
-							$results_at_pos[] = $this_result_pos + 2;
-
-							if($result_object->test_profile->get_result_proportion() == 'LIB')
-							{
-								$this_result_pos = $box_plot_size - $this_result_pos;
-							}
-
-							$string_to_show_length = strlen('^ ' . $component . ': ' . $value);
-							if($this_result_pos - $string_to_show_length - 3 > 4)
-							{
-								// print to left
-								$string_to_print = $component . ': ' . $value . ' ^';
-								$write_pos = ($this_result_pos - strlen($string_to_print) + 1);
-							}
-							else if($this_result_pos + $string_to_show_length < $terminal_width)
-							{
-
-								// print to right of line
-								$string_to_print = '^ ' . $component . ': ' . $value;
-								$write_pos = $this_result_pos;
-							}
-							else
-							{
-								continue;
-							}
-
-							// validate no overwrites
-							$complement_line = ($reference_results_added % 4);
-							if($complement_line == 0 && strpos($component, 'This Result') === false)
-							{
-								$complement_line = 1;
-							}
-							$no_overwrites = true;
-							for($i = $write_pos; $i < ($write_pos + $string_to_show_length) + 1 && isset($box_plot_complement[$complement_line][$i]); $i++)
-							{
-								if($box_plot_complement[$complement_line][$i] != ' ')
-								{
-									$no_overwrites = false;
-									break;
-								}
-							}
-							if($no_overwrites == false)
-							{
-								continue;
-							}
-							// end
-
-							if(strpos($component, 'This Result') !== false)
-							{
-								$brand_color = 'cyan';
-								$string_to_print = pts_client::cli_colored_text($string_to_print, 'cyan', true);
-								$box_plot[$this_result_pos] = pts_client::cli_colored_text('X', 'cyan', true);
-							}
-							else if(($brand_color = pts_render::identifier_to_brand_color($component, null)) != null)
-							{
-								$brand_color = pts_client::hex_color_to_string($brand_color);
-								$string_to_print = pts_client::cli_colored_text($string_to_print, $brand_color, false);
-							}
-							else
-							{
-								$brand_color = null;
-							}
-
-							for($i = $write_pos; $i < ($write_pos + $string_to_show_length) && $i < count($box_plot_complement[$complement_line]); $i++)
-							{
-								$box_plot_complement[$complement_line][$i] = '';
-							}
-
-							$box_plot_complement[$complement_line][$write_pos] = $string_to_print;
-							$box_plot[$this_result_pos] = pts_client::cli_colored_text('*', $brand_color, false);
-
-							$reference_results_added++;
-						/*	if($reference_results_added == 4)
-							{
-								break;
-							} */
+							continue;
 						}
-					}
-					else
-					{
-						$this_result = round($active_result / $max_value * $box_plot_size);
-						$box_plot[$this_result] = pts_client::cli_colored_text('X', 'cyan', true);
+						$this_result_pos = round($value / $max_value * $box_plot_size);
+						if(in_array($this_result_pos, $results_at_pos) || (strpos($component, 'This Result') === false && !in_array($box_plot[$this_result_pos], array(' ', '-', '#'))))
+						{
+							continue;
+						}
+						$results_at_pos[] = $this_result_pos;
+						$results_at_pos[] = $this_result_pos - 1;
+						$results_at_pos[] = $this_result_pos - 2;
+						$results_at_pos[] = $this_result_pos - 3;
+						$results_at_pos[] = $this_result_pos + 1;
+						$results_at_pos[] = $this_result_pos + 2;
+
+						if($result_object->test_profile->get_result_proportion() == 'LIB')
+						{
+							$this_result_pos = $box_plot_size - $this_result_pos;
+						}
+
+						$string_to_show_length = strlen('^ ' . $component . ': ' . $value);
+						if($this_result_pos - $string_to_show_length - 3 > 4)
+						{
+							// print to left
+							$string_to_print = $component . ': ' . $value . ' ^';
+							$write_pos = ($this_result_pos - strlen($string_to_print) + 1);
+						}
+						else if($this_result_pos + $string_to_show_length < $terminal_width)
+						{
+							// print to right of line
+							$string_to_print = '^ ' . $component . ': ' . $value;
+							$write_pos = $this_result_pos;
+						}
+						else
+						{
+							continue;
+						}
+
+						// validate no overwrites
+						$complement_line = ($reference_results_added % 4);
+						if($complement_line == 0 && strpos($component, 'This Result') === false)
+						{
+							$complement_line = 1;
+						}
+						$no_overwrites = true;
+						for($i = $write_pos; $i < ($write_pos + $string_to_show_length) + 1 && isset($box_plot_complement[$complement_line][$i]); $i++)
+						{
+							if($box_plot_complement[$complement_line][$i] != ' ')
+							{
+								$no_overwrites = false;
+								break;
+							}
+						}
+						if($no_overwrites == false)
+						{
+							continue;
+						}
+						// end
+
+						if(strpos($component, 'This Result') !== false)
+						{
+							$brand_color = 'cyan';
+							$string_to_print = pts_client::cli_colored_text($string_to_print, 'cyan', true);
+							$box_plot[$this_result_pos] = pts_client::cli_colored_text('X', 'cyan', true);
+						}
+						else if(($brand_color = pts_render::identifier_to_brand_color($component, null)) != null)
+						{
+							$brand_color = pts_client::hex_color_to_string($brand_color);
+							$string_to_print = pts_client::cli_colored_text($string_to_print, $brand_color, false);
+						}
+						else
+						{
+							$brand_color = null;
+						}
+
+						for($i = $write_pos; $i < ($write_pos + $string_to_show_length) && $i < count($box_plot_complement[$complement_line]); $i++)
+						{
+							$box_plot_complement[$complement_line][$i] = '';
+						}
+
+						$box_plot_complement[$complement_line][$write_pos] = $string_to_print;
+						$box_plot[$this_result_pos] = pts_client::cli_colored_text('*', $brand_color, false);
+						$reference_results_added++;
 					}
 
 					echo PHP_EOL;
