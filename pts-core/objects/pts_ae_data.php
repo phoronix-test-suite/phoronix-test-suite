@@ -187,7 +187,7 @@ class pts_ae_data
 			$comparison_components = array();
 			foreach($component_results as $component => $d)
 			{
-				if(stripos($component . ' ', 'device ') !== false || stripos($component, 'unknown') !== false)
+				if(stripos($component . ' ', 'device ') !== false || stripos($component, 'unknown') !== false || is_numeric($component))
 				{
 					continue;
 				}
