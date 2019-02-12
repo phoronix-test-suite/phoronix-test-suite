@@ -617,7 +617,7 @@ class pts_test_installer
 					'COMPILER_OPTIONS="$@"' . PHP_EOL .
 					$env_var_check . PHP_EOL .
 					'echo $COMPILER_OPTIONS >> ' . $mask_dir . $compiler_type . '-options-' . $compiler_name . PHP_EOL .
-					$compiler_path . ' $COMPILER_OPTIONS' . PHP_EOL .
+					$compiler_path . ' "$@"' . PHP_EOL .
 					PHP_EOL);
 
 				// Make executable
