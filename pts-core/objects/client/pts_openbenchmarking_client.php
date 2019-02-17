@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2017, Phoronix Media
-	Copyright (C) 2010 - 2017, Michael Larabel
+	Copyright (C) 2010 - 2019, Phoronix Media
+	Copyright (C) 2010 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -194,7 +194,7 @@ class pts_openbenchmarking_client
 		}
 		if(isset($json_response['openbenchmarking']['upload']['url']))
 		{
-			echo PHP_EOL . pts_client::cli_just_bold('Results Uploaded To: ') . $json_response['openbenchmarking']['upload']['url'] . PHP_EOL;
+			echo PHP_EOL . '    ' . pts_client::cli_just_bold('Results Uploaded To: ') . $json_response['openbenchmarking']['upload']['url'] . PHP_EOL;
 			pts_module_manager::module_process('__event_openbenchmarking_upload', $json_response);
 		}
 		//$json['openbenchmarking']['upload']['id']
