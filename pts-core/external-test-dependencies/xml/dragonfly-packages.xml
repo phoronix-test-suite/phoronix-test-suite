@@ -139,7 +139,7 @@
 		</Package>
 		<Package>
 			<GenericName>yasm</GenericName>
-			<PackageName>yasm</PackageName>
+			<PackageName>nasm yasm</PackageName>
 		</Package>
 		<Package>
 			<GenericName>gmp-library</GenericName>
