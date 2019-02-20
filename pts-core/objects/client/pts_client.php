@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2018, Phoronix Media
-	Copyright (C) 2008 - 2018, Michael Larabel
+	Copyright (C) 2008 - 2019, Phoronix Media
+	Copyright (C) 2008 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -1490,7 +1490,9 @@ class pts_client
 	{
 		static $terminal_width = null;
 
-		if($terminal_width == null)
+		// XXX As of PTS 8.6.1, no longer caching this as not sure it makes sense to do... So be more responsive about terminal resizing
+		// Or at least cache on Windows where powershell calls can take longer
+		if(!phodevi::is_windows() || $terminal_width == null)
 		{
 			$terminal_width = 80;
 
