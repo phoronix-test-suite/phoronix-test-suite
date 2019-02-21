@@ -1032,7 +1032,7 @@ class phodevi_gpu extends phodevi_device_interface
 	public static function gpu_model()
 	{
 		// Report graphics processor string
-		$info = phodevi_parser::read_glx_renderer();
+		$info = str_replace('(R)', '', phodevi_parser::read_glx_renderer());
 		$video_ram = phodevi::read_property('gpu', 'memory-capacity');
 
 		if(phodevi::is_macosx())
