@@ -240,7 +240,7 @@ class info implements pts_option_interface
 				{
 					echo PHP_EOL . pts_client::cli_just_bold('Contained Tests:') . PHP_EOL;
 					echo pts_user_io::display_text_list(array_unique($test_titles));
-					echo pts_client::cli_just_italic(pts_strings::plural_handler($o->get_test_count(), 'Test')) . PHP_EOL;
+					echo '  ' . pts_client::cli_just_italic(pts_strings::plural_handler($o->get_test_count(), 'Test')) . PHP_EOL;
 				}
 				echo PHP_EOL;
 			}

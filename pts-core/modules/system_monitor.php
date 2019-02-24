@@ -193,7 +193,7 @@ class system_monitor extends pts_module_interface
 		{
 			self::process_summary_results($sensor, $test_run_manager);
 		}
-
+		echo PHP_EOL;
 		foreach(self::$monitor_pids as $pid)
 		{
 			if(function_exists('posix_kill'))
