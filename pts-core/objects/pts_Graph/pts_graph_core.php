@@ -515,7 +515,7 @@ abstract class pts_graph_core
 
 					if(count($longest_r) > 1)
 					{
-						$plus_extra = count($longest_r) * $this->i['identifier_size'] * 1.2;
+						$plus_extra = floor(count($longest_r) * $this->i['identifier_size'] * 1.2);
 					}
 
 					$longest_identifier_width = self::text_string_width($this->i['graph_max_value'], $this->i['identifier_size']) + 60 + $plus_extra;
@@ -563,14 +563,17 @@ abstract class pts_graph_core
 				{
 					$longest_string = explode(' - ', $longest_identifier);
 					$longest_string = pts_strings::find_longest_string($longest_string);
-					$rotated_text = round(self::text_string_width($longest_string, $this->i['identifier_size']) * 0.96);
-					$per_identifier_height = 26; // default
+					if($this->test_result->test_result_buffer->get_count() > 9)
+					{
+						$this->i['identifier_size'] = floor($this->i['identifier_size'] * 0.88);
+					}
+					$rotated_text = round(self::text_string_width($longest_string, $this->i['identifier_size']) * 0.9);
+					$per_identifier_height = 24; // default
 
-					if(ceil($rotated_text * 1.25) >= floor($per_identifier_height * count($this->results)))
+					if(ceil($rotated_text * 1.2) >= floor($per_identifier_height * count($this->results)))
 					{
 						// this is to avoid having a rotated text bar overrun other results
-						// XXX the 50 number might be too hacky
-						$per_identifier_height = max(30, ceil($rotated_text / count($this->results) * 1.1));
+						$per_identifier_height = max(($per_identifier_height + 2), ceil($rotated_text / count($this->results)));
 					}
 				}
 				else if(count($this->results) > 3)

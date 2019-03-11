@@ -367,7 +367,7 @@ class pts_result_file_output
 	public static function result_file_to_pdf(&$result_file, $dest, $output_name, $extra_attributes = null)
 	{
 		ob_start();
-		$_REQUEST['force_format'] = 'JPEG'; // Force to PNG renderer
+		$_REQUEST['force_format'] = 'PNG'; // Force to PNG renderer
 		$_REQUEST['svg_dom_gd_no_interlacing'] = true; // Otherwise FPDF will fail
 		$pdf = new pts_pdf_template($result_file->get_title(), null);
 
