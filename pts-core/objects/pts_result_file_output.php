@@ -414,9 +414,11 @@ class pts_result_file_output
 			}
 
 			$graph->renderGraph();
-			$output = $graph->svg_dom->output(null);
+			$tmp_file = sys_get_temp_dir() . '/' . microtime() . rand(0, 999) . '.png';
+			$output = $graph->svg_dom->output($tmp_file);
 			$pdf->Ln(100);
-			$pdf->ImageJPGInline($output, 50, 40 + (($placement - 1) * 120), 120);
+			$pdf->Image($tmp_file, 50, 40 + (($placement - 1) * 120), 120);
+			unlink($tmp_file);
 
 			if($placement == 2 || $result_object->test_result_buffer->get_count() > 12)
 			{
