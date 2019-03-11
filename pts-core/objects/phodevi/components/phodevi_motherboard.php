@@ -362,11 +362,7 @@ class phodevi_motherboard extends phodevi_device_interface
 		}
 		else if(phodevi::is_windows())
 		{
-			$smbios_version = trim(str_replace(array('smbiosbiosversion', "\n"), '', shell_exec('wmic bios get smbiosbiosversion')));
-			if(pts_strings::is_version($smbios_version))
-			{
-				$bios_version = $smbios_version;
-			}
+			$bios_version = trim(str_ireplace(array('smbiosbiosversion', "\n"), '', shell_exec('wmic bios get smbiosbiosversion')));
 		}
 
 		return trim(str_replace(array('(', ')'), '', $bios_version));
