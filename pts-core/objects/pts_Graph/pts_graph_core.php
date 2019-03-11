@@ -563,12 +563,13 @@ abstract class pts_graph_core
 				{
 					$longest_string = explode(' - ', $longest_identifier);
 					$longest_string = pts_strings::find_longest_string($longest_string);
+					$per_identifier_height = 22; // default
 					if($this->test_result->test_result_buffer->get_count() > 9)
 					{
+						$per_identifier_height = 18; // default
 						$this->i['identifier_size'] = floor($this->i['identifier_size'] * 0.88);
 					}
 					$rotated_text = round(self::text_string_width($longest_string, $this->i['identifier_size']) * 0.9);
-					$per_identifier_height = 24; // default
 
 					if(ceil($rotated_text * 1.2) >= floor($per_identifier_height * count($this->results)))
 					{
