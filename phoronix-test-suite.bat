@@ -39,15 +39,6 @@ If not exist php.zip (
 powershell -command "& { iwr http://phoronix-test-suite.com/benchmark-files/php-7.2.3-Win32-VC15-x64.zip -OutFile php.zip }"
 )
 powershell -command "& { Expand-Archive php.zip -DestinationPath C:\PHP }"
-If not exist C:\PHP\php.exe (
-powershell -command "& { Add-Type -AssemblyName System.IO.Compression.FileSystem
-function unzip {
-    param( [string]$ziparchive, [string]$extractpath )
-    [System.IO.Compression.ZipFile]::ExtractToDirectory( $ziparchive, $extractpath )
-}
-
-unzip php.zip C:\PHP }"
-)
 If not exist VC_redist.x64.exe (
 echo Attempting to download and run Visual C++ Redistributable for Visual Studio 2017 support.
 powershell -command "& { iwr https://go.microsoft.com/fwlink/?LinkId=746572 -OutFile VC_redist.x64.exe }"
