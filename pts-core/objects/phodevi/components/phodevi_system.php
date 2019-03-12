@@ -357,6 +357,15 @@ class phodevi_system extends phodevi_device_interface
 			{
 				$fs = trim(shell_exec('powershell "(Get-Volume)[0].FileSystemType"'));
 			}
+
+			// Fallback for Windows 8
+			if(empty($fs) || $fs == 'Unknown' || $fs == 'FAT32')
+			{
+				if(strpos(shell_exec('fsutil fsinfo volumeinfo C:'), 'NTFS') !== false)
+				{
+					$fs = 'NTFS';
+				}
+			}
 		}
 
 		if(empty($fs))
