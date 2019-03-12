@@ -369,23 +369,29 @@ class pts_client
 	}
 	public static function supports_colored_text_output()
 	{
-		$config_color_option = pts_config::read_user_config('PhoronixTestSuite/Options/General/ColoredConsole', 'AUTO');
+		static $supports = -1;
 
-		switch(strtoupper($config_color_option))
+		if($supports == -1)
 		{
-			case 'TRUE':
-				$supported = true;
-				break;
-			case 'FALSE':
-				$supported = false;
-				break;
-			case 'AUTO':
-			default:
-				$supported = (function_exists('posix_isatty') && posix_isatty(STDOUT)) || (PTS_IS_CLIENT && (getenv('LS_COLORS') || getenv('CLICOLOR'))) || (phodevi::is_windows() && strstr(phodevi::read_property('system', 'operating-system'), 'Windows 8') === false && strstr(phodevi::read_property('system', 'operating-system'), 'Windows 7') === false);
-				break;
+			$config_color_option = pts_config::read_user_config('PhoronixTestSuite/Options/General/ColoredConsole', 'AUTO');
+
+			switch(strtoupper($config_color_option))
+			{
+				case 'TRUE':
+					$supported = true;
+					break;
+				case 'FALSE':
+					$supported = false;
+					break;
+				case 'AUTO':
+				default:
+					$supported = (function_exists('posix_isatty') && posix_isatty(STDOUT)) || (PTS_IS_CLIENT && (getenv('LS_COLORS') || getenv('CLICOLOR'))) || (phodevi::is_windows() && strstr(phodevi::read_property('system', 'operating-system'), 'Windows 8') === false && strstr(phodevi::read_property('system', 'operating-system'), 'Windows 7') === false);
+					break;
+			}
+			$supports = $supported;
 		}
 
-		return $supported;
+		return $supports;
 	}
 	public static function hex_color_to_string($hex)
 	{
