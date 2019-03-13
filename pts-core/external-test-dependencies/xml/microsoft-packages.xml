@@ -72,6 +72,16 @@
 			<FileCheck>C:\Program Files (x86)\Tesseract-OCR</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>firefox</GenericName>
+			<PackageName>https://ftp.mozilla.org/pub/firefox/releases/65.0.2/win64/en-US/Firefox%20Setup%2065.0.2.exe</PackageName>
+			<FileCheck>C:\Program Files\Mozilla Firefox</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>google-chrome</GenericName>
+			<PackageName></PackageName>
+			<FileCheck>C:\Program Files (x86)\Google\Chrome</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>rust</GenericName>
 			<PackageName>https://static.rust-lang.org/dist/rust-beta-x86_64-pc-windows-msvc.msi</PackageName>
 			<FileCheck>rustc.exe</FileCheck>
