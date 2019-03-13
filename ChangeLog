@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Various fallbacks/workarounds for those wanting to (unofficially) use PTS on Windows 8.1
 pts_Graph: Condensing improvements for large graphs
 pts_Graph: Various formatting improvements
 phodevi: Intel GPU reporting improvements
