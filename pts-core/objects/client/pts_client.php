@@ -1717,6 +1717,7 @@ class pts_client
 		if(phodevi::is_windows())
 		{
 			$possible_paths_to_add = array('C:\Users\\' . getenv('USERNAME') . '\AppData\Local\Programs\Python\Python36-32',
+				'C:\Users\\' . getenv('USERNAME') . '\AppData\Local\Programs\Python\Python37',
 				'C:\Python27',
 				'C:\Go\bin',
 				'C:\Strawberry\perl\bin',

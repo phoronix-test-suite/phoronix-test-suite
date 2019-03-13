@@ -38,7 +38,7 @@
 		</Package>
 		<Package>
 			<GenericName>python</GenericName>
-			<PackageName>https://www.python.org/ftp/python/3.7.1/python-3.7.1-amd64.exe https://www.python.org/ftp/python/2.7.15/python-2.7.15.amd64.msi python2 python3-pip</PackageName>
+			<PackageName>https://www.python.org/ftp/python/3.7.1/python-3.7.1-amd64.exe https://www.python.org/ftp/python/2.7.15/python-2.7.15.amd64.msi python2 python37 python37-pip</PackageName>
 			<FileCheck>C:\Python27</FileCheck>
 		</Package>
 		<Package>
