@@ -461,7 +461,7 @@ class pts_test_execution
 					{
 						pts_client::$display->test_run_instance_output($interim_output);
 					}
-					//sleep(2); // Rest for a moment between tests
+					sleep(2); // Rest for a moment between tests
 				}
 
 				pts_module_manager::module_process('__interim_test_run', $test_run_request);
