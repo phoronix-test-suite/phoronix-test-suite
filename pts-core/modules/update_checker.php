@@ -41,7 +41,7 @@ class update_checker extends pts_module_interface
 			if(is_numeric($latest_reported_version) && $latest_reported_version > PTS_CORE_VERSION)
 			{
 				// New version of PTS is available
-				pts_client::$display->generic_heading(strtoupper('An outdated version of the Phoronix Test Suite is installed.' . PHP_EOL . 'The version in use is ' . PTS_VERSION . ' (' . PTS_CORE_VERSION . '), but the latest is pts-core ' . $latest_reported_version . '.' . PHP_EOL . 'Visit https://www.phoronix-test-suite.com/ to update this software.'));
+				pts_client::$display->generic_heading(pts_client::cli_just_bold('An outdated version of the Phoronix Test Suite is installed.' . PHP_EOL . 'The version in use is ' . PTS_VERSION . ' (' . PTS_CORE_VERSION . '), but the latest is pts-core ' . $latest_reported_version . '.' . PHP_EOL . 'Visit https://www.phoronix-test-suite.com/ to update this software.'));
 			}
 		}
 
