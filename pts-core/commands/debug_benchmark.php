@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2015, Phoronix Media
-	Copyright (C) 2009 - 2015, Michael Larabel
+	Copyright (C) 2009 - 2019, Phoronix Media
+	Copyright (C) 2009 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -40,7 +40,10 @@ class debug_benchmark implements pts_option_interface
 		// Make sure you're debugging the latest test script...
 		pts_test_installer::standard_install($r);
 		// For debugging, usually running just once is sufficient, unless FORCE_TIMES_TO_RUN is preset
-		pts_client::pts_set_environment_variable('FORCE_TIMES_TO_RUN', 1);
+		if(getenv('FORCE_TIMES_TO_RUN') == null)
+		{
+			pts_client::pts_set_environment_variable('FORCE_TIMES_TO_RUN', 1);
+		}
 		// Run the test(s) in debug mode
 		pts_client::set_debug_mode(true);
 		$test_run_manager = new pts_test_run_manager();

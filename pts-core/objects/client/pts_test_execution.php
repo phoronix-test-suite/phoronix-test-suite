@@ -224,7 +224,7 @@ class pts_test_execution
 
 				$test_prepend = getenv('TEST_EXEC_PREPEND') != null ? getenv('TEST_EXEC_PREPEND') . ' ': null;
 				pts_client::$display->test_run_instance_header($test_run_request);
-				sleep((phodevi::is_windows() ? 2 : 1));
+				sleep(2);
 				$test_run_command = 'cd ' . $to_execute . ' && ' . $test_prepend . $execute_binary_prepend . './' . $execute_binary . ' ' . $pts_test_arguments . ' 2>&1';
 
 				pts_client::test_profile_debug_message('Test Run Command: ' . $test_run_command);
