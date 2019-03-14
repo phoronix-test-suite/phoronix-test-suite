@@ -2,7 +2,9 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Allow FORCE_TIMES_TO_RUN to override debug-run/debug-benchmark single run behavior
 pts-core: Various fallbacks/workarounds for those wanting to (unofficially) use PTS on Windows 8.1
+pts-core: Other small tweaks and optimizations
 pts_Graph: Condensing improvements for large graphs
 pts_Graph: Various formatting improvements
 phodevi: Intel GPU reporting improvements
