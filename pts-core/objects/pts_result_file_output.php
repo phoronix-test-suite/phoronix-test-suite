@@ -49,10 +49,9 @@ class pts_result_file_output
 
 		return json_encode($json, JSON_PRETTY_PRINT);
 	}
-	public static function result_file_to_csv(&$result_file)
+	public static function result_file_to_csv(&$result_file, $delimiter = ',')
 	{
 		$csv_output = null;
-		$delimiter = ',';
 
 		$csv_output .= $result_file->get_title() . PHP_EOL . PHP_EOL;
 
@@ -110,6 +109,38 @@ class pts_result_file_output
 				$buffer_item = $result_object->test_result_buffer->find_buffer_item($column);
 				$value = $buffer_item != false ? $buffer_item->get_result_value() : null;
 				$csv_output .= $delimiter . $value;
+			}
+			$csv_output .= PHP_EOL;
+		}
+		$csv_output .= PHP_EOL;
+
+		return $csv_output;
+	}
+	public static function result_file_raw_to_csv(&$result_file, $delimiter = ',')
+	{
+		$csv_output = null;
+		$csv_output .= $result_file->get_title() . $delimiter . PHP_EOL . PHP_EOL;
+
+		foreach($result_file->get_result_objects() as $result_object)
+		{
+			$csv_output .= '"' . $result_object->test_profile->get_title() . $result_object->test_profile->get_app_version() . ' - ' . $result_object->get_arguments_description() . '"' . $delimiter . PHP_EOL;
+
+			switch($result_object->test_profile->get_result_proportion())
+			{
+				case 'HIB':
+					$csv_output .= 'Higher Results Are Better' . PHP_EOL;
+					break;
+				case 'LIB':
+					$csv_output .= 'Lower Results Are Better' . PHP_EOL;
+					break;
+			}
+			$csv_output .= PHP_EOL;
+			foreach($result_object->test_result_buffer->get_buffer_items() as $index => $buffer_item)
+			{
+				$identifier = $buffer_item->get_result_identifier();
+				$raw = $buffer_item->get_result_raw();
+
+				$csv_output .= '"' . $identifier . '"' . $delimiter . str_replace(':', $delimiter, $raw) . PHP_EOL;
 			}
 			$csv_output .= PHP_EOL;
 		}

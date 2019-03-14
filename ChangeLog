@@ -8,6 +8,7 @@ pts-core: Other small tweaks and optimizations
 pts-core: Fixes an odd scenario where on Windows after 2 runs, further runs of that test profile for current run could fail in select (random) instances
 pts-core: Write out system notes for each system when generating PDF result output
 pts-core: CSV output improvements
+pts-core: Add result-file-raw-to-csv for dumping the raw/individual benchmark result run data
 pts_Graph: Condensing improvements for large graphs
 pts_Graph: Various formatting improvements
 phodevi: Intel GPU reporting improvements
