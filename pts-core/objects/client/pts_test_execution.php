@@ -250,7 +250,10 @@ class pts_test_execution
 						$use_phoroscript = false;
 						$test_extra_runtime_variables['PATH'] = (isset($test_extra_runtime_variables['PATH']) ? $test_extra_runtime_variables['PATH'] : null) . ';C:\cygwin64\bin';
 					}
-					$execute_binary = '"' . $execute_binary . '"';
+					else
+					{
+						$execute_binary = '"' . $execute_binary . '"';
+					}
 				}
 
 				$is_monitoring = pts_test_result_parser::system_monitor_task_check($test_run_request);
