@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2018, Phoronix Media
-	Copyright (C) 2009 - 2018, Michael Larabel
+	Copyright (C) 2009 - 2019, Phoronix Media
+	Copyright (C) 2009 - 2019, Michael Larabel
 	pts_ResultFileTable.php: The result file table object
 
 	This program is free software; you can redistribute it and/or modify
@@ -27,7 +27,7 @@ class pts_ResultFileTable extends pts_Table
 
 	public function __construct(&$result_file, $system_id_keys = null, $result_object_index = -1, $extra_attributes = null)
 	{
-		list($rows, $columns, $table_data) = self::result_file_to_result_table($result_file, $system_id_keys, $result_object_index, $this->flagged_results, $extra_attributes);
+		list($rows, $columns, $table_data) = pts_ResultFileTable::result_file_to_result_table($result_file, $system_id_keys, $result_object_index, $this->flagged_results, $extra_attributes);
 		parent::__construct($rows, $columns, $table_data, $result_file);
 		$this->result_object_index = $result_object_index;
 

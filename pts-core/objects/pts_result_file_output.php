@@ -366,6 +366,7 @@ class pts_result_file_output
 	}
 	public static function result_file_to_pdf(&$result_file, $dest, $output_name, $extra_attributes = null)
 	{
+		//ini_set('memory_limit', '1024M');
 		ob_start();
 		$_REQUEST['force_format'] = 'PNG'; // Force to PNG renderer
 		$_REQUEST['svg_dom_gd_no_interlacing'] = true; // Otherwise FPDF will fail
@@ -391,6 +392,7 @@ class pts_result_file_output
 		$systems = $result_file->get_systems();
 		for($i = 0; $i < count($systems); $i++)
 		{
+			$pdf->Ln(5);
 			$pdf->WriteMiniHeader($systems[$i]->get_identifier());
 			if(isset($systems[($i + 1)]) && $systems[($i + 1)]->get_hardware() == $systems[$i]->get_hardware() && $systems[($i + 1)]->get_software() == $systems[$i]->get_software())
 			{
@@ -413,7 +415,32 @@ class pts_result_file_output
 			$pdf->Ln();
 		}
 
-		$pdf->AddPage();
+		//$pdf->AddPage();
+		$columns = $result_file->get_system_identifiers();
+		array_unshift($columns, ' ');
+		$table_data = array();
+		$row = 0;
+		foreach($result_file->get_result_objects() as $ro)
+		{
+			$table_data[$row][0] = $ro->test_profile->get_title() . ': ' . $ro->get_arguments_description();
+			for($i = 1; $i < count($columns); $i++)
+			{
+				$table_data[$row][$i] = ' ';
+			}
+			foreach($ro->test_result_buffer->get_buffer_items() as $index => $buffer_item)
+			{
+				$identifier = $buffer_item->get_result_identifier();
+				$value = $buffer_item->get_result_value();
+
+				if(($x = array_search($identifier, $columns)) !== false)
+				{
+					$table_data[$row][$x] = $value;
+				}
+			}
+			$row++;
+		}
+		$pdf->ResultTable($columns, $table_data);
+
 
 		$placement = 1;
 		$i = 0;

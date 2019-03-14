@@ -287,68 +287,48 @@ class pts_pdf_template extends FPDF
 	}
 	public function WriteText($Text)
 	{
-		$this->SetFont('Arial', '', 11);
-		$this->MultiCell(0, 4, $Text);
+		$this->SetFont('Arial', '', 10);
+		$this->MultiCell(0, 5, $Text);
 		$this->Ln();
 	}
 	public function WriteMiniText($Text)
 	{
-		$this->SetFont('Arial', '', 6);
+		$this->SetFont('Arial', '', 7);
 		$this->MultiCell(0, 3, $Text);
 		//$this->Ln();
 	}
-	public function ResultTable($headers, $data, $left_headers = '')
+	public function ResultTable($headers, $data)
 	{
 		$this->Ln(20);
-		$this->SetFillColor(0, 0, 0);
-		$this->SetTextColor(255, 255, 255);
+		//$this->SetFillColor(0, 0, 0);
+		$this->SetTextColor(0, 0, 0);
 		$this->SetDrawColor(34, 34, 34);
 		$this->SetLineWidth(0.3);
-		$this->SetFont('Arial', 'B');
+		$this->SetFont('Arial', '');
 
-		$cell_width = 50;
-		$cell_large_width = $cell_width * 1.20;
+		$cell_width = floor($this->w / (count($headers) + 2));
+		$cell_widths = array();
+		$cell_large_width = round($cell_width * 2);
 		$table_width = 0;
 
-		if(is_array($left_headers) && count($left_headers) > 0)
+		array_push($cell_widths, $cell_large_width);
+		for($i = 1; $i < count($headers); $i++)
 		{
-			$this->Cell($cell_large_width, 7, '', 1, 0, 'C', true);
-			$table_width += $cell_large_width;
+			array_push($cell_widths, $cell_width);
+			//$this->Cell($cell_width, 2, $headers[$i], 1, 0, 'D', true);
 		}
+		$this->Row($headers, $cell_widths);
 
-		for($i = 0; $i < count($headers); $i++)
-		{
-			$this->Cell($cell_width, 7, $headers[$i], 1, 0, 'C', true);
-		}
-
-		$this->Ln();
-
-		$this->SetFillColor(139, 143, 124);
-		$this->SetTextColor(0);
+		//$this->SetFillColor(139, 143, 124);
+		//$this->SetTextColor(0);
 		$this->SetFont('Arial');
 
 		$fill = false;
-		for($i = 0; $i < count($data) || $i < count($left_headers); $i++)
+		for($i = 0; $i < count($data); $i++)
 		{
-			if(isset($left_headers[$i]))
-			{
-				$this->Cell($cell_large_width, 6, $left_headers[$i], 'LR', 0, 'L', $fill);
-			}
-
-			if(!isset($data[$i]))
-			{
-				$data[$i] = array();
-			}
-
-			for($j = 0; $j < count($data[$i]); $j++)
-			{
-				$this->Cell($cell_width, 6, $data[$i][$j], 'LR', 0, 'L', $fill);
-			}
-
-			$this->Ln();
-			$fill = !$fill;
+			$this->Row($data[$i], $cell_widths);
 		}
-		$this->Cell($table_width + (count($data[0]) * $cell_width), 0, '', 'T');
+		//$this->Cell($table_width + (count($data[0]) * $cell_width), 0, '', 'T');
 	}
 	public function _putinfo()
 	{
