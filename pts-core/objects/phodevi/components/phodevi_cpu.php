@@ -614,7 +614,7 @@ class phodevi_cpu extends phodevi_device_interface
 					// Haven't found a better way to detect Ampere eMAG as not exposed via cpuinfo, etc
 					$info = 'Ampere eMAG ' . $info;
 				}
-				else if(strpos(phodevi::$vfs->dmesg, 'thunderx') !== false)
+				else if(strpos(phodevi::$vfs->dmesg, 'thunderx') !== false || strpos(phodevi::$vfs->dmesg, 'Cavium erratum') !== false)
 				{
 					// Haven't found a better way to detect ThunderX as not exposed via cpuinfo, etc
 					$info = 'Cavium ThunderX ' . $info;
