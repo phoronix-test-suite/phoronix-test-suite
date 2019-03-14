@@ -399,6 +399,18 @@ class pts_result_file_output
 
 			$pdf->WriteText($systems[$i]->get_hardware());
 			$pdf->WriteText($systems[$i]->get_software());
+
+			$attributes = array();
+			pts_result_file_analyzer::system_to_note_array($systems[$i], $attributes);
+			foreach($attributes as $section => $data)
+			{
+				//$pdf->WriteMiniText($section . ' Notes');
+				foreach($data as $c => $val)
+				{
+					$pdf->WriteMiniText($section . ' Notes: ' . $val);
+				}
+			}
+			$pdf->Ln();
 		}
 
 		$pdf->AddPage();
@@ -416,6 +428,10 @@ class pts_result_file_output
 			$graph->renderGraph();
 			$tmp_file = sys_get_temp_dir() . '/' . microtime() . rand(0, 999) . '.png';
 			$output = $graph->svg_dom->output($tmp_file);
+			if(!is_file($tmp_file))
+			{
+				continue;
+			}
 			$pdf->Ln(100);
 			$pdf->Image($tmp_file, 50, 40 + (($placement - 1) * 120), 120);
 			unlink($tmp_file);

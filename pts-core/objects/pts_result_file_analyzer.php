@@ -685,6 +685,94 @@ class pts_result_file_analyzer
 			$c_index++;
 		}
 	}
+	public static function system_to_note_array(&$result_file_system, &$system_attributes)
+	{
+		$json = $result_file_system->get_json();
+		$notes_string = $result_file_system->get_notes();
+		$identifier = $result_file_system->get_identifier();
+
+		if(isset($json['kernel-parameters']) && $json['kernel-parameters'] != null)
+		{
+			$system_attributes['Kernel'][$identifier] = $json['kernel-parameters'];
+			unset($json['kernel-parameters']);
+		}
+		if(isset($json['environment-variables']) && $json['environment-variables'] != null)
+		{
+			$system_attributes['Environment'][$identifier] = $json['environment-variables'];
+			unset($json['environment-variables']);
+		}
+		if(isset($json['compiler-configuration']) && $json['compiler-configuration'] != null)
+		{
+			$system_attributes['Compiler'][$identifier] = $json['compiler-configuration'];
+			unset($json['compiler-configuration']);
+		}
+		if(isset($json['disk-scheduler']) && isset($json['disk-mount-options']))
+		{
+			$system_attributes['Disk'][$identifier] = $json['disk-scheduler'] . ' / ' . $json['disk-mount-options'];
+			if(isset($json['disk-details']) && !empty($json['disk-details']))
+			{
+				$system_attributes['Disk'][$identifier] .= ' / ' . $json['disk-details'];
+				unset($json['disk-details']);
+			}
+			unset($json['disk-scheduler']);
+			unset($json['disk-mount-options']);
+		}
+		if(isset($json['cpu-scaling-governor']))
+		{
+			$system_attributes['Processor'][$identifier] = 'Scaling Governor: ' . $json['cpu-scaling-governor'];
+			unset($json['cpu-scaling-governor']);
+		}
+		if(isset($json['graphics-2d-acceleration']) || isset($json['graphics-aa']) || isset($json['graphics-af']))
+		{
+			$report = array();
+			foreach(array('graphics-2d-acceleration', 'graphics-aa', 'graphics-af') as $check)
+			{
+				if(isset($json[$check]) && !empty($json[$check]))
+				{
+					$report[] = $json[$check];
+					unset($json[$check]);
+				}
+			}
+			$system_attributes['Graphics'][$identifier] = implode(' - ' , $report);
+		}
+		if(isset($json['graphics-compute-cores']))
+		{
+			$system_attributes['OpenCL'][$identifier] = 'GPU Compute Cores: ' . $json['graphics-compute-cores'];
+			unset($json['graphics-compute-cores']);
+		}
+		if(!empty($notes_string))
+		{
+			$system_attributes['System'][$identifier] = $notes_string;
+		}
+		if(!empty($json) && is_array($json))
+		{
+			foreach($json as $key => $value)
+			{
+				if(!empty($value))
+				{
+					$system_attributes[ucwords(str_replace(array('_', '-'), ' ', $key))][$identifier] = $value;
+				}
+				unset($json[$key]);
+			}
+		}
+	}
+	public static function system_notes_to_formatted_array(&$result_file)
+	{
+		$system_attributes = array();
+
+		foreach($result_file->get_systems() as $s)
+		{
+			pts_result_file_analyzer::system_to_note_array($s, $system_attributes);
+		}
+
+		if(isset($system_attributes['compiler']) && count($system_attributes['compiler']) == 1 && ($result_file->get_system_count() > 1 && ($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)) && isset($intent[0]) && is_array($intent[0]) && array_shift($intent[0]) == 'Compiler') == false)
+		{
+			// Only show compiler strings when it's meaningful (since they tend to be long strings)
+			unset($system_attributes['compiler']);
+		}
+
+		return $system_attributes;
+	}
 }
 
 ?>

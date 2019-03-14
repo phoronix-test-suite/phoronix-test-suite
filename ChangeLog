@@ -6,6 +6,7 @@ pts-core: Allow FORCE_TIMES_TO_RUN to override debug-run/debug-benchmark single 
 pts-core: Various fallbacks/workarounds for those wanting to (unofficially) use PTS on Windows 8.1
 pts-core: Other small tweaks and optimizations
 pts-core: Fixes an odd scenario where on Windows after 2 runs, further runs of that test profile for current run could fail in select (random) instances
+pts-core: Write out system notes for each system when generating PDF result output
 pts_Graph: Condensing improvements for large graphs
 pts_Graph: Various formatting improvements
 phodevi: Intel GPU reporting improvements

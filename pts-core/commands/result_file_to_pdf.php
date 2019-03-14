@@ -35,8 +35,8 @@ class result_file_to_pdf implements pts_option_interface
 	{
 		if(!function_exists('getimagesizefromstring') || !function_exists('imagettftext') || !extension_loaded('gd'))
 		{
-			echo pts_client::cli_just_bold('PHP GD support and TTF support are required for this command.') . PHP_EOL . PHP_EOL;
-			return false;
+			echo pts_client::cli_just_bold('PHP GD support and TTF support are required for the PDF output if wanting to display the benchmark result graphs.') . PHP_EOL . PHP_EOL;
+			//return false;
 		}
 
 		$_REQUEST['force_format'] = 'PNG'; // Force to PNG renderer

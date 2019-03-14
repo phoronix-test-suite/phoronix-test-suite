@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2018, Phoronix Media
-	Copyright (C) 2009 - 2018, Michael Larabel
+	Copyright (C) 2009 - 2019, Phoronix Media
+	Copyright (C) 2009 - 2019, Michael Larabel
 	pts_Table.php: A charting table object for pts_Graph
 
 	This program is free software; you can redistribute it and/or modify
@@ -68,6 +68,42 @@ class pts_Table extends pts_graph_core
 			if(($column instanceof pts_graph_ir_value) == false)
 			{
 				$column = new pts_graph_ir_value($column);
+			}
+		}
+	}
+	public static function report_system_notes_to_table(&$result_file, &$table)
+	{
+		$identifier_count = $result_file->get_system_count();
+		$system_attributes = pts_result_file_analyzer::system_notes_to_formatted_array($result_file);
+
+		foreach($system_attributes as $index_name => $attributes)
+		{
+			$unique_attribue_count = count(array_unique($attributes));
+
+			$section = $identifier_count > 1 ? ucwords($index_name) : null;
+
+			switch($unique_attribue_count)
+			{
+				case 0:
+					break;
+				case 1:
+					if($identifier_count == count($attributes))
+					{
+						// So there is something for all of the test runs and it's all the same...
+						$table->addTestNote(array_pop($attributes), null, $section);
+					}
+					else
+					{
+						// There is missing data for some test runs for this value so report the runs this is relevant to.
+						$table->addTestNote(implode(', ', array_keys($attributes)) . ': ' . array_pop($attributes), null, $section);
+					}
+					break;
+				default:
+					foreach($attributes as $identifier => $configuration)
+					{
+						$table->addTestNote($identifier . ': ' . $configuration, null, $section);
+					}
+					break;
 			}
 		}
 	}

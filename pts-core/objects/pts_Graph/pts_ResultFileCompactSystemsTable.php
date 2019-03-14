@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011 - 2018, Phoronix Media
-	Copyright (C) 2011 - 2018, Michael Larabel
+	Copyright (C) 2011 - 2019, Phoronix Media
+	Copyright (C) 2011 - 2019, Michael Larabel
 	pts_Table.php: A charting table object for pts_Graph
 
 	This program is free software; you can redistribute it and/or modify
@@ -44,7 +44,7 @@ class pts_ResultFileCompactSystemsTable extends pts_graph_core
 		$sw = pts_result_file_analyzer::system_component_string_to_array(array_shift($sw));
 		$this->components = array_merge($hw, $sw);
 
-		pts_render::report_system_notes_to_table($result_file, $this);
+		pts_Table::report_system_notes_to_table($result_file, $this);
 	}
 	public function renderChart($file = null)
 	{

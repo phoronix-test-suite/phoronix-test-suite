@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2018, Phoronix Media
-	Copyright (C) 2009 - 2018, Michael Larabel
+	Copyright (C) 2009 - 2019, Phoronix Media
+	Copyright (C) 2009 - 2019, Michael Larabel
 	pts_ResultFileTable.php: The result file table object
 
 	This program is free software; you can redistribute it and/or modify
@@ -58,7 +58,7 @@ class pts_ResultFileSystemsTable extends pts_Table
 		$this->i['graph_title'] = $result_file->get_title();
 
 		if(!defined('PHOROMATIC_EXPORT_VIEWER'))
-			pts_render::report_system_notes_to_table($result_file, $this);
+			pts_Table::report_system_notes_to_table($result_file, $this);
 	}
 }
 
