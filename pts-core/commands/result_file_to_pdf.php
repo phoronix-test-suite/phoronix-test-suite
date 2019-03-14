@@ -47,7 +47,7 @@ class result_file_to_pdf implements pts_option_interface
 		$result_file = new pts_result_file($r[0]);
 		$pdf_file = pts_core::user_home_directory() . $r[0] . '.pdf';
 		$pdf_output = pts_result_file_output::result_file_to_pdf($result_file, $pdf_file, 'F');
-		echo PHP_EOL . 'Saved To: ' . $pdf_file . PHP_EOL;
+		echo PHP_EOL . pts_client::cli_just_bold('Saved To: ') . $pdf_file . PHP_EOL;
 	}
 }
 

@@ -102,15 +102,7 @@ class pts_result_file_output
 
 		foreach($result_file->get_result_objects() as $result_object)
 		{
-			if(getenv('PTS_CSV_ALTERNATE_DESCRIPTION') !== false)
-			{
-				$csv_output .= '"' . $result_object->test_profile->get_identifier() . ' - ' . $result_object->get_arguments() . '"';
-			}
-			else
-			{
-				$csv_output .= '"' . $result_object->test_profile->get_identifier() . ' - ' . $result_object->get_arguments() . '"';
-			}
-
+			$csv_output .= '"' . $result_object->test_profile->get_title() . ' - ' . $result_object->get_arguments_description() . '"';
 			$csv_output .= $delimiter . $result_object->test_profile->get_result_proportion();
 
 			foreach($columns as $column)

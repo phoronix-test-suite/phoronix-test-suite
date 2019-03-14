@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2018, Phoronix Media
-	Copyright (C) 2009 - 2018, Michael Larabel
+	Copyright (C) 2009 - 2019, Phoronix Media
+	Copyright (C) 2009 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ class result_file_to_csv implements pts_option_interface
 		$file = pts_core::user_home_directory() . $r[0] . '.csv';
 		file_put_contents($file, $result_output);
 
-		echo $result_output;
+		echo PHP_EOL . pts_client::cli_just_bold('Saved To: ') . $file . PHP_EOL;
 	}
 }
 
