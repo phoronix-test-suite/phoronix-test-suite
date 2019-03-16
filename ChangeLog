@@ -13,6 +13,7 @@ pts_Graph: Condensing improvements for large graphs
 pts_Graph: Various formatting improvements
 phodevi: Intel GPU reporting improvements
 phodevi: BIOS version reporting support extended to Windows
+phodevi: ipmitool DMCI power sensor reporting for at least some POWER servers
 
 Phoronix Test Suite 8.6.1-Spydeberg
 21 February 2019
