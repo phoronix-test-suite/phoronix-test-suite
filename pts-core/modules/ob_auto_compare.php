@@ -158,17 +158,6 @@ class ob_auto_compare extends pts_module_interface
 
 		if(is_array($json_response))
 		{
-			if(isset($json_response['openbenchmarking']['result']['composite_xml']))
-			{
-				$composite_xml = $json_response['openbenchmarking']['result']['composite_xml'];
-				if(!empty($composite_xml))
-				{
-					$result_file = new pts_result_file($composite_xml);
-					$result_file->set_reference_id($json_response['openbenchmarking']['result']['public_id']);
-					$rf = $result_file;
-				}
-			}
-
 			$active_result = is_object($result_object->active) ? $result_object->active->get_result() : null;
 			if(empty($active_result) && $result_object->test_result_buffer->get_count() == 1)
 			{
@@ -357,6 +346,17 @@ class ob_auto_compare extends pts_module_interface
 						}
 					}
 					$rf = 2; // No reason to show OpenBenchmarking.org Dynamic Comparison as this display is arguably much better
+				}
+			}
+
+			if($rf == null && isset($json_response['openbenchmarking']['result']['composite_xml']))
+			{
+				$composite_xml = $json_response['openbenchmarking']['result']['composite_xml'];
+				if(!empty($composite_xml))
+				{
+					$result_file = new pts_result_file($composite_xml);
+					$result_file->set_reference_id($json_response['openbenchmarking']['result']['public_id']);
+					$rf = $result_file;
 				}
 			}
 		}
