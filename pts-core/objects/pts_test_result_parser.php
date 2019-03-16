@@ -543,8 +543,11 @@ class pts_test_result_parser
 				}
 				if(isset($x))
 				{
-					pts_client::test_profile_debug_message('XML Value Found: ' . $x);
-					$test_results[] = trim($x);
+					if(!is_array($x))
+					{
+						pts_client::test_profile_debug_message('XML Value Found: ' . $x);
+						$test_results[] = trim($x);
+					}
 				}
 				goto RESULTPOSTPROCESSING;
 				break;
