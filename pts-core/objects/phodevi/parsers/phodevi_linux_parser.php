@@ -49,6 +49,29 @@ class phodevi_linux_parser
 
 		return $value;
 	}
+	public static function read_ipmitool_dcmi_power()
+	{
+		$value = false;
+		$ipmitool = shell_exec('ipmitool dcmi power reading 2>&1');
+
+		$sensor = "Instantaneous power reading:";
+		$hit = stripos($ipmitool, $sensor);
+
+		if($hit !== false)
+		{
+			$trimmed = substr($ipmitool, ($hit + strlen($sensor)));
+			$trimmed = substr($trimmed, 0, strpos($trimmed, PHP_EOL));
+			$trimmed = trim($trimmed);
+			$trimmed = explode(' ', $trimmed);
+
+			if(count($trimmed) == 2)
+			{
+				$value = $trimmed[0];
+			}
+		}
+
+		return $value;
+	}
 	public static function read_sysfs_node($search, $type = 'NUMERIC', $node_dir_check = null, $find_position = 1)
 	{
 		static $sysfs_file_cache = null;

@@ -30,6 +30,7 @@ class sys_power extends phodevi_sensor
 	private static $tegra_power = false;
 	private static $wattsup_meter = false;
 	private static $ipmitool = false;
+	private static $ipmitool_dcmi = false;
 	private static $windows_battery = false;
 
 	public static function get_unit()
@@ -44,7 +45,7 @@ class sys_power extends phodevi_sensor
 		{
 			$unit = 'microAmps';
 		}
-		else if(self::$wattsup_meter || self::$ipmitool)
+		else if(self::$wattsup_meter || self::$ipmitool || self::$ipmitool_dcmi)
 		{
 			$unit = 'Watts';
 		}
@@ -104,6 +105,14 @@ class sys_power extends phodevi_sensor
 				self::$ipmitool = true;
 				return true;
 			}
+
+			$ipmi_read = phodevi_linux_parser::read_ipmitool_dcmi_power();
+
+			if($ipmi_read > 0 && is_numeric($ipmi_read))
+			{
+				self::$ipmitool_dcmi = true;
+				return true;
+			}
 		}
 	}
 	public function read_sensor()
@@ -130,6 +139,10 @@ class sys_power extends phodevi_sensor
 		else if(self::$ipmitool)
 		{
 			return phodevi_linux_parser::read_ipmitool_sensor('Node Power');
+		}
+		else if(self::$ipmitool_dcmi)
+		{
+			return phodevi_linux_parser::read_ipmitool_dcmi_power();
 		}
 		else if(self::$windows_battery)
 		{
