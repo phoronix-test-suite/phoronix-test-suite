@@ -23,7 +23,7 @@
 class ob_auto_compare extends pts_module_interface
 {
 	const module_name = 'OpenBenchmarking.org Auto Comparison';
-	const module_version = '1.2.0';
+	const module_version = '1.3.0';
 	const module_description = 'This module prints comparable OpenBenchmarking.org results in the command-line for reference purposes as tests are being run. OpenBenchmarking.org is automatically queried for results to show based on the test comparison hash and the system type (mobile, desktop, server, cloud, workstation, etc). No other system information or result data is transmitted..';
 	const module_author = 'Michael Larabel';
 
@@ -81,7 +81,7 @@ class ob_auto_compare extends pts_module_interface
 			$result_file = self::request_compare_from_ob($result_object, $comparison_hash, $system_type);
 		}
 
-		if(empty($result_file)) // default to see if local comparison first
+		if(empty($result_file))
 		{
 			$comparison_hash = $result_object->get_comparison_hash(true, false);
 			$result_file = self::request_compare_from_local_results($comparison_hash);
@@ -356,6 +356,7 @@ class ob_auto_compare extends pts_module_interface
 							echo '    ' . $line . PHP_EOL;
 						}
 					}
+					$rf = 2; // No reason to show OpenBenchmarking.org Dynamic Comparison as this display is arguably much better
 				}
 			}
 		}

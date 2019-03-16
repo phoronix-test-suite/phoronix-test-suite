@@ -464,7 +464,7 @@ class pts_result_file_output
 		}
 		$pdf->ResultTable($columns, $table_data);
 
-
+		$pdf->AddPage();
 		$placement = 1;
 		$i = 0;
 		foreach($result_file->get_result_objects() as $key => $result_object)
