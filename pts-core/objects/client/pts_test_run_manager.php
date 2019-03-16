@@ -114,6 +114,25 @@ class pts_test_run_manager
 	{
 		// returning false here will not yield extra test run, returning true will yield additional test run, returning -1 will abort/not-save current test result
 
+		if(max($active_result_buffer->results) > 100)
+		{
+			// On some tests due to handling bugs, "1" will get print as a result when clearly shouldn't be... This check seeks to clear those out and then increase the run count
+			// TODO XXX this could potentially be expanded in the future where if given result is 1000x difference from other results, just outright clear?
+			$was_hit = false;
+			foreach($active_result_buffer->results as $i => $r)
+			{
+				if($r === 1)
+				{
+					// Clear out the result
+					unset($active_result_buffer->results[$i]);
+				}
+			}
+			if($was_hit)
+			{
+				return true;
+			}
+		}
+
 		// Compute average time taking per test run (in seconds)
 		$avg_test_run_time = array_sum($test_run_request->test_run_times) / count($test_run_request->test_run_times);
 
