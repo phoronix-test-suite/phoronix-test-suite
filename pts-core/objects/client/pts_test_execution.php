@@ -361,7 +361,7 @@ class pts_test_execution
 			}
 			if(in_array(($i + 1), $ignore_runs))
 			{
-				pts_client::$display->test_run_instance_error('Ignoring run result per test profile definition.');
+				pts_client::$display->test_run_instance_error('Ignoring this run result per test profile definition.');
 			}
 			else if($exit_status_pass)
 			{
@@ -422,10 +422,10 @@ class pts_test_execution
 				$increase_run_count = false;
 				$runs_ignored_count = count($ignore_runs);
 
-				if($defined_times_to_run == ($i + 1) && $times_result_produced > 0 && ($times_result_produced + $runs_ignored_count) < $defined_times_to_run && $i < 64)
+				if($defined_times_to_run == ($i + 1) && $times_result_produced > 0 && $times_result_produced < $defined_times_to_run && $i < 64)
 				{
 					// At least one run passed, but at least one run failed to produce a result. Increase count to try to get more successful runs
-					$increase_run_count = $defined_times_to_run - $times_result_produced + $runs_ignored_count;
+					$increase_run_count = $defined_times_to_run - $times_result_produced;
 				}
 				else if($times_result_produced >= 2)
 				{
