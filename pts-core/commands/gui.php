@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2012 - 2018, Phoronix Media
-	Copyright (C) 2012 - 2018, Michael Larabel
+	Copyright (C) 2012 - 2019, Phoronix Media
+	Copyright (C) 2012 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,7 +23,8 @@
 class gui implements pts_option_interface
 {
 	const doc_section = 'Web / GUI Support';
-	const doc_description = 'Launch the Phoronix Test Suite HTML5 web user-interface in the local GUI mode (no remote web support) and attempt to auto-launch the web-browser. THIS FEATURE IS CURRENTLY EXPERIMENTAL AND NO LONGER ACTIVE DEVELOPMENT. See Phoronix Test Suite Phoromatic as an alternative web UI approach.';
+	const doc_description = 'Launch the Phoronix Test Suite HTML5 web user-interface in the local GUI mode (no remote web support) and attempt to auto-launch the web-browser. THIS FEATURE IS CURRENTLY EXPERIMENTAL AND NO LONGER IN ACTIVE DEVELOPMENT. See Phoronix Test Suite Phoromatic as an alternative web UI approach.';
+		const doc_skip = true;
 
 	public static function command_aliases()
 	{
