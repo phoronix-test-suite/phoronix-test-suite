@@ -193,6 +193,8 @@ This option is used if you wish to change the name of the identifier in a test r
 This option is used if you wish to change the name of the saved name of a result file.
 #### reorder-result-file  [Test Result]
 This option is used if you wish to manually change the order in which test results are shown in the Phoronix Test Suite Results Viewer and the contained graphs. The user must specify a saved results file and then they will be prompted to select the results identifiers one at a time in the order they would like them to be displayed from left to right.
+#### result-file-raw-to-csv  [Test Result]
+This option will read a saved test results file and output the raw result file run data to a CSV file. This raw (individual) result file output is intended for data analytic purposes where the result-file-to-csv is more end-user-ready.
 #### result-file-stats  [Test Result]
 This option is used if you wish to analyze a result file by seeing various statistics on the result data for result files containing at least two sets of data.
 #### result-file-to-csv  [Test Result]
@@ -247,10 +249,6 @@ This option allows the user to configure how the Phoronix Test Suite connects to
 This option can be used for resetting the Phoronix Test Suite user configuration file to its default state.
 #### user-config-set
 This option can be used for setting an XML value in the Phoronix Test Suite user configuration file.
-
-## Web / GUI Support
-#### gui
-Launch the Phoronix Test Suite HTML5 web user-interface in the local GUI mode (no remote web support) and attempt to auto-launch the web-browser. THIS FEATURE IS CURRENTLY EXPERIMENTAL AND NO LONGER ACTIVE DEVELOPMENT. See Phoronix Test Suite Phoromatic as an alternative web UI approach.
 
 ## Phoromatic
 #### start-phoromatic-server

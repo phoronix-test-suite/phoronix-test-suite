@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 8.8.0 Milestone 1
+16 March 2019
 
 pts-core: Allow FORCE_TIMES_TO_RUN to override debug-run/debug-benchmark single run behavior
 pts-core: Various fallbacks/workarounds for those wanting to (unofficially) use PTS on Windows 8.1
