@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+phodevi: CPU-therm reporting via sysfs for CPU core temp
+
 Phoronix Test Suite 8.8.0 Milestone 1
 16 March 2019
 
