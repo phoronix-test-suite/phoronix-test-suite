@@ -404,7 +404,7 @@ class pts_test_profile_parser
 	}
 	public function get_estimated_run_time()
 	{
-		return $this->xg('TestProfile/EstimatedTimePerRun', 0) * $this->get_times_to_run();
+		return $this->xg('TestProfile/EstimatedTimePerRun', 0) * $this->xg('TestInformation/TimesToRun', 3);
 	}
 	public function requires_core_version_min()
 	{
