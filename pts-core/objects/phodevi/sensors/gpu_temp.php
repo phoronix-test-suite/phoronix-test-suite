@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2017, Phoronix Media
-	Copyright (C) 2009 - 2017, Michael Larabel
+	Copyright (C) 2009 - 2019, Phoronix Media
+	Copyright (C) 2009 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -115,6 +115,16 @@ class gpu_temp extends phodevi_sensor
 		{
 			// Try ACPI thermal
 			$temp_c = phodevi_linux_parser::read_sysfs_node('/sys/class/thermal/thermal_zone*/temp', 'POSITIVE_NUMERIC', array('type' => 'gpu_thermal'));
+			if(is_numeric($temp_c) && $temp_c > 1000)
+			{
+				$temp_c /= 1000;
+			}
+		}
+
+		if($temp_c == -1)
+		{
+			// Try ACPI thermal (Tegra works here)
+			$temp_c = phodevi_linux_parser::read_sysfs_node('/sys/class/thermal/thermal_zone*/temp', 'POSITIVE_NUMERIC', array('type' => 'GPU-therm'));
 			if(is_numeric($temp_c) && $temp_c > 1000)
 			{
 				$temp_c /= 1000;

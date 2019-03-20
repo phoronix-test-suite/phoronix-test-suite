@@ -665,10 +665,15 @@ class system_monitor extends pts_module_interface
 			$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_object_identifier($sensor),
 								self::$individual_test_run_offsets[phodevi::sensor_object_identifier($sensor)]);
 
-			if(count($sensor_results) > 0)
+			if(count($sensor_results) > 4)
 			{
 				$result_buffer->add_test_result(self::$result_identifier, implode(',', $sensor_results), implode(',', $sensor_results));
 			}
+		}
+
+		if($result_buffer->get_count() == 0)
+		{
+			return;
 		}
 
 		self::write_test_run_results($result_buffer, $result_file, $sensor);
