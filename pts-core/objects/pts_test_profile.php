@@ -179,7 +179,7 @@ class pts_test_profile extends pts_test_profile_parser
 
 		if(($force_runs_multiple = pts_client::read_env('FORCE_TIMES_TO_RUN_MULTIPLE')) && is_numeric($force_runs_multiple) && $force_runs_multiple > 1)
 		{
-			$times_to_run *= force_runs_multiple;
+			$times_to_run *= $force_runs_multiple;
 		}
 
 		if(($force_runs = pts_client::read_env('FORCE_TIMES_TO_RUN')) && is_numeric($force_runs))
