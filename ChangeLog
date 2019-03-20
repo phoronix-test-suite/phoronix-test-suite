@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 pts-core: On new installs set 3.00% as deviation for increasing dynamic run count rather than 3.50%
 pts-core: Add FORCE_MIN_TIMES_TO_RUN_CUTOFF= environment variable to toggle cutoff for FORCE_MIN_TIMES_TO_RUN behavior
 pts-core: Add FORCE_TIMES_TO_RUN_MULTIPLE
+pts-core: Add strict-benchmark option for enabling various options to ensure stricter behavior about the number of times to run each benchmark
 phodevi: CPU-therm reporting via sysfs for CPU core temp
 phodevi: GPU-therm reporting via sysfs for GPU core temp
 
