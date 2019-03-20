@@ -22,6 +22,10 @@
 
 class pts_math
 {
+	public static function arithmetic_mean($values)
+	{
+		return array_sum($values) / count($values);
+	}
 	public static function geometric_mean($values)
 	{
 		// default

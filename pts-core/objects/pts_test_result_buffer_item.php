@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2017, Phoronix Media
-	Copyright (C) 2009 - 2017, Michael Larabel
+	Copyright (C) 2009 - 2019, Phoronix Media
+	Copyright (C) 2009 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -69,6 +69,10 @@ class pts_test_result_buffer_item
 	public function get_result_raw()
 	{
 		return $this->result_raw;
+	}
+	public function get_result_raw_array()
+	{
+		return explode(':', $this->result_raw);
 	}
 	public function get_result_json()
 	{

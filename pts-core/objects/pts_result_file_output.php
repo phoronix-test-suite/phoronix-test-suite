@@ -246,7 +246,6 @@ class pts_result_file_output
 					$min_value = $v;
 				}
 			}
-
 			// First run through the items to see if it makes sense applying colors (e.g. multiple matches)
 			$buffer_count = 0;
 			foreach($buffers as &$buffer_item)

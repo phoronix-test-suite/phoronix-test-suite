@@ -57,6 +57,8 @@
 <p>If you wish to override the number of times to run each test -- rather than the Phoronix Test Suite using the number of times specified in each test profile -- this variable can be used.</p>
 <p><strong>FORCE_MIN_TIMES_TO_RUN</strong></p>
 <p>This is similar to the FORCE_TIMES_TO_RUN option but will only be used if the test profile's run count is less than this defined value.</p>
+<p><strong>FORCE_MIN_TIMES_TO_RUN_CUTOFF</strong></p>
+<p>When used in conjunction with FORCE_MIN_TIMES_TO_RUN, the override value will only be applied to test profiles where its average run-time length (in minutes) is less than the value specified by FORCE_MIN_TIMES_TO_RUN_CUTOFF.</p>
 <p><strong>NO_FILE_HASH_CHECKS</strong></p>
 <p>To disable MD5/SHA256 check-sums from being checked when downloading test files, set this variable to 1. This variable used to be known as <em>NO_MD5_CHECKS</em>, which is still honored but was changed to <em>NO_FILE_HASH_CHECKS</em> to reflect other kind of file hash sum checks.</p>
 <p><strong>NO_HTTPS</strong></p>
