@@ -449,7 +449,7 @@ class pts_result_file_output
 				continue;
 			}
 
-			$table_data[$row][0] = $ro->test_profile->get_title() . ': ' . $ro->get_arguments_description() . ' (' . $ro->test_profile->get_result_scale() / ')';
+			$table_data[$row][0] = $ro->test_profile->get_title() . ': ' . $ro->get_arguments_description() . ' (' . $ro->test_profile->get_result_scale() . ')';
 			for($i = 1; $i < count($columns); $i++)
 			{
 				$table_data[$row][$i] = ' ';
