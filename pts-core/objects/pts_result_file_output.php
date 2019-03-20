@@ -445,6 +445,11 @@ class pts_result_file_output
 		$row = 0;
 		foreach($result_file->get_result_objects() as $ro)
 		{
+			if($ro->test_profile->get_display_format() != 'BAR_GRAPH')
+			{
+				continue;
+			}
+
 			$table_data[$row][0] = $ro->test_profile->get_title() . ': ' . $ro->get_arguments_description();
 			for($i = 1; $i < count($columns); $i++)
 			{
