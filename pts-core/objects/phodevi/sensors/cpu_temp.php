@@ -128,11 +128,15 @@ class cpu_temp extends phodevi_sensor
 
 		if(pts_client::executable_in_path('ipmitool'))
 		{
-			$ipmi = phodevi_linux_parser::read_ipmitool_sensor('Temp 0');
+			foreach(array('CPU Core Temp 1', 'CPU Core Temp 2',
+					'CPU Core Temp 3', 'Temp 0') as $s) {
 
-			if($ipmi > 0 && is_numeric($ipmi))
-			{
-				$temp_c = $ipmi;
+				$ipmi = phodevi_linux_parser::read_ipmitool_sensor($s);
+				if($ipmi > 0 && is_numeric($ipmi))
+				{
+					$temp_c = $ipmi;
+					return $temp_c;
+				}
 			}
 		}
 		
