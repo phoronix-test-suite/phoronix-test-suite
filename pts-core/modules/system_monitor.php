@@ -75,7 +75,7 @@ class system_monitor extends pts_module_interface
 	public static function __run_manager_setup(&$test_run_manager)
 	{
 		$test_run_manager->force_results_save();
-		$test_run_manager->disable_dynamic_run_count();
+		//$test_run_manager->disable_dynamic_run_count();
 	}
 
 	public static function __pre_run_process(&$test_run_manager)
