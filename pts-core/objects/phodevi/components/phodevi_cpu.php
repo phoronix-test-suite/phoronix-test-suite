@@ -42,7 +42,8 @@ class phodevi_cpu extends phodevi_device_interface
 			'scaling-governor' => new phodevi_device_property('cpu_scaling_governor', phodevi::std_caching),
 			'microcode-version' => new phodevi_device_property('cpu_microcode_version', phodevi::std_caching),
 			'cache-size' => new phodevi_device_property('cpu_cache_size', phodevi::smart_caching),
-			'cache-size-string' => new phodevi_device_property('cpu_cache_size_string', phodevi::smart_caching)
+			'cache-size-string' => new phodevi_device_property('cpu_cache_size_string', phodevi::smart_caching),
+			'smt' => new phodevi_device_property('cpu_smt', phodevi::std_caching),
 			);
 	}
 	public static function cpu_string()
@@ -303,6 +304,18 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 
 		return trim($scaling_governor);
+	}
+	public static function cpu_smt()
+	{
+		$smt = false;
+
+		if(pts_client::executable_in_path('ppc64_cpu')) {
+			$ppc64 = trim(shell_exec('ppc64_cpu --smt -n | grep SMT= | cut -d= -f2'));
+			if(is_numeric($ppc64) && $ppc64 >= 1)
+				$smt = $ppc64;
+		}
+
+		return trim($smt);
 	}
 	public static function is_genuine($cpu)
 	{
