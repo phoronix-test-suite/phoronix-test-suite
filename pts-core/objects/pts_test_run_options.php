@@ -434,6 +434,27 @@ class pts_test_run_options
 					}
 				}
 				break;
+			case 'auto-executable':
+				if(PTS_IS_CLIENT == false)
+				{
+					echo 'ERROR: This option is not supported in this configuration.';
+					return;
+				}
+
+				$names = $option_names;
+				$values = $option_values;
+				$option_names = array();
+				$option_values = array();
+
+				for($i = 0; $i < count($names) && $i < count($values); $i++)
+				{
+					if(is_executable($values[$i]) || pts_client::executable_in_path($values[$i]))
+					{
+						$option_names[] = $names[$i];
+						$option_values[] = $values[$i];
+					}
+				}
+				break;
 			case 'auto-directory-select':
 				if(PTS_IS_CLIENT == false)
 				{
