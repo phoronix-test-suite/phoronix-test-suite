@@ -55,7 +55,7 @@
 		</Package>
 		<Package>
 			<GenericName>openssl-development</GenericName>
-			<PackageName>libssl1.0-dev</PackageName>
+			<PackageName>libssl-dev</PackageName>
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
@@ -89,7 +89,7 @@
 		</Package>
 		<Package>
 			<GenericName>java</GenericName>
-			<PackageName>openjdk-8-jdk</PackageName>
+			<PackageName>openjdk-11-jdk</PackageName>
 		</Package>
 		<Package>
 			<GenericName>maven</GenericName>
