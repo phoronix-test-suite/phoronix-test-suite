@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2017, Phoronix Media
-	Copyright (C) 2010 - 2017, Michael Larabel
+	Copyright (C) 2010 - 2019 Phoronix Media
+	Copyright (C) 2010 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -453,6 +453,36 @@ class pts_test_run_options
 						$option_names[] = $names[$i];
 						$option_values[] = $values[$i];
 					}
+				}
+				break;
+			case 'cpu-threads':
+				if(PTS_IS_CLIENT == false)
+				{
+					return;
+				}
+
+				$option_names = array();
+				$option_values = array();
+
+				for($i = 1; $i <= phodevi::read_property('cpu', 'core-count'); $i++)
+				{
+					$option_names[] = $i;
+					$option_values[] = $i;
+				}
+				break;
+			case 'cpu-physical-threads':
+				if(PTS_IS_CLIENT == false)
+				{
+					return;
+				}
+
+				$option_names = array();
+				$option_values = array();
+
+				for($i = 1; $i <= phodevi::read_property('cpu', 'physical-core-count'); $i++)
+				{
+					$option_names[] = $i;
+					$option_values[] = $i;
 				}
 				break;
 			case 'renderer':
