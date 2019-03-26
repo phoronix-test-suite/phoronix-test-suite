@@ -30,7 +30,8 @@ class pts_result_file_output
 		$json['results'] = array();
 		foreach($result_file->get_result_objects() as $result_object)
 		{
-			$json['results'][$result_object->test_profile->get_identifier()] = array(
+			$r = array(
+				'test' => $result_object->test_profile->get_identifier(),
 				'arguments' => $result_object->get_arguments_description(),
 				'units' => $result_object->test_profile->get_result_scale(),
 				);
@@ -39,12 +40,14 @@ class pts_result_file_output
 			{
 				foreach($buffers as &$buffer)
 				{
-					$json['results'][$result_object->test_profile->get_identifier()]['results'][$buffer->get_result_identifier()] = array(
+					$r['results'][$buffer->get_result_identifier()] = array(
 						'value' => $buffer->get_result_value(),
 						'all_results' => $buffer->get_result_raw()
 						);
 				}
 			}
+
+			$json['results'][] = $r;
 		}
 
 		return json_encode($json, JSON_PRETTY_PRINT);
