@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Add "everything" virtual suite
 phodevi: Detect AVX-512 VNNI
 
 Phoronix Test Suite 8.8.0 Milestone 2

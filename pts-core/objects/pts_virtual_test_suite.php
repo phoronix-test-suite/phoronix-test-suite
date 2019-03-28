@@ -31,6 +31,7 @@ class pts_virtual_test_suite
 	private $is_virtual_software_type = false;
 	private $is_virtual_internal_tag = false;
 	private $is_virtual_installed = false;
+	private $is_virtual_everything = false;
 
 	public function __construct($identifier)
 	{
@@ -45,6 +46,7 @@ class pts_virtual_test_suite
 		$this->is_virtual_software_type = self::is_selector_software_type($identifier[1]);
 		$this->is_virtual_internal_tag = self::is_selector_internal_tag($this->repo, $this->virtual);
 		$this->is_virtual_installed = ($this->virtual == 'installed');
+		$this->is_virtual_everything = ($this->virtual == 'everything');
 	}
 	public function __toString()
 	{
@@ -55,7 +57,7 @@ class pts_virtual_test_suite
 		$virtual_suites = array();
 
 		$possible_identifiers = array_merge(
-			array('all', 'installed'),
+			array('all', 'installed', 'everything'),
 			array_map('strtolower', self::available_operating_systems()),
 			array_map('strtolower', pts_types::subsystem_targets()),
 			array_map('strtolower', pts_types::test_profile_software_types())
@@ -100,6 +102,11 @@ class pts_virtual_test_suite
 				if($identifier[1] == 'all')
 				{
 					// virtual suite of all supported tests
+					$is_virtual_suite = true;
+				}
+				else if($identifier[1] == 'everything')
+				{
+					// virtual suite of everything -- including UNSUPPORTED TESTS
 					$is_virtual_suite = true;
 				}
 				else if($identifier[1] == 'installed')
@@ -162,6 +169,10 @@ class pts_virtual_test_suite
 		{
 			$title = 'All ' . strtoupper(substr($this->identifier, 0,  strpos($this->identifier, '/'))) . ' Tests';
 		}
+		else if($this->is_virtual_everything)
+		{
+			$title = 'Every ' . strtoupper(substr($this->identifier, 0,  strpos($this->identifier, '/'))) . ' Test';
+		}
 		else
 		{
 			$title = 'Virtual Suite';
@@ -194,6 +205,10 @@ class pts_virtual_test_suite
 		else if(substr($this->identifier, strrpos($this->identifier, '/') + 1) == 'all')
 		{
 			$description = 'This is a collection of all test profiles found within the specified OpenBenchmarking.org repository.';
+		}
+		else if($this->is_virtual_everything)
+		{
+			$description = 'This is a collection of every test profile found within the specified OpenBenchmarking.org repository, including unsupported tests.';
 		}
 		else
 		{
@@ -310,6 +325,14 @@ class pts_virtual_test_suite
 		{
 			foreach($repo_index['tests'] as $test_identifier => &$test)
 			{
+				if($this->is_virtual_everything)
+				{
+					$test_version = array_shift($test['versions']);
+					$test_profile = new pts_test_profile($this->repo . '/' . $test_identifier . '-' . $test_version);
+					$contained[] = $test_profile;
+					continue;
+				}
+
 				if((!empty($test['supported_platforms']) && !in_array(phodevi::operating_system(), $test['supported_platforms'])) || empty($test['title']))
 				{
 					// Initial check to not do unsupported tests
