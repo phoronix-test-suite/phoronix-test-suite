@@ -710,7 +710,7 @@ class phodevi_cpu extends phodevi_device_interface
 			'rdrand' => (1 << 16), // Intel Bull Mountain RDRAND - Ivy Bridge
 			'fsgsbase' => (1 << 17), // FSGSBASE - Ivy Bridge AVX
 			'bmi2' => (1 << 18), // Intel Haswell has BMI2
-			'avx512cd' => (1 << 19) // AVX-512
+			'avx512cd' => (1 << 19), // AVX-512
 			'avx512_vnni' => (1 << 20) // AVX-512 VNNI (DL BOOST)
 			);
 	}
