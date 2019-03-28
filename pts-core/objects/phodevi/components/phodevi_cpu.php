@@ -711,6 +711,7 @@ class phodevi_cpu extends phodevi_device_interface
 			'fsgsbase' => (1 << 17), // FSGSBASE - Ivy Bridge AVX
 			'bmi2' => (1 << 18), // Intel Haswell has BMI2
 			'avx512cd' => (1 << 19) // AVX-512
+			'avx512_vnni' => (1 << 20) // AVX-512 VNNI (DL BOOST)
 			);
 	}
 	public static function get_cpu_feature_constant($constant)
@@ -773,7 +774,7 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 
 		// Check for other instruction sets
-		foreach(array('avx512cd', 'avx2', 'avx', 'xop', 'fma3', 'fma4', 'rdrand', 'fsgsbase') as $instruction_set)
+		foreach(array('avx512_vnni', 'avx512cd', 'avx2', 'avx', 'xop', 'fma3', 'fma4', 'rdrand', 'fsgsbase') as $instruction_set)
 		{
 			if(($cpu_flags & self::get_cpu_feature_constant($instruction_set)))
 			{
