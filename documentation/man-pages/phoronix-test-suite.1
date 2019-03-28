@@ -1,4 +1,4 @@
-.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "8.8.0m1"
+.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "8.8.0m2"
 .SH NAME
 phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source platform for performing testing and performance evaluation.
 .SH SYNOPSIS
@@ -68,6 +68,9 @@ This option can be used if you wish to run all of the tests found in a supplied 
 .TP
 .B stress-run [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option will run the passed tests/suites in the multi-process stress-testing mode. The stress-run mode will not produce a result file but is rather intended for running multiple test profiles concurrently to stress / burn-in the system. The number of tests to run concurrently can be toggled via the PTS_CONCURRENT_TEST_RUNS environment variable and by default is set to a value of 2.
+.TP
+.B strict-benchmark [Test | Suite | OpenBenchmarking ID | Test Result]  ...
+This option is equivalent to the `benchmark` option except it enables various options to run benchmarks an extended number of times for ensuring better statistical accuracy if enforcing strict controls over the data quality, in some cases running the benchmarks for 20+ times.
 .TP
 .SH BATCH TESTING
 .B batch-benchmark [Test | Suite | OpenBenchmarking ID | Test Result]  ...

@@ -63,6 +63,8 @@ This option will query OpenBenchmarking.org to run random benchmarks and result 
 This option can be used if you wish to run all of the tests found in a supplied suite, but you wish to re-configure each of the test options rather than using the defaults supplied by the suite.
 #### stress-run  [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option will run the passed tests/suites in the multi-process stress-testing mode. The stress-run mode will not produce a result file but is rather intended for running multiple test profiles concurrently to stress / burn-in the system. The number of tests to run concurrently can be toggled via the PTS_CONCURRENT_TEST_RUNS environment variable and by default is set to a value of 2.
+#### strict-benchmark  [Test | Suite | OpenBenchmarking ID | Test Result]  ...
+This option is equivalent to the `benchmark` option except it enables various options to run benchmarks an extended number of times for ensuring better statistical accuracy if enforcing strict controls over the data quality, in some cases running the benchmarks for 20+ times.
 
 ## Batch Testing
 #### batch-benchmark  [Test | Suite | OpenBenchmarking ID | Test Result]  ...
@@ -503,8 +505,12 @@ If you want to ensure that the time for a given Phoronix Test Suite process does
 When running any test(s), if you would like the test(s) to continue running for a number of times, this variable can be used. The value should be the number of times to loop the testing process before ending.
 **FORCE_TIMES_TO_RUN**
 If you wish to override the number of times to run each test -- rather than the Phoronix Test Suite using the number of times specified in each test profile -- this variable can be used.
+**FORCE_TIMES_TO_RUN_MULTIPLE**
+This option allows specifying a multiple for increasing the number of times a test will run based upon the original TimesToRun value specified in the test definition. This allows for increasing the expected times to run based on a multiple of that default rather than a static value.
 **FORCE_MIN_TIMES_TO_RUN**
 This is similar to the FORCE_TIMES_TO_RUN option but will only be used if the test profile's run count is less than this defined value.
+**FORCE_MIN_TIMES_TO_RUN_CUTOFF**
+When used in conjunction with FORCE_MIN_TIMES_TO_RUN, the override value will only be applied to test profiles where its average run-time length (in minutes) is less than the value specified by FORCE_MIN_TIMES_TO_RUN_CUTOFF.
 **NO_FILE_HASH_CHECKS**
 To disable MD5/SHA256 check-sums from being checked when downloading test files, set this variable to 1. This variable used to be known as *NO_MD5_CHECKS* , which is still honored but was changed to *NO_FILE_HASH_CHECKS* to reflect other kind of file hash sum checks.
 **NO_HTTPS**

@@ -65,6 +65,9 @@
 <h3>stress-run<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
 </h3>
 <p>This option will run the passed tests/suites in the multi-process stress-testing mode. The stress-run mode will not produce a result file but is rather intended for running multiple test profiles concurrently to stress / burn-in the system. The number of tests to run concurrently can be toggled via the PTS_CONCURRENT_TEST_RUNS environment variable and by default is set to a value of 2.</p>
+<h3>strict-benchmark<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
+</h3>
+<p>This option is equivalent to the `benchmark` option except it enables various options to run benchmarks an extended number of times for ensuring better statistical accuracy if enforcing strict controls over the data quality, in some cases running the benchmarks for 20+ times.</p>
 <h1>Batch Testing</h1>
 <h3>batch-benchmark<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
 </h3>

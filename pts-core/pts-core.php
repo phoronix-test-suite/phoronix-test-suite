@@ -262,9 +262,9 @@ function pts_version_codenames()
 		);
 }
 
-pts_define('PTS_VERSION', '8.8.0m1');
-pts_define('PTS_CORE_VERSION', 8710);
-pts_define('PTS_RELEASE_DATE', '20190316');
+pts_define('PTS_VERSION', '8.8.0m2');
+pts_define('PTS_CORE_VERSION', 8720);
+pts_define('PTS_RELEASE_DATE', '20190327');
 pts_define('PTS_CODENAME', 'Hvaler');
 
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));
