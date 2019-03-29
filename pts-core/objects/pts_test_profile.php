@@ -187,7 +187,7 @@ class pts_test_profile extends pts_test_profile_parser
 			$times_to_run = $force_runs;
 		}
 
-		if(($force_min_cutoff = pts_client::read_env('FORCE_MIN_TIMES_TO_RUN_CUTOFF')) == false || ($this->get_estimated_run_time() / 60) < $force_min_cutoff)
+		if(($force_min_cutoff = pts_client::read_env('FORCE_MIN_TIMES_TO_RUN_CUTOFF')) == false || ($this->get_estimated_run_time() > 0 && ($this->get_estimated_run_time() / 60) < $force_min_cutoff))
 		{
 			if(($force_runs = pts_client::read_env('FORCE_MIN_TIMES_TO_RUN')) && is_numeric($force_runs) && $force_runs > $times_to_run)
 			{
