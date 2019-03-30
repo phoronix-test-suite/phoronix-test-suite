@@ -162,7 +162,12 @@ class pts_test_run_manager
 
 			if($avg_test_run_time < 120)
 			{
-				// If test run time is 2 minutes or less, safely use a 3x multiple for how many times to run for statistical accuracy...
+				// If test run time is 2 minutes or less, safely use a 4x multiple for how many times to run for statistical accuracy...
+				$maximum_times_to_run = $scheduled_times_to_run * 4;
+			}
+			else if($avg_test_run_time < 240)
+			{
+				// If test run time is 4 minutes or less, safely use a 3x multiple for how many times to run for statistical accuracy...
 				$maximum_times_to_run = $scheduled_times_to_run * 3;
 			}
 			else
