@@ -416,6 +416,12 @@ class pts_test_installer
 									pts_download_speed_manager::update_download_speed_average($download_package->get_filesize(), ($download_end - $download_start));
 								}
 							}
+							else if($download_package->is_optional())
+							{
+								self::test_install_error(null, $test_install_request, 'File failed to download, but package is optional.');
+								$objects_completed++;
+								break;
+							}
 							else
 							{
 								// Download failed

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2018, Phoronix Media
-	Copyright (C) 2008 - 2018, Michael Larabel
+	Copyright (C) 2008 - 2019, Phoronix Media
+	Copyright (C) 2008 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -32,11 +32,12 @@ class pts_test_file_download
 	private $sha256;
 	private $architecture;
 	private $platform;
+	private $is_optional = false;
 
 	private $download_location_type = null;
 	private $download_location_path = null;
 
-	public function __construct($url = null, $filename = null, $filesize = 0, $md5 = null, $sha256 = null, $platform = null, $architecture = null)
+	public function __construct($url = null, $filename = null, $filesize = 0, $md5 = null, $sha256 = null, $platform = null, $architecture = null, $is_optional = false)
 	{
 		$this->filename = empty($filename) ? basename($url) : $filename;
 		$this->url = $this->filename == $url ? null : $url;
@@ -47,6 +48,7 @@ class pts_test_file_download
 		$this->location_path = array();
 		$this->platform = $platform;
 		$this->architecture = $architecture;
+		$this->is_optional = $is_optional || strtolower($is_optional) == 'true';
 
 		if(phodevi::is_windows() || !extension_loaded('openssl'))
 		{
@@ -101,6 +103,14 @@ class pts_test_file_download
 	public function get_sha256()
 	{
 		return $this->sha256;
+	}
+	public function is_optional()
+	{
+		return $this->is_optional == true;
+	}
+	public function is_optional_string()
+	{
+		return $this->is_optional ? 'TRUE' : '';
 	}
 	public function check_file_hash($file)
 	{

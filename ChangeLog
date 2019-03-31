@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Allow marking of test profile download files as optional
 pts-core: Add "everything" virtual suite
 phodevi: Detect AVX-512 VNNI
 

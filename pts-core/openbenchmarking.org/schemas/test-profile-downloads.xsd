@@ -3,8 +3,8 @@
 <xs:annotation>
 	<xs:documentation xml:lang="en">
 		Phoronix Test Suite / OpenBenchmarking.org XML Test Profile Specification
-		Copyright (C) 2008 - 2018, Phoronix Media
-		Copyright (C) 2008 - 2018, Michael Larabel
+		Copyright (C) 2008 - 2019, Phoronix Media
+		Copyright (C) 2008 - 2019, Michael Larabel
 	</xs:documentation>
 </xs:annotation>
 <xs:include schemaLocation="types.xsd" />
@@ -95,6 +95,16 @@
 							<dynamic_list_multi>pts_types.known_architectures</dynamic_list_multi>
 						</xs:appinfo>
 						<xs:documentation>If the file download is limited to a particular CPU architecture, it can be specified via ArchitectureSpecific. E.g. if there are separate files needed for supporting the test profile on x86 and x86_64. Multiple architectures can be specified via a comma and space.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Optional" type="xs:string" minOccurs="0" maxOccurs="1">
+					<xs:annotation>
+						<xs:appinfo>
+							<get>is_optional_string</get>
+							<set></set>
+							<default></default>
+						</xs:appinfo>
+						<xs:documentation>If the file download is not required for using the test profile, set the Optional value to TRUE to denote that the test installation and subsequent execution can still proceed even if the download fails / file not present.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
 			</xs:sequence>

@@ -477,7 +477,8 @@ class pts_test_profile extends pts_test_profile_parser
 					$pkg_filesize = isset($pkg->FileSize) ? $pkg->FileSize->__toString() : null;
 					$pkg_architecture = isset($pkg->ArchitectureSpecific) ? $pkg->ArchitectureSpecific->__toString() : null;
 					$pkg_platforms = isset($pkg->PlatformSpecific) ? $pkg->PlatformSpecific->__toString() : null;
-					$downloads[] = new pts_test_file_download($pkg_url, $pkg_filename, $pkg_filesize, $pkg_md5, $pkg_sha256, $pkg_platforms, $pkg_architecture);
+					$is_optional = isset($pkg->Optional) ? $pkg->Optional->__toString() : null;
+					$downloads[] = new pts_test_file_download($pkg_url, $pkg_filename, $pkg_filesize, $pkg_md5, $pkg_sha256, $pkg_platforms, $pkg_architecture, $is_optional);
 				}
 			}
 		}
