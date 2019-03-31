@@ -366,7 +366,7 @@ class pts_test_installer
 						else
 						{
 							$fail_if_no_downloads = true;
-						|
+						}
 					}
 					// Download the file
 					if(!is_file($download_destination) && count($package_urls) > 0 && $package_urls[0] != null)
