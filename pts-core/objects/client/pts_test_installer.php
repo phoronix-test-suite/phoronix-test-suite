@@ -359,7 +359,14 @@ class pts_test_installer
 					if(!is_file($download_destination) && empty($package_urls))
 					{
 						self::test_install_error(null, $test_install_request, $package_filename . ' must be manually placed in the Phoronix Test Suite download-cache.');
-						$fail_if_no_downloads = true;
+						if($download_package->is_optional())
+						{
+							self::test_install_error(null, $test_install_request, 'This file is marked as being optional.');
+						}
+						else
+						{
+							$fail_if_no_downloads = true;
+						|
 					}
 					// Download the file
 					if(!is_file($download_destination) && count($package_urls) > 0 && $package_urls[0] != null)
