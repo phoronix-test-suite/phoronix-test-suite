@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2018, Phoronix Media
-	Copyright (C) 2018, Michael Larabel
+	Copyright (C) 2018 - 2019, Phoronix Media
+	Copyright (C) 2018 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -80,28 +80,36 @@ class pts_search
 		{
 			$result_file = new pts_result_file($saved_results_identifier);
 
-			if($result_file->get_title() != null && (stripos($result_file->get_title(), $search_query) !== false || stripos($result_file->get_identifier(), $search_query) !== false || stripos($result_file->get_description(), $search_query) !== false))
+			if(pts_search::search_in_result_file($result_file, $search_query) !== false)
 			{
 				$matches[] = $result_file;
-				continue;
-			}
-			if($result_file->contains_system_hardware($search_query) || $result_file->contains_system_software($search_query))
-			{
-				$matches[] = $result_file;
-				continue;
-			}
-			foreach($result_file->get_systems() as $s)
-			{
-				if(stripos($s->get_identifier(), $search_query) !== false)
-				{
-					$matches[] = $result_file;
-					break;
-				}
-				//$ids[] = $s->get_identifier();
 			}
 
 		}
 		return $matches;
+	}
+	public static function search_in_result_file(&$result_file, $search_query)
+	{
+		if($result_file->get_title() != null && (stripos($result_file->get_title(), $search_query) !== false || stripos($result_file->get_identifier(), $search_query) !== false || stripos($result_file->get_description(), $search_query) !== false))
+		{
+			return 'META';
+		}
+		if($result_file->contains_system_hardware($search_query))
+		{
+			return 'HARDWARE';
+		}
+		if($result_file->contains_system_software($search_query))
+		{
+			return 'SOFTWARE';
+		}
+		foreach($result_file->get_systems() as $s)
+		{
+			if(stripos($s->get_identifier(), $search_query) !== false)
+			{
+				return 'SYSTEM_IDENTIFIER';
+			}
+		}
+		return false;
 	}
 	public static function search_test_results_for_tests($test_profile_identifiers)
 	{

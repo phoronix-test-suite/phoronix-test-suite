@@ -389,6 +389,106 @@ class pts_result_file_output
 		}
 		return $result_output;
 	}
+	public static function result_file_to_detailed_html_table(&$result_file, $grid_class = 'grid')
+	{
+		$table = array();
+		$systems = array_merge(array(' '), $result_file->get_system_identifiers());
+		$systems_format = $systems;
+		$af = function(&$value) { $value = '<strong>' . strtoupper($value) . '</strong>'; };
+		array_walk($systems_format, $af);
+		$table[] = $systems_format;
+
+		foreach($result_file->get_result_objects() as $ro)
+		{
+			if($ro == false || $ro->test_profile->get_display_format() != 'BAR_GRAPH')
+			{
+				continue;
+			}
+
+			$table[] = array_fill(0, count($systems), ' ');
+			$row = &$table[count($table) - 1];
+			$table[] = array_fill(0, count($systems), ' ');
+			$nor = &$table[count($table) - 1];
+			$nor[0] = ' &nbsp; &nbsp; Normalized';
+			$table[] = array_fill(0, count($systems), ' ');
+			$samples = &$table[count($table) - 1];
+			$samples[0] = ' &nbsp; &nbsp; Samples';
+			$table[] = array_fill(0, count($systems), ' ');
+			$dev = &$table[count($table) - 1];
+			$dev[0] = ' &nbsp; &nbsp; Standard Deviation';
+			$table[] = array_fill(0, count($systems), ' ');
+			$err = &$table[count($table) - 1];
+			$err[0] = ' &nbsp; &nbsp; Standard Error';
+
+			$hib = $ro->test_profile->get_result_proportion() == 'HIB';
+			$row[0] = '<span><strong>' . $ro->test_profile->get_title() . '</strong><br />' . $ro->get_arguments_description() . ' (' . $ro->test_profile->get_result_scale() . ' ' . ($hib ? '&uarr;' : '&darr;') . ' )</span>';
+
+			$best = $ro->get_result_first(false);
+			$worst = $ro->get_result_last(false);
+			foreach($ro->test_result_buffer->get_buffer_items() as $index => $buffer_item)
+			{
+				$identifier = $buffer_item->get_result_identifier();
+				$value = $buffer_item->get_result_value();
+
+				if(($x = array_search($identifier, $systems)) !== false)
+				{
+					if($value == $best)
+					{
+						$style = ' style="color: green;"';
+					}
+					else if($value == $worst)
+					{
+						$style = ' style="color: red;"';
+					}
+					else
+					{
+						$style = null;
+					}
+
+					$normalized = $hib ? ($value / $best) : ($best / $value);
+
+					$row[$x] = '<strong' . $style. '>' . $value . '</strong>';
+					$nor[$x] = round($normalized * 100, 2) . '%';
+					$samples[$x] = $buffer_item->get_sample_count();
+					if($samples[$x] > 1)
+					{
+						$raw = $buffer_item->get_result_raw_array();
+						$dev[$x] = round(pts_math::standard_deviation($raw), 4);
+						$err[$x] = round(pts_math::standard_error($raw), 4);
+					}
+				}
+			}
+		}
+
+		if($geo = pts_result_file_analyzer::generate_geometric_mean_result($result_file))
+		{
+			$table[] = array_fill(0, count($systems), ' ');
+			$row = &$table[count($table) - 1];
+			$row[0] = '<strong>GEOMETRIC MEAN</strong>';
+			foreach($geo->test_result_buffer->get_buffer_items() as $index => $buffer_item)
+			{
+				$identifier = $buffer_item->get_result_identifier();
+				$value = $buffer_item->get_result_value();
+
+				if(($x = array_search($identifier, $systems)) !== false)
+				{
+					$row[$x] = '<strong>' . $value . '</strong>';
+				}
+			}
+		}
+
+		$html = '<div class="' . $grid_class .'" style="grid-template-columns: max-content ' . str_repeat('max-content ', count($systems) - 1) . '">';
+		foreach($table as $i => &$row)
+		{
+			foreach($row as $c)
+			{
+				$html .= '<span>' . $c . '</span>';
+			}
+		}
+		$html .= '</div>' . PHP_EOL;
+
+		return $html;
+	}
 	public static function result_file_to_pdf(&$result_file, $dest, $output_name, $extra_attributes = null)
 	{
 		//ini_set('memory_limit', '1024M');

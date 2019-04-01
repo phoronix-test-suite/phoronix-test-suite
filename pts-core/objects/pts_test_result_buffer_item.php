@@ -74,6 +74,10 @@ class pts_test_result_buffer_item
 	{
 		return explode(':', $this->result_raw);
 	}
+	public function get_sample_count()
+	{
+		return count($this->get_result_raw_array());
+	}
 	public function get_result_json()
 	{
 		if($this->result_json != null && !is_array($this->result_json))

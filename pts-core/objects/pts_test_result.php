@@ -215,34 +215,34 @@ class pts_test_result
 
 		return $largest_variation;
 	}
-	public function get_result_first()
+	public function get_result_first($return_identifier = true)
 	{
 		// a.k.a. the result winner
 		$winner = null;
 
 		if($this->test_profile->get_result_proportion() == 'LIB')
 		{
-			$winner = $this->test_result_buffer->get_min_value(true);
+			$winner = $this->test_result_buffer->get_min_value($return_identifier);
 		}
 		else if($this->test_profile->get_result_proportion() == 'HIB')
 		{
-			$winner = $this->test_result_buffer->get_max_value(true);
+			$winner = $this->test_result_buffer->get_max_value($return_identifier);
 		}
 
 		return $winner;
 	}
-	public function get_result_last()
+	public function get_result_last($return_identifier = true)
 	{
 		// a.k.a. the result loser
 		$winner = null;
 
 		if($this->test_profile->get_result_proportion() == 'HIB')
 		{
-			$winner = $this->test_result_buffer->get_min_value(true);
+			$winner = $this->test_result_buffer->get_min_value($return_identifier);
 		}
 		else if($this->test_profile->get_result_proportion() == 'LIB')
 		{
-			$winner = $this->test_result_buffer->get_max_value(true);
+			$winner = $this->test_result_buffer->get_max_value($return_identifier);
 		}
 
 		return $winner;
