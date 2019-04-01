@@ -485,10 +485,15 @@ class pts_test_run_options
 				$option_names = array();
 				$option_values = array();
 
-				for($i = 1; $i <= phodevi::read_property('cpu', 'core-count'); $i++)
+				for($i = 1; $i <= phodevi::read_property('cpu', 'core-count'); $i *= 2)
 				{
 					$option_names[] = $i;
 					$option_values[] = $i;
+				}
+				if($i != phodevi::read_property('cpu', 'core-count'))
+				{
+					$option_names[] = phodevi::read_property('cpu', 'core-count');
+					$option_values[] = phodevi::read_property('cpu', 'core-count');
 				}
 				break;
 			case 'cpu-physical-threads':
@@ -500,10 +505,15 @@ class pts_test_run_options
 				$option_names = array();
 				$option_values = array();
 
-				for($i = 1; $i <= phodevi::read_property('cpu', 'physical-core-count'); $i++)
+				for($i = 1; $i <= phodevi::read_property('cpu', 'physical-core-count'); $i *= 2)
 				{
 					$option_names[] = $i;
 					$option_values[] = $i;
+				}
+				if($i != phodevi::read_property('cpu', 'physical-core-count'))
+				{
+					$option_names[] = phodevi::read_property('cpu', 'physical-core-count');
+					$option_values[] = phodevi::read_property('cpu', 'physical-core-count');
 				}
 				break;
 			case 'renderer':
