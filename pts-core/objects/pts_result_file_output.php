@@ -413,12 +413,15 @@ class pts_result_file_output
 			$table[] = array_fill(0, count($systems), ' ');
 			$samples = &$table[count($table) - 1];
 			$samples[0] = ' &nbsp; &nbsp; Samples';
-			$table[] = array_fill(0, count($systems), ' ');
-			$dev = &$table[count($table) - 1];
-			$dev[0] = ' &nbsp; &nbsp; Standard Deviation';
-			$table[] = array_fill(0, count($systems), ' ');
-			$err = &$table[count($table) - 1];
-			$err[0] = ' &nbsp; &nbsp; Standard Error';
+			if($ro->test_result_buffer->has_run_with_multiple_samples())
+			{
+				$table[] = array_fill(0, count($systems), ' ');
+				$dev = &$table[count($table) - 1];
+				$dev[0] = ' &nbsp; &nbsp; Standard Deviation';
+				$table[] = array_fill(0, count($systems), ' ');
+				$err = &$table[count($table) - 1];
+				$err[0] = ' &nbsp; &nbsp; Standard Error';
+			}
 
 			$hib = $ro->test_profile->get_result_proportion() == 'HIB';
 			$row[0] = '<span><strong>' . $ro->test_profile->get_title() . '</strong><br />' . $ro->get_arguments_description() . ' (' . $ro->test_profile->get_result_scale() . ' ' . ($hib ? '&uarr;' : '&darr;') . ' )</span>';

@@ -327,6 +327,18 @@ class pts_test_result_buffer
 
 		return $return_identifier ? $max_id : $value;
 	}
+	public function has_run_with_multiple_samples()
+	{
+		foreach($this->buffer_items as &$buffer_item)
+		{
+			if($buffer_item->get_sample_count() > 1)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
 	public function get_value_from_identifier($result_identifier)
 	{
 		foreach($this->buffer_items as &$buffer_item)
