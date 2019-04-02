@@ -1,0 +1,12 @@
+<?php
+
+// If an access key / mini log-in is desired as a basic measure to prevent authorized access to the viewer, set the value here using the SHA256 hash of desired key/password.
+define('VIEWER_ACCESS_KEY', '');
+
+// Path to results directory
+define('VIEWER_RESULTS_DIRECTORY_PATH', '');
+
+// Path to phoronix-test-suite installation
+define('VIEWER_PHORONIX_TEST_SUITE_PATH', '');
+
+?>

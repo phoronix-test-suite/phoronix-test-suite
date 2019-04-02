@@ -394,7 +394,7 @@ class pts_result_file_output
 		$table = array();
 		$systems = array_merge(array(' '), $result_file->get_system_identifiers());
 		$systems_format = $systems;
-		$af = function(&$value) { $value = '<strong>' . strtoupper($value) . '</strong>'; };
+		$af = function(&$value) { $value = '<strong style="writing-mode: vertical-rl; text-orientation: mixed;">' . strtoupper($value) . '</strong>'; };
 		array_walk($systems_format, $af);
 		$table[] = $systems_format;
 
