@@ -114,7 +114,7 @@ div#login_box_right
 </div>
 <div id="login_box_right">
 <form name="login_form" id="login_form" action="<?php echo CURRENT_URI; ?>" method="post"><br />
-<input type="text" name="access_key" id="u_access_key" required placeholder="Access Key" /><br />
+<input type="password" name="access_key" id="u_access_key" required placeholder="Access Key" /><br />
 <input type="submit" value="Login" />
 </form>
 </div>

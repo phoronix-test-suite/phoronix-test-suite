@@ -400,7 +400,7 @@ class pts_result_file_output
 
 		foreach($result_file->get_result_objects() as $ro)
 		{
-			if($ro == false || $ro->test_profile->get_display_format() != 'BAR_GRAPH')
+			if($ro == false || $ro->test_profile->get_display_format() != 'BAR_GRAPH' || $ro->test_profile->get_identifier() == null)
 			{
 				continue;
 			}
@@ -449,6 +449,10 @@ class pts_result_file_output
 					}
 
 					$normalized = $hib ? ($value / $best) : ($best / $value);
+					if($value > 1000)
+					{
+						$value = round($value);
+					}
 
 					$row[$x] = '<strong' . $style. '>' . $value . '</strong>';
 					$nor[$x] = round($normalized * 100, 2) . '%';
