@@ -481,7 +481,7 @@ class pts_network
 				$ipv4 = substr($ipv4, 0, strpos($ipv4, "\n"));
 				$local_ip = trim($ipv4);
 
-				if($local_ip != '127.0.0.1' && $local_ip != null)
+				if($local_ip != '127.0.0.1' && $local_ip != null && strpos($local_ip, '169.254') === false)
 				{
 					break;
 				}
