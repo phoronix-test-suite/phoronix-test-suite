@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2018, Phoronix Media
-	Copyright (C) 2010 - 2018, Michael Larabel
+	Copyright (C) 2010 - 2019, Phoronix Media
+	Copyright (C) 2010 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -426,7 +426,7 @@ class pts_openbenchmarking
 	}
 	public static function linked_repositories()
 	{
-		$repos = array('local', 'pts', 'system');
+		$repos = array('local', 'pts', 'system', 'git');
 
 		if(PTS_IS_CLIENT && phodevi::is_windows())
 		{
