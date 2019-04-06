@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2018, Phoronix Media
-	Copyright (C) 2008 - 2018, Michael Larabel
+	Copyright (C) 2008 - 2019, Phoronix Media
+	Copyright (C) 2008 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -294,6 +294,10 @@ class pts_test_profile_parser
 	}
 	public function get_times_to_run()
 	{
+		return $this->get_default_times_to_run();
+	}
+	public function get_default_times_to_run()
+	{
 		return $this->xg('TestInformation/TimesToRun', 3);
 	}
 	public function get_runs_to_ignore()
@@ -404,7 +408,7 @@ class pts_test_profile_parser
 	}
 	public function get_estimated_run_time()
 	{
-		return $this->xg('TestProfile/EstimatedTimePerRun', 0) * $this->xg('TestInformation/TimesToRun', 3);
+		return $this->xg('TestProfile/EstimatedTimePerRun', 0) * $this->get_default_times_to_run();
 	}
 	public function requires_core_version_min()
 	{

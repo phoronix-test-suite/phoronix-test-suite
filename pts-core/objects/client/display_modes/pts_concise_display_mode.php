@@ -482,6 +482,10 @@ class pts_concise_display_mode implements pts_display_mode_interface
 			{
 				$end_print .= PHP_EOL . $this->tab . 'Maximum: ' . $test_result->active->get_max_result();
 			}
+			if(count($test_result->active->results) != $test_result->test_profile->get_default_times_to_run())
+			{
+				$end_print .= PHP_EOL . $this->tab . 'Samples: ' . count($test_result->active->results);
+			}
 			if($result_count > 2)
 			{
 				$end_print .= PHP_EOL . $this->tab . 'Deviation: ' . pts_math::set_precision(pts_math::percent_standard_deviation($test_result->active->results), 2) . '%';

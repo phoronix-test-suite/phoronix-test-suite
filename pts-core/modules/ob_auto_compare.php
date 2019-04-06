@@ -253,7 +253,7 @@ class ob_auto_compare extends pts_module_interface
 							continue;
 						}
 						$this_result_pos = round($value / $max_value * $box_plot_size);
-						if(in_array($this_result_pos, $results_at_pos) || (strpos($component, 'This Result') === false && !in_array($box_plot[$this_result_pos], array(' ', '-', '#'))))
+						if(in_array($this_result_pos, $results_at_pos) || (strpos($component, 'This Result') === false && !in_array((isset($box_plot[$this_result_pos]) ? $box_plot[$this_result_pos] : null), array(' ', '-', '#'))))
 						{
 							continue;
 						}
