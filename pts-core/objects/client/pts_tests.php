@@ -319,13 +319,19 @@ class pts_tests
 		$xml_writer = new nye_XmlWriter('file://' . PTS_USER_PATH . 'xsl/' . 'pts-test-installation-viewer.xsl');
 
 		$test_duration = $test_profile->test_installation->get_average_run_time();
-		if(!is_numeric($test_duration) && !$is_install)
+
+		// When run count is higher due to forcing it with env vars, don't factor it into average to throw out the numbering...
+		$record_avg_run_time = $test_profile->get_default_times_to_run() == $test_profile->get_times_to_run();
+		if($record_avg_run_time)
 		{
-			$test_duration = $this_duration;
-		}
-		if(!$is_install && is_numeric($this_duration) && $this_duration > 0)
-		{
-			$test_duration = ceil((($test_duration * $test_profile->test_installation->get_run_count()) + $this_duration) / ($test_profile->test_installation->get_run_count() + 1));
+			if(!is_numeric($test_duration) && !$is_install)
+			{
+				$test_duration = $this_duration;
+			}
+			if(!$is_install && is_numeric($this_duration) && $this_duration > 0)
+			{
+				$test_duration = ceil((($test_duration * $test_profile->test_installation->get_run_count()) + $this_duration) / ($test_profile->test_installation->get_run_count() + 1));
+			}
 		}
 
 		$compiler_data = $is_install ? $compiler_data : $test_profile->test_installation->get_compiler_data();
