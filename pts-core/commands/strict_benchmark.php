@@ -40,6 +40,7 @@ class strict_benchmark implements pts_option_interface
 		putenv('FORCE_TIMES_TO_RUN_MULTIPLE=2');
 		putenv('FORCE_MIN_TIMES_TO_RUN=20');
 		putenv('FORCE_MIN_TIMES_TO_RUN_CUTOFF=5');
+		putenv('FORCE_ABSOLUTE_MIN_TIMES_TO_RUN=3');
 		pts_test_installer::standard_install($r);
 		$run_manager = new pts_test_run_manager();
 		$run_manager->standard_run($r);
