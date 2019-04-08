@@ -89,7 +89,7 @@ class pts_test_execution
 
 		$time_test_start = microtime(true);
 		pts_client::$display->test_run_start($test_run_manager, $test_run_request);
-		sleep(1);
+		sleep(2);
 
 		if(!$cache_share_present && !$test_run_manager->DEBUG_no_test_execution_just_result_parse)
 		{
