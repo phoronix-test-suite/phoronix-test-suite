@@ -490,7 +490,7 @@ class pts_test_run_options
 					$option_names[] = $i;
 					$option_values[] = $i;
 				}
-				if(!in_array($option_names, phodevi::read_property('cpu', 'core-count')))
+				if(!in_array(phodevi::read_property('cpu', 'core-count'), $option_names))
 				{
 					$option_names[] = phodevi::read_property('cpu', 'core-count');
 					$option_values[] = phodevi::read_property('cpu', 'core-count');
@@ -510,7 +510,7 @@ class pts_test_run_options
 					$option_names[] = $i;
 					$option_values[] = $i;
 				}
-				if(!in_array($option_names, phodevi::read_property('cpu', 'physical-core-count')))
+				if(!in_array(phodevi::read_property('cpu', 'physical-core-count'), $option_names))
 				{
 					$option_names[] = phodevi::read_property('cpu', 'physical-core-count');
 					$option_values[] = phodevi::read_property('cpu', 'physical-core-count');
