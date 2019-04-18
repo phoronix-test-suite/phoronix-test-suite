@@ -6,6 +6,7 @@ pts-core: Add experimental dynamic-result-viewer
 pts-core: Allow marking of test profile download files as optional
 pts-core: Add "everything" virtual suite
 phodevi: Detect AVX-512 VNNI
+phodevi: Fix OpenJDK Java version detection
 
 Phoronix Test Suite 8.8.0 Milestone 2
 27 March 2019

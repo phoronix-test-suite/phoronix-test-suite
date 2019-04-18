@@ -1991,7 +1991,7 @@ class phodevi_system extends phodevi_device_interface
 	{
 		$java_version = trim(shell_exec('java -version 2>&1'));
 
-		if(strpos($java_version, 'not found') == false && strpos($java_version, 'Java') !== FALSE)
+		if(strpos($java_version, 'not found') == false && (stripos($java_version, 'Java') !== false || stripos($java_version, 'jdk') !== false))
 		{
 			$java_version = explode("\n", $java_version);
 
