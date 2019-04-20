@@ -131,6 +131,12 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		}
 		else
 		{
+			if(isset($_POST) && !empty($_POST))
+			{
+				$req = $_REQUEST;
+				unset($req['PHPSESSID']);
+				header('Location: ?' . http_build_query($req));
+			}
 			$result_file = new pts_result_file(VIEWER_RESULTS_DIRECTORY_PATH . '/' . $_GET['result'] . '/composite.xml');
 			$extra_attributes = null;
 			pts_result_viewer_settings::process_request_to_attributes($_REQUEST, $result_file, $extra_attributes);
@@ -226,6 +232,34 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		{
 			$PAGE .= '<h2><a href="?page=result&result=' . $id . '">' . $result_file->get_title() . '</a></h2>';
 			$PAGE .= '<div class="sub">' . $result_file->get_test_count() . ' Tests &nbsp; &nbsp; ' . $result_file->get_system_count() . ' Systems &nbsp; &nbsp; ' . date('j F H:i', strtotime($result_file->get_last_modified())) . '</div>';
+
+			$geometric_mean = pts_result_file_analyzer::generate_geometric_mean_result($result_file);
+			if($geometric_mean)
+			{
+				$geo_display = null;
+				$geo_display_count = 0;
+				$best_result = $geometric_mean->test_result_buffer->get_max_value(false);
+				foreach($geometric_mean->test_result_buffer as &$buffers)
+				{
+					if(empty($buffers))
+						continue;
+
+					$max_value = 0;
+					foreach($buffers as &$buffer_item)
+					{
+						$v = $buffer_item->get_result_value();
+						if(!is_numeric($v)) continue;
+						$percentage = ($v / $best_result) * 100;
+						$geo_display .=  '<div class="geo_bg_graph" style="margin-right: ' . round(100 - $percentage, 1) . '%"><strong>' . $buffer_item->get_result_identifier() . ':</strong> ' . $v . ' (' . round($percentage, 2) . '%)</div>';
+						$geo_display_count++;
+					}
+				}
+				if($geo_display_count > 1)
+				{
+					$PAGE .= '<span class="sub_header">Geometric Mean</span>' . $geo_display;
+				}
+			}
+			$PAGE .= '<br />';
 		}
 		break;
 
@@ -338,6 +372,12 @@ div#main_area div.sub
 	font-size: 12pt;
 	text-transform: uppercase;
 }
+div#main_area span.sub_header
+{
+	text-transform: uppercase;
+	font-size: 8pt;
+	font-weight: bold;
+}
 hr
 {
 	color: #098BEF;
@@ -374,6 +414,16 @@ svg
 {
 	min-width: 50%;
 	height: auto;
+}
+div.geo_bg_graph
+{
+	background: #CCC;
+	font-size: 10pt;
+	font-weight: 500;
+	margin: 0;
+	padding: 1px 4px;
+	border: #BBB 2px solid;
+	border-width: 1px;
 }
 </style>
 </head>
