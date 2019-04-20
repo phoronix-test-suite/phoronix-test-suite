@@ -97,6 +97,11 @@ class pts_math
 
 		return $average_value != 0 ? ($standard_deviation / $average_value * 100) : 0;
 	}
+	public static function get_precision($number)
+	{
+		// number of decimal digits
+		return strlen(substr(strrchr($number, '.'), 1));
+	}
 	public static function set_precision($number, $precision = 2)
 	{
 		// This is better than using round() with precision because of the $precision is > than the current value, 0s will not be appended

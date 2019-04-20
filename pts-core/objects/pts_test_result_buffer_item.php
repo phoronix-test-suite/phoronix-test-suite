@@ -44,7 +44,7 @@ class pts_test_result_buffer_item
 	}
 	public function reset_result_value($value)
 	{
-		$precision = ($x = strrpos($this->result_final, '.')) !== false ? strlen($this->result_final) - $x + 1 : 0;
+		$precision = pts_math::get_precision($this->result_final);
 		$value = round($value, ($precision < 2 ? 2 : $precision));
 
 		$this->result_final = $value;

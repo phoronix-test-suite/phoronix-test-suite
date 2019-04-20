@@ -247,6 +247,23 @@ class pts_test_result
 
 		return $winner;
 	}
+	public function get_spread()
+	{
+		if($this->has_noisy_result())
+		{
+			return -1;
+		}
+
+		$best = $this->get_result_first(false);
+		$worst = $this->get_result_last(false);
+
+		$spread = $best / $worst;
+		if($this->test_profile->get_result_proportion() == 'LIB')
+		{
+			$spread = 1 / $spread;
+		}
+		return $spread;
+	}
 	public function normalize_buffer_values($normalize_against = false, $extra_attributes = null)
 	{
 		if($this->test_profile->get_display_format() != 'BAR_GRAPH') // BAR_ANALYZE_GRAPH is currently unsupported
@@ -423,6 +440,26 @@ class pts_test_result
 			}
 		}
 		return $val;
+	}
+	public function has_noisy_result($noise_level_percent = 6)
+	{
+		$val = null;
+		foreach(array_keys($this->test_result_buffer->buffer_items) as $k)
+		{
+			if($this->test_profile->get_display_format() != 'BAR_GRAPH')
+			{
+				continue;
+			}
+			$raw = $this->test_result_buffer->buffer_items[$k]->get_result_raw_array();
+			if(!empty($raw) && count($raw) > 2)
+			{
+				if(($p = pts_math::percent_standard_deviation($raw)) > $noise_level_percent)
+				{
+					return $p;
+				}
+			}
+		}
+		return false;
 	}
 	public function remove_noisy_results($threshold = 0.6)
 	{

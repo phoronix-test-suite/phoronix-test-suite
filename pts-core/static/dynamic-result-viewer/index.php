@@ -168,6 +168,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 					exit;
 			}
 			$PAGE .= '<hr /><p>' . pts_result_viewer_settings::get_html_options_markup($result_file, $_REQUEST) . '</p><hr />';
+			$PAGE .= pts_result_viewer_settings::process_helper_html($_REQUEST, $result_file, $extra_attributes);
 			$table = new pts_ResultFileSystemsTable($result_file);
 			$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
 			$intent = null;
@@ -184,7 +185,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 					continue;
 				}
 
-				$PAGE .= '<p align="center">';
+				$PAGE .= '<a name="r-' . $i . '"></a><p align="center">';
 				$PAGE .= $res;
 				$PAGE .= '</p>';
 				unset($result_object);

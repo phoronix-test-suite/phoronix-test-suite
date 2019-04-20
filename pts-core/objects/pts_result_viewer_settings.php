@@ -76,6 +76,7 @@ class pts_result_viewer_settings
 			$analyze_checkboxes['Statistics'][] = array('nor', 'Normalize Results');
 			$analyze_checkboxes['Graph Settings'][] = array('ftr', 'Force Line Graphs (Where Applicable)');
 			$analyze_checkboxes['Graph Settings'][] = array('scalar', 'Convert To Scalar (Where Applicable)');
+			$analyze_checkboxes['Helpers'][] = array('spr', 'Show Notable Results');
 
 			if($has_identifier_with_color_brand)
 			{
@@ -117,6 +118,36 @@ class pts_result_viewer_settings
 			$analyze_options = 'Add more than one test system to expose result analysis options.';
 		}
 		return $analyze_options;
+	}
+	public static function process_helper_html(&$request, &$result_file, &$extra_attributes)
+	{
+		$html = null;
+		if(self::check_request_for_var($request, 'spr'))
+		{
+			$results = $result_file->get_result_objects();
+			$spreads = array();
+			foreach($results as $i => &$result_object)
+			{
+				$spreads[$i] = $result_object->get_spread();
+			}
+			arsort($spreads);
+			$spreads = array_slice($spreads, 0, min(count($results) / 4, 10), true);
+
+			if(!empty($spreads))
+			{
+				$html .= '<h3>Notable Results</h3>';
+				foreach($spreads as $result_key => $spread)
+				{
+					$ro = $result_file->get_result_objects($result_key);
+					if(!is_object($ro[0]))
+					{
+						continue;
+					}
+					$html .= '<a href="#r-' . $result_key . '">' . $ro[0]->test_profile->get_title() . ' - ' . $ro[0]->get_arguments_description() . '</a><br />';
+				}
+			}
+		}
+		return $html;
 	}
 	public static function check_request_for_var(&$request, $check)
 	{
