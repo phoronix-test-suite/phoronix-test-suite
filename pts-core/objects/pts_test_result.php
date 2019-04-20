@@ -411,6 +411,19 @@ class pts_test_result
 		}
 		return true;
 	}
+	public function get_result_value_from_name($name)
+	{
+		$val = null;
+		foreach(array_keys($this->test_result_buffer->buffer_items) as $k)
+		{
+			if($this->test_result_buffer->buffer_items[$k]->get_result_identifier() == $name)
+			{
+				$val = $this->test_result_buffer->buffer_items[$k]->get_result_value();
+				break;
+			}
+		}
+		return $val;
+	}
 	public function remove_noisy_results($threshold = 0.6)
 	{
 		if($this->test_profile->get_display_format() != 'BAR_GRAPH') // BAR_ANALYZE_GRAPH is currently unsupported

@@ -131,8 +131,9 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		}
 		else
 		{
-			$extra_attributes = null;
 			$result_file = new pts_result_file(VIEWER_RESULTS_DIRECTORY_PATH . '/' . $_GET['result'] . '/composite.xml');
+			$extra_attributes = null;
+			pts_result_viewer_settings::process_request_to_attributes($_REQUEST, $result_file, $extra_attributes);
 			define('TITLE', $result_file->get_title());
 			$PAGE .= '<h1>' . $result_file->get_title() . '</h1>';
 			$PAGE .= '<p>' . $result_file->get_description() . '</p>';
@@ -166,10 +167,11 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 					echo $result_csv;
 					exit;
 			}
+			$PAGE .= '<hr /><p>' . pts_result_viewer_settings::get_html_options_markup($result_file, $_REQUEST) . '</p><hr />';
 			$table = new pts_ResultFileSystemsTable($result_file);
 			$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
 			$intent = null;
-			$PAGE .= '<div style="display:flex; align-items: center; justify-content: center;">' . pts_result_file_output::result_file_to_detailed_html_table($result_file, 'grid') . '</div>';
+			$PAGE .= '<div style="display:flex; align-items: center; justify-content: center;">' . pts_result_file_output::result_file_to_detailed_html_table($result_file, 'grid', $extra_attributes) . '</div>';
 			$table = new pts_ResultFileTable($result_file, $intent);
 			$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
 

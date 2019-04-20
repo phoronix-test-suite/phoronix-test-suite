@@ -389,7 +389,7 @@ class pts_result_file_output
 		}
 		return $result_output;
 	}
-	public static function result_file_to_detailed_html_table(&$result_file, $grid_class = 'grid')
+	public static function result_file_to_detailed_html_table(&$result_file, $grid_class = 'grid', $extra_attributes = null)
 	{
 		$table = array();
 		$systems = array_merge(array(' '), $result_file->get_system_identifiers());
@@ -428,6 +428,17 @@ class pts_result_file_output
 
 			$best = $ro->get_result_first(false);
 			$worst = $ro->get_result_last(false);
+
+			$normalize_against = 0;
+			if(isset($extra_attributes['highlight_graph_values']) && is_array($extra_attributes['highlight_graph_values']) && count($extra_attributes['highlight_graph_values']) == 1)
+			{
+				$normalize_against = $ro->get_result_value_from_name($extra_attributes['highlight_graph_values'][0]);
+			}
+			if($normalize_against == 0)
+			{
+				$normalize_against = $best;
+			}
+
 			foreach($ro->test_result_buffer->get_buffer_items() as $index => $buffer_item)
 			{
 				$identifier = $buffer_item->get_result_identifier();
@@ -448,7 +459,7 @@ class pts_result_file_output
 						$style = null;
 					}
 
-					$normalized = $hib ? ($value / $best) : ($best / $value);
+					$normalized = $hib ? ($value / $normalize_against) : ($normalize_against / $value);
 					if($value > 1000)
 					{
 						$value = round($value);

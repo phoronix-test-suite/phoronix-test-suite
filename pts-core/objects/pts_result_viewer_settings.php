@@ -41,6 +41,7 @@ class pts_result_viewer_settings
 				array('ncb', 'No Color Branding'),
 				array('nbp', 'No Box Plots'),
 				array('vb', 'Prefer Vertical Bar Graphs'),
+				array('rol', 'Remove Outliers Before Calculating Averages'),
 				);
 
 			if($result_file->is_multi_way_comparison())
@@ -140,6 +141,10 @@ var_dump($extra_attributes['highlight_graph_values']);
 			$extra_attributes['no_box_plots'] = true;
 		}
 		if(self::check_request_for_var($request, 'vb'))
+		{
+			$extra_attributes['vertical_bars'] = true;
+		}
+		if(self::check_request_for_var($request, 'rol'))
 		{
 			$extra_attributes['vertical_bars'] = true;
 		}
