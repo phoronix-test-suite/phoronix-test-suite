@@ -55,7 +55,7 @@ class pts_math
 		$outlier = $mag * $std_dev;
 		foreach($values as $i)
 		{
-			if(abs($i - $mean) < $outlier)
+			if(is_numeric($i) && abs($i - $mean) < $outlier)
 			{
 				$ret[] = $i;
 			}

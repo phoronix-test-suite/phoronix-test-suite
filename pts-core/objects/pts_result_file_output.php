@@ -496,6 +496,11 @@ class pts_result_file_output
 		}
 
 		$html = '<div class="' . $grid_class .'" style="grid-template-columns: max-content ' . str_repeat('max-content ', count($systems) - 1) . '">';
+
+		if(count($table) < 2)
+		{
+			return null;
+		}
 		foreach($table as $i => &$row)
 		{
 			foreach($row as $c)

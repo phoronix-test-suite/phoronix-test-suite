@@ -458,10 +458,10 @@ class pts_test_result
 			$jiggy_results = 0;
 			foreach($keys as $k)
 			{
-				$raw = $this->test_result_buffer->buffer_items[$k]->get_result_raw();
+				$raw = $this->test_result_buffer->buffer_items[$k]->get_result_raw_array();
 				if(!empty($raw))
 				{
-					$raw = pts_math::standard_error(pts_strings::colon_explode($raw));
+					$raw = pts_math::standard_error($raw);
 					if($raw > 10)
 					{
 						$jiggy_results++;
@@ -478,6 +478,27 @@ class pts_test_result
 			}
 		}
 		return true;
+	}
+	public function recalculate_averages_without_outliers($mag = 2)
+	{
+		if($this->test_profile->get_display_format() != 'BAR_GRAPH') // BAR_ANALYZE_GRAPH is currently unsupported
+		{
+			return false;
+		}
+
+		foreach(array_keys($this->test_result_buffer->buffer_items) as $i => $k)
+		{
+			$raw = $this->test_result_buffer->buffer_items[$k]->get_result_raw_array();
+			if(!empty($raw))
+			{
+				$raw = pts_math::remove_outliers($raw, $mag);
+				if(count($raw) > 0)
+				{
+					$this->test_result_buffer->buffer_items[$k]->reset_result_value(array_sum($raw) / count($raw));
+					$this->test_result_buffer->buffer_items[$k]->reset_raw_value(implode(':', $raw));
+				}
+			}
+		}
 	}
 	public function points_of_possible_interest($threshold_level = 0.05, $adaptive = true)
 	{

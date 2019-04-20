@@ -27,36 +27,89 @@ class pts_result_viewer_settings
 		$analyze_options = null;
 		if(count($result_file->get_system_identifiers()) > 1)
 		{
+			// CHECKS FOR DETERMINING OPTIONS TO DISPLAY
+			$has_identifier_with_color_brand = false;
+			$has_box_plot = false;
+			$has_line_graph = false;
+
+			foreach($result_file->get_system_identifiers() as $sys)
+			{
+				if(pts_render::identifier_to_brand_color($sys, null) != null)
+				{
+					$has_identifier_with_color_brand = true;
+					break;
+				}
+			}
+
+			foreach($result_file->get_result_objects() as $i => &$result_object)
+			{
+				if(!$has_box_plot && $result_object->test_profile->get_display_format() == 'HORIZONTAL_BOX_PLOT')
+				{
+					$has_box_plot = true;
+				}
+				if(!$has_line_graph && $result_object->test_profile->get_display_format() == 'LINE_GRAPH')
+				{
+					$has_line_graph = true;
+				}
+
+				// (optimization) if it has everything, break
+				if($has_line_graph && $has_box_plot)
+				{
+					break;
+				}
+			}
+			// END OF CHECKS
+
 			$analyze_options = '<form action="' . $_SERVER['REQUEST_URI'] . '" method="post">';
 			$analyze_checkboxes = array(
-				//array('obr_sas', 'Show Aggregate Sum'),
-				array('shm', 'Show Harmonic Mean'),
-				array('sgm', 'Show Geometric Mean'),
-				array('sor', 'Sort Results By Performance'),
-				array('sro', 'Sort Results By Identifier'),
-				array('rro', 'Reverse Result Order'),
-				array('nor', 'Normalize Results'),
-				array('ftr', 'Force Line Graphs (Where Appropriate)'),
-				array('scalar', 'Convert To Scalar (Where Appropriate)'),
-				array('ncb', 'No Color Branding'),
-				array('nbp', 'No Box Plots'),
-				array('vb', 'Prefer Vertical Bar Graphs'),
-				array('rol', 'Remove Outliers Before Calculating Averages'),
+				'Statistics' => array(),
+				'Sorting' => array(),
+				'Graph Settings' => array(),
+				'Multi-Way Comparison' => array(),
+				'Helpers' => array()
 				);
+			$analyze_checkboxes['Statistics'][] = array('shm', 'Show Overall Harmonic Mean(s)');
+			$analyze_checkboxes['Statistics'][] = array('sgm', 'Show Overall Geometric Mean');
+			$analyze_checkboxes['Sorting'][] = array('sor', 'Sort Results By Performance');
+			$analyze_checkboxes['Sorting'][] = array('sro', 'Sort Results By Identifier');
+			$analyze_checkboxes['Sorting'][] = array('rro', 'Reverse Result Order');
+			$analyze_checkboxes['Statistics'][] = array('nor', 'Normalize Results');
+			$analyze_checkboxes['Graph Settings'][] = array('ftr', 'Force Line Graphs (Where Applicable)');
+			$analyze_checkboxes['Graph Settings'][] = array('scalar', 'Convert To Scalar (Where Applicable)');
+
+			if($has_identifier_with_color_brand)
+			{
+				$analyze_checkboxes['Graph Settings'][] = array('ncb', 'No Color Branding');
+			}
+			if($has_box_plot || $has_line_graph)
+			{
+				$analyze_checkboxes['Graph Settings'][] = array('nbp', 'No Box Plots');
+			}
+			$analyze_checkboxes['Graph Settings'][] = array('vb', 'Prefer Vertical Bar Graphs');
+			$analyze_checkboxes['Statistics'][] = array('rol', 'Remove Outliers Before Calculating Averages');
+			$analyze_checkboxes['Statistics'][] = array('gtb', 'Graph Values Of All Runs (Box Plot)');
 
 			if($result_file->is_multi_way_comparison())
 			{
-				array_push($analyze_checkboxes, array('cmw', 'Condense Comparison'));
-				array_push($analyze_checkboxes, array('imw', 'Transpose Comparison'));
+				$analyze_checkboxes['Multi-Way Comparison'][] = array('cmw', 'Condense Comparison');
+				$analyze_checkboxes['Multi-Way Comparison'][] = array('imw', 'Transpose Comparison');
 			}
 
 			$t = null;
-			foreach($analyze_checkboxes as $i => $key)
+			foreach($analyze_checkboxes as $title => $group)
 			{
-				$t .= '<input type="checkbox" name="' . $key[0] . '" value="y"' . (self::check_request_for_var($request, $key[0]) ? ' checked="checked"' : null) . ' /> ' . $key[1] . ' ';
+				if(empty($group))
+				{
+					continue;
+				}
+				$t .= '<h2>' . $title . '</h2>';
+				foreach($group as $i => $key)
+				{
+					$t .= '<input type="checkbox" name="' . $key[0] . '" value="y"' . (self::check_request_for_var($request, $key[0]) ? ' checked="checked"' : null) . ' /> ' . $key[1] . ' ';
+				}
 			}
 
-			$t .= '<br /><br /><br />Highlight/Baseline Result: ' .  self::html_select_menu('hgv', 'hgv', null, array_merge(array(null), $result_file->get_system_identifiers()), false);
+			$t .= '<br /><br />Highlight/Baseline Result: ' .  self::html_select_menu('hgv', 'hgv', null, array_merge(array(null), $result_file->get_system_identifiers()), false);
 			$analyze_options .= $t . '<br /><input name="submit" value="Refresh Results" type="submit" /></form>';
 		}
 		else
@@ -144,9 +197,16 @@ var_dump($extra_attributes['highlight_graph_values']);
 		{
 			$extra_attributes['vertical_bars'] = true;
 		}
+		if(self::check_request_for_var($request, 'gtb'))
+		{
+			$extra_attributes['graph_render_type'] = 'HORIZONTAL_BOX_PLOT';
+		}
 		if(self::check_request_for_var($request, 'rol'))
 		{
-			$extra_attributes['vertical_bars'] = true;
+			foreach($result_file->get_result_objects() as $i => &$result_object)
+			{
+				$result_object->recalculate_averages_without_outliers(1.5);
+			}
 		}
 	}
 	public static function html_select_menu($name, $id, $on_change, $elements, $use_index = true, $other_attributes = array(), $selected = false)
