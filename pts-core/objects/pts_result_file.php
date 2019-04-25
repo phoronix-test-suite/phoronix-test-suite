@@ -38,7 +38,7 @@ class pts_result_file
 	private $is_tracker = -1;
 	private $last_modified = null;
 
-	public function __construct($result_file, $read_only_result_objects = false, $parse_only_qualified_result_objects = false)
+	public function __construct($result_file = null, $read_only_result_objects = false, $parse_only_qualified_result_objects = false)
 	{
 		$this->save_identifier = $result_file;
 		$this->extra_attributes = array();
