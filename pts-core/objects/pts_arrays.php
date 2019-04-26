@@ -75,7 +75,7 @@ class pts_arrays
 
 				for($j = ($i + 1); $j < count($items_formatted); $j++)
 				{
-					if($items_formatted[$i] == $items_formatted[$j])
+					if(isset($items_formatted[$j]) && $items_formatted[$i] == $items_formatted[$j])
 					{
 						$times_found++;
 						$items_formatted[$j] = '';
