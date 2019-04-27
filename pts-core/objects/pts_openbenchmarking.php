@@ -278,7 +278,7 @@ class pts_openbenchmarking
 				$test_versions_count += count($t['versions']);
 			}
 			echo pts_client::cli_colored_text('Updated OpenBenchmarking.org Repository Index', 'green', true) . PHP_EOL;
-			echo pts_client::cli_colored_text($repo . ': ' . count($new_index['tests']) . ' Distinct Tests, ' . $test_versions_count . ' Test Versions, ' . count($new_index['suites']) . ' Suites', 'green', true) . PHP_EOL;
+			echo pts_client::cli_colored_text($repo . ': ' . pts_strings::plural_handler(count($new_index['tests']), 'Distinct Test') . ', ' . pts_strings::plural_handler($test_versions_count, 'Test Version') . ', ' . pts_strings::plural_handler(count($new_index['suites']), 'Suite'), 'green', true) . PHP_EOL;
 			$table = array();
 			foreach(array_keys($new_index['tests']) as $test)
 			{
