@@ -272,9 +272,13 @@ class pts_openbenchmarking
 	{
 		if(isset($new_index['tests']) && isset($old_index['tests']) && $new_index['tests'] != $old_index['tests'])
 		{
-			$new_test_count = count($new_index['tests']);
+			$test_versions_count = 0;
+			foreach($new_index['tests'] as $t)
+			{
+				$test_versions_count += count($t['versions']);
+			}
 			echo pts_client::cli_colored_text('Updated OpenBenchmarking.org Repository Index', 'green', true) . PHP_EOL;
-			echo pts_client::cli_colored_text($repo . ': ' . count($new_index['tests']) . ' Distinct Tests, ' . count($new_index['suites']) . ' Suites', 'green', true) . PHP_EOL;
+			echo pts_client::cli_colored_text($repo . ': ' . count($new_index['tests']) . ' Distinct Tests, ' . $test_versions_count . ' Test Versions, ' . count($new_index['suites']) . ' Suites', 'green', true) . PHP_EOL;
 			$table = array();
 			foreach(array_keys($new_index['tests']) as $test)
 			{
