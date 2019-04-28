@@ -237,7 +237,7 @@ class ob_auto_compare extends pts_module_interface
 				if($active_result < $max_value)
 				{
 					$box_plot_complement = array();
-					for($i = 0; $i < 5; $i++)
+					for($i = 0; $i < 6; $i++)
 					{
 						$box_plot_complement[$i] = str_repeat(' ', $terminal_width - 4);
 						$box_plot_complement[$i] = str_split($box_plot_complement[$i]);
