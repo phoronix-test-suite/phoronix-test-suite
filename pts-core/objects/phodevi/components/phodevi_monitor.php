@@ -34,7 +34,7 @@ class phodevi_monitor extends phodevi_device_interface
 	}
 	public static function monitor_string()
 	{
-		$monitor = null;
+		$monitor = array();
 
 		if(phodevi::is_macosx())
 		{
@@ -52,7 +52,6 @@ class phodevi_monitor extends phodevi_device_interface
 		{
 			$log_parse = phodevi::$vfs->xorg_log;
 			$offset = 0;
-			$monitor = array();
 
 			/* e.g.
 			$ cat /var/log/Xorg.0.log | grep -i connected
@@ -72,12 +71,6 @@ class phodevi_monitor extends phodevi_device_interface
 				}
 				$offset = $monitor_pos + 2;
 			}
-
-			// technically should be fine reporting multiple of the same monitor
-			// but fglrx/catalyst as of late 2013 is in habit of reporting monitors twice
-			$monitor = array_unique($monitor);
-
-			$monitor = pts_arrays::array_to_cleansed_item_string($monitor);
 		}
 		else if(isset(phodevi::$vfs->xorg_log))
 		{
@@ -95,12 +88,6 @@ class phodevi_monitor extends phodevi_device_interface
 					array_push($monitor, $m);
 				}
 			}
-
-			// technically should be fine reporting multiple of the same monitor
-			// but fglrx/catalyst as of late 2013 is in habit of reporting monitors twice
-			$monitor = array_unique($monitor);
-
-			$monitor = pts_arrays::array_to_cleansed_item_string($monitor);
 		}
 
 		if($monitor == null && phodevi::is_linux())
@@ -118,12 +105,7 @@ class phodevi_monitor extends phodevi_device_interface
 				}
 
 				$edid = bin2hex($edid_file);
-				$monitor = self::edid_monitor_parse($edid);
-
-				if($monitor != null)
-				{
-					break;
-				}
+				$monitor[] = self::edid_monitor_parse($edid);
 			}
 		}
 		if($monitor == null && pts_client::executable_in_path('xrandr'))
@@ -135,10 +117,11 @@ class phodevi_monitor extends phodevi_device_interface
 				$xrandr_props = substr($xrandr_props, 0, strpos($xrandr_props, ':'));
 				$xrandr_props = substr($xrandr_props, 0, strrpos($xrandr_props, PHP_EOL));
 				$xrandr_props = str_replace(array(' ', "\t", PHP_EOL), '', $xrandr_props);
-				$monitor = self::edid_monitor_parse($xrandr_props);
+				$monitor[] = self::edid_monitor_parse($xrandr_props);
 			}
 		}
 
+		$monitor = pts_arrays::array_to_cleansed_item_string($monitor);
 		return empty($monitor) ? false : $monitor;
 	}
 	protected static function edid_monitor_parse($edid)
