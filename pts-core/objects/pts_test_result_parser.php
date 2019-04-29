@@ -305,6 +305,22 @@ class pts_test_result_parser
 						}
 					}
 					break;
+				case 'gpu-frames-space-delimited':
+					// HITMAN 2 uses at least this method
+					$log_file = pts_file_io::file_get_contents($test_log_file);
+					$frame_all_times = array();
+					if(($x = strpos($log_file, '---- GPU FRAMES ----')) !== false)
+					{
+						$log_file = trim(str_replace(PHP_EOL, ' ', substr($log_file, $x + strlen('---- GPU FRAMES ----'))));
+						foreach(explode(' ', $log_file) as $inp)
+						{
+							if(is_numeric($inp) && $inp > 0)
+							{
+								$frame_all_times[] = round(1000 / $inp, 3); // since its reporting current frame
+							}
+						}
+					}
+					break;
 				case 'valve-source-frame-times':
 					// Counter-Strike: GO At least
 					$log_file = pts_file_io::file_get_contents($test_log_file);
