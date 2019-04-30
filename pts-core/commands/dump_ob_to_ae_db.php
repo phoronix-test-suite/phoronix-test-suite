@@ -97,6 +97,11 @@ class dump_ob_to_ae_db implements pts_option_interface
 						{
 							$hw_type = 'Disk';
 						}
+						else if($hw_type == 'Network' && (strpos($args_desc, 'localhost') || strpos($args_desc, '127.0.0.1')))
+						{
+							// loopback / local test so network adapter really not important, moreso the system/CPU
+							$hw_type = 'System';
+						}
 
 						switch($hw_type)
 						{
