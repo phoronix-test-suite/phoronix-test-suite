@@ -80,7 +80,25 @@ class dump_ob_to_ae_db implements pts_option_interface
 						$system_identifier = $buffer_item->get_result_identifier();
 						$system_layer = isset($system_data[$system_identifier]['System Layer']) ? $system_data[$system_identifier]['System Layer'] : null;
 
-						switch($ro->test_profile->get_test_hardware_type())
+
+						$hw_type = $ro->test_profile->get_test_hardware_type();
+						$args_desc = $ro->get_arguments_description();
+
+						// Since some tests could stress multiple subsystems, see what the argument descriptions string says
+						if(strpos($args_desc, ' GPU') || strpos($args_desc, ' CUDA') || strpos($args_desc, ' OpenCL'))
+						{
+							$hw_type = 'Graphics';
+						}
+						else if(strpos($args_desc, ' RAM') || strpos($args_desc, ' Memory'))
+						{
+							$hw_type = 'Memory';
+						}
+						else if(strpos($args_desc, ' Disk'))
+						{
+							$hw_type = 'Disk';
+						}
+
+						switch($hw_type)
 						{
 							case 'Processor':
 								$component = 'Processor';
