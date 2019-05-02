@@ -159,12 +159,11 @@ class ob_auto_compare extends pts_module_interface
 		if(is_array($json_response))
 		{
 			$active_result = is_object($result_object->active) ? $result_object->active->get_result() : null;
-			if(empty($active_result) && $result_object->test_result_buffer->get_count() == 1)
+			if(empty($active_result))
 			{
 				$v = $result_object->test_result_buffer->get_values();
 				$active_result = array_pop($v);
 			}
-
 			// XXX DEBUG XXX
 			//$v = $result_object->test_result_buffer->get_values();
 			//$active_result = array_pop($v);
@@ -382,7 +381,7 @@ class ob_auto_compare extends pts_module_interface
 	public static function __test_run_success_inline_result($result_object)
 	{
 		// Passed is a copy of the successful pts_test_result after showing other inline metrics
-		if($result_object->test_result_buffer->get_count() < 3)
+		if($result_object->test_result_buffer->get_count() < 5)
 		{
 			$auto_comparison_result_file = self::request_compare($result_object, phodevi_base::determine_system_type(phodevi::system_hardware(), phodevi::system_software()));
 
