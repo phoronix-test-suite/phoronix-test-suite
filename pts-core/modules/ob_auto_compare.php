@@ -159,11 +159,12 @@ class ob_auto_compare extends pts_module_interface
 		if(is_array($json_response))
 		{
 			$active_result = is_object($result_object->active) ? $result_object->active->get_result() : null;
-			if(empty($active_result))
+			if(empty($active_result) && $result_object->test_result_buffer->get_count() < 4)
 			{
 				$v = $result_object->test_result_buffer->get_values();
 				$active_result = array_pop($v);
 			}
+
 			// XXX DEBUG XXX
 			//$v = $result_object->test_result_buffer->get_values();
 			//$active_result = array_pop($v);
