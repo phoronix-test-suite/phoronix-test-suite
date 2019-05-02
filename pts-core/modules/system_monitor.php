@@ -25,7 +25,7 @@
 class system_monitor extends pts_module_interface
 {
 	const module_name = 'System Monitor';
-	const module_version = '3.3.0';
+	const module_version = '3.4.0';
 	const module_description = 'This module contains sensor monitoring support.';
 	const module_author = 'Michael Larabel';
 
@@ -48,17 +48,18 @@ class system_monitor extends pts_module_interface
 	private static $test_run_try_number = null;
 	private static $sensor_monitoring_frequency = 1;
 	private static $test_run_timer = 0;
-	private static $perf_per_watt_collection;
+	private static $perf_per_sensor_collection;
+	private static $perf_per_sensor = null;
 
 	public static function module_environmental_variables()
 	{
-		return array('MONITOR', 'PERFORMANCE_PER_WATT', 'MONITOR_INTERVAL', 'MONITOR_PER_RUN' );
+		return array('MONITOR', 'PERFORMANCE_PER_WATT', 'PERFORMANCE_PER_SENSOR', 'MONITOR_INTERVAL', 'MONITOR_PER_RUN' );
 	}
 
 	public static function module_info()
 	{
 		$info = null;
-		$info .= PHP_EOL . 'Monitoring these sensors is as easy as running your normal Phoronix Test Suite commands but at the beginning of the command add: MONITOR=<selected sensors> (example: MONITOR=cpu.temp,cpu.voltage phoronix-test-suite benchmark universe). For some of the sensors there is an ability to monitor specific device, e.g. cpu.usage.cpu0 or hdd.read-speed.sda. If the PERFORMANCE_PER_WATT environment variable is set, a performance per Watt graph will also be added, assuming the system\'s power consumption can be monitored. Below are all of the sensors supported by this version of the Phoronix Test Suite.' . PHP_EOL . PHP_EOL;		$info .= 'Supported Options:' . PHP_EOL . PHP_EOL;
+		$info .= PHP_EOL . 'Monitoring these sensors is as easy as running your normal Phoronix Test Suite commands but at the beginning of the command add: MONITOR=<selected sensors> (example: MONITOR=cpu.temp,cpu.voltage phoronix-test-suite benchmark universe). For some of the sensors there is an ability to monitor specific device, e.g. cpu.usage.cpu0 or hdd.read-speed.sda. If the PERFORMANCE_PER_WATT environment variable is set, a performance per Watt graph will also be added, assuming the system\'s power consumption can be monitored. PERFORMANCE_PER_SENSOR= will allow similar behavior but for arbitrary sensors. Below are all of the sensors supported by this version of the Phoronix Test Suite.' . PHP_EOL . PHP_EOL;		$info .= 'Supported Options:' . PHP_EOL . PHP_EOL;
 
 		foreach(self::monitor_arguments() as $arg)
 		{
@@ -89,7 +90,7 @@ class system_monitor extends pts_module_interface
 		{
 			self::check_if_results_saved($test_run_manager);
 			$sensor_parameters = self::prepare_sensor_parameters();
-			self::enable_perf_per_watt($sensor_parameters);
+			self::enable_perf_per_sensor($sensor_parameters);
 			self::process_sensor_list($sensor_parameters);
 			self::create_monitoring_cgroups();
 			self::print_monitored_sensors();
@@ -162,9 +163,9 @@ class system_monitor extends pts_module_interface
 		// Let the system return to brief idling..
 		//sleep(self::$sensor_monitoring_frequency * 8);
 
-		if(pts_module::read_variable('PERFORMANCE_PER_WATT'))
+		if(!empty(self::$perf_per_sensor))
 		{
-			self::process_perf_per_watt($result_file);
+			self::process_perf_per_sensor($result_file);
 		}
 
 		if(self::$individual_monitoring != false && self::$successful_test_run_request)
@@ -185,7 +186,7 @@ class system_monitor extends pts_module_interface
 	}
 	public static function __event_results_process(&$test_run_manager)
 	{
-		self::process_perf_per_watt_collection($test_run_manager);
+		self::process_perf_per_sensor_collection($test_run_manager);
 
 		echo PHP_EOL . 'Finishing System Sensor Monitoring Process' . PHP_EOL;
 
@@ -377,19 +378,40 @@ class system_monitor extends pts_module_interface
 		return $to_monitor;
 	}
 
-	private static function enable_perf_per_watt(&$sensor_parameters)
+	private static function enable_perf_per_sensor(&$sensor_parameters)
 	{
 		if(pts_module::read_variable('PERFORMANCE_PER_WATT'))
 		{
 			// We need to ensure the system power consumption is being tracked to get performance-per-Watt
-
+			self::$perf_per_sensor = array('sys', 'power');
 			if(empty($sensor_parameters['sys']['power']))
 			{
 				$sensor_parameters['sys']['power'] = array();
 			}
 
-			self::$perf_per_watt_collection = array();
+			self::$perf_per_sensor_collection = array();
 			echo PHP_EOL . 'To Provide Performance-Per-Watt Outputs.' . PHP_EOL;
+		}
+		else if(pts_module::read_variable('PERFORMANCE_PER_SENSOR'))
+		{
+			// We need to ensure the system power consumption is being tracked to get performance-per-(arbitrary sensor)
+			$per_sensor = explode('.', pts_module::read_variable('PERFORMANCE_PER_SENSOR'));
+			if(count($per_sensor) == 2)
+			{
+				self::$perf_per_sensor = $per_sensor;
+			}
+			else
+			{
+				return false;
+			}
+
+			if(empty($sensor_parameters[self::$perf_per_sensor[0]][self::$perf_per_sensor[1]]))
+			{
+				$sensor_parameters[self::$perf_per_sensor[0]][self::$perf_per_sensor[1]] = array();
+			}
+
+			self::$perf_per_sensor_collection = array();
+			echo PHP_EOL . 'To Provide Performance-Per-Sensor Outputs for ' . self::$perf_per_sensor[0] . '.' . self::$perf_per_sensor[1] . '.' . PHP_EOL;
 		}
 	}
 
@@ -577,29 +599,28 @@ class system_monitor extends pts_module_interface
 		}
 	}
 
-	private static function process_perf_per_watt(&$result_file)
+	private static function process_perf_per_sensor(&$result_file)
 	{
-		$sensor = array('sys', 'power');
-		$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_identifier($sensor), self::$individual_test_run_offsets[phodevi::sensor_identifier($sensor)]);
+		$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_identifier(self::$perf_per_sensor), self::$individual_test_run_offsets[phodevi::sensor_identifier(self::$perf_per_sensor)]);
 
 		if(count($sensor_results) > 2 && self::$successful_test_run_request)
 		{
 			// Copy the value each time as if you are directly writing the original data, each succeeding time in the loop the used arguments gets borked
 			$test_result = clone self::$successful_test_run_request;
-			$process_perf_per_watt = true;
+			$unit = 'Watt';
 
-			$watt_average = array_sum($sensor_results) / count($sensor_results);
-			switch(phodevi::read_sensor_unit($sensor))
+			$res_average = array_sum($sensor_results) / count($sensor_results);
+			switch(phodevi::read_sensor_unit(self::$perf_per_sensor))
 			{
 				case 'Milliwatts':
 					$watt_average = $watt_average / 1000;
 				case 'Watts':
 					break;
 				default:
-					$process_perf_per_watt = false;
+					$unit = phodevi::read_sensor_unit(self::$perf_per_sensor);
 			}
 
-			if($process_perf_per_watt && $watt_average > 0 && $test_result->test_profile->get_display_format() == 'BAR_GRAPH')
+			if(!empty($unit) && $res_average > 0 && $test_result->test_profile->get_display_format() == 'BAR_GRAPH')
 			{
 				$test_result->test_profile->set_identifier(null);
 				//$test_result->set_used_arguments_description(phodevi::sensor_name('sys.power') . ' Monitor');
@@ -608,45 +629,46 @@ class system_monitor extends pts_module_interface
 
 				if($test_result->test_profile->get_result_proportion() == 'HIB')
 				{
-					$test_result->test_profile->set_result_scale($test_result->test_profile->get_result_scale() . ' Per Watt');
-					$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision($test_result->active->get_result() / $watt_average));
+					$test_result->test_profile->set_result_scale($test_result->test_profile->get_result_scale() . ' Per ' . $unit);
+					$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision($test_result->active->get_result() / $res_average));
 					$ro = $result_file->add_result_return_object($test_result);
 				}
 				else if($test_result->test_profile->get_result_proportion() == 'LIB')
 				{
 					return; // with below code not rendering nicely
 					$test_result->test_profile->set_result_proportion('HIB');
-					$test_result->test_profile->set_result_scale('Performance Per Watt');
-					$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision((1 / $test_result->active->get_result()) / $watt_average));
+					$test_result->test_profile->set_result_scale('Performance Per ' . $unit);
+					$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision((1 / $test_result->active->get_result()) / $res_average));
 					$ro = $result_file->add_result_return_object($test_result);
 				}
 				if($ro)
 				{
 					pts_client::$display->test_run_success_inline($ro);
 				}
-				self::$perf_per_watt_collection[] = $test_result->active->get_result();
+				self::$perf_per_sensor_collection[] = $test_result->active->get_result();
 			}
 		}
 	}
 
 	// Saves average of perf-per-watt results to the result file.
-	private static function process_perf_per_watt_collection(&$test_run_manager)
+	private static function process_perf_per_sensor_collection(&$test_run_manager)
 	{
-		if(is_array(self::$perf_per_watt_collection) && count(self::$perf_per_watt_collection) > 2)
+		if(is_array(self::$perf_per_sensor_collection) && count(self::$perf_per_sensor_collection) > 2)
 		{
-			// Performance per watt overall
-			$avg = pts_math::geometric_mean(self::$perf_per_watt_collection);
+			// Performance per watt/sensor overall
+			$unit = self::$perf_per_sensor == array('sys', 'power') ? 'Watt' : phodevi::read_sensor_unit(self::$perf_per_sensor);
+			$avg = pts_math::geometric_mean(self::$perf_per_sensor_collection);
 			$test_profile = new pts_test_profile();
 			$test_result = new pts_test_result($test_profile);
-			$test_result->test_profile->set_test_title('Meta Performance Per Watt');
+			$test_result->test_profile->set_test_title('Meta Performance Per ' . $unit);
 			$test_result->test_profile->set_identifier(null);
 			$test_result->test_profile->set_version(null);
 			$test_result->test_profile->set_result_proportion(null);
 			$test_result->test_profile->set_display_format('BAR_GRAPH');
-			$test_result->test_profile->set_result_scale('Performance Per Watt');
+			$test_result->test_profile->set_result_scale('Performance Per ' . $unit);
 			$test_result->test_profile->set_result_proportion('HIB');
-			$test_result->set_used_arguments_description('Performance Per Watt');
-			$test_result->set_used_arguments('Per-Per-Watt');
+			$test_result->set_used_arguments_description('Performance Per ' . $unit);
+			$test_result->set_used_arguments('Per-Per-' . $unit);
 			$test_result->test_result_buffer = new pts_test_result_buffer();
 			$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision($avg, 4));
 			$test_run_manager->result_file->add_result($test_result);

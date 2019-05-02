@@ -10,6 +10,7 @@ phodevi: Detect AVX-512 VNNI
 phodevi: Fix OpenJDK Java version detection
 phodevi: Expand memory temperature sensor to work for some ARM SBCs
 phodevi: Multi-monitor detection improvements
+system_monitor: Add PERFORMANCE_PER_SENSOR= support for performance-per-(arbitrary sensor) rather than just supporting perf-per-Watt
 
 Phoronix Test Suite 8.8.0 Milestone 2
 27 March 2019
