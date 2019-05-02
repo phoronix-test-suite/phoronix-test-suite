@@ -51,6 +51,19 @@ class gpu_power extends phodevi_sensor
 			}
 
 		}
+		else if($power1_average = phodevi_linux_parser::read_sysfs_node('/sys/class/drm/card0/device/hwmon/hwmon*/power1_average', 'POSITIVE_NUMERIC'))
+		{
+			// AMDGPU path
+			if(is_numeric($power1_average))
+			{
+				$power1_average = $power1_average / 1000000;
+				if($power1_average > 1 && $power1_average < 600)
+				{
+					self::$unit = 'Watts';
+					$gpu_power = $power1_average;
+				}
+			}
+		}
 		else if(is_readable('/sys/kernel/debug/dri/0/i915_emon_status'))
 		{
 			$i915_emon_status = file_get_contents('/sys/kernel/debug/dri/0/i915_emon_status');
@@ -69,19 +82,6 @@ class gpu_power extends phodevi_sensor
 					}
 
 					$gpu_power = $power;
-				}
-			}
-		}
-		else if($power1_average = phodevi_linux_parser::read_sysfs_node('/sys/class/drm/card0/device/hwmon/hwmon*/power1_average', 'POSITIVE_NUMERIC'))
-		{
-			// AMDGPU path
-			if(is_numeric($power1_average))
-			{
-				$power1_average = $power1_average / 1000000;
-				if($power1_average > 10 && $power1_average < 600)
-				{
-					self::$unit = 'Watts';
-					$gpu_power = $power1_average;
 				}
 			}
 		}

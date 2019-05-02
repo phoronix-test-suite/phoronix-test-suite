@@ -103,7 +103,8 @@ class system_monitor extends pts_module_interface
 		}
 		catch(Exception $e)
 		{
-			echo PHP_EOL . "Unloading system monitor: " . $e->getMessage();
+			echo PHP_EOL . 'Unloading system monitor: ' . $e->getMessage();
+			sleep(5);
 			return pts_module::MODULE_UNLOAD;
 		}
 
