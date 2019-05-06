@@ -37,6 +37,10 @@ class pts_result_file_analyzer
 			foreach($result->test_result_buffer->get_buffer_items() as $buffer_item)
 			{
 				$r = $buffer_item->get_result_value();
+				if(!is_numeric($r) || $r == 0)
+				{
+					continue;
+				}
 				if($result->test_profile->get_result_proportion() == 'LIB')
 				{
 					// convert to HIB

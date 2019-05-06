@@ -75,7 +75,7 @@ class ob_auto_compare extends pts_module_interface
 	{
 		$result_file = null;
 
-		if(pts_network::internet_support_available())
+		if(pts_network::internet_support_available() && $result_object->test_result_buffer->get_count() < 4)
 		{
 			$comparison_hash = $result_object->get_comparison_hash();
 			$result_file = self::request_compare_from_ob($result_object, $comparison_hash, $system_type);
