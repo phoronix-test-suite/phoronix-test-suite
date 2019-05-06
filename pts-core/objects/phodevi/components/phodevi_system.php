@@ -1,3 +1,4 @@
+
 <?php
 
 /*
@@ -359,7 +360,7 @@ class phodevi_system extends phodevi_device_interface
 			}
 
 			// Fallback for Windows 8
-			if(empty($fs) || $fs == 'Unknown' || $fs == 'FAT32')
+			if(empty($fs) || $fs == 'Unknown' || $fs == 'FAT32' || stripos($fs, 'not'))
 			{
 				if(strpos(shell_exec('fsutil fsinfo volumeinfo C:'), 'NTFS') !== false)
 				{
