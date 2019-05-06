@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015, Phoronix Media
-	Copyright (C) 2015, Michael Larabel
+	Copyright (C) 2015 - 2019, Phoronix Media
+	Copyright (C) 2015 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,14 +23,15 @@
 class linux_perf extends pts_module_interface
 {
 	const module_name = 'Linux Perf Framework Reporter';
-	const module_version = '0.1.0';
+	const module_version = '1.0.0';
 	const module_description = 'Setting LINUX_PERF=1 will auto-load and enable this Phoronix Test Suite module. The module also depends upon running a modern Linux kernel (supporting perf) and that the perf binary is available via standard system paths.';
 	const module_author = 'Michael Larabel';
 
 	private static $result_identifier;
 	private static $successful_test_run;
 	private static $std_output;
-
+    private static $tmp_file;
+    
 	public static function module_environmental_variables()
 	{
 		return array('LINUX_PERF');
@@ -59,7 +60,8 @@ class linux_perf extends pts_module_interface
 	public static function __pre_test_run(&$test_run_request)
 	{
 		// Set the perf command to pass in front of all tests to run
-		$test_run_request->exec_binary_prepend = 'perf stat ';
+        self::$tmp_file = tempnam(sys_get_temp_dir(), 'perf');
+		$test_run_request->exec_binary_prepend = 'perf stat -o ' . self::$tmp_file . ' ';
 	}
 	public static function __post_test_run_success($test_run_request)
 	{
@@ -67,7 +69,9 @@ class linux_perf extends pts_module_interface
 		self::$successful_test_run = clone $test_run_request;
 
 		// For now the current implementation is just copying the perf output for the last test run, but rather easily could be adapted to take average of all test runs, etc
-		self::$std_output = $test_run_request->test_result_standard_output;
+		//self::$std_output = $test_run_request->test_result_standard_output;
+        self::$std_output = file_get_contents(self::$tmp_file);
+        unlink(self::$tmp_file);
 	}
 	public static function __post_test_run_process(&$result_file)
 	{
@@ -82,33 +86,35 @@ class linux_perf extends pts_module_interface
 
 			// Items to find and report from the perf output
 			$perf_stats = array(
-				'task-clock' => 'Task Clock',
-				'context-switches' => 'Context Switches',
-				'page-faults' => 'Page Faults',
-				'branches' => 'Branches',
-				'branch-misses' => 'Branch Misses'
+				'page-faults' => array('Page Faults', 'Faults', 'LIB'),
+				'context-switches' => array('Context Switches', 'Context Switches', 'LIB'),
+				'branches' => array('Branches', 'Branches', 'LIB'),
+				'branch-misses' => array('Branch Misses', 'Branch Misses', 'LIB'),
+				'seconds user' => array('User Time', 'Seconds', 'LIB'),
+				'seconds sys' => array('Kernel/System Time', 'Seconds', 'LIB'),
 				);
 
-			foreach($perf_stats as $string_to_match => $pretty_string)
+			foreach($perf_stats as $string_to_match => $data)
 			{
+                list($pretty_string, $units, $hib_or_lib) = $data;
 				if(($x = strpos(self::$std_output, $string_to_match)) !== false)
 				{
 					$sout = substr(self::$std_output, 0, $x);
-					$sout = trim(substr($sout, (strrpos($sout, PHP_EOL) + 1)));
+					$sout = str_replace(',', '', trim(substr($sout, (strrpos($sout, PHP_EOL) + 1))));
 
-					if(is_numeric($sout))
+					if(is_numeric($sout) && $sout > 0)
 					{
 						// Assemble the new result object for the matching perf item
 						$test_result = clone self::$successful_test_run;
 						$test_result->test_profile->set_identifier(null);
 
 						// Description to show on graph
-						$test_result->set_used_arguments_description('Perf ' . $pretty_string . ' - ' . $test_result->get_arguments_description());
+						$test_result->set_used_arguments_description($pretty_string . ' (' . $test_result->get_arguments_description() . ')');
 
 						// Make a unique string for XML result matching
 						$test_result->set_used_arguments('perf ' . $string_to_match . ' ' . $test_result->get_arguments());
-						$test_result->test_profile->set_result_scale(' ');
-						//$test_result->test_profile->set_result_proportion(' ');
+						$test_result->test_profile->set_result_scale($units);
+						$test_result->test_profile->set_result_proportion($hib_or_lib);
 						$test_result->test_result_buffer = new pts_test_result_buffer();
 						$test_result->test_result_buffer->add_test_result(self::$result_identifier, $sout);
 						$result_file->add_result($test_result);
