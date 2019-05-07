@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2017 - 2018, Phoronix Media
-	Copyright (C) 2017 - 2018, Michael Larabel
+	Copyright (C) 2017 - 2019, Phoronix Media
+	Copyright (C) 2017 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -44,7 +44,10 @@ class gpu_memory_usage extends phodevi_sensor
 					$mem_usage = $mem;
 				}
 			}
-
+		}
+		else if(is_file('/sys/class/drm/card0/device/mem_busy_percent'))
+		{
+			$mem_usage = pts_file_io::file_get_contents('/sys/class/drm/card0/device/mem_busy_percent');
 		}
 
 		return $mem_usage;
