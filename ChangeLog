@@ -12,6 +12,7 @@ phodevi: Expand memory temperature sensor to work for some ARM SBCs
 phodevi: Multi-monitor detection improvements
 phodevi: Add support for gpu.memory-usage sensor with new AMDGPU mem_busy_percent sysfs interface
 system_monitor: Add PERFORMANCE_PER_SENSOR= support for performance-per-(arbitrary sensor) rather than just supporting perf-per-Watt
+ob_auto_compare: Show other results in result file on box plot
 
 Phoronix Test Suite 8.8.0 Milestone 2
 27 March 2019

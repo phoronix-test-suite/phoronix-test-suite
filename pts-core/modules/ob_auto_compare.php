@@ -75,7 +75,7 @@ class ob_auto_compare extends pts_module_interface
 	{
 		$result_file = null;
 
-		if(pts_network::internet_support_available() && $result_object->test_result_buffer->get_count() < 4)
+		if(pts_network::internet_support_available() && $result_object->test_result_buffer->get_count() < 5)
 		{
 			$comparison_hash = $result_object->get_comparison_hash();
 			$result_file = self::request_compare_from_ob($result_object, $comparison_hash, $system_type);
@@ -158,11 +158,16 @@ class ob_auto_compare extends pts_module_interface
 
 		if(is_array($json_response))
 		{
+			$other_data_in_result_file = array();
 			$active_result = is_object($result_object->active) ? $result_object->active->get_result() : null;
-			if(empty($active_result) && $result_object->test_result_buffer->get_count() < 4)
+			if(empty($active_result))
 			{
 				$v = $result_object->test_result_buffer->get_values();
 				$active_result = array_pop($v);
+			}
+			foreach($result_object->test_result_buffer->get_buffer_items() as $buffer_item)
+			{
+				$other_data_in_result_file[$buffer_item->get_result_identifier()] = $buffer_item->get_result_value();
 			}
 
 			// XXX DEBUG XXX
@@ -246,7 +251,7 @@ class ob_auto_compare extends pts_module_interface
 
 					$reference_results_added = 0;
 					$this_percentile = pts_strings::number_suffix_handler($this_result_percentile);
-					foreach(array_merge(array('This Result' . ($this_percentile > 0 && $this_percentile < 100 ? ' (' . $this_percentile . ' Percentile)' : null) => ($active_result > 99 ? round($active_result) : $active_result)), (is_array($json_response['openbenchmarking']['result']['ae']['reference_results']) ? $json_response['openbenchmarking']['result']['ae']['reference_results'] : array())) as $component => $value)
+					foreach(array_merge(array('This Result' . ($this_percentile > 0 && $this_percentile < 100 ? ' (' . $this_percentile . ' Percentile)' : null) => ($active_result > 99 ? round($active_result) : $active_result)), $other_data_in_result_file, (is_array($json_response['openbenchmarking']['result']['ae']['reference_results']) ? $json_response['openbenchmarking']['result']['ae']['reference_results'] : array())) as $component => $value)
 					{
 						if($value > $max_value)
 						{
@@ -313,6 +318,10 @@ class ob_auto_compare extends pts_module_interface
 							$brand_color = 'cyan';
 							$string_to_print = pts_client::cli_colored_text($string_to_print, 'cyan', true);
 							$box_plot[$this_result_pos] = pts_client::cli_colored_text('X', 'cyan', true);
+						}
+						else if(in_array($component, array_keys($other_data_in_result_file)))
+						{
+							$string_to_print = pts_client::cli_colored_text($string_to_print, 'white', true);
 						}
 						else if(($brand_color = pts_render::identifier_to_brand_color($component, null)) != null)
 						{
