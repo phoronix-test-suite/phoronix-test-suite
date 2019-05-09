@@ -313,6 +313,7 @@ class ob_auto_compare extends pts_module_interface
 						}
 						// end
 
+						$brand_color = null;
 						if(strpos($component, 'This Result') !== false)
 						{
 							$brand_color = 'cyan';
@@ -327,10 +328,6 @@ class ob_auto_compare extends pts_module_interface
 						{
 							$brand_color = pts_client::hex_color_to_string($brand_color);
 							$string_to_print = pts_client::cli_colored_text($string_to_print, $brand_color, false);
-						}
-						else
-						{
-							$brand_color = null;
 						}
 
 						for($i = $write_pos; $i < ($write_pos + $string_to_show_length) && $i < count($box_plot_complement[$complement_line]); $i++)
