@@ -38,7 +38,7 @@ class remove_results_from_result_file implements pts_option_interface
 		$remove_query = pts_user_io::prompt_user_input('Enter the title / arguments to search for to remove from this result file');
 		$remove_count = 0;
 		$table = array();
-		foreach($result_file->get_result_objects() as $id => &$result)
+		foreach($result_file->get_result_objects() as $id => $result)
 		{
 			if(stripos($result->test_profile->get_title(), $remove_query) !== false || stripos($result->test_profile->get_result_scale(), $remove_query) !== false || stripos($result->get_arguments_description(), $remove_query) !== false)
 			{
