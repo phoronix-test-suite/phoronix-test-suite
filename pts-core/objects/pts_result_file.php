@@ -432,6 +432,15 @@ class pts_result_file
 	{
 		return isset($this->result_objects[$ch]) ? $this->result_objects[$ch] : false;
 	}
+	public function remove_result_object_by_id($index)
+	{
+		if(isset($this->result_objects[$index]))
+		{
+			unset($this->result_objects[$index]);
+			return true;
+		}
+		return false;
+	}
 	public function get_result_objects($select_indexes = -1)
 	{
 		if($select_indexes != -1 && $select_indexes !== null)

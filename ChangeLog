@@ -7,6 +7,7 @@ pts-core: Allow marking of test profile download files as optional
 pts-core: Add "everything" virtual suite
 pts-core: Set MESA_VK_WSI_PRESENT_MODE=immediate by default to work around possible 60 FPS RADV bug
 pts-core: Rename remove-from-result-file to remove-run-from-result-file
+pts-core: Add remove-results-from-result-file sub-command
 phodevi: Detect AVX-512 VNNI
 phodevi: Fix OpenJDK Java version detection
 phodevi: Expand memory temperature sensor to work for some ARM SBCs
