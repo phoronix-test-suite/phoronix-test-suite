@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 8.8.0 Milestone 3
+9 May 2019
 
 pts-core: Add experimental dynamic-result-viewer
 pts-core: Allow marking of test profile download files as optional

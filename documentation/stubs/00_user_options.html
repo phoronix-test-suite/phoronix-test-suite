@@ -68,6 +68,9 @@
 <h3>strict-benchmark<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
 </h3>
 <p>This option is equivalent to the `benchmark` option except it enables various options to run benchmarks an extended number of times for ensuring better statistical accuracy if enforcing strict controls over the data quality, in some cases running the benchmarks for 20+ times.</p>
+<h3>strict-run<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
+</h3>
+<p>This option is equivalent to the `run` option except it enables various options to run benchmarks an extended number of times for ensuring better statistical accuracy if enforcing strict controls over the data quality, in some cases running the benchmarks for 20+ times.</p>
 <h1>Batch Testing</h1>
 <h3>batch-benchmark<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
 </h3>
@@ -238,12 +241,15 @@
 <h3>refresh-graphs<em>  [Test Result]</em>
 </h3>
 <p>This option will re-render and save all result graphs within a saved file. This option can be used when making modifications to the graphing code or its color/option configuration file and testing the changes.</p>
-<h3>remove-from-result-file<em>  [Test Result]</em>
-</h3>
-<p>This option is used if there is a set of test results you wish to remove/delete from a saved results file. The user must specify a saved results file and then they will be prompted to select the results identifier associated with the results they wish to remove.</p>
 <h3>remove-result<em>  [Test Result]</em>
 </h3>
 <p>This option will permanently remove the saved file set that is set as the first argument.</p>
+<h3>remove-results-from-result-file<em>  [Test Result]</em>
+</h3>
+<p>This option is used if there are test results (benchmarks) to be dropped from a given result file. The user must specify a saved results file and then they will be prompted to select the tests/benchmarks to remove.</p>
+<h3>remove-run-from-result-file<em>  [Test Result]</em>
+</h3>
+<p>This option is used if there is a set of test results you wish to remove/delete from a saved results file. The user must specify a saved results file and then they will be prompted to select the results identifier associated with the results they wish to remove.</p>
 <h3>rename-identifier-in-result-file<em>  [Test Result]</em>
 </h3>
 <p>This option is used if you wish to change the name of the identifier in a test results file that is shown in the Phoronix Test Suite Results Viewer and the contained graphs.</p>
