@@ -176,16 +176,21 @@ class pts_result_file_analyzer
 	public static function display_result_file_stats_pythagorean_means($result_file, $highlight_identifier = null)
 	{
 		$ret = null;
+		foreach(pts_result_file_analyzer::generate_harmonic_mean_result($result_file) as $harmonic_mean_result)
+		{
+			$ret .= PHP_EOL . pts_result_file_output::test_result_to_text($harmonic_mean_result, pts_client::terminal_width(), true, $highlight_identifier, true);
+		}
+
 		$geometric_mean = pts_result_file_analyzer::generate_geometric_mean_result($result_file);
 		if($geometric_mean)
 		{
 			$ret .= pts_result_file_output::test_result_to_text($geometric_mean, pts_client::terminal_width(), true, $highlight_identifier, true);
 		}
-		foreach(pts_result_file_analyzer::generate_harmonic_mean_result($result_file) as $harmonic_mean_result)
+
+		if($ret != null)
 		{
-			$ret .= PHP_EOL . pts_result_file_output::test_result_to_text($harmonic_mean_result, pts_client::terminal_width(), true, $highlight_identifier, true);
+			$ret .= PHP_EOL;
 		}
-		$ret .= PHP_EOL;
 
 		return $ret;
 	}
