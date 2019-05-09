@@ -318,7 +318,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 			$test_title_string .= ' [' . pts_client::swap_variables($test_description, array('pts_client', 'environmental_variables')) . ']';
 		}
 
-		echo PHP_EOL . PHP_EOL . pts_client::cli_colored_text($test_title_string, 'cyan', true) . PHP_EOL;
+		echo PHP_EOL . pts_client::cli_colored_text($test_title_string, 'cyan', true) . PHP_EOL;
 		echo $this->tab . 'Test ' . $test_run_manager->get_test_run_position() . ' of ' . $test_run_manager->get_test_run_count_reported() . PHP_EOL;
 
 		$this->trial_run_count_current = 0;
