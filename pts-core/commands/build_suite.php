@@ -33,7 +33,7 @@ class build_suite implements pts_option_interface
 		$suite_test_type = pts_user_io::prompt_text_menu('Select test type', pts_types::subsystem_targets());
 		$suite_maintainer = pts_user_io::prompt_user_input('Enter suite maintainer name');
 		$suite_description = pts_user_io::prompt_user_input('Enter suite description');
-		$bind_versions = pts_user_io::prompt_user_input('Bind current test profile versions to test suite');
+		$bind_versions = pts_user_io::prompt_bool_input('Bind current test profile versions to test suite');
 
 		$possible_suites = pts_openbenchmarking::available_suites(false);
 		$possible_tests = pts_openbenchmarking::available_tests(false);
