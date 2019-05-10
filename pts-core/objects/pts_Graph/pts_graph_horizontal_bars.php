@@ -2,8 +2,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2018, Phoronix Media
-	Copyright (C) 2008 - 2018, Michael Larabel
+	Copyright (C) 2008 - 2019, Phoronix Media
+	Copyright (C) 2008 - 2019, Michael Larabel
 	pts_HorizontalBarGraph.php: The horizontal bar graph object that extends pts_Graph.php
 
 	This program is free software; you can redistribute it and/or modify
@@ -125,7 +125,6 @@ class pts_graph_horizontal_bars extends pts_graph_core
 				$px_bound_top = $this->i['top_start'] + ($this->i['is_multi_way_comparison'] ? 5 : 0) + ($this->i['identifier_height'] * $i) + ($bar_height * $i_o) + ($separator_height * ($i_o + 1));
 				$px_bound_bottom = $px_bound_top + $bar_height;
 				$middle_of_bar = round($px_bound_top + ($bar_height / 2) + ($this->i['identifier_size'] - 4));
-				$title_tooltip = $buffer_item->get_result_identifier() . ': ' . $value;
 
 				$std_error = -1;
 				if(($raw_values = $buffer_item->get_result_raw_array()))
@@ -144,7 +143,7 @@ class pts_graph_horizontal_bars extends pts_graph_core
 					}
 				}
 
-				$this->svg_dom->add_element('rect', array('x' => $this->i['left_start'], 'y' => $px_bound_top, 'height' => $bar_height, 'width' => $graph_size, 'fill' => $this->adjust_color($buffer_item->get_result_identifier(), $paint_color), 'xlink:title' => $title_tooltip), $g_bars);
+				$this->svg_dom->add_element('rect', array('x' => $this->i['left_start'], 'y' => $px_bound_top, 'height' => $bar_height, 'width' => $graph_size, 'fill' => $this->adjust_color($buffer_item->get_result_identifier(), $paint_color)), $g_bars);
 
 				if($std_error != -1 && $std_error > 0 && $value != null)
 				{
