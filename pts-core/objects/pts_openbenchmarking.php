@@ -739,7 +739,7 @@ class pts_openbenchmarking
 
 		return $available_tests;
 	}
-	public static function available_suites($download_suites = true)
+	public static function available_suites($download_suites = true, $only_show_maintained_suites = false)
 	{
 		$available_suites = array();
 
@@ -751,6 +751,11 @@ class pts_openbenchmarking
 			{
 				foreach(array_keys($repo_index['suites']) as $identifier)
 				{
+					if($only_show_maintained_suites && strtotime($repo_index['suites'][$identifier]['last_updated']) < (time() - (86400 * 365 * 4)))
+					{
+						continue;
+					}
+
 					if($download_suites && pts_network::internet_support_available())
 					{
 						$version = array_shift($repo_index['suites'][$identifier]['versions']);

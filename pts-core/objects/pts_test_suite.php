@@ -96,6 +96,10 @@ class pts_test_suite
 			}
 		}
 
+		if($xml == null)
+		{
+			return;
+		}
 		// XInclude support
 		if(function_exists('dom_import_simplexml'))
 		{
