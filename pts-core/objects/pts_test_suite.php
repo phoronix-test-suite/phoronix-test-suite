@@ -478,7 +478,7 @@ class pts_test_suite
 	}
 	public function save_xml($suite_identifier = null, $save_to = null, $bind_versions = true)
 	{
-		$xml = $this->get_xml(null, force, $bind_versions);
+		$xml = $this->get_xml(null, null, $bind_versions);
 		if($suite_identifier != null)
 		{
 			$this->set_identifier($this->clean_save_name_string($suite_identifier));
