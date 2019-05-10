@@ -270,7 +270,7 @@ class pts_openbenchmarking
 	}
 	public static function report_repository_index_updates($repo, $old_index, $new_index)
 	{
-		if(isset($new_index['tests']) && isset($old_index['tests']) && $new_index['tests'] != $old_index['tests'])
+		if(isset($new_index['tests']) && isset($old_index['tests']) && ($new_index['tests'] != $old_index['tests'] || $new_index['suites'] != $old_index['suites']))
 		{
 			$test_versions_count = 0;
 			foreach($new_index['tests'] as $t)
@@ -292,6 +292,26 @@ class pts_openbenchmarking
 					if(!empty($version_diff))
 					{
 						$table[] = array(pts_client::cli_just_bold('Updated Test Available: '), $repo . '/' . $test, pts_client::cli_colored_text('v' . array_shift($version_diff), 'gray'));
+					}
+				}
+			}
+
+
+			if(isset($new_index['suites']) && isset($old_index['suites']) && $new_index['suites'] != $old_index['suites'])
+			{
+				foreach(array_keys($new_index['suites']) as $suite)
+				{
+					if(!isset($old_index['suites'][$suite]))
+					{
+						$table[] = array(pts_client::cli_just_bold('New Suite Available: '), $repo . '/' . $suite, pts_client::cli_colored_text('v' . array_shift($new_index['suites'][$suite]['versions']), 'gray'));
+					}
+					else if($new_index['suites'][$suite]['versions'] != $old_index['suites'][$suite]['versions'])
+					{
+						$version_diff = array_diff($new_index['suites'][$suite]['versions'], $old_index['suites'][$suite]['versions']);
+						if(!empty($version_diff))
+						{
+							$table[] = array(pts_client::cli_just_bold('Updated Suite Available: '), $repo . '/' . $suite, pts_client::cli_colored_text('v' . array_shift($version_diff), 'gray'));
+						}
 					}
 				}
 			}
