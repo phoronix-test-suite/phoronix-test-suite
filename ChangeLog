@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 pts-core: Report on the POWER SMT setting in notes
 pts-core: Add new/updated suite reporting
+pts-core: In build-suite allow not binding test profile versions
 
 Phoronix Test Suite 8.8.0 Milestone 3
 9 May 2019

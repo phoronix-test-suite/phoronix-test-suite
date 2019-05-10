@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2018, Phoronix Media
-	Copyright (C) 2008 - 2018, Michael Larabel
+	Copyright (C) 2008 - 2019, Phoronix Media
+	Copyright (C) 2008 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -447,7 +447,7 @@ class pts_test_suite
 		$b_comp = $b->test_profile->get_title();
 		return strcmp($a_comp, $b_comp);
 	}
-	public function get_xml($to = null, $force_nice_formatting = false)
+	public function get_xml($to = null, $force_nice_formatting = false, $bind_versions = true)
 	{
 		$xml_writer = new nye_XmlWriter(null, $force_nice_formatting);
 		$xml_writer->addXmlNode('PhoronixTestSuite/SuiteInformation/Title', $this->get_title());
@@ -468,7 +468,7 @@ class pts_test_suite
 				continue;
 			}
 
-			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Test', $test->test_profile->get_identifier());
+			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Test', $test->test_profile->get_identifier($bind_versions));
 			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Arguments', $test->get_arguments());
 			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Description', $test->get_arguments_description());
 			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Mode', null); // XXX wire this up!
@@ -476,9 +476,9 @@ class pts_test_suite
 		}
 		return $xml_writer->getXML();
 	}
-	public function save_xml($suite_identifier = null, $save_to = null)
+	public function save_xml($suite_identifier = null, $save_to = null, $bind_versions = true)
 	{
-		$xml = $this->get_xml();
+		$xml = $this->get_xml(null, force, $bind_versions);
 		if($suite_identifier != null)
 		{
 			$this->set_identifier($this->clean_save_name_string($suite_identifier));
