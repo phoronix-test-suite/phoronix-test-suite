@@ -76,7 +76,7 @@ class info implements pts_option_interface
 				{
 					echo pts_client::cli_just_bold(strtoupper('NOTE: This test profile is marked \'' . $o->get_license() . '\' and may have issues running without third-party/commercial dependencies.')) . PHP_EOL . PHP_EOL;
 				}
-				if($o->get_status() != 'Verified')
+				if($o->get_status() != 'Verified' && $o->get_status() != null)
 				{
 					echo pts_client::cli_just_bold(strtoupper('NOTE: This test profile is marked \'' . $o->get_status() . '\' and may have known issues with test installation or execution.')) . PHP_EOL . PHP_EOL;
 				}
