@@ -178,7 +178,7 @@ class pts_result_file_analyzer
 		$ret = null;
 		foreach(pts_result_file_analyzer::generate_harmonic_mean_result($result_file) as $harmonic_mean_result)
 		{
-			$ret .= PHP_EOL . pts_result_file_output::test_result_to_text($harmonic_mean_result, pts_client::terminal_width(), true, $highlight_identifier, true);
+			$ret .= pts_result_file_output::test_result_to_text($harmonic_mean_result, pts_client::terminal_width(), true, $highlight_identifier, true) . PHP_EOL;
 		}
 
 		$geometric_mean = pts_result_file_analyzer::generate_geometric_mean_result($result_file);

@@ -170,7 +170,7 @@ class pts_ae_data
 			$system_types = array();
 			$results = $this->get_results_array_by_comparison_hash($comparison_hash, $first_appeared, $last_appeared, $component_results, $component_dates, $system_types);
 
-			if(count($results) < 16)
+			if(count($results) < 12)
 			{
 				continue;
 			}
