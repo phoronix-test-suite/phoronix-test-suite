@@ -731,6 +731,11 @@ class pts_result_file_analyzer
 			$system_attributes['Processor'][$identifier] = 'Scaling Governor: ' . $json['cpu-scaling-governor'];
 			unset($json['cpu-scaling-governor']);
 		}
+		if(isset($json['cpu-smt']))
+		{
+			$system_attributes['Processor'][$identifier] = 'SMT (threads per core): ' . $json['cpu-smt'];
+			unset($json['cpu-smt']);
+		}
 		if(isset($json['graphics-2d-acceleration']) || isset($json['graphics-aa']) || isset($json['graphics-af']))
 		{
 			$report = array();

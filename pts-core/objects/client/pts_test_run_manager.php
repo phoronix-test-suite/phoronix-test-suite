@@ -960,6 +960,13 @@ class pts_test_run_manager
 			{
 				$notes['cpu-scaling-governor'] = $scaling_governor;
 			}
+
+			// POWER processors have configurable SMT, 1-8 per core.
+			$smt = phodevi::read_property('cpu', 'smt');
+			if($smt)
+			{
+				$notes['cpu-smt'] = $smt;
+			}
 		}
 		if($show_all || in_array('Graphics', $test_hardware_types))
 		{
