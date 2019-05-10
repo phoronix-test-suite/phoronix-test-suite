@@ -128,11 +128,9 @@ class pts_graph_horizontal_bars extends pts_graph_core
 				$title_tooltip = $buffer_item->get_result_identifier() . ': ' . $value;
 
 				$std_error = -1;
-				if(($raw_values = $buffer_item->get_result_raw()))
+				if(($raw_values = $buffer_item->get_result_raw_array()))
 				{
-					$std_error = pts_strings::colon_explode($raw_values);
-
-					switch(count($std_error))
+					switch(count($raw_values))
 					{
 						case 0:
 							$std_error = -1;
@@ -141,7 +139,7 @@ class pts_graph_horizontal_bars extends pts_graph_core
 							$std_error = 0;
 							break;
 						default:
-							$std_error = pts_math::standard_error($std_error);
+							$std_error = pts_math::standard_error($raw_values);
 							break;
 					}
 				}
@@ -166,7 +164,7 @@ class pts_graph_horizontal_bars extends pts_graph_core
 						}
 					}
 					$bar_offset_34 = round($middle_of_bar + ($this->i['is_multi_way_comparison'] ? 0 : ($bar_height / 5) + 1));
-					$this->svg_dom->add_text_element('SE +/- ' . pts_math::set_precision($std_error, max(2, pts_math::get_precision($value))), array('y' => $bar_offset_34, 'x' => ($this->i['left_start'] - 5)), $g_se);
+					$this->svg_dom->add_text_element('SE +/- ' . pts_math::set_precision($std_error, max(2, pts_math::get_precision($value))) . ', N = ' . count($raw_values), array('y' => $bar_offset_34, 'x' => ($this->i['left_start'] - 5)), $g_se);
 				}
 
 				if((self::text_string_width($value, $this->i['identifier_size']) + 2) < $graph_size)
