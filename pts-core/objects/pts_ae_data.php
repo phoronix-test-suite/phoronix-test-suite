@@ -187,7 +187,7 @@ class pts_ae_data
 			$comparison_components = array();
 			foreach($component_results as $component => $d)
 			{
-				if(stripos($component . ' ', 'device ') !== false || stripos($component, 'unknown') !== false || is_numeric($component))
+				if(stripos($component . ' ', 'device ') !== false || stripos($component, 'unknown') !== false  || stripos($component, 'common ') !== false || is_numeric($component))
 				{
 					continue;
 				}
@@ -204,17 +204,17 @@ class pts_ae_data
 					{
 						continue;
 					}
-					if($component_dates[$component][$related_component]['last_appeared'] < (time() - (31536000 * 2)))
+					if($component_dates[$component][$related_component]['last_appeared'] < (time() - (31536000 * 3)))
 					{
-						// if no new results in 4 years, likely outdated...
+						// if no new results in 3 years, likely outdated...
 						continue;
 					}
-					if(count($data) < 8)
+					if(count($data) < 6)
 					{
 						continue;
 					}
 					$data = pts_math::remove_outliers($data);
-					if(count($data) < 8)
+					if(count($data) < 6)
 					{
 						continue;
 					}
@@ -236,7 +236,7 @@ class pts_ae_data
 				}
 			}
 			uasort($comparison_components, array('pts_ae_data', 'sort_array_by_size_of_array_in_value'));
-			$comparison_components = array_slice($comparison_components, 0, 50);
+			$comparison_components = array_slice($comparison_components, 0, 60);
 			foreach($comparison_components as $component => &$values)
 			{
 				$values = round(array_sum($values) / count($values), ($peak > 60 ? 0 : 2));

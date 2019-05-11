@@ -25,6 +25,10 @@ class remove_run_from_result_file implements pts_option_interface
 	const doc_section = 'Result Management';
 	const doc_description = 'This option is used if there is a set of test results you wish to remove/delete from a saved results file. The user must specify a saved results file and then they will be prompted to select the results identifier associated with the results they wish to remove.';
 
+	public static function command_aliases()
+	{
+		return array('remove_from_result_file');
+	}
 	public static function argument_checks()
 	{
 		return array(
