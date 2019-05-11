@@ -32,6 +32,7 @@ class sys_power extends phodevi_sensor
 	private static $ipmitool = false;
 	private static $ipmitool_dcmi = false;
 	private static $windows_battery = false;
+	private static $hwmon_power_meter = false;
 
 	public static function get_unit()
 	{
@@ -45,7 +46,7 @@ class sys_power extends phodevi_sensor
 		{
 			$unit = 'microAmps';
 		}
-		else if(self::$wattsup_meter || self::$ipmitool || self::$ipmitool_dcmi)
+		else
 		{
 			$unit = 'Watts';
 		}
@@ -95,7 +96,12 @@ class sys_power extends phodevi_sensor
 				return true;
 			}
 		}
-
+		if(is_readable('/sys/class/hwmon/hwmon0/device/name') && pts_file_io::file_get_contents('/sys/class/hwmon/hwmon0/device/name') == 'power_meter' && is_readable('/sys/class/hwmon/hwmon0/device/power1_average'))
+		{
+			// Intel node manager -Meter measures total domain
+			self::$hwmon_power_meter = true;
+			return true;
+		}
 		if(pts_client::executable_in_path('ipmitool'))
 		{
 			$ipmi_read = phodevi_linux_parser::read_ipmitool_sensor('Node Power');
@@ -147,6 +153,15 @@ class sys_power extends phodevi_sensor
 		else if(self::$windows_battery)
 		{
 			return self::windows_wmi_battery_status_discharge();
+		}
+		else if(self::$hwmon_power_meter)
+		{
+			$p = pts_file_io::file_get_contents('/sys/class/hwmon/hwmon0/device/power1_average');
+			if($p > 1000000)
+			{
+				$p = $p / 1000000;
+			}
+			return $p;
 		}
 	}
 	private static function windows_wmi_battery_status_discharge()
