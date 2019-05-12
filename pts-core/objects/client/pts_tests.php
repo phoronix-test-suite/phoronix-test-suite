@@ -399,22 +399,21 @@ class pts_tests
 				$terminal_width = pts_client::terminal_width();
 				$tests_per_line = floor($terminal_width / $longest_test);
 				shuffle($recommended_tests);
-				$recommended_tests = array_slice($recommended_tests, 0, min(count($recommended_tests), $tests_per_line * 2));
+				$recommended_tests = array_slice($recommended_tests, 0, min(count($recommended_tests), $tests_per_line * 2 -1));
 
 				echo pts_client::cli_just_bold('Popular Tests:') . PHP_EOL;
 				$i = 0;
 				foreach($recommended_tests as $test)
 				{
-					if($i == 0)
+					if($i % $tests_per_line == 0)
 					{
 						echo '   ';
 					}
 					echo $test . str_repeat(' ', $longest_test - strlen($test));
 
 					$i++;
-					if($i == $tests_per_line)
+					if($i % $tests_per_line == 0 || $i == count($recommended_tests))
 					{
-						$i = 0;
 						echo PHP_EOL;
 					}
 				}
