@@ -24,7 +24,7 @@ class ob_auto_compare extends pts_module_interface
 {
 	const module_name = 'OpenBenchmarking.org Auto Comparison';
 	const module_version = '1.3.0';
-	const module_description = 'This module prints comparable OpenBenchmarking.org results in the command-line for reference purposes as tests are being run. OpenBenchmarking.org is automatically queried for results to show based on the test comparison hash and the system type (mobile, desktop, server, cloud, workstation, etc). No other system information or result data is transmitted..';
+	const module_description = 'This module prints comparable OpenBenchmarking.org results in the command-line for reference purposes as tests are being run. OpenBenchmarking.org is automatically queried for results to show based on the test comparison hash and the system type (mobile, desktop, server, cloud, workstation, etc). No other system information or result data is transmitted.';
 	const module_author = 'Michael Larabel';
 
 	private static $response_time = 0;
@@ -265,7 +265,7 @@ class ob_auto_compare extends pts_module_interface
 						$results_at_pos[] = $this_result_pos;
 						$results_at_pos[] = $this_result_pos - 1;
 						$results_at_pos[] = $this_result_pos - 2;
-						$results_at_pos[] = $this_result_pos - 3;
+						//$results_at_pos[] = $this_result_pos - 3;
 						$results_at_pos[] = $this_result_pos + 1;
 						$results_at_pos[] = $this_result_pos + 2;
 

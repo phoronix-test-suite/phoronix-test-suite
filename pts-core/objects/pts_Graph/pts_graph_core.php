@@ -511,11 +511,11 @@ abstract class pts_graph_core
 				{
 					$longest_r = $longest_identifier;
 					$longest_r = explode(' - ', $longest_r);
-					$plus_extra = 0;
+					$plus_extra = 22;
 
 					if(count($longest_r) > 1)
 					{
-						$plus_extra = floor(count($longest_r) * $this->i['identifier_size'] * 1.2);
+						$plus_extra += floor(count($longest_r) * $this->i['identifier_size'] * 1.2);
 					}
 
 					$longest_identifier_width = self::text_string_width($this->i['graph_max_value'], $this->i['identifier_size']) + 60 + $plus_extra;
