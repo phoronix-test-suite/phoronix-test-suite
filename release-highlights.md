@@ -1,5 +1,13 @@
 # Phoronix Test Suite Release History
 
+Phoronix Test Suite 8.8
+======
+#### Release Date: 13 May 2019 | Codename: Hvaler
+* Initial work on new result viewer (to be completed next cycle)
+* Phodevi improvements: AVX-512 VNNI detection, Intel Node Manager power reporting, OpenJDK/Java version detection improvements, RAM temperature reporting for some ARM SBCs, AMDGPU mem_busy_poercent handling, other hardware/software detection improvements
+* New sub-commands: remove-run-from-result-file, remove-results-from-result-file, strict-run/strict-benchmark, result-file-raw-to-csv
+* Continued Microsoft Windows support improvements
+
 Phoronix Test Suite 8.6
 ======
 #### Release Date: 5 February 2019 | Codename: Spydeberg
