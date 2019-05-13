@@ -487,6 +487,7 @@ abstract class pts_graph_core
 	{
 		$this->i['graph_max_value'] = $this->maximum_graph_value();
 		$longest_identifier = $this->test_result->test_result_buffer->get_longest_identifier();
+		$se_width = self::text_string_width('SE +/- 0.04, N = 3', $this->i['identifier_size'] - 1);
 
 		// Make room for tick markings, left hand side
 		if($this->i['iveland_view'] == false)
@@ -522,7 +523,7 @@ abstract class pts_graph_core
 				}
 				else
 				{
-					$longest_identifier_width = ceil(self::text_string_width($longest_identifier, $this->i['identifier_size']) * 1.09) + 12;
+					$longest_identifier_width = max($se_width, ceil(self::text_string_width($longest_identifier, $this->i['identifier_size']) * 1.09) + 16);
 				}
 
 				$longest_identifier_max = ceil(($this->i['graph_width'] * 0.55) + 0.01);
