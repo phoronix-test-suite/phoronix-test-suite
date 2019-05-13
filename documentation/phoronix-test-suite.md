@@ -300,7 +300,7 @@ phoronix-test-suite matisk.run
 phoronix-test-suite matisk.template
 
 ### OpenBenchmarking.org Auto Comparison
-This module prints comparable OpenBenchmarking.org results in the command-line for reference purposes as tests are being run. OpenBenchmarking.org is automatically queried for results to show based on the test comparison hash and the system type (mobile, desktop, server, cloud, workstation, etc). No other system information or result data is transmitted..
+This module prints comparable OpenBenchmarking.org results in the command-line for reference purposes as tests are being run. OpenBenchmarking.org is automatically queried for results to show based on the test comparison hash and the system type (mobile, desktop, server, cloud, workstation, etc). No other system information or result data is transmitted.
 phoronix-test-suite ob_auto_compare.debug
 
 ### Performance Per Dollar/Cost Calculator
