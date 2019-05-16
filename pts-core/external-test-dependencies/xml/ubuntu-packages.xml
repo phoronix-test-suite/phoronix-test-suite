@@ -60,7 +60,7 @@
 		<Package>
 			<GenericName>build-utilities</GenericName>
 			<PackageName>build-essential autoconf</PackageName>
-			<FileCheck>/usr/share/build-essential</FileCheck>
+			<FileCheck>/usr/share/build-essential, autoconf</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>cairo-development</GenericName>
