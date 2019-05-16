@@ -561,15 +561,7 @@ class phodevi_system extends phodevi_device_interface
 		// Meltdown / KPTI check
 		if(phodevi::is_linux())
 		{
-			if(is_file('/sys/devices/system/cpu/vulnerabilities/meltdown'))
-			{
-				if(pts_file_io::file_get_contents('/sys/devices/system/cpu/vulnerabilities/meltdown') == 'Mitigation: PTI')
-				{
-					// Kernel Page Table Isolation
-					$security[] = 'KPTI';
-				}
-			}
-			else if(strpos(phodevi::$vfs->dmesg, 'page tables isolation: enabled') !== false)
+			if(strpos(phodevi::$vfs->dmesg, 'page tables isolation: enabled') !== false)
 			{
 				// Kernel Page Table Isolation
 				$security[] = 'KPTI';
@@ -577,18 +569,12 @@ class phodevi_system extends phodevi_device_interface
 
 
 			// Spectre
-			foreach(array('spectre_v1', 'spectre_v2', 'spec_store_bypass', 'l1tf') as $vulns)
+			foreach(pts_file_io::glob('/sys/devices/system/cpu/vulnerabilities/*') as $vuln)
 			{
-				if(is_file('/sys/devices/system/cpu/vulnerabilities/' . $vulns))
-				{
-					$fc = file_get_contents('/sys/devices/system/cpu/vulnerabilities/' . $vulns);
-					if(($x = strpos($fc, ': ')) !== false)
-					{
-						$fc = trim(substr($fc, $x + 2));
-						$fc = str_replace('Speculative Store Bypass', 'SSB', $fc);
-						$security[] = $fc;
-					}
-				}
+				$fc = file_get_contents($vuln);
+				$fc = str_replace('Mitigation: ', 'Mitigation of ', $fc);
+				$fc = str_replace('Speculative Store Bypass', 'SSB', $fc);
+				$security[] = basename($vuln) . ': ' . $fc;
 			}
 		}
 		else if(phodevi::is_bsd())
