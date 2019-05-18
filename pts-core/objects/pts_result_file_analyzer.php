@@ -22,7 +22,7 @@
 
 class pts_result_file_analyzer
 {
-	public static function generate_geometric_mean_result($result_file)
+	public static function generate_geometric_mean_result($result_file, $do_sort = false)
 	{
 		$results = array();
 		$system_count = $result_file->get_system_count();
@@ -86,7 +86,7 @@ class pts_result_file_analyzer
 				$test_result->test_result_buffer->add_test_result($identifier, pts_math::set_precision($values, 3));
 			}
 
-			if(!$result_file->is_multi_way_comparison())
+			if(!$result_file->is_multi_way_comparison() || $do_sort)
 			{
 				$test_result->sort_results_by_performance();
 				$test_result->test_result_buffer->buffer_values_reverse();
@@ -96,7 +96,7 @@ class pts_result_file_analyzer
 
 		return false;
 	}
-	public static function generate_harmonic_mean_result($result_file)
+	public static function generate_harmonic_mean_result($result_file, $do_sort = false)
 	{
 		$results = array();
 		$system_count = $result_file->get_system_count();
@@ -168,8 +168,11 @@ class pts_result_file_analyzer
 				{
 					$test_result->test_result_buffer->add_test_result($identifier, pts_math::set_precision($values, 3));
 				}
-				$test_result->sort_results_by_performance();
-				$test_result->test_result_buffer->buffer_values_reverse();
+				if(!$result_file->is_multi_way_comparison() || $do_sort)
+				{
+					$test_result->sort_results_by_performance();
+					$test_result->test_result_buffer->buffer_values_reverse();
+				}
 				$test_results[] = $test_result;
 			}
 			return $test_results;
@@ -180,12 +183,12 @@ class pts_result_file_analyzer
 	public static function display_result_file_stats_pythagorean_means($result_file, $highlight_identifier = null)
 	{
 		$ret = null;
-		foreach(pts_result_file_analyzer::generate_harmonic_mean_result($result_file) as $harmonic_mean_result)
+		foreach(pts_result_file_analyzer::generate_harmonic_mean_result($result_file, true) as $harmonic_mean_result)
 		{
 			$ret .= pts_result_file_output::test_result_to_text($harmonic_mean_result, pts_client::terminal_width(), true, $highlight_identifier, true) . PHP_EOL;
 		}
 
-		$geometric_mean = pts_result_file_analyzer::generate_geometric_mean_result($result_file);
+		$geometric_mean = pts_result_file_analyzer::generate_geometric_mean_result($result_file, true);
 		if($geometric_mean)
 		{
 			$ret .= pts_result_file_output::test_result_to_text($geometric_mean, pts_client::terminal_width(), true, $highlight_identifier, true);
