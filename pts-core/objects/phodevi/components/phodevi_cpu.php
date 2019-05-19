@@ -747,6 +747,21 @@ class phodevi_cpu extends phodevi_device_interface
 
 		return $line;
 	}
+	public static function read_cpuinfo_line_multi($key)
+	{
+		$lines = array();
+		$key .= "\t";
+		$offset = 0;
+		while(isset(phodevi::$vfs->cpuinfo) && ($key_pos = strpos(phodevi::$vfs->cpuinfo, PHP_EOL . $key, $offset)) !== false)
+		{
+			$l = substr(phodevi::$vfs->cpuinfo, $key_pos);
+			$l = substr($l, strpos($l, ':') + 1);
+			$lines[] = trim(substr($l, 0, strpos($l, PHP_EOL)));
+			$offset = $key_pos + 1;
+		}
+
+		return $lines;
+	}
 	public static function set_cpu_feature_flags()
 	{
 		$flags = explode(' ', self::read_cpuinfo_line('flags'));
@@ -866,13 +881,7 @@ class phodevi_cpu extends phodevi_device_interface
 	}
 	public static function cpuinfo_thread_count()
 	{
-		$thread_count = self::read_cpuinfo_line('processor', false);
-
-		if(is_numeric($thread_count))
-		{
-			// cpuinfo 'processor' begins counting at 0
-			$thread_count += 1;
-		}
+		$thread_count = count(self::read_cpuinfo_line_multi('processor', false));
 
 		return $thread_count;
 	}
