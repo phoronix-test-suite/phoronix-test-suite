@@ -561,13 +561,12 @@ class phodevi_system extends phodevi_device_interface
 		// Meltdown / KPTI check
 		if(phodevi::is_linux())
 		{
-			if(strpos(phodevi::$vfs->dmesg, 'page tables isolation: enabled') !== false)
+		/*	if(strpos(phodevi::$vfs->dmesg, 'page tables isolation: enabled') !== false)
 			{
 				// Kernel Page Table Isolation
 				$security[] = 'KPTI';
 			}
-
-
+*/
 			// Spectre
 			foreach(pts_file_io::glob('/sys/devices/system/cpu/vulnerabilities/*') as $vuln)
 			{

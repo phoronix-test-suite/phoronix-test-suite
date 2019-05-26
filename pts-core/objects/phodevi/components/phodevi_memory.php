@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2018, Phoronix Media
-	Copyright (C) 2008 - 2018, Michael Larabel
+	Copyright (C) 2008 - 2019, Phoronix Media
+	Copyright (C) 2008 - 2019, Michael Larabel
 	phodevi_memory.php: The PTS Device Interface object for system memory
 
 	This program is free software; you can redistribute it and/or modify
@@ -245,7 +245,7 @@ class phodevi_memory extends phodevi_device_interface
 			}
 		}
 
-		return trim(str_replace('Unknown ', '', $mem_string));
+		return trim(str_replace(array('Unknown ', 'Undefined'), '', $mem_string));
 	}
 	public static function memory_capacity()
 	{

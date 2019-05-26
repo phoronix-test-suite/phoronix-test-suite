@@ -567,7 +567,7 @@ abstract class pts_graph_core
 					$per_identifier_height = 22; // default
 					if($this->test_result->test_result_buffer->get_count() > 9)
 					{
-						$per_identifier_height = 18; // default
+						$per_identifier_height = 20; // default
 						$this->i['identifier_size'] = floor($this->i['identifier_size'] * 0.88);
 					}
 					$rotated_text = round(self::text_string_width($longest_string, $this->i['identifier_size']) * 0.9);
