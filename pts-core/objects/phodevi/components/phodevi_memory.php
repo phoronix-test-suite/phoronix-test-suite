@@ -34,7 +34,6 @@ class phodevi_memory extends phodevi_device_interface
 	{
 		$mem_string = null;
 		$mem_prefix = null;
-
 		$mem_size = false;
 		$mem_speed = false;
 		$mem_type = false;
