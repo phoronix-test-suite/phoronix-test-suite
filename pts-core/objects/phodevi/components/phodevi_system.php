@@ -573,7 +573,10 @@ class phodevi_system extends phodevi_device_interface
 				$fc = file_get_contents($vuln);
 				$fc = str_replace('Mitigation: ', 'Mitigation of ', $fc);
 				$fc = str_replace('Speculative Store Bypass', 'SSB', $fc);
-				$security[] = basename($vuln) . ': ' . $fc;
+				if(!empty($fc))
+				{
+					$security[] = basename($vuln) . ': ' . $fc;
+				}
 			}
 		}
 		else if(phodevi::is_bsd())
