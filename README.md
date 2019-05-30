@@ -62,7 +62,8 @@ without installation from the extracted tar.gz/zip package. The only hard
 dependency on the Phoronix Test Suite is having command-line support for PHP
 (PHP 5.3+) installed. A complete PHP stack (e.g. with web server) is **not**
 needed, but merely the PHP command-line support, which is widely available from
-operating system package managers under the name `php`, `php5-cli`, or `php5`.
+operating system package managers under the name `php`, `php7-cli`, `php5-cli`,
+or `php7`.
 
 ## Usage
 

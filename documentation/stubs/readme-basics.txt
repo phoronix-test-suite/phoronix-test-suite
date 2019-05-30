@@ -12,7 +12,7 @@ Full details on the Phoronix Test Suite setup and usage is available from the in
 
 The Phoronix Test Suite is supported on Linux, *BSD, Solaris, macOS, and Windows systems. However, the most full-featured and well supported operating system for conducting the tests is Linux with some non-basic functionality not being available under all platforms. The Phoronix Test Suite software/framework is compatible with all major CPU architectures (e.g. i686, x86_64, ARM, PowerPC), but not all of the test profiles/suites are compatible with all architectures.
 
-The Phoronix Test Suite can be installed for system-wide usage or run locally without installation from the extracted tar.gz/zip package. The only hard dependency on the Phoronix Test Suite is having command-line support for PHP (PHP 5.3+) installed. A complete PHP stack (e.g. with web server) is **not** needed, but merely the PHP command-line support, which is widely available from operating system package managers under the name `php`, `php5-cli`, or `php5`.
+The Phoronix Test Suite can be installed for system-wide usage or run locally without installation from the extracted tar.gz/zip package. The only hard dependency on the Phoronix Test Suite is having command-line support for PHP (PHP 5.3+) installed. A complete PHP stack (e.g. with web server) is **not** needed, but merely the PHP command-line support, which is widely available from operating system package managers under the name `php`, `php7-cli`, `php5-cli`, or `php7`.
 
 ## Usage
 
