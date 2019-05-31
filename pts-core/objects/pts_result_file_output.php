@@ -227,9 +227,9 @@ class pts_result_file_output
 			foreach($buffers as &$buffer_item)
 			{
 				$v = $buffer_item->get_result_value();
-				if(isset($v[$longest_result]))
+				if(($vl = strlen($v)) > $longest_result)
 				{
-					$longest_result = strlen($v);
+					$longest_result = $vl;
 				}
 
 				if(stripos($v, ',') !== false)
