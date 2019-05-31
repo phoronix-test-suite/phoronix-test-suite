@@ -391,5 +391,9 @@
 			<GenericName>node-npm</GenericName>
 			<PackageName>npm</PackageName>
 		</Package>
+		<Package>
+			<GenericName>expat</GenericName>
+			<PackageName>libexpat1-dev</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

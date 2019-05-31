@@ -29,6 +29,10 @@
 			<FileCheck>/usr/include/cairo/cairo.h</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>expat</GenericName>
+			<PackageName>expat</PackageName>
+		</Package>
+		<Package>
 			<GenericName>glut</GenericName>
 			<PackageName>libmesaglut3-devel</PackageName>
 			<FileCheck>/usr/include/GL/glut.h</FileCheck>

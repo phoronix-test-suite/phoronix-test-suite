@@ -31,6 +31,10 @@
 			<PackageName>dev-libs/openssl</PackageName>
 		</Package>
 		<Package>
+			<GenericName>expat</GenericName>
+			<PackageName>dev-libs/expat</PackageName>
+		</Package>
+		<Package>
 			<GenericName>cairo-development</GenericName>
 			<PackageName>x11-libs/cairo</PackageName>
 		</Package>

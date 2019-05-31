@@ -113,6 +113,10 @@
 			<PackageName>smartmontools</PackageName>
 		</Package>
 		<Package>
+			<GenericName>expat</GenericName>
+			<PackageName>expat</PackageName>
+		</Package>
+		<Package>
 			<GenericName>zlib-development</GenericName>
 			<PackageName>zlib-devel</PackageName>
 		</Package>

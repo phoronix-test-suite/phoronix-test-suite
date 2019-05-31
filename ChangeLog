@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Add 'expat' as possible external dependency
 pts_Graph: Fix for displaying line graphs with very small values
 
 Phoronix Test Suite 8.8.1-Hvaler

@@ -22,6 +22,10 @@
 			<FileCheck>/usr/pkg/include/SDL/SDL.h, /usr/pkg/include/SDL/SDL_net.h, /usr/pkg/include/SDL/SDL_image.h</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>expat</GenericName>
+			<PackageName>expat</PackageName>
+		</Package>
+		<Package>
 			<GenericName>glut</GenericName>
 			<PackageName>glut</PackageName>
 			<FileCheck>/usr/pkg/lib/libglut.la, /usr/pkg/include/GL/glut.h</FileCheck>

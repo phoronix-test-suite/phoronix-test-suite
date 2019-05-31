@@ -530,5 +530,11 @@
 			<PossibleNames>npm, nodejs</PossibleNames>
 			<FileCheck>npm</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>expat</GenericName>
+			<Title>Expat XML Parser Library</Title>
+			<PossibleNames>libexpat1-dev, expat</PossibleNames>
+			<FileCheck>expat.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

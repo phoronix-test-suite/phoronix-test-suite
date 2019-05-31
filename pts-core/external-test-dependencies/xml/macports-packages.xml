@@ -37,6 +37,10 @@
 			<PackageName>libpng</PackageName>
 		</Package>
 		<Package>
+			<GenericName>expat</GenericName>
+			<PackageName>expat</PackageName>
+		</Package>
+		<Package>
 			<GenericName>nasm</GenericName>
 			<PackageName>nasm</PackageName>
 		</Package>

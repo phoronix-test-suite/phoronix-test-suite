@@ -25,6 +25,10 @@
 			<FileCheck>/usr/lib/libglut.so.3, /usr/include/GL/glut.h</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>expat</GenericName>
+			<PackageName>expat</PackageName>
+		</Package>
+		<Package>
 			<GenericName>csh</GenericName>
 			<PackageName>tcsh</PackageName>
 			<FileCheck>/bin/csh</FileCheck>

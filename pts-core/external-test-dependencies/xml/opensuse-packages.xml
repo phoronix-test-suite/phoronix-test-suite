@@ -29,6 +29,10 @@
 			<PackageName>freeglut-devel</PackageName>
 		</Package>
 		<Package>
+			<GenericName>expat</GenericName>
+			<PackageName>expat</PackageName>
+		</Package>
+		<Package>
 			<GenericName>openssl-development</GenericName>
 			<PackageName>libopenssl-devel</PackageName>
 		</Package>

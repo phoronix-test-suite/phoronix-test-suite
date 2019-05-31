@@ -166,6 +166,10 @@
 			<PackageName>curl-devel</PackageName>
 		</Package>
 		<Package>
+			<GenericName>expat</GenericName>
+			<PackageName>expat-devel</PackageName>
+		</Package>
+		<Package>
 			<GenericName>fftw3-development</GenericName>
 			<PackageName>fftw-devel</PackageName>
 		</Package>

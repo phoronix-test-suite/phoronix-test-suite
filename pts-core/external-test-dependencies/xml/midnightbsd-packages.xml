@@ -24,6 +24,10 @@
 			<PackageName>openjdk7-bin</PackageName>
 		</Package>
 		<Package>
+			<GenericName>expat</GenericName>
+			<PackageName>expat</PackageName>
+		</Package>
+		<Package>
 			<GenericName>maven</GenericName>
 			<PackageName>maven</PackageName>
 		</Package>

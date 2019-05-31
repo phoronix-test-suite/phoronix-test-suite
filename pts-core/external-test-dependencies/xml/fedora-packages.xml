@@ -43,6 +43,10 @@
 			<PackageName>nasm</PackageName>
 		</Package>
 		<Package>
+			<GenericName>expat</GenericName>
+			<PackageName>expat</PackageName>
+		</Package>
+		<Package>
 			<GenericName>vulkan-development</GenericName>
 			<PackageName>vulkan-devel</PackageName>
 		</Package>
