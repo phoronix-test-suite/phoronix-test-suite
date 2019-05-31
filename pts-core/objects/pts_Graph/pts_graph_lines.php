@@ -139,14 +139,14 @@ class pts_graph_lines extends pts_graph_core
 		}
 		else
 		{
-			if($max_value < $this->i['mark_count'])
+			if($max_value < 10)
 			{
 				$this->i['graph_max_value'] = max($this->i['graph_max_value'], $max_value) * 1.25; // leave room at top of graph
 				$this->i['graph_max_value'] += $this->i['graph_max_value'] % $this->i['mark_count'];
 			}
 			else
 			{
-				$max_value *= 1.2; // leave room at top of graph
+				$max_value = max($this->i['graph_max_value'], $max_value) * 1.2; // leave room at top of graph
 				$this->i['graph_max_value'] = round($max_value, $max_value < 10 ? 1 : 0);
 				$this->i['graph_max_value'] = round(ceil($this->i['graph_max_value'] / $this->i['mark_count']), (0 - strlen($this->i['graph_max_value']) + 2)) * $this->i['mark_count'];
 				if($min_value > 20)
