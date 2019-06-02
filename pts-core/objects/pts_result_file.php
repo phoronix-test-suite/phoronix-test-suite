@@ -769,6 +769,32 @@ class pts_result_file
 		}
 		return false;
 	}
+	public function sort_result_object_order_by_spread($asc = false)
+	{
+		usort($this->result_objects, array('pts_result_file', 'result_spread_comparison'));
+
+		if($asc == false)
+		{
+			$this->result_objects = array_reverse($this->result_objects, true);
+		}
+	}
+	public static function result_spread_comparison($a, $b)
+	{
+		return strcmp($a->get_spread(), $b->get_spread());
+	}
+	public function sort_result_object_order_by_title($asc = true)
+	{
+		usort($this->result_objects, array('pts_result_file', 'result_title_comparison'));
+
+		if($asc == false)
+		{
+			$this->result_objects = array_reverse($this->result_objects, true);
+		}
+	}
+	public static function result_title_comparison($a, $b)
+	{
+		return strcmp(strtolower($a->test_profile->get_title()) . ' ' . $a->test_profile->get_app_version(), strtolower($b->test_profile->get_title()) . ' ' . $b->test_profile->get_app_version());
+	}
 }
 
 ?>

@@ -25,6 +25,48 @@ class pts_result_viewer_settings
 	public static function get_html_options_markup(&$result_file, &$request)
 	{
 		$analyze_options = null;
+
+		$drop_down_menus = array('Export Result Data' => array(
+						'export=pdf' => 'Result File To PDF',
+						'export=txt' => 'Result File To Text',
+						'export=csv' => 'Result File To CSV/Excel',
+						'export=csv-all' => 'Individual Run Data To CSV/Excel',
+						),
+					);
+		if(count($result_file->get_system_identifiers()) > 1)
+		{
+			$drop_down_menus['Sort Results'] = array(
+				'sro' => 'By Identifier (ASC)',
+				'sro&rro' => 'By Identifier (DESC)',
+				'sor' => 'By Performance (ASC)',
+				'sor&rro' => 'By Performance (DESC)',
+				);
+		}
+		if($result_file->get_test_count() > 1)
+		{
+			$drop_down_menus['Sort Graph Order'] = array(
+				'grs' => 'By Result Spread',
+				'grt' => 'By Test Title'
+				);
+		}
+
+		$analyze_options .= '<div style="clear: both; float: right;"><ul>';
+		foreach(array_reverse($drop_down_menus, true) as $menu => $sub_menu)
+		{
+			$analyze_options .= '<li><a href="#">' . $menu . '</a><ul>';
+			foreach($sub_menu as $option => $txt)
+			{
+				$uri = CURRENT_URI;
+				foreach(array_reverse(array_keys($sub_menu)) as $rem)
+				{
+					$uri = str_replace('&' . $rem, null, $uri);
+				}
+				$analyze_options .= '<li><a href="' . $uri . '&' . $option . '">' . $txt . '</a></li>';
+			}
+			$analyze_options .= '</ul></li>';
+		}
+		$analyze_options .= '</ul></div>';
+
 		if(count($result_file->get_system_identifiers()) > 1)
 		{
 			// CHECKS FOR DETERMINING OPTIONS TO DISPLAY
@@ -60,7 +102,7 @@ class pts_result_viewer_settings
 			}
 			// END OF CHECKS
 
-			$analyze_options = '<form action="' . $_SERVER['REQUEST_URI'] . '" method="post">';
+			$analyze_options .= '<form action="' . $_SERVER['REQUEST_URI'] . '" method="post">';
 			$analyze_checkboxes = array(
 				'Statistics' => array(),
 				'Sorting' => array(),
@@ -70,9 +112,9 @@ class pts_result_viewer_settings
 				);
 			$analyze_checkboxes['Statistics'][] = array('shm', 'Show Overall Harmonic Mean(s)');
 			$analyze_checkboxes['Statistics'][] = array('sgm', 'Show Overall Geometric Mean');
-			$analyze_checkboxes['Sorting'][] = array('sor', 'Sort Results By Performance');
-			$analyze_checkboxes['Sorting'][] = array('sro', 'Sort Results By Identifier');
-			$analyze_checkboxes['Sorting'][] = array('rro', 'Reverse Result Order');
+			//$analyze_checkboxes['Sorting'][] = array('sor', 'Sort Results By Performance');
+			//$analyze_checkboxes['Sorting'][] = array('sro', 'Sort Results By Identifier');
+			//$analyze_checkboxes['Sorting'][] = array('rro', 'Reverse Result Order');
 			$analyze_checkboxes['Statistics'][] = array('nor', 'Normalize Results');
 			$analyze_checkboxes['Graph Settings'][] = array('ftr', 'Force Line Graphs (Where Applicable)');
 			$analyze_checkboxes['Graph Settings'][] = array('scalar', 'Convert To Scalar (Where Applicable)');
@@ -121,6 +163,49 @@ class pts_result_viewer_settings
 	}
 	public static function process_helper_html(&$request, &$result_file, &$extra_attributes)
 	{
+		// Result export?
+		switch(isset($_REQUEST['export']) ? $_REQUEST['export'] : null)
+		{
+			case 'pdf':
+				header('Content-Type: application/pdf');
+				$pdf_output = pts_result_file_output::result_file_to_pdf($result_file, $_GET['result'] . '.pdf', 'D', $extra_attributes);
+				exit;
+			case 'csv':
+				$result_csv = pts_result_file_output::result_file_to_csv($result_file);
+				header('Content-Description: File Transfer');
+				header('Content-Type: application/csv');
+				header('Content-Disposition: attachment; filename=' . $_GET['result']. '.csv');
+				header('Expires: 0');
+				header('Cache-Control: must-revalidate');
+				header('Pragma: public');
+				header('Content-Length: ' . strlen($result_csv));
+				echo $result_csv;
+				exit;
+			case 'csv-all':
+				$result_csv = pts_result_file_output::result_file_raw_to_csv($result_file);
+				header('Content-Description: File Transfer');
+				header('Content-Type: application/csv');
+				header('Content-Disposition: attachment; filename=' . $_GET['result']. '.csv');
+				header('Expires: 0');
+				header('Cache-Control: must-revalidate');
+				header('Pragma: public');
+				header('Content-Length: ' . strlen($result_csv));
+				echo $result_csv;
+				exit;
+			case 'txt':
+				$result_txt = pts_result_file_output::result_file_to_text($result_file);
+				header('Content-Description: File Transfer');
+				header('Content-Type: text/plain');
+				header('Content-Disposition: attachment; filename=' . $_GET['result']. '.txt');
+				header('Expires: 0');
+				header('Cache-Control: must-revalidate');
+				header('Pragma: public');
+				header('Content-Length: ' . strlen($result_txt));
+				echo $result_txt;
+				exit;
+		}
+		// End result export
+
 		$html = null;
 		if(self::check_request_for_var($request, 'spr'))
 		{
@@ -186,6 +271,14 @@ class pts_result_viewer_settings
 		if(self::check_request_for_var($request, 'sro'))
 		{
 			$extra_attributes['sort_result_buffer'] = true;
+		}
+		if(self::check_request_for_var($request, 'grs'))
+		{
+			$result_file->sort_result_object_order_by_spread();
+		}
+		if(self::check_request_for_var($request, 'grt'))
+		{
+			$result_file->sort_result_object_order_by_title();
 		}
 		if(self::check_request_for_var($request, 'nor'))
 		{

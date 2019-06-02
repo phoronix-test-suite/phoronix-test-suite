@@ -24,6 +24,25 @@ error_reporting(E_ALL);
 session_start();
 
 define('CURRENT_URI', $_SERVER['REQUEST_URI']);
+define('WEB_URL_PATH', rtrim(dirname($_SERVER['SCRIPT_NAME']), '/') . '/');
+$uri_stripped = CURRENT_URI;
+if(($x = strpos($uri_stripped, '&')) !== false)
+{
+	$args = substr($uri_stripped, $x + 1);
+	$r = array();
+	parse_str($args, $r);
+	$_REQUEST = array_merge($r, $_REQUEST);
+	$uri_stripped = substr($uri_stripped, 0, $x);
+}
+
+$uri_segments = explode('/', trim((WEB_URL_PATH == '/' ? $uri_stripped : str_replace(WEB_URL_PATH, null, $uri_stripped)), '/'));
+switch((isset($uri_segments[0]) ? $uri_segments[0] : null))
+{
+	case 'result':
+		$_GET['page'] = 'result';
+		$_GET['result'] = $uri_segments[1];
+		break;
+}
 
 if(getenv('PTS_VIEWER_RESULT_PATH') && getenv('PTS_VIEWER_PTS_PATH'))
 {
@@ -41,7 +60,6 @@ else
 	require('result_viewer_config.php');
 }
 
-define('PHOROMATIC_EXPORT_VIEWER', true);
 define('PTS_MODE', 'LIB');
 define('PTS_AUTO_LOAD_OBJECTS', true);
 
@@ -173,44 +191,31 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			define('TITLE', $result_file->get_title());
 			$PAGE .= '<h1>' . $result_file->get_title() . '</h1>';
 			$PAGE .= '<p>' . $result_file->get_description() . '</p>';
-			$PAGE .= '<p align="center"><strong>Export As: </strong> <a href="' . CURRENT_URI . '&export=pdf">PDF</a>, <a href="' . CURRENT_URI . '&export=csv">CSV</a>, <a href="' . CURRENT_URI . '&export=csv-all">CSV Individual Data</a> </p>';
-			switch(isset($_GET['export']) ? $_GET['export'] : null)
-			{
-				case 'pdf':
-					header('Content-Type: application/pdf');
-					$pdf_output = pts_result_file_output::result_file_to_pdf($result_file, $_GET['result'] . '.pdf', 'D', $extra_attributes);
-					exit;
-				case 'csv':
-					$result_csv = pts_result_file_output::result_file_to_csv($result_file);
-					header('Content-Description: File Transfer');
-					header('Content-Type: application/csv');
-					header('Content-Disposition: attachment; filename=' . $_GET['result']. '.csv');
-					header('Expires: 0');
-					header('Cache-Control: must-revalidate');
-					header('Pragma: public');
-					header('Content-Length: ' . strlen($result_csv));
-					echo $result_csv;
-					exit;
-				case 'csv-all':
-					$result_csv = pts_result_file_output::result_file_raw_to_csv($result_file);
-					header('Content-Description: File Transfer');
-					header('Content-Type: application/csv');
-					header('Content-Disposition: attachment; filename=' . $_GET['result']. '.csv');
-					header('Expires: 0');
-					header('Cache-Control: must-revalidate');
-					header('Pragma: public');
-					header('Content-Length: ' . strlen($result_csv));
-					echo $result_csv;
-					exit;
-			}
+			//$PAGE .= '<p align="center"><strong>Export As: </strong> <a href="' . CURRENT_URI . '&export=pdf">PDF</a>, <a href="' . CURRENT_URI . '&export=csv">CSV</a>, <a href="' . CURRENT_URI . '&export=csv-all">CSV Individual Data</a> </p>';
 			$PAGE .= '<hr /><p>' . pts_result_viewer_settings::get_html_options_markup($result_file, $_REQUEST) . '</p><hr />';
 			$PAGE .= pts_result_viewer_settings::process_helper_html($_REQUEST, $result_file, $extra_attributes);
-			$table = new pts_ResultFileSystemsTable($result_file);
+
+			$intent = -1;
+			if($result_file->get_system_count() == 1 || ($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)))
+			{
+				$table = new pts_ResultFileCompactSystemsTable($result_file, $intent);
+			}
+			else
+			{
+				$table = new pts_ResultFileSystemsTable($result_file);
+			}
+
 			$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
-			$intent = null;
-			$PAGE .= '<div style="display:flex; align-items: center; justify-content: center;">' . pts_result_file_output::result_file_to_detailed_html_table($result_file, 'grid', $extra_attributes) . '</div>';
-			$table = new pts_ResultFileTable($result_file, $intent);
-			$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
+			if(!$result_file->is_multi_way_comparison())
+			{
+				$PAGE .= '<div style="display:flex; align-items: center; justify-content: center;">' . pts_result_file_output::result_file_to_detailed_html_table($result_file, 'grid', $extra_attributes) . '</div>';
+			}
+			else
+			{
+				$intent = null;
+				$table = new pts_ResultFileTable($result_file, $intent);
+				$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
+			}
 
 			foreach($result_file->get_result_objects() as $i => &$result_object)
 			{
@@ -230,8 +235,8 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		break;
 	case 'index':
 	default:
-		define('TITLE', 'Result Viewer');
-		$PAGE .= '<form name="search_results" id="search_results" action="' . CURRENT_URI . '" method="post"><input type="text" name="search" id="u_search" required placeholder="Search Results" value="' . (isset($_POST['search']) ? $_POST['search'] : null) . '" /> <input type="submit" value="Search" />
+		define('TITLE', 'Phoronix Test Suite ' . PTS_VERSION . ' Result Viewer');
+		$PAGE .= '<form name="search_results" id="search_results" action="' . CURRENT_URI . '" method="post"><input type="text" name="search" id="u_search" placeholder="Search Results" value="' . (isset($_POST['search']) ? $_POST['search'] : null) . '" /> <input type="submit" value="Search" />
 </form>';
 		function sort_by_date($a, $b)
 		{
@@ -260,11 +265,18 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		}
 		uasort($results, 'sort_by_date');
 
-		$PAGE .= '<p>' . count($all_results) . ' Result Files</p>';
+		$total_result_points = 0;
 		foreach($results as $id => $result_file)
 		{
-			$PAGE .= '<h2><a href="?page=result&result=' . $id . '">' . $result_file->get_title() . '</a></h2>';
+			$total_result_points += $result_file->get_test_count();
+		}
+
+		$PAGE .= '<div class="sub" style="margin-bottom: 30px">' . (count($all_results) != count($results) ? count($results) . ' of ' : null) . count($all_results) . ' Result Files Containing A Combined ' . $total_result_points . ' Test Results</div>';
+		foreach($results as $id => $result_file)
+		{
+			$PAGE .= '<h2><a href="' . WEB_URL_PATH . 'result/' . $id . '">' . $result_file->get_title() . '</a></h2>';
 			$PAGE .= '<div class="sub">' . $result_file->get_test_count() . ' Tests &nbsp; &nbsp; ' . $result_file->get_system_count() . ' Systems &nbsp; &nbsp; ' . date('j F H:i', strtotime($result_file->get_last_modified())) . '</div>';
+			$PAGE .= '<div class="desc">' . $result_file->get_description() . '</div>';
 
 			$geometric_mean = pts_result_file_analyzer::generate_geometric_mean_result($result_file);
 			if($geometric_mean)
@@ -320,11 +332,11 @@ div#header
 	background-image: linear-gradient(#098BEF, #0367B4);
 	border: 1px solid #eee;
 	border-width: 0 0 1px 0;
-	padding: 10px;
+	padding: 2px 10px 0;
 	color: #fff;
 	overflow: hidden;
-	font-size: 14pt;
-	font-weight: 600;
+	font-size: 23pt;
+	font-weight: 500;
 }
 div#header ul
 {
@@ -338,13 +350,13 @@ div#header ul li
 	padding: 0 30px;
 	float: left;
 }
-div#header ul li a
+div#header ul li a, div#header a
 {
 	font-weight: 400;
 	color: #FFF;
 	text-decoration: none;
 }
-div#header ul li a:hover
+div#header ul li a:hover, div#header a:hover
 {
 	color: #eee;
 }
@@ -398,12 +410,79 @@ div#main_area input::placeholder, div#main_area textarea::placeholder
 	opacity: 0.7;
 	font-weight: 400;
 }
+div#main_area ul
+{
+	list-style: none;
+	position: relative;
+	float: left;
+	margin: 0;
+	padding: 0;
+	border: 1px solid #eee;
+}
+div#main_area ul:hover a
+{
+	color: #000
+}
+div#main_area ul a
+{
+	display: block;
+	color: #333;
+	text-decoration: none;
+	font-weight: 600;
+	line-height: 26px;
+	padding: 4px 8px;
+	text-transform: uppercase;
+}
+div#main_area ul li
+{
+	position: relative;
+	float: left;
+	margin: 0;
+	padding: 0
+}
+div#main_area ul li:hover
+{
+	background: #eee
+}
+div#main_area ul ul a
+{
+	padding: 0 8px;
+	font-weight: 300;
+	font-size: 10pt;
+}
+div#main_area ul ul
+{
+	display: none;
+	position: absolute;
+	top: 100%;
+	font-weight: 300;
+	left: 0;
+	background: #fff;
+	padding: 0
+}
+div#main_area ul ul li
+{
+	border: 1px solid #eee;
+	border-top: 1px;
+	float: none;
+}
+div#main_area ul li:hover > ul
+{
+	display: block
+}
 div#main_area div.sub
 {
-	margin: 2px 0 8px;
+	margin: -5px 0 8px;
 	padding: 0;
-	font-size: 12pt;
+	font-size: 10pt;
 	text-transform: uppercase;
+	color: #AAA;
+}
+div#main_area div.desc
+{
+	margin: 0;
+	padding: 0;
+	font-size: 10pt;
 }
 div#main_area span.sub_header
 {
@@ -417,12 +496,13 @@ hr
 	opacity: 0.3;
 	margin: 0 10%;
 }
-div#footer
+div#footer, div#footer a
 {
 	font-size: 9pt;
 	color: #aaa;
 	text-align: center;
-	padding: 0 50px;
+	padding: 0;
+	text-decoration: none;
 }
 .grid
 {
@@ -443,7 +523,7 @@ div#footer
 {
 	font-size: 12pt;
 }
-svg
+div#main_area svg
 {
 	min-width: 50%;
 	height: auto;
@@ -462,16 +542,19 @@ div.geo_bg_graph
 </head>
 <body>
 <div id="header">
-Result Viewer
+<div style="float: left; margin-top: 2px;">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewbox="0 0 76 41" width="76" height="41" preserveAspectRatio="xMinYMin meet">
+  <path d="m74 22v9m-5-16v16m-5-28v28m-23-2h12.5c2.485281 0 4.5-2.014719 4.5-4.5s-2.014719-4.5-4.5-4.5h-8c-2.485281 0-4.5-2.014719-4.5-4.5s2.014719-4.5 4.5-4.5h12.5m-21 5h-11m11 13h-2c-4.970563 0-9-4.029437-9-9v-20m-24 40v-20c0-4.970563 4.0294373-9 9-9 4.970563 0 9 4.029437 9 9s-4.029437 9-9 9h-9" stroke="#fff" stroke-width="4" fill="none" />
+</svg></div> <div style="float: left; margin-left: 10px;"> <a href="<?php echo WEB_URL_PATH; ?>">Result Viewer</a></div>
 <ul>
-<li><a href="?page=index">Results</a></li>
+<li><a href="<?php echo WEB_URL_PATH; ?>">Results</a></li>
 </ul>
 </div>
 
 <div id="main_area">
 <?php echo PAGE; ?>
 </div>
-<div id="footer"><hr /><br />Phoronix Test Suite - Generated <?php echo date('j F Y H:i:s'); ?> - Developed by Phoronix Media</div>
+<div id="footer"><hr /><br /><a href="https://www.phoronix-test-suite.com/">Phoronix Test Suite</a> <?php echo PTS_VERSION; ?> - Generated <?php echo date('j F Y H:i:s'); ?> - Developed by Phoronix Media</div>
 </body>
 <?php }
 session_write_close();

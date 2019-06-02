@@ -257,6 +257,11 @@ class pts_test_result
 		$best = $this->get_result_first(false);
 		$worst = $this->get_result_last(false);
 
+		if(!is_numeric($best) || !is_numeric($worst))
+		{
+			return -1;
+		}
+
 		$spread = $best / $worst;
 		if($this->test_profile->get_result_proportion() == 'LIB')
 		{
