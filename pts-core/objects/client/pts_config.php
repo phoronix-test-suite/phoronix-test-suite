@@ -127,6 +127,10 @@ class pts_config
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/TestResultValidation/MinimalTestTime', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/TestResultValidation/DropNoisyResults', $read_config);
 
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/ResultViewer/WebPort', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/ResultViewer/LimitAccessToLocalHost', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/ResultViewer/AccessKey', $read_config);
+
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/BatchMode/SaveResults', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/BatchMode/OpenBrowser', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/BatchMode/UploadResults', $read_config);

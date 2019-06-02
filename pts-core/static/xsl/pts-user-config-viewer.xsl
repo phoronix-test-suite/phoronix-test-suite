@@ -76,6 +76,14 @@
 			<h3>ExportResultsTo: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/TestResultValidation/ExportResultsTo" /></span></h3>
 			<p>This option can specify a file (either the absolute path or relative if contained within <em>~/.phoronix-test-suite/</em> where a set of test results will be passed as the first argument as a string with each of the test results being delimited by a colon. If the executed script returns an exit status of <em>0</em> the results are considered valid, if the script returns an exit status of <em>1</em> the Phoronix Test Suite will request the test be run again.</p>
 
+			<h1>ResultViewer Options</h1>
+			<h3>WebPort: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/ResultViewer/WebPort" /></span></h3>
+			<p>The default HTTP web port to use for launching the web-based result viewer. If the value is set to <em>RANDOM</em>, a random open web port will be used.</p>
+			<h3>LimitAccessToLocalHost: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/ResultViewer/LimitAccessToLocalHost" /></span></h3>
+			<p>If this value is set to <em>TRUE</em> (default), the web-based result viewer is only accessible by the local host. If the value is <em>FALSE</em>, anyone with access to the IP/port can access the result viewer.</p>
+			<h3>AccessKey: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/ResultViewer/AccessKey" /></span></h3>
+			<p>An access key / password can be optionally supplied as a basic precaution particularly for web-accessible result viewers that aren't limited to the local host. Set the string value here of the desired key/password that the user will be prompted to enter when trying to access the result viewer.</p>
+
 			<h1>Batch Mode Options</h1>
 			<p>The batch mode options are only used when using either the <em>batch-run</em> or <em>batch-benchmark</em> options with the Phoronix Test Suite. This mode is designed to fully automate the operation of the Phoronix Test Suite except for areas where the user would like to be prompted. To configure the batch mode options, it is recommended to run <em>phoronix-test-suite batch-setup</em> instead of modifying these values by hand.</p>
 			<h3>SaveResults: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/BatchMode/SaveResults" /></span></h3>

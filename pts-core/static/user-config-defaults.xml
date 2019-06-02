@@ -43,6 +43,11 @@
 			<MinimalTestTime>2</MinimalTestTime>
 			<DropNoisyResults>FALSE</DropNoisyResults>
 		</TestResultValidation>
+		<ResultViewer>
+			<WebPort>56955</WebPort>
+			<LimitAccessToLocalHost>TRUE</LimitAccessToLocalHost>
+			<AccessKey></AccessKey>
+		</ResultViewer>
 		<ExternalHooks>
 			<PreTestProcess></PreTestProcess>
 			<InterimTestProcess></InterimTestProcess>

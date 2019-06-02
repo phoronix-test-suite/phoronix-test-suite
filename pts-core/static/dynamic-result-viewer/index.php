@@ -25,12 +25,21 @@ session_start();
 
 define('CURRENT_URI', $_SERVER['REQUEST_URI']);
 
-if(!is_file('result_viewer_config.php'))
+if(getenv('PTS_VIEWER_RESULT_PATH') && getenv('PTS_VIEWER_PTS_PATH'))
 {
-	echo '<p>You must configure result_viewer_config.php!</p>';
-	exit;
+	define('VIEWER_ACCESS_KEY', getenv('PTS_VIEWER_ACCESS_KEY'));
+	define('VIEWER_RESULTS_DIRECTORY_PATH', getenv('PTS_VIEWER_RESULT_PATH'));
+	define('VIEWER_PHORONIX_TEST_SUITE_PATH', getenv('PTS_VIEWER_PTS_PATH'));
 }
-require('result_viewer_config.php');
+else
+{
+	if(!is_file('result_viewer_config.php'))
+	{
+		echo '<p>You must configure result_viewer_config.php!</p>';
+		exit;
+	}
+	require('result_viewer_config.php');
+}
 
 define('PHOROMATIC_EXPORT_VIEWER', true);
 define('PTS_MODE', 'LIB');
@@ -233,7 +242,8 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			return $a > $b ? -1 : 1;
 		}
 		$results = array();
-		foreach(pts_file_io::glob(VIEWER_RESULTS_DIRECTORY_PATH . '/*/composite.xml') as $composite_xml)
+		$all_results = pts_file_io::glob(VIEWER_RESULTS_DIRECTORY_PATH . '/*/composite.xml');
+		foreach($all_results as $composite_xml)
 		{
 			$id = basename(dirname($composite_xml));
 			$rf = new pts_result_file($composite_xml);
@@ -249,6 +259,8 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			$results[$id] = $rf;
 		}
 		uasort($results, 'sort_by_date');
+
+		$PAGE .= '<p>' . count($all_results) . ' Result Files</p>';
 		foreach($results as $id => $result_file)
 		{
 			$PAGE .= '<h2><a href="?page=result&result=' . $id . '">' . $result_file->get_title() . '</a></h2>';
