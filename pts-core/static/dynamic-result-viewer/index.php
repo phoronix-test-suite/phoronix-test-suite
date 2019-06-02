@@ -35,6 +35,11 @@ if(($x = strpos($uri_stripped, '&')) !== false)
 	$uri_stripped = substr($uri_stripped, 0, $x);
 }
 
+if(isset($_REQUEST['checkbox_compare_results']))
+{
+	echo '<script> window.location.href = "http://' . $_SERVER['HTTP_HOST'] . WEB_URL_PATH . 'result/' . implode(',', $_REQUEST['checkbox_compare_results']) . '"; </script>';
+	exit;
+}
 $uri_segments = explode('/', trim((WEB_URL_PATH == '/' ? $uri_stripped : str_replace(WEB_URL_PATH, null, $uri_stripped)), '/'));
 switch((isset($uri_segments[0]) ? $uri_segments[0] : null))
 {
@@ -173,70 +178,92 @@ $PAGE = null;
 switch(isset($_GET['page']) ? $_GET['page'] : null)
 {
 	case 'result':
-		if(!isset($_GET['result']) || !is_file(VIEWER_RESULTS_DIRECTORY_PATH . '/' . $_GET['result'] . '/composite.xml'))
+		if(false && isset($_POST) && !empty($_POST))
 		{
-			$PAGE = 'Could not find result file!';
+			$req = $_REQUEST;
+			unset($req['PHPSESSID']);
+			header('Location: ?' . http_build_query($req));
+		}
+		$result_file = null;
+		$result_merges = 0;
+		$possible_results = explode(',', $_GET['result']);
+		foreach($possible_results as $rid)
+		{
+			if(is_file(VIEWER_RESULTS_DIRECTORY_PATH . '/' . $rid . '/composite.xml'))
+			{
+				if($result_file == null)
+				{
+					$result_file = new pts_result_file(VIEWER_RESULTS_DIRECTORY_PATH . '/' . $rid . '/composite.xml');
+					if($possible_results > 1)
+					{
+						$result_file->rename_run('PREFIX', $result_file->get_title());
+					}
+				}
+				else
+				{
+					$rf = new pts_result_file(VIEWER_RESULTS_DIRECTORY_PATH . '/' . $rid . '/composite.xml');
+					$result_file->merge(array(new pts_result_merge_select($rf)), 0, $rf->get_title());
+					$result_merges++;
+				}
+			}
+		}
+		if($result_file == null)
+		{
+			break;
+		}
+		if($result_merges > 0)
+		{
+			$result_file->avoid_duplicate_identifiers();
+		}
+
+		$extra_attributes = null;
+		pts_result_viewer_settings::process_request_to_attributes($_REQUEST, $result_file, $extra_attributes);
+		define('TITLE', $result_file->get_title());
+		$PAGE .= '<h1>' . $result_file->get_title() . '</h1>';
+		$PAGE .= '<p>' . $result_file->get_description() . '</p>';
+		//$PAGE .= '<p align="center"><strong>Export As: </strong> <a href="' . CURRENT_URI . '&export=pdf">PDF</a>, <a href="' . CURRENT_URI . '&export=csv">CSV</a>, <a href="' . CURRENT_URI . '&export=csv-all">CSV Individual Data</a> </p>';
+		$PAGE .= '<hr /><p>' . pts_result_viewer_settings::get_html_options_markup($result_file, $_REQUEST) . '</p><hr />';
+		$PAGE .= pts_result_viewer_settings::process_helper_html($_REQUEST, $result_file, $extra_attributes);
+
+		$intent = -1;
+		if($result_file->get_system_count() == 1 || ($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)))
+		{
+			$table = new pts_ResultFileCompactSystemsTable($result_file, $intent);
 		}
 		else
 		{
-			if(false && isset($_POST) && !empty($_POST))
-			{
-				$req = $_REQUEST;
-				unset($req['PHPSESSID']);
-				header('Location: ?' . http_build_query($req));
-			}
-			$result_file = new pts_result_file(VIEWER_RESULTS_DIRECTORY_PATH . '/' . $_GET['result'] . '/composite.xml');
-			$extra_attributes = null;
-			pts_result_viewer_settings::process_request_to_attributes($_REQUEST, $result_file, $extra_attributes);
-			define('TITLE', $result_file->get_title());
-			$PAGE .= '<h1>' . $result_file->get_title() . '</h1>';
-			$PAGE .= '<p>' . $result_file->get_description() . '</p>';
-			//$PAGE .= '<p align="center"><strong>Export As: </strong> <a href="' . CURRENT_URI . '&export=pdf">PDF</a>, <a href="' . CURRENT_URI . '&export=csv">CSV</a>, <a href="' . CURRENT_URI . '&export=csv-all">CSV Individual Data</a> </p>';
-			$PAGE .= '<hr /><p>' . pts_result_viewer_settings::get_html_options_markup($result_file, $_REQUEST) . '</p><hr />';
-			$PAGE .= pts_result_viewer_settings::process_helper_html($_REQUEST, $result_file, $extra_attributes);
+			$table = new pts_ResultFileSystemsTable($result_file);
+		}
 
-			$intent = -1;
-			if($result_file->get_system_count() == 1 || ($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)))
-			{
-				$table = new pts_ResultFileCompactSystemsTable($result_file, $intent);
-			}
-			else
-			{
-				$table = new pts_ResultFileSystemsTable($result_file);
-			}
-
+		$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
+		if(!$result_file->is_multi_way_comparison())
+		{
+			$PAGE .= '<div style="display:flex; align-items: center; justify-content: center;">' . pts_result_file_output::result_file_to_detailed_html_table($result_file, 'grid', $extra_attributes) . '</div>';
+		}
+		else
+		{
+			$intent = null;
+			$table = new pts_ResultFileTable($result_file, $intent);
 			$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
-			if(!$result_file->is_multi_way_comparison())
-			{
-				$PAGE .= '<div style="display:flex; align-items: center; justify-content: center;">' . pts_result_file_output::result_file_to_detailed_html_table($result_file, 'grid', $extra_attributes) . '</div>';
-			}
-			else
-			{
-				$intent = null;
-				$table = new pts_ResultFileTable($result_file, $intent);
-				$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
-			}
+		}
 
-			foreach($result_file->get_result_objects() as $i => &$result_object)
+		foreach($result_file->get_result_objects() as $i => &$result_object)
+		{
+			$res = pts_render::render_graph_inline_embed($result_object, $result_file, $extra_attributes);
+			if($res == false)
 			{
-				$res = pts_render::render_graph_inline_embed($result_object, $result_file, $extra_attributes);
-
-				if($res == false)
-				{
-					continue;
-				}
-
-				$PAGE .= '<a name="r-' . $i . '"></a><p align="center">';
-				$PAGE .= $res;
-				$PAGE .= '</p>';
-				unset($result_object);
+				continue;
 			}
+			$PAGE .= '<a name="r-' . $i . '"></a><p align="center">';
+			$PAGE .= $res;
+			$PAGE .= '</p>';
+			unset($result_object);
 		}
 		break;
 	case 'index':
 	default:
 		define('TITLE', 'Phoronix Test Suite ' . PTS_VERSION . ' Result Viewer');
-		$PAGE .= '<form name="search_results" id="search_results" action="' . CURRENT_URI . '" method="post"><input type="text" name="search" id="u_search" placeholder="Search Results" value="' . (isset($_POST['search']) ? $_POST['search'] : null) . '" /> <input type="submit" value="Search" />
+		$PAGE .= '<form name="search_results" id="search_results" action="' . CURRENT_URI . '" method="post"><input type="text" name="search" id="u_search" placeholder="Search Test Results" value="' . (isset($_POST['search']) ? $_POST['search'] : null) . '" /> <input type="submit" value="Search" />
 </form>';
 		function sort_by_date($a, $b)
 		{
@@ -272,10 +299,13 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		}
 
 		$PAGE .= '<div class="sub" style="margin-bottom: 30px">' . (count($all_results) != count($results) ? count($results) . ' of ' : null) . count($all_results) . ' Result Files Containing A Combined ' . $total_result_points . ' Test Results</div>';
+		$PAGE .= '<form name="compare_results" id="compare_results_id" action="' . CURRENT_URI . '" method="post"><input type="submit" value="Compare Results" id="compare_results_submit" />';
+		$i = 0;
 		foreach($results as $id => $result_file)
 		{
+			$i++;
 			$PAGE .= '<h2><a href="' . WEB_URL_PATH . 'result/' . $id . '">' . $result_file->get_title() . '</a></h2>';
-			$PAGE .= '<div class="sub">' . $result_file->get_test_count() . ' Tests &nbsp; &nbsp; ' . $result_file->get_system_count() . ' Systems &nbsp; &nbsp; ' . date('j F H:i', strtotime($result_file->get_last_modified())) . '</div>';
+			$PAGE .= '<div class="sub"><input type="checkbox" name="checkbox_compare_results[]" value="' . $id . '" id="cr_checkbox_' . $i . '" /> <label for="cr_checkbox_' . $i . '"><span onclick="javascript:document.getElementById(\'compare_results_id\').submit(); return false;">Compare Results</span></label> ' . $result_file->get_test_count() . ' Tests &nbsp; &nbsp; ' . $result_file->get_system_count() . ' Systems &nbsp; &nbsp; ' . date('j F H:i', strtotime($result_file->get_last_modified())) . '</div>';
 			$PAGE .= '<div class="desc">' . $result_file->get_description() . '</div>';
 
 			$geometric_mean = pts_result_file_analyzer::generate_geometric_mean_result($result_file);
@@ -306,6 +336,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			}
 			$PAGE .= '<br />';
 		}
+		$PAGE .= '</form>';
 		break;
 
 }
@@ -316,7 +347,7 @@ define('PAGE', $PAGE);
 <!doctype html>
 <html lang="en">
 <head>
-  <title><?php echo TITLE; ?></title>
+  <title><?php echo defined('TITLE') ? TITLE : ''; ?></title>
 <link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 <style>
 body
@@ -537,6 +568,24 @@ div.geo_bg_graph
 	padding: 1px 4px;
 	border: #BBB 2px solid;
 	border-width: 1px;
+}
+input#compare_results_submit
+{
+	display: none;
+}
+input[type="checkbox"] + label
+{
+	display: none;
+	background: #098BEF;
+	color: #FFF;
+	padding: 4px;
+	border: 1px solid #000;
+	font-weight: 10pt;
+}
+input[type="checkbox"]:checked + label
+{
+	font-weight: bold;
+	display: inline;
 }
 </style>
 </head>

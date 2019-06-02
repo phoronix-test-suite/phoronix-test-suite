@@ -113,7 +113,14 @@ class pts_test_result_buffer
 	}
 	public function rename($from, $to)
 	{
-		if($from == null && count($this->buffer_items) == 1)
+		if($from == 'PREFIX')
+		{
+			foreach($this->buffer_items as &$buffer_item)
+			{
+				$buffer_item->reset_result_identifier($to . ': ' . $buffer_item->get_result_identifier());
+			}
+		}
+		else if($from == null && count($this->buffer_items) == 1)
 		{
 			foreach($this->buffer_items as &$buffer_item)
 			{

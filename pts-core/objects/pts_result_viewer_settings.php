@@ -46,6 +46,7 @@ class pts_result_viewer_settings
 		{
 			$drop_down_menus['Sort Graph Order'] = array(
 				'grs' => 'By Result Spread',
+				'gru' => 'By Result Unit',
 				'grt' => 'By Test Title'
 				);
 		}
@@ -279,6 +280,10 @@ class pts_result_viewer_settings
 		if(self::check_request_for_var($request, 'grt'))
 		{
 			$result_file->sort_result_object_order_by_title();
+		}
+		if(self::check_request_for_var($request, 'gru'))
+		{
+			$result_file->sort_result_object_order_by_result_scale();
 		}
 		if(self::check_request_for_var($request, 'nor'))
 		{

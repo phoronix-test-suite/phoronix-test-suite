@@ -502,7 +502,14 @@ class pts_result_file
 	}
 	public function rename_run($from, $to)
 	{
-		if($from == null)
+		if($from == 'PREFIX')
+		{
+			foreach($this->systems as &$s)
+			{
+				$s->set_identifier($to . ': ' . $s->get_identifier());
+			}
+		}
+		else if($from == null)
 		{
 			if(count($this->systems) == 1)
 			{
@@ -681,7 +688,7 @@ class pts_result_file
 
 		return $to == null ? $xml_writer->getXML() : $xml_writer->saveXMLFile($to);
 	}
-	public function merge($result_merges_to_combine, $pass_attributes = 0)
+	public function merge($result_merges_to_combine, $pass_attributes = 0, $add_prefix = null)
 	{
 		if(!is_array($result_merges_to_combine) || empty($result_merges_to_combine))
 		{
@@ -717,7 +724,11 @@ class pts_result_file
 		{
 			$result_file = new pts_result_file($merge_select->get_result_file(), true);
 
-			if($merge_select->get_rename_identifier())
+			if($add_prefix)
+			{
+				$result_file->rename_run('PREFIX', $add_prefix);
+			}
+			else if($merge_select->get_rename_identifier())
 			{
 				$result_file->rename_run(null, $merge_select->get_rename_identifier());
 			}
@@ -794,6 +805,19 @@ class pts_result_file
 	public static function result_title_comparison($a, $b)
 	{
 		return strcmp(strtolower($a->test_profile->get_title()) . ' ' . $a->test_profile->get_app_version(), strtolower($b->test_profile->get_title()) . ' ' . $b->test_profile->get_app_version());
+	}
+	public function sort_result_object_order_by_result_scale($asc = true)
+	{
+		usort($this->result_objects, array('pts_result_file', 'result_scale_comparison'));
+
+		if($asc == false)
+		{
+			$this->result_objects = array_reverse($this->result_objects, true);
+		}
+	}
+	public static function result_scale_comparison($a, $b)
+	{
+		return strcmp($a->test_profile->get_result_proportion() . ' ' . strtolower($a->test_profile->get_result_scale()) . ' ' . $a->test_profile->get_identifier(), $b->test_profile->get_result_proportion() . ' ' . strtolower($b->test_profile->get_result_scale()) . ' ' . $a->test_profile->get_identifier());
 	}
 }
 
