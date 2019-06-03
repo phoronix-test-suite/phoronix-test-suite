@@ -203,7 +203,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 				else
 				{
 					$rf = new pts_result_file(VIEWER_RESULTS_DIRECTORY_PATH . '/' . $rid . '/composite.xml');
-					$result_file->merge(array(new pts_result_merge_select($rf)), 0, $rf->get_title());
+					$result_file->merge(array(new pts_result_merge_select($rf)), 0, $rf->get_title(), true);
 					$result_merges++;
 				}
 			}
@@ -222,9 +222,9 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		define('TITLE', $result_file->get_title());
 		$PAGE .= pts_result_viewer_settings::get_html_sort_bar($result_file, $_REQUEST);
 		$PAGE .= '<h1>' . $result_file->get_title() . '</h1>';
-		$PAGE .= '<p>' . $result_file->get_description() . '</p>';
+		$PAGE .= '<p>' . str_replace(PHP_EOL, '<br />', $result_file->get_description()) . '</p>';
 		//$PAGE .= '<p align="center"><strong>Export As: </strong> <a href="' . CURRENT_URI . '&export=pdf">PDF</a>, <a href="' . CURRENT_URI . '&export=csv">CSV</a>, <a href="' . CURRENT_URI . '&export=csv-all">CSV Individual Data</a> </p>';
-		$PAGE .= '<hr /><div class="sub">' . pts_result_viewer_settings::get_html_options_markup($result_file, $_REQUEST) . '</div><hr />';
+		$PAGE .= '<hr /><div style="font-size: 12pt;">' . pts_result_viewer_settings::get_html_options_markup($result_file, $_REQUEST) . '</div><hr />';
 		$PAGE .= pts_result_viewer_settings::process_helper_html($_REQUEST, $result_file, $extra_attributes);
 
 		$intent = -1;
@@ -249,7 +249,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			$table = new pts_ResultFileTable($result_file, $intent);
 			$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
 		}
-
+		$PAGE .= '<div id="results">';
 		foreach($result_file->get_result_objects() as $i => &$result_object)
 		{
 			$res = pts_render::render_graph_inline_embed($result_object, $result_file, $extra_attributes);
@@ -262,6 +262,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			$PAGE .= '</p>';
 			unset($result_object);
 		}
+		$PAGE .= '</div>';
 		break;
 	case 'index':
 	default:
@@ -558,6 +559,11 @@ div#footer, div#footer a
 	font-size: 12pt;
 }
 div#main_area svg
+{
+	min-width: 30%;
+	height: auto;
+}
+div#results svg
 {
 	min-width: 50%;
 	height: auto;

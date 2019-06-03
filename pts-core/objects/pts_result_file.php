@@ -688,7 +688,7 @@ class pts_result_file
 
 		return $to == null ? $xml_writer->getXML() : $xml_writer->saveXMLFile($to);
 	}
-	public function merge($result_merges_to_combine, $pass_attributes = 0, $add_prefix = null)
+	public function merge($result_merges_to_combine, $pass_attributes = 0, $add_prefix = null, $merge_meta = false)
 	{
 		if(!is_array($result_merges_to_combine) || empty($result_merges_to_combine))
 		{
@@ -744,6 +744,12 @@ class pts_result_file
 			}
 
 			$this->add_to_result_file($result_file);
+
+			if($merge_meta)
+			{
+				$this->set_title($this->get_title() . ', ' . $result_file->get_title());
+				$this->set_description($this->get_description() . PHP_EOL . PHP_EOL . $result_file->get_title() . ': ' . $result_file->get_description());
+			}
 			unset($result_file);
 		}
 	}

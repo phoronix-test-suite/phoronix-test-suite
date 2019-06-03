@@ -424,7 +424,7 @@ class pts_result_file_output
 			}
 
 			$hib = $ro->test_profile->get_result_proportion() == 'HIB';
-			$row[0] = '<span><strong>' . $ro->test_profile->get_title() . '</strong><br />' . $ro->get_arguments_description() . ' (' . $ro->test_profile->get_result_scale() . ' ' . ($hib ? '&uarr;' : '&darr;') . ' )</span>';
+			$row[0] = '<span><strong><a href="#r-' . $ro->get_comparison_hash(true, false) . '">' . $ro->test_profile->get_title() . '</a></strong><br />' . $ro->get_arguments_description() . ' (' . $ro->test_profile->get_result_scale() . ' ' . ($hib ? '&uarr;' : '&darr;') . ' )</span>';
 
 			$best = $ro->get_result_first(false);
 			$worst = $ro->get_result_last(false);
