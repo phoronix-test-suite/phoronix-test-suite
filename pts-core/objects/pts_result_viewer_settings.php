@@ -22,10 +22,9 @@
 
 class pts_result_viewer_settings
 {
-	public static function get_html_options_markup(&$result_file, &$request)
+	public static function get_html_sort_bar(&$result_file, &$request)
 	{
 		$analyze_options = null;
-
 		$drop_down_menus = array('Export Result Data' => array(
 						'export=pdf' => 'Result File To PDF',
 						'export=txt' => 'Result File To Text',
@@ -67,6 +66,11 @@ class pts_result_viewer_settings
 			$analyze_options .= '</ul></li>';
 		}
 		$analyze_options .= '</ul></div>';
+		return $analyze_options;
+	}
+	public static function get_html_options_markup(&$result_file, &$request)
+	{
+		$analyze_options = null;
 
 		if(count($result_file->get_system_identifiers()) > 1)
 		{
@@ -113,9 +117,6 @@ class pts_result_viewer_settings
 				);
 			$analyze_checkboxes['Statistics'][] = array('shm', 'Show Overall Harmonic Mean(s)');
 			$analyze_checkboxes['Statistics'][] = array('sgm', 'Show Overall Geometric Mean');
-			//$analyze_checkboxes['Sorting'][] = array('sor', 'Sort Results By Performance');
-			//$analyze_checkboxes['Sorting'][] = array('sro', 'Sort Results By Identifier');
-			//$analyze_checkboxes['Sorting'][] = array('rro', 'Reverse Result Order');
 			$analyze_checkboxes['Statistics'][] = array('nor', 'Normalize Results');
 			$analyze_checkboxes['Graph Settings'][] = array('ftr', 'Force Line Graphs (Where Applicable)');
 			$analyze_checkboxes['Graph Settings'][] = array('scalar', 'Convert To Scalar (Where Applicable)');

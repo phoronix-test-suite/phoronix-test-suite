@@ -344,7 +344,7 @@ class pts_result_file_output
 					$repeat_length = $longest_result - strlen($val);
 					$result_line .= ($repeat_length >= 0 ? str_repeat(' ', $repeat_length) : null)  . '|';
 					$current_line_length = strlen($result_line);
-					$result_line .= str_repeat('=', round(($val / $max_value) * ($terminal_width - $current_line_length)));
+					$result_line .= str_repeat('=', max(0, round(($val / $max_value) * ($terminal_width - $current_line_length))));
 				}
 
 				if($stylize_output && PTS_IS_CLIENT)

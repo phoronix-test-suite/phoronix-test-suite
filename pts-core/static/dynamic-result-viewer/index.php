@@ -187,6 +187,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		$result_file = null;
 		$result_merges = 0;
 		$possible_results = explode(',', $_GET['result']);
+
 		foreach($possible_results as $rid)
 		{
 			if(is_file(VIEWER_RESULTS_DIRECTORY_PATH . '/' . $rid . '/composite.xml'))
@@ -194,7 +195,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 				if($result_file == null)
 				{
 					$result_file = new pts_result_file(VIEWER_RESULTS_DIRECTORY_PATH . '/' . $rid . '/composite.xml');
-					if($possible_results > 1)
+					if(count($possible_results) > 1)
 					{
 						$result_file->rename_run('PREFIX', $result_file->get_title());
 					}
@@ -219,10 +220,11 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		$extra_attributes = null;
 		pts_result_viewer_settings::process_request_to_attributes($_REQUEST, $result_file, $extra_attributes);
 		define('TITLE', $result_file->get_title());
+		$PAGE .= pts_result_viewer_settings::get_html_sort_bar($result_file, $_REQUEST);
 		$PAGE .= '<h1>' . $result_file->get_title() . '</h1>';
 		$PAGE .= '<p>' . $result_file->get_description() . '</p>';
 		//$PAGE .= '<p align="center"><strong>Export As: </strong> <a href="' . CURRENT_URI . '&export=pdf">PDF</a>, <a href="' . CURRENT_URI . '&export=csv">CSV</a>, <a href="' . CURRENT_URI . '&export=csv-all">CSV Individual Data</a> </p>';
-		$PAGE .= '<hr /><p>' . pts_result_viewer_settings::get_html_options_markup($result_file, $_REQUEST) . '</p><hr />';
+		$PAGE .= '<hr /><div class="sub">' . pts_result_viewer_settings::get_html_options_markup($result_file, $_REQUEST) . '</div><hr />';
 		$PAGE .= pts_result_viewer_settings::process_helper_html($_REQUEST, $result_file, $extra_attributes);
 
 		$intent = -1;
@@ -234,6 +236,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		{
 			$table = new pts_ResultFileSystemsTable($result_file);
 		}
+
 
 		$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
 		if(!$result_file->is_multi_way_comparison())
