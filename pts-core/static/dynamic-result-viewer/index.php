@@ -267,12 +267,28 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 	case 'index':
 	default:
 		define('TITLE', 'Phoronix Test Suite ' . PTS_VERSION . ' Result Viewer');
-		$PAGE .= '<form name="search_results" id="search_results" action="' . CURRENT_URI . '" method="post"><input type="text" name="search" id="u_search" placeholder="Search Test Results" value="' . (isset($_POST['search']) ? $_POST['search'] : null) . '" /> <input type="submit" value="Search" />
+		$PAGE .= '<form name="search_results" id="search_results" action="' . CURRENT_URI . '" method="post"><input type="text" name="search" id="u_search" placeholder="Search Test Results" value="' . (isset($_POST['search']) ? $_POST['search'] : null) . '" /> <select name="sort_results_by"><option value="date">Date</option><option value="test_count">Test Count</option><option value="system_count">System Count</option></select> <input type="submit" value="Update" />
 </form>';
 		function sort_by_date($a, $b)
 		{
 			$a = strtotime($a->get_last_modified());
 			$b = strtotime($b->get_last_modified());
+			if($a == $b)
+				return 0;
+			return $a > $b ? -1 : 1;
+		}
+		function sort_by_test_count($a, $b)
+		{
+			$a = $a->get_test_count();
+			$b = $b->get_test_count();
+			if($a == $b)
+				return 0;
+			return $a > $b ? -1 : 1;
+		}
+		function sort_by_system_count($a, $b)
+		{
+			$a = $a->get_system_count();
+			$b = $b->get_system_count();
 			if($a == $b)
 				return 0;
 			return $a > $b ? -1 : 1;
@@ -294,7 +310,19 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 
 			$results[$id] = $rf;
 		}
-		uasort($results, 'sort_by_date');
+		switch((isset($_REQUEST['sort_results_by']) ? $_REQUEST['sort_results_by'] : 'date'))
+		{
+			case 'test_count':
+				uasort($results, 'sort_by_test_count');
+				break;
+			case 'system_count':
+				uasort($results, 'sort_by_system_count');
+				break;
+			case 'date':
+			default:
+				uasort($results, 'sort_by_date');
+				break;
+		}
 
 		$total_result_points = 0;
 		foreach($results as $id => $result_file)
@@ -309,7 +337,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		{
 			$i++;
 			$PAGE .= '<h2><a href="' . WEB_URL_PATH . 'result/' . $id . '">' . $result_file->get_title() . '</a></h2>';
-			$PAGE .= '<div class="sub"><input type="checkbox" name="checkbox_compare_results[]" value="' . $id . '" id="cr_checkbox_' . $i . '" /> <label for="cr_checkbox_' . $i . '"><span onclick="javascript:document.getElementById(\'compare_results_id\').submit(); return false;">Compare Results</span></label> ' . $result_file->get_test_count() . ' Tests &nbsp; &nbsp; ' . $result_file->get_system_count() . ' Systems &nbsp; &nbsp; ' . date('j F H:i', strtotime($result_file->get_last_modified())) . '</div>';
+			$PAGE .= '<div class="sub"><input type="checkbox" name="checkbox_compare_results[]" value="' . $id . '" id="cr_checkbox_' . $i . '" /> <label for="cr_checkbox_' . $i . '"><span onclick="javascript:document.getElementById(\'compare_results_id\').submit(); return false;">Compare Results</span></label> ' . $result_file->get_test_count() . ' Tests &nbsp; &nbsp; ' . $result_file->get_system_count() . ' Systems &nbsp; &nbsp; ' . date('l j F H:i', strtotime($result_file->get_last_modified())) . '</div>';
 			$PAGE .= '<div class="desc">' . $result_file->get_description() . '</div>';
 
 			$geometric_mean = pts_result_file_analyzer::generate_geometric_mean_result($result_file);
@@ -429,7 +457,7 @@ div#main_area h2
 	padding: 0;
 	margin: 2px 0;
 }
-div#main_area input, div#main_area textarea
+div#main_area input, div#main_area textarea, div#main_area select
 {
 	margin: 10px 0;
 	background: #ddd;
@@ -439,7 +467,7 @@ div#main_area input, div#main_area textarea
 	padding: 5px 10px;
 	font-weight: 600;
 }
-div#main_area input::placeholder, div#main_area textarea::placeholder
+div#main_area input::placeholder, div#main_area textarea::placeholder, div#main_area select::placeholder
 {
 	color: #000;
 	opacity: 0.7;
@@ -473,7 +501,7 @@ div#main_area ul li
 	position: relative;
 	float: left;
 	margin: 0;
-	padding: 0
+	padding: 0;
 }
 div#main_area ul li:hover
 {
