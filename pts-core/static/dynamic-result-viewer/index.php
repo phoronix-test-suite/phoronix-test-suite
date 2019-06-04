@@ -267,7 +267,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 	case 'index':
 	default:
 		define('TITLE', 'Phoronix Test Suite ' . PTS_VERSION . ' Result Viewer');
-		$PAGE .= '<form name="search_results" id="search_results" action="' . CURRENT_URI . '" method="post"><input type="text" name="search" id="u_search" placeholder="Search Test Results" value="' . (isset($_POST['search']) ? $_POST['search'] : null) . '" /> <select name="sort_results_by"><option value="date">Date</option><option value="test_count">Test Count</option><option value="system_count">System Count</option></select> <input type="submit" value="Update" />
+		$PAGE .= '<form name="search_results" id="search_results" action="' . CURRENT_URI . '" method="post"><input type="text" name="search" id="u_search" placeholder="Search Test Results" value="' . (isset($_POST['search']) ? $_POST['search'] : null) . '" /> <select name="sort_results_by"><option value="date">Date</option><option value="test_count">Test Count</option><option value="system_count">System Count</option></select> <input class="primary-button" type="submit" value="Update" />
 </form>';
 		function sort_by_date($a, $b)
 		{
@@ -480,11 +480,10 @@ div#main_area ul
 	float: left;
 	margin: 0;
 	padding: 0;
-	border: 1px solid #eee;
 }
 div#main_area ul:hover a
 {
-	color: #000
+	color: #000;
 }
 div#main_area ul a
 {
@@ -502,11 +501,20 @@ div#main_area ul li
 	float: left;
 	margin: 0;
 	padding: 0;
+	border-right: 1px solid #aaa;
+}
+div#main_area ul li:last-of-type{
+	border-right:none;
 }
 div#main_area ul li:hover
 {
-	background: #eee
+	background: #eee;
+
 }
+div#main_area ul ul a:hover, div#main_area ul li a:hover{
+	color:#03b450;
+}
+
 div#main_area ul ul a
 {
 	padding: 0 8px;
@@ -539,7 +547,7 @@ div#main_area div.sub
 	padding: 0;
 	font-size: 10pt;
 	text-transform: uppercase;
-	color: #AAA;
+	color: #ef5e09;
 }
 div#main_area div.desc
 {
@@ -613,8 +621,15 @@ input#compare_results_submit
 input[type="checkbox"] + label
 {
 	display: none;
-	background: #098BEF;
+	background: #03b450;
 	color: #FFF;
+	padding: 4px;
+	border: 1px solid #000;
+	font-weight: 10pt;
+}
+input[type="submit"], .primay-button{
+	background: #03b450 !important;
+	color: #FFF !important;
 	padding: 4px;
 	border: 1px solid #000;
 	font-weight: 10pt;
@@ -646,4 +661,3 @@ input[type="checkbox"]:checked + label
 session_write_close();
 ?>
 </html>
-
