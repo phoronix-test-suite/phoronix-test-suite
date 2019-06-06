@@ -41,6 +41,11 @@ class microsoft_dependency_handler implements pts_dependency_handler
 			chdir($cwd);
 		}
 
+		if(!is_file(self::file_download_location() . 'mdstool-cli-20190519.exe')))
+		{
+			pts_network::download_file('http://www.phoronix-test-suite.com/benchmark-files/mdstool-cli-20190519.exe', self::file_download_location() . 'mdstool-cli.exe');
+		}
+
 		if(is_file('C:\cygwin64\etc\fstab') && stripos(file_get_contents('C:\cygwin64\etc\fstab'), 'noacl') === false)
 		{
 			// noacl is needed to not mess with file permissions

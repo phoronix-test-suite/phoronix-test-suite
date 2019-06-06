@@ -601,6 +601,21 @@ class phodevi_system extends phodevi_device_interface
 				$security[] = 'Meltdown Mitigation';
 			}
 		}
+		else if(phodevi::is_windows())
+		{
+			$mds_tool = getenv('USERPROFILE') . '\Downloads\mdstool-cli.exe';
+			if(is_file($mds_tool))
+			{
+				$mds_output = preg_replace('#\\x1b[[][^A-Za-z]*[A-Za-z]#', '', shell_exec($mds_tool));
+				foreach(array('__user pointer sanitization: Disabled', 'Retpoline: Full', 'IBPB: Always', 'IBRS: Enabled', 'STIBP: Enabled', 'KPTI Enabled: Yes', 'PTE Inversion: Yes') as $check)
+				{
+					if(stripos($mds_output, $check) !== false)
+					{
+						$security[] = $check;
+					}
+				}
+			}
+		}
 
 		return !empty($security) ? implode(' + ',  $security) : null;
 	}

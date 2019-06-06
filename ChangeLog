@@ -11,6 +11,7 @@ Phoronix Test Suite 8.8.1-Hvaler
 pts-core: Various minor tweaks/fixes
 phodevi: Fix Linux CPU thread detection in some scenarios where inner-cores may be offlined
 phodevi: More robust CPU vulnerability reporting
+phodevi: Add initial reporting for Windows vulnerabilities via mdstool-cli
 
 Phoronix Test Suite 8.8.0-Hvaler
 13 May 2019
