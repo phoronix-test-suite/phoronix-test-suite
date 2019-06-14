@@ -464,16 +464,18 @@ class pts_test_result_parser
 			}
 			$is_pass_fail_test = in_array($tr->test_profile->get_display_format(), array('PASS_FAIL', 'MULTI_PASS_FAIL'));
 			$is_numeric_check = !$is_pass_fail_test;
-			$test_result = self::parse_result_process_entry($tr, $log_file, $pts_test_arguments, $extra_arguments, $prefix, $entry, $is_pass_fail_test, $is_numeric_check, $all_parser_entries);
+			$min_test_result = false;
+			$max_test_result = false;
+			$test_result = self::parse_result_process_entry($tr, $log_file, $pts_test_arguments, $extra_arguments, $prefix, $entry, $is_pass_fail_test, $is_numeric_check, $all_parser_entries, $min_test_result, $max_test_result);
 			if($test_result != false)
 			{
 				// Result found
 				if($is_numeric_check)
 				{
 					// Check if this test reports a min result value
-					$min_result = self::parse_result_process_entry($tr, $log_file, $pts_test_arguments, $extra_arguments, 'MIN_', $entry, $is_pass_fail_test, $is_numeric_check, $all_parser_entries);
+					$min_result = $min_test_result !== false && is_numeric($min_test_result) ? $min_test_result : self::parse_result_process_entry($tr, $log_file, $pts_test_arguments, $extra_arguments, 'MIN_', $entry, $is_pass_fail_test, $is_numeric_check, $all_parser_entries);
 					// Check if this test reports a max result value
-					$max_result = self::parse_result_process_entry($tr, $log_file, $pts_test_arguments, $extra_arguments, 'MAX_', $entry, $is_pass_fail_test, $is_numeric_check, $all_parser_entries);
+					$max_result = $max_test_result !== false && is_numeric($max_test_result) ? $max_test_result : self::parse_result_process_entry($tr, $log_file, $pts_test_arguments, $extra_arguments, 'MAX_', $entry, $is_pass_fail_test, $is_numeric_check, $all_parser_entries);
 				}
 				self::gen_result_active_handle($test_run_request, $tr)->add_trial_run_result($test_result, $min_result, $max_result);
 				$produced_result = true;
@@ -482,7 +484,7 @@ class pts_test_result_parser
 
 		return $produced_result;
 	}
-	protected static function parse_result_process_entry(&$test_run_request, $log_file, $pts_test_arguments, $extra_arguments, $prefix, &$e, $is_pass_fail_test, $is_numeric_check, &$all_parser_entries)
+	protected static function parse_result_process_entry(&$test_run_request, $log_file, $pts_test_arguments, $extra_arguments, $prefix, &$e, $is_pass_fail_test, $is_numeric_check, &$all_parser_entries, &$min_test_result = false, &$max_test_result = false)
 	{
 		$test_result = false;
 		$match_test_arguments = $e->get_match_to_test_args();
@@ -826,19 +828,36 @@ class pts_test_result_parser
 				if($is_numeric_check)
 				{
 					$test_result = pts_math::geometric_mean($test_results);
+					if(count($test_results) > 1)
+					{
+						$min_test_result = min($test_results);
+						$max_test_result = max($test_results);
+					}
 					break;
 				}
 			case 'HARMONIC_MEAN':
 				if($is_numeric_check)
 				{
 					$test_result = pts_math::harmonic_mean($test_results);
+					if(count($test_results) > 1)
+					{
+						$min_test_result = min($test_results);
+						$max_test_result = max($test_results);
+					}
 					break;
 				}
 			case 'AVERAGE':
 			case 'MEAN':
 			default:
 				if($is_numeric_check)
+				{
 					$test_result = pts_math::arithmetic_mean($test_results);
+					if(count($test_results) > 1)
+					{
+						$min_test_result = min($test_results);
+						$max_test_result = max($test_results);
+					}
+				}
 				break;
 		}
 
