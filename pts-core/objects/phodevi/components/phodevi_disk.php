@@ -265,7 +265,7 @@ class phodevi_disk extends phodevi_device_interface
 			for($i = 0; $i < count($models) && $i < count($size); $i++)
 			{
 				$s = $size[$i] / 1073741824;
-				$models[$i] = round($s) . 'GB ' . $models[$i];
+				$models[$i] = round($s) . 'GB ' . str_replace(array(' Device'), null, $models[$i]);
 			}
 			$disks = $models;
 		}
