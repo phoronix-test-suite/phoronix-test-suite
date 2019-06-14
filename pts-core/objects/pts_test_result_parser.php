@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2018, Phoronix Media
-	Copyright (C) 2010 - 2018, Michael Larabel
+	Copyright (C) 2010 - 2019, Phoronix Media
+	Copyright (C) 2010 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -822,10 +822,23 @@ class pts_test_result_parser
 			case 'REPORT_ALL':
 				$test_result = implode(',', $test_results);
 				break;
-			case 'AVERAGE':
-				default:
+			case 'GEOMETRIC_MEAN':
 				if($is_numeric_check)
-					$test_result = array_sum($test_results) / count($test_results);
+				{
+					$test_result = pts_math::geometric_mean($test_results);
+					break;
+				}
+			case 'HARMONIC_MEAN':
+				if($is_numeric_check)
+				{
+					$test_result = pts_math::harmonic_mean($test_results);
+					break;
+				}
+			case 'AVERAGE':
+			case 'MEAN':
+			default:
+				if($is_numeric_check)
+					$test_result = pts_math::arithmetic_mean($test_results);
 				break;
 		}
 

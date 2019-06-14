@@ -137,7 +137,7 @@
 						<set></set>
 						<default></default>
 					</xs:appinfo>
-					<xs:documentation>If MultiMatch is set to MULTI, the test parser will attempt to find multiple test result matches within the single log file.</xs:documentation>
+					<xs:documentation>If MultiMatch is set to a non-null value, the test parser will attempt to find multiple test result matches within the single log file. If the value is AVERAGE, the average of all matched values will be used as the test result. Also supported are GEOMETRIC_MEAN and HARMONIC_MEAN and REPORT_ALL.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="DivideResultBy" type="PositiveInteger" minOccurs="0" maxOccurs="1">
