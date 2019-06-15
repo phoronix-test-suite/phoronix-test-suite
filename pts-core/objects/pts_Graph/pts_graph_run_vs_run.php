@@ -68,7 +68,7 @@ class pts_graph_run_vs_run extends pts_graph_core
 			}
 
 			$relative_win = $r->get_result_first(false);
-			if($relative_win < 1.01)
+			if($relative_win < 1.02)
 			{
 				continue;
 			}
@@ -116,7 +116,7 @@ class pts_graph_run_vs_run extends pts_graph_core
 
 		$plotting_width = $this->i['graph_left_end'] - $this->i['left_start'];
 		$center_point = $this->i['left_start'] + round($plotting_width / 2);
-		$scale = round($plotting_width / 2) / ($this->i['graph_max_value'] - 1.0 + 0.1);
+		$scale = round($plotting_width / 2) / ($this->i['graph_max_value'] - 1.0 + 0.25);
 		// Do the actual work
 		$this->render_graph_init();
 		$this->graph_key_height();
@@ -165,7 +165,7 @@ class pts_graph_run_vs_run extends pts_graph_core
 
 		for($i = 0; $i < $this->i['graph_max_value'] - 1.0; $i += round(($this->i['graph_max_value'] - 1.0) / 4, 3))
 		{
-			$val = $i == 0 ? 'Same' : '+' . round($i * 100, 1) . '%';
+			$val = $i == 0 ? 'Baseline' : '+' . round($i * 100, 1) . '%';
 			$this->svg_dom->draw_svg_line($center_point + ($i * $scale), $this->i['graph_top_end'] - 6, $center_point + ($i * $scale), $this->i['graph_top_end'], self::$c['color']['notches'], 1);
 			$this->svg_dom->add_text_element($val, array('x' => $center_point + ($i * $scale), 'y' => $this->i['graph_top_end'] + 2, 'text-anchor' => 'middle', 'font-weight' => 'bold', 'dominant-baseline' => 'hanging'), $g_txt_common);
 
