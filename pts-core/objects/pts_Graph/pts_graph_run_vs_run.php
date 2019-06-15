@@ -78,7 +78,7 @@ class pts_graph_run_vs_run extends pts_graph_core
 			$this->result_objects[] = array('winner' => $r->get_result_first(true), 'relative' => $relative_win, 'ro' => $r);
 			$longest_header = max($longest_header, strlen($r->test_profile->get_title()), strlen($r->get_arguments_description_shortened()));
 		}
-echo 'MAX ' . $this->i['graph_max_value'];
+
 		if(count($this->result_objects) < 3)
 		{
 			// No point in generating this if there aren't many valid tests
@@ -152,7 +152,6 @@ echo 'MAX ' . $this->i['graph_max_value'];
 			{
 				$this->svg_dom->add_text_element(round(($r['relative'] - 1) * 100, 1) . '%', array('x' => ($center_point + $box_width + 4), 'y' => $vertical_offset + self::$c['size']['tick_mark'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle'), $g_txt_common);
 			}
-
 
 			$i += 2;
 		}
