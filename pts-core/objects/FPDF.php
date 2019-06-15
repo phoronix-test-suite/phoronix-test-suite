@@ -1920,7 +1920,7 @@ function _enddoc()
 	$this->state = 3;
 }
 // Multi-Cell Table: http://www.fpdf.org/en/script/script3.php
-function Row($data, $widths, &$row_num = -1)
+function Row($data, $widths, &$row_num = -1, $hints = null)
 {
 	//Calculate the height of the row
 	$nb = 0;
@@ -1936,6 +1936,8 @@ function Row($data, $widths, &$row_num = -1)
 	//Draw the cells of the row
 	if($row_num === 0)
 	{
+		$this->SetTextColor(255, 255, 255);
+		$this->SetFillColor(0, 0, 0);
 		$this->SetFont('', 'B', 0);
 	}
 	for($i=0;$i<count($data);$i++)
@@ -1958,13 +1960,31 @@ function Row($data, $widths, &$row_num = -1)
 		$x=$this->GetX();
 		$y=$this->GetY();
 		//Draw the border
-		if($toggle_bg)
+		$did_reset_colors = false;
+		if($row_num !== 0)
 		{
-			$this->SetFillColor(212, 212, 212);
-		}
-		else
-		{
-			$this->SetFillColor(255, 255, 255);
+			if($toggle_bg)
+			{
+				$this->SetFillColor(212, 212, 212);
+			}
+			else
+			{
+				$this->SetFillColor(255, 255, 255);
+			}
+			if(isset($hints[$i]))
+			{
+				switch($hints[$i])
+				{
+					case 'green':
+						$this->SetTextColor(0, 128, 0);
+						$did_reset_colors = true;
+						break;
+					case 'red':
+						$this->SetTextColor(128, 0, 0);
+						$did_reset_colors = true;
+						break;
+				}
+			}
 		}
 		$this->Rect($x,$y,$w,$h, 'F');
 		//Print the text
@@ -1972,8 +1992,10 @@ function Row($data, $widths, &$row_num = -1)
 		//Put the position to the right of the cell
 		$this->SetXY($x+$w,$y);
 	}
-	if($row_num === 0)
+	if($row_num === 0 || $did_reset_colors)
 	{
+		$this->SetTextColor(0, 0, 0);
+		$this->SetFillColor(255, 255, 255);
 		$this->SetFont('', '', 0);
 	}
 	$toggle_bg = !$toggle_bg;

@@ -295,10 +295,12 @@ class pts_pdf_template extends FPDF
 	{
 		$this->SetFont('Arial', '', 7);
 		$this->MultiCell(0, 3, $Text);
+		$this->SetFont('Arial', '', 10);
 		//$this->Ln();
 	}
-	public function ResultTable($headers, $data)
+	public function ResultTable($headers, $data, $hints = null)
 	{
+		$this->SetFont('Arial', '', 9);
 		$this->Ln(20);
 		//$this->SetFillColor(0, 0, 0);
 		$this->SetTextColor(0, 0, 0);
@@ -327,7 +329,7 @@ class pts_pdf_template extends FPDF
 		$fill = false;
 		for($i = 0; $i < count($data); $i++)
 		{
-			$this->Row($data[$i], $cell_widths, $row_num);
+			$this->Row($data[$i], $cell_widths, $row_num, (isset($hints[$i]) ? $hints[$i] : null));
 		}
 		//$this->Cell($table_width + (count($data[0]) * $cell_width), 0, '', 'T');
 	}

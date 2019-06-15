@@ -567,6 +567,7 @@ class pts_result_file_output
 		$columns = $result_file->get_system_identifiers();
 		array_unshift($columns, ' ');
 		$table_data = array();
+		$table_data_hints = array();
 		$row = 0;
 		foreach($result_file->get_result_objects() as $ro)
 		{
@@ -580,6 +581,14 @@ class pts_result_file_output
 			{
 				$table_data[$row][$i] = ' ';
 			}
+
+			$best = $ro->get_result_first(false);
+			$worst = $ro->get_result_last(false);
+			if($best == $worst)
+			{
+				$best = -1;
+				$worst = -1;
+			}
 			foreach($ro->test_result_buffer->get_buffer_items() as $index => $buffer_item)
 			{
 				$identifier = $buffer_item->get_result_identifier();
@@ -588,11 +597,20 @@ class pts_result_file_output
 				if(($x = array_search($identifier, $columns)) !== false)
 				{
 					$table_data[$row][$x] = $value;
+					switch($value)
+					{
+						case $best:
+							$table_data_hints[$row][$x] = 'green';
+							break;
+						case $worst:
+							$table_data_hints[$row][$x] = 'red';
+							break;
+					}
 				}
 			}
 			$row++;
 		}
-		$pdf->ResultTable($columns, $table_data);
+		$pdf->ResultTable($columns, $table_data, $table_data_hints);
 
 		$pdf->AddPage();
 		$placement = 1;
