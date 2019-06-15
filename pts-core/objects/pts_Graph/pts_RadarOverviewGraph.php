@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2016, Phoronix Media
-	Copyright (C) 2010 - 2016, Michael Larabel
+	Copyright (C) 2010 - 2019, Phoronix Media
+	Copyright (C) 2010 - 2019, Michael Larabel
 	pts_RadarOverviewGraph.php: New display type being derived from pts_OverviewGraph... WIP
 
 	This program is free software; you can redistribute it and/or modify
@@ -23,7 +23,6 @@
 
 class pts_RadarOverviewGraph extends pts_graph_core
 {
-	public $skip_graph = false;
 	private $result_objects = array();
 	private $result_file = null;
 
@@ -51,7 +50,6 @@ class pts_RadarOverviewGraph extends pts_graph_core
 			// Multi way comparisons currently render the overview graph as blank
 			// If there aren't more than 3 tests then don't render
 			// If there aren't 3 or more systems then don't render
-			$this->skip_graph = true;
 			return;
 		}
 
@@ -83,7 +81,6 @@ class pts_RadarOverviewGraph extends pts_graph_core
 		if(count($this->result_objects) < 3)
 		{
 			// No point in generating this if there aren't many valid tests
-			$this->skip_graph = true;
 			return;
 		}
 
@@ -97,10 +94,6 @@ class pts_RadarOverviewGraph extends pts_graph_core
 
 		return true;
 	}
-	public function doSkipGraph()
-	{
-		return $this->skip_graph;
-	}
 	protected function render_graph_heading($with_version = true)
 	{
 		$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->i['graph_width'], 'height' => $this->i['top_heading_height'], 'fill' => self::$c['color']['main_headers']));
@@ -110,6 +103,10 @@ class pts_RadarOverviewGraph extends pts_graph_core
 	}
 	public function renderGraph()
 	{
+		if($this->result_file == null)
+		{
+			return false;
+		}
 		$this->i['top_heading_height'] = max(self::$c['size']['headers'] + 22 + self::$c['size']['key'], 48);
 		$this->i['top_start'] = $this->i['top_heading_height'] + 50;
 		$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'] + $this->i['top_start'], true);
@@ -243,6 +240,8 @@ class pts_RadarOverviewGraph extends pts_graph_core
 			$this->svg_dom->add_text_element(implode('; ', $line), array('x' => ($this->i['graph_left_end'] - 4), 'y' => ($this->i['graph_top_end'] - ($i * self::$c['size']['key'])), 'font-size' => self::$c['size']['key'], 'fill' => $this->get_paint_color($key), 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
 			$i++;
 		}
+
+		return true;
 	}
 }
 

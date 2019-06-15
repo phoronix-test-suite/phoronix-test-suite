@@ -289,7 +289,7 @@
 		</Package>
 		<Package>
 			<GenericName>python-sklearn</GenericName>
-			<PackageName>python2-scikit-learn</PackageName>
+			<PackageName>python-scikit-learn</PackageName>
 		</Package>
 		<Package>
 			<GenericName>V8</GenericName>

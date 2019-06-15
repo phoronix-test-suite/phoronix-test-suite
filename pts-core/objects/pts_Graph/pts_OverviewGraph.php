@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2018, Phoronix Media
-	Copyright (C) 2010 - 2018, Michael Larabel
+	Copyright (C) 2010 - 2019, Phoronix Media
+	Copyright (C) 2010 - 2019, Michael Larabel
 	pts_OverviewGraph.php: A graping object to create an "overview" / mini graphs of a pts_result_file for pts_Graph
 
 	This program is free software; you can redistribute it and/or modify
@@ -23,7 +23,7 @@
 
 class pts_OverviewGraph extends pts_graph_core
 {
-	protected $result_file;
+	protected $result_file = null;
 
 	protected $system_identifiers;
 	protected $test_titles;
@@ -32,8 +32,6 @@ class pts_OverviewGraph extends pts_graph_core
 
 	protected $graph_row_height = 120;
 	protected $graph_row_count;
-
-	public $skip_graph = false;
 
 	public function __construct($result_file)
 	{
@@ -44,7 +42,6 @@ class pts_OverviewGraph extends pts_graph_core
 		if($result_file->is_multi_way_comparison())
 		{
 			// Multi way comparisons currently render the overview graph as blank
-			$this->skip_graph = true;
 			return;
 		}
 
@@ -52,7 +49,6 @@ class pts_OverviewGraph extends pts_graph_core
 		if(count($this->system_identifiers) < 2)
 		{
 			// No point in generating this when there is only one identifier
-			$this->skip_graph = true;
 			return;
 		}
 
@@ -73,7 +69,6 @@ class pts_OverviewGraph extends pts_graph_core
 		if($result_object_count < 3)
 		{
 			// No point in generating this if there aren't many tests
-			$this->skip_graph = true;
 			return;
 		}
 		$result_file->override_result_objects($result_objects);
@@ -102,12 +97,12 @@ class pts_OverviewGraph extends pts_graph_core
 
 		return true;
 	}
-	public function doSkipGraph()
-	{
-		return $this->skip_graph;
-	}
 	public function renderGraph()
 	{
+		if($this->result_file == null)
+		{
+			return false;
+		}
 		$this->graph_data_title = &$this->system_identifiers;
 		$this->i['graph_max_value'] = 1.0;
 		$l_height = 15;
@@ -205,6 +200,8 @@ class pts_OverviewGraph extends pts_graph_core
 		//$this->render_graph_base($this->i['left_start'], $this->i['top_start'], $this->i['graph_left_end'], $this->i['graph_top_end']);
 		$this->render_graph_heading();
 		//$this->render_graph_watermark();
+
+		return true;
 	}
 }
 

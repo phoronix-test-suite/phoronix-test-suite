@@ -22,7 +22,6 @@
 
 class pts_graph_run_vs_run extends pts_graph_core
 {
-	public $skip_graph = false;
 	private $result_objects = array();
 	private $system_left = null;
 	private $system_right = null;
@@ -39,7 +38,6 @@ class pts_graph_run_vs_run extends pts_graph_core
 		$rf = clone $result_file;
 		if($rf->get_system_count() != 2)
 		{
-			$this->skip_graph = true;
 			return false;
 		}
 
@@ -82,7 +80,6 @@ class pts_graph_run_vs_run extends pts_graph_core
 		if(count($this->result_objects) < 3)
 		{
 			// No point in generating this if there aren't many valid tests
-			$this->skip_graph = true;
 			return false;
 		}
 
@@ -101,10 +98,6 @@ class pts_graph_run_vs_run extends pts_graph_core
 
 		return true;
 	}
-	public function doSkipGraph()
-	{
-		return $this->skip_graph;
-	}
 	protected function render_graph_heading($with_version = true)
 	{
 		$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->i['graph_width'], 'height' => $this->i['top_heading_height'], 'fill' => self::$c['color']['main_headers']));
@@ -114,6 +107,11 @@ class pts_graph_run_vs_run extends pts_graph_core
 	}
 	public function renderGraph()
 	{
+		if(count($this->result_objects) < 3)
+		{
+			// No point in generating this if there aren't many valid tests
+			return false;
+		}
 		//$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'] + $this->i['top_start'], true);
 
 		$plotting_width = $this->i['graph_left_end'] - $this->i['left_start'];
@@ -178,8 +176,7 @@ class pts_graph_run_vs_run extends pts_graph_core
 			}
 		}
 
-
-return;
+		return true;
 	}
 }
 
