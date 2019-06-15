@@ -497,7 +497,7 @@ function AddFont($family, $style='', $file='')
 	$this->fonts[$fontkey] = $info;
 }
 
-function SetFont($family, $style='', $size=0)
+function SetFont($family = '', $style='', $size=0)
 {
 	// Select a font; size given in points
 	if($family=='')
@@ -1920,7 +1920,7 @@ function _enddoc()
 	$this->state = 3;
 }
 // Multi-Cell Table: http://www.fpdf.org/en/script/script3.php
-function Row($data, $widths)
+function Row($data, $widths, &$row_num = -1)
 {
 	//Calculate the height of the row
 	$nb = 0;
@@ -1931,23 +1931,55 @@ function Row($data, $widths)
 	$h=5*$nb;
 	//Issue a page break first if needed
 		$this->CheckPageBreak($h);
-//Draw the cells of the row
+
+	static $toggle_bg = true;
+	//Draw the cells of the row
+	if($row_num === 0)
+	{
+		$this->SetFont('', 'B', 0);
+	}
 	for($i=0;$i<count($data);$i++)
 	{
 		$w=$widths[$i];
-		$a= $i == 0 ? 'R' : 'L';
+		if($i == 0)
+		{
+			$this->SetFont('', 'B', 0);
+			$a = 'R';
+		}
+		else
+		{
+			if($i == 1 && $row_num !== 0)
+			{
+				$this->SetFont('', '', 0);
+			}
+			$a = 'L';
+		}
 		//Save the current position
 		$x=$this->GetX();
 		$y=$this->GetY();
 		//Draw the border
-		$this->Rect($x,$y,$w,$h);
+		if($toggle_bg)
+		{
+			$this->SetFillColor(212, 212, 212);
+		}
+		else
+		{
+			$this->SetFillColor(255, 255, 255);
+		}
+		$this->Rect($x,$y,$w,$h, 'F');
 		//Print the text
 		$this->MultiCell($w,5,$data[$i],0,$a);
 		//Put the position to the right of the cell
 		$this->SetXY($x+$w,$y);
 	}
+	if($row_num === 0)
+	{
+		$this->SetFont('', '', 0);
+	}
+	$toggle_bg = !$toggle_bg;
 	//Go to the next line
 	$this->Ln($h);
+	$row_num++;
 }
 function CheckPageBreak($h)
 {

@@ -317,7 +317,8 @@ class pts_pdf_template extends FPDF
 			array_push($cell_widths, $cell_width);
 			//$this->Cell($cell_width, 2, $headers[$i], 1, 0, 'D', true);
 		}
-		$this->Row($headers, $cell_widths);
+		$row_num = 0;
+		$this->Row($headers, $cell_widths, $row_num);
 
 		//$this->SetFillColor(139, 143, 124);
 		//$this->SetTextColor(0);
@@ -326,7 +327,7 @@ class pts_pdf_template extends FPDF
 		$fill = false;
 		for($i = 0; $i < count($data); $i++)
 		{
-			$this->Row($data[$i], $cell_widths);
+			$this->Row($data[$i], $cell_widths, $row_num);
 		}
 		//$this->Cell($table_width + (count($data[0]) * $cell_width), 0, '', 'T');
 	}
