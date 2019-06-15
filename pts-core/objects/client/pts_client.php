@@ -1223,7 +1223,14 @@ class pts_client
 			}
 			unset($graph);
 
-			$graph = new pts_RadarOverviewGraph($result_file);
+			if($result_file->get_system_count() == 2)
+			{
+				$graph = new pts_graph_run_vs_run($result_file);
+			}
+			else
+			{
+				$graph = new pts_RadarOverviewGraph($result_file);
+			}
 
 			if($graph->doSkipGraph() == false)
 			{

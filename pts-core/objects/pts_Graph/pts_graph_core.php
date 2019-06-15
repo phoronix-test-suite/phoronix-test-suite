@@ -353,10 +353,10 @@ abstract class pts_graph_core
 	// Misc Functions
 	//
 
-	protected function get_paint_color($identifier)
+	protected function get_paint_color($identifier, $check_branding = false)
 	{
 		// For now to try to improve the color handling of line graphs, first try to use a pre-defined pool of colors until falling back to the old color code once exhausted
-		if(!isset(self::$color_cache[$identifier]))
+		if(!isset(self::$color_cache[$identifier]) || $check_branding)
 		{
 			if(!empty(self::$c['color']['paint']))
 			{
@@ -365,6 +365,11 @@ abstract class pts_graph_core
 			else
 			{
 				self::$color_cache[$identifier] = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+			}
+
+			if($check_branding)
+			{
+				self::$color_cache[$identifier] = self::identifier_to_branded_color($identifier, self::$color_cache[$identifier]);
 			}
 		}
 
