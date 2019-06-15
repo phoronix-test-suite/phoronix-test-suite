@@ -1922,13 +1922,14 @@ function _enddoc()
 // Multi-Cell Table: http://www.fpdf.org/en/script/script3.php
 function Row($data, $widths, &$row_num = -1, $hints = null)
 {
+	$this->SetFont('', '', $hints[0] == 'small' ? 7 : 9);
 	//Calculate the height of the row
 	$nb = 0;
 	for($i=0;$i<count($data);$i++)
 	{
 		$nb=max($nb,$this->NbLines($widths[$i],$data[$i]));
 	}
-	$h=5*$nb;
+	$h=($hints[0] == 'small' ? 4 : 5)*$nb;
 	//Issue a page break first if needed
 		$this->CheckPageBreak($h);
 
@@ -1940,6 +1941,7 @@ function Row($data, $widths, &$row_num = -1, $hints = null)
 		$this->SetFillColor(0, 0, 0);
 		$this->SetFont('', 'B', 0);
 	}
+
 	for($i=0;$i<count($data);$i++)
 	{
 		$w=$widths[$i];
@@ -1963,7 +1965,7 @@ function Row($data, $widths, &$row_num = -1, $hints = null)
 		$did_reset_colors = false;
 		if($row_num !== 0)
 		{
-			if($toggle_bg)
+			if($toggle_bg && $hints[$i] != 'small')
 			{
 				$this->SetFillColor(212, 212, 212);
 			}
@@ -2000,7 +2002,8 @@ function Row($data, $widths, &$row_num = -1, $hints = null)
 		$this->SetFillColor(255, 255, 255);
 		$this->SetFont('', '', 0);
 	}
-	$toggle_bg = !$toggle_bg;
+
+	$toggle_bg = $hints[$i] != 'small' || !$toggle_bg;
 	//Go to the next line
 	$this->Ln($h);
 	$row_num++;
@@ -2008,7 +2011,7 @@ function Row($data, $widths, &$row_num = -1, $hints = null)
 function CheckPageBreak($h)
 {
 	//If the height h would cause an overflow, add a new page immediately
-	if($this->GetY()+$h>$this->PageBreakTrigger)
+	if($this->GetY()+$h>$this->PageBreakTrigger - $h)
 		$this->AddPage($this->CurOrientation);
 }
 function NbLines($w,$txt)

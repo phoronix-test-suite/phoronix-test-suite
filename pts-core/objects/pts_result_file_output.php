@@ -459,14 +459,13 @@ class pts_result_file_output
 						$style = null;
 					}
 
-					$normalized = $hib ? ($value / $normalize_against) : ($normalize_against / $value);
 					if($value > 1000)
 					{
 						$value = round($value);
 					}
 
 					$row[$x] = '<strong' . $style. '>' . $value . '</strong>';
-					$nor[$x] = round($normalized * 100, 2) . '%';
+					$nor[$x] = round(($hib ? ($value / $normalize_against) : ($normalize_against / $value)) * 100, 2) . '%';
 					$samples[$x] = $buffer_item->get_sample_count();
 					if($samples[$x] > 1)
 					{
@@ -576,12 +575,13 @@ class pts_result_file_output
 				continue;
 			}
 
-			$table_data[$row][0] = $ro->test_profile->get_title() . ($ro->get_arguments_description() != null ? ' - ' : null) . $ro->get_arguments_description() . ' (' . $ro->test_profile->get_result_scale() . ')';
+			$table_data[$row][0] = $ro->test_profile->get_title() . ($ro->get_arguments_description() != null ? ' - ' : null) . $ro->get_arguments_description_shortened() . ' (' . $ro->test_profile->get_result_scale() . ')';
 			for($i = 1; $i < count($columns); $i++)
 			{
 				$table_data[$row][$i] = ' ';
 			}
 
+			$hib = $ro->test_profile->get_result_proportion() == 'HIB';
 			$best = $ro->get_result_first(false);
 			$worst = $ro->get_result_last(false);
 			if($best == $worst)
@@ -589,6 +589,7 @@ class pts_result_file_output
 				$best = -1;
 				$worst = -1;
 			}
+			$extra_rows = array(array(), array());
 			foreach($ro->test_result_buffer->get_buffer_items() as $index => $buffer_item)
 			{
 				$identifier = $buffer_item->get_result_identifier();
@@ -605,11 +606,43 @@ class pts_result_file_output
 							$table_data_hints[$row][$x] = 'red';
 							break;
 					}
+
+					if($best != -1)
+					{
+						$extra_rows[0][0] = 'Normalized';
+						$extra_rows[0][$x] = round(($hib ? ($value / $best) : ($best / $value)) * 100, 2) . '%';
+					}
+
+					$raw = $buffer_item->get_result_raw_array();
+					if(count($raw) > 1)
+					{
+						$extra_rows[1][0] = 'Standard Deviation';
+						$extra_rows[1][$x] = round(pts_math::percent_standard_deviation($raw), 1) . '%';
+					}
+
 					if($value > 1000)
 					{
 						$value = round($value);
 					}
 					$table_data[$row][$x] = $value;
+				}
+			}
+			foreach($extra_rows as $extra_row)
+			{
+				if(empty($extra_row))
+				{
+					continue;
+				}
+				$row++;
+				for($i = 0; $i < count($columns); $i++)
+				{
+					$table_data[$row][$i] = ' ';
+					$table_data_hints[$row][$i] = 'small';
+				}
+				foreach($extra_row as $x => $value)
+				{
+					$table_data[$row][$x] = $value;
+					$table_data_hints[$row][$x] = 'small';
 				}
 			}
 			$row++;
