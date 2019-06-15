@@ -202,7 +202,6 @@ class pts_pdf_template extends FPDF
 		{
 			$this->Image(PTS_CORE_STATIC_PATH . 'images/pts-158x82.jpg', 10, 8, 30);
 		}
-
 		$this->SetFont('Arial', 'B', 14);
 		$this->SetTextColor(0, 0, 0);
 		$this->Cell(80);
@@ -211,6 +210,8 @@ class pts_pdf_template extends FPDF
 		$this->SetFont('Arial', 'B', 10);
 		$this->Cell(0, 10, $this->pts_sub_title, 0, 0, 'C');
 		$this->Ln(15);
+   		$this->SetDrawColor(0,85,0);
+		$this->Line(10, 27, 210-10, 27);
 	}
 	public function Footer()
 	{
@@ -218,7 +219,9 @@ class pts_pdf_template extends FPDF
 		{
 			return;
 		}
-
+		$this->SetY(-15);
+   		$this->SetDrawColor(0,85,0);
+		$this->Line(10, $this->y, 210-10, $this->y);
 		$this->SetY(-10);
 		$this->SetFont('Arial', 'B', 7);
 		$this->SetTextColor(0, 0, 0);
@@ -249,7 +252,9 @@ class pts_pdf_template extends FPDF
 	}
 	public function WriteStatementCenter($Header)
 	{
+		$this->SetTextColor(0, 85, 0);
 		$this->WriteStatement($Header, 'C');
+		$this->SetTextColor(0, 0, 0);
 	}
 	public function WriteStatement($Header, $Align = 'L', $Link = null)
 	{
@@ -285,10 +290,11 @@ class pts_pdf_template extends FPDF
 		$this->SetFont('Arial', '', 10);
 		$this->MultiCell(0, 5, $Text);
 	}
-	public function WriteText($Text)
+	public function WriteText($Text, $I = '')
 	{
-		$this->SetFont('Arial', '', 10);
+		$this->SetFont('Arial', $I, 10);
 		$this->MultiCell(0, 5, $Text);
+		$this->SetFont('Arial', '', 10);
 		$this->Ln();
 	}
 	public function WriteMiniText($Text)

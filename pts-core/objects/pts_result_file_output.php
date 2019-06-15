@@ -528,7 +528,7 @@ class pts_result_file_output
 		$pdf->WriteBigHeaderCenter($result_file->get_title());
 		$pdf->WriteText($result_file->get_description());
 		$pdf->Ln(15);
-		$pdf->WriteText('This file was automatically generated via the Phoronix Test Suite benchmarking software.');
+		$pdf->WriteText('This file was automatically generated via the Phoronix Test Suite benchmarking software.', 'I');
 
 		$pdf->AddPage();
 		$pdf->Ln(15);
@@ -596,7 +596,6 @@ class pts_result_file_output
 
 				if(($x = array_search($identifier, $columns)) !== false)
 				{
-					$table_data[$row][$x] = $value;
 					switch($value)
 					{
 						case $best:
@@ -606,6 +605,11 @@ class pts_result_file_output
 							$table_data_hints[$row][$x] = 'red';
 							break;
 					}
+					if($value > 1000)
+					{
+						$value = round($value);
+					}
+					$table_data[$row][$x] = $value;
 				}
 			}
 			$row++;
@@ -642,7 +646,7 @@ class pts_result_file_output
 			$placement++;
 			$i++;
 		}
-		$pdf->WriteText('This file was automatically generated via the Phoronix Test Suite benchmarking software.');
+		$pdf->WriteText('This file was automatically generated via the Phoronix Test Suite benchmarking software on ' . date('l, j F Y H:i') . '.', 'I');
 		ob_get_clean();
 		$pdf->Output($dest, $output_name);
 	}

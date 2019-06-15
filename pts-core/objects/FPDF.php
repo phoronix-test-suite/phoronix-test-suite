@@ -1976,10 +1976,12 @@ function Row($data, $widths, &$row_num = -1, $hints = null)
 				switch($hints[$i])
 				{
 					case 'green':
-						$this->SetTextColor(0, 128, 0);
+						$this->SetFont('', 'B', 0);
+						$this->SetTextColor(0, 85, 0);
 						$did_reset_colors = true;
 						break;
 					case 'red':
+						$this->SetFont('', 'B', 0);
 						$this->SetTextColor(128, 0, 0);
 						$did_reset_colors = true;
 						break;
