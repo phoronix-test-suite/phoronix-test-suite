@@ -202,7 +202,7 @@ class pts_pdf_template extends FPDF
 		{
 			$this->Image(PTS_CORE_STATIC_PATH . 'images/pts-158x82.jpg', 10, 8, 30);
 		}
-		$this->SetFont('Arial', 'B', 14);
+		$this->SetFont('Arial', 'B', (isset($this->pts_title[50]) ? 10 : 14));
 		$this->SetTextColor(0, 0, 0);
 		$this->Cell(80);
 		$this->Cell(30, 10, $this->pts_title, 0, 0, 'C');
@@ -234,7 +234,7 @@ class pts_pdf_template extends FPDF
 	}
 	public function WriteBigHeader($Header, $Align = 'L')
 	{
-		$this->SetFont('Arial', 'B', 21);
+		$this->SetFont('Arial', 'B', isset($Header[50]) ? 15 : 21);
 		$this->SetFillColor(255, 255, 255);
 		$this->Cell(0, 6, $Header, 0, 0, $Align, true);
 		$this->Ln(15);

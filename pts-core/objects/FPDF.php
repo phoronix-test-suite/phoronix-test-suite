@@ -18,7 +18,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 * Author:  Olivier PLATHEY                                                     *
 *******************************************************************************/
 
-// Modifications by Michael Larabel 2015-2016 for PTS adaptation of FPDF
+// Modifications by Michael Larabel 2015-2019 for PTS adaptation of FPDF
 
 define('FPDF_VERSION','1.7');
 

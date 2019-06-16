@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 pts-core: Add 'expat' as possible external dependency
+pts-core: Various PDF report improvements
 pts_Graph: Fix for displaying line graphs with very small values
 phodevi: Support reading sys.power via IPMI PS1_Input_Power/PS2_Input_Power
 pts-core: Improve MultiMatch in test result parser

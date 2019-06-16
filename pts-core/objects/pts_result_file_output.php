@@ -527,10 +527,10 @@ class pts_result_file_output
 		$pdf->WriteBigHeaderCenter($result_file->get_title());
 		$pdf->WriteText($result_file->get_description());
 		$pdf->Ln(15);
-		$pdf->WriteText('This file was automatically generated via the Phoronix Test Suite benchmarking software.', 'I');
+		//$pdf->WriteText('This file was automatically generated via the Phoronix Test Suite benchmarking software.', 'I');
 
 		$pdf->AddPage();
-		$pdf->Ln(15);
+		//$pdf->Ln(15);
 
 		$pdf->SetSubject($result_file->get_title() . ' Benchmarks');
 		//$pdf->SetKeywords(implode(', ', $identifiers));
@@ -575,7 +575,7 @@ class pts_result_file_output
 				continue;
 			}
 
-			$table_data[$row][0] = $ro->test_profile->get_title() . ($ro->get_arguments_description() != null ? ' - ' : null) . $ro->get_arguments_description_shortened() . ' (' . $ro->test_profile->get_result_scale() . ')';
+			$table_data[$row][0] = $ro->test_profile->get_title() . ($ro->get_arguments_description() != null ? ' - ' : null) . $ro->get_arguments_description_shortened() . ' (' . $ro->test_profile->get_result_scale_shortened() . ')';
 			for($i = 1; $i < count($columns); $i++)
 			{
 				$table_data[$row][$i] = ' ';

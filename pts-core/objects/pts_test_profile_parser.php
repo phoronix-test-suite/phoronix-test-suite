@@ -320,11 +320,25 @@ class pts_test_profile_parser
 	{
 		return trim(pts_strings::first_in_string($this->get_result_scale(), '|'));
 	}
-	public function get_result_scale_offset()
+	public function get_result_scale_shortened()
 	{
-		$scale_parts = explode('|', $this->get_result_scale());
+		$scale = $this->get_result_scale();
+		$shorten = array(
+			'Frames Per Second' => 'FPS',
+			' Per Second' => '/sec',
+			' Per Minute' => '/min',
+			'Nanoseconds/Operation' => 'ns/op',
+			'Milli-Seconds' => 'ms',
+			'Seconds' => 'sec',
+			' Per ' => '/',
+			'Total ' => '',
+			);
+		foreach($shorten as $orig => $new)
+		{
+			$scale = str_replace($orig, $new, $scale);
+		}
 
-		return count($scale_parts) == 2 ? trim($scale_parts[1]) : array();
+		return $scale;
 	}
 	public function get_result_proportion()
 	{
