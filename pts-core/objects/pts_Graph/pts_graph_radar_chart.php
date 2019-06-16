@@ -49,11 +49,24 @@ class pts_graph_radar_chart extends pts_graph_core
 
 		// System Identifiers
 		$result_objects = $rf->get_result_objects();
+		$ignore_qualify_check = false;
+
+		if(count($result_objects) > 12)
+		{
+			$ros = pts_result_file_analyzer::generate_geometric_mean_result_per_test($result_file);
+
+			if(count($ros) > 2)
+			{
+				$ignore_qualify_check = true;
+				$result_objects = $ros;
+			}
+		}
+
 		usort($result_objects, array('pts_graph_run_vs_run', 'cmp_result_object_sort'));
 		$longest_header = 0;
 		foreach($result_objects as &$r)
 		{
-			if($r->test_profile->get_identifier() == null)
+			if($r->test_profile->get_identifier() == null && !$ignore_qualify_check)
 			{
 				continue;
 			}
@@ -67,7 +80,7 @@ class pts_graph_radar_chart extends pts_graph_core
 			}
 
 			$relative_win = $r->get_result_first(false);
-			if($relative_win < 1.03)
+			if($relative_win < 1.03 && count($result_objects) > 12)
 			{
 				continue;
 			}
@@ -98,33 +111,33 @@ class pts_graph_radar_chart extends pts_graph_core
 			return false;
 		}
 
-		$this->i['identifier_size'] = 6.5;
-		$this->i['top_heading_height'] = max(self::$c['size']['headers'] + 22 + self::$c['size']['key'], 48);
-		$this->i['top_start'] = $this->i['top_heading_height'] + 30;
-		$this->i['left_start'] = pts_graph_core::text_string_width(str_repeat('Z', $longest_header), self::$c['size']['tick_mark']) * 0.85;
-		$this->i['graph_title'] = 'Comparison';
-		//$this->graph_data_title = ' vs  Comparison';
-		$this->i['iveland_view'] = true;
-		$this->i['graph_width'] = round($this->i['graph_width'] * 1.5, PHP_ROUND_HALF_EVEN);
-		$this->i['graph_height'] = $this->i['graph_width'];
-		$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'], true);
-		//$this->results = $this->systems;
-		$this->i['show_graph_key'] = true;
-		$this->i['is_multi_way_comparison'] = false;
-
 		foreach($this->systems as $system)
 		{
 			//$this->get_paint_color($system, true);
 			$this->results[$system]  = $system;
 		}
 
+		$this->i['identifier_size'] = 6.5;
+		$this->i['top_heading_height'] = max(self::$c['size']['headers'] + 22 + self::$c['size']['key'], 48);
+		$this->i['top_start'] = $this->i['top_heading_height'] + 30;
+		$this->i['left_start'] = pts_graph_core::text_string_width(str_repeat('Z', $longest_header), self::$c['size']['tick_mark']) * 0.85;
+		$this->i['graph_title'] = 'Result Overview';
+		//$this->graph_data_title = ' vs  Comparison';
+		$this->i['iveland_view'] = true;
+		$this->i['show_graph_key'] = true;
+		$this->i['is_multi_way_comparison'] = false;
+		$this->i['graph_width'] = round($this->i['graph_width'] * 1.5, PHP_ROUND_HALF_EVEN);
+		$this->i['top_start'] += $this->graph_key_height();
+		$this->i['graph_height'] = $this->i['graph_width'] + $this->i['top_start'];
+		$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'], true);
+		//$this->results = $this->systems;
+
 		return true;
 	}
 	protected function render_graph_heading($with_version = true)
 	{
-		$this->svg_dom->add_element('image', array('xlink:href' => 'https://openbenchmarking.org/static/images/pts-80x42.png', 'x' => 10, 'y' => round($this->i['top_heading_height'] / 42 + 1), 'width' => 80, 'height' => 42));
- return;
 		$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->i['graph_width'], 'height' => $this->i['top_heading_height'], 'fill' => self::$c['color']['main_headers']));
+		$this->svg_dom->add_element('image', array('xlink:href' => 'https://openbenchmarking.org/static/images/pts-77x40-white.png', 'x' => 10, 'y' => round($this->i['top_heading_height'] / 40 + 1), 'width' => 77, 'height' => 40));
 		$this->svg_dom->add_text_element($this->i['graph_title'], array('x' => 100, 'y' => (4 + self::$c['size']['headers']), 'font-size' => self::$c['size']['headers'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'start'));
 		$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => 100, 'y' => (self::$c['size']['headers'] + 16), 'font-size' => self::$c['size']['key'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'href' => 'http://www.phoronix-test-suite.com/'));
 	}
@@ -143,10 +156,11 @@ class pts_graph_radar_chart extends pts_graph_core
 		$this->render_graph_heading();
 
 		$center_x = $this->i['graph_width'] / 2;
-		$center_y = $this->i['graph_height'] / 2;
+		$center_y = (($this->i['graph_height'] - $this->i['top_start']) / 2) + $this->i['top_start'];
 		$max_depth = $center_x * 0.7;
 		$scale = $max_depth / $this->i['graph_max_value'];
-		$degree_offset = 360 / count($this->result_objects);
+		$ro_count = count($this->result_objects);
+		$degree_offset = 360 / $ro_count;
 		$g_txt_common = $this->svg_dom->make_g(array('font-size' => self::$c['size']['tick_mark'], 'fill' => self::$c['color']['notches']));
 		$g_txt_circle = $this->svg_dom->make_g(array('font-size' => self::$c['size']['tick_mark'] - 1, 'fill' => self::$c['color']['body_light'], 'text-anchor' => 'middle'));
 		$g_txt_tests = $this->svg_dom->make_g(array('font-size' => self::$c['size']['tick_mark'] + 0.5, 'fill' => self::$c['color']['notches'], 'font-weight' => '800', 'dominant-baseline' => 'text-after-edge'));
@@ -156,7 +170,7 @@ class pts_graph_radar_chart extends pts_graph_core
 		{
 			$radius = $scale * $i;
 			$this->svg_dom->draw_svg_circle($center_x, $center_y, $radius, 'transparent', array('stroke' => self::$c['color']['body_light'], 'stroke-width' => 1, 'stroke-dasharray' => '10,10,10'));
-			$this->svg_dom->add_text_element(round($i * 100, 1) . '%', array('x' => $center_x, 'y' => $center_y + $radius + 2, 'dominant-baseline' => 'hanging'), $g_txt_circle);
+			$this->svg_dom->add_text_element(round($i * 100) . '%', array('x' => $center_x, 'y' => $center_y + $radius + 2, 'dominant-baseline' => 'hanging'), $g_txt_circle);
 		}
 
 		$i = 0;
@@ -182,8 +196,8 @@ class pts_graph_radar_chart extends pts_graph_core
 				$prev_y[$identifier] = $y;
 			}
 
-			$x_txt = $center_x + round(($this->i['graph_max_value'] * 1.01 * $scale) * cos(deg2rad($deg)));
-			$y_txt = $center_y + round(($this->i['graph_max_value'] * 1.01 * $scale) * sin(deg2rad($deg)));
+			$x_txt = $center_x + ceil(($this->i['graph_max_value'] * 1.03 * $scale) * cos(deg2rad($deg)));
+			$y_txt = $center_y + ceil(($this->i['graph_max_value'] * 1.03 * $scale) * sin(deg2rad($deg)));
 			$desc = $r['ro']->get_arguments_description_shortened();
 			if($x_txt >= $center_x)
 			{
@@ -195,10 +209,11 @@ class pts_graph_radar_chart extends pts_graph_core
 			}
 
 			$v_offset = $y_txt < $center_y && !empty($desc) ? -5 : 0;
-			$this->svg_dom->add_text_element($r['ro']->test_profile->get_title(), array('x' => $x_txt, 'y' => $y_txt + $v_offset, 'text-anchor' => $text_anchor), $g_txt_tests);
+			$rotate = $ro_count > 14 ? array('transform' => 'rotate(' . ($deg > 90 && $deg < 270 ? $deg + 180 : $deg) . ' ' . $x_txt . ' ' . $y_txt . ')') : array();
+			$this->svg_dom->add_text_element($r['ro']->test_profile->get_title(), array_merge(array('x' => $x_txt, 'y' => $y_txt + $v_offset, 'text-anchor' => $text_anchor), $rotate), $g_txt_tests);
 			if($desc)
 			{
-				$this->svg_dom->add_text_element($desc, array('x' => $x_txt, 'y' => $y_txt + 10, 'text-anchor' => $text_anchor), $g_txt_desc);
+				$this->svg_dom->add_text_element($desc, array_merge(array('x' => $x_txt, 'y' => $y_txt + 10, 'text-anchor' => $text_anchor), $rotate), $g_txt_desc);
 			}
 
 			if($i == 0)
