@@ -1225,7 +1225,7 @@ class pts_client
 			}
 			else
 			{
-				$graph = new pts_RadarOverviewGraph($result_file);
+				$graph = new pts_graph_radar_chart($result_file);
 			}
 
 			$rendered = $graph->renderGraph();
