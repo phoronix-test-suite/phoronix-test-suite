@@ -154,15 +154,11 @@ class pts_graph_run_vs_run extends pts_graph_core
 			{
 				$this->svg_dom->add_text_element(round(($r['relative'] - 1) * 100, 1) . '%', array('x' => ($center_point + $box_width + 4), 'y' => $vertical_offset + self::$c['size']['tick_mark'], 'dominant-baseline' => 'middle'), $g_txt_common_start);
 			}
-
 			$i += 2;
 		}
 
-		//$this->svg_dom->draw_svg_line($this->i['left_start'], $this->i['top_start'], $this->i['graph_left_end'], $this->i['top_start'], self::$c['color']['notches'], 1);
 		$this->svg_dom->draw_svg_line($this->i['left_start'], $this->i['top_start'], $this->i['left_start'], $this->i['graph_top_end'], self::$c['color']['notches'], 1);
-		//$this->svg_dom->draw_svg_line($this->i['graph_left_end'], $this->i['graph_top_end'], $this->i['graph_left_end'], $this->i['top_start'], self::$c['color']['notches'], 1);
 		$this->svg_dom->draw_svg_line($this->i['left_start'], $this->i['graph_top_end'], $this->i['graph_left_end'], $this->i['graph_top_end'], self::$c['color']['notches'], 1);
-
 		$this->svg_dom->draw_svg_line($center_point, $this->i['graph_top_end'], $center_point, $this->i['top_start'], self::$c['color']['notches'], 1);
 		$this->svg_dom->add_text_element($this->system_left, array('x' => $center_point - 4, 'y' => $this->i['top_start'] - 6, 'font-size' => round(self::$c['size']['tick_mark'] * 1.5), 'fill' => $this->get_paint_color($this->system_left), 'text-anchor' => 'end', 'font-weight' => 'bold'));
 		$this->svg_dom->add_text_element($this->system_right, array('x' => $center_point + 4, 'y' => $this->i['top_start'] - 6, 'font-size' => round(self::$c['size']['tick_mark'] * 1.5), 'fill' => $this->get_paint_color($this->system_right), 'text-anchor' => 'start', 'font-weight' => 'bold'));
