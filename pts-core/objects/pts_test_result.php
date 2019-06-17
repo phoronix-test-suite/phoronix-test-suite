@@ -107,7 +107,7 @@ class pts_test_result
 	{
 		return $this->used_arguments_description;
 	}
-	public function get_arguments_description_shortened()
+	public function get_arguments_description_shortened($compact_words = true)
 	{
 		$shortened = explode(' - ', $this->used_arguments_description);
 		foreach($shortened as &$part)
@@ -116,7 +116,7 @@ class pts_test_result
 			{
 				$part = substr($part, $x + 2);
 			}
-			if(isset($part[18]) && strpos($part, ' ') != false && function_exists('preg_replace'))
+			if($compact_words && isset($part[18]) && strpos($part, ' ') != false && function_exists('preg_replace'))
 			{
 				$part = implode('.', str_split(preg_replace('/\b(\w)|./', '$1', $part)));
 			}

@@ -1223,7 +1223,7 @@ class pts_client
 			{
 				$graph = new pts_graph_run_vs_run($result_file);
 			}
-			else
+			else if($result_file->get_system_count() > 2)
 			{
 				$graph = new pts_graph_radar_chart($result_file);
 			}
