@@ -1995,6 +1995,12 @@ function Row($data, $widths, &$row_num = -1, $hints = null)
 		$this->MultiCell($w,5,$data[$i],0,$a);
 		//Put the position to the right of the cell
 		$this->SetXY($x+$w,$y);
+
+		if($did_reset_colors)
+		{
+			$this->SetFont('', '', 0);
+			$this->SetTextColor(0, 0, 0);
+		}
 	}
 	if($row_num === 0 || $did_reset_colors)
 	{

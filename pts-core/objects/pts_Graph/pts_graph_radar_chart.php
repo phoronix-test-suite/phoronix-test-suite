@@ -108,7 +108,7 @@ class pts_graph_radar_chart extends pts_graph_core
 			$longest_header = max($longest_header, strlen($r->test_profile->get_title()), strlen($r->get_arguments_description_shortened()));
 		}
 
-		if($this->i['graph_max_value'] > 4 && pts_math::arithmetic_mean($all_max) < 1.9)
+		if($this->i['graph_max_value'] > 4 && pts_math::arithmetic_mean($all_max) < ($this->i['graph_max_value'] * 0.48))
 		{
 			// better to show a logarithmic view
 			$this->i['graph_max_value'] = 0;

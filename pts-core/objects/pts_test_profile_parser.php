@@ -329,6 +329,7 @@ class pts_test_profile_parser
 			' Per Minute' => '/min',
 			'Nanoseconds/Operation' => 'ns/op',
 			'Milli-Seconds' => 'ms',
+			'Request' => 'Req',
 			'Seconds' => 'sec',
 			' Per ' => '/',
 			'Total ' => '',
