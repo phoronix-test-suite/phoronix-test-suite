@@ -96,6 +96,93 @@ class pts_result_file_analyzer
 
 		return false;
 	}
+	public static function generate_geometric_mean_result_per_test($result_file, $do_sort = false)
+	{
+		$geo_results = array();
+		$results = array();
+		$system_count = $result_file->get_system_count();
+		foreach($result_file->get_result_objects() as $result)
+		{
+			if($result->test_profile->get_identifier() == null || $result->test_profile->get_display_format() != 'BAR_GRAPH' || $system_count > $result->test_result_buffer->get_count())
+			{
+				// Skip data where it's not a proper test, not a singular data value, or not all systems ran within the result file
+				continue;
+			}
+
+			foreach($result->test_result_buffer->get_buffer_items() as $buffer_item)
+			{
+				$r = $buffer_item->get_result_value();
+				if(!is_numeric($r) || $r == 0)
+				{
+					continue;
+				}
+				if($result->test_profile->get_result_proportion() == 'LIB')
+				{
+					// convert to HIB
+					$r = (1 / $r) * 100;
+				}
+
+				$ri = $buffer_item->get_result_identifier();
+
+				if(!isset($results[$result->test_profile->get_title()]))
+				{
+					$results[$result->test_profile->get_title()] = array();
+				}
+				if(!isset($results[$result->test_profile->get_title()][$ri]))
+				{
+					$results[$result->test_profile->get_title()][$ri] = array();
+				}
+				$results[$result->test_profile->get_title()][$ri][] = $r;
+			}
+		}
+
+		foreach($results as $test => $test_results)
+		{
+			foreach($test_results as $identifier => $values)
+			{
+				if(false && count($values) < 4)
+				{
+					// If small result file with not a lot of data, don't bother showing...
+					unset($results[$test][$identifier]);
+				}
+			}
+
+			if(empty($results[$test]))
+			{
+				unset($results[$test]);
+			}
+		}
+
+		foreach($results as $test_title => $test_results)
+		{
+			$test_profile = new pts_test_profile();
+			$test_result = new pts_test_result($test_profile);
+			$test_result->test_profile->set_test_title($test_title);
+			$test_result->test_profile->set_identifier(null);
+			$test_result->test_profile->set_version(null);
+			$test_result->test_profile->set_result_proportion(null);
+			$test_result->test_profile->set_display_format('BAR_GRAPH');
+			$test_result->test_profile->set_result_scale('Geometric Mean');
+			$test_result->test_profile->set_result_proportion('HIB');
+			$test_result->set_used_arguments_description('Geometric Mean');
+			$test_result->set_used_arguments('Geometric-Mean');
+			$test_result->test_result_buffer = new pts_test_result_buffer();
+			foreach($test_results as $identifier => $values)
+			{
+				$values = pts_math::geometric_mean($values);
+				$test_result->test_result_buffer->add_test_result($identifier, pts_math::set_precision($values, 3));
+			}
+
+			if(!$result_file->is_multi_way_comparison() || $do_sort)
+			{
+				$test_result->sort_results_by_performance();
+				$test_result->test_result_buffer->buffer_values_reverse();
+			}
+			$geo_results[] = $test_result;
+		}
+
+		return $geo_results;
+	}
 	public static function generate_harmonic_mean_result($result_file, $do_sort = false)
 	{
 		$results = array();

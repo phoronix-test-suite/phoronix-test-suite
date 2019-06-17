@@ -87,11 +87,12 @@ class pts_graph_run_vs_run extends pts_graph_core
 		$this->i['top_heading_height'] = max(self::$c['size']['headers'] + 22 + self::$c['size']['key'], 48);
 		$this->i['top_start'] = $this->i['top_heading_height'] + 30;
 		$this->i['graph_height'] = 20 + $this->i['top_start'] + ((count($this->result_objects) * 2) * (self::$c['size']['tick_mark'] + 4));
-		$this->i['left_start'] = pts_graph_core::text_string_width(str_repeat('Z', $longest_header), self::$c['size']['tick_mark']) * 0.85;
+		$this->i['left_start'] = ceil(pts_graph_core::text_string_width(str_repeat('Z', $longest_header), self::$c['size']['tick_mark']) * 0.85);
 		$this->i['graph_title'] = $this->system_left . ' vs. ' . $this->system_right . ' Comparison';
 		$this->graph_data_title = ' vs  Comparison';
 		$this->i['iveland_view'] = true;
 		$this->i['graph_width'] *= 1.5;
+
 		$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'] + $this->i['top_start'], true);
 		$this->get_paint_color($this->system_left, true);
 		$this->get_paint_color($this->system_right, true);
@@ -113,9 +114,9 @@ class pts_graph_run_vs_run extends pts_graph_core
 			return false;
 		}
 		//$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'] + $this->i['top_start'], true);
-
+		$this->i['graph_left_end'] -= 28;
 		$plotting_width = $this->i['graph_left_end'] - $this->i['left_start'];
-		$center_point = $this->i['left_start'] + round($plotting_width / 2);
+		$center_point = round($this->i['left_start'] + ($plotting_width / 2));
 		$scale = round($plotting_width / 2) / ($this->i['graph_max_value'] - 1.0 + 0.25);
 		// Do the actual work
 		$this->render_graph_init();
@@ -124,16 +125,19 @@ class pts_graph_run_vs_run extends pts_graph_core
 		$this->render_graph_heading();
 		$g_bars = $this->svg_dom->make_g(array('stroke' => self::$c['color']['body_light'], 'stroke-width' => 1));
 		$g_txt_common = $this->svg_dom->make_g(array('font-size' => self::$c['size']['tick_mark'], 'fill' => self::$c['color']['notches']));
+		$g_txt_common_start = $this->svg_dom->make_g(array('font-size' => self::$c['size']['tick_mark'], 'fill' => self::$c['color']['notches'], 'text-anchor' => 'start'));
+		$g_txt_common_end = $this->svg_dom->make_g(array('font-size' => self::$c['size']['tick_mark'], 'fill' => self::$c['color']['notches'], 'text-anchor' => 'end'));
+		$g_bold = $this->svg_dom->make_g(array('font-size' => self::$c['size']['tick_mark'], 'fill' => self::$c['color']['notches'], 'font-weight' => 'bold',  'text-anchor' => 'end'));
 		$i = 0;
 		foreach($this->result_objects as $r)
 		{
 			$vertical_offset = $this->i['top_start'] + ($i * (self::$c['size']['tick_mark'] + 4));
-			$this->svg_dom->add_text_element($r['ro']->test_profile->get_title(), array('x' => ($this->i['left_start'] - 10), 'y' => $vertical_offset + 1, 'text-anchor' => 'end', 'font-weight' => 'bold', 'dominant-baseline' => 'hanging'), $g_txt_common);
-			$this->svg_dom->add_text_element($r['ro']->get_arguments_description_shortened(), array('x' => ($this->i['left_start'] - 10), 'y' => $vertical_offset + self::$c['size']['tick_mark'] + 2, 'text-anchor' => 'end', 'dominant-baseline' => 'hanging'), $g_txt_common);
+			$this->svg_dom->add_text_element($r['ro']->test_profile->get_title(), array('x' => ($this->i['left_start'] - 10), 'y' => $vertical_offset + 1, 'dominant-baseline' => 'hanging'), $g_bold);
+			$this->svg_dom->add_text_element($r['ro']->get_arguments_description_shortened(), array('x' => ($this->i['left_start'] - 10), 'y' => $vertical_offset + self::$c['size']['tick_mark'] + 2, 'dominant-baseline' => 'hanging'), $g_txt_common_end);
 
 			$this->svg_dom->draw_svg_line($this->i['left_start'], $vertical_offset, $this->i['left_start'] - 6, $vertical_offset, self::$c['color']['notches'], 1);
 
-			$box_width = ($r['relative'] - 1) * $scale;
+			$box_width = round(($r['relative'] - 1) * $scale);
 			if($box_width == 0)
 			{
 				//continue;
@@ -144,11 +148,11 @@ class pts_graph_run_vs_run extends pts_graph_core
 
 			if($r['winner'] == $this->system_left)
 			{
-				$this->svg_dom->add_text_element(round(($r['relative'] - 1) * 100, 1) . '%', array('x' => ($center_point - $box_width - 4), 'y' => $vertical_offset + self::$c['size']['tick_mark'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle'), $g_txt_common);
+				$this->svg_dom->add_text_element(round(($r['relative'] - 1) * 100, 1) . '%', array('x' => ($center_point - $box_width - 4), 'y' => $vertical_offset + self::$c['size']['tick_mark'], 'dominant-baseline' => 'middle'), $g_txt_common_end);
 			}
 			else
 			{
-				$this->svg_dom->add_text_element(round(($r['relative'] - 1) * 100, 1) . '%', array('x' => ($center_point + $box_width + 4), 'y' => $vertical_offset + self::$c['size']['tick_mark'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle'), $g_txt_common);
+				$this->svg_dom->add_text_element(round(($r['relative'] - 1) * 100, 1) . '%', array('x' => ($center_point + $box_width + 4), 'y' => $vertical_offset + self::$c['size']['tick_mark'], 'dominant-baseline' => 'middle'), $g_txt_common_start);
 			}
 
 			$i += 2;
@@ -166,13 +170,15 @@ class pts_graph_run_vs_run extends pts_graph_core
 		for($i = 0; $i < $this->i['graph_max_value'] - 1.0; $i += round(($this->i['graph_max_value'] - 1.0) / 4, 3))
 		{
 			$val = $i == 0 ? 'Baseline' : '+' . round($i * 100, 1) . '%';
-			$this->svg_dom->draw_svg_line($center_point + ($i * $scale), $this->i['graph_top_end'] - 6, $center_point + ($i * $scale), $this->i['graph_top_end'], self::$c['color']['notches'], 1);
-			$this->svg_dom->add_text_element($val, array('x' => $center_point + ($i * $scale), 'y' => $this->i['graph_top_end'] + 2, 'text-anchor' => 'middle', 'font-weight' => 'bold', 'dominant-baseline' => 'hanging'), $g_txt_common);
+			$cx = round($center_point + ($i * $scale));
+			$this->svg_dom->draw_svg_line($cx, $this->i['graph_top_end'] - 6, $cx, $this->i['graph_top_end'], self::$c['color']['notches'], 1);
+			$this->svg_dom->add_text_element($val, array('x' => $cx, 'y' => $this->i['graph_top_end'] + 2, 'text-anchor' => 'middle', 'font-weight' => 'bold', 'dominant-baseline' => 'hanging'), $g_txt_common);
 
 			if($i != 0)
 			{
-				$this->svg_dom->draw_svg_line($center_point - ($i * $scale), $this->i['graph_top_end'] - 6, $center_point - ($i * $scale), $this->i['graph_top_end'], self::$c['color']['notches'], 1);
-				$this->svg_dom->add_text_element($val, array('x' => $center_point - ($i * $scale), 'y' => $this->i['graph_top_end'] + 2, 'text-anchor' => 'middle', 'font-weight' => 'bold', 'dominant-baseline' => 'hanging'), $g_txt_common);
+				$cx = round($center_point - ($i * $scale));
+				$this->svg_dom->draw_svg_line($cx, $this->i['graph_top_end'] - 6, $cx, $this->i['graph_top_end'], self::$c['color']['notches'], 1);
+				$this->svg_dom->add_text_element($val, array('x' => $cx, 'y' => $this->i['graph_top_end'] + 2, 'text-anchor' => 'middle', 'font-weight' => 'bold', 'dominant-baseline' => 'hanging'), $g_txt_common);
 			}
 		}
 

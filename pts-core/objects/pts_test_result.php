@@ -118,7 +118,7 @@ class pts_test_result
 			}
 			if(isset($part[18]) && strpos($part, ' ') != false && function_exists('preg_replace'))
 			{
-				$part = preg_replace('/\b(\w)|./', '$1', $part);
+				$part = implode('.', str_split(preg_replace('/\b(\w)|./', '$1', $part)));
 			}
 		}
 		return implode(' - ', $shortened);
