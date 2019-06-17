@@ -464,6 +464,11 @@ class pts_result_file_output
 						$value = round($value);
 					}
 
+					if($value == 0)
+					{
+						continue;
+					}
+
 					$row[$x] = '<strong' . $style. '>' . $value . '</strong>';
 					$nor[$x] = round(($hib ? ($value / $normalize_against) : ($normalize_against / $value)) * 100, 2) . '%';
 					$samples[$x] = $buffer_item->get_sample_count();

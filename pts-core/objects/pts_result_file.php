@@ -113,6 +113,13 @@ class pts_result_file
 
 		unset($xml);
 	}
+	public function __clone()
+	{
+		foreach($this->result_objects as $i => $v)
+		{
+			$this->result_objects[$i] = clone $this->result_objects[$i];
+		}
+	}
 	public function get_file_location()
 	{
 		return $this->file_location;

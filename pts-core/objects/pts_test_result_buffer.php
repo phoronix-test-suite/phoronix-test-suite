@@ -39,6 +39,10 @@ class pts_test_result_buffer
 	}
 	public function __clone()
 	{
+		foreach($this->buffer_items as $i => $v)
+		{
+			$this->buffer_items[$i] = clone $this->buffer_items[$i];
+		}
 	}
 	public function get_buffer_items()
 	{

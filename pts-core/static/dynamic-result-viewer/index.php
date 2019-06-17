@@ -236,9 +236,24 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		{
 			$table = new pts_ResultFileSystemsTable($result_file);
 		}
-
-
 		$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
+
+		if($result_file->get_system_count() == 2)
+		{
+			$graph = new pts_graph_run_vs_run($result_file);
+		}
+		else
+		{
+			$graph = new pts_graph_radar_chart($result_file);
+		}
+
+		$rendered = $graph->renderGraph();
+		// Check to see if skip_graph was realized during the rendering process
+		if($rendered)
+		{
+			$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($graph, $result_file, $extra_attributes) . '</p>';
+		}
+
 		if(!$result_file->is_multi_way_comparison())
 		{
 			$PAGE .= '<div style="display:flex; align-items: center; justify-content: center;">' . pts_result_file_output::result_file_to_detailed_html_table($result_file, 'grid', $extra_attributes) . '</div>';
