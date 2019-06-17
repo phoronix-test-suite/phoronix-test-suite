@@ -667,14 +667,14 @@ class pts_result_file_output
 			{
 				continue;
 			}
-			$pdf->Ln(100);
-			$pdf->Image($tmp_file, 50, 40 + (($placement - 1) * 120), 120);
+			$pdf->Ln(4);
+			$pdf->Image($tmp_file);
 			unlink($tmp_file);
 
 			if($placement == 2 || $result_object->test_result_buffer->get_count() > 12)
 			{
 				$placement = 0;
-				$pdf->AddPage();
+				//$pdf->AddPage();
 			}
 			$placement++;
 			$i++;
