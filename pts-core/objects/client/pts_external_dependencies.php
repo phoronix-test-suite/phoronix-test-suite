@@ -533,6 +533,7 @@ class pts_external_dependencies
 		if($file_check_success == false)
 		{
 			// Check the aliases to figure out the upstream distribution
+			$vend_id = $os_vendor;
 			$os_vendor = false;
 			$exdep_generic_parser = new pts_exdep_generic_parser();
 			foreach($exdep_generic_parser->get_vendors_list() as $this_vendor)
@@ -540,7 +541,7 @@ class pts_external_dependencies
 				$exdep_platform_parser = new pts_exdep_platform_parser($this_vendor);
 				$aliases = $exdep_platform_parser->get_aliases();
 
-				if(in_array($os_vendor, $aliases))
+				if(in_array($vend_id, $aliases))
 				{
 					$os_vendor = $this_vendor;
 					break;
