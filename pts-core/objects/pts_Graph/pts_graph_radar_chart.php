@@ -24,6 +24,7 @@ class pts_graph_radar_chart extends pts_graph_core
 {
 	private $result_objects = array();
 	private $systems = array();
+	private $logarithmic_view = false;
 
 	public static function cmp_result_object_sort($a, $b)
 	{
@@ -64,6 +65,7 @@ class pts_graph_radar_chart extends pts_graph_core
 
 		usort($result_objects, array('pts_graph_run_vs_run', 'cmp_result_object_sort'));
 		$longest_header = 0;
+		$all_max = array();
 		foreach($result_objects as &$r)
 		{
 			if($r->test_profile->get_identifier() == null && !$ignore_qualify_check)
@@ -87,6 +89,7 @@ class pts_graph_radar_chart extends pts_graph_core
 			$this->i['graph_max_value'] = max($this->i['graph_max_value'], $relative_win);
 			$rel = array();
 			$max = 0;
+
 			foreach($r->test_result_buffer->get_buffer_items() as $buffer_item)
 			{
 				if(in_array($buffer_item->get_result_identifier(), $this->systems))
@@ -101,8 +104,28 @@ class pts_graph_radar_chart extends pts_graph_core
 				continue;
 			}
 
+			$all_max[] = $max;
 			$this->result_objects[] = array('rel' => $rel, 'ro' => $r, 'max' => $max);
 			$longest_header = max($longest_header, strlen($r->test_profile->get_title()), strlen($r->get_arguments_description_shortened()));
+		}
+
+		if($this->i['graph_max_value'] > 4 && pts_math::arithmetic_mean($all_max) < 1.9)
+		{
+			// better to show a logarithmic view
+			$this->i['graph_max_value'] = 0;
+			$this->logarithmic_view = true;
+			foreach($this->result_objects as &$r)
+			{
+				$max = 0;
+				foreach($r['rel'] as $identifier => $value)
+				{
+					$r['rel'][$identifier] = log10($value * 10);
+					$max = max($max, $r['rel'][$identifier]);
+
+				}
+				$r['max'] = $max;
+				$this->i['graph_max_value'] = max($this->i['graph_max_value'], $max);
+			}
 		}
 
 		if(count($this->result_objects) < 3)
@@ -121,7 +144,7 @@ class pts_graph_radar_chart extends pts_graph_core
 		$this->i['top_heading_height'] = max(self::$c['size']['headers'] + 22 + self::$c['size']['key'], 48);
 		$this->i['top_start'] = $this->i['top_heading_height'] + 30;
 		$this->i['left_start'] = pts_graph_core::text_string_width(str_repeat('Z', $longest_header), self::$c['size']['tick_mark']) * 0.85;
-		$this->i['graph_title'] = 'Result Overview';
+		$this->i['graph_title'] = ($this->logarithmic_view ? 'Logarithmic ' : '') . 'Result Overview';
 		//$this->graph_data_title = ' vs  Comparison';
 		$this->i['iveland_view'] = true;
 		$this->i['show_graph_key'] = true;
@@ -170,7 +193,10 @@ class pts_graph_radar_chart extends pts_graph_core
 		{
 			$radius = $scale * $i;
 			$this->svg_dom->draw_svg_circle($center_x, $center_y, $radius, 'transparent', array('stroke' => self::$c['color']['body_light'], 'stroke-width' => 1, 'stroke-dasharray' => '10,10,10'));
-			$this->svg_dom->add_text_element(round($i * 100) . '%', array('x' => $center_x, 'y' => $center_y + $radius + 2, 'dominant-baseline' => 'hanging'), $g_txt_circle);
+			if(!$this->logarithmic_view)
+			{
+				$this->svg_dom->add_text_element(round($i * 100) . '%', array('x' => $center_x, 'y' => $center_y + $radius + 2, 'dominant-baseline' => 'hanging'), $g_txt_circle);
+			}
 		}
 
 		$i = 0;
