@@ -96,16 +96,20 @@ class pts_result_file_analyzer
 
 		return false;
 	}
-	public static function generate_geometric_mean_result_per_test($result_file, $do_sort = false)
+	public static function generate_geometric_mean_result_per_test($result_file, $do_sort = false, $selector = null)
 	{
 		$geo_results = array();
 		$results = array();
 		$system_count = $result_file->get_system_count();
 		foreach($result_file->get_result_objects() as $result)
 		{
-			if($result->test_profile->get_identifier() == null || $result->test_profile->get_display_format() != 'BAR_GRAPH' || $system_count > $result->test_result_buffer->get_count())
+			if(($selector == null && $result->test_profile->get_identifier() == null) || $result->test_profile->get_display_format() != 'BAR_GRAPH' || $system_count > $result->test_result_buffer->get_count())
 			{
 				// Skip data where it's not a proper test, not a singular data value, or not all systems ran within the result file
+				continue;
+			}
+			if($selector != null && strpos($result->get_arguments_description(), $selector) === false && strpos($result->test_profile->get_title(), $selector) === false && strpos($result->test_profile->get_result_scale(), $selector) === false)
+			{
 				continue;
 			}
 
@@ -136,6 +140,11 @@ class pts_result_file_analyzer
 			}
 		}
 
+		if(empty($results))
+		{
+			return array();
+		}
+
 		foreach($results as $test => $test_results)
 		{
 			foreach($test_results as $identifier => $values)
@@ -164,7 +173,7 @@ class pts_result_file_analyzer
 			$test_result->test_profile->set_display_format('BAR_GRAPH');
 			$test_result->test_profile->set_result_scale('Geometric Mean');
 			$test_result->test_profile->set_result_proportion('HIB');
-			$test_result->set_used_arguments_description('Geometric Mean');
+			$test_result->set_used_arguments_description(($selector ? $selector . ' ' : null) . 'Geometric Mean');
 			$test_result->set_used_arguments('Geometric-Mean');
 			$test_result->test_result_buffer = new pts_test_result_buffer();
 			foreach($test_results as $identifier => $values)

@@ -241,17 +241,23 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		if($result_file->get_system_count() == 2)
 		{
 			$graph = new pts_graph_run_vs_run($result_file);
+
+			if($graph->renderGraph())
+			{
+				$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($graph, $result_file, $extra_attributes) . '</p>';
+			}
 		}
 		else
 		{
-			$graph = new pts_graph_radar_chart($result_file);
-		}
+			foreach(array('', 'Per Watt', 'Per Dollar') as $selector)
+			{
+				$graph = new pts_graph_radar_chart($result_file, $selector);
 
-		$rendered = $graph->renderGraph();
-		// Check to see if skip_graph was realized during the rendering process
-		if($rendered)
-		{
-			$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($graph, $result_file, $extra_attributes) . '</p>';
+				if($graph->renderGraph())
+				{
+					$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($graph, $result_file, $extra_attributes) . '</p>';
+				}
+			}
 		}
 
 		if(!$result_file->is_multi_way_comparison())

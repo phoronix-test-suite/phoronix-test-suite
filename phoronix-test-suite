@@ -165,7 +165,7 @@ elif [ -x /usr/local/sbin/pkg ] || [ -x /usr/sbin/pkg ]
 then
 	# DragonFlyBSD and others
 	echo "The command to likely run for your operating system is: "
-	echo "# pkg install php72 php72-dom php72-zip php72-json php72-simplexml php72-openssl"
+	echo "# pkg install php73 php73-dom php73-zip php73-json php73-simplexml php73-openssl"
 	echo " "
 elif [ -x /usr/bin/swupd ]
 then
