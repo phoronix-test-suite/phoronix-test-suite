@@ -140,7 +140,7 @@ class pts_result_file_analyzer
 			}
 		}
 
-		if(empty($results))
+		if(count($results) < 3)
 		{
 			return array();
 		}
