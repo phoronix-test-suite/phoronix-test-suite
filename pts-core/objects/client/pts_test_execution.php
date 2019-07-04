@@ -64,6 +64,7 @@ class pts_test_execution
 		$execute_binary = $test_run_request->test_profile->get_test_executable();
 		$times_to_run = $test_run_request->test_profile->get_times_to_run();
 		$ignore_runs = $test_run_request->test_profile->get_runs_to_ignore();
+		$ignore_runs_override = getenv('IGNORE_RUNS') ? pts_strings::comma_explode(getenv('IGNORE_RUNS')) : array();
 		$test_type = $test_run_request->test_profile->get_test_hardware_type();
 		$allow_cache_share = $test_run_request->test_profile->allow_cache_share() && $test_run_manager->allow_test_cache_share();
 		$min_length = $test_run_request->test_profile->get_min_length();
@@ -362,6 +363,10 @@ class pts_test_execution
 			if(in_array(($i + 1), $ignore_runs))
 			{
 				pts_client::$display->test_run_instance_error('Ignoring this run result per test profile definition.');
+			}
+			else if(in_array(($i + 1), $ignore_runs_override))
+			{
+				pts_client::$display->test_run_instance_error('Ignoring this run result per IGNORE_RUNS environment variable.');
 			}
 			else if($exit_status_pass)
 			{
