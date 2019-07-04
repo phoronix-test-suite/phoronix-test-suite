@@ -165,6 +165,9 @@ abstract class pts_graph_core
 		{
 			$this->generate_results_var();
 		}
+
+		// reverve bar paint color (first color) from being used otherwise such as in charts rendered first
+		$this->get_paint_color(0);
 	}
 	public static function get_graph_config($o1 = null, $o2 = null)
 	{
