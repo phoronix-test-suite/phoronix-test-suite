@@ -134,7 +134,7 @@ class pts_test_run_manager
 		}
 
 		// Compute average time taking per test run (in seconds)
-		$avg_test_run_time = array_sum($test_run_request->test_run_times) / count($test_run_request->test_run_times);
+		$avg_test_run_time = pts_math::arithmetic_mean($test_run_request->test_run_times);
 
 		// First make sure this test doesn't take too long to run where we don't want dynamic handling
 		if(floor($avg_test_run_time / 60) > $this->dynamic_run_count_on_length_or_less)
@@ -146,7 +146,7 @@ class pts_test_run_manager
 
 		// Determine if results are statistically significant, otherwise up the run count
 		$std_dev = pts_math::percent_standard_deviation($active_result_buffer->results);
-		if($std_dev >= $this->dynamic_run_count_std_deviation_threshold)
+		if($std_dev >= $this->dynamic_run_count_std_deviation_threshold || pts_math::values_outside_three_sigma_limits($active_result_buffer->results))
 		{
 			static $test_run_pos; // keeping track of run index for what test in the run queue we are at
 			static $run_std_devs; // an array of standard deviations up to this point for the current test

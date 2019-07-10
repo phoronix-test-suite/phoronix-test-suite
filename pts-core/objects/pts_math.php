@@ -22,6 +22,20 @@
 
 class pts_math
 {
+	public static function values_outside_three_sigma_limits($values)
+	{
+		$tsl = pts_math::three_sigma_limits($values);
+		$outside_limits = array();
+		foreach($values as $num)
+		{
+			if($num < $tsl[0] || $num > $tsl[1])
+			{
+				$outside_limits[] = $num;
+			}
+		}
+
+		return empty($outside_limits) ? false : $outside_limits;
+	}
 	public static function three_sigma_limits($values, $p = 2)
 	{
 		$avg = pts_math::arithmetic_mean($values);
