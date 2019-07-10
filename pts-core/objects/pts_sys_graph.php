@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2013 - 2016, Phoronix Media
-	Copyright (C) 2013 - 2016, Michael Larabel
+	Copyright (C) 2013 - 2019, Phoronix Media
+	Copyright (C) 2013 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -178,7 +178,7 @@ class pts_sys_graph
 		$title_extra = null;
 		if(max($graph_data) < 1000 && $this->computed['graph_area_width'] >= 500)
 		{
-			$title_extra .= ' (Min: ' . min($graph_data) . ' / Avg: ' . round(array_sum($graph_data) / count($graph_data)) . ' / Max: ' . max($graph_data) . ' / Last: ' . end($graph_data) . ')';
+			$title_extra .= ' (Min: ' . min($graph_data) . ' / Avg: ' . round(pts_math::arithmetic_mean($graph_data)) . ' / Max: ' . max($graph_data) . ' / Last: ' . end($graph_data) . ')';
 		}
 
 		$this->svg_dom->add_text_element($this->data['title'] . $title_extra, array('x' => $this->computed['graph_area_x_start'], 'y' => $this->computed['graph_area_y_end'] - 5, 'font-size' => $this->data['text_size'], 'fill' => $this->data['text_color'], 'text-anchor' => 'start', 'alignment-baseline' => 'above-edge', 'font-weight' => 'bold'));

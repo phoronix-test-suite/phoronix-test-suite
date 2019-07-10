@@ -77,7 +77,7 @@ class pts_math
 	public static function remove_outliers($values, $mag = 2)
 	{
 		$ret = array();
-		$mean = array_sum($values) / count($values);
+		$mean = pts_math::arithmetic_mean($values);
 		$std_dev = self::standard_deviation($values);
 		$outlier = $mag * $std_dev;
 		foreach($values as $i)
@@ -120,7 +120,7 @@ class pts_math
 		}
 
 		$standard_deviation = pts_math::standard_deviation($values);
-		$average_value = array_sum($values) / count($values);
+		$average_value = pts_math::arithmetic_mean($values);
 
 		return $average_value != 0 ? ($standard_deviation / $average_value * 100) : 0;
 	}

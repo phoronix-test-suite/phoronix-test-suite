@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2018, Phoronix Media
-	Copyright (C) 2008 - 2018, Michael Larabel
+	Copyright (C) 2008 - 2019, Phoronix Media
+	Copyright (C) 2008 - 2019, Michael Larabel
 	pts_LineGraph.php: The line graph object that extends pts_Graph.php.
 
 	This program is free software; you can redistribute it and/or modify
@@ -305,7 +305,7 @@ class pts_graph_lines extends pts_graph_core
 
 		$min_value = min($data_set);
 		$max_value = max($data_set);
-		$avg_value = array_sum($data_set) / count($data_set);
+		$avg_value = pts_math::arithmetic_mean($data_set);
 
 		return array($min_value, $avg_value, $max_value);
 	}

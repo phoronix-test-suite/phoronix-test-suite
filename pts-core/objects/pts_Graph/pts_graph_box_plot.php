@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2018, Phoronix Media
-	Copyright (C) 2008 - 2018, Michael Larabel
+	Copyright (C) 2008 - 2019, Phoronix Media
+	Copyright (C) 2008 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -87,7 +87,7 @@ class pts_graph_box_plot extends pts_graph_horizontal_bars
 				$px_bound_bottom = $px_bound_top + $bar_height;
 				$middle_of_bar = $px_bound_top + ($bar_height / 2);
 
-				$avg_value = round(array_sum($values) / count($values), 2);
+				$avg_value = round(pts_math::arithmetic_mean($values), 2);
 				$whisker_bottom = pts_math::find_percentile($values, 0.02);
 				$whisker_top = pts_math::find_percentile($values, 0.98);
 				$median = pts_math::find_percentile($values, 0.5);

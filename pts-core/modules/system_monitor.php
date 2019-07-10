@@ -610,7 +610,7 @@ class system_monitor extends pts_module_interface
 			$test_result = clone self::$successful_test_run_request;
 			$unit = 'Watt';
 
-			$res_average = array_sum($sensor_results) / count($sensor_results);
+			$res_average = pts_math::arithmetic_mean($sensor_results);
 			switch(phodevi::read_sensor_unit(self::$perf_per_sensor))
 			{
 				case 'Milliwatts':

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015 - 2018, Phoronix Media
-	Copyright (C) 2015 - 2018, Michael Larabel
+	Copyright (C) 2015 - 2019, Phoronix Media
+	Copyright (C) 2015 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -107,7 +107,7 @@ class pts_short_display_mode extends pts_concise_display_mode
 
 			if(count($values) > 1)
 			{
-				$avg = pts_math::set_precision(array_sum($values) / count($values), 2);
+				$avg = pts_math::set_precision(pts_math::arithmetic_mean($values), 2);
 				$min = pts_math::set_precision(min($values), 2);
 				$max = pts_math::set_precision(max($values), 2);
 				$end_print .= 'AVG: ' . $avg . ' (' . $test_result->test_profile->get_result_scale() . ') / ';

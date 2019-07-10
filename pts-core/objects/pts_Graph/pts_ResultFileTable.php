@@ -309,7 +309,7 @@ class pts_ResultFileTable extends pts_Table
 					{
 						$identifier = $buffer_item->get_result_identifier();
 						$values = pts_strings::comma_explode($buffer_item->get_result_value());
-						$avg_value = pts_math::set_precision(array_sum($values) / count($values), 2);
+						$avg_value = pts_math::set_precision(pts_math::arithmetic_mean($values), 2);
 						$result_table[$identifier][$result_counter] = new pts_graph_ir_value($avg_value);
 					}
 					break;

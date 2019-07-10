@@ -174,7 +174,7 @@ class pts_test_result_parser
 						$result_value = min($sensor_values);
 						break;
 					case 'AVG':
-						$result_value = array_sum($sensor_values) / count($sensor_values);
+						$result_value = pts_math::arithmetic_mean($sensor_values);
 						break;
 					case 'ALL':
 						$result_value = implode(',', $sensor_values);
@@ -1045,7 +1045,7 @@ class pts_test_result_parser
 					break;
 				case 'AVG_':
 					default:
-					$val = array_sum($frame_time_values) / count($frame_time_values);
+					$val = pts_math::arithmetic_mean($frame_time_values);
 					break;
 			}
 

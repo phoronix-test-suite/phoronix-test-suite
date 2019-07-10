@@ -218,7 +218,7 @@ class pts_ae_data
 					{
 						continue;
 					}
-					$component_data[$component][$related_component]['avg'] = round(array_sum($data) / count($data), ($peak > 60 ? 0 : 2));
+					$component_data[$component][$related_component]['avg'] = round(pts_math::arithmetic_mean($data), ($peak > 60 ? 0 : 2));
 					$component_data[$component][$related_component]['samples'] = count($data);
 					$component_data[$component][$related_component]['first_appeared'] = $component_dates[$component][$related_component]['first_appeared'];
 					$component_data[$component][$related_component]['last_appeared'] = $component_dates[$component][$related_component]['last_appeared'];
@@ -239,7 +239,7 @@ class pts_ae_data
 			$comparison_components = array_slice($comparison_components, 0, 60);
 			foreach($comparison_components as $component => &$values)
 			{
-				$values = round(array_sum($values) / count($values), ($peak > 60 ? 0 : 2));
+				$values = round(pts_math::arithmetic_mean($values), ($peak > 60 ? 0 : 2));
 			}
 
 			if($row['HigherIsBetter'] == '1')

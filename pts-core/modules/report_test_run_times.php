@@ -77,7 +77,7 @@ class report_test_run_times extends pts_module_interface
 	{
 		if(getenv('RUN_TIMES_ARE_A_BENCHMARK') && self::$successful_test_run_request && !empty(self::$successful_test_run_request->test_run_times))
 		{
-			$result = round(array_sum(self::$successful_test_run_request->test_run_times) / count(self::$successful_test_run_request->test_run_times), 2);
+			$result = round(pts_math::arithmetic_mean(self::$successful_test_run_request->test_run_times), 2);
 			if($result > 0)
 			{
 				// This copy isn't needed but it's shorter and from port from system_monitor where there can be multiple items tracked

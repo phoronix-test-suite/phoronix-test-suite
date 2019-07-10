@@ -105,8 +105,8 @@ class pts_test_result_buffer_item
 		{
 			$a = explode(',', $a);
 			$b = explode(',', $b);
-			$a = array_sum($a) / count($a);
-			$b = array_sum($b) / count($b);
+			$a = pts_math::arithmetic_mean($a);
+			$b = pts_math::arithmetic_mean($b);
 		}
 
 		if($a == $b)

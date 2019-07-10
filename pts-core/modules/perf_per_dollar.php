@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015 - 2018, Phoronix Media
-	Copyright (C) 2015 - 2018, Michael Larabel
+	Copyright (C) 2015 - 2019, Phoronix Media
+	Copyright (C) 2015 - 2019, Michael Larabel
 	perf_per_dollar.php: This module is derived from the system_monitor module
 
 	This program is free software; you can redistribute it and/or modify
@@ -206,7 +206,7 @@ class perf_per_dollar extends pts_module_interface
 		{
 			if(self::$COST_PERF_PER_DOLLAR > 0)
 			{
-				$avg = array_sum(self::$perf_per_dollar_collection) / count(self::$perf_per_dollar_collection);
+				$avg = pts_math::arithmetic_mean(self::$perf_per_dollar_collection);
 				$avg_perf_dollar = $avg / self::$COST_PERF_PER_DOLLAR;
 				$test_profile = new pts_test_profile();
 				$test_result = new pts_test_result($test_profile);

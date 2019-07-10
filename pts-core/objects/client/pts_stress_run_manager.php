@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015 - 2018, Phoronix Media
-	Copyright (C) 2015 - 2018, Michael Larabel
+	Copyright (C) 2015 - 2019, Phoronix Media
+	Copyright (C) 2015 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -493,7 +493,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 			{
 				$table[] = array(pts_client::cli_just_bold($sensor_name . ': '),
 					pts_math::set_precision(min($sensor_data), 2),
-					pts_math::set_precision(array_sum($sensor_data) / count($sensor_data), 2),
+					pts_math::set_precision(pts_math::arithmetic_mean($sensor_data), 2),
 					pts_math::set_precision($max_val, 2),
 					$this->sensor_data_archived_units[$sensor_name]);
 			}

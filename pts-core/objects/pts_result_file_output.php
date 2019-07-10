@@ -378,7 +378,7 @@ class pts_result_file_output
 					// LINE GRAPH
 					$values = explode(',', $val);
 					$formatted_min = pts_math::set_precision(min($values), $precision);
-					$formatted_avg = pts_math::set_precision(array_sum($values) / count($values), $precision);
+					$formatted_avg = pts_math::set_precision(pts_math::arithmetic_mean($values), $precision);
 					$min_value_offset = $largest_min_length - strlen($formatted_min);
 					$min_value_offset = $min_value_offset > 0 ? str_repeat(' ', $min_value_offset) : null;
 					$avg_value_offset = $max_value_length - strlen($formatted_avg);

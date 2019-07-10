@@ -536,7 +536,7 @@ class pts_test_result
 				$raw = pts_math::remove_outliers($raw, $mag);
 				if(count($raw) > 0)
 				{
-					$this->test_result_buffer->buffer_items[$k]->reset_result_value(array_sum($raw) / count($raw));
+					$this->test_result_buffer->buffer_items[$k]->reset_result_value(pts_math::arithmetic_mean($raw));
 					$this->test_result_buffer->buffer_items[$k]->reset_raw_value(implode(':', $raw));
 				}
 			}

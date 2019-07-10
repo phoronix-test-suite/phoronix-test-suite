@@ -381,7 +381,7 @@ class pts_web_display_mode implements pts_display_mode_interface
 
 			if(count($values) > 1)
 			{
-				$avg = pts_math::set_precision(array_sum($values) / count($values), 2);
+				$avg = pts_math::set_precision(pts_math::arithmetic_mean($values), 2);
 				$min = pts_math::set_precision(min($values), 2);
 				$max = pts_math::set_precision(max($values), 2);
 				$end_print .= $this->tab . $this->tab . 'Average: ' . $avg . ' (' . $test_result->test_profile->get_result_scale() . ')' . PHP_EOL;

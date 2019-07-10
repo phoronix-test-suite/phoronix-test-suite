@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2013 - 2018, Phoronix Media
-	Copyright (C) 2013 - 2018, Michael Larabel
+	Copyright (C) 2013 - 2019, Phoronix Media
+	Copyright (C) 2013 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -68,7 +68,7 @@ class debug_self_test implements pts_option_interface
 		$longest_c = max(array_map('strlen', array_keys($individual_times)));
 		foreach($individual_times as $component => $times)
 		{
-			echo strtoupper($component) . ': ' . (str_repeat(' ', $longest_c - strlen($component))) . pts_math::set_precision(round(array_sum($times) / count($times), 3), 3) . ' seconds' . PHP_EOL;
+			echo strtoupper($component) . ': ' . (str_repeat(' ', $longest_c - strlen($component))) . pts_math::set_precision(round(pts_math::arithmetic_mean($times), 3), 3) . ' seconds' . PHP_EOL;
 		}
 
 		echo PHP_EOL . 'TOTAL ELAPSED TIME: ' . (str_repeat(' ', $longest_c - strlen('ELAPSED TIME'))) . round($finish - $start, 3) . ' seconds';
