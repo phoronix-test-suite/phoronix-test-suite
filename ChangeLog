@@ -9,6 +9,7 @@ phodevi: Support reading sys.power via IPMI PS1_Input_Power/PS2_Input_Power
 pts-core: Improve MultiMatch in test result parser
 pts_Graph: Add side-by-side 2-way comparison graph
 pts-core: Add IGNORE_RUNS environment variable
+pts-core: Add result-file-confidence sub-command
 
 Phoronix Test Suite 8.8.1-Hvaler
 30 May 2019

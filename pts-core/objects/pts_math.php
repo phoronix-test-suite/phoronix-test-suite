@@ -22,6 +22,19 @@
 
 class pts_math
 {
+	public static function three_sigma_limits($values, $p = 2)
+	{
+		$avg = pts_math::arithmetic_mean($values);
+		$variance = pts_math::variance($values, $avg);
+		$std_dev = sqrt($variance);
+		$std_dev_3x = $std_dev * 3;
+
+		return array(round($avg - $std_dev_3x, $p), round($avg + $std_dev_3x, $p));
+	}
+	public static function variance($values, $avg)
+	{
+		return array_sum(array_map(function($v) use ($avg) { return pow($v - $avg, 2); }, $values)) / count($values);
+	}
 	public static function arithmetic_mean($values)
 	{
 		return array_sum($values) / count($values);
@@ -100,7 +113,20 @@ class pts_math
 	public static function get_precision($number)
 	{
 		// number of decimal digits
-		return strlen(substr(strrchr($number, '.'), 1));
+		if(is_array($number))
+		{
+			$max_precision = 0;
+			foreach($number as $n)
+			{
+				$max_precision = max($max_precision, pts_math::get_precision($n));
+			}
+
+			return $max_precision;
+		}
+		else
+		{
+			return strlen(substr(strrchr($number, '.'), 1));
+		}
 	}
 	public static function set_precision($number, $precision = 2)
 	{

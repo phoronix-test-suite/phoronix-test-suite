@@ -182,6 +182,98 @@ class pts_result_file_output
 
 		return $result_output;
 	}
+	public static function result_file_confidence_text(&$result_file, $terminal_width = 80, $stylize_output = false)
+	{
+		$result_output = null;
+
+		$result_output .= $result_file->get_title() . PHP_EOL;
+		$result_output .= $result_file->get_description() . PHP_EOL . PHP_EOL . PHP_EOL;
+
+		$system_identifiers = array();
+		$system_hardware = array();
+		$system_software = array();
+		foreach($result_file->get_systems() as $system)
+		{
+			$system_identifiers[] = $system->get_identifier();
+			$system_hardware[] = $system->get_hardware();
+			$system_software[] = $system->get_software();
+		}
+
+		for($i = 0; $i < count($system_identifiers); $i++)
+		{
+			$result_output .= $system_identifiers[$i] . ': ' . PHP_EOL . PHP_EOL;
+			$result_output .= "\t" . $system_hardware[$i] . PHP_EOL . PHP_EOL . "\t" . $system_software[$i] . PHP_EOL . PHP_EOL;
+		}
+
+		foreach($result_file->get_result_objects() as $result_object)
+		{
+			$raw_values = array();
+
+			foreach($result_object->test_result_buffer as &$buffers)
+			{
+				foreach($buffers as &$buffer_item)
+				{
+					$v = $buffer_item->get_result_value();
+					$a = $buffer_item->get_result_raw_array();
+					if(!is_numeric($v) || empty($v) || empty($a) || strpos($v, ',') !== false)
+					{
+						continue;
+					}
+					if(pts_math::arithmetic_mean($a) == 0)
+					{
+						continue;
+					}
+					$raw_values[$buffer_item->get_result_identifier()] = $a;
+				}
+			}
+
+			if(empty($raw_values))
+			{
+				continue;
+			}
+
+			$result_output .= PHP_EOL . '    ' . trim($result_object->test_profile->get_title() . ' ' . $result_object->test_profile->get_app_version());
+			$result_output .= PHP_EOL . '    ' . $result_object->get_arguments_description();
+
+			$identifiers = $result_object->test_result_buffer->get_identifiers();
+			$longest_identifier_length = strlen(pts_strings::find_longest_string($identifiers)) + 1;
+			foreach($raw_values as $identifier => $raw)
+			{
+				$passes = true;
+				$p = pts_math::get_precision($raw);
+				$tsl = pts_math::three_sigma_limits($raw, $p);
+				$std_dev = round(pts_math::percent_standard_deviation($raw), $p);
+				$add_output = PHP_EOL . '    ' . $identifier . PHP_EOL;
+				$add_output .= '    ' . '    ' . 'Values: ' . implode(', ', $raw) . PHP_EOL;
+				$add_output .= '    ' . '    ' . 'Arithmetic Mean: ' . round(pts_math::arithmetic_mean($raw), $p) . PHP_EOL;
+				$add_output .= '    ' . '    ' . 'Std Deviation: ' . $std_dev . '%' . PHP_EOL;
+				$add_output .= '    ' . '    ' . 'Three-Sigma Limits: ' . implode(' ', $tsl) . PHP_EOL;
+				if($std_dev > 3.0)
+				{
+					$passes = false;
+				}
+				$outside_limits = array();
+				foreach($raw as $num)
+				{
+					if($num < $tsl[0] || $num > $tsl[1])
+					{
+						$outside_limits[] = $num;
+					}
+				}
+				if(!empty($outside_limits))
+				{
+					$passes = false;
+					$add_output .= '    ' . '    ' . '    Results Outside Limits: ' . implode(', ', $outside_limits) . PHP_EOL;
+				}
+
+				$result_output .= pts_client::cli_colored_text($add_output, ($passes ? 'green' : 'red'));
+			}
+
+			//$result_output .= PHP_EOL . PHP_EOL;
+		}
+
+		return $result_output;
+	}
 	public static function test_result_to_text($result_object, $terminal_width = 80, $stylize_output = false, $highlight_result = null, $show_title = true, $always_force_title = false)
 	{
 		$result_output = null;
