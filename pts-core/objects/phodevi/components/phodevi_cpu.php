@@ -647,7 +647,7 @@ class phodevi_cpu extends phodevi_device_interface
 					}
 				}
 
-				if(!empty(new_info))
+				if(!empty($new_info))
 				{
 					$info = trim($new_info);
 				}
