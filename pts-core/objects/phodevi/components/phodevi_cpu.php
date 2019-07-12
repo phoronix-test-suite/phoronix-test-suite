@@ -553,10 +553,11 @@ class phodevi_cpu extends phodevi_device_interface
 			}
 		}
 
-		if(empty($info))
+		if(empty($info) || strpos($info, 'rev ') !== false)
 		{
 			if(phodevi::is_linux())
 			{
+				$new_info = null;
 				$implementer = phodevi_linux_parser::read_cpuinfo_single('CPU implementer');
 				if($implementer == '0x41' || $implementer == '0x50')
 				{
@@ -564,60 +565,60 @@ class phodevi_cpu extends phodevi_device_interface
 					switch($architecture)
 					{
 						case '7':
-							$info = 'ARMv7';
+							$new_info = 'ARMv7';
 							break;
 						case '8':
 						case 'AArch64':
-							$info = 'ARMv8';
+							$new_info = 'ARMv8';
 							break;
 					}
 					$part = phodevi_linux_parser::read_cpuinfo_single('CPU part');
 					switch($part)
 					{
 						case '0xc07':
-							$info .= ' Cortex-A7';
+							$new_info .= ' Cortex-A7';
 							break;
 						case '0xc20':
-							$info .= ' Cortex-M7';
+							$new_info .= ' Cortex-M7';
 							break;
 						case '0xc09':
-							$info .= ' Cortex-A9';
+							$new_info .= ' Cortex-A9';
 							break;
 						case '0xc0f':
-							$info .= ' Cortex-A15';
+							$new_info .= ' Cortex-A15';
 							break;
 						case '0xc0e':
-							$info .= ' Cortex-A12';
+							$new_info .= ' Cortex-A12';
 							break;
 						case '0xd01':
-							$info .= ' Cortex-A32';
+							$new_info .= ' Cortex-A32';
 							break;
 						case '0xd03':
-							$info .= ' Cortex-A53';
+							$new_info .= ' Cortex-A53';
 							break;
 						case '0xd05':
-							$info .= ' Cortex-A55';
+							$new_info .= ' Cortex-A55';
 							break;
 						case '0xd07':
-							$info .= ' Cortex-A57';
+							$new_info .= ' Cortex-A57';
 							break;
 						case '0xd08':
-							$info .= ' Cortex-A72';
+							$new_info .= ' Cortex-A72';
 							break;
 						case '0xd09':
-							$info .= ' Cortex-A73';
+							$new_info .= ' Cortex-A73';
 							break;
 						case '0xd0a':
-							$info .= ' Cortex-A75';
+							$new_info .= ' Cortex-A75';
 							break;
 						case '0xd13':
-							$info .= ' Cortex-R52';
+							$new_info .= ' Cortex-R52';
 							break;
 						case '0xd20':
-							$info .= ' Cortex-M23';
+							$new_info .= ' Cortex-M23';
 							break;
 						case '0xd21':
-							$info .= ' Cortex-M33';
+							$new_info .= ' Cortex-M33';
 							break;
 					}
 				}
@@ -625,28 +626,31 @@ class phodevi_cpu extends phodevi_device_interface
 				if(strpos(phodevi::$vfs->dmesg, 'Ampere eMAG') !== false)
 				{
 					// Haven't found a better way to detect Ampere eMAG as not exposed via cpuinfo, etc
-					$info = 'Ampere eMAG ' . $info;
+					$new_info = 'Ampere eMAG ' . $new_info;
 				}
 				else if(strpos(phodevi::$vfs->dmesg, 'thunderx') !== false || strpos(phodevi::$vfs->dmesg, 'Cavium erratum') !== false)
 				{
 					// Haven't found a better way to detect ThunderX as not exposed via cpuinfo, etc
-					$info = 'Cavium ThunderX ' . $info;
+					$new_info = 'Cavium ThunderX ' . $new_info;
 				}
 				else if(strpos(phodevi::$vfs->dmesg, 'rockchip-cpuinfo') !== false)
 				{
 					// Haven't found a better way to detect Rockchip as not exposed via cpuinfo, etc
-					$info = 'Rockchip ' . $info;
+					$new_info = 'Rockchip ' . $new_info;
 				}
 				else if(is_file('/sys/devices/system/cpu/cpu0/cpufreq/scaling_driver'))
 				{
 					$scaling_driver = file_get_contents('/sys/devices/system/cpu/cpu0/cpufreq/scaling_driver');
 					if(strpos($scaling_driver, 'meson_') !== false)
 					{
-						$info = 'Amlogic ' . $info;
+						$new_info = 'Amlogic ' . $new_info;
 					}
 				}
 
-				$info = trim($info);
+				if(!empty(new_info))
+				{
+					$info = trim($new_info);
+				}
 
 				if(empty($info))
 				{

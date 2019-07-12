@@ -247,7 +247,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 				$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($graph, $result_file, $extra_attributes) . '</p>';
 			}
 		}
-		else
+		else if(!$result_file->is_multi_way_comparison())
 		{
 			foreach(array('', 'Per Watt', 'Per Dollar') as $selector)
 			{
