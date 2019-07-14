@@ -55,8 +55,17 @@ class pts_math
 	}
 	public static function geometric_mean($values)
 	{
-		// default
-		return pow(array_product($values), (1 / count($values)));
+		// simple code hits INF issue on large arrays
+		//return pow(array_product($values), (1 / count($values)));
+		$power = 1 / count($values);
+		$chunk_r = array();
+
+		foreach(array_chunk($values, 8) as $chunk)
+		{
+			$chunk_r[] = pow(array_product($chunk), $power);
+		}
+
+		return array_product($chunk_r);
 	}
 	public static function harmonic_mean($values)
 	{
