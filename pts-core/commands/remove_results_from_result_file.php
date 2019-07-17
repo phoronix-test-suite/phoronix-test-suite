@@ -60,7 +60,7 @@ class remove_results_from_result_file implements pts_option_interface
 			if($do_save)
 			{
 				pts_client::save_test_result($result_file->get_file_location(), $result_file->get_xml());
-				pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $r[0] . '/index.html');
+				pts_client::display_result_view($result_file, false);
 			}
 		}
 	}

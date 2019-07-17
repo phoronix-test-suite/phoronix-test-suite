@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 pts-core: Add 'expat' as possible external dependency
 pts-core: Various PDF report improvements
 pts-core: Also dynamically increase run count if any results outside 3-sigma limit
+pts-core: Add compare-results-two-way sub-command
 pts_Graph: Fix for displaying line graphs with very small values
 phodevi: Support reading sys.power via IPMI PS1_Input_Power/PS2_Input_Power
 phodevi: More robust Arm CPU model detection improvements

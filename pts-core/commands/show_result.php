@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2018, Phoronix Media
-	Copyright (C) 2008 - 2018, Michael Larabel
+	Copyright (C) 2008 - 2019, Phoronix Media
+	Copyright (C) 2008 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -40,15 +40,7 @@ class show_result implements pts_option_interface
 			pts_client::generate_result_file_graphs($r[0], PTS_SAVE_RESULTS_PATH . $r[0] . '/');
 		}
 
-		if(pts_client::read_env('DISPLAY') == false)
-		{
-			$rf = new pts_result_file($r[0]);
-			echo pts_result_file_output::result_file_to_text($rf, pts_client::terminal_width());
-		}
-		else
-		{
-			pts_client::display_web_page($URL . '/index.html', null, false, true);
-		}
+		pts_client::display_result_view($r[0], false);
 	}
 }
 

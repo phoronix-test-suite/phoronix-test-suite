@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011 - 2018, Phoronix Media
-	Copyright (C) 2011 - 2018, Michael Larabel
+	Copyright (C) 2011 - 2019, Phoronix Media
+	Copyright (C) 2011 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -97,7 +97,7 @@ class interactive implements pts_option_interface
 					$run_manager->standard_run($tests_to_run);
 					if($run_manager != false)
 					{
-						pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $run_manager->get_file_name() . '/index.html', null, true, true);
+						pts_client::display_result_view($run_manager->result_file, false);
 					}
 					break;
 				case 'RUN_STRESS_TEST':

@@ -32,6 +32,7 @@ class pts_client
 	protected static $full_output = false;
 	protected static $override_pts_env_vars = array();
 	protected static $sent_command = null;
+	public static $web_result_viewer_active = false;
 
 	public static function create_lock($lock_file)
 	{
@@ -1321,7 +1322,7 @@ class pts_client
 		if($generated && $full_process_string)
 		{
 			echo PHP_EOL . $full_process_string . PHP_EOL;
-			pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $result_file_identifier . '/index.html');
+			pts_client::display_result_view($result_file_identifier, false);
 		}
 
 		return $generated;
@@ -1805,6 +1806,31 @@ class pts_client
 		}
 
 		return $cache[$executable];
+	}
+	public static function display_result_view($result_file, $auto_open = false, $prompt_text = null)
+	{
+		if(!is_object($result_file))
+		{
+			$result_file = new pts_result_file($result_file);
+		}
+
+		if(!phodevi::is_display_server_active())
+		{
+			$prompt_text = !empty($prompt_text) ? $prompt_text : 'Do you want to view the test results?';
+			$txt_results = $auto_open || pts_user_io::prompt_bool_input($prompt_text, true);
+			if($txt_results)
+			{
+				echo pts_result_file_output::result_file_to_text($result_file, pts_client::terminal_width());
+			}
+		}
+		else if(pts_client::$web_result_viewer_active && pts_network::http_get_contents('http://127.0.0.1:' . pts_client::$web_result_viewer_active . '/PTS', false, false, false, false, 2) == 'PTS')
+		{
+			pts_client::display_web_page('http://127.0.0.1:' . pts_client::$web_result_viewer_active . '/result/' . $result_file->get_identifier(), $prompt_text, true, $auto_open);
+		}
+		else
+		{
+			pts_client::display_web_page(dirname($result_file->get_file_location()) . '/index.html', $prompt_text, true, $auto_open);
+		}
 	}
 	public static function display_web_page($URL, $alt_text = null, $default_open = true, $auto_open = false)
 	{

@@ -1083,22 +1083,18 @@ class pts_test_run_manager
 				{
 					if($this->batch_mode['OpenBrowser'])
 					{
-						pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/index.html', null, true, true);
+						pts_client::display_result_view($this->result_file, true, null);
 					}
 				}
 				else
 				{
 					if(!phodevi::is_display_server_active() && !defined('PHOROMATIC_PROCESS'))
 					{
-						$txt_results = pts_user_io::prompt_bool_input('Do you want to view the text results of the testing', true);
-						if($txt_results)
-						{
-							echo pts_result_file_output::result_file_to_text($this->result_file, pts_client::terminal_width());
-						}
+						pts_client::display_result_view($this->result_file, false, 'Do you want to view the text results of the testing');
 					}
 					else
 					{
-						pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/index.html', null, true, false);
+						pts_client::display_result_view($this->result_file, false, '');
 					}
 				}
 			}

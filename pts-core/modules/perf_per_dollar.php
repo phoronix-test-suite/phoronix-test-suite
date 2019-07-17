@@ -88,7 +88,7 @@ class perf_per_dollar extends pts_module_interface
 			}
 		}
 		pts_client::save_test_result($result_file->get_file_location(), $result_file->get_xml());
-		pts_client::display_web_page(PTS_SAVE_RESULTS_PATH . $r[0] . '/index.html');
+		pts_client::display_result_view($r[0], false);
 	}
 	public static function __run_manager_setup(&$test_run_manager)
 	{
