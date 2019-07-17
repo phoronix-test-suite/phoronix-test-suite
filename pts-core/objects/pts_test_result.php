@@ -321,7 +321,7 @@ class pts_test_result
 			{
 				foreach($keys as $k)
 				{
-					if(strpos($this->test_result_buffer->buffer_items[$k]->get_result_identifier(), $normalize_against) !== false)
+					if(strpos($this->test_result_buffer->buffer_items[$k]->get_result_identifier(), strval($normalize_against)) !== false)
 					{
 						$divide_value = $this->test_result_buffer->buffer_items[$k]->get_result_value();
 						break;

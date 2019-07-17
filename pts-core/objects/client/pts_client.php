@@ -443,7 +443,16 @@ class pts_client
 			return $str;
 		}
 
-		return "\e[3m$str\e[23m";
+		return "\e[3m$str\e[0m";
+	}
+	public static function cli_just_underline($str)
+	{
+		if(!self::supports_colored_text_output())
+		{
+			return $str;
+		}
+
+		return "\e[4m$str\e[0m";
 	}
 	public static function save_test_result($save_to = null, $save_results = null, $render_graphs = true, $result_identifier = null)
 	{
