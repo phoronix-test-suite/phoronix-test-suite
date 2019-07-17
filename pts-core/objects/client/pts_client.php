@@ -180,7 +180,7 @@ class pts_client
 	{
 		// Process initially called when PTS starts up
 		// Check for modules to auto-load from the configuration file
-		$load_modules = pts_config::read_user_config('PhoronixTestSuite/Options/Modules/LoadModules', null);
+		$load_modules = pts_config::read_user_config('PhoronixTestSuite/Options/Modules/AutoLoadModules', null);
 
 		if(!empty($load_modules))
 		{

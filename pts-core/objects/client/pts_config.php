@@ -102,7 +102,7 @@ class pts_config
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/General/FullOutput', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/General/ColoredConsole', $read_config);
 
-		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Modules/LoadModules', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Modules/AutoLoadModules', $read_config);
 
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Installation/RemoveDownloadFiles', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Installation/SearchMediaForCache', $read_config);

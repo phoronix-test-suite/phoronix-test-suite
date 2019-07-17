@@ -480,6 +480,9 @@ User Options
 <h3>compare-results-to-baseline<em>  [Test Result] [Test Result]</em>
 </h3>
 <p>This option will allows you to specify a result as a baseline (first parameter) and a second result file (second parameter) that will offer some analysis for showing how the second result compares to the first in matching tests.</p>
+<h3>compare-results-two-way<em>  [Test Result]</em>
+</h3>
+<p>This option will allows you to specify a result file and from there to compare two individual runs within that result file for looking at wins/losses and other metrics in a head-to-head type comparison.</p>
 <h3>edit-result-file<em>  [Test Result]</em>
 </h3>
 <p>This option is used if you wish to edit the title and description of an existing result file.</p>
@@ -510,6 +513,9 @@ User Options
 <h3>reorder-result-file<em>  [Test Result]</em>
 </h3>
 <p>This option is used if you wish to manually change the order in which test results are shown in the Phoronix Test Suite Results Viewer and the contained graphs. The user must specify a saved results file and then they will be prompted to select the results identifiers one at a time in the order they would like them to be displayed from left to right.</p>
+<h3>result-file-confidence<em>  [Test Result]</em>
+</h3>
+<p>This option will read a saved test results file and display various statistics on the confidence of the results with the standard deviation, three-sigma values, and other metrics while color-coding "passing" results in green.</p>
 <h3>result-file-raw-to-csv<em>  [Test Result]</em>
 </h3>
 <p>This option will read a saved test results file and output the raw result file run data to a CSV file. This raw (individual) result file output is intended for data analytic purposes where the result-file-to-csv is more end-user-ready.</p>
@@ -556,7 +562,7 @@ User Options
 <h1>Modules</h1>
 <h3>auto-load-module<em>  </em>
 </h3>
-<p>This option can be used for easily adding a module to the LoadModules list in the Phoronix Test Suite user configuration file. That list controls what PTS modules are automatically loaded on start-up of the Phoronix Test Suite.</p>
+<p>This option can be used for easily adding a module to the AutoLoadModules list in the Phoronix Test Suite user configuration file. That list controls what PTS modules are automatically loaded on start-up of the Phoronix Test Suite.</p>
 <h3>list-modules<em>  </em>
 </h3>
 <p>This option will list all of the available Phoronix Test Suite modules on this system.</p>
@@ -571,7 +577,7 @@ User Options
 <p>This option can be used for debugging a Phoronix Test Suite module.</p>
 <h3>unload-module<em>  </em>
 </h3>
-<p>This option can be used for easily removing a module from the LoadModules list in the Phoronix Test Suite user configuration file. That list controls what modules are automatically loaded on start-up of the Phoronix Test Suite.</p>
+<p>This option can be used for easily removing a module from the AutoLoadModules list in the Phoronix Test Suite user configuration file. That list controls what modules are automatically loaded on start-up of the Phoronix Test Suite.</p>
 <h1>User Configuration</h1>
 <h3>enterprise-setup<em>  </em>
 </h3>
@@ -592,11 +598,15 @@ User Options
 <h3>start-phoromatic-server<em>  </em>
 </h3>
 <p>Start the Phoromatic web server for controlling local Phoronix Test Suite client systems to facilitate automated and repeated test orchestration and other automated features targeted at the enterprise.</p>
+<h1>Result Viewer</h1>
+<h3>start-result-viewer<em>  </em>
+</h3>
+<p>Start the web-based result viewer.</p>
 <hr style="height: 50px; border: 0;"><a name="ModuleOptions%0A"></a><h1>
 
 Module Options
 </h1>
-<p>The following list is the modules included with the Phoronix Test Suite that are intended to extend the functionality of pts-core. Some of these options have commands that can be run directly in a similiar manner to the other Phoronix Test Suite user commands. Some modules are just meant to be loaded directly by adding the module name to the LoadModules tag in ~/.phoronix-test-suite/user-config.xml or via the PTS_MODULES environment variable. A list of available modules is also available by running <em>phoronix-test-suite list-modules.</em></p><hr>
+<p>The following list is the modules included with the Phoronix Test Suite that are intended to extend the functionality of pts-core. Some of these options have commands that can be run directly in a similiar manner to the other Phoronix Test Suite user commands. Some modules are just meant to be loaded directly by adding the module name to the AutoLoadModules tag in ~/.phoronix-test-suite/user-config.xml or via the PTS_MODULES environment variable. A list of available modules is also available by running <em>phoronix-test-suite list-modules.</em></p><hr>
 <h2>Backup Creation + Restore</h2>
 <p>This is a module for creating backups of the Phoronix Test Suite / Phoromatic and allows for restoring of created backups. The backup will be in ZIP or TAR format. If only a path is specified, the file-name will be auto-generated with a current time-stamp.</p>
 <p>phoronix-test-suite backup.create</p>
@@ -616,6 +626,8 @@ Module Options
 <h2>Linux Perf Framework Reporter</h2>
 <p>Setting LINUX_PERF=1 will auto-load and enable this Phoronix Test Suite module. The module also depends upon running a modern Linux kernel (supporting perf) and that the perf binary is available via standard system paths.</p>
 <p>This module utilizes the following environmental variables: LINUX_PERF.</p>
+<h2>Dynamic Result Viewer</h2>
+<p>This module pre-loads the HTTP dynamic result viewer for Phoronix Test Suite data.</p>
 <h2>Log Exporter</h2>
 <p>This module allows for easily exporting test run logs and system logs to external locations via specifying the directory paths via the COPY_TEST_RUN_LOGS_TO and COPY_SYSTEM_LOGS_TO environment variables.</p>
 <p>This module utilizes the following environmental variables: COPY_TEST_RUN_LOGS_TO, COPY_SYSTEM_LOGS_TO.</p>
@@ -798,6 +810,8 @@ Configuration
 <p>This is similar to the FORCE_TIMES_TO_RUN option but will only be used if the test profile's run count is less than this defined value.</p>
 <p><strong>FORCE_MIN_TIMES_TO_RUN_CUTOFF</strong></p>
 <p>When used in conjunction with FORCE_MIN_TIMES_TO_RUN, the override value will only be applied to test profiles where its average run-time length (in minutes) is less than the value specified by FORCE_MIN_TIMES_TO_RUN_CUTOFF.</p>
+<p><strong>IGNORE_RUNS</strong></p>
+<p>IGNORE_RUNS can be passed a comma-separated list of runs to skip on each benchmark. For example, IGNORE_RUNS=1 would always drop the first run from being recorded.</p>
 <p><strong>NO_FILE_HASH_CHECKS</strong></p>
 <p>To disable MD5/SHA256 check-sums from being checked when downloading test files, set this variable to 1. This variable used to be known as <em>NO_MD5_CHECKS</em>, which is still honored but was changed to <em>NO_FILE_HASH_CHECKS</em> to reflect other kind of file hash sum checks.</p>
 <p><strong>NO_HTTPS</strong></p>
@@ -1102,93 +1116,6 @@ Virtual Test Suites
 <h3>Smp Tests<em>  git/smp</em>
 </h3>
 <p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing smp.</p>
-<h3>All PTS Tests<em>  pts/all</em>
-</h3>
-<p>This is a collection of all test profiles found within the specified OpenBenchmarking.org repository.</p>
-<h3>Installed Tests<em>  pts/installed</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository that are already installed on the system under test.</p>
-<h3>Every PTS Test<em>  pts/everything</em>
-</h3>
-<p>This is a collection of every test profile found within the specified OpenBenchmarking.org repository, including unsupported tests.</p>
-<h3>Linux Operating System Tests<em>  pts/linux</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Linux Operating System.</p>
-<h3>Solaris Operating System Tests<em>  pts/solaris</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Solaris Operating System.</p>
-<h3>BSD Operating System Tests<em>  pts/bsd</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the BSD Operating System.</p>
-<h3>MacOSX Operating System Tests<em>  pts/macosx</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the MacOSX Operating System.</p>
-<h3>Windows Operating System Tests<em>  pts/windows</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Windows Operating System.</p>
-<h3>Hurd Operating System Tests<em>  pts/hurd</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Hurd Operating System.</p>
-<h3>System Subsystem Tests<em>  pts/system</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the System sub-system.</p>
-<h3>Processor Subsystem Tests<em>  pts/processor</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Processor sub-system.</p>
-<h3>Graphics Subsystem Tests<em>  pts/graphics</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Graphics sub-system.</p>
-<h3>Other Subsystem Tests<em>  pts/other</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Other sub-system.</p>
-<h3>Utility Tests<em>  pts/utility</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Utility software test.</p>
-<h3>Simulator Tests<em>  pts/simulator</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Simulator software test.</p>
-<h3>Scientific Tests<em>  pts/scientific</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Scientific software test.</p>
-<h3>Benchmark Tests<em>  pts/benchmark</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Benchmark software test.</p>
-<h3>Application Tests<em>  pts/application</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Application software test.</p>
-<h3>Game Tests<em>  pts/game</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Game software test.</p>
-<h3>Smp Tests<em>  pts/smp</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing smp.</p>
-<h3>Cuda Tests<em>  pts/cuda</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing cuda.</p>
-<h3>Openmp Tests<em>  pts/openmp</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing openmp.</p>
-<h3>Python Tests<em>  pts/python</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing python.</p>
-<h3>Go Tests<em>  pts/go</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing go.</p>
-<h3>Mpi Tests<em>  pts/mpi</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing mpi.</p>
-<h3>Vdpau Tests<em>  pts/vdpau</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing vdpau.</p>
-<h3>Video Tests<em>  pts/video</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing video.</p>
-<h3>Responsiveness Tests<em>  pts/responsiveness</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing responsiveness.</p>
-<h3>Openmpi Tests<em>  pts/openmpi</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing openmpi.</p>
 <h3>All WINDOWS Tests<em>  windows/all</em>
 </h3>
 <p>This is a collection of all test profiles found within the specified OpenBenchmarking.org repository.</p>

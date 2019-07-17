@@ -233,6 +233,9 @@ This option is used if you wish to automatically attempt to sort the results by 
 .B compare-results-to-baseline [Test Result] [Test Result]
 This option will allows you to specify a result as a baseline (first parameter) and a second result file (second parameter) that will offer some analysis for showing how the second result compares to the first in matching tests.
 .TP
+.B compare-results-two-way [Test Result]
+This option will allows you to specify a result file and from there to compare two individual runs within that result file for looking at wins/losses and other metrics in a head-to-head type comparison.
+.TP
 .B edit-result-file [Test Result]
 This option is used if you wish to edit the title and description of an existing result file.
 .TP
@@ -262,6 +265,9 @@ This option is used if you wish to change the name of the saved name of a result
 .TP
 .B reorder-result-file [Test Result]
 This option is used if you wish to manually change the order in which test results are shown in the Phoronix Test Suite Results Viewer and the contained graphs. The user must specify a saved results file and then they will be prompted to select the results identifiers one at a time in the order they would like them to be displayed from left to right.
+.TP
+.B result-file-confidence [Test Result]
+This option will read a saved test results file and display various statistics on the confidence of the results with the standard deviation, three-sigma values, and other metrics while color-coding "passing" results in green.
 .TP
 .B result-file-raw-to-csv [Test Result]
 This option will read a saved test results file and output the raw result file run data to a CSV file. This raw (individual) result file output is intended for data analytic purposes where the result-file-to-csv is more end-user-ready.
@@ -308,7 +314,7 @@ This option will display the Phoronix Test Suite client version.
 .TP
 .SH MODULES
 .B auto-load-module
-This option can be used for easily adding a module to the LoadModules list in the Phoronix Test Suite user configuration file. That list controls what PTS modules are automatically loaded on start-up of the Phoronix Test Suite.
+This option can be used for easily adding a module to the AutoLoadModules list in the Phoronix Test Suite user configuration file. That list controls what PTS modules are automatically loaded on start-up of the Phoronix Test Suite.
 .TP
 .B list-modules
 This option will list all of the available Phoronix Test Suite modules on this system.
@@ -323,7 +329,7 @@ This option will allow you to configure all available end-user options for a Pho
 This option can be used for debugging a Phoronix Test Suite module.
 .TP
 .B unload-module
-This option can be used for easily removing a module from the LoadModules list in the Phoronix Test Suite user configuration file. That list controls what modules are automatically loaded on start-up of the Phoronix Test Suite.
+This option can be used for easily removing a module from the AutoLoadModules list in the Phoronix Test Suite user configuration file. That list controls what modules are automatically loaded on start-up of the Phoronix Test Suite.
 .TP
 .SH USER CONFIGURATION
 .B enterprise-setup
@@ -342,6 +348,10 @@ This option can be used for resetting the Phoronix Test Suite user configuration
 This option can be used for setting an XML value in the Phoronix Test Suite user configuration file.
 .TP
 .SH PHOROMATIC
+.B start-phoromatic-server
+Start the Phoromatic web server for controlling local Phoronix Test Suite client systems to facilitate automated and repeated test orchestration and other automated features targeted at the enterprise.
+.TP
+.SH RESULT VIEWER
 .B n
 _
 .TP

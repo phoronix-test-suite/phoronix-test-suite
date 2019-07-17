@@ -29,7 +29,7 @@
 			<p>This option can be used to specify the IP address(es) and port(s) of any Phoromatic Servers you wish to connect to for obtaining cached data, connecting to Phoromatic as a client test system, etc. The Phoronix Test Suite will attempt zero-conf network discovery but if that fails you can add the <em>IP:port</em> (the Phoromatic Server's HTTP port) to this element for targeted probing by the Phoronix Test Suite. Multiple Phoromatic Servers can be added if delimited by a comma; e.g. <em>IP:port,IP:port, IP:port</em>.</p>
 
 			<h1>Modules Options</h1>
-			<h3>LoadModules: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Modules/LoadModules" /></span></h3>
+			<h3>AutoLoadModules: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/Modules/AutoLoadModules" /></span></h3>
 			<p>This tag contains a string of the names of the Phoronix Test Suite modules to load by default when running the Phoronix Test Suite. Multiple modules can be listed when delimited by a comma. Modules that load via setting an environment variable can also be specified here (i.e. <em>FORCE_AA=8</em> as an option in this string to load the <em>graphics_override</em> module with the 8x forced anti-aliasing). The default value is <em>toggle_screensaver, update_checker</em>.</p>
 
 			<h1>Installation Options</h1>

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2017, Phoronix Media
-	Copyright (C) 2017, Michael Larabel
+	Copyright (C) 2017 - 2019, Phoronix Media
+	Copyright (C) 2017 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,11 +23,11 @@
 class unload_module implements pts_option_interface
 {
 	const doc_section = 'Modules';
-	const doc_description = 'This option can be used for easily removing a module from the LoadModules list in the Phoronix Test Suite user configuration file. That list controls what modules are automatically loaded on start-up of the Phoronix Test Suite.';
+	const doc_description = 'This option can be used for easily removing a module from the AutoLoadModules list in the Phoronix Test Suite user configuration file. That list controls what modules are automatically loaded on start-up of the Phoronix Test Suite.';
 
 	public static function run($r)
 	{
-		$loaded_modules = pts_strings::comma_explode(pts_config::read_user_config('PhoronixTestSuite/Options/Modules/LoadModules', null));
+		$loaded_modules = pts_strings::comma_explode(pts_config::read_user_config('PhoronixTestSuite/Options/Modules/AutoLoadModules', null));
 		echo PHP_EOL . 'Currently Loaded Modules: ' . PHP_EOL;
 		echo pts_user_io::display_text_list($loaded_modules);
 
@@ -52,7 +52,7 @@ class unload_module implements pts_option_interface
 			}
 		}
 
-		$new_options = array('PhoronixTestSuite/Options/Modules/LoadModules' => implode(', ', $loaded_modules));
+		$new_options = array('PhoronixTestSuite/Options/Modules/AutoLoadModules' => implode(', ', $loaded_modules));
 		pts_config::user_config_generate($new_options);
 		echo PHP_EOL . 'New user configuration file written.' . PHP_EOL . PHP_EOL;
 	}

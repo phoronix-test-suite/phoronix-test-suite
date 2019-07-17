@@ -229,6 +229,9 @@
 <h3>compare-results-to-baseline<em>  [Test Result] [Test Result]</em>
 </h3>
 <p>This option will allows you to specify a result as a baseline (first parameter) and a second result file (second parameter) that will offer some analysis for showing how the second result compares to the first in matching tests.</p>
+<h3>compare-results-two-way<em>  [Test Result]</em>
+</h3>
+<p>This option will allows you to specify a result file and from there to compare two individual runs within that result file for looking at wins/losses and other metrics in a head-to-head type comparison.</p>
 <h3>edit-result-file<em>  [Test Result]</em>
 </h3>
 <p>This option is used if you wish to edit the title and description of an existing result file.</p>
@@ -259,6 +262,9 @@
 <h3>reorder-result-file<em>  [Test Result]</em>
 </h3>
 <p>This option is used if you wish to manually change the order in which test results are shown in the Phoronix Test Suite Results Viewer and the contained graphs. The user must specify a saved results file and then they will be prompted to select the results identifiers one at a time in the order they would like them to be displayed from left to right.</p>
+<h3>result-file-confidence<em>  [Test Result]</em>
+</h3>
+<p>This option will read a saved test results file and display various statistics on the confidence of the results with the standard deviation, three-sigma values, and other metrics while color-coding "passing" results in green.</p>
 <h3>result-file-raw-to-csv<em>  [Test Result]</em>
 </h3>
 <p>This option will read a saved test results file and output the raw result file run data to a CSV file. This raw (individual) result file output is intended for data analytic purposes where the result-file-to-csv is more end-user-ready.</p>
@@ -305,7 +311,7 @@
 <h1>Modules</h1>
 <h3>auto-load-module<em>  </em>
 </h3>
-<p>This option can be used for easily adding a module to the LoadModules list in the Phoronix Test Suite user configuration file. That list controls what PTS modules are automatically loaded on start-up of the Phoronix Test Suite.</p>
+<p>This option can be used for easily adding a module to the AutoLoadModules list in the Phoronix Test Suite user configuration file. That list controls what PTS modules are automatically loaded on start-up of the Phoronix Test Suite.</p>
 <h3>list-modules<em>  </em>
 </h3>
 <p>This option will list all of the available Phoronix Test Suite modules on this system.</p>
@@ -320,7 +326,7 @@
 <p>This option can be used for debugging a Phoronix Test Suite module.</p>
 <h3>unload-module<em>  </em>
 </h3>
-<p>This option can be used for easily removing a module from the LoadModules list in the Phoronix Test Suite user configuration file. That list controls what modules are automatically loaded on start-up of the Phoronix Test Suite.</p>
+<p>This option can be used for easily removing a module from the AutoLoadModules list in the Phoronix Test Suite user configuration file. That list controls what modules are automatically loaded on start-up of the Phoronix Test Suite.</p>
 <h1>User Configuration</h1>
 <h3>enterprise-setup<em>  </em>
 </h3>
@@ -341,5 +347,9 @@
 <h3>start-phoromatic-server<em>  </em>
 </h3>
 <p>Start the Phoromatic web server for controlling local Phoronix Test Suite client systems to facilitate automated and repeated test orchestration and other automated features targeted at the enterprise.</p>
+<h1>Result Viewer</h1>
+<h3>start-result-viewer<em>  </em>
+</h3>
+<p>Start the web-based result viewer.</p>
 </body>
 </html>

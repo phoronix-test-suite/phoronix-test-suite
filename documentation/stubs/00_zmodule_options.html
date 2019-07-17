@@ -4,7 +4,7 @@
 <title>Module Options</title>
 </head>
 <body>
-<p>The following list is the modules included with the Phoronix Test Suite that are intended to extend the functionality of pts-core. Some of these options have commands that can be run directly in a similiar manner to the other Phoronix Test Suite user commands. Some modules are just meant to be loaded directly by adding the module name to the LoadModules tag in ~/.phoronix-test-suite/user-config.xml or via the PTS_MODULES environment variable. A list of available modules is also available by running <em>phoronix-test-suite list-modules.</em><hr></p>
+<p>The following list is the modules included with the Phoronix Test Suite that are intended to extend the functionality of pts-core. Some of these options have commands that can be run directly in a similiar manner to the other Phoronix Test Suite user commands. Some modules are just meant to be loaded directly by adding the module name to the AutoLoadModules tag in ~/.phoronix-test-suite/user-config.xml or via the PTS_MODULES environment variable. A list of available modules is also available by running <em>phoronix-test-suite list-modules.</em><hr></p>
 <h2>Backup Creation + Restore</h2>
 <p>This is a module for creating backups of the Phoronix Test Suite / Phoromatic and allows for restoring of created backups. The backup will be in ZIP or TAR format. If only a path is specified, the file-name will be auto-generated with a current time-stamp.</p>
 <p>phoronix-test-suite backup.create</p>
@@ -24,6 +24,8 @@
 <h2>Linux Perf Framework Reporter</h2>
 <p>Setting LINUX_PERF=1 will auto-load and enable this Phoronix Test Suite module. The module also depends upon running a modern Linux kernel (supporting perf) and that the perf binary is available via standard system paths.</p>
 <p>This module utilizes the following environmental variables: LINUX_PERF.</p>
+<h2>Dynamic Result Viewer</h2>
+<p>This module pre-loads the HTTP dynamic result viewer for Phoronix Test Suite data.</p>
 <h2>Log Exporter</h2>
 <p>This module allows for easily exporting test run logs and system logs to external locations via specifying the directory paths via the COPY_TEST_RUN_LOGS_TO and COPY_SYSTEM_LOGS_TO environment variables.</p>
 <p>This module utilizes the following environmental variables: COPY_TEST_RUN_LOGS_TO, COPY_SYSTEM_LOGS_TO.</p>
