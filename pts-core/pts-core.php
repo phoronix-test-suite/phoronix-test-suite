@@ -259,6 +259,12 @@ function pts_version_codenames()
 		'8.4' => 'Skiptvet',
 		'8.6' => 'Spydeberg',
 		'8.8' => 'Hvaler',
+		// Akershus - Norway
+		'9.0' => 'Asker',
+		'9.2' => 'Hurdal',
+		'9.4' => 'Vestby',
+		'9.6' => 'Nittedal',
+		'9.8' => 'Nesodden',
 		);
 }
 
