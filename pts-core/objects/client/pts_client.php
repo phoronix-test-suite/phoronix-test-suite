@@ -1829,7 +1829,16 @@ class pts_client
 		}
 		else
 		{
-			pts_client::display_web_page(dirname($result_file->get_file_location()) . '/index.html', $prompt_text, true, $auto_open);
+			if($result_file->get_file_location() != null)
+			{
+				$index_html = dirname($result_file->get_file_location()) . '/index.html';
+			}
+			else
+			{
+				$index_html = PTS_SAVE_RESULTS_PATH . $result_file->get_identifier() . '/index.html';
+			}
+
+			pts_client::display_web_page($index_html, $prompt_text, true, $auto_open);
 		}
 	}
 	public static function display_web_page($URL, $alt_text = null, $default_open = true, $auto_open = false)
