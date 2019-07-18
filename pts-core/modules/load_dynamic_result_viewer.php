@@ -40,7 +40,7 @@ class load_dynamic_result_viewer extends pts_module_interface
 				fclose(self::$pipes[$i]);
 			}
 
-			proc_terminate(self::$process);
+			proc_close(self::$process);
 		}
 	}
 	public static function __startup()
