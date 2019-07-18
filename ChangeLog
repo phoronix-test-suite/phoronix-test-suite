@@ -10,6 +10,7 @@ pts-core: Add compare-results-two-way sub-command
 pts_Graph: Fix for displaying line graphs with very small values
 phodevi: Support reading sys.power via IPMI PS1_Input_Power/PS2_Input_Power
 phodevi: More robust Arm CPU model detection improvements
+phodevi: Much faster CPU usage reading on large core count systems
 pts-core: Improve MultiMatch in test result parser
 pts_Graph: Add side-by-side 2-way comparison graph
 pts-core: Add IGNORE_RUNS environment variable

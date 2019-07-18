@@ -108,10 +108,23 @@ class cpu_usage extends phodevi_sensor
 	}
 	private function cpu_usage_linux_bsd()
 	{
-		$start_load = self::cpu_load_array($this->cpu_to_monitor);
+		static $last_cpu_hit = -1;
+		static $cpu_stat_first = null;
+		static $cpu_stat_second = null;
+		if(($last_cpu_hit == $this->cpu_to_monitor || $cpu_stat_first == null) && is_file('/proc/stat'))
+		{
+			$cpu_stat_first = file_get_contents('/proc/stat');
+			usleep(500000);
+			$cpu_stat_second = file_get_contents('/proc/stat');
+
+		}
+		$start_load = self::cpu_load_array($cpu_stat_first);
 		//TODO make sleep duration configurable by envvar
-		usleep(500000);
-		$end_load = self::cpu_load_array($this->cpu_to_monitor);
+		if($cpu_stat_second == null)
+		{
+			usleep(500000);
+		}
+		$end_load = self::cpu_load_array($cpu_stat_second);
 
 		for($i = 0; $i < count($end_load); $i++)
 		{
@@ -140,14 +153,14 @@ class cpu_usage extends phodevi_sensor
 
 		return $percent;
 	}
-	private function cpu_load_array()
+	private function cpu_load_array($override_stat = null)
 	{
 		// CPU load array
 		$load = array();
 
 		if(phodevi::is_linux() && is_file('/proc/stat'))
 		{
-			$stat = file_get_contents('/proc/stat');
+			$stat = $override_stat != null ? $override_stat : file_get_contents('/proc/stat');
 
 			if($this->cpu_to_monitor === 'summary')
 			{
