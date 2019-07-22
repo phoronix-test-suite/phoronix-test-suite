@@ -48,7 +48,7 @@ class pts_client
 
 		self::$lock_pointers[$lock_file] = fopen($lock_file, 'w');
 		chmod($lock_file, 0644);
-		return self::$lock_pointers[$lock_file] != false && flock(self::$lock_pointers[$lock_file], LOCK_EX | LOCK_NB);
+		return self::$lock_pointers[$lock_file] != false && (phodevi::is_windows() || flock(self::$lock_pointers[$lock_file], LOCK_EX | LOCK_NB));
 	}
 	public static function possible_sub_commands()
 	{
