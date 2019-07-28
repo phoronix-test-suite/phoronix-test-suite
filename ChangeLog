@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+phodevi: Add support for cpu.power sensor reading from Linux zenpower driver
+
 Phoronix Test Suite 9.0.0 Milestone 1
 25 July 2019
 

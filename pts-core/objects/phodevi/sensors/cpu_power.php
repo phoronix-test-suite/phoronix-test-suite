@@ -114,6 +114,20 @@ class cpu_power extends phodevi_sensor
 				self::$cpu_energy = $total_energy;
 			}
 		}
+		else if(is_readable('/sys/class/hwmon/hwmon0/name') && pts_file_io::file_get_contents('/sys/class/hwmon/hwmon0/name') == 'zenpower')
+		{
+			foreach(pts_file_io::glob('/sys/class/hwmon/hwmon*/power*_label') as $label)
+			{
+				if(pts_file_io::file_get_contents($label) == 'SVI2_P_SoC')
+				{
+					$cpu_power += pts_file_io::file_get_contents(str_replace('_label', '_input', $label));
+				}
+			}
+			if($cpu_power > 100000)
+			{
+				$cpu_power = $cpu_power / 100000;
+			}
+		}
 
 		return round($cpu_power, 2);
 	}

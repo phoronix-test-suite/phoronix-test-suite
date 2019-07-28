@@ -87,7 +87,7 @@ class pts_graph_radar_chart extends pts_graph_core
 			}
 
 			$relative_win = $r->get_result_first(false);
-			if($relative_win < 1.03 && count($result_objects) > 12)
+			if($relative_win < 1.03 && count($result_objects) > 62)
 			{
 				continue;
 			}
