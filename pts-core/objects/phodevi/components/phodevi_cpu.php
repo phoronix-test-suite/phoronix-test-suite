@@ -370,7 +370,10 @@ class phodevi_cpu extends phodevi_device_interface
 				if(empty($info))
 				{
 					$cpu_mhz = str_replace('MHz', '', self::read_cpuinfo_line('clock'));
-					$info = $cpu_mhz / 1000;
+					if(is_numeric($cpu_mhz))
+					{
+						$info = $cpu_mhz / 1000;
+					}
 				}
 			}
 		}
