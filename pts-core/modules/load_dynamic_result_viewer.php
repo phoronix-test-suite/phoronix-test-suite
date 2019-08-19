@@ -40,6 +40,7 @@ class load_dynamic_result_viewer extends pts_module_interface
 				fclose(self::$pipes[$i]);
 			}
 			$ps = proc_get_status(self::$process);
+			sleep(10);
 			if(isset($ps['pid']) && function_exists('posix_kill'))
 			{
 				 posix_kill($ps['pid'], 9);
