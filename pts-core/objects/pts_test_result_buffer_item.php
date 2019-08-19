@@ -42,9 +42,9 @@ class pts_test_result_buffer_item
 	{
 		$this->result_identifier = $identifier;
 	}
-	public function reset_result_value($value)
+	public function reset_result_value($value, $set_precision = true)
 	{
-		if(is_numeric($this->result_final))
+		if(is_numeric($this->result_final) && $set_precision)
 		{
 			$precision = pts_math::get_precision($this->result_final);
 			$value = round($value, ($precision < 2 ? 2 : $precision));

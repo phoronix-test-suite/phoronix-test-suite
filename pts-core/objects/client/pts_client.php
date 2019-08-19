@@ -399,6 +399,10 @@ class pts_client
 	{
 		$colors = array();
 		list($colors['red'], $colors['green'], $colors['blue']) = sscanf($hex, "#%02x%02x%02x");
+		if($colors['red'] > 240 && $colors['green'] > 210)
+		{
+			return 'yellow'; // this works for Arm color, etc
+		}
 		return array_search(max($colors), $colors);
 	}
 	public static function cli_colored_text($str, $color, $bold = false)

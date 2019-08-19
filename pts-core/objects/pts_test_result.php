@@ -312,7 +312,7 @@ class pts_test_result
 				// Invert values for LIB
 				foreach($keys as $k)
 				{
-					$this->test_result_buffer->buffer_items[$k]->reset_result_value((1 / $this->test_result_buffer->buffer_items[$k]->get_result_value()));
+					$this->test_result_buffer->buffer_items[$k]->reset_result_value((1 / $this->test_result_buffer->buffer_items[$k]->get_result_value()), false);
 				}
 			}
 
@@ -357,8 +357,10 @@ class pts_test_result
 			{
 				foreach($keys as $k)
 				{
-					$normalized = pts_math::set_precision(($this->test_result_buffer->buffer_items[$k]->get_result_value() / $divide_value), max(3, $this->result_precision));
-					$this->test_result_buffer->buffer_items[$k]->reset_result_value($normalized);
+					$normalized = ($this->test_result_buffer->buffer_items[$k]->get_result_value() / $divide_value);
+					$normalized_attempt = pts_math::set_precision($normalized, max(3, $this->result_precision));
+					$normalized = !empty($normalized_attempt) ? $normalized_attempt : $normalized;
+					$this->test_result_buffer->buffer_items[$k]->reset_result_value($normalized, false);
 					$this->test_result_buffer->buffer_items[$k]->reset_raw_value(0);
 				}
 			}

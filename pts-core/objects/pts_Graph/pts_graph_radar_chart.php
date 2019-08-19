@@ -99,7 +99,10 @@ class pts_graph_radar_chart extends pts_graph_core
 			{
 				if(in_array($buffer_item->get_result_identifier(), $this->systems))
 				{
-					$rel[$buffer_item->get_result_identifier()] = $buffer_item->get_result_value();
+					$val_check = $buffer_item->get_result_value();
+					if(empty($val_check) || $val_check == '0.000' || !is_numeric($val_check))
+						continue;
+					$rel[$buffer_item->get_result_identifier()] = $val_check;
 					$max = max($max, $buffer_item->get_result_value());
 				}
 			}

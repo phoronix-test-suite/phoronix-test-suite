@@ -313,7 +313,7 @@ class pts_render
 		{
 			$paint_color = '#77b900';
 		}
-		else if(strpos($i, 'radeon') !== false || strpos($i, 'amd ') !== false || stripos($i, 'EPYC') !== false || strpos($i, 'opteron ') !== false || strpos($i, 'fx-') !== false || strpos($i, 'firepro ') !== false || strpos($i, 'ryzen ') !== false || strpos($i, 'threadripper ') !== false || strpos($i, 'a10-') !== false || strpos($i, 'athlon ') !== false || (strpos($i, 'r9 ') !== false && strpos($i, 'power9 ') === false) || strpos($i, 'r7 ') !== false || strpos($i, 'hd 7') !== false || strpos($i, 'rx ') !== false)
+		else if(strpos($i, 'radeon') !== false || strpos($i, 'amd ') !== false || stripos($i, 'EPYC') !== false || strpos($i, 'opteron ') !== false || strpos($i, 'fx-') !== false || strpos($i, 'firepro ') !== false || strpos($i, 'ryzen ') !== false || strpos($i, 'threadripper ') !== false || strpos($i, 'a10-') !== false || strpos($i, 'athlon ') !== false || (strpos($i, 'r9 ') !== false && strpos($i, 'power9 ') === false) || strpos($i, 'r7 ') !== false || strpos($i, 'hd 7') !== false || (strpos($i, 'rx ') !== false && strpos($i, 'thunderx ') === false))
 		{
 			$paint_color = '#f1052d';
 		}
@@ -336,6 +336,10 @@ class pts_render
 		else if(stripos($i, 'google') !== false)
 		{
 			$paint_color = '#4885ed';
+		}
+		else if(stripos($i, 'arm ') !== false)
+		{
+			$paint_color = '#f6d452';
 		}
 		else
 		{
