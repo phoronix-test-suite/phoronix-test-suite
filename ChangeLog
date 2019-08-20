@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: New result viewer improvements
 pts-core: Various fixes and code cleanups
 phodevi: Add support for cpu.power sensor reading from Linux zenpower driver
 

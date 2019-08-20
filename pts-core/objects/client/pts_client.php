@@ -36,6 +36,7 @@ class pts_client
 	public static $has_used_modern_result_viewer = false;
 	public static $last_browser_launch_time = 0;
 	public static $last_browser_duration = 0;
+	public static $last_result_view_url = null;
 
 	public static function create_lock($lock_file)
 	{
@@ -1833,7 +1834,8 @@ class pts_client
 		else if(pts_client::$web_result_viewer_active && pts_network::http_get_contents('http://127.0.0.1:' . pts_client::$web_result_viewer_active . '/PTS', false, false, false, false, 2) == 'PTS')
 		{
 			pts_client::$has_used_modern_result_viewer = true;
-			$length_browser_open = pts_client::display_web_page('http://127.0.0.1:' . pts_client::$web_result_viewer_active . '/result/' . $result_file->get_identifier(), $prompt_text, true, $auto_open);
+			pts_client::$last_result_view_url = 'http://127.0.0.1:' . pts_client::$web_result_viewer_active . '/result/' . $result_file->get_identifier();
+			$length_browser_open = pts_client::display_web_page(pts_client::$last_result_view_url, $prompt_text, true, $auto_open);
 		}
 		else
 		{

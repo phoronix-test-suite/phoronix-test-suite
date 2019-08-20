@@ -35,10 +35,20 @@ class load_dynamic_result_viewer extends pts_module_interface
 	{
 		if(is_resource(self::$process))
 		{
-			if(pts_client::$has_used_modern_result_viewer && pts_client::$last_browser_launch_time > (time() - 10) && pts_client::$last_browser_duration < 2)
+			if(pts_client::$has_used_modern_result_viewer && pts_client::$last_browser_launch_time > (time() - 10))
 			{
 				// Likely got connected to an existing browser process, so wait longer before quitting (killing the web server process)
-				sleep(3);
+				if(pts_client::$last_browser_duration < 2)
+				{
+					echo '     ' . pts_client::cli_just_bold('Result File URL: ') . pts_client::$last_result_view_url . PHP_EOL;
+					echo pts_client::cli_just_italic('     [ Hit ENTER when finished viewing the results to end the result viewer process. ]');
+					pts_user_io::read_user_input();
+					sleep(1);
+				}
+				else
+				{
+					sleep(3);
+				}
 			}
 			foreach(self::$pipes as $i => $pipe)
 			{
