@@ -182,6 +182,7 @@ class pts_result_file_analyzer
 				$precised = pts_math::set_precision($values, 3);
 				if($values != 0 && $precised == 0)
 				{
+					// Don't use precision if it ends up rounding result too small in certain situations
 					$precised = $values;
 				}
 				$test_result->test_result_buffer->add_test_result($identifier, $precised);
