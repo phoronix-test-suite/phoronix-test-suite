@@ -41,7 +41,7 @@ class load_dynamic_result_viewer extends pts_module_interface
 				if(pts_client::$last_browser_duration < 2)
 				{
 					echo '     ' . pts_client::cli_just_bold('Result File URL: ') . pts_client::$last_result_view_url . PHP_EOL;
-					echo pts_client::cli_just_italic('     [ Hit ENTER when finished viewing the results to end the result viewer process. ]');
+					echo pts_client::cli_just_italic('     [ Hit ENTER when finished viewing the results to end the result viewer process. ]') . PHP_EOL;
 					pts_user_io::read_user_input();
 					sleep(1);
 				}

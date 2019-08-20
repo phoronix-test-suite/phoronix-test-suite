@@ -179,7 +179,12 @@ class pts_result_file_analyzer
 			foreach($test_results as $identifier => $values)
 			{
 				$values = pts_math::geometric_mean($values);
-				$test_result->test_result_buffer->add_test_result($identifier, pts_math::set_precision($values, 3));
+				$precised = pts_math::set_precision($values, 3);
+				if($values != 0 && $precised == 0)
+				{
+					$precised = $values;
+				}
+				$test_result->test_result_buffer->add_test_result($identifier, $precised);
 			}
 
 			if(!$result_file->is_multi_way_comparison() || $do_sort)
