@@ -1941,14 +1941,7 @@ class pts_client
 			{
 				$launch_time = microtime(true);
 				pts_client::$last_browser_launch_time = time();
-				if(stripos($browser, 'chrome') !== false || stripos($browser, 'chromium') !== false)
-				{
-					shell_exec($browser . ' --temp-profile --app="' . $URL . '"  --new-window 2> /dev/null &');
-				}
-				else
-				{
-					shell_exec($browser . ' "' . $URL . '" 2> /dev/null &');
-				}
+				shell_exec($browser . ' "' . $URL . '" 2> /dev/null &');
 
 				// return how long the browser was opened, useful for trying to see if launched to an existing open browser or process stayed while viewing results
 				pts_client::$last_browser_duration = microtime(true) - $launch_time;
