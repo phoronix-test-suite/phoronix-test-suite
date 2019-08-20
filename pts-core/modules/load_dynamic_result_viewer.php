@@ -35,12 +35,16 @@ class load_dynamic_result_viewer extends pts_module_interface
 	{
 		if(is_resource(self::$process))
 		{
+			if(pts_client::$has_used_modern_result_viewer && pts_client::$last_browser_launch_time > (time() - 10) && pts_client::$last_browser_duration < 2)
+			{
+				// Likely got connected to an existing browser process, so wait longer before quitting (killing the web server process)
+				sleep(3);
+			}
 			foreach(self::$pipes as $i => $pipe)
 			{
 				fclose(self::$pipes[$i]);
 			}
 			$ps = proc_get_status(self::$process);
-			sleep(10);
 			if(isset($ps['pid']) && function_exists('posix_kill'))
 			{
 				 posix_kill($ps['pid'], 9);

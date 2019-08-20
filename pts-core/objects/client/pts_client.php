@@ -33,6 +33,9 @@ class pts_client
 	protected static $override_pts_env_vars = array();
 	protected static $sent_command = null;
 	public static $web_result_viewer_active = false;
+	public static $has_used_modern_result_viewer = false;
+	public static $last_browser_launch_time = 0;
+	public static $last_browser_duration = 0;
 
 	public static function create_lock($lock_file)
 	{
@@ -1829,7 +1832,8 @@ class pts_client
 		}
 		else if(pts_client::$web_result_viewer_active && pts_network::http_get_contents('http://127.0.0.1:' . pts_client::$web_result_viewer_active . '/PTS', false, false, false, false, 2) == 'PTS')
 		{
-			pts_client::display_web_page('http://127.0.0.1:' . pts_client::$web_result_viewer_active . '/result/' . $result_file->get_identifier(), $prompt_text, true, $auto_open);
+			pts_client::$has_used_modern_result_viewer = true;
+			$length_browser_open = pts_client::display_web_page('http://127.0.0.1:' . pts_client::$web_result_viewer_active . '/result/' . $result_file->get_identifier(), $prompt_text, true, $auto_open);
 		}
 		else
 		{
@@ -1849,7 +1853,7 @@ class pts_client
 	{
 		if(!phodevi::is_display_server_active() || defined('PHOROMATIC_PROCESS'))
 		{
-			return;
+			return -1;
 		}
 
 		if($auto_open == false)
@@ -1914,11 +1918,11 @@ class pts_client
 					{
 						shell_exec($browser . ' "' . $URL . '"');
 					}
-					return;
+					return -1;
 				}
 				else
 				{
-					$possible_browsers = array('firefox', 'mozilla', 'x-www-browser', 'iceweasel', 'konqueror', 'epiphany', 'google-chrome', 'midori', 'epiphany-browser', 'epiphany', 'falkon', 'qupzilla', 'open', 'xdg-open');
+					$possible_browsers = array('google-chrome', 'chromium', 'firefox', 'mozilla', 'x-www-browser', 'iceweasel', 'konqueror', 'epiphany', 'midori', 'epiphany-browser', 'epiphany', 'falkon', 'qupzilla', 'open', 'xdg-open');
 
 					foreach($possible_browsers as &$b)
 					{
@@ -1933,13 +1937,28 @@ class pts_client
 
 			if($browser != null)
 			{
-				shell_exec($browser . ' "' . $URL . '" 2> /dev/null &');
+				$launch_time = microtime(true);
+				pts_client::$last_browser_launch_time = time();
+				if(stripos($browser, 'chrome') !== false || stripos($browser, 'chromium') !== false)
+				{
+					shell_exec($browser . ' --temp-profile --app="' . $URL . '"  --new-window 2> /dev/null &');
+				}
+				else
+				{
+					shell_exec($browser . ' "' . $URL . '" 2> /dev/null &');
+				}
+
+				// return how long the browser was opened, useful for trying to see if launched to an existing open browser or process stayed while viewing results
+				pts_client::$last_browser_duration = microtime(true) - $launch_time;
+				return pts_client::$last_browser_duration;
 			}
 			else
 			{
 				echo PHP_EOL . 'No Web Browser Found.' . PHP_EOL;
 			}
 		}
+
+		return -1;
 	}
 	public static function cache_hardware_calls()
 	{
