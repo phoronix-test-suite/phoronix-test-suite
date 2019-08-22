@@ -46,7 +46,7 @@ It's possible to run the Phoronix Test Suite and Phoromatic Server without a per
 This command will simply download all of the needed test files for the tests/suites passed to the sub-command. Alternatively you could also pass pts/all to cache all tests. It's important though to just cache the tests/suites you'll be using on your network. This will generate the test file download cache by default to *~/.phoronix-test-suite/download-cache/* or */usr/share/phoronix-test-suite/download-cache/* depending upon your write permissions. You can always run this command later with more test files. Alternatively, if you already have a number of tests installed on the system, simply running "phoronix-test-suite make-download-cache" will generate the cache based upon the currently installed tests.
 **$ phoronix-test-suite make-openbenchmarking-cache**
 This command will cache as much of the OpenBenchmarking.org meta-data as possible for test profiles and test suites. After the above commands, the Phoromatic Server should no longer need a persistent Internet connection.
-**$ phororonix-test-suite start-phoromatic-server**
+**$ phoronix-test-suite start-phoromatic-server**
 Proceed to start the Phoromatic Server and operate as normal.
 For the test clients without an Internet connection, as long as they're able to reach the Phoromatic Server, the Phoromatic Server should be able to automatically serve all of the needed test files download cache and OpenBenchmarking.org meta-data to the systems locally.
 #### Use Case C: Phoromatic Across The Internet

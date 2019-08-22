@@ -44,7 +44,7 @@
 			<DropNoisyResults>FALSE</DropNoisyResults>
 		</TestResultValidation>
 		<ResultViewer>
-			<WebPort>56955</WebPort>
+			<WebPort>RANDOM</WebPort>
 			<LimitAccessToLocalHost>TRUE</LimitAccessToLocalHost>
 			<AccessKey></AccessKey>
 		</ResultViewer>
