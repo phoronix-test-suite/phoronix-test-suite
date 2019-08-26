@@ -39,7 +39,7 @@ class pts_openbenchmarking_client
 	{
 		if(pts_openbenchmarking::ob_upload_support_available() == false)
 		{
-			trigger_error('No OpenBenchmarking.org upload support available.', E_USER_WARNING);
+			//trigger_error('No OpenBenchmarking.org upload support available.', E_USER_WARNING);
 			return false;
 		}
 		return pts_openbenchmarking_upload::upload_usage_data($task, $data);
