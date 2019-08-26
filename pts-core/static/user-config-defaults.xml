@@ -6,6 +6,7 @@
 			<AnonymousUsageReporting>TRUE</AnonymousUsageReporting>
 			<IndexCacheTTL>3</IndexCacheTTL>
 			<AlwaysUploadSystemLogs>FALSE</AlwaysUploadSystemLogs>
+			<AllowResultUploadsToOpenBenchmarking>TRUE</AllowResultUploadsToOpenBenchmarking>
 		</OpenBenchmarking>
 		<General>
 			<DefaultBrowser></DefaultBrowser>

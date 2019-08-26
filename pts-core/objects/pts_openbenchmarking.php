@@ -1039,7 +1039,11 @@ class pts_openbenchmarking
 	}
 	public static function upload_test_result(&$object, $return_json_data = false, $prompts = true)
 	{
-		return pts_openbenchmarking_client::upload_test_result($object, $return_json_data, $prompts);
+		return pts_openbenchmarking_upload::upload_test_result($object, $return_json_data, $prompts);
+	}
+	public static function ob_upload_support_available()
+	{
+		return pts_auto_load_class('pts_openbenchmarking_upload') && pts_config::read_bool_config('PhoronixTestSuite/Options/OpenBenchmarking/AllowResultUploadsToOpenBenchmarking', 'TRUE');
 	}
 }
 

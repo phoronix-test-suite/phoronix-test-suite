@@ -233,9 +233,9 @@ class phoromatic_result implements pts_webui_interface
 			$result_file->avoid_duplicate_identifiers();
 			$extra_attributes = array();
 
-			if(isset($_GET['upload_to_openbenchmarking']))
+			if(isset($_GET['upload_to_openbenchmarking']) && pts_openbenchmarking::ob_upload_support_available())
 			{
-				$ob_url = pts_openbenchmarking_client::upload_test_result($result_file, false);
+				$ob_url = pts_openbenchmarking::upload_test_result($result_file, false);
 				if($ob_url)
 				{
 					header('Location: ' . $ob_url);
@@ -498,7 +498,10 @@ class phoromatic_result implements pts_webui_interface
 		$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&download=csv">Download As CSV</a></p>';
 		$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&download=xml">Download As XML</a></p>';
 		$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&download=txt">Download As TEXT</a></p>';
-		$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&upload_to_openbenchmarking">Upload To OpenBenchmarking.org</a></p>';
+		if(pts_openbenchmarking::ob_upload_support_available())
+		{
+			$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&upload_to_openbenchmarking">Upload To OpenBenchmarking.org</a></p>';
+		}
 
 		if(is_file(phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $row['UploadID']) . 'system-logs.zip'))
 		{

@@ -990,7 +990,14 @@ class pts_client
 				echo wordwrap($user_agreement, (pts_client::terminal_width() - 2));
 				$agree = pts_user_io::prompt_bool_input('Do you agree to these terms and wish to proceed', -1);
 
-				$usage_reporting = $agree ? pts_user_io::prompt_bool_input('Enable anonymous usage / statistics reporting', -1) : -1;
+				if(!pts_openbenchmarking::ob_upload_support_available())
+				{
+					$usage_reporting = false;
+				}
+				else
+				{
+					$usage_reporting = $agree ? pts_user_io::prompt_bool_input('Enable anonymous usage / statistics reporting', -1) : -1;
+				}
 			}
 
 			if($agree)

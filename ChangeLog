@@ -1,5 +1,10 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+pts-core: Add AllowResultUploadsToOpenBenchmarking user config option
+pts-core: Split OpenBenchmarking.org upload code into pts_openbenchmarking_upload file and allow it to be removed if wanting to strip out upload support
+
 Phoronix Test Suite 9.0.0 Milestone 2
 22 August 2019
 

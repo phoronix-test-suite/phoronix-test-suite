@@ -17,6 +17,8 @@
 			<p>The time to live for OpenBenchmarking.org index caches. This is an integer representing the number of days before an index cache should be automatically refreshed from OpenBenchmarking.org. The default value is <em>3</em> while setting the value to <em>0</em> will disable automatic refreshing of caches (caches can be manually updated at anytime using the respective command).</p>
 			<h3>AlwaysUploadSystemLogs: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/OpenBenchmarking/AlwaysUploadSystemLogs" /></span></h3>
 			<p>If this option is set to <em>TRUE</em>, the system logs (i.e. dmesg, lspci, lsusb, Xorg.0.log) will always be uploaded to OpenBenchmarking.org when uploading your test results. Otherwise the user is prompted whether to attach the system logs with their results.</p>
+			<h3>AllowResultUploadsToOpenBenchmarking: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/OpenBenchmarking/AllowResultUploadsToOpenBenchmarking" /></span></h3>
+			<p>This option defines whether to allow/support result uploads to OpenBenchmarking.org. If set to <em>FALSE</em>, the user will not be prompted to allow uploading of test results to the public site.</p>
 
 			<h1>General Options</h1>
 			<h3>DefaultBrowser: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/General/DefaultBrowser" /></span></h3>

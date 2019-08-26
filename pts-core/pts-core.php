@@ -322,6 +322,8 @@ if(PTS_IS_CLIENT || defined('PTS_AUTO_LOAD_OBJECTS'))
 			include($obj_files[$to_load]);
 			unset($obj_files[$to_load]);
 		}
+
+		return class_exists($to_load, false);
 	}
 	spl_autoload_register('pts_auto_load_class');
 }

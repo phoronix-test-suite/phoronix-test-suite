@@ -1099,7 +1099,7 @@ class pts_test_run_manager
 				}
 			}
 
-			if($this->allow_sharing_of_results && pts_network::internet_support_available())
+			if($this->allow_sharing_of_results && pts_network::internet_support_available() && pts_openbenchmarking::ob_upload_support_available())
 			{
 				if($this->auto_upload_to_openbenchmarking || pts_openbenchmarking_client::auto_upload_results() || pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/AlwaysUploadResultsToOpenBenchmarking', 'FALSE'))
 				{
