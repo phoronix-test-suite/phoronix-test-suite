@@ -236,21 +236,6 @@ class pts_openbenchmarking_client
 	{
 		self::$client_settings[$key] = $value;
 	}
-	protected static function result_upload_supported(&$result_file)
-	{
-		foreach($result_file->get_result_objects() as $result_object)
-		{
-			$test_profile = new pts_test_profile($result_object->test_profile->get_identifier());
-
-			if($test_profile->allow_results_sharing() == false)
-			{
-				echo PHP_EOL . $result_object->test_profile->get_identifier() . ' does not allow test results to be uploaded.' . PHP_EOL . PHP_EOL;
-				return false;
-			}
-		}
-
-		return true;
-	}
 	public static function read_repository_test_profile_attribute($test_profile, $attribute)
 	{
 		list($repo, $tp) = explode('/', $test_profile);
