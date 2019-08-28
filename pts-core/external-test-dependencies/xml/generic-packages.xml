@@ -546,7 +546,7 @@
 			<GenericName>libxml2</GenericName>
 			<Title>Libxml2</Title>
 			<PossibleNames>libxml2</PossibleNames>
-			<FileCheck>libxml2/libxml</FileCheck>
+			<FileCheck>libxml2/libxml/parser.h</FileCheck>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
