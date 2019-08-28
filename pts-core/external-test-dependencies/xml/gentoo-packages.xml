@@ -324,5 +324,9 @@
 			<GenericName>mongodb</GenericName>
 			<PackageName>dev-db/mongodb</PackageName>
 		</Package>
+		<Package>
+			<GenericName>hdf5</GenericName>
+			<PackageName>sci-libs/hdf5</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

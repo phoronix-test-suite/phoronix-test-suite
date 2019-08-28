@@ -536,5 +536,11 @@
 			<PossibleNames>libexpat1-dev, expat</PossibleNames>
 			<FileCheck>expat.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>hdf5</GenericName>
+			<Title>HDF5</Title>
+			<PossibleNames>libhdf5-dev, hdf5</PossibleNames>
+			<FileCheck>/usr/include/hdf5/</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

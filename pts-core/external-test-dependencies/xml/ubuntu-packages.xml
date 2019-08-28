@@ -395,5 +395,9 @@
 			<GenericName>expat</GenericName>
 			<PackageName>libexpat1-dev</PackageName>
 		</Package>
+		<Package>
+			<GenericName>hdf5</GenericName>
+			<PackageName>libhdf5-dev libhdf5-mpi-dev</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

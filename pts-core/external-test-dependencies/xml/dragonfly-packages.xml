@@ -232,5 +232,9 @@
 			<GenericName>rust</GenericName>
 			<PackageName>rust</PackageName>
 		</Package>
+		<Package>
+			<GenericName>hdf5</GenericName>
+			<PackageName>hdf5</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
