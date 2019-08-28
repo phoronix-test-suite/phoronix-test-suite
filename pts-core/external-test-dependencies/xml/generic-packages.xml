@@ -542,5 +542,11 @@
 			<PossibleNames>libhdf5-dev, hdf5</PossibleNames>
 			<FileCheck>/usr/include/hdf5/</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>libxml2</GenericName>
+			<Title>Libxml2</Title>
+			<PossibleNames>libxml2</PossibleNames>
+			<FileCheck>libxml2/libxml</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

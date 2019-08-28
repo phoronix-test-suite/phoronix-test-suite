@@ -315,5 +315,9 @@
 			<GenericName>hdf5</GenericName>
 			<PackageName>hdf5</PackageName>
 		</Package>
+		<Package>
+			<GenericName>libxml2</GenericName>
+			<PackageName>libxml2</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
