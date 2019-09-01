@@ -111,7 +111,7 @@ class pts_file_io
 
 		if(is_file($source))
 		{
-			if($no_overwrite && is_file($dest . basename($source)))
+			if($no_overwrite && is_file($dest))
 			{
 				$success = false;
 			}

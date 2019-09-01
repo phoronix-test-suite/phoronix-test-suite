@@ -405,7 +405,7 @@ class pts_test_installer
 							}
 							else
 							{
-								self::test_install_error(null, $test_install_request, 'Internet support is needed and it\'s disabled or not available.');
+								self::test_install_error(null, $test_install_request, 'Internet support is needed to acquire files and it\'s disabled or not available.');
 								return false;
 							}
 

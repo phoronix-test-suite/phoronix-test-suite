@@ -318,6 +318,19 @@ class pts_openbenchmarking
 			echo pts_user_io::display_text_table($table) . PHP_EOL;
 		}
 	}
+	public static function get_generated_time_from_index($index_file)
+	{
+		$generated_time = -1;
+		if(is_file($index_file))
+		{
+			$repo_index = json_decode(file_get_contents($index_file), true);
+			if(isset($repo_index['main']['generated']))
+			{
+				$generated_time = $repo_index['main']['generated'];
+			}
+		}
+		return $generated_time;
+	}
 	public static function refresh_repository_lists($repos = null, $force_refresh = false)
 	{
 		if($repos == null)
