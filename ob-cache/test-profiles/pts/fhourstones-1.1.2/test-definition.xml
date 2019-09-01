@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Fhourstones</Title>
+    <AppVersion>3.1</AppVersion>
+    <Description>This integer benchmark solves positions in the game of Connect-4, as played on a vertical 7x6 board. By default, it uses a 64Mb transposition table with the twobig replacement strategy. Positions are represented as 64-bit bitboards, and the hash function is computed using a single 64-bit modulo operation, giving 64-bit machines a slight edge. The alpha-beta searcher sorts moves dynamically based on the history heuristic.</Description>
+    <ResultScale>Kpos / sec</ResultScale>
+    <Proportion>HIB</Proportion>
+    <SubTitle>Complex Connect-4 Solving</SubTitle>
+    <Executable>fhourstones-benchmark</Executable>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.2</Version>
+    <SupportedPlatforms>Linux, MacOSX, BSD, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>0.1</EnvironmentSize>
+    <ProjectURL>http://homepages.cwi.nl/~tromp/c4/fhour.html</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

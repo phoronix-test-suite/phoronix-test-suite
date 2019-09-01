@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/Unigine_Heaven-4.0.run</URL>
+      <MD5>1c4d068307302bd4571478a416dba51d</MD5>
+      <SHA256>90e6f95bb3c0d92f557a948ca6754b1b1bead07a063ec2af0ce03ef8e7ac74f3</SHA256>
+      <FileSize>286329188</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>ftp://ftp.cstula.ru/software/test/unigine_heaven/Unigine_Heaven-4.0.exe, http://assets.unigine.com/d/Unigine_Heaven-4.0.exe, http://www.servodata.com.pl/ftp/testy/Unigine_Heaven-4.0.exe</URL>
+      <MD5>f4bdb20c734b5ba7a6a6cd75c87510cd</MD5>
+      <SHA256>64b43633eae18a0c237b039c2c780dfe4f86714852fe9be3c0085dce70f501a1</SHA256>
+      <FileSize>258728440</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

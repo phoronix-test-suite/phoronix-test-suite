@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.0m0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>GLmark2</Title>
+    <Description>This is a test of any system-installed GLMark2 OpenGL benchmark.</Description>
+    <ResultScale>Score</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Game</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <RequiresDisplay>TRUE</RequiresDisplay>
+    <EnvironmentSize>59</EnvironmentSize>
+    <ProjectURL>http://launchpad.net/glmark2</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>glmark2</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>--annotate</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>-s $VIDEO_WIDTHx$VIDEO_HEIGHT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

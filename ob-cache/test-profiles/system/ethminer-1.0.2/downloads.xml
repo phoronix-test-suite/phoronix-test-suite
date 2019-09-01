@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://github.com/ethereum-mining/ethminer/releases/download/v0.14.0.dev3/ethminer-0.14.0.dev3-Windows.zip</URL>
+      <MD5>0eeedfebaaf3d45e3bf15d4c511a0d3c</MD5>
+      <SHA256>e442116957b0ba6a290d42eaaaa9b4e2dfbd42203eb8af783b20bcaacb02a02f</SHA256>
+      <FileName>ethminer-0.14.0.dev3-Windows.zip</FileName>
+      <FileSize>2448772</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

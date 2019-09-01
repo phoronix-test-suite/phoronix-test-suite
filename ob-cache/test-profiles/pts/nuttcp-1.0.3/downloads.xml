@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://nuttcp.net/nuttcp/nuttcp-8.1.4.tar.bz2, http://phoronix-test-suite.com/benchmark-files/nuttcp-8.1.4.tar.bz2</URL>
+      <MD5>1b3474899921cb613d33d94a3370ff39</MD5>
+      <SHA256>737f702ec931ec12fcf54e66c4c1d5af72bd3631439ffa724ed2ac40ab2de78d</SHA256>
+      <FileName>nuttcp-8.1.4.tar.bz2</FileName>
+      <FileSize>13063419</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/GpuTest_Linux_x64_0.7.0.zip</URL>
+      <MD5>54bdaa11c73fa08f2e0a47d639f4bdb8</MD5>
+      <SHA256>a6cbddfb40dc203735d63bc9609b24abde8613fbb649d0ef7d0d4515842ba263</SHA256>
+      <FileSize>2083164</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/GpuTest_Windows_x64_0.7.0.zip</URL>
+      <MD5>cad82dff40b3613672d35dd6524b5d9a</MD5>
+      <SHA256>f88b98ac2fe11da92bd291eda898b248aee37d9f4e2bcfc29dd2d335d2ac79ef</SHA256>
+      <FileSize>2103678</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.4.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/lzma-4.32.7.tar.gz</URL>
+      <MD5>2a748b77a2f8c3cbc322dbd0b4c9d06a</MD5>
+      <FileName>lzma-4.32.7.tar.gz</FileName>
+      <FileSize>479270</FileSize>
+    </Package>
+    <Package>
+      <URL>https://www.kernel.org/pub/linux/kernel/v4.x/linux-4.0.1.tar.gz</URL>
+      <MD5>302775447c94392c8625cec1e685d57f</MD5>
+      <FileName>linux-4.0.1.tar.gz</FileName>
+      <FileSize>124202755</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

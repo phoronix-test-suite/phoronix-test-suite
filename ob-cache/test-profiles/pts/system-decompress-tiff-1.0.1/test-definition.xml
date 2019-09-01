@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.4.0m0 (Forsand)-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>System Libtiff Decompression</Title>
+    <Description>This test measures the time to decompress an image from TIFF to RGBA.</Description>
+    <ResultScale>ms</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>10</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <ExternalDependencies>build-utilities, zlib-development</ExternalDependencies>
+    <Maintainer>Jim Kukunas</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

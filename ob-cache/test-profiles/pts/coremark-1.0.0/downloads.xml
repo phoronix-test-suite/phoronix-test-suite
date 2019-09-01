@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/coremark-20190727.zip</URL>
+      <MD5>c3722ea6933c858314b4eb3a2bc51b45</MD5>
+      <SHA256>2e43e14c2bde20c8cf7e57bb029cdb6c85fb1f5bd0f69431de5038942e35763d</SHA256>
+      <FileName>coremark-20190727.zip</FileName>
+      <FileSize>497020</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

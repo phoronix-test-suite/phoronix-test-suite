@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/tiobench-20170504.tar.bz2</URL>
+      <MD5>29754766c19135ac0ec7a866ad6c2363</MD5>
+      <SHA256>816e4aa24d97ec6825d135f7d0952e79b7831edfb712f3e721a652a169d0d023</SHA256>
+      <FileSize>30585</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

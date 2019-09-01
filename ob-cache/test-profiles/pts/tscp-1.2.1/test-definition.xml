@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.6.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>TSCP</Title>
+    <AppVersion>1.81</AppVersion>
+    <Description>This is a performance test of TSCP, Tom Kerrigan's Simple Chess Program, which has a built-in performance benchmark.</Description>
+    <ResultScale>Nodes Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <SubTitle>AI Chess Performance</SubTitle>
+    <TimesToRun>5</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.1</Version>
+    <SupportedPlatforms>Linux, Solaris, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>0.3</EnvironmentSize>
+    <ProjectURL>http://www.tckerrigan.com/Chess/TSCP</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

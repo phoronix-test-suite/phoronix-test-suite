@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>ftp://ftp.idsoftware.com/idstuff/quake4/linux/quake4-linux-1.4.2.x86.run, http://games.mirrors.tds.net/pub/planetquake3/quake4/point_releases/quake4-linux-1.4.2.x86.run, ftp://www.mirrorservice.org/sites/quakeunity.com/quake4/point_releases/quake4-linux-1.4.2.x86.run</URL>
+      <MD5>bd2cb8164ede4272adcc091f724855ac</MD5>
+      <FileSize>287552973</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/quake4-pts-demo-1.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/quake4-pts-demo-1.tar.gz</URL>
+      <MD5>b278d8229d84553baab727baaea2d7a6</MD5>
+      <FileSize>72236521</FileSize>
+    </Package>
+    <Package>
+      <URL>quake4-game-files.tar</URL>
+      <FileName>quake4-game-files.tar</FileName>
+    </Package>
+    <Package>
+      <URL>quake4-key.tar</URL>
+      <FileName>quake4-key.tar</FileName>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

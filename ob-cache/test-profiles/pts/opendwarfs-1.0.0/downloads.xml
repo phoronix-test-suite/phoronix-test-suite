@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.8.3 (Sokndal)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/OpenDwarfs-git-20131106.tar.bz2</URL>
+      <MD5>228e3558da3014b3376907f470a01b97</MD5>
+      <SHA256>d69d5b110ab056cd3cfa7ff69278a802c0e7f1be56838f11e164261c141bb1b5</SHA256>
+      <FileSize>62262617</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

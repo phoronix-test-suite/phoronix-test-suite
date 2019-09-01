@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.4.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/pts-lostcoast-2.zip</URL>
+      <MD5>4186dae8ce09fd56df9aa1d93de282f2</MD5>
+      <SHA256>f6c69986fac2850045c2d0bc594a94ea4ce9a2f40a92d924cb68560e0f28d97b</SHA256>
+      <FileSize>537226</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

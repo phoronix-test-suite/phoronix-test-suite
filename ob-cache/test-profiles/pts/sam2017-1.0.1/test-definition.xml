@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.0.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Serious Sam Fusion 2017</Title>
+    <Description>This is a benchmark of Serious Sam HD Fusion 2017 edition. The test profile assumes you have a Steam account, have Steam installed for the system, and that you own the game. This automates the process of executing the game and using a standardized test.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+    <PreInstallMessage>This test will attempt to install the necessary game using your Steam account. If the test appears hung you may need to manually exit the Steam client.</PreInstallMessage>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Game</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <EnvironmentSize>2</EnvironmentSize>
+    <ProjectURL>http://store.steampowered.com/app/564310/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>$VIDEO_WIDTH $VIDEO_HEIGHT</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Quality</DisplayName>
+      <Identifier>quality</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>Low</Name>
+          <Value>Low</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>High</Name>
+          <Value>High</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Ultra</Name>
+          <Value>Ultra</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Renderer</DisplayName>
+      <Identifier>renderer</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>OpenGL</Name>
+          <Value>OpenGL</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Vulkan</Name>
+          <Value>Vulkan</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

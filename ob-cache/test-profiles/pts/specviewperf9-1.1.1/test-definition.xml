@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.6.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>SPECViewPerf 9</Title>
+    <Description>This test runs SPECViewPerf 9.0, which is made up of real-world OpenGL workstation tests such as 3DS Max, CATIA, Maya, Pro/Engineer, and SolidWorks.</Description>
+    <ResultScale>Weighted Geometric Mean</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.1</Version>
+    <SupportedPlatforms>Linux, Solaris</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, glut, csh, libpng-development</ExternalDependencies>
+    <EnvironmentSize>1800</EnvironmentSize>
+    <ProjectURL>http://www.spec.org/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>SPECViewPerf Test</DisplayName>
+      <Identifier>run-test</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>3dsmax-04</Name>
+          <Value>3dsmax</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>catia-02</Name>
+          <Value>catia</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>ensight-03</Name>
+          <Value>ensight</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>light-08</Name>
+          <Value>light</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>maya-02</Name>
+          <Value>maya</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>proe-04</Name>
+          <Value>proe</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>sw-01</Name>
+          <Value>sw</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>ugnx-01</Name>
+          <Value>ugnx</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>tcvis-01</Name>
+          <Value>tcvis</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

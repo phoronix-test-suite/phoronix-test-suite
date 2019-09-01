@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://asc.llnl.gov/sequoia/benchmarks/clomp_v1.0.tar.gz</URL>
+      <MD5>5676e9098217d9d6c878d2be88004442</MD5>
+      <FileSize>21772</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

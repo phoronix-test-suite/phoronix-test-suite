@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.4.0m4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Dbench</Title>
+    <AppVersion>4.0</AppVersion>
+    <Description>Dbench is a benchmark designed by the Samba project as a free alternative to netbench, but dbench contains only file-system calls for testing the disk performance.</Description>
+    <ResultScale>MB/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux, BSD</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Disk</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, autoconf, popt</ExternalDependencies>
+    <EnvironmentSize>46.4</EnvironmentSize>
+    <ProjectURL>http://samba.org/ftp/tridge/dbench/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>dbench</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Client Count</DisplayName>
+      <Identifier>client-count</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>1</Name>
+          <Value>1</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>6</Name>
+          <Value>6</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>12</Name>
+          <Value>12</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>48</Name>
+          <Value>48</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>128</Name>
+          <Value>128</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>256</Name>
+          <Value>256</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

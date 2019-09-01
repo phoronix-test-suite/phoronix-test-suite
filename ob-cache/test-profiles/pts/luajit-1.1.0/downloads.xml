@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.0m3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/LuaJIT-20190110.tar.xz</URL>
+      <MD5>c5efcb8c78bb16e981596faec943db81</MD5>
+      <SHA256>bfc6d0991c0ca1c0d892df3ad2d95c6a192f8f145a9d1246f47b9aa364bba10e</SHA256>
+      <FileName>LuaJIT-20190110.tar.xz</FileName>
+      <FileSize>704300</FileSize>
+    </Package>
+    <Package>
+      <URL>https://luajit.org/download/scimark.lua</URL>
+      <MD5>58c52e5551af4853c06ed94841649636</MD5>
+      <SHA256>c227152af39a8b7e0c3c225eb4e681e08975b749dacbebf494ebde0938c9a5fa</SHA256>
+      <FileName>scimark.lua</FileName>
+      <FileSize>11894</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

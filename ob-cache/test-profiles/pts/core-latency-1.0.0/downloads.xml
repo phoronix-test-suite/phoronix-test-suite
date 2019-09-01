@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.8.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/core-latency-20190614.zip</URL>
+      <MD5>cbb5818ac1e534e787876363c00d2377</MD5>
+      <SHA256>f73963aacad3ab6ddb8447a56969b02d5273dd65208fc5eddfe4edaf87745c85</SHA256>
+      <FileName>core-latency-20190614.zip</FileName>
+      <FileSize>245507</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

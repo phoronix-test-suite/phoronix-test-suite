@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>INFO: Current FPS: #_RESULT_#</OutputTemplate>
+    <LineHint>Current FPS</LineHint>
+    <MultiMatch>REPORT_ALL</MultiMatch>
+  </ResultsParser>
+</PhoronixTestSuite>

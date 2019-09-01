@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>SPEEDOMETER RUNS PER MINUTE RESULT: #_RESULT_#</OutputTemplate>
+    <LineHint>SPEEDOMETER</LineHint>
+    <ResultScale>Runs Per Minute</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>MOTIONMARK RESULT: #_RESULT_#</OutputTemplate>
+    <LineHint>MOTIONMARK</LineHint>
+    <ResultScale>Score</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>BASEMARK OVERALL SCORE RESULT: #_RESULT_#</OutputTemplate>
+    <LineHint>BASEMARK</LineHint>
+    <ResultScale>Overall Score</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>WEBXPRT SCORE RESULT: #_RESULT_#</OutputTemplate>
+    <LineHint>WEBXPRT</LineHint>
+    <ResultScale>Score</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>ARES-6 GEOMETRIC MEAN RESULT: #_RESULT_#</OutputTemplate>
+    <LineHint>ARES-6</LineHint>
+    <ResultScale>ms</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>OCTANE RESULT: #_RESULT_#</OutputTemplate>
+    <LineHint>OCTANE</LineHint>
+    <ResultScale>Geometric Mean</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>JETSTREAM RESULT: #_RESULT_#</OutputTemplate>
+    <LineHint>JETSTREAM</LineHint>
+    <ResultScale>Score</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>JSTREAM2 RESULT: #_RESULT_#</OutputTemplate>
+    <LineHint>JSTREAM2</LineHint>
+    <ResultScale>Score</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>CANVASMARK RESULT: #_RESULT_#</OutputTemplate>
+    <LineHint>CANVASMARK</LineHint>
+    <ResultScale>Score</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+</PhoronixTestSuite>

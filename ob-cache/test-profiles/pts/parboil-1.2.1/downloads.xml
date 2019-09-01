@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.4.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/pb2.5benchmarks.tgz</URL>
+      <MD5>8160be87912b80d830481b176b3d3aa7</MD5>
+      <SHA256>1b862fd8cc9a1e291dab3491ba84e4e8dd34f6b59d2913a633a0bb15ff5634cc</SHA256>
+      <FileName>pb2.5benchmarks.tgz</FileName>
+      <FileSize>2543967</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/pb2.5driver.tgz</URL>
+      <MD5>539eeb4347bead5f8bdbb9b847a97575</MD5>
+      <SHA256>32f6eedc30faa0e724af4546060dc1f291e36f224530836961510028f1555bde</SHA256>
+      <FileName>pb2.5driver.tgz</FileName>
+      <FileSize>47770</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/pb2.5datasets_standard.tgz</URL>
+      <MD5>d8c6fb1690d62e52ed79bf4f86ac6006</MD5>
+      <SHA256>449916452aa75e440d1a4b2b8aa42f6d9e5d70591f2890544f6f0a830e81bea0</SHA256>
+      <FileName>pb2.5datasets_standard.tgz</FileName>
+      <FileSize>370753945</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

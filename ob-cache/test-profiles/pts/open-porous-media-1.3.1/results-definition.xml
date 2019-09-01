@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.8.5 (Sokndal)-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Total wallclock time:       #_RESULT_# sec  (52 min 59.02 sec)</OutputTemplate>
+    <LineHint>Total wallclock time</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

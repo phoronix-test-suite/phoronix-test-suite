@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0m3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/tinymembench-20180528.zip</URL>
+      <MD5>e714db08f05c0f0dcef58e322aecef74</MD5>
+      <SHA256>0851a0e57e670d262d3150509b640862922f69d2ecbecddfc4c4c3b60d98b500</SHA256>
+      <FileName>tinymembench-20180528.zip</FileName>
+      <FileSize>26987</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

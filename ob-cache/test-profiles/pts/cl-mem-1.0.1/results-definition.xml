@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.0.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>write: 512 GB in 2070.7 ms: #_RESULT_# GB/s</OutputTemplate>
+    <MatchToTestArguments>WRITE</MatchToTestArguments>
+    <LineHint>write:</LineHint>
+    <ResultScale>GB/s</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>read: 512 GB in 2070.7 ms: #_RESULT_# GB/s</OutputTemplate>
+    <MatchToTestArguments>READ</MatchToTestArguments>
+    <LineHint>read:</LineHint>
+    <ResultScale>GB/s</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>copy: 512 GB in 2070.7 ms: #_RESULT_# GB/s</OutputTemplate>
+    <MatchToTestArguments>COPY</MatchToTestArguments>
+    <LineHint>copy:</LineHint>
+    <ResultScale>GB/s</ResultScale>
+  </ResultsParser>
+</PhoronixTestSuite>

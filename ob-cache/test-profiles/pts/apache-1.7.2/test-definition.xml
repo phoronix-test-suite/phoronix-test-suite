@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.8.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Apache Benchmark</Title>
+    <AppVersion>2.4.29</AppVersion>
+    <Description>This is a test of ab, which is the Apache benchmark program. This test profile measures how many requests per second a given system can sustain when carrying out 1,000,000 requests with 100 requests being carried out concurrently.</Description>
+    <ResultScale>Requests Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <SubTitle>Static Web Page Serving</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.7.2</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD, MacOSX, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, perl, pcre, expat</ExternalDependencies>
+    <EnvironmentSize>208</EnvironmentSize>
+    <ProjectURL>http://www.apache.org/</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-n 1000000 -c 100 http://localhost:8088/test.html</Arguments>
+    </Default>
+  </TestSettings>
+</PhoronixTestSuite>

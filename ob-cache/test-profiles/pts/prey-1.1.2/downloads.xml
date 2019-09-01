@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.0.0m2 (Suldal)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://icculus.org/prey/downloads/prey-installer-02192009.bin</URL>
+      <MD5>f2d8ec21b5d082b516774f62a8bb6e97</MD5>
+      <FileName>prey-installer-02192009.bin</FileName>
+      <FileSize>45447932</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/prey-retail-client-pts-1.tar.bz2, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/prey-retail-client-pts-1.tar.bz2</URL>
+      <MD5>50e6b6fb1128fb9ad350188162c0a9aa</MD5>
+      <FileName>prey-retail-client-pts-1.tar.bz2</FileName>
+      <FileSize>38591789</FileSize>
+    </Package>
+    <Package>
+      <URL></URL>
+      <FileName>prey-base-files.tar</FileName>
+      <FileSize>1686220800</FileSize>
+    </Package>
+    <Package>
+      <URL></URL>
+      <FileName>preykey.tar</FileName>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

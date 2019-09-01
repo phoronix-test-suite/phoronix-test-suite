@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.8.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>mean: #_RESULT_# ns, lb 139.47 ns, ub 141.176 ns, ci 0.95</OutputTemplate>
+    <MultiMatch>AVERAGE</MultiMatch>
+  </ResultsParser>
+</PhoronixTestSuite>

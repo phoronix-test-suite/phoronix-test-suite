@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/cifar10_tf.tar.gz</URL>
+      <MD5>f71780e2159320c70aea9e63f68c5ff1</MD5>
+      <SHA256>996b444e1082a0cb70ded6d8f5d405a82162f452995e441805112681a1e83c97</SHA256>
+      <FileSize>13188</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

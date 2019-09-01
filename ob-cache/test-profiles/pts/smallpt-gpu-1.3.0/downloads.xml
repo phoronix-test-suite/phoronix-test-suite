@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.8.3 (Sokndal)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/SmallptGPU-v1.6pts-1.tar.bz2</URL>
+      <MD5>e3b5bc93cb169a7772bf6d5f13f92068</MD5>
+      <FileSize>36740</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/mini-nbody-20151110.zip</URL>
+      <MD5>42b183b885ad9845a944124a0b331010</MD5>
+      <SHA256>a4ecd7be292ca1f0ec5b443deba1892424d05a8e9b20a6210f96a115043d00cc</SHA256>
+      <FileName>mini-nbody-20151110.zip</FileName>
+      <FileSize>20808</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

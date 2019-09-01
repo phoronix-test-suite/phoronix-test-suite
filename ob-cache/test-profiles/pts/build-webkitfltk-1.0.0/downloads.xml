@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.4.0m6 (Lipki)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ftp.jaist.ac.jp/pub/sourceforge/f/project/fi/fifth-browser/v0.1.1/webkitfltk-0.1.1.tar.xz, http://internode.dl.sourceforge.net/project/fifth-browser/v0.1.1/webkitfltk-0.1.1.tar.xz, http://netcologne.dl.sourceforge.net/project/fifth-browser/v0.1.1/webkitfltk-0.1.1.tar.xz</URL>
+      <MD5>995d7028b73f3295e5d2302be93db68c</MD5>
+      <SHA256>17faa227495aadfbe896b2b40a6e2f27d949d1fef005ae0344eca057a121bbc8</SHA256>
+      <FileSize>22778192</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

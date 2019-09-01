@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://render.otoy.com/downloads/a/691/8173705a-e2af-4e54-81b1-4bc89242e2d0/OctaneBench_4_00b_linux.zip</URL>
+      <FileName>OctaneBench_4_00b_linux.zip</FileName>
+      <FileSize>121126338</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://render.otoy.com/downloads/a/691/5d75ac70-301f-4685-a051-6a6cef7337b6/OctaneBench_4_00b_win.zip</URL>
+      <FileName>OctaneBench_4_00b_win.zip</FileName>
+      <FileSize>103292398</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

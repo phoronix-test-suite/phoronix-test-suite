@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.8.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.numberworld.org/y-cruncher/y-cruncher%20v0.7.7.9501-static.tar.xz, http://phoronix-test-suite.com/benchmark-files/y-cruncher%20v0.7.7.9501-static.tar.xz</URL>
+      <MD5>6e794ed0e9527bf7703be187eb1b8a1f</MD5>
+      <SHA256>abc1e89398105d4814333278ba4ce681217a140ffd0b6fdb9537fe49a3637b7d</SHA256>
+      <FileName>y-cruncher-static.tar.gz</FileName>
+      <FileSize>28849020</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.numberworld.org/y-cruncher/y-cruncher%20v0.7.7.9501.zip, http://phoronix-test-suite.com/benchmark-files/y-cruncher%20v0.7.7.9501-static.tar.xz</URL>
+      <MD5>840529efda4c48c0e66a0c9582528346</MD5>
+      <SHA256>1d7c9edcb696699ea1cf0ac2ee516f3a5436591fcbbb8c4c0a771330a4e4284a</SHA256>
+      <FileName>y-cruncher-windows.zip</FileName>
+      <FileSize>43744408</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

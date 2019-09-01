@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.2.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.bzip.org/1.0.6/bzip2-1.0.6.tar.gz, http://downloads.openwrt.org/sources/bzip2-1.0.6.tar.gz</URL>
+      <MD5>00b516f4704d4a7cb50a1d97e6e8e15b</MD5>
+      <FileSize>782025</FileSize>
+    </Package>
+    <Package>
+      <URL>https://launchpad.net/pbzip2/1.1/1.1.12/+download/pbzip2-1.1.12.tar.gz</URL>
+      <MD5>91a4911b13305850423840eb0fa6f4f9</MD5>
+      <FileSize>54982</FileSize>
+    </Package>
+    <Package>
+      <URL>https://www.kernel.org/pub/linux/kernel/v4.x/linux-4.3.tar.gz</URL>
+      <MD5>737570130236c2256cfa67920fa721cf</MD5>
+      <SHA256>1bba5be47e56b3f83856f5544d0eeb729a67c83ed0e298be71e8dd4379918912</SHA256>
+      <FileSize>131995842</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

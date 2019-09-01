@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.13.tar.gz, http://mirrors.mit.edu/kernel/linux/kernel/v4.x/linux-4.13.tar.gz</URL>
+      <MD5>7e0393558784f7494a50c5219eac14f1</MD5>
+      <SHA256>9511260e17e474183b9c3b2ea601d5af256dde783e14dba4031854eaa98d5089</SHA256>
+      <FileSize>155489655</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

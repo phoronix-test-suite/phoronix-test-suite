@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.0.1 (Khanino)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://archive.apache.org/dist/httpd/httpd-2.4.7.tar.bz2</URL>
+      <MD5>170d7fb6fe5f28b87d1878020a9ab94e</MD5>
+      <SHA256>64368d8301836815ae237f2b62d909711c896c1bd34573771e0ee5ad808ce71b</SHA256>
+      <FileSize>5004719</FileSize>
+    </Package>
+    <Package>
+      <URL>http://archive.apache.org/dist/apr/apr-1.5.0.tar.bz2</URL>
+      <MD5>cc93bd2c12d0d037f68e21cc6385dc31</MD5>
+      <SHA256>17287d36a5917e27281e60d47e7b147bd5ddcd1ca832702c2318f5e0724f1221</SHA256>
+      <FileSize>813976</FileSize>
+    </Package>
+    <Package>
+      <URL>http://archive.apache.org/dist/apr/apr-util-1.5.3.tar.bz2</URL>
+      <MD5>6f3417691c7a27090f36e7cf4d94b36e</MD5>
+      <SHA256>78edb174f13e25ee15ded2b849b741a248b879a93a77a2d31c20f7e225be3968</SHA256>
+      <FileSize>695303</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://gmplib.org/download/gmp/gmp-6.1.2.tar.bz2</URL>
+      <MD5>8ddbb26dc3bd4e2302984debba1406a5</MD5>
+      <SHA256>5275bb04f4863a13516b2f39392ac5e272f5e1bb8057b18aec1c9b79d73d8fb2</SHA256>
+      <FileName>gmp-6.1.2.tar.bz2</FileName>
+      <FileSize>2386766</FileSize>
+    </Package>
+    <Package>
+      <URL>http://ftp.ussg.iu.edu/gnu/mpfr/mpfr-4.0.0.tar.bz2, http://ftp.gnu.org/gnu/mpfr/mpfr-4.0.0.tar.bz2, http://ftp.vim.org/ftp/gnu/mpfr/mpfr-4.0.0.tar.bz2</URL>
+      <MD5>ef619f3bb68039e35c4a219e06be72d0</MD5>
+      <SHA256>6aa31fbf3bd1f9f95bcfa241590a9d11cb0f874e2bb93b99c9e2de8eaea6d5fd</SHA256>
+      <FileName>mpfr-4.0.0.tar.bz2</FileName>
+      <FileSize>1619917</FileSize>
+    </Package>
+    <Package>
+      <URL>http://ftp.gnu.org/gnu/mpc/mpc-1.1.0.tar.gz</URL>
+      <MD5>4125404e41e482ec68282a2e687f6c73</MD5>
+      <SHA256>6985c538143c1208dcb1ac42cedad6ff52e267b47e5f970183a3e75125b43c2e</SHA256>
+      <FileName>mpc-1.1.0.tar.gz</FileName>
+      <FileSize>701263</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

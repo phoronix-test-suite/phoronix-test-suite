@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.4.0m1 (Forsand)-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>2000 reps @  17.6448 msec (    #_RESULT_# ): PutImage 500x500 square Operations / Second</OutputTemplate>
+    <LineHint>reps @</LineHint>
+    <StripFromResult>/sec</StripFromResult>
+  </ResultsParser>
+</PhoronixTestSuite>

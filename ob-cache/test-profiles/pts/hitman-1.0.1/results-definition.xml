@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.8.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Benchmark Results:
+---- CPU ----
+3941 frames
+ #_RESULT_# Average
+  #_MIN_RESULT_# Min
+#_MAX_RESULT_# Max
+ 30.41ms Average
+  4.74ms Min
+117.72ms Max</OutputTemplate>
+    <LineBeforeHint>frames</LineBeforeHint>
+    <StripFromResult>fps</StripFromResult>
+  </ResultsParser>
+  <ExtraData>
+    <Identifier>cpu-frames-space-delimited</Identifier>
+  </ExtraData>
+</PhoronixTestSuite>

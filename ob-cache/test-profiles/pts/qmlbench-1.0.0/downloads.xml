@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/qmlbench-20180715.zip</URL>
+      <MD5>21afed50bb7d1e2ddcbfe4aa4273a092</MD5>
+      <SHA256>3fa971ce1b919ca4776e3f44666ec67855b1f95100bf2431c19a262dccf14803</SHA256>
+      <FileName>qmlbench-20180715.zip</FileName>
+      <FileSize>575905</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

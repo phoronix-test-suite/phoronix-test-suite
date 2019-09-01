@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Multichase Pointer Chaser</Title>
+    <Description>This is a benchmark of Google's multichase pointer chaser program.</Description>
+    <ResultScale>ns</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.2</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>5</EnvironmentSize>
+    <ProjectURL>http://github.com/google/multichase</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>run-test</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>256MB Array, 256 Byte Stride</Name>
+          <Value>multichase</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>4MB Array, 64 Byte Stride</Name>
+          <Value>multichase -m 4m -s 64</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>1GB Array, 256 Byte Stride</Name>
+          <Value>multichase -m 1g</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>1GB Array, 256 Byte Stride, 2 Threads</Name>
+          <Value>multichase -m 1g -t 2</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>1GB Array, 256 Byte Stride, 4 Threads</Name>
+          <Value>multichase -m 1g -t 4</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>SysTester</Title>
+    <AppVersion>1.1.0</AppVersion>
+    <Description>Time how long it takes to calculate pi to varying lengths.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <Executable>systester-cli</Executable>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, qt4-development, gmp-library</ExternalDependencies>
+    <EnvironmentSize>1.4</EnvironmentSize>
+    <ProjectURL>http://systester.sourceforge.net/</ProjectURL>
+    <Maintainer>Kenney Phillis</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Algorithm Choice</DisplayName>
+      <Identifier>Algorithm</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Gauss-Legendre algorithm</Name>
+          <Value>-gausslg</Value>
+          <Message>Recommended.</Message>
+        </Entry>
+        <Entry>
+          <Name>Borwein's Quadratic Convergence algorithm</Name>
+          <Value>-qcborwein</Value>
+          <Message>This Test Could take Hours to finish.</Message>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Digits To Calculate</DisplayName>
+      <Identifier>Digits</Identifier>
+      <Menu>
+        <Entry>
+          <Name>4 Million Digits</Name>
+          <Value>4M</Value>
+        </Entry>
+        <Entry>
+          <Name>16 Million Digits</Name>
+          <Value>16M</Value>
+          <Message>This Test could take a while to finish.</Message>
+        </Entry>
+        <Entry>
+          <Name>64 Million Digits</Name>
+          <Value>64M</Value>
+          <Message>This Test will take a long time to run.</Message>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Number of Threads</DisplayName>
+      <Identifier>Threads</Identifier>
+      <Menu>
+        <Entry>
+          <Name>1 thread</Name>
+          <Value>-threads 1</Value>
+          <Message>Single Thread Test</Message>
+        </Entry>
+        <Entry>
+          <Name>2 threads</Name>
+          <Value>-threads 2</Value>
+          <Message>2+ Cores Recommended</Message>
+        </Entry>
+        <Entry>
+          <Name>4 threads</Name>
+          <Value>-threads 4</Value>
+          <Message>2+ Cores Recommended</Message>
+        </Entry>
+        <Entry>
+          <Name>8 threads</Name>
+          <Value>-threads 8</Value>
+          <Message>4+ Cores Recommended</Message>
+        </Entry>
+        <Entry>
+          <Name>16 threads</Name>
+          <Value>-threads 16</Value>
+          <Message>8+ Cores Recommended</Message>
+        </Entry>
+        <Entry>
+          <Name>32 threads</Name>
+          <Value>-threads 32</Value>
+          <Message>Recommended For Servers</Message>
+        </Entry>
+        <Entry>
+          <Name>64 threads</Name>
+          <Value>-threads 64</Value>
+          <Message>Recommended For Servers</Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

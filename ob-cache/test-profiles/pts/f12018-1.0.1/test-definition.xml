@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.4.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>F1 2018</Title>
+    <Description>This is a benchmark of F1 2018 running under Steam Play (Proton) on Linux. The test profile assumes you have a Steam account, have Steam installed for the system, and that the game is already purchased/installed. This automates the process of executing the game and using a standardized time demo.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+    <PreInstallMessage>This test will attempt to install the necessary game using your Steam account. If the test appears hung you may need to manually exit the Steam client.</PreInstallMessage>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Game</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Retail</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+    <ExternalDependencies>steam</ExternalDependencies>
+    <RequiresDisplay>TRUE</RequiresDisplay>
+    <EnvironmentSize>4</EnvironmentSize>
+    <ProjectURL>https://store.steampowered.com/agecheck/app/737800/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Configuration</DisplayName>
+      <Identifier>config</Identifier>
+      <Menu>
+        <Entry>
+          <Name>1920 x 1080 - High Quality</Name>
+          <Value>hardware_settings_1920x1080_high</Value>
+        </Entry>
+        <Entry>
+          <Name>1920 x 1080 - Ultra High Quality</Name>
+          <Value>hardware_settings_1920x1080_ultra_high</Value>
+        </Entry>
+        <Entry>
+          <Name>2560 x 1440 - High Quality</Name>
+          <Value>hardware_settings_2560x1440_high</Value>
+        </Entry>
+        <Entry>
+          <Name>2560 x 1440 - Ultra High Quality</Name>
+          <Value>hardware_settings_2560x1440_ultra_high</Value>
+        </Entry>
+        <Entry>
+          <Name>3840 x 2160 - Low Quality</Name>
+          <Value>hardware_settings_3840x2160_low</Value>
+        </Entry>
+        <Entry>
+          <Name>3840 x 2160 - High Quality</Name>
+          <Value>hardware_settings_3840x2160_high</Value>
+        </Entry>
+        <Entry>
+          <Name>3840 x 2160 - Ultra High Quality</Name>
+          <Value>hardware_settings_3840x2160_ultra_high</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

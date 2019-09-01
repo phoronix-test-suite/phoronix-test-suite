@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.4.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>F1 2015</Title>
+    <Description>This is a benchmark of F1 2015 via Steam. The test profile assumes you have a Steam account, have Steam installed for the system, and that you have rights to F1 2015. This automates the process of executing the game and using a standardized time demo.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+    <PreInstallMessage>This test will attempt to install the necessary game using your Steam account. If the test appears hung you may need to manually exit the Steam client.</PreInstallMessage>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Game</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+    <EnvironmentSize>2</EnvironmentSize>
+    <ProjectURL>http://store.steampowered.com/app/286570/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>1920 x 1080 - Low Quality</Name>
+          <Value>preferences_1920x1080_low</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>1920 x 1080 - High Quality</Name>
+          <Value>preferences_1920x1080_high</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>1920 x 1080 - Ultra Quality</Name>
+          <Value>preferences_1920x1080_ultra</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>2560 x 1440 - Ultra Quality</Name>
+          <Value>preferences_2560x1440_ultra</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

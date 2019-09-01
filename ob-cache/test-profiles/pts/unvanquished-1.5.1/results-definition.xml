@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>[ 2434 frames, 40.6s: #_RESULT_# fps</OutputTemplate>
+    <LineHint>frames</LineHint>
+  </ResultsParser>
+  <ExtraData>
+    <Identifier>com-speeds-frame-latency-totals</Identifier>
+  </ExtraData>
+</PhoronixTestSuite>

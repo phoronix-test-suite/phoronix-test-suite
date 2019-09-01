@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.8.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Raw:	#_RESULT_# c/s real, 768 c/s virtual</OutputTemplate>
+    <LineHint>Raw:</LineHint>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Many salts:	#_RESULT_# c/s real, 6660K c/s virtual</OutputTemplate>
+    <LineHint>Many salts:</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.2.1 (Khanino)-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>9231 frames, 52.1 seconds: #_RESULT_# fps</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

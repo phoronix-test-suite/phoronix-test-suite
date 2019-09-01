@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.4.0m1 (Forsand)-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>x11perf</Title>
+    <AppVersion>1.5</AppVersion>
+    <Description>x11perf is a very basic performance/regression test for X.Org.</Description>
+    <ResultScale>Operations / Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.1</Version>
+    <SupportedPlatforms>Linux, BSD</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>glut, build-utilities, xorg-development</ExternalDependencies>
+    <EnvironmentSize>1.7</EnvironmentSize>
+    <ProjectURL>http://www.x.org/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-time 30 -repeat 1</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test</Identifier>
+      <Menu>
+        <Entry>
+          <Name>500px PutImage Square</Name>
+          <Value>-putimage500</Value>
+        </Entry>
+        <Entry>
+          <Name>Scrolling 500 x 500 px</Name>
+          <Value>-scroll500</Value>
+        </Entry>
+        <Entry>
+          <Name>Fill 300 x 300px AA Trapezoid</Name>
+          <Value>-aatrapezoid300</Value>
+        </Entry>
+        <Entry>
+          <Name>500px Copy From Window To Window</Name>
+          <Value>-copywinwin500</Value>
+        </Entry>
+        <Entry>
+          <Name>500px Compositing From Pixmap To Window</Name>
+          <Value>-comppixwin500</Value>
+        </Entry>
+        <Entry>
+          <Name>500px Compositing From Window To Window</Name>
+          <Value>-compwinwin500</Value>
+        </Entry>
+        <Entry>
+          <Name>Copy 500x500 From Pixmap To Pixmap</Name>
+          <Value>-copypixpix500</Value>
+        </Entry>
+        <Entry>
+          <Name>PutImage XY 500x500 Square</Name>
+          <Value>-putimagexy500</Value>
+        </Entry>
+        <Entry>
+          <Name>Char in 80-char aa line</Name>
+          <Value>-aa10text</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

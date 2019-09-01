@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.2.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Loop time of #_RESULT_# on 1 procs for 100 steps with 32000 atoms
+</OutputTemplate>
+    <LineHint>Loop time</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

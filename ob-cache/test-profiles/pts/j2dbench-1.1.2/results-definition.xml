@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>   Overall average:  #_RESULT_#</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

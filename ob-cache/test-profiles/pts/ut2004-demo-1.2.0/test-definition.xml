@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Unreal Tournament 2004 Demo</Title>
+    <AppVersion>3334</AppVersion>
+    <Description>This test calculates the average frame-rate within the Unreal Tournament 2004 game demo from Epic Games.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Game</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Non-Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+    <ExternalDependencies>libstdcpp5</ExternalDependencies>
+    <EnvironmentSize>798</EnvironmentSize>
+    <ProjectURL>http://www.unrealtournament2003.com/ut2004/index.html</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Map</DisplayName>
+      <Identifier>map</Identifier>
+      <Menu>
+        <Entry>
+          <Name>AS-Convoy Botmatch</Name>
+          <Value>as-convoy?spectatoronly=1?numbots=8?quickstart=1?attractcam=1 -benchmark -seconds=120 -nosound</Value>
+        </Entry>
+        <Entry>
+          <Name>BR-Colossus Botmatch</Name>
+          <Value>br-colossus?spectatoronly=1?numbots=8?quickstart=1?attractcam=1 -benchmark -seconds=120 -nosound</Value>
+        </Entry>
+        <Entry>
+          <Name>CTF-BridgeOfFate Botmatch</Name>
+          <Value>ctf-bridgeoffate?spectatoronly=1?numbots=8?quickstart=1?attractcam=1 -benchmark -seconds=120 -nosound</Value>
+        </Entry>
+        <Entry>
+          <Name>CTF-FaceClassic Botmatch</Name>
+          <Value>ctf-faceclassic?spectatoronly=1?numbots=8?quickstart=1?attractcam=1 -benchmark -seconds=120 -nosound</Value>
+        </Entry>
+        <Entry>
+          <Name>DM-Rankin Botmatch</Name>
+          <Value>dm-rankin?spectatoronly=1?numbots=8?quickstart=1?attractcam=1 -benchmark -seconds=120 -nosound</Value>
+        </Entry>
+        <Entry>
+          <Name>ONS-Torlan Botmatch</Name>
+          <Value>ons-torlan?spectatoronly=1?numbots=8?quickstart=1?attractcam=1 -benchmark -seconds=120 -nosound</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>resolution</Identifier>
+      <Menu>
+        <Entry>
+          <Name>800 x 600</Name>
+          <Value>-ini=../UT2004_800x600.ini</Value>
+        </Entry>
+        <Entry>
+          <Name>1024 x 768</Name>
+          <Value>-ini=../UT2004_1024x768.ini</Value>
+        </Entry>
+        <Entry>
+          <Name>1280 x 1024</Name>
+          <Value>-ini=../UT2004_1280x1024.ini</Value>
+        </Entry>
+        <Entry>
+          <Name>1680 x 1050</Name>
+          <Value>-ini=../UT2004_1680x1050.ini</Value>
+        </Entry>
+        <Entry>
+          <Name>1920 x 1200</Name>
+          <Value>-ini=../UT2004_1920x1200.ini</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

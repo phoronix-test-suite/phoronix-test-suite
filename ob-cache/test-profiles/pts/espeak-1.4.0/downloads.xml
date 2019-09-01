@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.8.0m3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/gutenberg-science.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/gutenberg-science.tar.gz</URL>
+      <MD5>e1b5250bbcf5e65d0f1e37ed727cc3d1</MD5>
+      <SHA256>6475eb2d05861b05a8d1393f19d2efe6db41ea6822500810da1b3189b979e26d</SHA256>
+      <FileSize>250250</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/espeak-1.48.04-source.tar.xz</URL>
+      <MD5>b7130a52c653a26b4becc5b9cfb04bb1</MD5>
+      <SHA256>07b7def28237cec4876b17dafd988d8fb3efae95b48ba7c64b88a8065b700ce0</SHA256>
+      <FileSize>2467876</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

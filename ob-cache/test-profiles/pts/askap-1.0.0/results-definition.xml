@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.0.0m5-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Gridding rate   #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>Gridding</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Degridding rate   #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>Degridding</MatchToTestArguments>
+  </ResultsParser>
+</PhoronixTestSuite>

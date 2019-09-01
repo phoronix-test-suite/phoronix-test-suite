@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.8.0m3-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Open FMM Nero2D</Title>
+    <AppVersion>2.0.2</AppVersion>
+    <Description>This is a test of Nero2D, which is a two-dimensional TM/TE solver for Open FMM. Open FMM is a free collection of electromagnetic software for scattering at very large objects. This test profile times how long it takes to solve one of the included 2D examples.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Total Time</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, fortran-compiler, fftw3-development, blas-development, lapack-development, openmpi-development</ExternalDependencies>
+    <EnvironmentSize>59</EnvironmentSize>
+    <ProjectURL>http://openfmm.sourceforge.net/</ProjectURL>
+    <InternalTags>SMP, MPI</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>nero2d_/share/examples/example2/example2.igf</Arguments>
+    </Default>
+  </TestSettings>
+</PhoronixTestSuite>

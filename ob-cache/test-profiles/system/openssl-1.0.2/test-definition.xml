@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.2.0m0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>OpenSSL</Title>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.2</Version>
+    <Extends>pts/openssl</Extends>
+    <RequiresCoreVersionMin>6100</RequiresCoreVersionMin>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>openssl</SystemDependencies>
+  </TestProfile>
+</PhoronixTestSuite>

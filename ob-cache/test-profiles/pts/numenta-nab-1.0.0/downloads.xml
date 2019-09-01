@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.4.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/NAB-20181109.tar.xz</URL>
+      <MD5>241651f1704f4bc71d669eeda69db615</MD5>
+      <SHA256>6a998d09ede35ec98ef187572f010b555bdbd324a4f95849bd09d3c25ca5a335</SHA256>
+      <FileName>NAB-20181109.tar.xz</FileName>
+      <FileSize>24659324</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

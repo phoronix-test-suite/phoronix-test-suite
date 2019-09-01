@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.4.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>lzbench</Title>
+    <AppVersion>2017-08-08</AppVersion>
+    <Description>lzbench is an in-memory benchmark of various compressors. The file used for compression is a Linux kernel source tree tarball.</Description>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux, MacOSX, Solaris, BSD</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>28</EnvironmentSize>
+    <ProjectURL>http://github.com/inikep/lzbench</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test</Identifier>
+      <ArgumentPrefix>-e</ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>Zstd 1</Name>
+          <Value>zstd,1</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Brotli 0</Name>
+          <Value>brotli,0</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Libdeflate 1</Name>
+          <Value>libdeflate,1</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>XZ 0</Name>
+          <Value>xz,0</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

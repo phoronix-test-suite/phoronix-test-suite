@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ftp.osuosl.org/pub/blfs/conglomeration/p7zip/p7zip_16.02_src_all.tar.bz2, ftp://ftp.za.freebsd.org/sourceforge/p/p7/p7zip/p7zip/16.02/p7zip_16.02_src_all.tar.bz2, ftp://sourceforge.nchc.org.tw/p/p7/p7zip/p7zip/16.02/p7zip_16.02_src_all.tar.bz2, ftp://sourceforge.mirrorservice.org/sites/distfiles.macports.org/p7zip/p7zip_16.02_src_all.tar.bz2</URL>
+      <MD5>a0128d661cfe7cc8c121e73519c54fbf</MD5>
+      <SHA256>5eb20ac0e2944f6cb9c2d51dd6c4518941c185347d4089ea89087ffdd6e2341f</SHA256>
+      <FileSize>4239909</FileSize>
+      <PlatformSpecific>Linux, BSD, Solaris, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/7z-win64-1602-files.zip</URL>
+      <MD5>137bf42df8b2193f741639b2a0d738e7</MD5>
+      <SHA256>7b13e4311994fe24be4f67545f2153ae239e4544a6ed664a76d829194a6312a3</SHA256>
+      <FileSize>1913316</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

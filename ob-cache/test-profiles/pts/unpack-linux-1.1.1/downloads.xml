@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://mirror.us.oneandone.net/linux/kernel/v4.x/linux-4.15.tar.xz</URL>
+      <MD5>0d701ac1e2a67d47ce7127432df2c32b</MD5>
+      <SHA256>5a26478906d5005f4f809402e981518d2b8844949199f60c4b6e1f986ca2a769</SHA256>
+      <FileSize>102181404</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

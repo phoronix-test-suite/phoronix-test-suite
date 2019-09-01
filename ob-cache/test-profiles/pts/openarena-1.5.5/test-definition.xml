@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>OpenArena</Title>
+    <AppVersion>0.8.8</AppVersion>
+    <Description>This is a test of OpenArena, a popular open-source first-person shooter. This game is based upon ioquake3, which in turn uses the GPL version of id Software's Quake 3 engine.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.5.5</Version>
+    <SupportedPlatforms>Linux, MacOSX, Windows</SupportedPlatforms>
+    <SoftwareType>Game</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+    <ExternalDependencies>sdl-development</ExternalDependencies>
+    <EnvironmentSize>448</EnvironmentSize>
+    <ProjectURL>http://openarena.ws/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>+exec pts-openarena-088 +set r_mode -1 +set r_fullscreen 1 +set com_speeds 1</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>resolution</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>800 x 600</Name>
+          <Value>+set r_customWidth 800 +set r_customHeight 600</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>1024 x 768</Name>
+          <Value>+set r_customWidth 1024 +set r_customHeight 768</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>1920 x 1080</Name>
+          <Value>+set r_customWidth 1920 +set r_customHeight 1080</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>2560 x 1440</Name>
+          <Value>+set r_customWidth 2560 +set r_customHeight 1440</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

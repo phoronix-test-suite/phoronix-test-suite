@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/pybench-2018-02-16.tar.gz</URL>
+      <MD5>e3ca0e887e4310896d32dd1cbd258a94</MD5>
+      <SHA256>851b5051b7e9c39cd118532071b9530ffb50a3767b7382d6dbb762531c1480e5</SHA256>
+      <FileName>pybench-2018-02-16.tar.gz</FileName>
+      <FileSize>102590</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

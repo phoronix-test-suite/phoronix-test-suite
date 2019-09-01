@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.2.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Apache Benchmark</Title>
+    <Description>This is a test of ab, which is the Apache benchmark program, using the system's supplied Apache web server.</Description>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <ExternalDependencies>httpd</ExternalDependencies>
+    <Extends>pts/apache</Extends>
+    <RequiresRoot>TRUE</RequiresRoot>
+    <EnvironmentSize>2</EnvironmentSize>
+    <Maintainer>Gabriela Cervantes</Maintainer>
+    <SystemDependencies>apachectl</SystemDependencies>
+  </TestProfile>
+</PhoronixTestSuite>

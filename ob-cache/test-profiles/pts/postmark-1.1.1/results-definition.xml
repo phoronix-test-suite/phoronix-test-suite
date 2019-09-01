@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Time:
+	8 seconds total
+	7 seconds of transactions (#_RESULT_# per second)
+
+Files:
+	12978 created (1622 per second)
+		Creation alone: 500 files (500 per second)
+		Mixed with transactions: 12478 files (1782 per second)
+	12475 read (1782 per second)
+	12512 appended (1787 per second)
+	12978 deleted (1622 per second)
+		Deletion alone: 456 files (456 per second)
+		Mixed with transactions: 12522 files (1788 per second)
+
+Data:
+	4142.43 megabytes read (517.80 megabytes per second)
+	4324.33 megabytes written (540.54 megabytes per second)</OutputTemplate>
+    <LineHint>seconds of transactions</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

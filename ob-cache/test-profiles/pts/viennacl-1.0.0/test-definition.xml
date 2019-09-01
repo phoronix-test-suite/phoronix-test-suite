@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.8.4 (Sokndal)-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>ViennaCL</Title>
+    <AppVersion>1.4.2</AppVersion>
+    <Description>ViennaCL is an open-source linear algebra library written in C++ and with support for OpenCL and OpenMP. This test profile uses ViennaCL OpenCL support and runs the included computational benchmark.</Description>
+    <ResultScale>GFLOPS</ResultScale>
+    <Proportion>HIB</Proportion>
+    <SubTitle>OpenCL LU Factorization</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, opencl, cmake</ExternalDependencies>
+    <EnvironmentSize>94</EnvironmentSize>
+    <ProjectURL>http://viennacl.sourceforge.net/</ProjectURL>
+    <InternalTags>OpenCL</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

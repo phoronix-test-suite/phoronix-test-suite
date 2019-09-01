@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.8.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://nginx.org/download/nginx-1.9.9.tar.gz</URL>
+      <MD5>50fdfa08e93ead7a111cba5a5f5735af</MD5>
+      <SHA256>de66bb2b11c82533aa5cb5ccc27cbce736ab87c9f2c761e5237cda0b00068d73</SHA256>
+      <FileName>nginx-1.9.9.tar.gz</FileName>
+      <FileSize>887908</FileSize>
+      <PlatformSpecific>Linux, Solaris, BSD, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://archive.apache.org/dist/httpd/httpd-2.2.17.tar.gz</URL>
+      <MD5>66d8e107f85acc039fd5e624e85728a9</MD5>
+      <FileName>httpd-2.2.17.tar.gz</FileName>
+      <FileSize>6597991</FileSize>
+      <PlatformSpecific>Linux, Solaris, BSD, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/apache-ab-test-files-1.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/apache-ab-test-files-1.tar.gz</URL>
+      <MD5>ca0c5bf0dd482a2847c68a52c0759942</MD5>
+      <FileName>apache-ab-test-files-1.tar.gz</FileName>
+      <FileSize>6008</FileSize>
+    </Package>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/Apache24-2.4.29-x64-vc14-r2-ah.zip</URL>
+      <MD5>8f7e773c8db85d55e4cc81ef153fef61</MD5>
+      <SHA256>1e6f26e8fbe3decd4c31cff3347a074c7db1f8af5ac71bf4386a1e80304e47ef</SHA256>
+      <FileName>Apache24-2.4.29-x64-vc14-r2-ah.zip</FileName>
+      <FileSize>10444082</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://nginx.org/download/nginx-1.9.9.zip</URL>
+      <MD5>0eddb07186d3ee3a4e333d61d1064db7</MD5>
+      <SHA256>8224bd319bc1dde4e0569085d1fcac37578d3be41c60505f34ed9d07e04320e6</SHA256>
+      <FileName>nginx-1.9.9.zip</FileName>
+      <FileSize>1357919</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

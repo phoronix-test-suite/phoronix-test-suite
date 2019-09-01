@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://github.com/fahbench/fahbench/releases/download/2.3.1/FAHBench-2.3.2-Linux.tar.gz</URL>
+      <MD5>3e885b9fcd68bebab9928a866109aa02</MD5>
+      <SHA256>1a5b81f57e25af557ebb25d2e8bfbeb1d2888384170e18871b7df930ac98c384</SHA256>
+      <FileSize>25859180</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://github.com/pandegroup/fahbench/releases/download/2.3.1/FAHBench-2.3.1-win64.zip</URL>
+      <MD5>d37a21376c1e06b3954dd9ed1ddf5046</MD5>
+      <SHA256>9853e4a8ca8520801c77457bafc989f171106667fce0189b00643d0fa164d489</SHA256>
+      <FileSize>33025488</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

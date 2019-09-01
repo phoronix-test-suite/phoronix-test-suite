@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>PBKDF2-sha512    #_RESULT_# iterations per second for 256-bit key</OutputTemplate>
+    <ArgumentsDescription>PBKDF2-sha512</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>PBKDF2-whirlpool  #_RESULT_# iterations per second for 256-bit key</OutputTemplate>
+    <ArgumentsDescription>PBKDF2-whirlpool</ArgumentsDescription>
+  </ResultsParser>
+</PhoronixTestSuite>

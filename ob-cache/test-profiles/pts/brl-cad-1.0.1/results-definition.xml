@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Benchmark results indicate an approximate VGR performance metric of #_RESULT_#</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

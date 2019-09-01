@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.2.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/ComputeApps-20170706.tar.bz2</URL>
+      <MD5>2a2a3dd35009f528fe8fce00ae4b48eb</MD5>
+      <SHA256>5ade6548ea9a6857eaba935178ec3767967378f4b43305e330864425dbe779a2</SHA256>
+      <FileSize>2070125</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

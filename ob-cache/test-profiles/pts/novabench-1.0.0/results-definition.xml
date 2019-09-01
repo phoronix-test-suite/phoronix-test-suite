@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>CPU Score: #_RESULT_#</OutputTemplate>
+    <LineHint>CPU Score</LineHint>
+    <ResultScale>CPU Score</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>GPU Compute (GFLOPS): #_RESULT_#</OutputTemplate>
+    <LineHint>GPU Compute</LineHint>
+    <ResultScale>GFLOPS</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>RAM Score: #_RESULT_#</OutputTemplate>
+    <LineHint>RAM Score</LineHint>
+    <ResultScale>RAM Score</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>RAM Speed (MB/s): #_RESULT_#</OutputTemplate>
+    <LineHint>RAM Speed</LineHint>
+    <ResultScale>MB/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+</PhoronixTestSuite>

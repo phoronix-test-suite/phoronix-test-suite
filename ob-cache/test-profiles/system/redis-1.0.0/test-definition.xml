@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.4.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Redis</Title>
+    <Executable>redis</Executable>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <ExternalDependencies>redis-server</ExternalDependencies>
+    <Extends>pts/redis</Extends>
+    <Maintainer>Gabriela Cervantes</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test</Identifier>
+      <ArgumentPrefix>-t </ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>SET</Name>
+          <Value>set</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>GET</Name>
+          <Value>get</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>LPUSH</Name>
+          <Value>lpush</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>LPOP</Name>
+          <Value>lpop</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>SADD</Name>
+          <Value>sadd</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

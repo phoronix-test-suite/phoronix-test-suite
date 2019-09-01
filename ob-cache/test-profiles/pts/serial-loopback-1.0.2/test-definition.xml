@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.0.0m3-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Serial Loopback Test</Title>
+    <Description>This test will do a simple write/read test on all detected serial interfaces. For this test to work, the relevant serial ports should have a serial loopback plug or have otherwise wired the appropriate pins.</Description>
+    <DisplayFormat>PASS_FAIL</DisplayFormat>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.2</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <RequiresRoot>TRUE</RequiresRoot>
+    <EnvironmentSize>1</EnvironmentSize>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

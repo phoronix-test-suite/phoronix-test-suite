@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/rbenchmarks-20160105.tar.bz2</URL>
+      <MD5>49bb38dff2a7eceb7658f21041e1c9bc</MD5>
+      <SHA256>e6e5f6e6baa9884c294d51de8350f6fd67e2d58e428ff3a992a3eac1d965096c</SHA256>
+      <FileSize>2554172</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

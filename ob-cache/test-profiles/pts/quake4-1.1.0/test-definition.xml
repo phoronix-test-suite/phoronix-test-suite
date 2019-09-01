@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Quake 4</Title>
+    <AppVersion>1.4.2</AppVersion>
+    <Description>This test calculates the average frame-rate within the Quake 4 game from id Software.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Game</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Retail</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+    <EnvironmentSize>2868</EnvironmentSize>
+    <ProjectURL>http://www.quake4game.com/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>+set sys_VideoRam $VIDEO_MEMORY +set r_mode -1 +timedemoquit pts +set in_tty 0</Arguments>
+      <PostArguments>+vid_restart</PostArguments>
+    </Default>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Quality</DisplayName>
+      <Identifier>game-quality</Identifier>
+      <ArgumentPrefix>+set com_machineSpec </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>Low</Name>
+        </Entry>
+        <Entry>
+          <Name>High</Name>
+          <Value>2</Value>
+        </Entry>
+        <Entry>
+          <Name>Ultra</Name>
+          <Value>3</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

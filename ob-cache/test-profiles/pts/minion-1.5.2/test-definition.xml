@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Minion</Title>
+    <AppVersion>1.8</AppVersion>
+    <Description>Minion is an open-source constraint solver that is designed to be very scalable. This test profile uses Minion's integrated benchmarking problems to solve.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.5.2</Version>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, cmake, boost-development, bzip2-development</ExternalDependencies>
+    <EnvironmentSize>55</EnvironmentSize>
+    <ProjectURL>http://minion.sourceforge.net/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Benchmark</DisplayName>
+      <Identifier>benchmark</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>Graceful</Name>
+          <Value>benchmarks/graceful/k6p2_table.minion</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Quasigroup</Name>
+          <Value>benchmarks/Quasigroup/qg-watchelement-7-10.minion</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Solitaire</Name>
+          <Value>benchmarks/solitaire/solitaire_benchmark_8.minion</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

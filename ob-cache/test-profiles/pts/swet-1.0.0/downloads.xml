@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/swet-1.5.16-src.tar.gz</URL>
+      <MD5>3643e0f222fd96082926615d4200a11d</MD5>
+      <SHA256>7671dedbd7bda9754ddc46c384354888864c1ebfbb9cd50824e5fdc954f258c5</SHA256>
+      <FileName>swet-1.5.16-src.tar.gz</FileName>
+      <FileSize>72671</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

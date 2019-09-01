@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://debian.redimadrid.es/debian/pool/main/p/postmark/postmark_1.51.orig.tar.gz, http://archive.debian.org/debian/pool/main/p/postmark/postmark_1.51.orig.tar.gz, https://mirrors.mediatemple.net/debian-archive/debian/pool/main/p/postmark/postmark_1.51.orig.tar.gz</URL>
+      <MD5>b494167c2df1850004110ab28e5ad164</MD5>
+      <FileSize>13394</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

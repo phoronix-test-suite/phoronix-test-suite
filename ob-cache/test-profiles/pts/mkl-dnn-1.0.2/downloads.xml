@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.8.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/mkl-dnn-20190416.tar.xz</URL>
+      <MD5>a6dba314d25c1201d01d9041c50f8ede</MD5>
+      <SHA256>9cb03a8a6515c2810a416c46a3648420d6ecf3ce373a9238881aa0e9d3bbbdb4</SHA256>
+      <FileName>mkl-dnn-20190416.tar.xz</FileName>
+      <FileSize>1147600</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

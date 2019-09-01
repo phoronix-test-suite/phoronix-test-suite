@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Phoronix Test Suite Self Test</Title>
+    <AppVersion>1.0</AppVersion>
+    <Description>This is a wrapper around the phoronix-test-suite debug-self-test sub-command for testing hot Phoronix Test Suite code paths and if wanting to compare different PHP implementations.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+    <IgnoreRuns>1</IgnoreRuns>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.4</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD, MacOSX, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <EnvironmentSize>1</EnvironmentSize>
+    <ProjectURL>http://www.phoronix-test-suite.com/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <AllowCacheShare>TRUE</AllowCacheShare>
+    </Default>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test</Identifier>
+      <ArgumentPrefix>TEST_</ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>List Suites</Name>
+          <Value>LIST_SUITES</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Info Command</Name>
+          <Value>INFO</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Render Test</Name>
+          <Value>RENDER</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Refresh Graphs</Name>
+          <Value>REFRESH_GRAPHS</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Merge Results</Name>
+          <Value>MERGE_RESULTS</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Total Time</Name>
+          <Value>TOTAL</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Peak Memory Usage</Name>
+          <Value>PEAK</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

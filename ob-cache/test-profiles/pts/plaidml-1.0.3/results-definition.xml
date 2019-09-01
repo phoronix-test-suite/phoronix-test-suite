@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Example finished, elapsed: 4.180670499801636 (compile), #_RESULT_# (execution), 0.19512354186736047 (execution per example)</OutputTemplate>
+    <LineHint>Example finished</LineHint>
+    <DivideResultDivisor>2048</DivideResultDivisor>
+  </ResultsParser>
+</PhoronixTestSuite>

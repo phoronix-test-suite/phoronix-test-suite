@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://math.nist.gov/scimark2/scimark2_1c.zip, http://www.phoronix-test-suite.com/benchmark-files/scimark2_1c.zip</URL>
+      <MD5>6cc8d6d5312a07e32316c03580e0206b</MD5>
+      <SHA256>223464cd7e90b4c22e2af08dbae6f6faa33e65b01e1c58e5a176837bc67958be</SHA256>
+      <FileSize>13792</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

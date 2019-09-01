@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.2.0 (Khanino)-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>1080p H.264 Video Playback</Title>
+    <Description>This is a test profile that will record the CPU usage while a 1080p H.264 video sample of Big Buck Bunny is played back for several minutes using MPlayer.</Description>
+    <ResultScale>Percent</ResultScale>
+    <DisplayFormat>LINE_GRAPH</DisplayFormat>
+    <SubTitle>CPU Usage</SubTitle>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <Extends>pts/mplayer-base</Extends>
+    <EnvironmentSize>692</EnvironmentSize>
+    <Maintainer>Michael Larabel</Maintainer>
+    <AutoSaveResults>TRUE</AutoSaveResults>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-frames 6000 -fs</Arguments>
+      <MinimumLength>60</MinimumLength>
+    </Default>
+    <Option>
+      <DisplayName>Video Decoding</DisplayName>
+      <Identifier>video-decoding</Identifier>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>GL2</Name>
+          <Value>-vo gl2</Value>
+        </Entry>
+        <Entry>
+          <Name>X-Video</Name>
+          <Value>-vo xv</Value>
+        </Entry>
+        <Entry>
+          <Name>XvMC</Name>
+          <Value>-vo xvmc</Value>
+        </Entry>
+        <Entry>
+          <Name>VDPAU</Name>
+          <Value>-vo vdpau -vc ffmpeg12vdpau,ffvmw3vdpau,ffvc1vdpau,ffh264vdpau,ffodivxvdpau -vf-clr yes</Value>
+        </Entry>
+        <Entry>
+          <Name>OS X CoreVideo</Name>
+          <Value>-vo corevideo</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

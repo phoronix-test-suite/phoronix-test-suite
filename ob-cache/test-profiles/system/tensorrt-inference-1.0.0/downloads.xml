@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/TRT_prototxt-20181223T214740Z-001.zip</URL>
+      <MD5>e12876266a0b8c06fca90c36c262e52f</MD5>
+      <SHA256>e81918f1b42b364630df7eaea989c491c9d6a07b07cc83428f6cb7e9eeedfe93</SHA256>
+      <FileName>TRT_prototxt-20181223T214740Z-001.zip</FileName>
+      <FileSize>14229</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

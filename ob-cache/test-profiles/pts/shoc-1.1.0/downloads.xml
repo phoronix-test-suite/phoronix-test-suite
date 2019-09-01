@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.0.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/shoc-20151110.zip</URL>
+      <MD5>b4fc2bf6395f292d4871d592b5889503</MD5>
+      <SHA256>4cf3918284c824184c01bc1185f4825a7eaae1d7d942685e16d9d7964aa790bc</SHA256>
+      <FileSize>2905517</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

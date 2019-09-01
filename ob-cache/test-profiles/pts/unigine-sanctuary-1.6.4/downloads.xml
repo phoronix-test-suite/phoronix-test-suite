@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/Unigine_Sanctuary-2.3.run, http://assets.unigine.com/d/Unigine_Sanctuary-2.3.run</URL>
+      <MD5>1b09cc3ec2273a011b84dba390befb9c</MD5>
+      <SHA256>28a8bbd1cb64126fadc7492304c59528c2c3ac9d53b0f1fe08a2c331703a39d5</SHA256>
+      <FileSize>29468416</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/Unigine_Sanctuary-2.3.msi, http://assets.unigine.com/d/Unigine_Sanctuary-2.3.msi</URL>
+      <MD5>210ace2670a368b9ece78153ac435fb9</MD5>
+      <SHA256>ac5fd6bb29452b373d0d796d2d5cd4b122408c4e6c88be7459bbb9ae88db800c</SHA256>
+      <FileSize>30514688</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

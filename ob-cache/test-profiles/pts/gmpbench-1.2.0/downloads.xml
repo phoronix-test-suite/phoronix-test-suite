@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.6.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://gmplib.org/download/gmp/gmp-6.1.2.tar.bz2, https://ftp.gnu.org/gnu/gmp/gmp-6.1.2.tar.bz2</URL>
+      <MD5>8ddbb26dc3bd4e2302984debba1406a5</MD5>
+      <SHA256>5275bb04f4863a13516b2f39392ac5e272f5e1bb8057b18aec1c9b79d73d8fb2</SHA256>
+      <FileSize>2386766</FileSize>
+    </Package>
+    <Package>
+      <URL>ftp://ftp.gmplib.org/pub/misc/gmpbench-0.2.tar.bz2</URL>
+      <MD5>5437655d34cc81663d080c3bbbb22139</MD5>
+      <FileSize>19992</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/gexpr.c.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/gexpr.c.tar.gz</URL>
+      <MD5>ee936a79be9f00de7e8ea2b55171167d</MD5>
+      <FileSize>2367</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

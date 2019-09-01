@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.0.0m3-->
+<PhoronixTestSuite>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Windows, Linux, MacOSX, BSD, Solaris</SupportedPlatforms>
+    <SoftwareType>BaseTestProfile</SoftwareType>
+    <License>Free</License>
+    <Status>Verified</Status>
+  </TestProfile>
+</PhoronixTestSuite>

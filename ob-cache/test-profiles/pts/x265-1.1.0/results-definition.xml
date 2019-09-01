@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>encoded 600 frames in 55.40s #_RESULT_# fps), 1098.05 kb/s, Avg QP:34.03</OutputTemplate>
+	<LineHint>encoded 600 frames</LineHint>
+    <StripFromResult>(</StripFromResult>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://old-releases.ubuntu.com/releases/16.04.3/ubuntu-16.04.3-server-i386.img</URL>
+      <MD5>8428cead4ee139873da19248590e354f</MD5>
+      <SHA256>2e763f7f3546be33ebc9a59311b2eee3b0b0c8e021fae65431c219b531d26d32</SHA256>
+      <FileSize>834666496</FileSize>
+    </Package>
+    <Package>
+      <URL>http://github.com/facebook/zstd/releases/download/v1.3.4/zstd-v1.3.4-win64.zip</URL>
+      <MD5>c16aa54401b42fa75257938f38c79e10</MD5>
+      <SHA256>b71f16f211aa0397a90e046ac4358c982ab9947c33e1004c933e69aee548ff26</SHA256>
+      <FileSize>1221468</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.6.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>ftp://ftp.spec.org/dist/gpc/opc/viewperf/unix/SPECViewperf9.0.3.tar.gz</URL>
+      <MD5>1651c5c99cbc724bfdbb6cf70220502d</MD5>
+      <SHA256>12935ff39876a2449b8b71498b4ee062628517d035d18645cf87879c1d9f2d17</SHA256>
+      <FileSize>654727464</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

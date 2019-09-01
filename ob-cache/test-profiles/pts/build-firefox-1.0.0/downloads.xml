@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.4.0m1 (Lipki)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ftp.mozilla.org/pub/mozilla.org/firefox/releases/32.0/source/firefox-32.0.source.tar.bz2</URL>
+      <MD5>859d0b6fe2d36b6959cf08cee4c783cc</MD5>
+      <SHA256>3265971e15809ab904403b474fa9eccf15f34697deb16fc400c5c3684afd50eb</SHA256>
+      <FileSize>149914070</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.2.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/lammps-22Jun07_v1.0.tgz</URL>
+      <MD5>3c9ac8e8081dbb5b4200fe50588706dc</MD5>
+      <SHA256>57135b2df66c1452692f06180594260aa061b360a190f3a5ec3859ad112db84a</SHA256>
+      <FileSize>16742242</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.8.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Average start-up time: #_RESULT_#</OutputTemplate>
+    <ResultAfterString>time:</ResultAfterString>
+    <ResultScale>sec</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+  </ResultsParser>
+</PhoronixTestSuite>

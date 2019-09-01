@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.paraview.org/files/v5.4/ParaView-5.4.1-Qt5-OpenGL2-MPI-Linux-64bit.tar.gz</URL>
+      <MD5>f9d9626e7b60bdb0e8f0b6ccb49525bb</MD5>
+      <SHA256>e0848896ee9ca0e2d52efcb4e6435a56bc352e30d23f0cc3fc542b44424c357a</SHA256>
+      <FileSize>308327272</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.paraview.org/files/v5.4/ParaView-5.4.1-Qt5-OpenGL2-MPI-Windows-64bit.zip</URL>
+      <MD5>ea89cb92c0115599d031959cc87c57c8</MD5>
+      <SHA256>622aab58f10e6edd44863295464879b5523db0ff5bc6dff289d9343b20937fbe</SHA256>
+      <FileSize>307175856</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

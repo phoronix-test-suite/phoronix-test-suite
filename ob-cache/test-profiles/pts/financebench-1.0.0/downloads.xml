@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.4.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/FinanceBench-20160606.tar.bz2</URL>
+      <MD5>9d05e2febe72a7e2f3bc348b3d9395d4</MD5>
+      <SHA256>c620536eb28ae540c805c4a523e3aa214e6124291a2e815977bc51222ae6732f</SHA256>
+      <FileSize>104059</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

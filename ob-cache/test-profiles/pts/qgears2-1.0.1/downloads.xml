@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/qgears2.tar.bz2, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/qgears2.tar.bz2, http://ktown.kde.org/~zrusin/examples/qgears2.tar.bz2</URL>
+      <MD5>1a5d0f555745c397216caa551fbda305</MD5>
+      <FileSize>274282</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/Radiance-Benchmark4-20180624.zip</URL>
+      <MD5>0f0c6e906b58da5b22bbbbb85e0344d7</MD5>
+      <SHA256>d117ebf84de8d6175c2d897f14acb141980da3a2f17bcdae185b98aa0e37b200</SHA256>
+      <FileSize>2739999</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/NREL/Radiance/releases/download/5.0/radiance-5.0.0-Linux64.tar.gz, http://www.phoronix-test-suite.com/benchmark-files/radiance-5.0.0-Linux64.tar.gz</URL>
+      <MD5>8bdc6965e234ce9200c2da5db71a91ab</MD5>
+      <SHA256>8632f5205fb1a0b8990e5eb43b18533fc82dc93fbae6ab2dab8d37b1238d0aa0</SHA256>
+      <FileSize>15906111</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

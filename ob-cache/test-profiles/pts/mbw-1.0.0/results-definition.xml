@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0m4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>AVG	Method: MCBLOCK	Elapsed: 0.01584	MiB: 128.00000	Copy: #_RESULT_# MiB/s</OutputTemplate>
+    <LineHint>AVG	Method:</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

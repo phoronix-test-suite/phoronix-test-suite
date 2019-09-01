@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>SQLite</Title>
+    <Executable>sqlite-benchmark</Executable>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <Extends>pts/sqlite</Extends>
+    <RequiresCoreVersionMin>6100</RequiresCoreVersionMin>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>pbzip2</SystemDependencies>
+  </TestProfile>
+</PhoronixTestSuite>

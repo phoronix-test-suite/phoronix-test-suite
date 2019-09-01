@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.6.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>HPCG result is VALID with a GFLOP/s rating of: #_RESULT_#</OutputTemplate>
+    <LineHint>HPCG result is VALID with</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

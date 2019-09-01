@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.8.0m2 (Belev)-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>TOTAL SCORE: #_RESULT_#</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

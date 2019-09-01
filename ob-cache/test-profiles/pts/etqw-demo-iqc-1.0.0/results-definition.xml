@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <ImageParser>
+    <SourceImage>shot00001.tga</SourceImage>
+    <MatchToTestArguments>vegetation</MatchToTestArguments>
+    <ImageX>484</ImageX>
+    <ImageY>105</ImageY>
+    <ImageWidth>332</ImageWidth>
+    <ImageHeight>256</ImageHeight>
+  </ImageParser>
+  <ImageParser>
+    <SourceImage>shot00003.tga</SourceImage>
+    <MatchToTestArguments>boat2</MatchToTestArguments>
+    <ImageX>660</ImageX>
+    <ImageY>310</ImageY>
+    <ImageWidth>306</ImageWidth>
+    <ImageHeight>374</ImageHeight>
+  </ImageParser>
+  <ImageParser>
+    <SourceImage>shot00002.tga</SourceImage>
+    <MatchToTestArguments>boat</MatchToTestArguments>
+    <ImageX>380</ImageX>
+    <ImageY>320</ImageY>
+    <ImageWidth>360</ImageWidth>
+    <ImageHeight>290</ImageHeight>
+  </ImageParser>
+  <ImageParser>
+    <SourceImage>shot00004.tga</SourceImage>
+    <MatchToTestArguments>water</MatchToTestArguments>
+    <ImageX>285</ImageX>
+    <ImageY>465</ImageY>
+    <ImageWidth>320</ImageWidth>
+    <ImageHeight>220</ImageHeight>
+  </ImageParser>
+  <ImageParser>
+    <SourceImage>shot00005.tga</SourceImage>
+    <MatchToTestArguments>trees</MatchToTestArguments>
+    <ImageX>500</ImageX>
+    <ImageY>184</ImageY>
+    <ImageWidth>247</ImageWidth>
+    <ImageHeight>131</ImageHeight>
+  </ImageParser>
+</PhoronixTestSuite>

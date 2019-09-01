@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.2.0m2 (Randaberg)-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>T: 0 ( 6596) P:80 I:10000 C:  10000 Min:      6 Act:    9 Avg:   #_RESULT_# Max:      63</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

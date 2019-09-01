@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/multichase-1.tar.bz2</URL>
+      <MD5>be4c42b6b337450bcb19084082dbec61</MD5>
+      <SHA256>46d406807fcac7fe3738dbb3cafc116804e1b7e9a048c0ce47b34dd500351fc6</SHA256>
+      <FileSize>18450</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

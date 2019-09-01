@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>ftp://openbsd.mirror.ac.za/sourceforge/p/po/polybench/polybench-c-4.2.tar.gz, ftp://ftp.za.freebsd.org/sourceforge/p/po/polybench/polybench-c-4.2.tar.gz, http://www.phoronix-test-suite.com/benchmark-files/polybench-c-4.2.tar.gz</URL>
+      <MD5>b575586c50f20ab6a3c038c3b8be51cb</MD5>
+      <SHA256>ecf1546d84ff4dc4ff02a8ad4b303ff15c6fd0940fccb37fd9dfb2eb223fe8b3</SHA256>
+      <FileSize>295260</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

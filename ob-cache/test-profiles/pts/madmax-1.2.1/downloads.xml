@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.6.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/madmax-prefs-2.tar.bz2</URL>
+      <MD5>c2f72e81cf8361d7f252598dc9425cc7</MD5>
+      <SHA256>0fdf9b699483e07a70fdf69bc1572b1b3b3d0965069d10082ce677915058ed2b</SHA256>
+      <FileSize>2367</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

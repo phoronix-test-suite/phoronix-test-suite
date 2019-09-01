@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>OSBench</Title>
+    <Description>OSBench is a collection of micro-benchmarks for measuring operating system primitives like time to create threads/processes, launching programs, creating files, and memory allocation.</Description>
+    <ResultScale>us Per Event</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux, BSD, MacOSX, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, meson</ExternalDependencies>
+    <EnvironmentSize>1</EnvironmentSize>
+    <ProjectURL>https://github.com/mbitsnbites/osbenc</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>Create Files</Name>
+          <Value>create_files.exe target</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Create Processes</Name>
+          <Value>create_processes.exe</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Create Threads</Name>
+          <Value>create_threads.exe</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Launch Programs</Name>
+          <Value>launch_programs.exe</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Memory Allocations</Name>
+          <Value>mem_alloc.exe</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

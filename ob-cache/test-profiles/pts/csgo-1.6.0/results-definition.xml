@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.4.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>pts10.dem UNKNOWN #_RESULT_# </OutputTemplate>
+    <LineHint>.dem</LineHint>
+    <FileFormat>CSV</FileFormat>
+  </ResultsParser>
+  <ExtraData>
+    <Identifier>valve-source-frame-times</Identifier>
+  </ExtraData>
+</PhoronixTestSuite>

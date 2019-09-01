@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Java Gradle Build</Title>
+    <AppVersion>1.0</AppVersion>
+    <Description>This test runs Java software project builds using the Gradle build system.  It is intended to give developers an idea as to the build performance for development activities and build servers.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>4</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD, MacOSX, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>java</ExternalDependencies>
+    <EnvironmentSize>200</EnvironmentSize>
+    <ProjectURL>https://github.com/reactor/reactor-core</ProjectURL>
+    <InternalTags>Java</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Gradle Build</DisplayName>
+      <Identifier>gradle-build</Identifier>
+      <ArgumentPrefix>TEST_</ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>Reactor</Name>
+          <Value>REACTOR</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

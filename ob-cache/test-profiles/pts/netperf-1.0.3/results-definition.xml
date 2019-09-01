@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate> #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>_STREAM</MatchToTestArguments>
+    <ResultScale>Megabits/sec Throughput</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>_MAERTS</MatchToTestArguments>
+    <ResultScale>Megabits/sec Throughput</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>_SENDFILE</MatchToTestArguments>
+    <ResultScale>Megabits/sec Throughput</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>_RR</MatchToTestArguments>
+    <ResultScale>Transaction Rate Per Second</ResultScale>
+  </ResultsParser>
+</PhoronixTestSuite>

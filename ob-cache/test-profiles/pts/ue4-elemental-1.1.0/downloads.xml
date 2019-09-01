@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.6.0m1 (Dedilovo)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ue4linux.raxxy.com/elemental_demo.tar.bz2</URL>
+      <MD5>b37cbfb02165f723d3ce93176880f715</MD5>
+      <SHA256>d86f0c7b2f2fc1a9c7b5df3d75b23a0a88985bcb706687441d310fb4e39c6e9a</SHA256>
+      <FileSize>1097828747</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

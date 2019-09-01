@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.4.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>#_RESULT_# Ops</OutputTemplate>
+    <LineHint>Ops/s</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

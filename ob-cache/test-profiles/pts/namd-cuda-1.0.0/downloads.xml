@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://www.ks.uiuc.edu/Research/namd/2.13b1/download/873189/NAMD_2.13b1_Linux-x86_64-multicore-CUDA.tar.gz</URL>
+      <MD5>ca85c614f615b0eb8305a0445313a97d</MD5>
+      <SHA256>4a874845391cdb14c47cf260424b0547707e73b94917e630fd9c8099721bef54</SHA256>
+      <FileName>NAMD_2.13b1_Linux-x86_64-multicore-CUDA.tar.gz</FileName>
+      <FileSize>250156757</FileSize>
+    </Package>
+    <Package>
+      <URL>https://www.ks.uiuc.edu/Research/namd/utilities/f1atpase.zip</URL>
+      <MD5>bec570545a4297dc89ac402b8a59753a</MD5>
+      <SHA256>26b37eb20ad532238a85724c43cbaedd58a507ec71ad8a40aff20b98da949fa8</SHA256>
+      <FileName>f1atpase.zip</FileName>
+      <FileSize>28241682</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

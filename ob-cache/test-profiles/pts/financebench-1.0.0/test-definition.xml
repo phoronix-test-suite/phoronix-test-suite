@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.4.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>FinanceBench</Title>
+    <AppVersion>2016-06-06</AppVersion>
+    <Description>FinanceBench is a collection of financial program benchmarks with support for benchmarking on the GPU.</Description>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, opencl</ExternalDependencies>
+    <EnvironmentSize>1</EnvironmentSize>
+    <ProjectURL>http://github.com/cavazos-lab/FinanceBench</ProjectURL>
+    <InternalTags>CUDA, OpenCL</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Benchmark</DisplayName>
+      <Identifier>benchmark</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>Black-Scholes OpenCL</Name>
+          <Value>Black-Scholes/OpenCL/blackScholesAnalyticEngine.exe</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Monte-Carlo OpenCL</Name>
+          <Value>Monte-Carlo/OpenCL/monteCarloEngine.exe</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

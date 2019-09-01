@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0m0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Swet</Title>
+    <AppVersion>1.5.16</AppVersion>
+    <Description>Swet is a synthetic CPU/RAM benchmark, includes multi-processor test cases.</Description>
+    <ResultScale>Operations Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <SubTitle>Average</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux, Solaris, MacOSX, BSD</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>1</EnvironmentSize>
+    <ProjectURL>http://swet.sourceforge.net/</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-Z -F</Arguments>
+    </Default>
+  </TestSettings>
+</PhoronixTestSuite>

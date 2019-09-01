@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.6.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Camp-HollowPoint: #_MIN_RESULT_# #_RESULT_# #_MAX_RESULT_#</OutputTemplate>
+    <LineHint>Camp-HollowPoint</LineHint>
+    <AppendToArgumentsDescription>Scene: Camp Hollow Point</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Stronghold-TyrantsLash: #_MIN_RESULT_# #_RESULT_# #_MAX_RESULT_#</OutputTemplate>
+    <LineHint>Stronghold-TyrantsLash</LineHint>
+    <AppendToArgumentsDescription>Scene: Stronghold</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Cutscene-HopeGloryandDogisDead: #_MIN_RESULT_# #_RESULT_# #_MAX_RESULT_#</OutputTemplate>
+    <LineHint>Cutscene-HopeGloryandDogisDead</LineHint>
+    <AppendToArgumentsDescription>Scene: Hope, Glory, and Dog is Dead</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Cutscene-Landmover: #_MIN_RESULT_# #_RESULT_# #_MAX_RESULT_#</OutputTemplate>
+    <LineHint>Cutscene-Landmover</LineHint>
+    <AppendToArgumentsDescription>Scene: Landmover</AppendToArgumentsDescription>
+  </ResultsParser>
+</PhoronixTestSuite>

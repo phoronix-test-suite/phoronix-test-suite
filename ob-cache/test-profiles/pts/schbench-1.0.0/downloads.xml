@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.8.0m3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/schbench-20180206.zip</URL>
+      <MD5>36bfb992f7288dc60cbfb65f879879ab</MD5>
+      <SHA256>626d29648b270895711c2a458fffa841b2c6a19f9115f8080dcd98a1aef3f4bb</SHA256>
+      <FileSize>39570</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

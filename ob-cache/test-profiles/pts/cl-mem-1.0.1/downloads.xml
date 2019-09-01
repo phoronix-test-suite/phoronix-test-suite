@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/cl-mem-20170113.tar.gz</URL>
+      <MD5>7a20a5c3f2baf7cc05118c0b97a35852</MD5>
+      <SHA256>d64297f368c95291f002df9618318bee55d1d0abcbcc467d5fb04c5f5415e174</SHA256>
+      <FileSize>54362</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

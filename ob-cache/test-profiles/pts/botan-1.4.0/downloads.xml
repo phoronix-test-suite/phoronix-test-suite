@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.4.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://botan.randombit.net/releases/Botan-2.8.0.tgz, http://www.phoronix-test-suite.com/benchmark-files/Botan-2.8.0.tgz</URL>
+      <MD5>aee9efa1c045b8db315c60eeee294828</MD5>
+      <SHA256>e7159b127e91e0c158245d61c638c50d443ec7b440b6b0161328c47b3aba3960</SHA256>
+      <FileName>Botan-2.8.0.tgz</FileName>
+      <FileSize>7152674</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

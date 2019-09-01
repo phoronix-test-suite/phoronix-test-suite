@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.mplayerhq.hu/MPlayer/releases/MPlayer-1.0rc3.tar.bz2, http://ftp.kaist.ac.kr/MPlayer/releases/MPlayer-1.0rc3.tar.bz2</URL>
+      <MD5>e1221be5fcad74a2a4185f67ba6c9ae0</MD5>
+      <FileSize>9650074</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

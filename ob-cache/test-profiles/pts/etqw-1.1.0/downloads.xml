@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ftp.4players.de/pub/hosted/wolfenstein/users/etqw/patches/ETQW-client-1.5-full.x86.run, http://ftp.jeuxlinux.fr/files/ETQW-client-1.5-full.x86.run</URL>
+      <MD5>28fd825fcd9f6227827230b319e481cf</MD5>
+      <FileSize>556383725</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/etqw-files-3.tar.bz2, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/etqw-files-3.tar.bz2</URL>
+      <MD5>d78dd6ebc88fa1c2ceab42039d2aef9b</MD5>
+      <FileSize>925105</FileSize>
+    </Package>
+    <Package>
+      <URL>etqw-game-files.tar</URL>
+      <FileName>etqw-game-files.tar</FileName>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/lc0-0.20.1.zip</URL>
+      <MD5>5f6a25a3b5f5640a97dc42d407622a4e8ef5f54cbba5213a45d3ee942d4b2701</MD5>
+      <SHA256>5f6a25a3b5f5640a97dc42d407622a4e8ef5f54cbba5213a45d3ee942d4b2701</SHA256>
+      <FileName>lc0-0.20.1.zip</FileName>
+      <FileSize>386524</FileSize>
+    </Package>
+    <Package>
+      <URL>http://lczero.org/cached/network/sha/0cf3fafcbd18e17d11d75d669d8dbf38eb89a57fbf0202196834433629da65ae</URL>
+      <MD5>e107593693abb0866b40723917f53573</MD5>
+      <SHA256>7c0ba64a092edc2d81662159aab81169d2c1173655cb045f9a7c18f3a909b092</SHA256>
+      <FileName>0cf3fafcbd18e17d11d75d669d8dbf38eb89a57fbf0202196834433629da65ae</FileName>
+      <FileSize>46381405</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

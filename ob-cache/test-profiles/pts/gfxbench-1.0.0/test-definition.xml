@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.0.0m6-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>GFXBench</Title>
+    <AppVersion>3.1</AppVersion>
+    <Description>This is a benchmark of GFXBench.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+    <PreInstallMessage>This GFXBench test profile requires you to have rights to GFXBench 3.1 and that you zip up the GFXBench31_Linux/ folder as GFXBench31_Linux.zip and place it within your Phoronix Test Suite download cache.</PreInstallMessage>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <EnvironmentSize>599</EnvironmentSize>
+    <ProjectURL>https://gfxbench.com/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>--gfx glfw --fullscreen=1</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>--width=$VIDEO_WIDTH --height=$VIDEO_HEIGHT</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>OpenGL API</DisplayName>
+      <Identifier>api</Identifier>
+      <ArgumentPrefix>--gl_api=</ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>Desktop Core</Name>
+          <Value>desktop_core</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Desktop Compatibility</Name>
+          <Value>desktop_compat</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>OpenGL ES</Name>
+          <Value>gles</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test</Identifier>
+      <ArgumentPrefix>-t </ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>Manhattan</Name>
+          <Value>gl_manhattan</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Trex</Name>
+          <Value>gl_trex</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

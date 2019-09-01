@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.2.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Lulesh OpenCL</Title>
+    <AppVersion>2017-07-06</AppVersion>
+    <Description>Lulesh OpenCL benchmark: Livermore Unstructured Lagrangian Explicit Shock Hydrodynamics.</Description>
+    <ResultScale>z/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>opencl, build-utilities</ExternalDependencies>
+    <EnvironmentSize>6</EnvironmentSize>
+    <ProjectURL>https://codesign.llnl.gov/lulesh.php</ProjectURL>
+    <InternalTags>OpenCL</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

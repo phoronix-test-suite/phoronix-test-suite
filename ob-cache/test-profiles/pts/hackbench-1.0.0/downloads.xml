@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.8.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/hackbench-20180115.zip</URL>
+      <MD5>6243b7ec9d95a63497b22b1172b77b0b</MD5>
+      <SHA256>79509b99f0297a837c4a4c482a280b95061e4f8396bc2c08cfc3bbd4a9a04cd3</SHA256>
+      <FileSize>3468</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

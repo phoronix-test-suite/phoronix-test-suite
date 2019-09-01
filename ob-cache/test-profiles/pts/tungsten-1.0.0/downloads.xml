@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/tungsten-20190812.zip</URL>
+      <MD5>76236914e36c8fffe3188057f5d34ce2</MD5>
+      <SHA256>cd8a54c985bee859cd583495a8539547f91461eeb4cab68a697bffca151e54ce</SHA256>
+      <FileName>tungsten-20190812.zip</FileName>
+      <FileSize>19238482</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

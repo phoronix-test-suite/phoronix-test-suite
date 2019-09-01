@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/perlbench-20160525.zip</URL>
+      <MD5>de5cad7c93793ff67313dc1ffb7a4db6</MD5>
+      <SHA256>0189d44a7ea71924068af507e2d46e252616edaaacc09d0060cd02c913c769cf</SHA256>
+      <FileSize>795381</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

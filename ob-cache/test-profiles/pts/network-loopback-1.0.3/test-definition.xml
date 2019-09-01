@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0m3-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Loopback TCP Network Performance</Title>
+    <Description>This test measures the loopback network adapter performance using a micro-benchmark to measure the TCP performance.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Time To Transfer 10GB Via Loopback</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.3</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Network</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <EnvironmentSize>1</EnvironmentSize>
+    <ProjectURL>http://developer.amazonwebservices.com/connect/thread.jspa?threadID=45513</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>nc</SystemDependencies>
+  </TestProfile>
+</PhoronixTestSuite>

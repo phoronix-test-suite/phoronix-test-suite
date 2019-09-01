@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ffte.jp/ffte-6.0.tgz</URL>
+      <MD5>dc87a551bcb44012488ab21a3875661e</MD5>
+      <SHA256>fc82595a8f8323b2796cc5eeb1cc9f7e50ca9e511a14365cc3984da6b7a9b8b4</SHA256>
+      <FileSize>29341</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

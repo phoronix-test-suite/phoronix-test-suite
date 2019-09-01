@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.4.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/cython-0.27.tar.gz</URL>
+      <MD5>8a8dacb17b57c52eec9e98e72a0228f4</MD5>
+      <SHA256>db1f9da5cfcee834d4a038aa91ecd457829e7c318a31c4301a0e0587a10f7cff</SHA256>
+      <FileSize>1793813</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

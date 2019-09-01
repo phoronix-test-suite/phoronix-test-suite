@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.2.0 (Khanino)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://download.blender.org/peach/bigbuckbunny_movies/big_buck_bunny_1080p_h264.mov, http://blender-mirror.kino3d.org/peach/bigbuckbunny_movies/big_buck_bunny_1080p_h264.mov</URL>
+      <MD5>c23ab2ff12023c684f46fcc02c57b585</MD5>
+      <SHA256>dc2146a2b1172def56730143ad80cd1825b7fad15f1fc9c23a4e7d01a741ac11</SHA256>
+      <FileSize>725106140</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

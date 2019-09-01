@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/reactor-core-2.5.0m1.tar.xz</URL>
+      <MD5>ff33c376553ebe3dbfeff8a9d6a5b96c</MD5>
+      <SHA256>c1fb795bd7a83efb5d8f8e3136e7514fc6f79d8c48837f7d36094c9cb9389973</SHA256>
+      <FileSize>43098128</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

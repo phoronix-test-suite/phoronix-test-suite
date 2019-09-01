@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Finished render. Render time #_RESULT_# seconds</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

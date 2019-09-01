@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Java 2D Microbenchmark</Title>
+    <AppVersion>1.0</AppVersion>
+    <Description>This test runs a series of microbenchmarks to check the performance of the OpenGL-based Java 2D pipeline and the underlying OpenGL drivers.</Description>
+    <ResultScale>Units Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>4</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.2</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD, MacOSX, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>java</ExternalDependencies>
+    <EnvironmentSize>0.4</EnvironmentSize>
+    <ProjectURL>http://www.java.net/</ProjectURL>
+    <InternalTags>Java</InternalTags>
+    <Maintainer>Tao Zhang</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Rendering Test</DisplayName>
+      <Identifier>rendering-test</Identifier>
+      <ArgumentPrefix>TEST_</ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>All Rendering Tests</Name>
+          <Value>ALL</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Vector Graphics Rendering</Name>
+          <Value>GRAPHICS</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Image Rendering</Name>
+          <Value>IMAGES</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Text Rendering</Name>
+          <Value>TEXT</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

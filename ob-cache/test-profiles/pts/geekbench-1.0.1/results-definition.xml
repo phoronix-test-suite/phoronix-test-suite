@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>  Single-Core Score             #_RESULT_#</OutputTemplate>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>  Multi-Core Score             #_RESULT_#</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

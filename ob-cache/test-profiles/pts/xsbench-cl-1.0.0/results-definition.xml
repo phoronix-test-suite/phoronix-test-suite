@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.2.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>OCL Lookups/s:   #_RESULT_#</OutputTemplate>
+    <LineHint>OCL Lookup</LineHint>
+    <StripFromResult>,</StripFromResult>
+  </ResultsParser>
+</PhoronixTestSuite>

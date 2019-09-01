@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.4.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>MyBenchmark.testMethod  thrpt  200  #_RESULT_# &#xB1; 13540170.775  ops/s</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

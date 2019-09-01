@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.8.4 (Sokndal)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://softlayer-dal.dl.sourceforge.net/project/viennacl/1.4.x/ViennaCL-1.4.2.tar.gz, http://iweb.dl.sourceforge.net/project/viennacl/1.4.x/ViennaCL-1.4.2.tar.gz</URL>
+      <MD5>998825f7b0c8624d3df4810c5f687af1</MD5>
+      <SHA256>3c74117a4b1a737e95b6e8d6952a2470a164bad8321b574da7a9253808ce1f8d</SHA256>
+      <FileSize>11326238</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

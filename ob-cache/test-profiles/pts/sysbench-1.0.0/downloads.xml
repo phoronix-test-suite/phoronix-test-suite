@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.8.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/sysbench-20180728.zip</URL>
+      <MD5>eb22b2e7652871cdb48480169ab04723</MD5>
+      <SHA256>b692fd9a9fe1b92848609d585db14c2989a200b75e1d4b75022b987b7a56040a</SHA256>
+      <FileSize>2244613</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

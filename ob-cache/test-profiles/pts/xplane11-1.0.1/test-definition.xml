@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>X-Plane</Title>
+    <AppVersion>11</AppVersion>
+    <Description>This is a test of X-Plane, a realistic multi-platform flight simulator designed for personal computers. This is commercial closed-source software and relies upon the Steam version.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
+    <SoftwareType>Simulator</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Retail</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <ExternalDependencies>openal-development, steam</ExternalDependencies>
+    <EnvironmentSize>1</EnvironmentSize>
+    <ProjectURL>http://www.x-plane.com/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>--no_workarounds --no_sound --pref:_prefs_found=0 --pref:_is_full_ALL=1 --load_smo=Output/replays/test_flight_c4.fdr</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Quality</DisplayName>
+      <Identifier>quality-setting</Identifier>
+      <ArgumentPrefix>--fps_test=</ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>Low</Name>
+          <Value>1</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Medium</Name>
+          <Value>2</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Very High</Name>
+          <Value>3</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Very High CPU</Name>
+          <Value>4</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Very High GPU</Name>
+          <Value>5</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>--pref:_x_res_full_ALL=$VIDEO_WIDTH --pref:_y_res_full_ALL=$VIDEO_HEIGHT</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

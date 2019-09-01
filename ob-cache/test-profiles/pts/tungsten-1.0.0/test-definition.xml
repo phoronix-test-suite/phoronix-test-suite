@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Tungsten Renderer</Title>
+    <AppVersion>0.2.2</AppVersion>
+    <Description>Tungsten is a C++ physically based renderer that makes use of Intel's Embree ray tracing library.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, cmake</ExternalDependencies>
+    <EnvironmentSize>200</EnvironmentSize>
+    <ProjectURL>https://benedikt-bitterli.me/tungsten.html</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Scene</DisplayName>
+      <Identifier>scene</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Hair</Name>
+          <Value>../../data/example-scenes/hair/scene.json</Value>
+        </Entry>
+        <Entry>
+          <Name>Water Caustic</Name>
+          <Value>../../data/example-scenes/water-caustic/scene.json</Value>
+        </Entry>
+        <Entry>
+          <Name>Non-Exponential</Name>
+          <Value>../../data/example-scenes/non-exponential/scene.json</Value>
+        </Entry>
+        <Entry>
+          <Name>Volumetric Caustic</Name>
+          <Value>../../data/example-scenes/volumetric-caustic/scene.json</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

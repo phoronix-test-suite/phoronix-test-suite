@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.6.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>BYTE Unix Benchmark</Title>
+    <AppVersion>3.6</AppVersion>
+    <Description>This is a test of BYTE.</Description>
+    <ResultScale>LPS</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.1</Version>
+    <SupportedPlatforms>Linux, Solaris, MacOSX, BSD</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>1.0</EnvironmentSize>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Computational Test</DisplayName>
+      <Identifier>compute-test</Identifier>
+      <ArgumentPrefix>TEST_</ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>Dhrystone 2</Name>
+          <Value>DHRY2</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Register Arithmetic</Name>
+          <Value>REGISTER</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Integer Arithmetic</Name>
+          <Value>INT</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Floating-Point Arithmetic</Name>
+          <Value>FLOAT</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

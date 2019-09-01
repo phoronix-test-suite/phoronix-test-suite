@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.8.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Renaissance</Title>
+    <AppVersion>0.9.0</AppVersion>
+    <Description>Renaissance is a suite of benchmarks designed to test the Java JVM from Apache Spark to a Twitter-like service to Scala and other features.</Description>
+    <ResultScale>ms</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>8</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD, MacOSX, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>java</ExternalDependencies>
+    <EnvironmentSize>401</EnvironmentSize>
+    <ProjectURL>https://renaissance.dev/</ProjectURL>
+    <InternalTags>Java</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-r 1 </Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Akka Unbalanced Cobwebbed Tree</Name>
+          <Value>akka-uct</Value>
+        </Entry>
+        <Entry>
+          <Name>Savina Reactors.IO</Name>
+          <Value>reactors</Value>
+        </Entry>
+        <Entry>
+          <Name>Apache Spark ALS</Name>
+          <Value>als</Value>
+        </Entry>
+        <Entry>
+          <Name>Apache Spark Bayes</Name>
+          <Value>naive-bayes</Value>
+        </Entry>
+        <Entry>
+          <Name>Apache Spark PageRank</Name>
+          <Value>page-rank</Value>
+        </Entry>
+        <Entry>
+          <Name>In-Memory Database Shootout</Name>
+          <Value>db-shootout</Value>
+        </Entry>
+        <Entry>
+          <Name>Scala Dotty</Name>
+          <Value>dotty</Value>
+        </Entry>
+        <Entry>
+          <Name>Twitter Finagle</Name>
+          <Value>finagle-chirper</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

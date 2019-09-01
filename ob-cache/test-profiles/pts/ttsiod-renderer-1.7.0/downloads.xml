@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/renderer-2.3b.zip</URL>
+      <MD5>745236e2ac443e7784d251b8370938ff</MD5>
+      <SHA256>abbdabd65c4ef312672c8692f514d311608f5c2cee7355b1b54a528545b2bd7d</SHA256>
+      <FileName>renderer-2.3b.zip</FileName>
+      <FileSize>4300024</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

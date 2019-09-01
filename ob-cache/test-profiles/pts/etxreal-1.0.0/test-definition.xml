@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.0.0m0 (Suldal)-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>ETXreaL</Title>
+    <AppVersion>0.3.0-20111110</AppVersion>
+    <Description>ETXreaL is a new engine that's paired with the original id Software Enemy Territory game assets. The improved open-source engine offers 64-bit support, an OpenGL 3.2 renderer, OpenGL VBO (vertex buffer object) changes, true 64-bit HDR lighting, deferred shading, real-time sun lights, relief mapping, and many other visual features not found in the original id Tech 3 engine with Return to Castle Wolfenstein: Enemy Territory.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Game</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+    <ExternalDependencies>p7zip, sdl-development</ExternalDependencies>
+    <EnvironmentSize>1900</EnvironmentSize>
+    <ProjectURL>http://sourceforge.net/projects/xreal/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>+exec pts-etconfig +set ui_r_mode -1 +set r_mode -1 +timedemo 1 +set demodone "quit" +set demoloop1 "demo pts; set nextdemo vstr demodone" +vstr demoloop1</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

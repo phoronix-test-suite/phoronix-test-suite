@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/m-queens-1.2.tar.gz</URL>
+      <MD5>efa067de7d43efb274363a1788b6a4c8</MD5>
+      <SHA256>37539a3484041982af92b554beddddca9e7615ac06acee9442829b3fa32a5ea8</SHA256>
+      <FileName>m-queens-1.2.tar.gz</FileName>
+      <FileSize>16154</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://stockfish.s3.amazonaws.com/stockfish-9-src.zip, http://www.phoronix-test-suite.com/benchmark-files/stockfish-9-src.zip</URL>
+      <MD5>421a7abbbb965842d176218bcd5691ac</MD5>
+      <SHA256>ba2e72d6973479c8c839c7f4a095d121829ebe8df39b71ebf291c84e5cb3e36e</SHA256>
+      <FileSize>171925</FileSize>
+    </Package>
+    <Package>
+      <URL>http://stockfish.s3.amazonaws.com/stockfish-9-win.zip</URL>
+      <MD5>8f780ed0bd1c2ef6cfdf429397f729b3</MD5>
+      <SHA256>b6eb7e6be6836b249d7983d51f15f0236ab3aacd3a6c84f4ed3b059817c8c2d2</SHA256>
+      <FileSize>2027815</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

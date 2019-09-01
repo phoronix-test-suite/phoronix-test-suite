@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.8.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Transaction rate:	    #_RESULT_# trans/sec</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

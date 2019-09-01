@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/BLAKE2-20170307.tar.xz</URL>
+      <MD5>654157280916e2a74439106fa4eb6130</MD5>
+      <SHA256>a41e50f6fd68456ea11057a59fcff2b4419ad87305def674a6dd45c19a456619</SHA256>
+      <FileSize>617408</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

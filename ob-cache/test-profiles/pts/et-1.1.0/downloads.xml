@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>ftp://ftp.csie.ncu.edu.tw/FreeBSD/ports/distfiles/et-linux-2.60.x86.run, ftp://ftp.eenet.ee/pub/FreeBSD/distfiles/et-linux-2.60.x86.run, ftp://ftp.tw.freebsd.org/pub/ports/distfiles/et-linux-2.60.x86.run</URL>
+      <MD5>2d2373f29f02e18d365d7f1860eee435</MD5>
+      <FileSize>270965248</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/et-demos-1.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/et-demos-1.tar.gz</URL>
+      <MD5>f6a91c2b2d0874010f6382d07b65fe02</MD5>
+      <FileSize>1157402</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

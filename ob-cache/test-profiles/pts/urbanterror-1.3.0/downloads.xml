@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://cdn.urbanterror.info/urt/43/releases/zips/UrbanTerror432_full.zip, https://nexunity.org/q3ut4/432/UrbanTerror432_full.zip, http://files.cucurb.net/UrbanTerror/UrbanTerror432_full.zip, https://up.barbatos.fr/urt/UrbanTerror432_full.zip</URL>
+      <MD5>9b61e7f790fb9dee5a3af9960af53479</MD5>
+      <SHA256>74dee1566fa6cd0eb26d866149a1b6ad7e8f18a653693f02790c05ef7ce352a4</SHA256>
+      <FileSize>1469432087</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/urbanterror-43-1.zip</URL>
+      <MD5>bd682d11bc6a3dba293694239bb57a5d</MD5>
+      <SHA256>4d45e507f1b13eeb0750434036d95a5ada4ad0673621cd202afed81366b39bb4</SHA256>
+      <FileSize>112731</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

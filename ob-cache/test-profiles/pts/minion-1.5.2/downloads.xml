@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://constraintmodelling.org/files/2015/06/minion-1.8-linux.tar_.gz</URL>
+      <MD5>2006deb7938bcf468ad7e8d413968062</MD5>
+      <SHA256>035b2d7182c25eaaf4a0ecb79de055ba47d5d9042898820775dfb959583da011</SHA256>
+      <FileSize>16517977</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://constraintmodelling.org/files/2015/06/minion-1.8-windows.tar_.gz</URL>
+      <MD5>92ea2b730620ed7522890522311c80a3</MD5>
+      <SHA256>f6f1fe56d211368140126af7bd1d695282c9255f3abb01b2e810a6e1fd7e431c</SHA256>
+      <FileSize>19767497</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

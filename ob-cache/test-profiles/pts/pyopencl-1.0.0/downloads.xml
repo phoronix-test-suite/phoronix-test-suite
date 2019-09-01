@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/pyopencl-2009-10-03.tgz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/pyopencl-2009-10-03.tgz</URL>
+    </Package>
+    <Package>
+      <URL>http://pypi.python.org/packages/source/p/pyopencl/pyopencl-0.91.3.tar.gz</URL>
+      <MD5>23be187de61f6732cbddd918c34472ae</MD5>
+      <FileSize>46318</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.6.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>GNU GMP GMPbench</Title>
+    <AppVersion>6.1.2</AppVersion>
+    <Description>GMPbench is a test of the GMP 6.1.2 math library.</Description>
+    <ResultScale>GMPbench Score</ResultScale>
+    <Proportion>HIB</Proportion>
+    <SubTitle>Total Time</SubTitle>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>4</EnvironmentSize>
+    <ProjectURL>http://www.gmplib.org/gmpbench.html</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

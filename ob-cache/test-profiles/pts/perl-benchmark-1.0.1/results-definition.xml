@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Avg: #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>benchmarks/app/podhtml.b</MatchToTestArguments>
+    <StripFromResult>s</StripFromResult>
+    <ResultPrecision>8</ResultPrecision>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Avg: #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>benchmarks/startup/noprog.b</MatchToTestArguments>
+    <StripFromResult>s</StripFromResult>
+    <ResultPrecision>8</ResultPrecision>
+  </ResultsParser>
+</PhoronixTestSuite>

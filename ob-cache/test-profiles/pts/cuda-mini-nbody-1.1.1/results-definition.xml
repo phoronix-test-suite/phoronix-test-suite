@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>524288, #_RESULT_# </OutputTemplate>
+    <LineHint>524288,</LineHint>
+    <ResultScale>(NBody^2)/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+</PhoronixTestSuite>

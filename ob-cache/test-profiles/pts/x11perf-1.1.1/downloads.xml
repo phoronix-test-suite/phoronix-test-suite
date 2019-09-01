@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.4.0m1 (Forsand)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://xorg.freedesktop.org/archive/individual/app/x11perf-1.5.tar.bz2</URL>
+      <MD5>31283bfc3c78718ac1bd71e510d4e774</MD5>
+      <FileSize>142378</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

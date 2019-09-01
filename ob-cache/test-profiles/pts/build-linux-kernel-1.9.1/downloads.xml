@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0m3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.18.tar.xz, http://mirrors.mit.edu/kernel/linux/kernel/v4.x/linux-4.18.tar.xz</URL>
+      <MD5>bee5fe53ee1c3142b8f0c12c0d3348f9</MD5>
+      <SHA256>19d8bcf49ef530cd4e364a45b4a22fa70714b70349c8100e7308488e26f1eaf1</SHA256>
+      <FileName>linux-4.18.tar.xz</FileName>
+      <FileSize>101781564</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

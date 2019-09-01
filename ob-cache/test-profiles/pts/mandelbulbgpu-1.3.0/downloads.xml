@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.8.3 (Sokndal)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/mandelbulbGPU-v1.0pts-1.tar.bz2</URL>
+      <MD5>48f1256d2d3b49ec90b67da6b03927d3</MD5>
+      <FileSize>31573</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

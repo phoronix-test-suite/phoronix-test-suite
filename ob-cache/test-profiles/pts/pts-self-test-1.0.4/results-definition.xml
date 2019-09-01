@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>LIST_AVAILABLE_SUITES:         #_RESULT_# seconds</OutputTemplate>
+    <MatchToTestArguments>TEST_LIST_SUITES</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>INFO:                          #_RESULT_# seconds</OutputTemplate>
+    <MatchToTestArguments>TEST_INFO</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>REFRESH_GRAPHS:                          #_RESULT_# seconds</OutputTemplate>
+    <MatchToTestArguments>TEST_REFRESH_GRAHPS</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>MERGE_RESULTS:                          #_RESULT_# seconds</OutputTemplate>
+    <MatchToTestArguments>TEST_MERGE_RESULTS</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>DEBUG_RENDER_TEST:             #_RESULT_# seconds</OutputTemplate>
+    <MatchToTestArguments>TEST_RENDER</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>TOTAL ELAPSED TIME:                  #_RESULT_# seconds</OutputTemplate>
+    <MatchToTestArguments>TEST_TOTAL</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>PEAK MEMORY USAGE:             #_RESULT_# MB</OutputTemplate>
+    <MatchToTestArguments>TEST_PEAK</MatchToTestArguments>
+    <ResultScale>MB</ResultScale>
+  </ResultsParser>
+</PhoronixTestSuite>

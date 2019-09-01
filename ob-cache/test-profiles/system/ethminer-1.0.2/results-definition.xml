@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>min mean max: #_MIN_RESULT_# #_RESULT_# #_MAX_RESULT_# H/s</OutputTemplate>
+    <LineHint>min/mean/max</LineHint>
+    <ResultScale>H/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <TurnCharsToSpace>/</TurnCharsToSpace>
+  </ResultsParser>
+</PhoronixTestSuite>

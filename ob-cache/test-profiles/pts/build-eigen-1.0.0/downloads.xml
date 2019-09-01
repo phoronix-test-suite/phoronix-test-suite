@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.2.0m4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://bitbucket.org/eigen/eigen/get/3.2.5.tar.bz2</URL>
+      <MD5>21a928f6e0f1c7f24b6f63ff823593f5</MD5>
+      <FileSize>1164254</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

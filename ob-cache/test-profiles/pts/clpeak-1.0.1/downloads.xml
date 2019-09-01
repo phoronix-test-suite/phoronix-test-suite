@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/clpeak-20190116.zip</URL>
+      <MD5>0bddb149c3f00aacbdf8eb9d3e9d822c</MD5>
+      <SHA256>4b5cde05e07eda9b3aaddc34e487cd9d6ba25762fd4997b1e14bdc46ae0a3b48</SHA256>
+      <FileName>clpeak-20190116.zip</FileName>
+      <FileSize>266209</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

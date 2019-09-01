@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.8.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>====== db-shootout (database), final iteration completed #_RESULT_# ms) ======
+</OutputTemplate>
+    <LineHint>final iteration completed</LineHint>
+    <StripFromResult>(</StripFromResult>
+  </ResultsParser>
+</PhoronixTestSuite>

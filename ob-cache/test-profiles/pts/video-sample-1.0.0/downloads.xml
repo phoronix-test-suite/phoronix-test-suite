@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/pts-trondheim-avi.tar.bz2, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/pts-trondheim-avi.tar.bz2</URL>
+      <MD5>c91aa7b412f32c0f2b616ebfe2f261ad</MD5>
+      <FileSize>90425128</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/pts-sample-playback-1.avi.tar.bz2, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/pts-sample-playback-1.avi.tar.bz2</URL>
+      <MD5>cb1e4775e9970ed31d346be804d0fe1c</MD5>
+      <FileSize>15866177</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/Grey.ts.tar.bz2, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/Grey.ts.tar.bz2</URL>
+      <MD5>58fe4041ac6a2e61466baca7e1b0cb8d</MD5>
+      <FileSize>34857761</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

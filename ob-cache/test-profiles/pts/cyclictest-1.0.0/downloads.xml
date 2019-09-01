@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.2.0m2 (Randaberg)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/rt-tests-0.84.tar.bz2</URL>
+      <MD5>768fa6bdba48d84e23fc5351c2d81044</MD5>
+      <FileName>rt-tests-0.84.tar.bz2</FileName>
+      <FileSize>92160</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

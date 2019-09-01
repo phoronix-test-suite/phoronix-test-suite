@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>ctx_clock</Title>
+    <Description>Ctx_clock is a simple test program to measure the context switch time in clock cycles.</Description>
+    <ResultScale>Clocks</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Context Switch Time</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>1</EnvironmentSize>
+    <ProjectURL>https://gist.github.com/teknoraver/ebee75c5bc4eb8533b8e761d0e57b7d9</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

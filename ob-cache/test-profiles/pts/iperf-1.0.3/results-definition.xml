@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.8.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>[  7]   0.00-10.00  sec   118 MBytes  #_RESULT_# Mbits/sec  0.337 ms  0/15129 (0%)  </OutputTemplate>
+    <MatchToTestArguments>-u</MatchToTestArguments>
+    <LineHint>0%</LineHint>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>[  7]   0.00-10.00  sec   298 MBytes   #_RESULT_# Mbits/sec    0             sender</OutputTemplate>
+    <MatchToTestArguments>-P 1 </MatchToTestArguments>
+    <LineHint>sender</LineHint>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>[SUM]   0.00-10.00  sec   314 MBytes   #_RESULT_# Mbits/sec    0             sender</OutputTemplate>
+    <LineHint>SUM</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

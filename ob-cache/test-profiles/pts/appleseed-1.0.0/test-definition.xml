@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.8.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Appleseed</Title>
+    <AppVersion>2.0 Beta</AppVersion>
+    <Description>Appleseed is an open-source production renderer focused on physically-based global illumination rendering engine primarily designed for animation and visual effects.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <Executable>appleseed-benchmark</Executable>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <EnvironmentSize>800</EnvironmentSize>
+    <ProjectURL>https://appleseedhq.net/</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Scene</DisplayName>
+      <Identifier>scene</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Emily</Name>
+          <Value>emily.appleseed</Value>
+        </Entry>
+        <Entry>
+          <Name>Disney Material</Name>
+          <Value>disney_material_1.appleseed</Value>
+        </Entry>
+        <Entry>
+          <Name>Material Tester</Name>
+          <Value>material_tester_ambient_occlusion.appleseed</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

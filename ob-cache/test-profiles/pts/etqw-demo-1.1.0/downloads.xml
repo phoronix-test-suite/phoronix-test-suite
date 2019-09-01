@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>ftp://ftp.idsoftware.com/idstuff/etqw/ETQW-demo2-client-full.r1.x86.run, ftp://ftp.gwdg.de/pub/misc/ftp.idsoftware.com/idstuff/etqw/ETQW-demo2-client-full.r1.x86.run, ftp://ftp.gameaholic.com/pub/mirrors/ftp.idsoftware.com/etqw/ETQW-demo2-client-full.r1.x86.run, ftp://ftp.demon.nl/disk2/idsoftware/idstuff/etqw/ETQW-demo2-client-full.r1.x86.run</URL>
+      <MD5>11f5a882127a917b6c8b648ffa22da74</MD5>
+      <FileSize>691248874</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/etqw-demo-files-4.tar.bz2, http://www.phoronix-test-suite.com/benchmark-files/etqw-demo-files-4.tar.bz2</URL>
+      <MD5>321ba58c513dd142ecb565fa2ff53885</MD5>
+      <FileSize>1787611</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

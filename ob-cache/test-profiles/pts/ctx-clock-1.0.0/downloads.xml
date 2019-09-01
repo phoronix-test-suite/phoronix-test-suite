@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/ctx_clock-1.zip</URL>
+      <MD5>f180d969001369e5017ce00e73276be1</MD5>
+      <SHA256>df98a9ba278809f5d18e1ad948f33a216d6d2873308dd0173fbe70f7ea537156</SHA256>
+      <FileName>ctx_clock-1.zip</FileName>
+      <FileSize>693</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

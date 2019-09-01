@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.2.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/apache-ab-test-files-1.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/apache-ab-test-files-1.tar.gz</URL>
+      <MD5>ca0c5bf0dd482a2847c68a52c0759942</MD5>
+      <FileSize>6008</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/httpd-system-test-conf-1.tar.bz2</URL>
+      <FileSize>14674</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

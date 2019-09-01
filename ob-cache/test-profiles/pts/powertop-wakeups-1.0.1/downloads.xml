@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.8.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://01.org/sites/default/files/downloads/powertop/powertop-2.2.tar.gz</URL>
+      <MD5>d620018e48a959c3ea41e63d3d9deffc</MD5>
+      <SHA256>1339e1bc3b9675c71dd70fed1132abf215d01469b348d23be7344bc65557b028</SHA256>
+      <FileSize>617805</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/lzbench-20170808.zip</URL>
+      <MD5>8fa45671795e94204492c605402b8ae8</MD5>
+      <SHA256>e15ce6d280555353e76e36e363dba9df8d4ac33b4cf5942b2425747303cc2c6d</SHA256>
+      <FileSize>2688532</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.9.tar.gz, http://mirrors.mit.edu/kernel/linux/kernel/v4.x/linux-4.9.tar.gz</URL>
+      <MD5>4e7c4498d825ff8438acc2e8f0531a95</MD5>
+      <SHA256>93930e60bacf3a9f98b17d14e84d98556cb03acd17d1e04675278330f7b6f018</SHA256>
+      <FileSize>141588630</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

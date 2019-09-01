@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://novabench.com/files/novabench.msi</URL>
+      <FileName>novabench.msi</FileName>
+      <FileSize>97783808</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://novabench.com/files/novabench-linux.tar.gz</URL>
+      <FileName>novabench-linux.tar.gz</FileName>
+      <FileSize>7720977</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

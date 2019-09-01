@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.0.0m6-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>    "fps": #_RESULT_#</OutputTemplate>
+    <LineHint>fps</LineHint>
+    <StripFromResult>,</StripFromResult>
+  </ResultsParser>
+</PhoronixTestSuite>

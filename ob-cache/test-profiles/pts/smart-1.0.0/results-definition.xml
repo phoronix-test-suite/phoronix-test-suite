@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.0.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>SMART overall-health self-assessment test result: #_RESULT_#</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

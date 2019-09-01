@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/t-test1c-20171.zip</URL>
+      <MD5>27f626cb512bbd29a81ff7d3165e5f81</MD5>
+      <SHA256>199388bfe018406724ef4525d9c93d37bf4e501bc8525d44a9b96af2743b93a6</SHA256>
+      <FileName>t-test1c-20171.zip</FileName>
+      <FileSize>4248</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

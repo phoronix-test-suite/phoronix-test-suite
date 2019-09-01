@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.2.0m4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>GL-vs-VK</Title>
+    <AppVersion>2017-06-05</AppVersion>
+    <Description>GL_vs_VK is a comparison of OpenGL and Vulkan APIs in simple performance micro-benchmarks.</Description>
+    <ResultScale>ms</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux, BSD</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, vulkan-development, cmake, xorg-development, git</ExternalDependencies>
+    <EnvironmentSize>102</EnvironmentSize>
+    <ProjectURL>https://github.com/RippeR37/GL_vs_VK</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-benchmark -time 20</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test</Identifier>
+      <ArgumentPrefix>-t </ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>Static Scene</Name>
+          <Value>1</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Terrain With Dynamic LoD</Name>
+          <Value>2</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Shadow Mapping</Name>
+          <Value>3</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>API</DisplayName>
+      <Identifier>api</Identifier>
+      <ArgumentPrefix>-api </ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>OpenGL</Name>
+          <Value>gl</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Vulkan</Name>
+          <Value>vk</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Multi-Threaded</DisplayName>
+      <Identifier>mt</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>Yes</Name>
+          <Value>-m </Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>No</Name>
+          <Value></Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

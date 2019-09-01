@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.4.0m3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/opencv-benchmarks-1.0.tar.gz</URL>
+      <MD5>5486f2ff8b9eedc279bf2c569486c62a</MD5>
+      <SHA256>f09f66b5648c5b2694a9e5da2381dc08277458a0213158db86aae5aac60f6115</SHA256>
+      <FileSize>39588</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

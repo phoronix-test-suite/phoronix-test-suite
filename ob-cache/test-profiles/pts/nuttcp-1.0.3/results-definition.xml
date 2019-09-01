@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>megabytes 3368.5993 real_seconds 30.02 rate_Mbps #_RESULT_# tx_cpu 1 rx_cpu 9 retrans 0 cwnd 393 rtt_ms 0.33</OutputTemplate>
+    <LineHint>rate_Mbps</LineHint>
+    <ResultAfterString>rate_Mbps</ResultAfterString>
+  </ResultsParser>
+</PhoronixTestSuite>

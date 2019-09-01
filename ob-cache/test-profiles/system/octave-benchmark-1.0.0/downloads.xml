@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/octave-benchmark-1.1.1.tar.gz</URL>
+      <MD5>33842f7c32af5eedbbd0af3b8f918b69</MD5>
+      <SHA256>7fd62c56062fee2efa49d848e85f1f1cf841ccfa629f783af7e95f17326d73db</SHA256>
+      <FileName>octave-benchmark-1.1.1.tar.gz</FileName>
+      <FileSize>13207</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>GraphicsMagick</Title>
+    <AppVersion>1.3.30</AppVersion>
+    <Description>This is a test of GraphicsMagick with its OpenMP implementation that performs various imaging tests to stress the system's CPU.</Description>
+    <ResultScale>Iterations Per Minute</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.8.0</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD, MacOSX, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, zlib-development</ExternalDependencies>
+    <Extends>pts/photo-sample</Extends>
+    <EnvironmentSize>22</EnvironmentSize>
+    <ProjectURL>http://www.graphicsmagick.org/</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Operation</DisplayName>
+      <Identifier>operation</Identifier>
+      <Menu>
+        <Entry>
+          <Name>HWB Color Space</Name>
+          <Value>-colorspace HWB</Value>
+        </Entry>
+        <Entry>
+          <Name>Noise-Gaussian</Name>
+          <Value>-operator all Noise-Gaussian 30%</Value>
+        </Entry>
+        <Entry>
+          <Name>Enhanced</Name>
+          <Value>-enhance</Value>
+        </Entry>
+        <Entry>
+          <Name>Resizing</Name>
+          <Value>-resize 50%</Value>
+        </Entry>
+        <Entry>
+          <Name>Rotate</Name>
+          <Value>-rotate 90</Value>
+        </Entry>
+        <Entry>
+          <Name>Sharpen</Name>
+          <Value>-sharpen 0x2.0</Value>
+        </Entry>
+        <Entry>
+          <Name>Swirl</Name>
+          <Value>-swirl 90</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

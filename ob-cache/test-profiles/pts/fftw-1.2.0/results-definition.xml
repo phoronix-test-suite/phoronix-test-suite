@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.4.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Problem: ibc64, setup: 83.22 ms, time: 294.77 ns, ``mflops'': #_RESULT_#</OutputTemplate>
+    <LineHint>mflops</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

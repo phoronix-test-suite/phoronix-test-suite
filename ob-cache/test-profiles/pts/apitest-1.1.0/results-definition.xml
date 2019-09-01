@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.2.1 (Khanino)-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate> NullProblem             oglcore    NullSolution                     30316       15.000     #_RESULT_#        0.495</OutputTemplate>
+    <LineBeforeHint>fps</LineBeforeHint>
+  </ResultsParser>
+</PhoronixTestSuite>

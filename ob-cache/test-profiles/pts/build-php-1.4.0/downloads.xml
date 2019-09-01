@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.4.0m3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://xmlsoft.org/sources/old/libxml2-2.6.31.tar.gz</URL>
+      <MD5>714b0683b1ec4bdc63bc356d729f9b18</MD5>
+      <FileSize>4734599</FileSize>
+    </Package>
+    <Package>
+      <URL>http://mirror.cogentco.com/pub/php/php-7.1.9.tar.bz2, http://mirrors.sohu.com/php/php-7.1.9.tar.bz2, http://download.openpkg.org/components/cache/php/php-7.1.9.tar.bz2</URL>
+      <MD5>2397be54f3281cdf30c7ef076b28f7d0</MD5>
+      <SHA256>314dcc10dfdd7c4443edb4fe1e133a44f2b2a8351be8c9eb6ab9222d45fd9bae</SHA256>
+      <FileSize>15093853</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

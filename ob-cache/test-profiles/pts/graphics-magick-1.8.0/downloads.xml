@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>ftp://ftp.graphicsmagick.org/pub/GraphicsMagick/1.3/GraphicsMagick-1.3.30.tar.bz2, http://ftp.icm.edu.pl/pub/unix/graphics/GraphicsMagick/1.3/GraphicsMagick-1.3.30.tar.bz2, http://ftp.icm.edu.pl/packages/GraphicsMagick/1.3/GraphicsMagick-1.3.30.tar.bz2, http://download2.polytechnic.edu.na/pub4/sourceforge/g/project/gr/graphicsmagick/graphicsmagick/1.3.30/GraphicsMagick-1.3.30.tar.bz2</URL>
+      <MD5>a773040cc9c57356fd3a6fa660ea29e5</MD5>
+      <SHA256>4da7b7d46b503bafeb2854e1c648307cb8d48839067487388beee55c9d35b878</SHA256>
+      <FileName>GraphicsMagick-1.3.30.tar.bz2</FileName>
+      <FileSize>7828821</FileSize>
+      <PlatformSpecific>Linux, Solaris, BSD, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://mirror.sobukus.de/files/src/libpng/libpng-1.6.34.tar.xz, http://ftp.osuosl.org/pub/blfs/conglomeration/libpng/libpng-1.6.34.tar.xz, https://src.fedoraproject.org/lookaside/pkgs/libpng/libpng-1.6.34.tar.xz/sha512/89407c5abc1623faaa3992fc1e4a62def671d9a7401108dfceee895d5f16fe7030090bea89b34a36d377d8e6a5d40046886991f663ce075d1a2d31bf9eaf3c51/libpng-1.6.34.tar.xz</URL>
+      <MD5>c05b6ca7190a5e387b78657dbe5536b2</MD5>
+      <SHA256>2f1e960d92ce3b3abd03d06dfec9637dfbd22febf107a536b44f7a47c60659f6</SHA256>
+      <FileName>libpng-1.6.34.tar.xz</FileName>
+      <FileSize>997968</FileSize>
+      <PlatformSpecific>Linux, Solaris, BSD, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>ftp://ftp.graphicsmagick.org/pub/GraphicsMagick/1.3/windows/GraphicsMagick-1.3.30-Q16-win64-dll.exe, http://ftp.icm.edu.pl/pub/unix/graphics/GraphicsMagick/1.3/windows/GraphicsMagick-1.3.30-Q16-win64-dll.exe, http://download2.nust.na/pub4/sourceforge/g/gr/graphicsmagick/graphicsmagick-binaries/1.3.30/GraphicsMagick-1.3.30-Q16-win64-dll.exe</URL>
+      <MD5>753864620b862718e08e325eef2a34f5</MD5>
+      <SHA256>097ddaeb7fe611957feef118f12307e1449fc681c41e555cc593631e3739b7b5</SHA256>
+      <FileName>GraphicsMagick-1.3.30-Q16-win64-dll.exe</FileName>
+      <FileSize>4538955</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

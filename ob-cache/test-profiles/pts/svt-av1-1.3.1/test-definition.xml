@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.8.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>SVT-AV1</Title>
+    <AppVersion>0.5</AppVersion>
+    <Description>This is a test of the Intel Open Visual Cloud Scalable Video Technology SVT-AV1 CPU-based multi-threaded video encoder for the AV1 video format with a sample 1080p YUV video file.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <SubTitle>1080p 8-bit YUV To AV1 Video Encode</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.3.1</Version>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, p7zip, yasm, cmake</ExternalDependencies>
+    <EnvironmentSize>1900</EnvironmentSize>
+    <ProjectURL>http://github.com/OpenVisualCloud/SVT-AV1</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-i Bosphorus_1920x1080_120fps_420_8bit_YUV.yuv -w 1920 -h 1080 -n 200</Arguments>
+    </Default>
+  </TestSettings>
+</PhoronixTestSuite>

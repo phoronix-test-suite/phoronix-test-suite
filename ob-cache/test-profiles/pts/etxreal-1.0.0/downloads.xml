@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.0.0m0 (Suldal)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ftp.freenet.de/pub/4players/hosted/et/official/et-linux-2.60.x86.run, ftp://ftp.idsoftware.com/idstuff/et/linux/et-linux-2.60.x86.run</URL>
+      <MD5>2d2373f29f02e18d365d7f1860eee435</MD5>
+      <FileName>et-linux-2.60.x86.run</FileName>
+      <FileSize>270965248</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/etxreal-demos-1.tar.gz</URL>
+      <MD5>370518e9e61978d8c806bc2b8625b2bd</MD5>
+      <FileName>etxreal-demos-1.tar.gz</FileName>
+      <FileSize>469646</FileSize>
+    </Package>
+    <Package>
+      <URL>http://voxel.dl.sourceforge.net/project/xreal/ETXreaL/ETXreaL-0.3.0-20111110.7z, http://iweb.dl.sourceforge.net/project/xreal/ETXreaL/ETXreaL-0.3.0-20111110.7z, http://iweb.dl.sourceforge.net/project/xreal/ETXreaL/ETXreaL-0.3.0-20111110.7z</URL>
+      <MD5>a105a0b79e8e24bdbb87aa3f48c8c661</MD5>
+      <FileName>ETXreaL-0.3.0-20111110.7z</FileName>
+      <FileSize>1526434119</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

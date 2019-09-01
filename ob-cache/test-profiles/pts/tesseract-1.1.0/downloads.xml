@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.2.1 (Khanino)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://download.tuxfamily.org/tesseract/tesseract_2014_05_12_first_edition_linux.tar.xz</URL>
+      <MD5>9d68c50615213ca7e84899860be4782b</MD5>
+      <SHA256>8d6e07dd154a40a3f593e52289335c036f06cf90a0ebc400c4650adb3395a0f4</SHA256>
+      <FileSize>249009328</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/tess_bench.tar.gz</URL>
+      <MD5>8c6d2b78a6ebae6cc602a1626f08c051</MD5>
+      <SHA256>9ce68094f49213dd38b394bb80a19ba7b4ce30bcc1203621698245c92de31213</SHA256>
+      <FileSize>50774</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

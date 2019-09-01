@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Zstd Compression</Title>
+    <Description>This test measures the time needed to compress a sample file (an Ubuntu file-system image) using Zstd compression supplied by the system or otherwise externally of the test profile.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Compressing ubuntu-16.04.3-server-i386.img, Compression Level 19</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux, BSD, Solaris, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>848</EnvironmentSize>
+    <EnvironmentTestingSize>256</EnvironmentTestingSize>
+    <ProjectURL>http://github.com/facebook/zstd</ProjectURL>
+    <Maintainer>Victor Rodriguez</Maintainer>
+    <SystemDependencies>zstd</SystemDependencies>
+  </TestProfile>
+</PhoronixTestSuite>

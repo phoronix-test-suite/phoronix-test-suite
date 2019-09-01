@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.2.0 (Khanino)-->
+<PhoronixTestSuite>
+  <SystemMonitor>
+    <Sensor>cpu.usage</Sensor>
+    <PollingFrequency>1</PollingFrequency>
+    <Report>ALL</Report>
+  </SystemMonitor>
+</PhoronixTestSuite>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/ImageMagick-6.9.0-0.tar.bz2</URL>
+      <MD5>7882143934cf6eba1c6c2f71e2fc8b12</MD5>
+      <SHA256>00585cdab3e3867c6855cb415bd7ad9c0521b34abf9a1c32beb90991033d1717</SHA256>
+      <FileSize>10068333</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

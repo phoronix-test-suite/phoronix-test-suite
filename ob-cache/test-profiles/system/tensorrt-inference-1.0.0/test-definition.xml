@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.0m0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>NVIDIA TensorRT Inference</Title>
+    <Description>This test profile uses any existing system installation of NVIDIA TensorRT for carrying out inference benchmarks with various neural networks.</Description>
+    <ResultScale>Images Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+    <PreInstallMessage>This test profile requires you have already installed TensorRT to /usr/src/tensorrt.</PreInstallMessage>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Restricted</License>
+    <Status>Experimental</Status>
+    <EnvironmentSize>1</EnvironmentSize>
+    <ProjectURL>https://developer.nvidia.com/tensorrt</ProjectURL>
+    <InternalTags>CUDA</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>--output=prob </Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Neural Network</DisplayName>
+      <Identifier>neural-net</Identifier>
+      <ArgumentPrefix>--deploy=</ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>AlexNet</Name>
+          <Value>AlexNet_N2.prototxt</Value>
+        </Entry>
+        <Entry>
+          <Name>GoogleNet</Name>
+          <Value>googlenet.prototxt</Value>
+        </Entry>
+        <Entry>
+          <Name>ResNet50</Name>
+          <Value>ResNet50_224x224.prototxt</Value>
+        </Entry>
+        <Entry>
+          <Name>ResNet152</Name>
+          <Value>ResNet152_N2.prototxt</Value>
+        </Entry>
+        <Entry>
+          <Name>VGG16</Name>
+          <Value>vgg16_N2.prototxt</Value>
+        </Entry>
+        <Entry>
+          <Name>VGG19</Name>
+          <Value>vgg19_N2.prototxt</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Precision</DisplayName>
+      <Identifier>precision</Identifier>
+      <Menu>
+        <Entry>
+          <Name>INT8</Name>
+          <Value>--int8</Value>
+        </Entry>
+        <Entry>
+          <Name>FP16</Name>
+          <Value>--fp16</Value>
+        </Entry>
+        <Entry>
+          <Name>FP32</Name>
+          <Value>--fp32</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Batch Size</DisplayName>
+      <Identifier>batch-size</Identifier>
+      <ArgumentPrefix>--batch=</ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>1</Name>
+          <Value>1</Value>
+        </Entry>
+        <Entry>
+          <Name>4</Name>
+          <Value>4</Value>
+        </Entry>
+        <Entry>
+          <Name>8</Name>
+          <Value>8</Value>
+        </Entry>
+        <Entry>
+          <Name>16</Name>
+          <Value>16</Value>
+        </Entry>
+        <Entry>
+          <Name>32</Name>
+          <Value>32</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>DLA Cores</DisplayName>
+      <Identifier>dla</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Disabled</Name>
+          <Value> </Value>
+        </Entry>
+        <Entry>
+          <Name>Enabled</Name>
+          <Value>--useDLA=1 --allowGPUfallback</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

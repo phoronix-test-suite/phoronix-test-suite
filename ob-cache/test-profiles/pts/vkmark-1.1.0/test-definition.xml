@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0m4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>VKMark</Title>
+    <AppVersion>2018-05-30</AppVersion>
+    <Description>VKMark is a collection of Vulkan tests/benchmarks.</Description>
+    <ResultScale>VKMark Score</ResultScale>
+    <Proportion>HIB</Proportion>
+    <Executable>vkmark-run</Executable>
+    <TimesToRun>3</TimesToRun>
+    <PreInstallMessage>Some external dependencies needed for this test are not currently covered by the Phoronix Test Suite. You might need to manually install those packages; on an Ubuntu system it would be - sudo apt install meson libvulkan-dev libglm-dev libassimp-dev libxcb1-dev libxcb-icccm4-dev libwayland-dev libdrm-dev libgbm-dev.</PreInstallMessage>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, vulkan-development, meson, xorg-development</ExternalDependencies>
+    <EnvironmentSize>96</EnvironmentSize>
+    <ProjectURL>https://github.com/vkmark/vkmark</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>--winsys-dir=build/src --data-dir=data </Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>--size $VIDEO_WIDTHx$VIDEO_HEIGHT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

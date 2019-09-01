@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.8.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Core-Latency</Title>
+    <Description>This is a test of core-latency, which measures the latency between all core combinations on the system processor(s). Reported is the average latency.</Description>
+    <ResultScale>ns</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Average Latency Between CPU Cores</SubTitle>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, boost-development</ExternalDependencies>
+    <EnvironmentSize>1.0</EnvironmentSize>
+    <ProjectURL>http://github.com/ajakubek/core-latency</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

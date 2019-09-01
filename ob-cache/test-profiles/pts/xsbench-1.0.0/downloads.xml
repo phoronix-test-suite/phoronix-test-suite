@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/XSBench-20170808.zip</URL>
+      <MD5>3177f54086f7dbb4d6ef8a3b2eb6d2ac</MD5>
+      <SHA256>a32e72473013e0fcfae48db235ca49d6ec5e0f9ce34e9d6697592b2307d3af6d</SHA256>
+      <FileSize>213529</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/benchmark-octane-20181001.zip</URL>
+      <MD5>6a141e7ea70b578199bb27e1f123568d</MD5>
+      <SHA256>d0de639d6a85f96800087b4607ed752e49dd801ee39391a4079385342c4f404d</SHA256>
+      <FileName>benchmark-octane-20181001.zip</FileName>
+      <FileSize>1986184</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

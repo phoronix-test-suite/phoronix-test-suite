@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>hdparm Timed Disk Reads</Title>
+    <Description>The hdparm utility is used for simple benchmarking the system's hard drive.</Description>
+    <ResultScale>MB/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>5</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Disk</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <RequiresRoot>TRUE</RequiresRoot>
+    <ProjectURL>http://sourceforge.net/projects/hdparm/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Disk To Read</DisplayName>
+      <Identifier>auto-disks</Identifier>
+      <ArgumentPrefix>-t </ArgumentPrefix>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

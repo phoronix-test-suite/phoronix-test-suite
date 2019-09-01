@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>,----------------------------------------------------------------------.
+| Item                  | Time     | Rate         | Usr CPU  | Sys CPU |
++-----------------------+----------+--------------+----------+---------+
+| Write         128 MBs |    2.0 s |  #_RESULT_# MB/s |   5.1 %  |  36.4 % |
+`----------------------------------------------------------------------'</OutputTemplate>
+    <LineHint>MBs</LineHint>
+    <ResultBeforeString>MB/s</ResultBeforeString>
+  </ResultsParser>
+</PhoronixTestSuite>

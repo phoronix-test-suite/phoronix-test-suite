@@ -1,0 +1,1224 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Accumulate_1D_f32 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Accumulate_1D_f32</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Accumulate_1D_f64 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Accumulate_1D_f64</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Accumulate_1D_s16 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Accumulate_1D_s16</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Accumulate_1D_s32 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Accumulate_1D_s32</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Accumulate_1D_s64 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Accumulate_1D_s64</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Accumulate_1D_u8 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Accumulate_1D_u8</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Accumulate_2D_f32 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Accumulate_2D_f32</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Accumulate_2D_f64 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Accumulate_2D_f64</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Accumulate_2D_s16 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Accumulate_2D_s16</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Accumulate_2D_s32 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Accumulate_2D_s32</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Accumulate_2D_s64 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Accumulate_2D_s64</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Accumulate_2D_u8 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Accumulate_2D_u8</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Bandwidth_f32 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Bandwidth_f32</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Bandwidth_f64 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Bandwidth_f64</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Bandwidth_s32 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Bandwidth_s32</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Bandwidth_s64 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Bandwidth_s64</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Bandwidth_u8 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Bandwidth_u8</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | BilateralFilter_f32 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>BilateralFilter_f32</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | BilateralFilter_f64 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>BilateralFilter_f64</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | BilateralFilter_s16 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>BilateralFilter_s16</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | BilateralFilter_s32 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>BilateralFilter_s32</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | BilateralFilter_u8 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>BilateralFilter_u8</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Convolve_f32_11x11 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Convolve_f32_11x11</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Convolve_f32_5x5 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Convolve_f32_5x5</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Convolve_f32_9x9 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Convolve_f32_9x9</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Convolve_f64_11x11 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Convolve_f64_11x11</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Convolve_f64_5x5 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Convolve_f64_5x5</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Convolve_f64_9x9 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Convolve_f64_9x9</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Convolve_s16_11x11 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Convolve_s16_11x11</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Convolve_s16_5x5 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Convolve_s16_5x5</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Convolve_s16_9x9 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Convolve_s16_9x9</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Convolve_s32_11x11 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Convolve_s32_11x11</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Convolve_s32_5x5 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Convolve_s32_5x5</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Convolve_s32_9x9 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Convolve_s32_9x9</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Convolve_s64_11x11 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Convolve_s64_11x11</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Convolve_s64_5x5 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Convolve_s64_5x5</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Convolve_s64_9x9 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Convolve_s64_9x9</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Convolve_u8_11x11 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Convolve_u8_11x11</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Convolve_u8_5x5 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Convolve_u8_5x5</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Convolve_u8_9x9 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Convolve_u8_9x9</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Data_f32_CONSTANT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Data_f32_CONSTANT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Data_f32_IDENTITY |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Data_f32_IDENTITY</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Data_f32_RANDN |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Data_f32_RANDN</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Data_f32_RANDU |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Data_f32_RANDU</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Data_f32_RANGE |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Data_f32_RANGE</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Data_f64_CONSTANT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Data_f64_CONSTANT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Data_f64_IDENTITY |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Data_f64_IDENTITY</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Data_f64_RANDN |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Data_f64_RANDN</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Data_f64_RANDU |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Data_f64_RANDU</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Data_f64_RANGE |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Data_f64_RANGE</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_ADD |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_ADD</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_ADD_CONSTANT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_ADD_CONSTANT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_ARC_COS |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_ARC_COS</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_ARC_SIN |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_ARC_SIN</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_ARC_TAN |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_ARC_TAN</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_ATAN2 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_ATAN2</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_CBRT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_CBRT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_COS |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_COS</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_DIVIDE |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_DIVIDE</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_DIVIDE_CONSTANT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_DIVIDE_CONSTANT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_ERF |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_ERF</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_ERFC |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_ERFC</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_EXP |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_EXP</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_EXP_M1 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_EXP_M1</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_HYPOT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_HYPOT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_HYP_ARC_COS |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_HYP_ARC_COS</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_HYP_ARC_SIN |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_HYP_ARC_SIN</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_HYP_ARC_TAN |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_HYP_ARC_TAN</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_HYP_COS |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_HYP_COS</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_HYP_SIN |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_HYP_SIN</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_HYP_TAN |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_HYP_TAN</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_IS_INF |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_IS_INF</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_IS_NAN |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_IS_NAN</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_IS_ZERO |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_IS_ZERO</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_LGAMMA |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_LGAMMA</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_LOG10 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_LOG10</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_LOG_1P |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_LOG_1P</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_LOG_E |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_LOG_E</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_MAX |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_MAX</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_MIN |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_MIN</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_MODULO |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_MODULO</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_MULTIPLY |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_MULTIPLY</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_MULTIPY_CONSTANT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_MULTIPY_CONSTANT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_POW |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_POW</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_REMAINDER |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_REMAINDER</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_SIN |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_SIN</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_SQRT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_SQRT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_SUBTRACT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_SUBTRACT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_SUBTRACT_CONSTANT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_SUBTRACT_CONSTANT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_TAN |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_TAN</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f32_TGAMMA |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f32_TGAMMA</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_ADD |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_ADD</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_ADD_CONSTANT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_ADD_CONSTANT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_ARC_COS |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_ARC_COS</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_ARC_SIN |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_ARC_SIN</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_ARC_TAN |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_ARC_TAN</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_ATAN2 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_ATAN2</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_CBRT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_CBRT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_COS |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_COS</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_DIVIDE |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_DIVIDE</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_DIVIDE_CONSTANT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_DIVIDE_CONSTANT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_ERF |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_ERF</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_ERFC |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_ERFC</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_EXP |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_EXP</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_EXP_M1 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_EXP_M1</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_HYPOT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_HYPOT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_HYP_ARC_COS |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_HYP_ARC_COS</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_HYP_ARC_SIN |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_HYP_ARC_SIN</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_HYP_ARC_TAN |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_HYP_ARC_TAN</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_HYP_COS |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_HYP_COS</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_HYP_SIN |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_HYP_SIN</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_HYP_TAN |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_HYP_TAN</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_IS_INF |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_IS_INF</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_IS_NAN |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_IS_NAN</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_IS_ZERO |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_IS_ZERO</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_LGAMMA |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_LGAMMA</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_LOG10 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_LOG10</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_LOG_1P |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_LOG_1P</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_LOG_E |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_LOG_E</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_MAX |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_MAX</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_MIN |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_MIN</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_MODULO |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_MODULO</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_MULTIPLY |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_MULTIPLY</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_MULTIPY_CONSTANT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_MULTIPY_CONSTANT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_POW |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_POW</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_REMAINDER |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_REMAINDER</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_SIN |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_SIN</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_SQRT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_SQRT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_SUBTRACT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_SUBTRACT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_SUBTRACT_CONSTANT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_SUBTRACT_CONSTANT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_TAN |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_TAN</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_f64_TGAMMA |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_f64_TGAMMA</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s16_ADD |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s16_ADD</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s16_ADD_CONSTANT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s16_ADD_CONSTANT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s16_DIVIDE |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s16_DIVIDE</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s16_DIVIDE_CONSTANT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s16_DIVIDE_CONSTANT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s16_MAX |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s16_MAX</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s16_MIN |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s16_MIN</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s16_MODULO |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s16_MODULO</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s16_MULTIPLY |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s16_MULTIPLY</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s16_MULTIPY_CONSTANT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s16_MULTIPY_CONSTANT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s16_REMAINDER |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s16_REMAINDER</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s16_SUBTRACT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s16_SUBTRACT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s16_SUBTRACT_CONSTANT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s16_SUBTRACT_CONSTANT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s32_ADD |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s32_ADD</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s32_ADD_CONSTANT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s32_ADD_CONSTANT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s32_DIVIDE |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s32_DIVIDE</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s32_DIVIDE_CONSTANT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s32_DIVIDE_CONSTANT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s32_MAX |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s32_MAX</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s32_MIN |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s32_MIN</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s32_MODULO |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s32_MODULO</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s32_MULTIPLY |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s32_MULTIPLY</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s32_MULTIPY_CONSTANT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s32_MULTIPY_CONSTANT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s32_REMAINDER |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s32_REMAINDER</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s32_SUBTRACT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s32_SUBTRACT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s32_SUBTRACT_CONSTANT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s32_SUBTRACT_CONSTANT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s64_ADD |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s64_ADD</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s64_ADD_CONSTANT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s64_ADD_CONSTANT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s64_DIVIDE |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s64_DIVIDE</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s64_DIVIDE_CONSTANT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s64_DIVIDE_CONSTANT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s64_MAX |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s64_MAX</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s64_MIN |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s64_MIN</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s64_MODULO |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s64_MODULO</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s64_MULTIPLY |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s64_MULTIPLY</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s64_MULTIPY_CONSTANT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s64_MULTIPY_CONSTANT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s64_REMAINDER |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s64_REMAINDER</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s64_SUBTRACT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s64_SUBTRACT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_s64_SUBTRACT_CONSTANT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_s64_SUBTRACT_CONSTANT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_u8_ADD |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_u8_ADD</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_u8_ADD_CONSTANT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_u8_ADD_CONSTANT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_u8_DIVIDE |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_u8_DIVIDE</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_u8_DIVIDE_CONSTANT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_u8_DIVIDE_CONSTANT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_u8_MAX |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_u8_MAX</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_u8_MIN |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_u8_MIN</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_u8_MODULO |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_u8_MODULO</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_u8_MULTIPLY |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_u8_MULTIPLY</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_u8_MULTIPY_CONSTANT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_u8_MULTIPY_CONSTANT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_u8_REMAINDER |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_u8_REMAINDER</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_u8_SUBTRACT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_u8_SUBTRACT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Elwise_u8_SUBTRACT_CONSTANT |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Elwise_u8_SUBTRACT_CONSTANT</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Erode_f32_11x11 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Erode_f32_11x11</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Erode_f32_3x3 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Erode_f32_3x3</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Erode_f32_5x5 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Erode_f32_5x5</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Erode_f32_9x9 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Erode_f32_9x9</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Erode_f64_11x11 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Erode_f64_11x11</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Erode_f64_3x3 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Erode_f64_3x3</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Erode_f64_5x5 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Erode_f64_5x5</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Erode_f64_9x9 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Erode_f64_9x9</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Erode_s16_11x11 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Erode_s16_11x11</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Erode_s16_3x3 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Erode_s16_3x3</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Erode_s16_5x5 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Erode_s16_5x5</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Erode_s16_9x9 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Erode_s16_9x9</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Erode_s32_11x11 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Erode_s32_11x11</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Erode_s32_3x3 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Erode_s32_3x3</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Erode_s32_5x5 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Erode_s32_5x5</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Erode_s32_9x9 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Erode_s32_9x9</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Erode_u8_11x11 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Erode_u8_11x11</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Erode_u8_3x3 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Erode_u8_3x3</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Erode_u8_5x5 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Erode_u8_5x5</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Erode_u8_9x9 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Erode_u8_9x9</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | FFT_1D_f32 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>FFT_1D_f32</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | FFT_1D_f64 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>FFT_1D_f64</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | FFT_2D_f32 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>FFT_2D_f32</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | FFT_2D_f64 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>FFT_2D_f64</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | GFOR_FOR_LOOP_SUM |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>GFOR_FOR_LOOP_SUM</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | GFOR_NO_LOOP_SUM |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>GFOR_NO_LOOP_SUM</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | GFOR_SUM |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>GFOR_SUM</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Histogram_f32 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Histogram_f32</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Histogram_f64 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Histogram_f64</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Image_Bilateral_11x11 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Image_Bilateral_11x11</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Image_Bilateral_5x5 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Image_Bilateral_5x5</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Image_Bilateral_9x9 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Image_Bilateral_9x9</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Image_Convolve_11x11 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Image_Convolve_11x11</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Image_Convolve_5x5 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Image_Convolve_5x5</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Image_Convolve_9x9 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Image_Convolve_9x9</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Image_Erode_11x11 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Image_Erode_11x11</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Image_Erode_5x5 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Image_Erode_5x5</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Image_Erode_9x9 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Image_Erode_9x9</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Image_FAST |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Image_FAST</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Image_Histogram |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Image_Histogram</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Image_ORB |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Image_ORB</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Image_Resize_Expand_2x |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Image_Resize_Expand_2x</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Image_Resize_Shrink_2x |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Image_Resize_Shrink_2x</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Cholesky_f32 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Cholesky_f32</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Cholesky_f64 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Cholesky_f64</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | LU_f32 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>LU_f32</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | LU_f64 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>LU_f64</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | MatrixMultiply_f32 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>MatrixMultiply_f32</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | MatrixMultiply_f64 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>MatrixMultiply_f64</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | MedianFilter_f32_5x5_PAD_SYM |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>MedianFilter_f32_5x5_PAD_SYM</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | MedianFilter_f32_5x5_PAD_ZERO |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>MedianFilter_f32_5x5_PAD_ZERO</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | MedianFilter_f64_5x5_PAD_SYM |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>MedianFilter_f64_5x5_PAD_SYM</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | MedianFilter_f64_5x5_PAD_ZERO |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>MedianFilter_f64_5x5_PAD_ZERO</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | PinnedMemory_f32_Bandwidth |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>PinnedMemory_f32_Bandwidth</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | PinnedMemory_f64_Bandwidth |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>PinnedMemory_f64_Bandwidth</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | PinnedMemory_s16_Bandwidth |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>PinnedMemory_s16_Bandwidth</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | PinnedMemory_s32_Bandwidth |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>PinnedMemory_s32_Bandwidth</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | PinnedMemory_s64_Bandwidth |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>PinnedMemory_s64_Bandwidth</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | PinnedMemory_u8_Bandwidth |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>PinnedMemory_u8_Bandwidth</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Expand_2D_f32_AF_INTERP_BILINEAR |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Expand_2D_f32_AF_INTERP_BILINEAR</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Expand_2D_f32_AF_INTERP_NEAREST |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Expand_2D_f32_AF_INTERP_NEAREST</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Expand_2D_f64_AF_INTERP_BILINEAR |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Expand_2D_f64_AF_INTERP_BILINEAR</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Expand_2D_f64_AF_INTERP_NEAREST |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Expand_2D_f64_AF_INTERP_NEAREST</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Expand_2D_s16_AF_INTERP_BILINEAR |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Expand_2D_s16_AF_INTERP_BILINEAR</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Expand_2D_s16_AF_INTERP_NEAREST |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Expand_2D_s16_AF_INTERP_NEAREST</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Expand_2D_s32_AF_INTERP_BILINEAR |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Expand_2D_s32_AF_INTERP_BILINEAR</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Expand_2D_s32_AF_INTERP_NEAREST |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Expand_2D_s32_AF_INTERP_NEAREST</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Expand_2D_s64_AF_INTERP_BILINEAR |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Expand_2D_s64_AF_INTERP_BILINEAR</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Expand_2D_s64_AF_INTERP_NEAREST |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Expand_2D_s64_AF_INTERP_NEAREST</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Expand_2D_u8_AF_INTERP_BILINEAR |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Expand_2D_u8_AF_INTERP_BILINEAR</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Expand_2D_u8_AF_INTERP_NEAREST |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Expand_2D_u8_AF_INTERP_NEAREST</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Shrink_2D_f32_AF_INTERP_BILINEAR |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Shrink_2D_f32_AF_INTERP_BILINEAR</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Shrink_2D_f32_AF_INTERP_NEAREST |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Shrink_2D_f32_AF_INTERP_NEAREST</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Shrink_2D_f64_AF_INTERP_BILINEAR |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Shrink_2D_f64_AF_INTERP_BILINEAR</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Shrink_2D_f64_AF_INTERP_NEAREST |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Shrink_2D_f64_AF_INTERP_NEAREST</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Shrink_2D_s16_AF_INTERP_BILINEAR |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Shrink_2D_s16_AF_INTERP_BILINEAR</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Shrink_2D_s16_AF_INTERP_NEAREST |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Shrink_2D_s16_AF_INTERP_NEAREST</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Shrink_2D_s32_AF_INTERP_BILINEAR |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Shrink_2D_s32_AF_INTERP_BILINEAR</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Shrink_2D_s32_AF_INTERP_NEAREST |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Shrink_2D_s32_AF_INTERP_NEAREST</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Shrink_2D_s64_AF_INTERP_BILINEAR |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Shrink_2D_s64_AF_INTERP_BILINEAR</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Shrink_2D_s64_AF_INTERP_NEAREST |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Shrink_2D_s64_AF_INTERP_NEAREST</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Shrink_2D_u8_AF_INTERP_BILINEAR |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Shrink_2D_u8_AF_INTERP_BILINEAR</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Shrink_2D_u8_AF_INTERP_NEAREST |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Shrink_2D_u8_AF_INTERP_NEAREST</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Rotate_f32_INTERP_NEAREST |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Rotate_f32_INTERP_NEAREST</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Rotate_f64_INTERP_NEAREST |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Rotate_f64_INTERP_NEAREST</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Rotate_s16_INTERP_NEAREST |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Rotate_s16_INTERP_NEAREST</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Rotate_s32_INTERP_NEAREST |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Rotate_s32_INTERP_NEAREST</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Rotate_s64_INTERP_NEAREST |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Rotate_s64_INTERP_NEAREST</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Rotate_u8_INTERP_NEAREST |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Rotate_u8_INTERP_NEAREST</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Sort_f32_ACENDING |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Sort_f32_ACENDING</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Sort_f32_DECENDING |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Sort_f32_DECENDING</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Sort_f64_ACENDING |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Sort_f64_ACENDING</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Sort_f64_DECENDING |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Sort_f64_DECENDING</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Sort_s16_ACENDING |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Sort_s16_ACENDING</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Sort_s16_DECENDING |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Sort_s16_DECENDING</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Sort_s32_ACENDING |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Sort_s32_ACENDING</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Sort_s32_DECENDING |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Sort_s32_DECENDING</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Sort_s64_ACENDING |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Sort_s64_ACENDING</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Sort_s64_DECENDING |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Sort_s64_DECENDING</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Sort_u16_ACENDING |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Sort_u16_ACENDING</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Sort_u16_DECENDING |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Sort_u16_DECENDING</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Sort_u32_ACENDING |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Sort_u32_ACENDING</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Sort_u32_DECENDING |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Sort_u32_DECENDING</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Sort_u64_ACENDING |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Sort_u64_ACENDING</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Sort_u64_DECENDING |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Sort_u64_DECENDING</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Sort_u8_ACENDING |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Sort_u8_ACENDING</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Sort_u8_DECENDING |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Sort_u8_DECENDING</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Sum_1D_f32 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Sum_1D_f32</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Sum_1D_f64 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Sum_1D_f64</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Sum_1D_s16 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Sum_1D_s16</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Sum_1D_s32 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Sum_1D_s32</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Sum_1D_s64 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Sum_1D_s64</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Sum_1D_u8 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Sum_1D_u8</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Sum_2D_f32 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Sum_2D_f32</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Sum_2D_f64 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Sum_2D_f64</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Sum_2D_s16 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Sum_2D_s16</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Sum_2D_s32 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Sum_2D_s32</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Sum_2D_s64 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Sum_2D_s64</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Sum_2D_u8 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Sum_2D_u8</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Transpose_f32 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Transpose_f32</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Transpose_f64 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Transpose_f64</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Transpose_s16 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Transpose_s16</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Transpose_s32 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Transpose_s32</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Transpose_s64 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Transpose_s64</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Sort            | Transpose_u8 |        1 |              10 |              10 |     1.00000 |      #_RESULT_# |          0.0 |</OutputTemplate>
+    <MatchToTestArguments>Transpose_u8</MatchToTestArguments>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.6.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/bork-1.4.zip</URL>
+      <MD5>8bbef446b89084142108888423310c72</MD5>
+      <SHA256>5d1a85abbeaa50b125a4ca2ef1e479460b4724c77bf77f55fef971027dd4d569</SHA256>
+      <FileSize>743599</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

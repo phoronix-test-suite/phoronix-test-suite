@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.8.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/batman-arkham-origins-config-1.zip</URL>
+      <MD5>baa176aaa93fe9927bb407fbcd80a443</MD5>
+      <SHA256>92e5d6b46491a36a4722eb97e7b0a84c2ab97d7292281fe3b2d94c5fe7d8dce5</SHA256>
+      <FileName>batman-arkham-origins-config-1.zip</FileName>
+      <FileSize>1077</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

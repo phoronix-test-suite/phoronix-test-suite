@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>#_RESULT_# us / alloc</OutputTemplate>
+    <LineHint>us</LineHint>
+    <ResultScale>us Per Event</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>#_RESULT_# ns / alloc</OutputTemplate>
+    <LineHint>ns</LineHint>
+    <ResultScale>Ns Per Event</ResultScale>
+  </ResultsParser>
+</PhoronixTestSuite>

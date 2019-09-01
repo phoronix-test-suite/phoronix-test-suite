@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.4.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>INTEGER BatchRun   Copy:      #_RESULT_# MB/s
+INTEGER BatchRun   Scale:     7578.89 MB/s
+INTEGER BatchRun   Add:       8701.14 MB/s
+INTEGER BatchRun   Triad:     8408.65 MB/s
+---
+INTEGER BatchRun   AVERAGE:   8189.55 MB/s</OutputTemplate>
+    <MatchToTestArguments>COPY</MatchToTestArguments>
+    <LineHint>Copy</LineHint>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>INTEGER BatchRun   Copy:      8069.52 MB/s
+INTEGER BatchRun   Scale:     #_RESULT_# MB/s
+INTEGER BatchRun   Add:       8701.14 MB/s
+INTEGER BatchRun   Triad:     8408.65 MB/s
+---
+INTEGER BatchRun   AVERAGE:   8189.55 MB/s</OutputTemplate>
+    <MatchToTestArguments>SCALE</MatchToTestArguments>
+    <LineHint>Scale</LineHint>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>INTEGER BatchRun   Copy:      8069.52 MB/s
+INTEGER BatchRun   Scale:     7578.89 MB/s
+INTEGER BatchRun   Add:       #_RESULT_# MB/s
+INTEGER BatchRun   Triad:     8408.65 MB/s
+---
+INTEGER BatchRun   AVERAGE:   8189.55 MB/s</OutputTemplate>
+    <MatchToTestArguments>ADD</MatchToTestArguments>
+    <LineHint>Add</LineHint>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>INTEGER BatchRun   Copy:      8069.52 MB/s
+INTEGER BatchRun   Scale:     7578.89 MB/s
+INTEGER BatchRun   Add:       8701.14 MB/s
+INTEGER BatchRun   Triad:     #_RESULT_# MB/s
+---
+INTEGER BatchRun   AVERAGE:   8189.55 MB/s</OutputTemplate>
+    <MatchToTestArguments>TRIAD</MatchToTestArguments>
+    <LineHint>Triad</LineHint>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>INTEGER BatchRun   Copy:      8069.52 MB/s
+INTEGER BatchRun   Scale:     7578.89 MB/s
+INTEGER BatchRun   Add:       8701.14 MB/s
+INTEGER BatchRun   Triad:     8408.65 MB/s
+---
+INTEGER BatchRun   AVERAGE:   #_RESULT_# MB/s</OutputTemplate>
+    <MatchToTestArguments>AVERAGE</MatchToTestArguments>
+    <LineHint>AVERAGE</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

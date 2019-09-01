@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.8.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate> SPECrate2017_fp_base                    #_RESULT_#</OutputTemplate>
+    <LineHint>SPECrate2017_fp_base</LineHint>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> Est. SPECrate2017_fp_base                    #_RESULT_#</OutputTemplate>
+    <LineHint>SPECrate2017_fp_base</LineHint>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> SPECrate2017_int_base                   #_RESULT_#</OutputTemplate>
+    <LineHint>SPECrate2017_int_base</LineHint>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> Est. SPECrate2017_int_base                   #_RESULT_#</OutputTemplate>
+    <LineHint>SPECrate2017_int_base</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

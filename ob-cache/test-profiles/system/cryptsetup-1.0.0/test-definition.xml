@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Cryptsetup</Title>
+    <Description>This is a test profile for running the cryptsetup benchmark to report on the system's cryptography performance.</Description>
+    <ResultScale>Iterations Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <EnvironmentSize>1</EnvironmentSize>
+    <ProjectURL>http://gitlab.com/cryptsetup/cryptsetup</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>cryptsetup</SystemDependencies>
+  </TestProfile>
+</PhoronixTestSuite>

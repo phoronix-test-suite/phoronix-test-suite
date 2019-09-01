@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://voxel.dl.sourceforge.net/project/systester/systester/1.1.0/systester-1.1.0-src.tar.bz2, http://internode.dl.sourceforge.net/project/systester/systester/1.1.0/systester-1.1.0-src.tar.bz2</URL>
+      <MD5>f8b42fc2e9bdb08f76aa11bbb1d27ef9</MD5>
+      <FileSize>119766</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

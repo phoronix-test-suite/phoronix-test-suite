@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.8.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/appleseedhq/appleseed/releases/download/2.0.0-beta/appleseed-2.0.0-beta-0-g5cff7b96b-linux64-gcc48.zip</URL>
+      <MD5>092da084b0c6f0b4871e478ae308aa8c</MD5>
+      <SHA256>4cc73c2c836c153dd9056ccf6499738923e826dbebd8652776ff3c7973f824f2</SHA256>
+      <FileName>appleseed-2.0.0-beta-0-g5cff7b96b-linux64-gcc48.zip</FileName>
+      <FileSize>108932072</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/appleseedhq/appleseed/releases/download/2.0.0-beta/appleseed-2.0.0-beta-0-g5cff7b96b-win64-vs140.zip</URL>
+      <MD5>4e6befb880dfeece518f4ccadd5f2f2c</MD5>
+      <SHA256>1cc690aac45100b3e228cf6888cec9faf777994ef32ed96a3110d0b0e102bb57</SHA256>
+      <FileName>appleseed-2.0.0-beta-0-g5cff7b96b-win64-vs140.zip</FileName>
+      <FileSize>62994385</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/appleseedhq/appleseed-scenes/releases/download/1.8.0-beta/emily_1.4.zip</URL>
+      <MD5>ac70fa83eb5f12966fd28a000c54c210</MD5>
+      <SHA256>3ad9332ad0777d70871454228587372fee9ad98db35483cd25c96b7663b81886</SHA256>
+      <FileName>emily_1.4.zip</FileName>
+      <FileSize>417182051</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/appleseedhq/appleseed-scenes/releases/download/1.8.0-beta/disney_material_1.2.zip</URL>
+      <MD5>4eebe5b47792b8ca031995cf9e613893</MD5>
+      <SHA256>6aa882aab4ce14129fbc899a9e00e65d281a239373f17705d536488511d719c4</SHA256>
+      <FileName>disney_material_1.2.zip</FileName>
+      <FileSize>3436200</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/appleseedhq/appleseed-scenes/releases/download/1.8.0-beta/material_tester_1.4.zip</URL>
+      <MD5>64cfa21fad171fa1ceb32539b448755a</MD5>
+      <SHA256>0e185ed1363f98c826c7b37763ccac0b203118df850c9583be29299b4f8da22e</SHA256>
+      <FileName>material_tester_1.4.zip</FileName>
+      <FileSize>21341121</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

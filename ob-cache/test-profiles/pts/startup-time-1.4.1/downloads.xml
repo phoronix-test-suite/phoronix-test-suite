@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.8.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/S-34.zip</URL>
+      <MD5>2a0c00dd687fdc0734d899bd895d5f19</MD5>
+      <SHA256>f9cecacb59cdca1490261bd6f34079ad19ffe7132332566e89776780a2975694</SHA256>
+      <FileName>S-34.zip</FileName>
+      <FileSize>24714802</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://sourceforge.mirrorservice.org/d/da/dacapobench/9.12-bach-MR1/dacapo-9.12-MR1-bach.jar, http://download2.nust.na/pub4/sourceforge/d/da/dacapobench/9.12-bach-MR1/dacapo-9.12-MR1-bach.jar, ftp://ftp.uk.freesbie.org/sites/downloads.sourceforge.net/d/da/dacapobench/9.12-bach-MR1/dacapo-9.12-MR1-bach.jar</URL>
+      <MD5>81a1e72daab989db1814fe7f765f8cee</MD5>
+      <SHA256>be3db084adcb2867760e1197b3ccf541c3213d918daa19386d8e236648d24be8</SHA256>
+      <FileName>dacapo-9.12-MR1-bach.jar</FileName>
+      <FileSize>198610940</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

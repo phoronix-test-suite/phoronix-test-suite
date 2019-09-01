@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/Prime-Benchmark-20181001.zip</URL>
+      <MD5>5ef5a3cbf644f7bfa06b71a4790f47af</MD5>
+      <SHA256>1816fe507f7e87ac6c029e2a118480b8a7415b74269a0b36a7b2bf9508d0a2ac</SHA256>
+      <FileName>Prime-Benchmark-20181001.zip</FileName>
+      <FileSize>124895</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

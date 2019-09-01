@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.6.0m1 (Dedilovo)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ue4linux.raxxy.com/matinee_demo.tar.bz2</URL>
+      <MD5>ab065bb1a99e84fafb2751af609bb8df</MD5>
+      <SHA256>fbbd2159d6db3080dfc576c756a778b4a026a56c9c0f6e911816f69e57f980b3</SHA256>
+      <FileSize>372728234</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://gentoo.cites.uiuc.edu/pub/gentoo/distfiles/ut2004-lnx-demo3334.run, http://gentoo.chem.wisc.edu/gentoo/distfiles/ut2004-lnx-demo3334.run, ftp://gentoo.inode.at/source/distfiles/ut2004-lnx-demo3334.run</URL>
+      <MD5>bf9f483902c6006b94c327fb7b585086</MD5>
+      <FileSize>288950743</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/UT2004-ptsconfig-2.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/UT2004-ptsconfig-2.tar.gz</URL>
+      <MD5>a3060608dc521040df4248de2dfd3b29</MD5>
+      <FileSize>5057</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

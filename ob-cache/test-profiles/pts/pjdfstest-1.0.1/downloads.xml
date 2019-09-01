@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/pjdfstest-20180715.tar.xz</URL>
+      <MD5>5e5822a6a68999347a960e2b9587b190</MD5>
+      <SHA256>14e61822189ca53ddfaac7fef8e15871446a9aa6f69632bfbb5034a7cabfed78</SHA256>
+      <FileName>pjdfstest-20180715.tar.xz</FileName>
+      <FileSize>295680</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.8.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Results for 3000 fall: #_3000fall_#
+Results for 1000 stack: #_1000stack_#
+Results for 136 ragdolls: #_136ragdolls_#
+Results for 1000 convex: #_1000convex_#
+Results for prim-trimesh: #_prim-trimesh_#
+Results for convex-trimesh: #_convex-trimesh_#
+Results for raytests: #_raytests_#</OutputTemplate>
+    <ResultKey>PTS_TEST_ARGUMENTS</ResultKey>
+  </ResultsParser>
+</PhoronixTestSuite>

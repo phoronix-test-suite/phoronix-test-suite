@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.0.0 (Plavsk)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/pts-cstrike-1.zip</URL>
+      <MD5>79791e59eed8d9a2e82999764858870a</MD5>
+      <SHA256>b98e7a19810f934b67bd9c2d83d9527735a42ebb8019663b13c7a91083ac6ac3</SHA256>
+      <FileSize>739204</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

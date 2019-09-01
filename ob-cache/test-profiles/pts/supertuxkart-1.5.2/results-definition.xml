@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.8.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>[verbose  ] profile: Number of frames: 3600 time 42.580002, Average FPS: #_RESULT_#</OutputTemplate>
+    <LineHint>Average FPS</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

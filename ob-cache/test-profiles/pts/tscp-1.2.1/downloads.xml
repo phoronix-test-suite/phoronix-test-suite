@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.6.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/tscp181_pts.tar.bz2</URL>
+      <MD5>89bed77fd19598f5dde61ff58ac0721f</MD5>
+      <SHA256>980cefbefcf1ae101eb98ae298db167c1a88a2692902a939e9d61443be730099</SHA256>
+      <FileSize>17656</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

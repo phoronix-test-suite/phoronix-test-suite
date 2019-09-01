@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.6.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>join: file 2 is not in sorted order
+Dhrystone 2 without register variables   #_RESULT_# lps   (10 secs, 6 samples)</OutputTemplate>
+    <LineHint>lps</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.8.0m3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://src.fedoraproject.org//repo/pkgs/vdrift/vdrift-2010-06-30.tar.bz2/ddcaf90bb25f9ce9cc084d7f467d7b56/vdrift-2010-06-30.tar.bz2, ftp://ftp.za.freebsd.org/sourceforge/v/vd/vdrift/vdrift/vdrift-2010-06-30/vdrift-2010-06-30.tar.bz2, ftp://raspbian.mirror.ac.za/sourceforge/v/vd/vdrift/vdrift/vdrift-2010-06-30/vdrift-2010-06-30.tar.bz2, ftp://slackware.mirror.ac.za/sourceforge/v/vd/vdrift/vdrift/vdrift-2010-06-30/vdrift-2010-06-30.tar.bz2</URL>
+      <MD5>ddcaf90bb25f9ce9cc084d7f467d7b56</MD5>
+      <FileSize>549124037</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://internode.dl.sourceforge.net/project/vdrift/vdrift/vdrift-2010-06-30/vdrift-setup-2010-06-30.exe, http://voxel.dl.sourceforge.net/project/vdrift/vdrift/vdrift-2010-06-30/vdrift-setup-2010-06-30.exe, http://internap.dl.sourceforge.net/project/vdrift/vdrift/vdrift-2010-06-30/vdrift-setup-2010-06-30.exe, http://garr.dl.sourceforge.net/project/vdrift/vdrift/vdrift-2010-06-30/vdrift-setup-2010-06-30.exe</URL>
+      <MD5>78adb25530f0a8c3cca1f6c008ca19c9</MD5>
+      <FileSize>486546603</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://internode.dl.sourceforge.net/project/vdrift/vdrift/vdrift-2010-06-30/vdrift-2009-06-15-mac.dmg, http://voxel.dl.sourceforge.net/project/vdrift/vdrift/vdrift-2010-06-30/vdrift-2009-06-15-mac.dmg, http://internap.dl.sourceforge.net/project/vdrift/vdrift/vdrift-2010-06-30/vdrift-2009-06-15-mac.dmg, http://garr.dl.sourceforge.net/project/vdrift/vdrift/vdrift-2010-06-30/vdrift-2009-06-15-mac.dmg</URL>
+      <MD5>8e58dcd7a07ab8bf92ee005994111bd2</MD5>
+      <FileSize>485396543</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/vdrift-benchmark-4.zip, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/vdrift-benchmark-4.zip</URL>
+      <MD5>90fb69a24dd467186153035935bd5fe4</MD5>
+      <FileSize>63895</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

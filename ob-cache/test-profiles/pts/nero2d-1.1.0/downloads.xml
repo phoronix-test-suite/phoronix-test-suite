@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.8.0m3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/nero2d-2.0.2-pts1.tar.gz</URL>
+      <MD5>a15e3d19b4fd241bd88aab6433fd301b</MD5>
+      <SHA256>4371a5cb2bd12a59b671f477c765439784d0e8a373628df3c1c96dda5698ae5b</SHA256>
+      <FileSize>1751267</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

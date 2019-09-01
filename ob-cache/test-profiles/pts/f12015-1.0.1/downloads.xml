@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.4.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/F12015-prefs-1.tar.bz2</URL>
+      <MD5>39f1c32122aa3824a3181f5812cd6afc</MD5>
+      <SHA256>b6906a3e135369d1f7e4dfd195b537380a02867de2ddf907b3a9e5bd13ef768e</SHA256>
+      <FileSize>2108</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

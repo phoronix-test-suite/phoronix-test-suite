@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://download.videolan.org/pub/videolan/x264/snapshots/x264-snapshot-20180925-2245.tar.bz2</URL>
+      <MD5>7de5ef945e2c6c5136bd9bc70a887441</MD5>
+      <SHA256>207c668e5b149dae04648b74f1008ab457e57ea89ea96712eebe52a79884ca7c</SHA256>
+      <FileName>x264-snapshot-20180925-2245.tar.bz2</FileName>
+      <FileSize>770751</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.nasm.us/pub/nasm/releasebuilds/2.13.01/nasm-2.13.01.tar.bz2</URL>
+      <MD5>1f7d4662040d24351df7d6719ed4f97a</MD5>
+      <SHA256>08f97baf0a7f892128c6413cfa93b69dc5825fbbd06c70928aea028835d198fa</SHA256>
+      <FileName>nasm-2.13.01.tar.bz2</FileName>
+      <FileSize>966295</FileSize>
+    </Package>
+    <Package>
+      <URL>http://ultravideo.cs.tut.fi/video/Bosphorus_1920x1080_120fps_420_8bit_YUV_Y4M.7z</URL>
+      <MD5>84ae521c95aa2537e16b34bbf72f2def</MD5>
+      <SHA256>e2f60b904789a60f6d1edc194d8540d401dd882e3ee3605b9b1de8feacc72133</SHA256>
+      <FileName>Bosphorus_1920x1080_120fps_420_8bit_YUV_Y4M.7z</FileName>
+      <FileSize>676792531</FileSize>
+    </Package>
+    <Package>
+      <URL>http://download.videolan.org/pub/videolan/x264/binaries/win64/x264-r2935-545de2f.exe</URL>
+      <MD5>f95282b876ac0073898f487667266f2d</MD5>
+      <SHA256>e0cee77e4f1c83266b961d0fde333a7f871da67cfd9e764833eca7899f9722b6</SHA256>
+      <FileName>x264-r2935-545de2f.exe</FileName>
+      <FileSize>22868992</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

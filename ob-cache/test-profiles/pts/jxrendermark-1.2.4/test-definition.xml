@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.4.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>JXRenderMark</Title>
+    <AppVersion>1.0.1</AppVersion>
+    <Description>JXRenderMark is an open-source benchmark of the X Render extension for X.Org. Currently all tests are rendering to the backbuffer and not directly to the screen.</Description>
+    <ResultScale>Operations Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <Executable>jxrender-run</Executable>
+    <TimesToRun>6</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.4</Version>
+    <SupportedPlatforms>Linux, Solaris</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>0.1</EnvironmentSize>
+    <ProjectURL>http://78.31.67.79:8080/jxrender/RenderMark.html</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>rendering-test</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>Rects Composition</Name>
+          <Value>2</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Put Composition</Name>
+          <Value>3</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Simple Blit</Name>
+          <Value>8</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Transformed Blit Linear</Name>
+          <Value>9</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Transformed Blit Bilinear</Name>
+          <Value>10</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Transformed Texture Paint</Name>
+          <Value>11</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Linear Gradient Blend</Name>
+          <Value>12</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Radial Gradient Paint</Name>
+          <Value>13</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Gradient+Temp Texture</Name>
+          <Value>14</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>12pt Text Grayscale</Name>
+          <Value>15</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>12pt Text LCD</Name>
+          <Value>16</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Size</DisplayName>
+      <Identifier>rendering-size</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>32x32</Name>
+          <Value>32</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>128x128</Name>
+          <Value>128</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>256x256</Name>
+          <Value>256</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>512x512</Name>
+          <Value>512</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>1024x1024</Name>
+          <Value>1024</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

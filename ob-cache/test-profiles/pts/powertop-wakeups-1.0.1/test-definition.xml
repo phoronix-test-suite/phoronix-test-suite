@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.8.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Powertop Wakeups</Title>
+    <AppVersion>2.2</AppVersion>
+    <Description>This test measures the wakeups-from-idle per second for a given interval.</Description>
+    <ResultScale>wakeups/second</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <RequiresRoot>True</RequiresRoot>
+    <Maintainer>Jim Kukunas</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

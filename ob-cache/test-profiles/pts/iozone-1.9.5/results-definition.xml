@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.4.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>              KB  reclen   write rewrite    read    reread    read   write    read  rewrite     read   fwrite frewrite   fread  freread
+          524288       4   99368 2519366  #_RESULT_#  5727103</OutputTemplate>
+    <MatchToTestArguments>#READ</MatchToTestArguments>
+    <LineBeforeHint>reclen</LineBeforeHint>
+    <DivideResultBy>1024</DivideResultBy>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>              KB  reclen   write rewrite    read    reread    read   write    read  rewrite     read   fwrite frewrite   fread  freread
+          524288       4   #_RESULT_# 2519366  5717186  5727103</OutputTemplate>
+    <MatchToTestArguments>#WRITE</MatchToTestArguments>
+    <LineBeforeHint>reclen</LineBeforeHint>
+    <DivideResultBy>1024</DivideResultBy>
+  </ResultsParser>
+</PhoronixTestSuite>

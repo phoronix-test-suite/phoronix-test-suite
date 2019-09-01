@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/numpy-benchmarks-20160218.tar.gz</URL>
+      <MD5>825d2ea40e75aa3ba13b8bb9eb01ed78</MD5>
+      <SHA256>5ad3ad591cbe9415deaedc2bc5c29472dda40c14bc668ce8f119c6bdc0df3d34</SHA256>
+      <FileSize>13090</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

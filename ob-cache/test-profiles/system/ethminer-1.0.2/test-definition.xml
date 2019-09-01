@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Ethereum Ethminer</Title>
+    <Description>This is a benchmark of the Ethereum Ethminer.</Description>
+    <ResultScale>H/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.2</Version>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <EnvironmentSize>100</EnvironmentSize>
+    <RequiresCoreVersionMin>7140</RequiresCoreVersionMin>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>ethminer</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Device</DisplayName>
+      <Identifier>device</Identifier>
+      <Menu>
+        <Entry>
+          <Name>OpenCL</Name>
+          <Value>-G</Value>
+        </Entry>
+        <Entry>
+          <Name>CUDA</Name>
+          <Value>-U</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

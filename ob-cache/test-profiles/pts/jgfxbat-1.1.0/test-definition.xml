@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Java Graphics Basic Acceptance Test</Title>
+    <AppVersion>2.0</AppVersion>
+    <Description>This test runs a series of automated performance/quality sub-tests that exercise the OpenGL-based Java 2D pipeline in order to verify the quality of OpenGL drivers.</Description>
+    <DisplayFormat>PASS_FAIL</DisplayFormat>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>java</ExternalDependencies>
+    <EnvironmentSize>0.4</EnvironmentSize>
+    <ProjectURL>http://www.java.net/</ProjectURL>
+    <InternalTags>Java</InternalTags>
+    <Maintainer>Tao Zhang</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

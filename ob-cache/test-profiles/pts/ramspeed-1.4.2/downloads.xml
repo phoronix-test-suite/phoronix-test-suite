@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/ramsmp-3.5.0.tar.gz, http://sources.buildroot.net/ramsmp/ramsmp-3.5.0.tar.gz</URL>
+      <MD5>c26b32c752c603e17c28a1cab4348682</MD5>
+      <SHA256>39fb15493fb3c293575746d56f6ab9faaa1d876d8b1f0d8e5a4042d2ace95839</SHA256>
+      <FileName>ramsmp-3.5.0.tar.gz</FileName>
+      <FileSize>79481</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

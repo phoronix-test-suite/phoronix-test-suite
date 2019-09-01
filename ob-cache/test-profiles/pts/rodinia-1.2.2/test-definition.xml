@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.0.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Rodinia</Title>
+    <AppVersion>2.4</AppVersion>
+    <Description>Rodinia is a suite focused upon accelerating compute-intensive applications with accelerators. CUDA, OpenMP, and OpenCL parallel models are supported by the included applications. This profile utilizes the OpenCL and OpenMP test binaries at the moment.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.2</Version>
+    <SupportedPlatforms>Linux, BSD</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, openmpi-development, opencl</ExternalDependencies>
+    <EnvironmentSize>1100</EnvironmentSize>
+    <ProjectURL>http://lava.cs.virginia.edu/Rodinia/</ProjectURL>
+    <InternalTags>SMP, OpenMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>run-test</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>OpenMP CFD Solver</Name>
+          <Value>OMP_CFD</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>OpenMP LavaMD</Name>
+          <Value>OMP_LAVAMD</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>OpenMP Leukocyte</Name>
+          <Value>OMP_LEUKOCYTE</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>OpenMP Streamcluster</Name>
+          <Value>OMP_STREAMCLUSTER</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>OpenCL LavaMD</Name>
+          <Value>OCL_LAVAMD</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>OpenCL Leukocyte</Name>
+          <Value>OCL_LEUKOCYTE</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>OpenCL Heartwall</Name>
+          <Value>OCL_HEARTWALL</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>OpenCL Myocyte</Name>
+          <Value>OCL_MYOCYTE</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>OpenCL Particle Filter</Name>
+          <Value>OCL_PARTICLEFILTER</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

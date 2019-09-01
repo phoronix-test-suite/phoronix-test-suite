@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>	fps_total min_fps= #_MIN_RESULT_#  max_fps= #_MAX_RESULT_#  av_fps= #_RESULT_#  min_fps_ms= 13.674289  max_fps_ms= 9.021717  av_fps_ms= 11.205852  </OutputTemplate>
+    <LineHint>fps_total</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

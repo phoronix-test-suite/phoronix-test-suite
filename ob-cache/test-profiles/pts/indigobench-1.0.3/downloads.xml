@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.8.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://downloads.indigorenderer.com/dist/beta/IndigoBenchmark_x64_v4.0.64.tar.gz</URL>
+      <MD5>82fa0346e0c16415d0314921eaf38366</MD5>
+      <SHA256>a3f556e0af5f8cc25f9de185b46b8e27080b75b96221b00922bb6d4f17308fad</SHA256>
+      <FileName>IndigoBenchmark_x64_v4.0.64.tar.gz</FileName>
+      <FileSize>217266907</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>ftp://ftp-osl.osuosl.org/pub/libpng/src/libpng12/libpng-1.2.59.tar.gz</URL>
+      <MD5>8909478bf85d80395f80e925bd79c0f8</MD5>
+      <SHA256>4bd4b5ce04ce634c281ae76174714fa02b053b573ac2181c985db06aa57e1e9e</SHA256>
+      <FileName>libpng-1.2.59.tar.gz</FileName>
+      <FileSize>1118350</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://downloads.indigorenderer.com/dist/beta/IndigoBenchmark_x64_v4.0.64_Setup.exe</URL>
+      <MD5>379af46538c73c5e1a14b76c991277a7</MD5>
+      <SHA256>fb840f81ff9faed93e6d3637cb14c91a2e246c3ac06b56e63fe31390696bd1c7</SHA256>
+      <FileName>IndigoBenchmark_x64_v4.0.64_Setup.exe</FileName>
+      <FileSize>203277392</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

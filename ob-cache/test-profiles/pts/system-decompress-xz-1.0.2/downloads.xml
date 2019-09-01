@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.4.0m1 (Forsand)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.kernel.org/pub/linux/kernel/v3.x/linux-3.7.tar.xz</URL>
+      <MD5>21223369d682bcf44bcdfe1521095983</MD5>
+      <FileSize>69736096</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

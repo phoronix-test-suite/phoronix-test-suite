@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>    90  90.0   #_RESULT_#  0.001  0.997 0.00099</OutputTemplate>
+    <LineHint>90  90.0</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

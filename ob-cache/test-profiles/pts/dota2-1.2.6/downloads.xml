@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0m4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/dota2-pts-1971360796.dem.tar.bz2</URL>
+      <MD5>f4f7001df7f9275e9f9be1a13895b4de</MD5>
+      <SHA256>2339912caa86959eff697ff1c1eee937ce0f39898717237fc15362c257f824f5</SHA256>
+      <FileName>dota2-pts-1971360796.dem.tar.bz2</FileName>
+      <FileSize>74166998</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

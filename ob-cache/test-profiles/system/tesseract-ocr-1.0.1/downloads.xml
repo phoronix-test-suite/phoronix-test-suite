@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/ocr-image-samples-1.zip</URL>
+      <MD5>3766fa00fa7df769216d2a89d55fb81d</MD5>
+      <SHA256>185d7823be9ea257aa0613d9acfeb8b2276ea251a72ffba0f1a11e43dcda5853</SHA256>
+      <FileName>ocr-image-samples-1.zip</FileName>
+      <FileSize>48594677</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

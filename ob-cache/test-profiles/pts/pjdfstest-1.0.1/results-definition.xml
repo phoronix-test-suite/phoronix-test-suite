@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0m0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Files=232, Tests=8789, #_RESULT_# wallclock secs ( 2.90 usr  0.61 sys + 52.15 cusr 16.32 csys = 71.98 CPU)</OutputTemplate>
+    <LineHint>wallclock secs</LineHint>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Result: #_RESULT_#</OutputTemplate>
+    <LineHint>Result: </LineHint>
+    <ResultScale>Test Pass / Fail</ResultScale>
+    <DisplayFormat>PASS_FAIL</DisplayFormat>
+  </ResultsParser>
+</PhoronixTestSuite>

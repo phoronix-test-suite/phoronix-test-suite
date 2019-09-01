@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/J2DBench.zip</URL>
+      <MD5>b77021077594c50f214a94a38d3ae9fe</MD5>
+      <SHA256>5cb6c0e99aab1c0fba263249d2a7505997fa17d0c375a7215fe3a942d2a2954c</SHA256>
+      <FileSize>260894</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

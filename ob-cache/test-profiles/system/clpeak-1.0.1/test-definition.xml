@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.2.0m4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>clpeak</Title>
+    <Description>Clpeak is designed to test the peak capabilities of OpenCL devices.</Description>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>opencl</ExternalDependencies>
+    <EnvironmentSize>2</EnvironmentSize>
+    <ProjectURL>https://github.com/krrishnarraj/clpeak</ProjectURL>
+    <InternalTags>OpenCL</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>clpeak</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-d 0</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>OpenCL Test</DisplayName>
+      <Identifier>cl-test</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>Global Memory Bandwidth</Name>
+          <Value>--global-bandwidth</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Single-Precision Float</Name>
+          <Value>--compute-sp</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Double-Precision Double</Name>
+          <Value>--compute-dp</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Integer Compute INT</Name>
+          <Value>--compute-integer</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Transfer Bandwidth enqueueWriteBuffer</Name>
+          <Value>--transfer-bandwidth #write</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Transfer Bandwidth enqueueReadBuffer</Name>
+          <Value>--transfer-bandwidth #read</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Kernel Latency</Name>
+          <Value>--kernel-latency</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

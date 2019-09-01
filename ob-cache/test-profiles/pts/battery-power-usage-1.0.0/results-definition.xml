@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <SystemMonitor>
+    <Sensor>sys.power</Sensor>
+    <PollingFrequency>1</PollingFrequency>
+    <Report>ALL</Report>
+  </SystemMonitor>
+</PhoronixTestSuite>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.8.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Rendered 100% 00:00V-Ray score: #_RESULT_# ksamples</OutputTemplate>
+    <LineHint>V-Ray score</LineHint>
+    <ResultAfterString>score:</ResultAfterString>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Unvanquished</Title>
+    <AppVersion>0.26.0</AppVersion>
+    <Description>Unvanquished is a modern fork of the Tremulous first person shooter. Unvanquished is powered by the Daemon engine, a combination of the ioquake3 engine with the graphically-beautiful XreaL engine. Unvanquished supports a modern OpenGL 3 renderer and other advanced graphics features for this open-source game.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.5.1</Version>
+    <SupportedPlatforms>Linux, MacOSX, Windows</SupportedPlatforms>
+    <SoftwareType>Game</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Broken</Status>
+    <SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+    <EnvironmentSize>635</EnvironmentSize>
+    <ProjectURL>http://www.unvanquished.net/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>+timedemo 1 +set demodone "quit" +set demoloop1 "demo pts26" +set nextdemo "vstr demodone" +set r_mode -1  +vstr demoloop1 +set r_fullscreen 1 +set r_swapinterval 0 +set com_speeds 1 +nocurses +set com_ansiColor 0</Arguments>
+      <PostArguments>+vid_restart</PostArguments>
+    </Default>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Effects Quality</DisplayName>
+      <Identifier>effects-quality</Identifier>
+      <ArgumentPrefix>+preset presets/</ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>Intermediate</Name>
+          <Value>intermediate.cfg</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>High</Name>
+          <Value>high.cfg</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Ultra</Name>
+          <Value>ultra.cfg</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

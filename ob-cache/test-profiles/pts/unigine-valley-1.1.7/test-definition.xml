@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0m0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Unigine Valley</Title>
+    <AppVersion>1.0</AppVersion>
+    <Description>This test calculates the average frame-rate within the Valley demo for the Unigine engine, released in February 2013. This engine is extremely demanding on the system's graphics card. Unigine Valley relies upon an OpenGL 3 core profile context.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.7</Version>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
+    <SoftwareType>Game</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Non-Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+    <EnvironmentSize>540</EnvironmentSize>
+    <ProjectURL>http://www.unigine.com/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>-video_width $VIDEO_WIDTH -video_height $VIDEO_HEIGHT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Mode</DisplayName>
+      <Identifier>mode</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Fullscreen</Name>
+          <Value>-video_fullscreen 1</Value>
+        </Entry>
+        <Entry>
+          <Name>Windowed</Name>
+          <Value>-video_fullscreen 0</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Renderer</DisplayName>
+      <Identifier>renderer</Identifier>
+      <Menu>
+        <Entry>
+          <Name>OpenGL</Name>
+          <Value>-video_app opengl</Value>
+        </Entry>
+        <Entry>
+          <Name>D3D9</Name>
+          <Value>-video_app direct3d9</Value>
+        </Entry>
+        <Entry>
+          <Name>D3D11</Name>
+          <Value>-video_app direct3d11</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

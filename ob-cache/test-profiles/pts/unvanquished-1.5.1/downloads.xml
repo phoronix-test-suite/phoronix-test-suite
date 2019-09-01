@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL></URL>
+      <MD5>38d567cca0883b4d35899f00d184e653</MD5>
+      <SHA256>44230e94a673355049e33dcd54a1a24dcc329b54eefdd3d19ae02ccb0381e50d</SHA256>
+      <FileName>unvanquished-0.26.0-universal.zip</FileName>
+      <FileSize>566547587</FileSize>
+    </Package>
+    <Package>
+      <URL></URL>
+      <MD5>aed4265b19ffda127446b9751c11cb20</MD5>
+      <SHA256>20ee31449ae47c28becce1b39b81290c1e43d998efc1c0e59168295d13cee15c</SHA256>
+      <FileName>unvanquished-26-1.zip</FileName>
+      <FileSize>816485</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

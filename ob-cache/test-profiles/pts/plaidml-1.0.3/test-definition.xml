@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>PlaidML</Title>
+    <Description>This test profile uses PlaidML deep learning framework for offering up various benchmarks.</Description>
+    <ResultScale>Examples Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.3</Version>
+    <SupportedPlatforms>Linux, BSD, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Restricted</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>python, opencl</ExternalDependencies>
+    <RequiresDisplay>FALSE</RequiresDisplay>
+    <RequiresInternet>TRUE</RequiresInternet>
+    <EnvironmentSize>1</EnvironmentSize>
+    <ProjectURL>https://github.com/plaidml/plaidml</ProjectURL>
+    <InternalTags>CUDA, OpenCL</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>--examples 2048 --batch-size 16 keras </Arguments>
+    </Default>
+    <Option>
+      <DisplayName>FP16</DisplayName>
+      <Identifier>fp16</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Yes</Name>
+          <Value>--fp16</Value>
+        </Entry>
+        <Entry>
+          <Name>No</Name>
+          <Value>--no-fp16</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Mode</DisplayName>
+      <Identifier>Mode</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Training</Name>
+          <Value>--train</Value>
+        </Entry>
+        <Entry>
+          <Name>Inference</Name>
+          <Value>--no-train</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Network</DisplayName>
+      <Identifier>net</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Mobilenet</Name>
+          <Value>mobilenet</Value>
+        </Entry>
+        <Entry>
+          <Name>Inception V3</Name>
+          <Value>inception_v3</Value>
+        </Entry>
+        <Entry>
+          <Name>ResNet 50</Name>
+          <Value>resnet50</Value>
+        </Entry>
+        <Entry>
+          <Name>NASNer Large</Name>
+          <Value>nasnet_large</Value>
+        </Entry>
+        <Entry>
+          <Name>DenseNet 201</Name>
+          <Value>densenet201</Value>
+        </Entry>
+        <Entry>
+          <Name>IMDB LSTM</Name>
+          <Value>imdb_lstm</Value>
+        </Entry>
+        <Entry>
+          <Name>VGG16</Name>
+          <Value>vgg16</Value>
+        </Entry>
+        <Entry>
+          <Name>VGG19</Name>
+          <Value>vgg19</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Device</DisplayName>
+      <Identifier>device</Identifier>
+      <Menu>
+        <Entry>
+          <Name>CPU</Name>
+          <Value>CPU</Value>
+        </Entry>
+        <Entry>
+          <Name>OpenCL</Name>
+          <Value>OPENCL</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

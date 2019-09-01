@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.0.0m3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/pts-sample-photos-2.tar.bz2, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/pts-sample-photos-2.tar.bz2</URL>
+      <MD5>7ff2870cf3fa2299ea5f4e77e5a8535f</MD5>
+      <FileSize>29599729</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

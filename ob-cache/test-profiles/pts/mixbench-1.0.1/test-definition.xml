@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.0m0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Mixbench</Title>
+    <AppVersion>2016-06-06</AppVersion>
+    <Description>A benchmark suite for GPUs on mixed operational intensity kernels.</Description>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, opencl</ExternalDependencies>
+    <RequiresDisplay>TRUE</RequiresDisplay>
+    <EnvironmentSize>1</EnvironmentSize>
+    <ProjectURL>https://github.com/ekondis/mixbench</ProjectURL>
+    <InternalTags>CUDA, OpenCL</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Benchmark</DisplayName>
+      <Identifier>benchmark</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Single Precision</Name>
+          <Value>SPGFLOPS</Value>
+        </Entry>
+        <Entry>
+          <Name>Double Precision</Name>
+          <Value>DPGFLOPS</Value>
+        </Entry>
+        <Entry>
+          <Name>Integer</Name>
+          <Value>GIOPS</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

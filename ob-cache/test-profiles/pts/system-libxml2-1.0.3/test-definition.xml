@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>System Libxml2 Parsing</Title>
+    <Description>This test measures the time to parse a random XML file with libxml2 via xmllint using the streaming API.</Description>
+    <ResultScale>ms</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.3</Version>
+    <SupportedPlatforms>Linux, BSD</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <Maintainer>Jim Kukunas</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Filesize</DisplayName>
+      <Identifier>fsz</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>5 KB</Name>
+          <Value>5K.xml</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>50 KB</Name>
+          <Value>50K.xml</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>100 KB</Name>
+          <Value>100K.xml</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>150 KB</Name>
+          <Value>150K.xml</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>200 KB</Name>
+          <Value>200K.xml</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>250 KB</Name>
+          <Value>250K.xml</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>300 KB</Name>
+          <Value>300K.xml</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>350 KB</Name>
+          <Value>350K.xml</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>400 KB</Name>
+          <Value>400K.xml</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>450 KB</Name>
+          <Value>450K.xml</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>500 KB</Name>
+          <Value>500K.xml</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>550 KB</Name>
+          <Value>550K.xml</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>600 KB</Name>
+          <Value>600K.xml</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>650 KB</Name>
+          <Value>650K.xml</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>700 KB</Name>
+          <Value>700K.xml</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>750 KB</Name>
+          <Value>750K.xml</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>800 KB</Name>
+          <Value>800K.xml</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>850 KB</Name>
+          <Value>850K.xml</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>900 KB</Name>
+          <Value>900K.xml</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>950 KB</Name>
+          <Value>950K.xml</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>1 MB</Name>
+          <Value>1M.xml</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>2 MB</Name>
+          <Value>2M.xml</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>3 MB</Name>
+          <Value>3M.xml</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>112 MB</Name>
+          <Value>112M.xml</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

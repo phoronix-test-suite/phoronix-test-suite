@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/aobench-20180207.zip</URL>
+      <MD5>6d2f7b7b82bd3363b8a5f382252588bc</MD5>
+      <SHA256>0d8fe95cb6a35042e38f87ca25f7c4f53e9d8f7d142a414be84c4439250c7a4e</SHA256>
+      <FileSize>2581</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.4.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/insurgency-pts1-dem.zip</URL>
+      <MD5>3f57709eed3bfd3b725c3ad76ac4d527</MD5>
+      <SHA256>af2f5d5a4e766696cd55e7e2279604dcd560417d75d10f8d4268bf8766a3298f</SHA256>
+      <FileSize>2083698</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

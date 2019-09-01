@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/xmlgen_rnd.tar.bz2</URL>
+      <MD5>3e116eb72cc4ae8f25e29080cf483324</MD5>
+      <FileSize>29113620</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

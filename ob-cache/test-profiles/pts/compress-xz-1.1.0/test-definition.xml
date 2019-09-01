@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.8.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>XZ Compression</Title>
+    <AppVersion>5.2.4</AppVersion>
+    <Description>This test measures the time needed to compress a sample file (an Ubuntu file-system image) using XZ compression.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Compressing ubuntu-16.04.3-server-i386.img, Compression Level 9</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux, BSD, MacOSX, Solaris, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>848</EnvironmentSize>
+    <EnvironmentTestingSize>256</EnvironmentTestingSize>
+    <ProjectURL>https://tukaani.org/xz/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

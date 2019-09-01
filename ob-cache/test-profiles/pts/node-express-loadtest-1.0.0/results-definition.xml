@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>[Mon Oct 01 2018 14:18:24 GMT-0400 (EDT)] INFO Requests per second: #_RESULT_#</OutputTemplate>
+    <LineHint>Requests per second</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>5850 frames 61.7 seconds #_RESULT_# fps #_MIN_RESULT_#/10.6/#_MAX_RESULT_#/4.2 ms</OutputTemplate>
+    <LineHint>fps</LineHint>
+    <ResultBeforeString>fps</ResultBeforeString>
+  </ResultsParser>
+  <ExtraData>
+    <Identifier>com-speeds-frame-latency-totals</Identifier>
+  </ExtraData>
+</PhoronixTestSuite>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.8.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/bullet/bullet-2.81-rev2613.zip</URL>
+      <MD5>854e0bbe95fbe42d0d6ea1c903f679d4</MD5>
+      <SHA256>ee7d7d8dc0762662c78e3909cf07c70620c333ab779ed6a3834d05a16ae7fa60</SHA256>
+      <FileSize>8924563</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

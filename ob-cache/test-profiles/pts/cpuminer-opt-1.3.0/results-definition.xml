@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0m3-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>[2017-12-10 18:07:01] Benchmark: #_RESULT_# MH/s</OutputTemplate>
+    <LineHint>MH/s</LineHint>
+    <MultiplyResultBy>1000</MultiplyResultBy>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>[2017-12-10 18:07:01] Benchmark: #_RESULT_# kH/s</OutputTemplate>
+    <LineHint>kH/s</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

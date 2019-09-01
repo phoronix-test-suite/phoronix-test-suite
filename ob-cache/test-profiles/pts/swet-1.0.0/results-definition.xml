@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0m0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate> 79 ...set ...... .... averages .... 00:00:00.179937171    #_RESULT_#   0.715  59.576 113.110 </OutputTemplate>
+    <LineHint>averages</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

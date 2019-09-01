@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.8.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://http.maxon.net/pub/cinebench/CinebenchR20.zip</URL>
+      <MD5>f6fa0f554cebc22f10d91f1d148710de</MD5>
+      <SHA256>56e55220743fba867ec7dbf192aed8b2470c579cce2be6a09e8143d995612184</SHA256>
+      <FileName>CinebenchR20.zip</FileName>
+      <FileSize>233251748</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

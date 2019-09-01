@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.8.0 (Sokndal)-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>adding stage random write
+dropping thread count to the number of contexts 1
+starting with random write
+file size 1024MB, record size 64KB, depth 64, ios per iteration 8
+max io_submit 8, buffer alignment set to 4KB
+threads 1 files 1 contexts 1 context offset 2MB verification off
+random write on aio-test-file (#_RESULT_# MB/s) 1024.00 MB in 3.84s
+thread 0 random write totals (63.36 MB/s) 1024.00 MB in 16.16s
+Running single thread version</OutputTemplate>
+    <LineHint>random write on aio-test-file</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

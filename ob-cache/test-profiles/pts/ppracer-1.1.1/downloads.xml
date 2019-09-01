@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://download.berlios.de/ppracer/ppracer-data-0.2.3.tar.bz2, http://download2.berlios.de/ppracer/ppracer-data-0.2.3.tar.bz2</URL>
+      <MD5>a0b3f40b2d875a5578a1605c6b6ecfed</MD5>
+      <FileSize>6625815</FileSize>
+    </Package>
+    <Package>
+      <URL>http://download.berlios.de/ppracer/ppracer-0.5alpha.tar.bz2, http://download2.berlios.de/ppracer/ppracer-0.5alpha.tar.bz2</URL>
+      <MD5>f1e2821676906cc827796558c7d45907</MD5>
+      <FileSize>9082047</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

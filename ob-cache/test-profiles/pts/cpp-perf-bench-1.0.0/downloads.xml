@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/CppPerformanceBenchmarks-9.zip</URL>
+      <MD5>f90720072c32333e3134c03991f96c9e</MD5>
+      <SHA256>e28985d0d82dc1148f8eba84f4df18aafe2cf5987f26f78ce850edf461142be4</SHA256>
+      <FileName>CppPerformanceBenchmarks-9.zip</FileName>
+      <FileSize>162259</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

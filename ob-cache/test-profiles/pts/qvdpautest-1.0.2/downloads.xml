@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.2.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/qvdpautest-0.5.1.tar.gz</URL>
+      <MD5>4835a39d4a363cf4e2d971f2f6912a29</MD5>
+      <SHA256>875ae2de3048ff3b1d9551e5ae5ccbf8ac26ae44dd754d00e8372454169944d4</SHA256>
+      <FileSize>8871566</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

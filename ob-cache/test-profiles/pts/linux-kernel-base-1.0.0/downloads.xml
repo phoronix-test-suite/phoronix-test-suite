@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.kernel.org/pub/linux/kernel/v2.6/linux-2.6.32.tar.bz2</URL>
+      <MD5>260551284ac224c3a43c4adac7df4879</MD5>
+      <FileSize>64424138</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.4.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://iozone.org/src/current/iozone3_465.tar</URL>
+      <MD5>c924e5e46fb1cf8145f420e8e57eb954</MD5>
+      <SHA256>2e3d72916e7d7340a7c505fc0c3d28553fcc5ff2daf41d811368e55bd4e6a293</SHA256>
+      <FileName>iozone3_465.tar</FileName>
+      <FileSize>1843200</FileSize>
+      <PlatformSpecific>Linux, MacOSX, Solaris, BSD</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/iozone-windows-1.zip</URL>
+      <MD5>5ce3382b1d4aed2f179dc130c91d1879</MD5>
+      <SHA256>cc95a10cd44bb1aa6a15097f2c2f35330645732ec943e5a89858323880ad9331</SHA256>
+      <FileName>iozone-windows-1.zip</FileName>
+      <FileSize>2925314</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

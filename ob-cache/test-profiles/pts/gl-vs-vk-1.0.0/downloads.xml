@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.2.0m4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/GL_vs_VK-git-20170605.tar.bz2</URL>
+      <MD5>51916388fbbab75b90d69f27322927d9</MD5>
+      <SHA256>8ea2c7e35f56f4bf114810f1580d309c2e5798b852f52ce08a995f52318c3578</SHA256>
+      <FileSize>5080784</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

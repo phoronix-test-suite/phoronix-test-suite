@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>QGears2</Title>
+    <Description>This test runs qgears2, which is a test written by Zack Rusin and is based upon cairogears. This test can see how well different rendering backends perform and uses Qt4.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <Executable>qgears2-run</Executable>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, qt4-development</ExternalDependencies>
+    <EnvironmentSize>0.5</EnvironmentSize>
+    <ProjectURL>http://zrusin.blogspot.com/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Rendering</DisplayName>
+      <Identifier>render-backend</Identifier>
+      <Menu>
+        <Entry>
+          <Name>CPU-based Raster</Name>
+          <Value>-image</Value>
+        </Entry>
+        <Entry>
+          <Name>XRender Extension</Name>
+          <Value>-render</Value>
+        </Entry>
+        <Entry>
+          <Name>OpenGL</Name>
+          <Value>-gl</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test-mode</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Gears</Name>
+          <Value>GEARSFANCY</Value>
+        </Entry>
+        <Entry>
+          <Name>Text</Name>
+          <Value>TEXT</Value>
+        </Entry>
+        <Entry>
+          <Name>Image Scaling</Name>
+          <Value>COMPO</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

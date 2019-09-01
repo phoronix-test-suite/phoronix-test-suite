@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0m4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/vkmark-20180530.tar.xz</URL>
+      <MD5>6c0a643cb53c52dcb1e8badc84862698</MD5>
+      <SHA256>d6978188cf13e9f8e982d1cc564d83e6388c1e14d7bfd94de1c0dd8e122d8f84</SHA256>
+      <FileName>vkmark-20180530.tar.xz</FileName>
+      <FileSize>1532972</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

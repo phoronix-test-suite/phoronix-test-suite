@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.0.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>SMART Disk Self-Report</Title>
+    <Description>This test profile will do a pass/fail report on the disk drive's SMART overall-health self-assessment test result.</Description>
+    <ResultScale>Overall-Health Self-Assessment</ResultScale>
+    <DisplayFormat>PASS_FAIL</DisplayFormat>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Disk</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>smartmontools</ExternalDependencies>
+    <EnvironmentSize>1</EnvironmentSize>
+    <RequiresCoreVersionMin>5921</RequiresCoreVersionMin>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Disk Device</DisplayName>
+      <Identifier>auto-disks</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

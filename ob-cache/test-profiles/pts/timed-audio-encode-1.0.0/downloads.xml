@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/pts-trondheim-wav-3.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/pts-trondheim-wav-3.tar.gz</URL>
+      <MD5>49b8f2f98ed71af16866e2df580e14c3</MD5>
+      <FileSize>78639834</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

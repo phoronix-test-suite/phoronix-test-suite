@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.2.0m0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>PBZIP2 Compression</Title>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <Extends>pts/compress-pbzip2</Extends>
+    <RequiresCoreVersionMin>6100</RequiresCoreVersionMin>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>pbzip2</SystemDependencies>
+  </TestProfile>
+</PhoronixTestSuite>

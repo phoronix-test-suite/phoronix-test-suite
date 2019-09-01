@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.6.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Caffe</Title>
+    <Executable>caffe-benchmark</Executable>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <Extends>pts/caffe</Extends>
+    <Maintainer>Athenas Jimenez</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

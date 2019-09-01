@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.2.0m1 (Khanino)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://softlayer-dal.dl.sourceforge.net/project/libpng/zlib/1.2.7/zlib-1.2.7.tar.bz2</URL>
+      <MD5>2ab442d169156f34c379c968f3f482dd</MD5>
+      <FileSize>505085</FileSize>
+    </Package>
+    <Package>
+      <URL>http://releases.qt-project.org/qt5/5.0.0/single/qt-everywhere-opensource-src-5.0.0.tar.gz</URL>
+      <MD5>1a1b73f913a965f6b0cf02bb820c8a03</MD5>
+      <FileSize>229374296</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

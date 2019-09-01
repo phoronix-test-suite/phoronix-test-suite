@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://www.openssl.org/source/openssl-1.1.1.tar.gz, http://mirrors.ibiblio.org/openssl/source/openssl-1.1.1.tar.gz, http://phoronix-test-suite.com/benchmark-files/openssl-1.1.1.tar.gz, http://ftp.vim.org/pub/ftp/security/openssl/openssl-1.1.1.tar.gz</URL>
+      <MD5>7079eb017429e0ffb9efb42bf80ccb21</MD5>
+      <SHA256>2836875a0f89c03d0fdf483941512613a50cfb421d6fd94b9f41d7279d586a3d</SHA256>
+      <FileName>openssl-1.1.1.tar.gz</FileName>
+      <FileSize>8337920</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.8.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/cp2k/cp2k/releases/download/v6.1.0/cp2k-6.1-Linux-x86_64.ssmp</URL>
+      <MD5>8709f4978bbdfb5737923fa1f1eb8849</MD5>
+      <SHA256>6ca3b5ae8856747671cca16c02028fe6656a52bb3eb9f47b8957318fb4984751</SHA256>
+      <FileName>cp2k-6.1-Linux-x86_64.ssmp</FileName>
+      <FileSize>112514696</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/cp2k/cp2k/releases/download/v6.1.0/cp2k-6.1.tar.bz2</URL>
+      <MD5>573a4de5a0ee2aaabb213e04543cb10f</MD5>
+      <SHA256>af803558e0a6b9e9d9ce8a3ab955ba32bacd179922455424e061c82c9fefa34b</SHA256>
+      <FileName>cp2k-6.1.tar.bz2</FileName>
+      <FileSize>55139278</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.0.0m2 (Suldal)-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Prey</Title>
+    <AppVersion>1.4.119</AppVersion>
+    <Description>This test calculates the average frame-rate within the Prey retail game from 3D Realms. This test requires a valid game key and game files found on the retail CD/DVD.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.2</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Game</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Retail</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+    <ExternalDependencies>libstdcpp5, 32bit-compatibility</ExternalDependencies>
+    <EnvironmentSize>1700</EnvironmentSize>
+    <ProjectURL>http://www.prey.com/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>+set logfile 1 +set in_tty 0 +set sys_VideoRam $VIDEO_MEMORY +set r_mode -1 +timedemoquit pts</Arguments>
+      <PostArguments>+vid_restart</PostArguments>
+    </Default>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>+set r_customWidth $VIDEO_WIDTH +set r_customHeight $VIDEO_HEIGHT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

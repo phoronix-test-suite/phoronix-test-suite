@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.2.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Xsbench OpenCL</Title>
+    <AppVersion>2017-07-06</AppVersion>
+    <Description>Xsbench benchmark in OpenCL via GPUOpen.</Description>
+    <ResultScale>Lookups/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>opencl, build-utilities</ExternalDependencies>
+    <EnvironmentSize>6</EnvironmentSize>
+    <ProjectURL>https://github.com/ANL-CESAR/XSBench</ProjectURL>
+    <InternalTags>OpenCL</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

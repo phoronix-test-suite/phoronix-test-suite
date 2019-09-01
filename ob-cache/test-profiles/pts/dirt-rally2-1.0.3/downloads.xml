@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/dirt-rally-20-proton-prefs-1.zip</URL>
+      <MD5>67493ac0d88dd10c7287342c36e46bbf</MD5>
+      <SHA256>3cea5ec2d1e9d79a78e1a41e149abc747ce074b87a6f019b31f155d62dfcf86c</SHA256>
+      <FileName>dirt-rally-20-proton-prefs-1.zip</FileName>
+      <FileSize>4321</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

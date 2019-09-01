@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.4.0m0 (Forsand)-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>#_RESULT_#</OutputTemplate>
+    <StripFromResult>ms</StripFromResult>
+  </ResultsParser>
+</PhoronixTestSuite>

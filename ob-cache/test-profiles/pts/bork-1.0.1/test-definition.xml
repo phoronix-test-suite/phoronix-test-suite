@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.6.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Bork File Encrypter</Title>
+    <AppVersion>1.4</AppVersion>
+    <Description>Bork is a small, cross-platform file encryption utility. It is written in Java and designed to be included along with the files it encrypts for long-term storage. This test measures the amount of time it takes to encrypt a sample file.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>File Encryption Time</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux, MacOSX, Solaris, BSD</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>java</ExternalDependencies>
+    <EnvironmentSize>0.93</EnvironmentSize>
+    <EnvironmentTestingSize>2048</EnvironmentTestingSize>
+    <ProjectURL>http://www.sourceforge.net/projects/bork</ProjectURL>
+    <InternalTags>Java</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://releases.llvm.org/6.0.0/llvm-6.0.0.src.tar.xz</URL>
+      <MD5>788a11a35fa62eb008019b37187d09d2</MD5>
+      <SHA256>1ff53c915b4e761ef400b803f07261ade637b0c269d99569f18040f3dcee4408</SHA256>
+      <FileSize>25296048</FileSize>
+    </Package>
+    <Package>
+      <URL>http://releases.llvm.org/6.0.0/test-suite-6.0.0.src.tar.xz</URL>
+      <MD5>ae4091e8654f91aa97386dedd4ce21f0</MD5>
+      <SHA256>74e0055efa27b2143415148ee93b817155e6333337d9cadd4cc5d468ad3c0edf</SHA256>
+      <FileSize>167467984</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

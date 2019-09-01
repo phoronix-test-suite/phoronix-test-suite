@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>BenchmarkJSON-36     2000          #_RESULT_# ns/op          17137664 GC-bytes-from-system    1011259 STW-ns/GC      </OutputTemplate>
+    <LineHint>ns/op</LineHint>
+    <ResultBeforeString>ns/op</ResultBeforeString>
+    <StripFromResult>ns/op</StripFromResult>
+  </ResultsParser>
+</PhoronixTestSuite>

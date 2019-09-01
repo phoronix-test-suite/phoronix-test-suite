@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.4.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>results samples= 34  total_time= 0.439485  min_fps= #_MIN_RESULT_#  max_fps= #_MAX_RESULT_#  avg_fps= #_RESULT_#  min_fps_ms= 0.000000  max_fps_ms= inf  avg_fps_ms= 13.504551</OutputTemplate>
+    <LineHint>avg_fps</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

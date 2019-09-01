@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.8.3 (Sokndal)-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>[FINAL] Elapsed Time: 146.311 sec - Sample/sec #_RESULT_#</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

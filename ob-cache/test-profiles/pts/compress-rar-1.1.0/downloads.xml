@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.kernel.org/pub/linux/kernel/v4.x/linux-4.13.tar.gz, http://mirrors.mit.edu/kernel/linux/kernel/v4.x/linux-4.13.tar.gz</URL>
+      <MD5>7e0393558784f7494a50c5219eac14f1</MD5>
+      <SHA256>9511260e17e474183b9c3b2ea601d5af256dde783e14dba4031854eaa98d5089</SHA256>
+      <FileName>linux-4.13.tar.gz</FileName>
+      <FileSize>155489655</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.rarlab.com/rar/rarlinux-x64-5.6.1.tar.gz</URL>
+      <MD5>15e81fad99e9588eb133af60c659a2b3</MD5>
+      <SHA256>e4142ac68034c66ffcd71b220d947fde0ac20d7b47e7e65af353b64d6ac1b927</SHA256>
+      <FileName>rarlinux-x64-5.6.1.tar.gz</FileName>
+      <FileSize>541765</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.rarlab.com/rar/winrar-x64-561.exe</URL>
+      <MD5>33100eaec5cf3ab0bd50f096b7e9f5d0</MD5>
+      <SHA256>7c4f3300ae333f36b2e94e48ac392b88fc7c4562d190994359821c56d4b81859</SHA256>
+      <FileName>winrar-x64-561.exe</FileName>
+      <FileSize>3190008</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.rarlab.com/rar/rarosx-5.6.1.tar.gz</URL>
+      <MD5>0d96c129d18f0081680f851c795d5a6a</MD5>
+      <SHA256>ea7baed80976b68dfe178dec662505251dd2d5efe11d92d3b13b0929d4066af2</SHA256>
+      <FileName>rarosx-5.6.1.tar.gz</FileName>
+      <FileSize>579480</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

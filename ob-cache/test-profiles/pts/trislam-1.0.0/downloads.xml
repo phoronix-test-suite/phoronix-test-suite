@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://graphcomp.com/opengl/trislam.tar.gz</URL>
+      <MD5>2d989b0406048e9fe4baa581a97801fe</MD5>
+      <FileSize>395130</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/trislam-1.patch, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/trislam-1.patch</URL>
+      <MD5>7564ea906a89d91c49e869fb96491a74</MD5>
+      <FileSize>274</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

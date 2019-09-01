@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.2.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>DiRT Showdown</Title>
+    <Description>This is a benchmark of DiRT Showdown on Steam. The test profile assumes you have a Steam account, have Steam installed for the system, and that you own a copy of this game. This automates the process of executing the game and using its built-in benchmark mode.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+    <PreInstallMessage>This test will attempt to install the necessary game using your Steam account. If the test appears hung you may need to manually exit the Steam client.</PreInstallMessage>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.2</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Game</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+    <EnvironmentSize>2</EnvironmentSize>
+    <ProjectURL>http://store.steampowered.com/app/201700/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>$VIDEO_WIDTH $VIDEO_HEIGHT</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Graphics Preset</DisplayName>
+      <Identifier>graphics-preset</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>Low</Name>
+          <Value>1</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>High</Name>
+          <Value>2</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Ultra</Name>
+          <Value>3</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Multi-Sampling</DisplayName>
+      <Identifier>multi-sampling</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>2x MSAA</Name>
+          <Value>2xmsaa</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>4x MSAA</Name>
+          <Value>4xmsaa</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>8x MSAA</Name>
+          <Value>8xmsaa</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

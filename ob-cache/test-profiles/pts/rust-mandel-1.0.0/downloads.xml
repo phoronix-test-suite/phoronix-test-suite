@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/mandel-rust-20181001.zip</URL>
+      <MD5>4e59a852af70f70bbc78907dc1e5885d</MD5>
+      <SHA256>1b5c54189b1e760ecd2b9cc3cf103578b7419f64ab03ab1804585401b1cb865d</SHA256>
+      <FileName>mandel-rust-20181001.zip</FileName>
+      <FileSize>55626</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

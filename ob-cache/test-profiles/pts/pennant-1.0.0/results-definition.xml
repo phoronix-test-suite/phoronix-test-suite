@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>hydro cycle run time=   #_RESULT_#</OutputTemplate>
+    <LineHint>hydro cycle run time</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

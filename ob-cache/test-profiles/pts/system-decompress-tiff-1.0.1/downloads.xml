@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.4.0m0 (Forsand)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://sipi.usc.edu/database/misc.tar.gz</URL>
+      <MD5>2959994695c27d480719ed4819e82232</MD5>
+      <FileSize>12390452</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

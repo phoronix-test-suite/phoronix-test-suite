@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/caffe-git-20181229.tar.xz</URL>
+      <MD5>f1d223f76d9296e9a526d6a8baead782</MD5>
+      <SHA256>e544e01749428331ce712c5b58ec6c5372ed6140b743aed24ea079335f74b3e3</SHA256>
+      <FileName>caffe-git-20181229.tar.xz</FileName>
+      <FileSize>7853396</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

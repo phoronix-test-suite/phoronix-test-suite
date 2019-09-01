@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.4.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Processing time on GPU: #_RESULT_# (ms)</OutputTemplate>
+    <LineHint>Processing time on GPU</LineHint>
+    <ResultScale>ms</ResultScale>
+  </ResultsParser>
+</PhoronixTestSuite>

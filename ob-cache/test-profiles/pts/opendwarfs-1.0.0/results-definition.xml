@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.8.3 (Sokndal)-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Parallel Algorithm Time: #_RESULT_# microseconds</OutputTemplate>
+    <MatchToTestArguments>crc -s 55555 -p 9 -v</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Time consumed(ms): #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>lud -i ../test/dense-linear-algebra/lud/2048.dat</MatchToTestArguments>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Time consumed(ms): #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>csr</MatchToTestArguments>
+  </ResultsParser>
+</PhoronixTestSuite>

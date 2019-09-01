@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.8.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Application Start-up Time</Title>
+    <AppVersion>3.4.0</AppVersion>
+    <Description>This benchmark measures the start-up time of applications when there is some I/O in the background.</Description>
+    <Executable>startuptime-run</Executable>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.4.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Disk</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, libaio-development</ExternalDependencies>
+    <RequiresRoot>TRUE</RequiresRoot>
+    <EnvironmentSize>4</EnvironmentSize>
+    <ProjectURL>https://github.com/Algodev-github/S</ProjectURL>
+    <RequiresCoreVersionMin>6921</RequiresCoreVersionMin>
+    <InternalTags>Responsiveness</InternalTags>
+    <Maintainer>Paolo Valente</Maintainer>
+    <SystemDependencies>awk, dd, fio, time, iostat, egrep</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Background I/O Mix</DisplayName>
+      <Identifier>iomix</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Only Sequential Reads</Name>
+          <Value>r</Value>
+        </Entry>
+        <Entry>
+          <Name>Sequential Reads + Writes</Name>
+          <Value>rw</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Application To Start</DisplayName>
+      <Identifier>command</Identifier>
+      <Menu>
+        <Entry>
+          <Name>GNOME Terminal</Name>
+          <Value>gnome-terminal</Value>
+        </Entry>
+        <Entry>
+          <Name>xterm</Name>
+          <Value>xterm</Value>
+        </Entry>
+        <Entry>
+          <Name>LibreOffice Writer</Name>
+          <Value>lowriter</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Disk Target</DisplayName>
+      <Identifier>auto-disk-mount-points</Identifier>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

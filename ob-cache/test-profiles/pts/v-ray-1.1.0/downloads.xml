@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.8.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <MD5>97fd626a295212b9bd2f9a0c4f603aba</MD5>
+      <SHA256>228b0f192458dfe4ca71fa8255ed97885aea8250bdc6d87c2a9e5570317532eb</SHA256>
+      <FileName>vray-benchmark-4.10.03</FileName>
+      <FileSize>341133711</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <MD5>9c1fb528e682b856f2df7af07f513636</MD5>
+      <SHA256>e2ea4a397a508eda1b1d1c6ffd444826679f877e33680261986c42b5ba5f054a</SHA256>
+      <FileName>vray-benchmark-4.10.03-cli.exe</FileName>
+      <FileSize>271861440</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/Fhourstones.tar.gz</URL>
+      <MD5>020cc5476aba44e4abf343e63fd47fca</MD5>
+      <SHA256>3fcca1fc0685709024f4c738a5a9575ac62ca7867265348ab0f3651b1e60a599</SHA256>
+      <FileSize>11396</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

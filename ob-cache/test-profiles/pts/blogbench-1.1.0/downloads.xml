@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.4.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://download.pureftpd.org/pub/blogbench/blogbench-1.1.tar.gz, http://ftp.ntu.edu.tw/pure-ftpd/misc/blogbench/blogbench-1.1.tar.gz, http://ftp.nchu.edu.tw/Unix/FTP/PureFTPd/misc/blogbench/blogbench-1.1.tar.gz</URL>
+      <MD5>d01ba61e971f126ed9f15613c80546d0</MD5>
+      <SHA256>8cded059bfdbccb7be35bb6a2272ecfdbe3fbea43d53c92ba5572ac24f26c4df</SHA256>
+      <FileName>blogbench-1.1.tar.gz</FileName>
+      <FileSize>137664</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

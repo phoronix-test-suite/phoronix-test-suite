@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.0.0m5-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/askap-benchmarks-20151110.tar.gz</URL>
+      <MD5>5bb53220fddd2b727e57bf530656f15e</MD5>
+      <SHA256>fba2491eafac9faab6934dab6305bc8de51fc742e7854abd35eaaddf0b3f415e</SHA256>
+      <FileSize>115132</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

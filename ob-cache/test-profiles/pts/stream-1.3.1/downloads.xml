@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.6.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/stream-2013-01-17.tar.bz2</URL>
+      <MD5>983401204d59466f74a3c8009ddae43a</MD5>
+      <SHA256>c4d82d3a5dc08633c1feaf2d10c82857d10868b591e2fbff1d3edff8e9e1cf83</SHA256>
+      <FileSize>6274</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

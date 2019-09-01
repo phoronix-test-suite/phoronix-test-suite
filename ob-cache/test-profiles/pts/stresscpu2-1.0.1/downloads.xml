@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://fire-salamander.co.uk/pts-tests/stresscpu2.php</URL>
+      <MD5>3c8dc3e9603ec925cc47ad92b9e7dd6c</MD5>
+      <FileName>stresscpu2.tgz</FileName>
+      <FileSize>733678</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

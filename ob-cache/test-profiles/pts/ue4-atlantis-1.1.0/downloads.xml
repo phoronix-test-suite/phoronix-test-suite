@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.6.0m1 (Dedilovo)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ue4linux.raxxy.com/atlantis_demo.tar.bz2</URL>
+      <MD5>d6d568ccaf5adc3d135055988254108d</MD5>
+      <SHA256>b1e1cba4a2d64780e67063b367026875c87af7660de731c2cb8d849ddc593b8d</SHA256>
+      <FileSize>225466454</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

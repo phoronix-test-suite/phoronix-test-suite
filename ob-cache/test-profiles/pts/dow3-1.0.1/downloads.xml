@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.2.0m4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/dow3-prefs-2.zip</URL>
+      <MD5>530bafd7e59f1883277d317e13b936da</MD5>
+      <SHA256>78497f604c8142e67ce1ddb6b56e586ca423261db155a7eaa9d80bae86ddc6e1</SHA256>
+      <FileSize>8170</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

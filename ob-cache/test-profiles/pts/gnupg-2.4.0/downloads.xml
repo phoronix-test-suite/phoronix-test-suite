@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.8.0m3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://gnupg.org/ftp/gcrypt/gnupg/gnupg-1.4.22.tar.bz2, http://src.fedoraproject.org//repo/pkgs/gnupg/gnupg-1.4.22.tar.bz2/sha512/c03acac0fa55761470bb085d78a44e2b99ebb187e8396cbb031a184b1e40bef2a40c91da07755d1a20610a3daa6aa1eefea2d12a0dbd5a79a45466166419c708/gnupg-1.4.22.tar.bz2, http://mirror1.ku.ac.th/ftp.gnupg.org/gcrypt/gnupg/gnupg-1.4.22.tar.bz2</URL>
+      <MD5>082bda3951a94743e76b83fcf3627547</MD5>
+      <SHA256>9594a24bec63a21568424242e3f198b9d9828dea5ff0c335e47b06f835f930b4</SHA256>
+      <FileSize>3746546</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

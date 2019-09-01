@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.2.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/scikit-learn-20160921.zip</URL>
+      <MD5>ec7e7f5546d523bc48e347069e3b7a85</MD5>
+      <SHA256>dc18d33c7646a6d5dace8e2ef62defdd082490afc52e2f37ae88e3ce9381b525</SHA256>
+      <FileSize>6129814</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

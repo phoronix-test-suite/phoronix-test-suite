@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.6.0m0 (Dedilovo)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/libframetime-20150110.tar.gz</URL>
+      <MD5>1c789d6d927be213b6cd42c8f282dbf0</MD5>
+      <SHA256>9ef8e19542e081c0380084f1bedcaa2354cc97b57e6154af1824c8870fcb315c</SHA256>
+      <FileSize>14300</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

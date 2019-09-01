@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.6.0m1 (Dedilovo)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ue4linux.raxxy.com/landscape_mountains.tar.bz2</URL>
+      <MD5>2c8bad28fc3697d5fd7d34be9fe1bd5c</MD5>
+      <SHA256>7d83208031bfb97701a53a9e4c3429a29b79b470e0fbf0a6197b21a2ce115609</SHA256>
+      <FileSize>446739028</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

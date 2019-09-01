@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ffmpeg.org/releases/ffmpeg-4.0.2.tar.bz2</URL>
+      <MD5>5576e8a22f80b6a336db39808f427cfb</MD5>
+      <SHA256>346c51735f42c37e0712e0b3d2f6476c86ac15863e4445d9e823fe396420d056</SHA256>
+      <FileName>ffmpeg-4.0.2.tar.bz2</FileName>
+      <FileSize>10424065</FileSize>
+      <PlatformSpecific>Linux, BSD, Solaris, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://ffmpeg.zeranoe.com/builds/win64/static/ffmpeg-4.0.2-win64-static.zip</URL>
+      <MD5>88398fd30c3e252a434ad8cd27ea27c6</MD5>
+      <SHA256>2bf3726d7b489f1fe5609e1f9d93d827fd9e9c9d21b829b254a5bae0c3f60ec8</SHA256>
+      <FileName>ffmpeg-4.0.2-win64-static.zip</FileName>
+      <FileSize>65766779</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://samples.ffmpeg.org/V-codecs/h264/HD2-h264.ts</URL>
+      <MD5>69dc5d10fdf92bdb7ea6097857508134</MD5>
+      <FileName>HD2-h264.ts</FileName>
+      <FileSize>303528820</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

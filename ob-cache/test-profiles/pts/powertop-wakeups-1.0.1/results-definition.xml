@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.8.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>#_RESULT_# wakeups/second,  0.0 GPU ops/second, 0.0 VFS ops/sec, 0.0 GFX wakes/sec and 0.6% CPU use</OutputTemplate>
+    <LineBeforeHint>**Power Consumption Summary**</LineBeforeHint>
+  </ResultsParser>
+</PhoronixTestSuite>

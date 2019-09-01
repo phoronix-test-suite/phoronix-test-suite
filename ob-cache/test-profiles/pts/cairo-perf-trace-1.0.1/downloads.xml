@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.8.0m1 (Bygland)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://cairographics.org/releases/cairo-1.10.2.tar.gz, http://pkgs.fedoraproject.org/repo/pkgs/cairo/cairo-1.10.2.tar.gz/f101a9e88b783337b20b2e26dfd26d5f/cairo-1.10.2.tar.gz, http://fossies.org/unix/misc/cairo-1.10.2.tar.gz</URL>
+      <MD5>f101a9e88b783337b20b2e26dfd26d5f</MD5>
+      <FileName>cairo-1.10.2.tar.gz</FileName>
+      <FileSize>23558405</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/cairo-traces-20120129.tar.bz2</URL>
+      <MD5>b3b094f683b3092ed03744afb9aacbae</MD5>
+      <FileName>cairo-traces-20120129.tar.bz2</FileName>
+      <FileSize>22643479</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

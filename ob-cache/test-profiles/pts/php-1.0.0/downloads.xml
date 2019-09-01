@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.4.0m3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ftp.ntu.edu.tw/pub/php/distributions/php-7.2.12.tar.bz2, http://mirror.internode.on.net/pub/php/php-7.2.12.tar.bz2, https://ftp.icm.edu.pl/packages/php/php-7.2.12.tar.bz2</URL>
+      <MD5>df22c804f604bc1b92e68d1bd0c75a3f</MD5>
+      <SHA256>b724c4c20347b6105be109d98cc395a610174e8aadb506c82e8cb645b65ef6b6</SHA256>
+      <FileName>php-7.2.12.tar.bz2</FileName>
+      <FileSize>15029274</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>
