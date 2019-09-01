@@ -170,6 +170,15 @@ class pts_client
 			pts_file_io::mkdir($dir);
 		}
 
+		if(PTS_INTERNAL_OB_CACHE && is_dir(PTS_INTERNAL_OB_CACHE . 'test-profiles'))
+		{
+			pts_file_io::copy(PTS_INTERNAL_OB_CACHE . 'test-profiles', PTS_TEST_PROFILE_PATH, true);
+		}
+		if(PTS_INTERNAL_OB_CACHE && is_dir(PTS_INTERNAL_OB_CACHE . 'test-suites'))
+		{
+			pts_file_io::copy(PTS_INTERNAL_OB_CACHE . 'test-suites', PTS_TEST_SUITE_PATH, true);
+		}
+
 		// Setup ~/.phoronix-test-suite/xsl/
 		pts_file_io::mkdir(PTS_USER_PATH . 'xsl/');
 		copy(PTS_CORE_STATIC_PATH . 'xsl/pts-test-installation-viewer.xsl', PTS_USER_PATH . 'xsl/' . 'pts-test-installation-viewer.xsl');

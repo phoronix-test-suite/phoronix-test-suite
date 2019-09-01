@@ -84,6 +84,7 @@ cp deploy/*-systemd/*.service $DESTDIR$INSTALL_PREFIX/../usr/lib/systemd/system/
 
 rm -rf $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/pts-core
 cp -r pts-core $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/
+cp -r ob-cache $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/
 cp -r deploy $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/
 rm -f $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/pts-core/static/phoronix-test-suite.desktop
 rm -f $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/pts-core/static/phoronix-test-suite-launcher.desktop

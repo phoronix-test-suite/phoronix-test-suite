@@ -105,13 +105,20 @@ class pts_file_io
 
 		return $filesize;
 	}
-	public static function copy($source, $dest)
+	public static function copy($source, $dest, $no_overwrite = false)
 	{
 		$success = false;
 
 		if(is_file($source))
 		{
-			$success = copy($source, $dest);
+			if($no_overwrite && is_file($dest . basename($source)))
+			{
+				$success = false;
+			}
+			else
+			{
+				$success = copy($source, $dest);
+			}
 		}
 		else if(is_link($source))
 		{
@@ -131,7 +138,7 @@ class pts_file_io
 				{
 					continue;
 				}
-				self::copy($source . '/' . $entry, $dest . '/' . $entry);
+				self::copy($source . '/' . $entry, $dest . '/' . $entry, $no_overwrite);
 			}
 
 			$dir->close();
