@@ -170,6 +170,7 @@ class pts_client
 			pts_file_io::mkdir($dir);
 		}
 
+		// Copy files (without overwrite) from internal OB program cache if present, to help those without Internet
 		if(PTS_INTERNAL_OB_CACHE && is_dir(PTS_INTERNAL_OB_CACHE . 'test-profiles'))
 		{
 			pts_file_io::copy(PTS_INTERNAL_OB_CACHE . 'test-profiles', PTS_TEST_PROFILE_PATH, true);
