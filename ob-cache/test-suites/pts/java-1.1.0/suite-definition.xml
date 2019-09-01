@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Java</Title>
+    <Version>1.1.0</Version>
+    <TestType>System</TestType>
+    <Description>The Java test suite contains all Java-based test profiles within the Phoronix Test Suite.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/sunflow</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/bork</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/java-scimark2</Test>
+    <Arguments>TEST_FFT</Arguments>
+    <Description>FFT Performance</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/java-scimark2</Test>
+    <Arguments>TEST_SOR</Arguments>
+    <Description>SOR Performance</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/java-scimark2</Test>
+    <Arguments>TEST_MONTE</Arguments>
+    <Description>Monte Carlo Performance</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/java-scimark2</Test>
+    <Arguments>TEST_COMPOSITE</Arguments>
+    <Description>Composite Performance</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/dacapobench</Test>
+    <Arguments>eclipse</Arguments>
+    <Description>Java Test: Eclipse</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/dacapobench</Test>
+    <Arguments>h2</Arguments>
+    <Description>Java Test: H2</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/dacapobench</Test>
+    <Arguments>jython</Arguments>
+    <Description>Java Test: Jython</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/dacapobench</Test>
+    <Arguments>tradebeans</Arguments>
+    <Description>Java Test: Tradebeans</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/dacapobench</Test>
+    <Arguments>tradesoap</Arguments>
+    <Description>Java Test: Tradesoap</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/java-gradle-perf</Test>
+    <Arguments>TEST_REACTOR</Arguments>
+    <Description>Gradle Build: Reactor</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/java-jmh</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+</PhoronixTestSuite>

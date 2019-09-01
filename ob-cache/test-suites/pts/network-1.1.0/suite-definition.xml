@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Networking Test Suite</Title>
+    <Version>1.1.0</Version>
+    <TestType>Network</TestType>
+    <Description>The network test suite consists of tests designed to test the computer's networking performance.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/sockperf-1.0.0</Test>
+    <Arguments>under-load</Arguments>
+    <Description>Test: Latency Under Load</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/sockperf-1.0.0</Test>
+    <Arguments>ping-pong</Arguments>
+    <Description>Test: Latency Ping Pong</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/sockperf-1.0.0</Test>
+    <Arguments>throughput</Arguments>
+    <Description>Test: Throughput</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr-1.0.4</Test>
+    <Arguments>-c localhost -p tcp -t b -n 1</Arguments>
+    <Description>Server Address: localhost - Protocol: TCP - Test: Bandwidth - Threads: 1</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr-1.0.4</Test>
+    <Arguments>-c localhost -p tcp -t c -n 1</Arguments>
+    <Description>Server Address: localhost - Protocol: TCP - Test: Connections/s - Threads: 1</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr-1.0.4</Test>
+    <Arguments>-c localhost -p tcp -t l -n 1</Arguments>
+    <Description>Server Address: localhost - Protocol: TCP - Test: Latency - Threads: 1</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr-1.0.4</Test>
+    <Arguments>-c localhost -p udp -t b -n 1</Arguments>
+    <Description>Server Address: localhost - Protocol: UDP - Test: Bandwidth - Threads: 1</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr-1.0.4</Test>
+    <Arguments>-c localhost -p udp -t c -n 1</Arguments>
+    <Description>Server Address: localhost - Protocol: UDP - Test: Connections/s - Threads: 1</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr-1.0.4</Test>
+    <Arguments>-c localhost -p udp -t l -n 1</Arguments>
+    <Description>Server Address: localhost - Protocol: UDP - Test: Latency - Threads: 1</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr-1.0.4</Test>
+    <Arguments>-c localhost -p http -t b -n 1</Arguments>
+    <Description>Server Address: localhost - Protocol: HTTP - Test: Bandwidth - Threads: 1</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr-1.0.4</Test>
+    <Arguments>-c localhost -p http -t c -n 1</Arguments>
+    <Description>Server Address: localhost - Protocol: HTTP - Test: Connections/s - Threads: 1</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr-1.0.4</Test>
+    <Arguments>-c localhost -p http -t l -n 1</Arguments>
+    <Description>Server Address: localhost - Protocol: HTTP - Test: Latency - Threads: 1</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/netperf-1.0.3</Test>
+    <Arguments>-H localhost -t TCP_STREAM -l 10</Arguments>
+    <Description>Server: localhost - Test: TCP Stream - Server To Client - Duration: 10 Seconds</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/netperf-1.0.3</Test>
+    <Arguments>-H localhost -t TCP_MAERTS -l 10</Arguments>
+    <Description>Server: localhost - Test: TCP Stream - Client To Server - Duration: 10 Seconds</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/netperf-1.0.3</Test>
+    <Arguments>-H localhost -t UDP_STREAM -b 10G -l 10</Arguments>
+    <Description>Server: localhost - Test: UDP Stream - Server To Client - 10G - Duration: 10 Seconds</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/netperf-1.0.3</Test>
+    <Arguments>-H localhost -t TCP_RR -l 10</Arguments>
+    <Description>Server: localhost - Test: TCP Request Response - Duration: 10 Seconds</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/netperf-1.0.3</Test>
+    <Arguments>-H localhost -t UDP_RR -l 10</Arguments>
+    <Description>Server: localhost - Test: UDP Request Response - Duration: 10 Seconds</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/netperf-1.0.3</Test>
+    <Arguments>-H localhost -t TCP_SENDFILE -l 10</Arguments>
+    <Description>Server: localhost - Test: TCP Send File - Duration: 10 Seconds</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/iperf-1.0.2</Test>
+    <Arguments>-c localhost -p 5555 -t 10  -P 20</Arguments>
+    <Description>Server Address: localhost - Server Port: 5555 - Duration: 10 Seconds - Test: TCP - Parallel: 20</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/iperf-1.0.2</Test>
+    <Arguments>-c localhost -p 5555 -t 10 -u -P 20</Arguments>
+    <Description>Server Address: localhost - Server Port: 5555 - Duration: 10 Seconds - Test: UDP - Parallel: 20</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/iperf-1.0.2</Test>
+    <Arguments>-c localhost -p 5555 -t 10 -u -b 100m -P 20</Arguments>
+    <Description>Server Address: localhost - Server Port: 5555 - Duration: 10 Seconds - Test: UDP - 100Mbit Objective - Parallel: 20</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/iperf-1.0.2</Test>
+    <Arguments>-c localhost -p 5555 -t 10 -u -b 1000m -P 20</Arguments>
+    <Description>Server Address: localhost - Server Port: 5555 - Duration: 10 Seconds - Test: UDP - 1000Mbit Objective - Parallel: 20</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+</PhoronixTestSuite>

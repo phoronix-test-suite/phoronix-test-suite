@@ -1,0 +1,5 @@
+The files in this directory are optional, providing a static cache of test profiles / test suites available via OpenBenchmarking.org.
+
+Patches to this directory will not be accepted but test profile changes should be submitted via https://github.com/phoronix-test-suite/test-profiles/
+
+This "ob-cache" is intended to help those running the Phoronix Test Suite behind firewalls / offline where they may not be able to query OpenBenchmarking.org for obtaining test data.

@@ -1,0 +1,174 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Server Motherboard</Title>
+    <Version>1.2.1</Version>
+    <TestType>System</TestType>
+    <Description>A collection of motherboard tests for a server environment.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/apache</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/nginx</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/apache-siege</Test>
+    <Arguments>-c200</Arguments>
+    <Description>Concurrent Users: 200</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/apache-siege</Test>
+    <Arguments>-c250</Arguments>
+    <Description>Concurrent Users: 250</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/mysqlslap</Test>
+    <Arguments>--concurrency=64</Arguments>
+    <Description>Clients: 64</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/pgbench</Test>
+    <Arguments>BUFFER_TEST NORMAL_LOAD READ_WRITE</Arguments>
+    <Description>Scaling: Buffer Test - Test: Normal Load - Mode: Read Write</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/pgbench</Test>
+    <Arguments>BUFFER_TEST NORMAL_LOAD READ_ONLY</Arguments>
+    <Description>Scaling: Buffer Test - Test: Normal Load - Mode: Read Only</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/pgbench</Test>
+    <Arguments>BUFFER_TEST HEAVY_CONTENTION READ_WRITE</Arguments>
+    <Description>Scaling: Buffer Test - Test: Heavy Contention - Mode: Read Write</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/pgbench</Test>
+    <Arguments>BUFFER_TEST HEAVY_CONTENTION READ_ONLY</Arguments>
+    <Description>Scaling: Buffer Test - Test: Heavy Contention - Mode: Read Only</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/mcperf</Test>
+    <Arguments>--method=get</Arguments>
+    <Description>Method: Get</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/mcperf</Test>
+    <Arguments>--method=set</Arguments>
+    <Description>Method: Set</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/mcperf</Test>
+    <Arguments>--method=delete</Arguments>
+    <Description>Method: Delete</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/mcperf</Test>
+    <Arguments>--method=add</Arguments>
+    <Description>Method: Add</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/mcperf</Test>
+    <Arguments>--method=replace</Arguments>
+    <Description>Method: Replace</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/mcperf</Test>
+    <Arguments>--method=append</Arguments>
+    <Description>Method: Append</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/mcperf</Test>
+    <Arguments>--method=prepend</Arguments>
+    <Description>Method: Prepend</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/redis</Test>
+    <Arguments>-t set</Arguments>
+    <Description>Test: SET</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/redis</Test>
+    <Arguments>-t get</Arguments>
+    <Description>Test: GET</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/redis</Test>
+    <Arguments>-t lpush</Arguments>
+    <Description>Test: LPUSH</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/redis</Test>
+    <Arguments>-t lpop</Arguments>
+    <Description>Test: LPOP</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/redis</Test>
+    <Arguments>-t sadd</Arguments>
+    <Description>Test: SADD</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/phpbench</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/npb</Test>
+    <Arguments>ep.B</Arguments>
+    <Description>Test / Class: EP.B</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/npb</Test>
+    <Arguments>is.C</Arguments>
+    <Description>Test / Class: IS.C</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/npb</Test>
+    <Arguments>lu.A</Arguments>
+    <Description>Test / Class: LU.A</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/npb</Test>
+    <Arguments>mg.B</Arguments>
+    <Description>Test / Class: MG.B</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/stream</Test>
+    <Arguments>Copy</Arguments>
+    <Description>Type: Copy</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/stream</Test>
+    <Arguments>Scale</Arguments>
+    <Description>Type: Scale</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/stream</Test>
+    <Arguments>Add</Arguments>
+    <Description>Type: Add</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/stream</Test>
+    <Arguments>Triad</Arguments>
+    <Description>Type: Triad</Description>
+  </Execute>
+</PhoronixTestSuite>

@@ -1,0 +1,257 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>OpenCL</Title>
+    <Version>1.1.0</Version>
+    <TestType>System</TestType>
+    <Description>A collection of OpenCL tests.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/juliagpu</Test>
+    <Arguments>0 1 rendering_kernel.cl $VIDEO_WIDTH $VIDEO_HEIGHT</Arguments>
+    <Description>OpenCL Device: GPU - Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/mandelgpu</Test>
+    <Arguments>0 1 rendering_kernel_float4.cl $VIDEO_WIDTH $VIDEO_HEIGHT 4096</Arguments>
+    <Description>OpenCL Device: GPU - Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/smallpt-gpu</Test>
+    <Arguments>1 256 rendering_kernel.cl $VIDEO_WIDTH $VIDEO_HEIGHT scenes/caustic.scn</Arguments>
+    <Description>OpenCL Device: GPU - Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Scene: Caustic</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/smallpt-gpu</Test>
+    <Arguments>1 256 rendering_kernel.cl $VIDEO_WIDTH $VIDEO_HEIGHT scenes/caustic3.scn</Arguments>
+    <Description>OpenCL Device: GPU - Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Scene: Caustic3</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/smallpt-gpu</Test>
+    <Arguments>1 256 rendering_kernel.cl $VIDEO_WIDTH $VIDEO_HEIGHT scenes/cornell.scn</Arguments>
+    <Description>OpenCL Device: GPU - Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Scene: Cornell</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/mandelbulbgpu</Test>
+    <Arguments>0 1 rendering_kernel.cl $VIDEO_WIDTH $VIDEO_HEIGHT</Arguments>
+    <Description>OpenCL Device: GPU - Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/luxmark</Test>
+    <Arguments>--mode=BENCHMARK_OCL_GPU --scene=LUXBALL_HDR</Arguments>
+    <Description>OpenCL Device: GPU - Scene: Luxball HDR</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/luxmark</Test>
+    <Arguments>--mode=BENCHMARK_OCL_GPU --scene=MICROPHONE</Arguments>
+    <Description>OpenCL Device: GPU - Scene: Microphone</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/luxmark</Test>
+    <Arguments>--mode=BENCHMARK_OCL_GPU --scene=HOTEL</Arguments>
+    <Description>OpenCL Device: GPU - Scene: Hotel</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/shoc</Test>
+    <Arguments>-opencl -benchmark BusSpeedDownload</Arguments>
+    <Description>Target: OpenCL - Benchmark: Bus Speed Download</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/shoc</Test>
+    <Arguments>-opencl -benchmark BusSpeedReadback</Arguments>
+    <Description>Target: OpenCL - Benchmark: Bus Speed Readback</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/shoc</Test>
+    <Arguments>-opencl -benchmark MaxFlops</Arguments>
+    <Description>Target: OpenCL - Benchmark: Max SP Flops</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/shoc</Test>
+    <Arguments>-opencl -benchmark DeviceMemory</Arguments>
+    <Description>Target: OpenCL - Benchmark: Texture Read Bandwidth</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/shoc</Test>
+    <Arguments>-opencl -benchmark FFT</Arguments>
+    <Description>Target: OpenCL - Benchmark: FFT SP</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/shoc</Test>
+    <Arguments>-opencl -benchmark MD5Hash</Arguments>
+    <Description>Target: OpenCL - Benchmark: MD5 Hash</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/shoc</Test>
+    <Arguments>-opencl -benchmark Triad</Arguments>
+    <Description>Target: OpenCL - Benchmark: Triad</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/cl-mem</Test>
+    <Arguments>READ</Arguments>
+    <Description>Benchmark: Read</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/cl-mem</Test>
+    <Arguments>WRITE</Arguments>
+    <Description>Benchmark: Write</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/cl-mem</Test>
+    <Arguments>COPY</Arguments>
+    <Description>Benchmark: Copy</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/clpeak</Test>
+    <Arguments>--global-bandwidth</Arguments>
+    <Description>OpenCL Test: Global Memory Bandwidth</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/clpeak</Test>
+    <Arguments>--compute-sp</Arguments>
+    <Description>OpenCL Test: Single-Precision Float</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/clpeak</Test>
+    <Arguments>--compute-dp</Arguments>
+    <Description>OpenCL Test: Double-Precision Double</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/clpeak</Test>
+    <Arguments>--compute-integer</Arguments>
+    <Description>OpenCL Test: Integer Compute INT</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/clpeak</Test>
+    <Arguments>--transfer-bandwidth #write</Arguments>
+    <Description>OpenCL Test: Transfer Bandwidth enqueueWriteBuffer</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/clpeak</Test>
+    <Arguments>--transfer-bandwidth #read</Arguments>
+    <Description>OpenCL Test: Transfer Bandwidth enqueueReadBuffer</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/clpeak</Test>
+    <Arguments>--kernel-latency</Arguments>
+    <Description>OpenCL Test: Kernel Latency</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/rodinia</Test>
+    <Arguments>OCL_LAVAMD</Arguments>
+    <Description>Test: OpenCL LavaMD</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/rodinia</Test>
+    <Arguments>OCL_LEUKOCYTE</Arguments>
+    <Description>Test: OpenCL Leukocyte</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/rodinia</Test>
+    <Arguments>OCL_HEARTWALL</Arguments>
+    <Description>Test: OpenCL Heartwall</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/rodinia</Test>
+    <Arguments>OCL_MYOCYTE</Arguments>
+    <Description>Test: OpenCL Myocyte</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/rodinia</Test>
+    <Arguments>OCL_PARTICLEFILTER</Arguments>
+    <Description>Test: OpenCL Particle Filter</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/parboil</Test>
+    <Arguments>bfs opencl_base 1M</Arguments>
+    <Description>Test: OpenCL BFS</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/parboil</Test>
+    <Arguments>tpacf opencl_base large</Arguments>
+    <Description>Test: OpenCL TPACF</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/parboil</Test>
+    <Arguments>lbm opencl_base long</Arguments>
+    <Description>Test: OpenCL LBM</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/parboil</Test>
+    <Arguments>mri-gridding opencl_base small</Arguments>
+    <Description>Test: OpenCL MRI Gridding</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/parboil</Test>
+    <Arguments>histo opencl_base large</Arguments>
+    <Description>Test: OpenCL Histo</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/blender</Test>
+    <Arguments>-b ../bmw27_gpu.blend -o output.test -x 1 -F JPEG -f 1  OPENCL</Arguments>
+    <Description>Blend File: BMW27 - Compute: OpenCL</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/blender</Test>
+    <Arguments>-b ../barbershop_interior_gpu.blend -o output.test -x 1 -F JPEG -f 1  OPENCL</Arguments>
+    <Description>Blend File: Barbershop - Compute: OpenCL</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>system/darktable</Test>
+    <Arguments>bench.SRW output.jpg --core -d opencl -d perf</Arguments>
+    <Description>Test: Boat - Acceleration: OpenCL</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>system/darktable</Test>
+    <Arguments>masskrug.NEF output.jpg --core -d opencl -d perf</Arguments>
+    <Description>Test: Masskrug - Acceleration: OpenCL</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>system/darktable</Test>
+    <Arguments>server_room.NEF output.jpg --core -d opencl -d perf</Arguments>
+    <Description>Test: Server Room - Acceleration: OpenCL</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>system/darktable</Test>
+    <Arguments>server-rack.dng output.jpg --core -d opencl -d perf</Arguments>
+    <Description>Test: Server Rack - Acceleration: OpenCL</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+</PhoronixTestSuite>

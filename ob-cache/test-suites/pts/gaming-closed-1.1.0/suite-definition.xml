@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Closed-Source Gaming</Title>
+    <Version>1.1.0</Version>
+    <TestType>System</TestType>
+    <Description>The gaming test suite is made up of all game tests that are available for free download but are not under an open-source license, this does include free demos for retail games.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/unigine-super-1.0.5</Test>
+    <Arguments>-video_width $VIDEO_WIDTH -video_height $VIDEO_HEIGHT -video_fullscreen 1 -shaders_quality 0 -textures_quality 0 -video_app opengl</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Mode: Fullscreen - Quality: Low - Renderer: OpenGL</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/unigine-super-1.0.5</Test>
+    <Arguments>-video_width $VIDEO_WIDTH -video_height $VIDEO_HEIGHT -video_fullscreen 1 -shaders_quality 1 -textures_quality 1 -video_app opengl</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Mode: Fullscreen - Quality: Medium - Renderer: OpenGL</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/unigine-super-1.0.5</Test>
+    <Arguments>-video_width $VIDEO_WIDTH -video_height $VIDEO_HEIGHT -video_fullscreen 1 -shaders_quality 2 -textures_quality 2 -video_app opengl</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Mode: Fullscreen - Quality: High - Renderer: OpenGL</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/unigine-super-1.0.5</Test>
+    <Arguments>-video_width $VIDEO_WIDTH -video_height $VIDEO_HEIGHT -video_fullscreen 1 -shaders_quality 3 -textures_quality 2 -video_app opengl</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Mode: Fullscreen - Quality: Ultra - Renderer: OpenGL</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/unigine-heaven-1.6.4</Test>
+    <Arguments>-video_width $VIDEO_WIDTH -video_height $VIDEO_HEIGHT -video_fullscreen 1 -video_app opengl</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Mode: Fullscreen - Renderer: OpenGL</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/unigine-valley-1.1.7</Test>
+    <Arguments>-video_width $VIDEO_WIDTH -video_height $VIDEO_HEIGHT -video_fullscreen 1 -video_app opengl</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Mode: Fullscreen - Renderer: OpenGL</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+</PhoronixTestSuite>

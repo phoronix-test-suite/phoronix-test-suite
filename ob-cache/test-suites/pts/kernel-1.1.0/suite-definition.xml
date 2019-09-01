@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Kernel</Title>
+    <Version>1.1.0</Version>
+    <TestType>System</TestType>
+    <Description>This suite consists of tests that look at different aspects of the system's kernel performance.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/apache</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/pgbench</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-7zip</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-pbzip2</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/encode-mp3</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/x264</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/openssl</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/c-ray</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/disk</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/mafft</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/hackbench</Test>
+    <Arguments>1 process</Arguments>
+    <Description>Count: 1 - Type: Process</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/hackbench</Test>
+    <Arguments>1 thread</Arguments>
+    <Description>Count: 1 - Type: Thread</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/hackbench</Test>
+    <Arguments>4 process</Arguments>
+    <Description>Count: 4 - Type: Process</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/hackbench</Test>
+    <Arguments>4 thread</Arguments>
+    <Description>Count: 4 - Type: Thread</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/hackbench</Test>
+    <Arguments>16 process</Arguments>
+    <Description>Count: 16 - Type: Process</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/hackbench</Test>
+    <Arguments>16 thread</Arguments>
+    <Description>Count: 16 - Type: Thread</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p tcp -t c -n 8</Arguments>
+    <Description>Server Address: localhost - Protocol: TCP - Test: Connections/s - Threads: 8</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p udp -t c -n 8</Arguments>
+    <Description>Server Address: localhost - Protocol: UDP - Test: Connections/s - Threads: 8</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p http -t c -n 8</Arguments>
+    <Description>Server Address: localhost - Protocol: HTTP - Test: Connections/s - Threads: 8</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/schbench</Test>
+    <Arguments>-m 8 -t 4</Arguments>
+    <Description>Message Threads: 8 - Workers Per Message Thread: 4</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/stress-ng</Test>
+    <Arguments>--memcpy 0</Arguments>
+    <Description>Test: Memory Copying</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/stress-ng</Test>
+    <Arguments>--fork 0</Arguments>
+    <Description>Test: Forking</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/stress-ng</Test>
+    <Arguments>--msg 0</Arguments>
+    <Description>Test: System V Message Passing</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/stress-ng</Test>
+    <Arguments>--sem 0</Arguments>
+    <Description>Test: Semaphores</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/stress-ng</Test>
+    <Arguments>--sock 0</Arguments>
+    <Description>Test: Socket Activity</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/stress-ng</Test>
+    <Arguments>--switch 0</Arguments>
+    <Description>Test: Context Switching</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/osbench</Test>
+    <Arguments>create_files.exe target</Arguments>
+    <Description>Test: Create Files</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/osbench</Test>
+    <Arguments>create_processes.exe</Arguments>
+    <Description>Test: Create Processes</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/osbench</Test>
+    <Arguments>create_threads.exe</Arguments>
+    <Description>Test: Create Threads</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/osbench</Test>
+    <Arguments>launch_programs.exe</Arguments>
+    <Description>Test: Launch Programs</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/osbench</Test>
+    <Arguments>mem_alloc.exe</Arguments>
+    <Description>Test: Memory Allocations</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+</PhoronixTestSuite>

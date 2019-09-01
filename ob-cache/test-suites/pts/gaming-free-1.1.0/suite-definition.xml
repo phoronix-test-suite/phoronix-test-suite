@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Free Software Gaming</Title>
+    <Version>1.1.0</Version>
+    <TestType>System</TestType>
+    <Description>The gaming test suite is made up of all game tests that are open-source.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/nexuiz</Test>
+    <Arguments>+vid_width $VIDEO_WIDTH +vid_height $VIDEO_HEIGHT</Arguments>
+    <Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/warsow</Test>
+    <Arguments>+vid_customwidth $VIDEO_WIDTH +vid_customheight $VIDEO_HEIGHT +vid_restart</Arguments>
+    <Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/openarena-1.5.5</Test>
+    <Arguments>+set r_customWidth 1920 +set r_customHeight 1080</Arguments>
+    <Description>Resolution: 1920 x 1080</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/xonotic-1.5.1</Test>
+    <Arguments>+vid_width $VIDEO_WIDTH +vid_height $VIDEO_HEIGHT +exec effects-low.cfg</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Effects Quality: Low</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/xonotic-1.5.1</Test>
+    <Arguments>+vid_width $VIDEO_WIDTH +vid_height $VIDEO_HEIGHT +exec effects-high.cfg</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Effects Quality: High</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/xonotic-1.5.1</Test>
+    <Arguments>+vid_width $VIDEO_WIDTH +vid_height $VIDEO_HEIGHT +exec effects-ultra.cfg</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Effects Quality: Ultra</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/xonotic-1.5.1</Test>
+    <Arguments>+vid_width $VIDEO_WIDTH +vid_height $VIDEO_HEIGHT +exec effects-ultimate.cfg</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Effects Quality: Ultimate</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/supertuxkart-1.5.2</Test>
+    <Arguments>--screensize=$VIDEO_WIDTHx$VIDEO_HEIGHT --fullscreen --enable-glow --enable-bloom --disable-light-shaft --disable-dof --disable-gi --enable-gfx --enable-motion-blur --enable-mlaa --enable-ssao --enable-ibl --disable-hd-textures --enable-dynamic-lights --anisotropic=4 --shadows=0 --numkarts=4 --track=candela_city</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Mode: Fullscreen - Graphics Effects: Medium - Karts: 4 - Scene: Candela City</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/supertuxkart-1.5.2</Test>
+    <Arguments>--screensize=$VIDEO_WIDTHx$VIDEO_HEIGHT --fullscreen --enable-glow --enable-bloom --disable-light-shaft --disable-dof --disable-gi --enable-gfx --enable-motion-blur --enable-mlaa --enable-ssao --enable-ibl --disable-hd-textures --enable-dynamic-lights --anisotropic=4 --shadows=0 --numkarts=4 --track=cocoa_temple</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Mode: Fullscreen - Graphics Effects: Medium - Karts: 4 - Scene: Cocoa Temple</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/supertuxkart-1.5.2</Test>
+    <Arguments>--screensize=$VIDEO_WIDTHx$VIDEO_HEIGHT --fullscreen --enable-glow --enable-bloom --disable-light-shaft --disable-dof --disable-gi --enable-gfx --enable-motion-blur --enable-mlaa --enable-ssao --enable-ibl --disable-hd-textures --enable-dynamic-lights --anisotropic=4 --shadows=0 --numkarts=4 --track=gran_paradiso_island</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Mode: Fullscreen - Graphics Effects: Medium - Karts: 4 - Scene: Gran Paradiso Island</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/supertuxkart-1.5.2</Test>
+    <Arguments>--screensize=$VIDEO_WIDTHx$VIDEO_HEIGHT --fullscreen --enable-glow --enable-bloom --enable-light-shaft --enable-dof --disable-gi --enable-gfx --enable-motion-blur --enable-mlaa --enable-ssao --enable-ibl --enable-hd-textures --enable-dynamic-lights --anisotropic=16 --shadows=512 --numkarts=4 --track=candela_city</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Mode: Fullscreen - Graphics Effects: High - Karts: 4 - Scene: Candela City</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/supertuxkart-1.5.2</Test>
+    <Arguments>--screensize=$VIDEO_WIDTHx$VIDEO_HEIGHT --fullscreen --enable-glow --enable-bloom --enable-light-shaft --enable-dof --disable-gi --enable-gfx --enable-motion-blur --enable-mlaa --enable-ssao --enable-ibl --enable-hd-textures --enable-dynamic-lights --anisotropic=16 --shadows=512 --numkarts=4 --track=cocoa_temple</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Mode: Fullscreen - Graphics Effects: High - Karts: 4 - Scene: Cocoa Temple</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/supertuxkart-1.5.2</Test>
+    <Arguments>--screensize=$VIDEO_WIDTHx$VIDEO_HEIGHT --fullscreen --enable-glow --enable-bloom --enable-light-shaft --enable-dof --disable-gi --enable-gfx --enable-motion-blur --enable-mlaa --enable-ssao --enable-ibl --enable-hd-textures --enable-dynamic-lights --anisotropic=16 --shadows=512 --numkarts=4 --track=gran_paradiso_island</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Mode: Fullscreen - Graphics Effects: High - Karts: 4 - Scene: Gran Paradiso Island</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/supertuxkart-1.5.2</Test>
+    <Arguments>--screensize=$VIDEO_WIDTHx$VIDEO_HEIGHT --fullscreen --enable-glow --enable-bloom --enable-light-shaft --enable-dof --enable-gi --enable-gfx --enable-motion-blur --enable-mlaa --enable-ssao --enable-ibl --enable-hd-textures --enable-dynamic-lights --anisotropic=16 --shadows=1024 --numkarts=4 --track=candela_city</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Mode: Fullscreen - Graphics Effects: Ultimate - Karts: 4 - Scene: Candela City</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/supertuxkart-1.5.2</Test>
+    <Arguments>--screensize=$VIDEO_WIDTHx$VIDEO_HEIGHT --fullscreen --enable-glow --enable-bloom --enable-light-shaft --enable-dof --enable-gi --enable-gfx --enable-motion-blur --enable-mlaa --enable-ssao --enable-ibl --enable-hd-textures --enable-dynamic-lights --anisotropic=16 --shadows=1024 --numkarts=4 --track=cocoa_temple</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Mode: Fullscreen - Graphics Effects: Ultimate - Karts: 4 - Scene: Cocoa Temple</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/supertuxkart-1.5.2</Test>
+    <Arguments>--screensize=$VIDEO_WIDTHx$VIDEO_HEIGHT --fullscreen --enable-glow --enable-bloom --enable-light-shaft --enable-dof --enable-gi --enable-gfx --enable-motion-blur --enable-mlaa --enable-ssao --enable-ibl --enable-hd-textures --enable-dynamic-lights --anisotropic=16 --shadows=1024 --numkarts=4 --track=gran_paradiso_island</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Mode: Fullscreen - Graphics Effects: Ultimate - Karts: 4 - Scene: Gran Paradiso Island</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/tesseract-1.1.0</Test>
+    <Arguments>-w$VIDEO_WIDTH -h$VIDEO_HEIGHT</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+</PhoronixTestSuite>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Gaming</Title>
+    <Version>1.0.1</Version>
+    <TestType>System</TestType>
+    <Description>The gaming test suite is made up of common game tests except those that rely upon commercial/paid licenses.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/gaming-free</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/gaming-closed</Test>
+  </Execute>
+</PhoronixTestSuite>
