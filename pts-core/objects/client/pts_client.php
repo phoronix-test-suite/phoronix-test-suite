@@ -178,6 +178,10 @@ class pts_client
 		{
 			pts_file_io::copy(PTS_INTERNAL_OB_CACHE . 'test-suites', PTS_TEST_SUITE_PATH, true);
 		}
+		if(PTS_INTERNAL_OB_CACHE && is_dir(PTS_INTERNAL_OB_CACHE . 'openbenchmarking.org'))
+		{
+			pts_file_io::copy(PTS_INTERNAL_OB_CACHE . 'openbenchmarking.org', PTS_OPENBENCHMARKING_SCRATCH_PATH, true);
+		}
 
 		// Setup ~/.phoronix-test-suite/xsl/
 		pts_file_io::mkdir(PTS_USER_PATH . 'xsl/');
