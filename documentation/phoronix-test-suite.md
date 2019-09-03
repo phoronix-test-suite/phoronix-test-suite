@@ -1258,7 +1258,7 @@ This static snapshot is provided in the *ob-cache/* Phoronix Test Suite folder. 
 
 This local cache does provide current and previous versions of test profiles to allow users to continue running older versions of tests/results even when upgrading their Phoronix Test Suite offline copy.
 
-Even with the local cache, there still is the need for obtaining any necessary files needed to run the selected test(s). For those wishing to optimize that workflow for offline usage, see the existing *phoronix-test-suite make-download-cache* sub-command documentation.
+Even with the local cache, there still is the need for obtaining any necessary files needed to run the selected test(s). For those wishing to optimize that workflow for offline usage, see the existing *phoronix-test-suite make-download-cache* sub-command documentation. The *phoronix-test-suite make-openbenchmarking-cache* sub-command may also be desirable depending upon setup.
 
 
 ## Disabling OpenBenchmarking.org Result Upload Functionality
