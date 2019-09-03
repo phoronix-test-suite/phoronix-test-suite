@@ -20,10 +20,10 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class stress_run implements pts_option_interface
+class stress_batch_run implements pts_option_interface
 {
 	const doc_section = 'Testing';
-	const doc_description = 'This option will run the passed tests/suites in the multi-process stress-testing mode. The stress-run mode will not produce a result file but is rather intended for running multiple test profiles concurrently to stress / burn-in the system. The number of tests to run concurrently can be toggled via the PTS_CONCURRENT_TEST_RUNS environment variable and by default is set to a value of 2.';
+	const doc_description = 'This option will run the passed tests/suites in the multi-process stress-testing mode while behaving by the Phoronix Test Suite batch testing characteristics. The stress-batch-run mode is similar to the stress-run command except that for any tests passed to it will run all combinations of the options rather than prompting the user for the values to be selected.';
 
 	public static function argument_checks()
 	{
@@ -33,7 +33,15 @@ class stress_run implements pts_option_interface
 	}
 	public static function run($to_run)
 	{
-		pts_stress_run_manager::stress_run($to_run);
+		pts_stress_run_manager::stress_run($to_run, array(
+			'UploadResults' => false,
+			'SaveResults' => false,
+			'PromptForTestDescription' => false,
+			'RunAllTestCombinations' => true, // run all combos
+			'PromptSaveName' => false,
+			'PromptForTestIdentifier' => false,
+			'OpenBrowser' => false
+			));
 	}
 }
 

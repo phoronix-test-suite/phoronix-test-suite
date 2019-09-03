@@ -34,6 +34,75 @@ class pts_stress_run_manager extends pts_test_run_manager
 	private $stress_logger;
 	private $stress_log_event_call = false;
 
+	public static function stress_run($to_run, $batch_mode = false)
+	{
+		if($batch_mode == false)
+		{
+			$batch_mode = array(
+				'UploadResults' => false,
+				'SaveResults' => false,
+				'PromptForTestDescription' => false,
+				'RunAllTestCombinations' => false,
+				'PromptSaveName' => false,
+				'PromptForTestIdentifier' => false,
+				'OpenBrowser' => false
+				);
+		}
+		$test_run_manager = new pts_stress_run_manager($batch_mode);
+
+		$tests_to_run_concurrently = 2;
+
+		echo PHP_EOL . pts_client::cli_just_bold('STRESS-RUN ENVIRONMENT VARIABLES:') . PHP_EOL;
+
+		if(($j = getenv('PTS_CONCURRENT_TEST_RUNS')) && is_numeric($j) && $j > 1)
+		{
+			$tests_to_run_concurrently = $j;
+			echo PHP_EOL . 'PTS_CONCURRENT_TEST_RUNS set; running ' . $tests_to_run_concurrently . ' tests concurrently.' . PHP_EOL . PHP_EOL;
+		}
+		else
+		{
+			echo PHP_EOL . pts_client::cli_just_bold('PTS_CONCURRENT_TEST_RUNS:') . ' Set the PTS_CONCURRENT_TEST_RUNS environment variable to specify how many tests should be run concurrently during the stress-run process. If not specified, defaults to 2.' . PHP_EOL . PHP_EOL;
+		}
+
+		// Run the actual tests
+		$total_loop_time = pts_client::read_env('TOTAL_LOOP_TIME');
+		if($total_loop_time == 'infinite')
+		{
+			$total_loop_time = 'infinite';
+			echo PHP_EOL . 'TOTAL_LOOP_TIME set; running tests in an infinite loop until otherwise triggered' . PHP_EOL . PHP_EOL;
+		}
+		else if($total_loop_time && is_numeric($total_loop_time) && $total_loop_time > 1)
+		{
+			echo PHP_EOL . 'TOTAL_LOOP_TIME set; running tests for ' . $total_loop_time . ' minutes' . PHP_EOL . PHP_EOL;
+		}
+		else
+		{
+			echo PHP_EOL . pts_client::cli_just_bold('TOTAL_LOOP_TIME:') . ' Set the TOTAL_LOOP_TIME environment variable if wishing to specify (in minutes) how long to run the stress-run process.' . PHP_EOL . PHP_EOL;
+			$total_loop_time = false;
+		}
+		//pts_test_installer::standard_install($to_run);
+		/*
+		if(count($to_run) < $tests_to_run_concurrently)
+		{
+			echo PHP_EOL . 'More tests must be specified in order to run ' . $tests_to_run_concurrently . ' tests concurrently.';
+			return false;
+		}
+		*/
+
+		if($test_run_manager->initial_checks($to_run, 'SHORT') == false)
+		{
+			return false;
+		}
+
+		// Load the tests to run
+		if($test_run_manager->load_tests_to_run($to_run) == false)
+		{
+			return false;
+		}
+
+		//$test_run_manager->pre_execution_process();
+		$test_run_manager->multi_test_stress_run_execute($tests_to_run_concurrently, $total_loop_time);
+	}
 	public function multi_test_stress_run_execute($tests_to_run_concurrently = 3, $total_loop_time = false)
 	{
 		ini_set('memory_limit','8192M'); // XXX testing

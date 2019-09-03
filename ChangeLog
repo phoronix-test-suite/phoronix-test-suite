@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+pts-core: Add stress-batch-run sub-command for behavior like stress-run but no prompts for test options
+
 Phoronix Test Suite 9.0.0 Milestone 3
 3 September 2019
 
