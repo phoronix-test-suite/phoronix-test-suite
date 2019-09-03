@@ -84,7 +84,7 @@ class pts_md_template
 					$this->md .= PHP_EOL . '> ' . str_replace("\n", "  \n> ", htmlentities($value)) . PHP_EOL . PHP_EOL;
 					break;
 				case 'p':
-					$this->md .= trim($this->html_text_interpret($dom_item)) . PHP_EOL;
+					$this->md .= trim($this->html_text_interpret($dom_item)) . PHP_EOL . PHP_EOL;
 					break;
 				case 'hr':
 					$this->md .= PHP_EOL . '---' . PHP_EOL;
