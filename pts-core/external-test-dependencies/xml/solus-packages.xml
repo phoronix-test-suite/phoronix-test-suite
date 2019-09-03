@@ -81,6 +81,10 @@
 			<PackageName>gfortran</PackageName>
 		</Package>
 		<Package>
+			<GenericName>openmpi-development</GenericName>
+			<PackageName>openmpi</PackageName>
+		</Package>
+		<Package>
 			<GenericName>glew</GenericName>
 			<PackageName>glew-devel</PackageName>
 		</Package>
@@ -284,6 +288,18 @@
 		<Package>
 			<GenericName>wine</GenericName>
 			<PackageName>wine</PackageName>
+		</Package>
+		<Package>
+			<GenericName>node-npm</GenericName>
+			<PackageName>nodejs</PackageName>
+		</Package>
+		<Package>
+			<GenericName>hdf5</GenericName>
+			<PackageName>hdf5</PackageName>
+		</Package>
+		<Package>
+			<GenericName>libxml2</GenericName>
+			<PackageName>libxml2</PackageName>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
