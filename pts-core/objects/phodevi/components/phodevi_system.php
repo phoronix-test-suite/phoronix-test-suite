@@ -1117,6 +1117,8 @@ class phodevi_system extends phodevi_device_interface
 				{
 					$vendor = $os_release['NAME'];
 				}
+
+				$vendor = str_replace('é', 'e', $vendor);
 			}
 
 			if(($x = stripos($vendor, ' for ')) !== false)
