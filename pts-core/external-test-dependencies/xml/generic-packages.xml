@@ -540,7 +540,7 @@
 			<GenericName>hdf5</GenericName>
 			<Title>HDF5</Title>
 			<PossibleNames>libhdf5-dev, hdf5</PossibleNames>
-			<FileCheck>/usr/include/hdf5/</FileCheck>
+			<FileCheck>/usr/include/hdf5/ OR hdf5.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>libxml2</GenericName>

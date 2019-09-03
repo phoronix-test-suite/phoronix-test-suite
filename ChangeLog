@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 pts-core: Add AllowResultUploadsToOpenBenchmarking user config option
 pts-core: Split OpenBenchmarking.org upload code into pts_openbenchmarking_upload file and allow it to be removed if wanting to strip out upload support
+pts-core: Add "ob-cache" local cache of tests/suites to help offline use-cases
 pts-core: Add hdf5 to the external dependency list
 pts-core: Add libxml2 to the external dependency list
 
