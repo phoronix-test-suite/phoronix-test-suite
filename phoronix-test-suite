@@ -290,7 +290,6 @@ fi
 # Run The Phoronix Test Suite
 PTS_EXIT_STATUS=8
 while [ $PTS_EXIT_STATUS -eq 8 ]; do
-	echo "$PTS_PREPEND_LAUNCH $PHP_BIN pts-core/phoronix-test-suite.php $@"
 	$PTS_PREPEND_LAUNCH $PHP_BIN $PTS_DIR/pts-core/phoronix-test-suite.php $@
 	PTS_EXIT_STATUS=$?
 done
