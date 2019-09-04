@@ -464,6 +464,8 @@ class pts_test_result_parser
 			}
 			$is_pass_fail_test = in_array($tr->test_profile->get_display_format(), array('PASS_FAIL', 'MULTI_PASS_FAIL'));
 			$is_numeric_check = !$is_pass_fail_test;
+			$min_result = null;
+			$max_result = null;
 			$min_test_result = false;
 			$max_test_result = false;
 			$test_result = self::parse_result_process_entry($tr, $log_file, $pts_test_arguments, $extra_arguments, $prefix, $entry, $is_pass_fail_test, $is_numeric_check, $all_parser_entries, $min_test_result, $max_test_result);
