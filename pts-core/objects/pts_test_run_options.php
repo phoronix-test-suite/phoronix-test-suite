@@ -516,6 +516,29 @@ class pts_test_run_options
 					$option_values[] = phodevi::read_property('cpu', 'physical-core-count');
 				}
 				break;
+			case 'ram-capacity':
+				if(PTS_IS_CLIENT == false)
+				{
+					return;
+				}
+
+				$option_names = array();
+				$option_values = array();
+
+				for($i = 32; $i < phodevi::read_property('memory', 'capacity'); $i *= 2)
+				{
+					if($i >= 1024)
+					{
+						$pretty = round($i / 1024) . 'GB';
+					}
+					else
+					{
+						$pretty = $i . 'MB';
+					}
+					$option_names[] = $pretty;
+					$option_values[] = $i;
+				}
+				break;
 			case 'renderer':
 				if(PTS_IS_CLIENT == false)
 				{
