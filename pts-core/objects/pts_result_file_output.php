@@ -438,6 +438,22 @@ class pts_result_file_output
 					$current_line_length = strlen($result_line);
 					$result_line .= str_repeat('=', max(0, round(($val / $max_value) * ($terminal_width - $current_line_length))));
 				}
+				else if($result_object->test_profile->get_display_format() == 'PASS_FAIL')
+				{
+					if($stylize_output && PTS_IS_CLIENT)
+					{
+						switch($val)
+						{
+							case 'PASS':
+								$val = pts_client::cli_colored_text($val, 'green', true);
+								break;
+							case 'FAIL':
+								$val = pts_client::cli_colored_text($val, 'red', true);
+								break;
+						}
+					}
+					$result_line .= $val;
+				}
 
 				if($stylize_output && PTS_IS_CLIENT)
 				{
