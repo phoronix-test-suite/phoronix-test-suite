@@ -263,6 +263,9 @@ class pts_render
 			case 'MULTI_PASS_FAIL':
 				$graph = new pts_graph_passfail($result_object, $result_file, $extra_attributes);
 				break;
+			case 'PIE_CHART':
+				$graph = new pts_graph_pie_chart($result_object, $result_file, $extra_attributes);
+				break;
 			case 'IMAGE_COMPARISON':
 				$graph = new pts_graph_iqc($result_object, $result_file, $extra_attributes);
 				break;
