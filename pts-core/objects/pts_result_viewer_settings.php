@@ -130,10 +130,6 @@ class pts_result_viewer_settings
 			{
 				$analyze_checkboxes['Graph Settings'][] = array('nbp', 'No Box Plots');
 			}
-			$analyze_checkboxes['Graph Settings'][] = array('vb', 'Prefer Vertical Bar Graphs');
-			$analyze_checkboxes['Statistics'][] = array('rol', 'Remove Outliers Before Calculating Averages');
-			$analyze_checkboxes['Statistics'][] = array('gtb', 'Graph Values Of All Runs (Box Plot)');
-			$analyze_checkboxes['Statistics'][] = array('gtl', 'Graph Values Of All Runs (Line Graph)');
 
 			if($result_file->is_multi_way_comparison())
 			{
@@ -158,10 +154,11 @@ class pts_result_viewer_settings
 			$t .= '<br /><br />Highlight/Baseline Result: ' .  self::html_select_menu('hgv', 'hgv', null, array_merge(array(null), $result_file->get_system_identifiers()), false);
 			$analyze_options .= $t . '<br /><input name="submit" value="Refresh Results" type="submit" /></form>';
 		}
-		else
-		{
-			$analyze_options = 'Add more than one test system to expose result analysis options.';
-		}
+		$analyze_checkboxes['Graph Settings'][] = array('vb', 'Prefer Vertical Bar Graphs');
+		$analyze_checkboxes['Statistics'][] = array('rol', 'Remove Outliers Before Calculating Averages');
+		$analyze_checkboxes['Statistics'][] = array('gtb', 'Graph Values Of All Runs (Box Plot)');
+		$analyze_checkboxes['Statistics'][] = array('gtl', 'Graph Values Of All Runs (Line Graph)');
+
 		return $analyze_options;
 	}
 	public static function process_helper_html(&$request, &$result_file, &$extra_attributes)
