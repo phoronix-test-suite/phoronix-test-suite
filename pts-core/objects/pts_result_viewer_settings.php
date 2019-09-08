@@ -133,6 +133,7 @@ class pts_result_viewer_settings
 			$analyze_checkboxes['Graph Settings'][] = array('vb', 'Prefer Vertical Bar Graphs');
 			$analyze_checkboxes['Statistics'][] = array('rol', 'Remove Outliers Before Calculating Averages');
 			$analyze_checkboxes['Statistics'][] = array('gtb', 'Graph Values Of All Runs (Box Plot)');
+			$analyze_checkboxes['Statistics'][] = array('gtl', 'Graph Values Of All Runs (Line Graph)');
 
 			if($result_file->is_multi_way_comparison())
 			{
@@ -330,6 +331,11 @@ var_dump($extra_attributes['highlight_graph_values']);
 		if(self::check_request_for_var($request, 'gtb'))
 		{
 			$extra_attributes['graph_render_type'] = 'HORIZONTAL_BOX_PLOT';
+		}
+		else if(self::check_request_for_var($request, 'gtl'))
+		{
+			$extra_attributes['graph_render_type'] = 'LINE_GRAPH';
+			$extra_attributes['graph_raw_values'] = true;
 		}
 		if(self::check_request_for_var($request, 'rol'))
 		{

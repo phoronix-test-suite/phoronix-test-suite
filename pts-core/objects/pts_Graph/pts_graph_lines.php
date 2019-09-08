@@ -39,10 +39,25 @@ class pts_graph_lines extends pts_graph_core
 					echo $val;
 				}
 				*/
+				$values = null;
 
-				$values = pts_strings::comma_explode($buffer_item->get_result_value());
+				if(isset($extra_attributes['graph_raw_values']) && $extra_attributes['graph_raw_values'])
+				{
+					$values = pts_strings::colon_explode($buffer_item->get_result_raw());
+					$raw_values = $values;
+					if(empty($values))
+					{
+						$values = null;
+					}
+				}
+
+				if($values == null)
+				{
+					$values = pts_strings::comma_explode($buffer_item->get_result_value());
+					$raw_values = pts_strings::comma_explode($buffer_item->get_result_raw());
+				}
 				$buffer_item->reset_result_value($values);
-				$buffer_item->reset_raw_value(pts_strings::comma_explode($buffer_item->get_result_raw()));
+				$buffer_item->reset_raw_value($raw_values);
 				$max_count = max($max_count, count($values));
 			}
 		}
