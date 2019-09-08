@@ -117,6 +117,7 @@ class pts_result_viewer_settings
 		{
 			$analyze_checkboxes['Statistics'][] = array('shm', 'Show Overall Harmonic Mean(s)');
 			$analyze_checkboxes['Statistics'][] = array('sgm', 'Show Overall Geometric Mean');
+			$analyze_checkboxes['Statistics'][] = array('swl', 'Show Wins / Losses Counts (Pie Chart)');
 			$analyze_checkboxes['Statistics'][] = array('nor', 'Normalize Results');
 			$analyze_checkboxes['Graph Settings'][] = array('ftr', 'Force Line Graphs (Where Applicable)');
 			$analyze_checkboxes['Graph Settings'][] = array('scalar', 'Convert To Scalar (Where Applicable)');
@@ -261,6 +262,14 @@ class pts_result_viewer_settings
 		{
 			$overview_geometric = pts_result_file_analyzer::generate_geometric_mean_result($result_file);
 			$result_file->add_result($overview_geometric);
+		}
+		if(self::check_request_for_var($request, 'swl'))
+		{
+			$overview_wins_losses = pts_result_file_analyzer::generate_wins_losses_results($result_file);
+			foreach($overview_wins_losses as $g)
+			{
+				$result_file->add_result($g);
+			}
 		}
 		if(self::check_request_for_var($request, 'sor'))
 		{

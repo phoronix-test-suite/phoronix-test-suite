@@ -22,6 +22,105 @@
 
 class pts_result_file_analyzer
 {
+	public static function generate_wins_losses_results($result_file)
+	{
+		$results = null;
+		$result_file_identifiers_count = $result_file->get_system_count();
+		$wins = array();
+		$losses = array();
+		$tests_counted = 0;
+
+		$possible_evaluate_result_count = 0;
+		foreach($result_file->get_result_objects() as $result)
+		{
+			if($result->test_profile->get_identifier() == null)
+			{
+				continue;
+			}
+			$possible_evaluate_result_count++;
+			if($result->test_result_buffer->get_count() < 2 || $result->test_result_buffer->get_count() < floor($result_file_identifiers_count / 2))
+			{
+				continue;
+			}
+
+			$tests_counted++;
+			$winner = $result->get_result_first();
+			$loser = $result->get_result_last();
+
+			if(!isset($wins[$winner]))
+			{
+				$wins[$winner] = 1;
+			}
+			else
+			{
+				$wins[$winner]++;
+			}
+
+			if(!isset($losses[$loser]))
+			{
+				$losses[$loser] = 1;
+			}
+			else
+			{
+				$losses[$loser]++;
+			}
+		}
+
+		if(empty($wins) || empty($losses))
+		{
+			return;
+		}
+
+		arsort($wins);
+		arsort($losses);
+
+		$test_profile = new pts_test_profile();
+		$test_result = new pts_test_result($test_profile);
+		$test_result->test_profile->set_test_title('Number Of First Place Finishes');
+		$test_result->test_profile->set_identifier(null);
+		$test_result->test_profile->set_version(null);
+		$test_result->test_profile->set_result_proportion(null);
+		$test_result->test_profile->set_display_format('PIE_CHART');
+		$test_result->test_profile->set_result_scale('Wins');
+		///$test_result->test_profile->set_result_proportion('HIB');
+		$test_result->set_used_arguments_description('Wins - ' . $tests_counted . ' Tests');
+		//$test_result->set_used_arguments('Geometric-Mean');
+		$test_result->test_result_buffer = new pts_test_result_buffer();
+
+		foreach($wins as $identifier => $count)
+		{
+			$test_result->test_result_buffer->add_test_result($identifier, $count);
+		}
+		if(count($wins) > 1)
+		{
+			$results[] = $test_result;
+		}
+
+		$test_profile = new pts_test_profile();
+		$test_result = new pts_test_result($test_profile);
+		$test_result->test_profile->set_test_title('Number Of Last Place Finishes');
+		$test_result->test_profile->set_identifier(null);
+		$test_result->test_profile->set_version(null);
+		$test_result->test_profile->set_result_proportion(null);
+		$test_result->test_profile->set_display_format('PIE_CHART');
+		$test_result->test_profile->set_result_scale('Losses');
+		///$test_result->test_profile->set_result_proportion('HIB');
+		$test_result->set_used_arguments_description('Losses - ' . $tests_counted . ' Tests');
+		//$test_result->set_used_arguments('Geometric-Mean');
+		$test_result->test_result_buffer = new pts_test_result_buffer();
+
+		foreach($losses as $identifier => $count)
+		{
+			$test_result->test_result_buffer->add_test_result($identifier, $count);
+		}
+
+		if(count($losses) > 1)
+		{
+			$results[] = $test_result;
+		}
+
+		return $results;
+	}
 	public static function generate_geometric_mean_result($result_file, $do_sort = false)
 	{
 		$results = array();
