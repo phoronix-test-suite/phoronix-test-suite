@@ -355,6 +355,18 @@ class pts_openbenchmarking_client
 
 		return ($a > $b) ? -1 : 1;
 	}
+	public static function compare_test_last_updated($a, $b)
+	{
+		$a = $a['last_updated'];
+		$b = $b['last_updated'];
+
+		if($a == $b)
+		{
+			return 0;
+		}
+
+		return ($a > $b) ? -1 : 1;
+	}
 	public static function most_popular_tests($limit = 10)
 	{
 		$only_show_available_cached_tests = pts_network::internet_support_available() == false;
@@ -392,6 +404,50 @@ class pts_openbenchmarking_client
 
 		uasort($tests, array('pts_openbenchmarking_client', 'compare_test_json_download_counts'));
 		return array_slice($tests, 0, $limit);
+	}
+	public static function new_and_recently_updated_tests($days_old_limit = 14, $test_limit = 10)
+	{
+		$only_show_available_cached_tests = pts_network::internet_support_available() == false;
+		$tests = array();
+
+		$cutoff_time = time() - ($days_old_limit * 86400);
+		foreach(pts_openbenchmarking::available_tests(false, false, false, false, $only_show_available_cached_tests) as $identifier)
+		{
+			$repo = substr($identifier, 0, strpos($identifier, '/'));
+			$id = substr($identifier, strlen($repo) + 1);
+			$repo_index = pts_openbenchmarking::read_repository_index($repo);
+			if($repo_index['tests'][$id]['last_updated'] < $cutoff_time)
+			{
+				// Don't show tests not actively maintained
+				continue;
+			}
+			if((!empty($repo_index['tests'][$id]['supported_platforms']) && !in_array(phodevi::os_under_test(), $repo_index['tests'][$id]['supported_platforms'])) || empty($repo_index['tests'][$id]['title']))
+			{
+				// Don't show unsupported tests
+				continue;
+			}
+			if(!empty($repo_index['tests'][$id]['status']) && $repo_index['tests'][$id]['status'] != 'Verified')
+			{
+				// Don't show unsupported tests
+				continue;
+			}
+			if($repo_index['tests'][$id]['test_type'] == 'Graphics' && !phodevi::is_display_server_active())
+			{
+				// Don't show graphics tests if no display active
+				continue;
+
+			}
+
+			$tests[$id] = $repo_index['tests'][$id];
+
+			if(count($tests) == $test_limit)
+			{
+				break;
+			}
+		}
+		uasort($tests, array('pts_openbenchmarking_client', 'compare_test_last_updated'));
+
+		return $tests;
 	}
 }
 

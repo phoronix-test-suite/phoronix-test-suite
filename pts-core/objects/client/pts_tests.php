@@ -391,19 +391,26 @@ class pts_tests
 
 		if($supports_passing_a_test)
 		{
-			$recommended_tests = array_keys(pts_openbenchmarking_client::most_popular_tests(20));
+			$tests_to_show = array_keys(pts_openbenchmarking_client::new_and_recently_updated_tests(14, 20));
+			$tests_to_show_title = 'New + Updated Tests';
 
-			if(count($recommended_tests) > 3)
+			if(count($tests_to_show) < 2)
 			{
-				$longest_test = strlen(pts_strings::find_longest_string($recommended_tests)) + 3;
+				$tests_to_show = array_keys(pts_openbenchmarking_client::most_popular_tests(20));
+				$tests_to_show_title = 'Popular Tests';
+			}
+
+			if(count($tests_to_show) > 3)
+			{
+				$longest_test = strlen(pts_strings::find_longest_string($tests_to_show)) + 3;
 				$terminal_width = pts_client::terminal_width();
 				$tests_per_line = floor($terminal_width / $longest_test);
-				shuffle($recommended_tests);
-				$recommended_tests = array_slice($recommended_tests, 0, min(count($recommended_tests), $tests_per_line * 2 -1));
+				shuffle($tests_to_show);
+				$tests_to_show = array_slice($tests_to_show, 0, min(count($tests_to_show), $tests_per_line * 2 -1));
 
-				echo pts_client::cli_just_bold('Popular Tests:') . PHP_EOL;
+				echo pts_client::cli_just_bold($tests_to_show_title . ':') . PHP_EOL;
 				$i = 0;
-				foreach($recommended_tests as $test)
+				foreach($tests_to_show as $test)
 				{
 					if($i % $tests_per_line == 0)
 					{
@@ -412,7 +419,7 @@ class pts_tests
 					echo $test . str_repeat(' ', $longest_test - strlen($test));
 
 					$i++;
-					if($i % $tests_per_line == 0 || $i == count($recommended_tests))
+					if($i % $tests_per_line == 0 || $i == count($tests_to_show))
 					{
 						echo PHP_EOL;
 					}
