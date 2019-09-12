@@ -95,15 +95,18 @@ abstract class pts_graph_core
 		}
 
 		$this->update_graph_dimensions(self::$c['graph']['width'], self::$c['graph']['height'], true);
-		if(isset($extra_attributes['force_tracking_line_graph']))
+		if(!isset($extra_attributes['skip_multi_way_comparison_check']))
 		{
-			// Phoromatic result tracker
-			// TODO: investigate this check as it could cause problems... bad assumption to make
-			$this->i['is_multi_way_comparison'] = true;
-		}
-		else if(isset($result_object->test_result_buffer))
-		{
-			$this->i['is_multi_way_comparison'] = pts_render::multi_way_identifier_check($result_object->test_result_buffer->get_identifiers());
+			if(isset($extra_attributes['force_tracking_line_graph']))
+			{
+				// Phoromatic result tracker
+				// TODO: investigate this check as it could cause problems... bad assumption to make
+				$this->i['is_multi_way_comparison'] = true;
+			}
+			else if(isset($result_object->test_result_buffer))
+			{
+				$this->i['is_multi_way_comparison'] = pts_render::multi_way_identifier_check($result_object->test_result_buffer->get_identifiers());
+			}
 		}
 
 		$this->i['graph_version'] = 'Phoronix Test Suite ' . PTS_VERSION;

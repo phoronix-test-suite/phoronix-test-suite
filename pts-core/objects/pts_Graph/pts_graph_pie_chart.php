@@ -23,9 +23,10 @@
 
 class pts_graph_pie_chart extends pts_graph_core
 {
-	public function __construct(&$result_object, &$result_file = null)
+	public function __construct(&$result_object, &$result_file = null, $extra_attributes = null)
 	{
-		parent::__construct($result_object, $result_file);
+		$extra_attributes['skip_multi_way_comparison_check'] = true;
+		parent::__construct($result_object, $result_file, $extra_attributes);
 		$this->i['iveland_view'] = true;
 		$this->i['graph_value_type'] = 'ABSTRACT';
 		$this->i['hide_graph_identifiers'] = false;
@@ -77,7 +78,6 @@ class pts_graph_pie_chart extends pts_graph_core
 		$key_line_height = 14;
 		$this->i['top_start'] += 12;
 		$c_y = $this->i['top_start'] - $key_line_height - 5;
-		//$this->reset_paint_index();
 
 		for($i = 0; $i < $key_count; $i++)
 		{
