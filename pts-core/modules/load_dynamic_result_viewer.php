@@ -128,6 +128,19 @@ class load_dynamic_result_viewer extends pts_module_interface
 
 		if(!phodevi::is_windows())
 		{
+			if(empty($ak))
+			{
+				$access_key = null;
+			}
+			else if(function_exists('hash'))
+			{
+				$access_key = trim(hash('sha256', trim($ak)));
+			}
+			else
+			{
+				$access_key = trim(sha1(trim($ak)));
+			}
+
 			$descriptorspec = array(
 			0 => array('pipe', 'r'),
 			1 => array('pipe', 'w'),
@@ -135,7 +148,7 @@ class load_dynamic_result_viewer extends pts_module_interface
 			);
 			$cwd = getcwd();
 			$env = array(
-			'PTS_VIEWER_ACCESS_KEY' => (empty($ak) ? null : trim(hash('sha256', trim($ak)))),
+			'PTS_VIEWER_ACCESS_KEY' => $access_key,
 			'PTS_VIEWER_RESULT_PATH' => PTS_SAVE_RESULTS_PATH,
 			'PTS_VIEWER_PTS_PATH' => getenv('PTS_DIR'),
 			);

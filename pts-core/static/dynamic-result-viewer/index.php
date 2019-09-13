@@ -82,7 +82,14 @@ ini_set('memory_limit','2048M');
 // Authenticate user and set session variables
 if(isset($_POST['access_key']))
 {
-	$_SESSION['AccessKey'] = trim(hash('sha256', trim($_POST['access_key'])));
+	if(function_exists('hash'))
+	{
+		$_SESSION['AccessKey'] = trim(hash('sha256', trim($_POST['access_key'])));
+	}
+	else
+	{
+		$_SESSION['AccessKey'] = trim(sha1(trim($_POST['access_key'])));
+	}
 }
 
 if(VIEWER_ACCESS_KEY != null && (!isset($_SESSION['AccessKey']) || $_SESSION['AccessKey'] != VIEWER_ACCESS_KEY)) { ?>
