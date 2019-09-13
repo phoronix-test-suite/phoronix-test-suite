@@ -100,6 +100,7 @@ class load_dynamic_result_viewer extends pts_module_interface
 		$remote_access = is_numeric($remote_access) && $remote_access > 1 ? $remote_access : false;
 		$blocked_ports = array(2049, 3659, 4045, 6000, 9000);
 
+		$access_limited_to_localhost = true;
 		if(pts_config::read_bool_config('PhoronixTestSuite/Options/ResultViewer/LimitAccessToLocalHost', 'TRUE'))
 		{
 			$server_ip = 'localhost';
@@ -108,6 +109,7 @@ class load_dynamic_result_viewer extends pts_module_interface
 		{
 			// Allows server to be web accessible
 			$server_ip = '0.0.0.0';
+			$access_limited_to_localhost = false;
 		}
 		if(($fp = fsockopen('127.0.0.1', $remote_access, $errno, $errstr, 5)) != false)
 		{
@@ -140,6 +142,11 @@ class load_dynamic_result_viewer extends pts_module_interface
 
 			self::$process = proc_open(getenv('PHP_BIN') . ' -S ' . $server_ip . ':' . $web_port . ' -t ' . PTS_CORE_PATH . 'static/dynamic-result-viewer/ ', $descriptorspec, self::$pipes, $cwd, $env);
 			pts_client::$web_result_viewer_active = $web_port;
+
+			if(pts_network::get_local_ip() && !$access_limited_to_localhost)
+			{
+				echo pts_client::cli_just_bold('Result Viewer: http://' . pts_network::get_local_ip() . ':' . $web_port);
+			}
 		}
 	}
 }
