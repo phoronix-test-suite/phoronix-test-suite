@@ -21,7 +21,10 @@
 
 
 error_reporting(E_ALL);
-session_start();
+if(function_exists('session_start'))
+{
+	session_start();
+}
 
 define('CURRENT_URI', $_SERVER['REQUEST_URI']);
 define('WEB_URL_PATH', rtrim(dirname($_SERVER['SCRIPT_NAME']), '/') . '/');
@@ -686,6 +689,9 @@ input[type="checkbox"]:checked + label
 <div id="footer"><hr /><br /><a href="https://www.phoronix-test-suite.com/">Phoronix Test Suite</a> <?php echo PTS_VERSION; ?> - Generated <?php echo date('j F Y H:i:s'); ?> - Developed by Phoronix Media</div>
 </body>
 <?php }
-session_write_close();
+if(function_exists('session_start'))
+{
+	session_write_close();
+}
 ?>
 </html>
