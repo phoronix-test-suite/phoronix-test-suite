@@ -6,6 +6,7 @@ pts-core: Add stress-batch-run sub-command for behavior like stress-run but no p
 pts-core: Allow plotting all individual run results as a line graph
 pts-core: Allow showing pie charts of wins/losses of tests
 pts-core: Add support for showing "new + updated tests" via the invalid command helper
+pts-core: Allow accessing the new result viewer via localhost too rather than just 127.0.0.1
 pts_Graph: Restore pie chart support from PTS 6.0 state when dropped
 
 Phoronix Test Suite 9.0.0 Milestone 3
