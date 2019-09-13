@@ -159,6 +159,11 @@ class load_dynamic_result_viewer extends pts_module_interface
 			if(pts_network::get_local_ip() && !$access_limited_to_localhost)
 			{
 				echo pts_client::cli_just_bold('Result Viewer: http://' . pts_network::get_local_ip() . ':' . $web_port);
+
+				if(!empty($ak))
+				{
+					echo PHP_EOL . pts_client::cli_just_bold('Result Viewer Access Key: ' . $ak);
+				}
 			}
 		}
 	}
