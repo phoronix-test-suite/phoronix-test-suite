@@ -441,7 +441,7 @@ class phodevi extends phodevi_base
 		$components = array(phodevi::read_property('cpu', 'model'), phodevi::read_property('system', 'operating-system'), phodevi::read_property('system', 'compiler'), $extra);
 		return base64_encode(implode('__', $components));
 	}
-	public static function read_property($device, $read_property)
+	public static function read_property($device, $read_property, $strip_string = true)
 	{
 		static $properties_table = array();
 		$value = false;
@@ -481,7 +481,10 @@ class phodevi extends phodevi_base
 				$value = call_user_func_array(array('phodevi_' . $device, $dev_function), $function_pass);
 				if(!is_array($value) && $value != null)
 				{
-					$value = pts_strings::strip_string($value);
+					if($strip_string)
+					{
+						$value = pts_strings::strip_string($value);
+					}
 					if(function_exists('preg_replace'))
 					{
 						$value = preg_replace('/[^(\x20-\x7F)]*/','', $value);

@@ -1000,9 +1000,9 @@ class pts_test_run_manager
 			$notes['kernel-parameters'] = phodevi::read_property('system', 'kernel-parameters');
 		}
 
-		if($show_all || phodevi::read_property('system', 'environment-variables'))
+		if($show_all || phodevi::read_property('system', 'environment-variables', false))
 		{
-			$notes['environment-variables'] = phodevi::read_property('system', 'environment-variables');
+			$notes['environment-variables'] = phodevi::read_property('system', 'environment-variables', false);
 		}
 		if($show_all || in_array('Java', $test_internal_tags) || in_array('java', $test_external_dependencies))
 		{
