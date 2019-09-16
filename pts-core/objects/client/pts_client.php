@@ -171,31 +171,34 @@ class pts_client
 		}
 
 		// Copy files (without overwrite) from internal OB program cache if present, to help those without Internet
-		if(PTS_INTERNAL_OB_CACHE && is_dir(PTS_INTERNAL_OB_CACHE . 'test-profiles'))
+		if(!phodevi::is_windows())
 		{
-			pts_file_io::copy(PTS_INTERNAL_OB_CACHE . 'test-profiles', PTS_TEST_PROFILE_PATH, true);
-		}
-		if(PTS_INTERNAL_OB_CACHE && is_dir(PTS_INTERNAL_OB_CACHE . 'test-suites'))
-		{
-			pts_file_io::copy(PTS_INTERNAL_OB_CACHE . 'test-suites', PTS_TEST_SUITE_PATH, true);
-		}
-		if(PTS_INTERNAL_OB_CACHE && is_dir(PTS_INTERNAL_OB_CACHE . 'openbenchmarking.org'))
-		{
-			pts_file_io::copy(PTS_INTERNAL_OB_CACHE . 'openbenchmarking.org', PTS_OPENBENCHMARKING_SCRATCH_PATH, true);
-
-			if(!pts_network::internet_support_available())
+			if(PTS_INTERNAL_OB_CACHE && is_dir(PTS_INTERNAL_OB_CACHE . 'test-profiles'))
 			{
-				// Only overwrite the OB index files if it's newer
-				foreach(pts_file_io::glob(PTS_INTERNAL_OB_CACHE . 'openbenchmarking.org/*.index') as $cache_index_file)
+				pts_file_io::copy(PTS_INTERNAL_OB_CACHE . 'test-profiles', PTS_TEST_PROFILE_PATH, true);
+			}
+			if(PTS_INTERNAL_OB_CACHE && is_dir(PTS_INTERNAL_OB_CACHE . 'test-suites'))
+			{
+				pts_file_io::copy(PTS_INTERNAL_OB_CACHE . 'test-suites', PTS_TEST_SUITE_PATH, true);
+			}
+			if(PTS_INTERNAL_OB_CACHE && is_dir(PTS_INTERNAL_OB_CACHE . 'openbenchmarking.org'))
+			{
+				pts_file_io::copy(PTS_INTERNAL_OB_CACHE . 'openbenchmarking.org', PTS_OPENBENCHMARKING_SCRATCH_PATH, true);
+
+				if(!pts_network::internet_support_available())
 				{
-					$index_file_name = basename($cache_index_file);
-					if(is_file(PTS_OPENBENCHMARKING_SCRATCH_PATH . $index_file_name))
+					// Only overwrite the OB index files if it's newer
+					foreach(pts_file_io::glob(PTS_INTERNAL_OB_CACHE . 'openbenchmarking.org/*.index') as $cache_index_file)
 					{
-						$current_version = pts_openbenchmarking::get_generated_time_from_index(PTS_OPENBENCHMARKING_SCRATCH_PATH . $index_file_name);
-						$cached_version = pts_openbenchmarking::get_generated_time_from_index($cache_index_file);
-						if($cached_version > $current_version)
+						$index_file_name = basename($cache_index_file);
+						if(is_file(PTS_OPENBENCHMARKING_SCRATCH_PATH . $index_file_name))
 						{
-							copy($cache_index_file, PTS_OPENBENCHMARKING_SCRATCH_PATH . $index_file_name);
+							$current_version = pts_openbenchmarking::get_generated_time_from_index(PTS_OPENBENCHMARKING_SCRATCH_PATH . $index_file_name);
+							$cached_version = pts_openbenchmarking::get_generated_time_from_index($cache_index_file);
+							if($cached_version > $current_version)
+							{
+								copy($cache_index_file, PTS_OPENBENCHMARKING_SCRATCH_PATH . $index_file_name);
+							}
 						}
 					}
 				}
