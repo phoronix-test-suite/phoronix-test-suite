@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 9.0.0-Asker
+16 September 2019
 
 pts-core: Add stress-batch-run sub-command for behavior like stress-run but no prompts for test options
 pts-core: Allow plotting all individual run results as a line graph

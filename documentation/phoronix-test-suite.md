@@ -88,6 +88,9 @@ This option will query OpenBenchmarking.org to run random benchmarks and result 
 #### run-tests-in-suite
 This option can be used if you wish to run all of the tests found in a supplied suite, but you wish to re-configure each of the test options rather than using the defaults supplied by the suite.
 
+#### stress-batch-run  [Test | Suite | OpenBenchmarking ID | Test Result]  ...
+This option will run the passed tests/suites in the multi-process stress-testing mode while behaving by the Phoronix Test Suite batch testing characteristics. The stress-batch-run mode is similar to the stress-run command except that for any tests passed to it will run all combinations of the options rather than prompting the user for the values to be selected.
+
 #### stress-run  [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option will run the passed tests/suites in the multi-process stress-testing mode. The stress-run mode will not produce a result file but is rather intended for running multiple test profiles concurrently to stress / burn-in the system. The number of tests to run concurrently can be toggled via the PTS_CONCURRENT_TEST_RUNS environment variable and by default is set to a value of 2.
 
