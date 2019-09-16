@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.0m3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ultravideo.cs.tut.fi/video/Bosphorus_1920x1080_120fps_420_8bit_YUV_RAW.7z</URL>
+      <MD5>db7c7ff09acd5d7820cc4d1eb0939cf9</MD5>
+      <SHA256>e73a54088e88e6465f578625d185933e85c3209ab7105deb755a8b8918b78cab</SHA256>
+      <FileName>Bosphorus_1920x1080_120fps_420_8bit_YUV_RAW.7z</FileName>
+      <FileSize>680772328</FileSize>
+    </Package>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/SVT-VP9-20190909.zip</URL>
+      <MD5>9b43c95d2ad1e4ffe0c04ec6f5f022b4</MD5>
+      <SHA256>95ab40bf9bbb348afd09ac85c6b4423cf2058779662345c363d836f06a897bf8</SHA256>
+      <FileName>SVT-VP9-20190909.zip</FileName>
+      <FileSize>1150363</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

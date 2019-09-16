@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.0m3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/stressapptest/stressapptest/archive/v1.0.9.zip</URL>
+      <MD5>429cfaa59a4051f5d4dd662ac60403c0</MD5>
+      <SHA256>8f4f3c8d981e832105246ca5e084390da90f207b9b881f10c4720bde7552c77f</SHA256>
+      <FileName>v1.0.9.zip</FileName>
+      <FileSize>248249</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

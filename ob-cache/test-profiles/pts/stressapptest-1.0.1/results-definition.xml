@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.0m3-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>2019/09/04-16:28:45(EDT) Status: #_RESULT_# - please verify no corrected errors</OutputTemplate>
+    <LineHint>please verify no corrected errors</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

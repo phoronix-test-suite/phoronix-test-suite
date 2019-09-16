@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.0m3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ftp.osuosl.org/pub/blfs/conglomeration/lame/lame-3.100.tar.gz, http://fossies.org/linux/misc/lame-3.100.tar.gz, http://sourceforge.mirrorservice.org/l/la/lame/lame/3.100/lame-3.100.tar.gz</URL>
+      <MD5>83e260acbe4389b54fe08e0bdbf7cddb</MD5>
+      <SHA256>ddfe36cab873794038ae2c1210557ad34857a4b6bdc515785d1da9e175b1da1e</SHA256>
+      <FileName>lame-3.100.tar.gz</FileName>
+      <FileSize>1524133</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.rarewares.org/files/mp3/lame3.100-64.zip</URL>
+      <MD5>2840af30efa75686f4e250573beb15a3</MD5>
+      <SHA256>c9cddf1650fff0ebe0ba79de794b1fa9b334f43f08e2d365b7a158941ad78fa7</SHA256>
+      <FileName>lame3.100-64.zip</FileName>
+      <FileSize>1442273</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

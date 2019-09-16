@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.0m3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://www.phoronix-test-suite.com/benchmark-files/glibc-benchmarks-2.tar.gz</URL>
+      <MD5>4d5cf0ad531f8f387a42b69b466b98de</MD5>
+      <SHA256>3ddc29f49762a697879b7a6d594ebf81f31f32eb43b7cd382897f4303951eb4b</SHA256>
+      <FileName>glibc-benchmarks-2.tar.gz</FileName>
+      <FileSize>3071112</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>
