@@ -3,10 +3,10 @@
 Phoronix Test Suite 9.0
 ======
 #### Release Date: 17 September 2019 | Codename: Asker
+* New result viewer by default
 * Confidential test/result handling improvements and ability to permanently disable result uploading support
 * Offline handling improvements with now shipping a static cache of all tests/suites as of release time
 * PDF report generation improvements
-* New result viewer by default
 * New pie-chart graphing feature of wins/losses for a result file
 * New sub-commands: stress-batch-run, compare-results-two-way, result-file-confidence
 
