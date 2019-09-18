@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+phodevi: New cpu.peak-freq sensor for reporting just the highest CPU core frequency at that moment
+
 Phoronix Test Suite 9.0.0-Asker
 16 September 2019
 
