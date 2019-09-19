@@ -296,6 +296,18 @@ class pts_result_file
 	{
 		return count($this->get_result_objects());
 	}
+	public function get_qualified_test_count()
+	{
+		$q_count = 0;
+		foreach($this->get_result_objects() as $ro)
+		{
+			if($ro->test_profile->get_identifier() != null)
+			{
+				$q_count++;
+			}
+		}
+		return $q_count;
+	}
 	public function has_matching_test_and_run_identifier(&$test_result, $run_identifier_to_check)
 	{
 		$found_match = false;

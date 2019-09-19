@@ -724,11 +724,11 @@ class system_monitor extends pts_module_interface
 			$arguments_try_description = phodevi::sensor_object_name($sensor) . ' Per Test Try Monitor';
 		}
 
-
+		$scale = phodevi::read_sensor_object_unit($sensor);
 		$test_result->test_profile->set_identifier(null);
-		$test_result->test_profile->set_result_proportion('LIB');
+		$test_result->test_profile->set_result_proportion(stripos($scale, 'hertz') === false && stripos($scale, 'hz') === false ? 'LIB' : 'HIB');
 		$test_result->test_profile->set_display_format('LINE_GRAPH');
-		$test_result->test_profile->set_result_scale(phodevi::read_sensor_object_unit($sensor));
+		$test_result->test_profile->set_result_scale($scale);
 		$test_result->set_used_arguments_description($arguments_description);
 		$test_result->set_used_arguments(phodevi::sensor_object_name($sensor) . ' ' . $test_result->get_arguments());
 		$test_result->test_result_buffer = $result_buffer;
