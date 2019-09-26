@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014 - 2017, Phoronix Media
-	Copyright (C) 2014 - 2017, Michael Larabel
+	Copyright (C) 2014 - 2019, Phoronix Media
+	Copyright (C) 2014 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -28,7 +28,8 @@ class enterprise_setup implements pts_option_interface
 	public static function run($r)
 	{
 		$force_options = array(
-			'PhoronixTestSuite/Options/OpenBenchmarking/AnonymousUsageReporting' => 'FALSE'
+			'PhoronixTestSuite/Options/OpenBenchmarking/AnonymousUsageReporting' => 'FALSE',
+			'PhoronixTestSuite/Options/OpenBenchmarking/AllowResultUploadsToOpenBenchmarking' => 'FALSE'
 			);
 
 		if(pts_network::internet_support_available() == false)
