@@ -68,7 +68,7 @@
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
-			<PackageName>gcc gcc-c++ make autoconf automake glibc-static patch expat-devel</PackageName>
+			<PackageName>gcc gcc-c++ make autoconf automake patch expat-devel</PackageName>
 			<FileCheck>gcc, c++</FileCheck>
 		</Package>
 		<Package>

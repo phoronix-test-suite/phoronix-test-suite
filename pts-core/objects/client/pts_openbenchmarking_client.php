@@ -23,7 +23,7 @@
 class pts_openbenchmarking_client
 {
 	private static $openbenchmarking_account = false;
-	private static $client_settings = null;
+	public static $client_settings = null;
 
 	public static function upload_test_result(&$object, $return_json_data = false, $prompts = true)
 	{

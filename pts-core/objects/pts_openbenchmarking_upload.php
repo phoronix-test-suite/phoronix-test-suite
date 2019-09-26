@@ -59,9 +59,9 @@ class pts_openbenchmarking_upload extends pts_openbenchmarking
 			{
 				$upload_system_logs = true;
 			}
-			else if(isset(self::$client_settings['UploadSystemLogsByDefault']))
+			else if(PTS_IS_CLIENT && isset(pts_openbenchmarking_client::$client_settings['UploadSystemLogsByDefault']))
 			{
-				$upload_system_logs = self::$client_settings['UploadSystemLogsByDefault'];
+				$upload_system_logs = pts_openbenchmarking_client::$client_settings['UploadSystemLogsByDefault'];
 			}
 			else if(is_dir($system_log_dir))
 			{
