@@ -178,6 +178,20 @@ class ob_auto_compare extends pts_module_interface
 			{
 				$percentiles = $json_response['openbenchmarking']['result']['ae']['percentiles'];
 				$sample_count = $json_response['openbenchmarking']['result']['ae']['samples'];
+				$first_appeared = $json_response['openbenchmarking']['result']['ae']['first_appeared'];
+
+				if(empty($first_appeared))
+				{
+					$first_appeared = null;
+				}
+				else if($first_appeared > (time() - (86400 * 330)))
+				{
+					$first_appeared = date('j F', $first_appeared);
+				}
+				else
+				{
+					$first_appeared = date('j F Y', $first_appeared);
+				}
 
 				$box_plot = str_repeat(' ', $terminal_width - 4);
 				$box_plot_size = strlen($box_plot);
@@ -341,7 +355,7 @@ class ob_auto_compare extends pts_module_interface
 					}
 
 					echo PHP_EOL;
-					echo '    ' . pts_client::cli_just_italic('Result compared to ' . pts_client::cli_just_bold(number_format($sample_count)) . ' OpenBenchmarking.org samples; median: ' . pts_client::cli_just_bold(round($percentiles[50], ($percentiles[50] < 100 ? 2 : 0))) . '. Box plot of sampling:') . PHP_EOL;
+					echo '    ' . pts_client::cli_just_italic('Result compared to ' . pts_client::cli_just_bold(number_format($sample_count)) . ' OpenBenchmarking.org samples; median: ' . pts_client::cli_just_bold(round($percentiles[50], ($percentiles[50] < 100 ? 2 : 0))) . '. Box plot of samplings' . ($first_appeared == null ? '' : ' since ' . pts_client::cli_just_bold($first_appeared)) . ':') . PHP_EOL;
 					echo '    ' . implode('', $box_plot) . PHP_EOL;
 					foreach($box_plot_complement as $line_r)
 					{

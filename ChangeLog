@@ -2,6 +2,8 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Fatal error fix for old PHP5 versions with pts_openbenchmarking_upload crash
+ob_auto_compare: Show "since [date]" as part of the inline box plot
 phodevi: New cpu.peak-freq sensor for reporting just the highest CPU core frequency at that moment
 
 Phoronix Test Suite 9.0.0-Asker
