@@ -160,10 +160,10 @@ class pts_openbenchmarking_upload extends pts_openbenchmarking
 			'system_logs_hash' => $system_logs_hash
 			);
 
-		if(isset(self::$client_settings['ResultUploadsDefaultDisplayStatus']) && is_numeric(self::$client_settings['ResultUploadsDefaultDisplayStatus']))
+		if(PTS_IS_CLIENT && isset(pts_openbenchmarking_client::$client_settings['ResultUploadsDefaultDisplayStatus']) && is_numeric(pts_openbenchmarking_client::$client_settings['ResultUploadsDefaultDisplayStatus']))
 		{
 
-			$to_post['display_status'] = self::$client_settings['ResultUploadsDefaultDisplayStatus'];
+			$to_post['display_status'] = pts_openbenchmarking_client::$client_settings['ResultUploadsDefaultDisplayStatus'];
 		}
 
 		$json_response = pts_openbenchmarking::make_openbenchmarking_request('upload_test_result', $to_post);
@@ -196,7 +196,7 @@ class pts_openbenchmarking_upload extends pts_openbenchmarking
 		}
 		//$json['openbenchmarking']['upload']['id']
 
-		if(isset(self::$client_settings['RemoveLocalResultsOnUpload']) && self::$client_settings['RemoveLocalResultsOnUpload'] && $local_file_name != null)
+		if(PTS_IS_CLIENT && isset(pts_openbenchmarking_client::$client_settings['RemoveLocalResultsOnUpload']) && pts_openbenchmarking_client::$client_settings['RemoveLocalResultsOnUpload'] && $local_file_name != null)
 		{
 			pts_client::remove_saved_result_file($local_file_name);
 		}
