@@ -72,10 +72,6 @@
 			<FileCheck>gcc, c++</FileCheck>
 		</Package>
 		<Package>
-			<GenericName>xorg-development</GenericName>
-			<PackageName>xorg-x11-server-devel</PackageName>
-		</Package>
-		<Package>
 			<GenericName>bison</GenericName>
 			<PackageName>bison</PackageName>
 		</Package>
@@ -253,7 +249,7 @@
 		</Package>
 		<Package>
 			<GenericName>openmpi-development</GenericName>
-			<PackageName>openmpi-devel openmpi mpich2-devel</PackageName>
+			<PackageName>openmpi-devel openmpi</PackageName>
 			<FileCheck>openmpi/lib/libmpi.so</FileCheck>
 		</Package>
 		<Package>
