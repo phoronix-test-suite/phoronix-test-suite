@@ -180,11 +180,12 @@ class ob_auto_compare extends pts_module_interface
 				$sample_count = $json_response['openbenchmarking']['result']['ae']['samples'];
 				$first_appeared = $json_response['openbenchmarking']['result']['ae']['first_appeared'];
 
-				if(empty($first_appeared))
+				if(empty($first_appeared) || !is_numeric($first_appeared))
 				{
-					$first_appeared = null;
+					$first_appeared = strtotime('2011-02-26');
 				}
-				else if($first_appeared > (time() - (86400 * 330)))
+
+				if($first_appeared > (time() - (86400 * 330)))
 				{
 					$first_appeared = date('j F', $first_appeared);
 				}
