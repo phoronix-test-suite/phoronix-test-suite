@@ -279,10 +279,10 @@ class ob_auto_compare extends pts_module_interface
 						}
 						$results_at_pos[] = $this_result_pos;
 						$results_at_pos[] = $this_result_pos - 1;
-						$results_at_pos[] = $this_result_pos - 2;
+						//$results_at_pos[] = $this_result_pos - 2;
 						//$results_at_pos[] = $this_result_pos - 3;
 						$results_at_pos[] = $this_result_pos + 1;
-						$results_at_pos[] = $this_result_pos + 2;
+						//$results_at_pos[] = $this_result_pos + 2;
 
 						if(($cc = strpos($component, '-Core')) !== false)
 						{
