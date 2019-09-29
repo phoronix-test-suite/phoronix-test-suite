@@ -805,7 +805,7 @@ class pts_test_result_parser
 			{
 				$test_result = $test_result / $divide_by;
 			}
-			if($divide_divisor != null && is_numeric($divide_divisor) && $divide_divisor != 0)
+			if($divide_divisor != null && is_numeric($divide_divisor) && $divide_divisor != 0 && $test_result != 0)
 			{
 				$test_result = $divide_divisor / $test_result;
 			}
