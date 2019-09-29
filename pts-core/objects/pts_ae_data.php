@@ -209,12 +209,12 @@ class pts_ae_data
 						// if no new results in 3 years, likely outdated...
 						continue;
 					}
-					if(count($data) < 6)
+					if(count($data) < 4)
 					{
 						continue;
 					}
 					$data = pts_math::remove_outliers($data);
-					if(count($data) < 6)
+					if(count($data) < 3)
 					{
 						continue;
 					}
@@ -229,14 +229,14 @@ class pts_ae_data
 			foreach($comparison_components as $component => &$values)
 			{
 				$values = pts_math::remove_outliers($values);
-				if(count($values) < 6)
+				if(count($values) < 3)
 				{
 					unset($comparison_components[$component]);
 					continue;
 				}
 			}
 			uasort($comparison_components, array('pts_ae_data', 'sort_array_by_size_of_array_in_value'));
-			$comparison_components = array_slice($comparison_components, 0, 60);
+			$comparison_components = array_slice($comparison_components, 0, 65);
 			foreach($comparison_components as $component => &$values)
 			{
 				$values = round(pts_math::arithmetic_mean($values), ($peak > 60 ? 0 : 2));

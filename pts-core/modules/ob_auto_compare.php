@@ -185,7 +185,7 @@ class ob_auto_compare extends pts_module_interface
 					$first_appeared = strtotime('2011-02-26');
 				}
 
-				if($first_appeared > (time() - (86400 * 330)))
+				if($first_appeared > (time() - (86400 * 270)))
 				{
 					$first_appeared = date('j F', $first_appeared);
 				}
