@@ -28,8 +28,8 @@ then
 fi
 
 # Full path to root directory of the actual Phoronix Test Suite code
-# export PTS_DIR=$(readlink -f `dirname $0`)
-export PTS_DIR=`pwd`
+export PTS_DIR=$(readlink -f `dirname $0`)
+#export PTS_DIR=`pwd`
 export PTS_MODE="CLIENT"
 if which realpath >/dev/null 2>&1 ;
 then
