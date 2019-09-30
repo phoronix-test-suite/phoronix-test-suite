@@ -153,7 +153,6 @@ class ob_auto_compare extends pts_module_interface
 		$test_profile = $result_object->test_profile->get_identifier(false);
 		$json_response = pts_openbenchmarking::make_openbenchmarking_request('auto_compare_via_hash', array('comparison_hash' => $comparison_hash, 'system_type' => $system_type, 'test_profile' => $test_profile, 'comparison_hash_string' => $ch));
 		self::$response_time = time() - $ob_request_time;
-
 		$json_response = json_decode($json_response, true);
 
 		if(is_array($json_response))
@@ -170,10 +169,6 @@ class ob_auto_compare extends pts_module_interface
 				$other_data_in_result_file[$buffer_item->get_result_identifier()] = $buffer_item->get_result_value();
 			}
 
-			// XXX DEBUG XXX
-			//$v = $result_object->test_result_buffer->get_values();
-			//$active_result = array_pop($v);
-
 			if(is_numeric($active_result) && $active_result > 0 && isset($json_response['openbenchmarking']['result']['ae']['percentiles']) && !empty($json_response['openbenchmarking']['result']['ae']['percentiles']) && isset($json_response['openbenchmarking']['result']['ae']['samples']))
 			{
 				$percentiles = $json_response['openbenchmarking']['result']['ae']['percentiles'];
@@ -187,6 +182,7 @@ class ob_auto_compare extends pts_module_interface
 
 				if($first_appeared > (time() - (86400 * 270)))
 				{
+					// If data is less than 9 months or so, don't bother putting year
 					$first_appeared = date('j F', $first_appeared);
 				}
 				else
