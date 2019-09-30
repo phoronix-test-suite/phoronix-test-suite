@@ -279,11 +279,15 @@ class ob_auto_compare extends pts_module_interface
 						$results_at_pos[] = $this_result_pos - 1;
 						$results_at_pos[] = $this_result_pos + 1;
 
-						if(($cc = strpos($component, '-Core')) !== false)
+						foreach(array('-Core', ' with ') as $cutoff)
 						{
 							// On AMD product strings, trip the XX-Core from string to save space...
-							$component = substr($component, 0, $cc);
-							$component = substr($component, 0, strrpos($component, ' '));
+							// Similarly some "APU with Radeon" text also chop off
+							if(($cc = strpos($component, $cutoff)) !== false)
+							{
+								$component = substr($component, 0, $cc);
+								$component = substr($component, 0, strrpos($component, ' '));
+							}
 						}
 
 						if($result_object->test_profile->get_result_proportion() == 'LIB')
