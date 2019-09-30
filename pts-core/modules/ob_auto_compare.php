@@ -141,7 +141,7 @@ class ob_auto_compare extends pts_module_interface
 	protected static function request_compare_from_ob(&$result_object, $comparison_hash, $system_type)
 	{
 		$terminal_width = pts_client::terminal_width();
-		if(!pts_network::internet_support_available() || self::$response_time > 14 || $terminal_width < 55)
+		if(!pts_network::internet_support_available() || self::$response_time > 15 || $terminal_width < 55)
 		{
 			// If no network or OB requests are being slow...
 			return false;
@@ -273,12 +273,11 @@ class ob_auto_compare extends pts_module_interface
 						{
 							continue;
 						}
+
+						// Blocks other entries from overwriting or being immediately adjacent to one another
 						$results_at_pos[] = $this_result_pos;
 						$results_at_pos[] = $this_result_pos - 1;
-						//$results_at_pos[] = $this_result_pos - 2;
-						//$results_at_pos[] = $this_result_pos - 3;
 						$results_at_pos[] = $this_result_pos + 1;
-						//$results_at_pos[] = $this_result_pos + 2;
 
 						if(($cc = strpos($component, '-Core')) !== false)
 						{
