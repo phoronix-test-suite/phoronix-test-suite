@@ -278,9 +278,9 @@ function pts_version_codenames()
 		);
 }
 
-pts_define('PTS_VERSION', '9.0.0');
-pts_define('PTS_CORE_VERSION', 9001);
-pts_define('PTS_RELEASE_DATE', '20190916');
+pts_define('PTS_VERSION', '9.0.1');
+pts_define('PTS_CORE_VERSION', 9010);
+pts_define('PTS_RELEASE_DATE', '20191001');
 pts_define('PTS_CODENAME', 'Asker');
 
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));
