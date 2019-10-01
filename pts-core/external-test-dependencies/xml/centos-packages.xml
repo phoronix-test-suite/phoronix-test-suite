@@ -3,9 +3,8 @@
 <PhoronixTestSuite>
 	<ExternalDependencies>
 		<Information>
-			<Name>Fedora</Name>
-			<Aliases>Moblin, MeeGo, Amazon, Red Hat Enterprise, Red Hat Enterprise Server, Scientific, ScientificSL, ClearOS, ClearOS Core Server, Oracle Server, OLPC</Aliases>
-			<PackageManager>yum</PackageManager>
+			<Name>CentOS</Name>
+			<Aliases></Aliases>
 		</Information>
 		<Package>
 			<GenericName>common-dependencies</GenericName>
@@ -189,7 +188,7 @@
 		</Package>
 		<Package>
 			<GenericName>meson</GenericName>
-			<PackageName>meson</PackageName>
+			<PackageName> </PackageName>
 		</Package>
 		<Package>
 			<GenericName>numa-development</GenericName>
@@ -209,11 +208,11 @@
 		</Package>
 		<Package>
 			<GenericName>blas-development</GenericName>
-			<PackageName>blas blas-devel</PackageName>
+			<PackageName>blas</PackageName>
 		</Package>
 		<Package>
 			<GenericName>lapack-development</GenericName>
-			<PackageName>lapack-devel</PackageName>
+			<PackageName> </PackageName>
 		</Package>
 		<Package>
 			<GenericName>cmake</GenericName>
@@ -254,7 +253,7 @@
 		</Package>
 		<Package>
 			<GenericName>yasm</GenericName>
-			<PackageName>yasm nasm</PackageName>
+			<PackageName> </PackageName>
 		</Package>
 		<Package>
 			<GenericName>lib3ds</GenericName>
@@ -286,7 +285,7 @@
 		</Package>
 		<Package>
 			<GenericName>opencl</GenericName>
-			<PackageName>opencl-headers pocl</PackageName>
+			<PackageName> </PackageName>
 		</Package>
 		<Package>
 			<GenericName>attr</GenericName>
