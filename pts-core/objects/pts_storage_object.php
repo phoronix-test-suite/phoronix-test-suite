@@ -38,10 +38,18 @@ class pts_storage_object
 		$this->pts_version = PTS_CORE_VERSION;
 		$this->object_cache = array();
 	}
+	/**
+	 * @param string identifier
+	 *
+	 * @return void
+	 */
 	public function add_object($identifier, $object)
 	{
 		$this->object_cache[$identifier] = $object;
 	}
+	/**
+	 * @param string $identifier
+	 */
 	public function read_object($identifier)
 	{
 		return isset($this->object_cache[$identifier]) ? $this->object_cache[$identifier] : false;
@@ -50,10 +58,18 @@ class pts_storage_object
 	{
 		unset($this->object_cache[$identifier]);
 	}
+	/**
+	 * @return array
+	 */
 	public function get_objects()
 	{
 		return $this->object_cache;
 	}
+	/**
+	 * @param string $destination
+	 *
+	 * @return void
+	 */
 	public function save_to_file($destination)
 	{
 		$this->object_cs = md5(serialize($this->get_objects())); // Checksum
@@ -65,14 +81,23 @@ class pts_storage_object
 	{
 		return $this->pts_version;
 	}
+	/**
+	 * @return string
+	 */
 	public function get_object_checksum()
 	{
 		return $this->object_cs;
 	}
+	/**
+	 * @return bool
+	 */
 	public function get_span_reboots()
 	{
 		return $this->span_reboots;
 	}
+	/**
+	 * @return bool
+	 */
 	public function get_span_versions()
 	{
 		return $this->span_versions !== false;

@@ -31,6 +31,9 @@ class pts_test_profile_parser
 	private $file_location = false;
 	public $no_fallbacks_on_null = false;
 
+	/**
+	 * @param string|null $read
+	 */
 	public function __construct($read = null, $normal_init = true)
 	{
 		$this->overrides = array();
@@ -126,6 +129,11 @@ class pts_test_profile_parser
 	{
 		$this->overrides[$xpath] = $value;
 	}
+	/**
+	 * @param string $xpath
+	 *
+	 * @return string|null
+	 */
 	public function xg($xpath, $default_on_null = null)
 	{
 		if(isset($this->overrides[$xpath]))
@@ -417,6 +425,9 @@ class pts_test_profile_parser
 	{
 		return $this->xg('TestProfile/EnvironmentSize', 0);
 	}
+	/**
+	 * @return string|null
+	 */
 	public function get_test_extension()
 	{
 		return $this->xg('TestProfile/Extends');

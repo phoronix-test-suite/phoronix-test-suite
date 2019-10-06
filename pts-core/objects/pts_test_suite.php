@@ -39,6 +39,9 @@ class pts_test_suite
 	static $temp_suite;
 	protected $xml_file_location = false;
 
+	/**
+	 * @param string $identifier
+	 */
 	public function __construct($identifier = null)
 	{
 		$this->test_objects = array();
@@ -185,6 +188,11 @@ class pts_test_suite
 			}
 		}
 	}
+	/**
+	 * @param pts_test_suite $suite
+	 *
+	 * @return void
+	 */
 	public function add_suite_tests_to_suite($suite)
 	{
 		foreach($suite->get_contained_test_result_objects() as $test_result)
@@ -192,6 +200,13 @@ class pts_test_suite
 			$this->test_objects[] = $test_result;
 		}
 	}
+	/**
+	 * @param pts_test_profile $test
+	 * @param string|null      $arguments
+	 * @param string|null      $arguments_description
+	 *
+	 * @return void
+	 */
 	public function add_to_suite($test, $arguments = null, $arguments_description = null)
 	{
 		if(!($test instanceof pts_test_profile))
@@ -264,6 +279,9 @@ class pts_test_suite
 
 		return false;
 	}
+	/**
+	 * @return int
+	 */
 	public function is_supported($report_warnings = false)
 	{
 		$supported_size = $original_size = count($this->test_objects);
@@ -300,6 +318,9 @@ class pts_test_suite
 		}
 		return count($unique_tests);
 	}
+	/**
+	 * @return pts_test_result[]
+	 */
 	public function get_contained_test_result_objects()
 	{
 		return $this->test_objects;
@@ -379,6 +400,9 @@ class pts_test_suite
 	{
 		$this->title = $s;
 	}
+	/**
+	 * @return string
+	 */
 	public function get_title()
 	{
 		return $this->title;
@@ -403,6 +427,9 @@ class pts_test_suite
 	{
 		$this->test_type = $s;
 	}
+	/**
+	 * @return string
+	 */
 	public function get_suite_type()
 	{
 		return $this->test_type;

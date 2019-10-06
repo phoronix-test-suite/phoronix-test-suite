@@ -29,6 +29,9 @@ class pts_test_install_request
 	public $install_error = null;
 	public $special_environment_vars;
 
+	/**
+	 * @param string $test
+	 */
 	public function __construct($test)
 	{
 		if($test instanceof pts_test_profile)
@@ -55,6 +58,9 @@ class pts_test_install_request
 	{
 		return $this->test_profile->get_identifier();
 	}
+	/**
+	 * @return pts_test_file_download[]
+	 */
 	public function get_download_objects()
 	{
 		return $this->test_files;
@@ -63,6 +69,11 @@ class pts_test_install_request
 	{
 		return count($this->test_files);
 	}
+	/**
+	 * @param bool $do_file_checks
+	 *
+	 * @return void
+	 */
 	public function generate_download_object_list($do_file_checks = true)
 	{
 		foreach($this->test_profile->get_downloads() as $download)

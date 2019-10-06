@@ -24,6 +24,10 @@ class pts_config_nye_XmlReader extends nye_XmlReader
 {
 	protected $override_values;
 
+	/**
+	 * @param string|null $new_values
+	 * @param bool        $override_file
+	 */
 	public function __construct($new_values = null, $override_file = false)
 	{
 		if($override_file && is_file($override_file))
@@ -86,6 +90,12 @@ class pts_config_nye_XmlReader extends nye_XmlReader
 
 		return $fallback_value;
 	}
+	/**
+	 * @param string $xml_tag
+	 * @param bool   $fallback_value
+	 *
+	 * @return string
+	 */
 	public function getXMLValue($xml_tag, $fallback_value = false)
 	{
 		if($this->override_values != false)

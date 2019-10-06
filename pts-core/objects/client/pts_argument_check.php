@@ -26,16 +26,27 @@ class pts_argument_check
 	private $function_check;
 	private $function_return_key;
 
+	/**
+	 * @param int      $index
+	 * @param string[] $function
+	 * @param          $return_key set to null when you don't want it to be set
+	 */
 	public function __construct($index, $function, $return_key = null)
 	{
 		$this->argument_index = $index;
 		$this->function_check = $function;
-		$this->function_return_key = $return_key; // set to null when you don't want it to be set
+		$this->function_return_key = $return_key;
 	}
+	/**
+	 * @return int
+	 */
 	public function get_argument_index()
 	{
 		return $this->argument_index;
 	}
+	/**
+	 * @return string[]
+	 */
 	public function get_function_check()
 	{
 		return $this->function_check;

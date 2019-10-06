@@ -522,6 +522,12 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	{
 		echo $this->tab . $prompt_string;
 	}
+	/**
+	 * @param string $string
+	 * @param bool   $ending_line_break
+	 *
+	 * @return void
+	 */
 	public function generic_heading($string, $ending_line_break = true)
 	{
 		static $shown_pts = false;

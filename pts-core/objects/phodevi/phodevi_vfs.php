@@ -119,6 +119,9 @@ class phodevi_vfs
 				break;
 		}
 	}
+	/**
+	 * @return void
+	 */
 	public function clear_cache()
 	{
 		$this->cache = array();
@@ -127,6 +130,11 @@ class phodevi_vfs
 	{
 		return array_keys($this->cache);
 	}
+	/**
+	 * @param string $name
+	 *
+	 * @return string
+	 */
 	public function __get($name)
 	{
 		// This assumes that isset() has been called on $name prior to actually trying to get it...
@@ -198,6 +206,11 @@ class phodevi_vfs
 
 		return false;
 	}
+	/**
+	 * @param string $name
+	 *
+	 * @return bool
+	 */
 	public function __isset($name)
 	{
 		return isset($this->cache[$name]) || (PTS_IS_CLIENT && $this->cache_isset_names($name));
@@ -206,6 +219,11 @@ class phodevi_vfs
 	{
 		$this->cache[$name] = $cache;
 	}
+	/**
+	 * @param string $name
+	 *
+	 * @return bool
+	 */
 	public function cache_isset_names($name)
 	{
 		// Cache the isset call names with their values when checking files/commands since Phodevi will likely hit each one potentially multiple times and little overhead to caching them

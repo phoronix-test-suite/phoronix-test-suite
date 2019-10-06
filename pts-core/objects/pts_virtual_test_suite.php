@@ -33,6 +33,9 @@ class pts_virtual_test_suite
 	private $is_virtual_installed = false;
 	private $is_virtual_everything = false;
 
+	/**
+	 * @param string $identifier
+	 */
 	public function __construct($identifier)
 	{
 		$this->identifier = $identifier;

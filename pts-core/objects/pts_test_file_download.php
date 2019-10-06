@@ -37,6 +37,16 @@ class pts_test_file_download
 	private $download_location_type = null;
 	private $download_location_path = null;
 
+	/**
+	 * @param string|null $url
+	 * @param string|null $filename
+	 * @param int         $filesize
+	 * @param string|null $md5
+	 * @param string|null $sha256
+	 * @param string|null $platform
+	 * @param string|null $architecture
+	 * @param string|null $is_optional
+	 */
 	public function __construct($url = null, $filename = null, $filesize = 0, $md5 = null, $sha256 = null, $platform = null, $architecture = null, $is_optional = false)
 	{
 		$this->filename = empty($filename) ? basename($url) : $filename;
@@ -72,6 +82,9 @@ class pts_test_file_download
 	{
 		return $this->url;
 	}
+	/**
+	 * @return string[]
+	 */
 	public function get_platform_array()
 	{
 		return pts_strings::comma_explode($this->platform);
@@ -80,6 +93,9 @@ class pts_test_file_download
 	{
 		return $this->platform;
 	}
+	/**
+	 * @return string[]
+	 */
 	public function get_architecture_array()
 	{
 		return pts_strings::comma_explode($this->architecture);
@@ -92,6 +108,9 @@ class pts_test_file_download
 	{
 		return $this->filename;
 	}
+	/**
+	 * @return string
+	 */
 	public function get_filesize()
 	{
 		return $this->filesize;
