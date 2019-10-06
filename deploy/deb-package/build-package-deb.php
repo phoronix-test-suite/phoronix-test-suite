@@ -53,7 +53,7 @@ shell_exec("./install-sh /tmp/pts-deb-builder/usr");
 $pts_version = str_replace("a", "~a", str_replace("b", "~b", PTS_VERSION)); // Fix version
 
 $phoronix_test_suite_bin = file_get_contents("phoronix-test-suite");
-$phoronix_test_suite_bin = str_replace("export PTS_DIR=`pwd`", "export PTS_DIR='/usr/share/phoronix-test-suite/'", $phoronix_test_suite_bin);
+$phoronix_test_suite_bin = str_replace("#export PTS_DIR=`pwd`", "export PTS_DIR='/usr/share/phoronix-test-suite/'", $phoronix_test_suite_bin);
 file_put_contents("/tmp/pts-deb-builder/usr/bin/phoronix-test-suite", $phoronix_test_suite_bin);
 shell_exec("chmod +x /tmp/pts-deb-builder/usr/bin/phoronix-test-suite");
 

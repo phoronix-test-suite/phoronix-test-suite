@@ -247,9 +247,9 @@ class pts_test_result
 
 		return $winner;
 	}
-	public function get_spread()
+	public function get_spread($noisy_check = true)
 	{
-		if($this->has_noisy_result())
+		if($noisy_check && $this->has_noisy_result())
 		{
 			return -1;
 		}

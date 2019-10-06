@@ -3,7 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite 9.0.1-Asker
 1 October 2019
 
-pts-core: Fatal error fix for old PHP5 versions with pts_openbenchmarking_upload crash
+pts-core: Fatal error fix for old PHP5 versions (RHEL 7) with pts_openbenchmarking_upload crash
 pts-core: Set AllowResultUploadsToOpenBenchmarking = FALSE in enterprise-setup
 ob_auto_compare: Show "since [date]" as part of the inline box plot
 ob_auto_compare: Various tweaks/styling improvements to the inline box-plot display
