@@ -251,7 +251,7 @@
 		</Package>
 		<Package>
 			<GenericName>tcl</GenericName>
-			<PackageName>tcl</PackageName>
+			<PackageName>tcl tclsh</PackageName>
 		</Package>
 		<Package>
 			<GenericName>glibc-development</GenericName>
