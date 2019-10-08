@@ -336,5 +336,9 @@
 			<GenericName>uuid</GenericName>
 			<PackageName>sys-libs/libuuid</PackageName>
 		</Package>
+		<Package>
+			<GenericName>gflags</GenericName>
+			<PackageName>dev-cpp/gflags</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

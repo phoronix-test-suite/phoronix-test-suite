@@ -560,5 +560,11 @@
 			<PossibleNames>clang</PossibleNames>
 			<FileCheck>clang</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>gflags</GenericName>
+			<Title>GFlags</Title>
+			<PossibleNames>gflags</PossibleNames>
+			<FileCheck>gflags/gflags.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

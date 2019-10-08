@@ -355,5 +355,9 @@
 			<GenericName>clang</GenericName>
 			<PackageName>clang</PackageName>
 		</Package>
+		<Package>
+			<GenericName>gflags</GenericName>
+			<PackageName>gflags-devel</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
