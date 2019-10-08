@@ -548,5 +548,11 @@
 			<PossibleNames>libxml2</PossibleNames>
 			<FileCheck>libxml2/libxml/parser.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>uuid</GenericName>
+			<Title>UUID</Title>
+			<PossibleNames>uuid-dev, libuuid-devel</PossibleNames>
+			<FileCheck>uuid/uuid.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

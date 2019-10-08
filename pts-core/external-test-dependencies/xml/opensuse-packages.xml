@@ -334,5 +334,9 @@
 			<GenericName>libxml2</GenericName>
 			<PackageName>libxml2-devel</PackageName>
 		</Package>
+		<Package>
+			<GenericName>uuid</GenericName>
+			<PackageName>uuid-devel</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
