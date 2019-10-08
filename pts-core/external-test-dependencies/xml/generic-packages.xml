@@ -554,5 +554,11 @@
 			<PossibleNames>uuid-dev, libuuid-devel</PossibleNames>
 			<FileCheck>uuid/uuid.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>clang</GenericName>
+			<Title>LLVM Clang</Title>
+			<PossibleNames>clang</PossibleNames>
+			<FileCheck>clang</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

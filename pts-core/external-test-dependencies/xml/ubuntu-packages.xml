@@ -407,5 +407,9 @@
 			<GenericName>uuid</GenericName>
 			<PackageName>uuid-dev</PackageName>
 		</Package>
+		<Package>
+			<GenericName>clang</GenericName>
+			<PackageName>clang</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
