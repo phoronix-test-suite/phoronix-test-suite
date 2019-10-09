@@ -141,7 +141,7 @@ class ob_auto_compare extends pts_module_interface
 	protected static function request_compare_from_ob(&$result_object, $comparison_hash, $system_type)
 	{
 		$terminal_width = pts_client::terminal_width();
-		if(!pts_network::internet_support_available() || self::$response_time > 15 || $terminal_width < 55)
+		if(!pts_network::internet_support_available() || self::$response_time > 15 || $terminal_width < 52)
 		{
 			// If no network or OB requests are being slow...
 			return false;
@@ -278,6 +278,11 @@ class ob_auto_compare extends pts_module_interface
 						$results_at_pos[] = $this_result_pos;
 						$results_at_pos[] = $this_result_pos - 1;
 						$results_at_pos[] = $this_result_pos + 1;
+
+						if($terminal_width <= 80)
+						{
+							$component = trim(str_replace(array('AMD', 'Intel', 'NVIDIA', 'Radeon', 'GeForce'), '', $component));
+						}
 
 						foreach(array('-Core', ' with ') as $cutoff)
 						{
