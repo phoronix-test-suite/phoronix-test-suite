@@ -532,7 +532,7 @@ class pts_test_run_manager
 			$components = pts_result_file_analyzer::system_component_string_to_array(phodevi::system_hardware(true) . ', ' . phodevi::system_software(true));
 			if($subsystem != null && isset($components[$subsystem]))
 			{
-				$subsystem_name = pts_strings::trim_search_query($components[$subsystem]);
+				$subsystem_name = trim(pts_strings::trim_search_query($components[$subsystem]));
 
 				if(!empty($subsystem_name) && phodevi::is_vendor_string($subsystem_name) && !in_array($subsystem_name, $subsystem_r))
 				{

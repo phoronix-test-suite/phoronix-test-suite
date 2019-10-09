@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+pts-core: New possible external dependencies for gflags, clang, uuid, tclsh
+
 Phoronix Test Suite 9.0.1-Asker
 1 October 2019
 
