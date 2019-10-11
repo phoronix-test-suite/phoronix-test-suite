@@ -62,6 +62,16 @@
 			<FileCheck>C:\cygwin64\bin\cmake.exe</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>tcl</GenericName>
+			<PackageName>tcl tclsh</PackageName>
+			<FileCheck>C:\cygwin64\bin\tclsh.exe</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>ruby</GenericName>
+			<PackageName>ruby</PackageName>
+			<FileCheck>C:\cygwin64\bin\ruby.exe</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>node-npm</GenericName>
 			<PackageName>https://nodejs.org/dist/latest-v11.x/node-v11.5.0-x64.msi</PackageName>
 			<FileCheck>C:\Program Files\nodejs</FileCheck>
