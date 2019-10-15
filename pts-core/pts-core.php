@@ -278,10 +278,10 @@ function pts_version_codenames()
 		);
 }
 
-pts_define('PTS_VERSION', '9.0.1');
-pts_define('PTS_CORE_VERSION', 9010);
+pts_define('PTS_VERSION', '9.2.0m0');
+pts_define('PTS_CORE_VERSION', 9100);
 pts_define('PTS_RELEASE_DATE', '20191001');
-pts_define('PTS_CODENAME', 'Asker');
+pts_define('PTS_CODENAME', 'Hurdal');
 
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));
 pts_define('PTS_IS_WEB_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'WEB_CLIENT'));

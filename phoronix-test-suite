@@ -28,7 +28,7 @@ then
 fi
 
 # Full path to root directory of the actual Phoronix Test Suite code
-if [[ "$OSTYPE" == "darwin"* ]]; then
+if "$OSTYPE" == "darwin"* ; then
 	# macOS has problems with the readlink code
 	export PTS_DIR=`pwd`
 else
