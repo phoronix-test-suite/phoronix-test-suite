@@ -1381,6 +1381,9 @@ class phodevi_gpu extends phodevi_device_interface
 			// Last possible fallback...
 			$info = str_replace(' FB', '', pts_file_io::file_get_contents('/sys/class/graphics/fb0/name'));
 		}
+
+		// Happens with Intel Iris Gallium3D
+		$info = str_replace('Mesa ', ' ', $info);
 		/*if(empty($info))
 		{
 			$info = 'Unknown';
