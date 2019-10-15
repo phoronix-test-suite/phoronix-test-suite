@@ -47,6 +47,10 @@ class phodevi_monitor extends phodevi_device_interface
 			{
 				$monitor = null;
 			}
+			else
+			{
+				$monitor = array($monitor);
+			}
 		}
 		else if(phodevi::is_nvidia_graphics() && isset(phodevi::$vfs->xorg_log))
 		{
