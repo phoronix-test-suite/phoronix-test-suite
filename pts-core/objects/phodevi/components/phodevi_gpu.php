@@ -1348,7 +1348,7 @@ class phodevi_gpu extends phodevi_device_interface
 			$info = 'AMD ' . $info;
 		}
 
-		if(phodevi::is_linux() && ($vendor = phodevi_linux_parser::read_pci_subsystem_value('VGA compatible controller')) != null && stripos($info, $vendor) === false && (stripos($info, 'AMD') !== false || stripos($info, 'NVIDIA') !== false))
+		if(phodevi::is_linux() && ($vendor = phodevi_linux_parser::read_pci_subsystem_value('VGA compatible controller')) != null && stripos($info, $vendor) === false && (stripos($info, 'AMD') !== false || stripos($info, 'NVIDIA') !== false || stripos($info, 'Intel') !== false))
 		{
 			$info = $vendor . ' ' . $info;
 		}
