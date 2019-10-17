@@ -1,8 +1,11 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 9.2.0 Milestone 1
+17 October 2019
 
 pts-core: New possible external dependencies for gflags, clang, uuid, tclsh
+pts-core: External dependencies updates for Windows
+pts-core: Crash fix for macOS in regression from PTS 9.0.1 launcher change
 
 Phoronix Test Suite 9.0.1-Asker
 1 October 2019
