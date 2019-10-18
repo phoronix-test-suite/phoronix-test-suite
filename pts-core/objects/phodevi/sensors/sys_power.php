@@ -64,6 +64,17 @@ class sys_power extends phodevi_sensor
 			}
 			return true;
 		}
+		if(pts_client::executable_in_path('wattsup'))
+		{
+			$wattsup = self::watts_up_power_meter();
+
+			if($wattsup > 0.5 && is_numeric($wattsup))
+			{
+				self::$wattsup_meter = true;
+				return true;
+			}
+		}
+
 		$test = self::sys_battery_power();
 		if(is_numeric($test) && $test != -1)
 		{
@@ -78,16 +89,6 @@ class sys_power extends phodevi_sensor
 			return true;
 		}
 
-		if(pts_client::executable_in_path('wattsup'))
-		{
-			$wattsup = self::watts_up_power_meter();
-
-			if($wattsup > 0.5 && is_numeric($wattsup))
-			{
-				self::$wattsup_meter = true;
-				return true;
-			}
-		}
 		if(is_readable('/sys/bus/i2c/drivers/ina3221x/0-0041/iio:device1/in_power0_input'))
 		{
 			$in_power0_input = pts_file_io::file_get_contents('/sys/bus/i2c/drivers/ina3221x/0-0041/iio:device1/in_power0_input');
