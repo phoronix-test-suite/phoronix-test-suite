@@ -184,6 +184,9 @@ class pts_tests
 		$extra_vars['MESA_VK_WSI_PRESENT_MODE'] = 'immediate'; // https://cgit.freedesktop.org/mesa/mesa/commit/?id=a182adfd83ad00e326153b00a725a014e0359bf0
 		$extra_vars['__GL_SYNC_TO_VBLANK'] = '0'; // Avoid sync to vblank with the NVIDIA binary drivers
 		$extra_vars['CCACHE_DISABLE'] = '1'; // Should avoid ccache being used in compiler tests
+		$extra_vars['OMPI_ALLOW_RUN_AS_ROOT'] = '1'; // Tests with mpirun should use --allow-run-as-root but otherwise this fallback
+		$extra_vars['OMPI_ALLOW_RUN_AS_ROOT_CONFIRM'] = '1'; // Tests with mpirun should use --allow-run-as-root but otherwise this fallback
+
 
 		foreach($test_profile->extended_test_profiles() as $i => $this_test_profile)
 		{
