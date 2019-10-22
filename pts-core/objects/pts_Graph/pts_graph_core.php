@@ -362,24 +362,24 @@ abstract class pts_graph_core
 	protected function get_paint_color($identifier, $check_branding = false)
 	{
 		// For now to try to improve the color handling of line graphs, first try to use a pre-defined pool of colors until falling back to the old color code once exhausted
-		if(!isset(self::$color_cache[$identifier]) || $check_branding)
+		if(!isset(self::$color_cache[$check_branding][$identifier]))
 		{
 			if(!empty(self::$c['color']['paint']))
 			{
-				self::$color_cache[$identifier] = array_shift(self::$c['color']['paint']);
+				self::$color_cache[$check_branding][$identifier] = array_shift(self::$c['color']['paint']);
 			}
 			else
 			{
-				self::$color_cache[$identifier] = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+				self::$color_cache[$check_branding][$identifier] = sprintf('#%06X', mt_rand(0, 0xFFFFFF));
 			}
 
 			if($check_branding)
 			{
-				self::$color_cache[$identifier] = self::identifier_to_branded_color($identifier, self::$color_cache[$identifier]);
+				self::$color_cache[$check_branding][$identifier] = self::identifier_to_branded_color($identifier, self::$color_cache[$check_branding][$identifier]);
 			}
 		}
 
-		return self::$color_cache[$identifier];
+		return self::$color_cache[$check_branding][$identifier];
 	}
 	protected function maximum_graph_value()
 	{
