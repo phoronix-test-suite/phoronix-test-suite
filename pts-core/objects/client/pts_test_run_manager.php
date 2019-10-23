@@ -110,7 +110,7 @@ class pts_test_run_manager
 	{
 		$this->skip_post_execution_options = true;
 	}
-	public function increase_run_count_check(&$test_run_request, &$active_result_buffer, $scheduled_times_to_run)
+	public function increase_run_count_check(&$test_run_request, &$active_result_buffer, $scheduled_times_to_run, $time_test_started = 0)
 	{
 		// returning false here will not yield extra test run, returning true will yield additional test run, returning -1 will abort/not-save current test result
 
@@ -128,6 +128,16 @@ class pts_test_run_manager
 				}
 			}
 			if($was_hit)
+			{
+				return true;
+			}
+		}
+
+		if($time_test_started && ($min_duration = getenv('FORCE_MIN_DURATION_PER_TEST')) != false)
+		{
+			// FORCE_MIN_DURATION_PER_TEST if wanting to force a test to run at least for a given amount of time (minutes)
+			$time_test_elapsed_so_far = microtime(true) - $time_test_started;
+			if(is_numeric($min_duration) && $time_test_elapsed_so_far < ($min_duration * 60))
 			{
 				return true;
 			}
