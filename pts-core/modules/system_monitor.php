@@ -49,7 +49,7 @@ class system_monitor extends pts_module_interface
 	private static $sensor_monitoring_frequency = 1;
 	private static $test_run_timer = 0;
 	private static $perf_per_sensor_collection;
-	private static $perf_per_sensor = null;
+	private static $perf_per_sensor = false;
 
 	public static function module_environmental_variables()
 	{
@@ -382,38 +382,40 @@ class system_monitor extends pts_module_interface
 
 	private static function enable_perf_per_sensor(&$sensor_parameters)
 	{
+		self::$perf_per_sensor = array();
 		if(pts_module::read_variable('PERFORMANCE_PER_WATT'))
 		{
 			// We need to ensure the system power consumption is being tracked to get performance-per-Watt
-			self::$perf_per_sensor = array('sys', 'power');
-			if(empty($sensor_parameters['sys']['power']))
-			{
-				$sensor_parameters['sys']['power'] = array();
-			}
-
-			self::$perf_per_sensor_collection = array();
+			self::$perf_per_sensor[] = array('sys', 'power');
 			echo PHP_EOL . 'To Provide Performance-Per-Watt Outputs.' . PHP_EOL;
 		}
-		else if(pts_module::read_variable('PERFORMANCE_PER_SENSOR'))
+		if(pts_module::read_variable('PERFORMANCE_PER_SENSOR'))
 		{
 			// We need to ensure the system power consumption is being tracked to get performance-per-(arbitrary sensor)
-			$per_sensor = explode('.', pts_module::read_variable('PERFORMANCE_PER_SENSOR'));
-			if(count($per_sensor) == 2)
+			foreach(explode(',', pts_module::read_variable('PERFORMANCE_PER_SENSOR')) as $s)
 			{
-				self::$perf_per_sensor = $per_sensor;
+				$per_sensor = explode('.', $s);
+				if(count($per_sensor) == 2)
+				{
+					self::$perf_per_sensor[] = $per_sensor;
+					echo PHP_EOL . 'To Provide Performance-Per-Sensor Outputs for ' . $per_sensor[0] . '.' . $per_sensor[1] . '.' . PHP_EOL;
+				}
 			}
-			else
+		}
+
+		if(empty(self::$perf_per_sensor))
+		{
+			return false;
+		}
+
+		foreach(self::$perf_per_sensor as $i => $s)
+		{
+			if(empty($sensor_parameters[$s[0]][$s[1]]))
 			{
-				return false;
+				$sensor_parameters[$s[0]][$s[1]] = array();
 			}
 
-			if(empty($sensor_parameters[self::$perf_per_sensor[0]][self::$perf_per_sensor[1]]))
-			{
-				$sensor_parameters[self::$perf_per_sensor[0]][self::$perf_per_sensor[1]] = array();
-			}
-
-			self::$perf_per_sensor_collection = array();
-			echo PHP_EOL . 'To Provide Performance-Per-Sensor Outputs for ' . self::$perf_per_sensor[0] . '.' . self::$perf_per_sensor[1] . '.' . PHP_EOL;
+			self::$perf_per_sensor_collection[$i] = array();
 		}
 	}
 
@@ -603,51 +605,54 @@ class system_monitor extends pts_module_interface
 
 	private static function process_perf_per_sensor(&$result_file)
 	{
-		$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_identifier(self::$perf_per_sensor), self::$individual_test_run_offsets[phodevi::sensor_identifier(self::$perf_per_sensor)]);
-
-		if(count($sensor_results) > 2 && self::$successful_test_run_request)
+		foreach(self::$perf_per_sensor as $i => $s)
 		{
-			// Copy the value each time as if you are directly writing the original data, each succeeding time in the loop the used arguments gets borked
-			$test_result = clone self::$successful_test_run_request;
-			$unit = 'Watt';
+			$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_identifier($s), self::$individual_test_run_offsets[phodevi::sensor_identifier($s)]);
 
-			$res_average = pts_math::arithmetic_mean($sensor_results);
-			switch(phodevi::read_sensor_unit(self::$perf_per_sensor))
+			if(count($sensor_results) > 2 && self::$successful_test_run_request)
 			{
-				case 'Milliwatts':
-					$watt_average = $watt_average / 1000;
-				case 'Watts':
-					break;
-				default:
-					$unit = phodevi::read_sensor_unit(self::$perf_per_sensor);
-			}
+				// Copy the value each time as if you are directly writing the original data, each succeeding time in the loop the used arguments gets borked
+				$test_result = clone self::$successful_test_run_request;
+				$unit = 'Watt';
 
-			if(!empty($unit) && $res_average > 0 && $test_result->test_profile->get_display_format() == 'BAR_GRAPH')
-			{
-				$test_result->test_profile->set_identifier(null);
-				//$test_result->set_used_arguments_description(phodevi::sensor_name('sys.power') . ' Monitor');
-				//$test_result->set_used_arguments(phodevi::sensor_name('sys.power') . ' ' . $test_result->get_arguments());
-				$test_result->test_result_buffer = new pts_test_result_buffer();
+				$res_average = pts_math::arithmetic_mean($sensor_results);
+				switch(phodevi::read_sensor_unit($s))
+				{
+					case 'Milliwatts':
+						$watt_average = $watt_average / 1000;
+					case 'Watts':
+						break;
+					default:
+						$unit = phodevi::read_sensor_unit($s);
+				}
 
-				if($test_result->test_profile->get_result_proportion() == 'HIB')
+				if(!empty($unit) && $res_average > 0 && $test_result->test_profile->get_display_format() == 'BAR_GRAPH')
 				{
-					$test_result->test_profile->set_result_scale($test_result->test_profile->get_result_scale() . ' Per ' . $unit);
-					$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision($test_result->active->get_result() / $res_average));
-					$ro = $result_file->add_result_return_object($test_result);
+					$test_result->test_profile->set_identifier(null);
+					//$test_result->set_used_arguments_description(phodevi::sensor_name('sys.power') . ' Monitor');
+					//$test_result->set_used_arguments(phodevi::sensor_name('sys.power') . ' ' . $test_result->get_arguments());
+					$test_result->test_result_buffer = new pts_test_result_buffer();
+
+					if($test_result->test_profile->get_result_proportion() == 'HIB')
+					{
+						$test_result->test_profile->set_result_scale($test_result->test_profile->get_result_scale() . ' Per ' . $unit);
+						$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision($test_result->active->get_result() / $res_average));
+						$ro = $result_file->add_result_return_object($test_result);
+					}
+					else if($test_result->test_profile->get_result_proportion() == 'LIB')
+					{
+						return; // with below code not rendering nicely
+						$test_result->test_profile->set_result_proportion('HIB');
+						$test_result->test_profile->set_result_scale('Performance Per ' . $unit);
+						$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision((1 / $test_result->active->get_result()) / $res_average));
+						$ro = $result_file->add_result_return_object($test_result);
+					}
+					if($ro)
+					{
+						pts_client::$display->test_run_success_inline($ro);
+					}
+					self::$perf_per_sensor_collection[$i][] = $test_result->active->get_result();
 				}
-				else if($test_result->test_profile->get_result_proportion() == 'LIB')
-				{
-					return; // with below code not rendering nicely
-					$test_result->test_profile->set_result_proportion('HIB');
-					$test_result->test_profile->set_result_scale('Performance Per ' . $unit);
-					$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision((1 / $test_result->active->get_result()) / $res_average));
-					$ro = $result_file->add_result_return_object($test_result);
-				}
-				if($ro)
-				{
-					pts_client::$display->test_run_success_inline($ro);
-				}
-				self::$perf_per_sensor_collection[] = $test_result->active->get_result();
 			}
 		}
 	}
@@ -655,25 +660,28 @@ class system_monitor extends pts_module_interface
 	// Saves average of perf-per-watt results to the result file.
 	private static function process_perf_per_sensor_collection(&$test_run_manager)
 	{
-		if(is_array(self::$perf_per_sensor_collection) && count(self::$perf_per_sensor_collection) > 2)
+		foreach(self::$perf_per_sensor as $i => $s)
 		{
-			// Performance per watt/sensor overall
-			$unit = self::$perf_per_sensor == array('sys', 'power') ? 'Watt' : phodevi::read_sensor_unit(self::$perf_per_sensor);
-			$avg = pts_math::geometric_mean(self::$perf_per_sensor_collection);
-			$test_profile = new pts_test_profile();
-			$test_result = new pts_test_result($test_profile);
-			$test_result->test_profile->set_test_title('Meta Performance Per ' . $unit);
-			$test_result->test_profile->set_identifier(null);
-			$test_result->test_profile->set_version(null);
-			$test_result->test_profile->set_result_proportion(null);
-			$test_result->test_profile->set_display_format('BAR_GRAPH');
-			$test_result->test_profile->set_result_scale('Performance Per ' . $unit);
-			$test_result->test_profile->set_result_proportion('HIB');
-			$test_result->set_used_arguments_description('Performance Per ' . $unit);
-			$test_result->set_used_arguments('Per-Per-' . $unit);
-			$test_result->test_result_buffer = new pts_test_result_buffer();
-			$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision($avg, 4));
-			$test_run_manager->result_file->add_result($test_result);
+			if(is_array(self::$perf_per_sensor_collection[$i]) && count(self::$perf_per_sensor_collection[$i]) > 2)
+			{
+				// Performance per watt/sensor overall
+				$unit = phodevi::read_sensor_unit($s);
+				$avg = pts_math::geometric_mean(self::$perf_per_sensor_collection[$i]);
+				$test_profile = new pts_test_profile();
+				$test_result = new pts_test_result($test_profile);
+				$test_result->test_profile->set_test_title('Meta Performance Per ' . $unit);
+				$test_result->test_profile->set_identifier(null);
+				$test_result->test_profile->set_version(null);
+				$test_result->test_profile->set_result_proportion(null);
+				$test_result->test_profile->set_display_format('BAR_GRAPH');
+				$test_result->test_profile->set_result_scale('Performance Per ' . $unit);
+				$test_result->test_profile->set_result_proportion('HIB');
+				$test_result->set_used_arguments_description('Performance Per ' . $unit);
+				$test_result->set_used_arguments('Per-Per-' . $unit);
+				$test_result->test_result_buffer = new pts_test_result_buffer();
+				$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision($avg, 4));
+				$test_run_manager->result_file->add_result($test_result);
+			}
 		}
 	}
 	private static function process_test_run_results(&$sensor, &$result_file)

@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 pts-core: Drop auto-compare sub-command since currently buggy / too server resource intensive
 pts-core: Add FORCE_MIN_DURATION_PER_TEST
+system_monitor: Allow multiple PERFORMANCE_PER_SENSOR= to be delimited by comma
 
 Phoronix Test Suite 9.2.0 Milestone 1
 17 October 2019
