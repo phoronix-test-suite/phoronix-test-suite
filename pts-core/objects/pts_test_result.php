@@ -27,6 +27,7 @@ class pts_test_result
 	private $used_arguments;
 	private $used_arguments_description;
 	private $result_precision = 2;
+	private $overrode_default_precision = false;
 
 	public $test_profile;
 	public $test_result_buffer;
@@ -87,13 +88,19 @@ class pts_test_result
 			$this->used_arguments_description .= ($this->used_arguments_description != null && $arguments_description[0] != ' ' ? ' ' : null) . $arguments_description;
 		}
 	}
-	public function set_result_precision($precision = 2)
+	public function set_result_precision($precision)
 	{
+		if(!is_numeric($precision) || $precision < 0)
+		{
+			return false;
+		}
+
 		$this->result_precision = $precision;
+		$this->overrode_default_precision = true;
 	}
 	public function get_result_precision()
 	{
-		if($this->result_precision == 2 && isset($this->active->results) && !empty($this->active->results))
+		if(!$this->overrode_default_precision && isset($this->active->results) && !empty($this->active->results))
 		{
 			// default precision
 			$p = pts_math::get_precision($this->active->results);
