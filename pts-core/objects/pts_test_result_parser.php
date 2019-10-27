@@ -136,7 +136,7 @@ class pts_test_result_parser
 				$end_time = microtime(true);
 
 				// Delta time
-				$result_value = $end_time - $sensor_r[3];
+				$result_value = round($end_time - $sensor_r[3], 3);
 
 				$minimal_test_time = pts_config::read_user_config('PhoronixTestSuite/Options/TestResultValidation/MinimalTestTime', 2);
 				if($result_value < $minimal_test_time)

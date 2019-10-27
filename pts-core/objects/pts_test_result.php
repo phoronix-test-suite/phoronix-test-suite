@@ -93,6 +93,16 @@ class pts_test_result
 	}
 	public function get_result_precision()
 	{
+		if($this->result_precision == 2 && isset($this->active->results) && !empty($this->active->results))
+		{
+			// default precision
+			$p = pts_math::get_precision($this->active->results);
+			if($p > 0 && $p < 10)
+			{
+				return $p;
+			}
+		}
+
 		return $this->result_precision;
 	}
 	public function set_used_arguments($used_arguments)
