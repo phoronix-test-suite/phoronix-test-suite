@@ -619,7 +619,7 @@ class system_monitor extends pts_module_interface
 				switch(phodevi::read_sensor_unit($s))
 				{
 					case 'Milliwatts':
-						$watt_average = $watt_average / 1000;
+						$res_average = $res_average / 1000;
 					case 'Watts':
 						break;
 					default:
