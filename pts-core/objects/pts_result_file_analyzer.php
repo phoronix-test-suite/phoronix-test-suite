@@ -185,7 +185,7 @@ class pts_result_file_analyzer
 				$test_result->test_result_buffer->add_test_result($identifier, pts_math::set_precision($values, 3));
 			}
 
-			if(!$result_file->is_multi_way_comparison() || $do_sort)
+			if((!$result_file->is_multi_way_comparison() && !$test_result->test_result_buffer->result_identifier_differences_only_numeric()) || $do_sort)
 			{
 				$test_result->sort_results_by_performance();
 				$test_result->test_result_buffer->buffer_values_reverse();

@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 pts-core: Drop auto-compare sub-command since currently buggy / too server resource intensive
 pts-core: Add FORCE_MIN_DURATION_PER_TEST
+pts-core: Don't sort geometric mean results when the only difference between result identifiers is numeric in nature
 pts-core: Allow preserving the precision of the original workload under test if not overriden by test profile
 system_monitor: Allow multiple PERFORMANCE_PER_SENSOR= to be delimited by comma
 
