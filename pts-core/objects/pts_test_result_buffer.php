@@ -423,6 +423,17 @@ class pts_test_result_buffer
 			{
 				$precision = 0;
 			}
+			else
+			{
+				$precision = 0;
+				foreach($this->buffer_items as &$buffer_item)
+				{
+					if(is_numeric(($val = $buffer_item->get_result_value())))
+					{
+						$precision = max($precision, pts_math::get_precision($val));
+					}
+				}
+			}
 		}
 		if(is_numeric($precision))
 		{
