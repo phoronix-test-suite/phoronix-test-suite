@@ -386,6 +386,7 @@ abstract class pts_graph_core
 		$real_maximum = 0;
 
 		$data_max = $this->test_result->test_result_buffer->get_max_value();
+		$max_precision = pts_math::get_precision($data_max);
 		if(!is_numeric($data_max))
 		{
 			if(is_array($data_max))
@@ -411,13 +412,14 @@ abstract class pts_graph_core
 
 				if($maximum > 1)
 				{
-					round($maximum);
+					pts_math::set_precision($maximum, $max_precision);
 				}
 			}
 			else
 			{
 				$maximum = (floor(round($real_maximum * $this->i['graph_max_value_multiplier']) / $this->i['mark_count']) + 1) * $this->i['mark_count'];
 				$maximum = round(ceil($maximum / $this->i['mark_count']), (0 - strlen($maximum) + 2)) * $this->i['mark_count'];
+				$maximum = pts_math::set_precision($maximum, $max_precision);
 			}
 		}
 		else

@@ -98,7 +98,7 @@ class pts_graph_vertical_bars extends pts_graph_core
 		$bar_width = floor(($this->i['identifier_width'] - $separator_width - ($bar_count * $separator_width)) / $bar_count);
 		$bar_font_size_ratio = 1;
 
-		while(floor($bar_width * 0.8) < self::text_string_width($this->i['graph_max_value'] + 0.01, floor(self::$c['size']['bars'] * $bar_font_size_ratio)) && $bar_font_size_ratio >= 0.6)
+		while(floor($bar_width * 0.8) < self::text_string_width($this->i['graph_max_value'], floor(self::$c['size']['bars'] * $bar_font_size_ratio)) && $bar_font_size_ratio >= 0.5)
 		{
 			$bar_font_size_ratio -= 0.05;
 		}

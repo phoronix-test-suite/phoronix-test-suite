@@ -328,9 +328,11 @@ class pts_test_result_buffer
 	{
 		$value = 0;
 		$max_id = null;
+		$precision = 2;
 
 		foreach($this->buffer_items as &$buffer_item)
 		{
+			$precision = max($precision, pts_math::get_precision($buffer_item->get_result_value()));
 			if($buffer_item->get_result_value() > $value)
 			{
 				$value = $buffer_item->get_result_value();
@@ -338,7 +340,7 @@ class pts_test_result_buffer
 			}
 		}
 
-		return $return_identifier ? $max_id : $value;
+		return $return_identifier ? $max_id : pts_math::set_precision($value, $precision);
 	}
 	public function get_min_value($return_identifier = false)
 	{
