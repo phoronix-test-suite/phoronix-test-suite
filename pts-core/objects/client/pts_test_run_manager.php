@@ -971,6 +971,12 @@ class pts_test_run_manager
 				$notes['cpu-scaling-governor'] = $scaling_governor;
 			}
 
+			$cpu_microcode = phodevi::read_property('cpu', 'microcode-version');
+			if($cpu_microcode)
+			{
+				$notes['cpu-microcode'] = $cpu_microcode;
+			}
+
 			// POWER processors have configurable SMT, 1-8 per core.
 			$smt = phodevi::read_property('cpu', 'smt');
 			if($smt)

@@ -934,10 +934,23 @@ class pts_result_file_analyzer
 			unset($json['disk-scheduler']);
 			unset($json['disk-mount-options']);
 		}
-		if(isset($json['cpu-scaling-governor']))
+		if(isset($json['cpu-scaling-governor']) || isset($json['cpu-microcode']))
 		{
-			$system_attributes['Processor'][$identifier] = 'Scaling Governor: ' . $json['cpu-scaling-governor'];
-			unset($json['cpu-scaling-governor']);
+			$cpu_data = array();
+
+			if(!empty($json['cpu-scaling-governor']))
+			{
+				$cpu_data[] = 'Scaling Governor: ' . $json['cpu-scaling-governor'];
+				unset($json['cpu-scaling-governor']);
+			}
+
+			if(!empty($json['cpu-microcode']))
+			{
+				$cpu_data[] = 'CPU Microcode: ' . $json['cpu-microcode'];
+				unset($json['cpu-microcode']);
+			}
+
+			$system_attributes['Processor'][$identifier] = implode(' - ', $cpu_data);
 		}
 		if(isset($json['cpu-smt']))
 		{

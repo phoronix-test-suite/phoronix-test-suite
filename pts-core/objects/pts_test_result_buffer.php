@@ -423,7 +423,7 @@ class pts_test_result_buffer
 			{
 				$precision = 0;
 			}
-			else
+			else if(false) // TODO XXX investigate whether this code path helps for vertical bar graphs with varying precision lengths
 			{
 				$precision = 0;
 				foreach($this->buffer_items as &$buffer_item)
