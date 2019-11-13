@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 9.2.0 Milestone 2
+13 November 2019
 
 pts-core: Drop auto-compare sub-command since currently buggy / too server resource intensive
 pts-core: Add FORCE_MIN_DURATION_PER_TEST

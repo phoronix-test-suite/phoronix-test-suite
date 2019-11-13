@@ -1,4 +1,4 @@
-.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "9.2.0m1"
+.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "9.2.0m2"
 .SH NAME
 phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source platform for performing testing and performance evaluation.
 .SH SYNOPSIS
@@ -45,9 +45,6 @@ This option will create a download cache for use by the Phoronix Test Suite. The
 This option will permanently remove a installed test by the Phoronix Test Suite.
 .TP
 .SH TESTING
-.B auto-compare
-This option will autonomously determine the most relevant test(s) to run for any selected sub-system(s). The tests to run are determined via OpenBenchmarking.org integration with the global results pool. Related test results from OpenBenchmarking.org are also merged to provide a straight-forward and effective means of carrying out a system comparison. If wishing to find comparable results for any particular test profile(s), simply pass the test profile names as additional arguments to this command.
-.TP
 .B benchmark [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option will install the selected test(s) (if needed) and will proceed to run the test(s). This option is equivalent to running phoronix-test-suite with the install option followed by the run option. Multiple arguments can be supplied to run additional tests at the same time and save the results into one file.
 .TP
