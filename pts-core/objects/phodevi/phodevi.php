@@ -125,6 +125,21 @@ class phodevi extends phodevi_base
 
 		return $selected;
 	}
+	public static function is_sensor_supported($sensor)
+	{
+		$supported = false;
+		$sensors = self::supported_sensors();
+		foreach($sensors as $s)
+		{
+			if($s[0] == $sensor[0] && $s[1] == $sensor[1])
+			{
+				$supported = true;
+				break;
+			}
+		}
+
+		return $supported;
+	}
 	public static function supported_sensors($limit_sensors = false)
 	{
 		static $supported_sensors = null;

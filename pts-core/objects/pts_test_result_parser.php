@@ -22,7 +22,6 @@
 
 class pts_test_result_parser
 {
-	private static $supported_sensors = null;
 	private static $monitoring_sensors = array();
 
 	protected static function gen_result_active_handle(&$root_result, $test_result = null)
@@ -64,13 +63,7 @@ class pts_test_result_parser
 				continue;
 			}
 
-			if(self::$supported_sensors == null)
-			{
-				// Cache this since this shouldn't change between tests/runs
-				self::$supported_sensors = phodevi::supported_sensors();
-			}
-
-			if(count($sensor) != 2 || !in_array($sensor, self::$supported_sensors))
+			if(count($sensor) != 2 || !phodevi::is_sensor_supported($sensor))
 			{
 				// Not a sensor or it's not supported
 				pts_client::test_profile_debug_message('No supported sensor found');

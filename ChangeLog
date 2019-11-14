@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+pts-core: Fix for sensor-driven result outputs (e.g. power)
+
 Phoronix Test Suite 9.2.0 Milestone 2
 13 November 2019
 
