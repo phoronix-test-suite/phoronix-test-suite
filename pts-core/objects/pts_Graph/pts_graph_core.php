@@ -785,7 +785,7 @@ abstract class pts_graph_core
 				switch($this->i['graph_proportion'])
 				{
 					case 'LIB':
-						$proportion = 'Less Is Better';
+						$proportion = 'Fewer Is Better';
 						$offset += 12;
 
 						if($this->i['graph_orientation'] == 'HORIZONTAL')
