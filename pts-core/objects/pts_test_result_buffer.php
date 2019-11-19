@@ -419,29 +419,36 @@ class pts_test_result_buffer
 		if($precision == 'auto')
 		{
 			// For very large results, little point in keeping the precision...
-			if($this->get_min_value() >= 100)
+			$min_value = $this->get_min_value();
+			$precision = -1;
+			if($min_value >= 100)
 			{
 				$precision = 0;
 			}
-			else if(false) // TODO XXX investigate whether this code path helps for vertical bar graphs with varying precision lengths
+			if($min_value >= 10)
 			{
-				$precision = 0;
-				foreach($this->buffer_items as &$buffer_item)
+				$precision = 2;
+			}
+
+			$current_precision = 0;
+			foreach($this->buffer_items as &$buffer_item)
+			{
+				if(is_numeric(($val = $buffer_item->get_result_value())))
 				{
-					if(is_numeric(($val = $buffer_item->get_result_value())))
-					{
-						$precision = max($precision, pts_math::get_precision($val));
-					}
+					$current_precision = max($current_precision, pts_math::get_precision($val));
 				}
 			}
+
+			$precision = $precision == -1 ? $current_precision : min($precision, $current_precision);
 		}
+
 		if(is_numeric($precision))
 		{
 			foreach($this->buffer_items as &$buffer_item)
 			{
 				if(is_numeric(($val = $buffer_item->get_result_value())))
 				{
-					$buffer_item->reset_result_value(pts_math::set_precision($val, $precision));
+					$buffer_item->reset_result_value(pts_math::set_precision($val, $precision), false);
 				}
 			}
 
