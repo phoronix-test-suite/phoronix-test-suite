@@ -52,10 +52,7 @@ class refresh_graphs implements pts_option_interface
 			$t[] = array(pts_client::cli_just_bold('Graph Size: '), $graph_bytes . ' Bytes');
 			echo pts_user_io::display_text_table($t) . PHP_EOL;
 			echo PHP_EOL . 'The ' . $identifier . ' result file graphs have been refreshed.' . PHP_EOL;
-			if(!defined('PHOROMATIC_PROCESS'))
-			{
-				pts_client::display_result_view($identifier, false);
-			}
+			pts_client::display_result_view($identifier, false);
 		}
 	}
 }
