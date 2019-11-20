@@ -1859,6 +1859,11 @@ class pts_client
 	}
 	public static function display_result_view($result_file, $auto_open = false, $prompt_text = null)
 	{
+		if(defined('PHOROMATIC_PROCESS'))
+		{
+			return false;
+		}
+
 		if(!is_object($result_file))
 		{
 			$result_file = new pts_result_file($result_file);
