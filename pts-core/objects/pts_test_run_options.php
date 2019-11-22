@@ -552,12 +552,19 @@ class pts_test_run_options
 
 				for($i = 0; $i < count($names) && $i < count($values); $i++)
 				{
-					// Only show Direct3D renderer options when running on Windows or similar (i.e. Wine)
-					if((stripos($names[$i], 'Direct3D') === false && stripos($names[$i], 'D3D') === false) || phodevi::os_under_test() == 'Windows' || in_array('wine', $test_profile->get_external_dependencies()))
+					if((stripos($names[$i], 'Direct3D') === false || stripos($names[$i], 'D3D') === false) && phodevi::os_under_test() != 'Windows' && !in_array('wine', $test_profile->get_external_dependencies()))
 					{
-						$option_names[] = $names[$i];
-						$option_values[] = $values[$i];
+						// Only show Direct3D renderer options when running on Windows or similar (i.e. Wine)
+						continue;
 					}
+					if((stripos($names[$i], 'NVIDIA ') === false || stripos($names[$i] . ' ', 'CUDA ') === false) && !phodevi::is_nvidia_graphics())
+					{
+						// Only show NVIDIA / CUDA options when running with NVIDIA hardware
+						continue;
+					}
+
+					$option_names[] = $names[$i];
+					$option_values[] = $values[$i];
 				}
 				break;
 		}
