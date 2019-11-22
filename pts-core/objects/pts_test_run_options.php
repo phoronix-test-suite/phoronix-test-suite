@@ -552,7 +552,7 @@ class pts_test_run_options
 
 				for($i = 0; $i < count($names) && $i < count($values); $i++)
 				{
-					if((stripos($names[$i], 'Direct3D') === false || stripos($names[$i], 'D3D') === false) && phodevi::os_under_test() != 'Windows' && !in_array('wine', $test_profile->get_external_dependencies()))
+					if((stripos($names[$i], 'Direct3D') !== false || stripos($names[$i], 'D3D') !== false) && phodevi::os_under_test() != 'Windows' && !in_array('wine', $test_profile->get_external_dependencies()))
 					{
 						// Only show Direct3D renderer options when running on Windows or similar (i.e. Wine)
 						continue;
