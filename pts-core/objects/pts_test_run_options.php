@@ -567,6 +567,29 @@ class pts_test_run_options
 					$option_values[] = $values[$i];
 				}
 				break;
+			default:
+				if(PTS_IS_CLIENT == false)
+				{
+					return;
+				}
+
+				$names = $option_names;
+				$values = $option_values;
+				$option_names = array();
+				$option_values = array();
+
+				for($i = 0; $i < count($names) && $i < count($values); $i++)
+				{
+					if((stripos($names[$i], 'NVIDIA ') === false || stripos($names[$i] . ' ', 'CUDA ') === false) && !phodevi::is_nvidia_graphics())
+					{
+						// Only show NVIDIA / CUDA options when running with NVIDIA hardware
+						continue;
+					}
+
+					$option_names[] = $names[$i];
+					$option_values[] = $values[$i];
+				}
+				break;
 		}
 	}
 }
