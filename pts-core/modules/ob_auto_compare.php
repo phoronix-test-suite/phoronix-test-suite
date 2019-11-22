@@ -175,8 +175,9 @@ class ob_auto_compare extends pts_module_interface
 				$sample_count = $json_response['openbenchmarking']['result']['ae']['samples'];
 				$first_appeared = $json_response['openbenchmarking']['result']['ae']['first_appeared'];
 
-				if(empty($first_appeared) || !is_numeric($first_appeared))
+				if(empty($first_appeared) || !is_numeric($first_appeared) || $first_appeared < 1298678400)
 				{
+					// OpenBenchmarking launch date so anything below that would be incorrect timing
 					$first_appeared = strtotime('2011-02-26');
 				}
 
