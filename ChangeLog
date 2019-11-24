@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 pts-core: Fix for sensor-driven result outputs (e.g. power)
 pts-core: Clean up precision handling on graphs
+pts-core: Add Clear Linux external dependencies handling for when not relying upon the Clear bundles that include all known dependencies
 
 Phoronix Test Suite 9.2.0 Milestone 2
 13 November 2019
