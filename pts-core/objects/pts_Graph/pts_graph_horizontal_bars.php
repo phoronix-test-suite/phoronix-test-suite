@@ -49,7 +49,13 @@ class pts_graph_horizontal_bars extends pts_graph_core
 		}
 		$middle_of_vert = round($this->i['top_start'] + ($this->i['is_multi_way_comparison'] ? 5 : 0) - ($this->i['identifier_height'] * 0.5) - 2);
 
-		$g = $this->svg_dom->make_g(array('font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers'], 'font-weight' => 'bold'));
+		$g = array('font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers'], 'font-weight' => 'bold');
+		if($this->i['is_multi_way_comparison'])
+		{
+			$g['font-size']--;
+			unset($g['font-weight']);
+		}
+		$g = $this->svg_dom->make_g($g);
 		foreach($this->graph_identifiers as $identifier)
 		{
 			$middle_of_vert += $this->i['identifier_height'];
