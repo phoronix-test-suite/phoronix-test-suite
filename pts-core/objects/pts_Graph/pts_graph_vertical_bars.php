@@ -103,11 +103,11 @@ class pts_graph_vertical_bars extends pts_graph_core
 			$bar_font_size_ratio -= 0.05;
 		}
 
-		$i_o = 0;
+		$group_offsets = array();
+		$id_offsets = array();
 		foreach($this->results as $identifier => &$group)
 		{
 			$paint_color = $this->get_paint_color($identifier);
-			$i = 0;
 			foreach($group as &$buffer_item)
 			{
 				if($identifier == 0 && !$this->i['is_multi_way_comparison'])
@@ -116,6 +116,11 @@ class pts_graph_vertical_bars extends pts_graph_core
 					$paint_color = self::identifier_to_branded_color($buffer_item->get_result_identifier(), $this->get_paint_color($identifier));
 				}
 
+				$i_o = $this->calc_offset($group_offsets, $identifier);
+				if($this->i['is_multi_way_comparison'])
+					$i = $this->calc_offset($id_offsets, $buffer_item->get_result_identifier());
+				else
+					$i = $this->calc_offset($id_offsets, $buffer_item->get_result_identifier() . ' ' . $value);
 				$value = $buffer_item->get_result_value();
 				$graph_size = round(($value / $this->i['graph_max_value']) * ($this->i['graph_top_end'] - $this->i['top_start']));
 				$value_plot_top = max($this->i['graph_top_end'] + 1 - $graph_size, 1);
@@ -155,9 +160,7 @@ class pts_graph_vertical_bars extends pts_graph_core
 						$this->svg_dom->add_text_element($value, array('x' => $x, 'y' => ($value_plot_top + 2), 'font-size' => floor(self::$c['size']['bars'] * $bar_font_size_ratio), 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 					}
 				}
-				$i++;
 			}
-			$i_o++;
 		}
 		// write a new line along the bottom since the draw_rectangle_with_border above had written on top of it
 		$this->svg_dom->draw_svg_line($this->i['left_start'], $this->i['graph_top_end'], $this->i['graph_left_end'], $this->i['graph_top_end'], self::$c['color']['notches'], 1);
