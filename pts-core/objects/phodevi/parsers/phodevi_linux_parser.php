@@ -128,7 +128,7 @@ class phodevi_linux_parser
 						continue;
 					}
 				}
-var_dump($sysfs_file);
+
 				$sysfs_value = pts_file_io::file_get_contents($sysfs_file);
 
 				switch($type)
