@@ -86,11 +86,11 @@ class cpu_temp extends phodevi_sensor
 	{
 		$temp_c = -1;
 		// Try hwmon interface
-		$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/temp2_input', 'POSITIVE_NUMERIC', array('name' => 'coretemp'));
+		$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/temp*_input', 'POSITIVE_NUMERIC', array('name' => 'coretemp'));
 
 		if($raw_temp == -1)
 		{
-			$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/temp1_input', 'POSITIVE_NUMERIC', array('name' => 'k10temp'));
+			$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/temp*_input', 'POSITIVE_NUMERIC', array('name' => 'k10temp'));
 		}
 
 		if($raw_temp == -1)
