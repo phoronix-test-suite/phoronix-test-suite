@@ -98,10 +98,12 @@ class sys_power extends phodevi_sensor
 				return true;
 			}
 		}
-		if(is_readable('/sys/class/hwmon/hwmon0/device/name') && pts_file_io::file_get_contents('/sys/class/hwmon/hwmon0/device/name') == 'power_meter' && is_readable('/sys/class/hwmon/hwmon0/device/power1_average'))
+
+		$hwmon_power = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/device/power*_average', 'POSITIVE_NUMERIC', array('name' => 'power_meter'), 1, true);
+		if($hwmon_power != -1)
 		{
 			// Intel node manager -Meter measures total domain
-			self::$hwmon_power_meter = true;
+			self::$hwmon_power_meter = $hwmon_power;
 			return true;
 		}
 		if(pts_client::executable_in_path('ipmitool'))
@@ -170,7 +172,7 @@ class sys_power extends phodevi_sensor
 		}
 		else if(self::$hwmon_power_meter)
 		{
-			$p = pts_file_io::file_get_contents('/sys/class/hwmon/hwmon0/device/power1_average');
+			$p = pts_file_io::file_get_contents(self::$hwmon_power_meter);
 			if($p > 1000000)
 			{
 				$p = $p / 1000000;

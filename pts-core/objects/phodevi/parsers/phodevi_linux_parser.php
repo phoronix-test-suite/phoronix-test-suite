@@ -72,7 +72,7 @@ class phodevi_linux_parser
 
 		return $value;
 	}
-	public static function read_sysfs_node($search, $type = 'NUMERIC', $node_dir_check = null, $find_position = 1)
+	public static function read_sysfs_node($search, $type = 'NUMERIC', $node_dir_check = null, $find_position = 1, $return_node = false)
 	{
 		static $sysfs_file_cache = null;
 		$arg_hash = crc32(serialize(func_get_args()));
@@ -172,6 +172,11 @@ class phodevi_linux_parser
 			{
 				$sysfs_file_cache[$arg_hash] = false;
 			}
+		}
+
+		if($return_node)
+		{
+			return $sysfs_file_cache[$arg_hash] == false ? -1 : $sysfs_file;
 		}
 
 		return $sysfs_file_cache[$arg_hash] == false ? -1 : pts_file_io::file_get_contents($sysfs_file_cache[$arg_hash]);
