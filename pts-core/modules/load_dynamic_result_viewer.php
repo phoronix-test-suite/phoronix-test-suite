@@ -150,7 +150,7 @@ class load_dynamic_result_viewer extends pts_module_interface
 			$env = array(
 			'PTS_VIEWER_ACCESS_KEY' => $access_key,
 			'PTS_VIEWER_RESULT_PATH' => PTS_SAVE_RESULTS_PATH,
-			'PTS_VIEWER_PTS_PATH' => getenv('PTS_DIR'),
+			'PTS_VIEWER_PTS_PATH' => PTS_PATH,
 			);
 
 			self::$process = proc_open(getenv('PHP_BIN') . ' -S ' . $server_ip . ':' . $web_port . ' -t ' . PTS_CORE_PATH . 'static/dynamic-result-viewer/ ', $descriptorspec, self::$pipes, $cwd, $env);
