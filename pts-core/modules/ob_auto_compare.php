@@ -283,7 +283,7 @@ class ob_auto_compare extends pts_module_interface
 						if($terminal_width <= 80)
 						{
 							// Try to shorten up some components/identifiers if terminal narrow to fit in more data
-							$component = trim(str_replace(array('AMD', 'Intel', 'NVIDIA', 'Radeon', 'GeForce', '  '), '', $component));
+							$component = trim(str_replace(array('AMD', 'Intel', 'NVIDIA', 'Radeon', 'GeForce', '  '), '', str_replace(' x ', ' x  ', $component)));
 						}
 
 						foreach(array('-Core', ' with ') as $cutoff)
