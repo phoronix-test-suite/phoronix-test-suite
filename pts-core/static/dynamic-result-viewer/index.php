@@ -63,6 +63,7 @@ else
 	if(!is_file('result_viewer_config.php'))
 	{
 		echo '<p>You must configure result_viewer_config.php!</p>';
+		echo '<p>Current debug values: PTS_VIEWER_RESULT_PATH = ' . getenv('PTS_VIEWER_RESULT_PATH') . ' PTS_VIEWER_PTS_PATH = ' . getenv('PTS_VIEWER_PTS_PATH') . '</p>';
 		exit;
 	}
 	require('result_viewer_config.php');
