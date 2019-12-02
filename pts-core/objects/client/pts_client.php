@@ -1869,6 +1869,7 @@ class pts_client
 			$result_file = new pts_result_file($result_file);
 		}
 
+echo 'xxx' . pts_network::http_get_contents('http://localhost:' . pts_client::$web_result_viewer_active . '/index.php?PTS', false, false, false, false, 2);
 		if(!phodevi::is_display_server_active())
 		{
 			$prompt_text = !empty($prompt_text) ? $prompt_text : 'Do you want to view the test results?';
@@ -1878,13 +1879,13 @@ class pts_client
 				echo pts_result_file_output::result_file_to_text($result_file, pts_client::terminal_width());
 			}
 		}
-		else if(pts_client::$web_result_viewer_active && pts_network::http_get_contents('http://localhost:' . pts_client::$web_result_viewer_active . '/PTS', false, false, false, false, 2) == 'PTS')
+		else if(pts_client::$web_result_viewer_active && pts_network::http_get_contents('http://localhost:' . pts_client::$web_result_viewer_active . '/index.php?PTS', false, false, false, false, 2) == 'PTS')
 		{
 			pts_client::$has_used_modern_result_viewer = true;
 			pts_client::$last_result_view_url = 'http://localhost:' . pts_client::$web_result_viewer_active . '/result/' . $result_file->get_identifier();
 			$length_browser_open = pts_client::display_web_page(pts_client::$last_result_view_url, $prompt_text, true, $auto_open);
 		}
-		else if(pts_client::$web_result_viewer_active && pts_network::http_get_contents('http://127.0.0.1:' . pts_client::$web_result_viewer_active . '/PTS', false, false, false, false, 2) == 'PTS')
+		else if(pts_client::$web_result_viewer_active && pts_network::http_get_contents('http://127.0.0.1:' . pts_client::$web_result_viewer_active . '/index.php?PTS', false, false, false, false, 2) == 'PTS')
 		{
 			pts_client::$has_used_modern_result_viewer = true;
 			pts_client::$last_result_view_url = 'http://127.0.0.1:' . pts_client::$web_result_viewer_active . '/result/' . $result_file->get_identifier();

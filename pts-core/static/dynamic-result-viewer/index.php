@@ -83,6 +83,13 @@ pts_define_directories();
 set_time_limit(0);
 ini_set('memory_limit','2048M');
 
+if(isset($_GET['PTS']))
+{
+	// Test for client to see if resolving properly
+	echo 'PTS';
+	exit;
+}
+
 // Authenticate user and set session variables
 if(isset($_POST['access_key']))
 {
