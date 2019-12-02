@@ -167,17 +167,18 @@ class pts_result_viewer_settings
 	public static function process_helper_html(&$request, &$result_file, &$extra_attributes)
 	{
 		// Result export?
+		$result_title = (isset($_GET['result']) ? $_GET['result'] : 'result');
 		switch(isset($_REQUEST['export']) ? $_REQUEST['export'] : null)
 		{
 			case 'pdf':
 				header('Content-Type: application/pdf');
-				$pdf_output = pts_result_file_output::result_file_to_pdf($result_file, (isset($_GET['result']) ? $_GET['result'] : 'result') . '.pdf', 'D', $extra_attributes);
+				$pdf_output = pts_result_file_output::result_file_to_pdf($result_file, $result_title . '.pdf', 'D', $extra_attributes);
 				exit;
 			case 'csv':
 				$result_csv = pts_result_file_output::result_file_to_csv($result_file);
 				header('Content-Description: File Transfer');
 				header('Content-Type: application/csv');
-				header('Content-Disposition: attachment; filename=' . $_GET['result']. '.csv');
+				header('Content-Disposition: attachment; filename=' . $result_title . '.csv');
 				header('Expires: 0');
 				header('Cache-Control: must-revalidate');
 				header('Pragma: public');
@@ -188,7 +189,7 @@ class pts_result_viewer_settings
 				$result_csv = pts_result_file_output::result_file_raw_to_csv($result_file);
 				header('Content-Description: File Transfer');
 				header('Content-Type: application/csv');
-				header('Content-Disposition: attachment; filename=' . $_GET['result']. '.csv');
+				header('Content-Disposition: attachment; filename=' . $result_title . '.csv');
 				header('Expires: 0');
 				header('Cache-Control: must-revalidate');
 				header('Pragma: public');
@@ -199,7 +200,7 @@ class pts_result_viewer_settings
 				$result_txt = pts_result_file_output::result_file_to_text($result_file);
 				header('Content-Description: File Transfer');
 				header('Content-Type: text/plain');
-				header('Content-Disposition: attachment; filename=' . $_GET['result']. '.txt');
+				header('Content-Disposition: attachment; filename=' . $result_title . '.txt');
 				header('Expires: 0');
 				header('Cache-Control: must-revalidate');
 				header('Pragma: public');

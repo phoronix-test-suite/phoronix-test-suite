@@ -1922,14 +1922,14 @@ function _enddoc()
 // Multi-Cell Table: http://www.fpdf.org/en/script/script3.php
 function Row($data, $widths, &$row_num = -1, $hints = null)
 {
-	$this->SetFont('', '', $hints[0] == 'small' ? 7 : 9);
+	$this->SetFont('', '', isset($hints[0]) && $hints[0] == 'small' ? 7 : 9);
 	//Calculate the height of the row
 	$nb = 0;
 	for($i=0;$i<count($data);$i++)
 	{
 		$nb=max($nb,$this->NbLines($widths[$i],$data[$i]));
 	}
-	$h=($hints[0] == 'small' ? 4 : 5)*$nb;
+	$h=(isset($hints[0]) && $hints[0] == 'small' ? 4 : 5)*$nb;
 	//Issue a page break first if needed
 		$this->CheckPageBreak($h);
 
