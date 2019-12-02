@@ -44,7 +44,7 @@ class phoromatic_result implements pts_webui_interface
 		{
 			$upload_ids = explode(',', $PATH[0]);
 
-			foreach($upload_ids as $i => $upload_id)
+			foreach($upload_ids as $i => &$upload_id)
 			{
 				if(($x = strpos($upload_id, '&')) !== false)
 				{
