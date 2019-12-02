@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>KeyDB</Title>
+    <AppVersion>5.0.2</AppVersion>
+    <Description>A benchmark of KeyDB as a multi-threaded fork of the Redis server.</Description>
+    <ResultScale>Requests Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, libevent, pcre, openssl-development, libtool, curl, uuid</ExternalDependencies>
+    <EnvironmentSize>69</EnvironmentSize>
+    <ProjectURL>https://github.com/JohnSully/KeyDB</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-n 250000</Arguments>
+    </Default>
+  </TestSettings>
+</PhoronixTestSuite>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>  sec=45.6861, msec/image=#_RESULT_#</OutputTemplate>
+    <LineHint>msec/image</LineHint>
+    <DivideResultDivisor>1000</DivideResultDivisor>
+  </ResultsParser>
+</PhoronixTestSuite>

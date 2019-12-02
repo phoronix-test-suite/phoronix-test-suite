@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>[Elapsed time:  15/20sec][Samples   17/1000][Convergence 0.000000%][Avg. samples/sec  #_RESULT_# on 66.6K tris]</OutputTemplate>
+    <LineHint>Avg. samples</LineHint>
+    <StripFromResult>M</StripFromResult>
+    <MultiMatch>AVERAGE</MultiMatch>
+  </ResultsParser>
+</PhoronixTestSuite>

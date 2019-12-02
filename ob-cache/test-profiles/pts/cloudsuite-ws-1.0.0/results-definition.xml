@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>         metric unit="ops/sec" #_RESULT_# /metric</OutputTemplate>
+    <LineHint>ops/sec</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

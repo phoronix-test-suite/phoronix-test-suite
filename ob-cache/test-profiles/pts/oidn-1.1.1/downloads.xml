@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/OpenImageDenoise/oidn/releases/download/v1.0.0/oidn-1.0.0.x86_64.linux.tar.gz</URL>
+      <MD5>aa4e637391b55cb711199a24d844d9d2</MD5>
+      <SHA256>0dec0d198cfac6076ed75dc63fa8319e26f7fe90a0f6249b387ae06dbbd97fe1</SHA256>
+      <FileName>oidn-1.0.0.x86_64.linux.tar.gz</FileName>
+      <FileSize>37473708</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/OpenImageDenoise/oidn/releases/download/v1.0.0/oidn-1.0.0.x64.vc14.windows.zip</URL>
+      <MD5>0e9bbcd03239777dd46d0f79f5da7d8a</MD5>
+      <SHA256>4b15436de54a8eccd5d0917ab1c8626e0d80b3b8600c4133cafa356f4e93d21d</SHA256>
+      <FileName>oidn-1.0.0.x64.vc14.windows.zip</FileName>
+      <FileSize>36903887</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/OpenImageDenoise/oidn/releases/download/v1.0.0/oidn-1.0.0.x86_64.macos.tar.gz</URL>
+      <MD5>88ddc24dca5f8ac7a1255a8a7d062a08</MD5>
+      <SHA256>714e96c142f2cce639edc829eca5ab52fdd540e24e49cbd0d592256328af460a</SHA256>
+      <FileName>oidn-1.0.0.x86_64.macos.tar.gz</FileName>
+      <FileSize>37260041</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.pauldebevec.com/Research/HDR/memorial.pfm</URL>
+      <MD5>cdd4e9fafd6c221cbbe9845414cd46c8</MD5>
+      <SHA256>7408901b58365dd4b974dfa5dd7294e52bfb2fe3671452f3c3e0510eebbf66f3</SHA256>
+      <FileName>memorial.pfm</FileName>
+      <FileSize>4718613</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

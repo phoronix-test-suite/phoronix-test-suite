@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.0m3-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>AOM AV1</Title>
+    <AppVersion>2019-09-16</AppVersion>
+    <Description>This is a simple test of the AOMedia AV1 encoder run on the CPU with a sample video file.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <SubTitle>AV1 Video Encoding</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.0</Version>
+    <SupportedPlatforms>Linux, MacOSX, BSD</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, p7zip, cmake, perl, yasm</ExternalDependencies>
+    <EnvironmentSize>369</EnvironmentSize>
+    <ProjectURL>https://aomedia.googlesource.com/aom/</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

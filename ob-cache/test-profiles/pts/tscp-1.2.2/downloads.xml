@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/tscp181_pts.tar.bz2</URL>
+      <MD5>89bed77fd19598f5dde61ff58ac0721f</MD5>
+      <SHA256>980cefbefcf1ae101eb98ae298db167c1a88a2692902a939e9d61443be730099</SHA256>
+      <FileName>tscp181_pts.tar.bz2</FileName>
+      <FileSize>17656</FileSize>
+      <PlatformSpecific>Linux, BSD, Solaris</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.tckerrigan.com/Chess/TSCP/tscp181.exe.zip</URL>
+      <MD5>dbd266e6e11e8b28ebf2b16e2971e93e</MD5>
+      <SHA256>1a511267c29e8861b4e93d09454ef4b094f341d9867b7514be667543d88a0447</SHA256>
+      <FileName>tscp181.exe.zip</FileName>
+      <FileSize>54248</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

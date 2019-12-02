@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/JohnSully/KeyDB/archive/v5.0.2.tar.gz</URL>
+      <MD5>a65ee0695716d5ff5f65acc69d2a0855</MD5>
+      <SHA256>3457075153a9c588caaf22d3e7d7fd214c56c60c19401a2d1fe8c46ca30d98bf</SHA256>
+      <FileName>KeyDB-5.0.2.tar.gz</FileName>
+      <FileSize>3016462</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

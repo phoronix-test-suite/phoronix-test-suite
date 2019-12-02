@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.0m3-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Totals     #_RESULT_#     13833.49     36766.29     63.52700      6330.95 </OutputTemplate>
+    <LineHint>Totals</LineHint>
+    <ResultScale>Ops/sec</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+</PhoronixTestSuite>

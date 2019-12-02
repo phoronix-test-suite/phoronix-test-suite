@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate> MFLOPS measured : #_RESULT_#	cpu : 59.868463</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

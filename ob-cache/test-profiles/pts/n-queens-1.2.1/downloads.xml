@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/qn24b-version1.0.tgz</URL>
+      <MD5>10fc6239b5e037b3c86890918d33b8f3</MD5>
+      <SHA256>5bc6c794f91feb2d904f695d5fd84029097c3b36bb4053931b467ef7e9011010</SHA256>
+      <FileName>qn24b-version1.0.tgz</FileName>
+      <FileSize>213360</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

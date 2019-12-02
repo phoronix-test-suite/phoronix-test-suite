@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/mtdgemm-crossroads-v1.0.0.tgz</URL>
+      <MD5>b133bd78e7864cef498f92b03176cafd</MD5>
+      <SHA256>ba0a6222ae82e89ec3e2c26b22f2d4d9999993f436d9980c57b0ade660d12649</SHA256>
+      <FileName>mtdgemm-crossroads-v1.0.0.tgz</FileName>
+      <FileSize>4082</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>ACES DGEMM</Title>
+    <AppVersion>1.0</AppVersion>
+    <Description>This is a multi-threaded DGEMM benchmark.</Description>
+    <ResultScale>GFLOP/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <SubTitle>Sustained Floating-Point Rate</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.0</Version>
+    <SupportedPlatforms>Linux, Solaris, MacOSX, BSD</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>1</EnvironmentSize>
+    <ProjectURL>https://www.lanl.gov/projects/crossroads/benchmarks-performance-analysis.php</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>3072 4</Arguments>
+    </Default>
+  </TestSettings>
+</PhoronixTestSuite>

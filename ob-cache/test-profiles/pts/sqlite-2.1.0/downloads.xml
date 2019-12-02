@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://sqlite.org/2019/sqlite-autoconf-3300100.tar.gz</URL>
+      <MD5>51252dc6bc9094ba11ab151ba650ff3c</MD5>
+      <SHA256>8c5a50db089bd2a1b08dbc5b00d2027602ca7ff238ba7658fabca454d4298e60</SHA256>
+      <FileName>sqlite-autoconf-3300100.tar.gz</FileName>
+      <FileSize>2848951</FileSize>
+    </Package>
+    <Package>
+      <URL>http://sqlite.org/2019/sqlite-tools-win32-x86-3300100.zip</URL>
+      <MD5>6211b900660fa63f4dbaa6ab0734a9d0</MD5>
+      <SHA256>64027558a7928fe7e6e5cbed0471a0b709591276ce132a457ec09bddca887258</SHA256>
+      <FileName>sqlite-tools-win32-x86-3300100.zip</FileName>
+      <FileSize>1806671</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/pts-sqlite-tests-1.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/pts-sqlite-tests-1.tar.gz</URL>
+      <MD5>153e725642619e38766ddf8359f65cfe</MD5>
+      <SHA256>1067f047461e21fd56e2a6ae03043c687047d00192ffdbe5b52271cd39de442f</SHA256>
+      <FileName>pts-sqlite-tests-1.tar.gz</FileName>
+      <FileSize>42835</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

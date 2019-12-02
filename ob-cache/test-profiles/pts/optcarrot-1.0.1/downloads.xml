@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/ocarrot-20180404.tar.xz</URL>
+      <MD5>965c2905ac7159da38965b3530bbaac6</MD5>
+      <SHA256>27a4ea493571de2ba64cf13cb000a5a34f2970de3a6842afd03da62ff6a8ad66</SHA256>
+      <FileName>ocarrot-20180404.tar.xz</FileName>
+      <FileSize>2666452</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Shadow of the Tomb Raider</Title>
+    <Description>Shadow of the Tomb Raider on Steam.
+
+The test profile assumes you have a Steam account, have Steam installed for the system, and that you own a copy of this game. This automates the process of executing the game and using its built-in benchmark mode.
+
+Backs up old preferences (in ~/.local/share/feral-interactive/) for the run.
+
+    </Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+    <IgnoreRuns>1</IgnoreRuns>
+    <PreInstallMessage>This test will attempt to install the necessary game using your Steam account. If the test appears hung you may need to manually exit the Steam client.</PreInstallMessage>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Game</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Retail</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <RequiresDisplay>TRUE</RequiresDisplay>
+    <EnvironmentSize>2</EnvironmentSize>
+    <EstimatedTimePerRun>3240</EstimatedTimePerRun>
+    <ProjectURL>https://store.steampowered.com/app/750920/</ProjectURL>
+    <Maintainer>NVIDIA</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>$VIDEO_WIDTH $VIDEO_HEIGHT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Graphics Preset</DisplayName>
+      <Identifier>graphics-preset</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Lowest</Name>
+          <Value>Lowest</Value>
+        </Entry>
+        <Entry>
+          <Name>Low</Name>
+          <Value>Low</Value>
+        </Entry>
+        <Entry>
+          <Name>Medium</Name>
+          <Value>Medium</Value>
+        </Entry>
+        <Entry>
+          <Name>High</Name>
+          <Value>High</Value>
+        </Entry>
+        <Entry>
+          <Name>Highest</Name>
+          <Value>Highest</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Anti Aliasing</DisplayName>
+      <Identifier>anti-aliasing</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Off</Name>
+          <Value>0</Value>
+        </Entry>
+        <Entry>
+          <Name>SMAA</Name>
+          <Value>1</Value>
+          <Message>Subpixel Morphological AA</Message>
+        </Entry>
+        <Entry>
+          <Name>TAA</Name>
+          <Value>2</Value>
+          <Message>Temporal AA</Message>
+        </Entry>
+        <Entry>
+          <Name>SMAAT2x</Name>
+          <Value>3</Value>
+          <Message>Blend of SMAA and TAA</Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>QMCPACK</Title>
+    <AppVersion>3.8</AppVersion>
+    <Description>QMCPACK is a modern high-performance open-source Quantum Monte Carlo (QMC) simulation code making use of MPI for this benchmark of the H20 example code.</Description>
+    <ResultScale>Total Execution Time - Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.3</Version>
+    <SupportedPlatforms>Linux, BSD</SupportedPlatforms>
+    <SoftwareType>Scientific</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>openmpi-development, fftw3-development, build-utilities, boost-development, cmake, hdf5, libxml2, lapack-development</ExternalDependencies>
+    <EnvironmentSize>1200</EnvironmentSize>
+    <ProjectURL>http://qmcpack.org/</ProjectURL>
+    <InternalTags>SMP, MPI</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>IOR</Title>
+    <AppVersion>3.2.1</AppVersion>
+    <Description>IOR is a parallel I/O storage benchmark.</Description>
+    <ResultScale>MB/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Disk</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>3</EnvironmentSize>
+    <ProjectURL>https://github.com/hpc/ior</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-v -w -r -i 100 -e -a POSIX -B -q</Arguments>
+    </Default>
+  </TestSettings>
+</PhoronixTestSuite>

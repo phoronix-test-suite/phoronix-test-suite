@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.neatvideo.com/nb/nv5/NeatBench5_Linux64.tgz</URL>
+      <MD5>b4b25a87de9fe4591d297667f0c9cc70</MD5>
+      <SHA256>f5ba46a0a8250a40af27e351d1b51b94ba083a824f61a02ac8bd7891f8a3975f</SHA256>
+      <FileName>NeatBench5_Linux64.tgz</FileName>
+      <FileSize>3951103</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.neatvideo.com/nb/nv5/NeatBench5_Win64.zip</URL>
+      <MD5>78f1945314f119f494035de8013dd764</MD5>
+      <SHA256>802704e3a0a33d8ced8f9cb56350a72a931c9770108437c95c75d2b9c3a94895</SHA256>
+      <FileName>NeatBench5_Win64.zip</FileName>
+      <FileSize>5462498</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.neatvideo.com/nb/nv5/NeatBench5_OSX64.zip</URL>
+      <MD5>c96fa836f74ed115e1f048988929f171</MD5>
+      <SHA256>1421e360549a7c8c289036339c7c5d96d1e4d06e879149eae1742e9a012fcc63</SHA256>
+      <FileName>NeatBench5_OSX64.zip</FileName>
+      <FileSize>1687262</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

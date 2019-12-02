@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/pennant-1.0.1-makefile-update.tar.xz</URL>
+      <MD5>d2ddff54bc60b3dce4aecc5b4adac142</MD5>
+      <SHA256>dfec96e7b5638601132d88f5713ea1cb115b6554466bbc321ba33e628dbce025</SHA256>
+      <FileName>pennant-1.0.1-makefile-update.tar.xz</FileName>
+      <FileSize>13918444</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

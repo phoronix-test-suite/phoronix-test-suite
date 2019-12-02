@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/embree/models/releases/download/release/asian_dragon.zip</URL>
+      <FileName>asian_dragon.zip</FileName>
+      <FileSize>103961493</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/embree/models/releases/download/release/asian_dragon_obj.zip</URL>
+      <FileName>asian_dragon_obj.zip</FileName>
+      <FileSize>157616423</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/embree/models/releases/download/release/crown.zip</URL>
+      <FileName>crown.zip</FileName>
+      <FileSize>68853062</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/embree/embree/releases/download/v3.6.1/embree-3.6.1.x86_64.linux.tar.gz</URL>
+      <MD5>3b6012add9dfc9ea8137ada5e0bd27b9</MD5>
+      <SHA256>fecc3abed0cd45b8d8f5ca11e298920b415f3079808ea66c967990c0a9408632</SHA256>
+      <FileName>embree-3.6.1.x86_64.linux.tar.gz</FileName>
+      <FileSize>81776509</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/embree/embree/releases/download/v3.6.1/embree-3.6.1.x64.vc14.windows.zip</URL>
+      <MD5>25bc886120859385f87d60a89d59927f</MD5>
+      <SHA256>5baa3e86d45462e62ede7b0bd9e00f7ca3f6c4a6ae3d06b98b96dac733bd0c27</SHA256>
+      <FileName>embree-3.6.1.x64.vc14.windows.zip</FileName>
+      <FileSize>38748839</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

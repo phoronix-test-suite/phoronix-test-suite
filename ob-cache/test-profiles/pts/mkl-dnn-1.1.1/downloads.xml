@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/intel/mkl-dnn/archive/v1.1.tar.gz</URL>
+      <MD5>dfe923c85a0f43fc82d018bc5e4ac345</MD5>
+      <SHA256>c5aac67e5ed4d95fe9943f835df49bbe6d608507780787c64aa620bdbd2171ba</SHA256>
+      <FileName>mkl-dnn-1.1.tar.gz</FileName>
+      <FileSize>4514572</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

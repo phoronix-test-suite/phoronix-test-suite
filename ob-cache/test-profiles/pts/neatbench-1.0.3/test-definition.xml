@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>NeatBench</Title>
+    <AppVersion>5</AppVersion>
+    <Description>NeatBench is a benchmark of the cross-platform Neat Video software on the CPU and optional GPU (OpenCL / CUDA) support.</Description>
+    <ResultScale>FPS</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.3</Version>
+    <SupportedPlatforms>Linux, Windows, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <EnvironmentSize>8</EnvironmentSize>
+    <ProjectURL>https://www.neatvideo.com/download/neatbench</ProjectURL>
+    <InternalTags>SMP, OpenCL, CUDA</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Acceleration</DisplayName>
+      <Identifier>accel</Identifier>
+      <Menu>
+        <Entry>
+          <Name>CPU</Name>
+          <Value>cpu</Value>
+        </Entry>
+        <Entry>
+          <Name>GPU</Name>
+          <Value>gpu</Value>
+        </Entry>
+        <Entry>
+          <Name>All (CPU + GPU)</Name>
+          <Value>all</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

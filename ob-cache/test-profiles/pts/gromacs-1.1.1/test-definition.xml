@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>GROMACS</Title>
+    <AppVersion>2019.4</AppVersion>
+    <Description>The Gromacs molecular dynamics package testing on the CPU with the water_GMX50 data.</Description>
+    <ResultScale>Ns Per Day</ResultScale>
+    <Proportion>HIB</Proportion>
+    <SubTitle>Water Benchmark</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.1</Version>
+    <SupportedPlatforms>Linux, BSD</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>1100</EnvironmentSize>
+    <ProjectURL>http://www.gromacs.org/</ProjectURL>
+    <InternalTags>SMP, MPI</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

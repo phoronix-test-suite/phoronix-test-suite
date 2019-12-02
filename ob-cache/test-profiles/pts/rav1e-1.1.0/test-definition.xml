@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>rav1e</Title>
+    <AppVersion>0.1</AppVersion>
+    <Description>Xiph rav1e is a Rust-written AV1 video encoder.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <SubTitle>1080p To AV1 Video Encode</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>rust, yasm, perl, cmake</ExternalDependencies>
+    <EnvironmentSize>3000</EnvironmentSize>
+    <ProjectURL>https://github.com/xiph/rav1e</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Nodes per second: #_RESULT_# (Score: 1.034)</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

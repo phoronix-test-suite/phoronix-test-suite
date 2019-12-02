@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>write         #_MAX_RESULT_#      #_MIN_RESULT_#     #_RESULT_#      59.66    0.00344 0 1 1 100 0 0 1 0 0 1 1048576 262144 1048576 POSIX 0</OutputTemplate>
+    <LineHint>write</LineHint>
+    <ArgumentsDescription>Write Test</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>read         #_MAX_RESULT_#      #_MIN_RESULT_#     #_RESULT_#      59.66    0.00344 0 1 1 100 0 0 1 0 0 1 1048576 262144 1048576 POSIX 0</OutputTemplate>
+    <LineHint>read</LineHint>
+    <ArgumentsDescription>Read Test</ArgumentsDescription>
+  </ResultsParser>
+</PhoronixTestSuite>

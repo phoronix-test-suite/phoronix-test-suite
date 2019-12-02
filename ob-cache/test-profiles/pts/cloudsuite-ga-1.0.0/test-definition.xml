@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>CloudSuite Graph Analytics</Title>
+    <Description>CloudSuite Graph Analytics uses Apache GraphX + Spark to perform graph analytics (PageRank) on sample Twitter data.</Description>
+    <ResultScale>ms</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <RequiresInternet>TRUE</RequiresInternet>
+    <EnvironmentSize>700</EnvironmentSize>
+    <ProjectURL>https://github.com/parsa-epfl/cloudsuite/blob/master/docs/benchmarks/graph-analytics.md</ProjectURL>
+    <InternalTags>Cloud, Docker</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>docker</SystemDependencies>
+  </TestProfile>
+</PhoronixTestSuite>

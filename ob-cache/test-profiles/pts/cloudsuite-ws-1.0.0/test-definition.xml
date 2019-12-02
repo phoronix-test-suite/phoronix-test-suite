@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>CloudSuite Web Serving</Title>
+    <Description>CloudSuite Web Serving is a Docker-based web server benchmark making use of a web server with Memcached and a MySQL database server.</Description>
+    <ResultScale>ops/sec</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <RequiresInternet>TRUE</RequiresInternet>
+    <EnvironmentSize>700</EnvironmentSize>
+    <ProjectURL>https://github.com/parsa-epfl/cloudsuite/blob/master/docs/benchmarks/data-analytics.md</ProjectURL>
+    <InternalTags>Cloud, Docker</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>docker</SystemDependencies>
+  </TestProfile>
+</PhoronixTestSuite>

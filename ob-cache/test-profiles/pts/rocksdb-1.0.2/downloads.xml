@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/facebook/rocksdb/archive/v6.3.6.tar.gz</URL>
+      <MD5>923e6b6b32c69c047e3adec4f3ab8ceb</MD5>
+      <SHA256>9878beb4e9b74a5f0d9500772235a39066fd019ba7af9ae6afe483ca713e3c7c</SHA256>
+      <FileName>rocksdb-6.3.6.tar.gz</FileName>
+      <FileSize>5573722</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

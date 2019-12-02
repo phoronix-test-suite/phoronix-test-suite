@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ftp.postgresql.org/pub/source/v12.0/postgresql-12.0.tar.bz2</URL>
+      <MD5>87545416ef021eee8621d31a93fcc899</MD5>
+      <SHA256>cda2397215f758b793f741c86be05468257b0e6bcb1a6113882ab5d0df0855c6</SHA256>
+      <FileName>postgresql-12.0.tar.bz2</FileName>
+      <FileSize>20177458</FileSize>
+      <PlatformSpecific>Linux, BSD, Solaris, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://get.enterprisedb.com/postgresql/postgresql-10.3-1-windows-x64-binaries.zip</URL>
+      <MD5>b2ccc4845f4691c58d3c86f9e60c11cf</MD5>
+      <SHA256>9e5cc5c4d8d368042f5e3ad3a2e8a530a8d9ae9e61354ff3dece6462eccfac00</SHA256>
+      <FileName>postgresql-10.3-1-windows-x64-binaries.zip</FileName>
+      <FileSize>198127421</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

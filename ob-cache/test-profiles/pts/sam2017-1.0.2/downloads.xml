@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/SeriousSam2017-TFE-1.zip</URL>
+      <MD5>2c78ba547c6883aa0a2e5a059696703b</MD5>
+      <SHA256>07abfcd45453634b9e0a8074b9eef5870324d4fbe1caf7e9d1f15f35b6db3dbd</SHA256>
+      <FileName>SeriousSam2017-TFE-1.zip</FileName>
+      <FileSize>23433</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

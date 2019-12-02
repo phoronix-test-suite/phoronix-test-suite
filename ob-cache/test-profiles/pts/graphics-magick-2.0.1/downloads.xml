@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>ftp://ftp.graphicsmagick.org/pub/GraphicsMagick/1.3/GraphicsMagick-1.3.33.tar.bz2, http://ftp.icm.edu.pl/pub/unix/graphics/GraphicsMagick/1.3/GraphicsMagick-1.3.33.tar.bz2, http://ftp.icm.edu.pl/packages/GraphicsMagick/1.3/GraphicsMagick-1.3.33.tar.bz2</URL>
+      <MD5>403d58ad09245e8868d8d2035e170615</MD5>
+      <SHA256>d18aaca2d79a10270d49ad1aaa01dce24752f7548880138d59874a78ac62e11f</SHA256>
+      <FileName>GraphicsMagick-1.3.33.tar.bz2</FileName>
+      <FileSize>7900288</FileSize>
+      <PlatformSpecific>Linux, Solaris, BSD, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>ftp://ftp.graphicsmagick.org/pub/GraphicsMagick/1.3/windows/GraphicsMagick-1.3.33-Q16-win64-dll.exe, http://ftp.icm.edu.pl/pub/unix/graphics/GraphicsMagick/1.3/windows/GraphicsMagick-1.3.33-Q16-win64-dll.exe</URL>
+      <MD5>53b25d8ab1f36315bd2e4fcff48a12db</MD5>
+      <SHA256>b7133b1ada51743b65d09f7f973efd8049e29257906da15d09134df69d260579</SHA256>
+      <FileName>GraphicsMagick-1.3.33-Q16-win64-dll.exe</FileName>
+      <FileSize>5662684</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/sample-photo-6000x4000-1.zip</URL>
+      <MD5>3da40124023e94f63d96c22c07e7e9c2</MD5>
+      <SHA256>cadcd434abcdc82a220e7022c749b6fa5f46bb7a32ec14423ca8aab067b0e989</SHA256>
+      <FileName>sample-photo-6000x4000-1.zip</FileName>
+      <FileSize>7824306</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

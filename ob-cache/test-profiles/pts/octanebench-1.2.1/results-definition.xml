@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>#_RESULT_#</OutputTemplate>
+    <LineBeforeHint>Total score</LineBeforeHint>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>frame [  0 - 600]:               min =  #_MIN_RESULT_# fps, avg =  #_RESULT_# fps, max =  #_MAX_RESULT_# fps, sigma = 0.0179 (0.1349%)</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/torvalds/linux/archive/v5.4-rc3.tar.gz</URL>
+      <MD5>0dd099d3b87baf8193150c0e666b1bd0</MD5>
+      <SHA256>c50d29a05e5d8deea6c6bd3478ca7f13170febe928436e1fad49a11bc359e9c2</SHA256>
+      <FileName>linux-5.4-rc3.tar.gz</FileName>
+      <FileSize>172568102</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

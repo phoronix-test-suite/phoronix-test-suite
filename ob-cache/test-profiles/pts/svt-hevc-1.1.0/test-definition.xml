@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.0m3-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>SVT-HEVC</Title>
+    <AppVersion>1.4.1</AppVersion>
+    <Description>This is a test of the Intel Open Visual Cloud Scalable Video Technology SVT-HEVC CPU-based multi-threaded video encoder for the HEVC / H.265 video format with a sample 1080p YUV video file.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <SubTitle>1080p 8-bit YUV To HEVC Video Encode</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, p7zip, yasm, cmake</ExternalDependencies>
+    <EnvironmentSize>1900</EnvironmentSize>
+    <ProjectURL>https://github.com/OpenVisualCloud/SVT-HEVC</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-encMode 5 -i Bosphorus_1920x1080_120fps_420_8bit_YUV.yuv -w 1920 -h 1080</Arguments>
+    </Default>
+  </TestSettings>
+</PhoronixTestSuite>

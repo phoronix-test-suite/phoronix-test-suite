@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/lo-sample-documents-1.zip</URL>
+      <MD5>f922bd4b667efdad99df731188a5166b</MD5>
+      <SHA256>a1e92da67999d8ed91ad6330b47828207285c146a3a4ebd7b95ad39cb2d62dcd</SHA256>
+      <FileName>lo-sample-documents-1.zip</FileName>
+      <FileSize>4154016</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>vgg16                10.55 ms                  9.93 ms / #_RESULT_# fps</OutputTemplate>
+    <LineHint>fps</LineHint>
+    <ResultScale>FPS</ResultScale>
+  </ResultsParser>
+</PhoronixTestSuite>

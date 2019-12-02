@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/LuxCoreRender/LuxCore/releases/download/luxcorerender_v2.2/luxcorerender-v2.2-linux64-sdk.tar.bz2</URL>
+      <SHA256>89d3887562207f37bbd7c57920a1fff5d224daff5dadc6b0d5bebe1ba754663e</SHA256>
+      <FileName>luxcorerender-v2.2-linux64-sdk.tar.bz2</FileName>
+      <FileSize>110923836</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/LuxCoreRender/LuxCore/releases/download/luxcorerender_v2.2/luxcorerender-v2.2-win64-sdk.zip</URL>
+      <MD5>0de4d47be8edf8dc23ad3078de5e6c91</MD5>
+      <SHA256>4be3deb4da3e71909f824bf4a1eb9827f7928d45ac54c2b299501ae568484be4</SHA256>
+      <FileName>luxcorerender-v2.2-win64-sdk.zip</FileName>
+      <FileSize>98749686</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/LuxCoreRender/LuxCoreTestScenes/releases/download/v2.1/DLSC.zip</URL>
+      <FileName>DLSC.zip</FileName>
+      <FileSize>20477185</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/LuxCoreRender/LuxCoreTestScenes/releases/download/v2.1/RainbowColorsAndPrism.zip</URL>
+      <FileName>RainbowColorsAndPrism.zip</FileName>
+      <FileSize>1962157</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

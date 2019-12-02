@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>	max: #_MIN_RESULT_#
+	min: #_MAX_RESULT_#
+	median: #_RESULT_#
+</OutputTemplate>
+    <DivideResultDivisor>1000</DivideResultDivisor>
+  </ResultsParser>
+</PhoronixTestSuite>

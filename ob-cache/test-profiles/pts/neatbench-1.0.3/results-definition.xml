@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Best combination: CPU only (6 cores): #_RESULT_# frames/sec</OutputTemplate>
+    <LineHint>Best combination</LineHint>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Best combination: GPU only (GeForce GTX 1080): #_RESULT_# frames/sec</OutputTemplate>
+    <LineHint>Best combination</LineHint>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Best combination: CPU (7 cores) and GPU (GeForce GTX 1080): #_RESULT_# frames/sec</OutputTemplate>
+    <LineHint>Best combination</LineHint>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Best combination: 6 cores: #_RESULT_# frames/secc</OutputTemplate>
+    <LineHint>Best combination</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

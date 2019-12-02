@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>N-Queens</Title>
+    <AppVersion>1.0</AppVersion>
+    <Description>This is a test of the OpenMP version of a test that solves the N-queens problem. The board problem size is 18.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Elapsed Time</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.1</Version>
+    <SupportedPlatforms>Linux, BSD, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>1.4</EnvironmentSize>
+    <ProjectURL>http://www.arch.cs.titech.ac.jp/~kise/nq/index.htm</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>18</Arguments>
+    </Default>
+  </TestSettings>
+</PhoronixTestSuite>

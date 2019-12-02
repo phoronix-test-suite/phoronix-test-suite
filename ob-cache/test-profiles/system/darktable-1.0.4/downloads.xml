@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/darktable-bench-assets-1.tar.bz2</URL>
+      <MD5>2092203e4399e2d11bbcde837983ef67</MD5>
+      <SHA256>33599937c2d38954c0c83934835fa077498b364a037f3d3303779baf6d9db1e7</SHA256>
+      <FileName>darktable-bench-assets-1.tar.bz2</FileName>
+      <FileSize>62408974</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/server-rack.tar.xz</URL>
+      <MD5>6b133f225c030383c7cc4d902a4aabb9</MD5>
+      <SHA256>f133664384f039d3e63e22f126953b836191e36d2c82d278d8f1aa3f1018335a</SHA256>
+      <FileName>server-rack.tar.xz</FileName>
+      <FileSize>10642472</FileSize>
+    </Package>
+    <Package>
+      <URL>http://github.com/darktable-org/darktable/releases/download/release-2.4.1/darktable-2.4.1-win64.zip</URL>
+      <MD5>f828ff19e4be65a91c589745d47d7e16</MD5>
+      <SHA256>560d82e4c87c002f0284daca922023df136c822713e3670ba42358c9427fe26c</SHA256>
+      <FileName>darktable-2.4.1-win64.zip</FileName>
+      <FileSize>93674789</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

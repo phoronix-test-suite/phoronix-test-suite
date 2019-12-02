@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://assets.unigine.com/d/Unigine_Superposition-1.0.run</URL>
+      <MD5>991127f472facfd3f75a25c968138974</MD5>
+      <SHA256>ba828e48ae1082dc5734dc584df7e2d91f56e1c48edb9708cd24c42f6e5d8a32</SHA256>
+      <FileName>Unigine_Superposition-1.0.run</FileName>
+      <FileSize>1641749718</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://assets.unigine.com/d/Unigine_Superposition-1.0.exe</URL>
+      <MD5>80c81b11e2daed577e06b4e06f887bd1</MD5>
+      <SHA256>651b205192f86f3c758e72d3dbb7bf65993769b8aa9035a1d73517526bb32a3b</SHA256>
+      <FileName>Unigine_Superposition-1.0.exe</FileName>
+      <FileSize>1338586016</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

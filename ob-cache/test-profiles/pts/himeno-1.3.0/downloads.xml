@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/himenobmtxpa-2.tar.xz</URL>
+      <MD5>eb8dcadd5dc5aae6eca013281095f4fe</MD5>
+      <SHA256>fc242a4ea4e24285a134bd661ad7e9543a5e7e3e3e2dac14160471cf67a07c57</SHA256>
+      <FileName>himenobmtxpa-2.tar.xz</FileName>
+      <FileSize>3384</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

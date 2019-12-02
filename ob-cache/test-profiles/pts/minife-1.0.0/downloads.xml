@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/Mantevo/miniFE/archive/2.2.0.tar.gz</URL>
+      <MD5>6aba64989cc72e45bc5d6034b9678fb9</MD5>
+      <SHA256>9eacb1029aa265fcf9f0d79f0634c5097ef1b1ab8bb23b1bf02ff68f884c72e4</SHA256>
+      <FileName>miniFE-2.2.0.tar.gz</FileName>
+      <FileSize>3002556</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

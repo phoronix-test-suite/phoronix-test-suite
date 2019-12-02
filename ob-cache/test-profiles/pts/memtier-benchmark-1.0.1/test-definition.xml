@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.0m3-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Memtier_benchmark</Title>
+    <AppVersion>1.2.17</AppVersion>
+    <Description>Memtier_benchmark is a NoSQL Redis/Memcache traffic generation plus benchmarking tool. This current test profile currently just stresses the Redis protocol and basic options exposed wotj a 1:1 Set/Get ratio, 30 pipeline, 100 clients per thread, and thread count equal to the number of CPU cores/threads present. Patches to extend the test are welcome as always.</Description>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, libevent, pcre, openssl-development, libtool</ExternalDependencies>
+    <EnvironmentSize>64</EnvironmentSize>
+    <ProjectURL>https://github.com/RedisLabs/memtier_benchmark</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-c 100 --ratio=1:1 --pipeline=120 --test-time=60</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Protocol</DisplayName>
+      <Identifier>protocol</Identifier>
+      <ArgumentPrefix>-P </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>Redis</Name>
+          <Value>redis</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

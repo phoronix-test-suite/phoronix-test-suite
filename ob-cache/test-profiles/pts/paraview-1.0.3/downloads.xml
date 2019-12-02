@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.paraview.org/files/v5.4/ParaView-5.4.1-Qt5-OpenGL2-MPI-Linux-64bit.tar.gz</URL>
+      <MD5>f9d9626e7b60bdb0e8f0b6ccb49525bb</MD5>
+      <SHA256>e0848896ee9ca0e2d52efcb4e6435a56bc352e30d23f0cc3fc542b44424c357a</SHA256>
+      <FileName>ParaView-5.4.1-Qt5-OpenGL2-MPI-Linux-64bit.tar.gz</FileName>
+      <FileSize>308327272</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.paraview.org/files/v5.4/ParaView-5.4.1-Qt5-OpenGL2-MPI-Windows-64bit.zip</URL>
+      <MD5>ea89cb92c0115599d031959cc87c57c8</MD5>
+      <SHA256>622aab58f10e6edd44863295464879b5523db0ff5bc6dff289d9343b20937fbe</SHA256>
+      <FileName>ParaView-5.4.1-Qt5-OpenGL2-MPI-Windows-64bit.zip</FileName>
+      <FileSize>307175856</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://www.paraview.org/files/v5.4/ParaView-5.4.1-Qt5-OpenGL2-MPI-OSX10.8-64bit.dmg</URL>
+      <MD5>5b0419eb56481458700972dec7308510</MD5>
+      <SHA256>21ba9374d6fa97e198498ca0168ed972f47d75b9cc98ad6d799bcf1a60265827</SHA256>
+      <FileName>ParaView-5.4.1-Qt5-OpenGL2-MPI-OSX10.8-64bit.dmg</FileName>
+      <FileSize>213391196</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

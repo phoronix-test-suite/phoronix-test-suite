@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>SQLite</Title>
+    <AppVersion>3.30.1</AppVersion>
+    <Description>This is a simple benchmark of SQLite. At present this test profile just measures the time to perform a pre-defined number of insertions on an indexed database.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Timed SQLite Insertions</SubTitle>
+    <Executable>sqlite-benchmark</Executable>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>2.1.0</Version>
+    <SupportedPlatforms>Linux, BSD, MacOSX, Solaris, Windows</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Disk</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>22</EnvironmentSize>
+    <ProjectURL>http://www.sqlite.org/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Threads / Copies</DisplayName>
+      <Identifier>threads</Identifier>
+      <Menu>
+        <Entry>
+          <Name>1</Name>
+          <Value>1</Value>
+        </Entry>
+        <Entry>
+          <Name>8</Name>
+          <Value>8</Value>
+        </Entry>
+        <Entry>
+          <Name>32</Name>
+          <Value>32</Value>
+        </Entry>
+        <Entry>
+          <Name>64</Name>
+          <Value>64</Value>
+        </Entry>
+        <Entry>
+          <Name>128</Name>
+          <Value>128</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>
