@@ -171,7 +171,7 @@ class pts_result_viewer_settings
 		{
 			case 'pdf':
 				header('Content-Type: application/pdf');
-				$pdf_output = pts_result_file_output::result_file_to_pdf($result_file, $_GET['result'] . '.pdf', 'D', $extra_attributes);
+				$pdf_output = pts_result_file_output::result_file_to_pdf($result_file, (isset($_GET['result']) ? $_GET['result'] : 'result') . '.pdf', 'D', $extra_attributes);
 				exit;
 			case 'csv':
 				$result_csv = pts_result_file_output::result_file_to_csv($result_file);
