@@ -46,6 +46,10 @@ class phoromatic_result implements pts_webui_interface
 
 			foreach($upload_ids as $i => $upload_id)
 			{
+				if(($x = strpos($upload_id, '&')) !== false)
+				{
+					$upload_id = substr($upload_id, 0, $x);
+				}
 				if(isset($upload_id[5]) && substr($upload_id, 0, 2) == 'S:')
 				{
 					$t = explode(':', $upload_id);
