@@ -362,6 +362,74 @@ div#pts_phoromatic_main_box h4
 	font-weight: 500;
 	color: #D95D04;
 }
+div#pts_phoromatic_main_area ul
+{
+	list-style: none;
+	position: relative;
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+div#pts_phoromatic_main_area ul:hover a
+{
+	color: #000;
+}
+div#pts_phoromatic_main_area ul a
+{
+	display: block;
+	color: #333;
+	text-decoration: none;
+	font-weight: 600;
+	line-height: 26px;
+	padding: 4px 8px;
+	text-transform: uppercase;
+}
+div#pts_phoromatic_main_area ul li
+{
+	position: relative;
+	float: left;
+	margin: 0;
+	padding: 0;
+	border-right: 1px solid #aaa;
+}
+div#pts_phoromatic_main_area ul li:last-of-type{
+	border-right:none;
+}
+div#pts_phoromatic_main_area ul li:hover
+{
+	background: #eee;
+
+}
+div#pts_phoromatic_main_area ul ul a:hover, div#main_area ul li a:hover{
+	color:#03b450;
+}
+
+div#pts_phoromatic_main_area ul ul a
+{
+	padding: 0 8px;
+	font-weight: 300;
+	font-size: 10pt;
+}
+div#pts_phoromatic_main_area ul ul
+{
+	display: none;
+	position: absolute;
+	top: 100%;
+	font-weight: 300;
+	left: 0;
+	background: #fff;
+	padding: 0
+}
+div#pts_phoromatic_main_area ul ul li
+{
+	border: 1px solid #eee;
+	border-top: 1px;
+	float: none;
+}
+div#pts_phoromatic_main_area ul li:hover > ul
+{
+	display: block
+}
 div#pts_phoromatic_main_area hr, div#pts_phoromatic_main_box hr
 {
 	border: #f1f1f1 1px solid;

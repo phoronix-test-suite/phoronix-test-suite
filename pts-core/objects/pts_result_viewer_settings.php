@@ -56,7 +56,7 @@ class pts_result_viewer_settings
 			$analyze_options .= '<li><a href="#">' . $menu . '</a><ul>';
 			foreach($sub_menu as $option => $txt)
 			{
-				$uri = CURRENT_URI;
+				$uri = $_SERVER['REQUEST_URI'];
 				foreach(array_reverse(array_keys($sub_menu)) as $rem)
 				{
 					$uri = str_replace('&' . $rem, null, $uri);
@@ -255,20 +255,29 @@ class pts_result_viewer_settings
 		{
 			foreach(pts_result_file_analyzer::generate_harmonic_mean_result($result_file) as $overview_harmonic)
 			{
-				$result_file->add_result($overview_harmonic);
+				if($overview_harmonic)
+				{
+					$result_file->add_result($overview_harmonic);
+				}
 			}
 		}
 		if(self::check_request_for_var($request, 'sgm'))
 		{
 			$overview_geometric = pts_result_file_analyzer::generate_geometric_mean_result($result_file);
-			$result_file->add_result($overview_geometric);
+			if($overview_geometric)
+			{
+				$result_file->add_result($overview_geometric);
+			}
 		}
 		if(self::check_request_for_var($request, 'swl'))
 		{
 			$overview_wins_losses = pts_result_file_analyzer::generate_wins_losses_results($result_file);
 			foreach($overview_wins_losses as $g)
 			{
-				$result_file->add_result($g);
+				if($g)
+				{
+					$result_file->add_result($g);
+				}
 			}
 		}
 		if(self::check_request_for_var($request, 'sor'))

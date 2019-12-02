@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2016, Phoronix Media
-	Copyright (C) 2008 - 2016, Michael Larabel
+	Copyright (C) 2008 - 2019, Phoronix Media
+	Copyright (C) 2008 - 2019, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -267,48 +267,6 @@ class phoromatic_result implements pts_webui_interface
 
 			$intent = null;
 
-			if(isset($_GET['download']) && $_GET['download'] == 'csv')
-			{
-				$result_csv = pts_result_file_output::result_file_to_csv($result_file);
-				header('Content-Description: File Transfer');
-				header('Content-Type: application/csv');
-				header('Content-Disposition: attachment; filename=phoromatic-result.csv');
-				header('Expires: 0');
-				header('Cache-Control: must-revalidate');
-				header('Pragma: public');
-				header('Content-Length: ' . strlen($result_csv));
-				ob_clean();
-				flush();
-				echo $result_csv;
-				return;
-			}
-			else if(isset($_GET['download']) && $_GET['download'] == 'txt')
-			{
-				$result_txt = pts_result_file_output::result_file_to_text($result_file);
-				header('Content-Description: File Transfer');
-				header('Content-Type: application/txt');
-				header('Content-Disposition: attachment; filename=phoromatic-result.txt');
-				header('Expires: 0');
-				header('Cache-Control: must-revalidate');
-				header('Pragma: public');
-				header('Content-Length: ' . strlen($result_txt));
-				ob_clean();
-				flush();
-				echo $result_txt;
-				return;
-			}
-			else if(isset($_GET['download']) && $_GET['download'] == 'pdf')
-			{
-				// TODO XXX: make use of pts_result_file_output::result_file_to_pdf()
-				$pdf_output = pts_result_file_output::result_file_to_pdf($result_file, 'phoromatic.pdf', 'I', $extra_attributes);
-				return;
-			}
-			else if(isset($_GET['download']) && $_GET['download'] == 'xml')
-			{
-				echo $result_file->get_xml();
-				return;
-			}
-
 			if(count($result_files) > 1)
 			{
 				$main .= '<h1>Phoromatic Comparison</h1>';
@@ -320,6 +278,12 @@ class phoromatic_result implements pts_webui_interface
 
 				$main .= '<p><strong>Uploaded On:</strong> ' . $upload_times[0] . '</p>';
 			}
+
+			pts_result_viewer_settings::process_request_to_attributes($_REQUEST, $result_file, $extra_attributes);
+			$main .= pts_result_viewer_settings::get_html_sort_bar($result_file, $_REQUEST);
+			$main .= '<hr /><div style="font-size: 12pt;">' . pts_result_viewer_settings::get_html_options_markup($result_file, $_REQUEST) . '</div><hr />';
+			$main .= pts_result_viewer_settings::process_helper_html($_REQUEST, $result_file, $extra_attributes);
+
 			$main .= phoromatic_annotate_entry('RESULT', implode(',', $upload_ids), 'TOP');
 
 			if($result_file->get_system_count() == 1 || ($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)))
@@ -448,31 +412,6 @@ class phoromatic_result implements pts_webui_interface
 			}
 		}
 
-		if(count($upload_ids) > 1)
-		{
-			$checkbox_options = array(
-				'normalize_results' => 'Normalize Results',
-				'sort_by_performance' => 'Sort Results By Performance',
-				'sort_by_name' => 'Reverse Result By Identifier',
-				'sort_by_reverse' => 'Reverse Result Order',
-				'show_only_changed_results' => 'Show Only Results With Result Variation',
-				'force_line_graph' => 'Force Line Graph',
-				);
-
-			if($result_file->is_multi_way_comparison())
-			{
-				$checkbox_options['condense_comparison'] = 'Condense Comparison';
-				$checkbox_options['transpose_comparison'] = 'Transpose Comparison';
-			}
-
-			$right .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="update_result_view" method="post"><hr /><h3>Result Analysis Options</h3><p align="left">' . PHP_EOL;
-			foreach($checkbox_options as $val => $name)
-			{
-				$right .= '<input type="checkbox" name="' . $val . '" value="1" ' . (isset($_POST[$val]) ? 'checked="checked" ' : null) . '/> ' . $name . '<br />';
-			}
-			$right .= '<br /><input type="submit" value="Refresh Results"></p></form>';
-		}
-
 		if(self::$schedule_id && !empty(self::$schedule_id) && $system_types[0] && $trigger_types[0])
 		{
 			$stmt = phoromatic_server::$db->prepare('SELECT UserContextStep FROM phoromatic_system_context_logs WHERE AccountID = :account_id AND ScheduleID = :schedule_id AND SystemID = :system_id AND TriggerID = :trigger_id');
@@ -494,10 +433,6 @@ class phoromatic_result implements pts_webui_interface
 
 		$right .= '<hr /><h3>Result Export</h3>';
 		$right .= '<p><a href="/public.php?t=result&ut='  . implode(',', $upload_ids) . $url_append . '">Public Viewer</a></p>';
-		$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&download=pdf' . $url_append . '">Download As PDF</a></p>';
-		$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&download=csv">Download As CSV</a></p>';
-		$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&download=xml">Download As XML</a></p>';
-		$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&download=txt">Download As TEXT</a></p>';
 		if(pts_openbenchmarking::ob_upload_support_available())
 		{
 			$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&upload_to_openbenchmarking">Upload To OpenBenchmarking.org</a></p>';
