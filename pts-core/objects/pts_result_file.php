@@ -615,6 +615,11 @@ class pts_result_file
 	}
 	public function add_result(&$result_object, $only_if_result_already_present = false)
 	{
+		if($result_object == null)
+		{
+			return false;
+		}
+
 		$ch = $result_object->get_comparison_hash(true, false);
 		if(isset($this->result_objects[$ch]) && isset($this->result_objects[$ch]->test_result_buffer))
 		{
