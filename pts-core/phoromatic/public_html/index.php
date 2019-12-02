@@ -81,7 +81,7 @@ $page_class = 'phoromatic_' . PAGE_REQUEST;
 pts_webui::websocket_setup_defines();
 $page_class = pts_webui::load_web_interface($page_class, $PATH, '../pages/');
 
-if(substr($PAGE_REQUEST, 0, 2) == 'r_' || isset($_GET['download']))
+if(substr($PAGE_REQUEST, 0, 2) == 'r_' || isset($_GET['download']) || isset($_GET['export']))
 {
 	// RESOURCE
 	phoromatic_server::prepare_database();
