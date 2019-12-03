@@ -1,5 +1,14 @@
 # Phoronix Test Suite Release History
 
+Phoronix Test Suite 9.2
+======
+#### Release Date: 3 December 2019 | Codename: Hurdal
+* Updated result viewer for Phoromatic Server
+* macOS support updates
+* Recording of CPU microcode revisions within the result file
+* Various graph handling improvements
+* Other fixes
+
 Phoronix Test Suite 9.0
 ======
 #### Release Date: 17 September 2019 | Codename: Asker

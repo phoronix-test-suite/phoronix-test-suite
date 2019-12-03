@@ -750,7 +750,7 @@ Installation Instructions
 External Dependencies
 </h1>
 <p>The Phoronix Test Suite has a feature known as "External Dependencies" where the Phoronix Test Suite can attempt to automatically install some of the test-specific dependencies on supported distributions. If running on a distribution where there is currently no External Dependencies profile, the needed package name(s) are listed for manual installation.</p>
-<p>Below are a list of the operating systems that currently have external dependencies support within the Phoronix Test Suite for the automatic installation of needed test files.</p><hr><ul></ul><li>Alpine Linux</li><li>Amazon</li><li>Angstrom</li><li>Arch Linux</li><li>CentOS</li><li>ClearOS</li><li>ClearOS Core Server</li><li>Debian</li><li>DragonFlyBSD</li><li>Fedora</li><li>Fluxbuntu</li><li>GNU KFreeBSD</li><li>Gentoo</li><li>Goobuntu</li><li>HP</li><li>Joli Cloud</li><li>Linaro</li><li>Linux Embedded Development Environment</li><li>Linux Mint</li><li>MEPIS</li><li>Mac OS X</li><li>MacPorts</li><li>Mageia</li><li>Mandriva</li><li>MeeGo</li><li>Microsoft Windows</li><li>MidnightBSD</li><li>Moblin</li><li>Mythbuntu</li><li>NetBSD</li><li>Nexenta Core</li><li>OLPC</li><li>OpenIndiana</li><li>OpenMandriva</li><li>OpenMandrivaLinux</li><li>OpenSolaris</li><li>OpenSuSE</li><li>Optware</li><li>Oracle Server</li><li>PCLinuxOS</li><li>PTS Desktop Live</li><li>PTS Linux Live</li><li>Palm</li><li>Pardus Linux</li><li>Red Hat Enterprise</li><li>Red Hat Enterprise Server</li><li>SUSE</li><li>SUSE Linux</li><li>Scientific</li><li>ScientificSL</li><li>Solus</li><li>Solus Linux</li><li>Termux</li><li>Ubuntu</li><li>Void Linux</li><li>Zenwalk</li><li>gNewSense</li><li>macOS Brew</li>
+<p>Below are a list of the operating systems that currently have external dependencies support within the Phoronix Test Suite for the automatic installation of needed test files.</p><hr><ul></ul><li>Alpine Linux</li><li>Amazon</li><li>Angstrom</li><li>Arch Linux</li><li>CentOS</li><li>Clear Linux</li><li>ClearOS</li><li>ClearOS Core Server</li><li>Debian</li><li>DragonFlyBSD</li><li>Fedora</li><li>Fluxbuntu</li><li>GNU KFreeBSD</li><li>Gentoo</li><li>Goobuntu</li><li>HP</li><li>Joli Cloud</li><li>Linaro</li><li>Linux Embedded Development Environment</li><li>Linux Mint</li><li>MEPIS</li><li>Mac OS X</li><li>MacPorts</li><li>Mageia</li><li>Mandriva</li><li>MeeGo</li><li>Microsoft Windows</li><li>MidnightBSD</li><li>Moblin</li><li>Mythbuntu</li><li>NetBSD</li><li>Nexenta Core</li><li>OLPC</li><li>OpenIndiana</li><li>OpenMandriva</li><li>OpenMandrivaLinux</li><li>OpenSolaris</li><li>OpenSuSE</li><li>Optware</li><li>Oracle Server</li><li>PCLinuxOS</li><li>PTS Desktop Live</li><li>PTS Linux Live</li><li>Palm</li><li>Pardus Linux</li><li>Red Hat Enterprise</li><li>Red Hat Enterprise Server</li><li>SUSE</li><li>SUSE Linux</li><li>Scientific</li><li>ScientificSL</li><li>Solus</li><li>Solus Linux</li><li>Termux</li><li>Ubuntu</li><li>Void Linux</li><li>Zenwalk</li><li>gNewSense</li><li>macOS Brew</li>
 <hr style="height: 50px; border: 0;"><a name="Configuration%0A"></a><h1>
 Configuration
 </h1>
@@ -970,21 +970,9 @@ Virtual Test Suites
 <h3>Python Tests<em>  pts/python</em>
 </h3>
 <p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing python.</p>
-<h3>Go Tests<em>  pts/go</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing go.</p>
-<h3>Vdpau Tests<em>  pts/vdpau</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing vdpau.</p>
-<h3>Video Tests<em>  pts/video</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing video.</p>
 <h3>Responsiveness Tests<em>  pts/responsiveness</em>
 </h3>
 <p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing responsiveness.</p>
-<h3>Openmpi Tests<em>  pts/openmpi</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing openmpi.</p>
 <h3>All SYSTEM Tests<em>  system/all</em>
 </h3>
 <p>This is a collection of all test profiles found within the specified OpenBenchmarking.org repository.</p>
@@ -1126,78 +1114,6 @@ Virtual Test Suites
 <h3>Smp Tests<em>  git/smp</em>
 </h3>
 <p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing smp.</p>
-<h3>All SYSTEM Tests<em>  system/all</em>
-</h3>
-<p>This is a collection of all test profiles found within the specified OpenBenchmarking.org repository.</p>
-<h3>Installed Tests<em>  system/installed</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository that are already installed on the system under test.</p>
-<h3>Every SYSTEM Test<em>  system/everything</em>
-</h3>
-<p>This is a collection of every test profile found within the specified OpenBenchmarking.org repository, including unsupported tests.</p>
-<h3>Linux Operating System Tests<em>  system/linux</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Linux Operating System.</p>
-<h3>Solaris Operating System Tests<em>  system/solaris</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Solaris Operating System.</p>
-<h3>BSD Operating System Tests<em>  system/bsd</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the BSD Operating System.</p>
-<h3>MacOSX Operating System Tests<em>  system/macosx</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the MacOSX Operating System.</p>
-<h3>Windows Operating System Tests<em>  system/windows</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Windows Operating System.</p>
-<h3>Hurd Operating System Tests<em>  system/hurd</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Hurd Operating System.</p>
-<h3>System Subsystem Tests<em>  system/system</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the System sub-system.</p>
-<h3>Processor Subsystem Tests<em>  system/processor</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Processor sub-system.</p>
-<h3>Disk Subsystem Tests<em>  system/disk</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Disk sub-system.</p>
-<h3>Graphics Subsystem Tests<em>  system/graphics</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Graphics sub-system.</p>
-<h3>Memory Subsystem Tests<em>  system/memory</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Memory sub-system.</p>
-<h3>Network Subsystem Tests<em>  system/network</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Network sub-system.</p>
-<h3>Other Subsystem Tests<em>  system/other</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Other sub-system.</p>
-<h3>Utility Tests<em>  system/utility</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Utility software test.</p>
-<h3>Simulator Tests<em>  system/simulator</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Simulator software test.</p>
-<h3>Scientific Tests<em>  system/scientific</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Scientific software test.</p>
-<h3>Benchmark Tests<em>  system/benchmark</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Benchmark software test.</p>
-<h3>Application Tests<em>  system/application</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Application software test.</p>
-<h3>Game Tests<em>  system/game</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Game software test.</p>
-<h3>Opencl Tests<em>  system/opencl</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing opencl.</p>
-<h3>Cuda Tests<em>  system/cuda</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing cuda.</p>
 <h3>All WINDOWS Tests<em>  windows/all</em>
 </h3>
 <p>This is a collection of all test profiles found within the specified OpenBenchmarking.org repository.</p>

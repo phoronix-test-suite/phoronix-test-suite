@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 9.2.0-Hurdal
+3 December 2019
 
 pts-core: Fix for sensor-driven result outputs (e.g. power)
 pts-core: Clean up precision handling on graphs
