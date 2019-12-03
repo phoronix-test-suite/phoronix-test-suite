@@ -1869,7 +1869,6 @@ class pts_client
 			$result_file = new pts_result_file($result_file);
 		}
 
-echo 'xxx' . pts_network::http_get_contents('http://localhost:' . pts_client::$web_result_viewer_active . '/index.php?PTS', false, false, false, false, 2);
 		if(!phodevi::is_display_server_active())
 		{
 			$prompt_text = !empty($prompt_text) ? $prompt_text : 'Do you want to view the test results?';
