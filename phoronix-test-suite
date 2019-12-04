@@ -35,6 +35,7 @@ then
 else
 	export PTS_DIR=$(readlink -f `dirname $0`)
 fi
+#export PTS_DIR=`pwd`
 
 export PTS_MODE="CLIENT"
 if which realpath >/dev/null 2>&1 ;
