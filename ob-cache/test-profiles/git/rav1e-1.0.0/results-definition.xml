@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>INFO  rav1e::stats         &gt; encoded 600 frames, #_RESULT_# fps, 2066.87 Kb/s</OutputTemplate>
+    <LineHint>fps</LineHint>
+    <TurnCharsToSpace>(</TurnCharsToSpace>
+  </ResultsParser>
+</PhoronixTestSuite>
