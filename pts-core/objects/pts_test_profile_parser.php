@@ -431,7 +431,7 @@ class pts_test_profile_parser
 	}
 	public function requires_core_version_max()
 	{
-		return $this->xg('TestProfile/RequiresCoreVersionMax', 9990);
+		return $this->xg('TestProfile/RequiresCoreVersionMax', 19990);
 	}
 	public function get_test_option_objects_array()
 	{

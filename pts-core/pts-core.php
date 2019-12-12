@@ -278,9 +278,9 @@ function pts_version_codenames()
 		);
 }
 
-pts_define('PTS_VERSION', '9.2.0');
-pts_define('PTS_CORE_VERSION', 9200);
-pts_define('PTS_RELEASE_DATE', '20191203');
+pts_define('PTS_VERSION', '9.2.1');
+pts_define('PTS_CORE_VERSION', 9210);
+pts_define('PTS_RELEASE_DATE', '20191211');
 pts_define('PTS_CODENAME', 'Hurdal');
 
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));

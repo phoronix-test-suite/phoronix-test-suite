@@ -344,7 +344,7 @@
 		</Package>
 		<Package>
 			<GenericName>gflags</GenericName>
-			<PackageName>gflags</PackageName>
+			<PackageName>gflags-devel</PackageName>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

@@ -1,5 +1,11 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite 9.2.1
+11 December 2019
+
+pts-core: Fix for Debian packaging generator
+pts-core: FIx for install script that could lead to Phoromatic Server instance not fully launching
+
 Phoronix Test Suite 9.2.0-Hurdal
 3 December 2019
 
