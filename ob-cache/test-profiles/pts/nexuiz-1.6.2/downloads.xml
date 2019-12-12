@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ftp.vim.org/pub/pub/os/Linux/distr/vectorlinux/veclinux-7.0/source/abs/games/nexuiz/nexuiz-252.zip, ftp://ftp.osuosl.org/.1/vectorlinux/VL64-7.0/source/sourceVL/nexuiz/nexuiz-252.zip</URL>
+      <MD5>d750bc328e58df8492f8d88bdcf818cb</MD5>
+      <FileSize>931253731</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>DeepSpeech</Title>
+    <AppVersion>0.6</AppVersion>
+    <Description>Mozilla DeepSpeech is a speech-to-text engine powered by TensorFlow for machine learning and derived from Baidu's Deep Speech research paper. This test profile times the speech-to-text process for a roughly three minute audio recording.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <Executable>deepspeech-run</Executable>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux, Windows, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <EnvironmentSize>1420</EnvironmentSize>
+    <ProjectURL>https://github.com/mozilla/DeepSpeech</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Acceleration</DisplayName>
+      <Identifier>accel</Identifier>
+      <Menu>
+        <Entry>
+          <Name>CPU</Name>
+          <Value>CPU</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/mozilla/DeepSpeech/releases/download/v0.6.0/deepspeech-0.6.0-models.tar.gz</URL>
+      <MD5>c271d4a939bc332fd784f9d874cb77a1</MD5>
+      <SHA256>ce7b4129bcb46fc3a212db53477febbcd08d72f422894d61671fe5cb37fb295a</SHA256>
+      <FileName>deepspeech-0.6.0-models.tar.gz</FileName>
+      <FileSize>1229022476</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/sample-speech-1.tar.xz</URL>
+      <MD5>ba4b83806b70a3595f6b220accb7852d</MD5>
+      <SHA256>a827b58aa79c23b3842d52af64a08fa3d050752a7643b803d7d18f740f73141e</SHA256>
+      <FileName>sample-speech-1.tar.xz</FileName>
+      <FileSize>9809032</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/mozilla/DeepSpeech/releases/download/v0.6.0/native_client.amd64.cpu.linux.tar.xz</URL>
+      <MD5>85d546d01845b9573b317fe5928b5e7a</MD5>
+      <SHA256>0cd3721c4e6d9a06be28b3e60266e5e8a70c5a99f6f6b136acd846822a245d1f</SHA256>
+      <FileName>native_client.amd64.cpu.linux.tar.xz</FileName>
+      <FileSize>6714832</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/mozilla/DeepSpeech/releases/download/v0.6.0/native_client.amd64.cpu.win.tar.xz</URL>
+      <MD5>e87432e05404f27651581fe22a9e2164</MD5>
+      <SHA256>0e04f5c5ef6a18be2c87cc3c7f59a123565c15ffb7602a07a6b54970f035c1f5</SHA256>
+      <FileName>native_client.amd64.cpu.win.tar.xz</FileName>
+      <FileSize>4692016</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/mozilla/DeepSpeech/releases/download/v0.6.0/native_client.amd64.cpu.osx.tar.xz</URL>
+      <MD5>ebc45832f22df032da8732d791550a03</MD5>
+      <SHA256>8f142d39ccdfcc61887c8f686f445fbb9c85fd98b14ca93ea6aadc455a46c568</SHA256>
+      <FileName>native_client.amd64.cpu.osx.tar.xz</FileName>
+      <FileSize>8453712</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>
