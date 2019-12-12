@@ -1010,8 +1010,20 @@ This is a collection of test profiles found within the specified OpenBenchmarkin
 #### Python Tests  pts/python
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing python.
 
+#### Go Tests  pts/go
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing go.
+
+#### Vdpau Tests  pts/vdpau
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing vdpau.
+
+#### Video Tests  pts/video
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing video.
+
 #### Responsiveness Tests  pts/responsiveness
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing responsiveness.
+
+#### Openmpi Tests  pts/openmpi
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing openmpi.
 
 #### All SYSTEM Tests  system/all
 This is a collection of all test profiles found within the specified OpenBenchmarking.org repository.
