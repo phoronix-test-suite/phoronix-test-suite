@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ultravideo.cs.tut.fi/video/Bosphorus_1920x1080_120fps_420_8bit_YUV_Y4M.7z</URL>
+      <MD5>84ae521c95aa2537e16b34bbf72f2def</MD5>
+      <SHA256>e2f60b904789a60f6d1edc194d8540d401dd882e3ee3605b9b1de8feacc72133</SHA256>
+      <FileName>Bosphorus_1920x1080_120fps_420_8bit_YUV_Y4M.7z</FileName>
+      <FileSize>676792531</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/xiph/rav1e/archive/20191023.tar.gz</URL>
+      <MD5>0e7b33137150436812365327368e06ce</MD5>
+      <SHA256>50cea4011703e99529d7798d4a40207f6d0ce6d5562b4e5f96f96262eddfd4dc</SHA256>
+      <FileName>rav1e-20191023.tar.gz</FileName>
+      <FileSize>572264</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/xiph/rav1e/releases/download/20191023/rav1e.exe</URL>
+      <MD5>43d6a1d1f04857ca755eada00941064f</MD5>
+      <SHA256>656341e36b36262a27a29406de64e6b64c02459b552995285e33818eee1af9f2</SHA256>
+      <FileName>rav1e-20191023.exe</FileName>
+      <FileSize>4328448</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

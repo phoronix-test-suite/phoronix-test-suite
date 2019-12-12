@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>cpu_time_overall=#_RESULT_#</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

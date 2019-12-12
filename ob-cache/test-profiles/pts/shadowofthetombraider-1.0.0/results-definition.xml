@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Min FPS: #_MIN_RESULT_#			Max FPS: #_MAX_RESULT_#			Average FPS: #_RESULT_#</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>
