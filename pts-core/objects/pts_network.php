@@ -412,10 +412,14 @@ class pts_network
 		$dev = '';
 
 		// try and get the device with the default route
-		if ($ip = pts_client::executable_in_path('ip')) {
+		if ($ip = pts_client::executable_in_path('ip'))
+		{
 			$out = shell_exec("$ip route 2>&1");
 			$start = strpos($out, ' dev ') + 5;
-			$dev = substr($out, $start, strpos($out, ' ', $start) - $start);
+			if(($xx = strpos($out, ' ', $start)) !== false)
+			{
+				$dev = substr($out, $start, $xx - $start);
+			}
 		}
 
 		// we grab the last field of the `netstat -nr` output, betting on *bsd not expiring it's default route
