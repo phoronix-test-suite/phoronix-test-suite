@@ -11,7 +11,7 @@
 
 # source function library
 
-. /etc/rc.d/init.d/functions
+. /etc/init.d/functions.sh
 
 RETVAL=0
 prog="phoromatic-client"
