@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2018, Phoronix Media
-	Copyright (C) 2008 - 2018, Michael Larabel
+	Copyright (C) 2008 - 2019, Phoronix Media
+	Copyright (C) 2008 - 2019, Michael Larabel
 	pts_PassFailGraph.php: An abstract graph object extending pts_Graph for showing results in a pass/fail scenario.
 
 	This program is free software; you can redistribute it and/or modify
@@ -60,7 +60,11 @@ class pts_graph_passfail extends pts_graph_core
 		$identifiers_total_width = $graph_width - $main_width - 2;
 
 		$headings = pts_strings::comma_explode($this->i['graph_y_title']);
-		$identifiers_width = floor($identifiers_total_width / (count($headings) != 0 ? count($headings) : 1));
+		if(empty($headings))
+		{
+			$headings = array(' ');
+		}
+		$identifiers_width = floor($identifiers_total_width / count($headings));
 		$headings_font_size = self::$c['size']['bars'];
 		while(($this->text_string_width(pts_strings::find_longest_string($headings), $headings_font_size) > ($identifiers_width - 2)) || $this->text_string_height($this->i['graph_max_value'], $headings_font_size) > ($line_height - 4))
 		{
@@ -100,7 +104,7 @@ class pts_graph_passfail extends pts_graph_core
 		$line_ttf_height = $this->text_string_height('AZ@![]()@|_', $headings_font_size);
 		for($i = 0; $i < count($headings); $i++)
 		{
-			$this->svg_dom->draw_svg_line($this->i['graph_left_end'] - $horizontal_border - (($i + 1) * $identifiers_width), $this->i['top_start'] + $vertical_border, $this->i['graph_left_end'] - $horizontal_border - (($i + 1) * $identifiers_width), $this->i['graph_top_end'] - $vertical_border, self::$c['color']['body_light']);
+			//$this->svg_dom->draw_svg_line($this->i['graph_left_end'] - $horizontal_border - (($i + 1) * $identifiers_width), $this->i['top_start'] + $vertical_border, $this->i['graph_left_end'] - $horizontal_border - (($i + 1) * $identifiers_width), $this->i['graph_top_end'] - $vertical_border, self::$c['color']['body_light']);
 			$x = $this->i['graph_left_end'] - $horizontal_border - ($i * $identifiers_width) - (0.5 * $identifiers_width);
 			$y = $this->i['top_start'] + $vertical_border + ($heading_height / 2) - ($line_ttf_height / 2);
 			$this->svg_dom->add_text_element($headings[$i], array('x' => $x, 'y' => $y, 'font-size' => $headings_font_size, 'fill' => self::$c['color']['headers'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
@@ -109,17 +113,17 @@ class pts_graph_passfail extends pts_graph_core
 		$line_ttf_height = $this->text_string_height('AZ@![]()@|_', $main_font_size);
 		for($i = 0; $i < $this->test_result->test_result_buffer->get_count(); $i++)
 		{
-			$this->svg_dom->draw_svg_line($this->i['left_start'] + $horizontal_border, $this->i['top_start'] + $vertical_border + ($i * $line_height) + $heading_height, $this->i['graph_left_end'] - $horizontal_border, $this->i['top_start'] + $vertical_border + ($i * $line_height) + $heading_height, self::$c['color']['body_light']);
+			//$this->svg_dom->draw_svg_line($this->i['left_start'] + $horizontal_border, $this->i['top_start'] + $vertical_border + ($i * $line_height) + $heading_height, $this->i['graph_left_end'] - $horizontal_border, $this->i['top_start'] + $vertical_border + ($i * $line_height) + $heading_height, self::$c['color']['body_light']);
 
 			$x = $this->i['left_start'] + $horizontal_border + $main_width;
 			$y = $this->i['top_start'] + $vertical_border + ($i * $line_height) + $heading_height + ($line_height / 2) - 2;
-			$this->svg_dom->add_text_element($this->test_result->test_result_buffer->buffer_items[$i]->get_result_identifier(), array('x' => $x, 'y' => $y, 'font-size' => $main_font_size, 'fill' => self::$c['color']['headers'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
+			$this->svg_dom->add_text_element($this->test_result->test_result_buffer->buffer_items[$i]->get_result_identifier(), array('x' => $x, 'y' => $y, 'font-size' => $main_font_size, 'fill' => self::$c['color']['headers'], 'text-anchor' => 'end', 'dominant-baseline' => 'middle', 'font-weight' => 'bold'));
 		}
 
-		$this->svg_dom->draw_svg_line($this->i['left_start'] + $horizontal_border, $this->i['top_start'] + $vertical_border, $this->i['graph_left_end'] - $horizontal_border, $this->i['top_start'] + $vertical_border, self::$c['color']['body_light']);
-		$this->svg_dom->draw_svg_line($this->i['left_start'] + $horizontal_border, $this->i['top_start'] + $vertical_border, $this->i['left_start'] + $horizontal_border, $this->i['graph_top_end'] - $vertical_border, self::$c['color']['body_light']);
-		$this->svg_dom->draw_svg_line($this->i['graph_left_end'] - $horizontal_border, $this->i['top_start'] + $vertical_border, $this->i['graph_left_end'] - $horizontal_border, $this->i['graph_top_end'] - $vertical_border, self::$c['color']['body_light']);
-		$this->svg_dom->draw_svg_line($this->i['left_start'] + $horizontal_border, $this->i['graph_top_end'] - $vertical_border, $this->i['graph_left_end'] - $horizontal_border, $this->i['graph_top_end'] - $vertical_border, self::$c['color']['body_light']);
+		//$this->svg_dom->draw_svg_line($this->i['left_start'] + $horizontal_border, $this->i['top_start'] + $vertical_border, $this->i['graph_left_end'] - $horizontal_border, $this->i['top_start'] + $vertical_border, self::$c['color']['body_light']);
+		//$this->svg_dom->draw_svg_line($this->i['left_start'] + $horizontal_border, $this->i['top_start'] + $vertical_border, $this->i['left_start'] + $horizontal_border, $this->i['graph_top_end'] - $vertical_border, self::$c['color']['body_light']);
+		//$this->svg_dom->draw_svg_line($this->i['graph_left_end'] - $horizontal_border, $this->i['top_start'] + $vertical_border, $this->i['graph_left_end'] - $horizontal_border, $this->i['graph_top_end'] - $vertical_border, self::$c['color']['body_light']);
+		//$this->svg_dom->draw_svg_line($this->i['left_start'] + $horizontal_border, $this->i['graph_top_end'] - $vertical_border, $this->i['graph_left_end'] - $horizontal_border, $this->i['graph_top_end'] - $vertical_border, self::$c['color']['body_light']);
 	}
 	protected function render_graph_result()
 	{
