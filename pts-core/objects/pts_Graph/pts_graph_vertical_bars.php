@@ -159,6 +159,12 @@ class pts_graph_vertical_bars extends pts_graph_core
 						$x = $px_bound_left + (($px_bound_right - $px_bound_left) / 2);
 						$this->svg_dom->add_text_element($value, array('x' => $x, 'y' => ($value_plot_top + 2), 'font-size' => floor(self::$c['size']['bars'] * $bar_font_size_ratio), 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'middle', 'dominant-baseline' => 'text-before-edge'));
 					}
+					else if($bar_width >= self::$c['size']['bars'])
+					{
+						$x = $px_bound_left + (($px_bound_right - $px_bound_left) / 2);
+						$this->svg_dom->add_text_element($value, array('x' => $x, 'y' => ($value_plot_top + 2), 'font-size' => floor(self::$c['size']['bars']), 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'start', 'dominant-baseline' => 'middle', 'transform' => 'rotate(90 ' . $x . ' ' . ($value_plot_top + 2) . ')'));
+
+					}
 				}
 			}
 		}

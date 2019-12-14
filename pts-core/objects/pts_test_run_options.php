@@ -95,7 +95,18 @@ class pts_test_run_options
 				else
 				{
 					echo PHP_EOL . $o->get_name() . PHP_EOL;
-					$value = pts_user_io::prompt_user_input('Enter Value');
+					if($o->get_identifier() == 'positive-number')
+					{
+						do
+						{
+							$value = pts_user_io::prompt_user_input('Enter Positive Number');
+						}
+						while($value <= 0 || !is_numeric($value));
+					}
+					else
+					{
+						$value = pts_user_io::prompt_user_input('Enter Value');
+					}
 				}
 
 				$text_args[] = array($o->format_option_display_from_input($value));
