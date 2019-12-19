@@ -45,6 +45,10 @@
 			<PackageName>cairo</PackageName>
 		</Package>
 		<Package>
+			<GenericName>openmpi-development</GenericName>
+			<PackageName>openmpi openmpi-dev</PackageName>
+		</Package>
+		<Package>
 			<GenericName>tiff</GenericName>
 			<PackageName>tiff</PackageName>
 		</Package>
@@ -62,7 +66,7 @@
 		</Package>
 		<Package>
 			<GenericName>java</GenericName>
-			<PackageName>java-common</PackageName>
+			<PackageName>java-common openjdk11</PackageName>
 		</Package>
 		<Package>
 			<GenericName>maven</GenericName>
@@ -70,7 +74,7 @@
 		</Package>
 		<Package>
 			<GenericName>expat</GenericName>
-			<PackageName>expat</PackageName>
+			<PackageName>expat expat-dev</PackageName>
 		</Package>
 		<Package>
 			<GenericName>portaudio-development</GenericName>
@@ -102,7 +106,11 @@
 		</Package>
 		<Package>
 			<GenericName>zlib-development</GenericName>
-			<PackageName>zlib</PackageName>
+			<PackageName>zlib zlib-dev</PackageName>
+		</Package>
+		<Package>
+			<GenericName>rust</GenericName>
+			<PackageName>rust cargo</PackageName>
 		</Package>
 		<Package>
 			<GenericName>jpeg-development</GenericName>
@@ -193,6 +201,10 @@
 			<PackageName>subversion</PackageName>
 		</Package>
 		<Package>
+			<GenericName>jpeg-development</GenericName>
+			<PackageName>libjpeg-turbo-dev</PackageName>
+		</Package>
+		<Package>
 			<GenericName>git</GenericName>
 			<PackageName>git</PackageName>
 		</Package>
@@ -211,6 +223,14 @@
 		<Package>
 			<GenericName>wine</GenericName>
 			<PackageName>wine</PackageName>
+		</Package>
+		<Package>
+			<GenericName>clang</GenericName>
+			<PackageName>clang</PackageName>
+		</Package>
+		<Package>
+			<GenericName>gflags</GenericName>
+			<PackageName>gflags gflags-dev</PackageName>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
