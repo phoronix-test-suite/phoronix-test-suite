@@ -120,7 +120,7 @@ class pts_graph_vertical_bars extends pts_graph_core
 				if($this->i['is_multi_way_comparison'])
 					$i = $this->calc_offset($id_offsets, $buffer_item->get_result_identifier());
 				else
-					$i = $this->calc_offset($id_offsets, $buffer_item->get_result_identifier() . ' ' . $value);
+					$i = $this->calc_offset($id_offsets, $buffer_item->get_result_identifier() . ' ' . (isset($value) ? $value : ''));
 				$value = $buffer_item->get_result_value();
 				$graph_size = round(($value / $this->i['graph_max_value']) * ($this->i['graph_top_end'] - $this->i['top_start']));
 				$value_plot_top = max($this->i['graph_top_end'] + 1 - $graph_size, 1);

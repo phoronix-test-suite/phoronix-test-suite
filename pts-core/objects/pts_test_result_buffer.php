@@ -313,10 +313,10 @@ class pts_test_result_buffer
 			return false;
 		}
 
-		$first_result = pts_strings::remove_from_string($this->buffer_items[0]->get_result_identifier(), pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL | pts_strings::CHAR_DASH);
+		$first_result = trim(str_ireplace(array('SVN', 'Git', 'Dev'), '', pts_strings::remove_from_string($this->buffer_items[0]->get_result_identifier(), pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL | pts_strings::CHAR_DASH)));
 		for($i = 1;  $i < count($this->buffer_items); $i++)
 		{
-			$result = pts_strings::remove_from_string($this->buffer_items[$i]->get_result_identifier(), pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL | pts_strings::CHAR_DASH);
+			$result = trim(str_ireplace(array('SVN', 'Git', 'Dev'), '', pts_strings::remove_from_string($this->buffer_items[$i]->get_result_identifier(), pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL | pts_strings::CHAR_DASH)));
 			if($result != $first_result)
 			{
 				return false;

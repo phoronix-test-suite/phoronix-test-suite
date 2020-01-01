@@ -530,7 +530,7 @@ class pts_test_installer
 		}
 		if(!pts_client::executable_in_path('python3'))
 		{
-			$compilers['PY3'] = array('python3.7', 'python3.6', 'python3.5', 'python3.4');
+			$compilers['PY3'] = array('python3.8', 'python3.7', 'python3.6', 'python3.5', 'python3.4');
 		}
 
 		if(empty($compilers))
@@ -658,6 +658,14 @@ class pts_test_installer
 				$test_install_request->compiler_mask_dir = $mask_dir;
 				// Appending the rest of the path will be done automatically within call_test_script
 				$test_install_request->special_environment_vars['PATH'] = $mask_dir;
+			}
+
+			// Additional workarounds
+
+			if(pts_client::executable_in_path('7z') == false && ($path_7za = pts_client::executable_in_path('7za')) != false)
+			{
+				// This should fix Fedora/RHEL providing 7za but not 7z even though for tests just extracting files this workaround should be fine
+				symlink($path_7za, $mask_dir . '7z');
 			}
 
 			return $mask_dir;
