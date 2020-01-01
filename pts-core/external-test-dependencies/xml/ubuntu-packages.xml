@@ -415,5 +415,9 @@
 			<GenericName>gflags</GenericName>
 			<PackageName>libgflags-dev</PackageName>
 		</Package>
+		<Package>
+			<GenericName>google-benchmark</GenericName>
+			<PackageName>libbenchmark-dev</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

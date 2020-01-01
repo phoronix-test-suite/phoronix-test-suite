@@ -566,5 +566,11 @@
 			<PossibleNames>gflags</PossibleNames>
 			<FileCheck>gflags/gflags.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>google-benchmark</GenericName>
+			<Title>Google Benchmark</Title>
+			<PossibleNames>libbenchmark-dev</PossibleNames>
+			<FileCheck>benchmark/benchmark.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

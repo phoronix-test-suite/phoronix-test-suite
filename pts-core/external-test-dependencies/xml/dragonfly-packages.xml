@@ -240,5 +240,9 @@
 			<GenericName>libxml2</GenericName>
 			<PackageName>libxml2</PackageName>
 		</Package>
+		<Package>
+			<GenericName>google-benchmark</GenericName>
+			<PackageName>benchmark</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

@@ -331,5 +331,9 @@
 			<GenericName>gflags</GenericName>
 			<PackageName>gflags</PackageName>
 		</Package>
+		<Package>
+			<GenericName>google-benchmark</GenericName>
+			<PackageName>benchmark</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
