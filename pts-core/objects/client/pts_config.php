@@ -184,11 +184,15 @@ class pts_config
 			$read_value = self::$xml_user_config->getXmlValue($xml_pointer);
 		}
 
-
-		$read_value = str_replace('~/.phoronix-test-suite/', PTS_USER_PATH, $read_value);
-
 		return !empty($read_value) ? $read_value : $predefined_value;
 	}
+
+	public static function read_path_config($xml_pointer, $predefined_value = false, &$nye_xml = null)
+	{
+		$read_value = self::read_user_config($xml_pointer, $predefined_value, $nye_xml);
+		return pts_strings::parse_for_home_directory($read_value);
+	}
+
 	public static function read_bool_config($xml_pointer, $predefined_value = false, &$nye_xml = null)
 	{
 		$value = self::read_user_config($xml_pointer, $predefined_value, $nye_xml);

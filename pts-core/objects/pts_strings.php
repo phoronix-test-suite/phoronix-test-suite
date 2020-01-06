@@ -157,12 +157,27 @@ class pts_strings
 	}
 	public static function parse_for_home_directory($path)
 	{
+		// Hack to automatically convert '$HOME/.phoronix-test-suite' and PTS_USER_PATH
+
+		// Convert $HOME/.phoronix-test-suite to PTS_USER_PATH if needed
+		if(strpos($path, '~/.phoronix-test-suite/') !== false)
+		{
+			$path = str_replace('~/.phoronix-test-suite/', PTS_USER_PATH, $path);
+		}
+
 		// Find home directory if needed
 		if(strpos($path, '~/') !== false)
 		{
-			$path = str_replace('~/', pts_core::user_home_directory(), $path);
+			$userhome = pts_core::user_home_directory();
+			if($userhome !== '/')
+			{
+				$path = str_replace('~/', $userhome, $path);
+			}
+			else
+			{
+				$path = str_replace('~/', PTS_USER_PATH, $path);
+			}
 		}
-
 		return pts_strings::add_trailing_slash($path);
 	}
 	public static function string_bool($string)

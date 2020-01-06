@@ -56,10 +56,6 @@ class pts_core
 			{
 				$userhome = pts_client::read_env('HOMEDRIVE') . $home;
 			}
-			else if(PTS_IS_DAEMONIZED_SERVER_PROCESS)
-			{
-				$userhome = PTS_USER_PATH;
-			}
 			else if(substr(__FILE__, 0, 6) == '/home/')
 			{
 				$home_dir = substr(__FILE__, 0, strpos(__FILE__, '/', 7)) . '/';

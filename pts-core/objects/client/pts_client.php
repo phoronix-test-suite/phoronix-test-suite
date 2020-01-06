@@ -128,14 +128,14 @@ class pts_client
 		}
 
 		self::core_storage_init_process();
-		$p = pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/EnvironmentDirectory', '~/.phoronix-test-suite/installed-tests/'));
+		$p = pts_config::read_path_config('PhoronixTestSuite/Options/Installation/EnvironmentDirectory', '~/.phoronix-test-suite/installed-tests/');
 		if(phodevi::is_windows())
 		{
 			$p = str_replace('/', DIRECTORY_SEPARATOR, $p);
 		}
 		pts_define('PTS_TEST_INSTALL_DEFAULT_PATH', $p);
 
-		pts_define('PTS_SAVE_RESULTS_PATH', pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Testing/ResultsDirectory', '~/.phoronix-test-suite/test-results/')));
+		pts_define('PTS_SAVE_RESULTS_PATH', pts_config::read_path_config('PhoronixTestSuite/Options/Testing/ResultsDirectory', '~/.phoronix-test-suite/test-results/'));
 		self::extended_init_process();
 
 		$openbenchmarking = pts_storage_object::read_from_file(PTS_CORE_STORAGE, 'openbenchmarking');
@@ -369,7 +369,7 @@ class pts_client
 		{
 			if(!defined('PTS_TEST_INSTALL_DEFAULT_PATH'))
 			{
-				$p = pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/EnvironmentDirectory', '~/.phoronix-test-suite/installed-tests/'));
+				$p = pts_config::read_path_config('PhoronixTestSuite/Options/Installation/EnvironmentDirectory', '~/.phoronix-test-suite/installed-tests/');
 				if(phodevi::is_windows())
 				{
 					$p = str_replace('/', DIRECTORY_SEPARATOR, $p);
@@ -383,7 +383,7 @@ class pts_client
 	}
 	public static function download_cache_path()
 	{
-		return pts_strings::add_trailing_slash(pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH)));
+		return pts_config::read_path_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH);
 	}
 	public static function user_run_save_variables()
 	{
