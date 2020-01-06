@@ -26,15 +26,11 @@ class pts_config_nye_XmlReader extends nye_XmlReader
 
 	public function __construct($new_values = null)
 	{
-		if(PTS_IS_DAEMONIZED_SERVER_PROCESS || (is_file('/etc/phoronix-test-suite.xml') && is_writable('/etc/phoronix-test-suite.xml')))
+		if(defined('PTS_USE_LINUX_FS_HIERARCHY') && is_file('/etc/phoronix-test-suite.xml'))
 		{
 			$file = '/etc/phoronix-test-suite.xml';
 		}
-		else if(PTS_IS_CLIENT && is_file(pts_config::get_config_file_location()))
-		{
-			$file = pts_config::get_config_file_location();
-		}
-		else if(PTS_USER_PATH . 'user-config.xml' != pts_config::get_config_file_location() && is_file(PTS_USER_PATH . 'user-config.xml'))
+		else if(is_file(PTS_USER_PATH . 'user-config.xml'))
 		{
 			$file = PTS_USER_PATH . 'user-config.xml';
 		}

@@ -33,7 +33,7 @@ class pts_config
 
 	public static function get_config_file_location()
 	{
-		if(PTS_IS_DAEMONIZED_SERVER_PROCESS || (is_file('/etc/phoronix-test-suite.xml') && is_writable('/etc/phoronix-test-suite.xml')))
+		if(defined('PTS_USE_LINUX_FS_HIERARCHY'))
 		{
 			return '/etc/phoronix-test-suite.xml';
 		}
@@ -184,10 +184,8 @@ class pts_config
 			$read_value = self::$xml_user_config->getXmlValue($xml_pointer);
 		}
 
-		if(PTS_IS_DAEMONIZED_SERVER_PROCESS)
-		{
-			$read_value = str_replace('~/.phoronix-test-suite/', PTS_USER_PATH, $read_value);
-		}
+
+		$read_value = str_replace('~/.phoronix-test-suite/', PTS_USER_PATH, $read_value);
 
 		return !empty($read_value) ? $read_value : $predefined_value;
 	}
