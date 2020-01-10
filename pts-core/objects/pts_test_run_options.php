@@ -99,13 +99,13 @@ class pts_test_run_options
 					{
 						do
 						{
-							$value = pts_user_io::prompt_user_input('Enter Positive Number', false, false, pts_client::$display->get_tab());
+							$value = pts_user_io::prompt_user_input('Enter Positive Number', false, false, pts_client::$display->get_tab() . pts_client::$display->get_tab());
 						}
 						while($value <= 0 || !is_numeric($value));
 					}
 					else
 					{
-						$value = pts_user_io::prompt_user_input('Enter Value', false, false, pts_client::$display->get_tab());
+						$value = pts_user_io::prompt_user_input('Enter Value', false, false, pts_client::$display->get_tab() . pts_client::$display->get_tab());
 					}
 				}
 
