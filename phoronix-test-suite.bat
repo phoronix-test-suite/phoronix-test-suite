@@ -1,7 +1,7 @@
 ::	Phoronix Test Suite
 ::	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-::	Copyright (C) 2008 - 2019, Phoronix Media
-::	Copyright (C) 2008 - 2019, Michael Larabel
+::	Copyright (C) 2008 - 2020, Phoronix Media
+::	Copyright (C) 2008 - 2020, Michael Larabel
 ::	phoronix-test-suite: The Phoronix Test Suite is an extensible open-source testing / benchmarking platform
 ::
 ::	This program is free software; you can redistribute it and/or modify

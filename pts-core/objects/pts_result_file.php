@@ -812,7 +812,7 @@ class pts_result_file
 	}
 	public function sort_result_object_order_by_spread($asc = false)
 	{
-		usort($this->result_objects, array('pts_result_file', 'result_spread_comparison'));
+		uasort($this->result_objects, array('pts_result_file', 'result_spread_comparison'));
 
 		if($asc == false)
 		{
@@ -825,7 +825,7 @@ class pts_result_file
 	}
 	public function sort_result_object_order_by_title($asc = true)
 	{
-		usort($this->result_objects, array('pts_result_file', 'result_title_comparison'));
+		uasort($this->result_objects, array('pts_result_file', 'result_title_comparison'));
 
 		if($asc == false)
 		{
@@ -838,7 +838,7 @@ class pts_result_file
 	}
 	public function sort_result_object_order_by_result_scale($asc = true)
 	{
-		usort($this->result_objects, array('pts_result_file', 'result_scale_comparison'));
+		uasort($this->result_objects, array('pts_result_file', 'result_scale_comparison'));
 
 		if($asc == false)
 		{

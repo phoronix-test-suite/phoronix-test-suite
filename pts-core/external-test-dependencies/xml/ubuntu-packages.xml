@@ -355,13 +355,13 @@
                 </Package>
 		<Package>
 			<GenericName>python-scipy</GenericName>
-			<PackageName>python-scipy</PackageName>
-			<FileCheck>/usr/lib/python2.7/dist-packages/scipy</FileCheck>
+			<PackageName>python3-scipy</PackageName>
+			<FileCheck>/usr/lib/python3/dist-packages/scipy</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>python-sklearn</GenericName>
-			<PackageName>python-sklearn</PackageName>
-			<FileCheck>/usr/lib/python2.7/dist-packages/sklearn/</FileCheck>
+			<PackageName>python3-sklearn</PackageName>
+			<FileCheck>/usr/lib/python3/dist-packages/sklearn/</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>V8</GenericName>
