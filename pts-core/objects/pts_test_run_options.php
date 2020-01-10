@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2019 Phoronix Media
-	Copyright (C) 2010 - 2019, Michael Larabel
+	Copyright (C) 2010 - 2020 Phoronix Media
+	Copyright (C) 2010 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -94,18 +94,18 @@ class pts_test_run_options
 				}
 				else
 				{
-					echo PHP_EOL . pts_client::cli_just_bold($o->get_name()) . ($o->get_helper_message() ? ' [' . pts_client::cli_just_italic($o->get_helper_message()) . ']' : null) . PHP_EOL;
+					echo PHP_EOL . pts_client::$display->get_tab() . pts_client::cli_just_bold($o->get_name()) . ($o->get_helper_message() ? ' [' . pts_client::cli_just_italic($o->get_helper_message()) . ']' : null) . PHP_EOL;
 					if($o->get_identifier() == 'positive-number')
 					{
 						do
 						{
-							$value = pts_user_io::prompt_user_input('Enter Positive Number');
+							$value = pts_user_io::prompt_user_input('Enter Positive Number', false, false, pts_client::$display->get_tab());
 						}
 						while($value <= 0 || !is_numeric($value));
 					}
 					else
 					{
-						$value = pts_user_io::prompt_user_input('Enter Value');
+						$value = pts_user_io::prompt_user_input('Enter Value', false, false, pts_client::$display->get_tab());
 					}
 				}
 

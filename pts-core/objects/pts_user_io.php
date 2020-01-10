@@ -40,11 +40,11 @@ class pts_user_io
 
 		return $output;
 	}
-	public static function prompt_user_input($question, $allow_null = false, $password = false)
+	public static function prompt_user_input($question, $allow_null = false, $password = false, $line_start = null)
 	{
 		do
 		{
-			echo PHP_EOL . pts_client::cli_just_bold($question . ': ');
+			echo PHP_EOL . $line_start . pts_client::cli_just_bold($question . ': ');
 			if($password && pts_client::executable_in_path('stty') && !phodevi::is_windows())
 			{
 				system('stty -echo');
