@@ -464,7 +464,7 @@ class pts_test_profile_parser
 					pts_test_run_options::auto_process_test_option($this, $option->Identifier, $names, $values, $messages);
 				}
 
-				$user_option = new pts_test_option($option->Identifier->__toString(), $option->DisplayName->__toString());
+				$user_option = new pts_test_option($option->Identifier->__toString(), $option->DisplayName->__toString(), $option->Message->__toString());
 				$user_option->set_option_prefix($option->ArgumentPrefix->__toString());
 				$user_option->set_option_postfix($option->ArgumentPostfix->__toString());
 

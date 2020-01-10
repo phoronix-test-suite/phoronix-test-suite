@@ -572,6 +572,16 @@
 						<xs:documentation>The default option number to use (or most common) in case the user does not select one of the options to run. This is an uncommon option.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
+				<xs:element name="Message" type="xs:string" minOccurs="0" maxOccurs="1">
+					<xs:annotation>
+						<xs:appinfo>
+							<get>get_helper_message</get>
+							<set></set>
+							<default></default>
+						</xs:appinfo>
+						<xs:documentation>Message allows passing any arbitrary string to the Phoronix Test Suite for displaying next to the option display name.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
 
 				<xs:element name="Menu" minOccurs="0" maxOccurs="1">
 				<xs:complexType>

@@ -28,12 +28,14 @@ class pts_test_option
 	private $prefix = null;
 	private $postfix = null;
 	private $default_entry = -1;
+	private $helper_message = null;
 	private $options = array();
 
-	public function __construct($identifier, $option)
+	public function __construct($identifier, $option, $helper_message = null)
 	{
 		$this->identifier = $identifier;
 		$this->option_name = $option;
+		$this->helper_message = $helper_message;
 	}
 	public function set_option_prefix($prefix)
 	{
@@ -61,6 +63,10 @@ class pts_test_option
 	public function get_identifier()
 	{
 		return $this->identifier;
+	}
+	public function get_helper_message()
+	{
+		return $this->helper_message;
 	}
 	public function get_name()
 	{

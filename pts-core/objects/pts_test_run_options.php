@@ -94,7 +94,7 @@ class pts_test_run_options
 				}
 				else
 				{
-					echo PHP_EOL . $o->get_name() . PHP_EOL;
+					echo PHP_EOL . pts_client::cli_just_bold($o->get_name()) . ($o->get_helper_message() ? ' [' . pts_client::cli_just_italic($o->get_helper_message()) . ']' : null) . PHP_EOL;
 					if($o->get_identifier() == 'positive-number')
 					{
 						do
@@ -135,11 +135,14 @@ class pts_test_run_options
 
 					if(count($option_names) > 1)
 					{
-						//echo PHP_EOL . $o->get_name() . ':' . PHP_EOL;
 						$option_names[] = 'Test All Options';
 					}
-
-					$bench_choice = pts_user_io::prompt_text_menu($o->get_name(), $option_names, true, true, pts_client::$display->get_tab() . pts_client::$display->get_tab());
+					$o_name = $o->get_name();
+					if($o->get_helper_message() != null)
+					{
+						$o_name .= ' [' . pts_client::cli_just_italic($o->get_helper_message()) . ']';
+					}
+					$bench_choice = pts_user_io::prompt_text_menu($o_name, $option_names, true, true, pts_client::$display->get_tab() . pts_client::$display->get_tab());
 					echo PHP_EOL;
 				}
 
@@ -448,7 +451,7 @@ class pts_test_run_options
 			case 'auto-executable':
 				if(PTS_IS_CLIENT == false)
 				{
-					echo 'ERROR: This option is not supported in this configuration.';
+					//echo 'ERROR: This option is not supported in this configuration.';
 					return;
 				}
 
