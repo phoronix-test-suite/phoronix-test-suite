@@ -196,6 +196,11 @@ class pts_config
 		$value = self::read_user_config($xml_pointer, $predefined_value, $nye_xml);
 		return pts_strings::string_bool($value);
 	}
+	public static function read_path_config($xml_pointer, $predefined_value = false, &$nye_xml = null)
+	{
+		$read_value = self::read_user_config($xml_pointer, $predefined_value, $nye_xml);
+		return pts_strings::parse_for_home_directory($read_value);
+	}
 }
 
 ?>

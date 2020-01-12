@@ -41,7 +41,7 @@ class phoromatic_server
 	}
 	public static function phoromatic_path()
 	{
-		$PHOROMATIC_PATH = pts_strings::parse_for_home_directory(pts_config::read_user_config('PhoronixTestSuite/Options/Server/PhoromaticStorage', ''));
+		$PHOROMATIC_PATH = pts_config::read_path_config('PhoronixTestSuite/Options/Server/PhoromaticStorage', '');
 
 		if(empty($PHOROMATIC_PATH) || ((is_dir($PHOROMATIC_PATH) && !is_writable($PHOROMATIC_PATH)) || !is_writable(dirname($PHOROMATIC_PATH))))
 		{
