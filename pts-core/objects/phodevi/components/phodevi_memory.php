@@ -236,11 +236,24 @@ class phodevi_memory extends phodevi_device_interface
 
 		if(empty($mem_string))
 		{
-			$mem_string = phodevi::read_property('memory', 'capacity');
+			$ram_in_mb = phodevi::read_property('memory', 'capacity');
 
-			if($mem_string != null)
+			if($ram_in_mb != null)
 			{
-				$mem_string .= 'MB';
+				$mem_string = $ram_in_mb . 'MB';
+
+				if($ram_in_mb > 5000)
+				{
+					$ram_in_gb = ceil($ram_in_mb / 1024);
+					if($ram_in_gb % 2 == 1)
+					{
+						$ram_in_gb++;
+					}
+					if($ram_in_gb >= 6)
+					{
+						$mem_string = $ram_in_gb . 'GB';
+					}
+				}
 			}
 		}
 
