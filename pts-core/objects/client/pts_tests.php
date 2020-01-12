@@ -87,7 +87,7 @@ class pts_tests
 	{
 		$error = null;
 
-		foreach(array('fatal error', 'error:', 'error while loading', 'undefined reference', 'cannot find -l', 'returned 1 exit status', 'not found', 'child process excited with status', 'error opening archive', 'failed to load', 'fatal', 'illegal argument') as $error_string)
+		foreach(array('fatal error', 'error while loading', 'undefined reference', 'cannot find -l', 'error:', 'returned 1 exit status', 'not found', 'child process excited with status', 'error opening archive', 'failed to load', 'fatal', 'illegal argument') as $error_string)
 		{
 			if(($e = strripos($log_file, $error_string)) !== false)
 			{
