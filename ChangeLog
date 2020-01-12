@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 pts-core: Allow test profile test options to expose more helper information strings
 pts-core: External dependency updates
 pts-core: When a test fails to install due to linker error, try to run that missing library through the external dependency handler to hint at the name
+pts-core: When a test fails to install due missing header file, try to run that missing library through the external dependency handler to hint at the name
 pts_Graph: Pass/fail graph formatting improvements
 phodevi: Convert large RAM capacity basic strings into GB rather than large MB
 phodevi: Add support for Linux 5.6+ drivetemp kernel module for ATA drive temperatures

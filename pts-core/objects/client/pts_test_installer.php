@@ -877,26 +877,41 @@ class pts_test_installer
 							if($test_install_request->install_error != null)
 							{
 								self::test_install_error(null, $test_install_request, 'ERROR: ' . $test_install_request->install_error);
+								$reverse_dep_look_for_files = array();
 								if(($e = strpos($install_error, 'cannot find -l')) !== false)
 								{
 									// Missing library
-									$lib_needed = substr($install_error, $e + strlen('cannot find -l'));
+									$lib_needed = trim(substr($install_error, $e + strlen('cannot find -l')));
 
 									if($lib_needed)
 									{
-										foreach(array('lib' . $lib_needed . '.so', $lib_needed) as $file)
-										{
+										$reverse_dep_look_for_files = array('lib' . $lib_needed . '.so', $lib_needed);
+									}
+								}
+								else if(($e = stripos($test_install_request->install_error, 'Missing Header File:')) !== false)
+								{
+									// Missing library
+									$lib_needed = trim(substr($test_install_request->install_error, $e + strlen('Missing Header File:')));
 
-											$lib_provided_by = pts_external_dependencies::packages_that_provide($file);
-											if($lib_provided_by)
+									if($lib_needed)
+									{
+										$reverse_dep_look_for_files[] = $lib_needed;
+									}
+								}
+
+								if($reverse_dep_look_for_files)
+								{
+									foreach($reverse_dep_look_for_files as $file)
+									{
+										$lib_provided_by = pts_external_dependencies::packages_that_provide($file);
+										if($lib_provided_by)
+										{
+											if(is_array($lib_provided_by))
 											{
-												if(is_array($lib_provided_by))
-												{
-													$lib_provided_by = array_shift($lib_provided_by);
-												}
-												self::test_install_error(null, $test_install_request, pts_client::cli_just_italic('Installing the package \'' . $lib_provided_by . '\' may fix this error.'));
-												break;
+												$lib_provided_by = array_shift($lib_provided_by);
 											}
+											self::test_install_error(null, $test_install_request, pts_client::cli_just_italic('Installing the package \'' . $lib_provided_by . '\' might fix this error.'));
+											break;
 										}
 									}
 								}
