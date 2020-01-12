@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015 - 2018, Phoronix Media
-	Copyright (C) 2015 - 2018, Michael Larabel
+	Copyright (C) 2015 - 2020, Phoronix Media
+	Copyright (C) 2015 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -39,6 +39,14 @@ class ubuntu_dependency_handler implements pts_dependency_handler
 					define('APT_FILE_UPDATED', 1);
 				}
 
+				// First run it through plain to see if any matches before trying to match more of the file
+				$apt_provides = self::run_apt_file_provides($file);
+				if($apt_provides != null)
+				{
+					$packages_needed[$file] = $apt_provides;
+					continue;
+				}
+
 				// Try appending common paths
 				if(strpos($file, '.h') !== false)
 				{
@@ -58,8 +66,8 @@ class ubuntu_dependency_handler implements pts_dependency_handler
 				}
 				else
 				{
-					foreach(array('/usr/bin/', '/bin/', '/usr/sbin') as $possible_path)
-						{
+					foreach(array('/usr/bin/', '/bin/', '/usr/sbin/') as $possible_path)
+					{
 						$apt_provides = self::run_apt_file_provides($possible_path . $file);
 						if($apt_provides != null)
 						{
