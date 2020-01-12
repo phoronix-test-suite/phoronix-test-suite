@@ -111,6 +111,17 @@ class pts_tests
 			}
 		}
 
+		if($error == null)
+		{
+			foreach(explode(PHP_EOL, $log_file) as $log_line)
+			{
+				if((stripos($log_line, 'checking ') !== false || stripos($log_line, 'looking for ') !== false) && stripos($log_line, 'missing') !== false)
+				{
+					$error = trim($log_line);
+				}
+			}
+		}
+
 		if($error == null && ($s = strrpos($log_file, PHP_EOL)) !== false && stripos($log_file, 'found', $s) !== false && stripos($log_file, 'no', ($s - 1)) !== false)
 		{
 			// See if the last line of the log is e.g. 'No OpenCL Environment Found', 'FFFFF Not Found', Etc
