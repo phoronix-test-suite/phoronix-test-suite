@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 9.4.0 Milestone 1
+13 January 2020
 
 pts-core: Allow test profile test options to expose more helper information strings
 pts-core: External dependency updates
