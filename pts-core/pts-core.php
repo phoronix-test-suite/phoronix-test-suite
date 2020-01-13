@@ -278,10 +278,10 @@ function pts_version_codenames()
 		);
 }
 
-pts_define('PTS_VERSION', '9.2.1');
-pts_define('PTS_CORE_VERSION', 9210);
-pts_define('PTS_RELEASE_DATE', '20191211');
-pts_define('PTS_CODENAME', 'Hurdal');
+pts_define('PTS_VERSION', '9.4.0m0');
+pts_define('PTS_CORE_VERSION', 9309);
+pts_define('PTS_RELEASE_DATE', '20200112');
+pts_define('PTS_CODENAME', 'Vestby');
 
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));
 pts_define('PTS_IS_WEB_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'WEB_CLIENT'));

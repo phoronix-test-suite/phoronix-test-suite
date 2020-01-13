@@ -730,7 +730,7 @@ class pts_client
 					}
 				}
 
-				echo sprintf('%-9ls %-30ls' . PHP_EOL, $extension[2], $extension[3]);
+				echo sprintf('%-9ls %-30ls' . PHP_EOL, pts_client::cli_just_bold($extension[2]), $extension[3]);
 			}
 		}
 
