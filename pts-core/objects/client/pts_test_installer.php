@@ -877,70 +877,7 @@ class pts_test_installer
 							if($test_install_request->install_error != null)
 							{
 								self::test_install_error(null, $test_install_request, 'ERROR: ' . $test_install_request->install_error);
-								$reverse_dep_look_for_files = array();
-								if(($e = strpos($install_error, 'cannot find -l')) !== false)
-								{
-									// Missing library
-									$lib_needed = trim(substr($install_error, $e + strlen('cannot find -l')));
-
-									if($lib_needed)
-									{
-										$reverse_dep_look_for_files = array('lib' . $lib_needed . '.so', $lib_needed);
-									}
-								}
-								else if(($e = stripos($test_install_request->install_error, 'Missing Header File:')) !== false)
-								{
-									// Missing library
-									$lib_needed = trim(substr($test_install_request->install_error, $e + strlen('Missing Header File:')));
-
-									if($lib_needed)
-									{
-										$reverse_dep_look_for_files[] = $lib_needed;
-									}
-								}
-								else if(($e = stripos($test_install_request->install_error, ' for ')) !== false && ($ex = stripos($test_install_request->install_error, ' not found')) !== false)
-								{
-									// Missing library
-									$lib_needed = trim(substr($test_install_request->install_error, 0, $e));
-
-									if($lib_needed)
-									{
-										$reverse_dep_look_for_files[] = $lib_needed;
-									}
-								}
-								else if(($e = stripos($test_install_request->install_error, ': Command not found')) !== false)
-								{
-									// Missing library
-									$lib_needed = ' ' . substr($test_install_request->install_error, 0, $e);
-									$lib_needed = trim(substr($lib_needed, strrpos($lib_needed, ' ') + 1));
-
-									if($lib_needed)
-									{
-										$reverse_dep_look_for_files[] = $lib_needed;
-									}
-								}
-								else if(stripos($test_install_request->install_error, 'fatal error') !== false && ($e = stripos($test_install_request->install_error, ': No such file or directory')) !== false)
-								{
-									// Missing library
-									$lib_needed = ' ' . substr($test_install_request->install_error, 0, $e);
-									$lib_needed = trim(substr($lib_needed, strrpos($lib_needed, ' ') + 1));
-
-									if($lib_needed)
-									{
-										$reverse_dep_look_for_files[] = $lib_needed;
-									}
-								}
-								else if(($e = stripos($test_install_request->install_error, ' is required')) !== false)
-								{
-									// Missing library
-									$lib_needed = ' ' . substr($test_install_request->install_error, 0, $e);
-									$lib_needed = trim(substr($lib_needed, strrpos($lib_needed, ' ') + 1));
-
-									if($lib_needed)
-									{
-										$reverse_dep_look_for_files[] = $lib_needed;
-									}
-								}
+								$reverse_dep_look_for_files = pts_tests::scan_for_file_missing_from_error($test_install_request->install_error);
 
 								if($reverse_dep_look_for_files)
 								{

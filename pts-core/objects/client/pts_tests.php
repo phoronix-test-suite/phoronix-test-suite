@@ -177,6 +177,75 @@ class pts_tests
 
 		return trim($error);
 	}
+	public static function scan_for_file_missing_from_error($error)
+	{
+		$reverse_dep_look_for_files = array();
+		if(($e = strpos($error, 'cannot find -l')) !== false)
+		{
+			// Missing library
+			$lib_needed = trim(substr($error, $e + strlen('cannot find -l')));
+
+			if($lib_needed)
+			{
+				$reverse_dep_look_for_files = array('lib' . $lib_needed . '.so', $lib_needed);
+			}
+		}
+		else if(($e = stripos($error, 'Missing Header File:')) !== false)
+		{
+			// Missing library
+			$lib_needed = trim(substr($error, $e + strlen('Missing Header File:')));
+
+			if($lib_needed)
+			{
+				$reverse_dep_look_for_files[] = $lib_needed;
+			}
+		}
+		else if(($e = stripos($error, ' for ')) !== false && ($ex = stripos($error, ' not found')) !== false)
+		{
+			// Missing library
+			$lib_needed = trim(substr($error, 0, $e));
+
+			if($lib_needed)
+			{
+				$reverse_dep_look_for_files[] = $lib_needed;
+			}
+		}
+		else if(($e = stripos($error, ': Command not found')) !== false)
+		{
+			// Missing library
+			$lib_needed = ' ' . substr($error, 0, $e);
+			$lib_needed = trim(substr($lib_needed, strrpos($lib_needed, ' ') + 1));
+
+			if($lib_needed)
+			{
+				$reverse_dep_look_for_files[] = $lib_needed;
+			}
+		}
+		else if(stripos($error, 'fatal error') !== false && ($e = stripos($error, ': No such file or directory')) !== false)
+		{
+			// Missing library
+			$lib_needed = ' ' . substr($error, 0, $e);
+			$lib_needed = trim(substr($lib_needed, strrpos($lib_needed, ' ') + 1));
+
+			if($lib_needed)
+			{
+				$reverse_dep_look_for_files[] = $lib_needed;
+			}
+		}
+		else if(($e = stripos($error, ' is required')) !== false)
+		{
+			// Missing library
+			$lib_needed = ' ' . substr($error, 0, $e);
+			$lib_needed = trim(substr($lib_needed, strrpos($lib_needed, ' ') + 1));
+
+			if($lib_needed)
+			{
+				$reverse_dep_look_for_files[] = $lib_needed;
+			}
+		}
+
+		return $reverse_dep_look_for_files;
+	}
 	public static function extra_environmental_variables(&$test_profile)
 	{
 		$extra_vars = array();
