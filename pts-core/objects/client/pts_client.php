@@ -24,19 +24,19 @@ class pts_client
 {
 	public static $display = false;
 	public static $pts_logger = false;
-	private static $current_command = null;
-	protected static $lock_pointers = null;
-	private static $forked_pids = array();
-	protected static $phoromatic_servers = array();
-	protected static $debug_mode = false;
-	protected static $full_output = false;
-	protected static $override_pts_env_vars = array();
-	protected static $sent_command = null;
 	public static $web_result_viewer_active = false;
 	public static $has_used_modern_result_viewer = false;
 	public static $last_browser_launch_time = 0;
 	public static $last_browser_duration = 0;
 	public static $last_result_view_url = null;
+	protected static $lock_pointers = null;
+	protected static $phoromatic_servers = array();
+	protected static $debug_mode = false;
+	protected static $full_output = false;
+	protected static $override_pts_env_vars = array();
+	protected static $sent_command = null;
+	private static $current_command = null;
+	private static $forked_pids = array();
 
 	public static function create_lock($lock_file)
 	{

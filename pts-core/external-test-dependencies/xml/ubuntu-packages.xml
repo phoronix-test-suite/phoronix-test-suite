@@ -147,7 +147,7 @@
 		<Package>
 			<GenericName>perl</GenericName>
 			<PackageName>perl perl-base perl-modules libsdl-perl libperl-dev</PackageName>
-			<FileCheck>perl, /etc/perl/CPAN</FileCheck>
+			<FileCheck>perl, /etc/perl</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>perl-opengl</GenericName>
