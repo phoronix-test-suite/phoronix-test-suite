@@ -38,14 +38,7 @@ class ubuntu_dependency_handler implements pts_dependency_handler
 					shell_exec('apt-file update 2>&1');
 					define('APT_FILE_UPDATED', 1);
 				}
-
-				// First run it through plain to see if any matches before trying to match more of the file
-				$apt_provides = self::run_apt_file_provides($file);
-				if($apt_provides != null)
-				{
-					$packages_needed[$file] = $apt_provides;
-					continue;
-				}
+				$added = false;
 
 				// Try appending common paths
 				if(strpos($file, '.h') !== false)
@@ -54,6 +47,7 @@ class ubuntu_dependency_handler implements pts_dependency_handler
 					if($apt_provides != null)
 					{
 						$packages_needed[$file] = $apt_provides;
+						$added = true;
 					}
 				}
 				else if(strpos($file, '.so') !== false)
@@ -62,18 +56,40 @@ class ubuntu_dependency_handler implements pts_dependency_handler
 					if($apt_provides != null)
 					{
 						$packages_needed[$file] = $apt_provides;
+						$added = true;
 					}
 				}
 				else
 				{
-					foreach(array('/usr/bin/', '/bin/', '/usr/sbin/') as $possible_path)
+					foreach(array('/usr/bin/', '/bin/') as $possible_path)
 					{
 						$apt_provides = self::run_apt_file_provides($possible_path . $file);
 						if($apt_provides != null)
 						{
 							$packages_needed[$file] = $apt_provides;
+							$added = true;
 							break;
 						}
+					}
+				}
+
+				// Broader search
+				if(!$added && substr($file, 0, 3) == 'lib')
+				{
+					$apt_provides = self::run_apt_file_provides($file . '.so');
+					if($apt_provides != null)
+					{
+						$packages_needed[$file] = $apt_provides;
+						$added = true;
+					}
+				}
+				if(!$added)
+				{
+					$apt_provides = self::run_apt_file_provides($file);
+					if($apt_provides != null)
+					{
+						$packages_needed[$file] = $apt_provides;
+						$added = true;
 					}
 				}
 			}
@@ -91,7 +107,7 @@ class ubuntu_dependency_handler implements pts_dependency_handler
 
 		foreach(explode(PHP_EOL, $apt_output) as $line)
 		{
-			if(($x = strpos($line, ': ')) == false)
+			if(($x = strpos($line, ': ')) == false || strpos($line, 'bash-completion') !== false)
 			{
 				continue;
 			}

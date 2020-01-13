@@ -898,6 +898,49 @@ class pts_test_installer
 										$reverse_dep_look_for_files[] = $lib_needed;
 									}
 								}
+								else if(($e = stripos($test_install_request->install_error, ' for ')) !== false && ($ex = stripos($test_install_request->install_error, ' not found')) !== false)
+								{
+									// Missing library
+									$lib_needed = trim(substr($test_install_request->install_error, 0, $e));
+
+									if($lib_needed)
+									{
+										$reverse_dep_look_for_files[] = $lib_needed;
+									}
+								}
+								else if(($e = stripos($test_install_request->install_error, ': Command not found')) !== false)
+								{
+									// Missing library
+									$lib_needed = ' ' . substr($test_install_request->install_error, 0, $e);
+									$lib_needed = trim(substr($lib_needed, strrpos($lib_needed, ' ') + 1));
+
+									if($lib_needed)
+									{
+										$reverse_dep_look_for_files[] = $lib_needed;
+									}
+								}
+								else if(stripos($test_install_request->install_error, 'fatal error') !== false && ($e = stripos($test_install_request->install_error, ': No such file or directory')) !== false)
+								{
+									// Missing library
+									$lib_needed = ' ' . substr($test_install_request->install_error, 0, $e);
+									$lib_needed = trim(substr($lib_needed, strrpos($lib_needed, ' ') + 1));
+
+									if($lib_needed)
+									{
+										$reverse_dep_look_for_files[] = $lib_needed;
+									}
+								}
+								else if(($e = stripos($test_install_request->install_error, ' is required')) !== false)
+								{
+									// Missing library
+									$lib_needed = ' ' . substr($test_install_request->install_error, 0, $e);
+									$lib_needed = trim(substr($lib_needed, strrpos($lib_needed, ' ') + 1));
+
+									if($lib_needed)
+									{
+										$reverse_dep_look_for_files[] = $lib_needed;
+									}
+								}
 
 								if($reverse_dep_look_for_files)
 								{

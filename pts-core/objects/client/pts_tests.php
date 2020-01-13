@@ -87,25 +87,31 @@ class pts_tests
 	{
 		$error = null;
 
-		foreach(array('fatal error', 'error while loading', 'undefined reference', 'cannot find -l', 'error:', 'returned 1 exit status', 'not found', 'child process excited with status', 'error opening archive', 'failed to load', 'fatal', 'illegal argument') as $error_string)
+		foreach(array('fatal error', 'error while loading', 'undefined reference', 'cannot find -l', 'error:', 'returned 1 exit status', 'not found', 'child process excited with status', 'error opening archive', 'failed to load', 'fatal', 'illegal argument', 'is required to build') as $error_string)
 		{
-			if(($e = strripos($log_file, $error_string)) !== false)
+			$lf = $log_file;
+			if(($e = strripos($lf, $error_string)) !== false)
 			{
-				if(($line_end = strpos($log_file, PHP_EOL, $e)) !== false)
+				if(($line_end = strpos($lf, PHP_EOL, $e)) !== false)
 				{
-					$log_file = substr($log_file, 0, $line_end);
+					$lf = substr($lf, 0, $line_end);
 				}
 
-				if(($line_start_e = strrpos($log_file, PHP_EOL)) !== false)
+				if(($line_start_e = strrpos($lf, PHP_EOL)) !== false)
 				{
-					$log_file = substr($log_file, ($line_start_e + 1));
+					$lf = substr($lf, ($line_start_e + 1));
 				}
 
-				$log_file = str_replace(array(PTS_TEST_PROFILE_PATH, $strip_string), null, $log_file);
+				$lf = str_replace(array(PTS_TEST_PROFILE_PATH, $strip_string), null, $lf);
 
-				if(isset($log_file[8]) && !isset($log_file[144]) && strpos($log_file, PHP_EOL) === false)
+				if(isset($lf[8]) && substr($lf, -7) == 'error: ')
 				{
-					$error = $log_file;
+					continue;
+				}
+
+				if(isset($lf[8]) && !isset($lf[144]) && strpos($lf, PHP_EOL) === false)
+				{
+					$error = $lf;
 					break;
 				}
 			}
