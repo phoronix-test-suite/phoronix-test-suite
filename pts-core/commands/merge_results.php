@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2019, Phoronix Media
-	Copyright (C) 2008 - 2019, Michael Larabel
+	Copyright (C) 2008 - 2020, Phoronix Media
+	Copyright (C) 2008 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -62,7 +62,7 @@ class merge_results implements pts_option_interface
 		$result_file->merge($result_files_to_merge);
 		pts_client::save_test_result($merge_to_file, $result_file->get_xml());
 		echo 'Merged Results Saved To: ' . PTS_SAVE_RESULTS_PATH . $merge_to_file . PHP_EOL . PHP_EOL;
-		pts_client::display_result_view($merge_to_file, false);
+		pts_client::display_result_view('merge-' . $rand_file, false);
 	}
 }
 
