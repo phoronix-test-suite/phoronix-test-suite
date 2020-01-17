@@ -249,7 +249,7 @@ class pts_graph_radar_chart extends pts_graph_core
 			$v_offset = $y_txt < $center_y && !empty($desc) ? -5 : 0;
 			$rotate = $ro_count > 14 ? array('transform' => 'rotate(' . ($deg > 90 && $deg < 270 ? $deg + 180 : $deg) . ' ' . $x_txt . ' ' . $y_txt . ')') : array();
 			$this->svg_dom->add_text_element($r['ro']->test_profile->get_title(), array_merge(array('x' => $x_txt, 'y' => $y_txt + $v_offset, 'text-anchor' => $text_anchor), $rotate), $g_txt_tests);
-			if($desc)
+			if($desc && $desc != 'Geometric Mean' && $desc != 'D.G.M')
 			{
 				$this->svg_dom->add_text_element($desc, array_merge(array('x' => $x_txt, 'y' => $y_txt + 10, 'text-anchor' => $text_anchor), $rotate), $g_txt_desc);
 			}
