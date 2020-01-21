@@ -156,6 +156,14 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			$result_file->save();
 		}
 		exit;
+	case 'remove-result-object':
+		if(VIEWER_CAN_MODIFY_RESULTS && isset($_REQUEST['result_file_id']) && isset($_REQUEST['result_object']))
+		{
+			$result_file = new pts_result_file($_REQUEST['result_file_id']);
+			$result_file->remove_result_object_by_id($_REQUEST['result_object']);
+			$result_file->save();
+		}
+		exit;
 	case 'result':
 		if(false && isset($_POST) && !empty($_POST))
 		{
@@ -203,8 +211,8 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		pts_result_viewer_settings::process_request_to_attributes($_REQUEST, $result_file, $extra_attributes);
 		define('TITLE', $result_file->get_title());
 		$PAGE .= pts_result_viewer_settings::get_html_sort_bar($result_file, $_REQUEST);
-		$PAGE .= '<h1 id="result_file_title">' . $result_file->get_title() . '</h1>';
-		$PAGE .= '<p id="result_file_desc">' . str_replace(PHP_EOL, '<br />', $result_file->get_description()) . '</p>';
+		$PAGE .= '<h1 id="result_file_title" placeholder="Title">' . $result_file->get_title() . '</h1>';
+		$PAGE .= '<p id="result_file_desc" placeholder="Description">' . str_replace(PHP_EOL, '<br />', $result_file->get_description()) . '</p>';
 		if(VIEWER_CAN_MODIFY_RESULTS && RESULTS_VIEWING_COUNT == 1)
 		{
 			$PAGE .= ' <input type="submit" id="save_result_file_meta_button" value="Save" onclick="javascript:save_result_file_meta(\'' . RESULTS_VIEWING_ID . '\'); return false;" style="display: none;">';
@@ -269,8 +277,12 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			{
 				continue;
 			}
-			$PAGE .= '<a name="r-' . $i . '"></a><p align="center">';
+			$PAGE .= '<a name="r-' . $i . '"></a><p align="center" id="result-' . $i . '">';
 			$PAGE .= $res;
+			if(VIEWER_CAN_DELETE_RESULTS && RESULTS_VIEWING_COUNT == 1)
+			{
+				$PAGE .= '<br /><a class="mini" href="#" onclick="javascript:delete_result_from_result_file(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\'); return false;">Delete Result</a>';
+			}
 			$PAGE .= '</p>';
 			unset($result_object);
 		}

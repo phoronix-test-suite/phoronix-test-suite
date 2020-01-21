@@ -315,3 +315,7 @@ div#leading_message
 	color: #098BEF;
 	padding: 10px;
 }
+a.mini
+{
+	font-size: 10px;
+}

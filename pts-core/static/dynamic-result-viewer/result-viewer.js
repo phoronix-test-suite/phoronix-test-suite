@@ -28,3 +28,20 @@ function save_result_file_meta(id)
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.send("result_file_id=" + id + "&result_title=" + title + "&result_desc=" + description);
 }
+function delete_result_from_result_file(result_file, result_hash)
+{
+	if(confirm("Permanently delete this result graph?"))
+	{
+		document.getElementById("result-" + result_hash).style.display = "none";
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+		if(this.readyState == 4 && this.status == 200) {
+
+			}
+		};
+		xhttp.open("POST", "/index.php?page=remove-result-object", true);
+		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhttp.send("result_file_id=" + result_file + "&result_object=" + result_hash);
+	}
+	return false;
+}
