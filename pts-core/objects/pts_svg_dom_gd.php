@@ -121,6 +121,23 @@ class pts_svg_dom_gd
 			$width = $dom->childNodes->item(2)->attributes->getNamedItem('width')->nodeValue;
 			$height = $dom->childNodes->item(2)->attributes->getNamedItem('height')->nodeValue;
 
+			if(PTS_IS_CLIENT && pts_client::executable_in_path('inkscape') && $format == 'PNG')
+			{
+				// Using Inkscape for converting SVG to PNG generally means higher quality conversion
+				$temp_svg = sys_get_temp_dir() . '/pts-temp-' . rand(0, 50000) . '.svg';
+				file_put_contents($temp_svg, $dom->saveXML());
+				$temp_png = sys_get_temp_dir() . '/pts-temp-' . rand(0, 50000) . '.png';
+				shell_exec('inkscape -z -e ' . $temp_png . ' -w ' . $width . ' -h ' . $height . ' ' . $temp_svg);
+				unlink($temp_svg);
+				if(is_file($temp_png))
+				{
+					$temp_png_output = file_get_contents($temp_png);
+					unlink($temp_png);
+					return $temp_png_output;
+				}
+				unlink($temp_png);
+			}
+
 			if($width > 1 && $height > 1)
 			{
 				$gd = imagecreatetruecolor($width, $height);
