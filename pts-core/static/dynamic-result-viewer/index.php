@@ -147,6 +147,15 @@ if(VIEWER_ACCESS_KEY != null && (!isset($_SESSION['AccessKey']) || $_SESSION['Ac
 $PAGE = null;
 switch(isset($_GET['page']) ? $_GET['page'] : null)
 {
+	case 'update-result-file-meta':
+		if(VIEWER_CAN_MODIFY_RESULTS && isset($_REQUEST['result_file_id']) && isset($_REQUEST['result_title']) && isset($_REQUEST['result_desc']))
+		{
+			$result_file = new pts_result_file($_REQUEST['result_file_id']);
+			$result_file->set_title($_REQUEST['result_title']);
+			$result_file->set_description($_REQUEST['result_desc']);
+			$result_file->save();
+		}
+		exit;
 	case 'result':
 		if(false && isset($_POST) && !empty($_POST))
 		{
@@ -157,14 +166,15 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		$result_file = null;
 		$result_merges = 0;
 		$possible_results = explode(',', $_GET['result']);
-
+		$results_viewing = array();
 		foreach($possible_results as $rid)
 		{
-			if(is_file(PTS_SAVE_RESULTS_PATH . '/' . $rid . '/composite.xml'))
+			if(pts_results::is_saved_result_file($rid))
 			{
 				if($result_file == null)
 				{
-					$result_file = new pts_result_file(PTS_SAVE_RESULTS_PATH . '/' . $rid . '/composite.xml');
+					$result_file = new pts_result_file($rid);
+					$results_viewing[] = $rid;
 					if(count($possible_results) > 1)
 					{
 						$result_file->rename_run('PREFIX', $result_file->get_title());
@@ -172,7 +182,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 				}
 				else
 				{
-					$rf = new pts_result_file(PTS_SAVE_RESULTS_PATH . '/' . $rid . '/composite.xml');
+					$rf = new pts_result_file($rid);
 					$result_file->merge(array(new pts_result_merge_select($rf)), 0, $rf->get_title(), true);
 					$result_merges++;
 				}
@@ -182,6 +192,8 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		{
 			break;
 		}
+		define('RESULTS_VIEWING_COUNT', count($results_viewing));
+		define('RESULTS_VIEWING_ID', $results_viewing[0]);
 		if($result_merges > 0)
 		{
 			$result_file->avoid_duplicate_identifiers();
@@ -191,11 +203,16 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		pts_result_viewer_settings::process_request_to_attributes($_REQUEST, $result_file, $extra_attributes);
 		define('TITLE', $result_file->get_title());
 		$PAGE .= pts_result_viewer_settings::get_html_sort_bar($result_file, $_REQUEST);
-		$PAGE .= '<h1>' . $result_file->get_title() . '</h1>';
-		$PAGE .= '<p>' . str_replace(PHP_EOL, '<br />', $result_file->get_description()) . '</p>';
-		if(count($possible_results) == 1)
+		$PAGE .= '<h1 id="result_file_title">' . $result_file->get_title() . '</h1>';
+		$PAGE .= '<p id="result_file_desc">' . str_replace(PHP_EOL, '<br />', $result_file->get_description()) . '</p>';
+		if(VIEWER_CAN_MODIFY_RESULTS && RESULTS_VIEWING_COUNT == 1)
 		{
-			$PAGE .= '<input type="button" value="Delete Result File" onclick="javascript:delete_result_file(\'' . $rid . '\'); return false;">';
+			$PAGE .= ' <input type="submit" id="save_result_file_meta_button" value="Save" onclick="javascript:save_result_file_meta(\'' . RESULTS_VIEWING_ID . '\'); return false;" style="display: none;">';
+			$PAGE .= ' <input type="submit" id="edit_result_file_meta_button" value="Edit" onclick="javascript:edit_result_file_meta(); return false;">';
+		}
+		if(VIEWER_CAN_DELETE_RESULTS && RESULTS_VIEWING_COUNT == 1)
+		{
+			$PAGE .= ' <input type="submit" value="Delete Result File" onclick="javascript:delete_result_file(\'' . RESULTS_VIEWING_ID . '\'); return false;">';
 		}
 		//$PAGE .= '<p align="center"><strong>Export As: </strong> <a href="' . CURRENT_URI . '&export=pdf">PDF</a>, <a href="' . CURRENT_URI . '&export=csv">CSV</a>, <a href="' . CURRENT_URI . '&export=csv-all">CSV Individual Data</a> </p>';
 		$PAGE .= '<hr /><div style="font-size: 12pt;">' . pts_result_viewer_settings::get_html_options_markup($result_file, $_REQUEST) . '</div><hr />';
@@ -298,11 +315,10 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			return $a > $b ? -1 : 1;
 		}
 		$results = array();
-		$all_results = pts_file_io::glob(PTS_SAVE_RESULTS_PATH . '/*/composite.xml');
-		foreach($all_results as $composite_xml)
+		$all_results = pts_results::saved_test_results();
+		foreach($all_results as $id)
 		{
-			$id = basename(dirname($composite_xml));
-			$rf = new pts_result_file($composite_xml);
+			$rf = new pts_result_file($id);
 
 			if(isset($_POST['search']) && !empty($_POST['search']))
 			{

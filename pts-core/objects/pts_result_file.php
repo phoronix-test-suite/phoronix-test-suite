@@ -125,6 +125,13 @@ class pts_result_file
 	{
 		return $this->file_location;
 	}
+	public function save()
+	{
+		if($this->file_location && is_file($this->file_location))
+		{
+			return file_put_contents($this->file_location, $this->get_xml());
+		}
+	}
 	public function get_last_modified()
 	{
 		return $this->last_modified;

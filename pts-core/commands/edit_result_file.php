@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014 - 2019, Phoronix Media
-	Copyright (C) 2014 - 2019, Michael Larabel
+	Copyright (C) 2014 - 2020, Phoronix Media
+	Copyright (C) 2014 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -48,7 +48,7 @@ class edit_result_file implements pts_option_interface
 		{
 			$result_file->set_description($new_description);
 		}
-		pts_client::save_test_result($result_file->get_file_location(), $result_file->get_xml());
+		$result_file->save();
 		pts_client::display_result_view($result_file, false);
 	}
 }
