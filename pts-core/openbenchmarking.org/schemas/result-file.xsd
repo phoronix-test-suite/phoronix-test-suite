@@ -3,8 +3,8 @@
 <xs:annotation>
 	<xs:documentation xml:lang="en">
 		Phoronix Test Suite / OpenBenchmarking.org XML Result File Specification
-		Copyright (C) 2008 - 2017, Phoronix Media
-		Copyright (C) 2008 - 2017, Michael Larabel
+		Copyright (C) 2008 - 2020, Phoronix Media
+		Copyright (C) 2008 - 2020, Michael Larabel
 	</xs:documentation>
 </xs:annotation>
 <xs:include schemaLocation="types.xsd" />
@@ -52,6 +52,7 @@
 			<xs:element name="Scale" type="xs:string" />
 			<xs:element name="Proportion" type="Proportion" />
 			<xs:element name="DisplayFormat" type="DisplayFormat" />
+			<xs:element name="Comment" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="Data">
 			<xs:complexType>
 			<xs:sequence>

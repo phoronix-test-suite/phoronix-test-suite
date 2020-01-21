@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2019, Phoronix Media
-	Copyright (C) 2008 - 2019, Michael Larabel
+	Copyright (C) 2008 - 2020, Phoronix Media
+	Copyright (C) 2008 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@ class pts_test_result
 	private $used_arguments_description;
 	private $result_precision = 2;
 	private $overrode_default_precision = false;
+	private $comment = null;
 
 	public $test_profile;
 	public $test_result_buffer;
@@ -123,6 +124,21 @@ class pts_test_result
 	public function get_arguments_description()
 	{
 		return $this->used_arguments_description;
+	}
+	public function set_comment($comment)
+	{
+		$this->comment = $comment;
+	}
+	public function append_comment($comment)
+	{
+		if(strpos($this->comment, $comment) === false)
+		{
+			$this->comment .= ' ' . PHP_EOL . $comment;
+		}
+	}
+	public function get_comment()
+	{
+		return $this->comment;
 	}
 	public function get_arguments_description_shortened($compact_words = true)
 	{
