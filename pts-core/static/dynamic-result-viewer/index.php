@@ -28,6 +28,9 @@ if(function_exists('session_start'))
 
 define('CURRENT_URI', $_SERVER['REQUEST_URI']);
 define('WEB_URL_PATH', rtrim(dirname($_SERVER['SCRIPT_NAME']), '/') . '/');
+define('RESULT_VIEWER_VERSION', 2);
+define('PTS_AUTO_LOAD_ALL_OBJECTS', true);
+
 $uri_stripped = CURRENT_URI;
 if(($x = strpos($uri_stripped, '&')) !== false)
 {
@@ -55,7 +58,7 @@ switch((isset($uri_segments[0]) ? $uri_segments[0] : null))
 if(getenv('PTS_VIEWER_RESULT_PATH') && getenv('PTS_VIEWER_PTS_PATH'))
 {
 	define('VIEWER_ACCESS_KEY', getenv('PTS_VIEWER_ACCESS_KEY'));
-	define('VIEWER_RESULTS_DIRECTORY_PATH', getenv('PTS_VIEWER_RESULT_PATH'));
+	define('PTS_SAVE_RESULTS_PATH', getenv('PTS_VIEWER_RESULT_PATH'));
 	define('VIEWER_PHORONIX_TEST_SUITE_PATH', getenv('PTS_VIEWER_PTS_PATH'));
 }
 else
@@ -90,6 +93,19 @@ if(isset($_GET['PTS']))
 	exit;
 }
 
+pts_config::set_override_default_config(getenv('PTS_VIEWER_CONFIG_FILE'));
+if(PTS_SAVE_RESULTS_PATH && is_writable(PTS_SAVE_RESULTS_PATH) && getenv('PTS_VIEWER_CONFIG_FILE'))
+{
+	define('VIEWER_CAN_MODIFY_RESULTS', pts_config::read_bool_config('PhoronixTestSuite/Options/ResultViewer/AllowSavingResultChanges', 'FALSE'));
+	define('VIEWER_CAN_DELETE_RESULTS', pts_config::read_bool_config('PhoronixTestSuite/Options/ResultViewer/AllowDeletingResults', 'FALSE'));
+}
+else
+{
+	define('VIEWER_CAN_MODIFY_RESULTS', false);
+	define('VIEWER_CAN_DELETE_RESULTS', false);
+}
+
+
 // Authenticate user and set session variables
 if(isset($_POST['access_key']))
 {
@@ -108,73 +124,9 @@ if(VIEWER_ACCESS_KEY != null && (!isset($_SESSION['AccessKey']) || $_SESSION['Ac
 <html lang="en">
 <head>
   <title>Phoronix Test Suite - Local Result Viewer</title>
+<link rel="stylesheet" href="/result-viewer.css">
+<script type="text/javascript" src="/result-viewer.js"></script>
 <link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-<style>
-body
-{
-	margin: 0;
-	padding: 0;
-	font-family: 'Roboto', sans-serif;
-
-
-}
-hr
-{
-	color: #098BEF;
-	opacity: 0.3;
-	margin: 0 10%;
-}
-div#login_box
-{
-	margin-top: 20%;
-	background-image: linear-gradient(#098BEF, #0367B4);
-	border: 1px solid #eee;
-	border-width: 1px 0 1px 0;
-	padding: 30px 0;
-	color: #fff;
-	overflow: hidden;
-}
-div#login_box input
-{
-	margin: 10px 0;
-	background: #098BEF;
-	color: #fff;
-	font-size: 15pt;
-	border: 1px solid #eee;
-	padding: 5px 10px;
-}
-div#login_box input::placeholder
-{
-	color: #fff;
-}
-div#login_box h1
-{
-	font-weight: 500;
-	text-transform: uppercase;
-}
-div#login_box h2
-{
-	font-weight: 400;
-	text-transform: uppercase;
-}
-div#login_box_left
-{
-	float: left;
-	width: 50%;
-	padding: 12px 30px 0 0;
-	text-align: right;
-	border: 1px solid #eee;
-	border-width: 0 1px 0 0;
-	min-height: 250px;
-}
-div#login_box_right
-{
-	border-width: 0 0 0 1px;
-	float: left;
-	padding-left: 30px;
-	text-align: left;
-}
-</style>
 </head>
 <body>
 
@@ -208,11 +160,11 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 
 		foreach($possible_results as $rid)
 		{
-			if(is_file(VIEWER_RESULTS_DIRECTORY_PATH . '/' . $rid . '/composite.xml'))
+			if(is_file(PTS_SAVE_RESULTS_PATH . '/' . $rid . '/composite.xml'))
 			{
 				if($result_file == null)
 				{
-					$result_file = new pts_result_file(VIEWER_RESULTS_DIRECTORY_PATH . '/' . $rid . '/composite.xml');
+					$result_file = new pts_result_file(PTS_SAVE_RESULTS_PATH . '/' . $rid . '/composite.xml');
 					if(count($possible_results) > 1)
 					{
 						$result_file->rename_run('PREFIX', $result_file->get_title());
@@ -220,7 +172,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 				}
 				else
 				{
-					$rf = new pts_result_file(VIEWER_RESULTS_DIRECTORY_PATH . '/' . $rid . '/composite.xml');
+					$rf = new pts_result_file(PTS_SAVE_RESULTS_PATH . '/' . $rid . '/composite.xml');
 					$result_file->merge(array(new pts_result_merge_select($rf)), 0, $rf->get_title(), true);
 					$result_merges++;
 				}
@@ -241,6 +193,10 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		$PAGE .= pts_result_viewer_settings::get_html_sort_bar($result_file, $_REQUEST);
 		$PAGE .= '<h1>' . $result_file->get_title() . '</h1>';
 		$PAGE .= '<p>' . str_replace(PHP_EOL, '<br />', $result_file->get_description()) . '</p>';
+		if(count($possible_results) == 1)
+		{
+			$PAGE .= '<input type="button" value="Delete Result File" onclick="javascript:delete_result_file(\'' . $rid . '\'); return false;">';
+		}
 		//$PAGE .= '<p align="center"><strong>Export As: </strong> <a href="' . CURRENT_URI . '&export=pdf">PDF</a>, <a href="' . CURRENT_URI . '&export=csv">CSV</a>, <a href="' . CURRENT_URI . '&export=csv-all">CSV Individual Data</a> </p>';
 		$PAGE .= '<hr /><div style="font-size: 12pt;">' . pts_result_viewer_settings::get_html_options_markup($result_file, $_REQUEST) . '</div><hr />';
 		$PAGE .= pts_result_viewer_settings::process_helper_html($_REQUEST, $result_file, $extra_attributes);
@@ -308,6 +264,15 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		define('TITLE', 'Phoronix Test Suite ' . PTS_VERSION . ' Result Viewer');
 		$PAGE .= '<form name="search_results" id="search_results" action="' . CURRENT_URI . '" method="post"><input type="text" name="search" id="u_search" placeholder="Search Test Results" value="' . (isset($_POST['search']) ? $_POST['search'] : null) . '" /> <select name="sort_results_by"><option value="date">Date</option><option value="test_count">Test Count</option><option value="system_count">System Count</option></select> <input class="primary-button" type="submit" value="Update" />
 </form>';
+		$leading_msg = null;
+		if(VIEWER_CAN_DELETE_RESULTS && isset($_GET['remove_result']) && $_GET['remove_result'] && pts_results::is_saved_result_file($_GET['remove_result']))
+		{
+			$deleted = pts_results::remove_saved_result_file($_GET['remove_result']);
+			if($deleted)
+			{
+				$leading_msg = 'Deleted the <em>' . $_GET['remove_result'] . '</em> result file.';
+			}
+		}
 		function sort_by_date($a, $b)
 		{
 			$a = strtotime($a->get_last_modified());
@@ -333,7 +298,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			return $a > $b ? -1 : 1;
 		}
 		$results = array();
-		$all_results = pts_file_io::glob(VIEWER_RESULTS_DIRECTORY_PATH . '/*/composite.xml');
+		$all_results = pts_file_io::glob(PTS_SAVE_RESULTS_PATH . '/*/composite.xml');
 		foreach($all_results as $composite_xml)
 		{
 			$id = basename(dirname($composite_xml));
@@ -376,7 +341,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		{
 			$i++;
 			$PAGE .= '<h2><a href="' . WEB_URL_PATH . 'result/' . $id . '">' . $result_file->get_title() . '</a></h2>';
-			$PAGE .= '<div class="sub"><input type="checkbox" name="checkbox_compare_results[]" value="' . $id . '" id="cr_checkbox_' . $i . '" /> <label for="cr_checkbox_' . $i . '"><span onclick="javascript:document.getElementById(\'compare_results_id\').submit(); return false;">Compare Results</span></label> ' . $result_file->get_test_count() . ' Tests &nbsp; &nbsp; ' . $result_file->get_system_count() . ' Systems &nbsp; &nbsp; ' . date('l j F H:i', strtotime($result_file->get_last_modified())) . '</div>';
+			$PAGE .= '<div class="sub"><input type="checkbox" name="checkbox_compare_results[]" value="' . $id . '" id="cr_checkbox_' . $i . '" /> <label for="cr_checkbox_' . $i . '"><span onclick="javascript:document.getElementById(\'compare_results_id\').submit(); return false;">Compare Results</span></label> ' . $result_file->get_test_count() . ' Tests &nbsp; &nbsp; ' . $result_file->get_system_count() . ' Systems &nbsp; &nbsp; ' . date('l j F H:i', strtotime($result_file->get_last_modified())) . ' ' . (VIEWER_CAN_DELETE_RESULTS ? ' &nbsp; &nbsp; <span onclick="javascript:delete_result_file(\'' . $id . '\'); return false;">DELETE RESULT FILE</span>' : null) . '</div>';
 			$PAGE .= '<div class="desc">' . $result_file->get_description() . '</div>';
 
 			$geometric_mean = pts_result_file_analyzer::generate_geometric_mean_result($result_file);
@@ -419,266 +384,9 @@ define('PAGE', $PAGE);
 <html lang="en">
 <head>
   <title><?php echo defined('TITLE') ? TITLE : ''; ?></title>
+<link rel="stylesheet" href="/result-viewer.css">
+<script type="text/javascript" src="/result-viewer.js"></script>
 <link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-<style>
-body
-{
-	margin: 0;
-	padding: 0;
-	font-family: 'Roboto', sans-serif;
-
-
-}
-div#header
-{
-	background-image: linear-gradient(#098BEF, #0367B4);
-	border: 1px solid #eee;
-	border-width: 0 0 1px 0;
-	padding: 2px 10px 0;
-	color: #fff;
-	overflow: hidden;
-	font-size: 23pt;
-	font-weight: 500;
-}
-div#header ul
-{
-	float: right;
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-}
-div#header ul li
-{
-	padding: 0 30px;
-	float: left;
-}
-div#header ul li a, div#header a
-{
-	font-weight: 400;
-	color: #FFF;
-	text-decoration: none;
-}
-div#header ul li a:hover, div#header a:hover
-{
-	color: #eee;
-}
-div#main_area
-{
-	font-size: 15pt;
-	color: #222;
-	padding: 50px;
-}
-div#main_area a
-{
-	color: #0367B4;
-	text-decoration: none;
-}
-div#main_area a:hover
-{
-	color: #4BABF4;
-}
-div#main_area h1
-{
-	color: #098BEF;
-	font-weight: 500;
-	text-transform: uppercase;
-}
-div#main_area h3
-{
-	color: #098BEF;
-	font-weight: 500;
-	font-size: 90%;
-}
-div#main_area h2
-{
-	color: #098BEF;
-	font-weight: 500;
-	padding: 0;
-	margin: 2px 0;
-}
-div#main_area input, div#main_area textarea, div#main_area select
-{
-	margin: 10px 0;
-	background: #ddd;
-	color: #000;
-	font-size: 15pt;
-	border: 1px solid #eee;
-	padding: 5px 10px;
-	font-weight: 600;
-}
-div#main_area input::placeholder, div#main_area textarea::placeholder, div#main_area select::placeholder
-{
-	color: #000;
-	opacity: 0.7;
-	font-weight: 400;
-}
-div#main_area ul
-{
-	list-style: none;
-	position: relative;
-	float: left;
-	margin: 0;
-	padding: 0;
-}
-div#main_area ul:hover a
-{
-	color: #000;
-}
-div#main_area ul a
-{
-	display: block;
-	color: #333;
-	text-decoration: none;
-	font-weight: 600;
-	line-height: 26px;
-	padding: 4px 8px;
-	text-transform: uppercase;
-}
-div#main_area ul li
-{
-	position: relative;
-	float: left;
-	margin: 0;
-	padding: 0;
-	border-right: 1px solid #aaa;
-}
-div#main_area ul li:last-of-type{
-	border-right:none;
-}
-div#main_area ul li:hover
-{
-	background: #eee;
-
-}
-div#main_area ul ul a:hover, div#main_area ul li a:hover{
-	color:#03b450;
-}
-
-div#main_area ul ul a
-{
-	padding: 0 8px;
-	font-weight: 300;
-	font-size: 10pt;
-}
-div#main_area ul ul
-{
-	display: none;
-	position: absolute;
-	top: 100%;
-	font-weight: 300;
-	left: 0;
-	background: #fff;
-	padding: 0
-}
-div#main_area ul ul li
-{
-	border: 1px solid #eee;
-	border-top: 1px;
-	float: none;
-}
-div#main_area ul li:hover > ul
-{
-	display: block
-}
-div#main_area div.sub
-{
-	margin: -5px 0 8px;
-	padding: 0;
-	font-size: 10pt;
-	text-transform: uppercase;
-	color: #ef5e09;
-}
-div#main_area div.desc
-{
-	margin: 0;
-	padding: 0;
-	font-size: 10pt;
-}
-div#main_area span.sub_header
-{
-	text-transform: uppercase;
-	font-size: 8pt;
-	font-weight: bold;
-}
-hr
-{
-	color: #098BEF;
-	opacity: 0.3;
-	margin: 0 10%;
-}
-div#footer, div#footer a
-{
-	font-size: 9pt;
-	color: #aaa;
-	text-align: center;
-	padding: 0;
-	text-decoration: none;
-}
-.grid
-{
-	font-size: 10pt;
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
-	grid-template-rows: auto;
-	border-left: 1px solid #ccc;
-	margin: 20px auto;
-}
-.grid > span
-{
-	padding: 2px 4px;
-	border-right: 1px solid #ccc;
-	border-bottom: 1px solid #ccc;
-}
-.grid > span strong
-{
-	font-size: 12pt;
-}
-div#main_area svg
-{
-	min-width: 30%;
-	height: auto;
-}
-div#results svg
-{
-	min-width: 50%;
-	height: auto;
-}
-div.geo_bg_graph
-{
-	background: #CCC;
-	font-size: 10pt;
-	font-weight: 500;
-	margin: 0;
-	padding: 1px 4px;
-	border: #BBB 2px solid;
-	border-width: 1px;
-}
-input#compare_results_submit
-{
-	display: none;
-}
-input[type="checkbox"] + label
-{
-	display: none;
-	background: #03b450;
-	color: #FFF;
-	padding: 4px;
-	border: 1px solid #000;
-	font-weight: 10pt;
-}
-input[type="submit"], .primay-button{
-	background: #03b450 !important;
-	color: #FFF !important;
-	padding: 4px;
-	border: 1px solid #000;
-	font-weight: 10pt;
-}
-input[type="checkbox"]:checked + label
-{
-	font-weight: bold;
-	display: inline;
-}
-</style>
 </head>
 <body>
 <div id="header">
@@ -690,7 +398,7 @@ input[type="checkbox"]:checked + label
 <li><a href="<?php echo WEB_URL_PATH; ?>">Results</a></li>
 </ul>
 </div>
-
+<?php if(isset($leading_msg) && $leading_msg) { echo '<div id="leading_message">' . $leading_msg . '</div>'; } ?>
 <div id="main_area">
 <?php echo PAGE; ?>
 </div>

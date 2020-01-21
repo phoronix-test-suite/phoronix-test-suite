@@ -45,7 +45,7 @@ class create_test_profile implements pts_option_interface
 				$is_valid = false;
 				echo 'There is already a test suite named ' . $input . '.' . PHP_EOL;
 			}
-			else if(pts_result_file::is_test_result_file($input))
+			else if(pts_results::is_saved_result_file($input))
 			{
 				$is_valid = false;
 				echo 'There is already a result file named ' . $input . '.' . PHP_EOL;

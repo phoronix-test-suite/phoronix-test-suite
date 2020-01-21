@@ -24,9 +24,13 @@ class pts_config_nye_XmlReader extends nye_XmlReader
 {
 	protected $override_values;
 
-	public function __construct($new_values = null)
+	public function __construct($new_values = null, $override_file = false)
 	{
-		if(PTS_IS_DAEMONIZED_SERVER_PROCESS || (is_file('/etc/phoronix-test-suite.xml') && is_writable('/etc/phoronix-test-suite.xml')))
+		if($override_file && is_file($override_file))
+		{
+			$file = $override_file;
+		}
+		else if(PTS_IS_DAEMONIZED_SERVER_PROCESS || (is_file('/etc/phoronix-test-suite.xml') && is_writable('/etc/phoronix-test-suite.xml')))
 		{
 			$file = '/etc/phoronix-test-suite.xml';
 		}

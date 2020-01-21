@@ -90,6 +90,8 @@ class pts_file_io
 		{
 			rmdir($object);
 		}
+
+		return true;
 	}
 	public static function array_filesize($r)
 	{

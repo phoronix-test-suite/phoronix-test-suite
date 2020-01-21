@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014 - 2018, Phoronix Media
-	Copyright (C) 2014 - 2018, Michael Larabel
+	Copyright (C) 2014 - 2020, Phoronix Media
+	Copyright (C) 2014 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -152,7 +152,7 @@ class run_random_tests implements pts_option_interface
 					$test_run_manager->pre_execution_process();
 					$test_run_manager->call_test_runs();
 					$test_run_manager->post_execution_process();
-					pts_client::remove_saved_result_file($test_run_manager->get_file_name());
+					pts_results::remove_saved_result_file($test_run_manager->get_file_name());
 				}
 			}
 

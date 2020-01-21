@@ -304,7 +304,7 @@ if(PTS_IS_CLIENT || defined('PTS_AUTO_LOAD_OBJECTS'))
 			{
 				if($file != '.' && $file != '..')
 				{
-					if(is_dir($dir . '/' . $file) && (PTS_IS_CLIENT || $file != 'client'))
+					if(is_dir($dir . '/' . $file) && ((PTS_IS_CLIENT || defined('PTS_AUTO_LOAD_ALL_OBJECTS')) || $file != 'client'))
 					{
 						// The client folder should contain classes exclusively used by the client
 						pts_build_dir_php_list($dir . '/' . $file, $files);

@@ -150,10 +150,6 @@ class pts_result_file
 			return strip_tags($value);
 		}
 	}
-	public static function is_test_result_file($identifier)
-	{
-		return is_file(PTS_SAVE_RESULTS_PATH . $identifier . '/composite.xml');
-	}
 	public function default_result_folder_path()
 	{
 		return PTS_SAVE_RESULTS_PATH . $this->save_identifier . '/';

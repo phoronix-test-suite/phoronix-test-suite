@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2011, Phoronix Media
-	Copyright (C) 2008 - 2011, Michael Larabel
+	Copyright (C) 2008 - 2020, Phoronix Media
+	Copyright (C) 2008 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -28,12 +28,12 @@ class remove_result implements pts_option_interface
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check(0, array('pts_result_file', 'is_test_result_file'), null)
+		new pts_argument_check(0, array('pts_results', 'is_saved_result_file'), null)
 		);
 	}
 	public static function run($r)
 	{
-		pts_client::remove_saved_result_file($r[0]);
+		pts_results::remove_saved_result_file($r[0]);
 		echo PHP_EOL . $r[0] . ' was removed.' . PHP_EOL;
 	}
 }

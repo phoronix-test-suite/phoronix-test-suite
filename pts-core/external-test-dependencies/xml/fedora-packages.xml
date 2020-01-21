@@ -145,7 +145,7 @@
 		</Package>
 		<Package>
 			<GenericName>p7zip</GenericName>
-			<PackageName>p7zip</PackageName>
+			<PackageName>p7zip p7zip-plugins</PackageName>
 		</Package>
 		<Package>
 			<GenericName>openal-development</GenericName>

@@ -2018,27 +2018,6 @@ class pts_client
 	{
 		phodevi::system_software(true);
 	}
-	public static function remove_saved_result_file($identifier)
-	{
-		pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $identifier, null, true);
-	}
-	public static function saved_test_results()
-	{
-		$results = array();
-		$ignore_ids = array();
-
-		foreach(pts_file_io::glob(PTS_SAVE_RESULTS_PATH . '*/composite.xml') as $result_file)
-		{
-			$identifier = basename(dirname($result_file));
-
-			if(!in_array($identifier, $ignore_ids))
-			{
-				$results[] = $identifier;
-			}
-		}
-
-		return $results;
-	}
 	public static function timed_function($function, $function_parameters, $time, $continue_while_true_function = null, $continue_while_true_function_parameters)
 	{
 		if(($time < 0.5 && $time != -1) || $time > 300)

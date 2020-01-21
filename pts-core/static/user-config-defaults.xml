@@ -48,6 +48,8 @@
 			<WebPort>RANDOM</WebPort>
 			<LimitAccessToLocalHost>TRUE</LimitAccessToLocalHost>
 			<AccessKey></AccessKey>
+			<AllowSavingResultChanges>TRUE</AllowSavingResultChanges>
+			<AllowDeletingResults>TRUE</AllowDeletingResults>
 		</ResultViewer>
 		<ExternalHooks>
 			<PreTestProcess></PreTestProcess>

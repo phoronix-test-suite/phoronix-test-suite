@@ -130,7 +130,7 @@ class pts_module_option
 					}
 					break;
 				case 'PTS_TEST_RESULT':
-					if(pts_result_file::is_test_result_file($input))
+					if(pts_results::is_saved_result_file($input))
 					{
 						$supported = true;
 					}

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2019, Phoronix Media
-	Copyright (C) 2008 - 2019, Michael Larabel
+	Copyright (C) 2008 - 2020, Phoronix Media
+	Copyright (C) 2008 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@ class pts_config
 {
 	static $init_process_ran = false;
 	static $xml_user_config = null;
+	private static $override_config_file_location = false;
 
 	public static function get_config_file_location()
 	{
@@ -84,11 +85,19 @@ class pts_config
 		pts_graph_core::init_graph_config($json_graph);
 		file_put_contents(PTS_USER_PATH . 'graph-config.json', pts_arrays::json_encode_pretty_string($json_graph));
 	}
+	public static function set_override_default_config($config_file)
+	{
+		self::$override_config_file_location = $config_file;
+	}
+	public static function get_override_default_config()
+	{
+		return self::$override_config_file_location;
+	}
 	public static function user_config_generate($new_config_values = null)
 	{
 		// Validate the config files, update them (or write them) if needed, and other configuration file tasks
 
-		$read_config = new pts_config_nye_XmlReader($new_config_values);
+		$read_config = new pts_config_nye_XmlReader($new_config_values, self::get_override_default_config());
 		$config = new nye_XmlWriter('xsl/pts-user-config-viewer.xsl');
 
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/OpenBenchmarking/AnonymousUsageReporting', $read_config);
@@ -131,6 +140,8 @@ class pts_config
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/ResultViewer/WebPort', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/ResultViewer/LimitAccessToLocalHost', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/ResultViewer/AccessKey', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/ResultViewer/AllowSavingResultChanges', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/ResultViewer/AllowDeletingResults', $read_config);
 
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/BatchMode/SaveResults', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/BatchMode/OpenBrowser', $read_config);
@@ -178,7 +189,7 @@ class pts_config
 		{
 			if(self::$xml_user_config == null)
 			{
-				self::$xml_user_config = new pts_config_nye_XmlReader();
+				self::$xml_user_config = new pts_config_nye_XmlReader(null, self::get_override_default_config());
 			}
 
 			$read_value = self::$xml_user_config->getXmlValue($xml_pointer);

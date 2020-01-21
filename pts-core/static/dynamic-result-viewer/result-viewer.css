@@ -1,0 +1,317 @@
+body
+{
+	margin: 0;
+	padding: 0;
+	font-family: 'Roboto', sans-serif;
+
+
+}
+div#header
+{
+	background-image: linear-gradient(#098BEF, #0367B4);
+	border: 1px solid #eee;
+	border-width: 0 0 1px 0;
+	padding: 2px 10px 0;
+	color: #fff;
+	overflow: hidden;
+	font-size: 23pt;
+	font-weight: 500;
+}
+div#header ul
+{
+	float: right;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+div#header ul li
+{
+	padding: 0 30px;
+	float: left;
+}
+div#header ul li a, div#header a
+{
+	font-weight: 400;
+	color: #FFF;
+	text-decoration: none;
+}
+div#header ul li a:hover, div#header a:hover
+{
+	color: #eee;
+}
+div#main_area
+{
+	font-size: 15pt;
+	color: #222;
+	padding: 50px;
+}
+div#main_area a
+{
+	color: #0367B4;
+	text-decoration: none;
+}
+div#main_area a:hover
+{
+	color: #4BABF4;
+}
+div#main_area h1
+{
+	color: #098BEF;
+	font-weight: 500;
+	text-transform: uppercase;
+}
+div#main_area h3
+{
+	color: #098BEF;
+	font-weight: 500;
+	font-size: 90%;
+}
+div#main_area h2
+{
+	color: #098BEF;
+	font-weight: 500;
+	padding: 0;
+	margin: 2px 0;
+}
+div#main_area input, div#main_area textarea, div#main_area select
+{
+	margin: 10px 0;
+	background: #ddd;
+	color: #000;
+	font-size: 15pt;
+	border: 1px solid #eee;
+	padding: 5px 10px;
+	font-weight: 600;
+}
+div#main_area input::placeholder, div#main_area textarea::placeholder, div#main_area select::placeholder
+{
+	color: #000;
+	opacity: 0.7;
+	font-weight: 400;
+}
+div#main_area ul
+{
+	list-style: none;
+	position: relative;
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+div#main_area ul:hover a
+{
+	color: #000;
+}
+div#main_area ul a
+{
+	display: block;
+	color: #333;
+	text-decoration: none;
+	font-weight: 600;
+	line-height: 26px;
+	padding: 4px 8px;
+	text-transform: uppercase;
+}
+div#main_area ul li
+{
+	position: relative;
+	float: left;
+	margin: 0;
+	padding: 0;
+	border-right: 1px solid #aaa;
+}
+div#main_area ul li:last-of-type{
+	border-right:none;
+}
+div#main_area ul li:hover
+{
+	background: #eee;
+
+}
+div#main_area ul ul a:hover, div#main_area ul li a:hover{
+	color:#03b450;
+}
+
+div#main_area ul ul a
+{
+	padding: 0 8px;
+	font-weight: 300;
+	font-size: 10pt;
+}
+div#main_area ul ul
+{
+	display: none;
+	position: absolute;
+	top: 100%;
+	font-weight: 300;
+	left: 0;
+	background: #fff;
+	padding: 0
+}
+div#main_area ul ul li
+{
+	border: 1px solid #eee;
+	border-top: 1px;
+	float: none;
+}
+div#main_area ul li:hover > ul
+{
+	display: block
+}
+div#main_area div.sub
+{
+	margin: -5px 0 8px;
+	padding: 0;
+	font-size: 10pt;
+	text-transform: uppercase;
+	color: #ef5e09;
+}
+div#main_area div.desc
+{
+	margin: 0;
+	padding: 0;
+	font-size: 10pt;
+}
+div#main_area span.sub_header
+{
+	text-transform: uppercase;
+	font-size: 8pt;
+	font-weight: bold;
+}
+hr
+{
+	color: #098BEF;
+	opacity: 0.3;
+	margin: 0 10%;
+}
+div#footer, div#footer a
+{
+	font-size: 9pt;
+	color: #aaa;
+	text-align: center;
+	padding: 0;
+	text-decoration: none;
+}
+.grid
+{
+	font-size: 10pt;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+	grid-template-rows: auto;
+	border-left: 1px solid #ccc;
+	margin: 20px auto;
+}
+.grid > span
+{
+	padding: 2px 4px;
+	border-right: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+.grid > span strong
+{
+	font-size: 12pt;
+}
+div#main_area svg
+{
+	min-width: 30%;
+	height: auto;
+}
+div#results svg
+{
+	min-width: 50%;
+	height: auto;
+}
+div.geo_bg_graph
+{
+	background: #CCC;
+	font-size: 10pt;
+	font-weight: 500;
+	margin: 0;
+	padding: 1px 4px;
+	border: #BBB 2px solid;
+	border-width: 1px;
+}
+input#compare_results_submit
+{
+	display: none;
+}
+input[type="checkbox"] + label
+{
+	display: none;
+	background: #03b450;
+	color: #FFF;
+	padding: 4px;
+	border: 1px solid #000;
+	font-weight: 10pt;
+}
+input[type="submit"], .primay-button{
+	background: #03b450 !important;
+	color: #FFF !important;
+	padding: 4px;
+	border: 1px solid #000;
+	font-weight: 10pt;
+}
+input[type="checkbox"]:checked + label
+{
+	font-weight: bold;
+	display: inline;
+}
+div#login_box
+{
+	margin-top: 20%;
+	background-image: linear-gradient(#098BEF, #0367B4);
+	border: 1px solid #eee;
+	border-width: 1px 0 1px 0;
+	padding: 30px 0;
+	color: #fff;
+	overflow: hidden;
+}
+div#login_box input
+{
+	margin: 10px 0;
+	background: #098BEF;
+	color: #fff;
+	font-size: 15pt;
+	border: 1px solid #eee;
+	padding: 5px 10px;
+}
+div#login_box input::placeholder
+{
+	color: #fff;
+}
+div#login_box h1
+{
+	font-weight: 500;
+	text-transform: uppercase;
+}
+div#login_box h2
+{
+	font-weight: 400;
+	text-transform: uppercase;
+}
+div#login_box_left
+{
+	float: left;
+	width: 50%;
+	padding: 12px 30px 0 0;
+	text-align: right;
+	border: 1px solid #eee;
+	border-width: 0 1px 0 0;
+	min-height: 250px;
+}
+div#login_box_right
+{
+	border-width: 0 0 0 1px;
+	float: left;
+	padding-left: 30px;
+	text-align: left;
+}
+div#leading_message
+{
+	border-style: solid;
+	border-width: 1px;
+	border-color: #cecece;
+	font-size: 16px;
+	margin: 14px;
+	color: #098BEF;
+	padding: 10px;
+}

@@ -70,7 +70,7 @@ class pts_argument_check
 		{
 			$type = 'OpenBenchmarking ID';
 		}
-		else if($this->get_function_check() == array('pts_result_file', 'is_test_result_file'))
+		else if($this->get_function_check() == array('pts_results', 'is_saved_result_file'))
 		{
 			$type = 'Test Result';
 		}
@@ -136,7 +136,7 @@ class pts_argument_check
 		{
 			$possible_values = array_keys(pts_openbenchmarking::result_uploads_from_this_ip());
 		}
-		else if($this->get_function_check() == array('pts_result_file', 'is_test_result_file'))
+		else if($this->get_function_check() == array('pts_results', 'is_saved_result_file'))
 		{
 			$possible_values = pts_client::saved_test_results();
 		}

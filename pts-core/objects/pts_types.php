@@ -169,7 +169,7 @@ class pts_types
 			// Object is a suite
 			$objects[] = new pts_test_suite($identifier_item);
 		}
-		else if(pts_result_file::is_test_result_file($identifier_item))
+		else if(pts_results::is_saved_result_file($identifier_item))
 		{
 			// Object is a saved results file
 			$objects[] = new pts_result_file($identifier_item);

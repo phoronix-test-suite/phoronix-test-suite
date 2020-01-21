@@ -85,6 +85,10 @@
 			<p>If this value is set to <em>TRUE</em> (default), the web-based result viewer is only accessible by the local host. If the value is <em>FALSE</em>, anyone with access to the IP/port can access the result viewer.</p>
 			<h3>AccessKey: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/ResultViewer/AccessKey" /></span></h3>
 			<p>An access key / password can be optionally supplied as a basic precaution particularly for web-accessible result viewers that aren't limited to the local host. Set the string value here of the desired key/password that the user will be prompted to enter when trying to access the result viewer.</p>
+			<h3>AllowSavingResultChanges: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/ResultViewer/AllowSavingResultChanges" /></span></h3>
+			<p>This allows saving result file changes (notes, modifying result files, etc) of result files from the web-based result viewer. Besides needing to be set to <em>TRUE</em>, the result file directory must also be write-enabled.</p>
+			<h3>AllowDeletingResults: <span style="color: #CC0000;"><xsl:value-of select="PhoronixTestSuite/Options/ResultViewer/AllowDeletingResults" /></span></h3>
+			<p>This option is similar to <em>AllowSavingResultChanges</em> but controls the behavior of whether results can be permanently removed. Besides needing to be set to <em>TRUE</em>, the result file directory must also be write-enabled.</p>
 
 			<h1>Batch Mode Options</h1>
 			<p>The batch mode options are only used when using either the <em>batch-run</em> or <em>batch-benchmark</em> options with the Phoronix Test Suite. This mode is designed to fully automate the operation of the Phoronix Test Suite except for areas where the user would like to be prompted. To configure the batch mode options, it is recommended to run <em>phoronix-test-suite batch-setup</em> instead of modifying these values by hand.</p>
