@@ -563,7 +563,7 @@ class pts_tests
 					}
 				}
 
-				foreach(pts_client::saved_test_results() as $result)
+				foreach(pts_results::saved_test_results() as $result)
 				{
 					if(soundex($result) == $arg_soundex || (isset($passed_arg[3]) && strpos($identifier, $arg_save_identifier_like) !== false))
 					{

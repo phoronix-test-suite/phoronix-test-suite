@@ -197,7 +197,7 @@ class info implements pts_option_interface
 				{
 					$o_identifier = $o->get_identifier(false);
 					$table = array();
-					foreach(pts_client::saved_test_results() as $saved_results_identifier)
+					foreach(pts_results::saved_test_results() as $saved_results_identifier)
 					{
 						$result_file = new pts_result_file($saved_results_identifier);
 						foreach($result_file->get_result_objects() as $result_object)

@@ -106,7 +106,7 @@ class debug_render_test implements pts_option_interface
 		{
 			echo PHP_EOL . 'LOCAL RENDER TEST TIME' . PHP_EOL;
 			$extra_graph_attributes = null;
-			foreach(pts_client::saved_test_results() as $saved_result)
+			foreach(pts_results::saved_test_results() as $saved_result)
 			{
 				$save_to_dir = pts_client::setup_test_result_directory($saved_result);
 				$generated_graphs = pts_client::generate_result_file_graphs($saved_result, $save_to_dir, $extra_graph_attributes);

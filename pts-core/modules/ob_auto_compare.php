@@ -91,7 +91,7 @@ class ob_auto_compare extends pts_module_interface
 	}
 	protected static function request_compare_from_local_results($comparison_hash)
 	{
-		$saved_results = pts_client::saved_test_results();
+		$saved_results = pts_results::saved_test_results();
 		shuffle($saved_results);
 
 		foreach($saved_results as $tr)

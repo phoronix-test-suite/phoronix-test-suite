@@ -31,7 +31,7 @@ class list_saved_results implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		$saved_results = pts_client::saved_test_results();
+		$saved_results = pts_results::saved_test_results();
 		pts_client::$display->generic_heading(count($saved_results) . ' Saved Results');
 
 		if(count($saved_results) > 0)

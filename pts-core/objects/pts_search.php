@@ -76,7 +76,7 @@ class pts_search
 	public static function search_test_results($search_query)
 	{
 		$matches = array();
-		foreach(pts_client::saved_test_results() as $saved_results_identifier)
+		foreach(pts_results::saved_test_results() as $saved_results_identifier)
 		{
 			$result_file = new pts_result_file($saved_results_identifier);
 
@@ -114,7 +114,7 @@ class pts_search
 	public static function search_test_results_for_tests($test_profile_identifiers)
 	{
 		$matches = array();
-		foreach(pts_client::saved_test_results() as $saved_results_identifier)
+		foreach(pts_results::saved_test_results() as $saved_results_identifier)
 		{
 			$result_file = new pts_result_file($saved_results_identifier);
 			foreach($test_profile_identifiers as $test_check)
