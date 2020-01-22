@@ -86,7 +86,7 @@ class pts_result_viewer_settings
 			}
 		}
 
-		foreach($result_file->get_result_objects() as $i => &$result_object)
+		foreach($result_file->get_result_objects() as $i => $result_object)
 		{
 			if(!$has_box_plot && $result_object->test_profile->get_display_format() == 'HORIZONTAL_BOX_PLOT')
 			{
@@ -357,7 +357,7 @@ var_dump($extra_attributes['highlight_graph_values']);
 		}
 		if(self::check_request_for_var($request, 'rol'))
 		{
-			foreach($result_file->get_result_objects() as $i => &$result_object)
+			foreach($result_file->get_result_objects() as $i => $result_object)
 			{
 				$result_object->recalculate_averages_without_outliers(1.5);
 			}
