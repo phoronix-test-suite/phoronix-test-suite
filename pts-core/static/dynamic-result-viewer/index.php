@@ -165,7 +165,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		}
 		exit;
 	case 'add-annotation-to-result-object':
-		if(VIEWER_CAN_DELETE_RESULTS && isset($_REQUEST['result_file_id']) && isset($_REQUEST['result_object']) && isset($_REQUEST['annotation']))
+		if(VIEWER_CAN_MODIFY_RESULTS && isset($_REQUEST['result_file_id']) && isset($_REQUEST['result_object']) && isset($_REQUEST['annotation']))
 		{
 			$result_file = new pts_result_file($_REQUEST['result_file_id']);
 			$result_file->update_annotation_for_result_object_by_id($_REQUEST['result_object'], $_REQUEST['annotation']);

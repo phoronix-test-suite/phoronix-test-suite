@@ -5,7 +5,8 @@ Phoronix Test Suite (Git)
 pts-core: Add config options allowing to modify or delete result files from the result viewer
 pts-core: Allow deleting results from the result viewer
 pts-core: Allow editing result file information from result viewer
-pts-core: Allow deleting results (graphs) from result file in web viewer
+pts-core: Allow deleting results (graphs) from result file in result viewer
+pts-core: Add ability to annotate (comment) on result graphs within the result viewer
 
 Phoronix Test Suite 9.4.0 Milestone 1
 13 January 2020
