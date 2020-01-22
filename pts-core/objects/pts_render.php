@@ -118,13 +118,6 @@ class pts_render
 		{
 			$result_object->sort_results_by_performance();
 		}
-		/*if(isset($extra_attributes['remove_noisy_results']))
-		{
-			foreach($result_object->test_result_buffer->get_buffer_items() as $i => &$buffer_item)
-			{
-
-			}
-		}*/
 		if(isset($extra_attributes['reverse_result_buffer']))
 		{
 			$result_object->test_result_buffer->buffer_values_reverse();

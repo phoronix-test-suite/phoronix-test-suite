@@ -279,7 +279,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		}
 		$PAGE .= '<div id="results">';
 		$prev_title = null;
-		foreach($result_file->get_result_objects() as $i => &$result_object)
+		foreach($result_file->get_result_objects() as $i => $result_object)
 		{
 			$res = pts_render::render_graph_inline_embed($result_object, $result_file, $extra_attributes);
 			if($res == false)
