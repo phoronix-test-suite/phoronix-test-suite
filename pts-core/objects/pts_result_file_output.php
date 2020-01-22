@@ -766,7 +766,6 @@ class pts_result_file_output
 		$pdf->ResultTable($columns, $table_data, $table_data_hints);
 
 		$pdf->AddPage();
-		$placement = 1;
 		$i = 0;
 		foreach($result_file->get_result_objects() as $key => $result_object)
 		{
@@ -786,13 +785,10 @@ class pts_result_file_output
 			$pdf->Ln(4);
 			$pdf->Image($tmp_file);
 			unlink($tmp_file);
-
-			if($placement == 2 || $result_object->test_result_buffer->get_count() > 12)
+			if($result_object->get_annotation() != null)
 			{
-				$placement = 0;
-				//$pdf->AddPage();
+				$pdf->WriteText($result_object->get_annotation());
 			}
-			$placement++;
 			$i++;
 		}
 		$pdf->WriteText('This file was automatically generated via the Phoronix Test Suite benchmarking software on ' . date('l, j F Y H:i') . '.', 'I');
