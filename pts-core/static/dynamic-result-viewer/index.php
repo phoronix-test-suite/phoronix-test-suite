@@ -157,10 +157,18 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		}
 		exit;
 	case 'remove-result-object':
-		if(VIEWER_CAN_MODIFY_RESULTS && isset($_REQUEST['result_file_id']) && isset($_REQUEST['result_object']))
+		if(VIEWER_CAN_DELETE_RESULTS && isset($_REQUEST['result_file_id']) && isset($_REQUEST['result_object']))
 		{
 			$result_file = new pts_result_file($_REQUEST['result_file_id']);
 			$result_file->remove_result_object_by_id($_REQUEST['result_object']);
+			$result_file->save();
+		}
+		exit;
+	case 'add-annotation-to-result-object':
+		if(VIEWER_CAN_DELETE_RESULTS && isset($_REQUEST['result_file_id']) && isset($_REQUEST['result_object']) && isset($_REQUEST['annotation']))
+		{
+			$result_file = new pts_result_file($_REQUEST['result_file_id']);
+			$result_file->update_annotation_for_result_object_by_id($_REQUEST['result_object'], $_REQUEST['annotation']);
 			$result_file->save();
 		}
 		exit;
@@ -270,6 +278,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
 		}
 		$PAGE .= '<div id="results">';
+		$prev_title = null;
 		foreach($result_file->get_result_objects() as $i => &$result_object)
 		{
 			$res = pts_render::render_graph_inline_embed($result_object, $result_file, $extra_attributes);
@@ -277,13 +286,34 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			{
 				continue;
 			}
-			$PAGE .= '<a name="r-' . $i . '"></a><p align="center" id="result-' . $i . '">';
-			$PAGE .= $res;
+			$PAGE .= '<a name="r-' . $i . '"></a><div style="text-align: center;" id="result-' . $i . '">';
+			if($result_object->test_profile->get_title() != $prev_title)
+			{
+				$PAGE .= '<h2>' . $result_object->test_profile->get_title() . '</h2>';
+				$prev_title = $result_object->test_profile->get_title();
+			}
+			$PAGE .= $res . '<br />';
 			if(VIEWER_CAN_DELETE_RESULTS && RESULTS_VIEWING_COUNT == 1)
 			{
-				$PAGE .= '<br /><a class="mini" href="#" onclick="javascript:delete_result_from_result_file(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\'); return false;">Delete Result</a>';
+				$PAGE .= '<a class="mini" href="#" onclick="javascript:delete_result_from_result_file(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\'); return false;">(Delete Result)</a>';
 			}
-			$PAGE .= '</p>';
+			if(VIEWER_CAN_MODIFY_RESULTS && RESULTS_VIEWING_COUNT == 1)
+			{
+				if($result_object->get_annotation() == null)
+				{
+					$PAGE .= ' <a class="mini" href="#" onclick="javascript:display_add_annotation_for_result_object(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\', this); return false;">(Add Annotation)</a>';
+					$PAGE .= ' <div id="annotation_area_' . $i . '" style="display: none;"> <form action="#" onsubmit="javascript:add_annotation_for_result_object(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\', this); return false;"><textarea rows="4" cols="50" placeholder="Add Annotation..." name="annotation"></textarea><br /><input type="submit" value="Add Annotation"></form></div>';
+				}
+				else
+				{
+					$PAGE .= '<br /><div id="update_annotation_' . $i . '" contentEditable="true">' . $result_object->get_annotation() . '</div> <input type="submit" value="Update Annotation" onclick="javascript:update_annotation_for_result_object(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\'); return false;">';
+				}
+			}
+			else
+			{
+				$PAGE .= $result_object->get_annotation();
+			}
+			$PAGE .= '</div>';
 			unset($result_object);
 		}
 		$PAGE .= '</div>';

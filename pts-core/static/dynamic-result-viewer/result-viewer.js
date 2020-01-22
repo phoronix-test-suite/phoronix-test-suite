@@ -45,3 +45,33 @@ function delete_result_from_result_file(result_file, result_hash)
 	}
 	return false;
 }
+function display_add_annotation_for_result_object(result_file, result_hash, link_obj)
+{
+	link_obj.style.display = "none";
+	document.getElementById("annotation_area_" + result_hash).style.display = "inline";
+}
+function add_annotation_for_result_object(result_file, result_hash, form)
+{
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+	if(this.readyState == 4 && this.status == 200) {
+		location.reload();
+		}
+	};
+	xhttp.open("POST", "/index.php?page=add-annotation-to-result-object", true);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.send("result_file_id=" + result_file + "&result_object=" + result_hash + "&annotation=" + form.annotation.value);
+}
+function update_annotation_for_result_object(result_file, result_hash)
+{
+	var annotation_updated = document.getElementById("update_annotation_" + result_hash).textContent;
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+	if(this.readyState == 4 && this.status == 200) {
+		location.reload();
+		}
+	};
+	xhttp.open("POST", "/index.php?page=add-annotation-to-result-object", true);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.send("result_file_id=" + result_file + "&result_object=" + result_hash + "&annotation=" + annotation_updated);
+}

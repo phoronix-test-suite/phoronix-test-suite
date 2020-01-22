@@ -52,7 +52,7 @@
 			<xs:element name="Scale" type="xs:string" />
 			<xs:element name="Proportion" type="Proportion" />
 			<xs:element name="DisplayFormat" type="DisplayFormat" />
-			<xs:element name="Comment" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="Annotation" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="Data">
 			<xs:complexType>
 			<xs:sequence>

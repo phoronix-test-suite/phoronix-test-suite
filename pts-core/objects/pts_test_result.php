@@ -28,7 +28,7 @@ class pts_test_result
 	private $used_arguments_description;
 	private $result_precision = 2;
 	private $overrode_default_precision = false;
-	private $comment = null;
+	private $annotation = null;
 
 	public $test_profile;
 	public $test_result_buffer;
@@ -125,20 +125,20 @@ class pts_test_result
 	{
 		return $this->used_arguments_description;
 	}
-	public function set_comment($comment)
+	public function set_annotation($annotation)
 	{
-		$this->comment = $comment;
+		$this->annotation = $annotation;
 	}
-	public function append_comment($comment)
+	public function append_annotation($annotation)
 	{
-		if(strpos($this->comment, $comment) === false)
+		if(strpos($this->annotation, $annotation) === false)
 		{
-			$this->comment .= ' ' . PHP_EOL . $comment;
+			$this->annotation .= ' ' . PHP_EOL . $annotation;
 		}
 	}
-	public function get_comment()
+	public function get_annotation()
 	{
-		return $this->comment;
+		return $this->annotation;
 	}
 	public function get_arguments_description_shortened($compact_words = true)
 	{

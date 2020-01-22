@@ -100,7 +100,7 @@ class pts_result_file
 				$test_result = new pts_test_result($test_profile);
 				$test_result->set_used_arguments_description($result->Description->__toString());
 				$test_result->set_used_arguments($result->Arguments->__toString());
-				$test_result->set_comment((isset($result->Comment) ? $result->Comment->__toString() : null));
+				$test_result->set_annotation((isset($result->Annotation) ? $result->Annotation->__toString() : null));
 
 				$result_buffer = new pts_test_result_buffer();
 				foreach($result->Data->Entry as $entry)
@@ -464,6 +464,15 @@ class pts_result_file
 		}
 		return false;
 	}
+	public function update_annotation_for_result_object_by_id($index, $annotation)
+	{
+		if(isset($this->result_objects[$index]))
+		{
+			$this->result_objects[$index]->set_annotation($annotation);
+			return true;
+		}
+		return false;
+	}
 	public function get_result_objects($select_indexes = -1)
 	{
 		if($select_indexes != -1 && $select_indexes !== null)
@@ -627,9 +636,9 @@ class pts_result_file
 		$ch = $result_object->get_comparison_hash(true, false);
 		if(isset($this->result_objects[$ch]) && isset($this->result_objects[$ch]->test_result_buffer))
 		{
-			if($result_object->get_comment() != null)
+			if($result_object->get_annotation() != null)
 			{
-				$this->result_objects[$ch]->append_comment($result_object->get_comment());
+				$this->result_objects[$ch]->append_annotation($result_object->get_annotation());
 			}
 			foreach($result_object->test_result_buffer->get_buffer_items() as $bi)
 			{
@@ -702,7 +711,7 @@ class pts_result_file
 			$xml_writer->addXmlNode('PhoronixTestSuite/Result/Scale', $result_object->test_profile->get_result_scale());
 			$xml_writer->addXmlNode('PhoronixTestSuite/Result/Proportion', $result_object->test_profile->get_result_proportion());
 			$xml_writer->addXmlNode('PhoronixTestSuite/Result/DisplayFormat', $result_object->test_profile->get_display_format());
-			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Result/Comment', $result_object->get_comment());
+			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Result/Annotation', $result_object->get_annotation());
 
 			foreach($buffer_items as $i => &$buffer_item)
 			{

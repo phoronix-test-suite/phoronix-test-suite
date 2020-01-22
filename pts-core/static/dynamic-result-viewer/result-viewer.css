@@ -71,7 +71,7 @@ div#main_area h2
 	color: #098BEF;
 	font-weight: 500;
 	padding: 0;
-	margin: 2px 0;
+	margin: 10px 0 2px;
 }
 div#main_area input, div#main_area textarea, div#main_area select
 {
@@ -217,6 +217,7 @@ div#main_area svg
 }
 div#results svg
 {
+	margin-top: 16px;
 	min-width: 50%;
 	height: auto;
 }
@@ -317,5 +318,5 @@ div#leading_message
 }
 a.mini
 {
-	font-size: 10px;
+	font-size: 11px;
 }
