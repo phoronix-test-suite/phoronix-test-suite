@@ -7,6 +7,7 @@ pts-core: Allow deleting results from the result viewer
 pts-core: Allow editing result file information from result viewer
 pts-core: Allow deleting results (graphs) from result file in result viewer
 pts-core: Add ability to annotate (comment) on result graphs within the result viewer
+pts-core: Support converting graphs to PNG/PDF with Inkscape or svg-convert when PHP GD is not installed/enabled
 
 Phoronix Test Suite 9.4.0 Milestone 1
 13 January 2020

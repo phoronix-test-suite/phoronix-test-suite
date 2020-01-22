@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2019, Phoronix Media
-	Copyright (C) 2009 - 2019, Michael Larabel
+	Copyright (C) 2009 - 2020, Phoronix Media
+	Copyright (C) 2009 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ class result_file_to_pdf implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		if(!function_exists('getimagesizefromstring') || !function_exists('imagettftext') || !extension_loaded('gd'))
+		if(!pts_svg_dom_gd::is_supported())
 		{
 			echo pts_client::cli_just_bold('PHP GD support and TTF support are required for the PDF output if wanting to display the benchmark result graphs.') . PHP_EOL . PHP_EOL;
 			//return false;
