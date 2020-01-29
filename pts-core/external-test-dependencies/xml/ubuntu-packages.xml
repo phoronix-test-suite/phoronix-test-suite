@@ -270,8 +270,8 @@
 		</Package>
 		<Package>
 			<GenericName>python</GenericName>
-			<PackageName>python python-pip python3-pip python3-yaml</PackageName>
-			<FileCheck>pip3, python, python3</FileCheck>
+			<PackageName>python-pip python3-pip python3-yaml</PackageName>
+			<FileCheck>pip3, python3</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>python-boost-development</GenericName>
