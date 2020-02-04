@@ -221,7 +221,7 @@ class phodevi_disk extends phodevi_device_interface
 		{
 			$disks = array();
 
-			foreach(array_merge(pts_file_io::glob('/sys/block/nvme*'), pts_file_io::glob('/sys/block/sd*'), pts_file_io::glob('/sys/block/mmcblk*'), pts_file_io::glob('/sys/block/vd*')) as $sdx)
+			foreach(array_merge(pts_file_io::glob('/sys/block/nvme*'), pts_file_io::glob('/sys/block/pmem*'), pts_file_io::glob('/sys/block/sd*'), pts_file_io::glob('/sys/block/mmcblk*'), pts_file_io::glob('/sys/block/vd*')) as $sdx)
 			{
 				if(strpos($sdx, 'boot') !== false)
 				{
