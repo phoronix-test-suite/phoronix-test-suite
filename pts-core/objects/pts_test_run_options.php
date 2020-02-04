@@ -328,7 +328,7 @@ class pts_test_run_options
 				{
 					$all_devices = array();
 				}*/
-				$all_devices = array_merge(pts_file_io::glob('/dev/hd*'), pts_file_io::glob('/dev/sd*'), pts_file_io::glob('/dev/vd*'), pts_file_io::glob('/dev/md*'), pts_file_io::glob('/dev/nvme*'));
+				$all_devices = array_merge(pts_file_io::glob('/dev/hd*'), pts_file_io::glob('/dev/sd*'), pts_file_io::glob('/dev/vd*'), pts_file_io::glob('/dev/md*'), pts_file_io::glob('/dev/nvme*'),  pts_file_io::glob('/dev/pmem*'));
 
 				foreach($all_devices as &$device)
 				{
@@ -394,7 +394,7 @@ class pts_test_run_options
 					return;
 				}
 
-				$all_devices = array_merge(pts_file_io::glob('/dev/hd*'), pts_file_io::glob('/dev/sd*'), pts_file_io::glob('/dev/vd*'), pts_file_io::glob('/dev/md*'), pts_file_io::glob('/dev/nvme*'));
+				$all_devices = array_merge(pts_file_io::glob('/dev/hd*'), pts_file_io::glob('/dev/sd*'), pts_file_io::glob('/dev/vd*'), pts_file_io::glob('/dev/md*'), pts_file_io::glob('/dev/nvme*'),  pts_file_io::glob('/dev/pmem*'));
 
 				foreach($all_devices as $i => &$device)
 				{
