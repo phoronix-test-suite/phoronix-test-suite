@@ -705,6 +705,15 @@ class pts_result_file_output
 				$best = -1;
 				$worst = -1;
 			}
+			$normalize_against = 0;
+			if(isset($extra_attributes['highlight_graph_values']) && is_array($extra_attributes['highlight_graph_values']) && count($extra_attributes['highlight_graph_values']) == 1)
+			{
+				$normalize_against = $ro->get_result_value_from_name($extra_attributes['highlight_graph_values'][0]);
+			}
+			if($normalize_against == 0)
+			{
+				$normalize_against = $best;
+			}
 			$extra_rows = array(array(), array());
 			foreach($ro->test_result_buffer->get_buffer_items() as $index => $buffer_item)
 			{
@@ -723,10 +732,10 @@ class pts_result_file_output
 							break;
 					}
 
-					if($best != -1)
+					if($normalize_against != -1)
 					{
 						$extra_rows[0][0] = 'Normalized';
-						$extra_rows[0][$x] = round(($hib ? ($value / $best) : ($best / $value)) * 100, 2) . '%';
+						$extra_rows[0][$x] = round(($hib ? ($value / $normalize_against) : ($normalize_against / $value)) * 100, 2) . '%';
 					}
 
 					$raw = $buffer_item->get_result_raw_array();

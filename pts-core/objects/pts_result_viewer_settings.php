@@ -61,7 +61,7 @@ class pts_result_viewer_settings
 				{
 					$uri = str_replace('&' . $rem, null, $uri);
 				}
-				$analyze_options .= '<li><a href="' . $uri . '&' . $option . '">' . $txt . '</a></li>';
+				$analyze_options .= '<li><a href="' . $uri . '&' . $option . '&' .  http_build_query($_POST) . '">' . $txt . '</a></li>';
 			}
 			$analyze_options .= '</ul></li>';
 		}
