@@ -315,7 +315,7 @@ class phodevi_linux_parser
 
 			foreach($cpuinfo_lines as $line)
 			{
-				$line = pts_strings::trim_explode(': ', $line);
+				$line = pts_strings::trim_explode(': ', $line, 2);
 
 				if(!isset($line[0]))
 				{
