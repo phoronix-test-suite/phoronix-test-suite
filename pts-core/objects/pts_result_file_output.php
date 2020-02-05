@@ -642,6 +642,21 @@ class pts_result_file_output
 		$pdf->Ln(15);
 		$pdf->WriteBigHeaderCenter($result_file->get_title());
 		$pdf->WriteText($result_file->get_description());
+
+		// Executive Summary
+		$highlight_result = null;
+		if(isset($extra_attributes['highlight_graph_values']) && is_array($extra_attributes['highlight_graph_values']) && count($extra_attributes['highlight_graph_values']) == 1)
+		{
+			$highlight_result = $extra_attributes['highlight_graph_values'][0];
+		}
+		$exec_summary = pts_result_file_analyzer::generate_executive_summary($result_file, $highlight_result);
+
+		if(!empty($exec_summary))
+		{
+			$pdf->WriteText('Automated Executive Summary', 'B');
+			$pdf->WriteText(implode(PHP_EOL . PHP_EOL, $exec_summary), 'I');
+		}
+
 		$pdf->Ln(15);
 		//$pdf->WriteText('This file was automatically generated via the Phoronix Test Suite benchmarking software.', 'I');
 

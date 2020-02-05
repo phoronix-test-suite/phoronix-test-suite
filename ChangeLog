@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 pts-core: Add PDF bookmarks to result graphs on PDF result file generation
+pts-core: Add automated executive summary of result files via executive-summary sub-command and PDF result export
 
 Phoronix Test Suite 9.4.0 Milestone 2
 5 February 2020

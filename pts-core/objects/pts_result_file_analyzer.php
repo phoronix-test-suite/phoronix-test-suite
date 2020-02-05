@@ -48,7 +48,7 @@ class pts_result_file_analyzer
 		if($first_place_buffer->get_result_identifier() != $selected_result)
 		{
 			// Most wins
-			$summary[] = $first_place_buffer->get_result_identifier() . ' had the most wins, coming in first place ' . floor($first_place_buffer->get_result_value() / $wins_result->test_result_buffer->get_total_value_sum() * 100) . '% of the tests.';
+			$summary[] = $first_place_buffer->get_result_identifier() . ' had the most wins, coming in first place for ' . floor($first_place_buffer->get_result_value() / $wins_result->test_result_buffer->get_total_value_sum() * 100) . '% of the tests.';
 		}
 
 		$geo_mean_result = pts_result_file_analyzer::generate_geometric_mean_result($result_file, true);
