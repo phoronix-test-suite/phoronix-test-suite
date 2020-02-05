@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 9.4.0 Milestone 2
+5 February 2020
 
 pts-core: Add config options allowing to modify or delete result files from the result viewer
 pts-core: Allow deleting results from the result viewer
