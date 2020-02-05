@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2019, Phoronix Media
-	Copyright (C) 2010 - 2019, Michael Larabel
+	Copyright (C) 2010 - 2020, Phoronix Media
+	Copyright (C) 2010 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -22,7 +22,105 @@
 
 class pts_result_file_analyzer
 {
-	public static function generate_wins_losses_results($result_file)
+	public static function generate_executive_summary($result_file, $selected_result = null,  &$error = null)
+	{
+		$summary = null;
+
+		if($result_file->get_test_count() < 10)
+		{
+			$error = 'Not enough tests to analyze...';
+			return false;
+		}
+		if($result_file->get_system_count() < 2)
+		{
+			$error = 'Not enough results to analyze...';
+			return false;
+		}
+
+		$wins_result = pts_result_file_analyzer::generate_wins_losses_results($result_file, true);
+		$first_place_buffer = $wins_result->test_result_buffer->get_max_value(2);
+
+		if($selected_result && ($sw = $wins_result->test_result_buffer->find_buffer_item($selected_result)))
+		{
+			$summary[] = $selected_result . ' came in first place for ' . floor($sw->get_result_value() / $wins_result->test_result_buffer->get_total_value_sum() * 100) . '% of the tests.';
+		}
+
+		if($first_place_buffer->get_result_identifier() != $selected_result)
+		{
+			// Most wins
+			$summary[] = $first_place_buffer->get_result_identifier() . ' had the most wins, coming in first place ' . floor($first_place_buffer->get_result_value() / $wins_result->test_result_buffer->get_total_value_sum() * 100) . '% of the tests.';
+		}
+
+		$geo_mean_result = pts_result_file_analyzer::generate_geometric_mean_result($result_file, true);
+		$first_place_buffer = $geo_mean_result->test_result_buffer->get_max_value(2);
+		$last_place_buffer = $geo_mean_result->test_result_buffer->get_min_value(2);
+
+		$geo_bits = array();
+		if($result_file->get_system_count() >= 3)
+		{
+			$prev_buffer = null;
+			foreach($geo_mean_result->test_result_buffer->get_buffer_items() as $bi)
+			{
+				if($prev_buffer == null)
+				{
+					$prev_buffer = $bi;
+					continue;
+				}
+				$geo_bits[] = $bi->get_result_identifier() . ' was ' . round($bi->get_result_value() / $prev_buffer->get_result_value(), 1) . 'x the speed of ' . $prev_buffer->get_result_identifier();
+				$prev_buffer = $bi;
+			}
+		}
+		switch(count($geo_bits))
+		{
+			case 0:
+				$geo_bits = null;
+				break;
+			case 1:
+				$geo_bits = array_pop($geo_bits) . '.';
+				break;
+			case 2:
+				$geo_bits = implode(' and ', $geo_bits) . '.';
+				break;
+			default:
+				$geo_bits = implode(', ', $geo_bits) . '.';
+				break;
+		}
+
+		$summary[] = trim('Based on the geometric mean of all complete results, the fastest (' . $first_place_buffer->get_result_identifier() . ') was ' . round($first_place_buffer->get_result_value() / $last_place_buffer->get_result_value(), 1) . 'x the speed of the slowest (' . $last_place_buffer->get_result_identifier() . '). ' . $geo_bits);
+
+		if($result_file->get_test_count() > 20)
+		{
+			$results = $result_file->get_result_objects();
+			$spreads = array();
+			foreach($results as $i => &$result_object)
+			{
+				$spreads[$i] = $result_object->get_spread();
+			}
+			arsort($spreads);
+			$spreads = array_slice($spreads, 0, 10, true);
+
+			if(!empty($spreads))
+			{
+				$spread_text = array();
+				foreach($spreads as $result_key => $spread)
+				{
+					$ro = $result_file->get_result_objects($result_key);
+					if(!is_object($ro[0]))
+					{
+						continue;
+					}
+					$spread_text[] = $ro[0]->test_profile->get_title() . ' (' . $ro[0]->get_arguments_description() . ') at ' . round($spread, 2) . 'x';
+				}
+				if(!empty($spread_text))
+				{
+					$summary[] = 'The results with the greatest spread from best to worst included: ' . implode(', ', $spread_text) . '.';
+				}
+			}
+		}
+
+		return $summary;
+	}
+	public static function generate_wins_losses_results($result_file, $only_wins = false)
 	{
 		$results = null;
 		$result_file_identifiers_count = $result_file->get_system_count();
@@ -90,6 +188,11 @@ class pts_result_file_analyzer
 		foreach($wins as $identifier => $count)
 		{
 			$test_result->test_result_buffer->add_test_result($identifier, $count);
+		}
+
+		if($only_wins)
+		{
+			return count($wins) > 1 ? $test_result : null;
 		}
 		if(count($wins) > 1)
 		{

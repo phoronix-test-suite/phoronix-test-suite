@@ -290,6 +290,21 @@ class pts_test_result_buffer
 
 		return $identifiers;
 	}
+	public function get_total_value_sum()
+	{
+		$sum = 0;
+
+		foreach($this->buffer_items as &$buffer_item)
+		{
+			$v = $buffer_item->get_result_value();
+			if(is_numeric($v))
+			{
+				$sum += $v;
+			}
+		}
+
+		return $sum;
+	}
 	public function get_longest_identifier()
 	{
 		$identifier = null;
@@ -326,6 +341,7 @@ class pts_test_result_buffer
 	}
 	public function get_max_value($return_identifier = false)
 	{
+		$bi = null;
 		$value = 0;
 		$max_id = null;
 		$precision = 2;
@@ -337,26 +353,53 @@ class pts_test_result_buffer
 			{
 				$value = $buffer_item->get_result_value();
 				$max_id = $buffer_item->get_result_identifier();
+				$bi = $buffer_item;
 			}
 		}
 
-		return $return_identifier ? $max_id : pts_math::set_precision($value, $precision);
+		if($return_identifier === 2)
+		{
+			return $bi;
+		}
+		else if($return_identifier)
+		{
+			return $max_id;
+		}
+		else
+		{
+			return pts_math::set_precision($value, $precision);
+		}
 	}
 	public function get_min_value($return_identifier = false)
 	{
+		$bi = null;
 		$value = 0;
-		$max_id = null;
+		$min_id = null;
+		$precision = 2;
 
 		foreach($this->buffer_items as &$buffer_item)
 		{
+			$precision = max($precision, pts_math::get_precision($buffer_item->get_result_value()));
 			if($buffer_item->get_result_value() < $value || $value == 0)
 			{
 				$value = $buffer_item->get_result_value();
-				$max_id = $buffer_item->get_result_identifier();
+				$min_id = $buffer_item->get_result_identifier();
+				$bi = $buffer_item;
 			}
 		}
 
-		return $return_identifier ? $max_id : $value;
+		if($return_identifier === 2)
+		{
+			return $bi;
+		}
+		else if($return_identifier)
+		{
+			return $min_id;
+		}
+		else
+		{
+			return pts_math::set_precision($value, $precision);
+		}
 	}
 	public function has_run_with_multiple_samples()
 	{
