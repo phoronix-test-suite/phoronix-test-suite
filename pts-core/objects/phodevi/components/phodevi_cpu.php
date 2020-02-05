@@ -450,6 +450,7 @@ class phodevi_cpu extends phodevi_device_interface
 			$physical_cpu_count = count(array_unique($physical_cpu_ids));
 
 			$cpu_strings = phodevi_linux_parser::read_cpuinfo(array('model name', 'Processor', 'cpu', 'cpu model'));
+
 			$cpu_strings_unique = array_unique($cpu_strings);
 
 			if($physical_cpu_count == 1 || empty($physical_cpu_count))
@@ -462,6 +463,19 @@ class phodevi_cpu extends phodevi_device_interface
 
 				$info = isset($cpu_strings[0]) ? $cpu_strings[0] : null;
 
+				// Fallback CPU detection
+				switch($info)
+				{
+					case 'AMD Eng Sample: 100-000000163_43/29_Y':
+						if(count($physical_cpu_ids) == 128)
+						{
+							$info = 'AMD Ryzen Threadripper 3990X';
+						}
+						break;
+					default:
+						$info = str_replace(': ', ' ', $info);
+						break;
+				}
 				if(strpos($info, 'ARM') !== false)
 				{
 					if(is_dir('/sys/devices/system/exynos-core/') && stripos($info, 'Exynos') === false)
