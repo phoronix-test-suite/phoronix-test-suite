@@ -29,6 +29,7 @@ var $n;                  // current object number
 var $offsets;            // array of object offsets
 var $buffer;             // buffer holding in-memory PDF
 var $pages;              // array containing pages
+var $PageInfo = array();
 var $state;              // current document state
 var $compress;           // compression flag
 var $k;                  // scale factor (number of points in user unit)
@@ -80,6 +81,10 @@ var $keywords;           // keywords
 var $creator;            // creator
 var $AliasNbPages;       // alias for total number of pages
 var $PDFVersion;         // PDF version number
+
+// http://www.fpdf.org/en/script/script1.php
+protected $outlines = array();
+protected $outlineRoot;
 
 /*******************************************************************************
 *                                                                              *
@@ -179,7 +184,76 @@ function SetMargins($left, $top, $right=null)
 		$right = $left;
 	$this->rMargin = $right;
 }
+function Bookmark($txt, $level=0, $y=0)
+{
+	$isUTF8=false;
 
+    if(!$isUTF8)
+        $txt = utf8_encode($txt);
+    if($y==-1)
+        $y = $this->GetY();
+    $this->outlines[] = array('t'=>$txt, 'l'=>$level, 'y'=>($this->h-$y)*$this->k, 'p'=>$this->PageNo());
+}
+
+function _putbookmarks()
+{
+    $nb = count($this->outlines);
+    if($nb==0)
+        return;
+    $lru = array();
+    $level = 0;
+    foreach($this->outlines as $i=>$o)
+    {
+        if($o['l']>0)
+        {
+            $parent = $lru[$o['l']-1];
+            // Set parent and last pointers
+            $this->outlines[$i]['parent'] = $parent;
+            $this->outlines[$parent]['last'] = $i;
+            if($o['l']>$level)
+            {
+                // Level increasing: set first pointer
+                $this->outlines[$parent]['first'] = $i;
+            }
+        }
+        else
+            $this->outlines[$i]['parent'] = $nb;
+        if($o['l']<=$level && $i>0)
+        {
+            // Set prev and next pointers
+            $prev = $lru[$o['l']];
+            $this->outlines[$prev]['next'] = $i;
+            $this->outlines[$i]['prev'] = $prev;
+        }
+        $lru[$o['l']] = $i;
+        $level = $o['l'];
+    }
+    // Outline items
+    $n = $this->n+1;
+    foreach($this->outlines as $i=>$o)
+    {
+        $this->_newobj();
+        $this->_out('<</Title '.$this->_textstring($o['t']));
+        $this->_out('/Parent '.($n+$o['parent']).' 0 R');
+        if(isset($o['prev']))
+            $this->_out('/Prev '.($n+$o['prev']).' 0 R');
+        if(isset($o['next']))
+            $this->_out('/Next '.($n+$o['next']).' 0 R');
+        if(isset($o['first']))
+            $this->_out('/First '.($n+$o['first']).' 0 R');
+        if(isset($o['last']))
+            $this->_out('/Last '.($n+$o['last']).' 0 R');
+        $this->_out(sprintf('/Dest [%d 0 R /XYZ 0 %.2F null]',$this->PageInfo[$o['p']]['n'],$o['y']));
+        $this->_out('/Count 0>>');
+        $this->_out('endobj');
+    }
+    // Outline root
+    $this->_newobj();
+    $this->outlineRoot = $this->n;
+    $this->_out('<</Type /Outlines /First '.$n.' 0 R');
+    $this->_out('/Last '.($n+$lru[0]).' 0 R>>');
+    $this->_out('endobj');
+}
 function SetLeftMargin($margin)
 {
 	// Set left margin
@@ -1601,6 +1675,8 @@ function _out($s)
 function _putpages()
 {
 	$nb = $this->page;
+	for($n=1;$n<=$nb;$n++)
+		$this->PageInfo[$n]['n'] = $this->n+1+2*($n-1);
 	if(!empty($this->AliasNbPages))
 	{
 		// Replace number of pages
@@ -1836,6 +1912,7 @@ function _putresources()
 	$this->_putresourcedict();
 	$this->_out('>>');
 	$this->_out('endobj');
+	$this->_putbookmarks();
 }
 function _putinfo()
 {
@@ -1871,6 +1948,12 @@ function _putcatalog()
 		$this->_out('/PageLayout /OneColumn');
 	elseif($this->LayoutMode=='two')
 		$this->_out('/PageLayout /TwoColumnLeft');
+
+    if(count($this->outlines)>0)
+    {
+        $this->_out('/Outlines '.$this->outlineRoot.' 0 R');
+        $this->_out('/PageMode /UseOutlines');
+    }
 }
 
 function _putheader()

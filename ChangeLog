@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+pts-core: Add PDF bookmarks to result graphs on PDF result file generation
+
 Phoronix Test Suite 9.4.0 Milestone 2
 5 February 2020
 

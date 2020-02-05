@@ -776,6 +776,7 @@ class pts_result_file_output
 
 		$pdf->AddPage();
 		$i = 0;
+		$last_result_title = null;
 		foreach($result_file->get_result_objects() as $key => $result_object)
 		{
 			$graph = pts_render::render_graph_process($result_object, $result_file, false, $extra_attributes);
@@ -799,6 +800,11 @@ class pts_result_file_output
 				$pdf->WriteText($result_object->get_annotation());
 			}
 			$i++;
+			if($last_result_title != $result_object->test_profile->get_title() && $result_object->test_profile->get_title() != null)
+			{
+				$last_result_title = $result_object->test_profile->get_title();
+				$pdf->Bookmark($last_result_title);
+			}
 		}
 		$pdf->WriteText('This file was automatically generated via the Phoronix Test Suite benchmarking software on ' . date('l, j F Y H:i') . '.', 'I');
 		ob_get_clean();
