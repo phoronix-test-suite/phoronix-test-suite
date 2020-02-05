@@ -469,7 +469,7 @@ class phodevi_cpu extends phodevi_device_interface
 					case 'AMD Eng Sample: 100-000000163_43/29_Y':
 						if(count($physical_cpu_ids) == 128)
 						{
-							$info = 'AMD Ryzen Threadripper 3990X';
+							$info = 'AMD Ryzen Threadripper 3990X 64-Core';
 						}
 						break;
 					default:
