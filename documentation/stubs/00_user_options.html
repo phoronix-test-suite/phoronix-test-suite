@@ -220,9 +220,6 @@
 </h3>
 <p>This option can be used for validating a Phoronix Test Suite test suite as being compliant against the OpenBenchmarking.org specification.</p>
 <h1>Result Management</h1>
-<h3>analyze-all-runs<em>  [Test Result]</em>
-</h3>
-<p>This option will generate a candlestick graph showing the distribution of results from all trial runs. The candlestick graph is similar to the Japanese candlestick charts used by the financial industry, except instead of representing stock data it is numerical result data from all trial runs.\n\nThe tip of the upper-wick represents the highest value of the test runs with the tip of the lower-wick representing the lowest value of all test runs. The upper-edge of the candle body represents the first or last run value and the lower-edge represents the first or last run value. Lastly, if the last run value is less than the first run value, the candle body is the same color as the graph background, otherwise the last run value is greater.</p>
 <h3>auto-sort-result-file<em>  [Test Result]</em>
 </h3>
 <p>This option is used if you wish to automatically attempt to sort the results by their result identifier string.</p>
@@ -262,15 +259,9 @@
 <h3>reorder-result-file<em>  [Test Result]</em>
 </h3>
 <p>This option is used if you wish to manually change the order in which test results are shown in the Phoronix Test Suite Results Viewer and the contained graphs. The user must specify a saved results file and then they will be prompted to select the results identifiers one at a time in the order they would like them to be displayed from left to right.</p>
-<h3>result-file-confidence<em>  [Test Result]</em>
-</h3>
-<p>This option will read a saved test results file and display various statistics on the confidence of the results with the standard deviation, three-sigma values, and other metrics while color-coding "passing" results in green.</p>
 <h3>result-file-raw-to-csv<em>  [Test Result]</em>
 </h3>
 <p>This option will read a saved test results file and output the raw result file run data to a CSV file. This raw (individual) result file output is intended for data analytic purposes where the result-file-to-csv is more end-user-ready.</p>
-<h3>result-file-stats<em>  [Test Result]</em>
-</h3>
-<p>This option is used if you wish to analyze a result file by seeing various statistics on the result data for result files containing at least two sets of data.</p>
 <h3>result-file-to-csv<em>  [Test Result]</em>
 </h3>
 <p>This option will read a saved test results file and output the system hardware and software information along with the results to a CSV output. The CSV (Comma Separated Values) output can then be loaded into a spreadsheet for easy viewing.</p>
@@ -286,9 +277,6 @@
 <h3>show-result<em>  [Test Result]</em>
 </h3>
 <p>Open up the test results in the Phoronix Test Suite Result Viewer or on OpenBenchmarking.org.</p>
-<h3>wins-and-losses<em>  [Test Result]</em>
-</h3>
-<p>This option is used if you wish to analyze a result file to see which runs produced the most wins/losses of those result identifiers in the saved file.</p>
 <h1>Other</h1>
 <h3>commands<em>  </em>
 </h3>
@@ -308,6 +296,22 @@
 <h3>version<em>  </em>
 </h3>
 <p>This option will display the Phoronix Test Suite client version.</p>
+<h1>Result Analysis</h1>
+<h3>analyze-all-runs<em>  [Test Result]</em>
+</h3>
+<p>This option will generate a candlestick graph showing the distribution of results from all trial runs. The candlestick graph is similar to the Japanese candlestick charts used by the financial industry, except instead of representing stock data it is numerical result data from all trial runs.\n\nThe tip of the upper-wick represents the highest value of the test runs with the tip of the lower-wick representing the lowest value of all test runs. The upper-edge of the candle body represents the first or last run value and the lower-edge represents the first or last run value. Lastly, if the last run value is less than the first run value, the candle body is the same color as the graph background, otherwise the last run value is greater.</p>
+<h3>executive-summary<em>  [Test Result]</em>
+</h3>
+<p>This option will attempt to auto-generate a textual executive summary for a result file to highlight prominent results / averages.</p>
+<h3>result-file-confidence<em>  [Test Result]</em>
+</h3>
+<p>This option will read a saved test results file and display various statistics on the confidence of the results with the standard deviation, three-sigma values, and other metrics while color-coding "passing" results in green.</p>
+<h3>result-file-stats<em>  [Test Result]</em>
+</h3>
+<p>This option is used if you wish to analyze a result file by seeing various statistics on the result data for result files containing at least two sets of data.</p>
+<h3>wins-and-losses<em>  [Test Result]</em>
+</h3>
+<p>This option is used if you wish to analyze a result file to see which runs produced the most wins/losses of those result identifiers in the saved file.</p>
 <h1>Modules</h1>
 <h3>auto-load-module<em>  </em>
 </h3>

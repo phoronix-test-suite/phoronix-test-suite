@@ -251,9 +251,6 @@ This option can be used for validating a Phoronix Test Suite test suite as being
 
 
 ## Result Management
-#### analyze-all-runs  [Test Result]
-This option will generate a candlestick graph showing the distribution of results from all trial runs. The candlestick graph is similar to the Japanese candlestick charts used by the financial industry, except instead of representing stock data it is numerical result data from all trial runs.\n\nThe tip of the upper-wick represents the highest value of the test runs with the tip of the lower-wick representing the lowest value of all test runs. The upper-edge of the candle body represents the first or last run value and the lower-edge represents the first or last run value. Lastly, if the last run value is less than the first run value, the candle body is the same color as the graph background, otherwise the last run value is greater.
-
 #### auto-sort-result-file  [Test Result]
 This option is used if you wish to automatically attempt to sort the results by their result identifier string.
 
@@ -293,14 +290,8 @@ This option is used if you wish to change the name of the saved name of a result
 #### reorder-result-file  [Test Result]
 This option is used if you wish to manually change the order in which test results are shown in the Phoronix Test Suite Results Viewer and the contained graphs. The user must specify a saved results file and then they will be prompted to select the results identifiers one at a time in the order they would like them to be displayed from left to right.
 
-#### result-file-confidence  [Test Result]
-This option will read a saved test results file and display various statistics on the confidence of the results with the standard deviation, three-sigma values, and other metrics while color-coding "passing" results in green.
-
 #### result-file-raw-to-csv  [Test Result]
 This option will read a saved test results file and output the raw result file run data to a CSV file. This raw (individual) result file output is intended for data analytic purposes where the result-file-to-csv is more end-user-ready.
-
-#### result-file-stats  [Test Result]
-This option is used if you wish to analyze a result file by seeing various statistics on the result data for result files containing at least two sets of data.
 
 #### result-file-to-csv  [Test Result]
 This option will read a saved test results file and output the system hardware and software information along with the results to a CSV output. The CSV (Comma Separated Values) output can then be loaded into a spreadsheet for easy viewing.
@@ -316,9 +307,6 @@ This option will read a saved test results file and output the system hardware a
 
 #### show-result  [Test Result]
 Open up the test results in the Phoronix Test Suite Result Viewer or on OpenBenchmarking.org.
-
-#### wins-and-losses  [Test Result]
-This option is used if you wish to analyze a result file to see which runs produced the most wins/losses of those result identifiers in the saved file.
 
 
 ## Other
@@ -339,6 +327,23 @@ This option will display a list of available Phoronix Test Suite commands and po
 
 #### version
 This option will display the Phoronix Test Suite client version.
+
+
+## Result Analysis
+#### analyze-all-runs  [Test Result]
+This option will generate a candlestick graph showing the distribution of results from all trial runs. The candlestick graph is similar to the Japanese candlestick charts used by the financial industry, except instead of representing stock data it is numerical result data from all trial runs.\n\nThe tip of the upper-wick represents the highest value of the test runs with the tip of the lower-wick representing the lowest value of all test runs. The upper-edge of the candle body represents the first or last run value and the lower-edge represents the first or last run value. Lastly, if the last run value is less than the first run value, the candle body is the same color as the graph background, otherwise the last run value is greater.
+
+#### executive-summary  [Test Result]
+This option will attempt to auto-generate a textual executive summary for a result file to highlight prominent results / averages.
+
+#### result-file-confidence  [Test Result]
+This option will read a saved test results file and display various statistics on the confidence of the results with the standard deviation, three-sigma values, and other metrics while color-coding "passing" results in green.
+
+#### result-file-stats  [Test Result]
+This option is used if you wish to analyze a result file by seeing various statistics on the result data for result files containing at least two sets of data.
+
+#### wins-and-losses  [Test Result]
+This option is used if you wish to analyze a result file to see which runs produced the most wins/losses of those result identifiers in the saved file.
 
 
 ## Modules
@@ -1165,99 +1170,6 @@ This is a collection of test profiles found within the specified OpenBenchmarkin
 
 #### Smp Tests  git/smp
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing smp.
-
-#### All PTS Tests  pts/all
-This is a collection of all test profiles found within the specified OpenBenchmarking.org repository.
-
-#### Installed Tests  pts/installed
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository that are already installed on the system under test.
-
-#### Every PTS Test  pts/everything
-This is a collection of every test profile found within the specified OpenBenchmarking.org repository, including unsupported tests.
-
-#### Linux Operating System Tests  pts/linux
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Linux Operating System.
-
-#### Solaris Operating System Tests  pts/solaris
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Solaris Operating System.
-
-#### BSD Operating System Tests  pts/bsd
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the BSD Operating System.
-
-#### MacOSX Operating System Tests  pts/macosx
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the MacOSX Operating System.
-
-#### Windows Operating System Tests  pts/windows
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Windows Operating System.
-
-#### Hurd Operating System Tests  pts/hurd
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Hurd Operating System.
-
-#### System Subsystem Tests  pts/system
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the System sub-system.
-
-#### Processor Subsystem Tests  pts/processor
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Processor sub-system.
-
-#### Graphics Subsystem Tests  pts/graphics
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Graphics sub-system.
-
-#### Other Subsystem Tests  pts/other
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Other sub-system.
-
-#### Utility Tests  pts/utility
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Utility software test.
-
-#### Simulator Tests  pts/simulator
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Simulator software test.
-
-#### Scientific Tests  pts/scientific
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Scientific software test.
-
-#### Benchmark Tests  pts/benchmark
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Benchmark software test.
-
-#### Application Tests  pts/application
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Application software test.
-
-#### Game Tests  pts/game
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Game software test.
-
-#### Smp Tests  pts/smp
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing smp.
-
-#### Cuda Tests  pts/cuda
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing cuda.
-
-#### Mpi Tests  pts/mpi
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing mpi.
-
-#### Openmp Tests  pts/openmp
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing openmp.
-
-#### Cloud Tests  pts/cloud
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing cloud.
-
-#### Docker Tests  pts/docker
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing docker.
-
-#### Python Tests  pts/python
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing python.
-
-#### Go Tests  pts/go
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing go.
-
-#### Vdpau Tests  pts/vdpau
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing vdpau.
-
-#### Video Tests  pts/video
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing video.
-
-#### Responsiveness Tests  pts/responsiveness
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing responsiveness.
-
-#### Openmpi Tests  pts/openmpi
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing openmpi.
 
 #### All WINDOWS Tests  windows/all
 This is a collection of all test profiles found within the specified OpenBenchmarking.org repository.

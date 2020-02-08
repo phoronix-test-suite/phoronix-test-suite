@@ -22,7 +22,7 @@
 
 class wins_and_losses implements pts_option_interface
 {
-	const doc_section = 'Result Management';
+	const doc_section = 'Result Analysis';
 	const doc_description = 'This option is used if you wish to analyze a result file to see which runs produced the most wins/losses of those result identifiers in the saved file.';
 
 	public static function command_aliases()

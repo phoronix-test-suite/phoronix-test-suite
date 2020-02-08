@@ -22,7 +22,7 @@
 
 class result_file_confidence implements pts_option_interface
 {
-	const doc_section = 'Result Management';
+	const doc_section = 'Result Analysis';
 	const doc_description = 'This option will read a saved test results file and display various statistics on the confidence of the results with the standard deviation, three-sigma values, and other metrics while color-coding "passing" results in green.';
 
 	public static function argument_checks()

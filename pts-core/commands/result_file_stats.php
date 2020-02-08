@@ -22,7 +22,7 @@
 
 class result_file_stats implements pts_option_interface
 {
-	const doc_section = 'Result Management';
+	const doc_section = 'Result Analysis';
 	const doc_description = 'This option is used if you wish to analyze a result file by seeing various statistics on the result data for result files containing at least two sets of data.';
 
 	public static function command_aliases()

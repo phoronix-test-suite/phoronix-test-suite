@@ -22,7 +22,7 @@
 
 class executive_summary implements pts_option_interface
 {
-	const doc_section = 'Result Management';
+	const doc_section = 'Result Analysis';
 	const doc_description = 'This option will attempt to auto-generate a textual executive summary for a result file to highlight prominent results / averages.';
 
 	public static function argument_checks()
