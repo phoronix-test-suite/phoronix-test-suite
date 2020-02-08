@@ -275,8 +275,11 @@ This option will re-render and save all result graphs within a saved file. This 
 #### remove-result  [Test Result]
 This option will permanently remove the saved file set that is set as the first argument.
 
-#### remove-results-from-result-file  [Test Result]
+#### remove-result-from-result-file  [Test Result]
 This option is used if there are test results (benchmarks) to be dropped from a given result file. The user must specify a saved results file and then they will be prompted to select the tests/benchmarks to remove.
+
+#### remove-results-from-result-file  [Test Result]
+This option is used if there are test results (benchmarks) to be dropped from a given result file. The user must specify a saved results file and then they will be prompted to provide a string to search for in removing those results from that given result file.
 
 #### remove-run-from-result-file  [Test Result]
 This option is used if there is a set of test results you wish to remove/delete from a saved results file. The user must specify a saved results file and then they will be prompted to select the results identifier associated with the results they wish to remove.

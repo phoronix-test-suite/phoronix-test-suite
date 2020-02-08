@@ -276,7 +276,8 @@ class pts_user_io
 			foreach(array_keys($options_r) as $i => $key)
 			{
 				$key_index[($i + 1)] = $key;
-				echo $line_prefix . pts_client::cli_just_bold(($i + 1) . ': ') . str_repeat(' ', strlen($option_count) - strlen(($i + 1))) . $options_r[$key] . PHP_EOL;
+				$line_offset = strlen($line_prefix . ($i + 1) . ': ' . str_repeat(' ', strlen($option_count) - strlen(($i + 1))));
+				echo $line_prefix . pts_client::cli_just_bold(($i + 1) . ': ') . str_repeat(' ', strlen($option_count) - strlen(($i + 1))) . str_replace(PHP_EOL, PHP_EOL . str_repeat(' ', $line_offset), $options_r[$key]) . PHP_EOL;
 			}
 			if($allow_multi_select)
 			{

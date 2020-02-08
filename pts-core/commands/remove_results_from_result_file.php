@@ -23,7 +23,7 @@
 class remove_results_from_result_file implements pts_option_interface
 {
 	const doc_section = 'Result Management';
-	const doc_description = 'This option is used if there are test results (benchmarks) to be dropped from a given result file. The user must specify a saved results file and then they will be prompted to select the tests/benchmarks to remove.';
+	const doc_description = 'This option is used if there are test results (benchmarks) to be dropped from a given result file. The user must specify a saved results file and then they will be prompted to provide a string to search for in removing those results from that given result file.';
 
 	public static function argument_checks()
 	{
