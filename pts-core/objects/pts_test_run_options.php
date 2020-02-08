@@ -142,7 +142,7 @@ class pts_test_run_options
 					{
 						$o_name .= ' [' . pts_client::cli_just_italic($o->get_helper_message()) . ']';
 					}
-					$bench_choice = pts_user_io::prompt_text_menu($o_name, $option_names, true, true, pts_client::$display->get_tab() . pts_client::$display->get_tab());
+					$bench_choice = implode(',', pts_user_io::prompt_text_menu($o_name, $option_names, true, true, pts_client::$display->get_tab() . pts_client::$display->get_tab()));
 					echo PHP_EOL;
 				}
 

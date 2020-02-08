@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2018, Phoronix Media
-	Copyright (C) 2009 - 2018, Michael Larabel
+	Copyright (C) 2009 - 2020, Phoronix Media
+	Copyright (C) 2009 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -497,7 +497,7 @@ class pts_validation
 			$do_require = in_array('TEST_REQUIRES', $node->get_flags_array());
 			if(!empty($enums))
 			{
-				$input = pts_user_io::prompt_text_menu('Select from the supported options', $enums, $type->multi_enum_select(), false, null);
+				$input = implode(',', pts_user_io::prompt_text_menu('Select from the supported options', $enums, $type->multi_enum_select(), false, null));
 			}
 			else
 			{

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011 - 2019, Phoronix Media
-	Copyright (C) 2011 - 2019, Michael Larabel
+	Copyright (C) 2011 - 2020, Phoronix Media
+	Copyright (C) 2011 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -91,7 +91,6 @@ class interactive implements pts_option_interface
 					asort($supported_tests);
 
 					$tests_to_run = pts_user_io::prompt_text_menu('Select Test(s)', $supported_tests, true, true);
-					$tests_to_run = explode(',', $tests_to_run);
 					pts_test_installer::standard_install($tests_to_run);
 					$run_manager = new pts_test_run_manager(false, 2);
 					$run_manager->standard_run($tests_to_run);
@@ -133,8 +132,6 @@ class interactive implements pts_option_interface
 					asort($supported_tests);
 
 					$tests_to_run = pts_user_io::prompt_text_menu('Select Test(s)', $supported_tests, true, true);
-					$tests_to_run = explode(',', $tests_to_run);
-
 					$concurrent_runs = pts_user_io::prompt_user_input('Number of tests to run concurrently');
 					putenv('PTS_CONCURRENT_TEST_RUNS=' . trim($concurrent_runs));
 					$minutes_loop_time = pts_user_io::prompt_user_input('Number of minutes to stress run');
@@ -152,7 +149,7 @@ class interactive implements pts_option_interface
 					}
 
 					$suites_to_run = pts_user_io::prompt_text_menu('Select Suite', $possible_suites, true);
-					foreach(explode(',', $suites_to_run) as $suite_to_run)
+					foreach($suites_to_run as $suite_to_run)
 					{
 						pts_test_installer::standard_install($suite_to_run);
 						$run_manager = new pts_test_run_manager(false, 2);

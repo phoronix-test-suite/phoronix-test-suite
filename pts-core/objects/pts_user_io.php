@@ -330,7 +330,8 @@ class pts_user_io
 			}
 		}
 
-		return implode(',', $select);
+		// Technically implode shouldn't be needed as should just be $select[0] to return
+		return $allow_multi_select ? $select : implode(',', $select);
 	}
 }
 

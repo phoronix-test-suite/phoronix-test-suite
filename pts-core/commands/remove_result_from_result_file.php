@@ -42,7 +42,7 @@ class remove_result_from_result_file implements pts_option_interface
 
 		$remove_ids = pts_user_io::prompt_text_menu('Select the result(s) to remove', $ros, true, true);
 
-		foreach(explode(',', $remove_ids) as $id)
+		foreach($remove_ids as $id)
 		{
 			$result_file->remove_result_object_by_id($id);
 		}

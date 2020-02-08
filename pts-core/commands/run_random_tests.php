@@ -31,7 +31,7 @@ class run_random_tests implements pts_option_interface
 		$allow_new_tests_to_be_installed = pts_user_io::prompt_bool_input('Allow new tests to be installed', true);
 		$allow_new_dependencies_to_be_installed = $allow_new_tests_to_be_installed ? pts_user_io::prompt_bool_input('Allow new test external dependencies to be installed', false) : false;
 		$limit_test_subsystem = pts_user_io::prompt_bool_input('Limit tests to a given subsystem', false);
-		$limit_test_subsystem = $limit_test_subsystem ? pts_user_io::prompt_text_menu('Select subsystem(s) to test', pts_types::subsystem_targets(), true) : false;
+		$limit_test_subsystem = $limit_test_subsystem ? pts_user_io::prompt_text_menu('Select subsystem(s) to test', pts_types::subsystem_targets(), true) : array();
 		$upload_to_openbenchmarking = pts_user_io::prompt_bool_input('Auto-upload test results to OpenBenchmarking.org', true);
 
 		while(1)
@@ -40,7 +40,7 @@ class run_random_tests implements pts_option_interface
 
 			if($limit_test_subsystem)
 			{
-				foreach(explode(',', $limit_test_subsystem) as $test_type)
+				foreach($limit_test_subsystem as $test_type)
 				{
 					$tests = pts_openbenchmarking_client::popular_tests(-1, $test_type);
 					$to_test = array_merge($to_test, $tests);
@@ -109,7 +109,7 @@ class run_random_tests implements pts_option_interface
 
 			if($limit_test_subsystem)
 			{
-				$subsystems_to_test = explode(',', $limit_test_subsystem);
+				$subsystems_to_test = $limit_test_subsystem;
 				$subsystems_to_avoid = array_diff(pts_types::subsystem_targets(), $subsystems_to_test);
 				pts_client::pts_set_environment_variable('SKIP_TESTING_SUBSYSTEMS', implode(',', $subsystems_to_avoid));
 			}

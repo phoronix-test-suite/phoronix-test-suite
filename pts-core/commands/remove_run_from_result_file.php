@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2019, Phoronix Media
-	Copyright (C) 2009 - 2019, Michael Larabel
+	Copyright (C) 2009 - 2020, Phoronix Media
+	Copyright (C) 2009 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ class remove_run_from_result_file implements pts_option_interface
 			return false;
 		}
 
-		$remove_identifiers = explode(',', pts_user_io::prompt_text_menu('Select the test run(s) to remove', $result_file_identifiers, true));
+		$remove_identifiers = pts_user_io::prompt_text_menu('Select the test run(s) to remove', $result_file_identifiers, true);
 		$result_file->remove_run($remove_identifiers);
 		$result_dir = dirname($result_file->get_file_location()) . '/';
 
