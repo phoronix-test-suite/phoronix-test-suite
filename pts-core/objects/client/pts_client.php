@@ -1810,6 +1810,16 @@ class pts_client
 				}
 			}
 		}
+		else if(phodevi::is_linux())
+		{
+			// Fedora OpenMPI path not often in PATH by default
+			$d = '/usr/lib64/openmpi/bin';
+			if(is_dir($d) && strpos($path, $d) === false)
+			{
+				$path .= ':' . $d;
+			}
+		}
+
 		return $path;
 	}
 	public static function get_path_separator()
