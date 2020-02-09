@@ -264,7 +264,14 @@ class pts_user_io
 
 		if($option_count == 1)
 		{
-			return $return_index ? pts_arrays::last_element(array_keys($options_r)) : array_pop($options_r);
+			if($allow_multi_select)
+			{
+				return $return_index ? array_keys($options_r) : $options_r;
+			}
+			else
+			{
+				return $return_index ? pts_arrays::last_element(array_keys($options_r)) : array_pop($options_r);
+			}
 		}
 
 		$select = array();
