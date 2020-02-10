@@ -933,6 +933,7 @@ class pts_test_result_parser
 		{
 			// The test_result is numeric except for the last character, possible k/M prefix or so
 			// Or do any other format conversion here
+			// Made in PTS 9.4, this shouldn't break any existing result-definitions since it would have been non-numeric here already
 			$result_without_last_char = substr($test_result, 0, -1);
 			switch(strtolower(substr($test_result, -1)))
 			{
