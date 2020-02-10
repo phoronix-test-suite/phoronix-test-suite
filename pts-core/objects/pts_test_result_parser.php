@@ -928,6 +928,22 @@ class pts_test_result_parser
 		{
 			$test_result = substr($test_result, 0, 0 - strlen($e->get_strip_result_postfix()));
 		}
+
+		if(!is_numeric($test_result) && is_numeric(substr($test_result, 0, -1)))
+		{
+			// The test_result is numeric except for the last character, possible k/M prefix or so
+			// Or do any other format conversion here
+			$result_without_last_char = substr($test_result, 0, -1);
+			switch(strtolower(substr($test_result, -1)))
+			{
+				case 'k':
+					$test_result = $result_without_last_char * 1000;
+					break;
+				case 'm':
+					$test_result = $result_without_last_char * 1000000;
+					break;
+			}
+		}
 	}
 	protected static function determine_search_key(&$output, $line_hint, $line_before_hint, $line_after_hint, $template_line, $template, $template_r, $key)
 	{
