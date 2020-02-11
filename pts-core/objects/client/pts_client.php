@@ -1889,20 +1889,32 @@ class pts_client
 				echo pts_result_file_output::result_file_to_text($result_file, pts_client::terminal_width());
 			}
 		}
-		else if(pts_client::$web_result_viewer_active && pts_network::http_get_contents('http://localhost:' . pts_client::$web_result_viewer_active . '/index.php?PTS', false, false, false, false, 2) == 'PTS')
-		{
-			pts_client::$has_used_modern_result_viewer = true;
-			pts_client::$last_result_view_url = 'http://localhost:' . pts_client::$web_result_viewer_active . '/result/' . $result_file->get_identifier();
-			$length_browser_open = pts_client::display_web_page(pts_client::$last_result_view_url, $prompt_text, true, $auto_open);
-		}
-		else if(pts_client::$web_result_viewer_active && pts_network::http_get_contents('http://127.0.0.1:' . pts_client::$web_result_viewer_active . '/index.php?PTS', false, false, false, false, 2) == 'PTS')
-		{
-			pts_client::$has_used_modern_result_viewer = true;
-			pts_client::$last_result_view_url = 'http://127.0.0.1:' . pts_client::$web_result_viewer_active . '/result/' . $result_file->get_identifier();
-			$length_browser_open = pts_client::display_web_page(pts_client::$last_result_view_url, $prompt_text, true, $auto_open);
-		}
 		else
 		{
+			$dynamic_urls_to_try = array();
+			if(pts_client::$web_result_viewer_active)
+			{
+				$dynamic_urls_to_try[] = 'http://localhost:' . pts_client::$web_result_viewer_active;
+				$dynamic_urls_to_try[] = 'http://127.0.0.1:' . pts_client::$web_result_viewer_active;
+			}
+			if(($restored_port = pts_storage_object::read_from_file(PTS_CORE_STORAGE, 'last_web_result_viewer_active_port')) != false && is_numeric($restored_port) && $restored_port > 20)
+			{
+				$dynamic_urls_to_try[] = 'http://localhost:' . $restored_port;
+				$dynamic_urls_to_try[] = 'http://127.0.0.1:' . $restored_port;
+			}
+
+			foreach($dynamic_urls_to_try as $base_url)
+			{
+				if(pts_network::http_get_contents($base_url . '/index.php?PTS', false, false, false, false, 2) == 'PTS')
+				{
+					pts_client::$has_used_modern_result_viewer = true;
+					pts_client::$last_result_view_url = $base_url . '/result/' . $result_file->get_identifier();
+					$length_browser_open = pts_client::display_web_page(pts_client::$last_result_view_url, $prompt_text, true, $auto_open);
+					return true;
+				}
+			}
+
+			// Fallback to old result viewer
 			if($result_file->get_file_location() != null)
 			{
 				$index_html = dirname($result_file->get_file_location()) . '/index.html';

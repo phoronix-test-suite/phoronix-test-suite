@@ -156,6 +156,7 @@ class load_dynamic_result_viewer extends pts_module_interface
 
 			self::$process = proc_open(getenv('PHP_BIN') . ' -S ' . $server_ip . ':' . $web_port . ' -t ' . PTS_CORE_PATH . 'static/dynamic-result-viewer/ ', $descriptorspec, self::$pipes, $cwd, $env);
 			pts_client::$web_result_viewer_active = $web_port;
+			pts_storage_object::set_in_file(PTS_CORE_STORAGE, 'last_web_result_viewer_active_port', $web_port);
 
 			if(pts_network::get_local_ip() && !$access_limited_to_localhost)
 			{
