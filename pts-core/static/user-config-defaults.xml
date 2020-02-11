@@ -30,7 +30,7 @@
 		<Testing>
 			<SaveSystemLogs>TRUE</SaveSystemLogs>
 			<SaveInstallationLogs>FALSE</SaveInstallationLogs>
-			<SaveTestLogs>FALSE</SaveTestLogs>
+			<SaveTestLogs>TRUE</SaveTestLogs>
 			<ResultsDirectory>~/.phoronix-test-suite/test-results/</ResultsDirectory>
 			<AlwaysUploadResultsToOpenBenchmarking>FALSE</AlwaysUploadResultsToOpenBenchmarking>
 			<AutoSortRunQueue>TRUE</AutoSortRunQueue>
