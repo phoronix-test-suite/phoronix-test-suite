@@ -1877,6 +1877,8 @@ class pts_client
 		}
 		if(TIME_PTS_LAUNCHED > (time() - 6))
 		{
+			// Avoid a race condition on start-up if the dynamic result viewer PHP server isn't yet active
+			// and running a command like 'refresh-graphs' where you may be viewing a result right away
 			sleep(5);
 		}
 

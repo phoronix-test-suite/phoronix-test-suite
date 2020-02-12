@@ -651,6 +651,12 @@ class pts_test_result_parser
 							$start_of_line = strrpos($line, "\n");
 							$output = substr($line, 0, $start_of_line) . "\n";
 							$possible_lines[] = substr($line, $start_of_line + 1);
+
+							if(count($possible_lines) > 16 && $is_multi_match)
+							{
+								// This vastly speeds up pts/dav1d result decoding on Windows as this expensive loop not used
+								break;
+							}
 						}
 
 						$line = !empty($possible_lines) ? array_shift($possible_lines) : null;
