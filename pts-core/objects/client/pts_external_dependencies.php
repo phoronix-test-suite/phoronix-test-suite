@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2018, Phoronix Media
-	Copyright (C) 2010 - 2018, Michael Larabel
+	Copyright (C) 2010 - 2020, Phoronix Media
+	Copyright (C) 2010 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -53,7 +53,7 @@ class pts_external_dependencies
 		}
 		return false;
 	}
-	public static function install_dependencies(&$test_profiles, $no_prompts = false, $skip_tests_with_missing_dependencies = false)
+	public static function install_dependencies(&$test_profiles, $no_prompts = false, $skip_tests_with_missing_dependencies = false, $report_progress = false)
 	{
 		// PTS External Dependencies install on distribution
 		if(pts_client::read_env('NO_EXTERNAL_DEPENDENCIES') != false || pts_client::read_env('SKIP_EXTERNAL_DEPENDENCIES') == 1)
@@ -74,6 +74,10 @@ class pts_external_dependencies
 		// Find all of the POSSIBLE test dependencies
 		$required_external_dependencies = array();
 		$required_system_files = array();
+		if($report_progress)
+		{
+			pts_client::$display->test_install_progress_start('Evaluating External Test Dependencies');
+		}
 		foreach($tests_to_check as &$test_profile)
 		{
 			foreach($test_profile->get_external_dependencies() as $test_dependency)
@@ -140,7 +144,11 @@ class pts_external_dependencies
 		// Find the dependencies that are actually missing from the system
 		$skip_warning_on_unmet_deps = false;
 		$generic_packages_needed = array();
-		$dependencies_to_install = self::check_dependencies_missing_from_system($required_external_dependencies, $generic_packages_needed, $skip_warning_on_unmet_deps);
+		$dependencies_to_install = self::check_dependencies_missing_from_system($required_external_dependencies, $generic_packages_needed, $skip_warning_on_unmet_deps, true);
+		if($report_progress)
+		{
+			pts_client::$display->test_install_progress_completed();
+		}
 
 		// If it's automated and can't install without root, return true if there are no dependencies to do otherwise false
 		if($no_prompts && phodevi::is_root() == false)
@@ -160,7 +168,7 @@ class pts_external_dependencies
 			}
 		}
 
-		$system_dependencies = self::check_for_missing_system_files($required_system_files);
+		$system_dependencies = self::check_for_missing_system_files($required_system_files, $report_progress);
 
 		if(!empty($system_dependencies))
 		{
@@ -308,7 +316,7 @@ class pts_external_dependencies
 		$dependency_names = self::installed_dependency_names();
 		return self::generic_names_to_titles($dependency_names);
 	}
-	private static function check_dependencies_missing_from_system(&$required_test_dependencies, &$generic_names_of_packages_needed = false, &$skip_warning_on_unmet_deps = false)
+	private static function check_dependencies_missing_from_system(&$required_test_dependencies, &$generic_names_of_packages_needed = false, &$skip_warning_on_unmet_deps = false, $report_progress = false)
 	{
 		$generic_dependencies_parser = new pts_exdep_generic_parser();
 		$vendor_dependencies_parser = new pts_exdep_platform_parser(self::vendor_identifier('package-list'));
@@ -316,6 +324,8 @@ class pts_external_dependencies
 		$kernel_architecture = phodevi::read_property('system', 'kernel-architecture');
 		$needed_os_packages = array();
 
+		$required_test_dep_count = count($required_test_dependencies);
+		$i = 0;
 		foreach($required_test_dependencies as $package => $dependents)
 		{
 			if($vendor_dependencies_parser->is_package($package))
@@ -354,6 +364,11 @@ class pts_external_dependencies
 					unset($required_test_dependencies[$package]);
 				}
 			}
+			$i++;
+			if($report_progress)
+			{
+				pts_client::$display->test_install_progress_update(($i / $required_test_dep_count));
+			}
 		}
 
 		if(count($required_test_dependencies) > 0)
@@ -372,11 +387,17 @@ class pts_external_dependencies
 
 		return $needed_os_packages;
 	}
-	private static function check_for_missing_system_files(&$required_system_files)
+	private static function check_for_missing_system_files(&$required_system_files, $report_progress = false)
 	{
 		$kernel_architecture = phodevi::read_property('system', 'kernel-architecture');
 		$needed_os_packages = array();
 
+		if($report_progress)
+		{
+			pts_client::$display->test_install_progress_start('Evaluating System Dependencies');
+			$system_file_check_count = count($required_system_files);
+		}
+		$i = 0;
 		foreach(array_keys($required_system_files) as $file)
 		{
 			$present = false;
@@ -409,6 +430,15 @@ class pts_external_dependencies
 					}
 				}
 			}
+			$i++;
+			if($report_progress)
+			{
+				pts_client::$display->test_install_progress_update(($i / $system_file_check_count));
+			}
+		}
+		if($report_progress)
+		{
+			pts_client::$display->test_install_progress_completed();
 		}
 
 		return $needed_os_packages;

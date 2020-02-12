@@ -58,7 +58,7 @@ class pts_test_installer
 		}
 
 		// Any external dependencies?
-		pts_external_dependencies::install_dependencies($test_profiles, $no_prompts, $skip_tests_with_missing_dependencies);
+		pts_external_dependencies::install_dependencies($test_profiles, $no_prompts, $skip_tests_with_missing_dependencies, true);
 
 		// Install tests
 		if(!is_writable(pts_client::test_install_root_path()))
