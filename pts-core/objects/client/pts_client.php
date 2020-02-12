@@ -1051,7 +1051,7 @@ class pts_client
 				'PhoronixTestSuite/Options/OpenBenchmarking/AnonymousUsageReporting' => pts_config::bool_to_string($usage_reporting)));
 		}
 
-		if(PTS_IS_CLIENT)
+		if(PTS_IS_CLIENT && getenv('PTS_SILENT_MODE') != 1)
 		{
 			pts_external_dependencies::startup_handler();
 		}

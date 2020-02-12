@@ -612,7 +612,7 @@ class phodevi_system extends phodevi_device_interface
 			if(is_file($mds_tool))
 			{
 				$mds_output = preg_replace('#\\x1b[[][^A-Za-z]*[A-Za-z]#', '', shell_exec($mds_tool));
-				echo PHP_EOL;
+				//echo PHP_EOL;
 				foreach(array('__user pointer sanitization: Disabled', 'Retpoline: Full', 'IBPB: Always', 'IBRS: Enabled', 'STIBP: Enabled', 'KPTI Enabled: Yes', 'PTE Inversion: Yes') as $check)
 				{
 					if(stripos($mds_output, $check) !== false)
