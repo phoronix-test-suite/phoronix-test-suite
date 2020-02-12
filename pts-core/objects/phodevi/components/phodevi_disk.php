@@ -401,6 +401,11 @@ class phodevi_disk extends phodevi_device_interface
 	}
 	public static function extra_disk_details()
 	{
+		if(phodevi::is_windows())
+		{
+			return null;
+		}
+
 		$device = self::proc_mount_options();
 		$mount_point = $device['mount-point'];
 		$extra_details = null;
