@@ -19,7 +19,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 error_reporting(E_ALL);
 if(function_exists('session_start'))
 {
@@ -53,6 +52,17 @@ switch((isset($uri_segments[0]) ? $uri_segments[0] : null))
 		$_GET['page'] = 'result';
 		$_GET['result'] = $uri_segments[1];
 		break;
+}
+
+if(strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' && isset($_ENV['TEMP']) && is_file($_ENV['TEMP'] . '\pts-env-web'))
+{
+	foreach(explode(PHP_EOL,  file_get_contents($_ENV['TEMP'] . '\pts-env-web')) as $line)
+	{
+		if(!empty($line))
+		{
+			putenv($line);
+		}
+	}
 }
 
 if(getenv('PTS_VIEWER_RESULT_PATH') && getenv('PTS_VIEWER_PTS_PATH'))

@@ -33,7 +33,7 @@ class load_dynamic_result_viewer extends pts_module_interface
 
 	public static function __shutdown()
 	{
-		if(is_resource(self::$process))
+		if(is_resource(self::$process) || phodevi::is_windows())
 		{
 			if(pts_client::$has_used_modern_result_viewer && pts_client::$last_browser_launch_time > (time() - 10))
 			{
@@ -50,6 +50,10 @@ class load_dynamic_result_viewer extends pts_module_interface
 					sleep(3);
 				}
 			}
+		}
+
+		if(is_resource(self::$process))
+		{
 			foreach(self::$pipes as $i => $pipe)
 			{
 				fclose(self::$pipes[$i]);
@@ -66,6 +70,10 @@ class load_dynamic_result_viewer extends pts_module_interface
 			proc_close(self::$process);
 		}
 	}
+	public static function user_commands()
+	{
+		return array('start' => 'start_result_viewer');
+	}
 	public static function __startup()
 	{
 		if(pts_client::create_lock(PTS_USER_PATH . 'result_viewer_lock') == false)
@@ -78,7 +86,9 @@ class load_dynamic_result_viewer extends pts_module_interface
 			//echo 'Running an unsupported PHP version. PHP 5.4+ is required to use this feature.' . PHP_EOL . PHP_EOL;
 			return false;
 		}
-
+	}
+	public static function start_result_viewer()
+	{
 		$remote_access = pts_config::read_user_config('PhoronixTestSuite/Options/ResultViewer/WebPort', 'RANDOM');
 		$fp = false;
 		$errno = null;
@@ -126,47 +136,58 @@ class load_dynamic_result_viewer extends pts_module_interface
 		//echo PHP_EOL . 'Launching with PHP built-in web server.' . PHP_EOL;
 		$ak = pts_config::read_user_config('PhoronixTestSuite/Options/ResultViewer/AccessKey', '');
 
-		if(!phodevi::is_windows())
+		if(empty($ak))
 		{
-			if(empty($ak))
-			{
-				$access_key = null;
-			}
-			else if(function_exists('hash'))
-			{
-				$access_key = trim(hash('sha256', trim($ak)));
-			}
-			else
-			{
-				$access_key = trim(sha1(trim($ak)));
-			}
+			$access_key = null;
+		}
+		else if(function_exists('hash'))
+		{
+			$access_key = trim(hash('sha256', trim($ak)));
+		}
+		else
+		{
+			$access_key = trim(sha1(trim($ak)));
+		}
 
-			$descriptorspec = array(
-			0 => array('pipe', 'r'),
-			1 => array('pipe', 'w'),
-			2 => array('pipe', 'w')
-			);
-			$cwd = getcwd();
-			$env = array(
-			'PTS_VIEWER_ACCESS_KEY' => $access_key,
-			'PTS_VIEWER_RESULT_PATH' => PTS_SAVE_RESULTS_PATH,
-			'PTS_VIEWER_PTS_PATH' => PTS_PATH,
-			'PTS_VIEWER_CONFIG_FILE' => pts_config::get_config_file_location(),
-			);
+		$descriptorspec = array(
+		0 => array('pipe', 'r'),
+		1 => array('pipe', 'w'),
+		2 => array('pipe', 'w')
+		);
+		$cwd = getcwd();
+		$env = array(
+		'PTS_VIEWER_ACCESS_KEY' => $access_key,
+		'PTS_VIEWER_RESULT_PATH' => PTS_SAVE_RESULTS_PATH,
+		'PTS_VIEWER_PTS_PATH' => PTS_PATH,
+		'PTS_VIEWER_CONFIG_FILE' => pts_config::get_config_file_location(),
+		);
 
+		pts_storage_object::set_in_file(PTS_CORE_STORAGE, 'last_web_result_viewer_active_port', $web_port);
+		pts_client::$web_result_viewer_active = $web_port;
+
+		if(pts_network::get_local_ip() && !$access_limited_to_localhost)
+		{
+			echo pts_client::cli_just_bold('Result Viewer: http://' . pts_network::get_local_ip() . ':' . $web_port);
+			if(!empty($ak))
+			{
+				echo PHP_EOL . pts_client::cli_just_bold('Result Viewer Access Key: ' . $ak);
+			}
+		}
+
+		if(phodevi::is_windows())
+		{
+			$env_string = '';
+			foreach($env as $key => $val)
+			{
+				$env_string.= '' . $key . '=' . $val . PHP_EOL;
+			}
+			file_put_contents(getenv('TEMP') . '/pts-env-web', $env_string);
+			//echo $server_ip . ':' . $web_port;
+			exec(getenv('PHP_BIN') . ' -S ' . $server_ip . ':' . $web_port . ' -t ' . str_replace('/', '\\', PTS_CORE_PATH) . 'static\dynamic-result-viewer\ > NUL');
+		}
+		else
+		{
 			self::$process = proc_open(getenv('PHP_BIN') . ' -S ' . $server_ip . ':' . $web_port . ' -t ' . PTS_CORE_PATH . 'static/dynamic-result-viewer/ ', $descriptorspec, self::$pipes, $cwd, $env);
-			pts_client::$web_result_viewer_active = $web_port;
-			pts_storage_object::set_in_file(PTS_CORE_STORAGE, 'last_web_result_viewer_active_port', $web_port);
-
-			if(pts_network::get_local_ip() && !$access_limited_to_localhost)
-			{
-				echo pts_client::cli_just_bold('Result Viewer: http://' . pts_network::get_local_ip() . ':' . $web_port);
-
-				if(!empty($ak))
-				{
-					echo PHP_EOL . pts_client::cli_just_bold('Result Viewer Access Key: ' . $ak);
-				}
-			}
 		}
 	}
 }

@@ -844,6 +844,7 @@ class pts_client
 		pts_define('IS_FIRST_RUN_TODAY', (substr($last_run, 0, 10) != date('Y-m-d')));
 		$pso->add_object('last_run_time', date('Y-m-d H:i:s')); // Time PTS was last run
 		pts_define('TIME_SINCE_LAST_RUN', ceil((time() - strtotime($last_run)) / 60)); // TIME_SINCE_LAST_RUN is in minutes
+		pts_define('TIME_PTS_LAUNCHED', time());
 
 		// User Agreement Checking
 		$agreement_cs = $pso->read_object('user_agreement_cs');
@@ -1874,6 +1875,10 @@ class pts_client
 		{
 			return false;
 		}
+		if(TIME_PTS_LAUNCHED > (time() - 6))
+		{
+			sleep(5);
+		}
 
 		if(!is_object($result_file))
 		{
@@ -1987,6 +1992,8 @@ class pts_client
 					}
 
 
+					pts_client::$last_browser_launch_time = time();
+					$launch_time = microtime(true);
 					if(empty($browser))
 					{
 						// should allow the browser to be opened in Edge
@@ -1996,6 +2003,7 @@ class pts_client
 					{
 						shell_exec($browser . ' "' . $URL . '"');
 					}
+					pts_client::$last_browser_duration = microtime(true) - $launch_time;
 					return -1;
 				}
 				else
