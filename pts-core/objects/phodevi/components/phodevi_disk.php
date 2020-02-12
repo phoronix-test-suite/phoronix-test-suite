@@ -355,6 +355,11 @@ class phodevi_disk extends phodevi_device_interface
 	}
 	public static function hdd_scheduler()
 	{
+		if(phodevi::is_windows())
+		{
+			return null;
+		}
+
 		$scheduler = null;
 		$device = self::proc_mount_options();
 		$device = basename($device['device']);
