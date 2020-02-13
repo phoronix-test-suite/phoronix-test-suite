@@ -271,6 +271,10 @@ class pts_test_profile_parser
 	{
 		return $this->xg('TestSettings/Default/PostArguments');
 	}
+	public function get_identifier_simplified()
+	{
+		return pts_strings::simplify_string_for_file_handling($this->identifier);
+	}
 	public function get_identifier_base_name()
 	{
 		$identifier = basename($this->identifier);

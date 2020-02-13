@@ -132,17 +132,18 @@ class pts_result_file
 		{
 			return false;
 		}
-		$log_dir .= '/test-logs/';
 
-		if($result_object == null)
+		return $log_dir . '/test-logs/' . ($result_object != null ? $result_object->get_comparison_hash(true, false) . '/' : null);
+	}
+	public function get_test_installation_log_dir()
+	{
+		$log_dir = dirname($this->file_location);
+		if(empty($log_dir) || !is_dir($log_dir))
 		{
-			return $log_dir;
-		}
-		else
-		{
-			return $log_dir . $result_object->get_comparison_hash(true, false) . '/';
+			return false;
 		}
 
+		return $log_dir . '/installation-logs/' ;
 	}
 	public function save()
 	{
