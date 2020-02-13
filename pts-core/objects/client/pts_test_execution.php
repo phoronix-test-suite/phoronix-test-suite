@@ -142,15 +142,15 @@ class pts_test_execution
 			$cache_share = new pts_storage_object(false, false);
 		}
 
-		if($test_run_manager->do_save_results() && $test_run_manager->get_file_name() != null && pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/SaveTestLogs', 'FALSE'))
+		$backup_test_log_file = false;
+		if($test_run_manager->do_save_results() && $test_run_manager->get_file_name() != null && pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/SaveTestLogs', 'TRUE'))
 		{
-			$backup_test_log_dir = PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . '/test-logs/active/' . $test_run_manager->get_results_identifier() . '/';
-			pts_file_io::delete($backup_test_log_dir);
-			pts_file_io::mkdir($backup_test_log_dir, 0777, true);
-		}
-		else
-		{
-			$backup_test_log_dir = false;
+			$backup_test_log_dir = $test_run_manager->result_file->get_test_log_dir($test_run_request);
+			if($backup_test_log_dir)
+			{
+				pts_file_io::mkdir($backup_test_log_dir, 0777, true);
+				$backup_test_log_file = $backup_test_log_dir . $test_run_manager->get_results_identifier_simplified() . '.log';
+			}
 		}
 
 		//
@@ -484,9 +484,9 @@ class pts_test_execution
 					pts_test_result_parser::generate_extra_data($test_run_request, $test_log_file);
 				}
 				pts_module_manager::module_process('__test_log_output', $test_log_file);
-				if($backup_test_log_dir)
+				if($backup_test_log_file)
 				{
-					copy($test_log_file, $backup_test_log_dir . basename($test_log_file));
+					file_put_contents($backup_test_log_file, '#####' . PHP_EOL . $test_run_manager->get_results_identifier() . ' - Run ' . ($i + 1) . PHP_EOL . date('Y-m-d H:i:s') . PHP_EOL . '#####' . PHP_EOL . file_get_contents($test_log_file) . PHP_EOL, FILE_APPEND);
 				}
 
 				if(pts_client::test_profile_debug_message('Log File At: ' . $test_log_file) == false)
@@ -838,24 +838,6 @@ class pts_test_execution
 				}
 			}
 		}
-
-		if($test_run_manager->do_save_results() && $test_run_manager->get_file_name() != null && pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/SaveTestLogs', 'FALSE'))
-		{
-			static $xml_write_pos = 1;
-			pts_file_io::mkdir(PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . '/test-logs/' . $xml_write_pos . '/');
-
-			if(is_dir(PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . '/test-logs/active/' . $test_run_manager->get_results_identifier()))
-			{
-				$test_log_write_dir = PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . '/test-logs/' . $xml_write_pos . '/' . $test_run_manager->get_results_identifier() . '/';
-				if(is_dir($test_log_write_dir))
-				{
-					pts_file_io::delete($test_log_write_dir, null, true);
-				}
-				rename(PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . '/test-logs/active/' . $test_run_manager->get_results_identifier() . '/', $test_log_write_dir);
-			}
-			$xml_write_pos++;
-		}
-		pts_file_io::unlink(PTS_SAVE_RESULTS_PATH . $test_run_manager->get_file_name() . '/test-logs/active/');
 
 		return $test_successful;
 	}

@@ -314,6 +314,10 @@ class pts_test_run_manager
 	{
 		return $this->results_identifier;
 	}
+	public function get_results_identifier_simplified()
+	{
+		return pts_strings::simplify_string_for_file_handling($this->get_results_identifier());
+	}
 	public function get_description()
 	{
 		return $this->run_description;
@@ -779,8 +783,6 @@ class pts_test_run_manager
 		if($test_successful == false && $test_run_request->test_profile->get_identifier() != null)
 		{
 			$this->failed_tests_to_run[] = $test_run_request;
-			// For now delete the failed test log files, but it may be a good idea to keep them
-			pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/test-logs/active/' . $this->get_results_identifier() . '/', null, true);
 		}
 
 		pts_module_manager::module_process('__post_test_run_process', $this->result_file);
@@ -1057,8 +1059,6 @@ class pts_test_run_manager
 				pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $this->get_file_name());
 				return false;
 			}
-
-			pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/test-logs/active/', null, true);
 
 			echo PHP_EOL;
 			pts_module_manager::module_process('__event_results_process', $this);

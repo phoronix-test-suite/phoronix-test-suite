@@ -60,6 +60,10 @@ class pts_test_result_buffer_item
 	{
 		return $this->result_identifier;
 	}
+	public function get_result_identifier_simplified()
+	{
+		return pts_strings::simplify_string_for_file_handling($this->result_identifier);
+	}
 	public function get_result_value()
 	{
 		return $this->result_final;

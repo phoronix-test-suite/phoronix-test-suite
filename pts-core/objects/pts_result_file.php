@@ -125,6 +125,25 @@ class pts_result_file
 	{
 		return $this->file_location;
 	}
+	public function get_test_log_dir(&$result_object = null)
+	{
+		$log_dir = dirname($this->file_location);
+		if(empty($log_dir) || !is_dir($log_dir))
+		{
+			return false;
+		}
+		$log_dir .= '/test-logs/';
+
+		if($result_object == null)
+		{
+			return $log_dir;
+		}
+		else
+		{
+			return $log_dir . $result_object->get_comparison_hash(true, false) . '/';
+		}
+
+	}
 	public function save()
 	{
 		if($this->file_location && is_file($this->file_location))
