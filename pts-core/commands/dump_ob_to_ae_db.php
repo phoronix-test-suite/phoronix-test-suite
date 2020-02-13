@@ -89,7 +89,7 @@ class dump_ob_to_ae_db implements pts_option_interface
 						{
 							$hw_type = 'Graphics';
 						}
-						else if(strpos($args_desc, ' RAM') || strpos($args_desc, ' Memory'))
+						else if(strpos($args_desc, ' RAM') || (strpos($args_desc, ' Memory') && strpos($args_desc, 'Hash Memory') === false ))
 						{
 							$hw_type = 'Memory';
 						}
