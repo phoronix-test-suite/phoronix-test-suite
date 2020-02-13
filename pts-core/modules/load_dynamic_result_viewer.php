@@ -86,6 +86,8 @@ class load_dynamic_result_viewer extends pts_module_interface
 			//echo 'Running an unsupported PHP version. PHP 5.4+ is required to use this feature.' . PHP_EOL . PHP_EOL;
 			return false;
 		}
+
+		self::start_result_viewer();
 	}
 	public static function start_result_viewer()
 	{
@@ -170,7 +172,7 @@ class load_dynamic_result_viewer extends pts_module_interface
 			echo pts_client::cli_just_bold('Result Viewer: http://' . pts_network::get_local_ip() . ':' . $web_port);
 			if(!empty($ak))
 			{
-				echo PHP_EOL . pts_client::cli_just_bold('Result Viewer Access Key: ' . $ak);
+				echo PHP_EOL . pts_client::cli_just_bold('Result Viewer Access Key: ' . $ak) . PHP_EOL;
 			}
 		}
 

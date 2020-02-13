@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2017, Phoronix Media
-	Copyright (C) 2008 - 2017, Michael Larabel
+	Copyright (C) 2008 - 2020, Phoronix Media
+	Copyright (C) 2008 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -32,6 +32,10 @@ class pts_installed_test
 		$read_xml = is_file($this->install_path . 'pts-install.xml') ? $this->install_path . 'pts-install.xml' : null;
 		$xml_options = LIBXML_COMPACT | LIBXML_PARSEHUGE;
 		$this->xml = simplexml_load_file($read_xml, 'SimpleXMLElement', $xml_options);
+	}
+	public function get_install_log_location()
+	{
+		return $this->get_install_dir() . 'install.log';
 	}
 	public function get_install_date_time()
 	{
