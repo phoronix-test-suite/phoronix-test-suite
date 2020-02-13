@@ -55,6 +55,7 @@ class pts_test_run_manager
 	protected $allow_test_cache_share = true;
 	protected $skip_post_execution_options = false;
 	protected $drop_noisy_results = false;
+	protected $test_subset = false;
 
 	protected static $test_run_process_active = false;
 	protected $batch_mode = false;
@@ -1581,6 +1582,31 @@ class pts_test_run_manager
 
 		return $result_objects;
 	}
+	public function prompt_subset_of_result_objects_to_run(&$result_objects_contained)
+	{
+		$ros = array();
+		foreach($result_objects_contained as $key => $ro)
+		{
+			$ros[$key] = trim($ro->test_profile->get_title() . PHP_EOL . $ro->get_arguments_description());
+		}
+		$run_ids = pts_user_io::prompt_text_menu('Select the test(s) to run', $ros, true, true);
+
+		foreach($result_objects_contained as $id => $ro)
+		{
+			if(!in_array($id, $run_ids))
+			{
+				unset($result_objects_contained[$id]);
+			}
+		}
+	}
+	public function do_prompt_to_test_subset()
+	{
+		$this->test_subset = true;
+	}
+	public function prompt_to_test_subset()
+	{
+		return $this->test_subset;
+	}
 	public function determine_tests_to_run(&$to_run_objects)
 	{
 		$unique_test_count = count(array_unique($to_run_objects));
@@ -1621,7 +1647,14 @@ class pts_test_run_manager
 					$this->is_pcqs = true;
 				}
 
-				foreach($run_object->get_contained_test_result_objects() as $result_object)
+				$tests_contained = $run_object->get_contained_test_result_objects();
+
+				if($this->prompt_to_test_subset() && !$this->auto_mode && !$this->batch_mode)
+				{
+					$this->prompt_subset_of_result_objects_to_run($tests_contained);
+				}
+
+				foreach($tests_contained as $result_object)
 				{
 					$this->add_test_result_object($result_object);
 				}
@@ -1644,6 +1677,11 @@ class pts_test_run_manager
 				$this->file_name_title = $run_object->get_title();
 
 				pts_module_manager::process_environment_variables_string_to_set($preset_vars);
+
+				if($this->prompt_to_test_subset() && !$this->auto_mode && !$this->batch_mode)
+				{
+					$this->prompt_subset_of_result_objects_to_run($result_objects);
+				}
 
 				foreach($result_objects as &$result_object)
 				{
