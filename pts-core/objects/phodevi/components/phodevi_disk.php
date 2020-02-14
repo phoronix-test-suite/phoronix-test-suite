@@ -355,7 +355,7 @@ class phodevi_disk extends phodevi_device_interface
 	}
 	public static function hdd_scheduler()
 	{
-		if(phodevi::is_windows())
+		if(!phodevi::is_linux())
 		{
 			return null;
 		}
