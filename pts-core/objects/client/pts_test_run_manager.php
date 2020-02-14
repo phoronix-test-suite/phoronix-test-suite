@@ -955,7 +955,7 @@ class pts_test_run_manager
 			}
 
 			$mount_options = phodevi::read_property('disk', 'mount-options');
-			if($mount_options['mount-options'] != null)
+			if(isset($mount_options['mount-options']) && $mount_options['mount-options'] != null)
 			{
 				$notes['disk-mount-options'] = $mount_options['mount-options'];
 			}
