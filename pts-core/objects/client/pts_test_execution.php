@@ -567,11 +567,11 @@ class pts_test_execution
 
 		if($test_run_manager->do_save_results() && (pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/SaveInstallationLogs', 'FALSE')))
 		{
-			if(is_file($test_run_request->test_profile->get_install_dir() . 'install.log'))
+			if($test_run_request->test_profile->test_installation->has_install_log())
 			{
 				$backup_log_dir = $test_run_manager->result_file->get_test_installation_log_dir() . $test_run_manager->get_results_identifier_simplified() . '/';
 				pts_file_io::mkdir($backup_log_dir, 0777, true);
-				copy($test_run_request->test_profile->get_install_dir() . 'install.log', $backup_log_dir . $test_run_request->test_profile->get_identifier_simplified() . '.log');
+				copy($test_run_request->test_profile->test_installation->get_install_log_location(), $backup_log_dir . $test_run_request->test_profile->get_identifier_simplified() . '.log');
 			}
 		}
 

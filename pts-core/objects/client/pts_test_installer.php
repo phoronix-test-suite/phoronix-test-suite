@@ -833,7 +833,7 @@ class pts_test_installer
 
 				if(!empty($install_log))
 				{
-					file_put_contents($test_install_directory . 'install.log', $install_log);
+					file_put_contents($test_install_request->test_profile->test_installation->get_install_log_location(), $install_log);
 					pts_file_io::unlink($test_install_directory . 'install-failed.log');
 					pts_client::$display->test_install_output($install_log);
 				}
@@ -861,11 +861,11 @@ class pts_test_installer
 						// TODO: perhaps better way to handle this than to remove pts-install.xml
 						pts_file_io::unlink($test_install_directory . 'pts-install.xml');
 
-						if(is_file($test_install_directory . 'install.log'))
+						if($test_install_request->test_profile->test_installation->has_install_log())
 						{
-							$install_log = pts_file_io::file_get_contents($test_install_directory . 'install.log');
+							$install_log = pts_file_io::file_get_contents($test_install_request->test_profile->test_installation->get_install_log_location());
 							$install_error = pts_tests::scan_for_error($install_log, $test_install_directory);
-							copy($test_install_directory . 'install.log', $test_install_directory . 'install-failed.log');
+							copy($test_install_request->test_profile->test_installation->get_install_log_location(), $test_install_directory . 'install-failed.log');
 						}
 
 						//pts_test_installer::setup_test_install_directory($test_install_request, true); // Remove installed files from the bunked installation

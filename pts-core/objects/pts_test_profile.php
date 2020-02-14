@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2018, Phoronix Media
-	Copyright (C) 2008 - 2018, Michael Larabel
+	Copyright (C) 2008 - 2020, Phoronix Media
+	Copyright (C) 2008 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ class pts_test_profile extends pts_test_profile_parser
 			$this->set_override_values($override_values);
 		}
 
-		if($normal_init && PTS_IS_CLIENT && $this->identifier != null && is_file($this->get_install_dir() . 'pts-install.xml'))
+		if($normal_init && PTS_IS_CLIENT && $this->identifier != null)
 		{
 			$this->test_installation = new pts_installed_test($this);
 		}

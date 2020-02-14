@@ -25,17 +25,29 @@ class pts_installed_test
 	private $xml;
 	private $footnote_override = null;
 	private $install_path = null;
+	private $installed;
 
 	public function __construct(&$test_profile)
 	{
 		$this->install_path = $test_profile->get_install_dir();
-		$read_xml = is_file($this->install_path . 'pts-install.xml') ? $this->install_path . 'pts-install.xml' : null;
-		$xml_options = LIBXML_COMPACT | LIBXML_PARSEHUGE;
-		$this->xml = simplexml_load_file($read_xml, 'SimpleXMLElement', $xml_options);
+		$this->installed = is_file($this->install_path . 'pts-install.xml') ? $this->install_path . 'pts-install.xml' : false;
+		if($this->installed)
+		{
+			$xml_options = LIBXML_COMPACT | LIBXML_PARSEHUGE;
+			$this->xml = simplexml_load_file($this->installed, 'SimpleXMLElement', $xml_options);
+		}
+	}
+	public function is_installed()
+	{
+		return $this->installed != false;
 	}
 	public function get_install_log_location()
 	{
-		return $this->get_install_dir() . 'install.log';
+		return $this->install_path . 'install.log';
+	}
+	public function has_install_log()
+	{
+		return is_file($this->get_install_log_location());
 	}
 	public function get_install_date_time()
 	{
