@@ -87,7 +87,11 @@ class load_dynamic_result_viewer extends pts_module_interface
 			return false;
 		}
 
-		self::start_result_viewer();
+		if(!phodevi::is_windows())
+		{
+			// Result viewer on Windows should be fired off from separate process in Windows bat file
+			self::start_result_viewer();
+		}
 	}
 	public static function start_result_viewer()
 	{
