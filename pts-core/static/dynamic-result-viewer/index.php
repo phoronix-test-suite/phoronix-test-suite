@@ -226,6 +226,49 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		}
 		echo '</body></html>';
 		exit;
+	case 'view_install_logs':
+		echo '<!doctype html>
+		<html lang="en">
+		<head>
+		  <title>Log Viewer</title>
+		<link rel="stylesheet" href="/result-viewer.css">
+		<script type="text/javascript" src="/result-viewer.js"></script>
+		<link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+		</head>
+		<body>';
+		if(isset($_REQUEST['result_file_id']) && isset($_REQUEST['result_object']))
+		{
+			$result_file = new pts_result_file($_REQUEST['result_file_id']);
+
+			if(($result_object = $result_file->get_result_object_by_hash($_REQUEST['result_object'])))
+			{
+				$install_logs = pts_file_io::glob($result_file->get_test_installation_log_dir() . '*/' . $result_object->test_profile->get_identifier_simplified() . '.log');
+				if(count($install_logs) > 0)
+				{
+					echo '<div style="text-align: center;"><form action="' . CURRENT_URI . '" method="post"><select name="log_select" id="log_select">';
+					foreach($install_logs as $log_file)
+					{
+						$b = basename(dirname($log_file));
+						echo '<option value="' . $b . '"' . ($b == $_REQUEST['log_select'] ? 'selected="selected"' : null) . '>' . $b . '</option>';
+					}
+					echo '</select> &nbsp; <input type="submit" value="Show Log"></form></div><br /><hr />';
+					if(isset($_REQUEST['log_select']) && is_file($result_file->get_test_installation_log_dir() . pts_strings::simplify_string_for_file_handling($_REQUEST['log_select']) . '/' . $result_object->test_profile->get_identifier_simplified() . '.log'))
+					{
+						$show_log = $result_file->get_test_installation_log_dir() . pts_strings::simplify_string_for_file_handling($_REQUEST['log_select']) . '/' . $result_object->test_profile->get_identifier_simplified() . '.log';
+					}
+					else
+					{
+						$show_log = array_shift($install_logs);
+					}
+					$log_file = htmlentities(file_get_contents($show_log));
+					$log_file = str_replace(PHP_EOL, '<br />', $log_file);
+					echo '<br /><div style="font-family: monospace;">' . $log_file . '</div>';
+				}
+			}
+
+		}
+		echo '</body></html>';
+		exit;
 	case 'result':
 		if(false && isset($_POST) && !empty($_POST))
 		{
@@ -372,6 +415,11 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			if($test_log_dir && count(pts_file_io::glob($test_log_dir . '*.log')) > 0)
 			{
 				$PAGE .= ' <a class="mini" href="#" onclick="javascript:display_test_logs_for_result_object(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\'); return false;">(View Test Run Logs)</a>';
+			}
+			$install_logs = pts_file_io::glob($result_file->get_test_installation_log_dir() . '*/' . $result_object->test_profile->get_identifier_simplified() . '.log');
+			if(count($install_logs) > 0)
+			{
+				$PAGE .= ' <a class="mini" href="#" onclick="javascript:display_install_logs_for_result_object(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\'); return false;">(View Test Installation Logs)</a>';
 			}
 
 
