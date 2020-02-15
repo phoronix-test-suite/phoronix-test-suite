@@ -75,3 +75,7 @@ function update_annotation_for_result_object(result_file, result_hash)
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.send("result_file_id=" + result_file + "&result_object=" + result_hash + "&annotation=" + annotation_updated);
 }
+function display_test_logs_for_result_object(result_file, result_hash)
+{
+	window.open("/index.php?page=view_test_logs&result_file_id=" + result_file + "&result_object=" + result_hash, "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=100,left=100,width=600,height=400");
+}

@@ -10,6 +10,7 @@ pts-core: Refactor test-logs (SaveTestLogs) handling
 pts-core: Refactor test installation logs handling
 pts-core: More verbose reporting of system/external dependency solving status
 pts-core: Get the modern result viewer working on Windows
+pts-core: Support for showing test logs from the result viewer
 
 Phoronix Test Suite 9.4.0 Milestone 2
 5 February 2020

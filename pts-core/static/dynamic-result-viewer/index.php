@@ -182,6 +182,50 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			$result_file->save();
 		}
 		exit;
+	case 'view_test_logs':
+		echo '<!doctype html>
+		<html lang="en">
+		<head>
+		  <title>Log Viewer</title>
+		<link rel="stylesheet" href="/result-viewer.css">
+		<script type="text/javascript" src="/result-viewer.js"></script>
+		<link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+		</head>
+		<body>';
+		if(isset($_REQUEST['result_file_id']) && isset($_REQUEST['result_object']))
+		{
+			$result_file = new pts_result_file($_REQUEST['result_file_id']);
+
+			if(($result_object = $result_file->get_result_object_by_hash($_REQUEST['result_object'])))
+			{
+				$test_log_dir = $result_file->get_test_log_dir($result_object);
+				if($test_log_dir && count(pts_file_io::glob($test_log_dir . '*.log')) > 0)
+				{
+					echo '<div style="text-align: center;"><form action="' . CURRENT_URI . '" method="post"><select name="log_select" id="log_select">';
+					foreach(pts_file_io::glob($test_log_dir . '*.log') as $log_file)
+					{
+						$b = basename($log_file, '.log');
+						echo '<option value="' . $b . '"' . ($b == $_REQUEST['log_select'] ? 'selected="selected"' : null) . '>' . $b . '</option>';
+					}
+					echo '</select> &nbsp; <input type="submit" value="Show Log"></form></div><br /><hr />';
+					if(isset($_REQUEST['log_select']) && is_file($test_log_dir . pts_strings::simplify_string_for_file_handling($_REQUEST['log_select']) . '.log'))
+					{
+						$show_log = $test_log_dir . pts_strings::simplify_string_for_file_handling($_REQUEST['log_select']) . '.log';
+					}
+					else
+					{
+						$logs = pts_file_io::glob($test_log_dir . '*.log');
+						$show_log = array_shift($logs);
+					}
+					$log_file = htmlentities(file_get_contents($show_log));
+					$log_file = str_replace(PHP_EOL, '<br />', $log_file);
+					echo '<br /><div style="font-family: monospace;">' . $log_file . '</div>';
+				}
+			}
+
+		}
+		echo '</body></html>';
+		exit;
 	case 'result':
 		if(false && isset($_POST) && !empty($_POST))
 		{
@@ -321,8 +365,16 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			}
 			else
 			{
-				$PAGE .= $result_object->get_annotation();
+				$PAGE .= '<p>' . $result_object->get_annotation() . '</p>';
 			}
+
+			$test_log_dir = $result_file->get_test_log_dir($result_object);
+			if($test_log_dir && count(pts_file_io::glob($test_log_dir . '*.log')) > 0)
+			{
+				$PAGE .= ' <a class="mini" href="#" onclick="javascript:display_test_logs_for_result_object(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\'); return false;">(View Test Run Logs)</a>';
+			}
+
+
 			$PAGE .= '</div>';
 			unset($result_object);
 		}

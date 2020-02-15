@@ -493,6 +493,10 @@ class pts_result_file
 		}
 		return false;
 	}
+	public function get_result_object_by_hash($h)
+	{
+		return isset($this->result_objects[$h]) ? $this->result_objects[$h] : false;
+	}
 	public function get_result_objects($select_indexes = -1)
 	{
 		if($select_indexes != -1 && $select_indexes !== null)
