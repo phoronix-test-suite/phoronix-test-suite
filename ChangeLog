@@ -6,6 +6,7 @@ pts-core: Add PDF bookmarks to result graphs on PDF result file generation
 pts-core: Add automated executive summary of result files via executive-summary sub-command and PDF result export
 pts-core: Add remove-result-from-result-file sub-command (slightly different from remove-results-from-result-file)
 pts-core: Set SaveTestLogs = TRUE by default
+pts-core: Set SaveInstallationLogs = TRUE by default
 pts-core: Refactor test-logs (SaveTestLogs) handling
 pts-core: Refactor test installation logs handling
 pts-core: More verbose reporting of system/external dependency solving status
