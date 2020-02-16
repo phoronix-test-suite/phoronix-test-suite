@@ -56,7 +56,7 @@ class pts_test_suites
 
 		return $local_suites;
 	}
-	public static function suites_in_result_file(&$result_file, $allow_partial = false)
+	public static function suites_in_result_file(&$result_file, $allow_partial = false, $upper_limit = 0)
 	{
 		$tests_in_result_file = array();
 		$suites_in_result_file = array();
@@ -90,6 +90,11 @@ class pts_test_suites
 				{
 					unset($suites_in_result_file[$suite->get_identifier()]);
 				}
+			}
+
+			if($upper_limit > 0 && isset($suites_in_result_file[$suite->get_identifier()]) && count($suites_in_result_file[$suite->get_identifier()]) > $upper_limit)
+			{
+				unset($suites_in_result_file[$suite->get_identifier()]);
 			}
 		}
 

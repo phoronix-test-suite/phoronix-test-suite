@@ -224,6 +224,30 @@ class pts_result_file_analyzer
 
 		return $results;
 	}
+	public static function generate_geometric_mean_result_for_suites_in_result_file(&$result_file, $allow_partial = true, $upper_limit = 0)
+	{
+		$geo_mean_results = array();
+		$suites_in_result_file = pts_test_suites::suites_in_result_file($result_file, $allow_partial, $upper_limit);
+		if(empty($suites_in_result_file))
+		{
+			return array();
+		}
+
+		foreach($suites_in_result_file as $suite_identifier => $contained_tests)
+		{
+			$geo_mean = pts_result_file_analyzer::generate_geometric_mean_result($result_file, true, $contained_tests);
+			if($geo_mean)
+			{
+				$suite = new pts_test_suite($suite_identifier);
+				$geo_mean->test_profile->set_test_title('Geometric Mean Of ' . $suite->get_title() . ' Tests');
+				$geo_mean->normalize_buffer_values();
+				$geo_mean->set_annotation('Geometric mean based upon tests: ' . implode(', ', $contained_tests));
+				$geo_mean_results[] = $geo_mean;
+			}
+		}
+
+		return $geo_mean_results;
+	}
 	public static function generate_geometric_mean_result($result_file, $do_sort = false, $limit_to = false)
 	{
 		$results = array();
@@ -289,7 +313,7 @@ class pts_result_file_analyzer
 		{
 			$test_profile = new pts_test_profile();
 			$test_result = new pts_test_result($test_profile);
-			$test_result->test_profile->set_test_title('Geometric Mean Of ' . ($limit_to ? $limit_to : 'All Test Results'));
+			$test_result->test_profile->set_test_title('Geometric Mean Of ' . ($limit_to && !is_array($limit_to) ? $limit_to : 'All Test Results'));
 			$test_result->test_profile->set_identifier(null);
 			$test_result->test_profile->set_version(null);
 			$test_result->test_profile->set_result_proportion(null);

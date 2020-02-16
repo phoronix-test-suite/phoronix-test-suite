@@ -653,6 +653,7 @@ class pts_result_file_output
 
 		if(!empty($exec_summary))
 		{
+			$pdf->Bookmark('Automated Executive Summary');
 			$pdf->WriteText('Automated Executive Summary', 'B');
 			$pdf->WriteText(implode(PHP_EOL . PHP_EOL, $exec_summary), 'I');
 		}
@@ -667,6 +668,7 @@ class pts_result_file_output
 		//$pdf->SetKeywords(implode(', ', $identifiers));
 
 		$pdf->WriteHeader('Test Systems:');
+		$pdf->Bookmark('System Information');
 		$systems = $result_file->get_systems();
 		for($i = 0; $i < count($systems); $i++)
 		{
@@ -833,11 +835,12 @@ class pts_result_file_output
 			}
 			$row++;
 		}
+		$pdf->Bookmark('Result Overview Table');
 		$pdf->ResultTable($columns, $table_data, $table_data_hints);
 
 		$pdf->AddPage();
-		$i = 0;
 		$last_result_title = null;
+		$pdf->Bookmark('--------------------');
 		foreach($result_file->get_result_objects() as $key => $result_object)
 		{
 			$graph = pts_render::render_graph_process($result_object, $result_file, false, $extra_attributes);
@@ -846,13 +849,31 @@ class pts_result_file_output
 			{
 				$pdf->WriteText($result_object->get_annotation());
 			}
-			$i++;
 			if($last_result_title != $result_object->test_profile->get_title() && $result_object->test_profile->get_title() != null)
 			{
 				$last_result_title = $result_object->test_profile->get_title();
 				$pdf->Bookmark($last_result_title);
 			}
 		}
+
+
+		$geo_mean_for_suites = pts_result_file_analyzer::generate_geometric_mean_result_for_suites_in_result_file($result_file, true, 12);
+		if(!empty($geo_mean_for_suites))
+		{
+			$pdf->AddPage();
+			$pdf->Bookmark('Geometric Means');
+			$pdf->WriteText('These geometric means are based upon test groupings / test suites for this result file.');
+			foreach($geo_mean_for_suites as $result_object)
+			{
+				$graph = pts_render::render_graph_process($result_object, $result_file, false, $extra_attributes);
+				self::add_graph_result_object_to_pdf($pdf, $graph);
+				if($result_object->get_annotation() != null)
+				{
+					$pdf->WriteText($result_object->get_annotation());
+				}
+			}
+		}
+
 		$pdf->WriteText('This file was automatically generated via the Phoronix Test Suite benchmarking software on ' . date('l, j F Y H:i') . '.', 'I');
 		ob_get_clean();
 		$pdf->Output($dest, $output_name);
