@@ -235,9 +235,22 @@ class pts_result_file_analyzer
 				// Skip data where it's not a proper test, not a singular data value, or not all systems ran within the result file
 				continue;
 			}
-			if($limit_to && $limit_to != $result->test_profile->get_identifier())
+			if($limit_to)
 			{
-				continue;
+				if(is_array($limit_to))
+				{
+					if(!in_array($result->test_profile->get_identifier(), $limit_to))
+					{
+						continue;
+					}
+				}
+				else
+				{
+					if($limit_to != $result->test_profile->get_identifier())
+					{
+						continue;
+					}
+				}
 			}
 
 			foreach($result->test_result_buffer->get_buffer_items() as $buffer_item)
@@ -265,7 +278,7 @@ class pts_result_file_analyzer
 
 		foreach($results as $identifier => $values)
 		{
-			if(count($values) < 3)
+			if(count($values) < 2)
 			{
 				// If small result file with not a lot of data, don't bother showing...
 				unset($results[$identifier]);
