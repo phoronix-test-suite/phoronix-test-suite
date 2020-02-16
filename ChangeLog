@@ -15,6 +15,7 @@ pts-core: Support for showing test logs from the result viewer
 pts-core: Support for showing install logs from the result viewer
 pts-core: PDF output improvements
 pts-core: Fix for some suites not showing up on list-suites sub-command
+pts-core: Report "Test Suites Containing This Test" in the info sub-command on tests
 
 Phoronix Test Suite 9.4.0 Milestone 2
 5 February 2020

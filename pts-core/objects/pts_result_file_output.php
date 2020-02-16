@@ -841,21 +841,7 @@ class pts_result_file_output
 		foreach($result_file->get_result_objects() as $key => $result_object)
 		{
 			$graph = pts_render::render_graph_process($result_object, $result_file, false, $extra_attributes);
-			if($graph == false)
-			{
-				continue;
-			}
-
-			$graph->renderGraph();
-			$tmp_file = sys_get_temp_dir() . '/' . microtime() . rand(0, 999) . '.png';
-			$output = $graph->svg_dom->output($tmp_file);
-			if(!is_file($tmp_file))
-			{
-				continue;
-			}
-			$pdf->Ln(4);
-			$pdf->Image($tmp_file);
-			unlink($tmp_file);
+			self::add_graph_result_object_to_pdf($pdf, $graph);
 			if($result_object->get_annotation() != null)
 			{
 				$pdf->WriteText($result_object->get_annotation());
@@ -870,6 +856,24 @@ class pts_result_file_output
 		$pdf->WriteText('This file was automatically generated via the Phoronix Test Suite benchmarking software on ' . date('l, j F Y H:i') . '.', 'I');
 		ob_get_clean();
 		$pdf->Output($dest, $output_name);
+	}
+	protected static function add_graph_result_object_to_pdf(&$pdf, &$graph)
+	{
+		if($graph == false)
+		{
+			return false;
+		}
+
+		$graph->renderGraph();
+		$tmp_file = sys_get_temp_dir() . '/' . microtime() . rand(0, 999) . '.png';
+		$output = $graph->svg_dom->output($tmp_file);
+		if(!is_file($tmp_file))
+		{
+			return false;
+		}
+		$pdf->Ln(4);
+		$pdf->Image($tmp_file);
+		unlink($tmp_file);
 	}
 }
 

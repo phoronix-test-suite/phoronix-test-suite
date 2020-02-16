@@ -450,6 +450,17 @@ class pts_test_suite
 
 		return $test_profiles;
 	}
+	public function get_contained_test_identifiers($bind_version = true)
+	{
+		$test_profiles = array();
+
+		foreach($this->test_objects as $result_objects)
+		{
+			$test_profiles[] = $result_objects->test_profile->get_identifier($bind_version);
+		}
+
+		return array_unique($test_profiles);
+	}
 	public function sort_contained_tests()
 	{
 		usort($this->test_objects, array($this, 'cmp_result_object_sort_title'));

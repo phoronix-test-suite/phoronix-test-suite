@@ -36,7 +36,7 @@ class pts_test_suites
 
 		return $local_suites;
 	}
-	public static function suites_on_disk()
+	public static function suites_on_disk($return_object = false)
 	{
 		$local_suites = array();
 		foreach(pts_file_io::glob(PTS_TEST_SUITE_PATH . '*/*/suite-definition.xml') as $path)
@@ -49,12 +49,66 @@ class pts_test_suites
 				$test_suite = new pts_test_suite($repo . '/' . $test);
 				if($test_suite->get_title() != null)
 				{
-					$local_suites[$test_suite->get_title()] = $repo . '/' . $test;
+					$local_suites[$test_suite->get_title()] = $return_object ? $test_suite : ($repo . '/' . $test);
 				}
 			}
 		}
 
 		return $local_suites;
+	}
+	public static function suites_in_result_file(&$result_file, $allow_partial = false)
+	{
+		$tests_in_result_file = array();
+		$suites_in_result_file = array();
+		foreach($result_file->get_contained_test_profiles() as $tp)
+		{
+			pts_arrays::unique_push($tests_in_result_file, $tp->get_identifier(false));
+		}
+
+		foreach(pts_test_suites::suites_on_disk(true) as $suite)
+		{
+			$contained_tests = $suite->get_contained_test_identifiers(false);
+			$suites_in_result_file[$suite->get_identifier()] = array();
+			foreach($contained_tests as $ct)
+			{
+				if(in_array($ct, $tests_in_result_file))
+				{
+					$suites_in_result_file[$suite->get_identifier()][] = $ct;
+				}
+			}
+
+			if($allow_partial)
+			{
+				if(count($suites_in_result_file[$suite->get_identifier()]) < 2)
+				{
+					unset($suites_in_result_file[$suite->get_identifier()]);
+				}
+			}
+			else
+			{
+				if(count($suites_in_result_file[$suite->get_identifier()]) < count($contained_tests))
+				{
+					unset($suites_in_result_file[$suite->get_identifier()]);
+				}
+			}
+		}
+
+		return $suites_in_result_file;
+	}
+	public static function suites_containing_test_profile(&$test_profile)
+	{
+		$suites_containing_test = array();
+
+		foreach(pts_test_suites::suites_on_disk(true) as $suite)
+		{
+			$contained_tests = $suite->get_contained_test_identifiers(false);
+			if(in_array($test_profile->get_identifier(false), $contained_tests))
+			{
+				$suites_containing_test[] = $suite;
+			}
+		}
+
+		return $suites_containing_test;
 	}
 }
 

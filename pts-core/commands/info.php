@@ -212,7 +212,19 @@ class info implements pts_option_interface
 					if(!empty($table))
 					{
 						echo PHP_EOL . pts_client::cli_just_bold('Results Containing This Test') . PHP_EOL;
-						echo pts_user_io::display_text_table($table);
+						echo pts_user_io::display_text_table($table) . PHP_EOL;
+					}
+
+					$suites_containing_test = pts_test_suites::suites_containing_test_profile($o);
+					if(!empty($suites_containing_test))
+					{
+						$table = array();
+						foreach($suites_containing_test as $suite)
+						{
+							$table[] = array($suite->get_identifier(false), pts_client::cli_just_bold($suite->get_title()));
+						}
+						echo PHP_EOL . pts_client::cli_just_bold('Test Suites Containing This Test') . PHP_EOL;
+						echo pts_user_io::display_text_table($table) . PHP_EOL;
 					}
 				}
 			}

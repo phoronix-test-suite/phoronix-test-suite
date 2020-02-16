@@ -239,7 +239,7 @@ class pts_result_file_analyzer
 			{
 				if(is_array($limit_to))
 				{
-					if(!in_array($result->test_profile->get_identifier(), $limit_to))
+					if(!in_array($result->test_profile->get_identifier(), $limit_to) && !in_array($result->test_profile->get_identifier(false), $limit_to))
 					{
 						continue;
 					}
