@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2019, Phoronix Media
-	Copyright (C) 2008 - 2019, Michael Larabel
+	Copyright (C) 2008 - 2020, Phoronix Media
+	Copyright (C) 2008 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ class list_available_suites implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		$available_suites = pts_test_suites::all_suites(true);
+		$available_suites = pts_test_suites::all_suites(true, true);
 		pts_client::$display->generic_heading('Available Suites');
 
 		if(count($available_suites) > 0)

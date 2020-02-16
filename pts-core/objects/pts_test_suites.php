@@ -22,9 +22,9 @@
 
 class pts_test_suites
 {
-	public static function all_suites($only_show_maintained_suites = false)
+	public static function all_suites($only_show_maintained_suites = false, $download_suites_if_needed = false)
 	{
-		return array_merge(pts_openbenchmarking::available_suites(false, $only_show_maintained_suites), pts_test_suites::local_suites());
+		return array_merge(pts_openbenchmarking::available_suites($download_suites_if_needed, $only_show_maintained_suites), pts_test_suites::local_suites());
 	}
 	public static function local_suites()
 	{
@@ -32,6 +32,26 @@ class pts_test_suites
 		foreach(pts_file_io::glob(PTS_TEST_SUITE_PATH . 'local/*/suite-definition.xml') as $path)
 		{
 			$local_suites[] = 'local/' . basename(dirname($path));
+		}
+
+		return $local_suites;
+	}
+	public static function suites_on_disk()
+	{
+		$local_suites = array();
+		foreach(pts_file_io::glob(PTS_TEST_SUITE_PATH . '*/*/suite-definition.xml') as $path)
+		{
+			$dir = explode('/', dirname($path));
+			if(count($dir) > 2)
+			{
+				$test = array_pop($dir);
+				$repo = array_pop($dir);
+				$test_suite = new pts_test_suite($repo . '/' . $test);
+				if($test_suite->get_title() != null)
+				{
+					$local_suites[$test_suite->get_title()] = $repo . '/' . $test;
+				}
+			}
 		}
 
 		return $local_suites;

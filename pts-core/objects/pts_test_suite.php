@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2019, Phoronix Media
-	Copyright (C) 2008 - 2019, Michael Larabel
+	Copyright (C) 2008 - 2020, Phoronix Media
+	Copyright (C) 2008 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -44,40 +44,49 @@ class pts_test_suite
 		$this->test_objects = array();
 		$this->test_names = array();
 		if($identifier == null)
-			return;
-
-		if(PTS_IS_CLIENT)
 		{
-			$ob_identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier, true, 'suite');
-
-			if($ob_identifier != false)
-			{
-				$identifier = $ob_identifier;
-			}
+			return;
 		}
-		$this->identifier = $identifier;
-
-		if(!isset($xml_file[512]) && defined('PTS_TEST_SUITE_PATH') && is_file(PTS_TEST_SUITE_PATH . $identifier . '/suite-definition.xml'))
+		else if(!isset($xml_file[384]) && defined('PTS_TEST_SUITE_PATH') && is_file(PTS_TEST_SUITE_PATH . $identifier . '/suite-definition.xml'))
 		{
 			$read = PTS_TEST_SUITE_PATH . $identifier . '/suite-definition.xml';
-		}
-		else if(substr($identifier, -4) == '.zip' && is_file($identifier))
-		{
-			$zip = new ZipArchive();
-
-			if($zip->open($identifier) === true)
-			{
-				$read = $zip->getFromName('suite-definition.xml');
-				$zip->close();
-			}
-		}
-		else if(isset(self::$temp_suite[$identifier]))
-		{
-			$read = self::$temp_suite[$identifier];
+			$this->identifier = $identifier;
 		}
 		else
 		{
-			$read = $identifier;
+			if(PTS_IS_CLIENT)
+			{
+				$ob_identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier, true, 'suite');
+
+				if($ob_identifier != false)
+				{
+					$identifier = $ob_identifier;
+				}
+			}
+			$this->identifier = $identifier;
+
+			if(!isset($xml_file[512]) && defined('PTS_TEST_SUITE_PATH') && is_file(PTS_TEST_SUITE_PATH . $identifier . '/suite-definition.xml'))
+			{
+				$read = PTS_TEST_SUITE_PATH . $identifier . '/suite-definition.xml';
+			}
+			else if(substr($identifier, -4) == '.zip' && is_file($identifier))
+			{
+				$zip = new ZipArchive();
+
+				if($zip->open($identifier) === true)
+				{
+					$read = $zip->getFromName('suite-definition.xml');
+					$zip->close();
+				}
+			}
+			else if(isset(self::$temp_suite[$identifier]))
+			{
+				$read = self::$temp_suite[$identifier];
+			}
+			else
+			{
+				$read = $identifier;
+			}
 		}
 
 		$xml_options = LIBXML_COMPACT | LIBXML_PARSEHUGE;

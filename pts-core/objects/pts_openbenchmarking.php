@@ -764,7 +764,7 @@ class pts_openbenchmarking
 			{
 				foreach(array_keys($repo_index['suites']) as $identifier)
 				{
-					if($only_show_maintained_suites && strtotime($repo_index['suites'][$identifier]['last_updated']) < (time() - (86400 * 365 * 4)))
+					if($only_show_maintained_suites && $repo_index['suites'][$identifier]['last_updated'] < (time() - (86400 * 365 * 5)))
 					{
 						continue;
 					}
