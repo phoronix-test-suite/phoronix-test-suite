@@ -2025,6 +2025,7 @@ function Row($data, $widths, &$row_num = -1, $hints = null)
 		$this->SetFont('', 'B', 0);
 	}
 
+	$row_is_divider = false;
 	for($i=0;$i<count($data);$i++)
 	{
 		$w=$widths[$i];
@@ -2048,7 +2049,12 @@ function Row($data, $widths, &$row_num = -1, $hints = null)
 		$did_reset_colors = false;
 		if($row_num !== 0)
 		{
-			if($toggle_bg && $hints[$i] != 'small')
+			if((isset($hints[$i]) && $hints[$i] == 'divide') || $row_is_divider)
+			{
+				$this->SetFillColor(139, 139, 139);
+				$row_is_divider = true;
+			}
+			else if($toggle_bg && isset($hints[$i]) && $hints[$i] != 'small')
 			{
 				$this->SetFillColor(212, 212, 212);
 			}
@@ -2068,6 +2074,11 @@ function Row($data, $widths, &$row_num = -1, $hints = null)
 					case 'red':
 						$this->SetFont('', 'B', 0);
 						$this->SetTextColor(128, 0, 0);
+						$did_reset_colors = true;
+						break;
+					case 'divide':
+						$this->SetFont('', 'B', 0);
+						$this->SetTextColor(256, 256, 256);
 						$did_reset_colors = true;
 						break;
 				}
@@ -2092,7 +2103,7 @@ function Row($data, $widths, &$row_num = -1, $hints = null)
 		$this->SetFont('', '', 0);
 	}
 
-	$toggle_bg = $hints[$i] != 'small' || !$toggle_bg;
+	$toggle_bg = !isset($hints[$i]) || $hints[$i] != 'small' || !$toggle_bg;
 	//Go to the next line
 	$this->Ln($h);
 	$row_num++;

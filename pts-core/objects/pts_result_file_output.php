@@ -699,12 +699,58 @@ class pts_result_file_output
 		$table_data = array();
 		$table_data_hints = array();
 		$row = 0;
+		$last_test_profile = null;
 		foreach($result_file->get_result_objects() as $ro)
 		{
 			if($ro->test_profile->get_display_format() != 'BAR_GRAPH')
 			{
 				continue;
 			}
+			if($last_test_profile != null && $last_test_profile != $ro->test_profile->get_identifier())
+			{
+				$geo_for_test = pts_result_file_analyzer::generate_geometric_mean_result($result_file, false, $last_test_profile);
+
+				if($geo_for_test)
+				{
+					$table_data[$row][0] = $geo_for_test->test_profile->get_title();
+					$table_data_hints[$row][0] = 'divide';
+					for($i = 1; $i < count($columns); $i++)
+					{
+						$table_data[$row][$i] = ' ';
+					}
+
+					$best = $geo_for_test->get_result_first(false);
+					$worst = $geo_for_test->get_result_last(false);
+
+					foreach($geo_for_test->test_result_buffer->get_buffer_items() as $index => $buffer_item)
+					{
+						$identifier = $buffer_item->get_result_identifier();
+						$value = $buffer_item->get_result_value();
+
+						if(($x = array_search($identifier, $columns)) !== false)
+						{
+							$table_data_hints[$row][$x] = 'divide';
+							switch($value)
+							{
+								case $best:
+									$table_data_hints[$row][$x] = 'green';
+									break;
+								case $worst:
+									$table_data_hints[$row][$x] = 'red';
+									break;
+							}
+
+							if($value > 1000)
+							{
+								$value = round($value);
+							}
+							$table_data[$row][$x] = $value;
+						}
+					}
+					$row++;
+				}
+			}
+			$last_test_profile = $ro->test_profile->get_identifier();
 
 			$table_data[$row][0] = $ro->test_profile->get_title() . ($ro->get_arguments_description() != null ? ' - ' : null) . $ro->get_arguments_description_shortened() . ' (' . $ro->test_profile->get_result_scale_shortened() . ')';
 			for($i = 1; $i < count($columns); $i++)

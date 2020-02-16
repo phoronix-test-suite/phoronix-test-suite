@@ -224,7 +224,7 @@ class pts_result_file_analyzer
 
 		return $results;
 	}
-	public static function generate_geometric_mean_result($result_file, $do_sort = false)
+	public static function generate_geometric_mean_result($result_file, $do_sort = false, $limit_to = false)
 	{
 		$results = array();
 		$system_count = $result_file->get_system_count();
@@ -233,6 +233,10 @@ class pts_result_file_analyzer
 			if($result->test_profile->get_identifier() == null || $result->test_profile->get_display_format() != 'BAR_GRAPH' || $system_count > $result->test_result_buffer->get_count())
 			{
 				// Skip data where it's not a proper test, not a singular data value, or not all systems ran within the result file
+				continue;
+			}
+			if($limit_to && $limit_to != $result->test_profile->get_identifier())
+			{
 				continue;
 			}
 
@@ -261,7 +265,7 @@ class pts_result_file_analyzer
 
 		foreach($results as $identifier => $values)
 		{
-			if(count($values) < 4)
+			if(count($values) < 3)
 			{
 				// If small result file with not a lot of data, don't bother showing...
 				unset($results[$identifier]);
@@ -272,7 +276,7 @@ class pts_result_file_analyzer
 		{
 			$test_profile = new pts_test_profile();
 			$test_result = new pts_test_result($test_profile);
-			$test_result->test_profile->set_test_title('Geometric Mean Of All Test Results');
+			$test_result->test_profile->set_test_title('Geometric Mean Of ' . ($limit_to ? $limit_to : 'All Test Results'));
 			$test_result->test_profile->set_identifier(null);
 			$test_result->test_profile->set_version(null);
 			$test_result->test_profile->set_result_proportion(null);
@@ -342,7 +346,7 @@ class pts_result_file_analyzer
 			}
 		}
 
-		if(count($results) < 3)
+		if(count($results) < 2)
 		{
 			return array();
 		}
