@@ -118,11 +118,11 @@ class pts_argument_check
 		}
 		else if($this->get_function_check() == array('pts_types', 'identifier_to_object'))
 		{
-			$possible_values = array_merge(self::available_tests(), pts_results::saved_test_results(), pts_tests::all_suites(), array_keys(pts_openbenchmarking::result_uploads_from_this_ip()));
+			$possible_values = array_merge(self::available_tests(), pts_results::saved_test_results(), pts_test_suites::all_suites(), array_keys(pts_openbenchmarking::result_uploads_from_this_ip()));
 		}
 		else if($this->get_function_check() == array('pts_types', 'is_test_or_suite'))
 		{
-			$possible_values = array_merge(self::available_tests(), pts_tests::all_suites());
+			$possible_values = array_merge(self::available_tests(), pts_test_suites::all_suites());
 		}
 		else if($this->get_function_check() == array('pts_test_profile', 'is_test_profile'))
 		{
@@ -130,7 +130,7 @@ class pts_argument_check
 		}
 		else if($this->get_function_check() == array('pts_test_suite', 'is_suite'))
 		{
-			$possible_values = pts_tests::all_suites();
+			$possible_values = pts_test_suites::all_suites();
 		}
 		else if($this->get_function_check() == array('pts_openbenchmarking', 'is_openbenchmarking_result_id'))
 		{

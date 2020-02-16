@@ -31,7 +31,7 @@ class list_available_suites implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		$available_suites = pts_tests::all_suites(true);
+		$available_suites = pts_test_suites::all_suites(true);
 		pts_client::$display->generic_heading('Available Suites');
 
 		if(count($available_suites) > 0)

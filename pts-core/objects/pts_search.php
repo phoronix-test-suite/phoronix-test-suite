@@ -63,7 +63,7 @@ class pts_search
 	public static function search_test_suites($search_query)
 	{
 		$matches = array();
-		foreach(array_merge(pts_openbenchmarking::available_suites(false), pts_tests::local_suites()) as $identifier)
+		foreach(array_merge(pts_openbenchmarking::available_suites(false), pts_test_suites::local_suites()) as $identifier)
 		{
 			$test_suite = new pts_test_suite($identifier);
 			if($test_suite->get_title() != null && (stripos($test_suite->get_title(), $search_query) !== false || stripos($test_suite->get_identifier(), $search_query) !== false || stripos($test_suite->get_description(), $search_query) !== false))
