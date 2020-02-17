@@ -25,6 +25,12 @@ class validate_test_suite implements pts_option_interface
 	const doc_section = 'Asset Creation';
 	const doc_description = 'This option can be used for validating a Phoronix Test Suite test suite as being compliant against the OpenBenchmarking.org specification.';
 
+	public static function argument_checks()
+	{
+		return array(
+		new pts_argument_check(0, array('pts_test_suite', 'is_suite'), null)
+		);
+	}
 	public static function run($r)
 	{
 		if(($test_suite = pts_types::identifier_to_object($r[0])) != false)

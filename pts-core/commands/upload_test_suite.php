@@ -25,6 +25,12 @@ class upload_test_suite implements pts_option_interface
 	const doc_section = 'OpenBenchmarking.org';
 	const doc_description = 'This option can be used for uploading a test suite to your account on OpenBenchmarking.org. By uploading your test suite to OpenBenchmarking.org, others are then able to browse and access this test suite for easy distribution.';
 
+	public static function argument_checks()
+	{
+		return array(
+		new pts_argument_check(0, array('pts_test_suite', 'is_suite'), null)
+		);
+	}
 	public static function run($r)
 	{
 		if(pts_openbenchmarking_client::user_name() == false)
