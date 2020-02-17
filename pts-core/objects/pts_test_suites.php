@@ -38,6 +38,11 @@ class pts_test_suites
 	}
 	public static function suites_on_disk($return_object = false)
 	{
+		if(!defined('PTS_TEST_SUITE_PATH') || !is_dir(PTS_TEST_SUITE_PATH))
+		{
+			return array();
+		}
+
 		$local_suites = array();
 		foreach(pts_file_io::glob(PTS_TEST_SUITE_PATH . '*/*/suite-definition.xml') as $path)
 		{
