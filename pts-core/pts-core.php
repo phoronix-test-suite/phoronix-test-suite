@@ -192,6 +192,16 @@ function pts_define_directories()
 	{
 		pts_define('PTS_SHARE_PATH', false);
 	}
+
+	if(!defined('PTS_TEST_SUITE_PATH') && defined('PTS_INTERNAL_OB_CACHE') && is_dir(PTS_INTERNAL_OB_CACHE . 'test-suites/'))
+	{
+		pts_define('PTS_TEST_SUITE_PATH', PTS_INTERNAL_OB_CACHE . 'test-suites/');
+	}
+
+	if(!defined('PTS_TEST_PROFILE_PATH') && defined('PTS_INTERNAL_OB_CACHE') && is_dir(PTS_INTERNAL_OB_CACHE . 'test-profiles/'))
+	{
+		pts_define('PTS_TEST_PROFILE_PATH', PTS_INTERNAL_OB_CACHE . 'test-profiles/');
+	}
 }
 function pts_needed_extensions()
 {

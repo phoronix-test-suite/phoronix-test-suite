@@ -475,7 +475,7 @@ class pts_openbenchmarking
 		{
 			$repos[] = pts_openbenchmarking_client::user_name();
 		}
-		$on_system_indexes = glob(PTS_OPENBENCHMARKING_SCRATCH_PATH . '*.index');
+		$on_system_indexes = !defined('PTS_OPENBENCHMARKING_SCRATCH_PATH') ? array() : glob(PTS_OPENBENCHMARKING_SCRATCH_PATH . '*.index');
 		foreach($on_system_indexes as $index)
 		{
 			$index = basename($index, '.index');
@@ -515,7 +515,7 @@ class pts_openbenchmarking
 			return $caches[$repo_name];
 		}
 
-		$index_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . '.index';
+		$index_file = !defined('PTS_OPENBENCHMARKING_SCRATCH_PATH') ? false : PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . '.index';
 		if(is_file($index_file))
 		{
 			$index_file = file_get_contents($index_file);
