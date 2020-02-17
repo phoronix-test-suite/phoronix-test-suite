@@ -3,7 +3,7 @@
 <PhoronixTestSuite>
   <SuiteInformation>
     <Title>Timed Code Compilation</Title>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <TestType>System</TestType>
     <Description>This test suite consists of tests that measure the amount of time needed to build common open-source software packages. These tests will use your default compiler and will adjust the number of compiling jobs based upon the number of detected CPU cores in your system. This suite is good for testing the system's processor, memory, and overall system performance.</Description>
     <Maintainer>Michael Larabel</Maintainer>
@@ -24,6 +24,18 @@
     <Test>pts/build-gcc</Test>
   </Execute>
   <Execute>
+    <Test>pts/build-gdb</Test>
+  </Execute>
+  <Execute>
     <Test>pts/build-llvm</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/build-ffmpeg</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/build-mplayer</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/build2</Test>
   </Execute>
 </PhoronixTestSuite>

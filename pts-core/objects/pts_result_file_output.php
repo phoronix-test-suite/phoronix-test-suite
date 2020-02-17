@@ -839,10 +839,38 @@ class pts_result_file_output
 		$pdf->ResultTable($columns, $table_data, $table_data_hints);
 
 		$pdf->AddPage();
+
+		/*
+		if($result_file->get_system_count() == 2)
+		{
+			$graph = new pts_graph_run_vs_run($result_file);
+
+			if($graph)
+			{
+				//$graph = pts_render::render_graph_process($graph, $result_file, $extra_attributes);
+				self::add_graph_result_object_to_pdf($pdf, $graph);
+			}
+		}
+		else if(!$result_file->is_multi_way_comparison())
+		{
+			foreach(array('', 'Per Watt', 'Per Dollar') as $selector)
+			{
+				$graph = new pts_graph_radar_chart($result_file, $selector);
+
+				if($graph)
+				{
+					//$graph = pts_render::render_graph_process($graph, $result_file, $extra_attributes);
+					self::add_graph_result_object_to_pdf($pdf, $graph);
+				}
+			}
+		}
+		*/
+
 		$last_result_title = null;
 		$pdf->Bookmark('--------------------');
 		foreach($result_file->get_result_objects() as $key => $result_object)
 		{
+			$result_object->sort_results_by_performance();
 			$graph = pts_render::render_graph_process($result_object, $result_file, false, $extra_attributes);
 			self::add_graph_result_object_to_pdf($pdf, $graph);
 			if($result_object->get_annotation() != null)
@@ -857,7 +885,7 @@ class pts_result_file_output
 		}
 
 
-		$geo_mean_for_suites = pts_result_file_analyzer::generate_geometric_mean_result_for_suites_in_result_file($result_file, true, 12);
+		$geo_mean_for_suites = pts_result_file_analyzer::generate_geometric_mean_result_for_suites_in_result_file($result_file, true, 18);
 		if(!empty($geo_mean_for_suites))
 		{
 			$pdf->AddPage();

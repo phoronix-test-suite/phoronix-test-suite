@@ -3,13 +3,28 @@
 <PhoronixTestSuite>
   <SuiteInformation>
     <Title>Database Test Suite</Title>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <TestType>System</TestType>
     <Description>The database test suite consists of tests that are designed to represent real-world database performance in areas such as SQL.</Description>
     <Maintainer>Michael Larabel</Maintainer>
   </SuiteInformation>
   <Execute>
     <Test>pts/sqlite</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/sqlite-speedtest</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/redis</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/rocksdb</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/cassandra</Test>
+    <Mode>BATCH</Mode>
   </Execute>
   <Execute>
     <Test>pts/pgbench</Test>

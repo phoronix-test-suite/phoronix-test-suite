@@ -40,7 +40,7 @@ class pts_test_suites
 	{
 		if(defined('PTS_TEST_SUITE_PATH') && is_dir(PTS_TEST_SUITE_PATH))
 		{
-			$suite_dir = PTS_TEST_SUITE_PATH;
+			echo $suite_dir = PTS_TEST_SUITE_PATH;
 		}
 		else
 		{

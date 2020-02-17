@@ -3,9 +3,9 @@
 <PhoronixTestSuite>
   <SuiteInformation>
     <Title>Machine Learning</Title>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <TestType>System</TestType>
-    <Description>The machine learning test suite helps to benchmark a system for the popular pattern recognition and computational learning algorithms</Description>
+    <Description>The machine learning test suite helps to benchmark a system for the popular pattern recognition and computational learning algorithms. Mainly different machine learning / deep learning benchmarks.</Description>
     <Maintainer>Victor Rodriguez</Maintainer>
   </SuiteInformation>
   <Execute>
@@ -38,6 +38,16 @@
     <Arguments></Arguments>
     <Description></Description>
     <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/mlpack</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/mkl-dnn</Test>
+    <Mode>BATCH</Mode>
   </Execute>
   <Execute>
     <Test>pts/plaidml</Test>

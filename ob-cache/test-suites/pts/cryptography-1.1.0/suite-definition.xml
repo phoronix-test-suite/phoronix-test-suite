@@ -3,7 +3,7 @@
 <PhoronixTestSuite>
   <SuiteInformation>
     <Title>Cryptography</Title>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <TestType>Processor</TestType>
     <Description>This test suite consists of cryptography tests such as OpenSSL and GnuPG.</Description>
     <Maintainer>Michael Larabel</Maintainer>
@@ -18,7 +18,7 @@
     <Test>pts/gcrypt</Test>
   </Execute>
   <Execute>
-    <Test>pts/blake2s</Test>
+    <Test>pts/blake2</Test>
   </Execute>
   <Execute>
     <Test>pts/john-the-ripper</Test>
@@ -27,5 +27,8 @@
   <Execute>
     <Test>pts/botan</Test>
     <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>system/cryptsetup</Test>
   </Execute>
 </PhoronixTestSuite>
