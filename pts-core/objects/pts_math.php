@@ -24,7 +24,8 @@ class pts_math
 {
 	public static function values_outside_three_sigma_limits($values)
 	{
-		$tsl = pts_math::three_sigma_limits($values);
+		$p = pts_math::get_precision($values);
+		$tsl = pts_math::three_sigma_limits($values, $p);
 		$outside_limits = array();
 		foreach($values as $num)
 		{
