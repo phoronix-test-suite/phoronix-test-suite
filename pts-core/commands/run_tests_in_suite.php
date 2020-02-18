@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2015, Phoronix Media
-	Copyright (C) 2010 - 2015, Michael Larabel
+	Copyright (C) 2010 - 2020, Phoronix Media
+	Copyright (C) 2010 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -25,6 +25,12 @@ class run_tests_in_suite implements pts_option_interface
 	const doc_section = 'Testing';
 	const doc_description = 'This option can be used if you wish to run all of the tests found in a supplied suite, but you wish to re-configure each of the test options rather than using the defaults supplied by the suite.';
 
+	public static function argument_checks()
+	{
+		return array(
+		new pts_argument_check(0, array('pts_test_suite', 'is_suite'), null)
+		);
+	}
 	public static function run($r)
 	{
 		$to_run = array();
