@@ -23,7 +23,6 @@
 class run_subset implements pts_option_interface
 {
 	const doc_section = 'Testing';
-	const doc_use_alias = 'run';
 	const doc_description = 'This option will run the selected test(s) but prompt the user when passing any test suites or result files what subset / test(s) contained within there to run rather than running all passed tests/suites/results.';
 
 	public static function argument_checks()
@@ -31,10 +30,6 @@ class run_subset implements pts_option_interface
 		return array(
 		new pts_argument_check('VARIABLE_LENGTH', array('pts_types', 'identifier_to_object'), null)
 		);
-	}
-	public static function command_aliases()
-	{
-		return array('run');
 	}
 	public static function run($to_run)
 	{

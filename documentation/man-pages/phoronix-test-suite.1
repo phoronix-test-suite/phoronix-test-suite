@@ -1,4 +1,4 @@
-.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "9.4.0m2"
+.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "9.4.0m3"
 .SH NAME
 phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source platform for performing testing and performance evaluation.
 .SH SYNOPSIS
@@ -59,6 +59,9 @@ This option will run the selected test(s).
 .TP
 .B run-random-tests
 This option will query OpenBenchmarking.org to run random benchmarks and result comparisons on the system. This test can be used for simply supplying interesting results from your system onto OpenBenchmarking.org, stressing your system with random workloads, seeding new OpenBenchmarking.org results, etc. Basic options are provided at start-up for tuning the randomness of the testing when running this command.
+.TP
+.B run-subset [Test | Suite | OpenBenchmarking ID | Test Result]  ...
+This option will run the selected test(s) but prompt the user when passing any test suites or result files what subset / test(s) contained within there to run rather than running all passed tests/suites/results.
 .TP
 .B run-tests-in-suite
 This option can be used if you wish to run all of the tests found in a supplied suite, but you wish to re-configure each of the test options rather than using the defaults supplied by the suite.
@@ -134,12 +137,15 @@ This option is used for uploading a test result to OpenBenchmarking.org.
 .B upload-test-profile
 This option can be used for uploading a test profile to your account on OpenBenchmarking.org. By uploading your test profile to OpenBenchmarking.org, others are then able to browse and access this test suite for easy distribution in a seamless manner by other Phoronix Test Suite clients.
 .TP
-.B upload-test-suite
+.B upload-test-suite [Suite]
 This option can be used for uploading a test suite to your account on OpenBenchmarking.org. By uploading your test suite to OpenBenchmarking.org, others are then able to browse and access this test suite for easy distribution.
 .TP
 .SH INFORMATION
 .B info [Test | Suite | OpenBenchmarking ID | Test Result]
 This option will show details about the supplied test, suite, virtual suite, or result file.
+.TP
+.B intersect [Test | Suite | OpenBenchmarking ID | Test Result]  ...
+This option will print the test profiles present in all passed result files / test suites. Two or more results/suites must be passed and printed will be all of the common test profiles.
 .TP
 .B list-all-tests
 This option will list all test profiles that are available from the enabled OpenBenchmarking.org repositories. Unlike the other test listing options, list-all-tests will show deprecated tests, potentially broken tests, or other tests not recommended for all environments. The only check in place is ensuring the test profiles are at least compatible with the operating system in use.
@@ -220,7 +226,7 @@ This option can be used for validating a Phoronix Test Suite result file as bein
 .B validate-test-profile [Test]
 This option can be used for validating a Phoronix Test Suite test profile as being compliant against the OpenBenchmarking.org specification.
 .TP
-.B validate-test-suite
+.B validate-test-suite [Suite]
 This option can be used for validating a Phoronix Test Suite test suite as being compliant against the OpenBenchmarking.org specification.
 .TP
 .SH RESULT MANAGEMENT

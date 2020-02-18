@@ -309,6 +309,9 @@ User Options
 <h3>run-random-tests<em>  </em>
 </h3>
 <p>This option will query OpenBenchmarking.org to run random benchmarks and result comparisons on the system. This test can be used for simply supplying interesting results from your system onto OpenBenchmarking.org, stressing your system with random workloads, seeding new OpenBenchmarking.org results, etc. Basic options are provided at start-up for tuning the randomness of the testing when running this command.</p>
+<h3>run-subset<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
+</h3>
+<p>This option will run the selected test(s) but prompt the user when passing any test suites or result files what subset / test(s) contained within there to run rather than running all passed tests/suites/results.</p>
 <h3>run-tests-in-suite<em>  </em>
 </h3>
 <p>This option can be used if you wish to run all of the tests found in a supplied suite, but you wish to re-configure each of the test options rather than using the defaults supplied by the suite.</p>
@@ -383,13 +386,16 @@ User Options
 <h3>upload-test-profile<em>  </em>
 </h3>
 <p>This option can be used for uploading a test profile to your account on OpenBenchmarking.org. By uploading your test profile to OpenBenchmarking.org, others are then able to browse and access this test suite for easy distribution in a seamless manner by other Phoronix Test Suite clients.</p>
-<h3>upload-test-suite<em>  </em>
+<h3>upload-test-suite<em>  [Suite]</em>
 </h3>
 <p>This option can be used for uploading a test suite to your account on OpenBenchmarking.org. By uploading your test suite to OpenBenchmarking.org, others are then able to browse and access this test suite for easy distribution.</p>
 <h1>Information</h1>
 <h3>info<em>  [Test | Suite | OpenBenchmarking ID | Test Result]</em>
 </h3>
 <p>This option will show details about the supplied test, suite, virtual suite, or result file.</p>
+<h3>intersect<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
+</h3>
+<p>This option will print the test profiles present in all passed result files / test suites. Two or more results/suites must be passed and printed will be all of the common test profiles.</p>
 <h3>list-all-tests<em>  </em>
 </h3>
 <p>This option will list all test profiles that are available from the enabled OpenBenchmarking.org repositories. Unlike the other test listing options, list-all-tests will show deprecated tests, potentially broken tests, or other tests not recommended for all environments. The only check in place is ensuring the test profiles are at least compatible with the operating system in use.</p>
@@ -469,7 +475,7 @@ User Options
 <h3>validate-test-profile<em>  [Test]</em>
 </h3>
 <p>This option can be used for validating a Phoronix Test Suite test profile as being compliant against the OpenBenchmarking.org specification.</p>
-<h3>validate-test-suite<em>  </em>
+<h3>validate-test-suite<em>  [Suite]</em>
 </h3>
 <p>This option can be used for validating a Phoronix Test Suite test suite as being compliant against the OpenBenchmarking.org specification.</p>
 <h1>Result Management</h1>
@@ -637,6 +643,7 @@ Module Options
 <p>This module utilizes the following environmental variables: LINUX_PERF.</p>
 <h2>Dynamic Result Viewer</h2>
 <p>This module pre-loads the HTTP dynamic result viewer for Phoronix Test Suite data.</p>
+<p>phoronix-test-suite load_dynamic_result_viewer.start</p>
 <h2>Log Exporter</h2>
 <p>This module allows for easily exporting test run logs and system logs to external locations via specifying the directory paths via the COPY_TEST_RUN_LOGS_TO and COPY_SYSTEM_LOGS_TO environment variables.</p>
 <p>This module utilizes the following environmental variables: COPY_TEST_RUN_LOGS_TO, COPY_SYSTEM_LOGS_TO.</p>
@@ -974,9 +981,6 @@ Virtual Test Suites
 <h3>Docker Tests<em>  pts/docker</em>
 </h3>
 <p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing docker.</p>
-<h3>Python Tests<em>  pts/python</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing python.</p>
 <h3>Go Tests<em>  pts/go</em>
 </h3>
 <p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing go.</p>
@@ -1133,6 +1137,96 @@ Virtual Test Suites
 <h3>Smp Tests<em>  git/smp</em>
 </h3>
 <p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing smp.</p>
+<h3>All PTS Tests<em>  pts/all</em>
+</h3>
+<p>This is a collection of all test profiles found within the specified OpenBenchmarking.org repository.</p>
+<h3>Installed Tests<em>  pts/installed</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository that are already installed on the system under test.</p>
+<h3>Every PTS Test<em>  pts/everything</em>
+</h3>
+<p>This is a collection of every test profile found within the specified OpenBenchmarking.org repository, including unsupported tests.</p>
+<h3>Linux Operating System Tests<em>  pts/linux</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Linux Operating System.</p>
+<h3>Solaris Operating System Tests<em>  pts/solaris</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Solaris Operating System.</p>
+<h3>BSD Operating System Tests<em>  pts/bsd</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the BSD Operating System.</p>
+<h3>MacOSX Operating System Tests<em>  pts/macosx</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the MacOSX Operating System.</p>
+<h3>Windows Operating System Tests<em>  pts/windows</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Windows Operating System.</p>
+<h3>Hurd Operating System Tests<em>  pts/hurd</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Hurd Operating System.</p>
+<h3>System Subsystem Tests<em>  pts/system</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the System sub-system.</p>
+<h3>Processor Subsystem Tests<em>  pts/processor</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Processor sub-system.</p>
+<h3>Graphics Subsystem Tests<em>  pts/graphics</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Graphics sub-system.</p>
+<h3>Other Subsystem Tests<em>  pts/other</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Other sub-system.</p>
+<h3>Utility Tests<em>  pts/utility</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Utility software test.</p>
+<h3>Simulator Tests<em>  pts/simulator</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Simulator software test.</p>
+<h3>Scientific Tests<em>  pts/scientific</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Scientific software test.</p>
+<h3>Benchmark Tests<em>  pts/benchmark</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Benchmark software test.</p>
+<h3>Application Tests<em>  pts/application</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Application software test.</p>
+<h3>Game Tests<em>  pts/game</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Game software test.</p>
+<h3>Smp Tests<em>  pts/smp</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing smp.</p>
+<h3>Cuda Tests<em>  pts/cuda</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing cuda.</p>
+<h3>Mpi Tests<em>  pts/mpi</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing mpi.</p>
+<h3>Openmp Tests<em>  pts/openmp</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing openmp.</p>
+<h3>Cloud Tests<em>  pts/cloud</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing cloud.</p>
+<h3>Docker Tests<em>  pts/docker</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing docker.</p>
+<h3>Go Tests<em>  pts/go</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing go.</p>
+<h3>Vdpau Tests<em>  pts/vdpau</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing vdpau.</p>
+<h3>Video Tests<em>  pts/video</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing video.</p>
+<h3>Responsiveness Tests<em>  pts/responsiveness</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing responsiveness.</p>
+<h3>Openmpi Tests<em>  pts/openmpi</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing openmpi.</p>
 <h3>All WINDOWS Tests<em>  windows/all</em>
 </h3>
 <p>This is a collection of all test profiles found within the specified OpenBenchmarking.org repository.</p>
