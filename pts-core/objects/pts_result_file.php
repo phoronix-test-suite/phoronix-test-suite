@@ -123,11 +123,18 @@ class pts_result_file
 	}
 	public function get_file_location()
 	{
-		return $this->file_location;
+		if($this->file_location)
+		{
+			return $this->file_location;
+		}
+		else if($this->save_identifier)
+		{
+			return PTS_SAVE_RESULTS_PATH . $this->save_identifier . '/composite.xml';
+		}
 	}
 	public function get_test_log_dir(&$result_object = null)
 	{
-		$log_dir = dirname($this->file_location);
+		$log_dir = dirname($this->get_file_location());
 		if(empty($log_dir) || !is_dir($log_dir))
 		{
 			return false;
@@ -137,7 +144,7 @@ class pts_result_file
 	}
 	public function get_test_installation_log_dir()
 	{
-		$log_dir = dirname($this->file_location);
+		$log_dir = dirname($this->get_file_location());
 		if(empty($log_dir) || !is_dir($log_dir))
 		{
 			return false;
@@ -147,9 +154,9 @@ class pts_result_file
 	}
 	public function save()
 	{
-		if($this->file_location && is_file($this->file_location))
+		if($this->get_file_location() && is_file($this->get_file_location()))
 		{
-			return file_put_contents($this->file_location, $this->get_xml());
+			return file_put_contents($this->get_file_location(), $this->get_xml());
 		}
 	}
 	public function get_last_modified()

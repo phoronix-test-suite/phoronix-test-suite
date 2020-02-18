@@ -565,7 +565,7 @@ class pts_test_execution
 			unset($cache_share);
 		}
 
-		if($test_run_manager->do_save_results() && (pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/SaveInstallationLogs', 'FALSE')))
+		if($test_run_manager->do_save_results() && (pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/SaveInstallationLogs', 'TRUE')))
 		{
 			if($test_run_request->test_profile->test_installation->has_install_log())
 			{
