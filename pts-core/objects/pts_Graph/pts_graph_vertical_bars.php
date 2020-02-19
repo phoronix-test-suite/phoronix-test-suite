@@ -128,13 +128,10 @@ class pts_graph_vertical_bars extends pts_graph_core
 				$px_bound_right = $px_bound_left + $bar_width;
 				$title_tooltip = $buffer_item->get_result_identifier() . ': ' . $value;
 
-				/*
 				$std_error = -1;
-				if(($raw_values = $buffer_item->get_result_raw()))
+				if(($raw_values = $buffer_item->get_result_raw_array()))
 				{
-					$std_error = pts_strings::colon_explode($raw_values);
-
-					switch(count($std_error))
+					switch(count($raw_values))
 					{
 						case 0:
 							$std_error = -1;
@@ -143,14 +140,32 @@ class pts_graph_vertical_bars extends pts_graph_core
 							$std_error = 0;
 							break;
 						default:
-							$std_error = pts_math::standard_error($std_error);
+							$std_error = pts_math::standard_error($raw_values);
 							break;
 					}
 				}
-				// DO SOMETHING WITH STD_ERROR TODO
-				*/
 
 				$this->svg_dom->add_element('rect', array('x' => ($px_bound_left + 1), 'y' => $value_plot_top, 'width' => $bar_width, 'height' => ($this->i['graph_top_end'] - $value_plot_top), 'fill' => $this->adjust_color($buffer_item->get_result_identifier(), $paint_color), 'stroke' => self::$c['color']['body_light'], 'stroke-width' => 1, 'xlink:title' => $title_tooltip));
+
+				if($std_error != -1 && $std_error > 0 && $value != null)
+				{
+					$std_error_height = 8;
+					if($std_error > 0 && is_numeric($std_error))
+					{
+						$std_error_rel_size = round(($std_error / $this->i['graph_max_value']) * ($this->i['graph_top_end'] - $this->i['top_start']));
+						if($std_error_rel_size > 4)
+						{
+							$std_error_base_bottom = ($value_plot_top - $std_error_rel_size);
+							$std_error_base_top = ($value_plot_top + $std_error_rel_size);
+
+							$g = $this->svg_dom->make_g(array('stroke' => self::$c['color']['notches'], 'stroke-width' => 1));
+							$this->svg_dom->add_element('line', array('x1' => ($px_bound_left + 1), 'y1' => $std_error_base_bottom, 'x2' => $px_bound_left + $std_error_height, 'y2' => $std_error_base_bottom), $g);
+							$this->svg_dom->add_element('line', array('x1' => ($px_bound_left + 1), 'y1' => $std_error_base_bottom, 'x2' => ($px_bound_left + 1), 'y2' => $std_error_base_top), $g);
+							$this->svg_dom->add_element('line', array('x1' => ($px_bound_left + 1), 'y1' => $std_error_base_top, 'x2' => $px_bound_left + $std_error_height, 'y2' => $std_error_base_top), $g);
+						}
+					}
+				}
+
 				if(($px_bound_right - $px_bound_left) > 10)
 				{
 					// The bars are too skinny to be able to plot anything on them
