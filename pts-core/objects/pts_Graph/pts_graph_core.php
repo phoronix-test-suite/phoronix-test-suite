@@ -466,7 +466,7 @@ abstract class pts_graph_core
 		if($paint_color != $fallback_color && strpos($identifier, ' - '))
 		{
 			// If there is " - " in string, darken the color... based upon idea when doing AMDGPU vs. Mesa vs. stock NVIDIA comparison for RX 480
-			$paint_color = $this->darken_color($paint_color);
+			$paint_color = $this->shift_color($paint_color);
 		}
 
 		return $paint_color;
@@ -475,13 +475,13 @@ abstract class pts_graph_core
 	//
 	// Render Functions
 	//
-	public function darken_color(&$paint_color)
+	public function shift_color(&$paint_color, $percent = 0.7, $mask = 0)
 	{
 		$new_color = null;
 		foreach(str_split(str_replace('#', null, $paint_color), 2) as $color)
 		{
 			$dec = hexdec($color);
-			$dec = min(max(0, $dec * 0.7), 255);
+			$dec = min(max(0, round($dec * $percent) + round($mask * (1 - $percent))), 255);
 			$new_color .= str_pad(dechex($dec), 2, 0, STR_PAD_LEFT);
 		}
 		return '#' . substr($new_color, 0, 6);
@@ -690,7 +690,7 @@ abstract class pts_graph_core
 		// Default to NORMAL
 		if($this->i['iveland_view'])
 		{
-			$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->i['graph_width'], 'height' => $this->i['top_heading_height'], 'fill' => self::$c['color']['main_headers']));
+			//$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->i['graph_width'], 'height' => $this->i['top_heading_height'], 'fill' => self::$c['color']['main_headers']));
 
 			if(isset($this->i['graph_title'][36]))
 			{
@@ -701,7 +701,7 @@ abstract class pts_graph_core
 				}
 			}
 
-			$this->svg_dom->add_text_element($this->i['graph_title'], array('x' => 6, 'y' => (self::$c['size']['headers'] + 2), 'font-size' => self::$c['size']['headers'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'xlink:show' => 'new', 'xlink:href' => $this->i['header_link'], 'font-weight' => 'bold'));
+			$this->svg_dom->add_text_element($this->i['graph_title'], array('x' => 6, 'y' => (self::$c['size']['headers'] + 2), 'font-size' => self::$c['size']['headers'], 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'start', 'xlink:show' => 'new', 'xlink:href' => $this->i['header_link'], 'font-weight' => 'bold'));
 
 			foreach($this->graph_sub_titles as $i => $sub_title)
 			{
@@ -712,11 +712,11 @@ abstract class pts_graph_core
 					while(self::text_string_width($sub_title, $sub_title_size) > ($this->i['graph_left_end'] - 20))
 						$sub_title_size -= 0.5;
 				}
-				$this->svg_dom->add_text_element($sub_title, array('x' => 6, 'y' => $vertical_offset, 'font-size' => $sub_title_size, 'font-weight' => 'bold', 'fill' => self::$c['color']['background'], 'text-anchor' => 'start'));
+				$this->svg_dom->add_text_element($sub_title, array('x' => 6, 'y' => $vertical_offset, 'font-size' => $sub_title_size, 'font-weight' => 'bold', 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'start'));
 			}
 
 			// SVG version of PTS thanks to https://gist.github.com/xorgy/65c6d0e87757dbb56a75
-			$this->svg_dom->add_element('path', array('d' => 'm74 22v9m-5-16v16m-5-28v28m-23-2h12.5c2.485281 0 4.5-2.014719 4.5-4.5s-2.014719-4.5-4.5-4.5h-8c-2.485281 0-4.5-2.014719-4.5-4.5s2.014719-4.5 4.5-4.5h12.5m-21 5h-11m11 13h-2c-4.970563 0-9-4.029437-9-9v-20m-24 40v-20c0-4.970563 4.0294373-9 9-9 4.970563 0 9 4.029437 9 9s-4.029437 9-9 9h-9', 'stroke' => '#ffffff', 'stroke-width' => 4, 'fill' => 'none', 'transform' => 'translate(' . ceil($this->i['graph_left_end'] - 77) . ',' . (ceil($this->i['top_heading_height'] / 40 + 2)) . ')'));
+			$this->svg_dom->add_element('path', array('d' => 'm74 22v9m-5-16v16m-5-28v28m-23-2h12.5c2.485281 0 4.5-2.014719 4.5-4.5s-2.014719-4.5-4.5-4.5h-8c-2.485281 0-4.5-2.014719-4.5-4.5s2.014719-4.5 4.5-4.5h12.5m-21 5h-11m11 13h-2c-4.970563 0-9-4.029437-9-9v-20m-24 40v-20c0-4.970563 4.0294373-9 9-9 4.970563 0 9 4.029437 9 9s-4.029437 9-9 9h-9', 'stroke' => self::$c['color']['main_headers'], 'stroke-width' => 4, 'fill' => 'none', 'xlink:show' => 'new', 'xlink:href' => 'https://www.phoronix-test-suite.com/', 'transform' => 'translate(' . ceil($this->i['graph_left_end'] - 77) . ',' . (ceil($this->i['top_heading_height'] / 40 + 2)) . ')'));
 		}
 		else
 		{
@@ -743,8 +743,8 @@ abstract class pts_graph_core
 		if($this->i['iveland_view'])
 		{
 			$bottom_heading_start = $this->i['graph_top_end'] + $this->i['bottom_offset'] + 22;
-			$this->svg_dom->add_element('rect', array('x' => 0, 'y' => $bottom_heading_start, 'width' => $this->i['graph_width'], 'height' => ($this->i['graph_height'] - $bottom_heading_start), 'fill' => self::$c['color']['main_headers']));
-			$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => $this->i['graph_left_end'], 'y' => ($bottom_heading_start + self::$c['size']['key'] + 3), 'font-size' => self::$c['size']['key'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'end', 'xlink:show' => 'new', 'xlink:href' => 'https://www.phoronix-test-suite.com/'));
+			//$this->svg_dom->add_element('rect', array('x' => 0, 'y' => $bottom_heading_start, 'width' => $this->i['graph_width'], 'height' => ($this->i['graph_height'] - $bottom_heading_start), 'fill' => self::$c['color']['main_headers']));
+			$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => $this->i['graph_left_end'], 'y' => ($bottom_heading_start + self::$c['size']['key'] + 3), 'font-size' => self::$c['size']['key'], 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'end', 'font-weight' => 'bold', 'xlink:show' => 'new', 'xlink:href' => 'https://www.phoronix-test-suite.com/'));
 
 			if(isset($this->d['link_alternate_view']) && $this->d['link_alternate_view'])
 			{
@@ -762,7 +762,7 @@ abstract class pts_graph_core
 				$estimated_height = 0;
 				foreach($this->i['notes'] as $i => $note_r)
 				{
-					$this->svg_dom->add_textarea_element(($i + 1) . '. ' . $note_r['note'], array('x' => 5, 'y' => ($bottom_heading_start + (self::$c['size']['key'] * 2) + 8 + $estimated_height), 'font-size' => (self::$c['size']['key'] - 1), 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'xlink:title' => $note_r['hover-title']), $estimated_height);
+					$this->svg_dom->add_textarea_element(($i + 1) . '. ' . $note_r['note'], array('x' => 5, 'y' => ($bottom_heading_start + (self::$c['size']['key'] * 2) + 8 + $estimated_height), 'font-size' => (self::$c['size']['key'] - 1), 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'start', 'xlink:title' => $note_r['hover-title']), $estimated_height);
 				}
 			}
 		}
@@ -1004,7 +1004,7 @@ abstract class pts_graph_core
 		if($this->i['highlight_values'] && (array_key_exists($identifier, $this->i['highlight_values']) || in_array($identifier, $this->i['highlight_values'])))
 		{
 			$color = isset($this->i['highlight_values'][$identifier]) ? $this->i['highlight_values'][$identifier] : null;
-			$paint_color = empty($color) ? $this->darken_color($paint_color) : $color;
+			$paint_color = empty($color) ? $this->shift_color($paint_color) : $color;
 		}
 		return $paint_color;
 	}
