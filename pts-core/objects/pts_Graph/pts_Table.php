@@ -231,7 +231,8 @@ class pts_Table extends pts_graph_core
 		if($this->i['graph_title'] != null)
 		{
 			$this->svg_dom->add_element('rect', array('x' => 1, 'y' => 1, 'width' => ($this->i['graph_width'] - 2), 'height' => $this->i['top_heading_height'], 'fill' => self::$c['color']['main_headers']));
-			$this->svg_dom->add_text_element($this->i['graph_title'], array('x' => 5, 'y' => (self::$c['size']['headers'] + 2), 'font-size' => self::$c['size']['headers'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'start'));
+			if(!$this->is_multi_way)
+				$this->svg_dom->add_text_element($this->i['graph_title'], array('x' => 5, 'y' => (self::$c['size']['headers'] + 2), 'font-size' => self::$c['size']['headers'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'start'));
 
 			foreach($this->graph_sub_titles as $i => $sub_title)
 			{
@@ -284,7 +285,7 @@ class pts_Table extends pts_graph_core
 						continue;
 					}
 
-					$paint_color = $this->get_paint_color($identifier[0]);
+					//$paint_color = $this->get_paint_color($system_identifier);
 
 					if($this->i['top_heading_height'] > 0)
 					{
@@ -294,11 +295,11 @@ class pts_Table extends pts_graph_core
 					$x = $this->i['left_start'] + 1 + ($last_changed_col * $table_item_width);
 					$x_end = ($this->i['left_start'] + ($last_changed_col * $table_item_width)) + ($table_item_width * ($current_col - $last_changed_col));
 
-					$this->svg_dom->add_element('rect', array('x' => $x, 'y' => 0, 'width' => ($table_item_width * ($current_col - $last_changed_col)) - 2, 'height' => $extra_heading_height, 'fill' => $paint_color), $g1);
+					//$this->svg_dom->add_element('rect', array('x' => $x, 'y' => 0, 'width' => ($table_item_width * ($current_col - $last_changed_col)) - 2, 'height' => $extra_heading_height, 'fill' => $paint_color), $g1);
 
 					if($identifier[0] != 'Temp')
 					{
-						$this->svg_dom->draw_svg_line(($this->i['left_start'] + ($current_col * $table_item_width) + 1), 1, ($this->i['left_start'] + ($current_col * $table_item_width) + 1), $table_proper_height, $paint_color, 1);
+						$this->svg_dom->draw_svg_line(($this->i['left_start'] + ($current_col * $table_item_width) + 1), 1, ($this->i['left_start'] + ($current_col * $table_item_width) + 1), $table_proper_height, self::$c['color']['background'], 1);
 					}
 
 					//$x = $this->i['left_start'] + ($last_changed_col * $table_item_width) + ($this->i['left_start'] + ($current_col * $table_item_width) - $this->i['left_start'] + ($last_changed_col * $table_item_width));

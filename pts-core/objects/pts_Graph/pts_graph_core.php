@@ -277,6 +277,19 @@ abstract class pts_graph_core
 		{
 			self::$c = array_merge(self::$c, $external_config);
 		}
+
+		self::$c['color']['seeded_paint'] = array();
+		foreach(self::$c['color']['paint'] as $color)
+		{
+			self::$c['color']['seeded_paint'][] = $color;
+			foreach(array(0.6, 0.35) as $p)
+			{
+				foreach(array(0, 255) as $o)
+				{
+					self::$c['color']['seeded_paint'][] = self::shift_color($color, $p, $o);
+				}
+			}
+		}
 	}
 	public static function set_default_graph_values(&$config)
 	{
@@ -365,9 +378,9 @@ abstract class pts_graph_core
 		// For now to try to improve the color handling of line graphs, first try to use a pre-defined pool of colors until falling back to the old color code once exhausted
 		if(!isset(self::$color_cache[$check_branding][$identifier]))
 		{
-			if(!empty(self::$c['color']['paint']))
+			if(!empty(self::$c['color']['seeded_paint']))
 			{
-				self::$color_cache[$check_branding][$identifier] = array_shift(self::$c['color']['paint']);
+				self::$color_cache[$check_branding][$identifier] = array_shift(self::$c['color']['seeded_paint']);
 			}
 			else
 			{
@@ -466,7 +479,7 @@ abstract class pts_graph_core
 		if($paint_color != $fallback_color && strpos($identifier, ' - '))
 		{
 			// If there is " - " in string, darken the color... based upon idea when doing AMDGPU vs. Mesa vs. stock NVIDIA comparison for RX 480
-			$paint_color = $this->shift_color($paint_color);
+			$paint_color = self::shift_color($paint_color);
 		}
 
 		return $paint_color;
@@ -475,7 +488,7 @@ abstract class pts_graph_core
 	//
 	// Render Functions
 	//
-	public function shift_color(&$paint_color, $percent = 0.7, $mask = 0)
+	public static function shift_color(&$paint_color, $percent = 0.7, $mask = 0)
 	{
 		$new_color = null;
 		foreach(str_split(str_replace('#', null, $paint_color), 2) as $color)
@@ -1004,7 +1017,7 @@ abstract class pts_graph_core
 		if($this->i['highlight_values'] && (array_key_exists($identifier, $this->i['highlight_values']) || in_array($identifier, $this->i['highlight_values'])))
 		{
 			$color = isset($this->i['highlight_values'][$identifier]) ? $this->i['highlight_values'][$identifier] : null;
-			$paint_color = empty($color) ? $this->shift_color($paint_color) : $color;
+			$paint_color = empty($color) ? self::shift_color($paint_color) : $color;
 		}
 		return $paint_color;
 	}
