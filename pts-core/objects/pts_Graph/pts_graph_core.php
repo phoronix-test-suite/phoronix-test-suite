@@ -72,6 +72,7 @@ abstract class pts_graph_core
 		$this->i['graph_title'] = null;
 		$this->i['header_link'] = null;
 		$this->i['highlight_values'] = false;
+		$this->i['skip_headers'] = false;
 
 		// Reset of setup besides config
 		if($result_object != null)
@@ -282,7 +283,7 @@ abstract class pts_graph_core
 		// Setup config values
 		$config['graph']['width'] = 600;
 		$config['graph']['height'] = 310;
-		$config['graph']['border'] = true;
+		$config['graph']['border'] = false;
 
 		// Colors
 		$config['color']['notches'] = '#757575';
@@ -569,7 +570,13 @@ abstract class pts_graph_core
 
 			$this->i['top_start'] = $this->i['top_heading_height'] + $key_height + 16; // + spacing before graph starts
 
-			$bottom_heading = 14;
+			if($this->i['skip_headers'])
+			{
+				$this->i['top_heading_height'] = 0;
+				$this->i['top_start'] = 5;
+			}
+
+			$bottom_heading = $this->i['skip_headers'] ? 0 : 14;
 
 			if($this->i['graph_orientation'] == 'HORIZONTAL')
 			{
@@ -617,7 +624,7 @@ abstract class pts_graph_core
 				$num_identifiers = $this->test_result->test_result_buffer->get_count() + ($this->i['is_multi_way_comparison'] ? 2 : 0);
 				$this->i['graph_top_end'] = $this->i['top_start'] + ($num_identifiers * $per_identifier_height);
 				// $this->i['top_end_bottom']
-				$this->i['graph_height'] = $this->i['graph_top_end'] + 25 + $bottom_heading;
+				$this->i['graph_height'] = $this->i['graph_top_end'] + ($this->i['skip_headers'] ? 0 : 25) + $bottom_heading;
 			}
 			else
 			{
@@ -659,7 +666,7 @@ abstract class pts_graph_core
 		$this->svg_dom = new pts_svg_dom(ceil($this->i['graph_width']), ceil($this->i['graph_height']));
 
 		// Background Color
-		if($this->i['iveland_view'] || self::$c['graph']['border'])
+		if(self::$c['graph']['border'])
 		{
 			$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->i['graph_width'], 'height' => $this->i['graph_height'], 'fill' => self::$c['color']['background'], 'stroke' => self::$c['color']['border'], 'stroke-width' => 2));
 		}
@@ -675,6 +682,11 @@ abstract class pts_graph_core
 	}
 	protected function render_graph_heading($with_version = true)
 	{
+		if($this->i['skip_headers'])
+		{
+			return;
+		}
+
 		// Default to NORMAL
 		if($this->i['iveland_view'])
 		{
@@ -723,6 +735,11 @@ abstract class pts_graph_core
 	}
 	protected function render_graph_post()
 	{
+		if($this->i['skip_headers'])
+		{
+			return;
+		}
+
 		if($this->i['iveland_view'])
 		{
 			$bottom_heading_start = $this->i['graph_top_end'] + $this->i['bottom_offset'] + 22;

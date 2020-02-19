@@ -30,6 +30,8 @@ class pts_graph_horizontal_bars extends pts_graph_core
 		$this->i['graph_orientation'] = 'HORIZONTAL';
 		$this->i['identifier_height'] = -1;
 
+		$this->i['skip_headers'] = false;
+
 		if(isset($extra_attributes['make_identifiers_web_links']) && !empty($extra_attributes['make_identifiers_web_links']))
 		{
 			$this->make_identifiers_web_links = $extra_attributes['make_identifiers_web_links'];

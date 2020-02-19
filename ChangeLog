@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 pts_Graph: Restore support for error bars on vertical bar graph rendering
+pts_Graph: Support for simpler view / rendering without header/footer
 
 Phoronix Test Suite 9.4.0 Milestone 3
 18 February 2020
