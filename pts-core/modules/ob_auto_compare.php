@@ -275,6 +275,21 @@ class ob_auto_compare extends pts_module_interface
 							continue;
 						}
 
+						$skip_result = false;
+						foreach(array(' Sample', 'Confidential') as $avoid_strings)
+						{
+							// Extra protection
+							if(stripos($component, $avoid_strings) !== false)
+							{
+								$skip_result = true;
+								break;
+							}
+						}
+						if($skip_result)
+						{
+							continue;
+						}
+
 						// Blocks other entries from overwriting or being immediately adjacent to one another
 						$results_at_pos[] = $this_result_pos;
 						$results_at_pos[] = $this_result_pos - 1;
