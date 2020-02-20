@@ -760,23 +760,12 @@ abstract class pts_graph_core
 			//$this->svg_dom->add_element('rect', array('x' => 0, 'y' => $bottom_heading_start, 'width' => $this->i['graph_width'], 'height' => ($this->i['graph_height'] - $bottom_heading_start), 'fill' => self::$c['color']['main_headers']));
 			//$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => $this->i['graph_left_end'], 'y' => ($bottom_heading_start + self::$c['size']['key'] + 3), 'font-size' => self::$c['size']['key'], 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'end', 'font-weight' => 'bold', 'xlink:show' => 'new', 'xlink:href' => 'https://www.phoronix-test-suite.com/'));
 
-			if(isset($this->d['link_alternate_view']) && $this->d['link_alternate_view'])
-			{
-				// add SVG version: https://gist.github.com/xorgy/169a65e29a3c2cc41e7f
-				$a = $this->svg_dom->make_a($this->d['link_alternate_view']);
-				$g = $this->svg_dom->make_g(array('transform' => 'translate(' . 4 . ',' . ($bottom_heading_start + 1) . ')', 'width' => 10, 'height' => 16), $a);
-				$this->svg_dom->add_element('path', array('d' => 'M5 0v6.5L0 11l3-3-3-3.5L5 0', 'fill' => '#038bb8'), $g);
-				$this->svg_dom->add_element('path', array('d' => 'M5 0v6.5l5 4.5-3-3 3-3.5L5 0', 'fill' => '#25b3e8'), $g);
-				$this->svg_dom->add_element('path', array('d' => 'M5 16V9l5-4.5V11l-5 5', 'fill' => '#e4f4fd'), $g);
-				$this->svg_dom->add_element('path', array('d' => 'M5 16V9L0 4.5V11l5 5', 'fill' => '#65cbf4'), $g);
-			}
-
 			if(!empty($this->i['notes']))
 			{
 				$estimated_height = 0;
 				foreach($this->i['notes'] as $i => $note_r)
 				{
-					$this->svg_dom->add_textarea_element(($i + 1) . '. ' . $note_r['note'], array('x' => 5, 'y' => ($bottom_heading_start + (self::$c['size']['key'] * 2) + 8 + $estimated_height), 'font-size' => (self::$c['size']['key'] - 1), 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'start', 'xlink:title' => $note_r['hover-title']), $estimated_height);
+					$this->svg_dom->add_textarea_element(($i + 1) . '. ' . $note_r['note'], array('x' => 5, 'y' => ($bottom_heading_start + (self::$c['size']['key'] * 2) + $estimated_height), 'font-size' => (self::$c['size']['key'] - 1), 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'start', 'xlink:title' => $note_r['hover-title']), $estimated_height);
 				}
 			}
 		}
@@ -789,7 +778,19 @@ abstract class pts_graph_core
 			$this->svg_dom->add_element('line', array('x1' => $left_start, 'y1' => $top_start, 'x2' => $left_start, 'y2' => ($top_end + 1)), $g);
 			$this->svg_dom->add_element('line', array('x1' => $left_start, 'y1' => $top_end, 'x2' => ($left_end + 1), 'y2' => $top_end), $g);
 
-			if(!empty(self::$c['text']['watermark']))
+			if(isset($this->d['link_alternate_view']) && $this->d['link_alternate_view'])
+			{
+				// add SVG version: https://gist.github.com/xorgy/169a65e29a3c2cc41e7f
+				$a = $this->svg_dom->make_a($this->d['link_alternate_view']);
+				$g = $this->svg_dom->make_g(array('transform' => 'translate(' . ($left_end - 10) . ',' . ($top_start - 5 - 10) . ')', 'width' => 10, 'height' => 16), $a);
+				$this->svg_dom->add_element('path', array('d' => 'M5 0v6.5L0 11l3-3-3-3.5L5 0', 'fill' => '#038bb8'), $g);
+				$this->svg_dom->add_element('path', array('d' => 'M5 0v6.5l5 4.5-3-3 3-3.5L5 0', 'fill' => '#25b3e8'), $g);
+				$this->svg_dom->add_element('path', array('d' => 'M5 16V9l5-4.5V11l-5 5', 'fill' => '#e4f4fd'), $g);
+				$this->svg_dom->add_element('path', array('d' => 'M5 16V9L0 4.5V11l5 5', 'fill' => '#65cbf4'), $g);
+
+				$this->svg_dom->add_text_element(self::$c['text']['watermark'], array('x' => $left_end - 12, 'y' => ($top_start - 5), 'font-size' => 8, 'fill' => self::$c['color']['text'], 'text-anchor' => 'end', 'font-weight' => 'bold', 'xlink:show' => 'new', 'xlink:href' => self::$c['text']['watermark_url']));
+			}
+			else if(!empty(self::$c['text']['watermark']))
 			{
 				$this->svg_dom->add_text_element(self::$c['text']['watermark'], array('x' => $left_end, 'y' => ($top_start - 5), 'font-size' => 8, 'fill' => self::$c['color']['text'], 'text-anchor' => 'end', 'font-weight' => 'bold', 'xlink:show' => 'new', 'xlink:href' => self::$c['text']['watermark_url']));
 			}
