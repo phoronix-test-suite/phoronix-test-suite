@@ -955,7 +955,6 @@ function Ln($h=null)
 	else
 		$this->y += $h;
 }
-
 function Image($file, $x=null, $y=null, $w=0, $h=0, $type='', $link='')
 {
 	// Put an image on the page

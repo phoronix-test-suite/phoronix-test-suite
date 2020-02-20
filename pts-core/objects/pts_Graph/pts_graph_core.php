@@ -324,7 +324,7 @@ abstract class pts_graph_core
 		}
 		else
 		{
-			$config['text']['watermark'] = 'PHORONIX-TEST-SUITE.COM';
+			$config['text']['watermark'] = 'Phoronix Test Suite ' . PTS_VERSION;
 			$config['text']['watermark_url'] = 'https://www.phoronix-test-suite.com/';
 		}
 
@@ -758,7 +758,7 @@ abstract class pts_graph_core
 		{
 			$bottom_heading_start = $this->i['graph_top_end'] + $this->i['bottom_offset'] + 22;
 			//$this->svg_dom->add_element('rect', array('x' => 0, 'y' => $bottom_heading_start, 'width' => $this->i['graph_width'], 'height' => ($this->i['graph_height'] - $bottom_heading_start), 'fill' => self::$c['color']['main_headers']));
-			$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => $this->i['graph_left_end'], 'y' => ($bottom_heading_start + self::$c['size']['key'] + 3), 'font-size' => self::$c['size']['key'], 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'end', 'font-weight' => 'bold', 'xlink:show' => 'new', 'xlink:href' => 'https://www.phoronix-test-suite.com/'));
+			//$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => $this->i['graph_left_end'], 'y' => ($bottom_heading_start + self::$c['size']['key'] + 3), 'font-size' => self::$c['size']['key'], 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'end', 'font-weight' => 'bold', 'xlink:show' => 'new', 'xlink:href' => 'https://www.phoronix-test-suite.com/'));
 
 			if(isset($this->d['link_alternate_view']) && $this->d['link_alternate_view'])
 			{
@@ -791,7 +791,7 @@ abstract class pts_graph_core
 
 			if(!empty(self::$c['text']['watermark']))
 			{
-				$this->svg_dom->add_text_element(self::$c['text']['watermark'], array('x' => $left_end, 'y' => ($top_start - 5), 'font-size' => 8, 'fill' => self::$c['color']['text'], 'text-anchor' => 'end', 'xlink:show' => 'new', 'xlink:href' => self::$c['text']['watermark_url']));
+				$this->svg_dom->add_text_element(self::$c['text']['watermark'], array('x' => $left_end, 'y' => ($top_start - 5), 'font-size' => 8, 'fill' => self::$c['color']['text'], 'text-anchor' => 'end', 'font-weight' => 'bold', 'xlink:show' => 'new', 'xlink:href' => self::$c['text']['watermark_url']));
 			}
 		}
 		else
@@ -800,7 +800,7 @@ abstract class pts_graph_core
 
 			if(self::$c['text']['watermark'] != null)
 			{
-				$this->svg_dom->add_text_element(self::$c['text']['watermark'], array('x' => ($left_end - 2), 'y' => ($top_start + 12), 'font-size' => 10, 'fill' => self::$c['color']['text'], 'text-anchor' => 'end', 'xlink:show' => 'new', 'xlink:href' => self::$c['text']['watermark_url']));
+				$this->svg_dom->add_text_element(self::$c['text']['watermark'], array('x' => ($left_end - 2), 'y' => ($top_start + 12), 'font-size' => 10, 'fill' => self::$c['color']['text'], 'text-anchor' => 'end', 'font-weight' => 'bold', 'xlink:show' => 'new', 'xlink:href' => self::$c['text']['watermark_url']));
 			}
 		}
 
@@ -852,7 +852,7 @@ abstract class pts_graph_core
 				}
 			}
 
-			$this->svg_dom->add_text_element($str, array('x' => ($left_start + $offset), 'y' => ($top_start - 5), 'font-size' => 8, 'fill' => self::$c['color']['text'], 'text-anchor' => 'start'));
+			$this->svg_dom->add_text_element($str, array('x' => ($left_start + $offset), 'y' => ($top_start - 5), 'font-size' => 8, 'font-weight' => 'bold', 'fill' => self::$c['color']['text'], 'text-anchor' => 'start'));
 		}
 	}
 	protected function render_graph_value_ticks($left_start, $top_start, $left_end, $top_end, $show_numbers = true)
