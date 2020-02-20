@@ -282,14 +282,15 @@ abstract class pts_graph_core
 		foreach(self::$c['color']['paint'] as $color)
 		{
 			self::$c['color']['seeded_paint'][] = $color;
-			foreach(array(0.6, 0.35) as $p)
+		/*	foreach(array(0.8, 0.4) as $p)
 			{
-				foreach(array(0, 255) as $o)
+				foreach(array(0, 220) as $o)
 				{
 					self::$c['color']['seeded_paint'][] = self::shift_color($color, $p, $o);
 				}
-			}
+			} */
 		}
+		//shuffle(self::$c['color']['seeded_paint']);
 	}
 	public static function set_default_graph_values(&$config)
 	{
@@ -908,7 +909,7 @@ abstract class pts_graph_core
 
 					if($i != 0 && $this->i['show_background_lines'])
 					{
-						$this->svg_dom->add_element('line', array('x1' => ($px_from_left_end + 6), 'y1' => ($px_from_top + 1), 'x2' => ($this->i['graph_left_end']), 'y2' => ($px_from_top + 1)), $g_background_lines);
+					//	$this->svg_dom->add_element('line', array('x1' => ($px_from_left_end + 6), 'y1' => ($px_from_top + 1), 'x2' => ($this->i['graph_left_end']), 'y2' => ($px_from_top + 1)), $g_background_lines);
 					}
 					if($i != 0)
 					{
