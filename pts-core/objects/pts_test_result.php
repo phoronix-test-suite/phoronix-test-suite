@@ -29,6 +29,7 @@ class pts_test_result
 	private $result_precision = 2;
 	private $overrode_default_precision = false;
 	private $annotation = null;
+	private $parent_hash = null;
 
 	public $test_profile;
 	public $test_result_buffer;
@@ -139,6 +140,18 @@ class pts_test_result
 	public function get_annotation()
 	{
 		return $this->annotation;
+	}
+	public function set_parent_hash_from_result(&$result_object)
+	{
+		$this->parent_hash = $result_object->get_comparison_hash(true, false);
+	}
+	public function set_parent_hash($parent)
+	{
+		$this->parent_hash = $parent;
+	}
+	public function get_parent_hash()
+	{
+		return $this->parent_hash;
 	}
 	public function get_arguments_description_shortened($compact_words = true)
 	{

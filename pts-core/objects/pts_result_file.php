@@ -101,6 +101,7 @@ class pts_result_file
 				$test_result->set_used_arguments_description($result->Description->__toString());
 				$test_result->set_used_arguments($result->Arguments->__toString());
 				$test_result->set_annotation((isset($result->Annotation) ? $result->Annotation->__toString() : null));
+				$test_result->set_parent_hash((isset($result->Parent) ? $result->Parent->__toString() : null));
 
 				$result_buffer = new pts_test_result_buffer();
 				foreach($result->Data->Entry as $entry)
@@ -743,6 +744,7 @@ class pts_result_file
 			$xml_writer->addXmlNode('PhoronixTestSuite/Result/Proportion', $result_object->test_profile->get_result_proportion());
 			$xml_writer->addXmlNode('PhoronixTestSuite/Result/DisplayFormat', $result_object->test_profile->get_display_format());
 			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Result/Annotation', $result_object->get_annotation());
+			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Result/Parent', $result_object->get_parent_hash());
 
 			foreach($buffer_items as $i => &$buffer_item)
 			{

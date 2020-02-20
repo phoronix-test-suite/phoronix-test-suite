@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2019, Phoronix Media
-	Copyright (C) 2008 - 2019, Michael Larabel
+	Copyright (C) 2008 - 2020, Phoronix Media
+	Copyright (C) 2008 - 2020, Michael Larabel
 	system_monitor.php: System sensor monitoring module for PTS
 
 	This program is free software; you can redistribute it and/or modify
@@ -612,6 +612,7 @@ class system_monitor extends pts_module_interface
 			if(count($sensor_results) > 2 && self::$successful_test_run_request)
 			{
 				// Copy the value each time as if you are directly writing the original data, each succeeding time in the loop the used arguments gets borked
+				$original_parent_hash = self::$successful_test_run_request->get_comparison_hash(true, false);
 				$test_result = clone self::$successful_test_run_request;
 				$unit = 'Watt';
 
@@ -632,6 +633,7 @@ class system_monitor extends pts_module_interface
 					//$test_result->set_used_arguments_description(phodevi::sensor_name('sys.power') . ' Monitor');
 					//$test_result->set_used_arguments(phodevi::sensor_name('sys.power') . ' ' . $test_result->get_arguments());
 					$test_result->test_result_buffer = new pts_test_result_buffer();
+					$test_result->set_parent_hash($original_parent_hash);
 
 					if($test_result->test_profile->get_result_proportion() == 'HIB')
 					{

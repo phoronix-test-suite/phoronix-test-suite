@@ -116,7 +116,7 @@ class pts_svg_dom_gd
 	}
 	public static function is_supported()
 	{
-		return (extension_loaded('gd') && function_exists('getimagesizefromstring')  && function_exists('imagettftext')) || pts_client::executable_in_path('rsvg-convert') || pts_client::executable_in_path('inkscape');
+		return (extension_loaded('gd') && function_exists('getimagesizefromstring')  && function_exists('imagettftext')) || (PTS_IS_CLIENT && (pts_client::executable_in_path('rsvg-convert') || pts_client::executable_in_path('inkscape')));
 	}
 	public static function svg_dom_to_gd($dom, $format)
 	{
@@ -125,7 +125,7 @@ class pts_svg_dom_gd
 			$width = $dom->childNodes->item(2)->attributes->getNamedItem('width')->nodeValue;
 			$height = $dom->childNodes->item(2)->attributes->getNamedItem('height')->nodeValue;
 
-			if(pts_client::executable_in_path('rsvg-convert') && $format == 'PNG')
+			if(PTS_IS_CLIENT && pts_client::executable_in_path('rsvg-convert') && $format == 'PNG')
 			{
 				// Using Inkscape for converting SVG to PNG generally means higher quality conversion
 				$temp_svg = sys_get_temp_dir() . '/pts-temp-' . rand(0, 50000) . '.svg';

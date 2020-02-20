@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015 - 2019, Phoronix Media
-	Copyright (C) 2015 - 2019, Michael Larabel
+	Copyright (C) 2015 - 2020, Phoronix Media
+	Copyright (C) 2015 - 2020, Michael Larabel
 	perf_per_dollar.php: This module is derived from the system_monitor module
 
 	This program is free software; you can redistribute it and/or modify
@@ -189,6 +189,7 @@ class perf_per_dollar extends pts_module_interface
 			return false;
 
 		// This copy isn't needed but it's shorter and from port from system_monitor where there can be multiple items tracked
+		$original_parent_hash = $test_result->get_comparison_hash(true, false);
 		$test_result = clone $test_result;
 		$test_result->test_profile->set_identifier(null);
 		$test_result->set_used_arguments_description('Performance / Cost - ' . $test_result->get_arguments_description());
@@ -196,6 +197,7 @@ class perf_per_dollar extends pts_module_interface
 		$test_result->test_profile->set_result_scale($scale);
 		$test_result->test_result_buffer = new pts_test_result_buffer();
 		$test_result->test_result_buffer->add_test_result(self::$result_identifier, $result, null, array('install-footnote' => $footnote));
+		$test_result->set_parent_hash($original_parent_hash);
 		$result_file->add_result($test_result);
 	}
 	public static function __event_results_process(&$test_run_manager)

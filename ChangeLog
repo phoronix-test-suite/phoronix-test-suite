@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Add Parent tag to result file schema for specifying relation to other result objects
 pts_Graph: Restore support for error bars on vertical bar graph rendering
 pts_Graph: Support for simpler view / rendering without header/footer
 
