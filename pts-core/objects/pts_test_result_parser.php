@@ -448,6 +448,7 @@ class pts_test_result_parser
 
 		$definitions = $test_run_request->test_profile->get_results_definition('ResultsParser');
 		$all_parser_entries = $definitions->get_result_parser_definitions();
+		$avoid_duplicates = array();
 		foreach($all_parser_entries as $entry)
 		{
 			$tr = clone $test_run_request;
@@ -465,6 +466,12 @@ class pts_test_result_parser
 			if($test_result != false)
 			{
 				// Result found
+				if(in_array($test_result, $avoid_duplicates))
+				{
+					// Workaround for some tests like FIO that have test result parsers that could generate duplicates in handling old PTS versions while newer ones have K conversion, etc
+					continue;
+				}
+				$avoid_duplicates[] = $test_result;
 				if($is_numeric_check)
 				{
 					// Check if this test reports a min result value
