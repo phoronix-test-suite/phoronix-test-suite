@@ -70,7 +70,6 @@ class pts_result_file_analyzer
 						$test_result->test_profile->set_identifier(null);
 						$test_result->test_profile->set_display_format('BAR_GRAPH');
 						$test_result->test_profile->set_result_scale($scale);
-						//$test_result->test_profile->set_result_proportion('HIB');
 						$test_result->set_used_arguments($test_combo);
 						$test_result->test_result_buffer = new pts_test_result_buffer();
 						$comparing = null;

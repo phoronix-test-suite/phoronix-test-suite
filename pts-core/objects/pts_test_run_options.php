@@ -571,7 +571,7 @@ class pts_test_run_options
 						// Only show Direct3D renderer options when running on Windows or similar (i.e. Wine)
 						continue;
 					}
-					if((stripos($names[$i], 'NVIDIA ') !== false || stripos($names[$i] . ' ', 'CUDA ') !== false) && !phodevi::is_nvidia_graphics())
+					if((stripos($names[$i], 'NVIDIA ') !== false || stripos($names[$i] . ' ', 'CUDA ') !== false) && stripos(phodevi::read_property('gpu', 'model'), 'NVIDIA') === false)
 					{
 						// Only show NVIDIA / CUDA options when running with NVIDIA hardware
 						continue;
@@ -594,7 +594,7 @@ class pts_test_run_options
 
 				for($i = 0; $i < count($names) && $i < count($values); $i++)
 				{
-					if((stripos($names[$i], 'NVIDIA ') !== false || stripos($names[$i] . ' ', 'CUDA ') !== false) && !phodevi::is_nvidia_graphics())
+					if((stripos($names[$i], 'NVIDIA ') !== false || stripos($names[$i] . ' ', 'CUDA ') !== false) && stripos(phodevi::read_property('gpu', 'model'), 'NVIDIA') === false)
 					{
 						// Only show NVIDIA / CUDA options when running with NVIDIA hardware
 						continue;
