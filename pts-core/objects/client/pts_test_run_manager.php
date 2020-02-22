@@ -1809,7 +1809,7 @@ class pts_test_run_manager
 		$display_driver = phodevi::read_property('system', 'display-driver');
 		$gpu = phodevi::read_name('gpu');
 
-		if($test_profile->is_supported(false) == false)
+		if($test_profile->is_supported($report_errors) == false)
 		{
 			$valid_test_profile = false;
 		}
