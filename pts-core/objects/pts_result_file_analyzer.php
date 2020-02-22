@@ -96,6 +96,7 @@ class pts_result_file_analyzer
 						$test_result->test_profile->set_version($ro->test_profile->get_app_version());
 						if($test_result->test_result_buffer->get_count() > 1)
 						{
+							$test_result->dynamically_generated = true;
 							$new_result_objects[] = $test_result;
 							$global_results_to_drop = array_merge($global_results_to_drop, $results_to_drop);
 						}
@@ -274,6 +275,7 @@ class pts_result_file_analyzer
 		$test_result->set_used_arguments_description('Wins - ' . $tests_counted . ' Tests');
 		//$test_result->set_used_arguments('Geometric-Mean');
 		$test_result->test_result_buffer = new pts_test_result_buffer();
+		$test_result->dynamically_generated = true;
 
 		foreach($wins as $identifier => $count)
 		{
@@ -301,6 +303,7 @@ class pts_result_file_analyzer
 		$test_result->set_used_arguments_description('Losses - ' . $tests_counted . ' Tests');
 		//$test_result->set_used_arguments('Geometric-Mean');
 		$test_result->test_result_buffer = new pts_test_result_buffer();
+		$test_result->dynamically_generated = true;
 
 		foreach($losses as $identifier => $count)
 		{
@@ -424,6 +427,7 @@ class pts_result_file_analyzer
 				$test_result->sort_results_by_performance();
 				$test_result->test_result_buffer->buffer_values_reverse();
 			}
+			$test_result->dynamically_generated = true;
 			return $test_result;
 		}
 
@@ -526,6 +530,7 @@ class pts_result_file_analyzer
 				$test_result->sort_results_by_performance();
 				$test_result->test_result_buffer->buffer_values_reverse();
 			}
+			$test_result->dynamically_generated = true;
 			$geo_results[] = $test_result;
 		}
 
@@ -608,6 +613,7 @@ class pts_result_file_analyzer
 					$test_result->sort_results_by_performance();
 					$test_result->test_result_buffer->buffer_values_reverse();
 				}
+				$test_result->dynamically_generated = true;
 				$test_results[] = $test_result;
 			}
 			return $test_results;

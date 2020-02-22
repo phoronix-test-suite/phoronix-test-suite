@@ -43,6 +43,7 @@ class pts_test_result
 	public $test_result_standard_output = null;
 
 	protected $already_normalized = false;
+	public $dynamically_generated = false;
 
 	public function __construct($test_profile)
 	{

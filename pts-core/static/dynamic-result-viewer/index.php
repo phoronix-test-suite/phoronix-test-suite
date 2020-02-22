@@ -390,11 +390,11 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 				$prev_title = $result_object->test_profile->get_title();
 			}
 			$PAGE .= $res . '<br />';
-			if(VIEWER_CAN_DELETE_RESULTS && RESULTS_VIEWING_COUNT == 1)
+			if(VIEWER_CAN_DELETE_RESULTS && RESULTS_VIEWING_COUNT == 1 && !$result_object->dynamically_generated)
 			{
 				$PAGE .= '<a class="mini" href="#" onclick="javascript:delete_result_from_result_file(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\'); return false;">(Delete Result)</a>';
 			}
-			if(VIEWER_CAN_MODIFY_RESULTS && RESULTS_VIEWING_COUNT == 1)
+			if(VIEWER_CAN_MODIFY_RESULTS && RESULTS_VIEWING_COUNT == 1 && !$result_object->dynamically_generated)
 			{
 				if($result_object->get_annotation() == null)
 				{
