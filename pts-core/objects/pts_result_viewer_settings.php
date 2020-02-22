@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2019, Phoronix Media
-	Copyright (C) 2008 - 2019, Michael Larabel
+	Copyright (C) 2008 - 2020, Phoronix Media
+	Copyright (C) 2008 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -144,6 +144,10 @@ class pts_result_viewer_settings
 			$analyze_checkboxes['Multi-Way Comparison'][] = array('cmw', 'Condense Comparison');
 			$analyze_checkboxes['Multi-Way Comparison'][] = array('imw', 'Transpose Comparison');
 		}
+		if((!$result_file->is_multi_way_comparison() && $result_file->get_qualified_test_count() > 1) || self::check_request_for_var($request, 'cts'))
+		{
+			$analyze_checkboxes['Multi-Way Comparison'][] = array('cts', 'Condense Multi-Option Tests Into Single Result Graphs');
+		}
 
 		$t = null;
 		foreach($analyze_checkboxes as $title => $group)
@@ -280,6 +284,10 @@ class pts_result_viewer_settings
 					$result_file->add_result($g);
 				}
 			}
+		}
+		if(self::check_request_for_var($request, 'cts'))
+		{
+			pts_result_file_analyzer::condense_result_file_by_multi_option_tests($result_file);
 		}
 		if(self::check_request_for_var($request, 'sor'))
 		{

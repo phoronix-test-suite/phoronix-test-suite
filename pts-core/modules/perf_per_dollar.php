@@ -215,7 +215,6 @@ class perf_per_dollar extends pts_module_interface
 				$test_result->test_profile->set_test_title('Meta Performance Per Dollar');
 				$test_result->test_profile->set_identifier(null);
 				$test_result->test_profile->set_version(null);
-				$test_result->test_profile->set_result_proportion(null);
 				$test_result->test_profile->set_display_format('BAR_GRAPH');
 				$test_result->test_profile->set_result_scale('Performance Per Dollar');
 				$test_result->test_profile->set_result_proportion('HIB');
@@ -239,7 +238,6 @@ class perf_per_dollar extends pts_module_interface
 				$test_result->test_profile->set_test_title('Cost To Run Tests');
 				$test_result->test_profile->set_identifier(null);
 				$test_result->test_profile->set_version(null);
-				$test_result->test_profile->set_result_proportion(null);
 				$test_result->test_profile->set_display_format('BAR_GRAPH');
 				$test_result->test_profile->set_result_scale('Cost / Price Per Hour');
 				$test_result->test_profile->set_result_proportion('LIB');

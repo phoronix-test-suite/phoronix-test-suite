@@ -483,14 +483,18 @@ class pts_result_file
 	{
 		return isset($this->result_objects[$ch]) ? $this->result_objects[$ch] : false;
 	}
-	public function remove_result_object_by_id($index)
+	public function remove_result_object_by_id($index_or_indexes)
 	{
-		if(isset($this->result_objects[$index]))
+		$did_remove = false;
+		foreach(pts_arrays::to_array($index_or_indexes) as $index)
 		{
-			unset($this->result_objects[$index]);
-			return true;
+			if(isset($this->result_objects[$index]))
+			{
+				unset($this->result_objects[$index]);
+				$did_remove = true;
+			}
 		}
-		return false;
+		return $did_remove;
 	}
 	public function update_annotation_for_result_object_by_id($index, $annotation)
 	{

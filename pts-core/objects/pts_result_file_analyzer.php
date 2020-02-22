@@ -22,6 +22,95 @@
 
 class pts_result_file_analyzer
 {
+	public static function condense_result_file_by_multi_option_tests(&$result_file)
+	{
+		$pmap = array();
+		$do_proceed = false;
+		foreach($result_file->get_result_objects() as $index => $ro)
+		{
+			if($ro->test_profile->get_identifier() == null || $ro->test_profile->get_display_format() != 'BAR_GRAPH')
+			{
+				continue;
+			}
+			$args = $ro->get_arguments_description();
+			$scale = $ro->test_profile->get_result_scale();
+			foreach(explode(' - ', $args) as $arg)
+			{
+				$args_without_current_arg = str_replace($arg, '', $args);
+				if(!isset($pmap[$ro->test_profile->get_identifier()][$args_without_current_arg]))
+				{
+					$pmap[$ro->test_profile->get_identifier()][$args_without_current_arg] = array();
+				}
+				if(!isset($pmap[$ro->test_profile->get_identifier()][$args_without_current_arg][$scale]))
+				{
+					$pmap[$ro->test_profile->get_identifier()][$args_without_current_arg][$scale] = array();
+				}
+				$pmap[$ro->test_profile->get_identifier()][$args_without_current_arg][$scale][$arg] = $index;
+
+				if(!$do_proceed && count($pmap[$ro->test_profile->get_identifier()][$args_without_current_arg][$scale]) > 1)
+				{
+					$do_proceed = true;
+				}
+			}
+		}
+
+		if($do_proceed)
+		{
+			$new_result_objects = array();
+			$global_results_to_drop = array();
+			foreach(array_keys($pmap) as $distinct_test)
+			{
+				foreach(array_keys($pmap[$distinct_test]) as $test_combo)
+				{
+					foreach(array_keys($pmap[$distinct_test][$test_combo]) as $scale)
+					{
+						$test_profile = new pts_test_profile($distinct_test);
+						$test_result = new pts_test_result($test_profile);
+						//$test_result->test_profile->set_test_title($test_profile->get_title());
+						$test_result->test_profile->set_identifier(null);
+						$test_result->test_profile->set_display_format('BAR_GRAPH');
+						$test_result->test_profile->set_result_scale($scale);
+						//$test_result->test_profile->set_result_proportion('HIB');
+						$test_result->set_used_arguments($test_combo);
+						$test_result->test_result_buffer = new pts_test_result_buffer();
+						$comparing = null;
+						$results_to_drop = array();
+						foreach($pmap[$distinct_test][$test_combo][$scale] as $arg => $ro_index)
+						{
+							if(strpos($arg, ': ') !== false)
+							{
+								list($comparing, $arg) = explode(': ', $arg);
+							}
+							if(($ro = $result_file->get_result_object_by_hash($ro_index)))
+							{
+								$test_result->test_profile->set_result_proportion($ro->test_profile->get_result_proportion());
+								foreach($ro->test_result_buffer->get_buffer_items() as $old_bi)
+								{
+									$test_result->test_result_buffer->add_test_result($old_bi->get_result_identifier() . ': ' . $arg, $old_bi->get_result_value(), $old_bi->get_result_raw(), $old_bi->get_result_json_raw(), $old_bi->get_min_result_value(), $old_bi->get_max_result_value());
+								}
+								$results_to_drop[] = $ro_index;
+							}
+						}
+						$tc = trim(trim(trim($test_combo), '-'));
+						$test_result->set_used_arguments_description($comparing . ' Comparison' . ($tc ? ' (' . $tc . ')' : null));
+						if($test_result->test_result_buffer->get_count() > 1)
+						{
+							$new_result_objects[] = $test_result;
+							$global_results_to_drop = array_merge($global_results_to_drop, $results_to_drop);
+						}
+					}
+				}
+			}
+			if(count($new_result_objects) > 0)
+			{
+				$result_file->remove_result_object_by_id($global_results_to_drop);
+				foreach($new_result_objects as $new_ro)
+				{
+					$result_file->add_result($new_ro);
+				}
+			}
+		}
+	}
 	public static function generate_executive_summary($result_file, $selected_result = null,  &$error = null)
 	{
 		$summary = null;
