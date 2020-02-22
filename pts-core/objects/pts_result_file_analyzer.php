@@ -67,7 +67,6 @@ class pts_result_file_analyzer
 					{
 						$test_profile = new pts_test_profile($distinct_test);
 						$test_result = new pts_test_result($test_profile);
-						//$test_result->test_profile->set_test_title($test_profile->get_title());
 						$test_result->test_profile->set_identifier(null);
 						$test_result->test_profile->set_display_format('BAR_GRAPH');
 						$test_result->test_profile->set_result_scale($scale);
@@ -84,7 +83,6 @@ class pts_result_file_analyzer
 							}
 							if(($ro = $result_file->get_result_object_by_hash($ro_index)))
 							{
-								$test_result->test_profile->set_result_proportion($ro->test_profile->get_result_proportion());
 								foreach($ro->test_result_buffer->get_buffer_items() as $old_bi)
 								{
 									$test_result->test_result_buffer->add_test_result(($system_count > 1 ? $old_bi->get_result_identifier() . ': ' : null) . $arg, $old_bi->get_result_value(), $old_bi->get_result_raw(), $old_bi->get_result_json_raw(), $old_bi->get_min_result_value(), $old_bi->get_max_result_value());
@@ -94,6 +92,9 @@ class pts_result_file_analyzer
 						}
 						$tc = trim(trim(trim($test_combo), '-'));
 						$test_result->set_used_arguments_description($comparing . ' Comparison' . ($tc ? ' (' . $tc . ')' : null));
+						$test_result->test_profile->set_test_title($ro->test_profile->get_title());
+						$test_result->test_profile->set_result_proportion($ro->test_profile->get_result_proportion());
+						$test_result->test_profile->set_version($ro->test_profile->get_app_version());
 						if($test_result->test_result_buffer->get_count() > 1)
 						{
 							$new_result_objects[] = $test_result;
