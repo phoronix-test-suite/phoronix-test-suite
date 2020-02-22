@@ -599,6 +599,16 @@ class pts_test_run_options
 						// Only show NVIDIA / CUDA options when running with NVIDIA hardware
 						continue;
 					}
+					if(stripos($names[$i], 'Windows') !== false && !phodevi::is_windows())
+					{
+						// Do not show options mentioning Windows if not on Windows
+						continue;
+					}
+					if(stripos($names[$i], 'Linux') !== false && !phodevi::is_linux())
+					{
+						// Do not show options mentioning Linux if not on Linux
+						continue;
+					}
 
 					$option_names[] = $names[$i];
 					$option_values[] = $values[$i];
