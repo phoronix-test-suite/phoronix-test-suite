@@ -56,6 +56,7 @@ class pts_result_file_analyzer
 
 		if($do_proceed)
 		{
+			$system_count = $result_file->get_system_count();
 			$new_result_objects = array();
 			$global_results_to_drop = array();
 			foreach(array_keys($pmap) as $distinct_test)
@@ -86,7 +87,7 @@ class pts_result_file_analyzer
 								$test_result->test_profile->set_result_proportion($ro->test_profile->get_result_proportion());
 								foreach($ro->test_result_buffer->get_buffer_items() as $old_bi)
 								{
-									$test_result->test_result_buffer->add_test_result($old_bi->get_result_identifier() . ': ' . $arg, $old_bi->get_result_value(), $old_bi->get_result_raw(), $old_bi->get_result_json_raw(), $old_bi->get_min_result_value(), $old_bi->get_max_result_value());
+									$test_result->test_result_buffer->add_test_result(($system_count > 1 ? $old_bi->get_result_identifier() . ': ' : null) . $arg, $old_bi->get_result_value(), $old_bi->get_result_raw(), $old_bi->get_result_json_raw(), $old_bi->get_min_result_value(), $old_bi->get_max_result_value());
 								}
 								$results_to_drop[] = $ro_index;
 							}
