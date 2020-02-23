@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 pts-core: Add option in the result viewer to allow compacting multi-option test results into single graphs
+pts-core: Add option in the result viewer to allow compacting multi-version test results into single graphs
 pts-core: Add Parent tag to result file schema for specifying relation to other result objects
 pts-core: Report test profile support errors when intended
 pts-core: Fix showing NVIDIA test options on non-Linux NVIDIA platforms

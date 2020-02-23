@@ -77,6 +77,7 @@ class pts_result_viewer_settings
 		$has_box_plot = false;
 		$has_line_graph = false;
 		$is_multi_way = $result_file->is_multi_way_comparison();
+		$system_identifier_count = count($result_file->get_system_identifiers());
 
 		foreach($result_file->get_system_identifiers() as $sys)
 		{
@@ -88,7 +89,9 @@ class pts_result_viewer_settings
 		}
 
 		$multi_test_run_options_tracking = array();
+		$tests_with_multiple_versions = array();
 		$has_test_with_multiple_options = false;
+		$has_test_with_multiple_versions = false;
 		foreach($result_file->get_result_objects() as $i => $result_object)
 		{
 			if(!$has_box_plot && $result_object->test_profile->get_display_format() == 'HORIZONTAL_BOX_PLOT')
@@ -99,8 +102,7 @@ class pts_result_viewer_settings
 			{
 				$has_line_graph = true;
 			}
-
-			if(!$has_test_with_multiple_options)
+			if(!$is_multi_way && !$has_test_with_multiple_options)
 			{
 				if(!isset($multi_test_run_options_tracking[$result_object->test_profile->get_identifier()]))
 				{
@@ -110,11 +112,26 @@ class pts_result_viewer_settings
 				if(count($multi_test_run_options_tracking[$result_object->test_profile->get_identifier()]) > 1)
 				{
 					$has_test_with_multiple_options = true;
+					unset($multi_test_run_options_tracking);
+				}
+			}
+			if(!$is_multi_way && !$has_test_with_multiple_versions)
+			{
+				$ti_no_version = $result_object->test_profile->get_identifier(false);
+				if(!isset($tests_with_multiple_versions[$ti_no_version]))
+				{
+					$tests_with_multiple_versions[$ti_no_version] = array();
+				}
+				pts_arrays::unique_push($tests_with_multiple_versions[$ti_no_version], $result_object->test_profile->get_app_version());
+				if(count($tests_with_multiple_versions[$ti_no_version]) > 1)
+				{
+					$has_test_with_multiple_versions = true;
+					unset($tests_with_multiple_versions);
 				}
 			}
 
 			// (optimization) if it has everything, break
-			if($has_line_graph && $has_box_plot && $has_test_with_multiple_options)
+			if($has_line_graph && $has_box_plot && $has_test_with_multiple_options && $has_test_with_multiple_versions)
 			{
 				break;
 			}
@@ -130,7 +147,7 @@ class pts_result_viewer_settings
 			'Helpers' => array()
 			);
 
-		if(count($result_file->get_system_identifiers()) > 1)
+		if($system_identifier_count > 1)
 		{
 			$analyze_checkboxes['Statistics'][] = array('shm', 'Show Overall Harmonic Mean(s)');
 			$analyze_checkboxes['Statistics'][] = array('sgm', 'Show Overall Geometric Mean');
@@ -161,14 +178,21 @@ class pts_result_viewer_settings
 			$analyze_checkboxes['Graph Settings'][] = array('nbp', 'No Box Plots');
 		}
 
-		if($is_multi_way && count($result_file->get_system_identifiers()) > 1)
+		if($is_multi_way && $system_identifier_count > 1)
 		{
 			$analyze_checkboxes['Multi-Way Comparison'][] = array('cmw', 'Condense Comparison');
+		}
+		if(($is_multi_way && $system_identifier_count > 1) || self::check_request_for_var($request, 'cmv') || self::check_request_for_var($request, 'cts'))
+		{
 			$analyze_checkboxes['Multi-Way Comparison'][] = array('imw', 'Transpose Comparison');
 		}
-		if((!$is_multi_way && $has_test_with_multiple_options) || self::check_request_for_var($request, 'cts'))
+		if((!$is_multi_way && $has_test_with_multiple_options && !self::check_request_for_var($request, 'cmv')) || self::check_request_for_var($request, 'cts'))
 		{
 			$analyze_checkboxes['Multi-Way Comparison'][] = array('cts', 'Condense Multi-Option Tests Into Single Result Graphs');
+		}
+		if((!$is_multi_way && $has_test_with_multiple_versions && !self::check_request_for_var($request, 'cts')) || self::check_request_for_var($request, 'cmv'))
+		{
+			$analyze_checkboxes['Multi-Way Comparison'][] = array('cmv', 'Condense Test Profiles With Multiple Version Results Into Single Result Graphs');
 		}
 
 		$t = null;
@@ -319,6 +343,10 @@ class pts_result_viewer_settings
 		if(self::check_request_for_var($request, 'cts'))
 		{
 			pts_result_file_analyzer::condense_result_file_by_multi_option_tests($result_file);
+		}
+		if(self::check_request_for_var($request, 'cmv'))
+		{
+			pts_result_file_analyzer::condense_result_file_by_multi_version_tests($result_file);
 		}
 		if(self::check_request_for_var($request, 'sor'))
 		{
