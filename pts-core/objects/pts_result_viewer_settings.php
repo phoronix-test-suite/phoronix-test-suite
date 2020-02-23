@@ -151,6 +151,11 @@ class pts_result_viewer_settings
 		$analyze_checkboxes['Statistics'][] = array('gtb', 'Graph Values Of All Runs (Box Plot)');
 		$analyze_checkboxes['Statistics'][] = array('gtl', 'Graph Values Of All Runs (Line Graph)');
 
+		if($result_file->get_test_count() > 12 && defined('PTS_TEST_SUITE_PATH') && is_dir(PTS_TEST_SUITE_PATH))
+		{
+			$analyze_checkboxes['Statistics'][] = array('sts', 'Show Performance Breakdown By Performance-Per-Suite');
+		}
+
 		if($has_box_plot || $has_line_graph)
 		{
 			$analyze_checkboxes['Graph Settings'][] = array('nbp', 'No Box Plots');
@@ -273,32 +278,41 @@ class pts_result_viewer_settings
 	}
 	public static function process_request_to_attributes(&$request, &$result_file, &$extra_attributes)
 	{
+		if(self::check_request_for_var($request, 'sts'))
+		{
+			foreach(pts_result_file_analyzer::generate_geometric_mean_result_for_suites_in_result_file($result_file, true, 20) as $result)
+			{
+				if($result)
+				{
+					$result_file->add_result($result);
+				}
+			}
+		}
 		if(self::check_request_for_var($request, 'shm'))
 		{
-			foreach(pts_result_file_analyzer::generate_harmonic_mean_result($result_file) as $overview_harmonic)
+			foreach(pts_result_file_analyzer::generate_harmonic_mean_result($result_file) as $result)
 			{
-				if($overview_harmonic)
+				if($result)
 				{
-					$result_file->add_result($overview_harmonic);
+					$result_file->add_result($result);
 				}
 			}
 		}
 		if(self::check_request_for_var($request, 'sgm'))
 		{
-			$overview_geometric = pts_result_file_analyzer::generate_geometric_mean_result($result_file);
-			if($overview_geometric)
+			$result = pts_result_file_analyzer::generate_geometric_mean_result($result_file);
+			if($result)
 			{
-				$result_file->add_result($overview_geometric);
+				$result_file->add_result($result);
 			}
 		}
 		if(self::check_request_for_var($request, 'swl'))
 		{
-			$overview_wins_losses = pts_result_file_analyzer::generate_wins_losses_results($result_file);
-			foreach($overview_wins_losses as $g)
+			foreach(pts_result_file_analyzer::generate_wins_losses_results($result_file) as $g)
 			{
-				if($g)
+				if($result)
 				{
-					$result_file->add_result($g);
+					$result_file->add_result($result);
 				}
 			}
 		}
