@@ -529,7 +529,12 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 						$v = $buffer_item->get_result_value();
 						if(!is_numeric($v)) continue;
 						$percentage = ($v / $best_result) * 100;
-						$geo_display .=  '<div class="geo_bg_graph" style="margin-right: ' . round(100 - $percentage, 1) . '%"><strong>' . $buffer_item->get_result_identifier() . ':</strong> ' . $v . ' (' . round($percentage, 2) . '%)</div>';
+						$bg = pts_render::identifier_to_brand_color($buffer_item->get_result_identifier(), '');
+						if($bg)
+						{
+							$bg = 'background: ' . $bg . '; color: #FFF';
+						}
+						$geo_display .=  '<div class="geo_bg_graph" style="margin-right: ' . round(100 - $percentage, 1) . '%; ' . $bg . '"><strong>' . $buffer_item->get_result_identifier() . ':</strong> ' . $v . ' (' . round($percentage, 2) . '%)</div>';
 						$geo_display_count++;
 					}
 				}
