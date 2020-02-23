@@ -157,7 +157,9 @@ class pts_svg_dom_gd
 				}
 				unlink($temp_png);
 			}
-			else if(extension_loaded('gd') && function_exists('imagettftext') && $width > 1 && $height > 1)
+
+			// Fallback to PHP GD library
+			if(extension_loaded('gd') && function_exists('imagettftext') && $width > 1 && $height > 1)
 			{
 				$gd = imagecreatetruecolor($width, $height);
 
@@ -194,20 +196,17 @@ class pts_svg_dom_gd
 			//var_dump($node->attributes);
 		}
 
-		$tmp_output = tempnam('/tmp', 'pts-gd');
+		ob_start();
 		switch($format)
 		{
 			case 'JPEG':
-				imagejpeg($gd, $tmp_output, 100);
-				$output = file_get_contents($tmp_output);
-				unlink($tmp_output);
+				imagejpeg($gd);
 				break;
 			case 'PNG':
-				imagepng($gd, $tmp_output, 1);
-				$output = file_get_contents($tmp_output);
-				unlink($tmp_output);
+				imagepng($gd);
 				break;
 		}
+		$output = ob_get_clean();
 
 		return $output;
 	}
