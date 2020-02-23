@@ -500,7 +500,7 @@ class pts_result_file_output
 		}
 		return $result_output;
 	}
-	public static function result_file_to_detailed_html_table(&$result_file, $grid_class = 'grid', $extra_attributes = null)
+	public static function result_file_to_detailed_html_table(&$result_file, $grid_class = 'grid', $extra_attributes = null, $detailed_table = true)
 	{
 		$table = array();
 		$systems = array_merge(array(' '), $result_file->get_system_identifiers());
@@ -518,20 +518,23 @@ class pts_result_file_output
 
 			$table[] = array_fill(0, count($systems), ' ');
 			$row = &$table[count($table) - 1];
-			$table[] = array_fill(0, count($systems), ' ');
-			$nor = &$table[count($table) - 1];
-			$nor[0] = ' &nbsp; &nbsp; Normalized';
-			$table[] = array_fill(0, count($systems), ' ');
-			$samples = &$table[count($table) - 1];
-			$samples[0] = ' &nbsp; &nbsp; Samples';
-			if($ro->test_result_buffer->has_run_with_multiple_samples())
+			if($detailed_table)
 			{
 				$table[] = array_fill(0, count($systems), ' ');
-				$dev = &$table[count($table) - 1];
-				$dev[0] = ' &nbsp; &nbsp; Standard Deviation';
+				$nor = &$table[count($table) - 1];
+				$nor[0] = ' &nbsp; &nbsp; Normalized';
 				$table[] = array_fill(0, count($systems), ' ');
-				$err = &$table[count($table) - 1];
-				$err[0] = ' &nbsp; &nbsp; Standard Error';
+				$samples = &$table[count($table) - 1];
+				$samples[0] = ' &nbsp; &nbsp; Samples';
+				if($ro->test_result_buffer->has_run_with_multiple_samples())
+				{
+					$table[] = array_fill(0, count($systems), ' ');
+					$dev = &$table[count($table) - 1];
+					$dev[0] = ' &nbsp; &nbsp; Standard Deviation';
+					$table[] = array_fill(0, count($systems), ' ');
+					$err = &$table[count($table) - 1];
+					$err[0] = ' &nbsp; &nbsp; Standard Error';
+				}
 			}
 
 			$hib = $ro->test_profile->get_result_proportion() == 'HIB';

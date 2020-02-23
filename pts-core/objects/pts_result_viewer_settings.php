@@ -195,6 +195,8 @@ class pts_result_viewer_settings
 			$analyze_checkboxes['Multi-Way Comparison'][] = array('cmv', 'Condense Test Profiles With Multiple Version Results Into Single Result Graphs');
 		}
 
+		$analyze_checkboxes['Table'][] = array('sdt', 'Show Detailed System Result Table');
+
 		$t = null;
 		foreach($analyze_checkboxes as $title => $group)
 		{

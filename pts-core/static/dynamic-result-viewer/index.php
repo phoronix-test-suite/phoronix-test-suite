@@ -314,7 +314,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 
 		$extra_attributes = null;
 		pts_result_viewer_settings::process_request_to_attributes($_REQUEST, $result_file, $extra_attributes);
-		define('TITLE', $result_file->get_title());
+		define('TITLE', $result_file->get_title() . ' - Phoronix Test Suite');
 		$PAGE .= pts_result_viewer_settings::get_html_sort_bar($result_file, $_REQUEST);
 		$PAGE .= '<h1 id="result_file_title" placeholder="Title">' . $result_file->get_title() . '</h1>';
 		$PAGE .= '<p id="result_file_desc" placeholder="Description">' . str_replace(PHP_EOL, '<br />', $result_file->get_description()) . '</p>';
@@ -366,7 +366,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 
 		if(!$result_file->is_multi_way_comparison())
 		{
-			$PAGE .= '<div style="display:flex; align-items: center; justify-content: center;">' . pts_result_file_output::result_file_to_detailed_html_table($result_file, 'grid', $extra_attributes) . '</div>';
+			$PAGE .= '<div style="display:flex; align-items: center; justify-content: center;">' . pts_result_file_output::result_file_to_detailed_html_table($result_file, 'grid', $extra_attributes, pts_result_viewer_settings::check_request_for_var($_REQUEST, 'sdt')) . '</div>';
 		}
 		else
 		{
