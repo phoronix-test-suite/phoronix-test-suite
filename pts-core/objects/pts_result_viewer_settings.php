@@ -76,6 +76,7 @@ class pts_result_viewer_settings
 		$has_identifier_with_color_brand = false;
 		$has_box_plot = false;
 		$has_line_graph = false;
+		$is_multi_way = $result_file->is_multi_way_comparison();
 
 		foreach($result_file->get_system_identifiers() as $sys)
 		{
@@ -86,6 +87,8 @@ class pts_result_viewer_settings
 			}
 		}
 
+		$multi_test_run_options_tracking = array();
+		$has_test_with_multiple_options = false;
 		foreach($result_file->get_result_objects() as $i => $result_object)
 		{
 			if(!$has_box_plot && $result_object->test_profile->get_display_format() == 'HORIZONTAL_BOX_PLOT')
@@ -96,8 +99,22 @@ class pts_result_viewer_settings
 			{
 				$has_line_graph = true;
 			}
+
+			if(!$has_test_with_multiple_options)
+			{
+				if(!isset($multi_test_run_options_tracking[$result_object->test_profile->get_identifier()]))
+				{
+					$multi_test_run_options_tracking[$result_object->test_profile->get_identifier()] = array();
+				}
+				$multi_test_run_options_tracking[$result_object->test_profile->get_identifier()][] = $result_object->get_arguments_description();
+				if(count($multi_test_run_options_tracking[$result_object->test_profile->get_identifier()]) > 1)
+				{
+					$has_test_with_multiple_options = true;
+				}
+			}
+
 			// (optimization) if it has everything, break
-			if($has_line_graph && $has_box_plot)
+			if($has_line_graph && $has_box_plot && $has_test_with_multiple_options)
 			{
 				break;
 			}
@@ -139,12 +156,12 @@ class pts_result_viewer_settings
 			$analyze_checkboxes['Graph Settings'][] = array('nbp', 'No Box Plots');
 		}
 
-		if($result_file->is_multi_way_comparison() && count($result_file->get_system_identifiers()) > 1)
+		if($is_multi_way && count($result_file->get_system_identifiers()) > 1)
 		{
 			$analyze_checkboxes['Multi-Way Comparison'][] = array('cmw', 'Condense Comparison');
 			$analyze_checkboxes['Multi-Way Comparison'][] = array('imw', 'Transpose Comparison');
 		}
-		if((!$result_file->is_multi_way_comparison() && $result_file->get_qualified_test_count() > 1) || self::check_request_for_var($request, 'cts'))
+		if((!$is_multi_way && $has_test_with_multiple_options) || self::check_request_for_var($request, 'cts'))
 		{
 			$analyze_checkboxes['Multi-Way Comparison'][] = array('cts', 'Condense Multi-Option Tests Into Single Result Graphs');
 		}
