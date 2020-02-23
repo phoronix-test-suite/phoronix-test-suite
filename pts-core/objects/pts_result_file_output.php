@@ -868,6 +868,7 @@ class pts_result_file_output
 
 		$last_result_title = null;
 		$pdf->Bookmark('--------------------');
+		$extra_attributes['pdf_generation'] = true;
 		foreach($result_file->get_result_objects() as $key => $result_object)
 		{
 			$result_object->sort_results_by_performance();
@@ -920,7 +921,7 @@ class pts_result_file_output
 		{
 			return false;
 		}
-		$pdf->Ln(4);
+		$pdf->Ln(1);
 		$pdf->Image($tmp_file);
 		unlink($tmp_file);
 	}
