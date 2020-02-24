@@ -898,7 +898,7 @@ class pts_result_file_output
 			$pdf->WriteText('These geometric means are based upon test groupings / test suites for this result file.');
 			foreach($geo_mean_for_suites as $result_object)
 			{
-				$pdf->CreateBookmark($result_object->test_profile->get_title(), 1);
+				$pdf->CreateBookmark(str_replace('Geometric Mean Of ', '', $result_object->test_profile->get_title()), 1);
 				$graph = pts_render::render_graph_process($result_object, $result_file, false, $extra_attributes);
 				self::add_graph_result_object_to_pdf($pdf, $graph);
 				if($result_object->get_annotation() != null)
