@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Nuttcp</Title>
+    <AppVersion>8.1.4</AppVersion>
+    <Description>Nuttcp is a network performance measurement tool intended for use by network and system managers. Its most basic usage is to determine the raw TCP (or UDP) network layer throughput by transferring memory buffers from a source system across an interconnecting network to a destination system, either transferring data for a specified time interval, or alternatively transferring a specified number of bytes.</Description>
+    <ResultScale>Mbits/sec</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+    <PreInstallMessage>This test profile automates the testing of a Nuttcp client. Ensure you have a suitable Nuttcp server [http://nuttcp.net/] running on your network prior to running this test profile.</PreInstallMessage>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux, BSD, Solaris, Windows, MacOSX</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Network</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <RequiresNetwork>TRUE</RequiresNetwork>
+    <EnvironmentSize>8</EnvironmentSize>
+    <ProjectURL>http://nuttcp.net/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments> -fparse -T30 </Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test</Identifier>
+      <Menu>
+        <Entry>
+          <Name>TCP Transfer - Default</Name>
+          <Value> </Value>
+        </Entry>
+        <Entry>
+          <Name>TCP Transfer - Server To Client</Name>
+          <Value> -r </Value>
+        </Entry>
+        <Entry>
+          <Name>10G+ UDP</Name>
+          <Value>-l8972 -u -w4m -Ru</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Server Address</DisplayName>
+      <Identifier>server-address</Identifier>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

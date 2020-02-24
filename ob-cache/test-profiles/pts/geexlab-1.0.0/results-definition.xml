@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.4.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>07:30:08(0000133)	[info ]	- average framerate: #_RESULT_# FPS</OutputTemplate>
+    <LineHint>average framerate</LineHint>
+    <ResultBeforeString>FPS</ResultBeforeString>
+  </ResultsParser>
+</PhoronixTestSuite>

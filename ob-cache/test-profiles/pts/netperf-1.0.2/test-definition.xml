@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Netperf</Title>
+    <AppVersion>2.7.0</AppVersion>
+    <Description>Netperf is a network bandwidth testing software. This test profile is used for automated testing of a netperf client and requires you have access to a netperf server.</Description>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+    <PreInstallMessage>This test profile automates the testing of a Netperf client. Ensure you have a suitable Netperf server running on your network prior to running this test.</PreInstallMessage>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.2</Version>
+    <SupportedPlatforms>Linux, BSD, Solaris, MacOSX, Windows</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Network</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>6</EnvironmentSize>
+    <ProjectURL>http://www.netperf.org/netperf/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Server</DisplayName>
+      <Identifier>server-address</Identifier>
+      <ArgumentPrefix>-H </ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+    </Option>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>run-test</Identifier>
+      <ArgumentPrefix>-t </ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>TCP Stream - Server To Client</Name>
+          <Value>TCP_STREAM</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>TCP Stream - Client To Server</Name>
+          <Value>TCP_MAERTS</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>UDP Stream - Server To Client - 10G</Name>
+          <Value>UDP_STREAM -b 10G</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>TCP Request Response</Name>
+          <Value>TCP_RR</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>UDP Request Response</Name>
+          <Value>UDP_RR</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>TCP Send File</Name>
+          <Value>TCP_SENDFILE</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Duration</DisplayName>
+      <Identifier>duration</Identifier>
+      <ArgumentPrefix>-l </ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>10 Seconds</Name>
+          <Value>10</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>60 Seconds</Name>
+          <Value>60</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>360 Seconds</Name>
+          <Value>360</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

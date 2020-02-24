@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>benchmark_mutex_lock_unlockstd::mutex         #_RESULT_# ns         13 ns 1000000000</OutputTemplate>
+    <LineHint> ns</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

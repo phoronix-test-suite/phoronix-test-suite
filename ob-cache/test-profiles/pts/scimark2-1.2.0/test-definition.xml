@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.8.0m0 (Sokndal)-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>SciMark</Title>
+    <AppVersion>2.0</AppVersion>
+    <Description>This test runs the ANSI C version of SciMark 2.0, which is a benchmark for scientific and numerical computing developed by programmers at the National Institute of Standards and Technology. This test is made up of Fast Foruier Transform, Jacobi Successive Over-relaxation, Monte Carlo, Sparse Matrix Multiply, and dense LU matrix factorization benchmarks.</Description>
+    <ResultScale>Mflops</ResultScale>
+    <Proportion>HIB</Proportion>
+    <SubTitle>Composite Score</SubTitle>
+    <TimesToRun>4</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.0</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>0.1</EnvironmentSize>
+    <ProjectURL>http://math.nist.gov/scimark2/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <AllowCacheShare>TRUE</AllowCacheShare>
+    </Default>
+    <Option>
+      <DisplayName>Computational Test</DisplayName>
+      <Identifier>compute-test</Identifier>
+      <ArgumentPrefix>TEST_</ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>Composite</Name>
+          <Value>COMPOSITE</Value>
+        </Entry>
+        <Entry>
+          <Name>Fast Fourier Transform</Name>
+          <Value>FFT</Value>
+        </Entry>
+        <Entry>
+          <Name>Jacobi Successive Over-Relaxation</Name>
+          <Value>SOR</Value>
+        </Entry>
+        <Entry>
+          <Name>Monte Carlo</Name>
+          <Value>MONTE</Value>
+        </Entry>
+        <Entry>
+          <Name>Sparse Matrix Multiply</Name>
+          <Value>SPARSE</Value>
+        </Entry>
+        <Entry>
+          <Name>Dense LU Matrix Factorization</Name>
+          <Value>DENSE</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

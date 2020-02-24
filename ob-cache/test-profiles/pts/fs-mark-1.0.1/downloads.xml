@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.mirrorservice.org/sites/downloads.sourceforge.net/f/fs/fsmark/fsmark/3.3/fs_mark-3.3.tar.gz, http://download2.polytechnic.edu.na/pub4/sourceforge/f/project/fs/fsmark/fsmark/3.3/fs_mark-3.3.tar.gz</URL>
+      <MD5>a31ac6f127a46ee45a33e4ce86c65553</MD5>
+      <FileSize>15322</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

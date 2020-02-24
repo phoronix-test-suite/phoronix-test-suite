@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.8.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Document Path:          /test.html
+Document Length:        3064 bytes
+
+Concurrency Level:      100
+Time taken for tests:   29.224 seconds
+Complete requests:      500000
+Failed requests:        0
+Write errors:           0
+Total transferred:      1659096222 bytes
+HTML transferred:       1532088856 bytes
+Requests per second:    #_RESULT_# [#/sec] (mean)
+Time per request:       5.845 [ms] (mean)
+Time per request:       0.058 [ms] (mean, across all concurrent requests)
+Transfer rate:          55440.49 [Kbytes/sec] received</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ftp.osuosl.org/pub/blfs/conglomeration/libvpx/libvpx-1.7.0.tar.gz, http://phoronix-test-suite.com/benchmark-files/libvpx-1.7.0.tar.gz, http://ftp.lfs-matrix.net/pub/blfs/conglomeration/libvpx/libvpx-1.7.0.tar.gz</URL>
+      <MD5>193346f9aec0726145e51db732417cd2</MD5>
+      <SHA256>1fec931eb5c94279ad219a5b6e0202358e94a93a90cfb1603578c326abfc1238</SHA256>
+      <FileSize>2679797</FileSize>
+    </Package>
+    <Package>
+      <URL>http://ultravideo.cs.tut.fi/video/Jockey_1920x1080_120fps_420_8bit_YUV_Y4M.7z</URL>
+      <MD5>c179df735def0f5c4cc07354540cf66f</MD5>
+      <SHA256>b2c4150efc02784d7f5b5072092f73fd041f894c5bb4ff5c9b275580902ceabf</SHA256>
+      <FileSize>761812403</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

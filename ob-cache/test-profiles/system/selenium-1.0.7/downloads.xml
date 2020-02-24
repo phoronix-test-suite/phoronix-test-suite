@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.8.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/selenium-scripts-6.zip</URL>
+      <MD5>0b0c2863b0e8f7a24a72b18a3fd7145d</MD5>
+      <SHA256>46572aaf78945313955c25dc50b1ebd98091dea781a87537286733746d3f30b5</SHA256>
+      <FileName>selenium-scripts-6.zip</FileName>
+      <FileSize>9566</FileSize>
+    </Package>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/geckodriver-v0.24.0-linux64.tar.gz</URL>
+      <MD5>7552b85e43973c84763e212af7cca566</MD5>
+      <SHA256>03be3d3b16b57e0f3e7e8ba7c1e4bf090620c147e6804f6c6f3203864f5e3784</SHA256>
+      <FileName>geckodriver-v0.24.0-linux64.tar.gz</FileName>
+      <FileSize>2896664</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://chromedriver.storage.googleapis.com/74.0.3729.6/chromedriver_linux64.zip</URL>
+      <MD5>3cd9e67808926bfba9a3f5946e2a994d</MD5>
+      <SHA256>ec9dbe021338f0befaecca702abc576cb7cc31a2f5a852c2c41e94721af5d3ad</SHA256>
+      <FileName>chromedriver_linux64_v74.zip</FileName>
+      <FileSize>5065988</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://chromedriver.storage.googleapis.com/74.0.3729.6/chromedriver_win32.zip</URL>
+      <MD5>9780b9b586e74253df9b58928b959861</MD5>
+      <SHA256>9d1088968f645f39234b149201507d0f09c818880ba908ddbb279d352ed9dc58</SHA256>
+      <FileName>chromedriver_win32_v74.zip</FileName>
+      <FileSize>4622324</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/geckodriver-v0.24.0-win64.zip</URL>
+      <MD5>83c1f76dfba615b8ddf29b2c4d157a2b</MD5>
+      <SHA256>55089b041e60295d9cd468baf78e1039fd9a38f6cd4d0166b9221626970b276e</SHA256>
+      <FileName>geckodriver-v0.24.0-win64.zip</FileName>
+      <FileSize>4673848</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Timed Idle</Title>
+    <Description>This test will just idle the system for the specified amount of time. This test is of benefit if paired with the system_monitor module to monitor the system sensors, battery consumption, etc while the system is idling. This also can be used just as a simple test profile to understand how the Phoronix Test Suite works.</Description>
+    <DisplayFormat>PASS_FAIL</DisplayFormat>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.0</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <EnvironmentSize>0.01</EnvironmentSize>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Time To Idle (In Minutes)</DisplayName>
+      <Identifier>positive-number</Identifier>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

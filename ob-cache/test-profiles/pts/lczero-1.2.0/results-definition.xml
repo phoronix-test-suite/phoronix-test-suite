@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Benchmark final time 77.4791s calculating #_RESULT_# nodes per second.</OutputTemplate>
+    <LineHint>Benchmark final time</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

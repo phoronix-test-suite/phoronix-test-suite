@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/smallpt-1.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/smallpt-1.tar.gz</URL>
+      <MD5>6f07f1c3e0dab914bcbe6dd6d14346ae</MD5>
+      <FileName>smallpt-1.tar.gz</FileName>
+      <FileSize>5756</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

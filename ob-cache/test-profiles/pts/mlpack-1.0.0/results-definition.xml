@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>[INFO] Metric: {'runtime': #_RESULT_#, 'ACC': 0.7953248917640812, 'MCC': 0.7416568406864265, 'Precision': 0.9656353770683679, 'Recall': 0.7953248917640812, 'MSE': 0.012938842404899509}</OutputTemplate>
+    <StripFromResult>,</StripFromResult>
+  </ResultsParser>
+</PhoronixTestSuite>

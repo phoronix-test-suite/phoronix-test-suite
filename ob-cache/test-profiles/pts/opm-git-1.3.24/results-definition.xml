@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.4.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Total wallclock time:       #_RESULT_# sec  (52 min 59.02 sec)</OutputTemplate>
+    <MatchToTestArguments>upscale_relperm_benchmark</MatchToTestArguments>
+    <LineHint>Total wallclock time</LineHint>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Total time taken (seconds):  #_RESULT_#</OutputTemplate>
+    <LineHint>Total time</LineHint>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Total time (seconds):  #_RESULT_#</OutputTemplate>
+    <LineHint>Total time</LineHint>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Solver time (seconds):  #_RESULT_#</OutputTemplate>
+    <LineHint>Solver time</LineHint>
+    <AppendToArgumentsDescription>Solver Time</AppendToArgumentsDescription>
+  </ResultsParser>
+</PhoronixTestSuite>

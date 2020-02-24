@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.0.1 (Khanino)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://iweb.dl.sourceforge.net/project/graphicsmagick/graphicsmagick/1.3.19/GraphicsMagick-1.3.19.tar.bz2, http://softlayer-ams.dl.sourceforge.net/project/graphicsmagick/graphicsmagick/1.3.19/GraphicsMagick-1.3.19.tar.bz2</URL>
+      <MD5>c105a2e24b03de6883c6cbaadd2038ed</MD5>
+      <SHA256>b57cdeb1ab9492b667776bbbc265149eda5601d2c572d65f43b44273e892fff1</SHA256>
+      <FileSize>7252296</FileSize>
+    </Package>
+    <Package>
+      <URL>http://gd.tuwien.ac.at/graphics/libs/png/src/libpng-1.2.49.tar.bz2, http://pkgs.fedoraproject.org/repo/pkgs/libpng/libpng-1.2.49.tar.bz2/d5106b70b4f8b464a7da66bffe4565fb/libpng-1.2.49.tar.bz2</URL>
+      <MD5>d5106b70b4f8b464a7da66bffe4565fb</MD5>
+      <SHA256>fbf8faa70ebca2ed2ee6df6f2249f4722517b581af5b6c3c71bbdaf925d5954e</SHA256>
+      <FileSize>669011</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

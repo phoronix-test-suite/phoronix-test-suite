@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>John The Ripper</Title>
+    <AppVersion>1.8.0-jumbo-1</AppVersion>
+    <Description>This is a benchmark of John The Ripper, which is a password cracker.</Description>
+    <ResultScale>Real C/S</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.6.2</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD, MacOSX, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, openssl-development</ExternalDependencies>
+    <EnvironmentSize>102</EnvironmentSize>
+    <ProjectURL>http://www.openwall.com/john/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>--test=20 </Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>run-test</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>Traditional DES</Name>
+          <Value>--format=descrypt</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>MD5</Name>
+          <Value>--format=md5crypt</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Blowfish</Name>
+          <Value>--format=bcrypt</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

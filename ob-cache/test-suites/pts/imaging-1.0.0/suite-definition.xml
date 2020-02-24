@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.0m2-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Imaging</Title>
+    <Version>1.0.1</Version>
+    <TestType>System</TestType>
+    <Description>Various imaging / photo manipulation / RAW photography software packages.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/graphics-magick</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>system/inkscape</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>system/rawtherapee</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/tjbench</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>system/gimp</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/dcraw</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>system/darktable</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>system/rsvg</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>system/gegl</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+</PhoronixTestSuite>

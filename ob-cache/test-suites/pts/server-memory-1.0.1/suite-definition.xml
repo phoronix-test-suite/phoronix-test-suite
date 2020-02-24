@@ -1,0 +1,1097 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.0m1-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Server Memory</Title>
+    <Version>1.0.1</Version>
+    <TestType>Memory</TestType>
+    <Description>Server memory real-world and synthetic workloads and more.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/ramspeed-1.4.2</Test>
+    <Arguments>ADD -b 3</Arguments>
+    <Description>Type: Add - Benchmark: Integer</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ramspeed-1.4.2</Test>
+    <Arguments>COPY -b 3</Arguments>
+    <Description>Type: Copy - Benchmark: Integer</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ramspeed-1.4.2</Test>
+    <Arguments>SCALE -b 3</Arguments>
+    <Description>Type: Scale - Benchmark: Integer</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ramspeed-1.4.2</Test>
+    <Arguments>AVERAGE -b 3</Arguments>
+    <Description>Type: Average - Benchmark: Integer</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ramspeed-1.4.2</Test>
+    <Arguments>ADD -b 6</Arguments>
+    <Description>Type: Add - Benchmark: Floating Point</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ramspeed-1.4.2</Test>
+    <Arguments>COPY -b 6</Arguments>
+    <Description>Type: Copy - Benchmark: Floating Point</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ramspeed-1.4.2</Test>
+    <Arguments>SCALE -b 6</Arguments>
+    <Description>Type: Scale - Benchmark: Floating Point</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ramspeed-1.4.2</Test>
+    <Arguments>AVERAGE -b 6</Arguments>
+    <Description>Type: Average - Benchmark: Floating Point</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/stream-1.3.1</Test>
+    <Arguments>Copy</Arguments>
+    <Description>Type: Copy</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/stream-1.3.1</Test>
+    <Arguments>Scale</Arguments>
+    <Description>Type: Scale</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/stream-1.3.1</Test>
+    <Arguments>Triad</Arguments>
+    <Description>Type: Triad</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/stream-1.3.1</Test>
+    <Arguments>Add</Arguments>
+    <Description>Type: Add</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/cp2k-1.0.0</Test>
+    <Arguments></Arguments>
+    <Description>Fayalite-FIST Data</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/rodinia-1.2.2</Test>
+    <Arguments>OMP_LAVAMD</Arguments>
+    <Description>Test: OpenMP LavaMD</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/namd-1.0.1</Test>
+    <Arguments></Arguments>
+    <Description>ATPase Simulation - 327,506 Atoms</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/renaissance-1.0.0</Test>
+    <Arguments>dotty</Arguments>
+    <Description>Test: Scala Dotty</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/renaissance-1.0.0</Test>
+    <Arguments>reactors</Arguments>
+    <Description>Test: Savina Reactors.IO</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/renaissance-1.0.0</Test>
+    <Arguments>page-rank</Arguments>
+    <Description>Test: Apache Spark PageRank</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/numpy-1.0.5</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/john-the-ripper-1.7.0</Test>
+    <Arguments>--format=bcrypt</Arguments>
+    <Description>Test: Blowfish</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/mkl-dnn-1.0.2</Test>
+    <Arguments>--deconv --batch=inputs/deconv/deconv_1d --cfg=f32</Arguments>
+    <Description>Harness: Deconvolution Batch deconv_1d - Data Type: f32</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/mkl-dnn-1.0.2</Test>
+    <Arguments>--conv --batch=inputs/conv_alexnet --cfg=f32</Arguments>
+    <Description>Harness: Convolution Batch conv_alexnet - Data Type: f32</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/mkl-dnn-1.0.2</Test>
+    <Arguments>--conv --batch=inputs/conv_googlenet_v3 --cfg=f32</Arguments>
+    <Description>Harness: Convolution Batch conv_googlenet_v3 - Data Type: f32</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/svt-av1-1.3.1</Test>
+    <Arguments></Arguments>
+    <Description>1080p 8-bit YUV To AV1 Video Encode</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/svt-hevc-1.0.0</Test>
+    <Arguments></Arguments>
+    <Description>1080p 8-bit YUV To HEVC Video Encode</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/svt-vp9-1.0.0</Test>
+    <Arguments></Arguments>
+    <Description>1080p 8-bit YUV To VP9 Video Encode</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/x264-2.5.0</Test>
+    <Arguments></Arguments>
+    <Description>H.264 Video Encoding</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/x265-1.1.0</Test>
+    <Arguments></Arguments>
+    <Description>H.265 1080p Video Encoding</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/himeno-1.2.0</Test>
+    <Arguments></Arguments>
+    <Description>Poisson Pressure Solver</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-7zip-1.7.0</Test>
+    <Arguments></Arguments>
+    <Description>Compress Speed Test</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/stockfish-1.1.1</Test>
+    <Arguments></Arguments>
+    <Description>Total Time</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/asmfish-1.1.1</Test>
+    <Arguments></Arguments>
+    <Description>1024 Hash Memory, 26 Depth</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/build-gcc-1.1.2</Test>
+    <Arguments></Arguments>
+    <Description>Time To Compile</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/build-linux-kernel-1.9.1</Test>
+    <Arguments></Arguments>
+    <Description>Time To Compile</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/build-llvm-1.1.0</Test>
+    <Arguments></Arguments>
+    <Description>Time To Compile</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/build-php-1.4.0</Test>
+    <Arguments></Arguments>
+    <Description>Time To Compile</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/c-ray-1.2.0</Test>
+    <Arguments></Arguments>
+    <Description>Total Time - 4K, 16 Rays Per Pixel</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/povray-1.2.1</Test>
+    <Arguments></Arguments>
+    <Description>Trace Time</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/rust-mandel-1.0.0</Test>
+    <Arguments></Arguments>
+    <Description>Time To Complete Serial/Parallel Mandelbrot</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-zstd-1.1.1</Test>
+    <Arguments></Arguments>
+    <Description>Compressing ubuntu-16.04.3-server-i386.img, Compression Level 19</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/cython-bench-1.0.0</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/dav1d-1.2.0</Test>
+    <Arguments>-i summer_nature_4k.ivf</Arguments>
+    <Description>Video Input: Summer Nature 4K</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/dav1d-1.2.0</Test>
+    <Arguments>-i summer_nature_1080p.ivf</Arguments>
+    <Description>Video Input: Summer Nature 1080p</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/hackbench-1.0.0</Test>
+    <Arguments>32 process</Arguments>
+    <Description>Count: 32 - Type: Process</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/m-queens-1.1.0</Test>
+    <Arguments></Arguments>
+    <Description>Time To Solve</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/opencv-bench-1.0.0</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/radiance-1.0.0</Test>
+    <Arguments>make all</Arguments>
+    <Description>Test: Serial</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/radiance-1.0.0</Test>
+    <Arguments>make smp</Arguments>
+    <Description>Test: SMP Parallel</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/openssl-1.11.0</Test>
+    <Arguments></Arguments>
+    <Description>RSA 4096-bit Performance</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/glibc-bench-1.6.0</Test>
+    <Arguments>bench-cos</Arguments>
+    <Description>Benchmark: cos</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/glibc-bench-1.6.0</Test>
+    <Arguments>bench-sin</Arguments>
+    <Description>Benchmark: sin</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/glibc-bench-1.6.0</Test>
+    <Arguments>bench-sqrt</Arguments>
+    <Description>Benchmark: sqrt</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/glibc-bench-1.6.0</Test>
+    <Arguments>bench-pthread_once</Arguments>
+    <Description>Benchmark: pthread_once</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/tjbench-1.1.1</Test>
+    <Arguments>decompression-throughput</Arguments>
+    <Description>Test: Decompression Throughput</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/mysqlslap-1.0.8</Test>
+    <Arguments>--concurrency=128</Arguments>
+    <Description>Clients: 128</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/mysqlslap-1.0.8</Test>
+    <Arguments>--concurrency=256</Arguments>
+    <Description>Clients: 256</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>system/gimp-1.1.2</Test>
+    <Arguments>resize</Arguments>
+    <Description>Test: resize</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>system/gimp-1.1.2</Test>
+    <Arguments>rotate</Arguments>
+    <Description>Test: rotate</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>system/gimp-1.1.2</Test>
+    <Arguments>auto-levels</Arguments>
+    <Description>Test: auto-levels</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>system/gimp-1.1.2</Test>
+    <Arguments>unsharp-mask</Arguments>
+    <Description>Test: unsharp-mask</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/redis-1.1.0</Test>
+    <Arguments>-t get</Arguments>
+    <Description>Test: GET</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/redis-1.1.0</Test>
+    <Arguments>-t set</Arguments>
+    <Description>Test: SET</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/stress-ng-1.2.2</Test>
+    <Arguments>--crypt 0</Arguments>
+    <Description>Test: Crypto</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/stress-ng-1.2.2</Test>
+    <Arguments>--cpu 0 --cpu-method all</Arguments>
+    <Description>Test: CPU Stress</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ctx-clock-1.0.0</Test>
+    <Arguments></Arguments>
+    <Description>Context Switch Time</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/sysbench-1.0.0</Test>
+    <Arguments>cpu run</Arguments>
+    <Description>Test: CPU</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/blender-1.4.1</Test>
+    <Arguments>-b ../bmw27_gpu.blend -o output.test -x 1 -F JPEG -f 1  NONE</Arguments>
+    <Description>Blend File: BMW27 - Compute: CPU-Only</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/blender-1.4.1</Test>
+    <Arguments>-b ../classroom_gpu.blend -o output.test -x 1 -F JPEG -f 1  NONE</Arguments>
+    <Description>Blend File: Classroom - Compute: CPU-Only</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/blender-1.4.1</Test>
+    <Arguments>-b ../fishy_cat_gpu.blend -o output.test -x 1 -F JPEG -f 1  NONE</Arguments>
+    <Description>Blend File: Fishy Cat - Compute: CPU-Only</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/blender-1.4.1</Test>
+    <Arguments>-b ../barbershop_interior_gpu.blend -o output.test -x 1 -F JPEG -f 1  NONE</Arguments>
+    <Description>Blend File: Barbershop - Compute: CPU-Only</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/pybench-1.1.3</Test>
+    <Arguments></Arguments>
+    <Description>Total For Average Test Times</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/numenta-nab-1.0.0</Test>
+    <Arguments></Arguments>
+    <Description>Time To Completion</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/appleseed-1.0.0</Test>
+    <Arguments>emily.appleseed</Arguments>
+    <Description>Scene: Emily</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/appleseed-1.0.0</Test>
+    <Arguments>disney_material_1.appleseed</Arguments>
+    <Description>Scene: Disney Material</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/apache-siege-1.0.4</Test>
+    <Arguments>-c250</Arguments>
+    <Description>Concurrent Users: 250</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/phpbench-1.1.5</Test>
+    <Arguments></Arguments>
+    <Description>PHP Benchmark Suite</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/scikit-learn-1.0.1</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>system/tesseract-ocr-1.0.1</Test>
+    <Arguments></Arguments>
+    <Description>Time To OCR 7 Images</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/sqlite-2.1.0</Test>
+    <Arguments>1</Arguments>
+    <Description>Threads / Copies: 1</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/sqlite-2.1.0</Test>
+    <Arguments>8</Arguments>
+    <Description>Threads / Copies: 8</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/tinymembench-1.0.2</Test>
+    <Arguments></Arguments>
+    <Description>Standard Memcpy</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/tinymembench-1.0.2</Test>
+    <Arguments></Arguments>
+    <Description>Standard Memset</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/mbw-1.0.0</Test>
+    <Arguments>-t0 4096</Arguments>
+    <Description>Test: Memory Copy - Array Size: 4096 MiB</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/mbw-1.0.0</Test>
+    <Arguments>-t2 4096</Arguments>
+    <Description>Test: Memory Copy, Fixed Block Size - Array Size: 4096 MiB</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/npb-1.4.0</Test>
+    <Arguments>bt.C</Arguments>
+    <Description>Test / Class: BT.C</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/npb-1.4.0</Test>
+    <Arguments>ep.D</Arguments>
+    <Description>Test / Class: EP.D</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/npb-1.4.0</Test>
+    <Arguments>ft.C</Arguments>
+    <Description>Test / Class: FT.C</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/npb-1.4.0</Test>
+    <Arguments>lu.C</Arguments>
+    <Description>Test / Class: LU.C</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/npb-1.4.0</Test>
+    <Arguments>mg.C</Arguments>
+    <Description>Test / Class: MG.C</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/npb-1.4.0</Test>
+    <Arguments>sp.B</Arguments>
+    <Description>Test / Class: SP.B</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/parboil-1.2.1</Test>
+    <Arguments>lbm omp_cpu long</Arguments>
+    <Description>Test: OpenMP LBM</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/parboil-1.2.1</Test>
+    <Arguments>cutcp omp_base large</Arguments>
+    <Description>Test: OpenMP CUTCP</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/parboil-1.2.1</Test>
+    <Arguments>stencil omp_base default</Arguments>
+    <Description>Test: OpenMP Stencil</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/parboil-1.2.1</Test>
+    <Arguments>mri-gridding omp_base small</Arguments>
+    <Description>Test: OpenMP MRI Gridding</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/cloverleaf-1.0.0</Test>
+    <Arguments></Arguments>
+    <Description>Lagrangian-Eulerian Hydrodynamics</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/rodinia-1.2.2</Test>
+    <Arguments>OMP_CFD</Arguments>
+    <Description>Test: OpenMP CFD Solver</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/rodinia-1.2.2</Test>
+    <Arguments>OMP_STREAMCLUSTER</Arguments>
+    <Description>Test: OpenMP Streamcluster</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/mrbayes-1.4.0</Test>
+    <Arguments></Arguments>
+    <Description>Primate Phylogeny Analysis</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/dacapobench-1.0.0</Test>
+    <Arguments>h2</Arguments>
+    <Description>Java Test: H2</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/dacapobench-1.0.0</Test>
+    <Arguments>jython</Arguments>
+    <Description>Java Test: Jython</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/dacapobench-1.0.0</Test>
+    <Arguments>tradesoap</Arguments>
+    <Description>Java Test: Tradesoap</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/dacapobench-1.0.0</Test>
+    <Arguments>tradebeans</Arguments>
+    <Description>Java Test: Tradebeans</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/node-express-loadtest-1.0.1</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/graphics-magick-2.0.1</Test>
+    <Arguments>-swirl 90</Arguments>
+    <Description>Operation: Swirl</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/graphics-magick-2.0.1</Test>
+    <Arguments>-rotate 90</Arguments>
+    <Description>Operation: Rotate</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/graphics-magick-2.0.1</Test>
+    <Arguments>-sharpen 0x2.0</Arguments>
+    <Description>Operation: Sharpen</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/graphics-magick-2.0.1</Test>
+    <Arguments>-enhance</Arguments>
+    <Description>Operation: Enhanced</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/graphics-magick-2.0.1</Test>
+    <Arguments>-resize 50%</Arguments>
+    <Description>Operation: Resizing</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/graphics-magick-2.0.1</Test>
+    <Arguments>-operator all Noise-Gaussian 30%</Arguments>
+    <Description>Operation: Noise-Gaussian</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/graphics-magick-2.0.1</Test>
+    <Arguments>-colorspace HWB</Arguments>
+    <Description>Operation: HWB Color Space</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ospray-1.0.3</Test>
+    <Arguments>xfrog-forest.xml --renderer scivis</Arguments>
+    <Description>Demo: XFrog Forest - Renderer: SciVis</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ospray-1.0.3</Test>
+    <Arguments>magnetic-512-volume/magnetic-512-volume.osp --renderer scivis</Arguments>
+    <Description>Demo: Magnetic Reconnection - Renderer: SciVis</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/embree-1.0.0</Test>
+    <Arguments>pathtracer -c crown/crown.ecs</Arguments>
+    <Description>Binary: Pathtracer - Model: Crown</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/rav1e-1.2.0</Test>
+    <Arguments>-s 6 -l 60</Arguments>
+    <Description>Speed: 6</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/rav1e-1.2.0</Test>
+    <Arguments>-s 9 -l 80</Arguments>
+    <Description>Speed: 9</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/svt-av1-2.2.0</Test>
+    <Arguments>-enc-mode 4 -n 80 -i Bosphorus_1920x1080_120fps_420_8bit_YUV.yuv -w 1920 -h 1080</Arguments>
+    <Description>Encoder Mode: Enc Mode 4 - Input: 1080p</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/svt-av1-2.2.0</Test>
+    <Arguments>-enc-mode 8 -n 320 -i Bosphorus_1920x1080_120fps_420_8bit_YUV.yuv -w 1920 -h 1080</Arguments>
+    <Description>Encoder Mode: Enc Mode 8 - Input: 1080p</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/svt-vp9-1.2.1</Test>
+    <Arguments>-tune 1 -i Bosphorus_1920x1080_120fps_420_8bit_YUV.yuv -w 1920 -h 1080</Arguments>
+    <Description>Tuning: PSNR/SSIM Optimized - Input: Bosphorus 1080p</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/svt-vp9-1.2.1</Test>
+    <Arguments>-tune 0 -i Bosphorus_1920x1080_120fps_420_8bit_YUV.yuv -w 1920 -h 1080</Arguments>
+    <Description>Tuning: Visual Quality Optimized - Input: Bosphorus 1080p</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/vpxenc-3.0.0</Test>
+    <Arguments>--cpu-used=0</Arguments>
+    <Description>Speed: Speed 0</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/vpxenc-3.0.0</Test>
+    <Arguments>--cpu-used=5</Arguments>
+    <Description>Speed: Speed 5</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/x265-1.2.0</Test>
+    <Arguments></Arguments>
+    <Description>H.265 1080p Video Encoding</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/mt-dgemm-1.2.0</Test>
+    <Arguments></Arguments>
+    <Description>Sustained Floating-Point Rate</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/oidn-1.1.1</Test>
+    <Arguments>-hdr memorial.pfm</Arguments>
+    <Description>Scene: Memorial</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/coremark-1.0.0</Test>
+    <Arguments></Arguments>
+    <Description>CoreMark Size 666 - Iterations Per Second</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/himeno-1.3.0</Test>
+    <Arguments></Arguments>
+    <Description>Poisson Pressure Solver</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/swet-1.0.0</Test>
+    <Arguments></Arguments>
+    <Description>Average</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ebizzy-1.0.4</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/build-linux-kernel-1.10.0</Test>
+    <Arguments></Arguments>
+    <Description>Time To Compile</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/build2-1.0.0</Test>
+    <Arguments></Arguments>
+    <Description>Time To Compile</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/tungsten-1.0.0</Test>
+    <Arguments>../../data/example-scenes/hair/scene.json</Arguments>
+    <Description>Scene: Hair</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/tungsten-1.0.0</Test>
+    <Arguments>../../data/example-scenes/water-caustic/scene.json</Arguments>
+    <Description>Scene: Water Caustic</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/tungsten-1.0.0</Test>
+    <Arguments>../../data/example-scenes/non-exponential/scene.json</Arguments>
+    <Description>Scene: Non-Exponential</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/tungsten-1.0.0</Test>
+    <Arguments>../../data/example-scenes/volumetric-caustic/scene.json</Arguments>
+    <Description>Scene: Volumetric Caustic</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/rays1bench-1.0.0</Test>
+    <Arguments></Arguments>
+    <Description>Large Scene</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-xz-1.1.0</Test>
+    <Arguments></Arguments>
+    <Description>Compressing ubuntu-16.04.3-server-i386.img, Compression Level 9</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/deepspeech-1.0.0</Test>
+    <Arguments>CPU</Arguments>
+    <Description>Acceleration: CPU</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/gromacs-1.1.1</Test>
+    <Arguments></Arguments>
+    <Description>Water Benchmark</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/mysqlslap-1.0.8</Test>
+    <Arguments>--concurrency=64</Arguments>
+    <Description>Clients: 64</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/pgbench-1.9.1</Test>
+    <Arguments>BUFFER_TEST NORMAL_LOAD READ_ONLY</Arguments>
+    <Description>Scaling: Buffer Test - Test: Normal Load - Mode: Read Only</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/pgbench-1.9.1</Test>
+    <Arguments>BUFFER_TEST NORMAL_LOAD READ_WRITE</Arguments>
+    <Description>Scaling: Buffer Test - Test: Normal Load - Mode: Read Write</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/sqlite-speedtest-1.0.0</Test>
+    <Arguments></Arguments>
+    <Description>Timed Time - Size 1,000</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>system/gegl-1.0.0</Test>
+    <Arguments>crop x=100 y=100 width=1920 height=1080</Arguments>
+    <Description>Operation: Crop</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>system/gegl-1.0.0</Test>
+    <Arguments>scale-size x=400 y=400</Arguments>
+    <Description>Operation: Scale</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>system/gegl-1.0.0</Test>
+    <Arguments>cartoon</Arguments>
+    <Description>Operation: Cartoon</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>system/gegl-1.0.0</Test>
+    <Arguments>reflect</Arguments>
+    <Description>Operation: Reflect</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>system/gegl-1.0.0</Test>
+    <Arguments>antialias</Arguments>
+    <Description>Operation: Antialias</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>system/gegl-1.0.0</Test>
+    <Arguments>tile-glass tile-width=20 tile-height=20</Arguments>
+    <Description>Operation: Tile Glass</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>system/gegl-1.0.0</Test>
+    <Arguments>wavelet-blur</Arguments>
+    <Description>Operation: Wavelet Blur</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>system/gegl-1.0.0</Test>
+    <Arguments>color-enhance</Arguments>
+    <Description>Operation: Color Enhance</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>system/gegl-1.0.0</Test>
+    <Arguments>rotate-on-center degrees=90</Arguments>
+    <Description>Operation: Rotate 90 Degrees</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>system/octave-benchmark-1.0.0</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/redis-1.2.0</Test>
+    <Arguments>-t get</Arguments>
+    <Description>Test: GET</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/redis-1.2.0</Test>
+    <Arguments>-t set</Arguments>
+    <Description>Test: SET</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/sysbench-1.0.0</Test>
+    <Arguments>memory run</Arguments>
+    <Description>Test: Memory</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/v-ray-1.1.0</Test>
+    <Arguments>-m vray</Arguments>
+    <Description>Mode: CPU</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/indigobench-1.0.4</Test>
+    <Arguments>--scenes bedroom</Arguments>
+    <Description>Scene: Bedroom</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/indigobench-1.0.4</Test>
+    <Arguments>--scenes supercar</Arguments>
+    <Description>Scene: Supercar</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/cassandra-1.0.2</Test>
+    <Arguments>WRITE</Arguments>
+    <Description>Test: Writes</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/rocksdb-1.0.2</Test>
+    <Arguments>--benchmarks="fillrandom"</Arguments>
+    <Description>Test: Random Fill</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/rocksdb-1.0.2</Test>
+    <Arguments>--benchmarks="readrandom"</Arguments>
+    <Description>Test: Random Read</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/rocksdb-1.0.2</Test>
+    <Arguments>--benchmarks="fillseq"</Arguments>
+    <Description>Test: Sequential Fill</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/rocksdb-1.0.2</Test>
+    <Arguments>--benchmarks="fillsync"</Arguments>
+    <Description>Test: Random Fill Sync</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/rocksdb-1.0.2</Test>
+    <Arguments>--benchmarks="readwhilewriting"</Arguments>
+    <Description>Test: Read While Writing</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/blender-1.6.0</Test>
+    <Arguments>-b ../bmw27_gpu.blend -o output.test -x 1 -F JPEG -f 1  NONE</Arguments>
+    <Description>Blend File: BMW27 - Compute: CPU-Only</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/blender-1.6.0</Test>
+    <Arguments>-b ../classroom_gpu.blend -o output.test -x 1 -F JPEG -f 1  NONE</Arguments>
+    <Description>Blend File: Classroom - Compute: CPU-Only</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/blender-1.6.0</Test>
+    <Arguments>-b ../barbershop_interior_gpu.blend -o output.test -x 1 -F JPEG -f 1  NONE</Arguments>
+    <Description>Blend File: Barbershop - Compute: CPU-Only</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/mcperf-1.1.1</Test>
+    <Arguments>--method=add</Arguments>
+    <Description>Method: Add</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/mcperf-1.1.1</Test>
+    <Arguments>--method=get</Arguments>
+    <Description>Method: Get</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/mcperf-1.1.1</Test>
+    <Arguments>--method=set</Arguments>
+    <Description>Method: Set</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/mcperf-1.1.1</Test>
+    <Arguments>--method=append</Arguments>
+    <Description>Method: Append</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/mcperf-1.1.1</Test>
+    <Arguments>--method=replace</Arguments>
+    <Description>Method: Replace</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/nginx-1.2.2</Test>
+    <Arguments></Arguments>
+    <Description>Static Web Page Serving</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/apache-1.7.2</Test>
+    <Arguments></Arguments>
+    <Description>Static Web Page Serving</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/appleseed-1.0.1</Test>
+    <Arguments>material_tester_ambient_occlusion.appleseed</Arguments>
+    <Description>Scene: Material Tester</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/apache-siege-1.0.4</Test>
+    <Arguments>-c50</Arguments>
+    <Description>Concurrent Users: 50</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/apache-siege-1.0.4</Test>
+    <Arguments>-c100</Arguments>
+    <Description>Concurrent Users: 100</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/apache-siege-1.0.4</Test>
+    <Arguments>-c200</Arguments>
+    <Description>Concurrent Users: 200</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/mlpack-1.0.0</Test>
+    <Arguments>SCIKIT_SVM</Arguments>
+    <Description>Benchmark: scikit_svm</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/scikit-learn-1.1.0</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/brl-cad-1.0.1</Test>
+    <Arguments></Arguments>
+    <Description>VGR Performance Metric</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+</PhoronixTestSuite>

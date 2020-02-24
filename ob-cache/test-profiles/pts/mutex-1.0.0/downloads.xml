@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/BenchmarkMutex-1.tar.xz</URL>
+      <MD5>8b0b83aa2939dc49f9d7b66186e76357</MD5>
+      <SHA256>1ec3ada8c58265167c898a808241b26c3fb0cb32e809ae2dae2e841427e69b20</SHA256>
+      <FileName>BenchmarkMutex-1.tar.xz</FileName>
+      <FileSize>6788</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

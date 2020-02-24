@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m3-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>glibc bench</Title>
+    <AppVersion>1.0</AppVersion>
+    <Description> The GNU C Library project provides the core libraries for the GNU system and GNU/Linux systems, as well as many other systems that use Linux as the kernel. These libraries provide critical APIs including ISO C11, POSIX.1-2008, BSD, OS-specific APIs and more.
+    </Description>
+    <ResultScale>nanoseconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.5.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>100</EnvironmentSize>
+    <ProjectURL>https://www.gnu.org/software/libc/</ProjectURL>
+    <Maintainer>Victor Rodriguez</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Benchmark</DisplayName>
+      <Identifier>benchmark</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>ffsll</Name>
+          <Value>bench-ffsll</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>ffs</Name>
+          <Value>bench-ffs</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>pthread_once</Name>
+          <Value>bench-pthread_once</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>ffsll</Name>
+          <Value>bench-ffsll</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>tanh</Name>
+          <Value>bench-tanh</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>sqrt</Name>
+          <Value>bench-sqrt</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>sin</Name>
+          <Value>bench-sin</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>cos</Name>
+          <Value>bench-cos</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

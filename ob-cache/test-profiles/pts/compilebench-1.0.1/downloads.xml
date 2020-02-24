@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.8.4 (Sokndal)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/compilebench-0.6.tar.bz2</URL>
+      <MD5>88907091223df4af78b1b2bfd150400e</MD5>
+      <SHA256>d3a22aec2002b725758c67c0f351183e98a6e9a5d1126ccd1124e223ce0d003a</SHA256>
+      <FileSize>591224</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

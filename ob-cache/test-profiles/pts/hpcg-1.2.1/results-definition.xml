@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Final Summary::HPCG result is VALID with a GFLOP/s rating of #_RESULT_#</OutputTemplate>
+    <LineHint>HPCG result is VALID with a GFLOP</LineHint>
+    <TurnCharsToSpace>=</TurnCharsToSpace>
+  </ResultsParser>
+</PhoronixTestSuite>

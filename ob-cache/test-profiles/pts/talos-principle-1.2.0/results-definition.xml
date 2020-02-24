@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.8.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>11:07:40 INF:    Average: #_RESULT_# FPS (90.3 w/o extremes)</OutputTemplate>
+    <LineHint>Average:</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

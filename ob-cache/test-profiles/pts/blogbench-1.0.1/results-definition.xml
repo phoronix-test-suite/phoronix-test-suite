@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Final score for reads :        #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>READ</MatchToTestArguments>
+    <LineHint>reads</LineHint>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Final score for writes:          #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>WRITE</MatchToTestArguments>
+    <LineHint>writes</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

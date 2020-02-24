@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/python/pyperformance/archive/1.0.0.zip</URL>
+      <MD5>7889682638a146a3eb46f73c6b83eee5</MD5>
+      <SHA256>02a93c78c1523c046d96844cf020afd9c019d27bd913d412f9643e31ca5be33f</SHA256>
+      <FileName>pyperformance-1.0.0.zip</FileName>
+      <FileSize>2423777</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

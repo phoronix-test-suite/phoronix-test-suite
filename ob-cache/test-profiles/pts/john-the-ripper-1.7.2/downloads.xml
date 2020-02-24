@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://www.openwall.com/john/k/john-1.9.0-jumbo-1.tar.gz, http://distro.ibiblio.org/openwall/projects/john/1.9.0/john-1.9.0-jumbo-1.tar.gz, https://download.openwall.net/pub/projects/john/1.9.0/john-1.9.0-jumbo-1.tar.gz</URL>
+      <MD5>cbcfaa36234c43657ef1a9ea4a91b0fa</MD5>
+      <SHA256>8b40499a20fdd66d5f651b439bf9846367182bb93e8bff3fd39ba267576dd317</SHA256>
+      <FileName>john-1.9.0-jumbo-1.tar.gz</FileName>
+      <FileSize>44303366</FileSize>
+      <PlatformSpecific>Linux, Solaris, BSD, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://www.openwall.com/john/k/john-1.9.0-jumbo-1-win64.zip, https://download.openwall.net/pub/projects/john/1.9.0/john-1.9.0-jumbo-1-win64.zip</URL>
+      <MD5>7ca6572ac79ea2ffb127f26f0f12f363</MD5>
+      <SHA256>7d59ea68d39a30a4988c9eb751a57d37d3fd90150ceeb6ee9afc2a76d13daa16</SHA256>
+      <FileName>john-1.9.0-jumbo-1-win64.zip</FileName>
+      <FileSize>65376163</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

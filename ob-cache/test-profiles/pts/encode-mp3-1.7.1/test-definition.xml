@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>LAME MP3 Encoding</Title>
+    <AppVersion>3.100</AppVersion>
+    <Description>LAME is an MP3 encoder licensed under the LGPL. This test measures the time required to encode a WAV file to MP3 format.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>WAV To MP3</SubTitle>
+    <Executable>lame</Executable>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.7.1</Version>
+    <SupportedPlatforms>Linux, Solaris, MacOSX, BSD</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <Extends>pts/timed-audio-encode</Extends>
+    <EnvironmentSize>5</EnvironmentSize>
+    <ProjectURL>http://lame.sourceforge.net/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

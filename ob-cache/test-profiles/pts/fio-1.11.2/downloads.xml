@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://brick.kernel.dk/snaps/fio-3.1.tar.gz</URL>
+      <MD5>ddc8e41d6c21e7ef95224c0dd3f55199</MD5>
+      <SHA256>5325d65b14746b93e50fdd5fc7d7cb41dd691e15a9732d4d4af24c329790deb9</SHA256>
+      <FileSize>710396</FileSize>
+      <PlatformSpecific>Linux, BSD, Solaris, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/fio-3.1-x64.zip</URL>
+      <MD5>edd7091d75976364ffa172ea47212f3b</MD5>
+      <SHA256>fdcc4d9433f635b1325c9849425ec097cfdc12030961570f45e5bfa75a3067d3</SHA256>
+      <FileSize>1411194</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

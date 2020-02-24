@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.4.0m3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/NPB3.3.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/NPB3.3.tar.gz</URL>
+      <MD5>fe65de7ff54709a0266301e0d38c7777</MD5>
+      <SHA256>247a284877541f731e9426357a82c41cd6c6142aa454ea3f8f5272dbcb4b93da</SHA256>
+      <FileSize>615658</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

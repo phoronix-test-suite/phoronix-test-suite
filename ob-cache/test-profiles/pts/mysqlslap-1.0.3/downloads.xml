@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>ftp://ftp.ulak.net.tr/pub/MariaDB/mariadb-10.3.8/source/mariadb-10.3.8.tar.gz, http://ftp.osuosl.org/pub/mariadb/mariadb-10.3.8/source/mariadb-10.3.8.tar.gz</URL>
+      <MD5>c66f4d12557edfb95fa5ca18ab622a13</MD5>
+      <SHA256>30bec17514d12d811a05757be46bd41724df28002cdec550d5c757b0b3f31ab8</SHA256>
+      <FileName>mariadb-10.3.8.tar.gz</FileName>
+      <FileSize>72152953</FileSize>
+    </Package>
+    <Package>
+      <URL>https://launchpadlibrarian.net/24493586/employees_db-full-1.0.6.tar.bz2</URL>
+      <MD5>dc44092ed3cfadfcf19bbab32b0ff887</MD5>
+      <SHA256>9be9b830a185e947758581cb06f529d1e8b675b29cde13a2860b1319b7e1cb7d</SHA256>
+      <FileName>employees_db-full-1.0.6.tar.bz2</FileName>
+      <FileSize>26715056</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

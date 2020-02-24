@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ultravideo.cs.tut.fi/video/Bosphorus_1920x1080_120fps_420_8bit_YUV_RAW.7z</URL>
+      <MD5>db7c7ff09acd5d7820cc4d1eb0939cf9</MD5>
+      <SHA256>e73a54088e88e6465f578625d185933e85c3209ab7105deb755a8b8918b78cab</SHA256>
+      <FileName>Bosphorus_1920x1080_120fps_420_8bit_YUV_RAW.7z</FileName>
+      <FileSize>680772328</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/OpenVisualCloud/SVT-AV1/archive/v0.8.0.zip</URL>
+      <MD5>0cdeb5a8d3604b6597c4620c6436f236</MD5>
+      <SHA256>eaae3b00f9dbaba193055f6d6f3e07c79ed8e8847df391994f080d3ed3f26853</SHA256>
+      <FileName>SVT-AV1-0.8.0.zip</FileName>
+      <FileSize>3651761</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/OpenVisualCloud/SVT-AV1/releases/download/v0.8.0/SvtAv1Enc.dll</URL>
+      <FileName>SvtAv1Enc-0.8.0.dll</FileName>
+      <FileSize>4872192</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/OpenVisualCloud/SVT-AV1/releases/download/v0.8.0/SvtAv1EncApp.exe</URL>
+      <FileName>SvtAv1EncApp-0.8.0.exe</FileName>
+      <FileSize>67584</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/webmproject/libvpx/archive/v1.8.2.tar.gz</URL>
+      <MD5>6dbccca688886c66a216d7e445525bce</MD5>
+      <SHA256>8735d9fcd1a781ae6917f28f239a8aa358ce4864ba113ea18af4bb2dc8b474ac</SHA256>
+      <FileName>libvpx-1.8.2.tar.gz</FileName>
+      <FileSize>5312988</FileSize>
+    </Package>
+    <Package>
+      <URL>http://ultravideo.cs.tut.fi/video/Bosphorus_1920x1080_120fps_420_8bit_YUV_RAW.7z</URL>
+      <MD5>db7c7ff09acd5d7820cc4d1eb0939cf9</MD5>
+      <SHA256>e73a54088e88e6465f578625d185933e85c3209ab7105deb755a8b8918b78cab</SHA256>
+      <FileName>Bosphorus_1920x1080_120fps_420_8bit_YUV_RAW.7z</FileName>
+      <FileSize>680772328</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ftp.mozilla.org/pub/mozilla.org/opus/opus-1.0.1.tar.gz, http://files.freeswitch.org/downloads/libs/opus-1.0.1.tar.gz</URL>
+      <MD5>bbac19996957b404a1139816e2f357f5</MD5>
+      <FileSize>767241</FileSize>
+    </Package>
+    <Package>
+      <URL>http://ftp.mozilla.org/pub/mozilla.org/opus/opus-tools-0.1.5.tar.gz</URL>
+      <MD5>244de849382267726bf6d1c0d1ef5e9f</MD5>
+      <FileSize>288303</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

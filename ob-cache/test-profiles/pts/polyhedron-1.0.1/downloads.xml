@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://www.fortran.uk/pb11.zip</URL>
+      <MD5>6b4526b10dbfae8ed256b1e58008974d</MD5>
+      <SHA256>2c33f81bb39dc55b6c2a84270dc0f8ffc1baa892a045af3419afd9deeb911158</SHA256>
+      <FileName>pb11.zip</FileName>
+      <FileSize>3970705</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

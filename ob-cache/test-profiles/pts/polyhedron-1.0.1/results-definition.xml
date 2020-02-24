@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Geometric Mean Execution Time =      #_RESULT_# seconds</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

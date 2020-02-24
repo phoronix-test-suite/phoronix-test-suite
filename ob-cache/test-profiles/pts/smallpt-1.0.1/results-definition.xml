@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.8.0m2 (Bygland)-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Elapsed Time: #_RESULT_# Seconds</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

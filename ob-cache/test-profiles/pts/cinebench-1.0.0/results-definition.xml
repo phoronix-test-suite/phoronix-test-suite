@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Rendering (Single   CPU) : #_RESULT_# pts</OutputTemplate>
+    <LineHint>Single   CPU</LineHint>
+    <ResultScale>pts</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Rendering (Multiple CPU) : #_RESULT_# pts</OutputTemplate>
+    <LineHint>Multiple CPU</LineHint>
+    <ResultScale>pts</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Shading (OpenGL)                : #_RESULT_# fps</OutputTemplate>
+    <LineHint>Shading</LineHint>
+    <ResultScale>fps</ResultScale>
+  </ResultsParser>
+</PhoronixTestSuite>

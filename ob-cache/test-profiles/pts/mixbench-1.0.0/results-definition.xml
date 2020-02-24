@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.4.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>          256,    128.250,    2.61, #_RESULT_#  51.33,     64.125,   80.99,  212.53,   3.31,   128.250,    8.97, 1918.98,  14.96</OutputTemplate>
+    <MatchToTestArguments>SPGFLOPS</MatchToTestArguments>
+    <LineHint> 256,</LineHint>
+    <StripFromResult>,</StripFromResult>
+    <ResultScale>GFLOPS</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>          256,    128.250,    2.61, 6582.63,  51.33,     64.125,   80.99,  #_RESULT_#   3.31,   128.250,    8.97, 1918.98,  14.96</OutputTemplate>
+    <MatchToTestArguments>DPGFLOPS</MatchToTestArguments>
+    <LineHint> 256,</LineHint>
+    <StripFromResult>,</StripFromResult>
+    <ResultScale>GFLOPS</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>          256,    128.250,    2.61, 6582.63,  51.33,     64.125,   80.99,  212.53,   3.31,   128.250,    8.97, #_RESULT_#  14.96</OutputTemplate>
+    <MatchToTestArguments>GIOPS</MatchToTestArguments>
+    <LineHint> 256,</LineHint>
+    <StripFromResult>,</StripFromResult>
+    <ResultScale>GIOPS</ResultScale>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.8.0 (Belev)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/pb2.5benchmarks.tgz</URL>
+      <MD5>8160be87912b80d830481b176b3d3aa7</MD5>
+      <FileSize>2543967</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/pb2.5driver.tgz</URL>
+      <MD5>539eeb4347bead5f8bdbb9b847a97575</MD5>
+      <FileSize>47770</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/pb2.5datasets_standard.tgz</URL>
+      <MD5>d8c6fb1690d62e52ed79bf4f86ac6006</MD5>
+      <FileSize>370753945</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.6.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Score      : #_RESULT_# (higher is better)</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

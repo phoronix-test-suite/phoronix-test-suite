@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Net average page latency (Arith. mean): #_RESULT_# us (260 clks)</OutputTemplate>
+    <LineHint>Net average page latency</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

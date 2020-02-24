@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.0.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>RAM size:    3828 MB,  # CPU hardware threads:   4
+RAM usage:    850 MB,  # Benchmark threads:      4
+
+Dict        Compressing          |        Decompressing
+      Speed Usage    R/U Rating  |    Speed Usage    R/U Rating
+       KB/s     %   MIPS   MIPS  |     KB/s     %   MIPS   MIPS
+
+22:    7874   265   2890   7659  |    87772   335   2363   7919
+23:    6622   231   2920   6747  |    81477   316   2361   7456
+24:    7748   277   3012   8330  |    85974   335   2384   7976
+25:    7381   271   3114   8427  |    95591   378   2381   8989
+----------------------------------------------------------------
+Avr:          261   2984   #_RESULT_#               341   2372   8085
+Tot:          301   2678   7938</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

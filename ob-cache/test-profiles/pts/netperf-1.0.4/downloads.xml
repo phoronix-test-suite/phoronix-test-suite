@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/netperf-2.7.0.tar.bz2</URL>
+      <MD5>ad1c5342d61f297c417a93133aeba65a</MD5>
+      <SHA256>842af17655835c8be7203808c3393e6cb327a8067f3ed1f1053eb78b4e40375a</SHA256>
+      <FileName>netperf-2.7.0.tar.bz2</FileName>
+      <FileSize>1024430</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

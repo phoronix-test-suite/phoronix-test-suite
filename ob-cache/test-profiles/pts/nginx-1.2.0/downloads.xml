@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.8.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://nginx.org/download/nginx-1.9.9.tar.gz</URL>
+      <MD5>50fdfa08e93ead7a111cba5a5f5735af</MD5>
+      <SHA256>de66bb2b11c82533aa5cb5ccc27cbce736ab87c9f2c761e5237cda0b00068d73</SHA256>
+      <FileSize>887908</FileSize>
+    </Package>
+    <Package>
+      <URL>http://archive.apache.org/dist/httpd/httpd-2.2.17.tar.gz</URL>
+      <MD5>66d8e107f85acc039fd5e624e85728a9</MD5>
+      <FileSize>6597991</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/apache-ab-test-files-1.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/apache-ab-test-files-1.tar.gz</URL>
+      <MD5>ca0c5bf0dd482a2847c68a52c0759942</MD5>
+      <FileSize>6008</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

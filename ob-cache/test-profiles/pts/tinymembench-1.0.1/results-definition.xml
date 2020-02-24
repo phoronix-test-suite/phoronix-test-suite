@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate> standard memcpy                                      :  #_RESULT_# MB/s (0.8%)</OutputTemplate>
+    <LineHint>standard memcpy</LineHint>
+    <ArgumentsDescription>Standard Memcpy</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> standard memset                                      :  #_RESULT_# MB/s (0.8%)</OutputTemplate>
+    <LineHint>standard memset</LineHint>
+    <ArgumentsDescription>Standard Memset</ArgumentsDescription>
+  </ResultsParser>
+</PhoronixTestSuite>

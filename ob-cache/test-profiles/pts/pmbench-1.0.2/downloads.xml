@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/jisooy-pmbench-46a3d394ca7b.tar.xz</URL>
+      <MD5>3dc44fdcdb509645b7fe2677b75eb4e5</MD5>
+      <SHA256>e9730d36dc1b5adb51a0cc65bde8fe1a79b77ec7e4876c2dd35609790ae4e556</SHA256>
+      <FileName>jisooy-pmbench-46a3d394ca7b.tar.xz</FileName>
+      <FileSize>243496</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

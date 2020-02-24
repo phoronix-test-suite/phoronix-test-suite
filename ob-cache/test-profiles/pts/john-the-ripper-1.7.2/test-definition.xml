@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>John The Ripper</Title>
+    <AppVersion>1.9.0-jumbo-1</AppVersion>
+    <Description>This is a benchmark of John The Ripper, which is a password cracker.</Description>
+    <ResultScale>Real C/S</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.7.2</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD, MacOSX, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, openssl-development</ExternalDependencies>
+    <EnvironmentSize>102</EnvironmentSize>
+    <ProjectURL>http://www.openwall.com/john/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>--test=30 </Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>run-test</Identifier>
+      <Menu>
+        <Entry>
+          <Name>MD5</Name>
+          <Value>--format=md5crypt</Value>
+        </Entry>
+        <Entry>
+          <Name>Blowfish</Name>
+          <Value>--format=bcrypt</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

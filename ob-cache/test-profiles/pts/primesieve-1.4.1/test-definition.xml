@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Primesieve</Title>
+    <AppVersion>6.2</AppVersion>
+    <Description>Primesieve generates prime numbers using a highly optimized sieve of Eratosthenes implementation. Primesieve benchmarks the CPU's L1/L2 cache performance.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>1e12 Prime Number Generation</SubTitle>
+    <Executable>primesieve-test</Executable>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.4.1</Version>
+    <SupportedPlatforms>Linux, BSD, Solaris, MacOSX, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, cmake</ExternalDependencies>
+    <EnvironmentSize>2.9</EnvironmentSize>
+    <ProjectURL>http://primesieve.org</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Kim Walisch</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>1e12 --quiet --time</Arguments>
+    </Default>
+  </TestSettings>
+</PhoronixTestSuite>

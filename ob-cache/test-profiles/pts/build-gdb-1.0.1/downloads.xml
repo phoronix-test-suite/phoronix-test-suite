@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://ftp.gnu.org/gnu/gdb/gdb-9.1.tar.xz, ftp://sourceware.org/pub/gdb/releases/gdb-9.1.tar.xz</URL>
+      <MD5>f7e9f6236c425097d9e5f18a6ac40655</MD5>
+      <SHA256>699e0ec832fdd2f21c8266171ea5bf44024bd05164fdf064e4d10cc4cf0d1737</SHA256>
+      <FileName>gdb-9.1.tar.xz</FileName>
+      <FileSize>20980824</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

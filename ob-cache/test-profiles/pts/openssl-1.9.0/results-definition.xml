@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.0.1 (Khanino)-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>rsa 4096 bits 0.006641s 0.000100s    #_RESULT_#  9994.5</OutputTemplate>
+    <LineHint>4096 bits</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

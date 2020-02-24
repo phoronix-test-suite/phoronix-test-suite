@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.6.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>#_RESULT_# records/s</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

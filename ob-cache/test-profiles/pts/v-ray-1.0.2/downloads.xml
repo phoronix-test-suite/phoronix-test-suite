@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+	<URL>vraybench_1.0.8_lin_x64</URL>
+      <MD5>1d57e0607fa2a15419d8c12e5e08a535</MD5>
+      <SHA256>a0620facba83099cacf6f8cde95188ba5b0792667be476baf001f0b9ffb7dadc</SHA256>
+      <FileName>vraybench_1.0.8_lin_x64</FileName>
+      <FileSize>170560473</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+	<URL>vraybench_1.0.8_win_x64-cli.exe</URL>
+      <MD5>4507908330cb9ab43809abf1935ae967</MD5>
+      <SHA256>dfb54d8bf5261bf63c6767c51bcf0869d6818213968786b9b591ad4aff6996c2</SHA256>
+      <FileName>vraybench_1.0.8_win_x64-cli.exe</FileName>
+      <FileSize>142290896</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

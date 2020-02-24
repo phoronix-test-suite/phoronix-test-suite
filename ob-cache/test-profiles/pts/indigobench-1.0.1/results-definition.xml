@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Intel(R) Core(TM) i9-7980XE CPU @ 2.60GHz (GenuineIntel) - Supercar: #_RESULT_# M samples/s (1280x720, 60.100 s, 388.870 samples/pixel)</OutputTemplate>
+    <ResultAfterString>Supercar:</ResultAfterString>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Intel(R) Core(TM) i9-7980XE CPU @ 2.60GHz (GenuineIntel) - Bedroom: #_RESULT_# M samples/s (1280x720, 60.100 s, 388.870 samples/pixel)</OutputTemplate>
+    <ResultAfterString>Bedroom:</ResultAfterString>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.4.0m0 (Forsand)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.arch.cs.titech.ac.jp/~kise/nq/package/qn24b-version1.0.tgz, ftp://ftp.es.freebsd.org/pub/FreeBSD/ports/distfiles/qn24b-version1.0.tgz, ftp://ftp.ussg.iu.edu/pub/FreeBSD/ports/distfiles/qn24b-version1.0.tgz</URL>
+      <MD5>10fc6239b5e037b3c86890918d33b8f3</MD5>
+      <FileSize>213360</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

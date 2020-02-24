@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Memory Test Suite</Title>
+    <Version>1.3.0</Version>
+    <TestType>Memory</TestType>
+    <Description>The system memory test suite consists of tests designed to test the computer's system memory (RAM) performance. Among these tests are RAMspeed and Bandwidth.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/ramspeed</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/stream</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/t-test1</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/cachebench</Test>
+    <Arguments>-r</Arguments>
+    <Description>Read Cache</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/cachebench</Test>
+    <Arguments>-w</Arguments>
+    <Description>Write Cache</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/tinymembench</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/mbw</Test>
+    <Arguments>-t0 1024</Arguments>
+    <Description>Test: Memory Copy - Array Size: 1024 MiB</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/mbw</Test>
+    <Arguments>-t2 1024</Arguments>
+    <Description>Test: Memory Copy, Fixed Block Size - Array Size: 1024 MiB</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+</PhoronixTestSuite>

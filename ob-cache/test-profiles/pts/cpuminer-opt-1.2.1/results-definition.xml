@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>[2017-12-10 18:07:01] Benchmark: #_RESULT_# MH/s</OutputTemplate>
+    <LineHint>Benchmark:</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

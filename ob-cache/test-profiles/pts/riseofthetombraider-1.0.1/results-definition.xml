@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m3-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>SpineOfTheMountain: 		Min FPS: #_MIN_RESULT_#			Max FPS: #_MAX_RESULT_#			Average FPS: #_RESULT_#</OutputTemplate>
+    <LineHint>SpineOfTheMountain</LineHint>
+    <AppendToArgumentsDescription>Scene: Spine Of The Mountain</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>ProphetsTomb: 		Min FPS: #_MIN_RESULT_#			Max FPS: #_MAX_RESULT_#			Average FPS: #_RESULT_#</OutputTemplate>
+    <LineHint>ProphetsTomb</LineHint>
+    <AppendToArgumentsDescription>Scene: Prophets Tomb</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>GeothermalValley: 		Min FPS: #_MIN_RESULT_#			Max FPS: #_MAX_RESULT_#			Average FPS: #_RESULT_#</OutputTemplate>
+    <LineHint>GeothermalValley</LineHint>
+    <AppendToArgumentsDescription>Scene: Geothermal Valley</AppendToArgumentsDescription>
+  </ResultsParser>
+</PhoronixTestSuite>

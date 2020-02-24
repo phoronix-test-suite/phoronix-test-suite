@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/libvpx-1.8.0.tar.gz, http://github.com/webmproject/libvpx/archive/v1.8.0.tar.gz</URL>
+      <MD5>49cb591325f44a3459b040112e3b82e7</MD5>
+      <SHA256>86df18c694e1c06cc8f83d2d816e9270747a0ce6abe316e93a4f4095689373f6</SHA256>
+      <FileName>libvpx-1.8.0.tar.gz</FileName>
+      <FileSize>2879302</FileSize>
+    </Package>
+    <Package>
+      <URL>http://ultravideo.cs.tut.fi/video/Jockey_1920x1080_120fps_420_8bit_YUV_Y4M.7z</URL>
+      <MD5>c179df735def0f5c4cc07354540cf66f</MD5>
+      <SHA256>b2c4150efc02784d7f5b5072092f73fd041f894c5bb4ff5c9b275580902ceabf</SHA256>
+      <FileSize>761812403</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.0.1 (Khanino)-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Results: 4 threads #_RESULT_# iter 192.66s user 60.56s total 0.561 iter/s 0.176 iter/cpu</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

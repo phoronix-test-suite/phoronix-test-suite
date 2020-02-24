@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.4.0m1 (Forsand)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://jedi.ks.uiuc.edu/~johns/raytracer/files/0.98.9/tachyon-0.98.9.tar.gz</URL>
+      <MD5>eb39e10bb37bccc949b45b8fc28dabd7</MD5>
+      <FileSize>3273086</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

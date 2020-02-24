@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://archive.debian.org/debian/pool/main/p/postmark/postmark_1.51.orig.tar.gz, https://mirrors.mediatemple.net/debian-archive/debian/pool/main/p/postmark/postmark_1.51.orig.tar.gz</URL>
+      <MD5>b494167c2df1850004110ab28e5ad164</MD5>
+      <SHA256>7cb7c31d4e7725ce8d8e11fb7df62ed700dee4dbd5ca1e31bf3a9161fc890b41</SHA256>
+      <FileName>postmark_1.51.orig.tar.gz</FileName>
+      <FileSize>13394</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

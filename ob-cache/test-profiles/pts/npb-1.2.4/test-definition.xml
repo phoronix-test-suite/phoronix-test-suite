@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.4.0m3-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>NAS Parallel Benchmarks</Title>
+    <AppVersion>3.3</AppVersion>
+    <Description>NPB, NAS Parallel Benchmarks, is a benchmark developed by NASA for high-end computer systems. This test profile currently uses the MPI version of NPB.</Description>
+    <ResultScale>Total Mop/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.4</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, fortran-compiler, openmpi-development</ExternalDependencies>
+    <EnvironmentSize>8</EnvironmentSize>
+    <ProjectURL>http://www.nas.nasa.gov/Resources/Software/npb.html</ProjectURL>
+    <InternalTags>SMP, MPI</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Test / Class</DisplayName>
+      <Identifier>run-test</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>BT.A</Name>
+          <Value>bt.A</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>EP.C</Name>
+          <Value>ep.C</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>FT.A</Name>
+          <Value>ft.A</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>FT.B</Name>
+          <Value>ft.B</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>LU.A</Name>
+          <Value>lu.A</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>LU.C</Name>
+          <Value>lu.C</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>SP.A</Name>
+          <Value>sp.A</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

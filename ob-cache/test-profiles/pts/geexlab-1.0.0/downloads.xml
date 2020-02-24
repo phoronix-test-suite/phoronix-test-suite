@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.4.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.ozone3d.net/geexlab/dl/GeeXLab_FREE_linux64_0.25.3.0.zip</URL>
+      <MD5>f1920f506f1d0886058ab053fd6f475c</MD5>
+      <SHA256>d86825a168d945ece10beabaf467ba15a053803394e641df065bf3a781396e34</SHA256>
+      <FileName>GeeXLab_FREE_linux64_0.25.3.0.zip</FileName>
+      <FileSize>150352037</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,365 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Multi-Core</Title>
+    <Version>1.3.0</Version>
+    <TestType>Processor</TestType>
+    <Description>This test suite consists of tests that are able to take advantage of multi-core and/or multi-processor systems. Among the tests in this suite are encoding, compilation, and rendering tests.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/blender</Test>
+    <Arguments>-b ../bmw27_gpu.blend -o output.test -x 1 -F JPEG -f 1  NONE</Arguments>
+    <Description>Blend File: BMW27 - Compute: CPU-Only</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/blender</Test>
+    <Arguments>-b ../barbershop_interior_gpu.blend -o output.test -x 1 -F JPEG -f 1  NONE</Arguments>
+    <Description>Blend File: Barbershop - Compute: CPU-Only</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/c-ray</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/stockfish</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/x265</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ttsiod-renderer</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/primesieve</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/svt-hevc</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/svt-vp9</Test>
+    <Arguments>-tune 0 -i Bosphorus_1920x1080_120fps_420_8bit_YUV.yuv -w 1920 -h 1080</Arguments>
+    <Description>Tuning: Visual Quality Optimized - Input: Bosphorus 1080p</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/svt-vp9</Test>
+    <Arguments>-tune 1 -i Bosphorus_1920x1080_120fps_420_8bit_YUV.yuv -w 1920 -h 1080</Arguments>
+    <Description>Tuning: PSNR/SSIM Optimized - Input: Bosphorus 1080p</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/svt-vp9</Test>
+    <Arguments>-tune 2 -i Bosphorus_1920x1080_120fps_420_8bit_YUV.yuv -w 1920 -h 1080</Arguments>
+    <Description>Tuning: VMAF Optimized - Input: Bosphorus 1080p</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/rodinia</Test>
+    <Arguments>OMP_CFD</Arguments>
+    <Description>Test: OpenMP CFD Solver</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/rodinia</Test>
+    <Arguments>OMP_LAVAMD</Arguments>
+    <Description>Test: OpenMP LavaMD</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/povray</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/parboil</Test>
+    <Arguments>cutcp omp_base large</Arguments>
+    <Description>Test: OpenMP CUTCP</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/smallpt</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/swet</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/namd</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/asmfish</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/nero2d</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/graphics-magick</Test>
+    <Arguments>-resize 50%</Arguments>
+    <Description>Operation: Resizing</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-7zip</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-pbzip2</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/build-linux-kernel</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/build-llvm</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/asmfish</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/appleseed</Test>
+    <Arguments>emily.appleseed</Arguments>
+    <Description>Scene: Emily</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/appleseed</Test>
+    <Arguments>disney_material_1.appleseed</Arguments>
+    <Description>Scene: Disney Material</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/appleseed</Test>
+    <Arguments>material_tester_ambient_occlusion.appleseed</Arguments>
+    <Description>Scene: Material Tester</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/tungsten</Test>
+    <Arguments>../../data/example-scenes/hair/scene.json</Arguments>
+    <Description>Scene: Hair</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/tungsten</Test>
+    <Arguments>../../data/example-scenes/water-caustic/scene.json</Arguments>
+    <Description>Scene: Water Caustic</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/tungsten</Test>
+    <Arguments>../../data/example-scenes/non-exponential/scene.json</Arguments>
+    <Description>Scene: Non-Exponential</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/tungsten</Test>
+    <Arguments>../../data/example-scenes/volumetric-caustic/scene.json</Arguments>
+    <Description>Scene: Volumetric Caustic</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/luxcorerender</Test>
+    <Arguments>DLSC/LuxCoreScene/render.cfg</Arguments>
+    <Description>Scene: DLSC</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/luxcorerender</Test>
+    <Arguments>RainbowColorsAndPrism/LuxCoreScene/render.cfg</Arguments>
+    <Description>Scene: Rainbow Colors and Prism</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>local/rocksdb</Test>
+    <Arguments>--benchmarks="fillseq"</Arguments>
+    <Description>Test: Sequential Fill</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>local/rocksdb</Test>
+    <Arguments>--benchmarks="fillrandom"</Arguments>
+    <Description>Test: Random Fill</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>local/rocksdb</Test>
+    <Arguments>--benchmarks="fillsync"</Arguments>
+    <Description>Test: Random Fill Sync</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>local/rocksdb</Test>
+    <Arguments>--benchmarks="readrandom"</Arguments>
+    <Description>Test: Random Read</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>local/rocksdb</Test>
+    <Arguments>--benchmarks="readwhilewriting"</Arguments>
+    <Description>Test: Read While Writing</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/cassandra</Test>
+    <Arguments>READ</Arguments>
+    <Description>Test: Reads</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/cassandra</Test>
+    <Arguments>WRITE</Arguments>
+    <Description>Test: Writes</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/cassandra</Test>
+    <Arguments>MIXED_1_1</Arguments>
+    <Description>Test: Mixed 1:1</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/cassandra</Test>
+    <Arguments>MIXED_1_3</Arguments>
+    <Description>Test: Mixed 1:3</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/pgbench</Test>
+    <Arguments>BUFFER_TEST NORMAL_LOAD READ_ONLY</Arguments>
+    <Description>Scaling: Buffer Test - Test: Normal Load - Mode: Read Only</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ospray</Test>
+    <Arguments>magnetic-512-volume/magnetic-512-volume.osp --renderer scivis</Arguments>
+    <Description>Demo: Magnetic Reconnection - Renderer: SciVis</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ospray</Test>
+    <Arguments>magnetic-512-volume/magnetic-512-volume.osp --renderer pathtracer</Arguments>
+    <Description>Demo: Magnetic Reconnection - Renderer: Path Tracer</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ospray</Test>
+    <Arguments>xfrog-forest.xml --renderer scivis</Arguments>
+    <Description>Demo: XFrog Forest - Renderer: SciVis</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ospray</Test>
+    <Arguments>xfrog-forest.xml --renderer pathtracer</Arguments>
+    <Description>Demo: XFrog Forest - Renderer: Path Tracer</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ospray</Test>
+    <Arguments>NASA-B-field-sun.osx --renderer scivis</Arguments>
+    <Description>Demo: NASA Streamlines - Renderer: SciVis</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ospray</Test>
+    <Arguments>NASA-B-field-sun.osx --renderer pathtracer</Arguments>
+    <Description>Demo: NASA Streamlines - Renderer: Path Tracer</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ospray</Test>
+    <Arguments>sanm/sanm.obj -vp 22.958788 3.204613 2.712676 -vu 0.000000 1.000000 0.000000 -vi 12.364944 0.176316 4.009342 -sg:sun:intensity=4.0 -sg:sun:direction=0,-1,0 -sg:bounce:intensity=0.0 --hdri-light rnl_probe.pfm -sg:hdri:intensity=1.25 --renderer scivis</Arguments>
+    <Description>Demo: San Miguel - Renderer: SciVis</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ospray</Test>
+    <Arguments>sanm/sanm.obj -vp 22.958788 3.204613 2.712676 -vu 0.000000 1.000000 0.000000 -vi 12.364944 0.176316 4.009342 -sg:sun:intensity=4.0 -sg:sun:direction=0,-1,0 -sg:bounce:intensity=0.0 --hdri-light rnl_probe.pfm -sg:hdri:intensity=1.25 --renderer pathtracer</Arguments>
+    <Description>Demo: San Miguel - Renderer: Path Tracer</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/embree</Test>
+    <Arguments>pathtracer -c asian_dragon/asian_dragon.ecs</Arguments>
+    <Description>Binary: Pathtracer - Model: Asian Dragon</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/embree</Test>
+    <Arguments>pathtracer -c asian_dragon_obj/asian_dragon.ecs</Arguments>
+    <Description>Binary: Pathtracer - Model: Asian Dragon Obj</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/embree</Test>
+    <Arguments>pathtracer -c crown/crown.ecs</Arguments>
+    <Description>Binary: Pathtracer - Model: Crown</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/embree</Test>
+    <Arguments>pathtracer_ispc -c asian_dragon/asian_dragon.ecs</Arguments>
+    <Description>Binary: Pathtracer ISPC - Model: Asian Dragon</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/embree</Test>
+    <Arguments>pathtracer_ispc -c asian_dragon_obj/asian_dragon.ecs</Arguments>
+    <Description>Binary: Pathtracer ISPC - Model: Asian Dragon Obj</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/embree</Test>
+    <Arguments>pathtracer_ispc -c crown/crown.ecs</Arguments>
+    <Description>Binary: Pathtracer ISPC - Model: Crown</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+</PhoronixTestSuite>

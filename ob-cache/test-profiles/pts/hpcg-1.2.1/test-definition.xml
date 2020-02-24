@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>High Performance Conjugate Gradient</Title>
+    <AppVersion>3.1</AppVersion>
+    <Description>HPCG is the High Performance Conjugate Gradient and is a new scientific benchmark from Sandia National Lans focused for super-computer testing with modern real-world workloads compared to HPCC.</Description>
+    <ResultScale>GFLOP/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, fortran-compiler, openmpi-development</ExternalDependencies>
+    <EnvironmentSize>2.4</EnvironmentSize>
+    <ProjectURL>http://www.hpcg-benchmark.org/</ProjectURL>
+    <InternalTags>SMP, MPI</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

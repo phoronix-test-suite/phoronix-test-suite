@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.4.0m0 (Forsand)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>ftp://ftp.uk.debian.org/debian/pool/main/p/postmark/postmark_1.51.orig.tar.gz, http://ftp.gva.es/mirror/debian/pool/main/p/postmark/postmark_1.51.orig.tar.gz, ftp://ftp.nz.freebsd.org/pub/debian-amd64/debian-amd64/pool/main/p/postmark/postmark_1.51.orig.tar.gz</URL>
+      <MD5>b494167c2df1850004110ab28e5ad164</MD5>
+      <FileSize>13394</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

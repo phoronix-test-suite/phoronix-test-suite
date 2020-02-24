@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Maxon Cinebench</Title>
+    <AppVersion>15.038</AppVersion>
+    <Description>This is a test profile to run MAXON Cinebench on Windows.</Description>
+    <ResultScale>pts</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Non-Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <EnvironmentSize>202</EnvironmentSize>
+    <ProjectURL>http://www.maxon.net/en/products/cinebench/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>Single-Core Test</Name>
+          <Value>-cb_cpu1</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Multi-Core Test</Name>
+          <Value>-cb_cpux</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>OpenGL Test</Name>
+          <Value>-cb_opengl</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.8.0m3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>ftp://ftp.mirrorservice.org/sites/downloads.sourceforge.net/m/mr/mrbayes/mrbayes/3.1.2/mrbayes-3.1.2.tar.gz, http://kent.dl.sourceforge.net/sourceforge/mrbayes/mrbayes-3.1.2.tar.gz</URL>
+      <MD5>942e4e0a90fa23481bb1f2e0fa0e0d66</MD5>
+      <SHA256>c60253de1980c9f0a0eb684fffe7ba428fda7c39a3edcb6acf384b5e1443f2f4</SHA256>
+      <FileSize>545968</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

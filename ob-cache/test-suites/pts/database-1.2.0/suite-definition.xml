@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Database Test Suite</Title>
+    <Version>1.2.0</Version>
+    <TestType>System</TestType>
+    <Description>The database test suite consists of tests that are designed to represent real-world database performance in areas such as SQL.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/sqlite</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/sqlite-speedtest</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/redis</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/rocksdb</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/cassandra</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/pgbench</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/mysqlslap</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+</PhoronixTestSuite>

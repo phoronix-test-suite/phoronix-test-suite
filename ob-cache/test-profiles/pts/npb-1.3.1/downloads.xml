@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/NPB3.3.1.tar.gz, http://www.nas.nasa.gov/assets/npb/NPB3.3.1.tar.gz</URL>
+      <MD5>8e5ec2c819480759725df67833619911</MD5>
+      <SHA256>4a8ea679b1df69f583c544c47198b3c26a50ec2bb6f8f69aef66c04c9a747d2d</SHA256>
+      <FileName>NPB3.3.1.tar.gz</FileName>
+      <FileSize>625209</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/rays1bench-20200109.zip</URL>
+      <MD5>6a250418b17c1eae5bcbf4d28a34ff01</MD5>
+      <SHA256>b849a27da3bef23bc8426341694953d3d2b445da6fe2a2f48b06bdeb79ceaa69</SHA256>
+      <FileName>rays1bench-20200109.zip</FileName>
+      <FileSize>2464083</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

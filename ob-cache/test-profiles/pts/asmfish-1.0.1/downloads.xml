@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.4.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/asmFish-20170919.tar.bz2</URL>
+      <MD5>e661249ff7147e34d95e1183db569f03</MD5>
+      <SHA256>f5dcd56234ec30420073cb0af6b77ba91384a64f289c8e05583a225bf2edb7fb</SHA256>
+      <FileSize>811822</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

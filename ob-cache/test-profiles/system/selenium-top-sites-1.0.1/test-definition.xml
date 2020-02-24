@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.8.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Time To Load + View Popular Websites</Title>
+    <Description>This test profile uses the Selenium WebDriver for measuring the time it takes to load a majority of the top 50 most popular websites in the web browser in different tabs and to scroll to the bottom of the page, keeping previous tabs open.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+    <IgnoreRuns>1</IgnoreRuns>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>python</ExternalDependencies>
+    <RequiresDisplay>TRUE</RequiresDisplay>
+    <RequiresInternet>TRUE</RequiresInternet>
+    <EnvironmentSize>100</EnvironmentSize>
+    <ProjectURL>https://www.seleniumhq.org/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>firefox, google-chrome</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Browser</DisplayName>
+      <Identifier>browser</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Firefox</Name>
+          <Value>Firefox</Value>
+        </Entry>
+        <Entry>
+          <Name>Google Chrome</Name>
+          <Value>Chrome</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

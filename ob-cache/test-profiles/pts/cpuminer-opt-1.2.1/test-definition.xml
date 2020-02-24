@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Cpuminer-Opt</Title>
+    <AppVersion>3.8.8.1</AppVersion>
+    <Description>Cpuminer benchmark.</Description>
+    <ResultScale>Hash Speed</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.1</Version>
+    <SupportedPlatforms>Linux, BSD, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>curl, build-utilities, gmp-library, openssl-development</ExternalDependencies>
+    <EnvironmentSize>5</EnvironmentSize>
+    <ProjectURL>http://github.com/JayDDee/cpuminer-opt</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Algorithm</DisplayName>
+      <Identifier>algo</Identifier>
+      <ArgumentPrefix>-a </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>lbry</Name>
+          <Value>lbry</Value>
+        </Entry>
+        <Entry>
+          <Name>sha256t</Name>
+          <Value>sha256t</Value>
+        </Entry>
+        <Entry>
+          <Name>skein</Name>
+          <Value>skein</Value>
+        </Entry>
+        <Entry>
+          <Name>myr-gr</Name>
+          <Value>myr-gr</Value>
+        </Entry>
+        <Entry>
+          <Name>m7m</Name>
+          <Value>m7m</Value>
+        </Entry>
+        <Entry>
+          <Name>deep</Name>
+          <Value>deep</Value>
+        </Entry>
+        <Entry>
+          <Name>cryptonight</Name>
+          <Value>cryptonight</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

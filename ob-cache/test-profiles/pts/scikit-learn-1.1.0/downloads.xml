@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/scikit-learn/scikit-learn/archive/0.22.1/scikit-learn-0.22.1.tar.gz</URL>
+      <MD5>27269b66e4bd20d099bd84bdb191ee39</MD5>
+      <SHA256>7132d376a5cb605847022724e9a5dd294bd7c8a988e686b954fdeb00e24fe302</SHA256>
+      <FileName>scikit-learn-0.22.1.tar.gz</FileName>
+      <FileSize>7030556</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Blender</Title>
+    <AppVersion>2.79a</AppVersion>
+    <Description>Blender is an open-source 3D creation software project. This test is of Blender's Cycles benchmark with various sample files. GPU computing via OpenCL or CUDA is supported.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.4.1</Version>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <ExternalDependencies>bzip2-development, glut, xorg-development, opencl</ExternalDependencies>
+    <EnvironmentSize>450</EnvironmentSize>
+    <ProjectURL>https://www.blender.org/</ProjectURL>
+    <InternalTags>OpenCL, CUDA</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-noaudio --enable-autoexec</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Blend File</DisplayName>
+      <Identifier>blend</Identifier>
+      <ArgumentPrefix>-b </ArgumentPrefix>
+      <ArgumentPostfix> -o output.test -x 1 -F JPEG -f 1</ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>BMW27</Name>
+          <Value>../bmw27_gpu.blend</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Classroom</Name>
+          <Value>../classroom_gpu.blend</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Fishy Cat</Name>
+          <Value>../fishy_cat_gpu.blend</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Pabellon Barcelona</Name>
+          <Value>../pavillon_barcelone_gpu.blend</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Barbershop</Name>
+          <Value>../barbershop_interior_gpu.blend</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Compute</DisplayName>
+      <Identifier>compute</Identifier>
+      <ArgumentPrefix> </ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>CPU-Only</Name>
+          <Value>NONE</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>OpenCL</Name>
+          <Value>OPENCL</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>CUDA</Name>
+          <Value>CUDA</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

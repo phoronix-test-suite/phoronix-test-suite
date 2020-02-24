@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://gforge.inria.fr/frs/download.php/file/34618/scotch_6.0.4.tar.gz, http://pkgs.fedoraproject.org/repo/pkgs/scotch/scotch_6.0.4.tar.gz/d58b825eb95e1db77efe8c6ff42d329f/scotch_6.0.4.tar.gz</URL>
+      <MD5>d58b825eb95e1db77efe8c6ff42d329f</MD5>
+      <SHA256>f53f4d71a8345ba15e2dd4e102a35fd83915abf50ea73e1bf6efe1bc2b4220c7</SHA256>
+      <FileName>scotch_6.0.4.tar.gz</FileName>
+      <FileSize>4804966</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.cs.sandia.gov/~kddevin/Zoltan_Distributions/zoltan_distrib_v3.8.tar.gz, http://ftp.mcs.anl.gov/pub/petsc/externalpackages/zoltan_distrib_v3.8.tar.gz</URL>
+      <MD5>9d8fba8a990896881b85351d4327c4a9</MD5>
+      <SHA256>5bdd46548fb9c73b225bbcf3d206c558c318cb292f0b19645e536315d14aafb7</SHA256>
+      <FileName>zoltan_distrib_v3.8.tar.gz</FileName>
+      <FileSize>5407789</FileSize>
+    </Package>
+    <Package>
+      <FileName>omega-opm.tar.gz</FileName>
+      <FileSize>440350494</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

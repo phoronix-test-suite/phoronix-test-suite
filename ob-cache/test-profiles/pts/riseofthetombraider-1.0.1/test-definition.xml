@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m3-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Rise of the Tomb Raider</Title>
+    <Description>Rise of the Tomb Raider on Steam.
+
+The test profile assumes you have a Steam account, have Steam installed for the system, and that you own a copy of this game. This automates the process of executing the game and using its built-in benchmark mode.
+
+Backs up old preferences (in ~/.local/share/feral-interactive/) for the run.
+
+NOTES for cross-platform comparisons:
+    Due to the extreme demands of "Very High" 4K Texture Detail on all platforms, which can need ~6GB+ of VRAM, the "Very High" graphics preset on Linux only sets Texture Detail to "High".
+    Nvidia ambient occlusion modes are not featured on the Linux version (HBAO+ and VXAO).
+
+See notes in install.sh for a few small tweaks including disabling the CPU governor check when testing for it's effects
+    </Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>2</TimesToRun>
+    <PreInstallMessage>This test will attempt to install the necessary game using your Steam account. If the test appears hung you may need to manually exit the Steam client.</PreInstallMessage>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Game</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Retail</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <EnvironmentSize>2</EnvironmentSize>
+    <EstimatedTimePerRun>120</EstimatedTimePerRun>
+    <ProjectURL>https://store.steampowered.com/app/391220/</ProjectURL>
+    <Maintainer>Feral Interactive</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>$VIDEO_WIDTH $VIDEO_HEIGHT</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Graphics Preset</DisplayName>
+      <Identifier>graphics-preset</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>Lowest</Name>
+          <Value>Lowest</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Low</Name>
+          <Value>Low</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Medium</Name>
+          <Value>Medium</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>High</Name>
+          <Value>High</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Very High</Name>
+          <Value>VeryHigh</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Anti Aliasing</DisplayName>
+      <Identifier>anti-aliasing</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>Off</Name>
+          <Value>0</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>FXAA</Name>
+          <Value>1</Value>
+          <Message>Fast Approximate AA</Message>
+        </Entry>
+        <Entry>
+          <Name>SMAA</Name>
+          <Value>2</Value>
+          <Message>Subpixel Morphological AA</Message>
+        </Entry>
+        <Entry>
+          <Name>SSAA 2x</Name>
+          <Value>3</Value>
+          <Message>Supersample AA 2x</Message>
+        </Entry>
+        <Entry>
+          <Name>SSAA 4x</Name>
+          <Value>4</Value>
+          <Message>Supersample AA 4x</Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

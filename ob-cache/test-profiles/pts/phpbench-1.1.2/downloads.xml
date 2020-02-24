@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.6.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://download.pureftpd.org/pub/phpbench/phpbench-0.8.1.tar.gz, ftp://ftp.pureftpd.org/pub/pure-ftpd/misc/phpbench/phpbench-0.8.1.tar.gz</URL>
+      <MD5>9ee2e4305e320c7f20a3d81978c8d0dc</MD5>
+      <FileSize>9482</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ftp.osuosl.org/pub/blfs/conglomeration/lame/lame-3.100.tar.gz, https://fossies.org/linux/misc/lame-3.100.tar.gz, http://sources.voidlinux.eu/lame-3.100/lame-3.100.tar.gz</URL>
+      <MD5>83e260acbe4389b54fe08e0bdbf7cddb</MD5>
+      <SHA256>ddfe36cab873794038ae2c1210557ad34857a4b6bdc515785d1da9e175b1da1e</SHA256>
+      <FileName>lame-3.100.tar.gz</FileName>
+      <FileSize>1524133</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/LeelaChessZero/lc0/archive/v0.23.2.zip</URL>
+      <MD5>a5dd74b70a582940313ef8e540089509</MD5>
+      <SHA256>55a7712f2b832ee444ff0a7b67d407ae2d663bcc6d19be012c73076ced318288</SHA256>
+      <FileName>lc0-0.23.2.zip</FileName>
+      <FileSize>482360</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/LeelaChessZero/lc0/releases/download/v0.23.2/lc0-v0.23.2-windows-cpu-openblas.zip</URL>
+      <MD5>76ff91ce8f3fa64b172fc7af71e57846</MD5>
+      <SHA256>9a73342efc86e0a0bec8d46ba282fb09a8e50a4eb4ce61634527fe0cd59022a2</SHA256>
+      <FileName>lc0-v0.23.2-windows-cpu-openblas.zip</FileName>
+      <FileSize>9139208</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://lczero.org/get_network?sha=9f44992aafe2f58e17d1d2565ba8e1ad6ae995f2d6be371a94b821221841f1d9</URL>
+      <MD5>5065ca5454b429c05de672a7bdcb7e10</MD5>
+      <SHA256>0450e7f15d998c232933912152d89d942b1fd37bc4b3e083f6e08a031288a299</SHA256>
+      <FileName>9f44992aafe2f58e17d1d2565ba8e1ad6ae995f2d6be371a94b821221841f1d9</FileName>
+      <FileSize>6340542</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

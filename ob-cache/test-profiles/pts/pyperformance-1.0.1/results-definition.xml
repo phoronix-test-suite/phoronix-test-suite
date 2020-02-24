@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Mean +- std dev: #_RESULT_# ms +- 25 ms</OutputTemplate>
+    <LineHint>Mean +- std dev</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

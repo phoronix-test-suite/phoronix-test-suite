@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.0.0m0 (Suldal)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.ffte.jp/ffte-5.0.tgz</URL>
+      <MD5>c92bd710a198b0e4d469c10ef0e8eac8</MD5>
+      <FileName>ffte-5.0.tgz</FileName>
+      <FileSize>22855</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

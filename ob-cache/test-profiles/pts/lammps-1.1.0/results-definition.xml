@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Performance: #_RESULT_# ns/day, 3.475 hours/ns, 39.968 timesteps/s</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

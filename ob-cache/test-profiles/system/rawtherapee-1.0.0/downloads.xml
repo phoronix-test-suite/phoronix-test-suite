@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/benchmarkRT-2.tar.xz</URL>
+      <MD5>449a8cd29b856f8c7b1d6fc2a4f09318</MD5>
+      <SHA256>f202e8cd8365c28d4028980aadfd5634a9b2bfb444cb272ee7ce1b96f19aea07</SHA256>
+      <FileName>benchmarkRT-2.tar.xz</FileName>
+      <FileSize>10959136</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

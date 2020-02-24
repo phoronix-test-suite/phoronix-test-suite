@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/f1-2018-configs-1.zip</URL>
+      <MD5>642a5eb3d0e77b9117a851c0109c9994</MD5>
+      <SHA256>d0177811960121e1953162d70121c076a0ef1fae8dadf71db4cb1fa999098866</SHA256>
+      <FileName>f1-2018-configs-1.zip</FileName>
+      <FileSize>10867</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

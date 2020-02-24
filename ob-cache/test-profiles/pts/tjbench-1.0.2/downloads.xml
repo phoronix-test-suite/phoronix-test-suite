@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/jpeg-test-1.zip</URL>
+      <MD5>33cf1ff89be71a7eb7b1c2958f1b7d89</MD5>
+      <SHA256>adb76e4ee2e8ee815693b0898d79be70cecf9508ac3fdcb79baa43bcfcdc2646</SHA256>
+      <FileSize>11321295</FileSize>
+    </Package>
+    <Package>
+      <URL>http://ftp.osuosl.org/pub/blfs/conglomeration/libjpeg-turbo/libjpeg-turbo-1.5.3.tar.gz, https://sources.voidlinux.eu/libjpeg-turbo-1.5.3/libjpeg-turbo-1.5.3.tar.gz</URL>
+      <MD5>7c82f0f6a3130ec06b8a4d0b321cbca3</MD5>
+      <SHA256>b24890e2bb46e12e72a79f7e965f409f4e16466d00e1dd15d93d73ee6b592523</SHA256>
+      <FileSize>1658672</FileSize>
+      <PlatformSpecific>Linux, Solaris, BSD, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/libjpeg-turbo64-1.5.3-win64-vc-1.zip</URL>
+      <MD5>1c85c31019d74dbc49b02291e1eff7e6</MD5>
+      <SHA256>b87fc9babca217d4435d33b41c04534dde07722a83225b2342d2a943a0e0fd0b</SHA256>
+      <FileSize>1227039</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

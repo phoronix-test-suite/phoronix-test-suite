@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/sample-photo-6000x4000-1.zip</URL>
+      <MD5>3da40124023e94f63d96c22c07e7e9c2</MD5>
+      <SHA256>cadcd434abcdc82a220e7022c749b6fa5f46bb7a32ec14423ca8aab067b0e989</SHA256>
+      <FileName>sample-photo-6000x4000-1.zip</FileName>
+      <FileSize>7824306</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/stock-photos-jpeg-2018-1.tar.xz</URL>
+      <MD5>26f41350aaa7a9f3eba3097d1ac21123</MD5>
+      <SHA256>bcd2c8b7ecf9064fbf20ec8075650cbc06c0b4ce8f06db2676fac3258c459c23</SHA256>
+      <FileName>stock-photos-jpeg-2018-1.tar.xz</FileName>
+      <FileSize>35384500</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/pts-sample-photos-2.tar.bz2, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/pts-sample-photos-2.tar.bz2</URL>
+      <MD5>7ff2870cf3fa2299ea5f4e77e5a8535f</MD5>
+      <SHA256>e8597d7d5910a709985bffae490dfa9490483eb7838b351191156f027d9b5272</SHA256>
+      <FileName>pts-sample-photos-2.tar.bz2</FileName>
+      <FileSize>29599729</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

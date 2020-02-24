@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://mirrors.dotsrc.org/gcrypt/libgcrypt/libgcrypt-1.4.4.tar.bz2, ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-1.4.4.tar.bz2</URL>
+      <MD5>34105aa927e23c217741966496b97e67</MD5>
+      <FileSize>1143139</FileSize>
+    </Package>
+    <Package>
+      <URL>ftp://ftp.gnupg.org/gcrypt/libgpg-error/libgpg-error-1.7.tar.bz2, http://mirrors.dotsrc.org/gcrypt/libgpg-error/libgpg-error-1.7.tar.bz2, ftp://ftp.slackware.org.uk/slamd64/slamd64-current/source/n/libgpg-error/libgpg-error-1.7.tar.bz2</URL>
+      <MD5>62c0d09d1e76c5b6da8fff92314c4665</MD5>
+      <FileSize>403751</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

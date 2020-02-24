@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.6.0m3 (Arendal)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://superb-sea2.dl.sourceforge.net/sourceforge/lame/lame-3.99.3.tar.gz, http://heanet.dl.sourceforge.net/sourceforge/lame/lame-3.99.3.tar.gz, http://jaist.dl.sourceforge.net/sourceforge/lame/lame-3.99.3.tar.gz</URL>
+      <MD5>5ad31e33e70455eb3a7b79a5dd934fce</MD5>
+      <FileName>lame-3.99.3.tar.gz</FileName>
+      <FileSize>1443843</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

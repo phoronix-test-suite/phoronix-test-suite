@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.0.0m0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>256 #_RESULT_#</OutputTemplate>
+    <LineHint> </LineHint>
+    <MultiMatch>AVERAGE</MultiMatch>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/S-20181019.zip</URL>
+      <MD5>07a53830ae2a305c5d9726b6a9362655</MD5>
+      <SHA256>16ce074f524260d0464216e5c4ac90f7490422b2d22e6f443a7719e331d49793</SHA256>
+      <FileName>S-20181019.zip</FileName>
+      <FileSize>24702953</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

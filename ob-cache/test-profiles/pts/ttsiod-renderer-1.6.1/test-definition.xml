@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>TTSIOD 3D Renderer</Title>
+    <AppVersion>2.3a</AppVersion>
+    <Description>A portable GPL 3D software renderer that supports OpenMP and Intel Threading Building Blocks with many different rendering modes. This version does not use OpenGL but is entirely CPU/software based.</Description>
+    <ResultScale>FPS</ResultScale>
+    <Proportion>HIB</Proportion>
+    <SubTitle>Phong Rendering With Soft-Shadow Mapping</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.6.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, sdl-development</ExternalDependencies>
+    <EnvironmentSize>36.2</EnvironmentSize>
+    <ProjectURL>https://github.com/ttsiodras/renderer</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-b -n 5000 statue.ply</Arguments>
+    </Default>
+  </TestSettings>
+</PhoronixTestSuite>

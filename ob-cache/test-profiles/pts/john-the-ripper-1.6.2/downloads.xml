@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.openwall.com/john/j/john-1.8.0-jumbo-1.tar.gz, http://distro.ibiblio.org/openwall/projects/john/1.8.0/john-1.8.0-jumbo-1.tar.gz, http://download.openwall.net/pub/projects/john/1.8.0/john-1.8.0-jumbo-1.tar.gz</URL>
+      <MD5>69f6a26037ad56676116ea2114f35a79</MD5>
+      <SHA256>8a059d3caa798e2eb1eddacefb5c4d886c8df55dbf3eac314648bee499eec65d</SHA256>
+      <FileSize>30786455</FileSize>
+      <PlatformSpecific>Linux, Solaris, BSD, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.openwall.com/john/j/john180j1w.zip, http://distro.ibiblio.org/openwall/projects/john/1.8.0/john180j1w.zip, http://download.openwall.net/pub/projects/john/1.8.0/john180j1w.zip</URL>
+      <MD5>40c348e5bfc020d1ea09ee2d857d54f6</MD5>
+      <SHA256>05c6a884248c76e8774131b621624d6e31a635003204e8232e2dc49292ae8aa0</SHA256>
+      <FileSize>35585413</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

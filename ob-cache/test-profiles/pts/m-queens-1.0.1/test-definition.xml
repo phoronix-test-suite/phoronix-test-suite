@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>m-queens</Title>
+    <AppVersion>1.1</AppVersion>
+    <Description>A solver for the N-queens problem with multi-threading support via the OpenMP library.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Time To Solve</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>0.1</EnvironmentSize>
+    <ProjectURL>https://github.com/sudden6/m-queens</ProjectURL>
+    <Maintainer>sudden6</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>19</Arguments>
+    </Default>
+  </TestSettings>
+</PhoronixTestSuite>

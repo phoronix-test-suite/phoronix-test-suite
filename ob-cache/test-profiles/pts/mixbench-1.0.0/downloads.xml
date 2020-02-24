@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.4.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/mixbench-20160606.tar.bz2</URL>
+      <MD5>3504750e69acf7094ce1d4c38e831295</MD5>
+      <SHA256>d76eb8453cd672f7c2d2537488823befb0642002e22e53cbb54295be6e184e7b</SHA256>
+      <FileSize>40347</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

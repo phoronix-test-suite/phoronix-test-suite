@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.4.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Min =   #_MIN_RESULT_# Max =  #_MAX_RESULT_# Avg =  #_RESULT_#</OutputTemplate>
+    <LineHint>Avg =</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

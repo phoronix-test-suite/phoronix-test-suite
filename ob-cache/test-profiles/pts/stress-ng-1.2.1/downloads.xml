@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.6.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/stress-ng-0.07.26.tar.gz</URL>
+      <MD5>16d8bc21e56f0208a0a1173b7f8d95e3</MD5>
+      <SHA256>e14e52df9fdac4f5be66a2ba86c7d56134ae6f2824f5349f89d8010a61d3890d</SHA256>
+      <FileSize>371638</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

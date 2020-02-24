@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ffmpeg.org/releases/ffmpeg-4.0.2.tar.bz2</URL>
+      <MD5>5576e8a22f80b6a336db39808f427cfb</MD5>
+      <SHA256>346c51735f42c37e0712e0b3d2f6476c86ac15863e4445d9e823fe396420d056</SHA256>
+      <FileName>ffmpeg-4.0.2.tar.bz2</FileName>
+      <FileSize>10424065</FileSize>
+    </Package>
+    <Package>
+      <URL>http://downloads.videolan.org/pub/videolan/dav1d/0.1.0/dav1d-0.1.0.tar.xz</URL>
+      <MD5>5e14d96fb3dbdb50eb805fa5064a3b4a</MD5>
+      <SHA256>4ce7cdb0d3eda131306dd35d6d8df18d91d7e17fcb549863f68b21af5aa48037</SHA256>
+      <FileName>dav1d-0.1.0.tar.xz</FileName>
+      <FileSize>309236</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.elecard.com/storage/video/Stream2_AV1_HD_6.8mbps.webm</URL>
+      <MD5>5e4c83cf494cbe6dc1668cbbd7ff774c</MD5>
+      <SHA256>2f23d29750a0663a6df656e8137cf934bddfc96b31e5088db2c3624f19ed14d4</SHA256>
+      <FileName>Stream2_AV1_HD_6.8mbps.webm</FileName>
+      <FileSize>122378926</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.elecard.com/storage/video/Stream2_AV1_4K_22.7mbps.webm</URL>
+      <MD5>8acc9c60c10a37bf4e568b465b03e35a</MD5>
+      <SHA256>52f3aa1d4b4487af62d37b0f295aabbc4b57f03fdc4c76402c6358193e4aa490</SHA256>
+      <FileName>Stream2_AV1_4K_22.7mbps.webm</FileName>
+      <FileSize>409458359</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

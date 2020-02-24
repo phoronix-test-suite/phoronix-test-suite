@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Parboil</Title>
+    <AppVersion>2.5</AppVersion>
+    <Description>The Parboil Benchmarks from the IMPACT Research Group at University of Illinois are a set of throughput computing applications for looking at computing architecture and compilers. Parboil test-cases support OpenMP, OpenCL, and CUDA multi-processing environments. However, at this time the test profile is just making use of the OpenMP and OpenCL test workloads.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, python, openmpi-development, opencl</ExternalDependencies>
+    <EnvironmentSize>985</EnvironmentSize>
+    <ProjectURL>http://impact.crhc.illinois.edu/parboil/parboil.aspx</ProjectURL>
+    <InternalTags>SMP, OpenMP, OpenCL</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>run-test</Identifier>
+      <Menu>
+        <Entry>
+          <Name>OpenMP CUTCP</Name>
+          <Value>cutcp omp_base large</Value>
+        </Entry>
+        <Entry>
+          <Name>OpenMP MRI-Q</Name>
+          <Value>mri-q omp_base large</Value>
+        </Entry>
+        <Entry>
+          <Name>OpenMP MRI Gridding</Name>
+          <Value>mri-gridding omp_base small</Value>
+        </Entry>
+        <Entry>
+          <Name>OpenMP Stencil</Name>
+          <Value>stencil omp_base default</Value>
+        </Entry>
+        <Entry>
+          <Name>OpenMP LBM</Name>
+          <Value>lbm omp_cpu long</Value>
+        </Entry>
+        <Entry>
+          <Name>OpenCL BFS</Name>
+          <Value>bfs opencl_base 1M</Value>
+        </Entry>
+        <Entry>
+          <Name>OpenCL TPACF</Name>
+          <Value>tpacf opencl_base large</Value>
+        </Entry>
+        <Entry>
+          <Name>OpenCL LBM</Name>
+          <Value>lbm opencl_base long</Value>
+        </Entry>
+        <Entry>
+          <Name>OpenCL MRI Gridding</Name>
+          <Value>mri-gridding opencl_base small</Value>
+        </Entry>
+        <Entry>
+          <Name>OpenCL Histo</Name>
+          <Value>histo opencl_base large</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

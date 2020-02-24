@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.4.0m1 (Forsand)-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Scene Parsing Time:     0.0673 seconds
+Scene contains 2330 objects.
+Preprocessing Time:     0.0018 seconds
+Rendering Progress:       100% complete            
+  Ray Tracing Time:    #_RESULT_# seconds
+    Image I/O Time:     0.0204 seconds</OutputTemplate>
+    <LineHint>Ray Tracing Time</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

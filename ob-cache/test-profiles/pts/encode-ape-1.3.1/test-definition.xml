@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.8.0m3-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Monkey Audio Encoding</Title>
+    <AppVersion>3.99u4b5s6</AppVersion>
+    <Description>This test times how long it takes to encode a sample WAV file to APE format.</Description>
+    <SubTitle>WAV To APE</SubTitle>
+    <Executable>encode-ape</Executable>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.3.1</Version>
+    <SupportedPlatforms>Linux, MacOSX, BSD</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <Status>Deprecated</Status>
+    <Extends>pts/timed-audio-encode</Extends>
+    <ProjectURL>http://www.monkeysaudio.com/</ProjectURL>
+    <Maintainer>apaige</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

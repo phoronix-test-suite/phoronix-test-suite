@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.8.4 (Sokndal)-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>intial create total runs 10 avg #_INITIAL_CREATE_# MB/s (user 0.54s sys 0.78s)
+no runs for create
+no runs for patch
+compile total runs 10 avg #_COMPILE_# MB/s (user 0.11s sys 0.56s)
+no runs for clean
+no runs for read tree
+read compiled tree total runs 3 avg #_READ_COMPILED_TREE_# MB/s (user 0.20s sys 0.40s)
+no runs for delete tree
+delete compiled tree total runs 10 avg 3.86 seconds (user 0.18s sys 0.34s)
+no runs for stat tree
+no runs for stat compiled tree</OutputTemplate>
+    <ResultKey>PTS_USER_SET_ARGUMENTS</ResultKey>
+  </ResultsParser>
+</PhoronixTestSuite>

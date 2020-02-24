@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/lammps/lammps/archive/patch_9Jan2020.tar.gz</URL>
+      <MD5>1586513dbd8d11c5912ac1c691df3ed1</MD5>
+      <SHA256>f2fd24f6c10837801f490913d73f672ec7c6becda08465d7e834a2bfbe3d7cd6</SHA256>
+      <FileName>lammps-patch_9Jan2020.tar.gz</FileName>
+      <FileSize>108302610</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

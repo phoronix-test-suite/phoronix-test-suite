@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.4.0m0 (Forsand)-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>elapsed time (sec)    : #_RESULT_#</OutputTemplate>
+    <LineBeforeHint>solutions/sec</LineBeforeHint>
+  </ResultsParser>
+</PhoronixTestSuite>

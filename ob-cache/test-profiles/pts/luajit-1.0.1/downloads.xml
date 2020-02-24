@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://luajit.org/download/LuaJIT-2.0.5.zip</URL>
+      <MD5>f7cf52a049d74aee4e624bdc1160b80d</MD5>
+      <SHA256>95f655cff930781619f0fbbab707fb8c05f406d9007a3505c8243e3dbbfacec8</SHA256>
+      <FileSize>962798</FileSize>
+    </Package>
+    <Package>
+      <URL>https://luajit.org/download/scimark.lua</URL>
+      <MD5>58c52e5551af4853c06ed94841649636</MD5>
+      <SHA256>c227152af39a8b7e0c3c225eb4e681e08975b749dacbebf494ebde0938c9a5fa</SHA256>
+      <FileSize>11894</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

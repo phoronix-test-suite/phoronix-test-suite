@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.4.0m0 (Lipki)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://bullet.googlecode.com/files/bullet-2.81-rev2613.zip</URL>
+      <MD5>854e0bbe95fbe42d0d6ea1c903f679d4</MD5>
+      <FileSize>8924563</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

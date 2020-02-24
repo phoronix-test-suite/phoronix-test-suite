@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://bitbucket.org/multicoreware/x265/downloads/x265_2.8.tar.gz, http://ftp.videolan.org/pub/videolan/x265/x265_2.8.tar.gz</URL>
+      <MD5>b68dcd4e8a495e53e53034a11fec5eb9</MD5>
+      <SHA256>6e59f9afc0c2b87a46f98e33b5159d56ffb3558a49d8e3d79cb7fdc6b7aaa863</SHA256>
+      <FileName>x265_2.8.tar.gz</FileName>
+      <FileSize>1379551</FileSize>
+    </Package>
+    <Package>
+      <URL>http://ultravideo.cs.tut.fi/video/Bosphorus_1920x1080_120fps_420_8bit_YUV_Y4M.7z</URL>
+      <MD5>84ae521c95aa2537e16b34bbf72f2def</MD5>
+      <SHA256>e2f60b904789a60f6d1edc194d8540d401dd882e3ee3605b9b1de8feacc72133</SHA256>
+      <FileName>Bosphorus_1920x1080_120fps_420_8bit_YUV_Y4M.7z</FileName>
+      <FileSize>676792531</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

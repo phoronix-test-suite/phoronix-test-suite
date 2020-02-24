@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://mirror.cogentco.com/pub/php/php-7.4.2.tar.bz2, http://mirrors.sohu.com/php/php-7.4.2.tar.bz2, http://ftp.ntu.edu.tw/php/distributions/php-7.4.2.tar.bz2</URL>
+      <MD5>304e428e81d8b90917338580bc23cce8</MD5>
+      <SHA256>02909974be9c70814ed5652a6bdae9c74220d41c1e5ed5ad921e15d028f8e816</SHA256>
+      <FileName>php-7.4.2.tar.bz2</FileName>
+      <FileSize>12700376</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

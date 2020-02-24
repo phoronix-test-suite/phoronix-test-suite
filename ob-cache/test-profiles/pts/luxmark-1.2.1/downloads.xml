@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/LuxCoreRender/LuxMark/releases/download/luxmark_v3.1/luxmark-linux64-v3.1.tar.bz2</URL>
+      <MD5>3d96191f9dfd6a91f2866c309195d991</MD5>
+      <SHA256>41756405ca55cd2c3be26bc4c95201960694ff1b28909f4c6fc54e2af9a8ca72</SHA256>
+      <FileName>luxmark-linux64-v3.1.tar.bz2</FileName>
+      <FileSize>129657456</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/LuxCoreRender/LuxMark/releases/download/luxmark_v3.1/luxmark-windows64-v3.1.zip</URL>
+      <MD5>9976fc5083752c6ae5f8f08fab511c3d</MD5>
+      <SHA256>a8942606c895662a64516816e47089abe1b6ad1fbf593c7d7aeee72ff124753f</SHA256>
+      <FileName>luxmark-windows64-v3.1.zip</FileName>
+      <FileSize>122677242</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

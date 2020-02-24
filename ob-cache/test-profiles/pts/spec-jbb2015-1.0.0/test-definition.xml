@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.8.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>SPECjbb 2015</Title>
+    <Description>This is a benchmark of SPECjbb 2015. For this test profile to work, you must have a valid license/copy of the SPECjbb 2015 ISO (SPECjbb2015-1.02.iso) in your Phoronix Test Suite download cache.</Description>
+    <ResultScale>jOPS</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>1</TimesToRun>
+    <PreInstallMessage>This test will only work if you have a legitimate copy of SPECjbb 2015 for your organization. Contact SPEC for purchasing the SPEC software.</PreInstallMessage>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Retail</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>java, p7zip</ExternalDependencies>
+    <EnvironmentSize>34</EnvironmentSize>
+    <ProjectURL>https://www.spec.org/jbb2015/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

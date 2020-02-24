@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Scikit-Learn</Title>
+    <AppVersion>0.22.1</AppVersion>
+    <Description>Scikit-learn is a Python module for machine learning</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux, BSD</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>python-scipy, python-sklearn, python</ExternalDependencies>
+    <ProjectURL>http://scikit-learn.org/</ProjectURL>
+    <Maintainer>Victor Rodriguez</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

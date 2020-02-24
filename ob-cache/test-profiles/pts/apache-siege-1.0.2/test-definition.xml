@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Apache Siege</Title>
+    <AppVersion>2.4.29</AppVersion>
+    <Description>This is a test of the Apache web server performance being facilitated by the Siege web serverb enchmark program.</Description>
+    <ResultScale>Transactions Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.2</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, perl, pcre, openssl-development</ExternalDependencies>
+    <EnvironmentSize>208</EnvironmentSize>
+    <ProjectURL>https://www.joedog.org/siege-home/</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-r10000 -d1 -b </Arguments>
+      <PostArguments> http://localhost:8088/test.html</PostArguments>
+    </Default>
+    <Option>
+      <DisplayName>Concurrent Users</DisplayName>
+      <Identifier>concurrent</Identifier>
+      <ArgumentPrefix>-c</ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>1</Name>
+          <Value>1</Value>
+        </Entry>
+        <Entry>
+          <Name>10</Name>
+          <Value>10</Value>
+        </Entry>
+        <Entry>
+          <Name>50</Name>
+          <Value>50</Value>
+        </Entry>
+        <Entry>
+          <Name>100</Name>
+          <Value>100</Value>
+        </Entry>
+        <Entry>
+          <Name>200</Name>
+          <Value>200</Value>
+        </Entry>
+        <Entry>
+          <Name>250</Name>
+          <Value>250</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

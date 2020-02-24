@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://www.ks.uiuc.edu/Research/namd/2.13b1/download/873189/NAMD_2.13b1_Linux-x86_64-multicore.tar.gz</URL>
+      <MD5>42bb5dd33b01fcd40a1f36e4115af8d9</MD5>
+      <SHA256>137f1694ff93efa5b9c988a80c3b1c462f0e138c0d5102c1ef038bd13d022040</SHA256>
+      <FileName>NAMD_2.13b1_Linux-x86_64-multicore.tar.gz</FileName>
+      <FileSize>15103931</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://www.ks.uiuc.edu/Research/namd/utilities/f1atpase.zip</URL>
+      <MD5>bec570545a4297dc89ac402b8a59753a</MD5>
+      <SHA256>26b37eb20ad532238a85724c43cbaedd58a507ec71ad8a40aff20b98da949fa8</SHA256>
+      <FileName>f1atpase.zip</FileName>
+      <FileSize>28241682</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

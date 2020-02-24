@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.8.0 (Belev)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://www.sqlite.org/2015/sqlite-autoconf-3081002.tar.gz</URL>
+      <MD5>a18bfc015cd49a1e7a961b7b77bc3b37</MD5>
+      <SHA256>8382e55a4e7d853c93038562ca3dd00307937fccf1c6b65ddd813e503a56d626</SHA256>
+      <FileSize>2049387</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/pts-sqlite-tests-1.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/pts-sqlite-tests-1.tar.gz</URL>
+      <MD5>153e725642619e38766ddf8359f65cfe</MD5>
+      <FileSize>42835</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

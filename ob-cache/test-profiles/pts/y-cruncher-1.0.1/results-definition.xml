@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Total Computation Time:     #_RESULT_# seconds  ( 0.106 minutes )</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

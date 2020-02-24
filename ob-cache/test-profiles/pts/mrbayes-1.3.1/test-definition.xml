@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.8.0m3-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Timed MrBayes Analysis</Title>
+    <AppVersion>3.1.2</AppVersion>
+    <Description>This test performs a bayesian analysis of a set of primate genome sequences in order to estimate their phylogeny.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Primate Phylogeny Analysis</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.3.1</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD, MacOSX</SupportedPlatforms>
+    <SoftwareType>Scientific</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, openmpi-development</ExternalDependencies>
+    <EnvironmentSize>22</EnvironmentSize>
+    <ProjectURL>http://mrbayes.csit.fsu.edu/</ProjectURL>
+    <Maintainer>Andrew Schofield</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

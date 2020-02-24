@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.hpcg-benchmark.org/downloads/hpcg-3.1.tar.gz</URL>
+      <MD5>b549e7229827cf221b7d465dc6030152</MD5>
+      <SHA256>33a434e716b79e59e745f77ff72639c32623e7f928eeb7977655ffcaade0f4a4</SHA256>
+      <FileName>hpcg-3.1.tar.gz</FileName>
+      <FileSize>84078</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

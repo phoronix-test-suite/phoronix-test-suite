@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.0.0m1 (Suldal)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.iozone.org/src/current/iozone3_405.tar</URL>
+      <MD5>8e947dda623368f50fd758d012bf52d4</MD5>
+      <FileName>iozone3_405.tar</FileName>
+      <FileSize>1702320</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.iozone.org/src/current/IozoneSetup.zip</URL>
+      <MD5>69fb09fe8bcbc99827db419e02bd15dc</MD5>
+      <FileName>IozoneSetup.zip</FileName>
+      <FileSize>3782160</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

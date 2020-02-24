@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://archive.apache.org/dist/httpd/httpd-2.4.29.tar.bz2, http://ftp.lfs-matrix.net/pub/blfs/conglomeration/httpd/httpd-2.4.29.tar.bz2</URL>
+      <MD5>0c599404ef6b69eee95bcd9fcd094407</MD5>
+      <SHA256>777753a5a25568a2a27428b2214980564bc1c38c1abf9ccc7630b639991f7f00</SHA256>
+      <FileSize>6567926</FileSize>
+      <PlatformSpecific>Linux, Solaris, BSD, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/apache-ab-test-files-1.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/apache-ab-test-files-1.tar.gz</URL>
+      <MD5>ca0c5bf0dd482a2847c68a52c0759942</MD5>
+      <FileSize>6008</FileSize>
+    </Package>
+    <Package>
+      <URL>http://apache.cs.utah.edu//apr/apr-1.6.3.tar.bz2, http://archive.apache.org/dist/apr/apr-1.6.3.tar.bz2</URL>
+      <MD5>12f2a349483ad6f12db49ba01fbfdbfa</MD5>
+      <SHA256>131f06d16d7aabd097fa992a33eec2b6af3962f93e6d570a9bd4d85e95993172</SHA256>
+      <FileSize>854100</FileSize>
+      <PlatformSpecific>Linux, Solaris, BSD, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.apache.org/dist/apr/apr-util-1.6.1.tar.bz2, http://apache.cs.utah.edu//apr/apr-util-1.6.1.tar.bz2</URL>
+      <MD5>8ff5dc36fa39a2a3db1df196d3ed6086</MD5>
+      <SHA256>d3e12f7b6ad12687572a3a39475545a072608f4ba03a6ce8a3778f607dd0035b</SHA256>
+      <FileSize>428595</FileSize>
+      <PlatformSpecific>Linux, Solaris, BSD, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/Apache24-2.4.29-x64-vc14-r2-ah.zip</URL>
+      <MD5>8f7e773c8db85d55e4cc81ef153fef61</MD5>
+      <SHA256>1e6f26e8fbe3decd4c31cff3347a074c7db1f8af5ac71bf4386a1e80304e47ef</SHA256>
+      <FileSize>10444082</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

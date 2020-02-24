@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>VP9 libvpx Encoding</Title>
+    <AppVersion>1.8.0</AppVersion>
+    <Description>This is a standard video encoding performance test of Google's libvpx library and the vpxenc command for the VP9/WebM format using a sample 1080p video.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <SubTitle>vpxenc VP9 1080p Video Encode</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>2.3.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, yasm, p7zip</ExternalDependencies>
+    <EnvironmentSize>827</EnvironmentSize>
+    <ProjectURL>http://www.webmproject.org/</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

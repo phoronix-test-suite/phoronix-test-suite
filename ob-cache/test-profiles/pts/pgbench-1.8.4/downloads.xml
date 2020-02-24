@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ftp.postgresql.org/pub/source/v10.3/postgresql-10.3.tar.bz2</URL>
+      <MD5>506498796a314c549388cafb3d5c717a</MD5>
+      <SHA256>6ea268780ee35e88c65cdb0af7955ad90b7d0ef34573867f223f14e43467931a</SHA256>
+      <FileSize>19959653</FileSize>
+      <PlatformSpecific>Linux, BSD, Solaris, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://get.enterprisedb.com/postgresql/postgresql-10.3-1-windows-x64-binaries.zip</URL>
+      <MD5>b2ccc4845f4691c58d3c86f9e60c11cf</MD5>
+      <SHA256>9e5cc5c4d8d368042f5e3ad3a2e8a530a8d9ae9e61354ff3dece6462eccfac00</SHA256>
+      <FileSize>198127421</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

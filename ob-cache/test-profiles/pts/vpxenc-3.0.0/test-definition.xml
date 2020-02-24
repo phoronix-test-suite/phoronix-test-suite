@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>VP9 libvpx Encoding</Title>
+    <AppVersion>1.8.2</AppVersion>
+    <Description>This is a standard video encoding performance test of Google's libvpx library and the vpxenc command for the VP9/WebM format using a sample 1080p video.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <SubTitle>vpxenc VP9 1080p Video Encode</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>3.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, yasm, p7zip</ExternalDependencies>
+    <EnvironmentSize>830</EnvironmentSize>
+    <ProjectURL>http://www.webmproject.org/</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Speed</DisplayName>
+      <Identifier>cpu-used</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Speed 5</Name>
+          <Value>--cpu-used=5</Value>
+          <Message>Fastest - Default</Message>
+        </Entry>
+        <Entry>
+          <Name>Speed 0</Name>
+          <Value>--cpu-used=0</Value>
+          <Message>Slowest</Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

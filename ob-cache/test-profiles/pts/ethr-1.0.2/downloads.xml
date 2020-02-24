@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/ethr-20190102.zip</URL>
+      <MD5>9771299aca20fff7c58b7008b0e01c17</MD5>
+      <SHA256>3d20d7df7eabd3b7b7470815545ac720fd21db483a55c2815874a677aa051b7e</SHA256>
+      <FileName>ethr-20190102.zip</FileName>
+      <FileSize>35539</FileSize>
+      <PlatformSpecific>Linux, BSD, Solaris, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/ethr-windows-20190102.zip</URL>
+      <MD5>0b691ef9b89067c08fac80d02c9d3595</MD5>
+      <SHA256>08bfea4e5c55b9b910fcb61a802d8e732cabcbd1412b1b081accbd888ce58abd</SHA256>
+      <FileName>ethr-windows-20190102.zip</FileName>
+      <FileSize>3646698</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

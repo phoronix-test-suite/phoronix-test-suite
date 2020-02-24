@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.2.0m3-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Overall mean (sum of I, II and III trimmed means/3)_ (sec):  #_RESULT_#</OutputTemplate>
+    <ResultPrecision>4</ResultPrecision>
+  </ResultsParser>
+</PhoronixTestSuite>

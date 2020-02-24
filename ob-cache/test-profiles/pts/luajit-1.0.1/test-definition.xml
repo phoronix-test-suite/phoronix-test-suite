@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>LuaJIT</Title>
+    <AppVersion>2.0.5</AppVersion>
+    <Description>This test profile is a collection of Lua scripts/benchmarks run against a locally-built copy of LuaJIT upstream.</Description>
+    <ResultScale>Mflops</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>1</EnvironmentSize>
+    <ProjectURL>https://luajit.org/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <AllowCacheShare>TRUE</AllowCacheShare>
+    </Default>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test</Identifier>
+      <ArgumentPrefix>TEST_</ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>Composite</Name>
+          <Value>COMPOSITE</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Fast Fourier Transform</Name>
+          <Value>FFT</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Jacobi Successive Over-Relaxation</Name>
+          <Value>SOR</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Monte Carlo</Name>
+          <Value>MONTE</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Sparse Matrix Multiply</Name>
+          <Value>SPARSE</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Dense LU Matrix Factorization</Name>
+          <Value>DENSE</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

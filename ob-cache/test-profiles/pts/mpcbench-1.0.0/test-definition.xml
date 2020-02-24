@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.8.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>GNU MPC</Title>
+    <AppVersion>1.1.0</AppVersion>
+    <Description>GNU MPC is a C library for the arithmetic of complex numbers.</Description>
+    <ResultScale>Global Score</ResultScale>
+    <Proportion>HIB</Proportion>
+    <SubTitle>Multi-Precision Benchmark</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux, BSD, MacOSX, Solaris</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>51</EnvironmentSize>
+    <ProjectURL>http://www.multiprecision.org/mpc/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

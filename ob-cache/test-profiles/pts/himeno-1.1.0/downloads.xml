@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.6.0m3 (Arendal)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/himenobmtxpa.tar.bz2, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/himenobmtxpa.tar.bz2</URL>
+      <MD5>a0d5a7edc30463af06762e475af43c49</MD5>
+      <FileName>himenobmtxpa.tar.bz2</FileName>
+      <FileSize>3106</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Crafty</Title>
+    <AppVersion>25.2</AppVersion>
+    <Description>This is a performance test of Crafty, an advanced open-source chess engine.</Description>
+    <ResultScale>Nodes Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <SubTitle>Elapsed Time</SubTitle>
+    <Executable>crafty-benchmark</Executable>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.4.3</Version>
+    <SupportedPlatforms>Linux, BSD, Windows, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>6</EnvironmentSize>
+    <ProjectURL>http://craftychess.com/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>bench quit</Arguments>
+    </Default>
+  </TestSettings>
+</PhoronixTestSuite>

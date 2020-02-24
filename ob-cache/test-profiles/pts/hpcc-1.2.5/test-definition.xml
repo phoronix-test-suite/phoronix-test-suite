@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>HPC Challenge</Title>
+    <AppVersion>1.5.0</AppVersion>
+    <Description>HPC Challenge (HPCC) is a cluster-focused benchmark consisting of the HPL Linpack TPP benchmark, DGEMM, STREAM, PTRANS, RandomAccess, FFT, and communication bandwidth and latency. This HPC Challenge test profile attempts to ship with standard yet versatile configuration/input files though they can be modified.</Description>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+    <PreInstallMessage>Supported install-time optional variables include $MPI_PATH, $MPI_INCLUDE, $MPI_CC, $MPI_LIBS, $LA_PATH, $LA_INCLUDE, $LA_LIBS, $CFLAGS, $LD_FLAGS, and $MPI_LD</PreInstallMessage>
+    <PostInstallMessage>Supported run-time optional environment variables include $N, $NB, $MPI_NUM_THREADS, $HOSTFILE</PostInstallMessage>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.5</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, fortran-compiler, openmpi-development, blas-development, atlas-development, lapack-development</ExternalDependencies>
+    <EnvironmentSize>9</EnvironmentSize>
+    <ProjectURL>http://icl.cs.utk.edu/hpcc/index.html</ProjectURL>
+    <InternalTags>SMP, MPI</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <AllowCacheShare>TRUE</AllowCacheShare>
+    </Default>
+    <Option>
+      <DisplayName>Test / Class</DisplayName>
+      <Identifier>run-test</Identifier>
+      <Menu>
+        <Entry>
+          <Name>G-HPL</Name>
+          <Value>HPL</Value>
+        </Entry>
+        <Entry>
+          <Name>G-Ptrans</Name>
+          <Value>PTRANS</Value>
+        </Entry>
+        <Entry>
+          <Name>G-Random Access</Name>
+          <Value>MPIRANDOMACCESS</Value>
+        </Entry>
+        <Entry>
+          <Name>G-Ffte</Name>
+          <Value>MPIFFT</Value>
+        </Entry>
+        <Entry>
+          <Name>EP-STREAM Triad</Name>
+          <Value>STARSTREAMTRIAD</Value>
+        </Entry>
+        <Entry>
+          <Name>EP-DGEMM</Name>
+          <Value>STARDGEMMFLOPS</Value>
+        </Entry>
+        <Entry>
+          <Name>Random Ring Latency</Name>
+          <Value>RRINGLATENCY</Value>
+        </Entry>
+        <Entry>
+          <Name>Random Ring Bandwidth</Name>
+          <Value>RRINGBANDWIDTH</Value>
+        </Entry>
+        <Entry>
+          <Name>Max Ping Pong Bandwidth</Name>
+          <Value>MAXPPBANDWIDTH</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.6.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/ebizzy-0.3.tar.gz</URL>
+      <MD5>af038bc506066bb3d28db08aba62bc38</MD5>
+      <SHA256>77286029d6348f3d9b3f04eae1feadb5ad1ad07b9f688f4d9f002960862467f2</SHA256>
+      <FileSize>12438</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

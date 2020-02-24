@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Java</Title>
+    <Version>1.1.1</Version>
+    <TestType>System</TestType>
+    <Description>The Java test suite contains all Java-based test profiles within the Phoronix Test Suite.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/sunflow</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/bork</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/java-scimark2</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/dacapobench</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/java-gradle-perf</Test>
+    <Arguments>TEST_REACTOR</Arguments>
+    <Description>Gradle Build: Reactor</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/java-jmh</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/renaissance</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+</PhoronixTestSuite>

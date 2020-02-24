@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>GEGL</Title>
+    <Description>GEGL is the Generic Graphics Library and is the library/framework used by GIMP and other applications like GNOME Photos. This test profile times how long it takes to complete various GEGL operations on a static set of sample JPEG images.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux, BSD, MacOSX, Solaris</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <EnvironmentSize>1</EnvironmentSize>
+    <ProjectURL>http://gegl.org/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>gegl</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Operation</DisplayName>
+      <Identifier>op</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Rotate 90 Degrees</Name>
+          <Value>rotate-on-center degrees=90</Value>
+        </Entry>
+        <Entry>
+          <Name>Scale</Name>
+          <Value>scale-size x=400 y=400</Value>
+        </Entry>
+        <Entry>
+          <Name>Antialias</Name>
+          <Value>antialias</Value>
+        </Entry>
+        <Entry>
+          <Name>Cartoon</Name>
+          <Value>cartoon</Value>
+        </Entry>
+        <Entry>
+          <Name>Color Enhance</Name>
+          <Value>color-enhance</Value>
+        </Entry>
+        <Entry>
+          <Name>Crop</Name>
+          <Value>crop x=100 y=100 width=1920 height=1080</Value>
+        </Entry>
+        <Entry>
+          <Name>Wavelet Blur</Name>
+          <Value>wavelet-blur</Value>
+        </Entry>
+        <Entry>
+          <Name>Reflect</Name>
+          <Value>reflect</Value>
+        </Entry>
+        <Entry>
+          <Name>Tile Glass</Name>
+          <Value>tile-glass tile-width=20 tile-height=20</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

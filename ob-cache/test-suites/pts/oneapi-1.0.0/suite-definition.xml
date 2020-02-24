@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.0-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Intel oneAPI</Title>
+    <Version>1.1.0</Version>
+    <TestType>System</TestType>
+    <Description>A collection of test profiles stressing either Intel oneAPI software components themselves (Open Image Denoise, OSPray, Embree) or benchmarks/programs leveraging these components.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/embree</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/oidn</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/ospray</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/tungsten</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+</PhoronixTestSuite>

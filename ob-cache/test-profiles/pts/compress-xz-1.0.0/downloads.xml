@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.4.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://old-releases.ubuntu.com/releases/16.04.3/ubuntu-16.04.3-server-i386.img</URL>
+      <MD5>8428cead4ee139873da19248590e354f</MD5>
+      <SHA256>2e763f7f3546be33ebc9a59311b2eee3b0b0c8e021fae65431c219b531d26d32</SHA256>
+      <FileName>ubuntu-16.04.3-server-i386.img</FileName>
+      <FileSize>834666496</FileSize>
+    </Package>
+    <Package>
+      <URL>http://distfiles.macports.org/xz/xz-5.2.4.tar.bz2, http://sourceforge.mirrorservice.org/l/lz/lzmautils/xz-5.2.4.tar.bz2, https://gigenet.dl.sourceforge.net/project/lzmautils/xz-5.2.4.tar.bz2</URL>
+      <MD5>b3264b15ab1db04c8c428dc81838d4eb</MD5>
+      <SHA256>3313fd2a95f43d88e44264e6b015e7d03053e681860b0d5d3f9baca79c57b7bf</SHA256>
+      <FileName>xz-5.2.4.tar.bz2</FileName>
+      <FileSize>1287922</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://internode.dl.sourceforge.net/sourceforge/p7zip/p7zip_9.20.1_src_all.tar.bz2, http://www.phoronix-test-suite.com/benchmark-files/p7zip_9.20.1_src_all.tar.bz2</URL>
+      <MD5>bd6caaea567dc0d995c990c5cc883c89</MD5>
+      <FileSize>3835235</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

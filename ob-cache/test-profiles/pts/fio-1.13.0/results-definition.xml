@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.0m3-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>   READ: bw=#_RESULT_# (861MB/s), 821MiB/s-821MiB/s (861MB/s-861MB/s), io=16.4GiB (17.3GB), run=20002-20002msec</OutputTemplate>
+    <LineHint>: bw=</LineHint>
+    <ResultAfterString>bw</ResultAfterString>
+    <StripFromResult>KiB/s</StripFromResult>
+    <DivideResultBy>1000</DivideResultBy>
+    <ResultScale>MB/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>   READ: bw=#_RESULT_# (861MB/s), 821MiB/s-821MiB/s (861MB/s-861MB/s), io=16.4GiB (17.3GB), run=20002-20002msec</OutputTemplate>
+    <LineHint>: bw=</LineHint>
+    <ResultAfterString>bw</ResultAfterString>
+    <StripFromResult>MiB/s</StripFromResult>
+    <ResultScale>MB/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>  write: IOPS=#_RESULT_# BW=891MiB/s (934MB/s)(17.5GiB/20006msec)</OutputTemplate>
+    <LineHint>IOPS=</LineHint>
+    <ResultAfterString>IOPS</ResultAfterString>
+    <StripFromResult>,</StripFromResult>
+    <ResultScale>IOPS</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>  write: IOPS=#_RESULT_# BW=891MiB/s (934MB/s)(17.5GiB/20006msec)</OutputTemplate>
+    <LineHint>IOPS=</LineHint>
+    <ResultAfterString>IOPS</ResultAfterString>
+    <StripFromResult>k,</StripFromResult>
+    <MultiplyResultBy>1000</MultiplyResultBy>
+    <ResultScale>IOPS</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.0.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ultravideo.cs.tut.fi/video/Bosphorus_1920x1080_120fps_420_8bit_YUV_RAW.7z</URL>
+      <MD5>db7c7ff09acd5d7820cc4d1eb0939cf9</MD5>
+      <SHA256>e73a54088e88e6465f578625d185933e85c3209ab7105deb755a8b8918b78cab</SHA256>
+      <FileName>Bosphorus_1920x1080_120fps_420_8bit_YUV_RAW.7z</FileName>
+      <FileSize>680772328</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/OpenVisualCloud/SVT-VP9/archive/v0.1.0.zip</URL>
+      <MD5>e33d87e0bba5eb57ed64538b2601c6a2</MD5>
+      <SHA256>c46bb55fd9aeb8bdb2fe138a684a4a3cada9c48cb9a1a4444527866de713b55d</SHA256>
+      <FileName>SVT-VP9-0.1.0.zip</FileName>
+      <FileSize>1153157</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/OpenVisualCloud/SVT-VP9/releases/download/v0.1.0/SvtVp9EncApp.exe</URL>
+      <FileName>SvtVp9EncApp-0.1.exe</FileName>
+      <FileSize>35840</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/OpenVisualCloud/SVT-VP9/releases/download/v0.1.0/SvtVp9Enc.dll</URL>
+      <FileName>SvtVp9Enc-0.1.dll</FileName>
+      <FileSize>820736</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

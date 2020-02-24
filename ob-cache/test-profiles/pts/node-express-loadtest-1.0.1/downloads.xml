@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/NodeRestPerfTest3-20181001.zip</URL>
+      <MD5>cd3ec7e7821b53ed466b5527e0b3c0a4</MD5>
+      <SHA256>21cc2b399839360625b4973f981317b92f028d40e9f6fa2254ea259bdace9fc5</SHA256>
+      <FileName>NodeRestPerfTest3-20181001.zip</FileName>
+      <FileSize>8547</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

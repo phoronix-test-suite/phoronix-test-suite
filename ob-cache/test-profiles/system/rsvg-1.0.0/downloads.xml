@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/svg-test-files-1.zip</URL>
+      <MD5>71078eed11f2ed6e46f0ad109767e0e8</MD5>
+      <SHA256>c373998bebff0a88f0c4e6fec383eaa62690f544c6eb2b1ad7c55b1547e4db08</SHA256>
+      <FileName>svg-test-files-1.zip</FileName>
+      <FileSize>206358</FileSize>
+    </Package>
+    <Package>
+      <URL>https://www.w3.org/Graphics/SVG/Test/20110816/archives/W3C_SVG_11_TestSuite.tar.gz</URL>
+      <MD5>d3d99dd5e797192f23fd99449970919b</MD5>
+      <SHA256>b5f46cca1ad79b670f9179770b2366c57efd5c671d084144090feab4b7ff1030</SHA256>
+      <FileName>W3C_SVG_11_TestSuite.tar.gz</FileName>
+      <FileSize>14651624</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>
