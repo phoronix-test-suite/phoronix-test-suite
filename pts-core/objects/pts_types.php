@@ -124,20 +124,16 @@ class pts_types
 		// Provide an array containing the location(s) of all test(s) for the supplied object name
 		$objects = array();
 
+		if(PTS_IS_CLIENT && !defined('CACHE_CHECK_FORCED'))
+		{
+			define('CACHE_CHECK_FORCED', true);
+			pts_openbenchmarking::refresh_repository_lists(null);
+		}
+
 		foreach(pts_arrays::to_array($identifiers) as $identifier_item)
 		{
 			if(!self::eval_identifier_to_obj_array($objects, $identifier_item))
 			{
-				if(PTS_IS_CLIENT && !defined('CACHE_CHECK_FORCED'))
-				{
-					define('CACHE_CHECK_FORCED', true);
-					pts_openbenchmarking::refresh_repository_lists(null, true);
-					if(self::eval_identifier_to_obj_array($objects, $identifier_item))
-					{
-						continue;
-					}
-				}
-
 				if(is_array($archive_unknown_objects))
 				{
 					// Unknown / nothing / broken
