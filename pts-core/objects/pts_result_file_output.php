@@ -553,6 +553,7 @@ class pts_result_file_output
 				$normalize_against = $best;
 			}
 
+			$result_buffer_count = $ro->test_result_buffer->get_count();
 			foreach($ro->test_result_buffer->get_buffer_items() as $index => $buffer_item)
 			{
 				$identifier = $buffer_item->get_result_identifier();
@@ -560,11 +561,11 @@ class pts_result_file_output
 
 				if(($x = array_search($identifier, $systems)) !== false)
 				{
-					if($value == $best)
+					if($result_buffer_count > 1 && $value == $best)
 					{
 						$style = ' style="color: green;"';
 					}
-					else if($value == $worst)
+					else if($result_buffer_count > 1 && $value == $worst)
 					{
 						$style = ' style="color: red;"';
 					}
