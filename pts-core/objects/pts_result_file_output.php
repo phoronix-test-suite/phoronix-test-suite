@@ -657,7 +657,7 @@ class pts_result_file_output
 
 		if(!empty($exec_summary))
 		{
-			$pdf->Bookmark('Automated Executive Summary');
+			$pdf->CreateBookmark('Automated Executive Summary', 0);
 			$pdf->WriteText('Automated Executive Summary', 'B');
 			$pdf->WriteText(implode(PHP_EOL . PHP_EOL, $exec_summary), 'I');
 		}
@@ -672,11 +672,12 @@ class pts_result_file_output
 		//$pdf->SetKeywords(implode(', ', $identifiers));
 
 		$pdf->WriteHeader('Test Systems:');
-		$pdf->Bookmark('System Information');
+		$pdf->CreateBookmark('System Information', 0);
 		$systems = $result_file->get_systems();
 		for($i = 0; $i < count($systems); $i++)
 		{
 			$pdf->Ln(5);
+			$pdf->CreateBookmark($systems[$i]->get_identifier(), 1);
 			$pdf->WriteMiniHeader($systems[$i]->get_identifier());
 			if(isset($systems[($i + 1)]) && $systems[($i + 1)]->get_hardware() == $systems[$i]->get_hardware() && $systems[($i + 1)]->get_software() == $systems[$i]->get_software())
 			{
@@ -839,7 +840,7 @@ class pts_result_file_output
 			}
 			$row++;
 		}
-		$pdf->Bookmark('Result Overview Table');
+		$pdf->CreateBookmark('Result Overview Table', 0);
 		$pdf->ResultTable($columns, $table_data, $table_data_hints);
 
 		$pdf->AddPage();
@@ -871,21 +872,20 @@ class pts_result_file_output
 		*/
 
 		$last_result_title = null;
-		$pdf->Bookmark('--------------------');
 		$extra_attributes['pdf_generation'] = true;
 		foreach($result_file->get_result_objects() as $key => $result_object)
 		{
+			if($last_result_title != $result_object->test_profile->get_title())
+			{
+				$last_result_title = $result_object->test_profile->get_title();
+				$pdf->CreateBookmark($last_result_title, 0);
+			}
 			$result_object->sort_results_by_performance();
 			$graph = pts_render::render_graph_process($result_object, $result_file, false, $extra_attributes);
 			self::add_graph_result_object_to_pdf($pdf, $graph);
 			if($result_object->get_annotation() != null)
 			{
 				$pdf->WriteText($result_object->get_annotation());
-			}
-			if($last_result_title != $result_object->test_profile->get_title() && $result_object->test_profile->get_title() != null)
-			{
-				$last_result_title = $result_object->test_profile->get_title();
-				$pdf->Bookmark($last_result_title);
 			}
 		}
 
@@ -894,10 +894,11 @@ class pts_result_file_output
 		if(!empty($geo_mean_for_suites))
 		{
 			$pdf->AddPage();
-			$pdf->Bookmark('Geometric Means');
+			$pdf->CreateBookmark('Geometric Means', 0);
 			$pdf->WriteText('These geometric means are based upon test groupings / test suites for this result file.');
 			foreach($geo_mean_for_suites as $result_object)
 			{
+				$pdf->CreateBookmark($result_object->test_profile->get_title(), 1);
 				$graph = pts_render::render_graph_process($result_object, $result_file, false, $extra_attributes);
 				self::add_graph_result_object_to_pdf($pdf, $graph);
 				if($result_object->get_annotation() != null)

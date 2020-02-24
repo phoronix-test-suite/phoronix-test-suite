@@ -404,6 +404,11 @@ class pts_result_file_analyzer
 	}
 	public static function generate_geometric_mean_result_for_suites_in_result_file(&$result_file, $allow_partial = true, $upper_limit = 0)
 	{
+		if($result_file->get_system_count() < 2)
+		{
+			return array();
+		}
+
 		$geo_mean_results = array();
 		$suites_in_result_file = pts_test_suites::suites_in_result_file($result_file, $allow_partial, $upper_limit);
 		if(empty($suites_in_result_file))
