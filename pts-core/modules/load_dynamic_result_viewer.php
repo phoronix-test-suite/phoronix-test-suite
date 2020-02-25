@@ -70,11 +70,22 @@ class load_dynamic_result_viewer extends pts_module_interface
 			proc_close(self::$process);
 
 			// Fallback for sometimes the child process not getting killed
-			if($ps['pid'] && is_file('/proc/' . ($ps['pid'] + 1) . '/comm') && strpos(pts_file_io::file_get_contents('/proc/' . ($ps['pid'] + 1) . '/comm'), 'php') !== false)
+			foreach(pts_file_io::glob('/proc/' . ($ps['pid'] + 1) . '/comm') as $proc_check)
 			{
-				if(is_file('/proc/' . ($ps['pid'] + 1) . '/environ') && function_exists('posix_kill') && strpos(pts_file_io::file_get_contents('/proc/' . ($ps['pid'] + 1) . '/comm'), 'PTS_') !== false)
+				$proc = dirname($proc_check);
+				if(strpos(pts_file_io::file_get_contents($proc . '/comm'), 'php') !== false)
 				{
-					posix_kill(($ps['pid'] + 1), 9);
+					if(is_file($proc . '/environ') && strpos(pts_file_io::file_get_contents($proc . '/comm'), 'PTS_VIEWER_RESULT_PATH') !== false)
+					{
+						if(pts_client::executable_in_path('kill'))
+						{
+							shell_exec('kill ' . basename($proc));
+						}
+						if(function_exists('posix_kill'))
+						{
+							posix_kill(basename($proc), 9);
+						}
+					}
 				}
 			}
 		}
