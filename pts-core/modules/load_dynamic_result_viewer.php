@@ -72,7 +72,7 @@ class load_dynamic_result_viewer extends pts_module_interface
 			// Fallback for sometimes the child process not getting killed
 			if($ps['pid'] && is_file('/proc/' . ($ps['pid'] + 1) . '/comm') && strpos(pts_file_io::file_get_contents('/proc/' . ($ps['pid'] + 1) . '/comm'), 'php') !== false)
 			{
-				if(is_file('/proc/' . ($ps['pid'] + 1) . '/environ') && strpos(pts_file_io::file_get_contents('/proc/' . ($ps['pid'] + 1) . '/comm'), 'PTS_') !== false)
+				if(is_file('/proc/' . ($ps['pid'] + 1) . '/environ') && function_exists('posix_kill') && strpos(pts_file_io::file_get_contents('/proc/' . ($ps['pid'] + 1) . '/comm'), 'PTS_') !== false)
 				{
 					posix_kill(($ps['pid'] + 1), 9);
 				}
