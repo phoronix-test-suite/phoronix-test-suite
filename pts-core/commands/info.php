@@ -126,7 +126,7 @@ class info implements pts_option_interface
 					}
 				}
 
-				if($o->test_installation != false)
+				if($o->test_installation != false && $o->test_installation->is_installed())
 				{
 					$last_run = $o->test_installation->get_last_run_date();
 					$last_run = $last_run == '0000-00-00' ? 'Never' : $last_run;
