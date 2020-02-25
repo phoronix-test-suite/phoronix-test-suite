@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 9.4.0-Vestby
+25 February 2020
 
 pts-core: Add option in the result viewer to allow compacting multi-option test results into single graphs
 pts-core: Add option in the result viewer to allow compacting multi-version test results into single graphs

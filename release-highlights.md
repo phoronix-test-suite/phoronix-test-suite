@@ -1,5 +1,17 @@
 # Phoronix Test Suite Release History
 
+Phoronix Test Suite 9.4
+======
+#### Release Date: 24 February 2020 | Codename: Vestby
+* Numerous result viewer improvements (showing logs within viewer, UI/UX improvements, new options, deleting results)
+* Support for annotating results that are then displayed below individual benchmark results
+* The modern result viewer now works on Microsoft Windows platforms
+* Support for showing performance-per-suite metrics
+* Numerous PDF result generation enhancements
+* Save test logs and save installation logs is now enabled by default
+* Improve reporting on test installation failures
+* New sub-commands: remove-result-from-result-file, intersect
+
 Phoronix Test Suite 9.2
 ======
 #### Release Date: 3 December 2019 | Codename: Hurdal
