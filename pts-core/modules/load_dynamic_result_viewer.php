@@ -70,6 +70,7 @@ class load_dynamic_result_viewer extends pts_module_interface
 			proc_close(self::$process);
 
 			// Fallback for sometimes the child process not getting killed
+			/*
 			foreach(pts_file_io::glob('/proc/' . ($ps['pid'] + 1) . '/comm') as $proc_check)
 			{
 				$proc = dirname($proc_check);
@@ -88,6 +89,7 @@ class load_dynamic_result_viewer extends pts_module_interface
 					}
 				}
 			}
+			*/
 		}
 	}
 	public static function user_commands()
