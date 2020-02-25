@@ -567,7 +567,7 @@ class pts_test_execution
 
 		if($test_run_manager->do_save_results() && (pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/SaveInstallationLogs', 'TRUE')))
 		{
-			if($test_run_request->test_profile->test_installation->has_install_log())
+			if($test_run_request->test_profile->test_installation->has_install_log() && $test_run_manager->result_file->get_test_installation_log_dir())
 			{
 				$backup_log_dir = $test_run_manager->result_file->get_test_installation_log_dir() . $test_run_manager->get_results_identifier_simplified() . '/';
 				pts_file_io::mkdir($backup_log_dir, 0777, true);
