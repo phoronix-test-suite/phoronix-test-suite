@@ -288,9 +288,9 @@ function pts_version_codenames()
 		);
 }
 
-pts_define('PTS_VERSION', '9.4.0m3');
-pts_define('PTS_CORE_VERSION', 9330);
-pts_define('PTS_RELEASE_DATE', '20200218');
+pts_define('PTS_VERSION', '9.4.0');
+pts_define('PTS_CORE_VERSION', 9400);
+pts_define('PTS_RELEASE_DATE', '20200225');
 pts_define('PTS_CODENAME', 'Vestby');
 
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));
