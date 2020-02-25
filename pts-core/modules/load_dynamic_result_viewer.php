@@ -75,7 +75,7 @@ class load_dynamic_result_viewer extends pts_module_interface
 				$proc = dirname($proc_check);
 				if(strpos(pts_file_io::file_get_contents($proc . '/comm'), 'php') !== false)
 				{
-					if(is_file($proc . '/environ') && strpos(pts_file_io::file_get_contents($proc . '/comm'), 'PTS_VIEWER_RESULT_PATH') !== false)
+					if(is_file($proc . '/environ') && strpos(pts_file_io::file_get_contents($proc . '/environ'), 'PTS_VIEWER_RESULT_PATH') !== false)
 					{
 						if(pts_client::executable_in_path('kill'))
 						{
