@@ -659,7 +659,7 @@ class pts_test_result_parser
 							$output = substr($line, 0, $start_of_line) . "\n";
 							$possible_lines[] = substr($line, $start_of_line + 1);
 
-							if(count($possible_lines) > 16 && $is_multi_match)
+							if(count($possible_lines) > 16 && $is_multi_match && phodevi::is_windows())
 							{
 								// This vastly speeds up pts/dav1d result decoding on Windows as this expensive loop not used
 								break;
