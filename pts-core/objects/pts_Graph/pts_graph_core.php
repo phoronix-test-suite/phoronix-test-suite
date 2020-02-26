@@ -942,7 +942,7 @@ abstract class pts_graph_core
 	}
 	protected function graph_key_height()
 	{
-		if((count($this->results) < 2 || $this->i['show_graph_key'] == false) && !$this->i['is_multi_way_comparison']) // TODO likely should be OR
+		if((count($this->results) < 2 || $this->i['show_graph_key'] == false) && !$this->i['is_multi_way_comparison'])
 		{
 			return 0;
 		}

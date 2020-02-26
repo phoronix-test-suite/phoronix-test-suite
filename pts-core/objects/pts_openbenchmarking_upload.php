@@ -171,7 +171,6 @@ class pts_openbenchmarking_upload extends pts_openbenchmarking
 		if(!is_array($json_response) && !empty($system_logs))
 		{
 			// Sometimes OpenBenchmarking has issues with large result files, so for now try uploading again with no logs
-			// XXX  TODO figure out why OB sometimes fails with large result files
 			$to_post['system_logs_zip'] = null;
 			$to_post['system_logs_hash'] = null;
 			$json_response = pts_openbenchmarking::make_openbenchmarking_request('upload_test_result', $to_post);

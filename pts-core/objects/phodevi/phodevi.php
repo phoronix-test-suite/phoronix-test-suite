@@ -402,7 +402,7 @@ class phodevi extends phodevi_base
 						}
 					}
 				}
-				else if(true || !empty($in)) // TODO this check not needed anymore?
+				else
 				{
 					if(($x = strpos($in, ' (')))
 					{

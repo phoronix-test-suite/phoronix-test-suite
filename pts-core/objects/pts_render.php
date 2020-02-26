@@ -539,11 +539,6 @@ class pts_render
 
 		return $common_segments;
 	}
-	public static function generate_overview_object(&$overview_table, $overview_type)
-	{
-		// TODO XXX this can be removed once OpenBenchmarking.org upgrades its PTS to new pts_result_file_analyzer APIs
-		// EOL 9 JANUARY 2019
-	}
 	public static function multi_way_identifier_check($identifiers)
 	{
 		/*
