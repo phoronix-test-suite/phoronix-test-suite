@@ -2051,13 +2051,13 @@ class pts_client
 	{
 		phodevi::system_software(true);
 	}
-	public static function timed_function($function, $function_parameters, $time, $continue_while_true_function = null, $continue_while_true_function_parameters = null)
+	public static function timed_function($function, $function_parameters, $time, $continue_while_true_function = false, $continue_while_true_function_parameters = null)
 	{
 		if(($time < 0.5 && $time != -1) || $time > 300)
 		{
 			return;
 		}
-		if($continue_while_true_function_parameters === null)
+		if($continue_while_true_function && $continue_while_true_function_parameters === null)
 		{
 			$continue_while_true_function_parameters = array();
 		}
