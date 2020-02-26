@@ -30,6 +30,7 @@ class load_dynamic_result_viewer extends pts_module_interface
 
 	protected static $process = null;
 	protected static $pipes;
+	protected static $random_id;
 
 	public static function __shutdown()
 	{
@@ -70,13 +71,12 @@ class load_dynamic_result_viewer extends pts_module_interface
 			proc_close(self::$process);
 
 			// Fallback for sometimes the child process not getting killed
-			/*
 			foreach(pts_file_io::glob('/proc/' . ($ps['pid'] + 1) . '/comm') as $proc_check)
 			{
 				$proc = dirname($proc_check);
 				if(strpos(pts_file_io::file_get_contents($proc . '/comm'), 'php') !== false)
 				{
-					if(is_file($proc . '/environ') && strpos(pts_file_io::file_get_contents($proc . '/environ'), 'PTS_VIEWER_RESULT_PATH') !== false)
+					if(is_file($proc . '/environ') && strpos(pts_file_io::file_get_contents($proc . '/environ'), 'PTS_VIEWER_ID=' . self::$random_id) !== false)
 					{
 						if(pts_client::executable_in_path('kill'))
 						{
@@ -89,7 +89,6 @@ class load_dynamic_result_viewer extends pts_module_interface
 					}
 				}
 			}
-			*/
 		}
 	}
 	public static function user_commands()
@@ -176,6 +175,7 @@ class load_dynamic_result_viewer extends pts_module_interface
 		{
 			$access_key = trim(sha1(trim($ak)));
 		}
+		self::$random_id = rand(100, getrandmax());
 
 		$descriptorspec = array(
 		0 => array('pipe', 'r'),
@@ -188,6 +188,7 @@ class load_dynamic_result_viewer extends pts_module_interface
 		'PTS_VIEWER_RESULT_PATH' => PTS_SAVE_RESULTS_PATH,
 		'PTS_VIEWER_PTS_PATH' => PTS_PATH,
 		'PTS_VIEWER_CONFIG_FILE' => pts_config::get_config_file_location(),
+		'PTS_VIEWER_ID' => self::$random_id
 		);
 
 		pts_storage_object::set_in_file(PTS_CORE_STORAGE, 'last_web_result_viewer_active_port', $web_port);
