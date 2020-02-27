@@ -289,7 +289,7 @@ class pts_result_file_analyzer
 				}
 				if(!empty($spread_text))
 				{
-					$summary[] = 'The results with the greatest spread from best to worst included: ' . implode(', ', $spread_text) . '.';
+					$summary[] = 'The results with the greatest spread from best to worst included: ' . PHP_EOL . PHP_EOL . implode(PHP_EOL . '- ', $spread_text) . '.';
 				}
 			}
 		}

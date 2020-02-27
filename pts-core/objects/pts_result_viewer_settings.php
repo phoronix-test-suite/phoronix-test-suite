@@ -334,7 +334,7 @@ class pts_result_viewer_settings
 		}
 		if(self::check_request_for_var($request, 'swl'))
 		{
-			foreach(pts_result_file_analyzer::generate_wins_losses_results($result_file) as $g)
+			foreach(pts_result_file_analyzer::generate_wins_losses_results($result_file) as $result)
 			{
 				if($result)
 				{

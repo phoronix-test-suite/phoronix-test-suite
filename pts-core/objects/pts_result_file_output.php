@@ -662,11 +662,11 @@ class pts_result_file_output
 			$pdf->WriteText(implode(PHP_EOL . PHP_EOL, $exec_summary), 'I');
 		}
 
-		$pdf->Ln(15);
+		$pdf->Ln(5);
 		//$pdf->WriteText('This file was automatically generated via the Phoronix Test Suite benchmarking software.', 'I');
 
-		$pdf->AddPage();
-		//$pdf->Ln(15);
+		//$pdf->AddPage();
+		$pdf->Ln(15);
 
 		$pdf->SetSubject($result_file->get_title() . ' Benchmarks');
 		//$pdf->SetKeywords(implode(', ', $identifiers));
@@ -926,7 +926,7 @@ class pts_result_file_output
 		{
 			return false;
 		}
-		$pdf->Ln(1);
+		//$pdf->Ln(1);
 		$pdf->Image($tmp_file);
 		unlink($tmp_file);
 	}
