@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014 - 2018, Phoronix Media
-	Copyright (C) 2014 - 2018, Michael Larabel
+	Copyright (C) 2014 - 2020, Phoronix Media
+	Copyright (C) 2014 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -31,6 +31,11 @@ class start_phoromatic_server implements pts_option_interface
 		{
 			trigger_error('The Phoromatic Server is already running.', E_USER_ERROR);
 			return false;
+		}
+
+		if(phodevi::is_windows())
+		{
+			trigger_error('Running the Phoromatic Server on Windows is experimental and may have issues. Running the Phoromatic client and Phoronix Test Suite itself on Windows is supported but the Phoromatic Server is currently not engineered for Windows but can be under commercial engagement.', E_USER_ERROR);
 		}
 
 		pts_file_io::unlink(getenv('PTS_EXT_LAUNCH_SCRIPT_DIR') . '/phoromatic-server-launcher');
