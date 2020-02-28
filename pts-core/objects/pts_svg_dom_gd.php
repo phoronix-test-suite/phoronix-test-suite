@@ -125,7 +125,22 @@ class pts_svg_dom_gd
 			$width = $dom->childNodes->item(2)->attributes->getNamedItem('width')->nodeValue;
 			$height = $dom->childNodes->item(2)->attributes->getNamedItem('height')->nodeValue;
 
-			if(PTS_IS_CLIENT && pts_client::executable_in_path('rsvg-convert') && $format == 'PNG')
+			if(extension_loaded('gd') && function_exists('imagettftext') && $width > 1 && $height > 1)
+			{
+				$gd = imagecreatetruecolor($width, $height);
+				imageresolution($gd, 200);
+				if(!isset($_REQUEST['svg_dom_gd_no_interlacing']))
+				{
+					// PHP FPDF fails on image interlacing
+					imageinterlace($gd, true);
+				}
+
+				if(function_exists('imageantialias'))
+				{
+					imageantialias($gd, true);
+				}
+			}
+			else if(PTS_IS_CLIENT && pts_client::executable_in_path('rsvg-convert') && $format == 'PNG')
 			{
 				// Using Inkscape for converting SVG to PNG generally means higher quality conversion
 				$temp_svg = sys_get_temp_dir() . '/pts-temp-' . rand(0, 50000) . '.svg';
@@ -156,23 +171,6 @@ class pts_svg_dom_gd
 					return $temp_png_output;
 				}
 				unlink($temp_png);
-			}
-
-			// Fallback to PHP GD library
-			if(extension_loaded('gd') && function_exists('imagettftext') && $width > 1 && $height > 1)
-			{
-				$gd = imagecreatetruecolor($width, $height);
-
-				if(!isset($_REQUEST['svg_dom_gd_no_interlacing']))
-				{
-					// PHP FPDF fails on image interlacing
-					imageinterlace($gd, true);
-				}
-
-				if(function_exists('imageantialias'))
-				{
-					imageantialias($gd, true);
-				}
 			}
 			else
 			{

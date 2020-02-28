@@ -55,11 +55,14 @@ class info implements pts_option_interface
 				$table[] = array(pts_client::cli_just_bold('Suite Type: '), $o->get_suite_type());
 				$table[] = array(pts_client::cli_just_bold('Unique Tests: '), $o->get_unique_test_count());
 				$table[] = array(pts_client::cli_just_bold('Contained Tests: '));
+				$unique_tests = array();
 				foreach($o->get_contained_test_result_objects() as $result_obj)
 				{
 					$table[] = array(pts_client::cli_just_bold(null), $result_obj->test_profile->get_title() . ' ', $result_obj->get_arguments_description());
+					pts_arrays::unique_push($unique_tests, $result_obj->test_profile->get_title());
 				}
 				echo pts_user_io::display_text_table($table) . PHP_EOL;
+				echo '                    ' . pts_client::cli_just_bold(count($table) . ' Tests / ' . count($unique_tests) . ' Unique Tests') . PHP_EOL;
 			}
 			else if($o instanceof pts_test_profile)
 			{
