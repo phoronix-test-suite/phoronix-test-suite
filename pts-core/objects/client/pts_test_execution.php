@@ -58,6 +58,12 @@ class pts_test_execution
 			self::test_run_error($test_run_manager, $test_run_request, 'The ' . $test_identifier . ' test is already running.');
 			return false;
 		}
+		$error = null;
+		if(pts_test_run_options::validate_test_arguments_compatibility($test_run_request->get_arguments_description(), $test_run_request->test_profile, $error) == false)
+		{
+			self::test_run_error($test_run_manager, $test_run_request, $error);
+			return false;
+		}
 
 		$test_run_request->active = new pts_test_result_buffer_active();
 		$test_run_request->generated_result_buffers = array();

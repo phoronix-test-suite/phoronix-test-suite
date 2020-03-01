@@ -601,6 +601,11 @@ class pts_test_run_options
 	}
 	public static function validate_test_arguments_compatibility($test_args, &$test_profile, &$error = null)
 	{
+		if(PTS_IS_CLIENT == false)
+		{
+			return true;
+		}
+
 		if((stripos($test_args, 'Direct3D') !== false || stripos($test_args, 'D3D') !== false) && phodevi::os_under_test() != 'Windows' && !in_array('wine', $test_profile->get_external_dependencies()))
 		{
 			// Only show Direct3D renderer options when running on Windows or similar (i.e. Wine)

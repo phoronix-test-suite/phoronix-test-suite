@@ -243,7 +243,7 @@ class pts_test_run_manager
 	{
 		$hash = $test_result->get_comparison_hash(true, false);
 
-		if(!isset($this->hashes_of_tests_to_run[$hash]) && $this->validate_test_to_run($test_result->test_profile) && self::test_result_system_compatibility_check($test_result, true))
+		if(!isset($this->hashes_of_tests_to_run[$hash]) && $this->validate_test_to_run($test_result->test_profile))
 		{
 			$this->hashes_of_tests_to_run[$hash] = $hash;
 			$this->tests_to_run[] = $test_result;
@@ -1528,7 +1528,7 @@ class pts_test_run_manager
 
 		foreach($result_objects as &$result_object)
 		{
-			if($this->validate_test_to_run($result_object->test_profile) && self::test_result_system_compatibility_check($result_object, true))
+			if($this->validate_test_to_run($result_object->test_profile))
 			{
 
 				// Check to ensure that nothing extra may have somehow wound up in the execution argument string of a saved result file...
