@@ -640,7 +640,7 @@ class pts_test_result_parser
 					else if($line_after_hint != null)
 					{
 						pts_client::test_profile_debug_message('Result Parsing Line After Hint: ' . $line_after_hint);
-						$line = substr($output, 0, strrpos($output, "\n", strrpos($output, $line_before_hint)));
+						$line = substr($output, 0, strrpos($output, "\n", strrpos($output, $line_after_hint)));
 						$line = substr($line, strrpos($line, "\n", 1) + 1);
 						$output = null;
 					}
