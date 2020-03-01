@@ -243,7 +243,7 @@ class pts_test_run_manager
 	{
 		$hash = $test_result->get_comparison_hash(true, false);
 
-		if($this->validate_test_to_run($test_result->test_profile) && !isset($this->hashes_of_tests_to_run[$hash]))
+		if(!isset($this->hashes_of_tests_to_run[$hash]) && $this->validate_test_to_run($test_result->test_profile) && self::test_result_system_compatibility_check($test_result, true))
 		{
 			$this->hashes_of_tests_to_run[$hash] = $hash;
 			$this->tests_to_run[] = $test_result;
@@ -1528,7 +1528,7 @@ class pts_test_run_manager
 
 		foreach($result_objects as &$result_object)
 		{
-			if($this->validate_test_to_run($result_object->test_profile))
+			if($this->validate_test_to_run($result_object->test_profile) && self::test_result_system_compatibility_check($result_object, true))
 			{
 
 				// Check to ensure that nothing extra may have somehow wound up in the execution argument string of a saved result file...
@@ -1799,6 +1799,20 @@ class pts_test_run_manager
 		}
 
 		return strcmp($a_comp, $b_comp);
+	}
+	public static function test_result_system_compatibility_check(&$test_result, $report_errors = false)
+	{
+		$error = null;
+		if(pts_test_run_options::validate_test_arguments_compatibility($test_result->get_arguments_description(), $test_result->test_profile, $error) == false)
+		{
+			if($report_errors)
+			{
+				$report_errors && pts_client::$display->test_run_error($test_profile . ': ' . $error);
+			}
+			return false;
+		}
+
+		return true;
 	}
 	public static function test_profile_system_compatibility_check(&$test_profile, $report_errors = false, $is_batch_mode = false)
 	{

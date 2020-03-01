@@ -566,14 +566,8 @@ class pts_test_run_options
 
 				for($i = 0; $i < count($names) && $i < count($values); $i++)
 				{
-					if((stripos($names[$i], 'Direct3D') !== false || stripos($names[$i], 'D3D') !== false) && phodevi::os_under_test() != 'Windows' && !in_array('wine', $test_profile->get_external_dependencies()))
+					if(self::validate_test_arguments_compatibility($names[$i], $test_profile) == false)
 					{
-						// Only show Direct3D renderer options when running on Windows or similar (i.e. Wine)
-						continue;
-					}
-					if((stripos($names[$i], 'NVIDIA ') !== false || stripos($names[$i] . ' ', 'CUDA ') !== false) && stripos(phodevi::read_property('gpu', 'model'), 'NVIDIA') === false)
-					{
-						// Only show NVIDIA / CUDA options when running with NVIDIA hardware
 						continue;
 					}
 
@@ -594,19 +588,8 @@ class pts_test_run_options
 
 				for($i = 0; $i < count($names) && $i < count($values); $i++)
 				{
-					if((stripos($names[$i], 'NVIDIA ') !== false || stripos($names[$i] . ' ', 'CUDA ') !== false) && stripos(phodevi::read_property('gpu', 'model'), 'NVIDIA') === false)
+					if(self::validate_test_arguments_compatibility($names[$i], $test_profile) == false)
 					{
-						// Only show NVIDIA / CUDA options when running with NVIDIA hardware
-						continue;
-					}
-					if(stripos($names[$i], 'Windows') !== false && !phodevi::is_windows())
-					{
-						// Do not show options mentioning Windows if not on Windows
-						continue;
-					}
-					if(stripos($names[$i], 'Linux') !== false && !phodevi::is_linux())
-					{
-						// Do not show options mentioning Linux if not on Linux
 						continue;
 					}
 
@@ -615,6 +598,41 @@ class pts_test_run_options
 				}
 				break;
 		}
+	}
+	public static function validate_test_arguments_compatibility($test_args, &$test_profile, &$error = null)
+	{
+		if((stripos($test_args, 'Direct3D') !== false || stripos($test_args, 'D3D') !== false) && phodevi::os_under_test() != 'Windows' && !in_array('wine', $test_profile->get_external_dependencies()))
+		{
+			// Only show Direct3D renderer options when running on Windows or similar (i.e. Wine)
+			$error = 'Direct3D renderer is not supported here.';
+			return false;
+		}
+		if((stripos($test_args, 'NVIDIA ') !== false || stripos($test_args . ' ', 'CUDA ') !== false) && stripos(phodevi::read_property('gpu', 'model'), 'NVIDIA') === false)
+		{
+			// Only show NVIDIA / CUDA options when running with NVIDIA hardware
+			$error = 'NVIDIA CUDA support is not available.';
+			return false;
+		}
+		if((stripos($test_args, 'NVIDIA ') !== false || stripos($test_args . ' ', 'CUDA ') !== false) && stripos(phodevi::read_property('gpu', 'model'), 'NVIDIA') === false)
+		{
+			// Only show NVIDIA / CUDA options when running with NVIDIA hardware
+			$error = 'NVIDIA support is not available.';
+			return false;
+		}
+		if(stripos($test_args, 'Windows') !== false && !phodevi::is_windows())
+		{
+			// Do not show options mentioning Windows if not on Windows
+			$error = 'Windows option is not available.';
+			return false;
+		}
+		if(stripos($test_args, 'Linux') !== false && !phodevi::is_linux())
+		{
+			// Do not show options mentioning Linux if not on Linux
+			$error = 'Linux support is not available.';
+			return false;
+		}
+
+		return true;
 	}
 }
 
