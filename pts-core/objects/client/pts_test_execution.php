@@ -52,16 +52,16 @@ class pts_test_execution
 			return false;
 		}
 
-		$lock_file = $test_directory . 'run_lock';
-		if(pts_client::create_lock($lock_file) == false && $test_run_manager->is_multi_test_stress_run() == false)
-		{
-			self::test_run_error($test_run_manager, $test_run_request, 'The ' . $test_identifier . ' test is already running.');
-			return false;
-		}
 		$error = null;
 		if(pts_test_run_options::validate_test_arguments_compatibility($test_run_request->get_arguments_description(), $test_run_request->test_profile, $error) == false)
 		{
 			self::test_run_error($test_run_manager, $test_run_request, $error);
+			return false;
+		}
+		$lock_file = $test_directory . 'run_lock';
+		if(pts_client::create_lock($lock_file) == false && $test_run_manager->is_multi_test_stress_run() == false)
+		{
+			self::test_run_error($test_run_manager, $test_run_request, 'The ' . $test_identifier . ' test is already running.');
 			return false;
 		}
 
