@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.2.0m0 (Randaberg)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://launchpad.net/dolfyn-cfd/0.527/dolfyn-cfd-0.527/+download/dolfyn-cfd_0.527.tgz</URL>
+      <MD5>3db5d2111bfa52675007a02e7ae3f189</MD5>
+      <FileName>dolfyn-cfd_0.527.tgz</FileName>
+      <FileSize>1107929</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

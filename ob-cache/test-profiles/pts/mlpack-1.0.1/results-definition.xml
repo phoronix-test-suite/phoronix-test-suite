@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.0m3-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>[INFO] Metric: {'runtime': #_RESULT_#, 'ACC': 0.7953248917640812, 'MCC': 0.7416568406864265, 'Precision': 0.9656353770683679, 'Recall': 0.7953248917640812, 'MSE': 0.012938842404899509}</OutputTemplate>
+    <MatchToTestArguments>SCIKIT_SVM</MatchToTestArguments>
+    <StripFromResult>,</StripFromResult>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>[INFO] Metric: {'runtime': #_RESULT_#, 'MSE': 0.0099063666127401}</OutputTemplate>
+    <MatchToTestArguments>SCIKIT_LINEARRIDGEREGRESSION</MatchToTestArguments>
+    <StripFromResult>,</StripFromResult>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>[INFO] Metric: {'runtime': #_RESULT_#, 'ACC': 0.5287654814222933, 'MCC': 0.036204581617472295, 'Precision': 0.5113918806959403, 'Recall': 0.5287654814222933, 'MSE': 0.9222048475371384}</OutputTemplate>
+    <MatchToTestArguments>SCIKIT_QDA</MatchToTestArguments>
+    <StripFromResult>,</StripFromResult>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>[INFO] Metric: {'runtime': #_RESULT_#}</OutputTemplate>
+    <MatchToTestArguments>SCIKIT_ICA</MatchToTestArguments>
+    <StripFromResult>}</StripFromResult>
+  </ResultsParser>
+</PhoronixTestSuite>

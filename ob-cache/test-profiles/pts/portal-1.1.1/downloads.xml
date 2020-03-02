@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.6.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/pts-portal-1.zip</URL>
+      <MD5>3a3993fa53d44d2f3308865ef5caaadd</MD5>
+      <SHA256>704dc4809f440688e0d5454508aaf8444b7b9a4bd9dbd557d8b94ab65dabf5da</SHA256>
+      <FileSize>472366</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

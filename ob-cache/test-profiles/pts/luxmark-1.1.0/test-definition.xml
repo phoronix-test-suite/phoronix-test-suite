@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.6.0 (Dedilovo)-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>LuxMark</Title>
+    <AppVersion>3.0</AppVersion>
+    <Description>LuxMark is a multi-platform OpenGL benchmark using LuxRender / SLG2. LuxMark supports targeting different OpenCL devices and has multiple scenes available for rendering. LuxMark is a fully open-source OpenCL program with real-world rendering examples.</Description>
+    <ResultScale>Score</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <ExternalDependencies>build-utilities, glut, opencl</ExternalDependencies>
+    <EnvironmentSize>230</EnvironmentSize>
+    <ProjectURL>http://www.luxrender.net/wiki/LuxMark</ProjectURL>
+    <InternalTags>OpenCL</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>--single-run</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>OpenCL Device</DisplayName>
+      <Identifier>cl-device</Identifier>
+      <ArgumentPrefix>--mode=</ArgumentPrefix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>CPU</Name>
+          <Value>BENCHMARK_OCL_CPU</Value>
+        </Entry>
+        <Entry>
+          <Name>GPU</Name>
+          <Value>BENCHMARK_OCL_GPU</Value>
+        </Entry>
+        <Entry>
+          <Name>CPU+GPU</Name>
+          <Value>BENCHMARK_OCL_CPUGPU</Value>
+        </Entry>
+        <Entry>
+          <Name>Hybrid GPU</Name>
+          <Value>BENCHMARK_HYBRID_GPU</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Scene</DisplayName>
+      <Identifier>scene</Identifier>
+      <ArgumentPrefix>--scene=</ArgumentPrefix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>Luxball HDR</Name>
+          <Value>LUXBALL_HDR</Value>
+        </Entry>
+        <Entry>
+          <Name>Microphone</Name>
+          <Value>MICROPHONE</Value>
+        </Entry>
+        <Entry>
+          <Name>Hotel</Name>
+          <Value>HOTEL</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

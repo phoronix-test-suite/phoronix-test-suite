@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://botan.randombit.net/releases/Botan-2.13.0.tar.xz</URL>
+      <MD5>9f90c7d523778be5f23f3ce79046ba35</MD5>
+      <SHA256>f57ae42a41e1091bca58f44f41addebd9a390b651603952c881ec89d50187e90</SHA256>
+      <FileName>Botan-2.13.0.tar.xz</FileName>
+      <FileSize>5911360</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

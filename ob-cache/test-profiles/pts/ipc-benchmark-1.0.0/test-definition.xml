@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>IPC_benchmark</Title>
+    <Description>IPC_benchmark is a Linux inter-process communication benchmark.</Description>
+    <ResultScale>Messages Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>1</EnvironmentSize>
+    <ProjectURL>https://github.com/detailyang/ipc_benchmark</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <PostArguments> 9000000</PostArguments>
+    </Default>
+    <Option>
+      <DisplayName>Type</DisplayName>
+      <Identifier>type</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Unnamed Pipe</Name>
+          <Value>pipe</Value>
+        </Entry>
+        <Entry>
+          <Name>FIFO Named Pipe</Name>
+          <Value>fifo</Value>
+        </Entry>
+        <Entry>
+          <Name>Unnamed Unix Domain Socket</Name>
+          <Value>socketpair</Value>
+        </Entry>
+        <Entry>
+          <Name>TCP Socket</Name>
+          <Value>tcp</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Message Bytes</DisplayName>
+      <Identifier>bytes</Identifier>
+      <Menu>
+        <Entry>
+          <Name>128</Name>
+          <Value>128</Value>
+        </Entry>
+        <Entry>
+          <Name>256</Name>
+          <Value>256</Value>
+        </Entry>
+        <Entry>
+          <Name>512</Name>
+          <Value>512</Value>
+        </Entry>
+        <Entry>
+          <Name>1024</Name>
+          <Value>1024</Value>
+        </Entry>
+        <Entry>
+          <Name>2048</Name>
+          <Value>2048</Value>
+        </Entry>
+        <Entry>
+          <Name>4096</Name>
+          <Value>4096</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

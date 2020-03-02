@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.0.0m4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Rendering 5000 frames in 67.275 seconds. (#_RESULT_# fps)</OutputTemplate>
+    <LineHint>fps</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/ipc_benchmark-20200228.zip</URL>
+      <MD5>921631d60768f73560ec46b4a89c1403</MD5>
+      <SHA256>bef8a39c8ec7505061e5c113990a2069d996b0955089be9c1914d3432adb6667</SHA256>
+      <FileName>ipc_benchmark-20200228.zip</FileName>
+      <FileSize>23066</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

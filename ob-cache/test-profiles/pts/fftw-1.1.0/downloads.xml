@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.6.0m1 (Dedilovo)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.fftw.org/fftw-3.3.4.tar.gz</URL>
+      <MD5>2edab8c06b24feeb3b82bbb3ebf3e7b3</MD5>
+      <SHA256>8f0cde90929bc05587c3368d2f15cd0530a60b8a9912a8e2979a72dbe5af0982</SHA256>
+      <FileSize>3940427</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

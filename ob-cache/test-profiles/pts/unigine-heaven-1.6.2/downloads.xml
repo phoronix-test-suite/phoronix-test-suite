@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.6.0m3 (Dedilovo)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/Unigine_Heaven-4.0.run</URL>
+      <MD5>1c4d068307302bd4571478a416dba51d</MD5>
+      <SHA256>90e6f95bb3c0d92f557a948ca6754b1b1bead07a063ec2af0ce03ef8e7ac74f3</SHA256>
+      <FileSize>286329188</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL></URL>
+      <FileName>Unigine_Heaven-4.0.exe</FileName>
+      <FileSize>258726912</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

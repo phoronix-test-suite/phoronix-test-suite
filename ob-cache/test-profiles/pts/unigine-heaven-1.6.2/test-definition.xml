@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.6.0m3 (Dedilovo)-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Unigine Heaven</Title>
+    <AppVersion>4.0</AppVersion>
+    <Description>This test calculates the average frame-rate within the Heaven demo for the Unigine engine. This engine is extremely demanding on the system's graphics card.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.6.2</Version>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
+    <SoftwareType>Game</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Non-Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+    <EnvironmentSize>350</EnvironmentSize>
+    <ProjectURL>http://www.unigine.com/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>-video_width $VIDEO_WIDTH -video_height $VIDEO_HEIGHT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Mode</DisplayName>
+      <Identifier>mode</Identifier>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>Fullscreen</Name>
+          <Value>-video_fullscreen 1</Value>
+        </Entry>
+        <Entry>
+          <Name>Windowed</Name>
+          <Value>-video_fullscreen 0</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

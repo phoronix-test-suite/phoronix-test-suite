@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>xz 5.2.3 -0                #_RESULT_# MB/s    97 MB/s   152697792  21.95 /home/phoronix/Desktop/linux-4.9.tar</OutputTemplate>
+    <LineAfterHint>memcpy</LineAfterHint>
+    <ResultScale>MB/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <AppendToArgumentsDescription>Process: Compression</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>xz 5.2.3 -0                55 MB/s    #_RESULT_# MB/s   152697792  21.95 /home/phoronix/Desktop/linux-4.9.tar</OutputTemplate>
+    <LineAfterHint>memcpy</LineAfterHint>
+    <ResultScale>MB/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <AppendToArgumentsDescription>Process: Decompression</AppendToArgumentsDescription>
+  </ResultsParser>
+</PhoronixTestSuite>

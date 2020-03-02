@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.2.1 (Khanino)-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>John The Ripper</Title>
+    <AppVersion>1.8.0</AppVersion>
+    <Description>This is a benchmark of John The Ripper, which is a password cracker.</Description>
+    <ResultScale>Real C/S</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.5.1</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, openssl-development</ExternalDependencies>
+    <EnvironmentSize>5</EnvironmentSize>
+    <ProjectURL>http://www.openwall.com/john/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>run-test</Identifier>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>Traditional DES</Name>
+          <Value>TRADITIONAL_DES_MANY_SALTS</Value>
+        </Entry>
+        <Entry>
+          <Name>MD5</Name>
+          <Value>MD5</Value>
+        </Entry>
+        <Entry>
+          <Name>Blowfish</Name>
+          <Value>BLOWFISH</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

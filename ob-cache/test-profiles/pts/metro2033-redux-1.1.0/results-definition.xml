@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.6.0m5 (Dedilovo)-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>aver_fps #_RESULT_#</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

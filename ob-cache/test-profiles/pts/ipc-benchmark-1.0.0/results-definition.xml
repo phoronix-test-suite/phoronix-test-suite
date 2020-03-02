@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>MB/s #_RESULT_#</OutputTemplate>
+    <LineHint>msg</LineHint>
+    <StripFromResult>msg/s</StripFromResult>
+  </ResultsParser>
+</PhoronixTestSuite>

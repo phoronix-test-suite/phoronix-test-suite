@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.4.0m3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.paraview.org/files/v5.4/ParaView-5.4.1-Qt5-OpenGL2-MPI-Linux-64bit.tar.gz</URL>
+      <MD5>f9d9626e7b60bdb0e8f0b6ccb49525bb</MD5>
+      <SHA256>e0848896ee9ca0e2d52efcb4e6435a56bc352e30d23f0cc3fc542b44424c357a</SHA256>
+      <FileSize>308327272</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

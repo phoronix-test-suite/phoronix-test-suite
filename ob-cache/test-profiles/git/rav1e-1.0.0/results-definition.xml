@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.2.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>XX  encoded 20/20 frames, #_RESULT_# fps, 2844.02 Kb/s, est. size: 0.23 MB, est. time: 0s</OutputTemplate>
+    <LineHint>fps</LineHint>
+    <TurnCharsToSpace>(</TurnCharsToSpace>
+  </ResultsParser>
+</PhoronixTestSuite>

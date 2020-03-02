@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.8.0m2 (Belev)-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>2013:05:11@14:11:37, ID=23 &gt;&gt; [Benchmark_Score] - module: PixMark Volplosion - Score: #_RESULT_# points (1920x1080 fullscreen, duration:60000 ms).</OutputTemplate>
+    <LineHint>Score:</LineHint>
+    <ResultBeforeString>points</ResultBeforeString>
+  </ResultsParser>
+</PhoronixTestSuite>

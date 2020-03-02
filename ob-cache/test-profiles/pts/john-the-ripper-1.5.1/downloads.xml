@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.2.1 (Khanino)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.openwall.com/john/j/john-1.8.0.tar.gz, http://download.openwall.net/pub/projects/john/1.8.0/john-1.8.0.tar.gz, http://distro.ibiblio.org/openwall/projects/john/1.8.0/john-1.8.0.tar.gz</URL>
+      <MD5>f73cb34f35f300535f9f77213f4199a9</MD5>
+      <SHA256>1222738c7829ce3014177ca9bd26c41573426f883c6b22527ee9bde363d84bda</SHA256>
+      <FileSize>5450412</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

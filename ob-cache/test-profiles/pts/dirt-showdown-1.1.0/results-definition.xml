@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.8.1 (Belev)-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>results samples= 16300  min_fps= #_MIN_RESULT_#  av_fps= #_RESULT_#  min_fps_ms= 10.083503  av_fps_ms= 7.718917</OutputTemplate>
+    <LineHint>av_fps</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.2.0m0 (Randaberg)-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Dolfyn</Title>
+    <AppVersion>0.527</AppVersion>
+    <Description>Dolfyn is a Computational Fluid Dynamics (CFD) code of modern numerical simulation techniques. The Dolfyn test profile measures the execution time of the bundled computational fluid dynamics demos that are bundled with Dolfyn.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Computational Fluid Dynamics</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, fortran-compiler</ExternalDependencies>
+    <EnvironmentSize>30</EnvironmentSize>
+    <ProjectURL>http://www.dolfyn.net/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

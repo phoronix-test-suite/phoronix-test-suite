@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.2.0m2-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Machine Learning</Title>
+    <Version>1.2.1</Version>
+    <TestType>System</TestType>
+    <Description>The machine learning test suite helps to benchmark a system for the popular pattern recognition and computational learning algorithms. Mainly different machine learning / deep learning benchmarks.</Description>
+    <Maintainer>Victor Rodriguez</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>system/caffe</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+  </Execute>
+  <Execute>
+    <Test>pts/caffe</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+  </Execute>
+  <Execute>
+    <Test>pts/shoc</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+  </Execute>
+  <Execute>
+    <Test>pts/rbenchmark</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+  </Execute>
+  <Execute>
+    <Test>pts/numpy</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+  </Execute>
+  <Execute>
+    <Test>pts/scikit-learn</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/mlpack</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/mkl-dnn</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/plaidml</Test>
+    <Arguments>--no-fp16 --train resnet50 CPU</Arguments>
+    <Description>FP16: No - Mode: Training - Network: ResNet 50 - Device: CPU</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/plaidml</Test>
+    <Arguments>--no-fp16 --train vgg16 CPU</Arguments>
+    <Description>FP16: No - Mode: Training - Network: VGG16 - Device: CPU</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/plaidml</Test>
+    <Arguments>--no-fp16 --no-train resnet50 CPU</Arguments>
+    <Description>FP16: No - Mode: Inference - Network: ResNet 50 - Device: CPU</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/plaidml</Test>
+    <Arguments>--no-fp16 --no-train vgg16 CPU</Arguments>
+    <Description>FP16: No - Mode: Inference - Network: VGG16 - Device: CPU</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/lczero</Test>
+    <Arguments>-b blas</Arguments>
+    <Description>Backend: BLAS</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+</PhoronixTestSuite>

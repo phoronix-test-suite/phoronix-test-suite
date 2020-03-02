@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.2.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>XXX #_RESULT_# #_MIN_RESULT_# #_MAX_RESULT_#, Overall</OutputTemplate>
+    <LineHint>, Overall</LineHint>
+    <StripFromResult>,</StripFromResult>
+  </ResultsParser>
+</PhoronixTestSuite>

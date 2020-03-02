@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>LuxCoreRender OpenCL</Title>
+    <AppVersion>2.2</AppVersion>
+    <Description>LuxCoreRender is an open-source physically based renderer. This test profile is focused on running LuxCoreRender on OpenCL accelerators/GPUs. The alternative luxcorerender test profile is for CPU execution due to a difference in tests, etc.</Description>
+    <ResultScale>M samples/sec</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.2</Version>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <ExternalDependencies>opencl</ExternalDependencies>
+    <RequiresDisplay>TRUE</RequiresDisplay>
+    <EnvironmentSize>730</EnvironmentSize>
+    <ProjectURL>https://luxcorerender.org/</ProjectURL>
+    <InternalTags>OpenCL</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>  -D batch.halttime 60 -D renderengine.type "PATHOCL" -D opencl.platform.index -1 -D opencl.cpu.use 0 -D opencl.gpu.use 1 -D opencl.native.threads.count 0 </Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Scene</DisplayName>
+      <Identifier>scene</Identifier>
+      <Menu>
+        <Entry>
+          <Name>LuxCore Benchmark</Name>
+          <Value>LuxCore2.1Benchmark/LuxCoreScene/render.cfg</Value>
+        </Entry>
+        <Entry>
+          <Name>DLSC</Name>
+          <Value>DLSC/LuxCoreScene/render.cfg</Value>
+        </Entry>
+        <Entry>
+          <Name>Rainbow Colors and Prism</Name>
+          <Value>RainbowColorsAndPrism/LuxCoreScene/render.cfg</Value>
+        </Entry>
+        <Entry>
+          <Name>Food</Name>
+          <Value>Food/LuxCoreScene/render.cfg</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

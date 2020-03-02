@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v4.8.5 (Sokndal)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/hint-1.0.tar.gz</URL>
+      <MD5>fd6c136d9cef28f4a44f0d0e5ca5ac99</MD5>
+      <SHA256>3788ce59006c33cf3d7f8303a85d411ffdd34f18699272f81cc34e96cc691f75</SHA256>
+      <FileSize>13860</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.0m3-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Avg Framerate:					 #_RESULT_# FPS (15.357872 ms)</OutputTemplate>
+    <LineHint>Avg Framerate</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

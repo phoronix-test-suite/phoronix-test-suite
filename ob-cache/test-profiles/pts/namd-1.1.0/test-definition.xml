@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>NAMD</Title>
+    <AppVersion>2.13</AppVersion>
+    <Description>NAMD is a parallel molecular dynamics code designed for high-performance simulation of large biomolecular systems. NAMD was developed by the Theoretical and Computational Biophysics Group in the Beckman Institute for Advanced Science and Technology at the University of Illinois at Urbana-Champaign.</Description>
+    <ResultScale>days/ns</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>ATPase Simulation - 327,506 Atoms</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux, Windows, MacOSX</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <EnvironmentSize>76</EnvironmentSize>
+    <ProjectURL>http://www.ks.uiuc.edu/Research/namd/</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

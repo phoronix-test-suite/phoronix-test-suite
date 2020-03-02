@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.2.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>2620 frames 100.788 seconds #_RESULT_# fps (38.47 ms/f) 15.329 fps variability
+</OutputTemplate>
+    <LineHint>fps</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

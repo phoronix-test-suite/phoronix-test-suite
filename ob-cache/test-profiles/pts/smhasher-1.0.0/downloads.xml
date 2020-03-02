@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/smhasher-20200229.tar.xz</URL>
+      <MD5>014fae6e49ef88fba81304570d9946a6</MD5>
+      <SHA256>573e3356748874c6ac33a7f7c92c15cbc9e58b5e312b7a4851f46f02aef15162</SHA256>
+      <FileName>smhasher-20200229.tar.xz</FileName>
+      <FileSize>1064672</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/toyBrot-20200228.tar.bz2</URL>
+      <MD5>4cc02ae77015c58aafcb61d87017d3cb</MD5>
+      <SHA256>0d53129660425914378dd1e042b245c265e3300bc96c9e22505102b093154a59</SHA256>
+      <FileName>toyBrot-20200228.tar.bz2</FileName>
+      <FileSize>64991</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://download.tuxfamily.org/openarena/rel/081/oa081.zip, ftp://ftp2.pt.freebsd.org/pub/gentoo/distfiles/oa081.zip, ftp://ftp.wh2.tu-dresden.de/pub/mirrors/gentoo/distfiles/oa081.zip, ftp://ftp.free.fr/.mirrors1/ftp.gentoo.org/distfiles/oa081.zip, ftp://ftp.uni-kassel.de/Mirrors/ftp.fhh.opensource-mirror.de/gentoo/distfiles/oa081.zip</URL>
+      <MD5>49006bcb02b4e8ea3d06749e8f4e4887</MD5>
+      <FileSize>318927645</FileSize>
+    </Package>
+    <Package>
+      <URL>http://download.tuxfamily.org/openarena/rel/085/oa085p.zip</URL>
+      <MD5>b2a0437da751cd50dd2351ed9e0c4e9d</MD5>
+      <FileSize>42528474</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/openarena-benchmark-files-6.zip, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/openarena-benchmark-files-6.zip</URL>
+      <MD5>8d9d7e02b56abbb4decc70d15b8379d4</MD5>
+      <FileSize>762229</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

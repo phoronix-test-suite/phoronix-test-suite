@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.6.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>pts2.dem,UNKNOWN,#_RESULT_#, 17.5, 30.1,3840,2160,3239,95,RGBA8888,"/home/phoronix/.steam/steam/steamapps/common/dota 2 beta/game/bin/linuxsteamrt64/dota2" /home/phoronix/.steam/steam/steamapps/common/dota 2 beta/game/bin/linuxsteamrt64/dota2 +cl_showfps 1 +timedemo pts2 +demo_quitafterplayback 1 +fps_max 0 -novconsole -fullscreen +timedemo_start 1 +timedemo_end 1000 +bench_start dota2.bench,OpenGL,0x1002,0x7300,RENDER_SYSTEM_DLL_GL,enabled,3,2,</OutputTemplate>
+    <LineHint>.dem</LineHint>
+    <FileFormat>CSV</FileFormat>
+  </ResultsParser>
+</PhoronixTestSuite>

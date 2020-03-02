@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/JohnSully/KeyDB/archive/v5.3.1.tar.gz</URL>
+      <MD5>7bb35cd23937e9f73bf97f6df8546607</MD5>
+      <SHA256>1dfa15128786d132097b0bc851eae325cd7a39808b8a7543cedf445d4c507082</SHA256>
+      <FileName>KeyDB-5.3.1.tar.gz</FileName>
+      <FileSize>3039782</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/RedisLabs/memtier_benchmark/archive/1.2.17.tar.gz</URL>
+      <MD5>08b45090c273ba1c32a174f02a55dfd6</MD5>
+      <SHA256>18526a32732173ac5f73cecfa003571079634e8d124132eaf545c46bab61e0b2</SHA256>
+      <FileName>memtier_benchmark-1.2.17.tar.gz</FileName>
+      <FileSize>76872</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.6.0 (Dedilovo)-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.luxrender.net/release/luxmark/v3.0/luxmark-linux64-v3.0.tar.bz2</URL>
+      <MD5>b78ed89bd35486124c6141c25a76ab01</MD5>
+      <SHA256>805a130682fee23b7042ca7c0667870ae984f09a6dcc0820be325e84cc5e58c2</SHA256>
+      <FileSize>129046163</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

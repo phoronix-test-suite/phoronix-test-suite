@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://voxel.dl.sourceforge.net/project/nexuiz/NexuizRelease/Nexuiz%202.5.2/nexuiz-252.zip, http://softlayer.dl.sourceforge.net/project/nexuiz/NexuizRelease/Nexuiz%202.5.2/nexuiz-252.zip, http://dfn.dl.sourceforge.net/project/nexuiz/NexuizRelease/Nexuiz%202.5.2/nexuiz-252.zip</URL>
+      <MD5>d750bc328e58df8492f8d88bdcf818cb</MD5>
+      <FileSize>931253731</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

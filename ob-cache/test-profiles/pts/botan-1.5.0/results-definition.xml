@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>TripleDES encrypt buffer size 1024 bytes: #_RESULT_# MiB/sec 66.21 cycles/byte (37.33 MiB in 1000.01 ms)</OutputTemplate>
+    <LineHint>encrypt buffer size</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

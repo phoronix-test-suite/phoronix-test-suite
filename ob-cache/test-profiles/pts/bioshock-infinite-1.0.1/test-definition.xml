@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.2.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>BioShock Infinite</Title>
+    <Description>A Steam-based test of the BioShock Infinite game.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+    <PreInstallMessage>This test profile assumes you have the Valve Steam client already installed for your operating system / distribution and that it's installed to the standard path. Your Steam account must also be active and the game already installed. If the test appears hung you may need to manually exit the Steam client.</PreInstallMessage>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Game</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+    <ProjectURL>http://store.steampowered.com/app/8870/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-fullscreen -noPauseOnLossOfFocus</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>-resx=$VIDEO_WIDTH -resy=$VIDEO_HEIGHT</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Effects Quality</DisplayName>
+      <Identifier>effects-quality</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>Low</Name>
+          <Value>-ForceCompatLevel=2</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Medium</Name>
+          <Value>-ForceCompatLevel=3</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>High</Name>
+          <Value>-ForceCompatLevel=4</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Very High</Name>
+          <Value>-ForceCompatLevel=5</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Ultra</Name>
+          <Value>-ForceCompatLevel=7</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

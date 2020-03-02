@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.6.0m1 (Dedilovo)-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>FFTW</Title>
+    <AppVersion>3.3.4</AppVersion>
+    <Description>FFTW is a C subroutine library for computing the discrete Fourier transform (DFT) in one or more dimensions.</Description>
+    <ResultScale>Mflops</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>5</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD</SupportedPlatforms>
+    <SoftwareType>Scientific</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>22</EnvironmentSize>
+    <ProjectURL>http://fftw.org/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Build</DisplayName>
+      <Identifier>run-build</Identifier>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>Stock</Name>
+          <Value>fftw-stock/tests/bench</Value>
+        </Entry>
+        <Entry>
+          <Name>Float + SSE</Name>
+          <Value>fftw-mr/tests/bench</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Size</DisplayName>
+      <Identifier>run-test</Identifier>
+      <ArgumentPrefix> --time-repeat 100 -opatient </ArgumentPrefix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>1D FFT Size 32</Name>
+          <Value>ibc32</Value>
+        </Entry>
+        <Entry>
+          <Name>1D FFT Size 64</Name>
+          <Value>ibc64</Value>
+        </Entry>
+        <Entry>
+          <Name>1D FFT Size 128</Name>
+          <Value>ibc128</Value>
+        </Entry>
+        <Entry>
+          <Name>1D FFT Size 256</Name>
+          <Value>ibc256</Value>
+        </Entry>
+        <Entry>
+          <Name>1D FFT Size 512</Name>
+          <Value>ibc512</Value>
+        </Entry>
+        <Entry>
+          <Name>1D FFT Size 1024</Name>
+          <Value>ibc1024</Value>
+        </Entry>
+        <Entry>
+          <Name>1D FFT Size 2048</Name>
+          <Value>ibc2048</Value>
+        </Entry>
+        <Entry>
+          <Name>1D FFT Size 4096</Name>
+          <Value>ibc4096</Value>
+        </Entry>
+        <Entry>
+          <Name>2D FFT Size 32</Name>
+          <Value>ibc32x32</Value>
+        </Entry>
+        <Entry>
+          <Name>2D FFT Size 64</Name>
+          <Value>ibc64x64</Value>
+        </Entry>
+        <Entry>
+          <Name>2D FFT Size 128</Name>
+          <Value>ibc128x128</Value>
+        </Entry>
+        <Entry>
+          <Name>2D FFT Size 256</Name>
+          <Value>ibc256x256</Value>
+        </Entry>
+        <Entry>
+          <Name>2D FFT Size 512</Name>
+          <Value>ibc512x512</Value>
+        </Entry>
+        <Entry>
+          <Name>2D FFT Size 1024</Name>
+          <Value>ibc1024x1024</Value>
+        </Entry>
+        <Entry>
+          <Name>2D FFT Size 2048</Name>
+          <Value>ibc2048x2048</Value>
+        </Entry>
+        <Entry>
+          <Name>2D FFT Size 4096</Name>
+          <Value>ibc4096x4096</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

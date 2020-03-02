@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>SMHasher</Title>
+    <AppVersion>2020-02-29</AppVersion>
+    <Description>SMHasher is a hash function tester.</Description>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux, MacOSX, Solaris, BSD</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, cmake</ExternalDependencies>
+    <EnvironmentSize>45</EnvironmentSize>
+    <ProjectURL>https://github.com/rurban/smhasher</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Hash</DisplayName>
+      <Identifier>hash</Identifier>
+      <ArgumentPrefix>--test=Speed </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>wyhash</Name>
+          <Value>wyhash</Value>
+        </Entry>
+        <Entry>
+          <Name>t1ha2_atonce</Name>
+          <Value>t1ha2_atonce</Value>
+        </Entry>
+        <Entry>
+          <Name>Spooky32</Name>
+          <Value>Spooky32</Value>
+        </Entry>
+        <Entry>
+          <Name>fasthash32</Name>
+          <Value>fasthash32</Value>
+        </Entry>
+        <Entry>
+          <Name>t1ha0_aes_avx2</Name>
+          <Value>t1ha0_aes_avx2</Value>
+          <Message>Requires AVX2</Message>
+        </Entry>
+        <Entry>
+          <Name>MeowHash</Name>
+          <Value>MeowHash</Value>
+          <Message>Requires x86_64 AES-NI</Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

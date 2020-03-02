@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v5.2.1 (Khanino)-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Benchmarking: descrypt, traditional crypt(3) [DES 128/128 SSE2-16]... DONE
+Many salts:	#_RESULT_# c/s real, 1260K c/s virtual
+Only one salt:	9227K c/s real, 1172K c/s virtual</OutputTemplate>
+    <MatchToTestArguments>TRADITIONAL_DES_MANY_SALTS</MatchToTestArguments>
+    <LineBeforeHint>traditional crypt</LineBeforeHint>
+    <StripResultPostfix>K</StripResultPostfix>
+    <MultiplyResultBy>1000</MultiplyResultBy>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Benchmarking: md5crypt [MD5 32/64 X2]... DONE
+Raw:	#_RESULT_# c/s real, 10323 c/s virtual</OutputTemplate>
+    <MatchToTestArguments>MD5</MatchToTestArguments>
+    <LineBeforeHint>md5crypt</LineBeforeHint>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Benchmarking: bcrypt ("$2a$05", 32 iterations) [Blowfish 32/64 X2]... DONE
+Raw:	#_RESULT_# c/s real, 768 c/s virtual
+</OutputTemplate>
+    <MatchToTestArguments>BLOWFISH</MatchToTestArguments>
+    <LineBeforeHint>Blowfish</LineBeforeHint>
+  </ResultsParser>
+</PhoronixTestSuite>

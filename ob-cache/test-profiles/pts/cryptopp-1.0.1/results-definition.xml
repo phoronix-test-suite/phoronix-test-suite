@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Throughput Geometric Average: #_RESULT_#</OutputTemplate>
+    <LineHint>Throughput Geometric Average</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>
