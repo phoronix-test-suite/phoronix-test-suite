@@ -983,9 +983,6 @@ This is a collection of test profiles found within the specified OpenBenchmarkin
 #### Cuda Tests  pts/cuda
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing cuda.
 
-#### Mpi Tests  pts/mpi
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing mpi.
-
 #### Openmp Tests  pts/openmp
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing openmp.
 
@@ -1213,9 +1210,6 @@ This is a collection of test profiles found within the specified OpenBenchmarkin
 
 #### Cuda Tests  pts/cuda
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing cuda.
-
-#### Mpi Tests  pts/mpi
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing mpi.
 
 #### Openmp Tests  pts/openmp
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing openmp.
