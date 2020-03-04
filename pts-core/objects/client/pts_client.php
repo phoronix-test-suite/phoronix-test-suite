@@ -308,7 +308,7 @@ class pts_client
 				$i++;
 				$nearest_cube = pow($i, 3);
 			}
-			while($physical_cores > pow(($i + 1), 3));
+			while($physical_cores >= pow(($i + 1), 3));
 
 			$env_variables = array(
 			'PTS_VERSION' => PTS_VERSION,
