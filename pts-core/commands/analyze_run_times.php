@@ -56,18 +56,18 @@ class analyze_run_times implements pts_option_interface
 				if(isset($json_data['test-run-times']))
 				{
 					$test_run_times = explode(':', $json_data['test-run-times']);
-					$total_time = array_sum($test_run_times);
-					$avg_time[] = $total_time;
 					foreach($test_run_times as &$t)
 					{
 						$t = ceil($t);
 					}
+					$total_time = array_sum($test_run_times);
+					$avg_time[] = $total_time;
 					$accumulated_times[$item->get_result_identifier()][] = $total_time;
 					$table[] = array($item->get_result_identifier() . ': ', pts_strings::format_time($total_time), '   ' . implode(' ', $test_run_times) . 's');
 				}
 			}
 
-			$output = PHP_EOL . pts_client::cli_just_bold($ro->test_profile->get_title() . PHP_EOL . $ro->get_arguments_description()) . PHP_EOL . PHP_EOL;
+			$output = PHP_EOL . pts_client::cli_just_bold(trim($ro->test_profile->get_title() . PHP_EOL . $ro->get_arguments_description())) . PHP_EOL;
 			$output .= pts_user_io::display_text_table($table) . PHP_EOL;
 			if(count($avg_time) > 1)
 			{
