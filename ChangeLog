@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+pts-core: Add new analyze-run-times sub-command
+
 Phoronix Test Suite 9.4.1
 4 March 2020
 
