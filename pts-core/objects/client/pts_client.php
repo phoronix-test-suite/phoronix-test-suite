@@ -301,6 +301,15 @@ class pts_client
 
 		if($env_variables == null)
 		{
+			$physical_cores = phodevi::read_property('cpu', 'physical-core-count');
+			$i = 0;
+			do
+			{
+				$i++;
+				$nearest_cube = pow($i, 3);
+			}
+			while($physical_cores > pow(($i + 1), 3));
+
 			$env_variables = array(
 			'PTS_VERSION' => PTS_VERSION,
 			'PTS_CODENAME' => PTS_CODENAME,
@@ -309,7 +318,8 @@ class pts_client
 			'PHP_BIN' => PHP_BIN,
 			'NUM_CPU_CORES' => phodevi::read_property('cpu', 'core-count'),
 			'OMP_NUM_THREADS' => phodevi::read_property('cpu', 'core-count'),
-			'NUM_CPU_PHYSICAL_CORES' => phodevi::read_property('cpu', 'physical-core-count'),
+			'NUM_CPU_PHYSICAL_CORES' => $physical_cores,
+			'NUM_CPU_PHYSICAL_CORES_CUBE' => $nearest_cube,
 			'NUM_CPU_NODES' => phodevi::read_property('cpu', 'node-count'),
 			'NUM_CPU_JOBS' => (phodevi::read_property('cpu', 'core-count') * 2),
 			'SYS_MEMORY' => phodevi::read_property('memory', 'capacity'),
