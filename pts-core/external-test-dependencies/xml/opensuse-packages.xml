@@ -327,6 +327,10 @@
 			<PackageName>npm</PackageName>
 		</Package>
 		<Package>
+			<GenericName>snappy</GenericName>
+			<PackageName>snappy-devel</PackageName>
+		</Package>
+		<Package>
 			<GenericName>hdf5</GenericName>
 			<PackageName>hdf5-devel</PackageName>
 		</Package>

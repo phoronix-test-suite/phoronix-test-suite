@@ -283,5 +283,9 @@
 			<GenericName>libxml2</GenericName>
 			<PackageName>libxml2-devel</PackageName>
 		</Package>
+		<Package>
+			<GenericName>snappy</GenericName>
+			<PackageName>snappy-devel</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

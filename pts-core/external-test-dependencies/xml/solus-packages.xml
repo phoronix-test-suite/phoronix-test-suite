@@ -242,6 +242,10 @@
 			<PackageName>git</PackageName>
 		</Package>
 		<Package>
+			<GenericName>snappy</GenericName>
+			<PackageName>snappy</PackageName>
+		</Package>
+		<Package>
 			<GenericName>suitesparse</GenericName>
 			<PackageName>suitesparse-devel</PackageName>
 		</Package>

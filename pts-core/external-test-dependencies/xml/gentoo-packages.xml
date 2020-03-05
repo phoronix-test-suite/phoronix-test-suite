@@ -340,5 +340,9 @@
 			<GenericName>gflags</GenericName>
 			<PackageName>dev-cpp/gflags</PackageName>
 		</Package>
+		<Package>
+			<GenericName>snappy</GenericName>
+			<PackageName>app-arch/snappy</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

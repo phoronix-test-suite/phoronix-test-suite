@@ -335,5 +335,9 @@
 			<GenericName>google-benchmark</GenericName>
 			<PackageName>benchmark</PackageName>
 		</Package>
+		<Package>
+			<GenericName>snappy</GenericName>
+			<PackageName>libsnappy</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

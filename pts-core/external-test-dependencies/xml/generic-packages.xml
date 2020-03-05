@@ -572,5 +572,11 @@
 			<PossibleNames>libbenchmark-dev</PossibleNames>
 			<FileCheck>benchmark/benchmark.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>snappy</GenericName>
+			<Title>Snappy Compression</Title>
+			<PossibleNames>libsnappy-dev</PossibleNames>
+			<FileCheck>snappy.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
