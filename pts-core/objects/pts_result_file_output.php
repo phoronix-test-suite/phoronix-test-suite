@@ -561,17 +561,17 @@ class pts_result_file_output
 
 				if(($x = array_search($identifier, $systems)) !== false)
 				{
-					if($result_buffer_count > 1 && $value == $best)
+					$style = null;
+					if($result_buffer_count > 1)
 					{
-						$style = ' style="color: green;"';
-					}
-					else if($result_buffer_count > 1 && $value == $worst)
-					{
-						$style = ' style="color: red;"';
-					}
-					else
-					{
-						$style = null;
+						if($value == $best)
+						{
+							$style = ' style="color: #00FF00;"';
+						}
+						else if($value == $worst)
+						{
+							$style = ' style="color: #FF0000;"';
+						}
 					}
 
 					if($value > 1000)
@@ -584,7 +584,7 @@ class pts_result_file_output
 						continue;
 					}
 
-					$row[$x] = '<strong' . $style. '>' . $value . '</strong>';
+					$row[$x] = '<strong' . $style. '>' . round($value, 2) . '</strong>';
 					$nor[$x] = round(($hib ? ($value / $normalize_against) : ($normalize_against / $value)) * 100, 2) . '%';
 					$samples[$x] = $buffer_item->get_sample_count();
 					if($samples[$x] > 1)

@@ -495,7 +495,7 @@ abstract class pts_graph_core
 	//
 	// Render Functions
 	//
-	public static function shift_color(&$paint_color, $percent = 0.7, $mask = 0)
+	public static function shift_color($paint_color, $percent = 0.7, $mask = 0)
 	{
 		$new_color = null;
 		foreach(str_split(str_replace('#', null, $paint_color), 2) as $color)
