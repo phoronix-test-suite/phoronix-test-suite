@@ -170,7 +170,7 @@ class pts_result_viewer_settings
 
 		if($result_file->get_test_count() > 12 && defined('PTS_TEST_SUITE_PATH') && is_dir(PTS_TEST_SUITE_PATH))
 		{
-			$analyze_checkboxes['Statistics'][] = array('sts', 'Show Performance Breakdown By Performance-Per-Suite');
+			$analyze_checkboxes['Helpers'][] = array('sts', 'Show Performance Breakdown By Performance-Per-Suite');
 		}
 
 		if($has_box_plot || $has_line_graph)
@@ -204,17 +204,19 @@ class pts_result_viewer_settings
 			{
 				continue;
 			}
+			$t .= '<div style="float: left; overflow: hidden; padding: 4px;">';
 			$t .= '<h2>' . $title . '</h2>';
 			foreach($group as $i => $key)
 			{
 				$t .= '<input type="checkbox" name="' . $key[0] . '" value="y"' . (self::check_request_for_var($request, $key[0]) ? ' checked="checked"' : null) . ' /> ' . $key[1] . '<br />';
 			}
+			$t .= '</div>';
 		}
 
 		if($system_identifier_count > 1)
 		{
 			$has_system_logs = glob($result_file->get_system_log_dir() . '/*/*');
-			$t .= '<h2>Run Management</h2>
+			$t .= '<div style="clear: both;"><h2>Run Management</h2>
 <div class="div_table">
 <div class="div_table_body">
 <div class="div_table_first_row">
@@ -252,7 +254,7 @@ $t .= '
 
 $t .= '
 </div>
-</div>';
+</div></div>';
 		}
 
 		$analyze_options .= $t . '<br /><input name="submit" value="Refresh Results" type="submit" /></form>';

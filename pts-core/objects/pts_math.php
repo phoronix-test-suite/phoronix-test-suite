@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2019, Phoronix Media
-	Copyright (C) 2009 - 2019, Michael Larabel
+	Copyright (C) 2009 - 2020, Phoronix Media
+	Copyright (C) 2009 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -185,6 +185,20 @@ class pts_math
 			{
 				unset($values[$i]);
 			}
+		}
+	}
+	public static function median($values)
+	{
+		sort($values);
+		$count = count($values);
+		$index = floor($count / 2);
+		if($count & 1)
+		{
+			return $values[$index];
+		}
+		else
+		{
+			return ($values[($index - 1)] + $values[($index + 1)]) / 2;
 		}
 	}
 }

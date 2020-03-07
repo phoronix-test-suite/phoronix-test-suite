@@ -542,6 +542,7 @@ class pts_result_file_output
 
 			$best = $ro->get_result_first(false);
 			$worst = $ro->get_result_last(false);
+			$median = $ro->test_result_buffer->get_median();
 
 			$normalize_against = 0;
 			if(isset($extra_attributes['highlight_graph_values']) && is_array($extra_attributes['highlight_graph_values']) && count($extra_attributes['highlight_graph_values']) == 1)
@@ -566,12 +567,20 @@ class pts_result_file_output
 					{
 						if($value == $best)
 						{
-							$style = ' style="color: #00FF00;"';
+							$style = ' style="font-weight: bold; color: #009900;"';
 						}
 						else if($value == $worst)
 						{
-							$style = ' style="color: #FF0000;"';
+							$style = ' style="font-weight: bold; color: #FF0000;"';
 						}
+						/* else if($hib && $value > $median)
+						{
+							$style = ' style="color: ' . pts_graph_core::shift_color('#009900', (($value - $median) / ($best - $median))) . ';"';
+						}
+						else if($hib && $value < ($best - $median))
+						{
+							$style = ' style="color: ' . pts_graph_core::shift_color('#FF0000', 1 - (abs($value - $median) / abs($best - $median))) . ';"';
+						} */
 					}
 
 					if($value > 1000)
@@ -584,7 +593,7 @@ class pts_result_file_output
 						continue;
 					}
 
-					$row[$x] = '<strong' . $style. '>' . round($value, 2) . '</strong>';
+					$row[$x] = '<span' . $style. '>' . round($value, 2) . '</span>';
 					$nor[$x] = round(($hib ? ($value / $normalize_against) : ($normalize_against / $value)) * 100, 2) . '%';
 					$samples[$x] = $buffer_item->get_sample_count();
 					if($samples[$x] > 1)

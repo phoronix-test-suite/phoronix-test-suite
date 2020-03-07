@@ -508,6 +508,10 @@ class pts_test_result_buffer
 
 		return $values;
 	}
+	public function get_median()
+	{
+		return pts_math::median($this->get_values());
+	}
 	public function get_values_as_string()
 	{
 		return implode(':', $this->get_values());
