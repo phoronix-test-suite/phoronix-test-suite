@@ -537,7 +537,7 @@ class pts_client
 			if($result_identifier != null && pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/SaveSystemLogs', 'TRUE'))
 			{
 				// Save verbose system information here
-				$system_log_dir = $save_to_dir . '/system-logs/' . pts_strings::simplify_string_for_file_handling($result_identifier) . '/';
+				$system_log_dir = $result_file->get_system_log_dir($result_identifier, false);
 				pts_file_io::mkdir($system_log_dir, 0777, true);
 
 				// Backup system files
@@ -1215,9 +1215,9 @@ class pts_client
 			$chart->renderChart($save_to_dir . '/result-graphs/systems.BILDE_EXTENSION');
 			unset($chart);
 
-			if($intent && is_dir($save_to_dir . '/system-logs/'))
+			if($intent && is_dir($result_file->get_system_log_dir()))
 			{
-				$chart = new pts_DetailedSystemComponentTable($result_file, $save_to_dir . '/system-logs/', $intent);
+				$chart = new pts_DetailedSystemComponentTable($result_file, $result_file->get_system_log_dir(), $intent);
 
 				if($chart)
 				{

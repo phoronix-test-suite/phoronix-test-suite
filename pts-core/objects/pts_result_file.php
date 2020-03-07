@@ -133,7 +133,7 @@ class pts_result_file
 			return PTS_SAVE_RESULTS_PATH . $this->save_identifier . '/composite.xml';
 		}
 	}
-	public function get_system_log_dir($result_identifier = null)
+	public function get_system_log_dir($result_identifier = null, $dir_check = true)
 	{
 		$log_dir = dirname($this->get_file_location());
 		if(empty($log_dir) || !is_dir($log_dir))
@@ -150,7 +150,7 @@ class pts_result_file
 		else
 		{
 			$sdir = $sdir . pts_strings::simplify_string_for_file_handling($result_identifier) . '/';
-			return is_dir($sdir) ? $sdir : false;
+			return !$dir_check || is_dir($sdir) ? $sdir : false;
 		}
 	}
 	public function get_test_log_dir(&$result_object = null)

@@ -793,7 +793,7 @@ class phoromatic extends pts_module_interface
 		$system_logs = null;
 		$system_logs_hash = null;
 		// TODO: Potentially integrate this code below shared with pts_openbenchmarking_client into a unified function for validating system log files
-		$system_log_dir = PTS_SAVE_RESULTS_PATH . $result_file->get_identifier() . '/system-logs/';
+		$system_log_dir = $result_file->get_system_log_dir();
 		if(is_dir($system_log_dir) && $upload_system_logs)
 		{
 			$is_valid_log = true;
