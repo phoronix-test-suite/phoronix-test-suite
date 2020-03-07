@@ -537,7 +537,8 @@ class pts_client
 			if($result_identifier != null && pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/SaveSystemLogs', 'TRUE'))
 			{
 				// Save verbose system information here
-				$system_log_dir = $result_file->get_system_log_dir($result_identifier, false);
+				//$system_log_dir = $result_file->get_system_log_dir($result_identifier, false);
+				$system_log_dir = $save_to_dir . '/system-logs/' . pts_strings::simplify_string_for_file_handling($result_identifier) . '/';
 				pts_file_io::mkdir($system_log_dir, 0777, true);
 
 				// Backup system files
@@ -613,7 +614,7 @@ class pts_client
 
 					if(($command_bin = pts_client::executable_in_path($command[0])))
 					{
-						$cmd_output = shell_exec('cd "' . dirname($command_bin) . '" && ./' . basename($command_bin) . ' 2>&1');
+						$cmd_output = shell_exec('cd "' . dirname($command_bin) . '" && ./' . $command_string . ' 2>&1');
 
 						if(strlen($cmd_output) > 900000)
 						{
