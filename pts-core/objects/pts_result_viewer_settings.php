@@ -213,15 +213,21 @@ class pts_result_viewer_settings
 
 		if($system_identifier_count > 1)
 		{
+			$has_system_logs = glob($result_file->get_system_log_dir() . '/*/*');
 			$t .= '<h2>Run Management</h2>
 <div class="div_table">
 <div class="div_table_body">
 <div class="div_table_first_row">
 <div class="div_table_cell">Highlight<br />Result</div>
 <div class="div_table_cell">Hide<br />Result</div>
-<div class="div_table_cell">Identifier</div>
-<div class="div_table_cell">View Logs</div>
-<div class="div_table_cell">Perf-Per-Dollar</div>
+<div class="div_table_cell">Identifier</div>';
+
+if($has_system_logs)
+{
+	$t .= '<div class="div_table_cell">View Logs</div>';
+}
+
+$t .= '<div class="div_table_cell">Perf-Per-Dollar</div>
 </div>
 ';
 $hgv = self::check_request_for_var($request, 'hgv');
@@ -233,9 +239,14 @@ $t .= '
 	<div class="div_table_row">
 	<div class="div_table_cell"><input type="checkbox" name="hgv[]" value="' . $si . '"' . (is_array($hgv) && in_array($si, $hgv) ? ' checked="checked"' : null) . ' /></div>
 	<div class="div_table_cell"><input type="checkbox" name="rmm[]" value="' . $si . '"' . (is_array($rmm) && in_array($si, $rmm) ? ' checked="checked"' : null) . ' /></div>
-	<div class="div_table_cell">' . $si . '</div>
-	<div class="div_table_cell">' . ($result_file->get_system_log_dir($si) ? '<a class="mini" href="#" onclick="javascript:display_system_logs_for_result(\'' . RESULTS_VIEWING_ID . '\', \'' . $si . '\'); return false;">View System Logs</a>' : ' ') . '</div>
-	<div class="div_table_cell"><input type="number" min="0" step="0.01" name="ppd_' . base64_encode($si) . '" value="' . ($ppd ? $ppd : '0.00') . '" /></div>
+	<div class="div_table_cell">' . $si . '</div>';
+
+	if($has_system_logs)
+	{
+		$t .= '<div class="div_table_cell">' . ($result_file->get_system_log_dir($si) ? '<a class="mini" href="#" onclick="javascript:display_system_logs_for_result(\'' . RESULTS_VIEWING_ID . '\', \'' . $si . '\'); return false;">View System Logs</a>' : ' ') . '</div>';
+	}
+
+	$t .= '<div class="div_table_cell"><input type="number" min="0" step="0.01" name="ppd_' . base64_encode($si) . '" value="' . ($ppd ? $ppd : '0.00') . '" /></div>
 	</div>';
 }
 
