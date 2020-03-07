@@ -198,6 +198,52 @@ class pts_result_file_analyzer
 			}
 		}
 	}
+	public static function generate_perf_per_dollar(&$result_file, $identifier, $value, $unit = 'Dollar')
+	{
+		foreach($result_file->get_result_objects() as $result_object)
+		{
+			$result = $result_object->test_result_buffer->get_value_from_identifier($identifier);
+			if($result_object->test_profile->get_identifier() != null && $result_object->test_profile->get_display_format() == 'BAR_GRAPH' && is_numeric($result) && $result > 0)
+			{
+				if($result_object->test_profile->get_result_proportion() == 'HIB')
+				{
+					$result = pts_math::set_precision($result / $value);
+					$scale = $result_object->test_profile->get_result_scale() . ' Per ' . $unit;
+				}
+				else if($result_object->test_profile->get_result_proportion() == 'LIB')
+				{
+					$result = pts_math::set_precision($result * $value);
+					$scale = $result_object->test_profile->get_result_scale() . ' x ' . $unit;
+				}
+				else
+				{
+					break;
+				}
+
+				if($result != 0)
+				{
+					pts_result_file_analyzer::add_perf_per_graph($result_file, $result_object, $identifier, $result, $scale, '$' . $value . ' reported cost.');
+				}
+			}
+		}
+	}
+	public static function add_perf_per_graph(&$result_file, $test_result, $result_identifier, $result, $scale, $footnote = null)
+	{
+		if(empty($result))
+			return false;
+
+		// This copy isn't needed but it's shorter and from port from system_monitor where there can be multiple items tracked
+		$original_parent_hash = $test_result->get_comparison_hash(true, false);
+		$test_result = clone $test_result;
+		$test_result->test_profile->set_identifier(null);
+		$test_result->set_used_arguments_description('Performance / Cost - ' . $test_result->get_arguments_description());
+		$test_result->set_used_arguments('dollar comparison ' . $test_result->get_arguments());
+		$test_result->test_profile->set_result_scale($scale);
+		$test_result->test_result_buffer = new pts_test_result_buffer();
+		$test_result->test_result_buffer->add_test_result($result_identifier, $result, null, array('install-footnote' => $footnote));
+		$test_result->set_parent_hash($original_parent_hash);
+		$result_file->add_result($test_result);
+	}
 	public static function generate_executive_summary($result_file, $selected_result = null,  &$error = null)
 	{
 		$summary = null;

@@ -256,6 +256,10 @@ input[type="checkbox"]:checked + label
 	font-weight: bold;
 	display: inline;
 }
+input[type=number]
+{
+    width: 70px;
+}
 div#login_box
 {
 	margin-top: 20%;
@@ -319,4 +323,34 @@ div#leading_message
 a.mini
 {
 	font-size: 11px;
+}
+.div_table
+{
+	display: table;
+}
+div#main_area .div_table_cell input
+{
+	font-size: 12px;
+	padding: 0;
+}
+.div_table_row
+{
+	display: table-row;
+}
+.div_table_first_row
+{
+	display: table-row;
+	font-size: 11px;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+.div_table_cell
+{
+	border: 0;
+	display: table-cell;
+	padding: 1px 0 1px 4px;
+}
+.div_table_body
+{
+	display: table-row-group;
 }

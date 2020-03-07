@@ -207,11 +207,43 @@ class pts_result_viewer_settings
 			$t .= '<h2>' . $title . '</h2>';
 			foreach($group as $i => $key)
 			{
-				$t .= '<input type="checkbox" name="' . $key[0] . '" value="y"' . (self::check_request_for_var($request, $key[0]) ? ' checked="checked"' : null) . ' /> ' . $key[1] . ' ';
+				$t .= '<input type="checkbox" name="' . $key[0] . '" value="y"' . (self::check_request_for_var($request, $key[0]) ? ' checked="checked"' : null) . ' /> ' . $key[1] . '<br />';
 			}
 		}
 
-		$t .= '<br /><br />Highlight/Baseline Result: ' .  self::html_select_menu('hgv', 'hgv', null, array_merge(array(null), $result_file->get_system_identifiers()), false);
+		if($system_identifier_count > 1)
+		{
+			$t .= '<h2>Run Management</h2>
+<div class="div_table">
+<div class="div_table_body">
+<div class="div_table_first_row">
+<div class="div_table_cell">Highlight<br />Result</div>
+<div class="div_table_cell">Hide<br />Result</div>
+<div class="div_table_cell">Identifier</div>
+<div class="div_table_cell">View Logs</div>
+<div class="div_table_cell">Perf-Per-Dollar</div>
+</div>
+';
+$hgv = self::check_request_for_var($request, 'hgv');
+$rmm = self::check_request_for_var($request, 'rmm');
+foreach($result_file->get_system_identifiers() as $si)
+{
+	$ppd = self::check_request_for_var($request, 'ppd_' . base64_encode($si));
+$t .= '
+	<div class="div_table_row">
+	<div class="div_table_cell"><input type="checkbox" name="hgv[]" value="' . $si . '"' . (is_array($hgv) && in_array($si, $hgv) ? ' checked="checked"' : null) . ' /></div>
+	<div class="div_table_cell"><input type="checkbox" name="rmm[]" value="' . $si . '"' . (is_array($rmm) && in_array($si, $rmm) ? ' checked="checked"' : null) . ' /></div>
+	<div class="div_table_cell">' . $si . '</div>
+	<div class="div_table_cell">&nbsp;</div>
+	<div class="div_table_cell"><input type="number" min="0" step="0.01" name="ppd_' . base64_encode($si) . '" value="' . ($ppd ? $ppd : '0.00') . '" /></div>
+	</div>';
+}
+
+$t .= '
+</div>
+</div>';
+		}
+
 		$analyze_options .= $t . '<br /><input name="submit" value="Refresh Results" type="submit" /></form>';
 
 		return $analyze_options;
@@ -390,14 +422,30 @@ class pts_result_viewer_settings
 		{
 			$extra_attributes['condense_multi_way'] = true;
 		}
-		if(self::check_request_for_var($request, 'hgv'))
+		if(($hgv = self::check_request_for_var($request, 'hgv')))
 		{
-			$extra_attributes['highlight_graph_values'] = explode(',', self::check_request_for_var($request, 'hgv'));
+			if(is_array($hgv))
+			{
+				$extra_attributes['highlight_graph_values'] = $hgv;
+			}
+			else
+			{
+				$extra_attributes['highlight_graph_values'] = explode(',', $hgv);
+			}
 		}
 		else if(self::check_request_for_var($request, 'hgv_base64'))
 		{
 			$extra_attributes['highlight_graph_values'] = explode(',', base64_decode(self::check_request_for_var($request, 'hgv_base64')));
-var_dump($extra_attributes['highlight_graph_values']);
+		}
+		if(($rmm = self::check_request_for_var($request, 'rmm')))
+		{
+			if(is_array($rmm))
+			{
+				foreach($rmm as $rm)
+				{
+					$result_file->remove_run($rm);
+				}
+			}
 		}
 		if(self::check_request_for_var($request, 'scalar'))
 		{
@@ -429,6 +477,15 @@ var_dump($extra_attributes['highlight_graph_values']);
 			foreach($result_file->get_result_objects() as $i => $result_object)
 			{
 				$result_object->recalculate_averages_without_outliers(1.5);
+			}
+		}
+
+		foreach($result_file->get_system_identifiers() as $si)
+		{
+			$ppd = self::check_request_for_var($request, 'ppd_' . base64_encode($si));
+			if($ppd && $ppd > 0 && is_numeric($ppd))
+			{
+				pts_result_file_analyzer::generate_perf_per_dollar($result_file, $si, $ppd);
 			}
 		}
 	}
