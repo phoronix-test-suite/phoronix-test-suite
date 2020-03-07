@@ -234,7 +234,7 @@ $t .= '
 	<div class="div_table_cell"><input type="checkbox" name="hgv[]" value="' . $si . '"' . (is_array($hgv) && in_array($si, $hgv) ? ' checked="checked"' : null) . ' /></div>
 	<div class="div_table_cell"><input type="checkbox" name="rmm[]" value="' . $si . '"' . (is_array($rmm) && in_array($si, $rmm) ? ' checked="checked"' : null) . ' /></div>
 	<div class="div_table_cell">' . $si . '</div>
-	<div class="div_table_cell">&nbsp;</div>
+	<div class="div_table_cell">' . ($result_file->get_system_log_dir($si) ? '<a class="mini" href="#" onclick="javascript:display_system_logs_for_result(\'' . RESULTS_VIEWING_ID . '\', \'' . $si . '\'); return false;">View System Logs</a>' : ' ') . '</div>
 	<div class="div_table_cell"><input type="number" min="0" step="0.01" name="ppd_' . base64_encode($si) . '" value="' . ($ppd ? $ppd : '0.00') . '" /></div>
 	</div>';
 }

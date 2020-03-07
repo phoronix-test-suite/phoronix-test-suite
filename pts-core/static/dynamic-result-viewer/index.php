@@ -269,6 +269,49 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		}
 		echo '</body></html>';
 		exit;
+	case 'view_system_logs':
+		echo '<!doctype html>
+		<html lang="en">
+		<head>
+		  <title>Log Viewer</title>
+		<link rel="stylesheet" href="/result-viewer.css">
+		<script type="text/javascript" src="/result-viewer.js"></script>
+		<link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+		</head>
+		<body>';
+		if(isset($_REQUEST['result_file_id']) && isset($_REQUEST['system_id']))
+		{
+			$result_file = new pts_result_file($_REQUEST['result_file_id']);
+
+			if(($system_log_dir = $result_file->get_system_log_dir($_REQUEST['system_id'])))
+			{
+				$system_logs = pts_file_io::glob($system_log_dir . '*');
+				if(count($system_logs) > 0)
+				{
+					echo '<div style="text-align: center;"><form action="' . CURRENT_URI . '" method="post"><select name="log_select" id="log_select">';
+					foreach($system_logs as $log_file)
+					{
+						$b = basename($log_file);
+						echo '<option value="' . $b . '"' . ($b == $_REQUEST['log_select'] ? 'selected="selected"' : null) . '>' . $b . '</option>';
+					}
+					echo '</select> &nbsp; <input type="submit" value="Show Log"></form></div><br /><hr />';
+					if(isset($_REQUEST['log_select']) && is_file($system_log_dir . pts_strings::simplify_string_for_file_handling($_REQUEST['log_select'])))
+					{
+						$show_log = $system_log_dir . pts_strings::simplify_string_for_file_handling($_REQUEST['log_select']);
+					}
+					else
+					{
+						$show_log = array_shift($system_logs);
+					}
+					$log_file = htmlentities(file_get_contents($show_log));
+					$log_file = str_replace(PHP_EOL, '<br />', $log_file);
+					echo '<br /><div style="font-family: monospace;">' . $log_file . '</div>';
+				}
+			}
+
+		}
+		echo '</body></html>';
+		exit;
 	case 'result':
 		if(false && isset($_POST) && !empty($_POST))
 		{
