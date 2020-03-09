@@ -288,10 +288,10 @@ function pts_version_codenames()
 		);
 }
 
-pts_define('PTS_VERSION', '9.4.1');
-pts_define('PTS_CORE_VERSION', 9410);
+pts_define('PTS_VERSION', '9.6.0m0');
+pts_define('PTS_CORE_VERSION', 9500);
 pts_define('PTS_RELEASE_DATE', '20200304');
-pts_define('PTS_CODENAME', 'Vestby');
+pts_define('PTS_CODENAME', 'Nittedal');
 
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));
 pts_define('PTS_IS_WEB_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'WEB_CLIENT'));
