@@ -257,7 +257,7 @@ $t .= '
 </div></div>';
 		}
 
-		$analyze_options .= $t . '<br /><input name="submit" value="Refresh Results" type="submit" /></form>';
+		$analyze_options .= $t . '<br /><input style="clear: both;" name="submit" value="Refresh Results" type="submit" /></form>';
 
 		return $analyze_options;
 	}

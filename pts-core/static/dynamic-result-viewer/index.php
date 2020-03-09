@@ -371,7 +371,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			$PAGE .= ' <input type="submit" value="Delete Result File" onclick="javascript:delete_result_file(\'' . RESULTS_VIEWING_ID . '\'); return false;">';
 		}
 		//$PAGE .= '<p align="center"><strong>Export As: </strong> <a href="' . CURRENT_URI . '&export=pdf">PDF</a>, <a href="' . CURRENT_URI . '&export=csv">CSV</a>, <a href="' . CURRENT_URI . '&export=csv-all">CSV Individual Data</a> </p>';
-		$PAGE .= '<hr /><div style="font-size: 12pt;">' . pts_result_viewer_settings::get_html_options_markup($result_file, $_REQUEST) . '</div><hr />';
+		$PAGE .= '<hr /><div style="font-size: 12pt;">' . pts_result_viewer_settings::get_html_options_markup($result_file, $_REQUEST) . '</div><hr style="clear: both;" />';
 		$PAGE .= pts_result_viewer_settings::process_helper_html($_REQUEST, $result_file, $extra_attributes);
 
 		$intent = -1;
@@ -417,6 +417,8 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			$table = new pts_ResultFileTable($result_file, $intent);
 			$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
 		}
+
+
 		$PAGE .= '<div id="results">';
 		$prev_title = null;
 		foreach($result_file->get_result_objects() as $i => $result_object)
@@ -430,6 +432,20 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			if($result_object->test_profile->get_title() != $prev_title)
 			{
 				$PAGE .= '<h2>' . $result_object->test_profile->get_title() . '</h2>';
+				if(is_file(PTS_INTERNAL_OB_CACHE . 'test-profiles/' . $result_object->test_profile->get_identifier() . '/test-definition.xml'))
+				{
+					$tp = new pts_test_profile(PTS_INTERNAL_OB_CACHE . 'test-profiles/' . $result_object->test_profile->get_identifier() . '/test-definition.xml');
+					$PAGE .= '<p style="font-size: 13px;">' . $tp->get_description() . ' <a href="https://openbenchmarking.org/test/' . $result_object->test_profile->get_identifier() . '"><em>Learn more at OpenBenchmarking.org</em></a>.</p>';
+
+				/*	$suites_containing_test = pts_test_suites::suites_containing_test_profile($result_object->test_profile);
+					if(!empty($suites_containing_test))
+					{
+						foreach($suites_containing_test as $suite)
+						{
+							$PAGE .= $suite->get_title() . ' ' . $suite->get_identifier();
+						}
+					}  */
+				}
 				$prev_title = $result_object->test_profile->get_title();
 			}
 			$PAGE .= $res . '<br />';

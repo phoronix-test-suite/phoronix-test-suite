@@ -6,6 +6,7 @@ pts-core: Add new analyze-run-times sub-command
 pts-core: Allow hiding results from within the result viewer
 pts-core: Allow generating performance-per-dollar metrics from within the result file
 pts-core: Allow showing system logs from the result viewer
+pts-core: Allow showing test description within the result viewer
 
 Phoronix Test Suite 9.4.1
 4 March 2020

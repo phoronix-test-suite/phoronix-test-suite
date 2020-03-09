@@ -42,6 +42,10 @@ class pts_test_suites
 		{
 			$suite_dir = PTS_TEST_SUITE_PATH;
 		}
+		else if(defined('PTS_INTERNAL_OB_CACHE') && is_dir(PTS_INTERNAL_OB_CACHE . 'test-suites/'))
+		{
+			$suite_dir = PTS_INTERNAL_OB_CACHE . 'test-suites/';
+		}
 		else
 		{
 			return array();
