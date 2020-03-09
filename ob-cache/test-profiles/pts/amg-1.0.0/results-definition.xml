@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Figure of Merit (FOM_1): #_RESULT_#</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

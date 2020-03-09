@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://github.com/intel/mpi-benchmarks/archive/IMB-v2019.3.tar.gz</URL>
+      <MD5>fe27a312ebc7f97ac233bfcea7cb62c0</MD5>
+      <SHA256>4f256d11bfed9ca6166548486d61a062e67be61f13dd9f30690232720e185f31</SHA256>
+      <FileName>mpi-benchmarks-IMB-v2019.3.tar.gz</FileName>
+      <FileSize>209468</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

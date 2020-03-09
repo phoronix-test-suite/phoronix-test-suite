@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Basemark GPU</Title>
+    <AppVersion>1.2</AppVersion>
+    <Description>This is a benchmark of Basemark GPU. For this test profile to work, you must have a valid license/copy of BasemarkGPU in your Phoronix Test Suite download cache. This test profile simply automates the execution of BasemarkGPU and you must already have the Windows .zip or Linux .tar.gz in the download cache.</Description>
+    <ResultScale>FPS</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+    <PreInstallMessage>This test will only work if you have a valid copy of the BasemarkGPU program on your system.</PreInstallMessage>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Retail</License>
+    <Status>Verified</Status>
+    <EnvironmentSize>2600</EnvironmentSize>
+    <ProjectURL>https://www.basemark.com/benchmarks/basemark-gpu/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Renderer</DisplayName>
+      <Identifier>renderer</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Vulkan</Name>
+          <Value>BasemarkGPU_vk</Value>
+        </Entry>
+        <Entry>
+          <Name>OpenGL</Name>
+          <Value>BasemarkGPU_gl</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value> WindowResolution $VIDEO_WIDTHx$VIDEO_HEIGHT RenderResolution $VIDEO_WIDTHx$VIDEO_HEIGHT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Graphics Preset</DisplayName>
+      <Identifier>graphics-preset</Identifier>
+      <Menu>
+        <Entry>
+          <Name>High</Name>
+          <Value>RenderPipeline highend</Value>
+        </Entry>
+        <Entry>
+          <Name>Medium</Name>
+          <Value>RenderPipeline medium</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

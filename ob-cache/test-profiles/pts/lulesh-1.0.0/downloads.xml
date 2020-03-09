@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/lulesh2.0.3.tar.xz</URL>
+      <MD5>d287012b35869593d31d913a34f9d50a</MD5>
+      <SHA256>8ddd7ae2733de08ddb77ec18330568d10d990a5e9c1a7f88640e7fa284b77525</SHA256>
+      <FileName>lulesh2.0.3.tar.xz</FileName>
+      <FileSize>33448</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

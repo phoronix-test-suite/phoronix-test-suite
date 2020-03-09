@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://arrayfire.s3.amazonaws.com/3.7.0/ArrayFire-v3.7.0_Linux_x86_64.sh</URL>
+      <MD5>34e01783845937a48a9eff4ad5a43228</MD5>
+      <SHA256>d695989ee7c188c1e9bfa85f39bdb5a4bcc46b3a96fc78ea173b7b7f4fac9bf7</SHA256>
+      <FileName>ArrayFire-v3.7.0_Linux_x86_64.sh</FileName>
+      <FileSize>1337052754</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

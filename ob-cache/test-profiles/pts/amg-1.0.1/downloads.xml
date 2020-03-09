@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/AMG-20200304.tar.xz</URL>
+      <MD5>aa0b1856f5f2d5c7e9250de8a4ef5084</MD5>
+      <SHA256>918964262a30023b65a1e67efc15ec7e434d48c3e886497d1fb2b2fb131043f8</SHA256>
+      <FileName>AMG-20200304.tar.xz</FileName>
+      <FileSize>1311336</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

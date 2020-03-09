@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>fillseq      :     257.528 micros/op;   #_RESULT_# MB/s    </OutputTemplate>
+    <LineHint>micros/op</LineHint>
+    <ResultScale>MB/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>readhot      :      #_RESULT_# micros/op;</OutputTemplate>
+    <LineHint>micros/op</LineHint>
+    <ResultScale>Microseconds Per Op</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+  </ResultsParser>
+</PhoronixTestSuite>

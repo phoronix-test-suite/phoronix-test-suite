@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://www.nas.nasa.gov/assets/npb/NPB3.4.tar.gz</URL>
+      <MD5>b1b963cc86803b185f0907b24d11c840</MD5>
+      <SHA256>991bb15ee34f1cff434d22d8228e3d8cb34ea9fea8c2920dda6582233897cc18</SHA256>
+      <FileName>NPB3.4.tar.gz</FileName>
+      <FileSize>420400</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

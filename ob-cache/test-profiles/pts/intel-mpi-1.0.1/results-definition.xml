@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>       131072          320        19.17      #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>IMB-MPI1 PingPong</MatchToTestArguments>
+    <LineHint>0</LineHint>
+    <MultiMatch>AVERAGE</MultiMatch>
+    <ResultScale>Average Mbytes/sec</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <DeleteOutputBefore># Benchmarking PingPong</DeleteOutputBefore>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>            2         1000         1.72         1.72         1.72         #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>IMB-MPI1 Sendrecv</MatchToTestArguments>
+    <LineHint>0</LineHint>
+    <MultiMatch>AVERAGE</MultiMatch>
+    <ResultScale>Average Mbytes/sec</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <DeleteOutputBefore># Benchmarking Sendrecv</DeleteOutputBefore>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>            2         1000         #_MIN_RESULT_#         #_MAX_RESULT_#         #_RESULT_#         2.33</OutputTemplate>
+    <MatchToTestArguments>IMB-MPI1 Sendrecv</MatchToTestArguments>
+    <LineHint>0</LineHint>
+    <MultiMatch>AVERAGE</MultiMatch>
+    <ResultScale>Average usec</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+    <DeleteOutputBefore># Benchmarking Sendrecv</DeleteOutputBefore>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>            2         1000         1.72         1.72         1.72         #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>IMB-MPI1 Exchange</MatchToTestArguments>
+    <LineHint>0</LineHint>
+    <MultiMatch>AVERAGE</MultiMatch>
+    <ResultScale>Average Mbytes/sec</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <DeleteOutputBefore># Benchmarking Exchange</DeleteOutputBefore>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>            2         1000         #_MIN_RESULT_#         #_MAX_RESULT_#         #_RESULT_#         2.33</OutputTemplate>
+    <MatchToTestArguments>IMB-MPI1 Exchange</MatchToTestArguments>
+    <LineHint>0</LineHint>
+    <MultiMatch>AVERAGE</MultiMatch>
+    <ResultScale>Average usec</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+    <DeleteOutputBefore># Benchmarking Exchange</DeleteOutputBefore>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>            1       100000         0.31        12.72     #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>IMB-P2P PingPong</MatchToTestArguments>
+    <LineHint>0</LineHint>
+    <MultiMatch>AVERAGE</MultiMatch>
+    <ResultScale>Average Msg/sec</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <DeleteOutputBefore># Benchmarking PingPong</DeleteOutputBefore>
+  </ResultsParser>
+</PhoronixTestSuite>

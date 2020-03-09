@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Tensorflow</Title>
+    <Description>This is a benchmark of the Tensorflow deep learning framework using the CIFAR10 data set.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>python</ExternalDependencies>
+    <EnvironmentSize>100</EnvironmentSize>
+    <ProjectURL>https://www.tensorflow.org</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>pip3</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Build</DisplayName>
+      <Identifier>build</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Cifar10</Name>
+          <Value>cifar10_train.py --max_steps 1000</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

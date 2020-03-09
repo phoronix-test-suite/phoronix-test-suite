@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>LULESH</Title>
+    <AppVersion>2.0.3</AppVersion>
+    <Description>LULESH is the Livermore Unstructured Lagrangian Explicit Shock Hydrodynamics.</Description>
+    <ResultScale>z/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Scientific</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>openmpi-development, build-utilities</ExternalDependencies>
+    <EnvironmentSize>1</EnvironmentSize>
+    <ProjectURL>https://computing.llnl.gov/projects/co-design/lulesh</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

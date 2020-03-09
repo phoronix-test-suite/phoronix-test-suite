@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Memcached mcperf</Title>
+    <AppVersion>1.5.22</AppVersion>
+    <Description>This is a test of twmperf/mcperf with memcached, a distributed memory object caching system.</Description>
+    <ResultScale>Operations Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.0</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, libevent</ExternalDependencies>
+    <EnvironmentSize>10</EnvironmentSize>
+    <ProjectURL>https://github.com/twitter-archive/twemperf</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>--linger=0 --call-rate=0 --num-calls=1000000 --conn-rate=0 --sizes=d5120</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Method</DisplayName>
+      <Identifier>method</Identifier>
+      <ArgumentPrefix>--method=</ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>Get</Name>
+          <Value>get</Value>
+        </Entry>
+        <Entry>
+          <Name>Set</Name>
+          <Value>set</Value>
+        </Entry>
+        <Entry>
+          <Name>Delete</Name>
+          <Value>delete</Value>
+        </Entry>
+        <Entry>
+          <Name>Add</Name>
+          <Value>add</Value>
+        </Entry>
+        <Entry>
+          <Name>Replace</Name>
+          <Value>replace</Value>
+        </Entry>
+        <Entry>
+          <Name>Append</Name>
+          <Value>append</Value>
+        </Entry>
+        <Entry>
+          <Name>Prepend</Name>
+          <Value>prepend</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Connections</DisplayName>
+      <Identifier>connections</Identifier>
+      <ArgumentPrefix>--num-conns=</ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>1</Name>
+          <Value>1</Value>
+        </Entry>
+        <Entry>
+          <Name>4</Name>
+          <Value>4</Value>
+        </Entry>
+        <Entry>
+          <Name>16</Name>
+          <Value>16</Value>
+        </Entry>
+        <Entry>
+          <Name>32</Name>
+          <Value>32</Value>
+        </Entry>
+        <Entry>
+          <Name>64</Name>
+          <Value>64</Value>
+        </Entry>
+        <Entry>
+          <Name>128</Name>
+          <Value>128</Value>
+        </Entry>
+        <Entry>
+          <Name>256</Name>
+          <Value>256</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>
