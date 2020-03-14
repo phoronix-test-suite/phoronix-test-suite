@@ -128,7 +128,10 @@ class pts_svg_dom_gd
 			if(extension_loaded('gd') && function_exists('imagettftext') && $width > 1 && $height > 1)
 			{
 				$gd = imagecreatetruecolor($width, $height);
-				imageresolution($gd, 200);
+				if(function_exists('imageresolution'))
+				{
+					imageresolution($gd, 200);
+				}
 				if(!isset($_REQUEST['svg_dom_gd_no_interlacing']))
 				{
 					// PHP FPDF fails on image interlacing

@@ -4,7 +4,7 @@
 define('VIEWER_ACCESS_KEY', '');
 
 // Path to results directory
-define('VIEWER_RESULTS_DIRECTORY_PATH', '');
+define('PTS_SAVE_RESULTS_PATH', '');
 
 // Path to phoronix-test-suite installation
 define('VIEWER_PHORONIX_TEST_SUITE_PATH', '');

@@ -230,12 +230,14 @@ if($has_system_logs)
 }
 
 $t .= '<div class="div_table_cell">Perf-Per-Dollar</div>
+<div class="div_table_cell">Test Date</div>
 </div>
 ';
 $hgv = self::check_request_for_var($request, 'hgv');
 $rmm = self::check_request_for_var($request, 'rmm');
-foreach($result_file->get_system_identifiers() as $si)
+foreach($result_file->get_systems() as $sys)
 {
+	$si = $sys->get_identifier();
 	$ppd = self::check_request_for_var($request, 'ppd_' . base64_encode($si));
 $t .= '
 	<div class="div_table_row">
@@ -249,6 +251,7 @@ $t .= '
 	}
 
 	$t .= '<div class="div_table_cell"><input type="number" min="0" step="0.01" name="ppd_' . base64_encode($si) . '" value="' . ($ppd ? $ppd : '0.00') . '" /></div>
+<div class="div_table_cell">' . date('Y-m-d', strtotime($sys->get_timestamp())) . '</div>
 	</div>';
 }
 
