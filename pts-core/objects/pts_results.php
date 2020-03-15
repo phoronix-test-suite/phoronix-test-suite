@@ -37,16 +37,10 @@ class pts_results
 	public static function saved_test_results()
 	{
 		$results = array();
-		$ignore_ids = array();
 
 		foreach(pts_file_io::glob(PTS_SAVE_RESULTS_PATH . '*/composite.xml') as $result_file)
 		{
 			$identifier = basename(dirname($result_file));
-
-			if(!in_array($identifier, $ignore_ids))
-			{
-				$results[] = $identifier;
-			}
 		}
 
 		return $results;
