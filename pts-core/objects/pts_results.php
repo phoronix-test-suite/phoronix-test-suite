@@ -40,7 +40,7 @@ class pts_results
 
 		foreach(pts_file_io::glob(PTS_SAVE_RESULTS_PATH . '*/composite.xml') as $result_file)
 		{
-			$identifier = basename(dirname($result_file));
+			$results[] = basename(dirname($result_file));
 		}
 
 		return $results;
@@ -48,6 +48,82 @@ class pts_results
 	public static function is_saved_result_file($identifier)
 	{
 		return is_file(PTS_SAVE_RESULTS_PATH . $identifier . '/composite.xml');
+	}
+	public static function query_saved_result_files($search = null, $sort_by = null)
+	{
+		$result_files = array();
+		if(empty($search))
+		{
+			$search = false;
+		}
+		if(empty($sort_by))
+		{
+			$search = false;
+		}
+		foreach(pts_results::saved_test_results() as $id)
+		{
+			$rf = new pts_result_file($id);
+
+			if($search)
+			{
+				if(pts_search::search_in_result_file($rf, $search) == false)
+				{
+					continue;
+				}
+			}
+
+			$result_files[$id] = $rf;
+		}
+		switch($sort_by)
+		{
+			case 'test_count':
+				uasort($result_files, array('pts_results', 'sort_by_test_count'));
+				break;
+			case 'system_count':
+				uasort($result_files, array('pts_results', 'sort_by_system_count'));
+				break;
+			case 'title':
+				uasort($result_files, array('pts_results', 'sort_by_title'));
+				break;
+			case 'date':
+			default:
+				uasort($result_files, array('pts_results', 'sort_by_date'));
+				break;
+		}
+
+		return $result_files;
+	}
+	protected static function sort_by_date($a, $b)
+	{
+		$a = strtotime($a->get_last_modified());
+		$b = strtotime($b->get_last_modified());
+		if($a == $b)
+			return 0;
+		return $a > $b ? -1 : 1;
+	}
+	protected static function sort_by_test_count($a, $b)
+	{
+		$a = $a->get_test_count();
+		$b = $b->get_test_count();
+		if($a == $b)
+			return 0;
+		return $a > $b ? -1 : 1;
+	}
+	protected static function sort_by_title($a, $b)
+	{
+		$a = $a->get_title();
+		$b = $b->get_title();
+		if($a == $b)
+			return 0;
+		return $a < $b ? -1 : 1;
+	}
+	protected static function sort_by_system_count($a, $b)
+	{
+		$a = $a->get_system_count();
+		$b = $b->get_system_count();
+		if($a == $b)
+			return 0;
+		return $a > $b ? -1 : 1;
 	}
 }
 

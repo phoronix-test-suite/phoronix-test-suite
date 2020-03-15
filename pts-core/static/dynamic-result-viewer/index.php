@@ -501,70 +501,8 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 				$leading_msg = 'Deleted the <em>' . $_GET['remove_result'] . '</em> result file.';
 			}
 		}
-		function sort_by_date($a, $b)
-		{
-			$a = strtotime($a->get_last_modified());
-			$b = strtotime($b->get_last_modified());
-			if($a == $b)
-				return 0;
-			return $a > $b ? -1 : 1;
-		}
-		function sort_by_test_count($a, $b)
-		{
-			$a = $a->get_test_count();
-			$b = $b->get_test_count();
-			if($a == $b)
-				return 0;
-			return $a > $b ? -1 : 1;
-		}
-		function sort_by_title($a, $b)
-		{
-			$a = $a->get_title();
-			$b = $b->get_title();
-			if($a == $b)
-				return 0;
-			return $a < $b ? -1 : 1;
-		}
-		function sort_by_system_count($a, $b)
-		{
-			$a = $a->get_system_count();
-			$b = $b->get_system_count();
-			if($a == $b)
-				return 0;
-			return $a > $b ? -1 : 1;
-		}
-		$results = array();
-		$all_results = pts_results::saved_test_results();
-		foreach($all_results as $id)
-		{
-			$rf = new pts_result_file($id);
 
-			if(isset($_POST['search']) && !empty($_POST['search']))
-			{
-				if(pts_search::search_in_result_file($rf, $_POST['search']) == false)
-				{
-					continue;
-				}
-			}
-
-			$results[$id] = $rf;
-		}
-		switch((isset($_REQUEST['sort_results_by']) ? $_REQUEST['sort_results_by'] : 'date'))
-		{
-			case 'test_count':
-				uasort($results, 'sort_by_test_count');
-				break;
-			case 'system_count':
-				uasort($results, 'sort_by_system_count');
-				break;
-			case 'title':
-				uasort($results, 'sort_by_title');
-				break;
-			case 'date':
-			default:
-				uasort($results, 'sort_by_date');
-				break;
-		}
+		$results = pts_results::query_saved_result_files((isset($_POST['search']) ? $_POST['search'] : null), (isset($_REQUEST['sort_results_by']) ? $_REQUEST['sort_results_by'] : null));
 
 		$total_result_points = 0;
 		foreach($results as $id => $result_file)
@@ -572,7 +510,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			$total_result_points += $result_file->get_test_count();
 		}
 
-		$PAGE .= '<div class="sub" style="margin-bottom: 30px">' . (count($all_results) != count($results) ? count($results) . ' of ' : null) . count($all_results) . ' Result Files Containing A Combined ' . $total_result_points . ' Test Results</div>';
+		$PAGE .= '<div class="sub" style="margin-bottom: 30px">' . count($results) . ' Result Files Containing A Combined ' . $total_result_points . ' Test Results</div>';
 		$PAGE .= '<form name="compare_results" id="compare_results_id" action="' . CURRENT_URI . '" method="post"><input type="submit" value="Compare Results" id="compare_results_submit" />';
 		$i = 0;
 		foreach($results as $id => $result_file)
