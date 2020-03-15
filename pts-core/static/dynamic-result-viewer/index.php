@@ -134,8 +134,8 @@ if(VIEWER_ACCESS_KEY != null && (!isset($_SESSION['AccessKey']) || $_SESSION['Ac
 <html lang="en">
 <head>
   <title>Phoronix Test Suite - Local Result Viewer</title>
-<link rel="stylesheet" href="/result-viewer.css">
-<script type="text/javascript" src="/result-viewer.js"></script>
+<link rel="stylesheet" href="<?php echo WEB_URL_PATH; ?>/result-viewer.css">
+<script type="text/javascript" src="<?php echo WEB_URL_PATH; ?>/result-viewer.js"></script>
 <link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
 <body>
@@ -187,8 +187,8 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		<html lang="en">
 		<head>
 		  <title>Log Viewer</title>
-		<link rel="stylesheet" href="/result-viewer.css">
-		<script type="text/javascript" src="/result-viewer.js"></script>
+		<link rel="stylesheet" href="' . WEB_URL_PATH . 'result-viewer.css">
+		<script type="text/javascript" src="' . WEB_URL_PATH . 'result-viewer.js"></script>
 		<link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 		</head>
 		<body>';
@@ -231,8 +231,8 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		<html lang="en">
 		<head>
 		  <title>Log Viewer</title>
-		<link rel="stylesheet" href="/result-viewer.css">
-		<script type="text/javascript" src="/result-viewer.js"></script>
+		<link rel="stylesheet" href="' . WEB_URL_PATH . 'result-viewer.css">
+		<script type="text/javascript" src="' . WEB_URL_PATH . 'result-viewer.js"></script>
 		<link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 		</head>
 		<body>';
@@ -274,8 +274,8 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		<html lang="en">
 		<head>
 		  <title>Log Viewer</title>
-		<link rel="stylesheet" href="/result-viewer.css">
-		<script type="text/javascript" src="/result-viewer.js"></script>
+		<link rel="stylesheet" href="' . WEB_URL_PATH . 'result-viewer.css">
+		<script type="text/javascript" src="' . WEB_URL_PATH . 'result-viewer.js"></script>
 		<link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 		</head>
 		<body>';
@@ -616,8 +616,11 @@ define('PAGE', $PAGE);
 <html lang="en">
 <head>
   <title><?php echo defined('TITLE') ? TITLE : ''; ?></title>
-<link rel="stylesheet" href="/result-viewer.css">
-<script type="text/javascript" src="/result-viewer.js"></script>
+<link rel="stylesheet" href="<?php echo WEB_URL_PATH; ?>result-viewer.css">
+<script type="text/javascript" src="<?php echo WEB_URL_PATH; ?>result-viewer.js"></script>
+<script>
+var WEB_URL_PATH = "<?php echo WEB_URL_PATH; ?>";
+</script>
 <link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
 <body>

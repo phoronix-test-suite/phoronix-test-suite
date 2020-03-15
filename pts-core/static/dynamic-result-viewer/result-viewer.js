@@ -2,7 +2,7 @@ function delete_result_file(id)
 {
 	if(confirm("Really delete the '" + id + "' result file permanently?"))
 	{
-		window.location.href = "/index.php?remove_result=" + id;
+		window.location.href = WEB_URL_PATH + "index.php?remove_result=" + id;
 	}
 }
 function edit_result_file_meta()
@@ -24,7 +24,7 @@ function save_result_file_meta(id)
 		location.reload();
 		}
 	};
-	xhttp.open("POST", "/index.php?page=update-result-file-meta", true);
+	xhttp.open("POST", WEB_URL_PATH + "index.php?page=update-result-file-meta", true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.send("result_file_id=" + id + "&result_title=" + title + "&result_desc=" + description);
 }
@@ -39,7 +39,7 @@ function delete_result_from_result_file(result_file, result_hash)
 
 			}
 		};
-		xhttp.open("POST", "/index.php?page=remove-result-object", true);
+		xhttp.open("POST", WEB_URL_PATH + "index.php?page=remove-result-object", true);
 		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xhttp.send("result_file_id=" + result_file + "&result_object=" + result_hash);
 	}
@@ -58,7 +58,7 @@ function add_annotation_for_result_object(result_file, result_hash, form)
 		location.reload();
 		}
 	};
-	xhttp.open("POST", "/index.php?page=add-annotation-to-result-object", true);
+	xhttp.open("POST", WEB_URL_PATH + "index.php?page=add-annotation-to-result-object", true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.send("result_file_id=" + result_file + "&result_object=" + result_hash + "&annotation=" + form.annotation.value);
 }
@@ -71,19 +71,19 @@ function update_annotation_for_result_object(result_file, result_hash)
 		location.reload();
 		}
 	};
-	xhttp.open("POST", "/index.php?page=add-annotation-to-result-object", true);
+	xhttp.open("POST", WEB_URL_PATH + "index.php?page=add-annotation-to-result-object", true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.send("result_file_id=" + result_file + "&result_object=" + result_hash + "&annotation=" + annotation_updated);
 }
 function display_test_logs_for_result_object(result_file, result_hash)
 {
-	window.open("/index.php?page=view_test_logs&result_file_id=" + result_file + "&result_object=" + result_hash, "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=100,left=100,width=600,height=400,location=no,menubar=no");
+	window.open(WEB_URL_PATH + "index.php?page=view_test_logs&result_file_id=" + result_file + "&result_object=" + result_hash, "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=100,left=100,width=600,height=400,location=no,menubar=no");
 }
 function display_install_logs_for_result_object(result_file, result_hash)
 {
-	window.open("/index.php?page=view_install_logs&result_file_id=" + result_file + "&result_object=" + result_hash, "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=100,left=100,width=600,height=400,location=no,menubar=no");
+	window.open(WEB_URL_PATH + "index.php?page=view_install_logs&result_file_id=" + result_file + "&result_object=" + result_hash, "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=100,left=100,width=600,height=400,location=no,menubar=no");
 }
 function display_system_logs_for_result(result_file, system_id)
 {
-	window.open("/index.php?page=view_system_logs&result_file_id=" + result_file + "&system_id=" + system_id, "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=100,left=100,width=600,height=400,location=no,menubar=no");
+	window.open(WEB_URL_PATH + "index.php?page=view_system_logs&result_file_id=" + result_file + "&system_id=" + system_id, "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=100,left=100,width=600,height=400,location=no,menubar=no");
 }

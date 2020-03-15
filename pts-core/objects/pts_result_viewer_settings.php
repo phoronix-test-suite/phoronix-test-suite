@@ -230,7 +230,7 @@ if($has_system_logs)
 }
 
 $t .= '<div class="div_table_cell">Perf-Per-Dollar</div>
-<div class="div_table_cell">Test Date</div>
+<div class="div_table_cell">Test Completion</div>
 </div>
 ';
 $hgv = self::check_request_for_var($request, 'hgv');
@@ -251,7 +251,7 @@ $t .= '
 	}
 
 	$t .= '<div class="div_table_cell"><input type="number" min="0" step="0.01" name="ppd_' . base64_encode($si) . '" value="' . ($ppd ? $ppd : '0.00') . '" /></div>
-<div class="div_table_cell">' . date('Y-m-d', strtotime($sys->get_timestamp())) . '</div>
+<div class="div_table_cell">' . date('F d Y @ H:i', strtotime($sys->get_timestamp())) . '</div>
 	</div>';
 }
 
