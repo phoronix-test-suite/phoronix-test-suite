@@ -99,12 +99,12 @@ div#main_area ul
 }
 div#main_area ul:hover a
 {
-	color: #000;
+	color: #ef5e09;
 }
 div#main_area ul a
 {
 	display: block;
-	color: #333;
+	color: #ef5e09;
 	text-decoration: none;
 	font-weight: 600;
 	line-height: 26px;
@@ -124,11 +124,11 @@ div#main_area ul li:last-of-type{
 }
 div#main_area ul li:hover
 {
-	background: #eee;
+	color:#ef2409;
 
 }
 div#main_area ul ul a:hover, div#main_area ul li a:hover{
-	color:#03b450;
+	color:#ef2409;
 }
 
 div#main_area ul ul a
@@ -179,7 +179,7 @@ div#main_area span.sub_header
 }
 hr
 {
-	color: #098BEF;
+	color: #ef5e09;
 	opacity: 0.3;
 	margin: 0 10%;
 }

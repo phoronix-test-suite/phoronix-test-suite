@@ -137,6 +137,7 @@ if(VIEWER_ACCESS_KEY != null && (!isset($_SESSION['AccessKey']) || $_SESSION['Ac
 <link rel="stylesheet" href="<?php echo WEB_URL_PATH; ?>/result-viewer.css">
 <script type="text/javascript" src="<?php echo WEB_URL_PATH; ?>/result-viewer.js"></script>
 <link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<link rel="icon" type="image/png" href="<?php echo WEB_URL_PATH; ?>favicon.png">
 </head>
 <body>
 
@@ -566,6 +567,7 @@ define('PAGE', $PAGE);
 <head>
   <title><?php echo defined('TITLE') ? TITLE : ''; ?></title>
 <link rel="stylesheet" href="<?php echo WEB_URL_PATH; ?>result-viewer.css">
+<link rel="icon" type="image/png" href="<?php echo WEB_URL_PATH; ?>favicon.png">
 <script type="text/javascript" src="<?php echo WEB_URL_PATH; ?>result-viewer.js"></script>
 <script>
 var WEB_URL_PATH = "<?php echo WEB_URL_PATH; ?>";
