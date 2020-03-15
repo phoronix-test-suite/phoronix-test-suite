@@ -30,6 +30,10 @@ class pts_results
 		}
 		return false;
 	}
+	public static function saved_test_results_count()
+	{
+		return count(pts_file_io::glob(PTS_SAVE_RESULTS_PATH . '*/composite.xml'));
+	}
 	public static function saved_test_results()
 	{
 		$results = array();

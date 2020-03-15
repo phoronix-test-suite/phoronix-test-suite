@@ -48,7 +48,7 @@ class interactive implements pts_option_interface
 				'SEARCH' => 'Search Tests / Suites / Results'
 				);
 
-			if(count(pts_results::saved_test_results()) > 0)
+			if(pts_results::saved_test_results_count() > 0)
 			{
 				$options['BACKUP_RESULTS_TO_USB'] = 'Backup Results To Media Storage';
 			}

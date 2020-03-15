@@ -490,7 +490,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 	case 'index':
 	default:
 		define('TITLE', 'Phoronix Test Suite ' . PTS_VERSION . ' Result Viewer');
-		$PAGE .= '<form name="search_results" id="search_results" action="' . CURRENT_URI . '" method="post"><input type="text" name="search" id="u_search" placeholder="Search Test Results" value="' . (isset($_POST['search']) ? $_POST['search'] : null) . '" /> <select name="sort_results_by"><option value="date">Date</option><option value="test_count">Test Count</option><option value="system_count">System Count</option></select> <input class="primary-button" type="submit" value="Update" />
+		$PAGE .= '<form name="search_results" id="search_results" action="' . CURRENT_URI . '" method="post"><input type="text" name="search" id="u_search" placeholder="Search Test Results" value="' . (isset($_POST['search']) ? $_POST['search'] : null) . '" /> <select name="sort_results_by"><option value="date">Sort By Date</option><option value="title">Sort By Title</option><option value="test_count">Sort By Test Count</option><option value="system_count">Sort By System Count</option></select> <input class="primary-button" type="submit" value="Update" />
 </form>';
 		$leading_msg = null;
 		if(VIEWER_CAN_DELETE_RESULTS && isset($_GET['remove_result']) && $_GET['remove_result'] && pts_results::is_saved_result_file($_GET['remove_result']))
@@ -516,6 +516,14 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			if($a == $b)
 				return 0;
 			return $a > $b ? -1 : 1;
+		}
+		function sort_by_title($a, $b)
+		{
+			$a = $a->get_title();
+			$b = $b->get_title();
+			if($a == $b)
+				return 0;
+			return $a < $b ? -1 : 1;
 		}
 		function sort_by_system_count($a, $b)
 		{
@@ -548,6 +556,9 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 				break;
 			case 'system_count':
 				uasort($results, 'sort_by_system_count');
+				break;
+			case 'title':
+				uasort($results, 'sort_by_title');
 				break;
 			case 'date':
 			default:
