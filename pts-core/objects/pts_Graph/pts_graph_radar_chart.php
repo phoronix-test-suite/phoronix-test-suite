@@ -155,7 +155,7 @@ class pts_graph_radar_chart extends pts_graph_core
 
 		$this->i['identifier_size'] = 6.5;
 		$this->i['top_heading_height'] = max(self::$c['size']['headers'] + 22 + self::$c['size']['key'], 48);
-		$this->i['top_start'] = $this->i['top_heading_height'] + 30;
+		$this->i['top_start'] = $this->i['top_heading_height'];
 		$this->i['left_start'] = pts_graph_core::text_string_width(str_repeat('Z', $longest_header), self::$c['size']['tick_mark']) * 0.85;
 		$this->i['graph_title'] = ($this->logarithmic_view ? 'Logarithmic ' : '') . ($this->selection_view ? $this->selection_view . ' ' : null) . 'Result Overview';
 		//$this->graph_data_title = ' vs  Comparison';
@@ -164,10 +164,9 @@ class pts_graph_radar_chart extends pts_graph_core
 		$this->i['is_multi_way_comparison'] = false;
 		$this->i['graph_width'] = round($this->i['graph_width'] * 1.5, PHP_ROUND_HALF_EVEN);
 		$this->i['top_start'] += $this->graph_key_height();
-		$this->i['graph_height'] = $this->i['graph_width'] + $this->i['top_start'];
+		$this->i['graph_height'] = $this->i['graph_width'] + $this->i['top_start'] + (count($this->result_objects) > 14 ? 50 : 0);
 		$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'], true);
 		//$this->results = $this->systems;
-
 		return true;
 	}
 	protected function render_graph_heading($with_version = true)
@@ -186,7 +185,7 @@ class pts_graph_radar_chart extends pts_graph_core
 		}
 		//$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'] + $this->i['top_start'], true);
 		$this->render_graph_init();
-		$this->graph_key_height();
+		//$this->graph_key_height();
 		$this->render_graph_key();
 		$this->render_graph_heading();
 

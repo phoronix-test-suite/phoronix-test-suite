@@ -250,7 +250,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 					foreach($install_logs as $log_file)
 					{
 						$b = basename(dirname($log_file));
-						echo '<option value="' . $b . '"' . ($b == $_REQUEST['log_select'] ? 'selected="selected"' : null) . '>' . $b . '</option>';
+						echo '<option value="' . $b . '"' . (isset($_REQUEST['log_select']) && $b == $_REQUEST['log_select'] ? 'selected="selected"' : null) . '>' . $b . '</option>';
 					}
 					echo '</select> &nbsp; <input type="submit" value="Show Log"></form></div><br /><hr />';
 					if(isset($_REQUEST['log_select']) && is_file($result_file->get_test_installation_log_dir() . pts_strings::simplify_string_for_file_handling($_REQUEST['log_select']) . '/' . $result_object->test_profile->get_identifier_simplified() . '.log'))
@@ -410,7 +410,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 
 		if(!$result_file->is_multi_way_comparison())
 		{
-			$PAGE .= '<div style="display:flex; align-items: center; justify-content: center;">' . pts_result_file_output::result_file_to_detailed_html_table($result_file, 'grid', $extra_attributes, pts_result_viewer_settings::check_request_for_var($_REQUEST, 'sdt')) . '</div>';
+			$PAGE .= '<div style="display:flex; align-items: center; justify-content: center; overflow: auto;">' . pts_result_file_output::result_file_to_detailed_html_table($result_file, 'grid', $extra_attributes, pts_result_viewer_settings::check_request_for_var($_REQUEST, 'sdt')) . '</div>';
 		}
 		else
 		{

@@ -168,7 +168,22 @@ class pts_test_result
 				$part = implode('.', str_split(preg_replace('/\b(\w)|./', '$1', $part)));
 			}
 		}
-		return implode(' - ', $shortened);
+
+		$shortened = implode(' - ', $shortened) . ' ';
+
+		$shorten_words = array(
+			'Random' => 'Rand',
+			'Sequential' => 'Seq',
+			'localhost -' => '',
+			'- D.T.D' => '',
+			);
+
+		foreach($shorten_words as $word => $to)
+		{
+			$shortened = str_ireplace($word . ' ', $to . ' ', $shortened);
+		}
+
+		return trim($shortened);
 	}
 	public function get_comparison_hash($show_version_and_attributes = true, $raw_output = true)
 	{

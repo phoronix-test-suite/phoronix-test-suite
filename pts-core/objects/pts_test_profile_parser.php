@@ -332,11 +332,17 @@ class pts_test_profile_parser
 			' Per Second' => '/sec',
 			' Per Minute' => '/min',
 			'Nanoseconds/Operation' => 'ns/op',
+			'Nodes/second' => 'Nodes/s',
+			'Nodes/sec' => 'Nodes/s',
+			'Mbits/sec' => 'Mbits/s',
+			'MiB/second' => 'MiB/s',
 			'Milli-Seconds' => 'ms',
+			'Microseconds' => 'us',
 			'Request' => 'Req',
 			'Seconds' => 'sec',
 			' Per ' => '/',
 			'Total ' => '',
+			'Average ' => '',
 			);
 		foreach($shorten as $orig => $new)
 		{
