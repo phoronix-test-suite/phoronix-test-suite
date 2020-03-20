@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2017, Phoronix Media
-	Copyright (C) 2009 - 2017, Michael Larabel
+	Copyright (C) 2009 - 2020, Phoronix Media
+	Copyright (C) 2009 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -72,6 +72,18 @@ class pts_test_result_buffer
 			if($buf->get_result_identifier() == $identifier)
 			{
 				return $buf;
+			}
+		}
+
+		return false;
+	}
+	public function get_result_from_identifier($identifier)
+	{
+		foreach($this->buffer_items as &$buf)
+		{
+			if($buf->get_result_identifier() == $identifier)
+			{
+				return $buf->get_result_value();
 			}
 		}
 

@@ -821,7 +821,14 @@ class pts_result_file
 
 		foreach($result_merges_to_combine as &$merge_select)
 		{
-			$result_file = new pts_result_file($merge_select->get_result_file(), true);
+			if($merge_select->get_result_file() instanceof pts_result_file)
+			{
+				$result_file = $merge_select->get_result_file();
+			}
+			else
+			{
+				$result_file = new pts_result_file($merge_select->get_result_file(), true);
+			}
 
 			if($add_prefix)
 			{

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2015, Phoronix Media
-	Copyright (C) 2009 - 2015, Michael Larabel
+	Copyright (C) 2009 - 2020, Phoronix Media
+	Copyright (C) 2009 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -34,6 +34,11 @@ class pts_result_merge_select
 	}
 	public function get_result_file()
 	{
+	/*	if($this->result_file instanceof pts_result_file)
+		{
+			return $this->result_file->get_file_location();
+		}*/
+
 		return $this->result_file;
 	}
 	public function get_selected_identifiers()

@@ -155,7 +155,7 @@ class pts_result_viewer_settings
 			$analyze_checkboxes['Statistics'][] = array('nor', 'Normalize Results');
 			$analyze_checkboxes['Graph Settings'][] = array('ftr', 'Force Line Graphs (Where Applicable)');
 			$analyze_checkboxes['Graph Settings'][] = array('scalar', 'Convert To Scalar (Where Applicable)');
-			$analyze_checkboxes['Helpers'][] = array('spr', 'Show Notable Results');
+			$analyze_checkboxes['Helpers'][] = array('spr', 'List Notable Results');
 			$analyze_checkboxes['Helpers'][] = array('hnr', 'Hide Noisy Results');
 			$analyze_checkboxes['Helpers'][] = array('hlc', 'Hide Results With Little Change/Spread');
 
@@ -240,7 +240,7 @@ $rmm = self::check_request_for_var($request, 'rmm');
 foreach($result_file->get_systems() as $sys)
 {
 	$si = $sys->get_identifier();
-	$ppd = self::check_request_for_var($request, 'ppd_' . base64_encode($si));
+	$ppd = self::check_request_for_var($request, 'ppd_' . rtrim(base64_encode($si), '='));
 $t .= '
 	<div class="div_table_row">
 	<div class="div_table_cell"><input type="checkbox" name="hgv[]" value="' . $si . '"' . (is_array($hgv) && in_array($si, $hgv) ? ' checked="checked"' : null) . ' /></div>
@@ -252,7 +252,7 @@ $t .= '
 		$t .= '<div class="div_table_cell">' . ($result_file->get_system_log_dir($si) ? '<a class="mini" href="#" onclick="javascript:display_system_logs_for_result(\'' . RESULTS_VIEWING_ID . '\', \'' . $si . '\'); return false;">View System Logs</a>' : ' ') . '</div>';
 	}
 
-	$t .= '<div class="div_table_cell"><input type="number" min="0" step="0.01" name="ppd_' . base64_encode($si) . '" value="' . ($ppd ? $ppd : '0.00') . '" /></div>
+	$t .= '<div class="div_table_cell"><input type="number" min="0" step="1" name="ppd_' . rtrim(base64_encode($si), '=') . '" value="' . ($ppd && $ppd !== true ? $ppd : '0') . '" /></div>
 <div class="div_table_cell">' . date('F d Y @ H:i', strtotime($sys->get_timestamp())) . '</div>
 	</div>';
 }
@@ -262,7 +262,15 @@ $t .= '
 </div></div>';
 		}
 
-		$analyze_options .= $t . '<br /><input style="clear: both;" name="submit" value="Refresh Results" type="submit" /></form>';
+$analyze_options .= $t;
+
+if($system_identifier_count > 2)
+{
+	$analyze_options .= '<div>Only show results where ' . self::html_select_menu('ftt', 'ftt', null, array_merge(array(null), $result_file->get_system_identifiers()), false) . ' is faster than ' . self::html_select_menu('ftb', 'ftb', null, array_merge(array(null), $result_file->get_system_identifiers()), false) . '</div>';
+}
+
+
+		$analyze_options .= '<br /><input style="clear: both;" name="submit" value="Refresh Results" type="submit" /></form>';
 
 		return $analyze_options;
 	}
@@ -354,6 +362,48 @@ $t .= '
 	}
 	public static function process_request_to_attributes(&$request, &$result_file, &$extra_attributes)
 	{
+		if(self::check_request_for_var($request, 'ftt') && self::check_request_for_var($request, 'ftt'))
+		{
+			$ftt = self::check_request_for_var($request, 'ftt');
+			$ftb = self::check_request_for_var($request, 'ftb');
+			if(!empty($ftt) && !empty($ftb) && $ftt !== true && $ftb !== true)
+			{
+				foreach($result_file->get_result_objects() as $i => $result_object)
+				{
+					$ftt_result = $result_object->test_result_buffer->get_result_from_identifier($ftt);
+					$ftb_result = $result_object->test_result_buffer->get_result_from_identifier($ftb);
+
+					if($ftt_result && $ftb_result)
+					{
+						$ftt_wins = false;
+
+						if($result_object->test_profile->get_result_proportion() == 'HIB')
+						{
+							if($ftt_result > $ftb_result)
+							{
+								$ftt_wins = true;
+							}
+						}
+						else
+						{
+							if($ftt_result < $ftb_result)
+							{
+								$ftt_wins = true;
+							}
+						}
+
+						if(!$ftt_wins)
+						{
+							$result_file->remove_result_object_by_id($i);
+						}
+					}
+					else
+					{
+						$result_file->remove_result_object_by_id($i);
+					}
+				}
+			}
+		}
 		if(self::check_request_for_var($request, 'hlc'))
 		{
 			foreach($result_file->get_result_objects() as $i => $result_object)
@@ -521,7 +571,7 @@ $t .= '
 
 		foreach($result_file->get_system_identifiers() as $si)
 		{
-			$ppd = self::check_request_for_var($request, 'ppd_' . base64_encode($si));
+			$ppd = self::check_request_for_var($request, 'ppd_' . rtrim(base64_encode($si), '='));
 			if($ppd && $ppd > 0 && is_numeric($ppd))
 			{
 				pts_result_file_analyzer::generate_perf_per_dollar($result_file, $si, $ppd);
