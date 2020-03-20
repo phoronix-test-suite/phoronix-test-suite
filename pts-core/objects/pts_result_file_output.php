@@ -684,7 +684,8 @@ class pts_result_file_output
 		$pdf->WriteHeader('Test Systems:');
 		$pdf->CreateBookmark('System Information', 0);
 		$systems = $result_file->get_systems();
-		for($i = 0; $i < count($systems); $i++)
+		$system_count = count($systems);
+		for($i = 0; $i < $system_count; $i++)
 		{
 			$pdf->Ln(5);
 			$pdf->CreateBookmark($systems[$i]->get_identifier(), 1);
@@ -727,7 +728,7 @@ class pts_result_file_output
 			{
 				$geo_for_test = pts_result_file_analyzer::generate_geometric_mean_result($result_file, false, $last_test_profile);
 
-				if($geo_for_test)
+				if(false && $geo_for_test)
 				{
 					$table_data[$row][0] = $geo_for_test->test_profile->get_title();
 					$table_data_hints[$row][0] = 'divide';
@@ -890,7 +891,10 @@ class pts_result_file_output
 				$last_result_title = $result_object->test_profile->get_title();
 				$pdf->CreateBookmark($last_result_title, 0);
 			}
-			$result_object->sort_results_by_performance();
+			if($system_count > 2)
+			{
+				$result_object->sort_results_by_performance();
+			}
 			$graph = pts_render::render_graph_process($result_object, $result_file, false, $extra_attributes);
 			self::add_graph_result_object_to_pdf($pdf, $graph);
 			if($result_object->get_annotation() != null)

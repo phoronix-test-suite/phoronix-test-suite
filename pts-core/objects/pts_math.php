@@ -189,6 +189,11 @@ class pts_math
 	}
 	public static function median($values)
 	{
+		if(count($values) < 3)
+		{
+			return;
+		}
+
 		sort($values);
 		$count = count($values);
 		$index = floor($count / 2);

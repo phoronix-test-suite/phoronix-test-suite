@@ -8,6 +8,8 @@ pts-core: Allow generating performance-per-dollar metrics from within the result
 pts-core: Allow showing system logs from the result viewer
 pts-core: Allow showing test description within the result viewer
 pts-core: Fixes for running the result viewer from a website sub directory in correctly loading assets
+pts-core: Add result viewer option "hide noisy results"
+pts-core: Add result viewer option "hide results with little change/spread"
 
 Phoronix Test Suite 9.4.1
 4 March 2020

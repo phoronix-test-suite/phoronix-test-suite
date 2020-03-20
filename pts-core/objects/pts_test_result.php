@@ -309,6 +309,38 @@ class pts_test_result
 
 		return $winner;
 	}
+	public function result_flat($distance = 0.03)
+	{
+		if($this->get_spread(false) < (1 + $distance))
+		{
+			return true;
+		}
+
+		$values = $this->test_result_buffer->get_values();
+		if(($value_count = count($values)) > 3)
+		{
+			$values_no_o = pts_math::remove_outliers($values, 1.5);
+			$avg = array_sum($values_no_o) / count($values_no_o);
+			$upper_threshold = $avg * (1 + $distance);
+			$lower_threshold = $avg * (1 - $distance);
+			$c = 0;
+//echo $this->test_profile->get_title() . ' - ' . $avg . ' ' . $upper_threshold . ' ' . $lower_threshold . '<br />';
+			foreach($values as $v)
+			{
+				if($v > $lower_threshold && $v < $upper_threshold)
+				{
+					$c++;
+
+					if($c > ($value_count * 0.3))
+					{
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
+	}
 	public function get_spread($noisy_check = true)
 	{
 		if($noisy_check && $this->has_noisy_result())
@@ -329,6 +361,7 @@ class pts_test_result
 		{
 			$spread = 1 / $spread;
 		}
+
 		return $spread;
 	}
 	public function normalize_buffer_values($normalize_against = false, $extra_attributes = null)
@@ -513,18 +546,31 @@ class pts_test_result
 	public function has_noisy_result($noise_level_percent = 6)
 	{
 		$val = null;
+		$noisy_count = 0;
+		$c = $this->test_result_buffer->get_count();
 		foreach(array_keys($this->test_result_buffer->buffer_items) as $k)
 		{
 			if($this->test_profile->get_display_format() != 'BAR_GRAPH')
 			{
-				continue;
+				break;
 			}
 			$raw = $this->test_result_buffer->buffer_items[$k]->get_result_raw_array();
 			if(!empty($raw) && count($raw) > 2)
 			{
 				if(($p = pts_math::percent_standard_deviation($raw)) > $noise_level_percent)
 				{
-					return $p;
+					if($c > 5)
+					{
+						// if large result file, check to see multiple results end up being noisy
+						$noisy_count++;
+
+						if($noisy_count > ceil($c * 0.2))
+						{
+							return $p;
+						}
+					}
+					else
+						return $p;
 				}
 			}
 		}

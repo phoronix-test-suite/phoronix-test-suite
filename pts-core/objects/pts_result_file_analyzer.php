@@ -308,7 +308,7 @@ class pts_result_file_analyzer
 				break;
 		}
 
-		$summary[] = trim('Based on the geometric mean of all complete results, the fastest (' . $first_place_buffer->get_result_identifier() . ') was ' . round($first_place_buffer->get_result_value() / $last_place_buffer->get_result_value(), 1) . 'x the speed of the slowest (' . $last_place_buffer->get_result_identifier() . '). ' . $geo_bits);
+		$summary[] = trim('Based on the geometric mean of all complete results, the fastest (' . $first_place_buffer->get_result_identifier() . ') was ' . round($first_place_buffer->get_result_value() / $last_place_buffer->get_result_value(), 2) . 'x the speed of the slowest (' . $last_place_buffer->get_result_identifier() . '). ' . $geo_bits);
 
 		if($result_file->get_test_count() > 20)
 		{
@@ -554,6 +554,10 @@ class pts_result_file_analyzer
 			$test_result->test_result_buffer = new pts_test_result_buffer();
 			foreach($results as $identifier => $values)
 			{
+				if(count($values) < 2)
+				{
+					return false;
+				}
 				$values = pts_math::geometric_mean($values);
 				$test_result->test_result_buffer->add_test_result($identifier, pts_math::set_precision($values, 3));
 			}

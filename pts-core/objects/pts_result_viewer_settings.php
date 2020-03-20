@@ -156,6 +156,8 @@ class pts_result_viewer_settings
 			$analyze_checkboxes['Graph Settings'][] = array('ftr', 'Force Line Graphs (Where Applicable)');
 			$analyze_checkboxes['Graph Settings'][] = array('scalar', 'Convert To Scalar (Where Applicable)');
 			$analyze_checkboxes['Helpers'][] = array('spr', 'Show Notable Results');
+			$analyze_checkboxes['Helpers'][] = array('hnr', 'Hide Noisy Results');
+			$analyze_checkboxes['Helpers'][] = array('hlc', 'Hide Results With Little Change/Spread');
 
 			if($has_identifier_with_color_brand)
 			{
@@ -352,6 +354,27 @@ $t .= '
 	}
 	public static function process_request_to_attributes(&$request, &$result_file, &$extra_attributes)
 	{
+		if(self::check_request_for_var($request, 'hlc'))
+		{
+			foreach($result_file->get_result_objects() as $i => $result_object)
+			{
+				if($result_object->result_flat())
+				{
+					$result_file->remove_result_object_by_id($i);
+				}
+			}
+		}
+		if(self::check_request_for_var($request, 'hnr'))
+		{
+			foreach($result_file->get_result_objects() as $i => $result_object)
+			{
+				if($result_object->has_noisy_result())
+				{
+					$result_file->remove_result_object_by_id($i);
+				}
+			}
+		}
+
 		if(self::check_request_for_var($request, 'sts'))
 		{
 			foreach(pts_result_file_analyzer::generate_geometric_mean_result_for_suites_in_result_file($result_file, true, 20) as $result)
