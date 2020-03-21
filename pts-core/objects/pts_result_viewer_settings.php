@@ -28,6 +28,7 @@ class pts_result_viewer_settings
 		$drop_down_menus = array('Export Result Data' => array(
 						'export=pdf' => 'Result File To PDF',
 						'export=txt' => 'Result File To Text',
+						'export=xml' => 'Result File To XML',
 						'export=csv' => 'Result File To CSV/Excel',
 						'export=csv-all' => 'Individual Run Data To CSV/Excel',
 						),
@@ -224,8 +225,7 @@ class pts_result_viewer_settings
 <div class="div_table_first_row">
 <div class="div_table_cell">Highlight<br />Result</div>
 <div class="div_table_cell">Hide<br />Result</div>
-<div class="div_table_cell">Identifier</div>
-<div class="div_table_cell"> </div>';
+<div class="div_table_cell">Identifier</div>';
 
 if($has_system_logs)
 {
@@ -233,11 +233,13 @@ if($has_system_logs)
 }
 
 $t .= '<div class="div_table_cell">Perf-Per-Dollar</div>
-<div class="div_table_cell">Test Date</div>
+<div class="div_table_cell">Triggered</div>
+<div class="div_table_cell"> </div>
 </div>
 ';
 $hgv = self::check_request_for_var($request, 'hgv');
 $rmm = self::check_request_for_var($request, 'rmm');
+$start_of_year = strtotime(date('Y-01-01'));
 foreach($result_file->get_systems() as $sys)
 {
 	$si = $sys->get_identifier();
@@ -247,15 +249,15 @@ $t .= '
 	<div id="table-line-' . $ppdx . '" class="div_table_row">
 	<div class="div_table_cell"><input type="checkbox" name="hgv[]" value="' . $si . '"' . (is_array($hgv) && in_array($si, $hgv) ? ' checked="checked"' : null) . ' /></div>
 	<div class="div_table_cell"><input type="checkbox" name="rmm[]" value="' . $si . '"' . (is_array($rmm) && in_array($si, $rmm) ? ' checked="checked"' : null) . ' /></div>
-	<div class="div_table_cell">' . $si . '</div>';
+	<div class="div_table_cell"><strong>' . $si . '</strong></div>';
 
 	if($has_system_logs)
 	{
 		$t .= '<div class="div_table_cell">' . ($result_file->get_system_log_dir($si) ? '<a class="mini" href="#" onclick="javascript:display_system_logs_for_result(\'' . RESULTS_VIEWING_ID . '\', \'' . $si . '\'); return false;">View System Logs</a>' : ' ') . '</div>';
 	}
-
+	$stime = strtotime($sys->get_timestamp());
 	$t .= '<div class="div_table_cell"><input type="number" min="0" step="1" name="ppd_' . $ppdx . '" value="' . ($ppd && $ppd !== true ? $ppd : '0') . '" /></div>
-<div class="div_table_cell">' . date('F d Y @ H:i', strtotime($sys->get_timestamp())) . '</div>';
+<div class="div_table_cell">' . date(($stime > $start_of_year ? 'F d @ H:i' : 'F d Y @ H:i'), $stime) . '</div>';
 
 	if(defined('VIEWER_CAN_DELETE_RESULTS') && VIEWER_CAN_DELETE_RESULTS && defined('RESULTS_VIEWING_ID'))
 	{
@@ -323,6 +325,17 @@ if($system_identifier_count > 2)
 				header('Pragma: public');
 				header('Content-Length: ' . strlen($result_txt));
 				echo $result_txt;
+				exit;
+			case 'xml':
+				$result_xml = $result_file->get_xml(null, true);
+				header('Content-Description: File Transfer');
+				header('Content-Type: text/xml');
+				header('Content-Disposition: attachment; filename=' . $result_title . '.xml');
+				header('Expires: 0');
+				header('Cache-Control: must-revalidate');
+				header('Pragma: public');
+				header('Content-Length: ' . strlen($result_xml));
+				echo $result_xml;
 				exit;
 		}
 		// End result export
