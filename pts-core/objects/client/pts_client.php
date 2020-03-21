@@ -339,7 +339,8 @@ class pts_client
 			'SYSTEM_TYPE_ID' => phodevi_base::determine_system_type(phodevi::system_hardware(), phodevi::system_software()),
 			'SYSTEM_TYPE' => phodevi_base::system_type_to_string(phodevi_base::determine_system_type(phodevi::system_hardware(), phodevi::system_software())),
 			'TERMINAL_WIDTH' => pts_client::terminal_width(),
-			'C_CXX_FLAGS_DEFAULT' => '-O3 -march=native' // mostly for future use
+			'C_CXX_FLAGS_DEFAULT' => '-O3 -march=native', // mostly for future use
+			'PATH' = pts_client::get_path()
 			);
 
 			if(!pts_client::executable_in_path('cc') && getenv('CC') == false)

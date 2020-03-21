@@ -250,7 +250,6 @@ class pts_tests
 		$extra_vars['LC_MESSAGES'] = '';
 		$extra_vars['LANG'] = 'en_US.utf8';
 		$extra_vars['PHP_BIN'] = PHP_BIN;
-		$extra_vars['PATH'] = pts_client::get_path();
 
 		// Safe-guards to try to ensure more accurate testing
 		$extra_vars['vblank_mode'] = '0'; // Avoid sync to vblank with the open-source drivers
