@@ -224,7 +224,8 @@ class pts_result_viewer_settings
 <div class="div_table_first_row">
 <div class="div_table_cell">Highlight<br />Result</div>
 <div class="div_table_cell">Hide<br />Result</div>
-<div class="div_table_cell">Identifier</div>';
+<div class="div_table_cell">Identifier</div>
+<div class="div_table_cell"> </div>';
 
 if($has_system_logs)
 {
@@ -232,7 +233,7 @@ if($has_system_logs)
 }
 
 $t .= '<div class="div_table_cell">Perf-Per-Dollar</div>
-<div class="div_table_cell">Test Completion</div>
+<div class="div_table_cell">Test Date</div>
 </div>
 ';
 $hgv = self::check_request_for_var($request, 'hgv');
@@ -240,9 +241,10 @@ $rmm = self::check_request_for_var($request, 'rmm');
 foreach($result_file->get_systems() as $sys)
 {
 	$si = $sys->get_identifier();
-	$ppd = self::check_request_for_var($request, 'ppd_' . rtrim(base64_encode($si), '='));
+	$ppdx = rtrim(base64_encode($si), '=');
+	$ppd = self::check_request_for_var($request, 'ppd_' . $ppdx);
 $t .= '
-	<div class="div_table_row">
+	<div id="table-line-' . $ppdx . '" class="div_table_row">
 	<div class="div_table_cell"><input type="checkbox" name="hgv[]" value="' . $si . '"' . (is_array($hgv) && in_array($si, $hgv) ? ' checked="checked"' : null) . ' /></div>
 	<div class="div_table_cell"><input type="checkbox" name="rmm[]" value="' . $si . '"' . (is_array($rmm) && in_array($si, $rmm) ? ' checked="checked"' : null) . ' /></div>
 	<div class="div_table_cell">' . $si . '</div>';
@@ -252,9 +254,14 @@ $t .= '
 		$t .= '<div class="div_table_cell">' . ($result_file->get_system_log_dir($si) ? '<a class="mini" href="#" onclick="javascript:display_system_logs_for_result(\'' . RESULTS_VIEWING_ID . '\', \'' . $si . '\'); return false;">View System Logs</a>' : ' ') . '</div>';
 	}
 
-	$t .= '<div class="div_table_cell"><input type="number" min="0" step="1" name="ppd_' . rtrim(base64_encode($si), '=') . '" value="' . ($ppd && $ppd !== true ? $ppd : '0') . '" /></div>
-<div class="div_table_cell">' . date('F d Y @ H:i', strtotime($sys->get_timestamp())) . '</div>
-	</div>';
+	$t .= '<div class="div_table_cell"><input type="number" min="0" step="1" name="ppd_' . $ppdx . '" value="' . ($ppd && $ppd !== true ? $ppd : '0') . '" /></div>
+<div class="div_table_cell">' . date('F d Y @ H:i', strtotime($sys->get_timestamp())) . '</div>';
+
+	if(defined('VIEWER_CAN_DELETE_RESULTS') && VIEWER_CAN_DELETE_RESULTS && defined('RESULTS_VIEWING_ID'))
+	{
+		$t .= '<div class="div_table_cell"><a onclick="javascript:delete_run_from_result_file(\'' . RESULTS_VIEWING_ID . '\', \'' . $si . '\', \'' . $ppdx . '\'); return false;">DELETE RUN</a></div>';
+	}
+	$t .= '</div>';
 }
 
 $t .= '
@@ -424,6 +431,18 @@ if($system_identifier_count > 2)
 				}
 			}
 		}
+		if(self::check_request_for_var($request, 'grs'))
+		{
+			$result_file->sort_result_object_order_by_spread();
+		}
+		if(self::check_request_for_var($request, 'grt'))
+		{
+			$result_file->sort_result_object_order_by_title();
+		}
+		if(self::check_request_for_var($request, 'gru'))
+		{
+			$result_file->sort_result_object_order_by_result_scale();
+		}
 
 		if(self::check_request_for_var($request, 'sts'))
 		{
@@ -482,18 +501,6 @@ if($system_identifier_count > 2)
 		if(self::check_request_for_var($request, 'sro'))
 		{
 			$extra_attributes['sort_result_buffer'] = true;
-		}
-		if(self::check_request_for_var($request, 'grs'))
-		{
-			$result_file->sort_result_object_order_by_spread();
-		}
-		if(self::check_request_for_var($request, 'grt'))
-		{
-			$result_file->sort_result_object_order_by_title();
-		}
-		if(self::check_request_for_var($request, 'gru'))
-		{
-			$result_file->sort_result_object_order_by_result_scale();
 		}
 		if(self::check_request_for_var($request, 'nor'))
 		{

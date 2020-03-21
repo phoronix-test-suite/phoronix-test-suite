@@ -34,7 +34,7 @@ class pts_result_file
 	private $internal_tags = null;
 	private $reference_id = null;
 	private $preset_environment_variables = null;
-	private $systems = null;
+	public $systems = null;
 	private $is_tracker = -1;
 	private $last_modified = null;
 
@@ -787,7 +787,7 @@ class pts_result_file
 
 		return $to == null ? $xml_writer->getXML() : $xml_writer->saveXMLFile($to);
 	}
-	public function merge($result_merges_to_combine, $pass_attributes = 0, $add_prefix = null, $merge_meta = false)
+	public function merge($result_merges_to_combine, $pass_attributes = 0, $add_prefix = null, $merge_meta = false, $only_prefix_on_collision = false)
 	{
 		if(!is_array($result_merges_to_combine) || empty($result_merges_to_combine))
 		{
@@ -801,7 +801,7 @@ class pts_result_file
 				$merge_select = new pts_result_merge_select($merge_select);
 			}
 
-			if(!is_file($merge_select->get_result_file()))
+			if(!is_file($merge_select->get_result_file()) && !($merge_select->get_result_file() instanceof pts_result_file))
 			{
 				if(defined('PTS_SAVE_RESULTS_PATH') && is_file(PTS_SAVE_RESULTS_PATH . $merge_select->get_result_file() . '/composite.xml'))
 				{
@@ -832,7 +832,21 @@ class pts_result_file
 
 			if($add_prefix)
 			{
-				$result_file->rename_run('PREFIX', $add_prefix);
+				if($only_prefix_on_collision)
+				{
+					$this_identifiers = $this->get_system_identifiers();
+					foreach($result_file->systems as &$s)
+					{
+						if(in_array($s->get_identifier(), $this_identifiers))
+						{
+							$s->set_identifier($add_prefix . ': ' . $s->get_identifier());
+						}
+					}
+				}
+				else
+				{
+					$result_file->rename_run('PREFIX', $add_prefix);
+				}
 			}
 			else if($merge_select->get_rename_identifier())
 			{
@@ -853,8 +867,14 @@ class pts_result_file
 
 			if($merge_meta)
 			{
-				$this->set_title($this->get_title() . ', ' . $result_file->get_title());
-				$this->set_description($this->get_description() . PHP_EOL . PHP_EOL . $result_file->get_title() . ': ' . $result_file->get_description());
+				if($result_file->get_title() != null && stripos($this->get_title(), $result_file->get_title()) === false)
+				{
+					$this->set_title($this->get_title() . ', ' . $result_file->get_title());
+				}
+				if($result_file->get_description() != null && stripos($this->get_description(), $result_file->get_description()) === false)
+				{
+					$this->set_description($this->get_description() . PHP_EOL . PHP_EOL . $result_file->get_title() . ': ' . $result_file->get_description());
+				}
 			}
 			unset($result_file);
 		}

@@ -45,6 +45,23 @@ function delete_result_from_result_file(result_file, result_hash)
 	}
 	return false;
 }
+function delete_run_from_result_file(result_file, system_identifier, ppd)
+{
+	if(confirm("Permanently delete this run?"))
+	{
+		document.getElementById("table-line-" + ppd).style.display = "none";
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+		if(this.readyState == 4 && this.status == 200) {
+
+			}
+		};
+		xhttp.open("POST", WEB_URL_PATH + "index.php?page=remove-result-run", true);
+		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhttp.send("result_file_id=" + result_file + "&result_run=" + system_identifier);
+	}
+	return false;
+}
 function display_add_annotation_for_result_object(result_file, result_hash, link_obj)
 {
 	link_obj.style.display = "none";

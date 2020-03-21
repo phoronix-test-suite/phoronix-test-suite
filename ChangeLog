@@ -11,6 +11,7 @@ pts-core: Fixes for running the result viewer from a website sub directory in co
 pts-core: Add result viewer option "hide noisy results"
 pts-core: Add result viewer option "hide results with little change/spread"
 pts-core: Add result viewer option "only show results where X faster than Y"
+pts-core: Support deleting runs from the result viewer
 
 Phoronix Test Suite 9.4.1
 4 March 2020

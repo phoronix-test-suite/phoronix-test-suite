@@ -175,6 +175,14 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			$result_file->save();
 		}
 		exit;
+	case 'remove-result-run':
+		if(VIEWER_CAN_DELETE_RESULTS && isset($_REQUEST['result_file_id']) && isset($_REQUEST['result_run']))
+		{
+			$result_file = new pts_result_file($_REQUEST['result_file_id']);
+			$result_file->remove_run($_REQUEST['result_run']);
+			$result_file->save();
+		}
+		exit;
 	case 'add-annotation-to-result-object':
 		if(VIEWER_CAN_MODIFY_RESULTS && isset($_REQUEST['result_file_id']) && isset($_REQUEST['result_object']) && isset($_REQUEST['annotation']))
 		{
@@ -332,15 +340,15 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 				{
 					$result_file = new pts_result_file($rid);
 					$results_viewing[] = $rid;
-					if(count($possible_results) > 1)
+					/*if(count($possible_results) > 1)
 					{
 						$result_file->rename_run('PREFIX', $result_file->get_title());
-					}
+					}*/
 				}
 				else
 				{
 					$rf = new pts_result_file($rid);
-					$result_file->merge(array(new pts_result_merge_select($rf)), 0, $rf->get_title(), true);
+					$result_file->merge(array(new pts_result_merge_select($rf)), 0, $rf->get_title(), true, true);
 					$result_merges++;
 				}
 			}
