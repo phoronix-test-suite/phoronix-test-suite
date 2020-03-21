@@ -139,7 +139,7 @@
 		</Package>
 		<Package>
 			<GenericName>python</GenericName>
-			<PackageName>python3 python</PackageName>
+			<PackageName>python3 python py37-pip</PackageName>
 		</Package>
 		<Package>
 			<GenericName>yasm</GenericName>
@@ -172,7 +172,7 @@
 		<Package>
 			<GenericName>openmpi-development</GenericName>
 			<PackageName>openmpi</PackageName>
-			<FileCheck>/usr/local/openmpi</FileCheck>
+			<FileCheck>/usr/local/openmpi OR /usr/local/mpi/openmpi/bin</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>git</GenericName>
@@ -184,13 +184,13 @@
 		</Package>
 		<Package>
 			<GenericName>python-sklearn</GenericName>
-			<PackageName>py27-scikit-learn</PackageName>
-			<FileCheck>/usr/local/lib/python2.7/site-packages/sklearn</FileCheck>
+			<PackageName>py37-scikit-learn</PackageName>
+			<FileCheck>/usr/local/lib/python3.7/site-packages/sklearn</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>python-scipy</GenericName>
-			<PackageName>py27-scipy</PackageName>
-			<FileCheck>/usr/local/lib/python2.7/site-packages/scipy</FileCheck>
+			<PackageName>py37-scipy</PackageName>
+			<FileCheck>/usr/local/lib/python3.7/site-packages/scipy</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>gimp</GenericName>
