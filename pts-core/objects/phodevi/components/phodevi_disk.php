@@ -158,13 +158,12 @@ class phodevi_disk extends phodevi_device_interface
 				$nvmecontrol = shell_exec('nvmecontrol devlist 2>&1');
 				while(($p = strpos($nvmecontrol, ': ')) !== false)
 				{
-					if(stripos($nvmecontrol, 'could not open') !== false)
-					{
-						continue;
-					}
 					$nvmecontrol = substr($nvmecontrol, $p + 2);
 					$line = substr($nvmecontrol, 0, strpos($nvmecontrol, PHP_EOL));
-					array_push($disks, trim($line));
+					if(stripos($nvmecontrol, 'could not open') === false)
+					{
+						array_push($disks, trim($line));
+					}
 				}
 			}
 
