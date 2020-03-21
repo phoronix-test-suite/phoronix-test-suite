@@ -1825,10 +1825,15 @@ class pts_client
 		else if(phodevi::is_linux())
 		{
 			// Fedora OpenMPI path not often in PATH by default
-			$d = '/usr/lib64/openmpi/bin';
-			if(is_dir($d) && strpos($path, $d) === false)
+			$ds = array('/usr/lib64/openmpi/bin',
+				'/usr/local/mpi/openmpi/bin'
+				);
+			foreach($ds as $d)
 			{
-				$path .= ':' . $d;
+				if(is_dir($d) && strpos($path, $d) === false)
+				{
+					$path .= ':' . $d;
+				}
 			}
 		}
 
