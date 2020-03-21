@@ -146,7 +146,10 @@ class phodevi_disk extends phodevi_device_interface
 
 				if($disk != false && strpos($disk, 'DVD') === false && $disk != false && strpos($disk, ' Console') === false && strpos($disk, 'ATAPI') === false)
 				{
-					array_push($disks, $disk);
+					if(stripos($disk, 'could not open') !== false)
+					{
+						array_push($disks, $disk);
+					}
 				}
 				$i++;
 			}
