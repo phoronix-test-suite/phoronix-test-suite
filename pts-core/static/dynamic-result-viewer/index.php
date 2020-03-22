@@ -380,6 +380,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			$PAGE .= ' <input type="submit" value="Delete Result File" onclick="javascript:delete_result_file(\'' . RESULTS_VIEWING_ID . '\'); return false;">';
 		}
 		//$PAGE .= '<p align="center"><strong>Export As: </strong> <a href="' . CURRENT_URI . '&export=pdf">PDF</a>, <a href="' . CURRENT_URI . '&export=csv">CSV</a>, <a href="' . CURRENT_URI . '&export=csv-all">CSV Individual Data</a> </p>';
+		$PAGE .= '<p align="center">Jump To <a href="#table">Table</a> - <a href="#results">Results</a></p>';
 		$PAGE .= '<hr /><div style="font-size: 12pt;">' . pts_result_viewer_settings::get_html_options_markup($result_file, $_REQUEST) . '</div><hr style="clear: both;" />';
 		$PAGE .= pts_result_viewer_settings::process_helper_html($_REQUEST, $result_file, $extra_attributes);
 
@@ -415,7 +416,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 				}
 			}
 		}
-
+		$PAGE .= '<a name="table"></a>';
 		if(!$result_file->is_multi_way_comparison())
 		{
 			$PAGE .= '<div style="display:flex; align-items: center; justify-content: center; overflow: auto;">' . pts_result_file_output::result_file_to_detailed_html_table($result_file, 'grid', $extra_attributes, pts_result_viewer_settings::check_request_for_var($_REQUEST, 'sdt')) . '</div>';
@@ -428,7 +429,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		}
 
 
-		$PAGE .= '<div id="results">';
+		$PAGE .= '<a name="table"></a><div id="results">';
 		$prev_title = null;
 		foreach($result_file->get_result_objects() as $i => $result_object)
 		{
