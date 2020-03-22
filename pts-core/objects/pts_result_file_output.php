@@ -685,21 +685,22 @@ class pts_result_file_output
 		$pdf->CreateBookmark('System Information', 0);
 		$systems = $result_file->get_systems();
 		$system_count = count($systems);
-		for($i = 0; $i < $system_count; $i++)
+
+		foreach($systems as $i => $system)
 		{
 			$pdf->Ln(5);
-			$pdf->CreateBookmark($systems[$i]->get_identifier(), 1);
-			$pdf->WriteMiniHeader($systems[$i]->get_identifier());
-			if(isset($systems[($i + 1)]) && $systems[($i + 1)]->get_hardware() == $systems[$i]->get_hardware() && $systems[($i + 1)]->get_software() == $systems[$i]->get_software())
+			$pdf->CreateBookmark($system->get_identifier(), 1);
+			$pdf->WriteMiniHeader($system->get_identifier());
+			if(isset($systems[($i + 1)]) && $systems[($i + 1)]->get_hardware() == $system->get_hardware() && $systems[($i + 1)]->get_software() == $system->get_software())
 			{
 				continue;
 			}
 
-			$pdf->WriteText($systems[$i]->get_hardware());
-			$pdf->WriteText($systems[$i]->get_software());
+			$pdf->WriteText($system->get_hardware());
+			$pdf->WriteText($system->get_software());
 
 			$attributes = array();
-			pts_result_file_analyzer::system_to_note_array($systems[$i], $attributes);
+			pts_result_file_analyzer::system_to_note_array($system, $attributes);
 			foreach($attributes as $section => $data)
 			{
 				//$pdf->WriteMiniText($section . ' Notes');

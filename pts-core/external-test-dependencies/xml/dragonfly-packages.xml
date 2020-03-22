@@ -162,6 +162,10 @@
 			<PackageName>flex</PackageName>
 		</Package>
 		<Package>
+			<GenericName>gflags</GenericName>
+			<PackageName>gflags</PackageName>
+		</Package>
+		<Package>
 			<GenericName>curl</GenericName>
 			<PackageName>curl</PackageName>
 		</Package>
