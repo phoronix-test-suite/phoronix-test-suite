@@ -370,6 +370,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		$PAGE .= pts_result_viewer_settings::get_html_sort_bar($result_file, $_REQUEST);
 		$PAGE .= '<h1 id="result_file_title" placeholder="Title">' . $result_file->get_title() . '</h1>';
 		$PAGE .= '<p id="result_file_desc" placeholder="Description">' . str_replace(PHP_EOL, '<br />', $result_file->get_description()) . '</p>';
+		$PAGE .= '<div id="result-settings">';
 		if(VIEWER_CAN_MODIFY_RESULTS && RESULTS_VIEWING_COUNT == 1)
 		{
 			$PAGE .= ' <input type="submit" id="save_result_file_meta_button" value="Save" onclick="javascript:save_result_file_meta(\'' . RESULTS_VIEWING_ID . '\'); return false;" style="display: none;">';
@@ -383,7 +384,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		$PAGE .= '<p align="center">Jump To <a href="#table">Table</a> - <a href="#results">Results</a></p>';
 		$PAGE .= '<hr /><div style="font-size: 12pt;">' . pts_result_viewer_settings::get_html_options_markup($result_file, $_REQUEST) . '</div><hr style="clear: both;" />';
 		$PAGE .= pts_result_viewer_settings::process_helper_html($_REQUEST, $result_file, $extra_attributes);
-
+		$PAGE .= '</div>';
 		$intent = -1;
 		if($result_file->get_system_count() == 1 || ($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)))
 		{

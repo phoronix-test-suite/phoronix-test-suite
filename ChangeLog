@@ -13,6 +13,7 @@ pts-core: Add result viewer option "hide results with little change/spread"
 pts-core: Add result viewer option "only show results where X faster than Y"
 pts-core: Add XML export to result viewer export menu
 pts-core: Support deleting runs from the result viewer
+pts-core: Improve the print view from the result viewer
 phodevi: BSD tweaks/fixes
 
 Phoronix Test Suite 9.4.1

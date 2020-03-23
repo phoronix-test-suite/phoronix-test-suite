@@ -26,7 +26,7 @@
 		</Package>
 		<Package>
 			<GenericName>java</GenericName>
-			<PackageName>java/openjdk8</PackageName>
+			<PackageName>java/openjdk11</PackageName>
 		</Package>
 		<Package>
 			<GenericName>expat</GenericName>

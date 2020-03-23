@@ -354,3 +354,7 @@ div#main_area .div_table_cell input
 {
 	display: table-row-group;
 }
+@media print
+{
+	#header, #result-settings, ul, .mini { display: none !important; }
+}
