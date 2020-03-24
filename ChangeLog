@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 9.6.0 Milestone 1
+24 March 2020
 
 pts-core: Add new analyze-run-times sub-command
 pts-core: Allow hiding results from within the result viewer

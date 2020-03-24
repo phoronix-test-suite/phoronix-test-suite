@@ -257,6 +257,9 @@ This option can be used for validating a Phoronix Test Suite test suite as being
 
 
 ## Result Management
+#### analyze-run-times  [Test Result]
+This option will read a saved test results file and print the statistics about how long the testing took to complete.
+
 #### auto-sort-result-file  [Test Result]
 This option is used if you wish to automatically attempt to sort the results by their result identifier string.
 

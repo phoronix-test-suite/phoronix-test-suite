@@ -288,9 +288,9 @@ function pts_version_codenames()
 		);
 }
 
-pts_define('PTS_VERSION', '9.6.0m0');
-pts_define('PTS_CORE_VERSION', 9500);
-pts_define('PTS_RELEASE_DATE', '20200304');
+pts_define('PTS_VERSION', '9.6.0m1');
+pts_define('PTS_CORE_VERSION', 9510);
+pts_define('PTS_RELEASE_DATE', '20200324');
 pts_define('PTS_CODENAME', 'Nittedal');
 
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));
