@@ -324,6 +324,10 @@ a.mini
 {
 	font-size: 11px;
 }
+p.mini
+{
+	font-size: 11px;
+}
 .div_table
 {
 	display: table;
@@ -354,7 +358,15 @@ div#main_area .div_table_cell input
 {
 	display: table-row-group;
 }
+.print_notes
+{
+	display: none;
+}
 @media print
 {
-	#header, #result-settings, ul, .mini { display: none !important; }
+	#header, #result-settings, ul, a.mini, div.grid, #result_overview_area, .hide_on_print { display: none !important; }
+	p.mini { font-size: 7px; }
+	#main_area, #main_area p, #result_file_desc { font-size: 12px; }
+	#main_area h1, #main_area h2 { font-size: 16px; }
+	.print_notes { display: block !important; }
 }

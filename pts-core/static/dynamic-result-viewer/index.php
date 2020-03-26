@@ -385,6 +385,9 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		$PAGE .= '<hr /><div style="font-size: 12pt;">' . pts_result_viewer_settings::get_html_options_markup($result_file, $_REQUEST) . '</div><hr style="clear: both;" />';
 		$PAGE .= pts_result_viewer_settings::process_helper_html($_REQUEST, $result_file, $extra_attributes);
 		$PAGE .= '</div>';
+
+		$PAGE .= '<div class="print_notes">' . pts_result_file_output::result_file_to_system_html($result_file) . '</div>';
+		$PAGE .= '<div id="result_overview_area">';
 		$intent = -1;
 		if($result_file->get_system_count() == 1 || ($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)))
 		{
@@ -428,7 +431,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			$table = new pts_ResultFileTable($result_file, $intent);
 			$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
 		}
-
+		$PAGE .= '</div>';
 
 		$PAGE .= '<a name="table"></a><div id="results">';
 		$prev_title = null;
@@ -446,7 +449,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 				if(is_file(PTS_INTERNAL_OB_CACHE . 'test-profiles/' . $result_object->test_profile->get_identifier() . '/test-definition.xml'))
 				{
 					$tp = new pts_test_profile(PTS_INTERNAL_OB_CACHE . 'test-profiles/' . $result_object->test_profile->get_identifier() . '/test-definition.xml');
-					$PAGE .= '<p style="font-size: 13px;">' . $tp->get_description() . ' <a href="https://openbenchmarking.org/test/' . $result_object->test_profile->get_identifier() . '"><em>Learn more at OpenBenchmarking.org</em></a>.</p>';
+					$PAGE .= '<p class="mini">' . $tp->get_description() . ' <a href="https://openbenchmarking.org/test/' . $result_object->test_profile->get_identifier() . '"><em class="hide_on_print">Learn more at OpenBenchmarking.org</em></a>.</p>';
 
 				/*	$suites_containing_test = pts_test_suites::suites_containing_test_profile($result_object->test_profile);
 					if(!empty($suites_containing_test))
@@ -478,7 +481,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			}
 			else
 			{
-				$PAGE .= '<p>' . $result_object->get_annotation() . '</p>';
+				$PAGE .= '<p class="mini">' . $result_object->get_annotation() . '</p>';
 			}
 
 			$test_log_dir = $result_file->get_test_log_dir($result_object);

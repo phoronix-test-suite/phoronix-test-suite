@@ -288,7 +288,12 @@ class pts_result_file_analyzer
 					$prev_buffer = $bi;
 					continue;
 				}
-				$geo_bits[] = $bi->get_result_identifier() . ' was ' . round($bi->get_result_value() / $prev_buffer->get_result_value(), 1) . 'x the speed of ' . $prev_buffer->get_result_identifier();
+				$rounded = round($bi->get_result_value() / $prev_buffer->get_result_value(), 2) . 'x';
+				if($rounded === '1.00x')
+				{
+					continue;
+				}
+				$geo_bits[] = $bi->get_result_identifier() . ' was ' . $rounded . ' the speed of ' . $prev_buffer->get_result_identifier();
 				$prev_buffer = $bi;
 			}
 		}
@@ -304,6 +309,11 @@ class pts_result_file_analyzer
 				$geo_bits = implode(' and ', $geo_bits) . '.';
 				break;
 			default:
+				if(count($geo_bits) > 10)
+				{
+					$geo_bits = null;
+					break;
+				}
 				$geo_bits = implode(', ', $geo_bits) . '.';
 				break;
 		}

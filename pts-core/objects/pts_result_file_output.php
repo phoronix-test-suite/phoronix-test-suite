@@ -641,6 +641,63 @@ class pts_result_file_output
 
 		return $html;
 	}
+	public static function result_file_to_system_html(&$result_file)
+	{
+		$html = null;
+		$systems = $result_file->get_systems();
+		$system_count = count($systems);
+		$prev_notes = null;
+		$prev_sw = null;
+		$prev_hw = null;
+
+		foreach($systems as $i => $system)
+		{
+			$html .= '<h2>' . $system->get_identifier() . '</h2>';
+			if(isset($systems[($i + 1)]) && $systems[($i + 1)]->get_hardware() == $system->get_hardware() && $systems[($i + 1)]->get_software() == $system->get_software())
+			{
+				continue;
+			}
+			$hw = $system->get_hardware();
+			$sw = $system->get_software();
+
+			$hw = pts_strings::highlight_words_with_colon($hw);
+			$sw = pts_strings::highlight_words_with_colon($sw);
+
+			if($hw != $prev_hw)
+			{
+				$html .= '<p>' . pts_strings::highlight_diff_two_structured_strings($hw, $prev_hw) . '</p>';
+				$prev_hw = $hw;
+			}
+			if($sw != $prev_sw)
+			{
+				$html .= '<p>' . $sw . '</p>';
+				$prev_sw = $sw;
+			}
+
+			$attributes = array();
+			pts_result_file_analyzer::system_to_note_array($system, $attributes);
+			if(!empty($attributes))
+			{
+				$notes = '<p class="mini"><em>';
+				foreach($attributes as $section => $data)
+				{
+					foreach($data as $c => $val)
+					{
+						$notes .= '<strong>' .$section . ' Notes:</strong> ' . $val . '<br />';
+					}
+				}
+				$notes .= '</em></p>';
+
+				if($notes != $prev_notes)
+				{
+					$html .= $notes;
+					$prev_notes = $notes;
+				}
+			}
+		}
+
+		return $html;
+	}
 	public static function result_file_to_pdf(&$result_file, $dest, $output_name, $extra_attributes = null)
 	{
 		//ini_set('memory_limit', '1024M');

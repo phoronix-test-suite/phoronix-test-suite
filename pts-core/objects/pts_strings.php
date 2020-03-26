@@ -769,6 +769,31 @@ class pts_strings
 	{
 		return pts_strings::keep_in_string(trim(str_replace(array('/', '\\'), '_', $str)), pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_DECIMAL | pts_strings::CHAR_SPACE | pts_strings::CHAR_UNDERSCORE | pts_strings::CHAR_COMMA | pts_strings::CHAR_AT | pts_strings::CHAR_PLUS | pts_strings::CHAR_SEMICOLON | pts_strings::CHAR_EQUAL);
 	}
+	public static function highlight_words_with_colon($str, $pre = '<strong>', $post = '</strong>')
+	{
+		$str_r = explode(' ', $str);
+		foreach($str_r as &$word)
+		{
+			if(substr($word, -1) == ':')
+			{
+				$word = $pre . $word . $post;
+			}
+		}
+		return implode(' ', $str_r);
+	}
+	public static function highlight_diff_two_structured_strings($str1, $str2, $pre = '<span style="color: #FF0000;">', $post = '</span>')
+	{
+		$str1 = explode(', ', $str1);
+		$str2 = explode(', ', $str2);
+		foreach($str1 as $i => &$word)
+		{
+			if(isset($str2[$i]) && $str2[$i] != $str1[$i])
+			{
+				$word = $pre . $word . $post;
+			}
+		}
+		return implode(', ', $str1);
+	}
 }
 
 ?>
