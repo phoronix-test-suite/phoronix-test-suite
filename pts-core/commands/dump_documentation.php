@@ -131,6 +131,13 @@ class dump_documentation implements pts_option_interface
 				$p = $dom->createElement('p', 'This module utilizes the following environmental variables: ' . implode(', ', $vars) . '.');
 				$body->appendChild($p);
 			}
+
+            // If there is module_info text defined, add it here.
+			$moduleInfoText = trim(pts_module_manager::module_call($module, 'module_info'));
+            if ( $moduleInfoText ) {
+                $moduleInfo = $dom->createElement('p', $moduleInfoText);
+                $body->appendChild($moduleInfo);
+            }
 		}
 
 		$dom->saveHTMLFile(PTS_PATH . 'documentation/stubs/00_zmodule_options.html');

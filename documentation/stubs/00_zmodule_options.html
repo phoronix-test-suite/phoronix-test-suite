@@ -12,6 +12,7 @@
 <h2>Dummy Module</h2>
 <p>This is a simple module intended for developers to just demonstrate some of the module functions.</p>
 <p>phoronix-test-suite dummy_module.dummy-command</p>
+<p>This is a simple module intended for developers to just demonstrate some of the module functions.</p>
 <h2>Generate Perf FlameGraphs For Tests</h2>
 <p>Setting FLAME_GRAPH_PATH=&lt;path to flamegraph path&gt; will auto-load and enable this Phoronix Test Suite module. The module will generate a Linux perf FlameGraph for each test run during the benchmarking process. Details on FlameGraph @ https://github.com/brendangregg/FlameGraph</p>
 <p>This module utilizes the following environmental variables: FLAME_GRAPH_PATH.</p>
@@ -45,6 +46,7 @@
 <p>This module alerts the user if the system configuration may not be the right one for achieving the best performance with the target benchmark(s). This initial version of the module actually cares only about the BFQ I/O scheduler and powersave governor checks.</p>
 <p>phoronix-test-suite perf_tips.show</p>
 <p>This module utilizes the following environmental variables: SUPPRESS_PERF_TIPS.</p>
+<p>This module alerts the user if the system configuration may not be the right one for achieving the best performance with the target benchmark(s). This initial version of the module actually cares only about the BFQ I/O scheduler: it gives a warning if BFQ is being used with an incorrect configuration in a disk benchmark, and suggests the right configuration to use. For the moment it only works for existing, throughput-based tests. It will need to be extended for responsiveness and soft real-time-latency tests.</p>
 <h2>Benchmarking Compiler PGO Impact</h2>
 <p>This module makes it easy to test a compiler PGO (Profile Guided Optimization) performance impact by running a test without PGO optimizations, capturing the PGO profile, rebuilding the tests with the PGO profile generated, and then repeat the benchmarks.</p>
 <p>phoronix-test-suite pgo.benchmark</p>
@@ -57,6 +59,7 @@
 <p>phoronix-test-suite phoromatic.list-results</p>
 <p>phoronix-test-suite phoromatic.clone</p>
 <p>phoronix-test-suite phoromatic.export-results-for-account-schedules</p>
+<p>The Phoromatic module contains the client support for interacting with Phoromatic and Phoromatic Tracker services.</p>
 <h2>Pushover.net</h2>
 <p>Submit notifications to your iOS/Android mobile devices of test results in real-time as push notifications, etc. Using the Pushover.net API.</p>
 <p>This module utilizes the following environmental variables: PUSHOVER_NET_USER.</p>
@@ -71,6 +74,70 @@
 <h2>System Monitor</h2>
 <p>This module contains sensor monitoring support.</p>
 <p>This module utilizes the following environmental variables: MONITOR, PERFORMANCE_PER_WATT, PERFORMANCE_PER_SENSOR, MONITOR_INTERVAL, MONITOR_PER_RUN.</p>
+<p>Monitoring these sensors is as easy as running your normal Phoronix Test Suite commands but at the beginning of the command add: MONITOR=&lt;selected sensors&gt;.  For example, this will monitor the CPU temperature and voltage during tests: 
+
+    MONITOR=cpu.temp,cpu.voltage phoronix-test-suite benchmark universe
+
+For some of the sensors there is an ability to monitor specific device, e.g. cpu.usage.cpu0 or hdd.read-speed.sda. If the PERFORMANCE_PER_WATT environment variable is set, a performance per Watt graph will also be added, assuming the system's power consumption can be monitored. PERFORMANCE_PER_SENSOR= will allow similar behavior but for arbitrary sensors. Below are all of the sensors supported by this version of the Phoronix Test Suite.
+
+Supported Options:
+
+  - all
+  - all.ambient
+  - ambient.temp
+  - all.cgroup
+  - cgroup.cpu-usage
+  - all.cpu
+  - cpu.fan-speed
+  - cpu.freq
+  - all.cpu.freq
+  - cpu.freq.cpu0
+  - cpu.freq.cpu1
+  - cpu.freq.cpu2
+  - cpu.peak-freq
+  - cpu.power
+  - cpu.temp
+  - cpu.usage
+  - all.cpu.usage
+  - cpu.usage.cpu0
+  - cpu.usage.cpu1
+  - cpu.usage.cpu2
+  - cpu.usage.summary
+  - cpu.voltage
+  - all.gpu
+  - gpu.fan-speed
+  - gpu.freq
+  - gpu.memory-usage
+  - gpu.power
+  - gpu.temp
+  - gpu.usage
+  - gpu.voltage
+  - all.hdd
+  - hdd.read-speed
+  - all.hdd.read-speed
+  - hdd.read-speed.sda
+  - hdd.temp
+  - all.hdd.temp
+  - hdd.temp.sda
+  - hdd.write-speed
+  - all.hdd.write-speed
+  - hdd.write-speed.sda
+  - all.memory
+  - memory.temp
+  - memory.usage
+  - all.network
+  - network.usage
+  - all.swap
+  - swap.usage
+  - all.sys
+  - sys.fan-speed
+  - sys.iowait
+  - sys.power
+  - sys.temp
+  - sys.voltage
+  - all.sys.voltage
+
+NOTE: Use the "system-sensors" command to see what sensors are available for monitoring on the system.</p>
 <h2>Timed Screenshot</h2>
 <p>This is a module that will take a screenshot of the system at a pre-defined interval. ImageMagick must be installed onto the system prior to using this module.</p>
 <p>This module utilizes the following environmental variables: SCREENSHOT_INTERVAL.</p>
