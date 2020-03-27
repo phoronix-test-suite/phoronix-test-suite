@@ -50,6 +50,13 @@ class pts_exdep_generic_parser
 	{
 		return PTS_CORE_PATH . 'external-test-dependencies/';
 	}
+	/**
+	 * @param string      $title
+	 * @param string|null $file_check
+	 * @param string|null $possible_packages
+	 *
+	 * @return (null|string)[]
+	 */
 	public function get_package_format($title = null, $file_check = null, $possible_packages = null)
 	{
 		return array(
@@ -62,10 +69,20 @@ class pts_exdep_generic_parser
 	{
 		return array_keys($this->struct['external-dependencies']['generic-packages']);
 	}
+	/**
+	 * @param string $package
+	 *
+	 * @return bool
+	 */
 	public function is_package($package)
 	{
 		return isset($this->struct['external-dependencies']['generic-packages'][$package]);
 	}
+	/**
+	 * @param string $package
+	 *
+	 * @return string[]
+	 */
 	public function get_package_data($package)
 	{
 		return $this->is_package($package) ? $this->struct['external-dependencies']['generic-packages'][$package] : $this->get_package_format();

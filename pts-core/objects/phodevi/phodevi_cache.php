@@ -37,6 +37,12 @@ class phodevi_cache
 		$this->storage_dir = $storage_dir;
 		$this->client_version = $client_version;
 	}
+	/**
+	 * @param string $storage_dir
+	 * @param int    $client_version
+	 *
+	 * @return array[]
+	 */
 	public function restore_cache($storage_dir = null, $client_version = null)
 	{
 		$restore_cache = null;

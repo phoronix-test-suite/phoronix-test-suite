@@ -31,6 +31,9 @@ class nye_XmlWriter
 	public $dom;
 	protected $times_fallback = 0;
 
+	/**
+	 * @param string $xsl_binding
+	 */
 	public function __construct($xsl_binding = null, $force_nice_formatting = false)
 	{
 		$this->dom = new DOMDocument('1.0');
@@ -56,6 +59,12 @@ class nye_XmlWriter
 		// When Not Empty, add the XML node
 		return $xml_value === null || $xml_value === false ? false : $this->addXmlNode($xml_location, $xml_value);
 	}
+	/**
+	 * @param string      $xml_location
+	 * @param string|null $xml_value
+	 *
+	 * @return void
+	 */
 	public function addXmlNode($xml_location, $xml_value = null)
 	{
 		$nodes = explode('/', $xml_location);
@@ -101,6 +110,12 @@ class nye_XmlWriter
 
 		$this->addXmlNode($xml_location, $value);
 	}
+	/**
+	 * @param string                   $xml_location
+	 * @param pts_config_nye_XmlReader $xml
+	 *
+	 * @return void
+	 */
 	public function addXmlNodeFromReader($xml_location, &$xml, $default_value = null)
 	{
 		$value = $xml->getXmlValue($xml_location);

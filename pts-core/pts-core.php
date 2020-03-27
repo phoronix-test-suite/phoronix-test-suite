@@ -93,6 +93,11 @@ class pts_core
 		return 'Phoronix Test Suite v' . PTS_VERSION . ($show_codename ? ' (' . pts_core::codename() . ')' : null);
 	}
 }
+/**
+ * @param string $name
+ *
+ * @return void
+ */
 function pts_define($name, $value = null)
 {
 	static $defines;
@@ -109,6 +114,9 @@ function pts_define($name, $value = null)
 	$defines[$name] = $value;
 	define($name, $value);
 }
+/**
+ * @return void
+ */
 function pts_define_directories()
 {
 	// User's home directory for storing results, module files, test installations, etc.
@@ -203,6 +211,9 @@ function pts_define_directories()
 		pts_define('PTS_TEST_PROFILE_PATH', PTS_INTERNAL_OB_CACHE . 'test-profiles/');
 	}
 }
+/**
+ * @return array[]
+ */
 function pts_needed_extensions()
 {
 	return array(
@@ -306,6 +317,12 @@ pts_define('PTS_PHP_VERSION', phpversion());
 
 if(PTS_IS_CLIENT || defined('PTS_AUTO_LOAD_OBJECTS'))
 {
+	/**
+	 * @param string   $dir
+	 * @param string[] $files
+	 *
+	 * @return void
+	 */
 	function pts_build_dir_php_list($dir, &$files)
 	{
 		if($dh = opendir($dir))
@@ -328,6 +345,11 @@ if(PTS_IS_CLIENT || defined('PTS_AUTO_LOAD_OBJECTS'))
 		}
 		closedir($dh);
 	}
+	/**
+	 * @param string $to_load
+	 *
+	 * @return bool
+	 */
 	function pts_auto_load_class($to_load)
 	{
 		static $obj_files = null;

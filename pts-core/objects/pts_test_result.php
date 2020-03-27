@@ -45,6 +45,9 @@ class pts_test_result
 	protected $already_normalized = false;
 	public $dynamically_generated = false;
 
+	/**
+	 * @param pts_test_profile $test_profile
+	 */
 	public function __construct($test_profile)
 	{
 		$this->test_profile = clone $test_profile;
@@ -64,6 +67,11 @@ class pts_test_result
 	{
 		$this->test_result_buffer = $test_result_buffer;
 	}
+	/**
+	 * @param string $arguments_description
+	 *
+	 * @return void
+	 */
 	public function set_used_arguments_description($arguments_description)
 	{
 		$this->used_arguments_description = $arguments_description;
@@ -115,6 +123,11 @@ class pts_test_result
 
 		return $this->result_precision;
 	}
+	/**
+	 * @param string $used_arguments
+	 *
+	 * @return void
+	 */
 	public function set_used_arguments($used_arguments)
 	{
 		$this->used_arguments = $used_arguments;

@@ -26,6 +26,9 @@ class phodevi_device_property
 	private $object_function;
 	private $cache_code;
 
+	/**
+	 * @param bool $cache_code
+	 */
 	public function __construct($function, $cache_code = false)
 	{
 		$this->object_function = $function;
@@ -35,6 +38,9 @@ class phodevi_device_property
 	{
 		return $this->object_function;
 	}
+	/**
+	 * @return bool
+	 */
 	public function cache_code()
 	{
 		return $this->cache_code;

@@ -24,6 +24,10 @@ class pts_test_profile extends pts_test_profile_parser
 {
 	public $test_installation = false;
 
+	/**
+	 * @param string $identifier
+	 * @param bool   $override_values
+	 */
 	public function __construct($identifier = null, $override_values = null, $normal_init = true)
 	{
 		parent::__construct($identifier, $normal_init);
@@ -52,6 +56,9 @@ class pts_test_profile extends pts_test_profile_parser
 		}
 		return $identifier != false && is_file(PTS_TEST_PROFILE_PATH . $identifier . '/test-definition.xml') ? $identifier : false;
 	}
+	/**
+	 * @return string
+	 */
 	public function get_resource_dir()
 	{
 		return PTS_TEST_PROFILE_PATH . $this->identifier . '/';
@@ -84,6 +91,12 @@ class pts_test_profile extends pts_test_profile_parser
 			}
 		}
 	}
+	/**
+	 * @param bool $include_extensions
+	 * @param int  $divider
+	 *
+	 * @return int
+	 */
 	public function get_download_size($include_extensions = true, $divider = 1048576)
 	{
 		$estimated_size = 0;
@@ -117,6 +130,11 @@ class pts_test_profile extends pts_test_profile_parser
 
 		return $estimated_size;
 	}
+	/**
+	 * @param bool $include_extensions
+	 *
+	 * @return int
+	 */
 	public function get_environment_size($include_extensions = true)
 	{
 		$estimated_size = parent::get_environment_size();
@@ -134,6 +152,9 @@ class pts_test_profile extends pts_test_profile_parser
 
 		return $estimated_size;
 	}
+	/**
+	 * @return string[]
+	 */
 	public function get_test_extensions_recursive()
 	{
 		// Process Extensions / Cascading Test Profiles
@@ -157,6 +178,9 @@ class pts_test_profile extends pts_test_profile_parser
 
 		return $extensions;
 	}
+	/**
+	 * @return string[]
+	 */
 	public function get_dependency_names()
 	{
 		$dependency_names = array();
@@ -209,6 +233,9 @@ class pts_test_profile extends pts_test_profile_parser
 
 		return $times_to_run;
 	}
+	/**
+	 * @return int
+	 */
 	public function get_estimated_run_time()
 	{
 		// get estimated run-time (in seconds)
@@ -235,6 +262,11 @@ class pts_test_profile extends pts_test_profile_parser
 
 		return $estimated_run_time;
 	}
+	/**
+	 * @param bool $report_warnings
+	 *
+	 * @return bool
+	 */
 	public function is_supported($report_warnings = true)
 	{
 		$test_supported = true;
@@ -279,6 +311,9 @@ class pts_test_profile extends pts_test_profile_parser
 
 		return $test_supported;
 	}
+	/**
+	 * @return bool
+	 */
 	public function custom_test_support_check()
 	{
 		/*
@@ -307,12 +342,18 @@ class pts_test_profile extends pts_test_profile_parser
 
 		return true;
 	}
+	/**
+	 * @return bool
+	 */
 	public function is_test_architecture_supported()
 	{
 		// Check if the system's architecture is supported by a test
 		$archs = $this->get_supported_architectures();
 		return !empty($archs) ? phodevi::cpu_arch_compatible($archs) : true;
 	}
+	/**
+	 * @return bool
+	 */
 	public function is_core_version_supported()
 	{
 		// Check if the test profile's version is compatible with pts-core
@@ -321,6 +362,9 @@ class pts_test_profile extends pts_test_profile_parser
 
 		return $core_version_min <= PTS_CORE_VERSION && $core_version_max > PTS_CORE_VERSION;
 	}
+	/**
+	 * @return bool
+	 */
 	public function is_test_platform_supported()
 	{
 		// Check if the system's OS is supported by a test
@@ -388,6 +432,9 @@ class pts_test_profile extends pts_test_profile_parser
 
 		return $exe;
 	}
+	/**
+	 * @return string
+	 */
 	public function get_install_dir()
 	{
 		return pts_client::test_install_root_path() . $this->identifier . DIRECTORY_SEPARATOR;
@@ -416,6 +463,9 @@ class pts_test_profile extends pts_test_profile_parser
 
 		return $installer;
 	}
+	/**
+	 * @return string|false
+	 */
 	public function get_file_download_spec()
 	{
 		return is_file($this->get_resource_dir() . 'downloads.xml') ? $this->get_resource_dir() . 'downloads.xml' : false;
@@ -437,6 +487,9 @@ class pts_test_profile extends pts_test_profile_parser
 
 		return $spec;
 	}
+	/**
+	 * @return pts_test_profile[]
+	 */
 	public function extended_test_profiles()
 	{
 		// Provide an array containing the location(s) of all test(s) for the supplied object name
@@ -463,6 +516,9 @@ class pts_test_profile extends pts_test_profile_parser
 		$simple_xml = simplexml_load_string($file);
 		return json_encode($simple_xml);
 	}
+	/**
+	 * @return pts_test_file_download[]
+	 */
 	public function get_downloads()
 	{
 		$download_xml_file = $this->get_file_download_spec();

@@ -31,20 +31,39 @@ class pts_test_option
 	private $helper_message = null;
 	private $options = array();
 
+	/**
+	 * @param string $identifier
+	 * @param string $option
+	 */
 	public function __construct($identifier, $option, $helper_message = null)
 	{
 		$this->identifier = $identifier;
 		$this->option_name = $option;
 		$this->helper_message = $helper_message;
 	}
+	/**
+	 * @param string $prefix
+	 *
+	 * @return void
+	 */
 	public function set_option_prefix($prefix)
 	{
 		$this->prefix = $prefix;
 	}
+	/**
+	 * @param string $postfix
+	 *
+	 * @return void
+	 */
 	public function set_option_postfix($postfix)
 	{
 		$this->postfix = $postfix;
 	}
+	/**
+	 * @param string $default_node
+	 *
+	 * @return void
+	 */
 	public function set_option_default($default_node)
 	{
 		if($default_node == null || $default_node == "0")
@@ -68,14 +87,23 @@ class pts_test_option
 	{
 		return $this->helper_message;
 	}
+	/**
+	 * @return string
+	 */
 	public function get_name()
 	{
 		return $this->option_name;
 	}
+	/**
+	 * @return string
+	 */
 	public function get_option_prefix()
 	{
 		return $this->prefix;
 	}
+	/**
+	 * @return string
+	 */
 	public function get_option_postfix()
 	{
 		return $this->postfix;
@@ -92,6 +120,13 @@ class pts_test_option
 	{		
 		return $this->default_entry == -1 ? $this->option_count() - 1 : $this->default_entry;
 	}
+	/**
+	 * @param string $name
+	 * @param string $value
+	 * @param string $message
+	 *
+	 * @return void
+	 */
 	public function add_option($name, $value, $message)
 	{
 		$this->options[] = array('NAME' => $name, 'VALUE' => $value, 'MESSAGE' => $message);
@@ -123,10 +158,20 @@ class pts_test_option
 
 		return $names;
 	}
+	/**
+	 * @param int $index
+	 *
+	 * @return string
+	 */
 	public function get_option_name($index)
 	{
 		return isset($this->options[$index]['NAME']) ? $this->options[$index]['NAME'] : null;
 	}
+	/**
+	 * @param int $index
+	 *
+	 * @return string
+	 */
 	public function get_option_value($index)
 	{
 		return isset($this->options[$index]['VALUE']) ? $this->options[$index]['VALUE'] : null;
@@ -135,26 +180,49 @@ class pts_test_option
 	{
 		return isset($this->options[$index]['MESSAGE']) ? $this->options[$index]['MESSAGE'] : null;
 	}
+	/**
+	 * @return int
+	 */
 	public function option_count()
 	{
 		return count($this->options);
 	}
+	/**
+	 * @param string $input
+	 *
+	 * @return string
+	 */
 	public function format_option_value_from_input($input)
 	{
 		return $this->get_option_prefix() . $input . $this->get_option_postfix();
 	}
+	/**
+	 * @param string $input
+	 *
+	 * @return string
+	 */
 	public function format_option_display_from_input($input)
 	{
 		$name = $this->get_name();
 
 		return $name != null && $input != null ? $name . ': ' . $input : null;
 	}
+	/**
+	 * @param int $select_pos
+	 *
+	 * @return string
+	 */
 	public function format_option_value_from_select($select_pos)
 	{
 		$input = $this->get_option_value($select_pos);
 
 		return $this->format_option_value_from_input($input);
 	}
+	/**
+	 * @param int $select_pos
+	 *
+	 * @return string
+	 */
 	public function format_option_display_from_select($select_pos)
 	{
 		$display_name = $this->get_option_name($select_pos);
