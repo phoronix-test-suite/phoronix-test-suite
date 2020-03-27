@@ -18,7 +18,7 @@ if [ \"X\$6\" = \"X\" ]
 then
 	DIRECTORY_TO_TEST=\"fiofile\"
 else
-	DIRECTORY_TO_TEST=\"\$6\"
+	DIRECTORY_TO_TEST=\"\$6/fiofile\"
 fi
 echo \"[global]
 rw=\$1
