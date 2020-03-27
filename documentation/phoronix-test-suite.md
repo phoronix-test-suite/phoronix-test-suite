@@ -542,6 +542,12 @@ This module contains sensor monitoring support.
 
 This module utilizes the following environmental variables: MONITOR, PERFORMANCE_PER_WATT, PERFORMANCE_PER_SENSOR, MONITOR_INTERVAL, MONITOR_PER_RUN.
 
+#### Monitoring Examples
+
+NOTE: Use the "system-sensors" command to see what sensors are available for monitoring on the system.
+
+* To monitor CPU temperatures during a test run:
+    * MONITOR=cpu.temp phoronix-test-suite run [...]
 
 ### Timed Screenshot
 This is a module that will take a screenshot of the system at a pre-defined interval. ImageMagick must be installed onto the system prior to using this module.
