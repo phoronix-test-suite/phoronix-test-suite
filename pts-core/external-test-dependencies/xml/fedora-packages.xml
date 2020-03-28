@@ -350,7 +350,7 @@
 		</Package>
 		<Package>
 			<GenericName>uuid</GenericName>
-			<PackageName>uuid-devel</PackageName>
+			<PackageName>uuid-devel libuuid-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>clang</GenericName>
