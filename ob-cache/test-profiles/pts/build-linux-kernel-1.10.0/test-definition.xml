@@ -18,7 +18,7 @@
     <TestType>Processor</TestType>
     <License>Free</License>
     <Status>Verified</Status>
-    <ExternalDependencies>build-utilities, bc, bison, flex, openssl-development</ExternalDependencies>
+    <ExternalDependencies>build-utilities, bc, bison, elfutils-libelf-devel, flex, openssl-development</ExternalDependencies>
     <EnvironmentSize>125</EnvironmentSize>
     <ProjectURL>http://www.kernel.org/</ProjectURL>
     <InternalTags>SMP</InternalTags>
