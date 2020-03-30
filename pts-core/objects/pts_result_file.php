@@ -560,6 +560,25 @@ class pts_result_file
 			return $objects;
 		}
 
+		$skip_objects = defined('SKIP_RESULT_OBJECTS') ? explode(',', SKIP_RESULT_OBJECTS) : false;
+		if($skip_objects)
+		{
+			$ros = $this->result_objects;
+			foreach($ros as $index => $ro)
+			{
+				foreach($skip_objects as $skip)
+				{
+					if(stripos($ro->test_profile->get_identifier(), $skip) !== false || stripos($ro->get_arguments_description(), $skip) !== false)
+					{
+						unset($ros[$index]);
+						break;
+					}
+				}
+			}
+
+			return $ros;
+		}
+
 		return $this->result_objects;
 	}
 	public function to_json()
