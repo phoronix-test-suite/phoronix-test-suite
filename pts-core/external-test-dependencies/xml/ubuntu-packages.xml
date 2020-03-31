@@ -270,7 +270,7 @@
 		</Package>
 		<Package>
 			<GenericName>python</GenericName>
-			<PackageName>python-pip python3-pip python3-yaml</PackageName>
+			<PackageName>python3-pip python3-yaml</PackageName>
 			<FileCheck>pip3, python3</FileCheck>
 		</Package>
 		<Package>
