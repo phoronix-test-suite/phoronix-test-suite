@@ -52,7 +52,7 @@ class pts_html_template
 			$dom->loadHTML($html);
 		}
 
-		$section_title = $dom->getElementsByTagName('html')->item(0)->getElementsByTagName('head')->item(0)->nodeValue;
+		$section_title = trim($dom->getElementsByTagName('html')->item(0)->getElementsByTagName('head')->item(0)->nodeValue);
 
 		$section_li_a = $this->dom->createElement('a', $section_title);
 		$section_li_a->setAttribute('href', '#' . str_replace(' ', null, $section_title));

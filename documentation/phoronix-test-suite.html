@@ -1,5 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html><!--
+<html>
+<!--
 
 Phoronix Test Suite
 URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
@@ -18,7 +19,13 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
---><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>Phoronix Test Suite</title><link rel="shortcut icon" href="http://www.phoronix-test-suite.com/favicon.ico"><link href="https://fonts.googleapis.com/css?family=Quicksand:400,700" rel="stylesheet" type="text/css"><link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet" type="text/css"><style>
+-->
+	<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Phoronix Test Suite</title>
+		<link rel="shortcut icon" href="http://www.phoronix-test-suite.com/favicon.ico">
+		<link href="https://fonts.googleapis.com/css?family=Quicksand:400,700" rel="stylesheet" type="text/css">
+		<link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet" type="text/css">
+		<style>
 		body
 		{
 			margin: 0;
@@ -191,10 +198,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 			opacity: 1.0;
 			filter: alpha(opacity=100);
 		}
-		</style></head><body>
+		</style>
+	</head>
+	<body>
 		<div id="pts_container">
 		<div style="overflow: hidden;">
-		<div style="text-align: right; float: right; clear: right; margin: 12px 10px 6px 8px;"><a href="http://www.phoronix-test-suite.com/" id="pts_top_logo"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewbox="0 0 76 41" width="76" height="41" preserveaspectratio="xMinYMin meet"><path d="m74 22v9m-5-16v16m-5-28v28m-23-2h12.5c2.485281 0 4.5-2.014719 4.5-4.5s-2.014719-4.5-4.5-4.5h-8c-2.485281 0-4.5-2.014719-4.5-4.5s2.014719-4.5 4.5-4.5h12.5m-21 5h-11m11 13h-2c-4.970563 0-9-4.029437-9-9v-20m-24 40v-20c0-4.970563 4.0294373-9 9-9 4.970563 0 9 4.029437 9 9s-4.029437 9-9 9h-9" stroke="#c8d905" stroke-width="4" fill="none"></path></svg></a></div>
+		<div style="text-align: right; float: right; clear: right; margin: 12px 10px 6px 8px;"><a href="http://www.phoronix-test-suite.com/" id="pts_top_logo"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewbox="0 0 76 41" width="76" height="41" preserveaspectratio="xMinYMin meet">
+  <path d="m74 22v9m-5-16v16m-5-28v28m-23-2h12.5c2.485281 0 4.5-2.014719 4.5-4.5s-2.014719-4.5-4.5-4.5h-8c-2.485281 0-4.5-2.014719-4.5-4.5s2.014719-4.5 4.5-4.5h12.5m-21 5h-11m11 13h-2c-4.970563 0-9-4.029437-9-9v-20m-24 40v-20c0-4.970563 4.0294373-9 9-9 4.970563 0 9 4.029437 9 9s-4.029437 9-9 9h-9" stroke="#c8d905" stroke-width="4" fill="none"></path>
+</svg></a></div>
 		<h1>Phoronix Test Suite</h1>
 		</div>
 		<div id="pts_banner_nav"></div>
@@ -211,7 +222,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <p>Phoromatic is a remote management system for the Phoronix Test Suite that allows the automatic scheduling of tests, remote installation of new tests, and the management of multiple test systems all through an intuitive, easy-to-use web interface. Tests can be scheduled to automatically run on a routine basis across multiple test systems. Phoromatic can also interface with revision control systems to offer support for issuing new tests on a context-basis, such as whenever a Git commit has been pushed or new daily image available. The test results are then available from this central, secure location.</p>
 <p>Phoromatic is an add-on to the Phoronix Test Suite that's primarily intended for enterprise users when facilitating tests across a wide-spectrum of hardware within a test lab or when needing to carry out tests on a routine basis.</p>
 <hr style="height: 50px; border: 0;"><a name="UserOptions"></a><h1>User Options</h1>
-<p>The following options are currently supported by the Phoronix Test Suite client. A list of available options can also be found by running <em>phoronix-test-suite help.</em></p><hr><h1>System</h1>
+<p>The following options are currently supported by the Phoronix Test Suite client. A list of available options can also be found by running <em>phoronix-test-suite help.</em></p><hr>
+<h1>System</h1>
 <h3>diagnostics<em>  </em>
 </h3>
 <p>This option will print information that is useful to developers when debugging problems with the Phoronix Test Suite and/or test profiles and test suites.</p>
@@ -574,7 +586,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 </h3>
 <p>Start the web-based result viewer.</p>
 <hr style="height: 50px; border: 0;"><a name="ModuleOptions"></a><h1>Module Options</h1>
-<p>The following list is the modules included with the Phoronix Test Suite that are intended to extend the functionality of pts-core. Some of these options have commands that can be run directly in a similiar manner to the other Phoronix Test Suite user commands. Some modules are just meant to be loaded directly by adding the module name to the AutoLoadModules tag in ~/.phoronix-test-suite/user-config.xml or via the PTS_MODULES environment variable. A list of available modules is also available by running <em>phoronix-test-suite list-modules.</em></p><hr><h2>Backup Creation + Restore</h2>
+<p>The following list is the modules included with the Phoronix Test Suite that are intended to extend the functionality of pts-core. Some of these options have commands that can be run directly in a similiar manner to the other Phoronix Test Suite user commands. Some modules are just meant to be loaded directly by adding the module name to the AutoLoadModules tag in ~/.phoronix-test-suite/user-config.xml or via the PTS_MODULES environment variable. A list of available modules is also available by running <em>phoronix-test-suite list-modules.</em></p><hr>
+<h2>Backup Creation + Restore</h2>
 <p>This is a module for creating backups of the Phoronix Test Suite / Phoromatic and allows for restoring of created backups. The backup will be in ZIP or TAR format. If only a path is specified, the file-name will be auto-generated with a current time-stamp.</p>
 <p>phoronix-test-suite backup.create</p>
 <p>phoronix-test-suite backup.restore</p>
@@ -663,6 +676,11 @@ Supported Options:
   - cpu.freq.cpu0
   - cpu.freq.cpu1
   - cpu.freq.cpu2
+  - cpu.freq.cpu3
+  - cpu.freq.cpu4
+  - cpu.freq.cpu5
+  - cpu.freq.cpu6
+  - cpu.freq.cpu7
   - cpu.peak-freq
   - cpu.power
   - cpu.temp
@@ -671,6 +689,11 @@ Supported Options:
   - cpu.usage.cpu0
   - cpu.usage.cpu1
   - cpu.usage.cpu2
+  - cpu.usage.cpu3
+  - cpu.usage.cpu4
+  - cpu.usage.cpu5
+  - cpu.usage.cpu6
+  - cpu.usage.cpu7
   - cpu.usage.summary
   - cpu.voltage
   - all.gpu
@@ -685,12 +708,18 @@ Supported Options:
   - hdd.read-speed
   - all.hdd.read-speed
   - hdd.read-speed.sda
+  - hdd.read-speed.sdb
+  - hdd.read-speed.nvme0n1
   - hdd.temp
   - all.hdd.temp
   - hdd.temp.sda
+  - hdd.temp.sdb
+  - hdd.temp.nvme0n1
   - hdd.write-speed
   - all.hdd.write-speed
   - hdd.write-speed.sda
+  - hdd.write-speed.sdb
+  - hdd.write-speed.nvme0n1
   - all.memory
   - memory.temp
   - memory.usage
@@ -731,7 +760,8 @@ NOTE: Use the "system-sensors" command to see what sensors are available for mon
 
 <p>The <em>phoronix-test-suite.bat</em> Windows launcher for the Phoronix Test Suite will automatically download and setup PHP on the local system if PHP is not present already.</p>
 <p>As part of the PHP requirement, the following PHP extensions are required and/or highly recommended in order to take advantage of the Phoronix Test Suite capabilities:</p>
-<ul><li><strong>PHP DOM</strong> is needed for XML operations and must be installed for the Phoronix Test Suite to function.</li>
+<ul>
+<li><strong>PHP DOM</strong> is needed for XML operations and must be installed for the Phoronix Test Suite to function.</li>
 <li><strong>PHP ZIP</strong> is needed for file compression and decompression and specifically dealing with test profiles and suites obtained via OpenBenchmarking.org or when uploading such tests and suites.</li>
 <li><strong>PHP OpenSSL</strong> is used for enabling HTTPS communication with Phoronix Test Suite / OpenBenchmarking.org servers.</li>
 <li><strong>PHP GD</strong> is highly recommended for rendering of test data to JPEG and PNG image formats and is selectively used in other image operations.</li>
@@ -740,7 +770,8 @@ NOTE: Use the "system-sensors" command to see what sensors are available for mon
 <li><strong>PHP POSIX</strong> is used for reliably obtaining more system information in an efficient manner.</li>
 <li><strong>PHP CURL</strong> is supported as an alternative networking library for improved network performance in downloading test files and other operations.</li>
 <li><strong>PHP FPDF</strong> is used to generate PDF reports of test data.</li>
-</ul><p>Without all of these extensions, some capabilities of the Phoronix Test Suite will not be available. Many of these packages are enabled by default and do not require any additional installation steps on most Linux distributions, otherwise they are often found in the package vendor's repository.</p>
+</ul>
+<p>Without all of these extensions, some capabilities of the Phoronix Test Suite will not be available. Many of these packages are enabled by default and do not require any additional installation steps on most Linux distributions, otherwise they are often found in the package vendor's repository.</p>
 <h1>Notes</h1>
 <h2>General</h2>
 <p>You may need to modify the <em>php.ini</em> file on your system in order to support uploading results to OpenBenchmarking.org or logging into your OpenBenchmarking.org account. The <em>allow_url_fopen</em>, <em>file_uploads</em>, and <em>allow_url_include</em> options must be set to true in the PHP configuration. See additional information in this <a href="http://www.phoronix.com/forums/showpost.php?p=32484&amp;postcount=4">Phoronix Forums support thread</a>.</p>
@@ -896,7 +927,8 @@ In the event that a test profile fails to install or run, the following general 
 <p>- By writing a Phoronix Test Suite module, you can easily extend the functionality of the Phoronix Test Suite. Some examples are being able to email the results upon completion, controlling the system's screensaver, updating a text LCD panel with the current test status, etc.</p>
 <hr style="height: 50px; border: 0;"><a name="VirtualTestSuites"></a><h1>Virtual Test Suites</h1>
 <p>Virtual test suites are not like a traditional test suite defined by the XML suite specification. Virtual test suites are dynamically generated in real-time by the Phoronix Test Suite client based upon the specified test critera. Virtual test suites can automatically consist of all test profiles that are compatible with a particular operating system or test profiles that meet other critera. When running a virtual suite, the OpenBenchmarking.org repository of the test profiles to use for generating the dynamic suite must be prefixed. </p>
-<p>Virtual test suites can be installed and run just like a normal XML test suite and shares nearly all of the same capabilities. However, when running a virtual suite, the user will be prompted to input any user-configuration options for needed test profiles just as they would need to do if running the test individually. When running a virtual suite, the user also has the ability to select individual tests within the suite to run or to run all of the contained test profiles. Virtual test suites are also only supported for an OpenBenchmarking.org repository if there is no test profile or test suite of the same name in the repository. Below is a list of common virtual test suites for the main Phoronix Test Suite repository, but the dynamic list of available virtual test suites based upon the enabled repositories is available by running <em>phoronix-test-suite list-available-virtual-suites.</em></p><hr><h3>All PTS Tests<em>  pts/all</em>
+<p>Virtual test suites can be installed and run just like a normal XML test suite and shares nearly all of the same capabilities. However, when running a virtual suite, the user will be prompted to input any user-configuration options for needed test profiles just as they would need to do if running the test individually. When running a virtual suite, the user also has the ability to select individual tests within the suite to run or to run all of the contained test profiles. Virtual test suites are also only supported for an OpenBenchmarking.org repository if there is no test profile or test suite of the same name in the repository. Below is a list of common virtual test suites for the main Phoronix Test Suite repository, but the dynamic list of available virtual test suites based upon the enabled repositories is available by running <em>phoronix-test-suite list-available-virtual-suites.</em></p><hr>
+<h3>All PTS Tests<em>  pts/all</em>
 </h3>
 <p>This is a collection of all test profiles found within the specified OpenBenchmarking.org repository.</p>
 <h3>Installed Tests<em>  pts/installed</em>
@@ -1124,6 +1156,159 @@ In the event that a test profile fails to install or run, the following general 
 <h3>Smp Tests<em>  git/smp</em>
 </h3>
 <p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing smp.</p>
+<h3>All PTS Tests<em>  pts/all</em>
+</h3>
+<p>This is a collection of all test profiles found within the specified OpenBenchmarking.org repository.</p>
+<h3>Installed Tests<em>  pts/installed</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository that are already installed on the system under test.</p>
+<h3>Every PTS Test<em>  pts/everything</em>
+</h3>
+<p>This is a collection of every test profile found within the specified OpenBenchmarking.org repository, including unsupported tests.</p>
+<h3>Linux Operating System Tests<em>  pts/linux</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Linux Operating System.</p>
+<h3>Solaris Operating System Tests<em>  pts/solaris</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Solaris Operating System.</p>
+<h3>BSD Operating System Tests<em>  pts/bsd</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the BSD Operating System.</p>
+<h3>MacOSX Operating System Tests<em>  pts/macosx</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the MacOSX Operating System.</p>
+<h3>Windows Operating System Tests<em>  pts/windows</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Windows Operating System.</p>
+<h3>Hurd Operating System Tests<em>  pts/hurd</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Hurd Operating System.</p>
+<h3>System Subsystem Tests<em>  pts/system</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the System sub-system.</p>
+<h3>Processor Subsystem Tests<em>  pts/processor</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Processor sub-system.</p>
+<h3>Graphics Subsystem Tests<em>  pts/graphics</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Graphics sub-system.</p>
+<h3>Other Subsystem Tests<em>  pts/other</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Other sub-system.</p>
+<h3>Utility Tests<em>  pts/utility</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Utility software test.</p>
+<h3>Simulator Tests<em>  pts/simulator</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Simulator software test.</p>
+<h3>Scientific Tests<em>  pts/scientific</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Scientific software test.</p>
+<h3>Benchmark Tests<em>  pts/benchmark</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Benchmark software test.</p>
+<h3>Application Tests<em>  pts/application</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Application software test.</p>
+<h3>Game Tests<em>  pts/game</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Game software test.</p>
+<h3>Smp Tests<em>  pts/smp</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing smp.</p>
+<h3>Cuda Tests<em>  pts/cuda</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing cuda.</p>
+<h3>Openmp Tests<em>  pts/openmp</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing openmp.</p>
+<h3>Cloud Tests<em>  pts/cloud</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing cloud.</p>
+<h3>Docker Tests<em>  pts/docker</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing docker.</p>
+<h3>Go Tests<em>  pts/go</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing go.</p>
+<h3>Vdpau Tests<em>  pts/vdpau</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing vdpau.</p>
+<h3>Video Tests<em>  pts/video</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing video.</p>
+<h3>Responsiveness Tests<em>  pts/responsiveness</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing responsiveness.</p>
+<h3>Openmpi Tests<em>  pts/openmpi</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing openmpi.</p>
+<h3>All WINDOWS Tests<em>  windows/all</em>
+</h3>
+<p>This is a collection of all test profiles found within the specified OpenBenchmarking.org repository.</p>
+<h3>Installed Tests<em>  windows/installed</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository that are already installed on the system under test.</p>
+<h3>Every WINDOWS Test<em>  windows/everything</em>
+</h3>
+<p>This is a collection of every test profile found within the specified OpenBenchmarking.org repository, including unsupported tests.</p>
+<h3>Linux Operating System Tests<em>  windows/linux</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Linux Operating System.</p>
+<h3>Solaris Operating System Tests<em>  windows/solaris</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Solaris Operating System.</p>
+<h3>BSD Operating System Tests<em>  windows/bsd</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the BSD Operating System.</p>
+<h3>MacOSX Operating System Tests<em>  windows/macosx</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the MacOSX Operating System.</p>
+<h3>Windows Operating System Tests<em>  windows/windows</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Windows Operating System.</p>
+<h3>Hurd Operating System Tests<em>  windows/hurd</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Hurd Operating System.</p>
+<h3>System Subsystem Tests<em>  windows/system</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the System sub-system.</p>
+<h3>Processor Subsystem Tests<em>  windows/processor</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Processor sub-system.</p>
+<h3>Disk Subsystem Tests<em>  windows/disk</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Disk sub-system.</p>
+<h3>Graphics Subsystem Tests<em>  windows/graphics</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Graphics sub-system.</p>
+<h3>Memory Subsystem Tests<em>  windows/memory</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Memory sub-system.</p>
+<h3>Network Subsystem Tests<em>  windows/network</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Network sub-system.</p>
+<h3>Other Subsystem Tests<em>  windows/other</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Other sub-system.</p>
+<h3>Utility Tests<em>  windows/utility</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Utility software test.</p>
+<h3>Simulator Tests<em>  windows/simulator</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Simulator software test.</p>
+<h3>Scientific Tests<em>  windows/scientific</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Scientific software test.</p>
+<h3>Benchmark Tests<em>  windows/benchmark</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Benchmark software test.</p>
+<h3>Application Tests<em>  windows/application</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Application software test.</p>
+<h3>Game Tests<em>  windows/game</em>
+</h3>
+<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Game software test.</p>
 <hr style="height: 50px; border: 0;"><a name="ComponentTesting"></a><h1>Component Testing</h1>
 <h1>Compiler Testing &amp; Masking</h1>
 <p>A majority of the test profiles provided by OpenBenchmarking.org to the Phoronix Test Suite are source-based tests. Relying upon the upstream source-code for each program under test allows for the tests to be easily brought to new platforms and architectures, avoids any out-of-tree / non-default packaging differences by different distributions and operating systems, and to allow the Phoronix Test Suite user to easily test new compilers and/or compiler options. For the source-based tests, the Phoronix Test Suite relies upon a compiler (e.g. GCC, LLVM/Clang, Sun Studio, Open64, et al) being present on the system under test. The Phoronix Test Suite does respect <em>CC/CXX</em> environment variables and test profiles are expected to honor <em>CFLAGS/CXXFLAGS</em> and other compiler settings.</p>
@@ -1150,11 +1335,15 @@ In the event that a test profile fails to install or run, the following general 
 <p>For those without the ability to remove that file from their Phoronix Test Suite installation or as a secondary safeguard, from the Phoronix Test Suite user configuration file (<em>/etc/phoronix-test-suite.xml<em> as root or <em>~/.phoronix-test-suite/user-config.xml<em> for most users) is a "<em>AllowResultUploadsToOpenBenchmarking</em>" option. If setting that value to <em>FALSE</em>, it should apply the same behavior as if deleting the pts_openbenchmarking_upload file.</em></em></em></em></p>
 <p>If distributing a customized/local copy of the Phoronix Test Suite, the default behavior of the configuration file (in addition to deleting the pts_openbenchmarking_upload file) can be done via the user configuration defaults defined within <em>pts-core/static/user-config-defaults.xml</em>.</p>
 <hr style="height: 50px; border: 0;"><a name="DevelopmentCredits"></a><h1>Development Credits</h1>
-<p>The Phoronix Test Suite is based upon the extensive testing and internal tools developed by <a href="http://www.phoronix.com/">Phoronix.com</a> since 2004 along with support from leading tier-one computer hardware and software vendors. The principal architects of the Phoronix Test Suite are <a href="http://www.michaellarabel.com/">Michael Larabel</a> and Matthew Tippett. The phoronix-test-suite, pts_Graph, Phoromatic, Phodevi, tandem_Xml, and nye_Xml are some of the related open-source projects provided by <a href="http://www.phoronix-media.com/">Phoronix Media</a>.</p><p style="padding-top: 30px; text-align: center;">Copyright &copy; 2008 - 2020 by Phoronix Media.</p></div>
+<p>The Phoronix Test Suite is based upon the extensive testing and internal tools developed by <a href="http://www.phoronix.com/">Phoronix.com</a> since 2004 along with support from leading tier-one computer hardware and software vendors. The principal architects of the Phoronix Test Suite are <a href="http://www.michaellarabel.com/">Michael Larabel</a> and Matthew Tippett. The phoronix-test-suite, pts_Graph, Phoromatic, Phodevi, tandem_Xml, and nye_Xml are some of the related open-source projects provided by <a href="http://www.phoronix-media.com/">Phoronix Media</a>.</p>
+<p style="padding-top: 30px; text-align: center;">Copyright &copy; 2008 - 2020 by Phoronix Media.</p></div>
 		<div id="pts_footer">
-			<div id="pts_footer_logo"><a href="http://www.phoronix-test-suite.com/"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewbox="0 0 76 41" width="76" height="41" preserveaspectratio="xMinYMin meet"><path d="m74 22v9m-5-16v16m-5-28v28m-23-2h12.5c2.485281 0 4.5-2.014719 4.5-4.5s-2.014719-4.5-4.5-4.5h-8c-2.485281 0-4.5-2.014719-4.5-4.5s2.014719-4.5 4.5-4.5h12.5m-21 5h-11m11 13h-2c-4.970563 0-9-4.029437-9-9v-20m-24 40v-20c0-4.970563 4.0294373-9 9-9 4.970563 0 9 4.029437 9 9s-4.029437 9-9 9h-9" stroke="#c8d905" stroke-width="4" fill="none"></path></svg></a></div>
+			<div id="pts_footer_logo"><a href="http://www.phoronix-test-suite.com/"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewbox="0 0 76 41" width="76" height="41" preserveaspectratio="xMinYMin meet">
+  <path d="m74 22v9m-5-16v16m-5-28v28m-23-2h12.5c2.485281 0 4.5-2.014719 4.5-4.5s-2.014719-4.5-4.5-4.5h-8c-2.485281 0-4.5-2.014719-4.5-4.5s2.014719-4.5 4.5-4.5h12.5m-21 5h-11m11 13h-2c-4.970563 0-9-4.029437-9-9v-20m-24 40v-20c0-4.970563 4.0294373-9 9-9 4.970563 0 9 4.029437 9 9s-4.029437 9-9 9h-9" stroke="#c8d905" stroke-width="4" fill="none"></path>
+</svg></a></div>
 			<p>Copyright &copy; 2008 - 2015 by <a href="http://www.phoronix-media.com/">Phoronix Media</a>.</p>
 			<p>All trademarks used are properties of their respective owners. All rights reserved.</p>
 		</div>
 		</div>
-	</body></html>
+	</body>
+</html>
