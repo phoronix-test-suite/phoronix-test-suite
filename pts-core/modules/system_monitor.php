@@ -59,12 +59,17 @@ class system_monitor extends pts_module_interface
 	public static function module_info()
 	{
 		$info = null;
-		$info .= PHP_EOL . 'Monitoring these sensors is as easy as running your normal Phoronix Test Suite commands but at the beginning of the command add: MONITOR=<selected sensors> (example: MONITOR=cpu.temp,cpu.voltage phoronix-test-suite benchmark universe). For some of the sensors there is an ability to monitor specific device, e.g. cpu.usage.cpu0 or hdd.read-speed.sda. If the PERFORMANCE_PER_WATT environment variable is set, a performance per Watt graph will also be added, assuming the system\'s power consumption can be monitored. PERFORMANCE_PER_SENSOR= will allow similar behavior but for arbitrary sensors. Below are all of the sensors supported by this version of the Phoronix Test Suite.' . PHP_EOL . PHP_EOL;		$info .= 'Supported Options:' . PHP_EOL . PHP_EOL;
+		$info .= PHP_EOL . 'Monitoring these sensors is as easy as running your normal Phoronix Test Suite commands but at the beginning of the command add: MONITOR=<selected sensors>.  For example, this will monitor the CPU temperature and voltage during tests: '
+            . PHP_EOL . PHP_EOL . '    MONITOR=cpu.temp,cpu.voltage phoronix-test-suite benchmark universe'
+            . PHP_EOL . PHP_EOL . 'For some of the sensors there is an ability to monitor specific device, e.g. cpu.usage.cpu0 or hdd.read-speed.sda. If the PERFORMANCE_PER_WATT environment variable is set, a performance per Watt graph will also be added, assuming the system\'s power consumption can be monitored. PERFORMANCE_PER_SENSOR= will allow similar behavior but for arbitrary sensors. Below are all of the sensors supported by this version of the Phoronix Test Suite.' 
+            . PHP_EOL . PHP_EOL . 'Supported Options:' . PHP_EOL . PHP_EOL;
 
 		foreach(self::monitor_arguments() as $arg)
 		{
 			$info .= '  - ' . $arg . PHP_EOL;
 		}
+
+        $info .= PHP_EOL . 'NOTE: Use the "system-sensors" command to see what sensors are available for monitoring on the system.' . PHP_EOL;
 
 		return $info;
 	}
