@@ -344,5 +344,9 @@
 			<GenericName>snappy</GenericName>
 			<PackageName>app-arch/snappy</PackageName>
 		</Package>
+		<Package>
+			<GenericName>vaapi</GenericName>
+			<PackageName>x11-libs/libva</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

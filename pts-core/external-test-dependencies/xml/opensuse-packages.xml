@@ -354,5 +354,9 @@
 			<GenericName>google-benchmark</GenericName>
 			<PackageName>benchmark-devel</PackageName>
 		</Package>
+		<Package>
+			<GenericName>vaapi</GenericName>
+			<PackageName>libva-devel</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

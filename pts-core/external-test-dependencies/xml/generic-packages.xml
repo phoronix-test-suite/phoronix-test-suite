@@ -578,5 +578,11 @@
 			<PossibleNames>libsnappy-dev</PossibleNames>
 			<FileCheck>snappy.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>vaapi</GenericName>
+			<Title>VA-API Video Acceleration API</Title>
+			<PossibleNames>libva-dev, libva-devel</PossibleNames>
+			<FileCheck>va/va.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

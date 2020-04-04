@@ -287,5 +287,9 @@
 			<GenericName>snappy</GenericName>
 			<PackageName>snappy-devel</PackageName>
 		</Package>
+		<Package>
+			<GenericName>vaapi</GenericName>
+			<PackageName>libva-devel</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

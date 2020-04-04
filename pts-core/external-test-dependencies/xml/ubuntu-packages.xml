@@ -320,7 +320,7 @@
 		</Package>
 		<Package>
 			<GenericName>opencl</GenericName>
-			<PackageName>opencl-headers ocl-icd-libopencl1</PackageName>
+			<PackageName>opencl-headers ocl-icd-libopencl1 ocl-icd-opencl-dev</PackageName>
 		</Package>
 		<Package>
 			<GenericName>attr</GenericName>
@@ -423,6 +423,10 @@
 		<Package>
 			<GenericName>snappy</GenericName>
 			<PackageName>libsnappy-dev</PackageName>
+		</Package>
+		<Package>
+			<GenericName>vaapi</GenericName>
+			<PackageName>libva-dev</PackageName>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

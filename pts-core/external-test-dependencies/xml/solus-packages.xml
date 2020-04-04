@@ -305,5 +305,9 @@
 			<GenericName>libxml2</GenericName>
 			<PackageName>libxml2</PackageName>
 		</Package>
+		<Package>
+			<GenericName>vaapi</GenericName>
+			<PackageName>libva</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
