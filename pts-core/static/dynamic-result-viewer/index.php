@@ -782,7 +782,7 @@ var WEB_URL_PATH = "<?php echo WEB_URL_PATH; ?>";
 
 if((!isset($leading_msg) || empty($leading_msg)) && defined('PTS_CORE_STORAGE') && ($motd = pts_storage_object::read_from_file(PTS_CORE_STORAGE, 'MOTD_HTML')) != null)
 {
-	$leading_msg = '<strong>Message Of The Day:</strong> <em>' . $motd . '</em>';
+	$leading_msg = '<em>' . $motd . '</em>';
 }
 
 if(isset($leading_msg) && $leading_msg) { echo '<div id="leading_message">' . $leading_msg . '</div>'; } ?>
