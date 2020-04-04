@@ -52,6 +52,10 @@ switch((isset($uri_segments[0]) ? $uri_segments[0] : null))
 		$_GET['page'] = 'result';
 		$_GET['result'] = $uri_segments[1];
 		break;
+	case 'test':
+		$_GET['page'] = 'test';
+		$_GET['test'] = base64_decode($uri_segments[1]);
+		break;
 	case 'tests':
 		$_GET['page'] = 'tests';
 		break;
@@ -324,6 +328,93 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		}
 		echo '</body></html>';
 		exit;
+	case 'test':
+		$o = new pts_test_profile($_GET['test']);
+		$PAGE .= '<h1>' . $o->get_title() . '</h1>';
+
+		if($o->get_license() == 'Retail' || $o->get_license() == 'Restricted')
+		{
+			$PAGE .= '<p><em>NOTE: This test profile is marked \'' . $o->get_license() . '\' and may have issues running without third-party/commercial dependencies.</em></p>';
+		}
+		if($o->get_status() != 'Verified' && $o->get_status() != null)
+		{
+			$PAGE .= '<p><em>NOTE: This test profile is marked \'' . $o->get_status() . '\' and may have known issues with test installation or execution.</em></p>';
+		}
+
+		$table = array();
+		$table[] = array('Run Identifier: ', $o->get_identifier());
+		$table[] = array('Profile Version: ', $o->get_test_profile_version());
+		$table[] = array('Maintainer: ', $o->get_maintainer());
+		$table[] = array('Test Type: ', $o->get_test_hardware_type());
+		$table[] = array('Software Type: ', $o->get_test_software_type());
+		$table[] = array('License Type: ', $o->get_license());
+		$table[] = array('Test Status: ', $o->get_status());
+		$table[] = array('Supported Platforms: ', implode(', ', $o->get_supported_platforms()));
+		$table[] = array('Project Web-Site: ', '<a target="_blank" href="' . $o->get_project_url() . '">' . $o->get_project_url() . '</a>');
+
+		$download_size = $o->get_download_size();
+		if(!empty($download_size))
+		{
+			$table[] = array('Download Size: ', $download_size . ' MB');
+		}
+
+		$environment_size = $o->get_environment_size();
+		if(!empty($environment_size))
+		{
+			$table[] = array('Environment Size: ', $environment_size . ' MB');
+		}
+
+		$cols = array(array(), array());
+		foreach($table as &$row)
+		{
+			$row[0] = '<strong>' . $row[0] . '</strong>';
+			$cols[0][] = $row[0];
+			$cols[1][] = $row[1];
+		}
+		$PAGE .= '<br /><div style="float: left;">' . implode('<br />', $cols[0]) . '</div>';
+		$PAGE .= '<div style="float: left; padding-left: 15px;">' . implode('<br />', $cols[1]) . '</div>' . '<br style="clear: both;" />';
+		$PAGE .= '<p>'. $o->get_description() . '</p>';
+
+		foreach(array('Pre-Install Message' => $o->get_pre_install_message(), 'Post-Install Message' => $o->get_post_install_message(), 'Pre-Run Message' => $o->get_pre_run_message(), 'Post-Run Message' => $o->get_post_run_message()) as $msg_type => $msg)
+		{
+			if($msg != null)
+			{
+				$PAGE .= '<p><em>' . $msg_type . ': ' . $msg . '</em></p>';
+			}
+		}
+
+		$dependencies = $o->get_external_dependencies();
+		if(!empty($dependencies) && !empty($dependencies[0]))
+		{
+			$PAGE .= PHP_EOL . '<strong>Software Dependencies:</strong>' . '<br />';
+			$PAGE .= implode('<br />', $dependencies);
+		}
+
+		$o_identifier = $o->get_identifier(false);
+		$table = array();
+		$i = 0;
+		$found_result = false;
+		foreach(pts_results::saved_test_results() as $id)
+		{
+			$result_file = new pts_result_file($id);
+			foreach($result_file->get_result_objects() as $result_object)
+			{
+				if($result_object->test_profile->get_identifier(false) == $o_identifier)
+				{
+					if(!$found_result)
+					{
+						$found_result = true;
+						$PAGE .= '<br /><h2>Results Containing This Test</h2><br />';
+					}
+					$PAGE .= '<h2><a href="' . WEB_URL_PATH . 'result/' . $id . '">' . $result_file->get_title() . '</a></h2>';
+					$PAGE .= '<div class="sub"><label for="cr_checkbox_' . $i . '"></label> ' . $result_file->get_test_count() . ' Tests &nbsp; &nbsp; ' . $result_file->get_system_count() . ' Systems &nbsp; &nbsp; ' . date('l j F H:i', strtotime($result_file->get_last_modified())) . ' </div>';
+					$PAGE .= '<div class="desc">' . $result_file->get_description() . '</div>';
+					break;
+					$i++;
+				}
+			}
+		}
+		break;
 	case 'tests':
 		$tests = pts_openbenchmarking::available_tests(false, false, true);
 		$tests_to_show = array();
@@ -395,7 +486,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 				$secondary_message = '- <em>Very Popular</em>';
 			}
 
-			$PAGE .= '<a href="?test/' . $test_profile->get_identifier() . '"><div class="table_test_box"><strong>' . $test_profile->get_title(). '</strong><br /><span style="">~' . pts_strings::plural_handler(max(1, round(pts_openbenchmarking_client::read_repository_test_profile_attribute($test_profile, 'average_run_time') / 60)),
+			$PAGE .= '<a href="' . WEB_URL_PATH . 'test/' . base64_encode($test_profile->get_identifier()) . '"><div class="table_test_box"><strong>' . $test_profile->get_title(). '</strong><br /><span style="">~' . pts_strings::plural_handler(max(1, round(pts_openbenchmarking_client::read_repository_test_profile_attribute($test_profile, 'average_run_time') / 60)),
 'min') . ' run-time ' . $secondary_message . '</span></div></a>';
 		}
 		if($tests_in_category > 0)
