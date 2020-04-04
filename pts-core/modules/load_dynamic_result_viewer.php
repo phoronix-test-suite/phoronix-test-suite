@@ -188,7 +188,8 @@ class load_dynamic_result_viewer extends pts_module_interface
 		'PTS_VIEWER_RESULT_PATH' => PTS_SAVE_RESULTS_PATH,
 		'PTS_VIEWER_PTS_PATH' => PTS_PATH,
 		'PTS_VIEWER_CONFIG_FILE' => pts_config::get_config_file_location(),
-		'PTS_VIEWER_ID' => self::$random_id
+		'PTS_VIEWER_ID' => self::$random_id,
+		'PTS_CORE_STORAGE' => PTS_CORE_STORAGE,
 		);
 
 		pts_storage_object::set_in_file(PTS_CORE_STORAGE, 'last_web_result_viewer_active_port', $web_port);

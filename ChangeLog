@@ -7,6 +7,7 @@ pts-core: External dependency updates
 pts-core: Allow listing test profiles within the result viewer
 pts-core: Allow showing test profile information within the result viewer
 pts-core: Various other updates to the result viewer
+update_checker: Add message of the day support
 
 Phoronix Test Suite 9.6.0 Milestone 1
 24 March 2020

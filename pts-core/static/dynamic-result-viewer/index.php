@@ -110,6 +110,11 @@ if(isset($_GET['PTS']))
 	exit;
 }
 
+if(!defined('PTS_CORE_STORAGE') && getenv('PTS_CORE_STORAGE') && is_file(getenv('PTS_CORE_STORAGE')))
+{
+	define('PTS_CORE_STORAGE',  getenv('PTS_CORE_STORAGE'));
+}
+
 pts_config::set_override_default_config(getenv('PTS_VIEWER_CONFIG_FILE'));
 if(PTS_SAVE_RESULTS_PATH && is_writable(PTS_SAVE_RESULTS_PATH) && getenv('PTS_VIEWER_CONFIG_FILE'))
 {
@@ -404,7 +409,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 					if(!$found_result)
 					{
 						$found_result = true;
-						$PAGE .= '<br /><h2>Results Containing This Test</h2><br />';
+						$PAGE .= '<br /><br /><h2>Results Containing This Test</h2><br />';
 					}
 					$PAGE .= '<h2><a href="' . WEB_URL_PATH . 'result/' . $id . '">' . $result_file->get_title() . '</a></h2>';
 					$PAGE .= '<div class="sub"><label for="cr_checkbox_' . $i . '"></label> ' . $result_file->get_test_count() . ' Tests &nbsp; &nbsp; ' . $result_file->get_system_count() . ' Systems &nbsp; &nbsp; ' . date('l j F H:i', strtotime($result_file->get_last_modified())) . ' </div>';
@@ -772,7 +777,15 @@ var WEB_URL_PATH = "<?php echo WEB_URL_PATH; ?>";
 <li><a href="<?php echo WEB_URL_PATH; ?>">Results</a></li>
 </ul>
 </div>
-<?php if(isset($leading_msg) && $leading_msg) { echo '<div id="leading_message">' . $leading_msg . '</div>'; } ?>
+
+<?php
+
+if((!isset($leading_msg) || empty($leading_msg)) && defined('PTS_CORE_STORAGE') && ($motd = pts_storage_object::read_from_file(PTS_CORE_STORAGE, 'MOTD_HTML')) != null)
+{
+	$leading_msg = '<strong>Message Of The Day:</strong> <em>' . $motd . '</em>';
+}
+
+if(isset($leading_msg) && $leading_msg) { echo '<div id="leading_message">' . $leading_msg . '</div>'; } ?>
 <div id="main_area">
 <?php echo PAGE; ?>
 </div>
