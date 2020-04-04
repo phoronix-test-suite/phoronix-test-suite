@@ -52,6 +52,9 @@ switch((isset($uri_segments[0]) ? $uri_segments[0] : null))
 		$_GET['page'] = 'result';
 		$_GET['result'] = $uri_segments[1];
 		break;
+	case 'tests':
+		$_GET['page'] = 'tests';
+		break;
 }
 
 if(strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' && isset($_ENV['TEMP']) && is_file($_ENV['TEMP'] . '\pts-env-web'))
@@ -133,7 +136,7 @@ if(VIEWER_ACCESS_KEY != null && (!isset($_SESSION['AccessKey']) || $_SESSION['Ac
 <!doctype html>
 <html lang="en">
 <head>
-  <title>Phoronix Test Suite - Local Result Viewer</title>
+  <title>Phoronix Test Suite - Result Portal</title>
 <link rel="stylesheet" href="<?php echo WEB_URL_PATH; ?>/result-viewer.css">
 <script type="text/javascript" src="<?php echo WEB_URL_PATH; ?>/result-viewer.js"></script>
 <link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
@@ -144,7 +147,7 @@ if(VIEWER_ACCESS_KEY != null && (!isset($_SESSION['AccessKey']) || $_SESSION['Ac
 <div id="login_box">
 <div id="login_box_left">
 <h1>Phoronix Test Suite</h1>
-<h2>Local Result Viewer</h2>
+<h2>Result Portal</h2>
 </div>
 <div id="login_box_right">
 <form name="login_form" id="login_form" action="<?php echo CURRENT_URI; ?>" method="post"><br />
@@ -321,6 +324,86 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		}
 		echo '</body></html>';
 		exit;
+	case 'tests':
+		$tests = pts_openbenchmarking::available_tests(false, false, true);
+		$tests_to_show = array();
+		foreach($tests as $identifier)
+		{
+			$test_profile = new pts_test_profile($identifier);
+
+			if($test_profile->get_title() == null)
+			{
+				// Don't show unsupported tests
+				continue;
+			}
+
+			$tests_to_show[] = $test_profile;
+		}
+		if(empty($tests_to_show))
+		{
+			$PAGE .= '<p>No cached test profiles found.</p>';
+		}
+		else
+		{
+			$PAGE .= '<p>The ' . count($tests_to_show) . ' test profiles below are cached on the local system and in a current state. For a complete listing of available tests visit <a href="https://openbenchmarking.org/">OpenBenchmarking.org</a>.</p>';
+		}
+
+		$PAGE .= '<div class="pts_test_boxes">';
+		$tests_to_show = array_unique($tests_to_show);
+		function tests_cmp_result_object_sort($a, $b)
+		{
+			$a_comp = $a->get_test_hardware_type() . $a->get_title();
+			$b_comp = $b->get_test_hardware_type() . $b->get_title();
+
+			return strcmp($a_comp, $b_comp);
+		}
+		usort($tests_to_show, 'tests_cmp_result_object_sort');
+		$category = null;
+		$tests_in_category = 0;
+		foreach($tests_to_show as &$test_profile)
+		{
+			if($category != $test_profile->get_test_hardware_type())
+			{
+				$category = $test_profile->get_test_hardware_type();
+				if($category == null) continue;
+				if($tests_in_category > 0)
+				{
+					$PAGE .= '<br style="clear: both;" /><em>' . $tests_in_category . ' Tests</em>';
+				}
+				$tests_in_category = 0;
+				$PAGE .= '</div><a name="' . $category . '"></a>' . PHP_EOL . '<h2>' . $category . '</h2>' . PHP_EOL . '<div class="pts_test_boxes">';
+				$popularity_index = pts_openbenchmarking_client::popular_tests(-1, pts_openbenchmarking_client::read_repository_test_profile_attribute($test_profile, 'test_type'));
+			}
+			if($category == null) continue;
+			$tests_in_category++;
+
+			$last_updated = pts_openbenchmarking_client::read_repository_test_profile_attribute($test_profile, 'last_updated');
+			$popularity = isset($popularity_index) && is_array($popularity_index) ? array_search($test_profile->get_identifier(false), $popularity_index) : false;
+			$secondary_message = null;
+
+			if($last_updated > (time() - (60 * 60 * 24 * 30)))
+			{
+				// Mark it as newly updated if uploaded in past 3 weeks
+				$secondary_message = '- <em>Recently Updated</em>';
+			}
+			else if($popularity === 0)
+			{
+				$secondary_message = '- <em>Most Popular</em>';
+			}
+			else if($popularity < 6)
+			{
+				$secondary_message = '- <em>Very Popular</em>';
+			}
+
+			$PAGE .= '<a href="?test/' . $test_profile->get_identifier() . '"><div class="table_test_box"><strong>' . $test_profile->get_title(). '</strong><br /><span style="">~' . pts_strings::plural_handler(max(1, round(pts_openbenchmarking_client::read_repository_test_profile_attribute($test_profile, 'average_run_time') / 60)),
+'min') . ' run-time ' . $secondary_message . '</span></div></a>';
+		}
+		if($tests_in_category > 0)
+		{
+			$PAGE .= '<br style="clear: both;" /><em>' . $tests_in_category . ' Tests</em>';
+		}
+		$PAGE .= '</div>';
+		break;
 	case 'result':
 		if(false && isset($_POST) && !empty($_POST))
 		{
@@ -503,7 +586,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		break;
 	case 'index':
 	default:
-		define('TITLE', 'Phoronix Test Suite ' . PTS_VERSION . ' Result Viewer');
+		define('TITLE', 'Phoronix Test Suite ' . PTS_VERSION . ' Result Portal');
 		$PAGE .= '<form name="search_results" id="search_results" action="' . CURRENT_URI . '" method="post"><input type="text" name="search" id="u_search" placeholder="Search Test Results" value="' . (isset($_POST['search']) ? $_POST['search'] : null) . '" /> <select name="sort_results_by"><option value="date">Sort By Date</option><option value="title">Sort By Title</option><option value="test_count">Sort By Test Count</option><option value="system_count">Sort By System Count</option></select> <input class="primary-button" type="submit" value="Update" />
 </form>';
 		$leading_msg = null;
@@ -594,6 +677,7 @@ var WEB_URL_PATH = "<?php echo WEB_URL_PATH; ?>";
   <path d="m74 22v9m-5-16v16m-5-28v28m-23-2h12.5c2.485281 0 4.5-2.014719 4.5-4.5s-2.014719-4.5-4.5-4.5h-8c-2.485281 0-4.5-2.014719-4.5-4.5s2.014719-4.5 4.5-4.5h12.5m-21 5h-11m11 13h-2c-4.970563 0-9-4.029437-9-9v-20m-24 40v-20c0-4.970563 4.0294373-9 9-9 4.970563 0 9 4.029437 9 9s-4.029437 9-9 9h-9" stroke="#fff" stroke-width="4" fill="none" />
 </svg></div> <div style="float: left; margin-left: 10px;"> <a href="<?php echo WEB_URL_PATH; ?>">Result Viewer</a></div>
 <ul>
+<?php if(PTS_OPENBENCHMARKING_SCRATCH_PATH != null) { ?> <li><a href="<?php echo WEB_URL_PATH; ?>tests/">Test Profiles</a></li><?php } ?>
 <li><a href="<?php echo WEB_URL_PATH; ?>">Results</a></li>
 </ul>
 </div>

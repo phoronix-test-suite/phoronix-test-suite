@@ -362,6 +362,39 @@ div#main_area .div_table_cell input
 {
 	display: none;
 }
+a div.table_test_box:hover
+{
+	background: #f1f1f1;
+	border-color: #1F1F1F;
+}
+div.pts_test_boxes
+{
+	overflow: hidden;
+}
+div.table_test_box
+{
+	background: #fff;
+	color: #000;
+	font-size: 12px;
+	border: solid #949494 1px;
+	display: block;
+	margin: 3px;
+	padding: 2px 4px;
+	float: left;
+	width: 280px;
+}
+div.table_test_box strong
+{
+	color: #044374;
+	font-size: 14px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+div.table_test_box em, div.pts_test_boxes em
+{
+	color: #ef5e09;
+}
 @media print
 {
 	#header, #result-settings, ul, a.mini, div.grid, #result_overview_area, .hide_on_print { display: none !important; }

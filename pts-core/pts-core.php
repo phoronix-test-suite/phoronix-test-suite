@@ -193,6 +193,7 @@ function pts_define_directories()
 		pts_define('PTS_SHARE_PATH', false);
 	}
 
+	// Fallbacks below for dynamic result viewer
 	if(!defined('PTS_TEST_SUITE_PATH') && defined('PTS_INTERNAL_OB_CACHE') && is_dir(PTS_INTERNAL_OB_CACHE . 'test-suites/'))
 	{
 		pts_define('PTS_TEST_SUITE_PATH', PTS_INTERNAL_OB_CACHE . 'test-suites/');
@@ -201,6 +202,11 @@ function pts_define_directories()
 	if(!defined('PTS_TEST_PROFILE_PATH') && defined('PTS_INTERNAL_OB_CACHE') && is_dir(PTS_INTERNAL_OB_CACHE . 'test-profiles/'))
 	{
 		pts_define('PTS_TEST_PROFILE_PATH', PTS_INTERNAL_OB_CACHE . 'test-profiles/');
+	}
+
+	if(!defined('PTS_OPENBENCHMARKING_SCRATCH_PATH') && defined('PTS_INTERNAL_OB_CACHE') && is_dir(PTS_INTERNAL_OB_CACHE . 'openbenchmarking.org/'))
+	{
+		pts_define('PTS_OPENBENCHMARKING_SCRATCH_PATH', PTS_INTERNAL_OB_CACHE . 'openbenchmarking.org/');
 	}
 }
 function pts_needed_extensions()
