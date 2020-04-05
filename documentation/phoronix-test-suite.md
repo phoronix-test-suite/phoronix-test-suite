@@ -643,7 +643,7 @@ This module utilizes the following environmental variables: HALT_SCREENSAVER.
 
 
 ### Update Checker
-This module checks to see if the Phoronix Test Suite -- and its tests and suites -- are up to date.
+This module checks to see if the Phoronix Test Suite -- and its tests and suites -- are up to date plus also handles message of the day information.
 
 
 ### Utilize Wine On Linux Benchmarking
@@ -746,7 +746,7 @@ Below are a list of the operating systems that currently have external dependenc
 ---
 
 
-Alpine LinuxAmazonAngstromArch LinuxClear LinuxClearOSClearOS Core ServerDebianDragonFlyBSDFedoraFluxbuntuGNU KFreeBSDGentooGoobuntuHPJoli CloudLinaroLinux Embedded Development EnvironmentLinux MintMEPISMac OS XMacPortsMageiaMandrivaMeeGoMicrosoft WindowsMidnightBSDMoblinMythbuntuNetBSDNexenta CoreOLPCOpenIndianaOpenMandrivaOpenMandrivaLinuxOpenSolarisOpenSuSEOptwareOracle ServerPCLinuxOSPTS Desktop LivePTS Linux LivePalmPardus LinuxRed Hat EnterpriseRed Hat Enterprise ServerSUSESUSE LinuxScientificScientificSLSolusSolus LinuxTermuxUbuntuVoid LinuxZenwalkgNewSensemacOS Brew
+Alpine LinuxAmazonAngstromArch LinuxClear LinuxClearOSClearOS Core ServerDebianDragonFlyBSDFedoraFluxbuntuGNU KFreeBSDGentooGoobuntuHPJoli CloudLinaroLinux Embedded Development EnvironmentLinux MintMEPISMac OS XMacPortsMageiaMandrivaMeeGoMicrosoft WindowsMidnightBSDMoblinMythbuntuNetBSDNexenta CoreOLPCOpenIndianaOpenMandrivaOpenMandrivaLinuxOpenSolarisOpenSuSEOptwareOracle ServerPCLinuxOSPalmPardus LinuxRed Hat EnterpriseRed Hat Enterprise ServerSUSESUSE LinuxScientificScientificSLSolusSolus LinuxTermuxUbuntuVoid LinuxZenwalkgNewSensemacOS Brew
 # Configuration
 
 ## User Files & Folders
