@@ -505,13 +505,13 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			$tests_in_category++;
 
 			$last_updated = pts_openbenchmarking_client::read_repository_test_profile_attribute($test_profile, 'last_updated');
+			$versions = pts_openbenchmarking_client::read_repository_test_profile_attribute($test_profile, 'versions');
 			$popularity = isset($popularity_index) && is_array($popularity_index) ? array_search($test_profile->get_identifier(false), $popularity_index) : false;
 			$secondary_message = null;
 
 			if($last_updated > (time() - (60 * 60 * 24 * 30)))
 			{
-				// Mark it as newly updated if uploaded in past 3 weeks
-				$secondary_message = '- <em>Recently Updated</em>';
+				$secondary_message = count($versions) == 1 ? '- <em>Newly Added</em>' : '- <em>Recently Updated</em>';
 			}
 			else if($popularity === 0)
 			{
@@ -584,12 +584,13 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			$suites_in_category++;
 
 			$last_updated = pts_openbenchmarking_client::read_repository_test_suite_attribute($test_suite->get_identifier(), 'last_updated');
+			$versions = pts_openbenchmarking_client::read_repository_test_suite_attribute($test_suite->get_identifier(), 'versions');
 			$secondary_message = null;
 
 			if($last_updated > (time() - (60 * 60 * 24 * 45)))
 			{
 				// Mark it as newly updated if uploaded in past 3 weeks
-				$secondary_message = '- <em>Recently Updated</em>';
+				$secondary_message = count($versions) == 1 ? '- <em>Newly Added</em>' : '- <em>Recently Updated</em>';
 			}
 
 			$PAGE .= '<a href="' . WEB_URL_PATH . 'suite/' . base64_encode($test_suite->get_identifier()) . '"><div class="table_test_box"><strong>' . $test_suite->get_title(). '</strong><br /><span>' . $test_suite->get_test_count() . ' Tests (' . $test_suite->get_unique_test_count() . ' Unique Profiles) ' . $secondary_message . '</span></div></a>';
