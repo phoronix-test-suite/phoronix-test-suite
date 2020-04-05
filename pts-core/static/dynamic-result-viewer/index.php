@@ -56,8 +56,13 @@ switch((isset($uri_segments[0]) ? $uri_segments[0] : null))
 		$_GET['page'] = 'test';
 		$_GET['test'] = base64_decode($uri_segments[1]);
 		break;
+	case 'suite':
+		$_GET['page'] = 'suite';
+		$_GET['suite'] = base64_decode($uri_segments[1]);
+		break;
 	case 'tests':
-		$_GET['page'] = 'tests';
+	case 'suites':
+		$_GET['page'] = $uri_segments[0];
 		break;
 }
 
@@ -420,6 +425,32 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			}
 		}
 		break;
+	case 'suite':
+		$o = new pts_test_suite($_GET['suite']);
+		$PAGE .= '<h1>' . $o->get_title() . '</h1>';
+
+		$table = array();
+		$table[] = array('Run Identifier: ', $o->get_identifier());
+		$table[] = array('Profile Version: ', $o->get_version());
+		$table[] = array('Maintainer: ', $o->get_maintainer());
+		$table[] = array('Test Type: ', $o->get_suite_type());
+
+		$cols = array(array(), array());
+		foreach($table as &$row)
+		{
+			$row[0] = '<strong>' . $row[0] . '</strong>';
+			$cols[0][] = $row[0];
+			$cols[1][] = $row[1];
+		}
+		$PAGE .= '<br /><div style="float: left;">' . implode('<br />', $cols[0]) . '</div>';
+		$PAGE .= '<div style="float: left; padding-left: 15px;">' . implode('<br />', $cols[1]) . '</div>' . '<br style="clear: both;" />';
+		$PAGE .= '<p>'. $o->get_description() . '</p>';
+		foreach($o->get_contained_test_result_objects() as $ro)
+		{
+			$PAGE .= '<h2><a href="' . WEB_URL_PATH . 'test/' . base64_encode($ro->test_profile->get_identifier()) . '">' . $ro->test_profile->get_title() . '</a></h2>';
+			$PAGE .= '<p>' . $ro->get_arguments_description() . '</p>';
+		}
+		break;
 	case 'tests':
 		$tests = pts_openbenchmarking::available_tests(false, false, true);
 		$tests_to_show = array();
@@ -491,12 +522,81 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 				$secondary_message = '- <em>Very Popular</em>';
 			}
 
-			$PAGE .= '<a href="' . WEB_URL_PATH . 'test/' . base64_encode($test_profile->get_identifier()) . '"><div class="table_test_box"><strong>' . $test_profile->get_title(). '</strong><br /><span style="">~' . pts_strings::plural_handler(max(1, round(pts_openbenchmarking_client::read_repository_test_profile_attribute($test_profile, 'average_run_time') / 60)),
+			$PAGE .= '<a href="' . WEB_URL_PATH . 'test/' . base64_encode($test_profile->get_identifier()) . '"><div class="table_test_box"><strong>' . $test_profile->get_title(). '</strong><br /><span>~' . pts_strings::plural_handler(max(1, round(pts_openbenchmarking_client::read_repository_test_profile_attribute($test_profile, 'average_run_time') / 60)),
 'min') . ' run-time ' . $secondary_message . '</span></div></a>';
 		}
 		if($tests_in_category > 0)
 		{
 			$PAGE .= '<br style="clear: both;" /><em>' . $tests_in_category . ' Tests</em>';
+		}
+		$PAGE .= '</div>';
+		break;
+	case 'suites':
+		$suites = pts_test_suites::all_suites_cached();
+		$suites_to_show = array();
+		foreach($suites as $identifier)
+		{
+			$test_suite = new pts_test_suite($identifier);
+
+			if($test_suite->get_title() == null)
+			{
+				// Don't show unsupported suites
+				continue;
+			}
+
+			$suites_to_show[] = $test_suite;
+		}
+		if(empty($suites_to_show))
+		{
+			$PAGE .= '<p>No cached test suites found.</p>';
+		}
+		else
+		{
+			$PAGE .= '<p>The ' . count($suites_to_show) . ' test suites below are cached on the local system and in a current state. For a complete listing of available test suites visit <a href="https://openbenchmarking.org/">OpenBenchmarking.org</a>.</p>';
+		}
+
+		$PAGE .= '<div class="pts_test_boxes">';
+		$suites_to_show = array_unique($suites_to_show);
+		function suites_cmp_result_object_sort($a, $b)
+		{
+			$a_comp = $a->get_suite_type() . $a->get_title();
+			$b_comp = $b->get_suite_type() . $b->get_title();
+
+			return strcmp($a_comp, $b_comp);
+		}
+		usort($suites_to_show, 'suites_cmp_result_object_sort');
+		$category = null;
+		$suites_in_category = 0;
+		foreach($suites_to_show as &$test_suite)
+		{
+			if($category != $test_suite->get_suite_type())
+			{
+				$category = $test_suite->get_suite_type();
+				if($category == null) continue;
+				if($suites_in_category > 0)
+				{
+					$PAGE .= '<br style="clear: both;" /><em>' . $suites_in_category . ' Suites</em>';
+				}
+				$suites_in_category = 0;
+				$PAGE .= '</div><a name="' . $category . '"></a>' . PHP_EOL . '<h2>' . $category . '</h2>' . PHP_EOL . '<div class="pts_test_boxes">';
+			}
+			if($category == null) continue;
+			$suites_in_category++;
+
+			$last_updated = pts_openbenchmarking_client::read_repository_test_suite_attribute($test_suite->get_identifier(), 'last_updated');
+			$secondary_message = null;
+
+			if($last_updated > (time() - (60 * 60 * 24 * 45)))
+			{
+				// Mark it as newly updated if uploaded in past 3 weeks
+				$secondary_message = '- <em>Recently Updated</em>';
+			}
+
+			$PAGE .= '<a href="' . WEB_URL_PATH . 'suite/' . base64_encode($test_suite->get_identifier()) . '"><div class="table_test_box"><strong>' . $test_suite->get_title(). '</strong><br /><span>' . $test_suite->get_test_count() . ' Tests (' . $test_suite->get_unique_test_count() . ' Unique Profiles) ' . $secondary_message . '</span></div></a>';
+		}
+		if($suites_in_category > 0)
+		{
+			$PAGE .= '<br style="clear: both;" /><em>' . $suites_in_category . ' Tests</em>';
 		}
 		$PAGE .= '</div>';
 		break;
@@ -773,7 +873,10 @@ var WEB_URL_PATH = "<?php echo WEB_URL_PATH; ?>";
   <path d="m74 22v9m-5-16v16m-5-28v28m-23-2h12.5c2.485281 0 4.5-2.014719 4.5-4.5s-2.014719-4.5-4.5-4.5h-8c-2.485281 0-4.5-2.014719-4.5-4.5s2.014719-4.5 4.5-4.5h12.5m-21 5h-11m11 13h-2c-4.970563 0-9-4.029437-9-9v-20m-24 40v-20c0-4.970563 4.0294373-9 9-9 4.970563 0 9 4.029437 9 9s-4.029437 9-9 9h-9" stroke="#fff" stroke-width="4" fill="none" />
 </svg></div> <div style="float: left; margin-left: 10px;"> <a href="<?php echo WEB_URL_PATH; ?>">Result Viewer</a></div>
 <ul>
-<?php if(PTS_OPENBENCHMARKING_SCRATCH_PATH != null) { ?> <li><a href="<?php echo WEB_URL_PATH; ?>tests/">Test Profiles</a></li><?php } ?>
+<?php if(PTS_OPENBENCHMARKING_SCRATCH_PATH != null) { ?>
+<li><a href="<?php echo WEB_URL_PATH; ?>tests/">Test Profiles</a></li>
+<li><a href="<?php echo WEB_URL_PATH; ?>suites/">Test Suites</a></li>
+<?php } ?>
 <li><a href="<?php echo WEB_URL_PATH; ?>">Results</a></li>
 </ul>
 </div>

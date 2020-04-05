@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 pts-core: Documentation updates
 pts-core: External dependency updates
 pts-core: Allow listing test profiles within the result viewer
+pts-core: Allow listing test suites and test suite data within the result viewer
 pts-core: Allow showing test profile information within the result viewer
 pts-core: Various other updates to the result viewer
 pts-core: Add vaapi as possible external dependency

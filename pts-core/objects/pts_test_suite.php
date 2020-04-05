@@ -110,10 +110,13 @@ class pts_test_suite
 			return;
 		}
 		// XInclude support
-		if(function_exists('dom_import_simplexml'))
+		if(function_exists('dom_import_simplexml') && is_object($xml))
 		{
 			$dom = dom_import_simplexml($xml);
-			$dom->ownerDocument->xinclude();
+			if(isset($dom->ownerDocument))
+			{
+				$dom->ownerDocument->xinclude();
+			}
 		}
 
 		if(isset($xml->SuiteInformation))
@@ -299,6 +302,10 @@ class pts_test_suite
 			pts_arrays::unique_push($unique_tests, $obj->test_profile->get_identifier());
 		}
 		return count($unique_tests);
+	}
+	public function get_test_count()
+	{
+		return count($this->test_objects);
 	}
 	public function get_contained_test_result_objects()
 	{

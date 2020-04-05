@@ -26,6 +26,22 @@ class pts_test_suites
 	{
 		return array_merge(pts_openbenchmarking::available_suites($download_suites_if_needed, $only_show_maintained_suites), pts_test_suites::local_suites());
 	}
+	public static function all_suites_cached($remove_redundant_versions = true)
+	{
+		$suites = array();
+		foreach(pts_file_io::glob(PTS_TEST_SUITE_PATH . '*/*/suite-definition.xml') as $path)
+		{
+			$suite = str_replace(PTS_TEST_SUITE_PATH, '', dirname($path));
+			$suite_short = $suite;
+			if($remove_redundant_versions && ($c = strrpos($suite, '-')) && pts_strings::is_version(substr($suite, ($c + 1))))
+			{
+				$suite_short = substr($suite, 0, $c);
+			}
+
+			$suites[$suite_short] = $suite;
+		}
+		return $suites;
+	}
 	public static function local_suites()
 	{
 		$local_suites = array();

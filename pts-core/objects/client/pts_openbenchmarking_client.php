@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2019, Phoronix Media
-	Copyright (C) 2010 - 2019, Michael Larabel
+	Copyright (C) 2010 - 2020, Phoronix Media
+	Copyright (C) 2010 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -243,6 +243,14 @@ class pts_openbenchmarking_client
 		$repo_index = pts_openbenchmarking::read_repository_index($repo);
 
 		return isset($repo_index['tests'][$tp][$attribute]) ? $repo_index['tests'][$tp][$attribute] : null;
+	}
+	public static function read_repository_test_suite_attribute($test_profile, $attribute)
+	{
+		list($repo, $tp) = explode('/', $test_profile);
+		$ts = substr($tp, 0, strrpos($tp, '-'));
+		$repo_index = pts_openbenchmarking::read_repository_index($repo);
+
+		return isset($repo_index['suites'][$ts][$attribute]) ? $repo_index['suites'][$ts][$attribute] : null;
 	}
 	public static function popular_openbenchmarking_results()
 	{
