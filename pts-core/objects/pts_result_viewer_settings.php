@@ -157,8 +157,9 @@ class pts_result_viewer_settings
 			$analyze_checkboxes['Graph Settings'][] = array('ftr', 'Force Line Graphs (Where Applicable)');
 			$analyze_checkboxes['Graph Settings'][] = array('scalar', 'Convert To Scalar (Where Applicable)');
 			$analyze_checkboxes['Helpers'][] = array('spr', 'List Notable Results');
-			$analyze_checkboxes['Helpers'][] = array('hnr', 'Hide Noisy Results');
-			$analyze_checkboxes['Helpers'][] = array('hlc', 'Hide Results With Little Change/Spread');
+			$analyze_checkboxes['Helpers'][] = array('hnr', 'Do Not Show Noisy Results');
+			$analyze_checkboxes['Helpers'][] = array('hni', 'Do Not Show Results With Incomplete Data');
+			$analyze_checkboxes['Helpers'][] = array('hlc', 'Do Not Show Results With Little Change/Spread');
 
 			if($has_identifier_with_color_brand)
 			{
@@ -439,6 +440,17 @@ if($system_identifier_count > 2)
 			foreach($result_file->get_result_objects() as $i => $result_object)
 			{
 				if($result_object->has_noisy_result())
+				{
+					$result_file->remove_result_object_by_id($i);
+				}
+			}
+		}
+		if(self::check_request_for_var($request, 'hni'))
+		{
+			$system_count = $result_file->get_system_count();
+			foreach($result_file->get_result_objects() as $i => $result_object)
+			{
+				if($result_object->test_result_buffer->get_count() < $system_count)
 				{
 					$result_file->remove_result_object_by_id($i);
 				}
