@@ -36,7 +36,7 @@ class build_suite implements pts_option_interface
 		$bind_versions = pts_user_io::prompt_bool_input('Bind current test profile versions to test suite');
 
 		$possible_suites = pts_openbenchmarking::available_suites(false);
-		$possible_tests = pts_openbenchmarking::available_tests(false);
+		$possible_tests = pts_openbenchmarking::available_tests(false, false, false, true);
 
 		$new_suite = new pts_test_suite();
 		$new_suite->set_title($suite_name);
