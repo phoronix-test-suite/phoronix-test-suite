@@ -52,7 +52,7 @@ class pts_result_file_output
 
 		return json_encode($json, JSON_PRETTY_PRINT);
 	}
-	public static function result_file_to_csv(&$result_file, $delimiter = ',')
+	public static function result_file_to_csv(&$result_file, $delimiter = ',', $extra_attributes = null)
 	{
 		$csv_output = null;
 
@@ -104,6 +104,7 @@ class pts_result_file_output
 
 		foreach($result_file->get_result_objects() as $result_object)
 		{
+			pts_render::attribute_processing_on_result_object($result_object, $result_file, $extra_attributes);
 			$csv_output .= '"' . $result_object->test_profile->get_title() . ' - ' . $result_object->get_arguments_description() . '"';
 			$csv_output .= $delimiter . $result_object->test_profile->get_result_proportion();
 
@@ -111,6 +112,11 @@ class pts_result_file_output
 			{
 				$buffer_item = $result_object->test_result_buffer->find_buffer_item($column);
 				$value = $buffer_item != false ? $buffer_item->get_result_value() : null;
+				if(strpos($value, ',') !== false)
+				{
+					$value = explode(',', $value);
+					$value = round(array_sum($value) / count($value), 2);
+				}
 				$csv_output .= $delimiter . $value;
 			}
 			$csv_output .= PHP_EOL;

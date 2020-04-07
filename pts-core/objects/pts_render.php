@@ -87,9 +87,8 @@ class pts_render
 
 		return $graph;
 	}
-	public static function render_graph_process(&$result_object, &$result_file = null, $save_as = false, $extra_attributes = null)
+	public static function attribute_processing_on_result_object(&$result_object, &$result_file = null, $extra_attributes = null)
 	{
-		// NOTICE: $save_as doesn't appear used anymore
 		if(isset($extra_attributes['clear_unchanged_results']))
 		{
 			$result_object->remove_unchanged_results();
@@ -122,6 +121,11 @@ class pts_render
 		{
 			$result_object->test_result_buffer->buffer_values_reverse();
 		}
+	}
+	public static function render_graph_process(&$result_object, &$result_file = null, $save_as = false, $extra_attributes = null)
+	{
+		// NOTICE: $save_as doesn't appear used anymore
+		self::attribute_processing_on_result_object($result_object, $result_file, $extra_attributes);
 
 		if($result_object->test_result_buffer->get_count() == 0)
 		{

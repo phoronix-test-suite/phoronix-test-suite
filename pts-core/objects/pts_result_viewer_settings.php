@@ -295,7 +295,7 @@ if($system_identifier_count > 2)
 				$pdf_output = pts_result_file_output::result_file_to_pdf($result_file, $result_title . '.pdf', 'D', $extra_attributes);
 				exit;
 			case 'csv':
-				$result_csv = pts_result_file_output::result_file_to_csv($result_file);
+				$result_csv = pts_result_file_output::result_file_to_csv($result_file, ',', $extra_attributes);
 				header('Content-Description: File Transfer');
 				header('Content-Type: application/csv');
 				header('Content-Disposition: attachment; filename=' . $result_title . '.csv');
