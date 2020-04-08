@@ -24,7 +24,7 @@ class pts_test_suites
 {
 	public static function all_suites($only_show_maintained_suites = false, $download_suites_if_needed = false)
 	{
-		return array_merge(pts_openbenchmarking::available_suites($download_suites_if_needed, $only_show_maintained_suites), pts_test_suites::local_suites());
+		return array_unique(array_merge(pts_openbenchmarking::available_suites($download_suites_if_needed, $only_show_maintained_suites), pts_test_suites::local_suites()));
 	}
 	public static function all_suites_cached($remove_redundant_versions = true)
 	{
