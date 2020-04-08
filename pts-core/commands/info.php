@@ -52,6 +52,7 @@ class info implements pts_option_interface
 				$table[] = array(pts_client::cli_just_bold('Run Identifier:    '), $o->get_identifier());
 				$table[] = array(pts_client::cli_just_bold('Suite Version: '), $o->get_version());
 				$table[] = array(pts_client::cli_just_bold('Maintainer: '), $o->get_maintainer());
+				$table[] = array(pts_client::cli_just_bold('Status: '), $o->get_status());
 				$table[] = array(pts_client::cli_just_bold('Suite Type: '), $o->get_suite_type());
 				$table[] = array(pts_client::cli_just_bold('Unique Tests: '), $o->get_unique_test_count());
 				$table[] = array(pts_client::cli_just_bold('Contained Tests: '));
