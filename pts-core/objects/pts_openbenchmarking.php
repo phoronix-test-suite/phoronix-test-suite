@@ -308,7 +308,7 @@ class pts_openbenchmarking
 					else if($new_index['suites'][$suite]['versions'] != $old_index['suites'][$suite]['versions'])
 					{
 						$version_diff = array_diff($new_index['suites'][$suite]['versions'], $old_index['suites'][$suite]['versions']);
-						if(!empty($version_diff) && ($new_index['suites'][$suite]['status'] != 'Deprecated')
+						if(!empty($version_diff) && $new_index['suites'][$suite]['status'] != 'Deprecated')
 						{
 							$table[] = array(pts_client::cli_just_bold('Updated Suite Available: '), $repo . '/' . $suite, pts_client::cli_colored_text('v' . array_shift($version_diff), 'gray'));
 						}
