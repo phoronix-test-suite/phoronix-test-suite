@@ -28,6 +28,7 @@ class pts_test_suite
 	private $version;
 	private $maintainer;
 	private $test_type;
+	private $status;
 	private $run_mode;
 	private $requires_minimum_core_version;
 	private $requires_maximum_core_version;
@@ -126,6 +127,7 @@ class pts_test_suite
 			$this->maintainer = self::clean_input($xml->SuiteInformation->Maintainer);
 			$this->version = self::clean_input($xml->SuiteInformation->Version);
 			$this->test_type = self::clean_input($xml->SuiteInformation->TestType);
+			$this->status = self::clean_input($xml->SuiteInformation->Status);
 			$this->run_mode = self::clean_input($xml->SuiteInformation->RunMode);
 			$this->requires_minimum_core_version = self::clean_input($xml->SuiteInformation->RequiresCoreVersionMin);
 			$this->requires_maximum_core_version = self::clean_input($xml->SuiteInformation->RequiresCoreVersionMax);
@@ -413,6 +415,15 @@ class pts_test_suite
 	public function get_suite_type()
 	{
 		return $this->test_type;
+	}
+	public function set_status($s)
+	{
+		$this->status = $s;
+	}
+	public function get_status()
+	{
+		// if null assume Verified
+		return $this->status;
 	}
 	public function set_pre_run_message($s)
 	{

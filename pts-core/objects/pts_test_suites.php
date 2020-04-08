@@ -78,9 +78,9 @@ class pts_test_suites
 				$test = array_pop($dir);
 				$repo = array_pop($dir);
 				$test_suite = new pts_test_suite($repo . '/' . $test);
-				if($test_suite->get_title() != null)
+				if($test_suite->get_title() != null && $test_suite->get_status() != 'Deprecated')
 				{
-					$local_suites[$test_suite->get_title()] = $return_object ? $test_suite : ($repo . '/' . $test);
+					$local_suites[$test_suite->get_identifier(false)] = $return_object ? $test_suite : ($repo . '/' . $test);
 				}
 			}
 		}

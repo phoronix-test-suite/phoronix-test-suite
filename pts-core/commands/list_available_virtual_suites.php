@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2011, Phoronix Media
-	Copyright (C) 2010 - 2011, Michael Larabel
+	Copyright (C) 2010 - 2020, Phoronix Media
+	Copyright (C) 2010 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -25,6 +25,10 @@ class list_available_virtual_suites implements pts_option_interface
 	const doc_section = 'Information';
 	const doc_description = 'This option will list all available virtual test suites that can be dynamically created based upon the available tests from enabled OpenBenchmarking.org repositories.';
 
+	public static function command_aliases()
+	{
+		return array('list_virtual_suites');
+	}
 	public static function run($r)
 	{
 		pts_client::$display->generic_heading('Available Virtual Suites');

@@ -5,6 +5,8 @@ Phoronix Test Suite (Git)
 pts-core: Allow adding deprecated tests to build-suite
 pts-core: CSV export improvements
 pts-core: Add "Do Not Show Results With Incomplete Data" to the result viewer
+pts-core: Allow test suite "Status" tag
+pts-core: Don't report OB updates on deprecated tests or suites
 
 Phoronix Test Suite 9.6.0 Milestone 2
 5 April 2020
