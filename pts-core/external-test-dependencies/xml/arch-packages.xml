@@ -355,5 +355,9 @@
 			<GenericName>vaapi</GenericName>
 			<PackageName>libva</PackageName>
 		</Package>
+		<Package>
+			<GenericName>glfw</GenericName>
+			<PackageName>glfw</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

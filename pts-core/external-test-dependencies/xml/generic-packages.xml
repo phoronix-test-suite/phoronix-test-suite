@@ -602,5 +602,11 @@
 			<PossibleNames>openexr, libopenexr-dev</PossibleNames>
 			<FileCheck>OpenEXR/OpenEXRConfig.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>glfw</GenericName>
+			<Title>GLFW</Title>
+			<PossibleNames>glfw, libglfw3</PossibleNames>
+			<FileCheck>GLFW/glfw3.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

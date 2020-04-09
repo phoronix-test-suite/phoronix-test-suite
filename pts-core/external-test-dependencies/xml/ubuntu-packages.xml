@@ -441,5 +441,9 @@
 			<GenericName>openexr</GenericName>
 			<PackageName>libopenexr-dev</PackageName>
 		</Package>
+		<Package>
+			<GenericName>glfw</GenericName>
+			<PackageName>libglfw3-dev</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

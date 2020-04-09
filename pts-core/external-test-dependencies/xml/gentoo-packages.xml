@@ -360,5 +360,9 @@
 			<GenericName>vaapi</GenericName>
 			<PackageName>x11-libs/libva</PackageName>
 		</Package>
+		<Package>
+			<GenericName>glfw</GenericName>
+			<PackageName>media-libs/glfw</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

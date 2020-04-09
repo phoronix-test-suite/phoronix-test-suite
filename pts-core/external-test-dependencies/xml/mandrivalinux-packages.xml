@@ -303,5 +303,9 @@
 			<GenericName>vaapi</GenericName>
 			<PackageName>libva-devel</PackageName>
 		</Package>
+		<Package>
+			<GenericName>glfw</GenericName>
+			<PackageName>glfw-devel</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

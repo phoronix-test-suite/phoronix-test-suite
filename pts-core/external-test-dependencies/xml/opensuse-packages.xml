@@ -367,6 +367,10 @@
 			<PackageName>benchmark-devel</PackageName>
 		</Package>
 		<Package>
+			<GenericName>glfw</GenericName>
+			<PackageName>libglfw-devel</PackageName>
+		</Package>
+		<Package>
 			<GenericName>vaapi</GenericName>
 			<PackageName>libva-devel</PackageName>
 		</Package>
