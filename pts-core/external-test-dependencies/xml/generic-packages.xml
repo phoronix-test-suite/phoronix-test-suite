@@ -474,7 +474,7 @@
 			<GenericName>opencv</GenericName>
 			<Title>OpenCV</Title>
 			<PossibleNames>opencv</PossibleNames>
-			<FileCheck>opencv/cv.h OR opencv2/core.hpp</FileCheck>
+			<FileCheck>opencv/cv.h OR opencv2/core.hpp OR /usr/include/opencv/ml.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>steam</GenericName>
