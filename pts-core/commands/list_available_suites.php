@@ -51,7 +51,7 @@ class list_available_suites implements pts_option_interface
 				{
 					$identifier_prefix = $partially_supported ? '*' : ' ';
 
-					if($suite_info->get_title() != null)
+					if($suite_info->get_title() != null && !$suite_info->is_deprecated())
 					{
 						echo sprintf('%-34ls - %-32ls %s' . PHP_EOL, $identifier_prefix . ' ' . $identifier, $suite_info->get_title(), $suite_info->get_suite_type());
 					}

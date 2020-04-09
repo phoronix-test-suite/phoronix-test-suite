@@ -425,6 +425,10 @@ class pts_test_suite
 		// if null assume Verified
 		return $this->status;
 	}
+	public function is_deprecated()
+	{
+		return $this->get_status() == 'Deprecated';
+	}
 	public function set_pre_run_message($s)
 	{
 		$this->pre_run_message = $s;
