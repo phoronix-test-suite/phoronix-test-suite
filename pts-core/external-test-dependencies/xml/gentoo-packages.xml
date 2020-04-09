@@ -305,6 +305,10 @@
 			<PackageName>sci-libs/scikits_learn</PackageName>
 		</Package>
 		<Package>
+			<GenericName>swig</GenericName>
+			<PackageName>dev-lang/swig</PackageName>
+		</Package>
+		<Package>
 			<GenericName>V8</GenericName>
 			<PackageName>dev-lang/v8</PackageName>
 		</Package>
@@ -325,6 +329,10 @@
 			<PackageName>dev-db/mongodb</PackageName>
 		</Package>
 		<Package>
+			<GenericName>freetype</GenericName>
+			<PackageName>media-libs/freetype</PackageName>
+		</Package>
+		<Package>
 			<GenericName>hdf5</GenericName>
 			<PackageName>sci-libs/hdf5</PackageName>
 		</Package>
@@ -335,6 +343,10 @@
 		<Package>
 			<GenericName>uuid</GenericName>
 			<PackageName>sys-libs/libuuid</PackageName>
+		</Package>
+		<Package>
+			<GenericName>openexr</GenericName>
+			<PackageName>media-libs/openexr</PackageName>
 		</Package>
 		<Package>
 			<GenericName>gflags</GenericName>

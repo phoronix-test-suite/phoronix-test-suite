@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Add workload-topology sub-command
 pts-core: Allow adding deprecated tests to build-suite
 pts-core: CSV export improvements
 pts-core: Add "Do Not Show Results With Incomplete Data" to the result viewer

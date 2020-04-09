@@ -337,6 +337,10 @@
 			<PackageName>mongodb</PackageName>
 		</Package>
 		<Package>
+			<GenericName>swig</GenericName>
+			<PackageName>swig</PackageName>
+		</Package>
+		<Package>
 			<GenericName>node-npm</GenericName>
 			<PackageName>npm</PackageName>
 		</Package>
@@ -345,8 +349,16 @@
 			<PackageName>hdf5-devel</PackageName>
 		</Package>
 		<Package>
+			<GenericName>openexr</GenericName>
+			<PackageName>openexr-devel</PackageName>
+		</Package>
+		<Package>
 			<GenericName>libxml2</GenericName>
 			<PackageName>libxml2-devel</PackageName>
+		</Package>
+		<Package>
+			<GenericName>freetype</GenericName>
+			<PackageName>freetype-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>uuid</GenericName>

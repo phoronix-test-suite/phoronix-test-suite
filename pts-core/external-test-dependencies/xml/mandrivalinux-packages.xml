@@ -244,6 +244,10 @@
 			<PackageName>superlu</PackageName>
 		</Package>
 		<Package>
+			<GenericName>swig</GenericName>
+			<PackageName>swig</PackageName>
+		</Package>
+		<Package>
 			<GenericName>suitesparse</GenericName>
 			<PackageName>suitesparse-devel</PackageName>
 		</Package>
@@ -264,9 +268,17 @@
 			<PackageName>opencv-devel</PackageName>
 		</Package>
 		<Package>
+			<GenericName>freetype</GenericName>
+			<PackageName>libfreetype6-devel</PackageName>
+		</Package>
+		<Package>
                         <GenericName>perl-digest-md5</GenericName>
                         <PackageName>perl-Digest-MD5</PackageName>
                 </Package>
+		<Package>
+			<GenericName>openexr</GenericName>
+			<PackageName>openexr-devel</PackageName>
+		</Package>
 		<Package>
 			<GenericName>wine</GenericName>
 			<PackageName>wine</PackageName>

@@ -275,6 +275,10 @@
 			<PackageName>opencv-devel</PackageName>
 		</Package>
 		<Package>
+			<GenericName>swig</GenericName>
+			<PackageName>swig</PackageName>
+		</Package>
+		<Package>
 			<GenericName>perl-digest-md5</GenericName>
 			<PackageName>perl</PackageName>
 			<FileCheck>/usr/lib/perl5/5.22.1/x86_64-linux/Digest/MD5.pm</FileCheck>
@@ -300,6 +304,10 @@
 		<Package>
 			<GenericName>hdf5</GenericName>
 			<PackageName>hdf5</PackageName>
+		</Package>
+		<Package>
+			<GenericName>freetype</GenericName>
+			<PackageName>freetype</PackageName>
 		</Package>
 		<Package>
 			<GenericName>libxml2</GenericName>

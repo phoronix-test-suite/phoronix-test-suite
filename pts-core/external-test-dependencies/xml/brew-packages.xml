@@ -23,6 +23,10 @@
 			<PackageName>freeglut</PackageName>
 		</Package>
 		<Package>
+			<GenericName>swig</GenericName>
+			<PackageName>swig</PackageName>
+		</Package>
+		<Package>
 			<GenericName>csh</GenericName>
 			<PackageName>tcsh</PackageName>
 		</Package>

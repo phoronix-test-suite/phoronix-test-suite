@@ -26,6 +26,10 @@
 			<PackageName>expat</PackageName>
 		</Package>
 		<Package>
+			<GenericName>swig</GenericName>
+			<PackageName>swig</PackageName>
+		</Package>
+		<Package>
 			<GenericName>glut</GenericName>
 			<PackageName>glut</PackageName>
 			<FileCheck>/usr/pkg/lib/libglut.la, /usr/pkg/include/GL/glut.h</FileCheck>
@@ -38,6 +42,10 @@
                 <Package>
 			<GenericName>golang</GenericName>
 			<PackageName>go</PackageName>
+		</Package>
+		<Package>
+			<GenericName>freetype</GenericName>
+			<PackageName>freetype</PackageName>
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>

@@ -296,6 +296,10 @@
 			<PackageName>v8</PackageName>
 		</Package>
 		<Package>
+			<GenericName>swig</GenericName>
+			<PackageName>swig</PackageName>
+		</Package>
+		<Package>
 			<GenericName>ruby</GenericName>
 			<PackageName>ruby</PackageName>
 		</Package>
@@ -304,8 +308,16 @@
 			<PackageName>wine</PackageName>
 		</Package>
 		<Package>
+			<GenericName>freetype</GenericName>
+			<PackageName>freetype2</PackageName>
+		</Package>
+		<Package>
 			<GenericName>mongodb</GenericName>
 			<PackageName>mongodb</PackageName>
+		</Package>
+		<Package>
+			<GenericName>openexr</GenericName>
+			<PackageName>openexr</PackageName>
 		</Package>
 		<Package>
 			<GenericName>node-npm</GenericName>

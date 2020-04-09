@@ -414,6 +414,14 @@
 			<PackageName>clang</PackageName>
 		</Package>
 		<Package>
+			<GenericName>swig</GenericName>
+			<PackageName>swig</PackageName>
+		</Package>
+		<Package>
+			<GenericName>freetype</GenericName>
+			<PackageName>libfreetype6-dev</PackageName>
+		</Package>
+		<Package>
 			<GenericName>gflags</GenericName>
 			<PackageName>libgflags-dev</PackageName>
 		</Package>
@@ -428,6 +436,10 @@
 		<Package>
 			<GenericName>vaapi</GenericName>
 			<PackageName>libva-dev</PackageName>
+		</Package>
+		<Package>
+			<GenericName>openexr</GenericName>
+			<PackageName>libopenexr-dev</PackageName>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

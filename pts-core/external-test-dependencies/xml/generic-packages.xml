@@ -584,5 +584,23 @@
 			<PossibleNames>libva-dev, libva-devel</PossibleNames>
 			<FileCheck>va/va.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>swig</GenericName>
+			<Title>C++ SWIG</Title>
+			<PossibleNames>swig</PossibleNames>
+			<FileCheck>swig</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>freetype</GenericName>
+			<Title>Freetype</Title>
+			<PossibleNames>freetype, libfreetype6-dev</PossibleNames>
+			<FileCheck>freetype2/freetype/freetype.h</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>openexr</GenericName>
+			<Title>OpenEXR</Title>
+			<PossibleNames>openexr, libopenexr-dev</PossibleNames>
+			<FileCheck>OpenEXR/OpenEXRConfig.h</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

@@ -25,6 +25,10 @@
 			<FileCheck>/usr/local/bin/go</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>freetype</GenericName>
+			<PackageName>freetype</PackageName>
+		</Package>
+		<Package>
 			<GenericName>java</GenericName>
 			<PackageName>java/openjdk11</PackageName>
 		</Package>
@@ -35,6 +39,10 @@
 		<Package>
 			<GenericName>maven</GenericName>
 			<PackageName>maven</PackageName>
+		</Package>
+		<Package>
+			<GenericName>swig</GenericName>
+			<PackageName>swig</PackageName>
 		</Package>
 		<Package>
 			<GenericName>libpng-development</GenericName>

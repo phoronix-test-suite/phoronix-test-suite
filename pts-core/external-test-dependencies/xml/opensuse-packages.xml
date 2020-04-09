@@ -315,6 +315,10 @@
 			<PackageName>libevent-devel</PackageName>
 		</Package>
 		<Package>
+			<GenericName>swig</GenericName>
+			<PackageName>swig</PackageName>
+		</Package>
+		<Package>
 			<GenericName>wine</GenericName>
 			<PackageName>wine</PackageName>
 		</Package>
@@ -335,6 +339,10 @@
 			<PackageName>hdf5-devel</PackageName>
 		</Package>
 		<Package>
+			<GenericName>openexr</GenericName>
+			<PackageName>openexr-devel</PackageName>
+		</Package>
+		<Package>
 			<GenericName>libxml2</GenericName>
 			<PackageName>libxml2-devel</PackageName>
 		</Package>
@@ -349,6 +357,10 @@
 		<Package>
 			<GenericName>gflags</GenericName>
 			<PackageName>gflags-devel</PackageName>
+		</Package>
+		<Package>
+			<GenericName>freetype</GenericName>
+			<PackageName>freetype-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>google-benchmark</GenericName>
