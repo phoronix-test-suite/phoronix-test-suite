@@ -659,7 +659,7 @@ class pts_test_result_parser
 							$output = substr($line, 0, $start_of_line) . "\n";
 							$possible_lines[] = substr($line, $start_of_line + 1);
 
-							if(count($possible_lines) > 16 && $is_multi_match && phodevi::is_windows())
+							if((count($possible_lines) > 16 && $is_multi_match && phodevi::is_windows()) || $multi_match == 'REPORT_ALL')
 							{
 								// This vastly speeds up pts/dav1d result decoding on Windows as this expensive loop not used
 								break;
@@ -831,6 +831,8 @@ class pts_test_result_parser
 		{
 			case 'REPORT_ALL':
 				$test_result = implode(',', $test_results);
+				$e->set_display_format('LINE_GRAPH');
+				$is_numeric_check = false;
 				break;
 			case 'GEOMETRIC_MEAN':
 				if($is_numeric_check)

@@ -298,5 +298,9 @@ class pts_test_profile_results_definition_result_parser
 	{
 		return $this->display_format;
 	}
+	public function set_display_format($f)
+	{
+		$this->display_format = $f;
+	}
 }
 ?>
