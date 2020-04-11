@@ -249,7 +249,7 @@ input[type="checkbox"] + label
 	border: 1px solid #000;
 	font-weight: 10pt;
 }
-input[type="submit"], .primay-button{
+input[type="submit"], .primay-button, button{
 	background: #03b450 !important;
 	color: #FFF !important;
 	padding: 4px;

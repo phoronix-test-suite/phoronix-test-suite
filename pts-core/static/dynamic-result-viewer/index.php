@@ -862,13 +862,13 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 
 			if(VIEWER_CAN_DELETE_RESULTS && RESULTS_VIEWING_COUNT == 1 && !$result_object->dynamically_generated)
 			{
-				$PAGE .= '<a class="mini" href="#" onclick="javascript:delete_result_from_result_file(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\'); return false;">(Delete Result)</a>';
+				$PAGE .= '<button onclick="javascript:delete_result_from_result_file(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\'); return false;">Delete Result</button>';
 			}
 			if(VIEWER_CAN_MODIFY_RESULTS && RESULTS_VIEWING_COUNT == 1 && !$result_object->dynamically_generated)
 			{
 				if($result_object->get_annotation() == null)
 				{
-					$PAGE .= ' <a class="mini" href="#" onclick="javascript:display_add_annotation_for_result_object(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\', this); return false;">(Add Annotation)</a>';
+					$PAGE .= ' <button onclick="javascript:display_add_annotation_for_result_object(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\', this); return false;">Add Annotation</button>';
 					$PAGE .= ' <div id="annotation_area_' . $i . '" style="display: none;"> <form action="#" onsubmit="javascript:add_annotation_for_result_object(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\', this); return false;"><textarea rows="4" cols="50" placeholder="Add Annotation..." name="annotation"></textarea><br /><input type="submit" value="Add Annotation"></form></div><br />';
 				}
 				else
@@ -880,7 +880,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			{
 				$PAGE .= '<p class="mini">' . $result_object->get_annotation() . '</p>';
 			}
-			$PAGE .= '<br />';
+
 			//
 			// DISPLAY LOGS
 			//
@@ -888,16 +888,15 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			$test_log_dir = $result_file->get_test_log_dir($result_object);
 			if($test_log_dir && count(pts_file_io::glob($test_log_dir . '*.log')) > 0)
 			{
-				$PAGE .= ' <a class="mini" href="#" onclick="javascript:display_test_logs_for_result_object(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\'); return false;">(View Test Run Logs)</a>';
+				$PAGE .= ' <button onclick="javascript:display_test_logs_for_result_object(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\'); return false;">View Test Run Logs</button>';
 			}
 			$install_logs = pts_file_io::glob($result_file->get_test_installation_log_dir() . '*/' . $result_object->test_profile->get_identifier_simplified() . '.log');
 			if(count($install_logs) > 0)
 			{
-				$PAGE .= ' <a class="mini" href="#" onclick="javascript:display_install_logs_for_result_object(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\'); return false;">(View Test Installation Logs)</a>';
+				$PAGE .= ' <button onclick="javascript:display_install_logs_for_result_object(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\'); return false;">View Test Installation Logs</button>';
 			}
 
-
-			$PAGE .= '</div>';
+			$PAGE .= '<br /></div>';
 			unset($result_object);
 		}
 		$PAGE .= '</div>';
