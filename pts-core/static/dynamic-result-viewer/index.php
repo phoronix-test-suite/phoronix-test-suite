@@ -718,6 +718,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		$identifier_mapping_to_cores = array();
 		$identifier_mapping_to_threads = array();
 		$identifier_mapping_to_cpu_clock = array();
+		$identifier_mapping_to_ram_channels = array();
 
 		if($result_file->get_system_count() > 1 && !$result_file->is_multi_way_comparison())
 		{
@@ -738,6 +739,11 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 				{
 					$identifier_mapping_to_cpu_clock[$system->get_identifier()] = $t;
 				}
+				$t = $system->get_memory_channels();
+				if($t > 0)
+				{
+					$identifier_mapping_to_ram_channels[$system->get_identifier()] = $t;
+				}
 			}
 
 			if(count(array_unique($identifier_mapping_to_cores)) < 2)
@@ -752,8 +758,15 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			{
 				$identifier_mapping_to_cpu_clock = array();
 			}
+			if(count(array_unique($identifier_mapping_to_ram_channels)) < 2)
+			{
+				$identifier_mapping_to_ram_channels = array();
+			}
 		}
 
+		//
+		// SHOW THE RESULTS
+		//
 		foreach($result_file->get_result_objects() as $i => $result_object)
 		{
 			//
@@ -798,6 +811,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			$res_per_core = false;
 			$res_per_thread = false;
 			$res_per_clock = false;
+			$res_per_ram = false;
 			$res_variability = false;
 
 			if(!in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'BOX_PLOT')) && $result_object->test_result_buffer->detected_multi_sample_result() && $result_object->test_result_buffer->get_count() > 1)
@@ -832,12 +846,21 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 					$res_per_clock = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
 				}
 			}
+			if(!empty($identifier_mapping_to_ram_channels))
+			{
+				$ro = pts_result_file_analyzer::get_result_object_custom($result_file, $result_object, $identifier_mapping_to_ram_channels, 'Performance Per Memory Channel', 'Channel');
+				if($ro)
+				{
+					$res_per_ram = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
+				}
+			}
 
 			$tabs = array(
 				'Result' => $res,
-				'Performance Per Core' => $res_per_core,
-				'Performance Per Thread' => $res_per_thread,
-				'Performance Per Clock' => $res_per_clock,
+				'Perf Per Core' => $res_per_core,
+				'Perf Per Thread' => $res_per_thread,
+				'Perf Per Clock' => $res_per_clock,
+				'Perf Per RAM Channel' => $res_per_ram,
 				'Result Confidence' => $res_variability,
 				);
 			foreach($tabs as $title => &$graph)

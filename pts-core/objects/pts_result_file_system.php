@@ -132,6 +132,52 @@ class pts_result_file_system
 
 		return is_numeric($hw) ? $hw : false;
 	}
+	public function get_memory_channels()
+	{
+		$memory_channels = -1;
+		$dimm_count = $this->get_memory_dimm_count();
+		$socket_count = $this->get_cpu_socket_count();
+		if($dimm_count > 0 && $dimm_count > $socket_count)
+		{
+			$memory_channels = $dimm_count / $socket_count;
+		}
+
+		return $memory_channels > 0 && is_int($memory_channels) ? $memory_channels : -1;
+	}
+	public function get_memory_dimm_count()
+	{
+		$hw = $this->get_hardware();
+		$hw = substr(strstr($hw, 'Memory:'), 8);
+		$hw = strstr($hw, ',', true);
+
+		if(($x = strpos($hw, ' x ')) !== false)
+		{
+			$hw = substr($hw, 0, $x);
+		}
+		else
+		{
+			$hw = -1;
+		}
+
+		return is_numeric($hw) ? $hw : -1;
+	}
+	public function get_cpu_socket_count()
+	{
+		$hw = $this->get_hardware();
+		$hw = substr(strstr($hw, 'Processor:'), 11);
+		$hw = strstr($hw, ',', true);
+
+		if(($x = strpos($hw, ' x ')) !== false)
+		{
+			$hw = substr($hw, 0, $x);
+		}
+		else
+		{
+			$hw = 1;
+		}
+
+		return is_numeric($hw) && $hw > 0 ? $hw : 1;
+	}
 }
 
 ?>
