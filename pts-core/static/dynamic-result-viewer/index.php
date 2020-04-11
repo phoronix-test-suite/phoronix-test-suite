@@ -719,7 +719,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		$identifier_mapping_to_threads = array();
 		$identifier_mapping_to_cpu_clock = array();
 
-		if($result_file->get_system_count() > 1)
+		if($result_file->get_system_count() > 1 && !$result_file->is_multi_way_comparison())
 		{
 			foreach($result_file->get_systems() as $system)
 			{
@@ -795,6 +795,10 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			//
 
 			// Run variability
+			$res_per_core = false;
+			$res_per_thread = false;
+			$res_per_clock = false;
+			$res_variability = false;
 			$extra_attributes['graph_render_type'] = 'HORIZONTAL_BOX_PLOT';
 			$ro = clone $result_object;
 			$res_variability = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
@@ -836,6 +840,10 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			$PAGE .= '<div class="tabs">';
 			foreach($tabs as $title => &$graph)
 			{
+				if(empty($graph))
+				{
+					continue;
+				}
 				$tab_id = strtolower(str_replace(' ', '_', $title)) . '_' . $i;
 			$PAGE .= '<input type="radio" name="tabs_' . $i . '" id="' . $tab_id . '"' . ($title == 'Result' ? ' checked="checked"' : '') . '>
 			  <label for="' . $tab_id . '">' . $title . '</label>
