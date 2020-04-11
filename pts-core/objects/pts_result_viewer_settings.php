@@ -143,10 +143,10 @@ class pts_result_viewer_settings
 		$analyze_options .= '<form action="' . $_SERVER['REQUEST_URI'] . '" method="post">';
 		$analyze_checkboxes = array(
 			'Statistics' => array(),
+			'View' => array(),
 			'Sorting' => array(),
 			'Graph Settings' => array(),
 			'Multi-Way Comparison' => array(),
-			'Helpers' => array()
 			);
 
 		if($system_identifier_count > 1)
@@ -155,32 +155,38 @@ class pts_result_viewer_settings
 			$analyze_checkboxes['Statistics'][] = array('sgm', 'Show Overall Geometric Mean');
 			if(count($suites_in_result_file) > 1)
 			{
-				$analyze_checkboxes['Statistics'][] = array('scm', 'Show Geometric Means Per-Suite/Category');
+				$analyze_checkboxes['Statistics'][] = array('sts', 'Show Geometric Means Per-Suite/Category');
 			}
 			$analyze_checkboxes['Statistics'][] = array('swl', 'Show Wins / Losses Counts (Pie Chart)');
 			$analyze_checkboxes['Statistics'][] = array('nor', 'Normalize Results');
 			$analyze_checkboxes['Graph Settings'][] = array('ftr', 'Force Line Graphs (Where Applicable)');
 			$analyze_checkboxes['Graph Settings'][] = array('scalar', 'Convert To Scalar (Where Applicable)');
-			$analyze_checkboxes['Helpers'][] = array('spr', 'List Notable Results');
-			$analyze_checkboxes['Helpers'][] = array('hnr', 'Do Not Show Noisy Results');
-			$analyze_checkboxes['Helpers'][] = array('hni', 'Do Not Show Results With Incomplete Data');
-			$analyze_checkboxes['Helpers'][] = array('hlc', 'Do Not Show Results With Little Change/Spread');
+			$analyze_checkboxes['View'][] = array('spr', 'List Notable Results');
+			$analyze_checkboxes['View'][] = array('hnr', 'Do Not Show Noisy Results');
+			$analyze_checkboxes['View'][] = array('hni', 'Do Not Show Results With Incomplete Data');
+			$analyze_checkboxes['View'][] = array('hlc', 'Do Not Show Results With Little Change/Spread');
 
 			if($has_identifier_with_color_brand)
 			{
 				$analyze_checkboxes['Graph Settings'][] = array('ncb', 'No Color Branding');
 			}
 		}
+		if(count($suites_in_result_file) > 1)
+		{
+			$suite_limit = '<h3>Limit displaying results to tests within:</h3>';
+			$stis = self::check_request_for_var($request, 'stis');
+			foreach($suites_in_result_file as $suite => $contained_tests)
+			{
+				$suite = new pts_test_suite($suite);
+				$suite_limit .= '<input type="checkbox" name="stis[]" value="' . $suite->get_identifier() . '"' . (is_array($stis) && in_array($suite->get_identifier(), $stis) ? ' checked="checked"' : null) . ' /> ' . $suite->get_title() . '<br />';
+			}
+			$analyze_checkboxes['View'][] = array('', $suite_limit);
+		}
 
 		$analyze_checkboxes['Graph Settings'][] = array('vb', 'Prefer Vertical Bar Graphs');
 		$analyze_checkboxes['Statistics'][] = array('rol', 'Remove Outliers Before Calculating Averages');
 		$analyze_checkboxes['Statistics'][] = array('gtb', 'Graph Values Of All Runs (Box Plot)');
 		$analyze_checkboxes['Statistics'][] = array('gtl', 'Graph Values Of All Runs (Line Graph)');
-
-		if($result_file->get_test_count() > 12 && defined('PTS_TEST_SUITE_PATH') && is_dir(PTS_TEST_SUITE_PATH))
-		{
-			$analyze_checkboxes['Helpers'][] = array('sts', 'Show Performance Breakdown By Performance-Per-Suite');
-		}
 
 		if($has_box_plot || $has_line_graph)
 		{
@@ -215,9 +221,16 @@ class pts_result_viewer_settings
 			}
 			$t .= '<div style="float: left; overflow: hidden; padding: 4px;">';
 			$t .= '<h2>' . $title . '</h2>';
-			foreach($group as $i => $key)
+			foreach($group as $key)
 			{
-				$t .= '<input type="checkbox" name="' . $key[0] . '" value="y"' . (self::check_request_for_var($request, $key[0]) ? ' checked="checked"' : null) . ' /> ' . $key[1] . '<br />';
+				if($key[0] == null)
+				{
+					$t .= $key[1] . '<br />';
+				}
+				else
+				{
+					$t .= '<input type="checkbox" name="' . $key[0] . '" value="y"' . (self::check_request_for_var($request, $key[0]) ? ' checked="checked"' : null) . ' /> ' . $key[1] . '<br />';
+				}
 			}
 			$t .= '</div>';
 		}
@@ -263,7 +276,7 @@ $t .= '
 	}
 	$stime = strtotime($sys->get_timestamp());
 	$t .= '<div class="div_table_cell"><input type="number" min="0" step="1" name="ppd_' . $ppdx . '" value="' . ($ppd && $ppd !== true ? $ppd : '0') . '" /></div>
-<div class="div_table_cell">' . date(($stime > $start_of_year ? 'F d @ H:i' : 'F d Y @ H:i'), $stime) . '</div>';
+<div class="div_table_cell">' . date(($stime > $start_of_year ? 'F d' : 'F d Y'), $stime) . '</div>';
 
 	if(defined('VIEWER_CAN_DELETE_RESULTS') && VIEWER_CAN_DELETE_RESULTS && defined('RESULTS_VIEWING_ID'))
 	{
@@ -430,6 +443,32 @@ if($system_identifier_count > 2)
 				}
 			}
 		}
+		if(($stis = self::check_request_for_var($request, 'stis')))
+		{
+			$suites_in_result_file = pts_test_suites::suites_in_result_file($result_file, true, 0);
+			$tests_to_show = array();
+			foreach($stis as $suite_to_show)
+			{
+				if(isset($suites_in_result_file[$suite_to_show]))
+				{
+					foreach($suites_in_result_file[$suite_to_show] as $test_to_show)
+					{
+						$tests_to_show[] = $test_to_show;
+					}
+				}
+			}
+
+			if(!empty($tests_to_show))
+			{
+				foreach($result_file->get_result_objects() as $i => $result_object)
+				{
+					if(!in_array($result_object->test_profile->get_identifier(false), $tests_to_show))
+					{
+						$result_file->remove_result_object_by_id($i);
+					}
+				}
+			}
+		}
 		if(self::check_request_for_var($request, 'hlc'))
 		{
 			foreach($result_file->get_result_objects() as $i => $result_object)
@@ -473,17 +512,6 @@ if($system_identifier_count > 2)
 		{
 			$result_file->sort_result_object_order_by_result_scale();
 		}
-
-		if(self::check_request_for_var($request, 'sts'))
-		{
-			foreach(pts_result_file_analyzer::generate_geometric_mean_result_for_suites_in_result_file($result_file, true, 20) as $result)
-			{
-				if($result)
-				{
-					$result_file->add_result($result);
-				}
-			}
-		}
 		if(self::check_request_for_var($request, 'shm'))
 		{
 			foreach(pts_result_file_analyzer::generate_harmonic_mean_result($result_file) as $result)
@@ -502,7 +530,7 @@ if($system_identifier_count > 2)
 				$result_file->add_result($result);
 			}
 		}
-		if(self::check_request_for_var($request, 'scm'))
+		if(self::check_request_for_var($request, 'sts'))
 		{
 			foreach(pts_result_file_analyzer::generate_geometric_mean_result_for_suites_in_result_file($result_file, true, 0) as $result)
 			{
