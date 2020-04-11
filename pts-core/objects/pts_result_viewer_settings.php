@@ -281,7 +281,7 @@ $t .= '
 
 	if(defined('VIEWER_CAN_DELETE_RESULTS') && VIEWER_CAN_DELETE_RESULTS && defined('RESULTS_VIEWING_ID'))
 	{
-		$t .= '<div class="div_table_cell"><button onclick="javascript:delete_run_from_result_file(\'' . RESULTS_VIEWING_ID . '\', \'' . $si . '\', \'' . $ppdx . '\'); return false;">DELETE RUN</button></div>';
+		$t .= '<div class="div_table_cell"><button onclick="javascript:delete_run_from_result_file(\'' . RESULTS_VIEWING_ID . '\', \'' . $si . '\', \'' . $ppdx . '\'); return false;">Delete Run</button></div>';
 	}
 	$t .= '</div>';
 }

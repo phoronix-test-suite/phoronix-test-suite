@@ -75,12 +75,12 @@ div#main_area h2
 	padding: 0;
 	margin: 10px 0 2px;
 }
-div#main_area input, div#main_area textarea, div#main_area select
+div#main_area input, div#main_area textarea, div#main_area select, div#main_area button
 {
 	margin: 10px 0;
 	background: #ddd;
 	color: #000;
-	font-size: 15pt;
+	font-size: 13pt;
 	border: 1px solid #eee;
 	padding: 5px 10px;
 	font-weight: 600;

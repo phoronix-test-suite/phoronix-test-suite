@@ -900,7 +900,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 				$PAGE .= '<p>' . $button_area . '</p>';
 			}
 
-			$PAGE .= '<br /></div>';
+			$PAGE .= '</div>';
 			unset($result_object);
 		}
 		$PAGE .= '</div>';
