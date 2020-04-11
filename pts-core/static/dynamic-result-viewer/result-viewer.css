@@ -396,6 +396,59 @@ div.table_test_box em, div.pts_test_boxes em
 {
 	color: #ef5e09;
 }
+.tabs
+{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+.tabs label
+{
+	order: 1;
+	display: block;
+	padding: 5px 10px;
+	margin-right: 2px;
+	cursor: pointer;
+	background: #ef5e09;
+	color: #fff;
+	transition: background ease 0.5s;
+}
+.tabs .tab
+{
+	order: 99;
+	flex-grow: 1;
+	width: 100%;
+	display: none;
+	padding: 1rem;
+	background: #fff;
+}
+.tabs input[type="radio"]
+{
+	display: none;
+}
+.tabs input[type="radio"]:checked + label
+{
+	color: #000;
+	background: #fff;
+}
+.tabs input[type="radio"]:checked + label + .tab
+{
+	display: block;
+}
+
+@media (max-width: 45em) {
+  .tabs .tab,
+  .tabs label {
+    order: initial;
+  }
+  .tabs label {
+    width: 100%;
+    margin-right: 0;
+    margin-top: 0.2rem;
+  }
+}
+
 @media print
 {
 	#header, #result-settings, ul, a.mini, div.grid, #result_overview_area, .hide_on_print { display: none !important; }

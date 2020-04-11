@@ -719,7 +719,8 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			//
 			// RENDER TEST AND ANCHOR
 			//
-			$res = pts_render::render_graph_inline_embed($result_object, $result_file, $extra_attributes);
+			$ro = clone $result_object;
+			$res = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
 			if($res == false)
 			{
 				continue;
@@ -753,7 +754,30 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			// DISPLAY GRAPH
 			//
 
-			$PAGE .= $res . '<br />';
+			// Run variability
+			$extra_attributes['graph_render_type'] = 'HORIZONTAL_BOX_PLOT';
+			$ro = clone $result_object;
+			$res_variability = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
+			unset($extra_attributes['graph_render_type']);
+
+			$tabs = array(
+				'Performance' => $res,
+				'Result Confidence' => $res_variability,
+				);
+
+			$PAGE .= '<div class="tabs">';
+			foreach($tabs as $title => &$graph)
+			{
+				$tab_id = strtolower(str_replace(' ', '_', $title)) . '_' . $i;
+			$PAGE .= '<input type="radio" name="tabs_' . $i . '" id="' . $tab_id . '"' . ($title == 'Performance' ? ' checked="checked"' : '') . '>
+			  <label for="' . $tab_id . '">' . $title . '</label>
+			  <div class="tab">
+			    ' . $graph . '
+			  </div>';
+			}
+			$PAGE .= '</div>';
+
+			// $PAGE .= $res . '<br />';
 
 
 			//
