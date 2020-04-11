@@ -855,6 +855,21 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 
 			// $PAGE .= $res . '<br />';
 
+			//
+			// DISPLAY LOGS
+			//
+			$button_area = null;
+			$test_log_dir = $result_file->get_test_log_dir($result_object);
+			if($test_log_dir && count(pts_file_io::glob($test_log_dir . '*.log')) > 0)
+			{
+				$button_area .= ' <button onclick="javascript:display_test_logs_for_result_object(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\'); return false;">View Test Run Logs</button> ';
+			}
+			$install_logs = pts_file_io::glob($result_file->get_test_installation_log_dir() . '*/' . $result_object->test_profile->get_identifier_simplified() . '.log');
+			if(count($install_logs) > 0)
+			{
+				$button_area .= ' <button onclick="javascript:display_install_logs_for_result_object(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\'); return false;">View Test Installation Logs</button> ';
+			}
+
 
 			//
 			// EDITING / DELETE OPTIONS
@@ -862,38 +877,27 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 
 			if(VIEWER_CAN_DELETE_RESULTS && RESULTS_VIEWING_COUNT == 1 && !$result_object->dynamically_generated)
 			{
-				$PAGE .= '<button onclick="javascript:delete_result_from_result_file(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\'); return false;">Delete Result</button>';
+				$button_area .= ' <button onclick="javascript:delete_result_from_result_file(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\'); return false;">Delete Result</button> ';
 			}
 			if(VIEWER_CAN_MODIFY_RESULTS && RESULTS_VIEWING_COUNT == 1 && !$result_object->dynamically_generated)
 			{
 				if($result_object->get_annotation() == null)
 				{
-					$PAGE .= ' <button onclick="javascript:display_add_annotation_for_result_object(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\', this); return false;">Add Annotation</button>';
-					$PAGE .= ' <div id="annotation_area_' . $i . '" style="display: none;"> <form action="#" onsubmit="javascript:add_annotation_for_result_object(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\', this); return false;"><textarea rows="4" cols="50" placeholder="Add Annotation..." name="annotation"></textarea><br /><input type="submit" value="Add Annotation"></form></div><br />';
+					$button_area .= ' <button onclick="javascript:display_add_annotation_for_result_object(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\', this); return false;">Add Annotation</button> ';
+					$PAGE .= ' <div id="annotation_area_' . $i . '" style="display: none;"> <form action="#" onsubmit="javascript:add_annotation_for_result_object(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\', this); return false;"><textarea rows="4" cols="50" placeholder="Add Annotation..." name="annotation"></textarea><br /><input type="submit" value="Add Annotation"></form></div>';
 				}
 				else
 				{
-					$PAGE .= '<br /><div id="update_annotation_' . $i . '" contentEditable="true">' . $result_object->get_annotation() . '</div> <input type="submit" value="Update Annotation" onclick="javascript:update_annotation_for_result_object(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\'); return false;">';
+					$PAGE .= '<div id="update_annotation_' . $i . '" contentEditable="true">' . $result_object->get_annotation() . '</div> <input type="submit" value="Update Annotation" onclick="javascript:update_annotation_for_result_object(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\'); return false;">';
 				}
 			}
 			else
 			{
 				$PAGE .= '<p class="mini">' . $result_object->get_annotation() . '</p>';
 			}
-
-			//
-			// DISPLAY LOGS
-			//
-
-			$test_log_dir = $result_file->get_test_log_dir($result_object);
-			if($test_log_dir && count(pts_file_io::glob($test_log_dir . '*.log')) > 0)
+			if($button_area != null)
 			{
-				$PAGE .= ' <button onclick="javascript:display_test_logs_for_result_object(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\'); return false;">View Test Run Logs</button>';
-			}
-			$install_logs = pts_file_io::glob($result_file->get_test_installation_log_dir() . '*/' . $result_object->test_profile->get_identifier_simplified() . '.log');
-			if(count($install_logs) > 0)
-			{
-				$PAGE .= ' <button onclick="javascript:display_install_logs_for_result_object(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\'); return false;">View Test Installation Logs</button>';
+				$PAGE .= '<p>' . $button_area . '</p>';
 			}
 
 			$PAGE .= '<br /></div>';
