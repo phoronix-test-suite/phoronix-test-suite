@@ -716,12 +716,19 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		$prev_title = null;
 		foreach($result_file->get_result_objects() as $i => $result_object)
 		{
+			//
+			// RENDER TEST AND ANCHOR
+			//
 			$res = pts_render::render_graph_inline_embed($result_object, $result_file, $extra_attributes);
 			if($res == false)
 			{
 				continue;
 			}
 			$PAGE .= '<a name="r-' . $i . '"></a><div style="text-align: center;" id="result-' . $i . '">';
+
+			//
+			// DISPLAY TEST PORIFLE METADATA HELPER
+			//
 			if($result_object->test_profile->get_title() != $prev_title)
 			{
 				$PAGE .= '<h2>' . $result_object->test_profile->get_title() . '</h2>';
@@ -741,7 +748,18 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 				}
 				$prev_title = $result_object->test_profile->get_title();
 			}
+
+			//
+			// DISPLAY GRAPH
+			//
+
 			$PAGE .= $res . '<br />';
+
+
+			//
+			// EDITING / DELETE OPTIONS
+			//
+
 			if(VIEWER_CAN_DELETE_RESULTS && RESULTS_VIEWING_COUNT == 1 && !$result_object->dynamically_generated)
 			{
 				$PAGE .= '<a class="mini" href="#" onclick="javascript:delete_result_from_result_file(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\'); return false;">(Delete Result)</a>';
@@ -762,6 +780,10 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			{
 				$PAGE .= '<p class="mini">' . $result_object->get_annotation() . '</p>';
 			}
+
+			//
+			// DISPLAY LOGS
+			//
 
 			$test_log_dir = $result_file->get_test_log_dir($result_object);
 			if($test_log_dir && count(pts_file_io::glob($test_log_dir . '*.log')) > 0)
