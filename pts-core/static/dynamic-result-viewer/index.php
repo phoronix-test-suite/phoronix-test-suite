@@ -151,8 +151,8 @@ if(VIEWER_ACCESS_KEY != null && (!isset($_SESSION['AccessKey']) || $_SESSION['Ac
 <html lang="en">
 <head>
   <title>Phoronix Test Suite - Result Portal</title>
-<link rel="stylesheet" href="<?php echo WEB_URL_PATH; ?>/result-viewer.css">
-<script type="text/javascript" src="<?php echo WEB_URL_PATH; ?>/result-viewer.js"></script>
+<link rel="stylesheet" href="<?php echo WEB_URL_PATH; ?>/result-viewer.css?<?php echo PTS_CORE_VERSION; ?>">
+<script type="text/javascript" src="<?php echo WEB_URL_PATH; ?>/result-viewer.js?<?php echo PTS_CORE_VERSION; ?>"></script>
 <link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 <link rel="icon" type="image/png" href="<?php echo WEB_URL_PATH; ?>favicon.png">
 </head>
@@ -799,10 +799,14 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			$res_per_thread = false;
 			$res_per_clock = false;
 			$res_variability = false;
-			$extra_attributes['graph_render_type'] = 'HORIZONTAL_BOX_PLOT';
-			$ro = clone $result_object;
-			$res_variability = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
-			unset($extra_attributes['graph_render_type']);
+
+			if(!in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'BOX_PLOT')) && $result_object->test_result_buffer->detected_multi_sample_result())
+			{
+				$extra_attributes['graph_render_type'] = 'HORIZONTAL_BOX_PLOT';
+				$ro = clone $result_object;
+				$res_variability = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
+				unset($extra_attributes['graph_render_type']);
+			}
 
 			if(!empty($identifier_mapping_to_cores))
 			{
@@ -836,22 +840,34 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 				'Performance Per Clock' => $res_per_clock,
 				'Result Confidence' => $res_variability,
 				);
-
-			$PAGE .= '<div class="tabs">';
 			foreach($tabs as $title => &$graph)
 			{
 				if(empty($graph))
 				{
-					continue;
+					unset($tabs[$title]);
 				}
-				$tab_id = strtolower(str_replace(' ', '_', $title)) . '_' . $i;
-			$PAGE .= '<input type="radio" name="tabs_' . $i . '" id="' . $tab_id . '"' . ($title == 'Result' ? ' checked="checked"' : '') . '>
-			  <label for="' . $tab_id . '">' . $title . '</label>
-			  <div class="tab">
-			    ' . $graph . '
-			  </div>';
 			}
-			$PAGE .= '</div>';
+
+			switch(count($tabs))
+			{
+				case 0:
+					continue 2;
+				case 1:
+					$PAGE .= $res . '<br />';
+					break;
+				default:
+					$PAGE .= '<div class="tabs">';
+					foreach($tabs as $title => &$graph)
+					{
+						$tab_id = strtolower(str_replace(' ', '_', $title)) . '_' . $i;
+						$PAGE .= '<input type="radio" name="tabs_' . $i . '" id="' . $tab_id . '"' . ($title == 'Result' ? ' checked="checked"' : '') . '>
+						  <label for="' . $tab_id . '">' . $title . '</label>
+						  <div class="tab">
+						    ' . $graph . '
+						  </div>';
+					}
+					$PAGE .= '</div>';
+			}
 
 			// $PAGE .= $res . '<br />';
 
@@ -983,9 +999,9 @@ define('PAGE', $PAGE);
 <html lang="en">
 <head>
   <title><?php echo defined('TITLE') ? TITLE : ''; ?></title>
-<link rel="stylesheet" href="<?php echo WEB_URL_PATH; ?>result-viewer.css">
+<link rel="stylesheet" href="<?php echo WEB_URL_PATH; ?>result-viewer.css?<?php echo PTS_CORE_VERSION; ?>">
 <link rel="icon" type="image/png" href="<?php echo WEB_URL_PATH; ?>favicon.png">
-<script type="text/javascript" src="<?php echo WEB_URL_PATH; ?>result-viewer.js"></script>
+<script type="text/javascript" src="<?php echo WEB_URL_PATH; ?>result-viewer.js?<?php echo PTS_CORE_VERSION; ?>"></script>
 <script>
 var WEB_URL_PATH = "<?php echo WEB_URL_PATH; ?>";
 </script>

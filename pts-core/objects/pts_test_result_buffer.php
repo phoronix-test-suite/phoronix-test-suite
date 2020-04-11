@@ -24,6 +24,7 @@ class pts_test_result_buffer
 {
 	public $buffer_items;
 	protected $buffer_contains;
+	protected $added_multi_sample_result = false;
 
 	public function __construct($buffer_items = array())
 	{
@@ -114,7 +115,16 @@ class pts_test_result_buffer
 			$value = implode(':', $value);
 		}
 
+		if($this->added_multi_sample_result == false && $raw_value)
+		{
+			$this->added_multi_sample_result = strpos($raw_value, ':') !== false;
+		}
+
 		$this->buffer_contains[$identifier . $value] = 1;
+	}
+	public function detected_multi_sample_result()
+	{
+		return $this->added_multi_sample_result;
 	}
 	public function clear_outlier_results($value_below)
 	{
