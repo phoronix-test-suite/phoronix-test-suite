@@ -52,7 +52,7 @@ class pts_test_suites
 
 		return $local_suites;
 	}
-	public static function suites_on_disk($return_object = false)
+	public static function suites_on_disk($return_object = false, $skip_deprecated = true)
 	{
 		if(defined('PTS_TEST_SUITE_PATH') && is_dir(PTS_TEST_SUITE_PATH))
 		{
@@ -78,8 +78,12 @@ class pts_test_suites
 				$test = array_pop($dir);
 				$repo = array_pop($dir);
 				$test_suite = new pts_test_suite($repo . '/' . $test);
-				if($test_suite->get_title() != null && !$test_suite->is_deprecated())
+				if($test_suite->get_title() != null)
 				{
+					if($skip_deprecated && $test_suite->is_deprecated())
+					{
+						continue;
+					}
 					$local_suites[$test_suite->get_identifier(false)] = $return_object ? $test_suite : ($repo . '/' . $test);
 				}
 			}
@@ -96,7 +100,7 @@ class pts_test_suites
 			pts_arrays::unique_push($tests_in_result_file, $tp->get_identifier(false));
 		}
 
-		foreach(pts_test_suites::suites_on_disk(true) as $suite)
+		foreach(pts_test_suites::suites_on_disk(true, true) as $suite)
 		{
 			$contained_tests = $suite->get_contained_test_identifiers(false);
 			$suites_in_result_file[$suite->get_identifier()] = array();

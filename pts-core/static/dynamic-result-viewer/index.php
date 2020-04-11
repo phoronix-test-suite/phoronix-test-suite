@@ -665,7 +665,6 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		$PAGE .= '<hr /><div style="font-size: 12pt;">' . pts_result_viewer_settings::get_html_options_markup($result_file, $_REQUEST) . '</div><hr style="clear: both;" />';
 		$PAGE .= pts_result_viewer_settings::process_helper_html($_REQUEST, $result_file, $extra_attributes);
 		$PAGE .= '</div>';
-
 		$PAGE .= '<div class="print_notes">' . pts_result_file_output::result_file_to_system_html($result_file) . '</div>';
 		$PAGE .= '<div id="result_overview_area">';
 		$intent = -1;

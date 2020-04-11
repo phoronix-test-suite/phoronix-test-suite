@@ -137,6 +137,7 @@ class pts_result_viewer_settings
 				break;
 			}
 		}
+		$suites_in_result_file = pts_test_suites::suites_in_result_file($result_file, true, 0);
 		// END OF CHECKS
 
 		$analyze_options .= '<form action="' . $_SERVER['REQUEST_URI'] . '" method="post">';
@@ -152,6 +153,10 @@ class pts_result_viewer_settings
 		{
 			$analyze_checkboxes['Statistics'][] = array('shm', 'Show Overall Harmonic Mean(s)');
 			$analyze_checkboxes['Statistics'][] = array('sgm', 'Show Overall Geometric Mean');
+			if(count($suites_in_result_file) > 1)
+			{
+				$analyze_checkboxes['Statistics'][] = array('scm', 'Show Geometric Means Per-Suite/Category');
+			}
 			$analyze_checkboxes['Statistics'][] = array('swl', 'Show Wins / Losses Counts (Pie Chart)');
 			$analyze_checkboxes['Statistics'][] = array('nor', 'Normalize Results');
 			$analyze_checkboxes['Graph Settings'][] = array('ftr', 'Force Line Graphs (Where Applicable)');
@@ -495,6 +500,16 @@ if($system_identifier_count > 2)
 			if($result)
 			{
 				$result_file->add_result($result);
+			}
+		}
+		if(self::check_request_for_var($request, 'scm'))
+		{
+			foreach(pts_result_file_analyzer::generate_geometric_mean_result_for_suites_in_result_file($result_file, true, 0) as $result)
+			{
+				if($result)
+				{
+					$result_file->add_result($result);
+				}
 			}
 		}
 		if(self::check_request_for_var($request, 'swl'))
