@@ -215,12 +215,13 @@ class pts_result_file_analyzer
 
 				if($result_object->test_profile->get_result_proportion() == 'HIB')
 				{
-					$result = pts_math::set_precision($result / $value, 3);
+					$result = $result / $value;
+					$result = round($result, ($result < 1 ? 4 : 2));
 					$scale = $result_object->test_profile->get_result_scale() . ' Per ' . $unit;
 				}
 				else if($result_object->test_profile->get_result_proportion() == 'LIB')
 				{
-					$result = pts_math::set_precision($result * $value, 3);
+					$result = round($result * $value, 3);
 					$scale = $result_object->test_profile->get_result_scale() . ' x ' . $unit;
 				}
 

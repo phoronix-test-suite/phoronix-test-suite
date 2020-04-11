@@ -56,6 +56,7 @@ div#main_area a:hover
 }
 div#main_area h1
 {
+	clear: both;
 	color: #098BEF;
 	font-weight: 500;
 	text-transform: uppercase;
@@ -97,20 +98,23 @@ div#main_area ul
 	float: left;
 	margin: 0;
 	padding: 0;
+	background: #ef5e09;
+	color: #fff;
+	clear: both;
 }
 div#main_area ul:hover a
 {
-	color: #ef5e09;
+	background: #ef5e09;
+	color: #fff;
 }
 div#main_area ul a
 {
 	display: block;
-	color: #ef5e09;
+	color: #fff;
 	text-decoration: none;
 	font-weight: 600;
 	line-height: 26px;
 	padding: 4px 8px;
-	text-transform: uppercase;
 }
 div#main_area ul li
 {
@@ -125,11 +129,11 @@ div#main_area ul li:last-of-type{
 }
 div#main_area ul li:hover
 {
-	color:#ef2409;
+	color: #222;
 
 }
 div#main_area ul ul a:hover, div#main_area ul li a:hover{
-	color:#ef2409;
+	color:#222;
 }
 
 div#main_area ul ul a

@@ -25,7 +25,7 @@ class pts_result_viewer_settings
 	public static function get_html_sort_bar(&$result_file, &$request)
 	{
 		$analyze_options = null;
-		$drop_down_menus = array('Export Result Data' => array(
+		$drop_down_menus = array('Export Benchmark Data' => array(
 						'export=pdf' => 'Result File To PDF',
 						'export=txt' => 'Result File To Text',
 						'export=xml' => 'Result File To XML',
@@ -35,7 +35,7 @@ class pts_result_viewer_settings
 					);
 		if(count($result_file->get_system_identifiers()) > 1)
 		{
-			$drop_down_menus['Sort Results'] = array(
+			$drop_down_menus['Sort Result Order'] = array(
 				'sro' => 'By Identifier (ASC)',
 				'sro&rro' => 'By Identifier (DESC)',
 				'sor' => 'By Performance (ASC)',
@@ -51,7 +51,7 @@ class pts_result_viewer_settings
 				);
 		}
 
-		$analyze_options .= '<div style="clear: both; float: right;"><ul>';
+		$analyze_options .= '<div style="float: right;"><ul>';
 		foreach(array_reverse($drop_down_menus, true) as $menu => $sub_menu)
 		{
 			$analyze_options .= '<li><a href="#">' . $menu . '</a><ul>';
