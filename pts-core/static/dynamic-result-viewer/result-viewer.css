@@ -455,7 +455,7 @@ div.table_test_box em, div.pts_test_boxes em
 
 @media print
 {
-	#header, #result-settings, ul, a.mini, div.grid, #result_overview_area, .hide_on_print { display: none !important; }
+	#header, #result-settings, ul, a.mini, div.grid, #result_overview_area, .hide_on_print, .tabs label, button { display: none !important; }
 	p.mini { font-size: 7px; }
 	#main_area, #main_area p, #result_file_desc { font-size: 12px; }
 	#main_area h1, #main_area h2 { font-size: 16px; }
