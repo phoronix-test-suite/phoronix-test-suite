@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Allow automated per-thread/core/clock graphs within the result viewer
 pts-core: Result viewer add "Limit displaying results to tests within:"
 pts-core: From the result viewer allow "Show Geometric Means Per-Suite/Category"
 pts-core: Add workload-topology sub-command

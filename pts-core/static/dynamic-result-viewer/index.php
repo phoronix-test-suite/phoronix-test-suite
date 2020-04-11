@@ -714,6 +714,46 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 
 		$PAGE .= '<a name="table"></a><div id="results">';
 		$prev_title = null;
+
+		$identifier_mapping_to_cores = array();
+		$identifier_mapping_to_threads = array();
+		$identifier_mapping_to_cpu_clock = array();
+
+		if($result_file->get_system_count() > 1)
+		{
+			foreach($result_file->get_systems() as $system)
+			{
+				$t = $system->get_cpu_core_count();
+				if($t > 0)
+				{
+					$identifier_mapping_to_cores[$system->get_identifier()] = $t;
+				}
+				$t = $system->get_cpu_thread_count();
+				if($t > 0)
+				{
+					$identifier_mapping_to_threads[$system->get_identifier()] = $t;
+				}
+				$t = $system->get_cpu_clock();
+				if($t > 0)
+				{
+					$identifier_mapping_to_cpu_clock[$system->get_identifier()] = $t;
+				}
+			}
+
+			if(count(array_unique($identifier_mapping_to_cores)) < 2)
+			{
+				$identifier_mapping_to_cores = array();
+			}
+			if(count(array_unique($identifier_mapping_to_threads)) < 2)
+			{
+				$identifier_mapping_to_threads = array();
+			}
+			if(count(array_unique($identifier_mapping_to_cpu_clock)) < 2)
+			{
+				$identifier_mapping_to_cpu_clock = array();
+			}
+		}
+
 		foreach($result_file->get_result_objects() as $i => $result_object)
 		{
 			//
@@ -760,8 +800,36 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			$res_variability = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
 			unset($extra_attributes['graph_render_type']);
 
+			if(!empty($identifier_mapping_to_cores))
+			{
+				$ro = pts_result_file_analyzer::get_result_object_custom($result_file, $result_object, $identifier_mapping_to_cores, 'Performance Per Core', 'Core');
+				if($ro)
+				{
+					$res_per_core = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
+				}
+			}
+			if(!empty($identifier_mapping_to_threads))
+			{
+				$ro = pts_result_file_analyzer::get_result_object_custom($result_file, $result_object, $identifier_mapping_to_threads, 'Performance Per Thread', 'Thread');
+				if($ro)
+				{
+					$res_per_thread = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
+				}
+			}
+			if(!empty($identifier_mapping_to_cpu_clock))
+			{
+				$ro = pts_result_file_analyzer::get_result_object_custom($result_file, $result_object, $identifier_mapping_to_cpu_clock, 'Performance Per Clock', 'GHz');
+				if($ro)
+				{
+					$res_per_clock = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
+				}
+			}
+
 			$tabs = array(
-				'Performance' => $res,
+				'Result' => $res,
+				'Performance Per Core' => $res_per_core,
+				'Performance Per Thread' => $res_per_thread,
+				'Performance Per Clock' => $res_per_clock,
 				'Result Confidence' => $res_variability,
 				);
 
@@ -769,7 +837,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			foreach($tabs as $title => &$graph)
 			{
 				$tab_id = strtolower(str_replace(' ', '_', $title)) . '_' . $i;
-			$PAGE .= '<input type="radio" name="tabs_' . $i . '" id="' . $tab_id . '"' . ($title == 'Performance' ? ' checked="checked"' : '') . '>
+			$PAGE .= '<input type="radio" name="tabs_' . $i . '" id="' . $tab_id . '"' . ($title == 'Result' ? ' checked="checked"' : '') . '>
 			  <label for="' . $tab_id . '">' . $title . '</label>
 			  <div class="tab">
 			    ' . $graph . '
@@ -793,7 +861,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 				if($result_object->get_annotation() == null)
 				{
 					$PAGE .= ' <a class="mini" href="#" onclick="javascript:display_add_annotation_for_result_object(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\', this); return false;">(Add Annotation)</a>';
-					$PAGE .= ' <div id="annotation_area_' . $i . '" style="display: none;"> <form action="#" onsubmit="javascript:add_annotation_for_result_object(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\', this); return false;"><textarea rows="4" cols="50" placeholder="Add Annotation..." name="annotation"></textarea><br /><input type="submit" value="Add Annotation"></form></div>';
+					$PAGE .= ' <div id="annotation_area_' . $i . '" style="display: none;"> <form action="#" onsubmit="javascript:add_annotation_for_result_object(\'' . RESULTS_VIEWING_ID . '\', \'' . $i . '\', this); return false;"><textarea rows="4" cols="50" placeholder="Add Annotation..." name="annotation"></textarea><br /><input type="submit" value="Add Annotation"></form></div><br />';
 				}
 				else
 				{
@@ -804,7 +872,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			{
 				$PAGE .= '<p class="mini">' . $result_object->get_annotation() . '</p>';
 			}
-
+			$PAGE .= '<br />';
 			//
 			// DISPLAY LOGS
 			//

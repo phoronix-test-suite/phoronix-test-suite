@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015, Phoronix Media
-	Copyright (C) 2015, Michael Larabel
+	Copyright (C) 2015 - 2020, Phoronix Media
+	Copyright (C) 2015 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -81,6 +81,56 @@ class pts_result_file_system
 	public function set_identifier($new_id)
 	{
 		$this->identifier = $new_id;
+	}
+	public function get_cpu_core_count()
+	{
+		$hw = $this->get_hardware();
+		$hw = strstr($hw, 'Processor:');
+		$hw = strstr($hw, ',', true);
+		$hw = substr(strstr($hw, '('), 1);
+
+		if(($x = strpos($hw, ' Cores')) !== false)
+		{
+			$hw = substr($hw, 0, $x);
+		}
+
+		return is_numeric($hw) ? $hw : false;
+	}
+	public function get_cpu_thread_count()
+	{
+		$hw = $this->get_hardware();
+		$hw = strstr($hw, 'Processor:');
+		$hw = strstr($hw, ',', true);
+		$hw = substr(strstr($hw, '('), 1);
+
+		if(($x = strpos($hw, ' Threads')) !== false)
+		{
+			$hw = substr($hw, 0, $x);
+			if(($x = strpos($hw, ' / ')) !== false)
+			{
+				$hw = substr($hw, $x + 3);
+			}
+		}
+
+		return is_numeric($hw) ? $hw : false;
+	}
+	public function get_cpu_clock()
+	{
+		$hw = $this->get_hardware();
+		$hw = strstr($hw, 'Processor:');
+		$hw = strstr($hw, ',', true);
+		$hw = strstr($hw, '(', true);
+
+		if(($x = strpos($hw, ' @ ')) !== false)
+		{
+			$hw = substr($hw, $x + 3);
+			if(($x = strpos($hw, 'GHz')) !== false)
+			{
+				$hw = substr($hw, 0, $x);
+			}
+		}
+
+		return is_numeric($hw) ? $hw : false;
 	}
 }
 

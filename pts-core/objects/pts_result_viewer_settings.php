@@ -179,7 +179,7 @@ class pts_result_viewer_settings
 			{
 				$suite = new pts_test_suite($suite);
 				$id = rtrim(base64_encode($suite->get_identifier()), '=');
-				$suite_limit .= '<input type="checkbox" name="stis[]" value="' . $id . '"' . (is_array($stis) && in_array($id, $stis) ? ' checked="checked"' : null) . ' /> ' . $suite->get_title() . ' <sup><em>' . count($contained_tests) . ' Results</em></sup><br />';
+				$suite_limit .= '<input type="checkbox" name="stis[]" value="' . $id . '"' . (is_array($stis) && in_array($id, $stis) ? ' checked="checked"' : null) . ' /> ' . $suite->get_title() . ' <sup><em>' . count($contained_tests) . ' Test Profiles</em></sup><br />';
 			}
 			$analyze_checkboxes['View'][] = array('', $suite_limit);
 		}

@@ -198,6 +198,48 @@ class pts_result_file_analyzer
 			}
 		}
 	}
+	public static function get_result_object_custom(&$result_file, $result_object, $identifier_mapping, $title_prepend = '', $unit = '')
+	{
+		if($result_object->test_profile->get_identifier() != null && $result_object->test_profile->get_display_format() == 'BAR_GRAPH')
+		{
+			$added_count = 0;
+			$test_result = clone $result_object;
+			$test_result->test_profile->set_identifier(null);
+			$test_result->set_used_arguments_description($title_prepend . ($test_result->get_arguments_description() != null ? ' - ' . $test_result->get_arguments_description() : ''));
+			$test_result->set_used_arguments($title_prepend . ' ' . $test_result->get_arguments());
+			$test_result->test_result_buffer = new pts_test_result_buffer();
+
+			foreach($identifier_mapping as $identifier => $value)
+			{
+				$result = $result_object->test_result_buffer->get_value_from_identifier($identifier);
+
+				if($result_object->test_profile->get_result_proportion() == 'HIB')
+				{
+					$result = pts_math::set_precision($result / $value, 3);
+					$scale = $result_object->test_profile->get_result_scale() . ' Per ' . $unit;
+				}
+				else if($result_object->test_profile->get_result_proportion() == 'LIB')
+				{
+					$result = pts_math::set_precision($result * $value, 3);
+					$scale = $result_object->test_profile->get_result_scale() . ' x ' . $unit;
+				}
+
+				if($result != 0)
+				{
+					$test_result->test_result_buffer->add_test_result($identifier, $result, null, array('install-footnote' => 'Detected ' . strtolower($unit) . ' count of ' . $value));
+					$added_count++;
+				}
+			}
+
+			if($added_count > 1)
+			{
+				$test_result->test_profile->set_result_scale($scale);
+				return $test_result;
+			}
+		}
+
+		return false;
+	}
 	public static function generate_perf_per_dollar(&$result_file, $identifier, $value, $unit = 'Dollar')
 	{
 		foreach($result_file->get_result_objects() as $result_object)
@@ -236,7 +278,7 @@ class pts_result_file_analyzer
 		$original_parent_hash = $test_result->get_comparison_hash(true, false);
 		$test_result = clone $test_result;
 		$test_result->test_profile->set_identifier(null);
-		$test_result->set_used_arguments_description('Performance / Cost - ' . $test_result->get_arguments_description());
+		$test_result->set_used_arguments_description('Performance / Cost' . ($test_result->get_arguments_description() != null ? ' - ' . $test_result->get_arguments_description() : ''));
 		$test_result->set_used_arguments('dollar comparison ' . $test_result->get_arguments());
 		$test_result->test_profile->set_result_scale($scale);
 		$test_result->test_result_buffer = new pts_test_result_buffer();
