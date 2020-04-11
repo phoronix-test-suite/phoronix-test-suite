@@ -69,7 +69,10 @@ class pts_test_suites
 
 
 		$local_suites = array();
-		foreach(pts_file_io::glob($suite_dir . '*/*/suite-definition.xml') as $path)
+		$suite_xml_files = pts_file_io::glob($suite_dir . '*/*/suite-definition.xml');
+		rsort($suite_xml_files);
+		$skip_suites_deprecated = array();
+		foreach($suite_xml_files as $path)
 		{
 			$dir = explode('/', dirname($path));
 
@@ -78,10 +81,12 @@ class pts_test_suites
 				$test = array_pop($dir);
 				$repo = array_pop($dir);
 				$test_suite = new pts_test_suite($repo . '/' . $test);
+
 				if($test_suite->get_title() != null)
 				{
-					if($skip_deprecated && $test_suite->is_deprecated())
+					if($skip_deprecated && ($test_suite->is_deprecated() || in_array($test_suite->get_identifier(false), $skip_suites_deprecated) ))
 					{
+						$skip_suites_deprecated[] = $test_suite->get_identifier(false);
 						continue;
 					}
 					$local_suites[$test_suite->get_identifier(false)] = $return_object ? $test_suite : ($repo . '/' . $test);

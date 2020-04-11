@@ -142,8 +142,8 @@ class pts_result_viewer_settings
 
 		$analyze_options .= '<form action="' . $_SERVER['REQUEST_URI'] . '" method="post">';
 		$analyze_checkboxes = array(
-			'Statistics' => array(),
 			'View' => array(),
+			'Statistics' => array(),
 			'Sorting' => array(),
 			'Graph Settings' => array(),
 			'Multi-Way Comparison' => array(),
@@ -161,10 +161,10 @@ class pts_result_viewer_settings
 			$analyze_checkboxes['Statistics'][] = array('nor', 'Normalize Results');
 			$analyze_checkboxes['Graph Settings'][] = array('ftr', 'Force Line Graphs (Where Applicable)');
 			$analyze_checkboxes['Graph Settings'][] = array('scalar', 'Convert To Scalar (Where Applicable)');
-			$analyze_checkboxes['View'][] = array('spr', 'List Notable Results');
 			$analyze_checkboxes['View'][] = array('hnr', 'Do Not Show Noisy Results');
 			$analyze_checkboxes['View'][] = array('hni', 'Do Not Show Results With Incomplete Data');
 			$analyze_checkboxes['View'][] = array('hlc', 'Do Not Show Results With Little Change/Spread');
+			$analyze_checkboxes['View'][] = array('spr', 'List Notable Results');
 
 			if($has_identifier_with_color_brand)
 			{
@@ -175,11 +175,12 @@ class pts_result_viewer_settings
 		{
 			$suite_limit = '<h3>Limit displaying results to tests within:</h3>';
 			$stis = self::check_request_for_var($request, 'stis');
+			ksort($suites_in_result_file);
 			foreach($suites_in_result_file as $suite => $contained_tests)
 			{
 				$suite = new pts_test_suite($suite);
 				$id = rtrim(base64_encode($suite->get_identifier()), '=');
-				$suite_limit .= '<input type="checkbox" name="stis[]" value="' . $id . '"' . (is_array($stis) && in_array($id, $stis) ? ' checked="checked"' : null) . ' /> ' . $suite->get_title() . ' <sup><em>' . count($contained_tests) . ' Test Profiles</em></sup><br />';
+				$suite_limit .= '<input type="checkbox" name="stis[]" value="' . $id . '"' . (is_array($stis) && in_array($id, $stis) ? ' checked="checked"' : null) . ' /> ' . $suite->get_title() . ' <sup><em>' . count($contained_tests) . ' Tests</em></sup><br />';
 			}
 			$analyze_checkboxes['View'][] = array('', $suite_limit);
 		}

@@ -645,6 +645,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		}
 
 		$extra_attributes = null;
+		$html_options = pts_result_viewer_settings::get_html_options_markup($result_file, $_REQUEST);
 		pts_result_viewer_settings::process_request_to_attributes($_REQUEST, $result_file, $extra_attributes);
 		define('TITLE', $result_file->get_title() . ' - Phoronix Test Suite');
 		$PAGE .= pts_result_viewer_settings::get_html_sort_bar($result_file, $_REQUEST);
@@ -662,7 +663,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		}
 		//$PAGE .= '<p align="center"><strong>Export As: </strong> <a href="' . CURRENT_URI . '&export=pdf">PDF</a>, <a href="' . CURRENT_URI . '&export=csv">CSV</a>, <a href="' . CURRENT_URI . '&export=csv-all">CSV Individual Data</a> </p>';
 		$PAGE .= '<p align="center">Jump To <a href="#table">Table</a> - <a href="#results">Results</a></p>';
-		$PAGE .= '<hr /><div style="font-size: 12pt;">' . pts_result_viewer_settings::get_html_options_markup($result_file, $_REQUEST) . '</div><hr style="clear: both;" />';
+		$PAGE .= '<hr /><div style="font-size: 12pt;">' . $html_options . '</div><hr style="clear: both;" />';
 		$PAGE .= pts_result_viewer_settings::process_helper_html($_REQUEST, $result_file, $extra_attributes);
 		$PAGE .= '</div>';
 		$PAGE .= '<div class="print_notes">' . pts_result_file_output::result_file_to_system_html($result_file) . '</div>';
