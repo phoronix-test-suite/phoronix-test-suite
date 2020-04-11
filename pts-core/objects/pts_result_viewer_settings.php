@@ -178,7 +178,8 @@ class pts_result_viewer_settings
 			foreach($suites_in_result_file as $suite => $contained_tests)
 			{
 				$suite = new pts_test_suite($suite);
-				$suite_limit .= '<input type="checkbox" name="stis[]" value="' . $suite->get_identifier() . '"' . (is_array($stis) && in_array($suite->get_identifier(), $stis) ? ' checked="checked"' : null) . ' /> ' . $suite->get_title() . '<br />';
+				$id = rtrim(base64_encode($suite->get_identifier()), '=');
+				$suite_limit .= '<input type="checkbox" name="stis[]" value="' . $id . '"' . (is_array($stis) && in_array($id, $stis) ? ' checked="checked"' : null) . ' /> ' . $suite->get_title() . ' <sup><em>' . count($contained_tests) . ' Results</em></sup><br />';
 			}
 			$analyze_checkboxes['View'][] = array('', $suite_limit);
 		}
@@ -280,7 +281,7 @@ $t .= '
 
 	if(defined('VIEWER_CAN_DELETE_RESULTS') && VIEWER_CAN_DELETE_RESULTS && defined('RESULTS_VIEWING_ID'))
 	{
-		$t .= '<div class="div_table_cell"><a onclick="javascript:delete_run_from_result_file(\'' . RESULTS_VIEWING_ID . '\', \'' . $si . '\', \'' . $ppdx . '\'); return false;">DELETE RUN</a></div>';
+		$t .= '<div class="div_table_cell"><button onclick="javascript:delete_run_from_result_file(\'' . RESULTS_VIEWING_ID . '\', \'' . $si . '\', \'' . $ppdx . '\'); return false;">DELETE RUN</button></div>';
 	}
 	$t .= '</div>';
 }
@@ -449,6 +450,7 @@ if($system_identifier_count > 2)
 			$tests_to_show = array();
 			foreach($stis as $suite_to_show)
 			{
+				$suite_to_show = base64_decode($suite_to_show);
 				if(isset($suites_in_result_file[$suite_to_show]))
 				{
 					foreach($suites_in_result_file[$suite_to_show] as $test_to_show)
