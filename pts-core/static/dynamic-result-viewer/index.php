@@ -800,7 +800,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			$res_per_clock = false;
 			$res_variability = false;
 
-			if(!in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'BOX_PLOT')) && $result_object->test_result_buffer->detected_multi_sample_result())
+			if(!in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'BOX_PLOT')) && $result_object->test_result_buffer->detected_multi_sample_result() && $result_object->test_result_buffer->get_count() > 1)
 			{
 				$extra_attributes['graph_render_type'] = 'HORIZONTAL_BOX_PLOT';
 				$ro = clone $result_object;
