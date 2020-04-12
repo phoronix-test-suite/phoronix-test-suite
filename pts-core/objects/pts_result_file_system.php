@@ -112,7 +112,7 @@ class pts_result_file_system
 			}
 		}
 
-		return is_numeric($hw) ? $hw : false;
+		return is_numeric($hw) && $hw > 0 ? $hw : $this->get_cpu_core_count();
 	}
 	public function get_cpu_clock()
 	{
