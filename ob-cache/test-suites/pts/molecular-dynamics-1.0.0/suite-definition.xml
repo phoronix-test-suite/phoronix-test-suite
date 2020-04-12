@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0m2-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Molecular Dynamics</Title>
+    <Version>1.0.0</Version>
+    <TestType>System</TestType>
+    <Description>A collection of molecular dynamics benchmarks.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/namd</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/gromacs</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/namd</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/cp2k</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/lammps</Test>
+    <Arguments>in.rhodo</Arguments>
+    <Description>Model: Rhodopsin Protein</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+</PhoronixTestSuite>
