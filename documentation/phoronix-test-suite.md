@@ -320,6 +320,9 @@ This option will read a saved test results file and output the system hardware a
 #### show-result  [Test Result]
 Open up the test results in the Phoronix Test Suite Result Viewer or on OpenBenchmarking.org.
 
+#### workload-topology  [Test Result]
+This option will read a saved test results file and print the test profiles contained within and their arrangement within different test suites for getting an idea as to the workload topology/make-up / logical groupings of the benchmarks being run.
+
 
 ## Other
 #### commands

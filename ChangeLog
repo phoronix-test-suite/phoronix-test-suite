@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 9.6.0 Milestone 3
+12 April 2020
 
 pts-core: Allow automated per-thread/core/clock/RAM graphs within the result viewer
 pts-core: Result viewer add "Limit displaying results to tests within:"
