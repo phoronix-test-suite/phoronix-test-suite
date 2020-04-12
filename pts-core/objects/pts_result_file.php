@@ -484,13 +484,17 @@ class pts_result_file
 	{
 		return $this->is_multi_way_inverted;
 	}
-	public function get_contained_test_profiles()
+	public function get_contained_test_profiles($unique = false)
 	{
 		$test_profiles = array();
 
 		foreach($this->get_result_objects() as $object)
 		{
 			$test_profiles[] = $object->test_profile;
+		}
+		if($unique)
+		{
+			$test_profiles = array_unique($test_profiles);
 		}
 
 		return $test_profiles;

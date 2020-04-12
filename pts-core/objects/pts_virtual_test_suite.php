@@ -42,22 +42,25 @@ class pts_virtual_test_suite
 		$exdep = new pts_exdep_generic_parser();
 		self::$external_dependency_suites = $exdep->get_virtual_suite_packages();
 	}
-
+	public static function get_external_dependency_suites()
+	{
+		return self::$external_dependency_suites;
+	}
 	public function __construct($identifier)
 	{
 		$this->identifier = $identifier;
 
 		$identifier = explode('/', $identifier);
-		$this->repo = $identifier[0];
-		$this->virtual = $identifier[1];
+		$this->repo = isset($identifier[1]) ? $identifier[0] : null;
+		$this->virtual = isset($identifier[1]) ? $identifier[1] : $identifier[0];
 
-		$this->is_virtual_os_selector = self::is_selector_os($identifier[1]);
-		$this->is_virtual_subsystem_selector = self::is_selector_subsystem($identifier[1]);
-		$this->is_virtual_software_type = self::is_selector_software_type($identifier[1]);
+		$this->is_virtual_os_selector = self::is_selector_os($this->virtual);
+		$this->is_virtual_subsystem_selector = self::is_selector_subsystem($this->virtual);
+		$this->is_virtual_software_type = self::is_selector_software_type($this->virtual);
 		$this->is_virtual_internal_tag = self::is_selector_internal_tag($this->repo, $this->virtual);
 		$this->is_virtual_installed = ($this->virtual == 'installed');
 		$this->is_virtual_everything = ($this->virtual == 'everything');
-		$this->is_virtual_dependency_suite = isset(self::$external_dependency_suites[$identifier[1]]);
+		$this->is_virtual_dependency_suite = isset(self::$external_dependency_suites[$this->virtual]);
 	}
 	public function __toString()
 	{

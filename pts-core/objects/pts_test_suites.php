@@ -108,33 +108,55 @@ class pts_test_suites
 		foreach(pts_test_suites::suites_on_disk(true, true) as $suite)
 		{
 			$contained_tests = $suite->get_contained_test_identifiers(false);
-			$suites_in_result_file[$suite->get_identifier()] = array($suite, array());
+			$sb = basename($suite->get_identifier(false));
+			$suites_in_result_file[$sb] = array($suite, array());
 			foreach($contained_tests as $ct)
 			{
 				if(in_array($ct, $tests_in_result_file))
 				{
-					$suites_in_result_file[$suite->get_identifier()][1][] = $ct;
+					$suites_in_result_file[$sb][1][] = $ct;
 				}
 			}
 
 			if($allow_partial)
 			{
-				if(count($suites_in_result_file[$suite->get_identifier()][1]) < 2)
+				if(count($suites_in_result_file[$sb][1]) < 2)
 				{
-					unset($suites_in_result_file[$suite->get_identifier()]);
+					unset($suites_in_result_file[$sb]);
 				}
 			}
 			else
 			{
-				if(count($suites_in_result_file[$suite->get_identifier()][1]) < count($contained_tests))
+				if(count($suites_in_result_file[$sb][1]) < count($contained_tests))
 				{
-					unset($suites_in_result_file[$suite->get_identifier()]);
+					unset($suites_in_result_file[$sb]);
 				}
 			}
 
-			if($upper_limit > 0 && isset($suites_in_result_file[$suite->get_identifier()]) && count($suites_in_result_file[$suite->get_identifier()][1]) > $upper_limit)
+			if($upper_limit > 0 && isset($suites_in_result_file[$sb]) && count($suites_in_result_file[$sb][1]) > $upper_limit)
 			{
-				unset($suites_in_result_file[$suite->get_identifier()]);
+				unset($suites_in_result_file[$sb]);
+			}
+		}
+
+		$ctp = $result_file->get_contained_test_profiles(true);
+		foreach(pts_virtual_test_suite::get_external_dependency_suites() as $suite_identifier => $data)
+		{
+			if(isset($suites_in_result_file[$suite_identifier]))
+			{
+				continue;
+			}
+			$suites_in_result_file[$suite_identifier] = array(new pts_virtual_test_suite($suite_identifier), array());
+			foreach($ctp as $tp)
+			{
+				if(in_array($data[0], $tp->get_external_dependencies()))
+				{
+					$suites_in_result_file[$suite_identifier][1][] = $tp->get_identifier(false);
+				}
+			}
+			if(count($suites_in_result_file[$suite_identifier][1]) < 2)
+			{
+				unset($suites_in_result_file[$suite_identifier]);
 			}
 		}
 

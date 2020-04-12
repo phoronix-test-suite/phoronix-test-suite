@@ -514,7 +514,7 @@ class pts_result_file_analyzer
 		{
 			return array();
 		}
-
+		ksort($suites_in_result_file);
 		foreach($suites_in_result_file as $suite_identifier => &$s)
 		{
 			list($suite, $contained_tests) = $s;
