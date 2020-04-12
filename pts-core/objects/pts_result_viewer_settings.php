@@ -177,9 +177,9 @@ class pts_result_viewer_settings
 			$stis = self::check_request_for_var($request, 'stis');
 			ksort($suites_in_result_file);
 			$suite_limit .= '<div style="max-height: 250px; overflow: scroll;">';
-			foreach($suites_in_result_file as $suite => $contained_tests)
+			foreach($suites_in_result_file as $suite => $s)
 			{
-				$suite = new pts_test_suite($suite);
+				list($suite, $contained_tests) = $s;
 				$id = rtrim(base64_encode($suite->get_identifier()), '=');
 				$suite_limit .= '<input type="checkbox" name="stis[]" value="' . $id . '"' . (is_array($stis) && in_array($id, $stis) ? ' checked="checked"' : null) . ' /> ' . $suite->get_title() . ' <sup><em>' . count($contained_tests) . ' Tests</em></sup><br />';
 			}
@@ -456,7 +456,7 @@ if($system_identifier_count > 2)
 				$suite_to_show = base64_decode($suite_to_show);
 				if(isset($suites_in_result_file[$suite_to_show]))
 				{
-					foreach($suites_in_result_file[$suite_to_show] as $test_to_show)
+					foreach($suites_in_result_file[$suite_to_show][1] as $test_to_show)
 					{
 						$tests_to_show[] = $test_to_show;
 					}

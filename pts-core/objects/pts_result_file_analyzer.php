@@ -515,12 +515,12 @@ class pts_result_file_analyzer
 			return array();
 		}
 
-		foreach($suites_in_result_file as $suite_identifier => $contained_tests)
+		foreach($suites_in_result_file as $suite_identifier => &$s)
 		{
+			list($suite, $contained_tests) = $s;
 			$geo_mean = pts_result_file_analyzer::generate_geometric_mean_result($result_file, true, $contained_tests);
 			if($geo_mean)
 			{
-				$suite = new pts_test_suite($suite_identifier);
 				$geo_mean->test_profile->set_test_title('Geometric Mean Of ' . $suite->get_title() . ' Tests');
 				$geo_mean->normalize_buffer_values();
 				$geo_mean->set_annotation('Geometric mean based upon tests: ' . implode(', ', $contained_tests));

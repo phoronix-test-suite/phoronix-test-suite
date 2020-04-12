@@ -108,31 +108,31 @@ class pts_test_suites
 		foreach(pts_test_suites::suites_on_disk(true, true) as $suite)
 		{
 			$contained_tests = $suite->get_contained_test_identifiers(false);
-			$suites_in_result_file[$suite->get_identifier()] = array();
+			$suites_in_result_file[$suite->get_identifier()] = array($suite, array());
 			foreach($contained_tests as $ct)
 			{
 				if(in_array($ct, $tests_in_result_file))
 				{
-					$suites_in_result_file[$suite->get_identifier()][] = $ct;
+					$suites_in_result_file[$suite->get_identifier()][1][] = $ct;
 				}
 			}
 
 			if($allow_partial)
 			{
-				if(count($suites_in_result_file[$suite->get_identifier()]) < 2)
+				if(count($suites_in_result_file[$suite->get_identifier()][1]) < 2)
 				{
 					unset($suites_in_result_file[$suite->get_identifier()]);
 				}
 			}
 			else
 			{
-				if(count($suites_in_result_file[$suite->get_identifier()]) < count($contained_tests))
+				if(count($suites_in_result_file[$suite->get_identifier()][1]) < count($contained_tests))
 				{
 					unset($suites_in_result_file[$suite->get_identifier()]);
 				}
 			}
 
-			if($upper_limit > 0 && isset($suites_in_result_file[$suite->get_identifier()]) && count($suites_in_result_file[$suite->get_identifier()]) > $upper_limit)
+			if($upper_limit > 0 && isset($suites_in_result_file[$suite->get_identifier()]) && count($suites_in_result_file[$suite->get_identifier()][1]) > $upper_limit)
 			{
 				unset($suites_in_result_file[$suite->get_identifier()]);
 			}
