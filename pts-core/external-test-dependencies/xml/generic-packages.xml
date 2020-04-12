@@ -63,7 +63,7 @@
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
-			<Title>Compiler / Development Libraries</Title>
+			<Title>C/C++ Compiler + Common Toolchain Components</Title>
 			<PossibleNames>gcc</PossibleNames>
 			<FileCheck>gcc OR clang OR cc</FileCheck>
 		</Package>
@@ -120,6 +120,7 @@
 			<Title>Java Runtime Environment</Title>
 			<PossibleNames>java-openjdk, java, sun-java</PossibleNames>
 			<FileCheck>java OR jvm OR /usr/lib64/jvm</FileCheck>
+			<VirtualSuite>TRUE</VirtualSuite>
 		</Package>
 		<Package>
 			<GenericName>maven</GenericName>
@@ -147,9 +148,10 @@
 		</Package>
 		<Package>
 			<GenericName>fortran-compiler</GenericName>
-			<Title>Fortran Compiler</Title>
+			<Title>Fortran</Title>
 			<PossibleNames>gfortran, gcc-fortran</PossibleNames>
 			<FileCheck>gfortran</FileCheck>
+			<VirtualSuite>TRUE</VirtualSuite>
 		</Package>
 		<Package>
 			<GenericName>smartmontools</GenericName>
@@ -297,15 +299,17 @@
 		</Package>
 		<Package>
 			<GenericName>blas-development</GenericName>
-			<Title>Basic Linear Algebra Sub-Routine Library</Title>
+			<Title>BLAS (Basic Linear Algebra Sub-Routine) Library</Title>
 			<PossibleNames>libblas-dev, libblas-devel, blas-devel, blas</PossibleNames>
 			<FileCheck>libblas.so OR openblas_config.h</FileCheck>
+			<VirtualSuite>TRUE</VirtualSuite>
 		</Package>
 		<Package>
 			<GenericName>lapack-development</GenericName>
-			<Title>Linear Algebra Pack</Title>
+			<Title>LAPACK (Linear Algebra Pack)</Title>
 			<PossibleNames>liblapack-dev, lapack, lapack-devel, liblapack-devel</PossibleNames>
 			<FileCheck>liblapack.so</FileCheck>
+			<VirtualSuite>TRUE</VirtualSuite>
 		</Package>
 		<Package>
 			<GenericName>atlas-development</GenericName>
@@ -318,8 +322,8 @@
 			<Title>OpenMPI</Title>
 			<PossibleNames>libopenmpi-dev, openmpi-bin</PossibleNames>
 			<FileCheck>openmpi/lib/libmpi.so OR mpirun.openmpi OR /usr/lib64/mpi OR /usr/include/openmpi</FileCheck>
+			<VirtualSuite>TRUE</VirtualSuite>
 		</Package>
-
 		<Package>
 			<GenericName>cmake</GenericName>
 			<Title>CMake</Title>
@@ -331,6 +335,7 @@
 			<Title>Boost Development Libraries</Title>
 			<PossibleNames>boost-devel, libboost-dev, libboost-devel</PossibleNames>
 			<FileCheck>boost/regex.hpp</FileCheck>
+			<VirtualSuite>TRUE</VirtualSuite>
 		</Package>
 		<Package>
 			<GenericName>bzip2-development</GenericName>
@@ -355,6 +360,7 @@
 			<Title>Python</Title>
 			<PossibleNames>python</PossibleNames>
 			<FileCheck>python OR python3 OR python2</FileCheck>
+			<VirtualSuite>TRUE</VirtualSuite>
 		</Package>
 		<Package>
 			<GenericName>python-boost-development</GenericName>
@@ -433,6 +439,7 @@
 			<Title>Rust</Title>
 			<PossibleNames>rust, rustc, cargo</PossibleNames>
 			<FileCheck>rustc, cargo</FileCheck>
+			<VirtualSuite>TRUE</VirtualSuite>
 		</Package>
 		<Package>
 			<GenericName>dune</GenericName>
@@ -463,6 +470,7 @@
 			<Title>Go Language</Title>
 			<PossibleNames>golang, go-doc</PossibleNames>
 			<FileCheck>/usr/bin/go</FileCheck>
+			<VirtualSuite>TRUE</VirtualSuite>
 		</Package>
 		<Package>
 			<GenericName>redis-server</GenericName>
@@ -475,12 +483,14 @@
 			<Title>OpenCV</Title>
 			<PossibleNames>opencv</PossibleNames>
 			<FileCheck>opencv/cv.h OR opencv2/core.hpp OR opencv4/opencv2/core.hpp</FileCheck>
+			<VirtualSuite>TRUE</VirtualSuite>
 		</Package>
 		<Package>
 			<GenericName>steam</GenericName>
 			<Title>Steam</Title>
 			<PossibleNames>steam</PossibleNames>
 			<FileCheck>steam</FileCheck>
+			<VirtualSuite>TRUE</VirtualSuite>
 		</Package>
 		<Package>
                         <GenericName>perl-digest-md5</GenericName>
@@ -511,12 +521,14 @@
 			<Title>Ruby</Title>
 			<PossibleNames>ruby</PossibleNames>
 			<FileCheck>ruby</FileCheck>
+			<VirtualSuite>TRUE</VirtualSuite>
 		</Package>
 		<Package>
 			<GenericName>wine</GenericName>
 			<Title>Wine</Title>
 			<PossibleNames>wine</PossibleNames>
 			<FileCheck>wine</FileCheck>
+			<VirtualSuite>TRUE</VirtualSuite>
 		</Package>
 		<Package>
 			<GenericName>mongodb</GenericName>
@@ -529,6 +541,7 @@
 			<Title>Node.js + NPM</Title>
 			<PossibleNames>npm, nodejs</PossibleNames>
 			<FileCheck>npm</FileCheck>
+			<VirtualSuite>TRUE</VirtualSuite>
 		</Package>
 		<Package>
 			<GenericName>expat</GenericName>

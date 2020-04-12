@@ -20,6 +20,8 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+pts_virtual_test_suite::load_external_dependency_suites();
+
 class pts_virtual_test_suite
 {
 	private $identifier;
@@ -32,6 +34,14 @@ class pts_virtual_test_suite
 	private $is_virtual_internal_tag = false;
 	private $is_virtual_installed = false;
 	private $is_virtual_everything = false;
+	private $is_virtual_dependency_suite = false;
+
+	protected static $external_dependency_suites;
+	public static function load_external_dependency_suites()
+	{
+		$exdep = new pts_exdep_generic_parser();
+		self::$external_dependency_suites = $exdep->get_virtual_suite_packages();
+	}
 
 	public function __construct($identifier)
 	{
@@ -47,6 +57,7 @@ class pts_virtual_test_suite
 		$this->is_virtual_internal_tag = self::is_selector_internal_tag($this->repo, $this->virtual);
 		$this->is_virtual_installed = ($this->virtual == 'installed');
 		$this->is_virtual_everything = ($this->virtual == 'everything');
+		$this->is_virtual_dependency_suite = isset(self::$external_dependency_suites[$identifier[1]]);
 	}
 	public function __toString()
 	{
@@ -60,8 +71,10 @@ class pts_virtual_test_suite
 			array('all', 'installed', 'everything'),
 			array_map('strtolower', self::available_operating_systems()),
 			array_map('strtolower', pts_types::subsystem_targets()),
-			array_map('strtolower', pts_types::test_profile_software_types())
+			array_map('strtolower', pts_types::test_profile_software_types()),
+			array_map('strtolower', array_keys(self::$external_dependency_suites))
 			);
+		sort($possible_identifiers);
 
 		foreach(pts_openbenchmarking::linked_repositories() as $repo)
 		{
@@ -77,7 +90,7 @@ class pts_virtual_test_suite
 
 					if($virtual_suite instanceof pts_virtual_test_suite)
 					{
-						$virtual_suites[] = $virtual_suite;
+						$virtual_suites[$virtual_suite->get_identifier()] = $virtual_suite;
 					}
 				}
 			}
@@ -134,6 +147,11 @@ class pts_virtual_test_suite
 					// virtual suite of all supported tests by a given SoftwareType
 					$is_virtual_suite = true;
 				}
+				else if(isset(self::$external_dependency_suites[$identifier[1]]))
+				{
+					// virtual suite based on external dependencies
+					$is_virtual_suite = true;
+				}
 			}
 		}
 
@@ -173,6 +191,10 @@ class pts_virtual_test_suite
 		{
 			$title = 'Every ' . strtoupper(substr($this->identifier, 0,  strpos($this->identifier, '/'))) . ' Test';
 		}
+		else if($this->is_virtual_dependency_suite)
+		{
+			$title = self::$external_dependency_suites[$this->virtual][1];
+		}
 		else
 		{
 			$title = 'Virtual Suite';
@@ -209,6 +231,10 @@ class pts_virtual_test_suite
 		else if($this->is_virtual_everything)
 		{
 			$description = 'This is a collection of every test profile found within the specified OpenBenchmarking.org repository, including unsupported tests.';
+		}
+		else if($this->is_virtual_dependency_suite)
+		{
+			$description = 'This is a collection of test profiles having an external dependency on ' . self::$external_dependency_suites[$this->virtual][1];
 		}
 		else
 		{
@@ -363,6 +389,10 @@ class pts_virtual_test_suite
 				$test_version = array_shift($test['versions']);
 				$test_profile = new pts_test_profile($this->repo . '/' . $test_identifier . '-' . $test_version);
 
+				if($this->is_virtual_dependency_suite && !in_array(self::$external_dependency_suites[$this->virtual][0], $test_profile->get_external_dependencies()))
+				{
+					continue;
+				}
 				if($test_profile->get_display_format() != 'BAR_GRAPH' || ($this->is_virtual_installed == false && !in_array($test_profile->get_license(), array('Free', 'Non-Free'))))
 				{
 					// Also ignore these tests
@@ -387,5 +417,7 @@ class pts_virtual_test_suite
 		return $contained;
 	}
 }
+
+
 
 ?>

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2012 - 2018, Phoronix Media
-	Copyright (C) 2012 - 2018, Michael Larabel
+	Copyright (C) 2012 - 2020, Phoronix Media
+	Copyright (C) 2012 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -27,11 +27,12 @@ class pts_exdep_generic_parser
 	public function __construct()
 	{
 		$this->struct = array('external-dependencies' => array('generic-packages' => array()));
+		$generic_packages_file = pts_exdep_generic_parser::get_external_dependency_path() . 'xml/generic-packages.xml';
 
-		if(PTS_IS_CLIENT)
+		if(is_file($generic_packages_file))
 		{
 			$xml_options = LIBXML_COMPACT | LIBXML_PARSEHUGE;
-			$xml = simplexml_load_file(pts_exdep_generic_parser::get_external_dependency_path() . 'xml/generic-packages.xml', 'SimpleXMLElement', $xml_options);
+			$xml = simplexml_load_file($generic_packages_file, 'SimpleXMLElement', $xml_options);
 
 			if(isset($xml->ExternalDependencies) && isset($xml->ExternalDependencies->Package))
 			{
@@ -41,7 +42,8 @@ class pts_exdep_generic_parser
 					$title = isset($pkg->Title) ? $pkg->Title->__toString() : null;
 					$file_check = isset($pkg->FileCheck) ? $pkg->FileCheck->__toString() : null;
 					$possible_packages = isset($pkg->PossibleNames) ? $pkg->PossibleNames->__toString() : null;
-					$this->struct['external-dependencies']['generic-packages'][$generic_name] = $this->get_package_format($title, $file_check, $possible_packages);
+					$virtual_suite = isset($pkg->VirtualSuite) ? $pkg->VirtualSuite->__toString() : false;
+					$this->struct['external-dependencies']['generic-packages'][$generic_name] = $this->get_package_format($title, $file_check, $possible_packages, $virtual_suite);
 				}
 			}
 		}
@@ -50,13 +52,28 @@ class pts_exdep_generic_parser
 	{
 		return PTS_CORE_PATH . 'external-test-dependencies/';
 	}
-	public function get_package_format($title = null, $file_check = null, $possible_packages = null)
+	public function get_package_format($title = null, $file_check = null, $possible_packages = null, $virtual_suite = null)
 	{
 		return array(
 			'title' => $title,
 			'file_check' => $file_check,
-			'possible_packages' => $possible_packages
+			'possible_packages' => $possible_packages,
+			'virtual_suite' => $virtual_suite
 			);
+	}
+	public function get_virtual_suite_packages()
+	{
+		$suites = array();
+		foreach($this->struct['external-dependencies']['generic-packages'] as $generic_pkg => $data)
+		{
+			if($data['virtual_suite'] != 'TRUE')
+			{
+				continue;
+			}
+			$suites[str_replace(array('-compiler', '-development'), '', $generic_pkg)] = array($generic_pkg, $data['title']);
+		}
+
+		return $suites;
 	}
 	public function get_available_packages()
 	{
