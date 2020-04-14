@@ -727,7 +727,7 @@ class system_monitor extends pts_module_interface
 			return;
 
 		$test_result = clone self::$individual_test_run_request;
-		$test_result->set_parent_hash($individual_test_run_request->get_comparison_hash(true, false));
+		$test_result->set_parent_hash(self::$individual_test_run_request->get_comparison_hash(true, false));
 
 		if(pts_module_manager::is_module_attached('matisk'))
 		{
