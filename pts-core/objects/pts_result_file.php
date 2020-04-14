@@ -531,7 +531,7 @@ class pts_result_file
 	{
 		return isset($this->result_objects[$ch]) ? $this->result_objects[$ch] : false;
 	}
-	public function remove_result_object_by_id($index_or_indexes)
+	public function remove_result_object_by_id($index_or_indexes, $delete_child_objects = true)
 	{
 		$did_remove = false;
 		foreach(pts_arrays::to_array($index_or_indexes) as $index)
@@ -540,6 +540,17 @@ class pts_result_file
 			{
 				unset($this->result_objects[$index]);
 				$did_remove = true;
+
+				if($delete_child_objects)
+				{
+					foreach($this->get_relation_map($index) as $child_ro)
+					{
+						if($this->result_objects[$child_ro])
+						{
+							unset($this->result_objects[$child_ro]);
+						}
+					}
+				}
 			}
 		}
 		return $did_remove;

@@ -871,7 +871,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 				$c_ro = $result_file->get_result($child_ro);
 				if($c_ro)
 				{
-					$tabs[str_replace(array(' Monitor'), '', $c_ro->get_arguments_description())] = pts_render::render_graph_inline_embed($c_ro, $result_file, null);
+					$tabs[str_replace(array(' Monitor'), '', $c_ro->get_arguments_description_shortened(false))] = pts_render::render_graph_inline_embed($c_ro, $result_file, null);
 					$result_file->remove_result_object_by_id($child_ro);
 					$skip_ros[] = $child_ro;
 				}

@@ -174,6 +174,8 @@ class pts_test_result
 		$shorten_words = array(
 			'Random' => 'Rand',
 			'Sequential' => 'Seq',
+			'Frequency' => 'Freq',
+			'Temperature' => 'Temp',
 			'localhost -' => '',
 			'- D.T.D' => '',
 			);
