@@ -190,6 +190,11 @@ class pts_strings
 	}
 	public static function trim_explode($delimiter, $to_explode, $limit = PHP_INT_MAX)
 	{
+		if(is_array($to_explode))
+		{
+			return $to_explode;
+		}
+
 		return empty($to_explode) ? array() : array_map('trim', explode($delimiter, $to_explode, $limit));
 	}
 	public static function comma_explode($to_explode)

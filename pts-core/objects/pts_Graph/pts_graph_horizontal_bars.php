@@ -51,7 +51,7 @@ class pts_graph_horizontal_bars extends pts_graph_core
 		}
 		$middle_of_vert = round($this->i['top_start'] + ($this->i['is_multi_way_comparison'] ? 5 : 0) - ($this->i['identifier_height'] * 0.5) - 2);
 
-		$g = array('font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers'], 'font-weight' => 'bold');
+		$g = array('font-size' => $this->i['identifier_size'] + 1, 'fill' => self::$c['color']['headers'], 'font-weight' => 'bold');
 		if($this->i['is_multi_way_comparison'])
 		{
 			$g['font-size']--;
@@ -66,7 +66,7 @@ class pts_graph_horizontal_bars extends pts_graph_core
 				foreach(array_reverse(explode(' - ', $identifier)) as $i => $identifier_line)
 				{
 					$x = 8 + ($i * (1.2 * $this->i['identifier_size']));
-					$this->svg_dom->add_text_element($identifier_line, array('x' => $x, 'y' => $middle_of_vert, 'text-anchor' => 'middle', 'transform' => 'rotate(90 ' . $x . ' ' . $middle_of_vert . ')'), $g);
+					$this->svg_dom->add_text_element($identifier_line, array('x' => $x, 'y' => $middle_of_vert, 'text-anchor' => 'middle', 'font-weight' => 'bold', 'transform' => 'rotate(90 ' . $x . ' ' . $middle_of_vert . ')'), $g);
 				}
 			}
 			else

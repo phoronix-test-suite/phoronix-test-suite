@@ -37,6 +37,7 @@ class pts_result_file
 	public $systems = null;
 	private $is_tracker = -1;
 	private $last_modified = null;
+	private $ro_relation_map = null;
 
 	public function __construct($result_file = null, $read_only_result_objects = false, $parse_only_qualified_result_objects = false)
 	{
@@ -44,6 +45,7 @@ class pts_result_file
 		$this->extra_attributes = array();
 		$this->systems = array();
 		$this->result_objects = array();
+		$this->ro_relation_map = array();
 
 		if($result_file == null)
 		{
@@ -101,7 +103,8 @@ class pts_result_file
 				$test_result->set_used_arguments_description($result->Description->__toString());
 				$test_result->set_used_arguments($result->Arguments->__toString());
 				$test_result->set_annotation((isset($result->Annotation) ? $result->Annotation->__toString() : null));
-				$test_result->set_parent_hash((isset($result->Parent) ? $result->Parent->__toString() : null));
+				$parent = (isset($result->Parent) ? $result->Parent->__toString() : null);
+				$test_result->set_parent_hash($parent);
 
 				$result_buffer = new pts_test_result_buffer();
 				foreach($result->Data->Entry as $entry)
@@ -109,7 +112,17 @@ class pts_result_file
 					$result_buffer->add_test_result($entry->Identifier->__toString(), $entry->Value->__toString(), $entry->RawString->__toString(), (isset($entry->JSON) ? $entry->JSON->__toString() : null));
 				}
 				$test_result->set_test_result_buffer($result_buffer);
-				$this->result_objects[$test_result->get_comparison_hash(true, false)] = $test_result;
+				$this_ch = $test_result->get_comparison_hash(true, false);
+				$this->result_objects[$this_ch] = $test_result;
+
+				if($parent)
+				{
+					if(!isset($this->ro_relation_map[$parent]))
+					{
+						$this->ro_relation_map[$parent] = array();
+					}
+					$this->ro_relation_map[$parent][] = $this_ch;
+				}
 			}
 		}
 
@@ -120,6 +133,17 @@ class pts_result_file
 		foreach($this->result_objects as $i => $v)
 		{
 			$this->result_objects[$i] = clone $this->result_objects[$i];
+		}
+	}
+	public function get_relation_map($parent = null)
+	{
+		if($parent)
+		{
+			return isset($this->ro_relation_map[$parent]) ? $this->ro_relation_map[$parent] : array();
+		}
+		else
+		{
+			return $this->ro_relation_map;
 		}
 	}
 	public function get_file_location()

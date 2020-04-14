@@ -195,7 +195,7 @@ class pts_render
 
 					foreach($buffer_items as $i => $buffer_item)
 					{
-						$values_in_buffer = explode(',', $buffer_item->get_result_value());
+						$values_in_buffer = !is_array($buffer_item->get_result_value()) ? explode(',', $buffer_item->get_result_value()) : $buffer_item->get_result_value();
 						$unique_in_buffer = array_unique($values_in_buffer);
 						$all_values_are_flat = count($unique_in_buffer) == 1;
 
