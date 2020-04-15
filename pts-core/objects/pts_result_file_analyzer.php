@@ -530,7 +530,7 @@ class pts_result_file_analyzer
 
 		return $geo_mean_results;
 	}
-	public static function generate_geometric_mean_result($result_file, $do_sort = false, $limit_to = false)
+	public static function generate_geometric_mean_result($result_file, $do_sort = false, $limit_to = false, $best_is_last = false)
 	{
 		$results = array();
 		$system_count = $result_file->get_system_count();
@@ -618,7 +618,10 @@ class pts_result_file_analyzer
 			if((!$result_file->is_multi_way_comparison() && !$test_result->test_result_buffer->result_identifier_differences_only_numeric()) || $do_sort)
 			{
 				$test_result->sort_results_by_performance();
-				//$test_result->test_result_buffer->buffer_values_reverse();
+				if($best_is_last)
+				{
+					$test_result->test_result_buffer->buffer_values_reverse();
+				}
 			}
 			$test_result->dynamically_generated = true;
 			return $test_result;
@@ -626,7 +629,7 @@ class pts_result_file_analyzer
 
 		return false;
 	}
-	public static function generate_geometric_mean_result_per_test($result_file, $do_sort = false, $selector = null)
+	public static function generate_geometric_mean_result_per_test($result_file, $do_sort = false, $selector = null, $best_is_last = false)
 	{
 		$geo_results = array();
 		$results = array();
@@ -721,7 +724,10 @@ class pts_result_file_analyzer
 			if(!$result_file->is_multi_way_comparison() || $do_sort)
 			{
 				$test_result->sort_results_by_performance();
-				$test_result->test_result_buffer->buffer_values_reverse();
+				if($best_is_last)
+				{
+					$test_result->test_result_buffer->buffer_values_reverse();
+				}
 			}
 			$test_result->dynamically_generated = true;
 			$geo_results[] = $test_result;
@@ -729,7 +735,7 @@ class pts_result_file_analyzer
 
 		return $geo_results;
 	}
-	public static function generate_harmonic_mean_result($result_file, $do_sort = false)
+	public static function generate_harmonic_mean_result($result_file, $do_sort = false, $best_is_last = false)
 	{
 		$results = array();
 		$system_count = $result_file->get_system_count();
@@ -804,7 +810,10 @@ class pts_result_file_analyzer
 				if(!$result_file->is_multi_way_comparison() || $do_sort)
 				{
 					$test_result->sort_results_by_performance();
-					$test_result->test_result_buffer->buffer_values_reverse();
+					if($best_is_last)
+					{
+						$test_result->test_result_buffer->buffer_values_reverse();
+					}
 				}
 				$test_result->dynamically_generated = true;
 				$test_results[] = $test_result;
@@ -817,12 +826,12 @@ class pts_result_file_analyzer
 	public static function display_result_file_stats_pythagorean_means($result_file, $highlight_identifier = null)
 	{
 		$ret = null;
-		foreach(pts_result_file_analyzer::generate_harmonic_mean_result($result_file, true) as $harmonic_mean_result)
+		foreach(pts_result_file_analyzer::generate_harmonic_mean_result($result_file, true, true) as $harmonic_mean_result)
 		{
 			$ret .= pts_result_file_output::test_result_to_text($harmonic_mean_result, pts_client::terminal_width(), true, $highlight_identifier, true) . PHP_EOL;
 		}
 
-		$geometric_mean = pts_result_file_analyzer::generate_geometric_mean_result($result_file, true);
+		$geometric_mean = pts_result_file_analyzer::generate_geometric_mean_result($result_file, true, false, true);
 		if($geometric_mean)
 		{
 			$ret .= pts_result_file_output::test_result_to_text($geometric_mean, pts_client::terminal_width(), true, $highlight_identifier, true);
