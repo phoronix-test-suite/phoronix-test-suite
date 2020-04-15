@@ -89,6 +89,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 		{
 			$test_run_manager->save_result_file = pts_test_run_manager::clean_save_name($j);
 			$test_run_manager->result_file = new pts_result_file($test_run_manager->save_result_file);
+			$test_run_manager->result_file->set_title($j . ' Stress-Run Monitoring');
 			echo PHP_EOL . 'TEST_RESULTS_NAME set; saving the result sensor data as ' . $test_run_manager->save_result_file . '.' . PHP_EOL . PHP_EOL;
 
 			if(($j = getenv('TEST_RESULTS_IDENTIFIER')))
