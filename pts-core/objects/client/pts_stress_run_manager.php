@@ -26,6 +26,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 	private $stress_tests_executed;
 	private $sensor_data_archived;
 	private $sensor_data_archived_units;
+	private $sensor_data_archived_identifiers;
 	private $loop_until_time;
 	private $thread_collection_dir;
 	private $sensors_to_monitor;
@@ -93,12 +94,12 @@ class pts_stress_run_manager extends pts_test_run_manager
 			if(($j = getenv('TEST_RESULTS_IDENTIFIER')))
 			{
 				$test_run_manager->save_result_identifier = $j;
-				echo PHP_EOL . 'TEST_RESULTS_IDENTIFIER set; test identifier is ' . $test_run_manager->save_result_identifier . '.' . PHP_EOL . PHP_EOL;
+				echo PHP_EOL . pts_client::cli_just_bold('TEST_RESULTS_IDENTIFIER') . ' set; test identifier is ' . $test_run_manager->save_result_identifier . '.' . PHP_EOL . PHP_EOL;
 			}
 			else
 			{
 				$test_run_manager->save_result_identifier = date('Y-m-d H:i:s');
-				echo PHP_EOL . 'TEST_RESULTS_IDENTIFIER is not set; test identifier is ' . $test_run_manager->save_result_identifier . '.' . PHP_EOL . PHP_EOL;
+				echo PHP_EOL . pts_client::cli_just_bold('TEST_RESULTS_IDENTIFIER') . ' is not set; test identifier is ' . $test_run_manager->save_result_identifier . '.' . PHP_EOL . PHP_EOL;
 			}
 		}
 		else
@@ -149,6 +150,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 		$this->sensors_to_monitor = array();
 		$this->sensor_data_archived = array();
 		$this->sensor_data_archived_units = array();
+		$this->sensor_data_archived_identifiers = array();
 		$this->stress_logger = new pts_logger(null, 'phoronix-test-suite-stress-' . date('ymdHi') . '.log');
 		$this->stress_logger->log('Log Initialized');
 		putenv('FORCE_TIMES_TO_RUN=1');
@@ -213,6 +215,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 					array_push($this->sensors_to_monitor, $sensor_object);
 					$this->sensor_data_archived[phodevi::sensor_object_name($sensor_object)] = array();
 					$this->sensor_data_archived_units[phodevi::sensor_object_name($sensor_object)] = phodevi::read_sensor_object_unit($sensor_object);
+					$this->sensor_data_archived_identifiers[phodevi::sensor_object_name($sensor_object)] = phodevi::sensor_object_identifier($sensor_object);
 				}
 			}
 		}
@@ -550,17 +553,6 @@ class pts_stress_run_manager extends pts_test_run_manager
 			}
 			$report_buffer .= PHP_EOL;
 		}
-		$report_buffer .= PHP_EOL . pts_client::cli_just_bold('SYSTEM INFORMATION: ') . PHP_EOL;
-		$table = array();
-		foreach(phodevi::system_hardware(false) as $component => $value)
-		{
-			$table[] = array(pts_client::cli_just_bold($component . ': '), $value);
-		}
-		foreach(phodevi::system_software(false) as $component => $value)
-		{
-			$table[] = array(pts_client::cli_just_bold($component . ': '), $value);
-		}
-		$report_buffer .= pts_user_io::display_text_table($table, '     ', 1) . PHP_EOL . PHP_EOL;
 
 		if(!empty($this->stress_tests_executed))
 		{
@@ -578,6 +570,18 @@ class pts_stress_run_manager extends pts_test_run_manager
 		{
 			$this->result_file->append_description($this->save_result_identifier . ': ' . $report_buffer);
 		}
+
+		$report_buffer .= PHP_EOL . pts_client::cli_just_bold('SYSTEM INFORMATION: ') . PHP_EOL;
+		$table = array();
+		foreach(phodevi::system_hardware(false) as $component => $value)
+		{
+			$table[] = array(pts_client::cli_just_bold($component . ': '), $value);
+		}
+		foreach(phodevi::system_software(false) as $component => $value)
+		{
+			$table[] = array(pts_client::cli_just_bold($component . ': '), $value);
+		}
+		$report_buffer .= pts_user_io::display_text_table($table, '     ', 1) . PHP_EOL . PHP_EOL;
 
 		$report_buffer .= pts_client::cli_just_bold('SENSOR DATA: ') . PHP_EOL;
 		$table = array(array(pts_client::cli_just_bold('SENSOR'), pts_client::cli_just_bold('MIN'), pts_client::cli_just_bold('AVG'), pts_client::cli_just_bold('MAX')));
@@ -608,7 +612,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 					$test_result->test_profile->set_display_format('LINE_GRAPH');
 					$test_result->test_profile->set_result_scale($this->sensor_data_archived_units[$sensor_name]);
 					$test_result->set_used_arguments_description('Phoronix Test Suite System Monitoring');
-					$test_result->set_used_arguments($sensor_name); // phodevi::sensor_object_identifier($sensor)
+					$test_result->set_used_arguments($this->sensor_data_archived_identifiers[$sensor_name]);
 					$test_result->test_result_buffer = new pts_test_result_buffer();
 					$test_result->test_result_buffer->add_test_result($this->save_result_identifier, implode(',', $sensor_data), implode(',', $sensor_data), implode(',', $sensor_data), implode(',', $sensor_data));
 					$this->result_file->add_result_return_object($test_result);
@@ -623,6 +627,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 			$sys = new pts_result_file_system($this->save_result_identifier, phodevi::system_hardware(true), phodevi::system_software(true), array(), pts_client::current_user(), null, date('Y-m-d H:i:s'), PTS_VERSION);
 			$this->result_file->add_system($sys);
 			pts_client::save_test_result($this->save_result_file . '/composite.xml', $this->result_file->get_xml(), true, $this->save_result_identifier);
+			$report_buffer .= pts_client::cli_just_bold('Result saved: ' . $this->save_result_file) . PHP_EOL;
 		}
 
 		return $report_buffer;
