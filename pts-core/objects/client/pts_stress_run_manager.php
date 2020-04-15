@@ -90,7 +90,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 			$test_run_manager->save_result_file = pts_test_run_manager::clean_save_name($j);
 			$test_run_manager->result_file = new pts_result_file($test_run_manager->save_result_file);
 			$test_run_manager->result_file->set_title($j . ' Stress-Run Monitoring');
-			echo PHP_EOL . 'TEST_RESULTS_NAME set; saving the result sensor data as ' . $test_run_manager->save_result_file . '.' . PHP_EOL . PHP_EOL;
+			echo PHP_EOL . pts_client::cli_just_bold('TEST_RESULTS_NAME') . ' set; saving the result sensor data as ' . $test_run_manager->save_result_file . '.' . PHP_EOL . PHP_EOL;
 
 			if(($j = getenv('TEST_RESULTS_IDENTIFIER')))
 			{
@@ -105,7 +105,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 		}
 		else
 		{
-			echo PHP_EOL . pts_client::cli_just_bold('TEST_RESULTS_NAME:') . ' Set the TEST_RESULTS_NAME environment variable if wanting to save the sensor summary to a result file.' . PHP_EOL . PHP_EOL;
+			echo PHP_EOL . pts_client::cli_just_bold('TEST_RESULTS_NAME') . ' is not set; set the TEST_RESULTS_NAME environment variable if wanting to save the sensor summary to a result file.' . PHP_EOL . PHP_EOL;
 		}
 		//pts_test_installer::standard_install($to_run);
 		/*
@@ -625,8 +625,8 @@ class pts_stress_run_manager extends pts_test_run_manager
 
 		if($this->result_file)
 		{
-			$sys = new pts_result_file_system($this->save_result_identifier, phodevi::system_hardware(true), phodevi::system_software(true), array(), pts_client::current_user(), null, date('Y-m-d H:i:s'), PTS_VERSION);
-			$this->result_file->add_system($sys);
+			//$sys = new pts_result_file_system($this->save_result_identifier, phodevi::system_hardware(true), phodevi::system_software(true), array(), pts_client::current_user(), null, date('Y-m-d H:i:s'), PTS_VERSION);
+			//$this->result_file->add_system($sys);
 			pts_client::save_test_result($this->save_result_file . '/composite.xml', $this->result_file->get_xml(), true, $this->save_result_identifier);
 			$report_buffer .= pts_client::cli_just_bold('Result saved: ' . $this->save_result_file) . PHP_EOL;
 		}
