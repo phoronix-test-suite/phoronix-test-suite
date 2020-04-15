@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015 - 2019, Phoronix Media
-	Copyright (C) 2015 - 2019, Michael Larabel
+	Copyright (C) 2015 - 2020, Phoronix Media
+	Copyright (C) 2015 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -96,7 +96,7 @@ class linux_perf extends pts_module_interface
 
 			foreach($perf_stats as $string_to_match => $data)
 			{
-                list($pretty_string, $units, $hib_or_lib) = $data;
+				list($pretty_string, $units, $hib_or_lib) = $data;
 				if(($x = strpos(self::$std_output, $string_to_match)) !== false)
 				{
 					$sout = substr(self::$std_output, 0, $x);
@@ -117,6 +117,7 @@ class linux_perf extends pts_module_interface
 						$test_result->test_profile->set_result_proportion($hib_or_lib);
 						$test_result->test_result_buffer = new pts_test_result_buffer();
 						$test_result->test_result_buffer->add_test_result(self::$result_identifier, $sout);
+						$test_result->set_parent_hash(self::$successful_test_run->get_comparison_hash(true, false));
 						$result_file->add_result($test_result);
 					}
 				}
