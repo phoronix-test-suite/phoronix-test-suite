@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015 - 2019, Phoronix Media
-	Copyright (C) 2015 - 2019, Michael Larabel
+	Copyright (C) 2015 - 2020, Phoronix Media
+	Copyright (C) 2015 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -33,6 +33,10 @@ class pts_stress_run_manager extends pts_test_run_manager
 	private $stress_child_thread = false;
 	private $stress_logger;
 	private $stress_log_event_call = false;
+
+	private $save_result_file = false;
+	private $save_result_identifier = false;
+	private $result_file = false;
 
 	public static function stress_run($to_run, $batch_mode = false)
 	{
@@ -79,6 +83,28 @@ class pts_stress_run_manager extends pts_test_run_manager
 		{
 			echo PHP_EOL . pts_client::cli_just_bold('TOTAL_LOOP_TIME:') . ' Set the TOTAL_LOOP_TIME environment variable if wishing to specify (in minutes) how long to run the stress-run process.' . PHP_EOL . PHP_EOL;
 			$total_loop_time = false;
+		}
+
+		if(($j = getenv('TEST_RESULTS_NAME')))
+		{
+			$this->save_result_file = pts_test_run_manager::clean_save_name($j);
+			$this->result_file = new pts_result_file($this->save_result_file);
+			echo PHP_EOL . 'TEST_RESULTS_NAME set; saving the result sensor data as ' . $this->save_result_file . '.' . PHP_EOL . PHP_EOL;
+
+			if(($j = getenv('TEST_RESULTS_IDENTIFIER')))
+			{
+				$this->save_result_identifier = $j;
+				echo PHP_EOL . 'TEST_RESULTS_IDENTIFIER set; test identifier is ' . $this->save_result_identifier . '.' . PHP_EOL . PHP_EOL;
+			}
+			else
+			{
+				$this->save_result_identifier = date('Y-m-d H:i:s');
+				echo PHP_EOL . 'TEST_RESULTS_IDENTIFIER is not set; test identifier is ' . $this->save_result_identifier . '.' . PHP_EOL . PHP_EOL;
+			}
+		}
+		else
+		{
+			echo PHP_EOL . pts_client::cli_just_bold('TEST_RESULTS_NAME:') . ' Set the TEST_RESULTS_NAME environment variable if wanting to save the sensor summary to a result file.' . PHP_EOL . PHP_EOL;
 		}
 		//pts_test_installer::standard_install($to_run);
 		/*
@@ -549,6 +575,11 @@ class pts_stress_run_manager extends pts_test_run_manager
 			$report_buffer .= pts_user_io::display_text_table($table, '     ', 2) . PHP_EOL . PHP_EOL;
 		}
 
+		if($this->result_file)
+		{
+			$this->result_file->append_description($this->save_result_identifier . ': ' . $report_buffer);
+		}
+
 		$report_buffer .= pts_client::cli_just_bold('SENSOR DATA: ') . PHP_EOL;
 		$table = array(array(pts_client::cli_just_bold('SENSOR'), pts_client::cli_just_bold('MIN'), pts_client::cli_just_bold('AVG'), pts_client::cli_just_bold('MAX')));
 		foreach($this->sensor_data_archived as $sensor_name => &$sensor_data)
@@ -565,10 +596,36 @@ class pts_stress_run_manager extends pts_test_run_manager
 					pts_math::set_precision(pts_math::arithmetic_mean($sensor_data), 2),
 					pts_math::set_precision($max_val, 2),
 					$this->sensor_data_archived_units[$sensor_name]);
+
+				if($this->result_file)
+				{
+					$test_profile = new pts_test_profile();
+					$test_result = new pts_test_result($test_profile);
+
+					$test_result->test_profile->set_test_title($sensor_name . ' Monitor');
+					$test_result->test_profile->set_identifier(null);
+					$test_result->test_profile->set_version(null);
+					$test_result->test_profile->set_result_proportion(null);
+					$test_result->test_profile->set_display_format('LINE_GRAPH');
+					$test_result->test_profile->set_result_scale($this->sensor_data_archived_units[$sensor_name]);
+					$test_result->set_used_arguments_description('Phoronix Test Suite System Monitoring');
+					$test_result->set_used_arguments($sensor_name); // phodevi::sensor_object_identifier($sensor)
+					$test_result->test_result_buffer = new pts_test_result_buffer();
+					$test_result->test_result_buffer->add_test_result($this->save_result_identifier, implode(',', $sensor_data), implode(',', $sensor_data), implode(',', $sensor_data), implode(',', $sensor_data));
+					$this->result_file->add_result_return_object($test_result);
+				}
 			}
 		}
 		$report_buffer .= pts_user_io::display_text_table($table, '     ', 2) . PHP_EOL;
 		$report_buffer .= '######' . PHP_EOL;
+
+		if($this->result_file)
+		{
+			$sys = new pts_result_file_system($this->save_result_identifier, phodevi::system_hardware(true), phodevi::system_software(true), array(), pts_client::current_user(), null, date('Y-m-d H:i:s'), PTS_VERSION);
+			$this->result_file->add_system($sys);
+			pts_client::save_test_result($this->save_result_file . '/composite.xml', $this->result_file->get_xml(), true, $this->save_result_identifier);
+		}
+
 		return $report_buffer;
 	}
 }

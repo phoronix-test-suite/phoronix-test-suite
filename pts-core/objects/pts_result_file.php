@@ -313,6 +313,13 @@ class pts_result_file
 	{
 		return $this->title;
 	}
+	public function append_description($append_description)
+	{
+		if($append_description != null && strpos($this->description, $append_description) === false)
+		{
+			$this->description .= PHP_EOL . $append_description;
+		}
+	}
 	public function set_description($new_description)
 	{
 		if($new_description != null)
