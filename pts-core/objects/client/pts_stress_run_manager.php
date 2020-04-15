@@ -570,7 +570,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 			$report_buffer .= pts_user_io::display_text_table($table, '     ', 2) . PHP_EOL . PHP_EOL;
 		}
 
-		if($this->result_file)
+		if($this->save_result_file)
 		{
 			$desc = $this->save_result_identifier . ': ' . $report_buffer;
 		}
@@ -604,7 +604,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 					pts_math::set_precision($max_val, 2),
 					$this->sensor_data_archived_units[$sensor_name]);
 
-				if($this->result_file)
+				if($this->save_result_file)
 				{
 					$test_profile = new pts_test_profile();
 					$test_result = new pts_test_result($test_profile);
@@ -626,7 +626,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 		$report_buffer .= pts_user_io::display_text_table($table, '     ', 2) . PHP_EOL;
 		$report_buffer .= '######' . PHP_EOL;
 
-		if($this->result_file)
+		if($this->save_result_file)
 		{
 			$this->result_file->append_description($this->save_result_identifier . ': ' . $report_buffer);
 			pts_client::save_test_result($this->save_result_file . '/composite.xml', $this->result_file->get_xml(), true, $this->save_result_identifier);
