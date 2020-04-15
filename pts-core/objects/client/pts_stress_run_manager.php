@@ -73,11 +73,11 @@ class pts_stress_run_manager extends pts_test_run_manager
 		if($total_loop_time == 'infinite')
 		{
 			$total_loop_time = 'infinite';
-			echo PHP_EOL . 'TOTAL_LOOP_TIME set; running tests in an infinite loop until otherwise triggered' . PHP_EOL . PHP_EOL;
+			echo PHP_EOL . pts_client::cli_just_bold('TOTAL_LOOP_TIME') . ' set; running tests in an infinite loop until otherwise triggered' . PHP_EOL . PHP_EOL;
 		}
 		else if($total_loop_time && is_numeric($total_loop_time) && $total_loop_time > 1)
 		{
-			echo PHP_EOL . 'TOTAL_LOOP_TIME set; running tests for ' . $total_loop_time . ' minutes' . PHP_EOL . PHP_EOL;
+			echo PHP_EOL . pts_client::cli_just_bold('TOTAL_LOOP_TIME') . ' set; running tests for ' . $total_loop_time . ' minutes' . PHP_EOL . PHP_EOL;
 		}
 		else
 		{
@@ -90,8 +90,6 @@ class pts_stress_run_manager extends pts_test_run_manager
 			$test_run_manager->save_result_file = pts_test_run_manager::clean_save_name($j);
 			$test_run_manager->result_file = new pts_result_file($test_run_manager->save_result_file);
 			$test_run_manager->result_file->set_title($j . ' Stress-Run Monitoring');
-			$sys = new pts_result_file_system($test_run_manager->save_result_identifier, phodevi::system_hardware(true), phodevi::system_software(true), array(), pts_client::current_user(), null, date('Y-m-d H:i:s'), PTS_VERSION);
-			$test_run_manager->result_file->add_system($sys);
 			echo PHP_EOL . pts_client::cli_just_bold('TEST_RESULTS_NAME') . ' set; saving the result sensor data as ' . $test_run_manager->save_result_file . '.' . PHP_EOL . PHP_EOL;
 
 			if(($j = getenv('TEST_RESULTS_IDENTIFIER')))
@@ -104,6 +102,9 @@ class pts_stress_run_manager extends pts_test_run_manager
 				$test_run_manager->save_result_identifier = date('Y-m-d H:i:s');
 				echo PHP_EOL . pts_client::cli_just_bold('TEST_RESULTS_IDENTIFIER') . ' is not set; test identifier is ' . $test_run_manager->save_result_identifier . '.' . PHP_EOL . PHP_EOL;
 			}
+
+			$sys = new pts_result_file_system($test_run_manager->save_result_identifier, phodevi::system_hardware(true), phodevi::system_software(true), array(), pts_client::current_user(), null, date('Y-m-d H:i:s'), PTS_VERSION);
+			$test_run_manager->result_file->add_system($sys);
 		}
 		else
 		{
@@ -571,7 +572,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 
 		if($this->result_file)
 		{
-			$this->result_file->set_description($this->save_result_identifier . ': ' . $report_buffer);
+			$desc = $this->save_result_identifier . ': ' . $report_buffer;
 		}
 
 		$report_buffer .= PHP_EOL . pts_client::cli_just_bold('SYSTEM INFORMATION: ') . PHP_EOL;
@@ -627,6 +628,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 
 		if($this->result_file)
 		{
+			$this->result_file->append_description($this->save_result_identifier . ': ' . $report_buffer);
 			pts_client::save_test_result($this->save_result_file . '/composite.xml', $this->result_file->get_xml(), true, $this->save_result_identifier);
 			$report_buffer .= pts_client::cli_just_bold('Result saved: ' . $this->save_result_file) . PHP_EOL;
 		}
