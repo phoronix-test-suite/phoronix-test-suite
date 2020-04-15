@@ -36,7 +36,6 @@ class pts_stress_run_manager extends pts_test_run_manager
 
 	private $save_result_file = false;
 	private $save_result_identifier = false;
-	private $result_file = false;
 
 	public static function stress_run($to_run, $batch_mode = false)
 	{
