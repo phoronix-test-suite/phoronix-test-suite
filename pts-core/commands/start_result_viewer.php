@@ -61,7 +61,7 @@ class start_result_viewer implements pts_option_interface
 
 				$remote_access = rand(8000, 8999);
 			}
-			while(($fp = fsockopen('127.0.0.1', $remote_access, $errno, $errstr, 5)) != false);
+			while(($fp = fsockopen('127.0.0.1', $remote_access, $errno, $errstr, 5)) == false);
 			echo 'Port ' . $remote_access . ' chosen as random port for this instance. Change the default port via the Phoronix Test Suite user configuration file.' . PHP_EOL;
 		}
 
@@ -77,7 +77,7 @@ class start_result_viewer implements pts_option_interface
 			// Allows server to be web accessible
 			$server_ip = '0.0.0.0';
 		}
-		if(($fp = fsockopen('127.0.0.1', $remote_access, $errno, $errstr, 5)) != false)
+		if(($fp = fsockopen('127.0.0.1', $remote_access, $errno, $errstr, 5)) == false)
 		{
 			fclose($fp);
 			trigger_error('Port ' . $remote_access . ' is already in use by another server process. Close that process or change the Phoronix Test Suite server port via' . pts_config::get_config_file_location() . ' to proceed.', E_USER_ERROR);
