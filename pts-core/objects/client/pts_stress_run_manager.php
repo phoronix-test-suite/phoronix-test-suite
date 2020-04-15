@@ -34,8 +34,8 @@ class pts_stress_run_manager extends pts_test_run_manager
 	private $stress_logger;
 	private $stress_log_event_call = false;
 
-	private $save_result_file = false;
-	private $save_result_identifier = false;
+	public $save_result_file = false;
+	public $save_result_identifier = false;
 
 	public static function stress_run($to_run, $batch_mode = false)
 	{
@@ -86,19 +86,19 @@ class pts_stress_run_manager extends pts_test_run_manager
 
 		if(($j = getenv('TEST_RESULTS_NAME')))
 		{
-			$this->save_result_file = pts_test_run_manager::clean_save_name($j);
-			$this->result_file = new pts_result_file($this->save_result_file);
-			echo PHP_EOL . 'TEST_RESULTS_NAME set; saving the result sensor data as ' . $this->save_result_file . '.' . PHP_EOL . PHP_EOL;
+			$test_run_manager->save_result_file = pts_test_run_manager::clean_save_name($j);
+			$test_run_manager->result_file = new pts_result_file($test_run_manager->save_result_file);
+			echo PHP_EOL . 'TEST_RESULTS_NAME set; saving the result sensor data as ' . $test_run_manager->save_result_file . '.' . PHP_EOL . PHP_EOL;
 
 			if(($j = getenv('TEST_RESULTS_IDENTIFIER')))
 			{
-				$this->save_result_identifier = $j;
-				echo PHP_EOL . 'TEST_RESULTS_IDENTIFIER set; test identifier is ' . $this->save_result_identifier . '.' . PHP_EOL . PHP_EOL;
+				$test_run_manager->save_result_identifier = $j;
+				echo PHP_EOL . 'TEST_RESULTS_IDENTIFIER set; test identifier is ' . $test_run_manager->save_result_identifier . '.' . PHP_EOL . PHP_EOL;
 			}
 			else
 			{
-				$this->save_result_identifier = date('Y-m-d H:i:s');
-				echo PHP_EOL . 'TEST_RESULTS_IDENTIFIER is not set; test identifier is ' . $this->save_result_identifier . '.' . PHP_EOL . PHP_EOL;
+				$test_run_manager->save_result_identifier = date('Y-m-d H:i:s');
+				echo PHP_EOL . 'TEST_RESULTS_IDENTIFIER is not set; test identifier is ' . $test_run_manager->save_result_identifier . '.' . PHP_EOL . PHP_EOL;
 			}
 		}
 		else
