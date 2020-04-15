@@ -3,6 +3,8 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 pts-core: Allow building virtual suites off external dependencies
+pts-core: Various result viewer improvements
+pts-core: Allow saving results under stress-run
 
 Phoronix Test Suite 9.6.0 Milestone 3
 12 April 2020

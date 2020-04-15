@@ -775,6 +775,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			// RENDER TEST AND ANCHOR
 			//
 			$ro = clone $result_object;
+			$res_desc_shortened = $result_object->get_arguments_description_shortened(false);
 			$res = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
 			if($res == false || in_array($i, $skip_ros))
 			{
@@ -871,7 +872,8 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 				$c_ro = $result_file->get_result($child_ro);
 				if($c_ro)
 				{
-					$tabs[str_replace(array(' Monitor'), '', $c_ro->get_arguments_description_shortened(false))] = pts_render::render_graph_inline_embed($c_ro, $result_file, null);
+					$desc = str_replace(array(' Monitor'), '', $c_ro->get_arguments_description_shortened(false));
+					$tabs[($desc == $res_desc_shortened || empty($desc) ? $c_ro->test_profile->get_result_scale() : $desc)] = pts_render::render_graph_inline_embed($c_ro, $result_file, null);
 					$result_file->remove_result_object_by_id($child_ro);
 					$skip_ros[] = $child_ro;
 				}
