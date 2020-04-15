@@ -60,7 +60,7 @@ class linux_perf extends pts_module_interface
 	public static function __pre_test_run(&$test_run_request)
 	{
 		// Set the perf command to pass in front of all tests to run
-        self::$tmp_file = tempnam(sys_get_temp_dir(), 'perf');
+		self::$tmp_file = tempnam(sys_get_temp_dir(), 'perf');
 		$test_run_request->exec_binary_prepend = 'perf stat -o ' . self::$tmp_file . ' ';
 	}
 	public static function __post_test_run_success($test_run_request)
