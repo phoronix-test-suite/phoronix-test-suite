@@ -677,7 +677,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		{
 			$table = new pts_ResultFileSystemsTable($result_file);
 		}
-		$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
+		$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object" id="result_file_system_table">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
 
 		if($result_file->get_system_count() == 2)
 		{
@@ -712,7 +712,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		$PAGE .= '<a name="table"></a>';
 		if(!$result_file->is_multi_way_comparison())
 		{
-			$PAGE .= '<div style="display:flex; align-items: center; justify-content: center; overflow: auto;">' . pts_result_file_output::result_file_to_detailed_html_table($result_file, 'grid', $extra_attributes, pts_result_viewer_settings::check_request_for_var($_REQUEST, 'sdt')) . '</div>';
+			$PAGE .= '<div class="pts_result_table">' . pts_result_file_output::result_file_to_detailed_html_table($result_file, 'grid', $extra_attributes, pts_result_viewer_settings::check_request_for_var($_REQUEST, 'sdt')) . '</div>';
 		}
 		else
 		{

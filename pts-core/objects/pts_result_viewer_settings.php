@@ -160,8 +160,8 @@ class pts_result_viewer_settings
 			}
 			$analyze_checkboxes['Statistics'][] = array('swl', 'Show Wins / Losses Counts (Pie Chart)');
 			$analyze_checkboxes['Statistics'][] = array('nor', 'Normalize Results');
-			$analyze_checkboxes['Graph Settings'][] = array('ftr', 'Force Line Graphs (Where Applicable)');
-			$analyze_checkboxes['Graph Settings'][] = array('scalar', 'Convert To Scalar (Where Applicable)');
+			$analyze_checkboxes['Graph Settings'][] = array('ftr', 'Force Line Graphs Where Applicable');
+			$analyze_checkboxes['Graph Settings'][] = array('scalar', 'Convert To Scalar Where Applicable');
 			$analyze_checkboxes['View'][] = array('hnr', 'Do Not Show Noisy Results');
 			$analyze_checkboxes['View'][] = array('hni', 'Do Not Show Results With Incomplete Data');
 			$analyze_checkboxes['View'][] = array('hlc', 'Do Not Show Results With Little Change/Spread');
@@ -169,7 +169,7 @@ class pts_result_viewer_settings
 
 			if($has_identifier_with_color_brand)
 			{
-				$analyze_checkboxes['Graph Settings'][] = array('ncb', 'No Color Branding');
+				$analyze_checkboxes['Graph Settings'][] = array('ncb', 'Disable Color Branding');
 			}
 		}
 		if(count($suites_in_result_file) > 1)
@@ -224,7 +224,7 @@ class pts_result_viewer_settings
 			{
 				continue;
 			}
-			$t .= '<div style="float: left; overflow: hidden; padding: 4px;">';
+			$t .= '<div class="pts_result_viewer_settings_box">';
 			$t .= '<h2>' . $title . '</h2>';
 			foreach($group as $key)
 			{

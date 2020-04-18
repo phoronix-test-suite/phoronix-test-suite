@@ -400,6 +400,23 @@ div.table_test_box em, div.pts_test_boxes em
 {
 	color: #ef5e09;
 }
+div.pts_result_viewer_settings_box
+{
+	float: left;
+	overflow: hidden;
+	padding: 4px;
+}
+div.pts_result_table
+{
+	display:flex;
+	align-items: center;
+	justify-content: center;
+	overflow: auto;
+}
+p#result_file_system_table
+{
+
+}
 .tabs
 {
 	display: flex;
@@ -452,6 +469,16 @@ div.table_test_box em, div.pts_test_boxes em
     margin-right: 0;
     margin-top: 0.2rem;
   }
+}
+@media (max-width: 1000px) {
+	div.pts_result_viewer_settings_box { float: none; font-size: 15pt; }
+	div.pts_result_table { display: none; }
+	.print_notes { display: block !important; }
+	p#result_file_system_table { display: none; }
+	div#results svg { width: 100%; }
+	div#main_area { padding: 5px; }
+	#result_overview_area { display: none !important; }
+	div#header ul li { padding: 0 5px; }
 }
 
 @media print
