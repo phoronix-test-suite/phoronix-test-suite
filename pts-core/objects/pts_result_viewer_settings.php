@@ -249,16 +249,16 @@ class pts_result_viewer_settings
 <div class="div_table_first_row">
 <div class="div_table_cell">Highlight<br />Result</div>
 <div class="div_table_cell">Hide<br />Result</div>
-<div class="div_table_cell">Identifier</div>';
+<div class="div_table_cell">Result<br />Identifier</div>';
 
 if($has_system_logs)
 {
 	$t .= '<div class="div_table_cell">View Logs</div>';
 }
 
-$t .= '<div class="div_table_cell">Perf-Per-Dollar</div>
-<div class="div_table_cell">Triggered</div>
-<div class="div_table_cell"> &nbsp; Duration</div>
+$t .= '<div class="div_table_cell">Perf-Per<br />Dollar</div>
+<div class="div_table_cell">Date<br />Triggered</div>
+<div class="div_table_cell"> &nbsp; Test<br /> &nbsp; Duration</div>
 <div class="div_table_cell"> </div>
 </div>
 ';
