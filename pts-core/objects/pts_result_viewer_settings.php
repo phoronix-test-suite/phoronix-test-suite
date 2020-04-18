@@ -47,7 +47,8 @@ class pts_result_viewer_settings
 			$drop_down_menus['Sort Graph Order'] = array(
 				'grs' => 'By Result Spread',
 				'gru' => 'By Result Unit',
-				'grt' => 'By Test Title'
+				'grt' => 'By Test Title',
+				'grr' => 'By Test Length/Time'
 				);
 		}
 
@@ -505,18 +506,24 @@ if($system_identifier_count > 2)
 				}
 			}
 		}
+
 		if(self::check_request_for_var($request, 'grs'))
 		{
 			$result_file->sort_result_object_order_by_spread();
 		}
-		if(self::check_request_for_var($request, 'grt'))
+		else if(self::check_request_for_var($request, 'grt'))
 		{
 			$result_file->sort_result_object_order_by_title();
 		}
-		if(self::check_request_for_var($request, 'gru'))
+		else if(self::check_request_for_var($request, 'gru'))
 		{
 			$result_file->sort_result_object_order_by_result_scale();
 		}
+		else if(self::check_request_for_var($request, 'grr'))
+		{
+			$result_file->sort_result_object_order_by_run_time();
+		}
+
 		if(self::check_request_for_var($request, 'shm'))
 		{
 			foreach(pts_result_file_analyzer::generate_harmonic_mean_result($result_file) as $result)

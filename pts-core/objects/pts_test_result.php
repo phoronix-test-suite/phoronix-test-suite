@@ -654,6 +654,22 @@ class pts_test_result
 			}
 		}
 	}
+	public function get_run_time()
+	{
+		$total_times = array();
+
+		foreach($this->test_result_buffer->get_buffer_items() as $item)
+		{
+			$json_data = $item->get_result_json();
+			if(isset($json_data['test-run-times']))
+			{
+				$test_run_times = explode(':', $json_data['test-run-times']);
+				$total_times[] = array_sum($test_run_times);
+			}
+		}
+
+		return !empty($total_times) ? array_sum($total_times) / count($total_times) : -1;
+	}
 	public function points_of_possible_interest($threshold_level = 0.05, $adaptive = true)
 	{
 		$points_of_interest = array();

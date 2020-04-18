@@ -1016,6 +1016,27 @@ class pts_result_file
 	{
 		return strcmp($a->test_profile->get_result_proportion() . ' ' . strtolower($a->test_profile->get_result_scale()) . ' ' . $a->test_profile->get_identifier(), $b->test_profile->get_result_proportion() . ' ' . strtolower($b->test_profile->get_result_scale()) . ' ' . $a->test_profile->get_identifier());
 	}
+	public function sort_result_object_order_by_run_time($asc = false)
+	{
+		uasort($this->result_objects, array('pts_result_file', 'result_run_time_comparison'));
+
+		if($asc == false)
+		{
+			$this->result_objects = array_reverse($this->result_objects, true);
+		}
+	}
+	public static function result_run_time_comparison($a, $b)
+	{
+		$a = $a->get_run_time();
+		$b = $b->get_run_time();
+
+		if($a == $b)
+		{
+			return 0;
+		}
+
+		return $a < $b ? -1 : 1;
+	}
 }
 
 ?>
