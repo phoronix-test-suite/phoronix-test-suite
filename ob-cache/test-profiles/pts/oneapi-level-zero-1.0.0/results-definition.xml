@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Host-&gt;Device[ 268435456]:  BW = #_RESULT_# GBPS  Latency =  19037.81 usec</OutputTemplate>
+    <LineHint>BW =</LineHint>
+    <ResultScale>GB/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Host-&gt;Device[ 268435456]:  BW = 333 GBPS  Latency =  #_RESULT_# usec</OutputTemplate>
+    <LineHint>BW =</LineHint>
+    <ResultScale>usec</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>#_RESULT_# GBPS</OutputTemplate>
+    <LineBeforeHint>Host2Device2Host: Measuring Bandwidth for</LineBeforeHint>
+    <ResultScale>GB/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>float16 : #_RESULT_# GBPS</OutputTemplate>
+    <ResultScale>GB/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>half : #_RESULT_# GFLOPS</OutputTemplate>
+    <ResultScale>GFLOPS</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>double : #_RESULT_# GFLOPS</OutputTemplate>
+    <ResultScale>GFLOPS</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>int4 : #_RESULT_# GFLOPS</OutputTemplate>
+    <ResultScale>GFLOPS</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>System Memory Copy to Shared Memory : #_RESULT_# GBPS</OutputTemplate>
+    <ResultScale>GB/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Kernel launch latency : #_RESULT_# (uS)</OutputTemplate>
+    <ResultScale>us</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+  </ResultsParser>
+</PhoronixTestSuite>

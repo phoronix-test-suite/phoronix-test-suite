@@ -69,10 +69,11 @@ class analyze_run_times implements pts_option_interface
 
 			$output = PHP_EOL . pts_client::cli_just_bold(trim($ro->test_profile->get_title() . PHP_EOL . $ro->get_arguments_description())) . PHP_EOL;
 			$output .= pts_user_io::display_text_table($table) . PHP_EOL;
-			if(count($avg_time) > 1)
+			if(($c = count($avg_time)) > 1)
 			{
 				$avg_time = array_sum($avg_time) / count($avg_time);
-				$output .= PHP_EOL . pts_client::cli_just_bold('Average Test Run Time: ') . pts_strings::format_time($avg_time) . PHP_EOL;
+				if($c > 2)
+					$output .= PHP_EOL . pts_client::cli_just_bold('Average Test Run Time: ') . pts_strings::format_time($avg_time) . PHP_EOL;
 			}
 
 			$time_segments[] = array($avg_time, $output);

@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0m3-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>NWChem</Title>
+    <AppVersion>7.0</AppVersion>
+    <Description>NWChem is an open-source high performance computational chemistry package.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Input: C240 Buckyball</SubTitle>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Scientific</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, openmpi-development, fortran-compiler, blas-development, lapack-development, atlas-development, tcl</ExternalDependencies>
+    <EnvironmentSize>1100</EnvironmentSize>
+    <ProjectURL>http://www.nwchem-sw.org/</ProjectURL>
+    <InternalTags>SMP, MPI</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

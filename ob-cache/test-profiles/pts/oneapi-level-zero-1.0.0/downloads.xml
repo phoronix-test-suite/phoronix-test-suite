@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/level-zero-tests-master-20200404.tar.xz</URL>
+      <MD5>92f3016ae303a02710bfc453f5d3d895</MD5>
+      <SHA256>03f39c1fc3f64043519f7978ff940fc3c8fdb8da392809d9c50b84acb6cd8436</SHA256>
+      <FileName>level-zero-tests-master-20200404.tar.xz</FileName>
+      <FileSize>9408076</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

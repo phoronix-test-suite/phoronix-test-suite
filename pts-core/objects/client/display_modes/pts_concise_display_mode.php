@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2019, Phoronix Media
-	Copyright (C) 2009 - 2019, Michael Larabel
+	Copyright (C) 2009 - 2020, Phoronix Media
+	Copyright (C) 2009 - 2020, Michael Larabel
 	pts_concise_display_mode.php: The batch / concise display mode
 
 	This program is free software; you can redistribute it and/or modify

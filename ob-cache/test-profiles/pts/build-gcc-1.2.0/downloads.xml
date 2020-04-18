@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>ftp://ftp.fu-berlin.de/unix/languages/gcc/releases/gcc-9.3.0/gcc-9.3.0.tar.gz, ftp://ftp.gwdg.de/pub/misc/gcc/releases/gcc-9.3.0/gcc-9.3.0.tar.gz, https://ftp.gnu.org/gnu/gcc/gcc-9.3.0/gcc-9.3.0.tar.gz</URL>
+      <MD5>9b7e8f6cfad96114e726c752935af58a</MD5>
+      <SHA256>5258a9b6afe9463c2e56b9e8355b1a4bee125ca828b8078f910303bc2ef91fa6</SHA256>
+      <FileName>gcc-9.3.0.tar.gz</FileName>
+      <FileSize>124140238</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

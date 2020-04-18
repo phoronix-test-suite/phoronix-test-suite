@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>oneAPI Level Zero Tests</Title>
+    <Description>This is benchmarking the collection of Intel oneAPI Level Zero Tests.</Description>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+    <PreInstallMessage>For these oneAPI Level Zero benchmarks you must have level-zero packages installed and the Intel Compute Runtime available via https://github.com/oneapi-src/level-zero/releases and https://github.com/intel/compute-runtime/releases</PreInstallMessage>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, cmake, opencl, libpng-development, boost-development, vaapi</ExternalDependencies>
+    <EnvironmentSize>500</EnvironmentSize>
+    <ProjectURL>https://github.com/oneapi-src/level-zero-tests/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Host-To-Device Bandwidth</Name>
+          <Value>ze_bandwidth -t d2h -s 268435456 -i 1000</Value>
+        </Entry>
+        <Entry>
+          <Name>Device-To-Host Bandwidth</Name>
+          <Value>ze_bandwidth -t d2h -s 268435456 -i 1000</Value>
+        </Entry>
+        <Entry>
+          <Name>Host-To-Device-To-Host Image Copy</Name>
+          <Value>ze_image_copy -w 3840 -h 2160</Value>
+        </Entry>
+        <Entry>
+          <Name>Peak Float16 Global Memory Bandwidth</Name>
+          <Value>ze_peak -t global_bw</Value>
+        </Entry>
+        <Entry>
+          <Name>Peak Half-Precision Compute</Name>
+          <Value>ze_peak -t hp_compute</Value>
+        </Entry>
+        <Entry>
+          <Name>Peak Single-Precision Compute</Name>
+          <Value>ze_peak -t sp_compute</Value>
+        </Entry>
+        <Entry>
+          <Name>Peak Double-Precision Compute</Name>
+          <Value>ze_peak -t dp_compute</Value>
+        </Entry>
+        <Entry>
+          <Name>Peak Integer Compute</Name>
+          <Value>ze_peak -t int_compute</Value>
+        </Entry>
+        <Entry>
+          <Name>Peak System Memory Copy to Shared Memory</Name>
+          <Value>ze_peak -t transfer_bw</Value>
+        </Entry>
+        <Entry>
+          <Name>Peak Kernel Launch Latency</Name>
+          <Value>ze_peak -t kernel_lat -i 10000</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

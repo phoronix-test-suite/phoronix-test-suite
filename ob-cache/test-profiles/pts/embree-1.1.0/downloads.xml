@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/embree/models/releases/download/release/asian_dragon.zip</URL>
+      <FileName>asian_dragon.zip</FileName>
+      <FileSize>103961493</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/embree/models/releases/download/release/asian_dragon_obj.zip</URL>
+      <FileName>asian_dragon_obj.zip</FileName>
+      <FileSize>157616423</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/embree/models/releases/download/release/crown.zip</URL>
+      <FileName>crown.zip</FileName>
+      <FileSize>68853062</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/embree/embree/releases/download/v3.9.0/embree-3.9.0.x86_64.linux.tar.gz</URL>
+      <MD5>1d9da6dc935d8b3eba88d4ec73ce4497</MD5>
+      <SHA256>8ab88965456b70553f62f08dda16dd7d87c6021d5a3a1fd4a7611b90a9f2949d</SHA256>
+      <FileName>embree-3.9.0.x86_64.linux.tar.gz</FileName>
+      <FileSize>98644141</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/embree/embree/releases/download/v3.9.0/embree-3.9.0.x86_64.macosx.zip</URL>
+      <MD5>63a35420bb75f80cf6dec995b26942b1</MD5>
+      <SHA256>7f4ada7bb7edb578b49241149b2b9f0398cdccb3a3dcfac1b51fddc8908ef5db</SHA256>
+      <FileName>embree-3.9.0.x86_64.macosx.zip</FileName>
+      <FileSize>116386421</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/embree/embree/releases/download/v3.9.0/embree-3.9.0.x64.vc14.windows.zip</URL>
+      <MD5>90831e6514030417973c45e8e94a77c4</MD5>
+      <SHA256>e6b9ae4a8edadce4166e5c8ac52a5e3d8a5a2e4957411eeadc1d8233a4031034</SHA256>
+      <FileName>embree-3.9.0.x64.vc14.windows.zip</FileName>
+      <FileSize>56223602</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

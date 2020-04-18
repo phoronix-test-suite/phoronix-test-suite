@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0m0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Timed LLVM Compilation</Title>
+    <AppVersion>10.0</AppVersion>
+    <Description>This test times how long it takes to build the LLVM compiler.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Time To Compile</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.0</Version>
+    <SupportedPlatforms>Linux, BSD, MacOSX, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, cmake, python</ExternalDependencies>
+    <ProjectURL>http://www.llvm.org/</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

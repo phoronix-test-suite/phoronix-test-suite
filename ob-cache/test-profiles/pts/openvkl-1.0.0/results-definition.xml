@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>render_wavelet_structured_regular/hit_iterator / 512 / scalar          2265933 ns      2265888 ns          309 items_per_second=#_RESULT_#</OutputTemplate>
+    <LineHint>items_per_second</LineHint>
+    <ResultBeforeString>items_per_second</ResultBeforeString>
+    <StripFromResult>/s</StripFromResult>
+    <MultiMatch>MultiMatch</MultiMatch>
+    <TurnCharsToSpace>=</TurnCharsToSpace>
+  </ResultsParser>
+</PhoronixTestSuite>

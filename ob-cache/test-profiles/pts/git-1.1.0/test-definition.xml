@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Git</Title>
+    <Description>This test measures the time needed to carry out some sample Git operations on an example, static repository that happens to be a copy of the GNOME GTK tool-kit repository.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Time To Complete Common Git Commands</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux, BSD, MacOSX, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>git</ExternalDependencies>
+    <RequiresInternet>TRUE</RequiresInternet>
+    <EnvironmentTestingSize>523</EnvironmentTestingSize>
+    <ProjectURL>https://git-scm.com/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

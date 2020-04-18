@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/YafaRay/Core/archive/v3.4.1.tar.gz</URL>
+      <MD5>03a4740f4db11f18823a9a2cf77edfc3</MD5>
+      <SHA256>a9155542d54e6864219919c103c705ed494c2e2fd1b2ccfaf28c7aa5951a08a4</SHA256>
+      <FileName>Core-3.4.1.tar.gz</FileName>
+      <FileSize>1136077</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/yafarayRender-sample-1.tar.xz</URL>
+      <MD5>d688b89b0883ad55ec9a2428a0e5fcb4</MD5>
+      <SHA256>6869e8b88658594325dc743fe1c3b96e58900cf3daf2ecd632e932f2c6b6b93a</SHA256>
+      <FileName>yafarayRender-sample-1.tar.xz</FileName>
+      <FileSize>10744</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

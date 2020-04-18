@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0m3-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>RAMspeed SMP</Title>
+    <AppVersion>3.5.0</AppVersion>
+    <Description>This benchmark tests the system memory (RAM) performance.</Description>
+    <ResultScale>MB/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.4.3</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Memory</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>0.72</EnvironmentSize>
+    <ProjectURL>http://www.alasir.com/software/ramspeed/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <PostArguments>-l 10</PostArguments>
+    </Default>
+    <Option>
+      <DisplayName>Type</DisplayName>
+      <Identifier>run-type</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Copy</Name>
+          <Value>COPY</Value>
+        </Entry>
+        <Entry>
+          <Name>Scale</Name>
+          <Value>SCALE</Value>
+        </Entry>
+        <Entry>
+          <Name>Add</Name>
+          <Value>ADD</Value>
+        </Entry>
+        <Entry>
+          <Name>Triad</Name>
+          <Value>TRIAD</Value>
+        </Entry>
+        <Entry>
+          <Name>Average</Name>
+          <Value>AVERAGE</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Benchmark</DisplayName>
+      <Identifier>benchmark</Identifier>
+      <ArgumentPrefix>-b </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>Integer</Name>
+          <Value>3</Value>
+        </Entry>
+        <Entry>
+          <Name>Floating Point</Name>
+          <Value>6</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

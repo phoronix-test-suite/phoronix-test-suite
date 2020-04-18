@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Op rate                   :   #_RESULT_# op/s  [WRITE: 55,622 op/s]</OutputTemplate>
+    <LineHint>Op rate</LineHint>
+    <StripFromResult>,</StripFromResult>
+  </ResultsParser>
+</PhoronixTestSuite>

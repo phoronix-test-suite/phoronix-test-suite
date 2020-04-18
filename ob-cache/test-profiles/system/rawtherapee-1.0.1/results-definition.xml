@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0m0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Benchmark total: #_RESULT_#</OutputTemplate>
+    <LineHint>Benchmark total</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

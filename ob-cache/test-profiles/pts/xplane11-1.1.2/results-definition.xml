@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>FRAMERATE TEST: time=187.8, frames=1847, fps=#_RESULT_#</OutputTemplate>
+    <LineHint>fps=</LineHint>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>FRAME 12:  CPU: 1.292760 GPU: 0.007053 Total: #_RESULT_# Time: 8.948935</OutputTemplate>
+    <LineHint>FRAME </LineHint>
+    <ResultBeforeString>Total:</ResultBeforeString>
+    <MultiMatch>REPORT_ALL</MultiMatch>
+    <MultiplyResultBy>1000</MultiplyResultBy>
+    <ResultScale>ms</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+    <AppendToArgumentsDescription>Per Frame Timing</AppendToArgumentsDescription>
+  </ResultsParser>
+</PhoronixTestSuite>

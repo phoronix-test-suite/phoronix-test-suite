@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/neat-git-20200229.tar.xz</URL>
+      <MD5>6618ffc003127d29a671c568c646d69e</MD5>
+      <SHA256>85ad0d2d13fb2b09ca02cc7e89c4f8da4cefcaefa9b487eb0f72dd3f5f55ba38</SHA256>
+      <FileName>neat-git-20200229.tar.xz</FileName>
+      <FileSize>572524</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>
