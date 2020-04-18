@@ -89,6 +89,29 @@ class pts_arrays
 
 		return $items;
 	}
+	public static function implode_list($r)
+	{
+		$l = null;
+		switch(count($r))
+		{
+			case 0:
+				break;
+			case 1:
+				$l = array_pop($r);
+				break;
+			case 2:
+				$l = implode(' and ', $r);
+				break;
+			default:
+				$l1 = array_pop($r);
+				$l2 = array_pop($r);
+				array_push($r, $l2 . ' and ' . $l1);
+				$l = implode(', ', $r);
+				break;
+		}
+
+		return $l;
+	}
 }
 
 ?>
