@@ -77,7 +77,7 @@ div#main_area h2
 }
 div#main_area input, div#main_area textarea, div#main_area select, div#main_area button
 {
-	margin: 10px 0;
+	margin: 1px 0;
 	background: #ddd;
 	color: #000;
 	font-size: 13pt;
@@ -417,6 +417,7 @@ div.table_test_box em, div.pts_test_boxes em
 	background: #ef5e09;
 	color: #fff;
 	transition: background ease 0.5s;
+	user-select: none;
 }
 .tabs .tab
 {

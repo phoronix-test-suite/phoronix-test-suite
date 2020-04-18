@@ -983,7 +983,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			$total_result_points += $result_file->get_test_count();
 		}
 
-		$PAGE .= '<div class="sub" style="margin-bottom: 30px">' . count($results) . ' Result Files Containing A Combined ' . $total_result_points . ' Test Results</div>';
+		$PAGE .= '<div class="sub" style="margin: 6px 0 30px">' . count($results) . ' Result Files Containing A Combined ' . $total_result_points . ' Test Results</div>';
 		$PAGE .= '<form name="compare_results" id="compare_results_id" action="' . CURRENT_URI . '" method="post"><input type="submit" value="Compare Results" id="compare_results_submit" />';
 		$i = 0;
 		foreach($results as $id => $result_file)
