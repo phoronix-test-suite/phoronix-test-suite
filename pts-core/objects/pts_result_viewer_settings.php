@@ -258,12 +258,14 @@ if($has_system_logs)
 
 $t .= '<div class="div_table_cell">Perf-Per-Dollar</div>
 <div class="div_table_cell">Triggered</div>
+<div class="div_table_cell"> &nbsp; Duration</div>
 <div class="div_table_cell"> </div>
 </div>
 ';
 $hgv = self::check_request_for_var($request, 'hgv');
 $rmm = self::check_request_for_var($request, 'rmm');
 $start_of_year = strtotime(date('Y-01-01'));
+$test_run_times = $result_file->get_test_run_times();
 foreach($result_file->get_systems() as $sys)
 {
 	$si = $sys->get_identifier();
@@ -277,11 +279,12 @@ $t .= '
 
 	if($has_system_logs)
 	{
-		$t .= '<div class="div_table_cell">' . ($result_file->get_system_log_dir($si) ? '<a class="mini" href="#" onclick="javascript:display_system_logs_for_result(\'' . RESULTS_VIEWING_ID . '\', \'' . $si . '\'); return false;">View System Logs</a>' : ' ') . '</div>';
+		$t .= '<div class="div_table_cell">' . ($result_file->get_system_log_dir($si) ? '<button onclick="javascript:display_system_logs_for_result(\'' . RESULTS_VIEWING_ID . '\', \'' . $si . '\'); return false;">View System Logs</button>' : ' ') . '</div>';
 	}
 	$stime = strtotime($sys->get_timestamp());
 	$t .= '<div class="div_table_cell"><input type="number" min="0" step="1" name="ppd_' . $ppdx . '" value="' . ($ppd && $ppd !== true ? $ppd : '0') . '" /></div>
-<div class="div_table_cell">' . date(($stime > $start_of_year ? 'F d' : 'F d Y'), $stime) . '</div>';
+<div class="div_table_cell">' . date(($stime > $start_of_year ? 'F d' : 'F d Y'), $stime) . '</div>
+<div class="div_table_cell"> &nbsp; ' . (isset($test_run_times[$si]) && $test_run_times[$si] > 0 ? pts_strings::format_time($test_run_times[$si], 'SECONDS', true, 60) : ' '). '</div>';
 
 	if(defined('VIEWER_CAN_DELETE_RESULTS') && VIEWER_CAN_DELETE_RESULTS && defined('RESULTS_VIEWING_ID'))
 	{

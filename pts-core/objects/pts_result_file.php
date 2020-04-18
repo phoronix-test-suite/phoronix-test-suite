@@ -1016,6 +1016,23 @@ class pts_result_file
 	{
 		return strcmp($a->test_profile->get_result_proportion() . ' ' . strtolower($a->test_profile->get_result_scale()) . ' ' . $a->test_profile->get_identifier(), $b->test_profile->get_result_proportion() . ' ' . strtolower($b->test_profile->get_result_scale()) . ' ' . $a->test_profile->get_identifier());
 	}
+	public function get_test_run_times()
+	{
+		$run_times = array();
+		foreach($this->get_system_identifiers() as $si)
+		{
+			$run_times[$si] = 0;
+		}
+		foreach($this->result_objects as &$ro)
+		{
+			foreach($ro->get_run_times() as $si => $elapsed_time)
+			{
+				$run_times[$si] += $elapsed_time;
+			}
+		}
+
+		return $run_times;
+	}
 	public function sort_result_object_order_by_run_time($asc = false)
 	{
 		uasort($this->result_objects, array('pts_result_file', 'result_run_time_comparison'));
@@ -1027,8 +1044,8 @@ class pts_result_file
 	}
 	public static function result_run_time_comparison($a, $b)
 	{
-		$a = $a->get_run_time();
-		$b = $b->get_run_time();
+		$a = $a->get_run_time_avg();
+		$b = $b->get_run_time_avg();
 
 		if($a == $b)
 		{
