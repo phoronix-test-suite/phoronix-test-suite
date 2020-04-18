@@ -859,12 +859,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			}
 
 			$tabs = array(
-				'Result' => $res,
-				'Perf Per Core' => $res_per_core,
-				'Perf Per Thread' => $res_per_thread,
-				'Perf Per Clock' => $res_per_clock,
-				'Perf Per RAM Channel' => $res_per_ram,
-				'Result Confidence' => $res_variability,
+				'Result' => $res
 				);
 
 			foreach($result_file->get_relation_map($i) as $child_ro)
@@ -878,6 +873,12 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 					$skip_ros[] = $child_ro;
 				}
 			}
+
+			$tabs['Perf Per Core'] = $res_per_core;
+			$tabs['Perf Per Thread'] = $res_per_thread;
+			$tabs['Perf Per Clock'] = $res_per_clock;
+			$tabs['Perf Per RAM Channel'] = $res_per_ram;
+			$tabs['Result Confidence'] = $res_variability;
 
 			foreach($tabs as $title => &$graph)
 			{
