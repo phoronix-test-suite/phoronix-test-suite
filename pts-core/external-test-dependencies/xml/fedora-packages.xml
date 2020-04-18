@@ -314,7 +314,7 @@
                 </Package>
 		<Package>
 			<GenericName>python-scipy</GenericName>
-			<PackageName>scipy</PackageName>
+			<PackageName>python3-scipy</PackageName>
 		</Package>
 		<Package>
 			<GenericName>python-sklearn</GenericName>
