@@ -204,12 +204,14 @@ div#footer, div#footer a
 	grid-template-rows: auto;
 	border-left: 1px solid #ccc;
 	margin: 20px auto;
+	overflow: hidden;
 }
 .grid > span
 {
 	padding: 2px 4px;
 	border-right: 1px solid #ccc;
 	border-bottom: 1px solid #ccc;
+	overflow: hidden;
 }
 .grid > span strong
 {
