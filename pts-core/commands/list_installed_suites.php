@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2016, Phoronix Media
-	Copyright (C) 2009 - 2016, Michael Larabel
+	Copyright (C) 2009 - 2020, Phoronix Media
+	Copyright (C) 2009 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ class list_installed_suites implements pts_option_interface
 	{
 		$installed_suites = array();
 
-		foreach(pts_openbenchmarking::available_suites() as $suite)
+		foreach(pts_test_suites::all_suites() as $suite)
 		{
 			$suite = new pts_test_suite($suite);
 			if($suite->needs_updated_install() == false)
