@@ -1016,59 +1016,95 @@ Virtual test suites can be installed and run just like a normal XML test suite a
 #### All PTS Tests  pts/all
 This is a collection of all test profiles found within the specified OpenBenchmarking.org repository.
 
-#### Installed Tests  pts/installed
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository that are already installed on the system under test.
-
-#### Every PTS Test  pts/everything
-This is a collection of every test profile found within the specified OpenBenchmarking.org repository, including unsupported tests.
-
-#### Linux Operating System Tests  pts/linux
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Linux Operating System.
-
-#### Solaris Operating System Tests  pts/solaris
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Solaris Operating System.
-
-#### BSD Operating System Tests  pts/bsd
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the BSD Operating System.
-
-#### MacOSX Operating System Tests  pts/macosx
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the MacOSX Operating System.
-
-#### Windows Operating System Tests  pts/windows
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Windows Operating System.
-
-#### Hurd Operating System Tests  pts/hurd
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Hurd Operating System.
-
-#### System Subsystem Tests  pts/system
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the System sub-system.
-
-#### Processor Subsystem Tests  pts/processor
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Processor sub-system.
-
-#### Graphics Subsystem Tests  pts/graphics
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Graphics sub-system.
-
-#### Other Subsystem Tests  pts/other
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Other sub-system.
-
-#### Utility Tests  pts/utility
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Utility software test.
-
-#### Simulator Tests  pts/simulator
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Simulator software test.
-
-#### Scientific Tests  pts/scientific
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Scientific software test.
+#### Application Tests  pts/application
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Application software test.
 
 #### Benchmark Tests  pts/benchmark
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Benchmark software test.
 
-#### Application Tests  pts/application
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Application software test.
+#### BLAS (Basic Linear Algebra Sub-Routine) Library  pts/blas
+This is a collection of test profiles having an external dependency on BLAS (Basic Linear Algebra Sub-Routine) Library
+
+#### Boost Development Libraries  pts/boost
+This is a collection of test profiles having an external dependency on Boost Development Libraries
+
+#### BSD Operating System Tests  pts/bsd
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the BSD Operating System.
+
+#### Every PTS Test  pts/everything
+This is a collection of every test profile found within the specified OpenBenchmarking.org repository, including unsupported tests.
+
+#### Fortran  pts/fortran
+This is a collection of test profiles having an external dependency on Fortran
 
 #### Game Tests  pts/game
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Game software test.
+
+#### Go Language  pts/golang
+This is a collection of test profiles having an external dependency on Go Language
+
+#### Graphics Subsystem Tests  pts/graphics
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Graphics sub-system.
+
+#### Hurd Operating System Tests  pts/hurd
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Hurd Operating System.
+
+#### Installed Tests  pts/installed
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository that are already installed on the system under test.
+
+#### LAPACK (Linear Algebra Pack)  pts/lapack
+This is a collection of test profiles having an external dependency on LAPACK (Linear Algebra Pack)
+
+#### Linux Operating System Tests  pts/linux
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Linux Operating System.
+
+#### MacOSX Operating System Tests  pts/macosx
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the MacOSX Operating System.
+
+#### Node.js + NPM  pts/node-npm
+This is a collection of test profiles having an external dependency on Node.js + NPM
+
+#### OpenCV  pts/opencv
+This is a collection of test profiles having an external dependency on OpenCV
+
+#### Openmpi Tests  pts/openmpi
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing openmpi.
+
+#### Other Subsystem Tests  pts/other
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Other sub-system.
+
+#### Processor Subsystem Tests  pts/processor
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Processor sub-system.
+
+#### Ruby  pts/ruby
+This is a collection of test profiles having an external dependency on Ruby
+
+#### Rust  pts/rust
+This is a collection of test profiles having an external dependency on Rust
+
+#### Scientific Tests  pts/scientific
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Scientific software test.
+
+#### Simulator Tests  pts/simulator
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Simulator software test.
+
+#### Solaris Operating System Tests  pts/solaris
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Solaris Operating System.
+
+#### Steam  pts/steam
+This is a collection of test profiles having an external dependency on Steam
+
+#### System Subsystem Tests  pts/system
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the System sub-system.
+
+#### Utility Tests  pts/utility
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Utility software test.
+
+#### Windows Operating System Tests  pts/windows
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Windows Operating System.
+
+#### Wine  pts/wine
+This is a collection of test profiles having an external dependency on Wine
 
 #### Smp Tests  pts/smp
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing smp.
@@ -1097,47 +1133,59 @@ This is a collection of test profiles found within the specified OpenBenchmarkin
 #### Responsiveness Tests  pts/responsiveness
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing responsiveness.
 
-#### Openmpi Tests  pts/openmpi
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing openmpi.
-
 #### All SYSTEM Tests  system/all
 This is a collection of all test profiles found within the specified OpenBenchmarking.org repository.
 
-#### Installed Tests  system/installed
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository that are already installed on the system under test.
+#### Application Tests  system/application
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Application software test.
 
-#### Every SYSTEM Test  system/everything
-This is a collection of every test profile found within the specified OpenBenchmarking.org repository, including unsupported tests.
+#### Benchmark Tests  system/benchmark
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Benchmark software test.
 
-#### Linux Operating System Tests  system/linux
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Linux Operating System.
+#### BLAS (Basic Linear Algebra Sub-Routine) Library  system/blas
+This is a collection of test profiles having an external dependency on BLAS (Basic Linear Algebra Sub-Routine) Library
 
-#### Solaris Operating System Tests  system/solaris
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Solaris Operating System.
+#### Boost Development Libraries  system/boost
+This is a collection of test profiles having an external dependency on Boost Development Libraries
 
 #### BSD Operating System Tests  system/bsd
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the BSD Operating System.
 
-#### MacOSX Operating System Tests  system/macosx
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the MacOSX Operating System.
+#### Disk Subsystem Tests  system/disk
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Disk sub-system.
 
-#### Windows Operating System Tests  system/windows
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Windows Operating System.
+#### Every SYSTEM Test  system/everything
+This is a collection of every test profile found within the specified OpenBenchmarking.org repository, including unsupported tests.
+
+#### Fortran  system/fortran
+This is a collection of test profiles having an external dependency on Fortran
+
+#### Game Tests  system/game
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Game software test.
+
+#### Go Language  system/golang
+This is a collection of test profiles having an external dependency on Go Language
+
+#### Graphics Subsystem Tests  system/graphics
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Graphics sub-system.
 
 #### Hurd Operating System Tests  system/hurd
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Hurd Operating System.
 
-#### System Subsystem Tests  system/system
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the System sub-system.
+#### Installed Tests  system/installed
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository that are already installed on the system under test.
 
-#### Processor Subsystem Tests  system/processor
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Processor sub-system.
+#### Java  system/java
+This is a collection of test profiles having an external dependency on Java
 
-#### Disk Subsystem Tests  system/disk
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Disk sub-system.
+#### LAPACK (Linear Algebra Pack)  system/lapack
+This is a collection of test profiles having an external dependency on LAPACK (Linear Algebra Pack)
 
-#### Graphics Subsystem Tests  system/graphics
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Graphics sub-system.
+#### Linux Operating System Tests  system/linux
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Linux Operating System.
+
+#### MacOSX Operating System Tests  system/macosx
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the MacOSX Operating System.
 
 #### Memory Subsystem Tests  system/memory
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Memory sub-system.
@@ -1145,26 +1193,53 @@ This is a collection of test profiles found within the specified OpenBenchmarkin
 #### Network Subsystem Tests  system/network
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Network sub-system.
 
+#### Node.js + NPM  system/node-npm
+This is a collection of test profiles having an external dependency on Node.js + NPM
+
+#### OpenCV  system/opencv
+This is a collection of test profiles having an external dependency on OpenCV
+
+#### OpenMPI  system/openmpi
+This is a collection of test profiles having an external dependency on OpenMPI
+
 #### Other Subsystem Tests  system/other
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Other sub-system.
 
-#### Utility Tests  system/utility
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Utility software test.
+#### Processor Subsystem Tests  system/processor
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Processor sub-system.
 
-#### Simulator Tests  system/simulator
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Simulator software test.
+#### Python  system/python
+This is a collection of test profiles having an external dependency on Python
+
+#### Ruby  system/ruby
+This is a collection of test profiles having an external dependency on Ruby
+
+#### Rust  system/rust
+This is a collection of test profiles having an external dependency on Rust
 
 #### Scientific Tests  system/scientific
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Scientific software test.
 
-#### Benchmark Tests  system/benchmark
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Benchmark software test.
+#### Simulator Tests  system/simulator
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Simulator software test.
 
-#### Application Tests  system/application
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Application software test.
+#### Solaris Operating System Tests  system/solaris
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Solaris Operating System.
 
-#### Game Tests  system/game
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Game software test.
+#### Steam  system/steam
+This is a collection of test profiles having an external dependency on Steam
+
+#### System Subsystem Tests  system/system
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the System sub-system.
+
+#### Utility Tests  system/utility
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Utility software test.
+
+#### Windows Operating System Tests  system/windows
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Windows Operating System.
+
+#### Wine  system/wine
+This is a collection of test profiles having an external dependency on Wine
 
 #### Opencl Tests  system/opencl
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing opencl.
@@ -1175,41 +1250,56 @@ This is a collection of test profiles found within the specified OpenBenchmarkin
 #### All GIT Tests  git/all
 This is a collection of all test profiles found within the specified OpenBenchmarking.org repository.
 
-#### Installed Tests  git/installed
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository that are already installed on the system under test.
+#### Application Tests  git/application
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Application software test.
 
-#### Every GIT Test  git/everything
-This is a collection of every test profile found within the specified OpenBenchmarking.org repository, including unsupported tests.
+#### Benchmark Tests  git/benchmark
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Benchmark software test.
 
-#### Linux Operating System Tests  git/linux
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Linux Operating System.
+#### BLAS (Basic Linear Algebra Sub-Routine) Library  git/blas
+This is a collection of test profiles having an external dependency on BLAS (Basic Linear Algebra Sub-Routine) Library
 
-#### Solaris Operating System Tests  git/solaris
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Solaris Operating System.
+#### Boost Development Libraries  git/boost
+This is a collection of test profiles having an external dependency on Boost Development Libraries
 
 #### BSD Operating System Tests  git/bsd
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the BSD Operating System.
 
-#### MacOSX Operating System Tests  git/macosx
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the MacOSX Operating System.
+#### Disk Subsystem Tests  git/disk
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Disk sub-system.
 
-#### Windows Operating System Tests  git/windows
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Windows Operating System.
+#### Every GIT Test  git/everything
+This is a collection of every test profile found within the specified OpenBenchmarking.org repository, including unsupported tests.
+
+#### Fortran  git/fortran
+This is a collection of test profiles having an external dependency on Fortran
+
+#### Game Tests  git/game
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Game software test.
+
+#### Go Language  git/golang
+This is a collection of test profiles having an external dependency on Go Language
+
+#### Graphics Subsystem Tests  git/graphics
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Graphics sub-system.
 
 #### Hurd Operating System Tests  git/hurd
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Hurd Operating System.
 
-#### System Subsystem Tests  git/system
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the System sub-system.
+#### Installed Tests  git/installed
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository that are already installed on the system under test.
 
-#### Processor Subsystem Tests  git/processor
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Processor sub-system.
+#### Java  git/java
+This is a collection of test profiles having an external dependency on Java
 
-#### Disk Subsystem Tests  git/disk
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Disk sub-system.
+#### LAPACK (Linear Algebra Pack)  git/lapack
+This is a collection of test profiles having an external dependency on LAPACK (Linear Algebra Pack)
 
-#### Graphics Subsystem Tests  git/graphics
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Graphics sub-system.
+#### Linux Operating System Tests  git/linux
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Linux Operating System.
+
+#### MacOSX Operating System Tests  git/macosx
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the MacOSX Operating System.
 
 #### Memory Subsystem Tests  git/memory
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Memory sub-system.
@@ -1217,155 +1307,110 @@ This is a collection of test profiles found within the specified OpenBenchmarkin
 #### Network Subsystem Tests  git/network
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Network sub-system.
 
+#### Node.js + NPM  git/node-npm
+This is a collection of test profiles having an external dependency on Node.js + NPM
+
+#### OpenCV  git/opencv
+This is a collection of test profiles having an external dependency on OpenCV
+
+#### OpenMPI  git/openmpi
+This is a collection of test profiles having an external dependency on OpenMPI
+
 #### Other Subsystem Tests  git/other
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Other sub-system.
 
-#### Utility Tests  git/utility
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Utility software test.
+#### Processor Subsystem Tests  git/processor
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Processor sub-system.
 
-#### Simulator Tests  git/simulator
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Simulator software test.
+#### Python  git/python
+This is a collection of test profiles having an external dependency on Python
+
+#### Ruby  git/ruby
+This is a collection of test profiles having an external dependency on Ruby
+
+#### Rust  git/rust
+This is a collection of test profiles having an external dependency on Rust
 
 #### Scientific Tests  git/scientific
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Scientific software test.
 
-#### Benchmark Tests  git/benchmark
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Benchmark software test.
+#### Simulator Tests  git/simulator
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Simulator software test.
 
-#### Application Tests  git/application
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Application software test.
+#### Solaris Operating System Tests  git/solaris
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Solaris Operating System.
 
-#### Game Tests  git/game
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Game software test.
+#### Steam  git/steam
+This is a collection of test profiles having an external dependency on Steam
+
+#### System Subsystem Tests  git/system
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the System sub-system.
+
+#### Utility Tests  git/utility
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Utility software test.
+
+#### Windows Operating System Tests  git/windows
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Windows Operating System.
+
+#### Wine  git/wine
+This is a collection of test profiles having an external dependency on Wine
 
 #### Smp Tests  git/smp
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing smp.
 
-#### All PTS Tests  pts/all
-This is a collection of all test profiles found within the specified OpenBenchmarking.org repository.
-
-#### Installed Tests  pts/installed
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository that are already installed on the system under test.
-
-#### Every PTS Test  pts/everything
-This is a collection of every test profile found within the specified OpenBenchmarking.org repository, including unsupported tests.
-
-#### Linux Operating System Tests  pts/linux
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Linux Operating System.
-
-#### Solaris Operating System Tests  pts/solaris
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Solaris Operating System.
-
-#### BSD Operating System Tests  pts/bsd
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the BSD Operating System.
-
-#### MacOSX Operating System Tests  pts/macosx
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the MacOSX Operating System.
-
-#### Windows Operating System Tests  pts/windows
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Windows Operating System.
-
-#### Hurd Operating System Tests  pts/hurd
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Hurd Operating System.
-
-#### System Subsystem Tests  pts/system
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the System sub-system.
-
-#### Processor Subsystem Tests  pts/processor
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Processor sub-system.
-
-#### Graphics Subsystem Tests  pts/graphics
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Graphics sub-system.
-
-#### Other Subsystem Tests  pts/other
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Other sub-system.
-
-#### Utility Tests  pts/utility
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Utility software test.
-
-#### Simulator Tests  pts/simulator
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Simulator software test.
-
-#### Scientific Tests  pts/scientific
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Scientific software test.
-
-#### Benchmark Tests  pts/benchmark
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Benchmark software test.
-
-#### Application Tests  pts/application
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Application software test.
-
-#### Game Tests  pts/game
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Game software test.
-
-#### Smp Tests  pts/smp
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing smp.
-
-#### Cuda Tests  pts/cuda
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing cuda.
-
-#### Openmp Tests  pts/openmp
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing openmp.
-
-#### Cloud Tests  pts/cloud
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing cloud.
-
-#### Docker Tests  pts/docker
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing docker.
-
-#### Go Tests  pts/go
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing go.
-
-#### Vdpau Tests  pts/vdpau
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing vdpau.
-
-#### Video Tests  pts/video
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing video.
-
-#### Responsiveness Tests  pts/responsiveness
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing responsiveness.
-
-#### Openmpi Tests  pts/openmpi
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing openmpi.
-
 #### All WINDOWS Tests  windows/all
 This is a collection of all test profiles found within the specified OpenBenchmarking.org repository.
 
-#### Installed Tests  windows/installed
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository that are already installed on the system under test.
+#### Application Tests  windows/application
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Application software test.
 
-#### Every WINDOWS Test  windows/everything
-This is a collection of every test profile found within the specified OpenBenchmarking.org repository, including unsupported tests.
+#### Benchmark Tests  windows/benchmark
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Benchmark software test.
 
-#### Linux Operating System Tests  windows/linux
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Linux Operating System.
+#### BLAS (Basic Linear Algebra Sub-Routine) Library  windows/blas
+This is a collection of test profiles having an external dependency on BLAS (Basic Linear Algebra Sub-Routine) Library
 
-#### Solaris Operating System Tests  windows/solaris
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Solaris Operating System.
+#### Boost Development Libraries  windows/boost
+This is a collection of test profiles having an external dependency on Boost Development Libraries
 
 #### BSD Operating System Tests  windows/bsd
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the BSD Operating System.
 
-#### MacOSX Operating System Tests  windows/macosx
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the MacOSX Operating System.
+#### Disk Subsystem Tests  windows/disk
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Disk sub-system.
 
-#### Windows Operating System Tests  windows/windows
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Windows Operating System.
+#### Every WINDOWS Test  windows/everything
+This is a collection of every test profile found within the specified OpenBenchmarking.org repository, including unsupported tests.
+
+#### Fortran  windows/fortran
+This is a collection of test profiles having an external dependency on Fortran
+
+#### Game Tests  windows/game
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Game software test.
+
+#### Go Language  windows/golang
+This is a collection of test profiles having an external dependency on Go Language
+
+#### Graphics Subsystem Tests  windows/graphics
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Graphics sub-system.
 
 #### Hurd Operating System Tests  windows/hurd
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Hurd Operating System.
 
-#### System Subsystem Tests  windows/system
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the System sub-system.
+#### Installed Tests  windows/installed
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository that are already installed on the system under test.
 
-#### Processor Subsystem Tests  windows/processor
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Processor sub-system.
+#### Java  windows/java
+This is a collection of test profiles having an external dependency on Java
 
-#### Disk Subsystem Tests  windows/disk
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Disk sub-system.
+#### LAPACK (Linear Algebra Pack)  windows/lapack
+This is a collection of test profiles having an external dependency on LAPACK (Linear Algebra Pack)
 
-#### Graphics Subsystem Tests  windows/graphics
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Graphics sub-system.
+#### Linux Operating System Tests  windows/linux
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Linux Operating System.
+
+#### MacOSX Operating System Tests  windows/macosx
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the MacOSX Operating System.
 
 #### Memory Subsystem Tests  windows/memory
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Memory sub-system.
@@ -1373,26 +1418,53 @@ This is a collection of test profiles found within the specified OpenBenchmarkin
 #### Network Subsystem Tests  windows/network
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Network sub-system.
 
+#### Node.js + NPM  windows/node-npm
+This is a collection of test profiles having an external dependency on Node.js + NPM
+
+#### OpenCV  windows/opencv
+This is a collection of test profiles having an external dependency on OpenCV
+
+#### OpenMPI  windows/openmpi
+This is a collection of test profiles having an external dependency on OpenMPI
+
 #### Other Subsystem Tests  windows/other
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Other sub-system.
 
-#### Utility Tests  windows/utility
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Utility software test.
+#### Processor Subsystem Tests  windows/processor
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the Processor sub-system.
 
-#### Simulator Tests  windows/simulator
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Simulator software test.
+#### Python  windows/python
+This is a collection of test profiles having an external dependency on Python
+
+#### Ruby  windows/ruby
+This is a collection of test profiles having an external dependency on Ruby
+
+#### Rust  windows/rust
+This is a collection of test profiles having an external dependency on Rust
 
 #### Scientific Tests  windows/scientific
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Scientific software test.
 
-#### Benchmark Tests  windows/benchmark
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Benchmark software test.
+#### Simulator Tests  windows/simulator
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Simulator software test.
 
-#### Application Tests  windows/application
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Application software test.
+#### Solaris Operating System Tests  windows/solaris
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Solaris Operating System.
 
-#### Game Tests  windows/game
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Game software test.
+#### Steam  windows/steam
+This is a collection of test profiles having an external dependency on Steam
+
+#### System Subsystem Tests  windows/system
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the System sub-system.
+
+#### Utility Tests  windows/utility
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a Utility software test.
+
+#### Windows Operating System Tests  windows/windows
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the Windows Operating System.
+
+#### Wine  windows/wine
+This is a collection of test profiles having an external dependency on Wine
 
 
 # Component Testing
