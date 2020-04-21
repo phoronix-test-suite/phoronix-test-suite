@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2019, Phoronix Media
-	Copyright (C) 2008 - 2019, Michael Larabel
+	Copyright (C) 2008 - 2020, Phoronix Media
+	Copyright (C) 2008 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ class build_suite implements pts_option_interface
 		$bind_versions = pts_user_io::prompt_bool_input('Bind current test profile versions to test suite');
 
 		$possible_suites = pts_openbenchmarking::available_suites(false);
-		$possible_tests = pts_openbenchmarking::available_tests(false, false, false, true);
+		$possible_tests = array_merge(pts_tests::local_tests(), pts_openbenchmarking::available_tests(false, false, false, true));
 
 		$new_suite = new pts_test_suite();
 		$new_suite->set_title($suite_name);
