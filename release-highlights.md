@@ -1,5 +1,11 @@
 # Phoronix Test Suite Release History
 
+Phoronix Test Suite 9.6
+======
+#### Release Date: 21 April 2020 | Codename: Nittedal
+* Continued improvements to the result viewer with many features added
+* New sub-commands: workload-topology, analyze-run-times
+
 Phoronix Test Suite 9.4
 ======
 #### Release Date: 24 February 2020 | Codename: Vestby
