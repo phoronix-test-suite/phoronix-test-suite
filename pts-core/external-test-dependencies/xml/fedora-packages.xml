@@ -140,10 +140,6 @@
 			<PackageName>libXv-devel libXvMC-devel libvdpau-devel</PackageName>
 		</Package>
 		<Package>
-			<GenericName>libstdcpp5</GenericName>
-			<PackageName>compat-libstdc++-33</PackageName>
-		</Package>
-		<Package>
 			<GenericName>p7zip</GenericName>
 			<PackageName>p7zip p7zip-plugins</PackageName>
 		</Package>
@@ -274,7 +270,7 @@
 		</Package>
 		<Package>
 			<GenericName>superlu</GenericName>
-			<PackageName>superlu-devel</PackageName>
+			<PackageName>SuperLU-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>suitesparse</GenericName>
