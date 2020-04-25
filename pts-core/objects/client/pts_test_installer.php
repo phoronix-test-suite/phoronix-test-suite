@@ -657,7 +657,7 @@ class pts_test_installer
 			{
 				$test_install_request->compiler_mask_dir = $mask_dir;
 				// Appending the rest of the path will be done automatically within call_test_script
-				$test_install_request->special_environment_vars['PATH'] = $mask_dir;
+				$test_install_request->special_environment_vars['PATH'] = $mask_dir . (is_dir('/usr/lib64/openmpi/bin') ? ':/usr/lib64/openmpi/bin' : null);
 			}
 
 			// Additional workarounds
