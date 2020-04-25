@@ -1427,6 +1427,11 @@ class phodevi_system extends phodevi_device_interface
 			$desktop_environment = 'Cinnamon';
 			$desktop_version = pts_strings::last_in_string(trim(shell_exec('cinnamon --version 2> /dev/null')));
 		}
+		else if(pts_client::is_process_running('sway'))
+		{
+			$desktop_environment = 'Sway';
+			$desktop_version = pts_strings::last_in_string(trim(shell_exec('sway --version 2> /dev/null')));
+		}
 		else if(pts_client::is_process_running('enlightenment'))
 		{
 			$desktop_environment = 'Enlightenment';
