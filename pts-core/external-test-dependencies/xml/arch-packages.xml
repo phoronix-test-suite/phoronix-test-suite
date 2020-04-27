@@ -349,7 +349,7 @@
 		</Package>
 		<Package>
 			<GenericName>snappy</GenericName>
-			<PackageName>libsnappy</PackageName>
+			<PackageName>snappy</PackageName>
 		</Package>
 		<Package>
 			<GenericName>vaapi</GenericName>
@@ -357,7 +357,7 @@
 		</Package>
 		<Package>
 			<GenericName>glfw</GenericName>
-			<PackageName>glfw</PackageName>
+			<PackageName>glfw-x11</PackageName>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
