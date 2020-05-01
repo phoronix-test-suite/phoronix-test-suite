@@ -99,7 +99,7 @@ class linux_perf extends pts_module_interface
 				'L1-dcache-loads' => array('L1d Loads', 'L1d Cache Loads', ''),
 				'L1-icache-loads' => array('L1i Loads', 'L1i Cache Loads', ''),
 				'L1-dcache-load-misses' => array('L1d Load Misses', 'L1 Data Cache Load Misses', 'LIB'),
-				'L1-icache-load-misses' => array('L1i Load Misses', 'Li Data Cache Load Misses', 'LIB'),
+				'L1-icache-load-misses' => array('L1i Load Misses', 'L1 Instruction Cache Load Misses', 'LIB'),
 				'cache-misses' => array('Cache Misses', 'Cache Misses', 'LIB'),
 				'branch-load-misses' => array('Branch Load Misses', 'Branch Load Misses', 'LIB'),
 				'dTLB-load-misses' => array('dTLB Load Misses', 'dTLB Load Misses', 'LIB'),
