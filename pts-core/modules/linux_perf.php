@@ -104,7 +104,7 @@ class linux_perf extends pts_module_interface
 				'branch-load-misses' => array('Branch Load Misses', 'Branch Load Misses', 'LIB'),
 				'dTLB-load-misses' => array('dTLB Load Misses', 'dTLB Load Misses', 'LIB'),
 				'ex_ret_mmx_fp_instr.sse_instr' => array('SSE Instructions', 'SSE Instructions', ''),
-				'fp_ret_sse_avx_ops.all' => array('AVX Instructions', 'AVX Instructions', ''),
+				'fp_ret_sse_avx_ops.all' => array('SSE+AVX Instructions', 'AVX Instructions', ''),
 				'instructions' => array('Instructions', 'Instructions', 'LIB'),
 				);
 

@@ -284,13 +284,33 @@ $t .= '
 	$stime = strtotime($sys->get_timestamp());
 	$t .= '<div class="div_table_cell"><input type="number" min="0" step="1" name="ppd_' . $ppdx . '" value="' . ($ppd && $ppd !== true ? $ppd : '0') . '" /></div>
 <div class="div_table_cell">' . date(($stime > $start_of_year ? 'F d' : 'F d Y'), $stime) . '</div>
-<div class="div_table_cell"> &nbsp; ' . (isset($test_run_times[$si]) && $test_run_times[$si] > 0 ? pts_strings::format_time($test_run_times[$si], 'SECONDS', true, 60) : ' '). '</div>';
+<div class="div_table_cell"> &nbsp; ' . (isset($test_run_times[$si]) && $test_run_times[$si] > 0 ? pts_strings::format_time($test_run_times[$si], 'SECONDS', true, 60) : ' ') . '</div>';
 
 	if(defined('VIEWER_CAN_DELETE_RESULTS') && VIEWER_CAN_DELETE_RESULTS && defined('RESULTS_VIEWING_ID'))
 	{
 		$t .= '<div class="div_table_cell"><button onclick="javascript:delete_run_from_result_file(\'' . RESULTS_VIEWING_ID . '\', \'' . $si . '\', \'' . $ppdx . '\'); return false;">Delete Run</button></div>';
 	}
 	$t .= '</div>';
+}
+
+if($result_file->get_system_count() > 2)
+{
+	$t .= '
+	<div class="div_table_row">
+	<div class="div_table_cell"> </div>
+	<div class="div_table_cell"><input type="checkbox" onclick="javascript:invert_hide_all_results_checkboxes();" /></div>
+	<div class="div_table_cell"><em>Invert Hiding All Results Option</em></div>';
+
+	if($has_system_logs)
+	{
+		$t .= '<div class="div_table_cell"> </div>';
+	}
+
+	$t .= '<div class="div_table_cell"> </div>
+	<div class="div_table_cell"> </div>
+	<div class="div_table_cell"> &nbsp; <em>' . pts_strings::format_time(array_sum($test_run_times) / count($test_run_times), 'SECONDS', true, 60) . '</em></div>
+	<div class="div_table_cell"> </div>
+	</div>';
 }
 
 $t .= '

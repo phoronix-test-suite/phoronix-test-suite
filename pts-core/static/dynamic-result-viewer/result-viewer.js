@@ -104,3 +104,14 @@ function display_system_logs_for_result(result_file, system_id)
 {
 	window.open(WEB_URL_PATH + "index.php?page=view_system_logs&result_file_id=" + result_file + "&system_id=" + system_id, "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=100,left=100,width=600,height=400,location=no,menubar=no");
 }
+function invert_hide_all_results_checkboxes()
+{
+	var inputs = document.getElementsByName("rmm[]");
+	for(var i = 0; i < inputs.length; i++)
+	{
+		if(inputs[i].type == "checkbox")
+		{
+			inputs[i].checked = !inputs[i].checked;
+		}
+	}
+}
