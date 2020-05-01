@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+linux_perf: Reporting many more events
 pts-core: External dependency updates
 pts_Graph: grap code tweaks
 phodevi: Sway compositor version detection

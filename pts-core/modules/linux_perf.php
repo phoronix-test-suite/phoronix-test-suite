@@ -23,7 +23,7 @@
 class linux_perf extends pts_module_interface
 {
 	const module_name = 'Linux Perf Framework Reporter';
-	const module_version = '1.0.0';
+	const module_version = '1.1.0';
 	const module_description = 'Setting LINUX_PERF=1 will auto-load and enable this Phoronix Test Suite module. The module also depends upon running a modern Linux kernel (supporting perf) and that the perf binary is available via standard system paths.';
 	const module_author = 'Michael Larabel';
 
@@ -61,7 +61,8 @@ class linux_perf extends pts_module_interface
 	{
 		// Set the perf command to pass in front of all tests to run
 		self::$tmp_file = tempnam(sys_get_temp_dir(), 'perf');
-		$test_run_request->exec_binary_prepend = 'perf stat -o ' . self::$tmp_file . ' ';
+		// -d or below is more exhaustive list
+		$test_run_request->exec_binary_prepend = 'perf stat -I 1000 -e branches,branch-misses,cache-misses,cache-references,cycles,instructions,stalled-cycles-backend,stalled-cycles-frontend,cs,cpu-clock,page-faults,duration_time,task-clock,L1-dcache-load-misses,L1-dcache-loads,L1-dcache-prefetches,L1-icache-load-misses,context-switches,cpu-migrations,L1-icache-loads,branch-loads,branch-load-misses,dTLB-loads,dTLB-load-misses,iTLB-load-misses,iTLB-loads,ex_ret_mmx_fp_instr.mmx_instr,ex_ret_mmx_fp_instr.sse_instr,fp_ret_sse_avx_ops.all -o ' . self::$tmp_file . ' ';
 	}
 	public static function __post_test_run_success($test_run_request)
 	{
@@ -88,10 +89,23 @@ class linux_perf extends pts_module_interface
 			$perf_stats = array(
 				'page-faults' => array('Page Faults', 'Faults', 'LIB'),
 				'context-switches' => array('Context Switches', 'Context Switches', 'LIB'),
-				'branches' => array('Branches', 'Branches', 'LIB'),
+				'cpu-migrations' => array('CPU Migrations', 'CPU Migrations', 'LIB'),
+				'branches' => array('Branches', 'Branches', ''),
 				'branch-misses' => array('Branch Misses', 'Branch Misses', 'LIB'),
 				'seconds user' => array('User Time', 'Seconds', 'LIB'),
 				'seconds sys' => array('Kernel/System Time', 'Seconds', 'LIB'),
+				'stalled-cycles-frontend' => array('Stalled Cycles Front-End', 'Cycles Idle', 'LIB'),
+				'stalled-cycles-backend' => array('Stalled Cycles Back-End', 'Cycles Idle', 'LIB'),
+				'L1-dcache-loads' => array('L1d Loads', 'L1d Cache Loads', ''),
+				'L1-icache-loads' => array('L1i Loads', 'L1i Cache Loads', ''),
+				'L1-dcache-load-misses' => array('L1d Load Misses', 'L1 Data Cache Load Misses', 'LIB'),
+				'L1-icache-load-misses' => array('L1i Load Misses', 'Li Data Cache Load Misses', 'LIB'),
+				'cache-misses' => array('Cache Misses', 'Cache Misses', 'LIB'),
+				'branch-load-misses' => array('Branch Load Misses', 'Branch Load Misses', 'LIB'),
+				'dTLB-load-misses' => array('dTLB Load Misses', 'dTLB Load Misses', 'LIB'),
+				'ex_ret_mmx_fp_instr.sse_instr' => array('SSE Instructions', 'SSE Instructions', ''),
+				'fp_ret_sse_avx_ops.all' => array('AVX Instructions', 'AVX Instructions', ''),
+				'instructions' => array('Instructions', 'Instructions', 'LIB'),
 				);
 
 			foreach($perf_stats as $string_to_match => $data)
@@ -105,8 +119,10 @@ class linux_perf extends pts_module_interface
 					if(is_numeric($sout) && $sout > 0)
 					{
 						// Assemble the new result object for the matching perf item
+						$original_parent_hash = self::$successful_test_run->get_comparison_hash(true, false);
 						$test_result = clone self::$successful_test_run;
 						$test_result->test_profile->set_identifier(null);
+						$test_result->set_parent_hash($original_parent_hash);
 
 						// Description to show on graph
 						$test_result->set_used_arguments_description($pretty_string . ' (' . $test_result->get_arguments_description() . ')');
