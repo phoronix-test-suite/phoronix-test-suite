@@ -62,7 +62,7 @@ class linux_perf extends pts_module_interface
 		// Set the perf command to pass in front of all tests to run
 		self::$tmp_file = tempnam(sys_get_temp_dir(), 'perf');
 		// -d or below is more exhaustive list
-		$test_run_request->exec_binary_prepend = 'perf stat -I 1000 -e branches,branch-misses,cache-misses,cache-references,cycles,instructions,stalled-cycles-backend,stalled-cycles-frontend,cs,cpu-clock,page-faults,duration_time,task-clock,L1-dcache-load-misses,L1-dcache-loads,L1-dcache-prefetches,L1-icache-load-misses,context-switches,cpu-migrations,L1-icache-loads,branch-loads,branch-load-misses,dTLB-loads,dTLB-load-misses,iTLB-load-misses,iTLB-loads,ex_ret_mmx_fp_instr.mmx_instr,ex_ret_mmx_fp_instr.sse_instr,fp_ret_sse_avx_ops.all -o ' . self::$tmp_file . ' ';
+		$test_run_request->exec_binary_prepend = 'perf stat -e branches,branch-misses,cache-misses,cache-references,cycles,instructions,stalled-cycles-backend,stalled-cycles-frontend,cs,cpu-clock,page-faults,duration_time,task-clock,L1-dcache-load-misses,L1-dcache-loads,L1-dcache-prefetches,L1-icache-load-misses,context-switches,cpu-migrations,L1-icache-loads,branch-loads,branch-load-misses,dTLB-loads,dTLB-load-misses,iTLB-load-misses,iTLB-loads,ex_ret_mmx_fp_instr.mmx_instr,ex_ret_mmx_fp_instr.sse_instr,fp_ret_sse_avx_ops.all -o ' . self::$tmp_file . ' ';
 	}
 	public static function __post_test_run_success($test_run_request)
 	{
