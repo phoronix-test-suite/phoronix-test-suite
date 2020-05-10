@@ -2043,7 +2043,7 @@ class phodevi_system extends phodevi_device_interface
 			$python3_version = trim(shell_exec(escapeshellarg($p) . ' -V 2>&1'));
 			if($python3_version != $python_version)
 			{
-				$python_version .= ' + ' . $python3_version;
+				$python_version .= ($python_version != null ? ' + ' : null) . $python3_version;
 			}
 		}
 
