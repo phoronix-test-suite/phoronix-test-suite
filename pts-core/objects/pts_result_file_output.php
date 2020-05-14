@@ -105,7 +105,7 @@ class pts_result_file_output
 		foreach($result_file->get_result_objects() as $result_object)
 		{
 			pts_render::attribute_processing_on_result_object($result_object, $result_file, $extra_attributes);
-			$csv_output .= '"' . $result_object->test_profile->get_title() . ' - ' . $result_object->get_arguments_description() . '"';
+			$csv_output .= '"' . $result_object->test_profile->get_title() . ' - ' . $result_object->get_arguments_description()  . ' (' . $result_object->test_profile->get_result_scale_shortened() . ')' . '"';
 			$csv_output .= $delimiter . $result_object->test_profile->get_result_proportion();
 
 			foreach($columns as $column)
