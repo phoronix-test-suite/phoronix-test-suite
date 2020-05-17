@@ -2,10 +2,12 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Show unit/scale in CSV export
 linux_perf: Reporting many more events
 pts-core: External dependency updates
-pts_Graph: grap code tweaks
+pts_Graph: graph code tweaks
 phodevi: Sway compositor version detection
+phodevi: Detection of newer Arm CPU cores
 
 Phoronix Test Suite 9.6.0
 21 April 2020

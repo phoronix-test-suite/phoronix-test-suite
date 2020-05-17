@@ -72,7 +72,7 @@ class linux_perf extends pts_module_interface
 		// For now the current implementation is just copying the perf output for the last test run, but rather easily could be adapted to take average of all test runs, etc
 		//self::$std_output = $test_run_request->test_result_standard_output;
 		self::$std_output = file_get_contents(self::$tmp_file);
-		unlink(self::$tmp_file);
+		pts_file_io::unlink(self::$tmp_file);
 	}
 	public static function __post_test_run_process(&$result_file)
 	{
