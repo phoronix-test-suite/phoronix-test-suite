@@ -491,7 +491,14 @@ if($system_identifier_count > 2)
 			{
 				foreach($result_file->get_result_objects() as $i => $result_object)
 				{
-					if(!in_array($result_object->test_profile->get_identifier(false), $tests_to_show))
+					if($result_object->get_parent_hash())
+					{
+						if(!$result_file->get_result_object_by_hash($result_object->get_parent_hash()) || !in_array($result_file->get_result_object_by_hash($result_object->get_parent_hash())->test_profile->get_identifier(false), $tests_to_show))
+						{
+							$result_file->remove_result_object_by_id($i);
+						}
+					}
+					else if(!in_array($result_object->test_profile->get_identifier(false), $tests_to_show))
 					{
 						$result_file->remove_result_object_by_id($i);
 					}
