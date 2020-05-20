@@ -40,8 +40,8 @@ powershell -command "& { $ProgressPreference = 'SilentlyContinue'; iwr http://ph
 )
 powershell -command "& { Expand-Archive php.zip -DestinationPath C:\PHP }"
 If not exist VC_redist.x64.exe (
-echo Attempting to download and run Visual C++ Redistributable for Visual Studio 2017 support.
-powershell -command "& { $ProgressPreference = 'SilentlyContinue'; iwr https://go.microsoft.com/fwlink/?LinkId=746572 -OutFile VC_redist.x64.exe; $ProgressPreference = 'Continue' }"
+echo Attempting to download and run Visual C++ Redistributable for Visual Studio 2019 support.
+powershell -command "& { $ProgressPreference = 'SilentlyContinue'; iwr https://aka.ms/vs/16/release/VC_redist.x64.exe -OutFile VC_redist.x64.exe; $ProgressPreference = 'Continue' }"
 VC_redist.x64.exe
 )
   )
