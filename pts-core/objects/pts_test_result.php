@@ -44,6 +44,7 @@ class pts_test_result
 
 	protected $already_normalized = false;
 	public $dynamically_generated = false;
+	public $belongs_to_suite = false;
 
 	public function __construct($test_profile)
 	{
@@ -90,6 +91,14 @@ class pts_test_result
 
 			$this->used_arguments_description .= ($this->used_arguments_description != null && $arguments_description[0] != ' ' ? ' ' : null) . $arguments_description;
 		}
+	}
+	public function set_suite_parent($suite)
+	{
+		$this->belongs_to_suite = $suite;
+	}
+	public function belongs_to_suite()
+	{
+		return $this->belongs_to_suite ? $this->belongs_to_suite : false;
 	}
 	public function set_result_precision($precision)
 	{

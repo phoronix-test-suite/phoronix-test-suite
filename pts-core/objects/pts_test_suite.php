@@ -214,6 +214,7 @@ class pts_test_suite
 		$test_result = new pts_test_result($test);
 		$test_result->set_used_arguments($arguments);
 		$test_result->set_used_arguments_description($arguments_description);
+		$test_result->set_suite_parent($this->get_identifier(false));
 		$this->test_objects[] = $test_result;
 
 		if($mode != null)
@@ -518,12 +519,26 @@ class pts_test_suite
 		$xml_writer->addXmlNodeWNE('PhoronixTestSuite/SuiteInformation/RunMode', $this->get_run_mode());
 		$xml_writer->addXmlNodeWNE('PhoronixTestSuite/SuiteInformation/RequiresCoreVersionMin', $this->requires_minimum_core_version);
 		$xml_writer->addXmlNodeWNE('PhoronixTestSuite/SuiteInformation/RequiresCoreVersionMax', $this->requires_maximum_core_version);
+		$skip_suites = array();
 		$skip_tests = array();
 
 		foreach($this->test_objects as $i => &$test)
 		{
 			if($test->test_profile->get_title() == null || in_array($test->test_profile->get_identifier(), $skip_tests))
 			{
+				continue;
+			}
+
+			$belongs_to_suite = $test->belongs_to_suite();
+			if($belongs_to_suite && $belongs_to_suite != $this->get_identifier(false))
+			{
+				if(in_array($belongs_to_suite, $skip_suites))
+				{
+					continue;
+				}
+
+				$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Test', $belongs_to_suite);
+				$skip_suites[] = $belongs_to_suite;
 				continue;
 			}
 
@@ -538,8 +553,14 @@ class pts_test_suite
 
 			if($mode == null)
 			{
-				$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Arguments', $test->get_arguments());
-				$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Description', $test->get_arguments_description());
+				if($test->get_arguments())
+				{
+					$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Arguments', $test->get_arguments());
+				}
+				if($test->get_arguments_description())
+				{
+					$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Description', $test->get_arguments_description());
+				}
 			}
 
 			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Mode', $mode);
