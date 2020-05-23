@@ -192,7 +192,15 @@ class pts_test_suite
 			}
 		}
 	}
-	public function add_suite_tests_to_suite($suite)
+	public function result_file_to_suite(&$result_file)
+	{
+		foreach($result_file->get_result_objects() as $result_object)
+		{
+			$test = new pts_test_profile($result_object->test_profile->get_identifier());
+			$this->add_to_suite($test, $result_object->get_arguments(), $result_object->get_arguments_description());
+		}
+	}
+	public function add_suite_tests_to_suite(&$suite)
 	{
 		foreach($suite->get_contained_test_result_objects() as $test_result)
 		{

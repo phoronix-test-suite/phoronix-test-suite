@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2018, Phoronix Media
-	Copyright (C) 2008 - 2018, Michael Larabel
+	Copyright (C) 2008 - 2020, Phoronix Media
+	Copyright (C) 2008 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -43,6 +43,7 @@ class result_file_to_suite implements pts_option_interface
 		$suite_test_type = pts_user_io::prompt_text_menu('Select test type', pts_types::subsystem_targets());
 		$suite_maintainer = pts_user_io::prompt_user_input('Enter suite maintainer name');
 		$suite_description = pts_user_io::prompt_user_input('Enter suite description');
+		$bind_versions = pts_user_io::prompt_bool_input('Bind current test profile versions to test suite');
 
 		$new_suite = new pts_test_suite();
 		$new_suite->set_title($suite_name);
@@ -53,14 +54,10 @@ class result_file_to_suite implements pts_option_interface
 
 
 		$result_file = new pts_result_file($result_file);
-		foreach($result_file->get_result_objects() as $result_object)
-		{
-			$test = new pts_test_profile($result_object->test_profile->get_identifier());
-			$new_suite->add_to_suite($test, $result_object->get_arguments(), $result_object->get_arguments_description());
-		}
+		$new_suite->result_file_to_suite($result_file);
 
 		// Finish it off
-		if($new_suite->save_xml($suite_name) != false)
+		if($new_suite->save_xml($suite_name, null, $bind_versions) != false)
 		{
 			echo PHP_EOL . PHP_EOL . 'Saved -- to run this suite, type: phoronix-test-suite benchmark ' . $new_suite->get_identifier() . PHP_EOL . PHP_EOL;
 		}
