@@ -585,8 +585,8 @@ class phoromatic extends pts_module_interface
 				{
 					case 'install':
 						phoromatic::update_system_status('Installing Tests');
-						pts_test_suite::set_temporary_suite('pre-seed', $json['phoromatic']['test_suite']);
-						pts_test_installer::standard_install('pre-seed', false, true);
+						$phoromatic_suite = new pts_test_suite($json['phoromatic']['test_suite']);
+						pts_test_installer::standard_install($phoromatic_suite, false, true);
 						break;
 					case 'benchmark':
 
@@ -595,8 +595,7 @@ class phoromatic extends pts_module_interface
 
 						$benchmark_timer = time();
 						self::$is_running_as_phoromatic_node = true;
-						$suite_identifier = sha1(time() . rand(2, 1000));
-						pts_test_suite::set_temporary_suite($suite_identifier, $json['phoromatic']['test_suite']);
+						$phoromatic_suite = new pts_test_suite($json['phoromatic']['test_suite']);
 						self::$p_save_identifier = $json['phoromatic']['trigger_id'];
 						$phoromatic_results_identifier = self::$p_save_identifier;
 						$phoromatic_save_identifier = $json['phoromatic']['save_identifier'];
@@ -613,7 +612,7 @@ class phoromatic extends pts_module_interface
 								phoromatic::set_user_context($json['phoromatic']['pre_install_set_context'], self::$p_trigger_id, self::$p_schedule_id, 'PRE_INSTALL');
 							}
 
-							pts_test_installer::standard_install($suite_identifier, pts_strings::string_bool($json['phoromatic']['settings']['ForceInstallTests']), true);
+							pts_test_installer::standard_install($phoromatic_suite, pts_strings::string_bool($json['phoromatic']['settings']['ForceInstallTests']), true);
 							if(isset($json['phoromatic']['post_install_set_context']))
 							{
 								phoromatic::set_user_context($json['phoromatic']['post_install_set_context'], self::$p_trigger_id, self::$p_schedule_id, 'POST_INSTALL');
@@ -637,9 +636,9 @@ class phoromatic extends pts_module_interface
 								'OpenBrowser' => false
 								), true);
 
-							if(self::$test_run_manager->initial_checks($suite_identifier, 'SHORT'))
+							if(self::$test_run_manager->initial_checks($phoromatic_suite, 'SHORT'))
 							{
-								if(self::$test_run_manager->load_tests_to_run($suite_identifier))
+								if(self::$test_run_manager->load_tests_to_run($phoromatic_suite))
 								{
 									self::$test_run_manager->action_on_stress_log_set(array('phoromatic', 'upload_stress_log_sane'));
 									self::$in_stress_mode = $phoromatic_save_identifier;
@@ -661,10 +660,10 @@ class phoromatic extends pts_module_interface
 							), true);
 						}
 
-						if(self::$test_run_manager->initial_checks($suite_identifier, 'SHORT'))
+						if(self::$test_run_manager->initial_checks($phoromatic_suite, 'SHORT'))
 						{
 							// Load the tests to run
-							if(self::$test_run_manager->load_tests_to_run($suite_identifier))
+							if(self::$test_run_manager->load_tests_to_run($phoromatic_suite))
 							{
 								phoromatic::update_system_status('Tests In Run Queue: ' . implode(', ', self::$test_run_manager->get_tests_to_run_identifiers()));
 								if(isset($json['phoromatic']['pre_run_set_context']))

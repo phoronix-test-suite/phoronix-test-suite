@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2018, Phoronix Media
-	Copyright (C) 2010 - 2018, Michael Larabel
+	Copyright (C) 2010 - 2020, Phoronix Media
+	Copyright (C) 2010 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -190,11 +190,6 @@ class pts_types
 		{
 			// Object is a virtual suite
 			$objects[] = new pts_virtual_test_suite($identifier_item);
-		}
-		else if(pts_test_suite::is_temporary_suite($identifier_item))
-		{
-			// Object is a temporary test suite
-			$objects[] = new pts_test_suite($identifier_item);
 		}
 		else
 		{

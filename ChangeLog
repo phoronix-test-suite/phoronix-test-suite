@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 pts-core: Show unit/scale in CSV export
 pts-core: When limiting results to show in result viewer, keep child objects that match the desired type for the parent
+pts-core: Add rebuild-test-suite option for regenerating suite XML all cleaned up
 linux_perf: Reporting many more events
 pts-core: External dependency updates
 pts_Graph: graph code tweaks

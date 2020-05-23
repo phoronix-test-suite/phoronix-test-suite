@@ -38,7 +38,6 @@ class pts_test_suite
 	protected $test_objects;
 	protected $test_names;
 	protected $raw_xml;
-	static $temp_suite;
 	protected $xml_file_location = false;
 
 	public function __construct($identifier = null)
@@ -82,10 +81,6 @@ class pts_test_suite
 					$read = $zip->getFromName('suite-definition.xml');
 					$zip->close();
 				}
-			}
-			else if(isset(self::$temp_suite[$identifier]))
-			{
-				$read = self::$temp_suite[$identifier];
 			}
 			else
 			{
@@ -221,14 +216,6 @@ class pts_test_suite
 		{
 			$this->tests_with_modes[$test_result->test_profile->get_identifier()] = $mode;
 		}
-	}
-	public static function set_temporary_suite($name, $suite_xml)
-	{
-		self::$temp_suite[$name] = $suite_xml;
-	}
-	public static function is_temporary_suite($name)
-	{
-		return isset(self::$temp_suite[$name]);
 	}
 	public function get_file_location()
 	{
@@ -387,7 +374,7 @@ class pts_test_suite
 	}
 	public function requires_core_version_max()
 	{
-		return $this->requires_maximum_core_version != null ? $this->requires_maximum_core_version : 9990;
+		return $this->requires_maximum_core_version != null ? $this->requires_maximum_core_version : 99990;
 	}
 	public function set_description($s)
 	{
