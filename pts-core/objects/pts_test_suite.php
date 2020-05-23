@@ -34,6 +34,7 @@ class pts_test_suite
 	private $requires_maximum_core_version;
 	private $pre_run_message;
 	private $post_run_message;
+	protected $tests_with_modes;
 	protected $test_objects;
 	protected $test_names;
 	protected $raw_xml;
@@ -44,6 +45,8 @@ class pts_test_suite
 	{
 		$this->test_objects = array();
 		$this->test_names = array();
+		$this->tests_with_modes = array();
+
 		if($identifier == null)
 		{
 			return;
@@ -147,6 +150,7 @@ class pts_test_suite
 				{
 					// Check for test profile values to override
 					$override_options = array();
+
 					if(isset($to_execute->OverrideTestOptions) && !empty($to_execute->OverrideTestOptions))
 					{
 						foreach(explode(';', self::clean_input($to_execute->OverrideTestOptions)) as $override_string)
@@ -163,12 +167,15 @@ class pts_test_suite
 					switch((isset($to_execute->Mode) ? self::clean_input($to_execute->Mode) : null))
 					{
 						case 'BATCH':
+							$mode = 'BATCH';
 							$option_output = pts_test_run_options::batch_user_options($obj);
 							break;
 						case 'DEFAULTS':
+							$mode = 'DEFAULTS';
 							$option_output = pts_test_run_options::default_user_options($obj);
 							break;
 						default:
+							$mode = null;
 							$option_output = array(array((isset($to_execute->Arguments) ? self::clean_input($to_execute->Arguments) : null)), array((isset($to_execute->Description) ? self::clean_input($to_execute->Description) : null)));
 							break;
 					}
@@ -180,7 +187,7 @@ class pts_test_suite
 							$obj->set_override_values($override_options);
 						}
 
-						$this->add_to_suite($obj, $option_output[0][$x], $option_output[1][$x]);
+						$this->add_to_suite($obj, $option_output[0][$x], $option_output[1][$x], $mode);
 					}
 				}
 				else if($obj instanceof pts_test_suite)
@@ -197,7 +204,7 @@ class pts_test_suite
 			$this->test_objects[] = $test_result;
 		}
 	}
-	public function add_to_suite($test, $arguments = null, $arguments_description = null)
+	public function add_to_suite($test, $arguments = null, $arguments_description = null, $mode = null)
 	{
 		if(!($test instanceof pts_test_profile))
 		{
@@ -208,6 +215,11 @@ class pts_test_suite
 		$test_result->set_used_arguments($arguments);
 		$test_result->set_used_arguments_description($arguments_description);
 		$this->test_objects[] = $test_result;
+
+		if($mode != null)
+		{
+			$this->tests_with_modes[$test_result->test_profile->get_identifier()] = $mode;
+		}
 	}
 	public static function set_temporary_suite($name, $suite_xml)
 	{
@@ -506,18 +518,36 @@ class pts_test_suite
 		$xml_writer->addXmlNodeWNE('PhoronixTestSuite/SuiteInformation/RunMode', $this->get_run_mode());
 		$xml_writer->addXmlNodeWNE('PhoronixTestSuite/SuiteInformation/RequiresCoreVersionMin', $this->requires_minimum_core_version);
 		$xml_writer->addXmlNodeWNE('PhoronixTestSuite/SuiteInformation/RequiresCoreVersionMax', $this->requires_maximum_core_version);
+		$skip_tests = array();
 
 		foreach($this->test_objects as $i => &$test)
 		{
-			if($test->test_profile->get_title() == null)
+			if($test->test_profile->get_title() == null || in_array($test->test_profile->get_identifier(), $skip_tests))
 			{
 				continue;
 			}
+
 			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Test', $test->test_profile->get_identifier($bind_versions));
-			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Arguments', $test->get_arguments());
-			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Description', $test->get_arguments_description());
-			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Mode', null); // XXX wire this up!
-			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/OverrideTestOptions', $test->test_profile->get_override_values(true));
+
+			$mode = null;
+			if(isset($this->tests_with_modes[$test->test_profile->get_identifier()]) && $this->tests_with_modes[$test->test_profile->get_identifier()] != null)
+			{
+				$mode = $this->tests_with_modes[$test->test_profile->get_identifier()];
+				$skip_tests[] = $test->test_profile->get_identifier();
+			}
+
+			if($mode == null)
+			{
+				$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Arguments', $test->get_arguments());
+				$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Description', $test->get_arguments_description());
+			}
+
+			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Mode', $mode);
+			$ov = $test->test_profile->get_override_values(true);
+			if($ov)
+			{
+				$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/OverrideTestOptions', $ov);
+			}
 		}
 		return $xml_writer->getXML();
 	}
@@ -529,6 +559,10 @@ class pts_test_suite
 			$this->set_identifier($this->clean_save_name_string($suite_identifier));
 			$save_to = PTS_TEST_SUITE_PATH . 'local/' . $this->get_identifier() . '/suite-definition.xml';
 			pts_file_io::mkdir(dirname($save_to));
+		}
+		else if($this->xml_file_location && is_file($this->xml_file_location))
+		{
+			$save_to = $this->xml_file_location;
 		}
 
 		return file_put_contents($save_to, $xml) != false;
