@@ -52,6 +52,18 @@ class pts_result_file_output
 
 		return json_encode($json, JSON_PRETTY_PRINT);
 	}
+	public static function result_file_to_suite_xml(&$result_file)
+	{
+		$new_suite = new pts_test_suite();
+		$new_suite->set_title($result_file->get_title() . ' Suite');
+		$new_suite->set_version('1.0.0');
+		$new_suite->set_maintainer(' ');
+		$new_suite->set_suite_type('System');
+		$new_suite->set_description('Test suite extracted from ' . $result_file->get_title() . '.');
+		$new_suite->result_file_to_suite($result_file);
+
+		return $new_suite->get_xml(null, true, true);
+	}
 	public static function result_file_to_csv(&$result_file, $delimiter = ',', $extra_attributes = null)
 	{
 		$csv_output = null;

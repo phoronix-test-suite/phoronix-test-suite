@@ -29,6 +29,7 @@ class pts_result_viewer_settings
 						'export=pdf' => 'Result File To PDF',
 						'export=txt' => 'Result File To Text',
 						'export=xml' => 'Result File To XML',
+						'export=xml-suite' => 'Result File To Test Suite (XML)',
 						'export=csv' => 'Result File To CSV/Excel',
 						'export=csv-all' => 'Individual Run Data To CSV/Excel',
 						),
@@ -372,6 +373,17 @@ if($system_identifier_count > 2)
 				header('Pragma: public');
 				header('Content-Length: ' . strlen($result_txt));
 				echo $result_txt;
+				exit;
+			case 'xml-suite':
+				$suite_xml = pts_result_file_output::result_file_to_suite_xml($result_file);
+				header('Content-Description: File Transfer');
+				header('Content-Type: text/xml');
+				header('Content-Disposition: attachment; filename=' . $result_title . '-suite.xml');
+				header('Expires: 0');
+				header('Cache-Control: must-revalidate');
+				header('Pragma: public');
+				header('Content-Length: ' . strlen($suite_xml));
+				echo $suite_xml;
 				exit;
 			case 'xml':
 				$result_xml = $result_file->get_xml(null, true);
