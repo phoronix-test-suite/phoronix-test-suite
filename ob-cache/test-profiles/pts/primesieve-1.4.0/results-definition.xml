@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.6.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Primes: 37607912018
+Seconds: #_RESULT_#</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

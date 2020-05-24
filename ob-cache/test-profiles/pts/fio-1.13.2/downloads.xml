@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://brick.kernel.dk/snaps/fio-3.18.tar.gz</URL>
+      <MD5>df8e0755ebfd09f761f99bcd47fcafa1</MD5>
+      <SHA256>b44d6470714cf65dff3301942f528eb4ef8463e033649c6e821fca3e706f8914</SHA256>
+      <FileName>fio-3.18.tar.gz</FileName>
+      <FileSize>1004976</FileSize>
+      <PlatformSpecific>Linux, BSD, Solaris, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://bsdio.com/fio/releases/fio-3.18-x64.zip</URL>
+      <MD5>588d5210dc75b66c40cdcf7ff2a2a157</MD5>
+      <SHA256>0b062ae1bcffe0204acf9dfcc3d88ad55309a205c196781cd95c04248f064241</SHA256>
+      <FileName>fio-3.18-x64.zip</FileName>
+      <FileSize>3721072</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

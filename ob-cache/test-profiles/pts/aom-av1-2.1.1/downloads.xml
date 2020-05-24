@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ultravideo.cs.tut.fi/video/Bosphorus_1920x1080_120fps_420_8bit_YUV_Y4M.7z</URL>
+      <MD5>84ae521c95aa2537e16b34bbf72f2def</MD5>
+      <SHA256>e2f60b904789a60f6d1edc194d8540d401dd882e3ee3605b9b1de8feacc72133</SHA256>
+      <FileName>Bosphorus_1920x1080_120fps_420_8bit_YUV_Y4M.7z</FileName>
+      <FileSize>676792531</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/aom-200.tar.xz</URL>
+      <MD5>93c614944b53ed69f36439e433411ddc</MD5>
+      <SHA256>8996bb24c5768a109e3d20cb4b7adb617d7a4095e11801cef1ffccba5e5e6e2c</SHA256>
+      <FileName>aom-200.tar.xz</FileName>
+      <FileSize>2390800</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/aom-200-windows.zip</URL>
+      <MD5>693fe89d844c2735c347b78d3b2df32f</MD5>
+      <SHA256>b27e905f990dffb4071475b0129809ab30f49ed578e69857af61c63400a8572b</SHA256>
+      <FileName>aom-200-windows.zip</FileName>
+      <FileSize>3691863</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

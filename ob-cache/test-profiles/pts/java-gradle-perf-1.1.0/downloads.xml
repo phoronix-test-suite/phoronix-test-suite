@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/reactor/reactor-core/archive/v3.3.5.RELEASE.tar.gz</URL>
+      <MD5>3f75b427d9091dfdb65f66498bc83b32</MD5>
+      <SHA256>2424f838fab708b3e509cd91cdabc39b659871ad9f47dcc4e196c86ea3fee9fd</SHA256>
+      <FileName>reactor-core-3.3.5.RELEASE.tar.gz</FileName>
+      <FileSize>2564736</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Decoded 8929 8929 frames (100.0%) - #_RESULT_# 25 fps (9.20x)</OutputTemplate>
+    <LineHint>fps</LineHint>
+    <MultiMatch>AVERAGE</MultiMatch>
+    <TurnCharsToSpace>/</TurnCharsToSpace>
+  </ResultsParser>
+</PhoronixTestSuite>

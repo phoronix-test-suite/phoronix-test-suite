@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>	Average number of seconds to run all queries: #_RESULT_# seconds</OutputTemplate>
+    <DivideResultDivisor>1000</DivideResultDivisor>
+    <ResultPrecision>0</ResultPrecision>
+  </ResultsParser>
+</PhoronixTestSuite>

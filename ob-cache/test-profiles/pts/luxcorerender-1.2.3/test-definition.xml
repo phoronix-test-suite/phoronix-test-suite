@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>LuxCoreRender</Title>
+    <AppVersion>2.3</AppVersion>
+    <Description>LuxCoreRender is an open-source physically based renderer. This test profile is focused on running LuxCoreRender on the CPU as opposed to the OpenCL version.</Description>
+    <ResultScale>M samples/sec</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.3</Version>
+    <SupportedPlatforms>Linux, Windows, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <EnvironmentSize>319</EnvironmentSize>
+    <ProjectURL>https://luxcorerender.org/</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>  -D batch.halttime 60 </Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Scene</DisplayName>
+      <Identifier>scene</Identifier>
+      <Menu>
+        <Entry>
+          <Name>DLSC</Name>
+          <Value>DLSC/LuxCoreScene/render.cfg</Value>
+        </Entry>
+        <Entry>
+          <Name>Rainbow Colors and Prism</Name>
+          <Value>RainbowColorsAndPrism/LuxCoreScene/render.cfg</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

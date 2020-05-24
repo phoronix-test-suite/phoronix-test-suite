@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.4.0m3-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>encoded 600 frames, #_RESULT_# fps, 4221.95 kb/s</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Elapsed time:	   62.4 s, #_RESULT_# MB/s</OutputTemplate>
+    <LineHint>Elapsed time</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

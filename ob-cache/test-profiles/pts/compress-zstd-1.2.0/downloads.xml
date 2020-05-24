@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://old-releases.ubuntu.com/releases/18.04.3/ubuntu-18.04.3-desktop-amd64.iso</URL>
+      <MD5>72491db7ef6f3cd4b085b9fe1f232345</MD5>
+      <SHA256>add4614b6fe3bb8e7dddcaab0ea97c476fbd4ffe288f2a4912cb06f1a47dcfa0</SHA256>
+      <FileName>ubuntu-18.04.3-desktop-amd64.iso</FileName>
+      <FileSize>2082816000</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/facebook/zstd/releases/download/v1.4.5/zstd-1.4.5.tar.gz</URL>
+      <MD5>dd0b53631303b8f972dafa6fd34beb0c</MD5>
+      <SHA256>98e91c7c6bf162bf90e4e70fdbc41a8188b9fa8de5ad840c401198014406ce9e</SHA256>
+      <FileName>zstd-1.4.5.tar.gz</FileName>
+      <FileSize>1973695</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/facebook/zstd/releases/download/v1.4.5/zstd-v1.4.5-win64.zip</URL>
+      <MD5>f0ffd35b5a4e0c9c721f6356e3ab573e</MD5>
+      <SHA256>112f1a4adc80ba5f5f5c012d1b808ca7dd0c28998157d455ca0392eefade6f4f</SHA256>
+      <FileName>zstd-v1.4.5-win64.zip</FileName>
+      <FileSize>1445189</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

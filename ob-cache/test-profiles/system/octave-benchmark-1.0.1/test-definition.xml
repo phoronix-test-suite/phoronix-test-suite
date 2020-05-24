@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>GNU Octave Benchmark</Title>
+    <Description>This test profile measures how long it takes to complete several reference GNU Octave files via octave-benchmark. GNU Octave is used for numerical computations and is an open-source alternative to MATLAB.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>5</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux, MacOSX, BSD</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <EnvironmentSize>1</EnvironmentSize>
+    <ProjectURL>http://octave.sourceforge.io/benchmark/index.html</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>octave-cli</SystemDependencies>
+  </TestProfile>
+</PhoronixTestSuite>

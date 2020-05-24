@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/Blosc/c-blosc2/archive/v2.0.0.beta.5.tar.gz</URL>
+      <MD5>57a8cc431d4a34295654c49f004700fd</MD5>
+      <SHA256>e9bbe5f88a697745d5779ef7a2b32775652a5c8693d0aabcef19b2c4292566f5</SHA256>
+      <FileName>c-blosc2-2.0.0.beta.5.tar.gz</FileName>
+      <FileSize>1045304</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

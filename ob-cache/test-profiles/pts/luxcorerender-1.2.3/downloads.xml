@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/LuxCoreRender/LuxCore/releases/download/luxcorerender_v2.3/luxcorerender-v2.3-linux64-sdk.tar.bz2</URL>
+      <MD5>807af18bc8482eb54040e89c247b8956</MD5>
+      <SHA256>2db4514e7f33d4c93cc00a09265c992bd9cfbb1267491cb2bccf937342b700f6</SHA256>
+      <FileName>luxcorerender-v2.3-linux64-sdk.tar.bz2</FileName>
+      <FileSize>129663675</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/LuxCoreRender/LuxCore/releases/download/luxcorerender_v2.3/luxcorerender-v2.3-win64-sdk.zip</URL>
+      <MD5>82f5ce3cb4705234393cff17ffb84618</MD5>
+      <SHA256>456174adac4fa0c398cbde4efd9ab6f96bd3a4c55ff41fb9f31ca298645347cc</SHA256>
+      <FileName>luxcorerender-v2.3-win64-sdk.zip</FileName>
+      <FileSize>113536941</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/LuxCoreRender/LuxCore/releases/download/luxcorerender_v2.3/luxcorerender-v2.3-mac64.dmg</URL>
+      <MD5>c0416be2e89b02af4871ad9ab6bd1180</MD5>
+      <SHA256>efa4fa9ea4b666b33679a91a79162636c6fc830446afdb66e79d22fe415bc4da</SHA256>
+      <FileName>luxcorerender-v2.3-mac64.dmg</FileName>
+      <FileSize>125782615</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/LuxCoreRender/LuxCoreTestScenes/releases/download/v2.1/DLSC.zip</URL>
+      <FileName>DLSC.zip</FileName>
+      <FileSize>20477185</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/LuxCoreRender/LuxCoreTestScenes/releases/download/v2.1/RainbowColorsAndPrism.zip</URL>
+      <FileName>RainbowColorsAndPrism.zip</FileName>
+      <FileSize>1962157</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://iweb.dl.sourceforge.net/project/supertuxkart/SuperTuxKart/1.1/SuperTuxKart-1.1-linux.tar.xz, https://netcologne.dl.sourceforge.net/project/supertuxkart/SuperTuxKart/1.1/SuperTuxKart-1.1-linux.tar.xz, https://pilotfiber.dl.sourceforge.net/project/supertuxkart/SuperTuxKart/1.1/SuperTuxKart-1.1-linux.tar.xz</URL>
+      <MD5>f88024343368b0e6ecf11a63ab950801</MD5>
+      <SHA256>cb0946fbf7ee00b57dfce1ecc6e91315f704d1b6d0e6c395850c6baa226b45d0</SHA256>
+      <FileName>SuperTuxKart-1.1-linux.tar.xz</FileName>
+      <FileSize>600439780</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://iweb.dl.sourceforge.net/project/supertuxkart/SuperTuxKart/1.1/SuperTuxKart-1.1-win.zip, http://netcologne.dl.sourceforge.net/project/supertuxkart/SuperTuxKart/1.1/SuperTuxKart-1.1-win.zip, http://pilotfiber.dl.sourceforge.net/project/supertuxkart/SuperTuxKart/1.1/SuperTuxKart-1.1-win.zip</URL>
+      <MD5>865770155fd561e393911e99294a6ddb</MD5>
+      <SHA256>38ae88a3a270c54768b0a6fe8f858d05f7b5ed2a9780503884de4e3336f6db86</SHA256>
+      <FileName>SuperTuxKart-1.1-win.zip</FileName>
+      <FileSize>643001106</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

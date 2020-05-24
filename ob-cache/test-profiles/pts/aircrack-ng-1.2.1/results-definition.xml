@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>#_RESULT_# k/s</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

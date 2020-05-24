@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://http.maxon.net/pub/cinebench/CinebenchR20.zip</URL>
+      <MD5>f6fa0f554cebc22f10d91f1d148710de</MD5>
+      <SHA256>56e55220743fba867ec7dbf192aed8b2470c579cce2be6a09e8143d995612184</SHA256>
+      <FileName>CinebenchR20.zip</FileName>
+      <FileSize>233251748</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://http.maxon.net/pub/cinebench/CinebenchR20.dmg</URL>
+      <MD5>4b795b68793b3b207e8291d7f95df3ab</MD5>
+      <SHA256>c2ee9b2dab04cdd8fc1b1a03bb2303cdaf1495cbc2614cd2f3fa56cd8151e47e</SHA256>
+      <FileName>CinebenchR20.dmg</FileName>
+      <FileSize>201820314</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

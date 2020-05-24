@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://archive.apache.org/dist/hbase/2.2.3/hbase-2.2.3-bin.tar.gz, https://mirrors.huaweicloud.com/apache/hbase/2.2.3/hbase-2.2.3-bin.tar.gz</URL>
+      <MD5>a51900ace3d8dd480da8140f1075d77b</MD5>
+      <SHA256>ea8fa72aa6220e038e30bd7c439d181b10bd7225383f7f2d224ebb5f5397310a</SHA256>
+      <FileName>hbase-2.2.3-bin.tar.gz</FileName>
+      <FileSize>223539590</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

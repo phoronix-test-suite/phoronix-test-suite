@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Chaos Group V-RAY</Title>
+    <AppVersion>4.10.07</AppVersion>
+    <Description>This is a test of Chaos Group's V-RAY benchmark.</Description>
+    <ResultScale>Ksamples</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+    <PreInstallMessage>You must manually download the V-RAY CLI benchmark program from https://www.chaosgroup.com/vray/benchmark and place it in your Phoronix Test Suite download cache.</PreInstallMessage>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.1</Version>
+    <SupportedPlatforms>Linux, Windows, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Non-Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <EnvironmentSize>340</EnvironmentSize>
+    <ProjectURL>https://www.chaosgroup.com/vray/benchmark</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-q </Arguments>
+      <MinimumLength>10</MinimumLength>
+    </Default>
+    <Option>
+      <DisplayName>Mode</DisplayName>
+      <Identifier>mode</Identifier>
+      <ArgumentPrefix>-m </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>CPU</Name>
+          <Value>vray</Value>
+        </Entry>
+        <Entry>
+          <Name>CUDA GPU</Name>
+          <Value>vray-gpu</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>
