@@ -730,6 +730,12 @@ class phodevi_cpu extends phodevi_device_interface
 			}
 		}
 
+		if(($c = strpos($info, '-Core ')) !== false && $c < strpos($info, ' '))
+		{
+			// At least on newer macOS, they append strings like 6-Core prior to Intel
+			$info = substr($info, ($c + 6));
+		}
+
 		return $info;
 	}
 	public static function get_cpu_feature_constants()

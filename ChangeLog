@@ -9,6 +9,7 @@ pts-core: Allow exporting result files to XML test suites via the result viewer
 linux_perf: Reporting many more events
 pts-core: External dependency updates
 pts_Graph: graph code tweaks
+phodevi: Avoid macOS reporting X-Core string before Intel CPU string
 phodevi: Sway compositor version detection
 phodevi: Detection of newer Arm CPU cores
 
