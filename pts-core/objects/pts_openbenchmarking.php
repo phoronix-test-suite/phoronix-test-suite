@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2019, Phoronix Media
-	Copyright (C) 2010 - 2019, Michael Larabel
+	Copyright (C) 2010 - 2020, Phoronix Media
+	Copyright (C) 2010 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -434,6 +434,16 @@ class pts_openbenchmarking
 
 			if($server_index != null && json_decode($server_index) != false)
 			{
+				/* if(PTS_IS_CLIENT)
+				{
+					// Reformat the JSON to pretty print
+					$re_encode = json_encode(json_decode($server_index, true), JSON_PRETTY_PRINT);
+					if(!empty($re_encode))
+					{
+						$server_index = $re_encode;
+					}
+				}*/
+
 				file_put_contents($index_file, $server_index);
 				if(PTS_IS_CLIENT && isset($old_index))
 				{

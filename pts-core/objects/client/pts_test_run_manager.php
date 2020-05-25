@@ -1274,7 +1274,7 @@ class pts_test_run_manager
 					continue;
 				}
 			}
-			else if($run_object instanceof pts_test_suite || $run_object instanceof pts_virtual_test_suite)
+			else if($run_object instanceof pts_test_suite)
 			{
 				if($run_object->is_core_version_supported() == false)
 				{
@@ -1545,6 +1545,60 @@ class pts_test_run_manager
 					$this->add_test_result_object($result_object);
 				}
 			}
+			else if($run_object instanceof pts_virtual_test_suite)
+			{
+				$virtual_suite_tests = $run_object->get_contained_test_profiles();
+
+				foreach(array_keys($virtual_suite_tests) as $i)
+				{
+					if($virtual_suite_tests[$i]->is_supported(false) == false || $this->validate_test_to_run($virtual_suite_tests[$i]) == false)
+					{
+						unset($virtual_suite_tests[$i]);
+					}
+				}
+				sort($virtual_suite_tests);
+
+				if(count($virtual_suite_tests) > 1)
+				{
+					$virtual_suite_tests[] = 'All Tests In Suite';
+				}
+
+				if(!$this->auto_mode && !$this->batch_mode)
+				{
+					$run_index = pts_user_io::prompt_text_menu('Select the tests in the virtual suite to run', $virtual_suite_tests, true, true);
+				}
+				else
+				{
+					$run_index = -1;
+				}
+
+				if((count($virtual_suite_tests) > 2 && is_array($run_index) && in_array((count($virtual_suite_tests) - 1), $run_index)) || $run_index == -1)
+				{
+					// The appended 'All Tests In Suite' was selected, so run all
+				}
+				else
+				{
+					foreach(array_keys($virtual_suite_tests) as $i)
+					{
+						if(!in_array($i, $run_index))
+						{
+							unset($virtual_suite_tests[$i]);
+						}
+					}
+				}
+
+				foreach($virtual_suite_tests as &$test_profile)
+				{
+					if($test_profile instanceof pts_test_profile)
+					{
+						// The user is to configure virtual suites manually
+						foreach(self::test_prompts_to_result_objects($test_profile) as $result_object)
+						{
+							$this->add_test_result_object($result_object);
+						}
+					}
+				}
+			}
 			else if($run_object instanceof pts_test_suite)
 			{
 				$this->pre_run_message = $run_object->get_pre_run_message();
@@ -1601,60 +1655,6 @@ class pts_test_run_manager
 					$test_result->set_used_arguments($result_object->get_arguments());
 					$test_result->set_used_arguments_description($result_object->get_arguments_description());
 					$this->add_test_result_object($test_result);
-				}
-			}
-			else if($run_object instanceof pts_virtual_test_suite)
-			{
-				$virtual_suite_tests = $run_object->get_contained_test_profiles();
-
-				foreach(array_keys($virtual_suite_tests) as $i)
-				{
-					if($virtual_suite_tests[$i]->is_supported(false) == false || $this->validate_test_to_run($virtual_suite_tests[$i]) == false)
-					{
-						unset($virtual_suite_tests[$i]);
-					}
-				}
-				sort($virtual_suite_tests);
-
-				if(count($virtual_suite_tests) > 1)
-				{
-					$virtual_suite_tests[] = 'All Tests In Suite';
-				}
-
-				if(!$this->auto_mode && !$this->batch_mode)
-				{
-					$run_index = pts_user_io::prompt_text_menu('Select the tests in the virtual suite to run', $virtual_suite_tests, true, true);
-				}
-				else
-				{
-					$run_index = -1;
-				}
-
-				if((count($virtual_suite_tests) > 2 && is_array($run_index) && in_array((count($virtual_suite_tests) - 1), $run_index)) || $run_index == -1)
-				{
-					// The appended 'All Tests In Suite' was selected, so run all
-				}
-				else
-				{
-					foreach(array_keys($virtual_suite_tests) as $i)
-					{
-						if(!in_array($i, $run_index))
-						{
-							unset($virtual_suite_tests[$i]);
-						}
-					}
-				}
-
-				foreach($virtual_suite_tests as &$test_profile)
-				{
-					if($test_profile instanceof pts_test_profile)
-					{
-						// The user is to configure virtual suites manually
-						foreach(self::test_prompts_to_result_objects($test_profile) as $result_object)
-						{
-							$this->add_test_result_object($result_object);
-						}
-					}
 				}
 			}
 			else

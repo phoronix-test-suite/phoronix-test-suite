@@ -36,14 +36,12 @@ class pts_test_suite
 	private $post_run_message;
 	protected $tests_with_modes;
 	protected $test_objects;
-	protected $test_names;
 	protected $raw_xml;
 	protected $xml_file_location = false;
 
 	public function __construct($identifier = null)
 	{
 		$this->test_objects = array();
-		$this->test_names = array();
 		$this->tests_with_modes = array();
 
 		if($identifier == null)
@@ -137,9 +135,7 @@ class pts_test_suite
 		{
 			foreach($xml->Execute as $to_execute)
 			{
-				$test_name = self::clean_input($to_execute->Test);
-				$this->test_names[] = $test_name;
-				$obj = pts_types::identifier_to_object($test_name);
+				$obj = pts_types::identifier_to_object(self::clean_input($to_execute->Test));
 
 				if($obj instanceof pts_test_profile)
 				{
@@ -331,7 +327,7 @@ class pts_test_suite
 	}
 	public function __toString()
 	{
-		return $this->get_identifier() . ' [v' . $this->get_version() . ']';
+		return $this->get_identifier() . ($this->get_version() != null ? ' [v' . $this->get_version() . ']' : null);
 	}
 	public function set_identifier($s)
 	{
@@ -460,14 +456,6 @@ class pts_test_suite
 	public function get_run_mode()
 	{
 		return $this->run_mode;
-	}
-	public function get_test_names()
-	{
-		return $this->test_names;
-	}
-	public function get_unique_test_names()
-	{
-		return array_unique($this->get_test_names());
 	}
 	public function get_contained_test_profiles()
 	{

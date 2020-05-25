@@ -74,7 +74,7 @@ class pts_types
 			{
 				$test_profiles[] = $object;
 			}
-			else if($object instanceof pts_test_suite || $object instanceof pts_virtual_test_suite)
+			else if($object instanceof pts_test_suite)
 			{
 				foreach($object->get_contained_test_profiles() as $test_profile)
 				{

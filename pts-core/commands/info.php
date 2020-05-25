@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2019, Phoronix Media
-	Copyright (C) 2008 - 2019, Michael Larabel
+	Copyright (C) 2008 - 2020, Phoronix Media
+	Copyright (C) 2008 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -258,17 +258,6 @@ class info implements pts_option_interface
 					echo pts_user_io::display_text_list(array_unique($test_titles));
 					echo '  ' . pts_client::cli_just_italic(pts_strings::plural_handler($o->get_test_count(), 'Test')) . PHP_EOL;
 					echo '  ' . pts_client::cli_just_italic(pts_strings::plural_handler($o->get_qualified_test_count(), 'Qualified Test')) . PHP_EOL;
-				}
-				echo PHP_EOL;
-			}
-			else if($o instanceof pts_virtual_test_suite)
-			{
-				pts_client::$display->generic_heading($o->get_title());
-				echo pts_client::cli_just_bold('Virtual Suite Description: ') . $o->get_description() . PHP_EOL . PHP_EOL;
-
-				foreach($o->get_contained_test_profiles() as $test_profile)
-				{
-					echo '- ' . $test_profile . PHP_EOL;
 				}
 				echo PHP_EOL;
 			}
