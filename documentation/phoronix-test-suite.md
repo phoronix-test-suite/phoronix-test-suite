@@ -243,6 +243,9 @@ This will download the selected test file(s) to the Phoronix Test Suite download
 #### inspect-test-profile  [Test]
 This option can be used for inspecting a Phoronix Test Suite test profile with providing inside details on test profiles for debugging / evaluation / learning purposes.
 
+#### rebuild-test-suite  [Suite]
+This option will regenerate the local test suite XML file against the OpenBenchmarking.org specification. This can be used to clean up any existing XML syntax / styling issues, etc.
+
 #### result-file-to-suite  [Test Result]
 This option will guide the user through the process of generating their own test suite, which they can then run, that is based upon an existing test results file.
 

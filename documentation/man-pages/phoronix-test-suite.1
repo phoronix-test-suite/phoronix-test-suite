@@ -1,4 +1,4 @@
-.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "9.6.0"
+.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "9.6.1"
 .SH NAME
 phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source platform for performing testing and performance evaluation.
 .SH SYNOPSIS
@@ -216,6 +216,9 @@ This will download the selected test file(s) to the Phoronix Test Suite download
 .TP
 .B inspect-test-profile [Test]
 This option can be used for inspecting a Phoronix Test Suite test profile with providing inside details on test profiles for debugging / evaluation / learning purposes.
+.TP
+.B rebuild-test-suite [Suite]
+This option will regenerate the local test suite XML file against the OpenBenchmarking.org specification. This can be used to clean up any existing XML syntax / styling issues, etc.
 .TP
 .B result-file-to-suite [Test Result]
 This option will guide the user through the process of generating their own test suite, which they can then run, that is based upon an existing test results file.

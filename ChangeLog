@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 9.6.1
+25 May 2020
 
 pts-core: Show unit/scale in CSV export
 pts-core: When limiting results to show in result viewer, keep child objects that match the desired type for the parent
