@@ -1185,6 +1185,37 @@ class pts_test_run_manager
 			$this->batch_mode['Configured'] = true;
 		}
 	}
+	public function cleanup_test_profile_valid(&$test_profile, &$tests_missing, $check_for_new_on_fail = true)
+	{
+		if($test_profile->get_title() == null)
+		{
+			pts_client::$display->generic_sub_heading('Not A Test: ' . $test_profile);
+			return false;
+		}
+		else
+		{
+			if($test_profile->is_supported(false) == false)
+			{
+				return false;
+			}
+			if($test_profile->is_test_installed() == false)
+			{
+				// If the desired test version is not installed, see if a newer version in that release stream (minor version difference) is installed
+				if($check_for_new_on_fail)
+				{
+					$tp = pts_openbenchmarking_client::test_profile_newer_minor_version_available($test_profile);
+					if($tp && $this->cleanup_test_profile_valid($tp, $tests_missing, false))
+					{
+						return $tp;
+					}
+				}
+				$tests_missing[] = $test_profile;
+				return false;
+			}
+		}
+
+		return $test_profile;
+	}
 	public function cleanup_tests_to_run(&$to_run_objects)
 	{
 		$skip_tests = ($e = pts_client::read_env('SKIP_TESTS')) ? pts_strings::comma_explode($e) : false;
@@ -1200,44 +1231,26 @@ class pts_test_run_manager
 			}
 			else if($run_object instanceof pts_test_profile)
 			{
-				if($run_object->get_title() == null)
+				$valid = $this->cleanup_test_profile_valid($run_object, $tests_missing);
+				if($valid == false)
 				{
-					pts_client::$display->generic_sub_heading('Not A Test: ' . $run_object);
 					continue;
 				}
-				else
-				{
-					if($run_object->is_supported(false) == false)
-					{
-						continue;
-					}
-					if($run_object->is_test_installed() == false)
-					{
-						// Check to see if older version of test is currently installed
-						// TODO: show change-log between installed versions and upstream
-						$tests_missing[] = $run_object;
-						continue;
-					}
-				}
+
+				// Set $valid to $run_object in case it's a newer version of the test profile that was upgraded
+				$run_object = $valid;
 			}
 			else if($run_object instanceof pts_result_file)
 			{
 				$num_installed = 0;
 				foreach($run_object->get_contained_test_profiles() as $test_profile)
 				{
-					if($test_profile == null || $test_profile->get_identifier() == null || $test_profile->is_supported(false) == false)
+					$valid = $this->cleanup_test_profile_valid($test_profile, $tests_missing);
+					if($valid == false)
 					{
 						continue;
 					}
-					else if($test_profile->is_test_installed() == false)
-					{
-						$tests_missing[] = $test_profile;
-						continue;
-					}
-					else
-					{
-						$num_installed++;
-					}
+					$num_installed++;
 				}
 
 				if($num_installed == 0)
@@ -1245,7 +1258,7 @@ class pts_test_run_manager
 					continue;
 				}
 			}
-			else if($run_object instanceof pts_test_suite || $run_object instanceof pts_virtual_test_suite|| $run_object instanceof pts_virtual_test_queue)
+			else if($run_object instanceof pts_test_suite || $run_object instanceof pts_virtual_test_suite)
 			{
 				if($run_object->is_core_version_supported() == false)
 				{
@@ -1257,20 +1270,12 @@ class pts_test_run_manager
 
 				foreach($run_object->get_contained_test_profiles() as $test_profile)
 				{
-					if($test_profile == null || $test_profile->get_identifier() == null || $test_profile->is_supported(false) == false)
+					$valid = $this->cleanup_test_profile_valid($test_profile, $tests_missing);
+					if($valid == false)
 					{
 						continue;
 					}
-
-					if($test_profile->is_test_installed() == false)
-					{
-						$tests_missing[] = $test_profile;
-						continue;
-					}
-					else
-					{
-						$num_installed++;
-					}
+					$num_installed++;
 				}
 
 				if($num_installed == 0)
@@ -1496,119 +1501,6 @@ class pts_test_run_manager
 	public function load_tests_to_run(&$to_run_objects)
 	{
 		// Determine what to run
-		$this->determine_tests_to_run($to_run_objects);
-
-		// Is there something to run?
-		return $this->get_test_count() > 0;
-	}
-	public function load_result_file_to_run($save_name, $result_identifier, &$result_file, $tests_to_complete = null)
-	{
-		// Determine what to run
-		$this->auto_save_results($save_name, $result_identifier);
-		$this->run_description = $result_file->get_description();
-		$result_objects = $result_file->get_result_objects();
-
-		// Unset result objects that shouldn't be run
-		if(is_array($tests_to_complete))
-		{
-			foreach(array_keys($result_objects) as $i)
-			{
-				if(!in_array($i, $tests_to_complete))
-				{
-					unset($result_objects[$i]);
-				}
-			}
-		}
-
-		if(count($result_objects) == 0)
-		{
-			return false;
-		}
-
-
-		foreach($result_objects as &$result_object)
-		{
-			if($this->validate_test_to_run($result_object->test_profile))
-			{
-
-				// Check to ensure that nothing extra may have somehow wound up in the execution argument string of a saved result file...
-				if(pts_strings::has_in_string($result_object->get_arguments(), array(';', '&&', '|')))
-				{
-					echo PHP_EOL . 'Exception loading a result object.' . PHP_EOL;
-					continue;
-				}
-				$test_result = new pts_test_result($result_object->test_profile);
-				$test_result->set_used_arguments($result_object->get_arguments());
-				$test_result->set_used_arguments_description($result_object->get_arguments_description());
-				$this->add_test_result_object($test_result);
-			}
-		}
-
-		// Is there something to run?
-		return $this->get_test_count() > 0;
-	}
-	public function is_multi_test_stress_run()
-	{
-		return $this->multi_test_stress_run;
-	}
-	protected function test_prompts_to_result_objects(&$test_profile)
-	{
-		$result_objects = array();
-
-		if($this->batch_mode && $this->batch_mode['RunAllTestCombinations'])
-		{
-			list($test_arguments, $test_arguments_description) = pts_test_run_options::batch_user_options($test_profile);
-		}
-		else if($this->batch_mode && (pts_client::read_env('PRESET_OPTIONS') || pts_client::read_env('PRESET_OPTIONS_VALUES')))
-		{
-			list($test_arguments, $test_arguments_description) = pts_test_run_options::prompt_user_options($test_profile, null, true);
-		}
-		else if($this->auto_mode == 2)
-		{
-			list($test_arguments, $test_arguments_description) = pts_test_run_options::default_user_options($test_profile);
-		}
-		else
-		{
-			list($test_arguments, $test_arguments_description) = pts_test_run_options::prompt_user_options($test_profile);
-		}
-
-		foreach(array_keys($test_arguments) as $i)
-		{
-			$test_result = new pts_test_result($test_profile);
-			$test_result->set_used_arguments($test_arguments[$i]);
-			$test_result->set_used_arguments_description($test_arguments_description[$i]);
-			$result_objects[] = $test_result;
-		}
-
-		return $result_objects;
-	}
-	public function prompt_subset_of_result_objects_to_run(&$result_objects_contained)
-	{
-		$ros = array();
-		foreach($result_objects_contained as $key => $ro)
-		{
-			$ros[$key] = trim($ro->test_profile->get_title() . PHP_EOL . $ro->get_arguments_description());
-		}
-		$run_ids = pts_user_io::prompt_text_menu('Select the test(s) to run', $ros, true, true);
-
-		foreach($result_objects_contained as $id => $ro)
-		{
-			if(!in_array($id, $run_ids))
-			{
-				unset($result_objects_contained[$id]);
-			}
-		}
-	}
-	public function do_prompt_to_test_subset()
-	{
-		$this->test_subset = true;
-	}
-	public function prompt_to_test_subset()
-	{
-		return $this->test_subset;
-	}
-	public function determine_tests_to_run(&$to_run_objects)
-	{
 		$unique_test_count = count(array_unique($to_run_objects));
 		$run_contains_a_no_result_type = false;
 		$request_results_save = false;
@@ -1655,13 +1547,6 @@ class pts_test_run_manager
 				}
 
 				foreach($tests_contained as $result_object)
-				{
-					$this->add_test_result_object($result_object);
-				}
-			}
-			else if($run_object instanceof pts_virtual_test_queue)
-			{
-				foreach($run_object->get_contained_test_result_objects() as $result_object)
 				{
 					$this->add_test_result_object($result_object);
 				}
@@ -1779,6 +1664,115 @@ class pts_test_run_manager
 
 		$this->prompt_save_results = $run_contains_a_no_result_type == false || $unique_test_count > 1;
 		$this->force_save_results = $this->force_save_results || $request_results_save;
+
+		// Is there something to run?
+		return $this->get_test_count() > 0;
+	}
+	public function load_result_file_to_run($save_name, $result_identifier, &$result_file, $tests_to_complete = null)
+	{
+		// Determine what to run
+		$this->auto_save_results($save_name, $result_identifier);
+		$this->run_description = $result_file->get_description();
+		$result_objects = $result_file->get_result_objects();
+
+		// Unset result objects that shouldn't be run
+		if(is_array($tests_to_complete))
+		{
+			foreach(array_keys($result_objects) as $i)
+			{
+				if(!in_array($i, $tests_to_complete))
+				{
+					unset($result_objects[$i]);
+				}
+			}
+		}
+
+		if(count($result_objects) == 0)
+		{
+			return false;
+		}
+
+
+		foreach($result_objects as &$result_object)
+		{
+			if($this->validate_test_to_run($result_object->test_profile))
+			{
+
+				// Check to ensure that nothing extra may have somehow wound up in the execution argument string of a saved result file...
+				if(pts_strings::has_in_string($result_object->get_arguments(), array(';', '&&', '|')))
+				{
+					echo PHP_EOL . 'Exception loading a result object.' . PHP_EOL;
+					continue;
+				}
+				$test_result = new pts_test_result($result_object->test_profile);
+				$test_result->set_used_arguments($result_object->get_arguments());
+				$test_result->set_used_arguments_description($result_object->get_arguments_description());
+				$this->add_test_result_object($test_result);
+			}
+		}
+
+		// Is there something to run?
+		return $this->get_test_count() > 0;
+	}
+	public function is_multi_test_stress_run()
+	{
+		return $this->multi_test_stress_run;
+	}
+	protected function test_prompts_to_result_objects(&$test_profile)
+	{
+		$result_objects = array();
+
+		if($this->batch_mode && $this->batch_mode['RunAllTestCombinations'])
+		{
+			list($test_arguments, $test_arguments_description) = pts_test_run_options::batch_user_options($test_profile);
+		}
+		else if($this->batch_mode && (pts_client::read_env('PRESET_OPTIONS') || pts_client::read_env('PRESET_OPTIONS_VALUES')))
+		{
+			list($test_arguments, $test_arguments_description) = pts_test_run_options::prompt_user_options($test_profile, null, true);
+		}
+		else if($this->auto_mode == 2)
+		{
+			list($test_arguments, $test_arguments_description) = pts_test_run_options::default_user_options($test_profile);
+		}
+		else
+		{
+			list($test_arguments, $test_arguments_description) = pts_test_run_options::prompt_user_options($test_profile);
+		}
+
+		foreach(array_keys($test_arguments) as $i)
+		{
+			$test_result = new pts_test_result($test_profile);
+			$test_result->set_used_arguments($test_arguments[$i]);
+			$test_result->set_used_arguments_description($test_arguments_description[$i]);
+			$result_objects[] = $test_result;
+		}
+
+		return $result_objects;
+	}
+	public function prompt_subset_of_result_objects_to_run(&$result_objects_contained)
+	{
+		$ros = array();
+		foreach($result_objects_contained as $key => $ro)
+		{
+			$ros[$key] = trim($ro->test_profile->get_title() . PHP_EOL . $ro->get_arguments_description());
+		}
+		$run_ids = pts_user_io::prompt_text_menu('Select the test(s) to run', $ros, true, true);
+
+		foreach($result_objects_contained as $id => $ro)
+		{
+			if(!in_array($id, $run_ids))
+			{
+				unset($result_objects_contained[$id]);
+			}
+		}
+	}
+	public function do_prompt_to_test_subset()
+	{
+		$this->test_subset = true;
+	}
+	public function prompt_to_test_subset()
+	{
+		return $this->test_subset;
 	}
 	public static function cmp_result_object_sort($a, $b)
 	{

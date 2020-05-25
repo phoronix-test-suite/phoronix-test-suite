@@ -242,15 +242,15 @@ class pts_web_socket_server_gui extends pts_web_socket
 		}
 		pts_client::$display = new pts_websocket_display_mode();
 		pts_client::$display->set_web_socket($this, $user->id);
-		$virtual_test_queue = array();
-		$virtual_test_queue[0] = new pts_virtual_test_queue();
+		$test_suite = array();
+		$test_suite[0] = new pts_test_suite();
 		foreach($json_queue['tests'] as $test)
 		{
-			$virtual_test_queue[0]->add_to_queue($test['test_profile_id'], $test['test_options_title'], $test['test_options_value']);
+			$test_suite[0]->add_to_suite($test['test_profile_id'], $test['test_options_title'], $test['test_options_value']);
 		}
 		$test_run_manager = new pts_test_run_manager(false, true);
-		pts_test_installer::standard_install($virtual_test_queue, false, true);
-		if($test_run_manager->initial_checks($virtual_test_queue) == false)
+		pts_test_installer::standard_install($test_suite, false, true);
+		if($test_run_manager->initial_checks($test_suite) == false)
 		{
 			$j['pts']['msg']['name'] = 'benchmark_state';
 			$j['pts']['msg']['current_state'] = 'failed';
@@ -258,7 +258,7 @@ class pts_web_socket_server_gui extends pts_web_socket
 			$this->send_json_data($user->socket, $j);
 			exit(1);
 		}
-		if($test_run_manager->load_tests_to_run($virtual_test_queue))
+		if($test_run_manager->load_tests_to_run($test_suite))
 		{
 			// SETUP
 			$test_run_manager->auto_upload_to_openbenchmarking();

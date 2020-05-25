@@ -74,7 +74,7 @@ class pts_types
 			{
 				$test_profiles[] = $object;
 			}
-			else if($object instanceof pts_test_suite || $object instanceof pts_virtual_test_suite || $object instanceof pts_virtual_test_queue)
+			else if($object instanceof pts_test_suite || $object instanceof pts_virtual_test_suite)
 			{
 				foreach($object->get_contained_test_profiles() as $test_profile)
 				{
@@ -148,11 +148,6 @@ class pts_types
 	{
 		if($identifier_item instanceof pts_test_profile || $identifier_item instanceof pts_test_suite || $identifier_item instanceof pts_result_file)
 		{
-			$objects[] = $identifier_item;
-		}
-		else if(PTS_IS_CLIENT && $identifier_item instanceof pts_virtual_test_queue)
-		{
-			// Object is a virtual suite
 			$objects[] = $identifier_item;
 		}
 		else if(($tp_identifier = pts_test_profile::is_test_profile($identifier_item)))
