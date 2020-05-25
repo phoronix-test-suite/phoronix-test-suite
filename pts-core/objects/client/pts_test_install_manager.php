@@ -33,7 +33,7 @@ class pts_test_install_manager
 	{
 		return !in_array($cache, self::$extra_caches) ? array_push(self::$extra_caches, $cache) : false;
 	}
-	public function add_test_profile($test_profile)
+	public function add_test_profile($test_profile, $front_of_queue = false)
 	{
 		$added = false;
 
@@ -47,7 +47,14 @@ class pts_test_install_manager
 		}
 		else
 		{
-			$added = pts_arrays::unique_push($this->tests_to_install, new pts_test_install_request($test_profile));
+			if($front_of_queue)
+			{
+				$added = pts_arrays::unique_unshift($this->tests_to_install, new pts_test_install_request($test_profile));
+			}
+			else
+			{
+				$added = pts_arrays::unique_push($this->tests_to_install, new pts_test_install_request($test_profile));
+			}
 		}
 
 		return $added;

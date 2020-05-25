@@ -132,7 +132,10 @@ class pts_test_installer
 		// Let the pts_test_install_manager make some estimations, etc...
 		echo PHP_EOL;
 		$test_install_manager->generate_download_file_lists();
-		$test_install_manager->check_download_caches_for_files();
+		if(getenv('NO_DOWNLOAD_CACHE') == false)
+		{
+			$test_install_manager->check_download_caches_for_files();
+		}
 		pts_client::$display->test_install_process($test_install_manager);
 
 		// Begin the install process
@@ -141,6 +144,7 @@ class pts_test_installer
 		$test_profiles = array();
 		while(($test_install_request = $test_install_manager->next_in_install_queue()) != false)
 		{
+			$test_install_request->generate_download_object_list(); // run this again due to any late additions after the above generate_download_file_lists call
 			pts_client::$display->test_install_start($test_install_request->test_profile->get_identifier());
 			$test_install_request->special_environment_vars['INSTALL_FOOTNOTE'] = $test_install_request->test_profile->get_install_dir() . 'install-footnote';
 			$installed = pts_test_installer::install_test_process($test_install_request, $no_prompts);
@@ -165,6 +169,12 @@ class pts_test_installer
 			}
 			else
 			{
+				$tp = pts_openbenchmarking_client::test_profile_newer_minor_version_available($test_install_request->test_profile);
+				if($tp)
+				{
+					pts_client::$display->test_install_message('Trying newer but compatible test profile version: ' . $tp->get_identifier());
+					$test_install_manager->add_test_profile($tp, true);
+				}
 				$failed_installs[] = $test_install_request;
 			}
 

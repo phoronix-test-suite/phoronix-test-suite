@@ -37,6 +37,11 @@ class pts_arrays
 		// Only push to the array if it's a unique value
 		return !in_array($to_push, $array) && array_push($array, $to_push);
 	}
+	public static function unique_unshift(&$array, $to_push)
+	{
+		// Only push to the array if it's a unique value
+		return !in_array($to_push, $array) && array_unshift($array, $to_push);
+	}
 	public static function to_array($var)
 	{
 		return !is_array($var) ? array($var) : $var;

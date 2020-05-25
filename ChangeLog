@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+pts-core: When an install fails, try a newer minor version update to that test profile if available (fixes broken download mirrors, etc)
+
 Phoronix Test Suite 9.6.1
 25 May 2020
 

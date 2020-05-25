@@ -239,15 +239,57 @@ class pts_openbenchmarking_client
 	public static function read_repository_test_profile_attribute($test_profile, $attribute)
 	{
 		list($repo, $tp) = explode('/', $test_profile);
-		$tp = substr($tp, 0, strrpos($tp, '-'));
+		if(($x = strrpos($tp, '-')))
+		{
+			$tp = substr($tp, 0, $x);
+		}
 		$repo_index = pts_openbenchmarking::read_repository_index($repo);
 
 		return isset($repo_index['tests'][$tp][$attribute]) ? $repo_index['tests'][$tp][$attribute] : null;
 	}
+	public static function test_profile_newer_minor_version_available(&$test_profile)
+	{
+		$test_identifier = $test_profile->get_identifier(false);
+		$test_current_version = $test_profile->get_test_profile_version();
+		$versions = pts_openbenchmarking_client::read_repository_test_profile_attribute($test_identifier, 'versions');
+
+		if($versions && ($x = strrpos($test_current_version, '.')) !== false)
+		{
+			$current_version_short = substr($test_current_version, 0, $x);
+			$current_version_minor_number = substr($test_current_version, ($x + 1));
+			$new_minor_version = false;
+			foreach($versions as $v)
+			{
+				if(substr($v, 0, strlen($current_version_short)) == $current_version_short)
+				{
+					if(substr($v, (strrpos($v, '.') + 1)) > $current_version_minor_number)
+					{
+						$new_minor_version = $v;
+						break;
+					}
+				}
+			}
+
+			if($new_minor_version)
+			{
+				$tp = new pts_test_profile($test_identifier . '-' . $new_minor_version);
+				if($tp->get_test_profile_version() == $new_minor_version)
+				{
+					// can read version correctly, thus test is there
+					return $tp;
+				}
+			}
+		}
+
+		return false;
+	}
 	public static function read_repository_test_suite_attribute($test_profile, $attribute)
 	{
-		list($repo, $tp) = explode('/', $test_profile);
-		$ts = substr($tp, 0, strrpos($tp, '-'));
+		list($repo, $ts) = explode('/', $test_profile);
+		if(($x = strrpos($ts, '-')))
+		{
+			$ts = substr($ts, 0, $x);
+		}
 		$repo_index = pts_openbenchmarking::read_repository_index($repo);
 
 		return isset($repo_index['suites'][$ts][$attribute]) ? $repo_index['suites'][$ts][$attribute] : null;

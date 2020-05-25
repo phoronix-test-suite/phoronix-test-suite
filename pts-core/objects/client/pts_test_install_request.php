@@ -28,6 +28,7 @@ class pts_test_install_request
 	public $compiler_mask_dir = false;
 	public $install_error = null;
 	public $special_environment_vars;
+	protected $has_generated_download_object_list = false;
 
 	public function __construct($test)
 	{
@@ -65,6 +66,13 @@ class pts_test_install_request
 	}
 	public function generate_download_object_list($do_file_checks = true)
 	{
+		// no need to repeat if called multiple times
+		if($this->has_generated_download_object_list)
+		{
+			return true;
+		}
+		$this->has_generated_download_object_list = true;
+
 		foreach($this->test_profile->get_downloads() as $download)
 		{
 			// Check for platform compatibility
