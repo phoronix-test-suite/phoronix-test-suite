@@ -131,7 +131,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	{
 		$this->test_install_pos++;
 		echo $this->tab . pts_client::cli_colored_text($identifier, 'cyan', true) . ':' . PHP_EOL;
-		echo $this->tab . $this->tab . 'Test Installation ' . $this->test_install_pos . ' of ' . $this->test_install_count . PHP_EOL;
+		echo $this->tab . $this->tab . 'Test Installation ' . $this->test_install_pos . ' of ' . max($this->test_install_pos, $this->test_install_count) . PHP_EOL;
 	}
 	public function test_install_downloads($test_install_request)
 	{

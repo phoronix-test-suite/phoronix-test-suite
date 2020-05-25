@@ -272,6 +272,7 @@ class pts_openbenchmarking_client
 
 			if($new_minor_version)
 			{
+				pts_openbenchmarking::download_test_profile($test_identifier . '-' . $new_minor_version);
 				$tp = new pts_test_profile($test_identifier . '-' . $new_minor_version);
 				if($tp->get_test_profile_version() == $new_minor_version)
 				{

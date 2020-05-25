@@ -243,10 +243,26 @@ class pts_test_run_manager
 	{
 		$hash = $test_result->get_comparison_hash(true, false);
 
-		if(!isset($this->hashes_of_tests_to_run[$hash]) && $this->validate_test_to_run($test_result->test_profile))
+		if(!isset($this->hashes_of_tests_to_run[$hash]))
 		{
-			$this->hashes_of_tests_to_run[$hash] = $hash;
-			$this->tests_to_run[] = $test_result;
+			if(!$test_result->test_profile->is_test_installed())
+			{
+				// Test is not installed, see if should upgrade to new minor release
+				$tp = pts_openbenchmarking_client::test_profile_newer_minor_version_available($test_result->test_profile);
+				$tests_missing = array();
+				if($tp && $this->cleanup_test_profile_valid($tp, $tests_missing, false))
+				{
+					pts_client::$display->display_interrupt_message('Using ' . $tp->get_identifier() . ' in place of ' . $test_result->test_profile->get_identifier());
+					$current_overrides = $test_result->test_profile->get_override_values();
+					$test_result->test_profile = $tp;
+					$test_result->test_profile->set_override_values($current_overrides);
+				}
+			}
+			if($this->validate_test_to_run($test_result->test_profile))
+			{
+				$this->hashes_of_tests_to_run[$hash] = $hash;
+				$this->tests_to_run[] = $test_result;
+			}
 		}
 	}
 	public function get_tests_to_run()
