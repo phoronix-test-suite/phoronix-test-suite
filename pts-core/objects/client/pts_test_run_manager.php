@@ -372,7 +372,7 @@ class pts_test_run_manager
 	{
 		if(empty($save_name))
 		{
-			$save_name = date('Y-m-d-Hi');
+			$save_name = date('Y-m-d-Hi', pts_client::current_time());
 		}
 
 		$this->file_name = self::clean_save_name($save_name, $is_new_save);
@@ -594,7 +594,7 @@ class pts_test_run_manager
 
 		if(empty($results_identifier))
 		{
-			$results_identifier = date('Y-m-d H:i');
+			$results_identifier = date('Y-m-d H:i', pts_client::current_time());
 		}
 
 		$this->results_identifier = $results_identifier;
@@ -907,7 +907,7 @@ class pts_test_run_manager
 
 			// TODO XXX JSON In null and notes
 			$json_attr = $this->generate_json_system_attributes();
-			$sys = new pts_result_file_system($this->results_identifier, phodevi::system_hardware(true), phodevi::system_software(true), $json_attr, pts_client::current_user(), null, date('Y-m-d H:i:s'), PTS_VERSION);
+			$sys = new pts_result_file_system($this->results_identifier, phodevi::system_hardware(true), phodevi::system_software(true), $json_attr, pts_client::current_user(), null, date('Y-m-d H:i:s', pts_client::current_time()), PTS_VERSION);
 			$this->result_file->add_system($sys);
 		}
 

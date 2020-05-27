@@ -787,7 +787,7 @@ class pts_result_file
 	{
 		$xml_writer = new nye_XmlWriter(null, $force_nice_formatting);
 		$xml_writer->addXmlNode('PhoronixTestSuite/Generated/Title', $this->get_title());
-		$xml_writer->addXmlNode('PhoronixTestSuite/Generated/LastModified', date('Y-m-d H:i:s'));
+		$xml_writer->addXmlNode('PhoronixTestSuite/Generated/LastModified', date('Y-m-d H:i:s', pts_client::current_time()));
 		$xml_writer->addXmlNode('PhoronixTestSuite/Generated/TestClient', pts_core::program_title(true));
 		$xml_writer->addXmlNode('PhoronixTestSuite/Generated/Description', $this->get_description());
 		$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Generated/Notes', $this->get_notes());

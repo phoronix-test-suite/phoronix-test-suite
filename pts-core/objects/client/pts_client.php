@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2019, Phoronix Media
-	Copyright (C) 2008 - 2019, Michael Larabel
+	Copyright (C) 2008 - 2020, Phoronix Media
+	Copyright (C) 2008 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -53,6 +53,36 @@ class pts_client
 		self::$lock_pointers[$lock_file] = fopen($lock_file, 'w');
 		chmod($lock_file, 0644);
 		return self::$lock_pointers[$lock_file] != false && (phodevi::is_windows() || flock(self::$lock_pointers[$lock_file], LOCK_EX | LOCK_NB));
+	}
+	public static function current_time()
+	{
+		$current_time = time();
+
+		// Calculate time based on offset from last OpenBenchmarking.org check and then the time since that file was modified
+		$repo_index = pts_openbenchmarking::read_repository_index('pts');
+		if($repo_index && isset($repo_index['main']['generated']))
+		{
+			$repo_time = $repo_index['main']['generated'];
+			if(($index = pts_openbenchmarking::is_repository('pts')))
+			{
+				$last_modified = filemtime($index);
+				$time_since_modify = time() - $last_modified;
+			}
+
+			$calculated_time = $repo_time + $time_since_modify;
+			if($calculated_time > $current_time)
+			{
+				$current_time = $calculated_time;
+			}
+		}
+
+		// Fallback to checking time since the PTS release to see if date computed is behind that
+		if(($fallback_time = strtotime(PTS_RELEASE_DATE . ' ' . date('H:i:s'))) > $current_time)
+		{
+			$current_time = $fallback_time;
+		}
+
+		return $current_time;
 	}
 	public static function possible_sub_commands()
 	{

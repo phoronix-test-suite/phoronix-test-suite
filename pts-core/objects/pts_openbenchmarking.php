@@ -513,7 +513,7 @@ class pts_openbenchmarking
 	}
 	public static function is_repository($repo_name)
 	{
-		return is_file(PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . '.index');
+		return is_file(PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . '.index') ? PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . '.index' : false;
 	}
 	public static function read_repository_index($repo_name, $do_decode = true)
 	{

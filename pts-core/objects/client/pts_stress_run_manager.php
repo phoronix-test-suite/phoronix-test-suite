@@ -103,7 +103,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 				echo PHP_EOL . pts_client::cli_just_bold('TEST_RESULTS_IDENTIFIER') . ' is not set; test identifier is ' . $test_run_manager->save_result_identifier . '.' . PHP_EOL . PHP_EOL;
 			}
 
-			$sys = new pts_result_file_system($test_run_manager->save_result_identifier, phodevi::system_hardware(true), phodevi::system_software(true), array(), pts_client::current_user(), null, date('Y-m-d H:i:s'), PTS_VERSION);
+			$sys = new pts_result_file_system($test_run_manager->save_result_identifier, phodevi::system_hardware(true), phodevi::system_software(true), array(), pts_client::current_user(), null, date('Y-m-d H:i:s', pts_client::current_time()), PTS_VERSION);
 			$test_run_manager->result_file->add_system($sys);
 		}
 		else
