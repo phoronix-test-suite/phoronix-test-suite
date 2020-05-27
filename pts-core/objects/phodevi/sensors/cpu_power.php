@@ -26,6 +26,7 @@ class cpu_power extends phodevi_sensor
 	const SENSOR_SENSES = 'power';
 	static $cpu_energy = 0;
 	static $last_time = 0;
+	protected static $amd_energy_sockets = false;
 
 	public function read_sensor()
 	{
@@ -55,21 +56,28 @@ class cpu_power extends phodevi_sensor
 	{
 		$cpu_power = -1;
 
-		// Try hwmon interface for AMD 15h (Bulldozer FX CPUs) where this support was introduced for AMD CPUs and exposed by the fam15h_power hwmon driver
-		// The fam15h_power driver doesn't expose the power consumption on a per-core/per-package basis but only an average
-		$hwmon_watts = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/device/power1_input', 'POSITIVE_NUMERIC', array('name' => 'fam15h_power'));
-
-		if($hwmon_watts != -1)
+		if(self::$amd_energy_sockets === false)
 		{
-			if($hwmon_watts > 1000000)
+			self::$amd_energy_sockets = array();
+			foreach(pts_file_io::glob('/sys/class/hwmon/hwmon*/name') as $hwmon)
 			{
-				// convert to Watts
-				$hwmon_watts = $hwmon_watts / 1000000;
-			}
+				if(pts_file_io::file_get_contents($hwmon) == 'amd_energy')
+				{
+					$hwmon_dir = dirname($hwmon);
 
-			$cpu_power = pts_math::set_precision($hwmon_watts, 2);
+					foreach(glob($hwmon_dir . '/energy*_label') as $label)
+					{
+						if(strpos(file_get_contents($label), 'Esocket') !== false)
+						{
+							self::$amd_energy_sockets[] = str_replace('_label', '_input', $label);
+						}
+					}
+					break;
+				}
+			}
 		}
-		else if(is_readable('/sys/bus/i2c/drivers/ina3221x/0-0041/iio:device1/in_power1_input'))
+
+		if(is_readable('/sys/bus/i2c/drivers/ina3221x/0-0041/iio:device1/in_power1_input'))
 		{
 			$in_power1_input = pts_file_io::file_get_contents('/sys/bus/i2c/drivers/ina3221x/0-0041/iio:device1/in_power1_input');
 			if(is_numeric($in_power1_input) && $in_power1_input > 1)
@@ -113,6 +121,22 @@ class cpu_power extends phodevi_sensor
 				self::$last_time = time();
 				self::$cpu_energy = $total_energy;
 			}
+		}
+		else if(!empty(self::$amd_energy_sockets))
+		{
+			$j1 = 0;
+			$j2 = 0;
+			foreach(self::$amd_energy_sockets as $f)
+			{
+				$j1 += trim(file_get_contents($f));
+			}
+			sleep(1);
+			foreach(self::$amd_energy_sockets as $f)
+			{
+				$j2 += trim(file_get_contents($f));
+			}
+
+			$cpu_power = ($j2 - $j1) * 0.0000010;
 		}
 		else if(is_readable('/sys/class/hwmon/hwmon0/name') && pts_file_io::file_get_contents('/sys/class/hwmon/hwmon0/name') == 'zenpower')
 		{

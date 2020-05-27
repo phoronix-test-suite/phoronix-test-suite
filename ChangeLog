@@ -6,6 +6,7 @@ pts-core: When an install fails, try a newer minor version update to that test p
 pts-core: When a newer minor version of a test profile is installed and a requested (older) one is not, use the newer compatible version
 pts-core: Rewrite virtual test suite implementation
 pts-core: Add handler for ensuring reported system time is accurate, otherwise calculate current date/time using offsets
+phodevi: Add amd_energy Linux driver support
 
 Phoronix Test Suite 9.6.1
 25 May 2020
