@@ -124,19 +124,26 @@ class cpu_power extends phodevi_sensor
 		}
 		else if(!empty(self::$amd_energy_sockets))
 		{
-			$j1 = 0;
-			$j2 = 0;
-			foreach(self::$amd_energy_sockets as $f)
+			$tries = 0;
+			do
 			{
-				$j1 += trim(file_get_contents($f));
-			}
-			sleep(1);
-			foreach(self::$amd_energy_sockets as $f)
-			{
-				$j2 += trim(file_get_contents($f));
-			}
+				$tries++;
+				$j1 = 0;
+				$j2 = 0;
+				foreach(self::$amd_energy_sockets as $f)
+				{
+					$j1 += trim(file_get_contents($f));
+				}
+				sleep(1);
+				foreach(self::$amd_energy_sockets as $f)
+				{
+					$j2 += trim(file_get_contents($f));
+				}
+				$cpu_power = ($j2 - $j1) * 0.0000010;
 
-			$cpu_power = ($j2 - $j1) * 0.0000010;
+				// This loop is in case the counters roll over
+			}
+			while($cpu_power < 1 && $tries < 2);
 		}
 		else if(is_readable('/sys/class/hwmon/hwmon0/name') && pts_file_io::file_get_contents('/sys/class/hwmon/hwmon0/name') == 'zenpower')
 		{
