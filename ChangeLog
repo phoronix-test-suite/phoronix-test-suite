@@ -7,6 +7,7 @@ pts-core: When a newer minor version of a test profile is installed and a reques
 pts-core: Rewrite virtual test suite implementation
 pts-core: Add handler for ensuring reported system time is accurate, otherwise calculate current date/time using offsets
 pts-core: When scanning test suites on disk, ensure the latest test suite version is used
+pts-core: Add test-to-suite map sub-command
 phodevi: Add amd_energy Linux driver support
 
 Phoronix Test Suite 9.6.1
