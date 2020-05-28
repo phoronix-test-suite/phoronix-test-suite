@@ -25,6 +25,10 @@ class analyze_run_times implements pts_option_interface
 	const doc_section = 'Result Management';
 	const doc_description = 'This option will read a saved test results file and print the statistics about how long the testing took to complete.';
 
+	public static function command_aliases()
+	{
+		return array('analyze_run_time');
+	}
 	public static function argument_checks()
 	{
 		return array(

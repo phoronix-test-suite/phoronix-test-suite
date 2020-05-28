@@ -70,7 +70,7 @@ class pts_test_suites
 
 		$local_suites = array();
 		$suite_xml_files = pts_file_io::glob($suite_dir . '*/*/suite-definition.xml');
-		rsort($suite_xml_files);
+		sort($suite_xml_files);
 		$skip_suites_deprecated = array();
 		foreach($suite_xml_files as $path)
 		{
@@ -89,6 +89,17 @@ class pts_test_suites
 						$skip_suites_deprecated[] = $test_suite->get_identifier(false);
 						continue;
 					}
+					if(isset($local_suites[$test_suite->get_identifier(false)]))
+					{
+						if($return_object)
+						{
+							if($local_suites[$test_suite->get_identifier(false)]->get_version() > $test_suite->get_version())
+							{
+								continue;
+							}
+						}
+					}
+
 					$local_suites[$test_suite->get_identifier(false)] = $return_object ? $test_suite : ($repo . '/' . $test);
 				}
 			}
