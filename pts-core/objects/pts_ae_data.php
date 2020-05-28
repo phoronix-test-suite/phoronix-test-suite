@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2019, Phoronix Media
-	Copyright (C) 2010 - 2019, Michael Larabel
+	Copyright (C) 2010 - 2020, Phoronix Media
+	Copyright (C) 2010 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -31,6 +31,11 @@ class pts_ae_data
 		if(!is_dir($output_dir))
 		{
 			echo 'valid directory needed!';
+			return false;
+		}
+		if(!extension_loaded('sqlite3'))
+		{
+			echo PHP_EOL . PHP_EOL . pts_client::cli_just_bold('PHP SQLite3') . ' support must first be enabled.' . PHP_EOL . PHP_EOL;
 			return false;
 		}
 
@@ -236,7 +241,7 @@ class pts_ae_data
 				}
 			}
 			uasort($comparison_components, array('pts_ae_data', 'sort_array_by_size_of_array_in_value'));
-			$comparison_components = array_slice($comparison_components, 0, 65);
+			$comparison_components = array_slice($comparison_components, 0, 120);
 			foreach($comparison_components as $component => &$values)
 			{
 				$values = round(pts_math::arithmetic_mean($values), ($peak > 60 ? 0 : 2));

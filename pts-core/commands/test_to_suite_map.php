@@ -23,7 +23,7 @@
 class test_to_suite_map implements pts_option_interface
 {
 	const doc_section = 'Information';
-	const doc_description = 'This option will list all test profiles that are available from the enabled OpenBenchmarking.org repositories. Unlike the other test listing options, list-all-tests will show deprecated tests, potentially broken tests, or other tests not recommended for all environments. The only check in place is ensuring the test profiles are at least compatible with the operating system in use.';
+	const doc_description = 'This option will list all test profiles and any test suites each test belongs to.';
 
 	public static function run($r)
 	{
