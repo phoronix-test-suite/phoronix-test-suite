@@ -823,6 +823,23 @@ class phodevi extends phodevi_base
 	{
 		return phodevi::is_vendor_string($product) && !pts_strings::has_in_istring($product, array('VBOX', 'QEMU', 'Virtual', 'Family', '440BX', 'VMware', ' Gen', 'Core IGP'));
 	}
+	public static function is_fake_device($str)
+	{
+		$string_check = array(
+			'Logical Volume',
+			'QEMU',
+			);
+
+		foreach($string_check as $check)
+		{
+			if(stripos($str, $check) !== false)
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
 	public static function os_under_test($force_override = false, $force_value = null)
 	{
 		static $os_under_test = null;
