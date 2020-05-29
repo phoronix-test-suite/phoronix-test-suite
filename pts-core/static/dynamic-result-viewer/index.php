@@ -26,7 +26,7 @@ if(function_exists('session_start'))
 }
 
 define('CURRENT_URI', $_SERVER['REQUEST_URI']);
-define('WEB_URL_PATH', rtrim(rtrim(dirname($_SERVER['SCRIPT_NAME']), '/'), '\\') . '/');
+define('WEB_URL_PATH', rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'])), '/') . '/');
 define('RESULT_VIEWER_VERSION', 2);
 define('PTS_AUTO_LOAD_ALL_OBJECTS', true);
 
