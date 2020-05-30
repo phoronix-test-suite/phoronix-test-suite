@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2017 - 2019, Phoronix Media
-	Copyright (C) 2017 - 2019, Michael Larabel
+	Copyright (C) 2017 - 2020, Phoronix Media
+	Copyright (C) 2017 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -310,6 +310,11 @@ class ob_auto_compare extends pts_module_interface
 								$component = substr($component, 0, $cc);
 								$component = substr($component, 0, strrpos($component, ' '));
 							}
+						}
+
+						if(empty($component))
+						{
+							continue;
 						}
 
 						if($result_object->test_profile->get_result_proportion() == 'LIB')
