@@ -370,6 +370,11 @@ class pts_test_execution
 			{
 				pts_client::$display->test_run_instance_error('Ignoring this run result per test profile definition.');
 			}
+			else if($i == 0 && $test_run_request->test_profile->is_root_required() && !phodevi::is_root() && $is_monitoring)
+			{
+				// Useful for test profiles like system/wireguard that are timed test but can be interrupted by sudo
+				pts_client::$display->test_run_instance_error('Ignoring first run in case root/sudo transition time skewed result.');
+			}
 			else if(in_array(($i + 1), $ignore_runs_override))
 			{
 				pts_client::$display->test_run_instance_error('Ignoring this run result per IGNORE_RUNS environment variable.');
