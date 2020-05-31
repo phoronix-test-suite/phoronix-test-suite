@@ -115,7 +115,7 @@ class pts_test_result_buffer
 			$value = implode(':', $value);
 		}
 
-		if($this->added_multi_sample_result == false && $raw_value)
+		if($this->added_multi_sample_result == false && $raw_value && !is_array($raw_value))
 		{
 			$this->added_multi_sample_result = strpos($raw_value, ':') !== false;
 		}
