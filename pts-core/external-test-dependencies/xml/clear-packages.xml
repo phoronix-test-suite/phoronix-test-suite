@@ -223,5 +223,9 @@
 			<GenericName>gflags</GenericName>
 			<PackageName>devpkg-gflags</PackageName>
 		</Package>
+		<Package>
+			<GenericName>glfw</GenericName>
+			<PackageName>devpkg-glfw</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

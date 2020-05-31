@@ -139,7 +139,7 @@ class info implements pts_option_interface
 					$avg_time = !empty($avg_time) ? pts_strings::format_time($avg_time, 'SECONDS') : 'N/A';
 					$latest_time = $o->test_installation->get_latest_run_time();
 					$latest_time = !empty($latest_time) ? pts_strings::format_time($latest_time, 'SECONDS') : 'N/A';
-					$install_time = ceil($o->test_installation->get_latest_install_time());
+					$install_time = $o->test_installation->get_latest_install_time();
 					$install_time = !empty($install_time) ? pts_strings::format_time($install_time, 'SECONDS') : 'N/A';
 
 					$table = array();
