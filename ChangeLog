@@ -11,6 +11,7 @@ pts-core: Add test-to-suite map sub-command
 pts-core: Fix for loading the result viewer JavaScript / CSS when running on a Windows host
 pts-core: For tests requiring root but not run initially as root and using monitoring data, drop the first run to ensure sudo promot doesn't skew time
 pts-core: Fix PHP8 error in the 'info' sub-command
+pts-core: Other PHP deprecation code tweaks
 phodevi: Add amd_energy Linux driver support
 
 Phoronix Test Suite 9.6.1
