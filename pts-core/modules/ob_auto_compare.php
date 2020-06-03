@@ -330,7 +330,7 @@ class ob_auto_compare extends pts_module_interface
 							$string_to_print = $component . ': ' . $value . ' ^';
 							$write_pos = ($this_result_pos - strlen($string_to_print) + 1);
 						}
-						else if($this_result_pos + $string_to_show_length < ($terminal_width - 2))
+						else if($this_result_pos + $string_to_show_length < ($terminal_width - 3))
 						{
 							// print to right of line
 							$string_to_print = '^ ' . $component . ': ' . $value;
