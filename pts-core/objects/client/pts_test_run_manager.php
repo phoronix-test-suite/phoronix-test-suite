@@ -1225,7 +1225,10 @@ class pts_test_run_manager
 						return $tp;
 					}
 				}
-				$tests_missing[] = $test_profile;
+				if($test_profile->get_identifier(false) != null)
+				{
+					$tests_missing[] = $test_profile;
+				}
 				return false;
 			}
 		}
