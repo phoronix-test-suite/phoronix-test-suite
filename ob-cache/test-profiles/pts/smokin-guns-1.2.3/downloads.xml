@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ftp.jeuxlinux.fr/files/Smokin_Guns_1.0.zip, ftp://ftp.slackware.org.uk/sbosrcarch/by-name/games/smokinguns/Smokin_Guns_1.1.zip</URL>
+      <MD5>f6eac64fa534fa9ff121dda5fd2dba44</MD5>
+      <FileSize>416465253</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/smokinguns-benchmark-3.zip</URL>
+      <MD5>4d67304d60290407898fd951c2c32fec</MD5>
+      <FileSize>297493</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

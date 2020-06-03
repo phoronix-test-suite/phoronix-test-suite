@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Nexuiz Image Quality</Title>
+    <ResultScale>NULL</ResultScale>
+    <Proportion>ABSTRACT</Proportion>
+    <DisplayFormat>IMAGE_COMPARISON</DisplayFormat>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux, MacOSX, Windows</SupportedPlatforms>
+    <SoftwareType>Game</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Deprecated</Status>
+    <Extends>pts/nexuiz</Extends>
+    <AllowResultsSharing>FALSE</AllowResultsSharing>
+    <AutoSaveResults>TRUE</AutoSaveResults>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments> </Arguments>
+      <AllowCacheShare>TRUE</AllowCacheShare>
+    </Default>
+    <Option>
+      <DisplayName>Scene</DisplayName>
+      <Identifier>scene</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>Weapon Rendering</Name>
+          <Value>nexuiz000085.tga</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Enemy</Name>
+          <Value>nexuiz000090.tga</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Explosion</Name>
+          <Value>nexuiz000112.tga</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://zock-server.de/WoP_1.6/wop-1.5-unified.zip</URL>
+      <MD5>8871affc2a36f23aa22044454c834923</MD5>
+      <SHA256>82af4a8b93cac1a6fa8deb2607e9b0a15255f8386b0c8cb21d6e532ac6c601f5</SHA256>
+      <FileSize>947290087</FileSize>
+    </Package>
+    <Package>
+      <URL>http://zock-server.de/WoP_1.6/wop-1.5.x-to-1.6-patch-unified.zip</URL>
+      <MD5>86ab95804ec6b1f0c81078f083c0fcda</MD5>
+      <SHA256>fe120218823825d742c506b2f448e15bf6ca756b99bc1d11d12749191e12c4c7</SHA256>
+      <FileSize>122204892</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/wop-benchmark-1.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/wop-benchmark-1.tar.gz</URL>
+      <MD5>8a7f8a1dd3b23d0b2147e7af3c8e146e</MD5>
+      <FileSize>799842</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

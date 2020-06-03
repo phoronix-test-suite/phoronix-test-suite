@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://dl.bintray.com/corecode/generic/CoreBreachPTS.zip</URL>
+      <MD5>28109f5a2d194790da0884fcf6723e3a</MD5>
+      <FileSize>150159053</FileSize>
+      <PlatformSpecific>MacOSX, Linux, Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/apitrace-apitrace-3.0-0-gde9f3e5.zip</URL>
+      <MD5>9ef70fa990f165e30a4408762fdb4a76</MD5>
+      <FileSize>1279634</FileSize>
+    </Package>
+    <Package>
+      <URL></URL>
+      <MD5>21708bcee9c1e539b051779a76cc8880</MD5>
+      <FileName>redeclipse-1-trace.7z</FileName>
+      <FileSize>156191890</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

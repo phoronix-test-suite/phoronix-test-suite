@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://netix.dl.sourceforge.net/project/boost/boost/1.59.0/boost_1_59_0.tar.gz</URL>
+      <MD5>51528a0e3b33d9e10aaa311d9eb451e3</MD5>
+      <FileSize>83709983</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

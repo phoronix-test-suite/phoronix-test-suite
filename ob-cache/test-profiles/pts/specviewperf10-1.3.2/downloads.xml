@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>ftp://ftp.spec.org/dist/gpc/opc/viewperf/unix/SPECViewperf10.tgz</URL>
+      <MD5>73eea64f6f9702a78795d0d42843b7fe</MD5>
+      <SHA256>012119fdeca12a471eeec83e262f3e05887a0e49ef1bc21efed2d1b5bd5c2920</SHA256>
+      <FileSize>613587625</FileSize>
+      <PlatformSpecific>Linux, Solaris</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/SPECViewperf101.diff.tar.bz2</URL>
+      <MD5>2bab49d8625516dda667da92fa236206</MD5>
+      <SHA256>e22aa227982c100776ad584c31ae6cb33d77efd2cda1b680cec4d1162d2502c9</SHA256>
+      <FileSize>6862</FileSize>
+      <PlatformSpecific>Linux, Solaris</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>ftp://ftp.spec.org/dist/gpc/opc/viewperf/SPECViewperf10.exe</URL>
+      <MD5>45cdfa71a2a2b8caaa6cd26e433a91b3</MD5>
+      <FileSize>615885705</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

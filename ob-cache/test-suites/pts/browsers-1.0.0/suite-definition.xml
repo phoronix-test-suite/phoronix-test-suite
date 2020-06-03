@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.1-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Web Browsers</Title>
+    <Version>1.0.0</Version>
+    <TestType>System</TestType>
+    <Description>Automated web browser benchmarks.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>system/selenium</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+</PhoronixTestSuite>

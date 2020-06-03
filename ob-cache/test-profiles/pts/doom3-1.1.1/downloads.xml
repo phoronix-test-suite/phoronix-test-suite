@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v7.8.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>ftp://ftp.ru.debian.org/gentoo-distfiles/distfiles/doom3-linux-1.3.1.1304.x86.run</URL>
+      <MD5>6325f0936f59420d33668754032141cb</MD5>
+      <FileSize>21145838</FileSize>
+    </Package>
+    <Package>
+      <URL></URL>
+      <FileName>doom3-game-files.tar</FileName>
+      <FileSize>1556049920</FileSize>
+    </Package>
+    <Package>
+      <URL></URL>
+      <FileName>doom3-key.tar</FileName>
+      <FileSize>10240</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

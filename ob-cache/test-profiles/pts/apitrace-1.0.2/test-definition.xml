@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>APITrace</Title>
+    <AppVersion>3.0</AppVersion>
+    <Description>This is a benchmark measuring the performance of various OpenGL Linux games that lack suitable benchmarking modes so this is solely measuring the performance of pushing pre-recorded OpenGL calls as recorded by APITrace through the system's graphics driver stack and being executed on the GPU. This isn't measuring the system's performance in that game but rather just the recorded OpenGL performance being executed.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.2</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Game</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Deprecated</Status>
+    <SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+    <ExternalDependencies>32bit-compatibility, cmake, python, build-utilities, p7zip</ExternalDependencies>
+    <EnvironmentSize>2000</EnvironmentSize>
+    <ProjectURL>http://github.com/apitrace/apitrace/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Trace</DisplayName>
+      <Identifier>trace</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>Red Eclipse 1.2</Name>
+          <Value>redeclipse-1.trace</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

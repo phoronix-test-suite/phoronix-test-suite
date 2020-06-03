@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.dee.cz/lightsmark/Lightsmark2008.2.0.tar.bz2</URL>
+      <MD5>325707b95daab878512dbb27271b1565</MD5>
+      <FileSize>34768173</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/lightsmark-2008-windows.zip, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/lightsmark-2008-windows.zip</URL>
+      <MD5>c64cb1fa1e93e3eaafd7111db3b5b51e</MD5>
+      <FileSize>32917699</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

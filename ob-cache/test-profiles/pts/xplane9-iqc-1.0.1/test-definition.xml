@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>X-Plane Image Quality</Title>
+    <ResultScale>NULL</ResultScale>
+    <Proportion>ABSTRACT</Proportion>
+    <DisplayFormat>IMAGE_COMPARISON</DisplayFormat>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux, MacOSX, Windows</SupportedPlatforms>
+    <SoftwareType>Game</SoftwareType>
+    <TestType>System</TestType>
+    <Status>Deprecated</Status>
+    <Extends>pts/xplane9</Extends>
+    <EnvironmentSize>1</EnvironmentSize>
+    <AllowResultsSharing>FALSE</AllowResultsSharing>
+    <AutoSaveResults>TRUE</AutoSaveResults>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>--no_workarounds --no_sound --pref:_prefs_found=1 --pref:_tex_res=5 --pref:_draw_objs_06=6 --pref:_draw_vecs_03=3 --pref:_draw_reflect_water05=5 --pref:_draw_volume_fog01=1 --pref:_draw_shaders=1 --pref:_draw_for_05=5 --pref:_is_full_ALL=1 --pref:_x_res_full_ALL=1280 --pref:_y_res_full_ALL=1024 --fps_test=3 --qa_script=conformance.txt</Arguments>
+      <AllowCacheShare>TRUE</AllowCacheShare>
+    </Default>
+    <Option>
+      <DisplayName>Scene</DisplayName>
+      <Identifier>scene</Identifier>
+      <ArgumentPrefix></ArgumentPrefix>
+      <ArgumentPostfix></ArgumentPostfix>
+      <DefaultEntry>0</DefaultEntry>
+      <Menu>
+        <Entry>
+          <Name>Control Tower</Name>
+          <Value>CONTROL_TOWER</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>City</Name>
+          <Value>CITY</Value>
+          <Message></Message>
+        </Entry>
+        <Entry>
+          <Name>Water</Name>
+          <Value>WATER</Value>
+          <Message></Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

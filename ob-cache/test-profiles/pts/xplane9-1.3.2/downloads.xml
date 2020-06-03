@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://dev.x-plane.com/update/misc/xplane_945_timedemo.tar.bz2</URL>
+      <MD5>e9b26a61de3e8125b4fd423b6a92d4f5</MD5>
+      <FileSize>544758306</FileSize>
+      <PlatformSpecific>Linux, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL></URL>
+      <FileName>xplane_945_timedemo.zip</FileName>
+      <FileSize>544758306</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

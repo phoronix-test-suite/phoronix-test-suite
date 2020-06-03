@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <ImageParser>
+    <SourceImage>.nexuiz/data/screenshots/nexuiz000085.tga</SourceImage>
+    <MatchToTestArguments>nexuiz000085.tga</MatchToTestArguments>
+    <ImageX>645</ImageX>
+    <ImageY>679</ImageY>
+    <ImageWidth>540</ImageWidth>
+    <ImageHeight>300</ImageHeight>
+  </ImageParser>
+  <ImageParser>
+    <SourceImage>.nexuiz/data/screenshots/nexuiz000090.tga</SourceImage>
+    <MatchToTestArguments>nexuiz000090.tga</MatchToTestArguments>
+    <ImageX>420</ImageX>
+    <ImageY>322</ImageY>
+    <ImageWidth>350</ImageWidth>
+    <ImageHeight>310</ImageHeight>
+  </ImageParser>
+  <ImageParser>
+    <SourceImage>.nexuiz/data/screenshots/nexuiz000112.tga</SourceImage>
+    <MatchToTestArguments>nexuiz000112.tga</MatchToTestArguments>
+    <ImageX>600</ImageX>
+    <ImageY>345</ImageY>
+    <ImageWidth>440</ImageWidth>
+    <ImageHeight>270</ImageHeight>
+  </ImageParser>
+</PhoronixTestSuite>

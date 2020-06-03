@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.0.0m0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>ftp://ftp.mirrorservice.org/sites/downloads.sourceforge.net/t/tr/tremulous/tremulous/1.1/tremulous-1.1.0.zip, ftp://ftp.za.freebsd.org/sourceforge/t/tr/tremulous/tremulous/1.1/tremulous-1.1.0.zip, ftp://ftp.uk.freesbie.org/sites/downloads.sourceforge.net/t/tr/tremulous/tremulous/1.1/tremulous-1.1.0.zip</URL>
+      <MD5>3df5f7565571fb9524656308347bce1b</MD5>
+      <FileSize>105821907</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/tremulous-benchmark-2.zip, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/tremulous-benchmark-2.zip</URL>
+      <MD5>34e9de994dc431ef43acc0124c05b7f3</MD5>
+      <FileSize>413440</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

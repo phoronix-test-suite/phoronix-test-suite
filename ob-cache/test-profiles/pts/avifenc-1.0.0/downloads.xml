@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/aom-200.tar.xz</URL>
+      <MD5>93c614944b53ed69f36439e433411ddc</MD5>
+      <SHA256>8996bb24c5768a109e3d20cb4b7adb617d7a4095e11801cef1ffccba5e5e6e2c</SHA256>
+      <FileName>aom-200.tar.xz</FileName>
+      <FileSize>2390800</FileSize>
+    </Package>
+    <Package>
+      <URL>http://github.com/AOMediaCodec/libavif/archive/v0.7.3.tar.gz</URL>
+      <MD5>6a2baf3100cb901028fe7e5085ad3e5d</MD5>
+      <SHA256>a4ce03649c58ec9f3dc6ab2b7cf7d58474b149acf1e4c563be4081bad60ed2dd</SHA256>
+      <FileName>libavif-0.7.3.tar.gz</FileName>
+      <FileSize>2893675</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/AOMediaCodec/libavif/releases/download/v0.7.3/avifenc.exe</URL>
+      <MD5>9f4b6915e7dce4f020bc4bf8525ba9ae</MD5>
+      <SHA256>1d3f9ae83406121f10007fa5b352e96545a5562df5a71bb7c9d1e7219f2cb123</SHA256>
+      <FileName>avifenc-073.exe</FileName>
+      <FileSize>9736192</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/sample-photo-6000x4000-1.zip</URL>
+      <MD5>3da40124023e94f63d96c22c07e7e9c2</MD5>
+      <SHA256>cadcd434abcdc82a220e7022c749b6fa5f46bb7a32ec14423ca8aab067b0e989</SHA256>
+      <FileName>sample-photo-6000x4000-1.zip</FileName>
+      <FileSize>7824306</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>
