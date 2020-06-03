@@ -238,6 +238,11 @@ class pts_openbenchmarking_client
 	}
 	public static function read_repository_test_profile_attribute($test_profile, $attribute)
 	{
+		if(empty($test_profile))
+		{
+			return;
+		}
+
 		list($repo, $tp) = explode('/', $test_profile);
 		if(($x = strrpos($tp, '-')))
 		{
