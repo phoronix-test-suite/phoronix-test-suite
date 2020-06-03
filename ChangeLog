@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 9.8.0 Milestone 1
+3 June 2020
 
 pts-core: When an install fails, try a newer minor version update to that test profile if available (fixes broken download mirrors, etc)
 pts-core: When a newer minor version of a test profile is installed and a requested (older) one is not, use the newer compatible version
