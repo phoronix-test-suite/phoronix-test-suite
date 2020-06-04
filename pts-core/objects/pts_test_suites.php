@@ -131,7 +131,11 @@ class pts_test_suites
 
 			if($allow_partial)
 			{
-				if(count($suites_in_result_file[$sb][1]) < 2)
+				if(count($contained_tests) == 1 && count($suites_in_result_file[$sb][1]))
+				{
+					// Only 1 test profile in suite (e.g. browsers), so allow this combination and not fail below check
+				}
+				else if(count($suites_in_result_file[$sb][1]) < 2)
 				{
 					unset($suites_in_result_file[$sb]);
 				}
