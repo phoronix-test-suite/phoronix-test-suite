@@ -2060,12 +2060,26 @@ class pts_client
 				{
 					$possible_browsers = array('x-www-browser', 'google-chrome', 'chromium', 'firefox', 'mozilla', 'iceweasel', 'konqueror', 'epiphany', 'midori', 'epiphany-browser', 'epiphany', 'falkon', 'qupzilla', 'open', 'xdg-open');
 
+					// First try to see if a browser is already running and use that
 					foreach($possible_browsers as &$b)
 					{
-						if(($b = pts_client::executable_in_path($b)))
+						if(pts_client::is_process_running($b) && ($b = pts_client::executable_in_path($b)))
 						{
 							$browser = $b;
 							break;
+						}
+					}
+
+					// Otherwise just find any browser available in PATH
+					if($browser == null)
+					{
+						foreach($possible_browsers as &$b)
+						{
+							if(($b = pts_client::executable_in_path($b)))
+							{
+								$browser = $b;
+								break;
+							}
 						}
 					}
 				}
