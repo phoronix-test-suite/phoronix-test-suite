@@ -522,7 +522,7 @@ class pts_result_file_analyzer
 			$geo_mean = pts_result_file_analyzer::generate_geometric_mean_result($result_file, true, $contained_tests);
 			if($geo_mean)
 			{
-				$geo_mean->test_profile->set_test_title('Geometric Mean Of ' . $suite->get_title() . ' Tests');
+				$geo_mean->test_profile->set_test_title('Geometric Mean Of ' . $suite->get_title() . (stripos($suite->get_title(), 'Test') === false ? ' Tests' : null));
 				$geo_mean->normalize_buffer_values();
 				$geo_mean->set_annotation('Geometric mean based upon tests: ' . pts_arrays::implode_list($contained_tests));
 				$geo_mean_results[] = $geo_mean;
