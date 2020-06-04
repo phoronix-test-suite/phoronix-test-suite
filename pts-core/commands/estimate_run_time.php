@@ -47,6 +47,11 @@ class estimate_run_time implements pts_option_interface
 		{
 			foreach(pts_types::identifiers_to_test_profile_objects($arg, false, false) as $t)
 			{
+				if($t->get_identifier() == null)
+				{
+					continue;
+				}
+
 				$tests[] = array($t->get_identifier(), pts_strings::format_time($t->get_estimated_run_time()));
 				$total_time += $t->get_estimated_run_time();
 				$test_count++;
@@ -55,7 +60,7 @@ class estimate_run_time implements pts_option_interface
 		if($test_count > 1 && $total_time > 0)
 		{
 			echo pts_user_io::display_text_table($tests);
-			echo PHP_EOL . PHP_EOL . 'TOTAL TIME ESTIMATE: ' . pts_strings::format_time($total_time) . PHP_EOL . PHP_EOL;
+			echo PHP_EOL . PHP_EOL . pts_client::cli_just_bold('TOTAL TIME ESTIMATE: ') . pts_strings::format_time($total_time) . PHP_EOL . PHP_EOL;
 		}
 	}
 }
