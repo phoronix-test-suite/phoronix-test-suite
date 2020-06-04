@@ -235,6 +235,24 @@ class pts_test_profile extends pts_test_profile_parser
 
 		return $estimated_run_time;
 	}
+	public function get_estimated_install_time()
+	{
+		// get estimated install-time (in seconds)
+		$est_install_time = 0;
+		if($this->test_installation != false && is_numeric($this->test_installation->get_latest_install_time()) && $this->test_installation->get_latest_install_time() > 0)
+		{
+			$est_install_time = $this->test_installation->get_latest_install_time();
+		}
+
+		if($est_install_time == 0 && PTS_IS_CLIENT)
+		{
+			$identifier = explode('/', $this->get_identifier(false));
+			$repo_index = pts_openbenchmarking::read_repository_index($identifier[0]);
+			$est_install_time = isset($identifier[1]) && isset($repo_index['tests'][$identifier[1]]) && isset($repo_index['tests'][$identifier[1]]['average_install_time']) ? $repo_index['tests'][$identifier[1]]['average_install_time'] : 1;
+		}
+
+		return ceil($est_install_time);
+	}
 	public function is_supported($report_warnings = true)
 	{
 		$test_supported = true;

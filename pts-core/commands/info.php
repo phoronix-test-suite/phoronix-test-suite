@@ -100,6 +100,10 @@ class info implements pts_option_interface
 				{
 					$table[] = array(pts_client::cli_just_bold('Estimated Run-Time: '), $o->get_estimated_run_time() . ' Seconds');
 				}
+				if($o->get_estimated_run_time() > 1)
+				{
+					$table[] = array(pts_client::cli_just_bold('Estimated Install Time: '), $o->get_estimated_install_time() . ' Seconds');
+				}
 
 				$download_size = $o->get_download_size();
 				if(!empty($download_size))

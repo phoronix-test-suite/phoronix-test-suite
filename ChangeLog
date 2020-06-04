@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+pts-core: Add client side plumbing for estimated test install time from OpenBenchmarking.org
+
 Phoronix Test Suite 9.8.0 Milestone 1
 3 June 2020
 
@@ -8,7 +12,7 @@ pts-core: When a newer minor version of a test profile is installed and a reques
 pts-core: Rewrite virtual test suite implementation
 pts-core: Add handler for ensuring reported system time is accurate, otherwise calculate current date/time using offsets
 pts-core: When scanning test suites on disk, ensure the latest test suite version is used
-pts-core: Add test-to-suite map sub-command
+pts-core: Add test-to-suite-map sub-command
 pts-core: Fix for loading the result viewer JavaScript / CSS when running on a Windows host
 pts-core: For tests requiring root but not run initially as root and using monitoring data, drop the first run to ensure sudo promot doesn't skew time
 pts-core: Fix PHP8 error in the 'info' sub-command
