@@ -281,7 +281,11 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	{
 		if(($size = $test_install_request->test_profile->get_environment_size(false)) > 0)
 		{
-			echo $this->tab . $this->tab . 'Installation Size: ' . $size . ' MB' . PHP_EOL;
+			echo $this->tab . $this->tab . pts_client::cli_just_bold('Approximate Install Size: ') . $size . ' MB' . PHP_EOL;
+		}
+		if(($time = $test_install_request->test_profile->get_estimated_install_time()) > 1)
+		{
+			echo $this->tab . $this->tab . pts_client::cli_just_bold('Estimated Install Time: ') . pts_strings::format_time($time) . PHP_EOL;
 		}
 
 		echo $this->tab . $this->tab . 'Installing Test' . ' @ ' . date('H:i:s') . PHP_EOL;
