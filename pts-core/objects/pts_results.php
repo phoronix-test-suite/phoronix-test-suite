@@ -47,7 +47,7 @@ class pts_results
 	}
 	public static function is_saved_result_file($identifier)
 	{
-		return is_file(PTS_SAVE_RESULTS_PATH . $identifier . '/composite.xml');
+		return defined('PTS_SAVE_RESULTS_PATH') && is_file(PTS_SAVE_RESULTS_PATH . $identifier . '/composite.xml');
 	}
 	public static function query_saved_result_files($search = null, $sort_by = null)
 	{

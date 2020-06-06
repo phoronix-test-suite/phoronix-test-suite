@@ -64,7 +64,7 @@ class pts_result_viewer_settings
 				{
 					$uri = str_replace('&' . $rem, null, $uri);
 				}
-				$analyze_options .= '<li><a href="' . $uri . '&' . $option . '&' .  http_build_query($_POST) . '">' . $txt . '</a></li>';
+				$analyze_options .= '<li><a href="' . $uri . '&' . $option . '">' . $txt . '</a></li>';
 			}
 			$analyze_options .= '</ul></li>';
 		}
@@ -235,7 +235,7 @@ class pts_result_viewer_settings
 				}
 				else
 				{
-					$t .= '<input type="checkbox" name="' . $key[0] . '" value="y"' . (self::check_request_for_var($request, $key[0]) ? ' checked="checked"' : null) . ' /> ' . $key[1] . '<br />';
+					$t .= '<input type="checkbox" name="' . $key[0] . '" value="1"' . (self::check_request_for_var($request, $key[0]) ? ' checked="checked"' : null) . ' /> ' . $key[1] . '<br />';
 				}
 			}
 			$t .= '</div>';
@@ -264,7 +264,15 @@ $t .= '<div class="div_table_cell">Perf-Per<br />Dollar</div>
 </div>
 ';
 $hgv = self::check_request_for_var($request, 'hgv');
+if(!is_array($hgv))
+{
+	$hgv = explode(',', $hgv);
+}
 $rmm = self::check_request_for_var($request, 'rmm');
+if(!is_array($rmm))
+{
+	$rmm = explode(',', $rmm);
+}
 $start_of_year = strtotime(date('Y-01-01'));
 $test_run_times = $result_file->get_test_run_times();
 foreach($result_file->get_systems() as $sys)
@@ -657,12 +665,14 @@ if($system_identifier_count > 2)
 		}
 		if(($rmm = self::check_request_for_var($request, 'rmm')))
 		{
-			if(is_array($rmm))
+			if(!is_array($rmm))
 			{
-				foreach($rmm as $rm)
-				{
-					$result_file->remove_run($rm);
-				}
+				$rmm = explode(',', $rmm);
+			}
+
+			foreach($rmm as $rm)
+			{
+				$result_file->remove_run($rm);
 			}
 		}
 		if(self::check_request_for_var($request, 'scalar'))

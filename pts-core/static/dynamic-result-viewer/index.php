@@ -602,11 +602,27 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		$PAGE .= '</div>';
 		break;
 	case 'result':
-		if(false && isset($_POST) && !empty($_POST))
+		if(isset($_POST) && !empty($_POST))
 		{
-			$req = $_REQUEST;
-			unset($req['PHPSESSID']);
-			header('Location: ?' . http_build_query($req));
+			$result_link = null;
+			foreach(array_keys($_POST) as $key)
+			{
+				if($_REQUEST[$key] != null && $_REQUEST[$key] != '0' && $key != 'submit')
+				{
+					if(is_array($_REQUEST[$key]))
+					{
+						$_REQUEST[$key] = implode(',', $_REQUEST[$key]);
+					}
+					$result_link .= '&' . $key . '=' . urlencode($_REQUEST[$key]);
+				}
+			}
+			$server_uri = $_SERVER['REQUEST_URI'];
+			if(($x = strpos($server_uri, '&')) !== false)
+			{
+				$server_uri = substr($server_uri, 0, $x);
+			}
+
+			header('Location: ' . $server_uri . $result_link);
 		}
 		$result_file = null;
 		$result_merges = 0;
