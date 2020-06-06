@@ -220,6 +220,8 @@ class pts_result_file
 	}
 	protected static function clean_input($value)
 	{
+		return strip_tags($value);
+		/*
 		if(is_array($value))
 		{
 			return array_map(array($this, 'clean_input'), $value);
@@ -228,6 +230,7 @@ class pts_result_file
 		{
 			return strip_tags($value);
 		}
+		*/
 	}
 	public function default_result_folder_path()
 	{
