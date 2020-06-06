@@ -40,16 +40,16 @@ class sys_fanspeed extends phodevi_sensor
 	private function sys_fanspeed_linux()
 	{
 		$fan_speed = -1;
-		$raw_fan = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/fan2_input', 'POSITIVE_NUMERIC');
+		$raw_fan = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/fan2_input', 'NUMERIC');
 
 		if($raw_fan == -1)
 		{
-			$raw_fan = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/fan3_input', 'POSITIVE_NUMERIC');
+			$raw_fan = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/fan3_input', 'NUMERIC');
 		}
 
 		if($raw_fan == -1)
 		{
-			$raw_fan = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/fan4_input', 'POSITIVE_NUMERIC');
+			$raw_fan = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/fan4_input', 'NUMERIC');
 		}
 
 		if($raw_fan == -1)
