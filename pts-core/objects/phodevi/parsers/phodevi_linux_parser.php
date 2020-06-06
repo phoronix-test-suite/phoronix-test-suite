@@ -140,7 +140,7 @@ class phodevi_linux_parser
 						}
 						break;
 					case 'POSITIVE_NUMERIC':
-						if(is_numeric($sysfs_value) && $sysfs_value > 0)
+						if(is_numeric($sysfs_value) && $sysfs_value >= 0)
 						{
 							$sysfs_file_cache[$arg_hash] = $sysfs_file;
 						}
