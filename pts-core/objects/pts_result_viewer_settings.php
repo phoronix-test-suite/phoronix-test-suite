@@ -288,16 +288,16 @@ $t .= '
 
 	if($has_system_logs)
 	{
-		$t .= '<div class="div_table_cell">' . ($result_file->get_system_log_dir($si) ? '<button onclick="javascript:display_system_logs_for_result(\'' . RESULTS_VIEWING_ID . '\', \'' . $si . '\'); return false;">View System Logs</button>' : ' ') . '</div>';
+		$t .= '<div class="div_table_cell">' . ($result_file->get_system_log_dir($si) ? '<button type="button" onclick="javascript:display_system_logs_for_result(\'' . RESULTS_VIEWING_ID . '\', \'' . $si . '\'); return false;">View System Logs</button>' : ' ') . '</div>';
 	}
 	$stime = strtotime($sys->get_timestamp());
-	$t .= '<div class="div_table_cell"><input type="number" min="0" step="1" name="ppd_' . $ppdx . '" value="' . ($ppd && $ppd !== true ? $ppd : '0') . '" /></div>
+	$t .= '<div class="div_table_cell"><input type="number" min="0" step="1" name="ppd_' . $ppdx . '" value="' . ($ppd && $ppd !== true ? strip_tags($ppd) : '0') . '" /></div>
 <div class="div_table_cell">' . date(($stime > $start_of_year ? 'F d' : 'F d Y'), $stime) . '</div>
 <div class="div_table_cell"> &nbsp; ' . (isset($test_run_times[$si]) && $test_run_times[$si] > 0 ? pts_strings::format_time($test_run_times[$si], 'SECONDS', true, 60) : ' ') . '</div>';
 
 	if(defined('VIEWER_CAN_DELETE_RESULTS') && VIEWER_CAN_DELETE_RESULTS && defined('RESULTS_VIEWING_ID'))
 	{
-		$t .= '<div class="div_table_cell"><button onclick="javascript:delete_run_from_result_file(\'' . RESULTS_VIEWING_ID . '\', \'' . $si . '\', \'' . $ppdx . '\'); return false;">Delete Run</button></div>';
+		$t .= '<div class="div_table_cell"><button type="button" onclick="javascript:delete_run_from_result_file(\'' . RESULTS_VIEWING_ID . '\', \'' . $si . '\', \'' . $ppdx . '\'); return false;">Delete Run</button></div>';
 	}
 	$t .= '</div>';
 }
@@ -334,6 +334,10 @@ if($system_identifier_count > 2)
 	$analyze_options .= '<div>Only show results where ' . self::html_select_menu('ftt', 'ftt', null, array_merge(array(null), $result_file->get_system_identifiers()), false) . ' is faster than ' . self::html_select_menu('ftb', 'ftb', null, array_merge(array(null), $result_file->get_system_identifiers()), false) . '</div>';
 }
 
+if($result_file->get_test_count() > 1)
+{
+	$analyze_options .= '<div>Only show results matching title/arguments (delimit multiple options with a comma): ' . self::html_input_field('oss', 'oss') . '</div>';
+}
 
 		$analyze_options .= '<br /><input style="clear: both;" name="submit" value="Refresh Results" type="submit" /></form>';
 
@@ -449,6 +453,31 @@ if($system_identifier_count > 2)
 	}
 	public static function process_request_to_attributes(&$request, &$result_file, &$extra_attributes)
 	{
+		if(($oss = self::check_request_for_var($request, 'oss')))
+		{
+			$oss = pts_strings::comma_explode($oss);
+			foreach($result_file->get_result_objects() as $i => $result_object)
+			{
+				$matched = false;
+				foreach($oss as $search_check)
+				{
+					if(stripos($result_object->get_arguments_description(), $search_check) === false && stripos($result_object->test_profile->get_identifier(), $search_check) === false && stripos($result_object->test_profile->get_title(), $search_check) === false)
+					{
+						// Not found
+						$matched = false;
+					}
+					else
+					{
+						$matched = true;
+						break;
+					}
+				}
+				if(!$matched)
+				{
+					$result_file->remove_result_object_by_id($i);
+				}
+			}
+		}
 		if(self::check_request_for_var($request, 'ftt') && self::check_request_for_var($request, 'ftt'))
 		{
 			$ftt = self::check_request_for_var($request, 'ftt');
@@ -718,6 +747,10 @@ if($system_identifier_count > 2)
 				pts_result_file_analyzer::generate_perf_per_dollar($result_file, $si, $ppd);
 			}
 		}
+	}
+	public static function html_input_field($name, $id, $on_change = null)
+	{
+		return '<input type="text" name="' . $name . '" id="' . $id . '" onclick="" value="' . (isset($_REQUEST[$name]) ? strip_tags($_REQUEST[$name]) : null) . '">';
 	}
 	public static function html_select_menu($name, $id, $on_change, $elements, $use_index = true, $other_attributes = array(), $selected = false)
 	{

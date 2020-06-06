@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 pts-core: Add client side plumbing for estimated test install time from OpenBenchmarking.org
 pts-core: Add estimate-install-time sub-command, show estimated install time when installing a test
 pts-core: Improve web browser selection logic for result viewer
+pts-core: Add search field to the result viewer areas for limiting based on title/argument matching
 
 Phoronix Test Suite 9.8.0 Milestone 1
 3 June 2020
