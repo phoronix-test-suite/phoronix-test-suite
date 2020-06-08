@@ -365,7 +365,7 @@ class phodevi_disk extends phodevi_device_interface
 
 		$scheduler = null;
 		$device = self::proc_mount_options();
-		$device = basename($device['device']);
+		$device = isset($device['device']) ? basename($device['device']) : null;
 
 		if(is_readable('/sys/block/' . ($d = pts_strings::keep_in_string($device, pts_strings::CHAR_LETTER)) . '/queue/scheduler'))
 		{
@@ -410,6 +410,10 @@ class phodevi_disk extends phodevi_device_interface
 		}
 
 		$device = self::proc_mount_options();
+		if(!isset($device['mount-point']))
+		{
+			return null;
+		}
 		$mount_point = $device['mount-point'];
 		$extra_details = null;
 
