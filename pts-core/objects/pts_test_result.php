@@ -362,7 +362,7 @@ class pts_test_result
 		$best = $this->get_result_first(false);
 		$worst = $this->get_result_last(false);
 
-		if(!is_numeric($best) || !is_numeric($worst))
+		if(!is_numeric($best) || !is_numeric($worst) || $worst == 0)
 		{
 			return -1;
 		}
