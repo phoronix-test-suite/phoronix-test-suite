@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2019, Phoronix Media
-	Copyright (C) 2008 - 2019, Michael Larabel
+	Copyright (C) 2008 - 2020, Phoronix Media
+	Copyright (C) 2008 - 2020, Michael Larabel
 	phodevi_monitor.php: The PTS Device Interface object for the display monitor
 
 	This program is free software; you can redistribute it and/or modify
@@ -74,23 +74,6 @@ class phodevi_monitor extends phodevi_device_interface
 					array_push($monitor, $m);
 				}
 				$offset = $monitor_pos + 2;
-			}
-		}
-		else if(isset(phodevi::$vfs->xorg_log))
-		{
-			$log_parse = phodevi::$vfs->xorg_log;
-			$offset = 0;
-			$monitor = array();
-
-			while(($monitor_name = strpos($log_parse, 'Monitor name:', $offset)) !== false)
-			{
-				$log_parse = substr($log_parse, $monitor_name + 14);
-				$m = trim(substr($log_parse, 0, strpos($log_parse, "\n")));
-
-				if(!empty($m))
-				{
-					array_push($monitor, $m);
-				}
 			}
 		}
 
