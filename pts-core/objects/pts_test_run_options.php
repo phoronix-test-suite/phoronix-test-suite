@@ -131,7 +131,7 @@ class pts_test_run_options
 				}
 				else
 				{
-					$option_names = $o->get_all_option_names_with_messages();
+					$option_names = $o->get_all_option_names_with_messages(true);
 
 					if(count($option_names) > 1)
 					{

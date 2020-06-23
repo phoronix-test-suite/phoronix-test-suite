@@ -111,14 +111,21 @@ class pts_test_option
 
 		return $names;
 	}
-	public function get_all_option_names_with_messages()
+	public function get_all_option_names_with_messages($italic_messages = false)
 	{
 		$names = array();
 
+		$longest_name = 0;
 		for($i = 0; $i < $this->option_count(); $i++)
 		{
+			$longest_name = max($longest_name, strlen($this->get_option_name($i)));
+		}
+
+		for($i = 0; $i < $this->option_count(); $i++)
+		{
+			$option_name = $this->get_option_name($i);
 			$user_msg = $this->get_option_message($i);
-			$names[] = $this->get_option_name($i) . (!empty($user_msg) ? ' [' . $user_msg . ']' : null);
+			$names[] = $option_name . (!empty($user_msg) ? (strlen($option_name) < $longest_name ? str_repeat(' ', $longest_name - strlen($option_name)) : null) . ' [' . ($italic_messages ? pts_client::cli_just_italic($user_msg) : $user_msg) . ']' : null);
 		}
 
 		return $names;
