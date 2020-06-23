@@ -405,7 +405,7 @@ class pts_external_dependencies
 			{
 				$present = true;
 			}
-			if(strpos($file, '.h') !== false && is_file('/usr/includes/' . $file))
+			if(strpos($file, '.h') !== false && is_file('/usr/include/' . $file))
 			{
 				$present = true;
 			}
