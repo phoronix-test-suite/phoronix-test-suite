@@ -81,15 +81,14 @@ class build_suite implements pts_option_interface
 					$test_profile = new pts_test_profile($test_to_add);
 
 					$opts = pts_test_run_options::prompt_user_options($test_profile);
-					if($opts == false)
+					if($opts != false)
 					{
-						continue;
-					}
-					list($args, $description) = $opts;
+						list($args, $description) = $opts;
 
-					for($i = 0; $i < count($args); $i++)
-					{
-						$new_suite->add_to_suite($test_profile, $args[$i], $description[$i]);
+						for($i = 0; $i < count($args); $i++)
+						{
+							$new_suite->add_to_suite($test_profile, $args[$i], $description[$i]);
+						}
 					}
 					break;
 				case 'Add Sub-Suite':
