@@ -409,11 +409,11 @@ class pts_external_dependencies
 			{
 				$present = true;
 			}
-			else if(strpos($file, '.so') !== false && is_file('/usr/lib/' . $file))
+			else if(strpos($file, '.so') !== false && glob('/usr/lib*/' . $file) != false)
 			{
 				$present = true;
 			}
-			else if(strpos($file, '.so') !== false && glob('/usr/lib/*/' . $file) != false)
+			else if(strpos($file, '.so') !== false && glob('/usr/lib*/*/' . $file) != false)
 			{
 				$present = true;
 			}
