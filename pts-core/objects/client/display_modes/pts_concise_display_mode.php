@@ -71,10 +71,12 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		$cache_total = 0;
 		$cache_size = 0;
 		$install_size = 0;
+		$install_time = 0;
 
 		foreach($test_install_manager->get_test_run_requests() as $test_run_request)
 		{
 			$install_size += $test_run_request->test_profile->get_environment_size();
+			$install_time += $test_run_request->test_profile->get_estimated_install_time();
 
 			foreach($test_run_request->get_download_objects() as $test_file_download)
 			{
@@ -123,6 +125,10 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		if($install_size > 0)
 		{
 			echo $this->tab . $this->tab . ceil($install_size) . 'MB Of Disk Space Is Needed' . PHP_EOL;
+		}
+		if($install_time > 0)
+		{
+			echo $this->tab . $this->tab . pts_strings::format_time($install_time) . ' Estimated Install Time' . PHP_EOL;
 		}
 
 		echo PHP_EOL;
