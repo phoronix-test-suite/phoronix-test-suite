@@ -377,7 +377,14 @@ class pts_test_profile_parser
 	}
 	public function is_display_required()
 	{
-		return pts_strings::string_bool($this->xg('TestProfile/RequiresDisplay', 'FALSE')) || ($this->xg('TestProfile/RequiresDisplay') == null && $this->get_test_hardware_type() == 'Graphics');
+		return pts_strings::string_bool($this->xg('TestProfile/RequiresDisplay', 'FALSE')) || ($this->xg('TestProfile/RequiresDisplay') == null && $this->get_test_hardware_type() == 'Graphics' && !$this->is_gpu_compute_test());
+	}
+	protected function is_gpu_compute_test()
+	{
+		$internal_tags = $this->get_internal_tags();
+		$external_dependencies = $this->get_external_dependencies();
+
+		return in_array('OpenCL', $internal_tags) || in_array('CUDA', $internal_tags) || in_array('opencl', $external_dependencies);
 	}
 	public function is_network_required()
 	{
