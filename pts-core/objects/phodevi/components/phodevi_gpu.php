@@ -1304,6 +1304,23 @@ class phodevi_gpu extends phodevi_device_interface
 			}
 		}
 
+		if(empty($info) && (($nvidia_smi = pts_client::executable_in_path('nvidia-smi')) || ($nvidia_smi = pts_client::executable_in_path('nvidia-smi'))))
+		{
+			// This works for some headless configurations or with Windows WSL2
+			$nvidia_smi = shell_exec($nvidia_smi . ' -L 2>&1');
+			if(($x = strpos($nvidia_smi, 'GPU 0: ')) !== false)
+			{
+				$nvidia_smi = substr($nvidia_smi, $x + 7);
+
+				if(($x = strpos($nvidia_smi, PHP_EOL)) !== false)
+				{
+					$nvidia_smi = substr($nvidia_smi, 0, $x);
+				}
+
+				$info = trim($nvidia_smi);
+			}
+		}
+
 		if(($x = strpos($info, ' (')) !== false)
 		{
 			$info = substr($info, 0, $x);
