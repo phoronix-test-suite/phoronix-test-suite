@@ -624,6 +624,12 @@ class pts_test_run_options
 			$error = 'NVIDIA support is not available.';
 			return false;
 		}
+		if(stripos($test_args, 'OpenCL') !== false && phodevi::opencl_support_detected() === false)
+		{
+			// Try to only show OpenCL configurations if known to be working
+			$error = 'OpenCL support seems to be unavailable.';
+			return false;
+		}
 		if(stripos($test_args, 'Windows') !== false && !phodevi::is_windows())
 		{
 			// Do not show options mentioning Windows if not on Windows

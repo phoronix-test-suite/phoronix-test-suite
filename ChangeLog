@@ -6,6 +6,8 @@ pts-core: Add client side plumbing for estimated test install time from OpenBenc
 pts-core: Add estimate-install-time sub-command, show estimated install time when installing a test
 pts-core: Improve web browser selection logic for result viewer
 pts-core: Add search field to the result viewer areas for limiting based on title/argument matching
+pts-core: Various minor fixes
+pts-core: Don't show OpenCL test options if no OpenCL drivers/adapters appear present
 phodevi: Fix for incorrect monitor count when parsing X.Org log
 phodevi: Warning fixes for latest WSL
 
