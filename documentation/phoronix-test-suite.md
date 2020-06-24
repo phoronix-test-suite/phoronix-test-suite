@@ -70,6 +70,9 @@ This option will permanently remove a installed test by the Phoronix Test Suite.
 #### benchmark  [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option will install the selected test(s) (if needed) and will proceed to run the test(s). This option is equivalent to running phoronix-test-suite with the install option followed by the run option. Multiple arguments can be supplied to run additional tests at the same time and save the results into one file.
 
+#### estimate-install-time  [Test | Suite | OpenBenchmarking ID | Test Result]
+This option will provide estimates for test install/setup time length.
+
 #### estimate-run-time  [Test | Suite | OpenBenchmarking ID | Test Result]
 This option will provide estimates for test run-time / length.
 
