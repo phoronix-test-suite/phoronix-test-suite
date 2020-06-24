@@ -49,13 +49,20 @@ class pts_test_run_options
 
 		$identifier_short = $test_profile->get_identifier_base_name();
 		$identifier_full = $test_profile->get_identifier(false);
+		$error_handle = null;
+		$option_objects = $test_profile->get_test_option_objects(true, $error_handle);
 
-		if(count($test_profile->get_test_option_objects()) > 0)
+		if(count($option_objects) > 0)
 		{
 			pts_client::$display->test_run_configure($test_profile);
 		}
+		if($error_handle)
+		{
+			echo PHP_EOL . pts_client::$display->get_tab() . pts_client::cli_just_italic($error_handle) . PHP_EOL;
+			return false;
+		}
 
-		foreach($test_profile->get_test_option_objects() as $i => $o)
+		foreach($option_objects as $i => $o)
 		{
 			$option_identifier = $o->get_identifier();
 
@@ -177,7 +184,14 @@ class pts_test_run_options
 		$all_args_real = array();
 		$all_args_description = array();
 
-		foreach($test_profile->get_test_option_objects() as $o)
+		$error_handle = null;
+		$option_objects = $test_profile->get_test_option_objects(true, $error_handle);
+		if($error_handle)
+		{
+			echo PHP_EOL . pts_client::$display->get_tab() . pts_client::cli_just_italic($error_handle) . PHP_EOL;
+			return false;
+		}
+		foreach($option_objects as $o)
 		{
 			$option_args = array();
 			$option_args_description = array();
@@ -216,7 +230,14 @@ class pts_test_run_options
 		$batch_all_args_real = array();
 		$batch_all_args_description = array();
 
-		foreach($test_profile->get_test_option_objects() as $o)
+		$error_handle = null;
+		$option_objects = $test_profile->get_test_option_objects(true, $error_handle);
+		if($error_handle)
+		{
+			echo PHP_EOL . pts_client::$display->get_tab() . pts_client::cli_just_italic($error_handle) . PHP_EOL;
+			return false;
+		}
+		foreach($option_objects as $o)
 		{
 			$option_args = array();
 			$option_args_description = array();
@@ -264,7 +285,7 @@ class pts_test_run_options
 			}
 		}
 	}
-	public static function auto_process_test_option(&$test_profile, $option_identifier, &$option_names, &$option_values, &$option_messages)
+	public static function auto_process_test_option(&$test_profile, $option_identifier, &$option_names, &$option_values, &$option_messages, &$error = null)
 	{
 		// Some test items have options that are dynamically built
 		switch($option_identifier)
@@ -563,16 +584,23 @@ class pts_test_run_options
 				$values = $option_values;
 				$option_names = array();
 				$option_values = array();
+				$had_valid_fail = false;
 
 				for($i = 0; $i < count($names) && $i < count($values); $i++)
 				{
 					if(self::validate_test_arguments_compatibility($names[$i], $test_profile) == false)
 					{
+						$had_valid_fail = true;
 						continue;
 					}
 
 					$option_names[] = $names[$i];
 					$option_values[] = $values[$i];
+				}
+				if($had_valid_fail && empty($option_names))
+				{
+					$error = 'No supported options found for ' . $option_identifier;
+					return -1;
 				}
 				break;
 			default:
@@ -585,16 +613,23 @@ class pts_test_run_options
 				$values = $option_values;
 				$option_names = array();
 				$option_values = array();
+				$had_valid_fail = false;
 
 				for($i = 0; $i < count($names) && $i < count($values); $i++)
 				{
 					if(self::validate_test_arguments_compatibility($names[$i], $test_profile) == false)
 					{
+						$had_valid_fail = true;
 						continue;
 					}
 
 					$option_names[] = $names[$i];
 					$option_values[] = $values[$i];
+				}
+				if($had_valid_fail && empty($option_names))
+				{
+					$error = 'No supported options found for ' . $option_identifier;
+					return -1;
 				}
 				break;
 		}

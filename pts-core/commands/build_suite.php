@@ -51,7 +51,12 @@ class build_suite implements pts_option_interface
 
 			if($test_object instanceof pts_test_profile)
 			{
-				list($args, $description) = pts_test_run_options::prompt_user_options($test_object);
+				$opts = pts_test_run_options::prompt_user_options($test_object);
+				if($opts == false)
+				{
+					continue;
+				}
+				list($args, $description) = $opts;
 
 				for($i = 0; $i < count($args); $i++)
 				{
@@ -75,7 +80,12 @@ class build_suite implements pts_option_interface
 					$test_to_add = pts_user_io::prompt_text_menu('Enter test name', $possible_tests);
 					$test_profile = new pts_test_profile($test_to_add);
 
-					list($args, $description) = pts_test_run_options::prompt_user_options($test_profile);
+					$opts = pts_test_run_options::prompt_user_options($test_profile);
+					if($opts == false)
+					{
+						continue;
+					}
+					list($args, $description) = $opts;
 
 					for($i = 0; $i < count($args); $i++)
 					{

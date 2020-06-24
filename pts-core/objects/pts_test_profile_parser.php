@@ -447,7 +447,7 @@ class pts_test_profile_parser
 	{
 		return $this->get_test_option_objects(false);
 	}
-	public function get_test_option_objects($auto_process = true)
+	public function get_test_option_objects($auto_process = true, &$error = null)
 	{
 		$test_options = array();
 
@@ -471,7 +471,12 @@ class pts_test_profile_parser
 
 				if($auto_process)
 				{
-					pts_test_run_options::auto_process_test_option($this, $option->Identifier, $names, $values, $messages);
+					$auto_process_error_msg = null;
+					$auto_process_error = pts_test_run_options::auto_process_test_option($this, $option->Identifier, $names, $values, $messages, $auto_process_error_msg);
+					if($auto_process_error == -1)
+					{
+						$error = $auto_process_error_msg;
+					}
 				}
 
 				$user_option = new pts_test_option($option->Identifier->__toString(), $option->DisplayName->__toString(), $option->Message->__toString());

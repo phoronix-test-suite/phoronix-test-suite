@@ -171,6 +171,11 @@ class pts_test_suite
 							break;
 					}
 
+					if($option_output == false)
+					{
+						continue;
+					}
+
 					foreach(array_keys($option_output[0]) as $x)
 					{
 						if($override_options != null)

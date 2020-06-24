@@ -2,6 +2,8 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Handling of cases where all options are unsupported (such as CUDA and OpenCL tests with no valid backends found) to avoid prompts
+
 Phoronix Test Suite 9.8.0 Milestone 2
 24 June 2020
 

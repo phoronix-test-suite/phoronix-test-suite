@@ -1743,20 +1743,27 @@ class pts_test_run_manager
 
 		if($this->batch_mode && $this->batch_mode['RunAllTestCombinations'])
 		{
-			list($test_arguments, $test_arguments_description) = pts_test_run_options::batch_user_options($test_profile);
+			$opts = pts_test_run_options::batch_user_options($test_profile);
 		}
 		else if($this->batch_mode && (pts_client::read_env('PRESET_OPTIONS') || pts_client::read_env('PRESET_OPTIONS_VALUES')))
 		{
-			list($test_arguments, $test_arguments_description) = pts_test_run_options::prompt_user_options($test_profile, null, true);
+			$opts = pts_test_run_options::prompt_user_options($test_profile, null, true);
 		}
 		else if($this->auto_mode == 2)
 		{
-			list($test_arguments, $test_arguments_description) = pts_test_run_options::default_user_options($test_profile);
+			$opts = pts_test_run_options::default_user_options($test_profile);
 		}
 		else
 		{
-			list($test_arguments, $test_arguments_description) = pts_test_run_options::prompt_user_options($test_profile);
+			$opts = pts_test_run_options::prompt_user_options($test_profile);
 		}
+
+		if($opts == false)
+		{
+			return array();
+		}
+
+		list($test_arguments, $test_arguments_description) = $opts;
 
 		foreach(array_keys($test_arguments) as $i)
 		{
