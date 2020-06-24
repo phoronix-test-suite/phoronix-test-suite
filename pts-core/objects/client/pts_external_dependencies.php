@@ -413,6 +413,10 @@ class pts_external_dependencies
 			{
 				$present = true;
 			}
+			else if(strpos($file, '.so') !== false && glob('/usr/lib/*/' . $file) != false)
+			{
+				$present = true;
+			}
 			else if(pts_client::executable_in_path($file))
 			{
 				$present = true;
