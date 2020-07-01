@@ -291,6 +291,8 @@ function pts_version_codenames()
 		'9.4' => 'Vestby',
 		'9.6' => 'Nittedal',
 		'9.8' => 'Nesodden',
+		//  Senja Municipality in Troms og Finnmark - Norway
+		'10.0' => 'Finnsnes',
 		);
 }
 

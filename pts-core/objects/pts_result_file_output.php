@@ -625,7 +625,8 @@ class pts_result_file_output
 			}
 		}
 
-		if($geo = pts_result_file_analyzer::generate_geometric_mean_result($result_file))
+		// disable this for now
+		if(false && $geo = pts_result_file_analyzer::generate_geometric_mean_result($result_file))
 		{
 			$table[] = array_fill(0, count($systems), ' ');
 			$row = &$table[count($table) - 1];
