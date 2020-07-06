@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.8.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Timed Clash Compilation</Title>
+    <Description>Build the clash-lang Haskell to VHDL/Verilog/SystemVerilog compiler with GHC 8.10.1</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Time To Compile</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>curl</ExternalDependencies>
+    <ProjectURL>https://clash-lang.org/</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Serge Kosyrev</Maintainer>
+    <SystemDependencies>ghc, jq</SystemDependencies>
+  </TestProfile>
+</PhoronixTestSuite>

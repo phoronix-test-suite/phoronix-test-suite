@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.8.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>          256,    128.250,    2.61, #_RESULT_#  51.33,     64.125,   80.99,  212.53,   3.31,   128.250,    8.97, 1918.98,  14.96</OutputTemplate>
+    <MatchToTestArguments>SPGFLOPS</MatchToTestArguments>
+    <LineHint> 256,</LineHint>
+    <ResultScale>GFLOPS</ResultScale>
+    <TurnCharsToSpace>,</TurnCharsToSpace>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>          256,    128.250,    2.61, 6582.63,  51.33,     64.125,   80.99,  #_RESULT_#   3.31,   128.250,    8.97, 1918.98,  14.96</OutputTemplate>
+    <MatchToTestArguments>DPGFLOPS</MatchToTestArguments>
+    <LineHint> 256,</LineHint>
+    <ResultScale>GFLOPS</ResultScale>
+    <TurnCharsToSpace>,</TurnCharsToSpace>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>          256,    128.250,    1.00,17292.00, 134.83,     64.125,   42.27,  407.22,   6.35,    256.500,    1.00 xxx #_RESULT_# 134.30,   128.250,    1.11,15442.37, 120.41</OutputTemplate>
+    <MatchToTestArguments>HPGFLOPS</MatchToTestArguments>
+    <LineHint> 256,</LineHint>
+    <ResultScale>GFLOPS</ResultScale>
+    <TurnCharsToSpace>,</TurnCharsToSpace>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>          256,    128.250,    0.99,17301.45, 134.90,     64.125,   39.56,  435.18,   6.79,    256.500,    0.00,     inf,    inf,   128.250,    1.00 xx #_RESULT_# 134.50</OutputTemplate>
+    <MatchToTestArguments>GIOPS</MatchToTestArguments>
+    <LineHint> 256,</LineHint>
+    <ResultScale>GIOPS</ResultScale>
+    <TurnCharsToSpace>,</TurnCharsToSpace>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.8.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>[SUM]     TCP      000-001 sec   #_RESULT_#</OutputTemplate>
+    <LineHint>SUM</LineHint>
+    <StripFromResult>M</StripFromResult>
+    <MultiMatch>AVERAGE</MultiMatch>
+    <ResultScale>Mbits/sec</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>[SUM]     TCP      000-001 sec   #_RESULT_#</OutputTemplate>
+    <LineHint>SUM</LineHint>
+    <StripFromResult>G</StripFromResult>
+    <MultiMatch>AVERAGE</MultiMatch>
+    <MultiplyResultBy>1000</MultiplyResultBy>
+    <ResultScale>Mbits/sec</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>  TCP      001-002 sec    #_RESULT_#</OutputTemplate>
+    <LineHint>K</LineHint>
+    <StripFromResult>K</StripFromResult>
+    <MultiMatch>AVERAGE</MultiMatch>
+    <MultiplyResultBy>1000</MultiplyResultBy>
+    <ResultScale>Connections/sec</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>#_RESULT_#  #_MIN_RESULT_# 104.86us 105.84us 107.14us 109.41us 112.72us 112.72us #_MAX_RESULT_#</OutputTemplate>
+    <LineHint>us</LineHint>
+    <StripFromResult>us</StripFromResult>
+    <MultiMatch>AVERAGE</MultiMatch>
+    <ResultScale>Microseconds</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>  HTTP     008-009 sec   #_RESULT_#M</OutputTemplate>
+    <LineHint>M</LineHint>
+    <StripFromResult>M</StripFromResult>
+    <MultiMatch>AVERAGE</MultiMatch>
+    <ResultScale>Mbits/sec</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>  HTTP     008-009 sec   #_RESULT_#G</OutputTemplate>
+    <LineHint>G</LineHint>
+    <StripFromResult>G</StripFromResult>
+    <MultiMatch>AVERAGE</MultiMatch>
+    <MultiplyResultBy>1000</MultiplyResultBy>
+    <ResultScale>Mbits/sec</ResultScale>
+  </ResultsParser>
+</PhoronixTestSuite>

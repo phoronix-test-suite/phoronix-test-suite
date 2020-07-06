@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.8.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/mixbench-20200623.zip</URL>
+      <MD5>2583d31cbf5bde5da267e1127910b76f</MD5>
+      <SHA256>eb6d93d2c181d420c9ecf48c395cc7b8a3dbb1e57a21b1b52118ea9fd0bc2c11</SHA256>
+      <FileName>mixbench-20200623.zip</FileName>
+      <FileSize>115206</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

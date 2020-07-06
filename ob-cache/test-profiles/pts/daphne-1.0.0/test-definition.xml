@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.8.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Darmstadt Automotive Parallel Heterogeneous Suite</Title>
+    <Description>DAPHNE is the Darmstadt Automotive Parallel HeterogeNEous Benchmark Suite with OpenCL / CUDA / OpenMP test cases for these automotive benchmarks for evaluating programming models in context to vehicle autonomous driving capabilities.</Description>
+    <ResultScale>Test Cases Per Minute</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, opencl</ExternalDependencies>
+    <EnvironmentSize>29000</EnvironmentSize>
+    <ProjectURL>https://github.com/esa-tu-darmstadt/daphne-benchmark</ProjectURL>
+    <InternalTags>SMP, OpenMP, CUDA, OpenCL</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Backend</DisplayName>
+      <Identifier>backend</Identifier>
+      <Menu>
+        <Entry>
+          <Name>OpenMP</Name>
+          <Value>OpenMP</Value>
+        </Entry>
+        <Entry>
+          <Name>OpenCL</Name>
+          <Value>OpenCl</Value>
+        </Entry>
+        <Entry>
+          <Name>NVIDIA CUDA</Name>
+          <Value>Cuda</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Kernel</DisplayName>
+      <Identifier>kernel</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Euclidean Cluster</Name>
+          <Value>euclidean_cluster</Value>
+        </Entry>
+        <Entry>
+          <Name>NDT Mapping</Name>
+          <Value>ndt_mapping</Value>
+        </Entry>
+        <Entry>
+          <Name>Points2Image</Name>
+          <Value>points2image</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

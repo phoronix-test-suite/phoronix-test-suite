@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.8.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/wireguard-for-pts-2.tar.xz</URL>
+      <MD5>56423fa15e4280605688bc7050265165</MD5>
+      <SHA256>0dfcd6c71a58cbb966d90b801872d1d1b833b3132e14d2555241e40bae382c34</SHA256>
+      <FileName>wireguard-for-pts-2.tar.xz</FileName>
+      <FileSize>1804</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

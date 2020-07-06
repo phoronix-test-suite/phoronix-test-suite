@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.8.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>WireGuard + Linux Networking Stack Stress Test</Title>
+    <Description>This is a benchmark of the WireGuard secure VPN tunnel and Linux networking stack stress test. The test runs on the local host but does require root permissions to run. The way it works is it creates three namespaces. ns0 has a loopback device. ns1 and ns2 each have wireguard devices. Those two wireguard devices send traffic through the loopback device of ns0. The end result of this is that tests wind up testing encryption and decryption at the same time -- a pretty CPU and scheduler-heavy workflow.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Network</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <RequiresNetwork>TRUE</RequiresNetwork>
+    <EnvironmentSize>1</EnvironmentSize>
+    <ProjectURL>https://www.wireguard.com/</ProjectURL>
+    <Maintainer>Jason Donenfeld</Maintainer>
+    <SystemDependencies>iperf3, wg</SystemDependencies>
+  </TestProfile>
+</PhoronixTestSuite>

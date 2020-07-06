@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.8.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.4.35.tar.xz, https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.4.35.tar.xz</URL>
+      <MD5>504a03f47f41fe4a29e66eda6eacc7a3</MD5>
+      <SHA256>e16bd5f7284a80a41328bf712e1136b0adf5b71cc0bd263efa7cac75539806d4</SHA256>
+      <FileName>linux-5.4.35.tar.xz</FileName>
+      <FileSize>109524684</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

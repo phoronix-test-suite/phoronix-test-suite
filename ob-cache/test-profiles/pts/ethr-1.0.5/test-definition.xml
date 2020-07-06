@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.8.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Ethr</Title>
+    <AppVersion>2019-01-02</AppVersion>
+    <Description>Ethr is a cross-platform Golang-written network performance measurement tool developed by Microsoft that is capable of testing multiple protocols and different measurements.</Description>
+    <ResultScale>Mbits/sec</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+    <PreInstallMessage>This test profile automates the testing of a Microsoft Ethr client. Ensure you have a suitable Ethr server [https://github.com/microsoft/ethr] running on your network prior to running this test profile.</PreInstallMessage>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.5</Version>
+    <SupportedPlatforms>Linux, BSD, Solaris, MacOSX, Windows</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Network</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>golang</ExternalDependencies>
+    <RequiresNetwork>TRUE</RequiresNetwork>
+    <EnvironmentSize>8</EnvironmentSize>
+    <ProjectURL>https://github.com/microsoft/ethr</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <PostArguments> -d 20s </PostArguments>
+    </Default>
+    <Option>
+      <DisplayName>Server Address</DisplayName>
+      <Identifier>server-address</Identifier>
+      <ArgumentPrefix>-c </ArgumentPrefix>
+    </Option>
+    <Option>
+      <DisplayName>Protocol</DisplayName>
+      <Identifier>protocol</Identifier>
+      <ArgumentPrefix>-p </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>TCP</Name>
+          <Value>tcp</Value>
+        </Entry>
+        <Entry>
+          <Name>UDP</Name>
+          <Value>udp</Value>
+        </Entry>
+        <Entry>
+          <Name>HTTP</Name>
+          <Value>http</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test</Identifier>
+      <ArgumentPrefix>-t </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>Bandwidth</Name>
+          <Value>b</Value>
+        </Entry>
+        <Entry>
+          <Name>Connections/s</Name>
+          <Value>c</Value>
+        </Entry>
+        <Entry>
+          <Name>Latency</Name>
+          <Value>l</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Threads</DisplayName>
+      <Identifier>threads</Identifier>
+      <ArgumentPrefix>-n </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>1</Name>
+          <Value>1</Value>
+        </Entry>
+        <Entry>
+          <Name>2</Name>
+          <Value>2</Value>
+        </Entry>
+        <Entry>
+          <Name>4</Name>
+          <Value>4</Value>
+        </Entry>
+        <Entry>
+          <Name>8</Name>
+          <Value>8</Value>
+        </Entry>
+        <Entry>
+          <Name>16</Name>
+          <Value>16</Value>
+        </Entry>
+        <Entry>
+          <Name>32</Name>
+          <Value>32</Value>
+        </Entry>
+        <Entry>
+          <Name>64</Name>
+          <Value>64</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

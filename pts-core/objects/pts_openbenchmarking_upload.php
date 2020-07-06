@@ -177,7 +177,6 @@ class pts_openbenchmarking_upload extends pts_openbenchmarking
 			$json_response = json_decode($json_response, true);
 		}
 
-
 		if(!is_array($json_response))
 		{
 			trigger_error('Unhandled Exception', E_USER_ERROR);

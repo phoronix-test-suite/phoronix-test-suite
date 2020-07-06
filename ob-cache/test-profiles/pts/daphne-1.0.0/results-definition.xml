@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.8.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>elapsed time: 6.61638 seconds, average time per testcase (#2500): #_RESULT_# seconds</OutputTemplate>
+    <LineHint>elapsed time</LineHint>
+    <DivideResultDivisor>60</DivideResultDivisor>
+  </ResultsParser>
+</PhoronixTestSuite>
