@@ -155,10 +155,10 @@ class pts_types
 			// Object is a test
 			$objects[] = new pts_test_profile($tp_identifier);
 		}
-		else if(pts_test_suite::is_suite($identifier_item))
+		else if(($s = pts_test_suite::is_suite($identifier_item)))
 		{
 			// Object is a suite
-			$objects[] = new pts_test_suite($identifier_item);
+			$objects[] = new pts_test_suite($s);
 		}
 		else if(pts_results::is_saved_result_file($identifier_item))
 		{

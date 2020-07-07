@@ -264,7 +264,7 @@ class pts_test_suite
 		{
 			$identifier = pts_openbenchmarking::evaluate_string_to_qualifier($identifier, true, 'suite');
 		}
-		return is_file(PTS_TEST_SUITE_PATH . $identifier . '/suite-definition.xml');
+		return is_file(PTS_TEST_SUITE_PATH . $identifier . '/suite-definition.xml') ? $identifier : false;
 	}
 	public function needs_updated_install()
 	{
