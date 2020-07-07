@@ -36,9 +36,24 @@ class pts_virtual_test_suite extends pts_test_suite
 		$this->virtual = isset($identifier[1]) ? $identifier[1] : $identifier[0];
 
 		// Read the OpenBenchmarking.org repository index
-		$repo_index = pts_openbenchmarking::read_repository_index($this->repo);
+		if($this->repo == null)
+		{
+			$repo_index = array('tests' => array());
+			foreach(pts_openbenchmarking::linked_repositories() as $repo)
+			{
+				$temp_index = pts_openbenchmarking::read_repository_index($repo);
+				if(isset($temp_index['tests']))
+				{
+					$repo_index['tests'] = array_merge($temp_index['tests'], $repo_index['tests']);
+				}
+			}
+		}
+		else
+		{
+			$repo_index = pts_openbenchmarking::read_repository_index($this->repo);
+		}
 
-		if(!isset($repo_index['tests']) || !is_array($repo_index['tests']))
+		if(!isset($repo_index['tests']) || !is_array($repo_index['tests']) || count($repo_index['tests']) < 1)
 		{
 			return;
 		}
