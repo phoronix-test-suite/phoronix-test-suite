@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 9.8.0
+9 July 2020
 
 pts-core: Handling of cases where all options are unsupported (such as CUDA and OpenCL tests with no valid backends found) to avoid prompts
 pts-core: Be more liberal in allowing CUDA/OpenCL GPU compute tests to run fine without display server active

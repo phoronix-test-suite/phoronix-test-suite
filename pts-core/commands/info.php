@@ -260,7 +260,7 @@ class info implements pts_option_interface
 				{
 					echo PHP_EOL . pts_client::cli_just_bold('Contained Tests:') . PHP_EOL;
 					$tt = array_unique($test_titles);
-					sort($tt);
+					natcasesort($tt);
 					echo pts_user_io::display_text_list($tt);
 					echo '  ' . pts_client::cli_just_italic(pts_strings::plural_handler(count($tt), 'Distinct Test Profiles')) . PHP_EOL;
 					echo '  ' . pts_client::cli_just_italic(pts_strings::plural_handler($o->get_test_count(), 'Test')) . PHP_EOL;
