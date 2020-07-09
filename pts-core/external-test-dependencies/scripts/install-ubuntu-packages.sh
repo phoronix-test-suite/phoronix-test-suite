@@ -1,4 +1,5 @@
 #!/bin/sh
+export DEBIAN_FRONTEND=noninteractive
 if [ `whoami` = "root" ] && [ ! -w /usr/bin/sudo ]; then
 	apt-get -y --ignore-missing install $*
 elif [ `whoami` != "root" ] && [ ! -z "$DISPLAY" ]; then

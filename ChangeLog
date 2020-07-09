@@ -8,6 +8,7 @@ pts-core: Be more liberal in allowing CUDA/OpenCL GPU compute tests to run fine 
 pts-core: Fix for not filling test suites of contained tests in some select cases (sub-suites listing in results viewer)
 pts-core: Allow creating new virtual test suites that are not prefixed by a OB repository
 phodevi: NVIDIA GPU detection within WSL2
+docker: Rewritten phoronix/pts Docker implementation based on Ubuntu 20.04 LTS
 
 Phoronix Test Suite 9.8.0 Milestone 2
 24 June 2020

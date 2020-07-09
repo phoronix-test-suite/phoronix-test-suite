@@ -1,5 +1,15 @@
 # Phoronix Test Suite Release History
 
+Phoronix Test Suite 9.8
+======
+#### Release Date: 9 July 2020 | Codename: Nesodden
+* Improved handling of test install failure when a new minor test profile update is available tu automatically try
+* Improved detection of OpenCL and NVIDIA CUDA presence for avoiding some test option prompts when not supported
+* Estimated test install time reporting
+* Rewritten virtual test suite implementation
+* Early PHP 8.0 support
+* Linux AMD Energy driver support in Phodevi, NVIDIA GPU detection in WSL2, other cases
+
 Phoronix Test Suite 9.6
 ======
 #### Release Date: 21 April 2020 | Codename: Nittedal
