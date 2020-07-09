@@ -204,7 +204,7 @@ class dump_documentation implements pts_option_interface
 
 		foreach(pts_virtual_test_suite::available_virtual_suites() as $virtual_suite)
 		{
-			$sub_header = $dom->createElement('h3', $virtual_suite->get_title());
+			$sub_header = $dom->createElement('h3', ucwords($virtual_suite->get_title()));
 			$em = $dom->CreateElement('em', '  ' . $virtual_suite->get_identifier());
 			$sub_header->appendChild($em);
 			$body->appendChild($sub_header);
