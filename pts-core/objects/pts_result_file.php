@@ -784,6 +784,16 @@ class pts_result_file
 			$this->result_objects[$ch] = $result_object;
 		}
 
+		$parent = $result_object->get_parent_hash();
+		if($parent)
+		{
+			if(!isset($this->ro_relation_map[$parent]))
+			{
+				$this->ro_relation_map[$parent] = array();
+			}
+			$this->ro_relation_map[$parent][] = $ch;
+		}
+
 		return $ch;
 	}
 	public function add_result_return_object(&$result_object, $only_if_result_already_present = false)
