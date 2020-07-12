@@ -28,6 +28,7 @@ class pts_result_viewer_embed
 	protected $result_public_id;
 	protected $graph_export_handler = false;
 	protected $post_description_message = null;
+	protected $show_html_table_when_relevant = true;
 
 	public function __construct(&$result_file, $public_id = null)
 	{
@@ -59,6 +60,10 @@ class pts_result_viewer_embed
 	public function set_post_description_message($msg)
 	{
 		$this->post_description_message = $msg;
+	}
+	public function show_html_result_table($show)
+	{
+		$this->show_html_table_when_relevant = $show;
 	}
 	public function get_html()
 	{
@@ -137,7 +142,7 @@ class pts_result_viewer_embed
 			}
 		}
 		$PAGE .= '<a name="table"></a>';
-		if(!$result_file->is_multi_way_comparison())
+		if(!$result_file->is_multi_way_comparison() && $this->show_html_table_when_relevant)
 		{
 			$PAGE .= '<div class="pts_result_table">' . pts_result_file_output::result_file_to_detailed_html_table($result_file, 'grid', $extra_attributes, pts_result_viewer_settings::check_request_for_var($_REQUEST, 'sdt')) . '</div>';
 		}
