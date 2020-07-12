@@ -37,10 +37,10 @@ class pts_result_viewer_settings
 		if(count($result_file->get_system_identifiers()) > 1)
 		{
 			$drop_down_menus['Sort Result Order'] = array(
-				'sro' => 'By Identifier (ASC)',
 				'sro&rro' => 'By Identifier (DESC)',
-				'sor' => 'By Performance (ASC)',
-				'sor&rro' => 'By Performance (DESC)',
+				'sro' => 'By Identifier (ASC)',
+				'sor' => 'By Performance (DESC)',
+				'sor&rro' => 'By Performance (ASC)',
 				);
 		}
 		if($result_file->get_test_count() > 1)
@@ -71,8 +71,12 @@ class pts_result_viewer_settings
 		$analyze_options .= '</ul></div>';
 		return $analyze_options;
 	}
-	public static function get_html_options_markup(&$result_file, &$request)
+	public static function get_html_options_markup(&$result_file, &$request, $public_id = null, $can_delete_results = false)
 	{
+		if($public_id == null && defined('RESULTS_VIEWING_ID'))
+		{
+			$public_id = RESULTS_VIEWING_ID;
+		}
 		$analyze_options = null;
 
 		// CHECKS FOR DETERMINING OPTIONS TO DISPLAY
@@ -288,16 +292,16 @@ $t .= '
 
 	if($has_system_logs)
 	{
-		$t .= '<div class="div_table_cell">' . ($result_file->get_system_log_dir($si) ? '<button type="button" onclick="javascript:display_system_logs_for_result(\'' . RESULTS_VIEWING_ID . '\', \'' . $si . '\'); return false;">View System Logs</button>' : ' ') . '</div>';
+		$t .= '<div class="div_table_cell">' . ($result_file->get_system_log_dir($si) ? '<button type="button" onclick="javascript:display_system_logs_for_result(\'' . $public_id . '\', \'' . $si . '\'); return false;">View System Logs</button>' : ' ') . '</div>';
 	}
 	$stime = strtotime($sys->get_timestamp());
 	$t .= '<div class="div_table_cell"><input type="number" min="0" step="1" name="ppd_' . $ppdx . '" value="' . ($ppd && $ppd !== true ? strip_tags($ppd) : '0') . '" /></div>
 <div class="div_table_cell">' . date(($stime > $start_of_year ? 'F d' : 'F d Y'), $stime) . '</div>
 <div class="div_table_cell"> &nbsp; ' . (isset($test_run_times[$si]) && $test_run_times[$si] > 0 ? pts_strings::format_time($test_run_times[$si], 'SECONDS', true, 60) : ' ') . '</div>';
 
-	if(defined('VIEWER_CAN_DELETE_RESULTS') && VIEWER_CAN_DELETE_RESULTS && defined('RESULTS_VIEWING_ID'))
+	if($can_delete_results && !empty($public_id))
 	{
-		$t .= '<div class="div_table_cell"><button type="button" onclick="javascript:delete_run_from_result_file(\'' . RESULTS_VIEWING_ID . '\', \'' . $si . '\', \'' . $ppdx . '\'); return false;">Delete Run</button></div>';
+		$t .= '<div class="div_table_cell"><button type="button" onclick="javascript:delete_run_from_result_file(\'' . $public_id . '\', \'' . $si . '\', \'' . $ppdx . '\'); return false;">Delete Run</button></div>';
 	}
 	$t .= '</div>';
 }
@@ -343,7 +347,7 @@ if($result_file->get_test_count() > 1)
 
 		return $analyze_options;
 	}
-	public static function process_helper_html(&$request, &$result_file, &$extra_attributes)
+	public static function process_result_export_pre_render(&$request, &$result_file, &$extra_attributes)
 	{
 		// Result export?
 		$result_title = (isset($_GET['result']) ? $_GET['result'] : 'result');
@@ -410,7 +414,10 @@ if($result_file->get_test_count() > 1)
 				exit;
 		}
 		// End result export
-
+	}
+	public static function process_helper_html(&$request, &$result_file, &$extra_attributes)
+	{
+		self::process_result_export_pre_render($request, $result_file, $extra_attributes);
 		$html = null;
 		if(self::check_request_for_var($request, 'spr'))
 		{
