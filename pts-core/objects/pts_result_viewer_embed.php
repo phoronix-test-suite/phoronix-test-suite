@@ -336,9 +336,8 @@ class pts_result_viewer_embed
 						$PAGE .= '<input type="radio" name="tabs_' . $i . '" id="' . $tab_id . '"' . ($title == 'Result' ? ' checked="checked"' : '') . '>
 						  <label for="' . $tab_id . '">' . $title . '</label>
 						  <div class="tab">
-						    ' . $rendered . '
+						    ' . $rendered . $this->graph_export_handler($rendered) . '
 						  </div>';
-						$PAGE .= $this->graph_export_handler($rendered);
 					}
 					$PAGE .= '</div>';
 			}
