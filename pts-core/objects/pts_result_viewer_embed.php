@@ -27,6 +27,7 @@ class pts_result_viewer_embed
 	protected $can_delete_results = false;
 	protected $result_public_id;
 	protected $graph_export_handler = false;
+	protected $post_description_message = null;
 
 	public function __construct(&$result_file, $public_id = null)
 	{
@@ -55,6 +56,10 @@ class pts_result_viewer_embed
 			return call_user_func($this->graph_export_handler, $raw);
 		}
 	}
+	public function set_post_description_message($msg)
+	{
+		$this->post_description_message = $msg;
+	}
 	public function get_html()
 	{
 		$result_file = &$this->result_file;
@@ -75,7 +80,7 @@ class pts_result_viewer_embed
 		{
 			$PAGE .= ' <input type="submit" value="Delete Result File" onclick="javascript:delete_result_file(\'' . $this->result_public_id . '\'); return false;">';
 		}
-
+		$PAGE .= $this->post_description_message;
 		$PAGE .= '<p align="center">Jump To <a href="#table">Table</a> - <a href="#results">Results</a></p>';
 		$PAGE .= '<hr /><div style="font-size: 12pt;">' . $html_options . '</div><hr style="clear: both;" />';
 		$PAGE .= pts_result_viewer_settings::process_helper_html($_REQUEST, $result_file, $extra_attributes);
