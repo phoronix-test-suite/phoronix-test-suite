@@ -327,7 +327,7 @@ class pts_result_viewer_embed
 			{
 				$button_area .= ' <button onclick="javascript:display_test_logs_for_result_object(\'' . $this->result_public_id . '\', \'' . $i . '\'); return false;">View Test Run Logs</button> ';
 			}
-			$install_logs = pts_file_io::glob($result_file->get_test_installation_log_dir() . '*/' . $result_object->test_profile->get_identifier_simplified() . '.log');
+			$install_logs = $result_file->get_test_installation_log_dir() ? pts_file_io::glob($result_file->get_test_installation_log_dir() . '*/' . $result_object->test_profile->get_identifier_simplified() . '.log') : array();
 			if(count($install_logs) > 0)
 			{
 				$button_area .= ' <button onclick="javascript:display_install_logs_for_result_object(\'' . $this->result_public_id . '\', \'' . $i . '\'); return false;">View Test Installation Logs</button> ';

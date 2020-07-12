@@ -247,7 +247,7 @@ class pts_result_viewer_settings
 
 		if($system_identifier_count > 1)
 		{
-			$has_system_logs = glob($result_file->get_system_log_dir() . '/*/*');
+			$has_system_logs = $result_file->get_system_log_dir() ? glob($result_file->get_system_log_dir() . '/*/*') : false;
 			$t .= '<div style="clear: both;"><h2>Run Management</h2>
 <div class="div_table">
 <div class="div_table_body">
