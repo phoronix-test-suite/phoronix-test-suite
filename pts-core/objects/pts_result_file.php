@@ -641,7 +641,12 @@ class pts_result_file
 	public function avoid_duplicate_identifiers()
 	{
 		// avoid duplicate test identifiers
-		foreach(pts_arrays::duplicates_in_array($this->get_system_identifiers()) as $duplicate)
+		$identifiers = $this->get_system_identifiers();
+		if(count($identifiers) < 2)
+		{
+			return;
+		}
+		foreach(pts_arrays::duplicates_in_array($identifiers) as $duplicate)
 		{
 			while($this->is_system_identifier_in_result_file($duplicate))
 			{

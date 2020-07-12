@@ -625,7 +625,6 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			header('Location: ' . $server_uri . $result_link);
 		}
 		$result_file = null;
-		$result_merges = 0;
 		$possible_results = explode(',', $_GET['result']);
 		$results_viewing = array();
 		foreach($possible_results as $rid)
@@ -645,7 +644,6 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 				{
 					$rf = new pts_result_file($rid);
 					$result_file->merge(array(new pts_result_merge_select($rf)), 0, $rf->get_title(), true, true);
-					$result_merges++;
 				}
 			}
 		}
@@ -655,10 +653,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		}
 		define('RESULTS_VIEWING_COUNT', count($results_viewing));
 		define('RESULTS_VIEWING_ID', $results_viewing[0]);
-		if($result_merges > 0)
-		{
-			$result_file->avoid_duplicate_identifiers();
-		}
+		$result_file->avoid_duplicate_identifiers();
 
 		$extra_attributes = null;
 		$html_options = pts_result_viewer_settings::get_html_options_markup($result_file, $_REQUEST);
