@@ -244,7 +244,7 @@ class pts_ae_data
 			{
 				$values = pts_math::remove_outliers($values);
 
-				if(phodevi::is_fake_device($component) || count($values) < 2)
+				if(phodevi::is_fake_device($component) || count($values) < 4)
 				{
 					unset($comparison_components[$component]);
 					continue;
