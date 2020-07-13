@@ -63,7 +63,7 @@ class pts_ae_data
 				$this->db->exec('CREATE INDEX `by_cat` ON `components` (`Component`,`Category`,`TimesAppeared`);');
 				$this->db->exec('CREATE TABLE `component_categories` (`CategoryID`	INTEGER PRIMARY KEY AUTOINCREMENT,`Category`	TEXT UNIQUE);');
 				$this->db->exec('CREATE INDEX `quick_cat` ON `component_categories` (	`CategoryID`,	`Category`);');
-				$this->db->exec('CREATE TABLE `composite` (`ComparisonHash`	TEXT UNIQUE,`TestProfile`	TEXT,`Title`	TEXT,`ArgumentsDescription`	TEXT,`HigherIsBetter`	INTEGER, TestVersion TEXT, AppVersion TEXT,`SampleSize`	INTEGER, Percentiles TEXT, FirstAppeared INTEGER, LastAppeared INTEGER, PRIMARY KEY(`ComparisonHash`));');
+				$this->db->exec('CREATE TABLE `composite` (`ComparisonHash`	TEXT UNIQUE,`TestProfile`	TEXT,`Title`	TEXT,`ArgumentsDescription`	TEXT,`HigherIsBetter`	INTEGER, TestVersion TEXT, AppVersion TEXT, ResultUnit TEXT,`SampleSize`	INTEGER, Percentiles TEXT, FirstAppeared INTEGER, LastAppeared INTEGER, PRIMARY KEY(`ComparisonHash`));');
 				$this->db->exec('CREATE INDEX `tp` ON `composite` (`TestProfile`);');
 				$this->db->exec('CREATE UNIQUE INDEX `unq` ON `analytics_results` (`DateTime`,`Result`,`Component`,`RelatedComponent`,`ComparisonHash`);');
 				//$this->db->exec('');
@@ -75,7 +75,7 @@ class pts_ae_data
 	}
 	public function insert_composite_hash_entry_by_result_object($comparison_hash, &$result_object)
 	{
-		$stmt = $this->db->prepare('INSERT OR IGNORE INTO composite (ComparisonHash, TestProfile, Title, ArgumentsDescription, HigherIsBetter, TestVersion, AppVersion) VALUES (:ch, :tp, :t, :ad, :hib, :tv, :av)');
+		$stmt = $this->db->prepare('INSERT OR IGNORE INTO composite (ComparisonHash, TestProfile, Title, ArgumentsDescription, HigherIsBetter, TestVersion, AppVersion, ResultUnit) VALUES (:ch, :tp, :t, :ad, :hib, :tv, :av, :ru)');
 		$stmt->bindValue(':ch', $comparison_hash);
 		$stmt->bindValue(':tp', $result_object->test_profile->get_identifier(false));
 		$stmt->bindValue(':t', $result_object->test_profile->get_title());
@@ -83,6 +83,7 @@ class pts_ae_data
 		$stmt->bindValue(':hib', ($result_object->test_profile->get_result_proportion() == 'HIB' ? 1 : 0));
 		$stmt->bindValue(':tv', $result_object->test_profile->get_test_profile_version());
 		$stmt->bindValue(':av', $result_object->test_profile->get_app_version());
+		$stmt->bindValue(':ru', $result_object->test_profile->get_result_scale());
 		$result = $stmt->execute();
 	}
 	public function insert_result_into_analytic_results($comparison_hash, $result_reference, $component, $category, $related_component, $related_category, $result, $datetime, $system_type, $system_layer)
@@ -270,6 +271,7 @@ class pts_ae_data
 			$json['test_version'] = $row['TestVersion'];
 			$json['app_version'] = $row['AppVersion'];
 			$json['hib'] = $row['HigherIsBetter'];
+			$json['unit'] = $row['ResultUnit'];
 			$json['samples'] = count($results);
 			$json['first_appeared'] = $first_appeared;
 			$json['last_appeared'] = $last_appeared;
@@ -277,12 +279,12 @@ class pts_ae_data
 			$json['components'] = $component_data;
 			$json['reference_results'] = $comparison_components;
 
-			$json = json_encode($json);
-			if(!empty($json))
+			$json_encoded = json_encode($json);
+			if(!empty($json_encoded))
 			{
 				$test_dir = base64_encode($row['TestProfile']);
 				pts_file_io::mkdir($this->ae_dir . 'comparison-hashes/' . $test_dir . '/');
-				file_put_contents($this->ae_dir . 'comparison-hashes/' . $test_dir . '/' . $comparison_hash . '.json', $json);
+				file_put_contents($this->ae_dir . 'comparison-hashes/' . $test_dir . '/' . $comparison_hash . '.json', $json_encoded);
 
 				if(!isset($json_index_master[$test_dir]))
 				{
@@ -293,7 +295,9 @@ class pts_ae_data
 					'description' => $json['description'],
 					'test_version' => $json['test_version'],
 					'app_version' => $json['app_version'],
+					'unit' => $json['unit'],
 					'samples' => $json['samples'],
+					'product_samples' => count($comparison_components),
 					);
 			}
 			// EO JSON
