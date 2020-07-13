@@ -843,6 +843,7 @@ class phodevi extends phodevi_base
 		$string_check = array(
 			'Logical Volume',
 			'QEMU',
+			'Eng Sample',
 			);
 
 		foreach($string_check as $check)
