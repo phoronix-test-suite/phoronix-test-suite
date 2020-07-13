@@ -117,7 +117,7 @@ class pts_arrays
 
 		return $l;
 	}
-	function natural_krsort(&$array)
+	public static function natural_krsort(&$array)
 	{
 		$keys = array_keys($array);
 		natsort($keys);

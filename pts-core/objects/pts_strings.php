@@ -692,10 +692,10 @@ class pts_strings
 	public static function number_suffix_handler($n)
 	{
 		$suffix = 'th';
-		$n = $n % 100;
-		if($n < 11 || $n > 13)
+		$r = $n % 100;
+		if($r < 11 || $r > 13)
 		{
-			switch($n % 10)
+			switch($r % 10)
 			{
 				case 1:
 					$suffix = 'st';
