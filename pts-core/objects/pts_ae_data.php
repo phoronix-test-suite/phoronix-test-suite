@@ -319,7 +319,7 @@ class pts_ae_data
 		{
 			foreach($json_index_master as $test_profile_dir => $test_index)
 			{
-				krsort($test_index);
+				pts_arrays::natural_krsort($test_index);
 				$test_index = json_encode($test_index);
 				file_put_contents($this->ae_dir . 'comparison-hashes/' . $test_profile_dir . '/index.json', $test_index);
 			}
