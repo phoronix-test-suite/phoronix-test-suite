@@ -63,7 +63,7 @@ class pts_ae_data
 				$this->db->exec('CREATE INDEX `by_cat` ON `components` (`Component`,`Category`,`TimesAppeared`);');
 				$this->db->exec('CREATE TABLE `component_categories` (`CategoryID`	INTEGER PRIMARY KEY AUTOINCREMENT,`Category`	TEXT UNIQUE);');
 				$this->db->exec('CREATE INDEX `quick_cat` ON `component_categories` (	`CategoryID`,	`Category`);');
-				$this->db->exec('CREATE TABLE `composite` (`ComparisonHash`	TEXT UNIQUE,`TestProfile`	TEXT,`Title`	TEXT,`ArgumentsDescription`	TEXT,`HigherIsBetter`	INTEGER,`SampleSize`	INTEGER, Percentiles TEXT, FirstAppeared INTEGER, LastAppeared INTEGER, PRIMARY KEY(`ComparisonHash`));');
+				$this->db->exec('CREATE TABLE `composite` (`ComparisonHash`	TEXT UNIQUE,`TestProfile`	TEXT,`Title`	TEXT,`ArgumentsDescription`	TEXT,`HigherIsBetter`	INTEGER, TestVersion TEXT, AppVersion TEXT,`SampleSize`	INTEGER, Percentiles TEXT, FirstAppeared INTEGER, LastAppeared INTEGER, PRIMARY KEY(`ComparisonHash`));');
 				$this->db->exec('CREATE INDEX `tp` ON `composite` (`TestProfile`);');
 				$this->db->exec('CREATE UNIQUE INDEX `unq` ON `analytics_results` (`DateTime`,`Result`,`Component`,`RelatedComponent`,`ComparisonHash`);');
 				//$this->db->exec('');
@@ -75,12 +75,14 @@ class pts_ae_data
 	}
 	public function insert_composite_hash_entry_by_result_object($comparison_hash, &$result_object)
 	{
-		$stmt = $this->db->prepare('INSERT OR IGNORE INTO composite (ComparisonHash, TestProfile, Title, ArgumentsDescription, HigherIsBetter) VALUES (:ch, :tp, :t, :ad, :hib)');
+		$stmt = $this->db->prepare('INSERT OR IGNORE INTO composite (ComparisonHash, TestProfile, Title, ArgumentsDescription, HigherIsBetter, TestVersion, AppVersion) VALUES (:ch, :tp, :t, :ad, :hib, :tv, :av)');
 		$stmt->bindValue(':ch', $comparison_hash);
 		$stmt->bindValue(':tp', $result_object->test_profile->get_identifier(false));
 		$stmt->bindValue(':t', $result_object->test_profile->get_title());
 		$stmt->bindValue(':ad', $result_object->get_arguments_description());
 		$stmt->bindValue(':hib', ($result_object->test_profile->get_result_proportion() == 'HIB' ? 1 : 0));
+		$stmt->bindValue(':tv', $result_object->test_profile->get_test_profile_version());
+		$stmt->bindValue(':av', $result_object->test_profile->get_app_version());
 		$result = $stmt->execute();
 	}
 	public function insert_result_into_analytic_results($comparison_hash, $result_reference, $component, $category, $related_component, $related_category, $result, $datetime, $system_type, $system_layer)
@@ -164,6 +166,7 @@ class pts_ae_data
 	{
 		$stmt = $this->db->prepare('SELECT * FROM composite');
 		$result = $stmt ? $stmt->execute() : false;
+		$json_index_master = array();
 
 		while($result && ($row = $result->fetchArray()))
 		{
@@ -264,6 +267,8 @@ class pts_ae_data
 			$json['test_profile'] = $row['TestProfile'];
 			$json['title'] = $row['Title'];
 			$json['description'] = $row['ArgumentsDescription'];
+			$json['test_version'] = $row['TestVersion'];
+			$json['app_version'] = $row['AppVersion'];
 			$json['hib'] = $row['HigherIsBetter'];
 			$json['samples'] = count($results);
 			$json['first_appeared'] = $first_appeared;
@@ -278,6 +283,18 @@ class pts_ae_data
 				$test_dir = base64_encode($row['TestProfile']);
 				pts_file_io::mkdir($this->ae_dir . 'comparison-hashes/' . $test_dir . '/');
 				file_put_contents($this->ae_dir . 'comparison-hashes/' . $test_dir . '/' . $comparison_hash . '.json', $json);
+
+				if(!isset($json_index_master[$test_dir]))
+				{
+					$json_index_master[$test_dir] = array();
+				}
+				$json_index_master[$test_dir][$json['test_version']] = array(
+					'comparison_hash' => $json['comparison_hash'],
+					'description' => $json['description'],
+					'test_version' => $json['test_version'],
+					'app_version' => $json['app_version'],
+					'samples' => $json['samples'],
+					);
 			}
 			// EO JSON
 
@@ -288,6 +305,15 @@ class pts_ae_data
 			$stmt->bindValue(':fa', $first_appeared);
 			$stmt->bindValue(':la', $last_appeared);
 			$stmt->execute();
+		}
+		if(!empty($json_index_master))
+		{
+			foreach($json_index_master as $test_profile_dir => $test_index)
+			{
+				krsort($test_index);
+				$test_index = json_encode($test_index);
+				file_put_contents($this->ae_dir . 'comparison-hashes/' . $test_profile_dir . '/index.json', $test_index);
+			}
 		}
 	}
 	public function sort_array_by_size_of_array_in_value($a, $b)

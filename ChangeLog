@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+pts-core: Split the dynamic result viewer into its own embed class for result file handling to allow for easy re-use by OpenBenchmarking, Phoromatic, etc
+
 Phoronix Test Suite 9.8.0
 9 July 2020
 
