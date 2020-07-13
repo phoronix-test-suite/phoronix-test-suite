@@ -254,7 +254,24 @@ class pts_ae_data
 			$comparison_components = array_slice($comparison_components, 0, 120);
 			foreach($comparison_components as $component => &$values)
 			{
-				$values = round(pts_math::arithmetic_mean($values), ($peak > 60 ? 0 : 2));
+				$values = pts_math::arithmetic_mean($values);
+				if($values < 5)
+				{
+					$precision = 5;
+				}
+				else if($values < 20)
+				{
+					$precision = 3;
+				}
+				else if($values < 60)
+				{
+					$precision = 2;
+				}
+				else if($peak > 100)
+				{
+					$precision = 0;
+				}
+				$values = round($values, $precision);
 			}
 
 			if($row['HigherIsBetter'] == '1')
