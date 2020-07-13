@@ -95,11 +95,11 @@ class pts_ResultFileCompactSystemsTable extends pts_graph_core
 
 		// Header
 		//$this->svg_dom->add_element('rect', array('x' => 0, 'y' => 0, 'width' => $this->i['graph_width'], 'height' => $this->i['graph_height'] - 2, 'fill' => self::$c['color']['background'], 'stroke' => self::$c['color']['body_light'], 'stroke-width' => 2));
-		$this->svg_dom->add_element('rect', array('x' => 2, 'y' => 1, 'width' => ($this->i['graph_width'] - 3), 'height' => ($this->i['top_heading_height'] - 1), 'fill' => self::$c['color']['main_headers'], 'stroke' => self::$c['color']['border'], 'stroke-width' => 1));
-		$this->svg_dom->add_text_element($this->i['graph_title'], array('x' => ($this->i['graph_width'] / 2), 'y' => (2 + self::$c['size']['headers']), 'font-size' => self::$c['size']['headers'], 'fill' => self::$c['color']['background'], 'text-anchor' => 'middle', 'font-weight' => 'bold'));
+		//$this->svg_dom->add_element('rect', array('x' => 2, 'y' => 1, 'width' => ($this->i['graph_width'] - 3), 'height' => ($this->i['top_heading_height'] - 1), 'fill' => self::$c['color']['main_headers'], 'stroke' => self::$c['color']['border'], 'stroke-width' => 1));
+		$this->svg_dom->add_text_element($this->i['graph_title'], array('x' => ($this->i['graph_width'] / 2), 'y' => (2 + self::$c['size']['headers']), 'font-size' => self::$c['size']['headers'], 'fill' => self::$c['color']['main_headers', 'text-anchor' => 'middle', 'font-weight' => 'bold'));
 
-		$this->svg_dom->add_text_element(self::$c['text']['watermark'], array('x' => 4, 'y' => ($this->i['top_heading_height'] - 3), 'font-size' => 8, 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'xlink:show' => 'new', 'xlink:href' => self::$c['text']['watermark_url'], 'font-weight' => 'bold'));
-		$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => ($this->i['graph_width'] - 4), 'y' => ($this->i['top_heading_height'] - 3), 'font-size' => 8, 'fill' => self::$c['color']['background'], 'text-anchor' => 'end', 'xlink:show' => 'new', 'xlink:href' => 'https://www.phoronix-test-suite.com/', 'font-weight' => 'bold'));
+		$this->svg_dom->add_text_element(self::$c['text']['watermark'], array('x' => 4, 'y' => ($this->i['top_heading_height'] - 3), 'font-size' => 8, 'fill' => self::$c['color']['main_headers', 'text-anchor' => 'start', 'xlink:show' => 'new', 'xlink:href' => self::$c['text']['watermark_url'], 'font-weight' => 'bold'));
+		$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => ($this->i['graph_width'] - 4), 'y' => ($this->i['top_heading_height'] - 3), 'font-size' => 8, 'fill' => self::$c['color']['main_headers', 'text-anchor' => 'end', 'xlink:show' => 'new', 'xlink:href' => 'https://www.phoronix-test-suite.com/', 'font-weight' => 'bold'));
 
 		// Body
 		$offset = $this->i['top_heading_height'];
