@@ -290,7 +290,7 @@ class pts_ae_data
 				{
 					$json_index_master[$test_dir] = array();
 				}
-				$json_index_master[$test_dir][$json['test_version']] = array(
+				$json_index_master[$test_dir][$json['test_version'] . $json['comparison_hash']] = array(
 					'comparison_hash' => $json['comparison_hash'],
 					'description' => $json['description'],
 					'test_version' => $json['test_version'],
