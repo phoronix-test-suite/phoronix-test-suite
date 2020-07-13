@@ -188,6 +188,11 @@ class pts_ae_data
 			for($i = 0; $i < 100; $i++)
 			{
 				$percentiles[$i] = pts_math::find_percentile($results, ($i * 0.01));
+
+				if($percentiles[$i] > 10)
+				{
+					$percentiles[$i] = round($percentiles[$i], 5);
+				}
 			}
 
 			$peak = max($results);
@@ -268,7 +273,7 @@ class pts_ae_data
 			$json['test_profile'] = $row['TestProfile'];
 			$json['title'] = $row['Title'];
 			$json['description'] = $row['ArgumentsDescription'];
-			$json['test_version'] = $row['TestVersion'];
+			$json['test_version'] = substr($row['TestVersion'], 0, strrpos($row['TestVersion'], '.')) . '.x';
 			$json['app_version'] = $row['AppVersion'];
 			$json['hib'] = $row['HigherIsBetter'];
 			$json['unit'] = $row['ResultUnit'];
@@ -290,7 +295,7 @@ class pts_ae_data
 				{
 					$json_index_master[$test_dir] = array();
 				}
-				$json_index_master[$test_dir][$json['test_version'] . $json['comparison_hash']] = array(
+				$json_index_master[$test_dir][str_replace('.', '', $json['test_version']) . '-' . $json['comparison_hash']] = array(
 					'comparison_hash' => $json['comparison_hash'],
 					'description' => $json['description'],
 					'test_version' => $json['test_version'],
