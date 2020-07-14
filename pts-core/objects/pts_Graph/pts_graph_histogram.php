@@ -39,7 +39,11 @@ class pts_graph_histogram extends pts_graph_core
 		$result->set_used_arguments_description('Range of ' . $this->val_min . ' to ' . $this->val_max);
 		$range = abs($this->val_min - $this->val_max);
 		$this->number_of_bins = min(30, ceil(sqrt($range)));
-		$this->bin_increment = (($range + ($range % $this->number_of_bins)) / $this->number_of_bins);
+		$this->bin_increment = ($range / $this->number_of_bins);
+		if($this->bin_increment > 1)
+		{
+			$this->bin_increment = ceil($this->bin_increment);
+		}
 		
 		$this->bins = array_fill(0, $this->number_of_bins, 0);
 		sort($all_values);
