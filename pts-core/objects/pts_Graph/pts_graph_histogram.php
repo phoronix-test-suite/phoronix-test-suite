@@ -100,7 +100,7 @@ class pts_graph_histogram extends pts_graph_core
 			}
 
 			$x = $px_bound_left;
-			if(strlen($this->val_min + ($i * $this->bin_increment)) < 5)
+			if(strlen($this->val_min + ($i * $this->bin_increment)) < 4)
 			{
 				$this->svg_dom->add_text_element($this->val_min + ($i * $this->bin_increment), array('x' => $x, 'y' => ($px_from_top_end + $this->i['identifier_size']), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers'], 'text-anchor' => 'middle'));
 			}
