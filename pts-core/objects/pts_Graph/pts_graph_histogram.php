@@ -44,8 +44,8 @@ class pts_graph_histogram extends pts_graph_core
 		$this->i['min_identifier_size'] = 6;
 		$this->i['identifier_width'] = -1;
 
-		$this->val_min = min($all_values);
-		$this->val_max = max($all_values);
+		$this->val_min = floor(min($all_values));
+		$this->val_max = ceil(max($all_values));
 		$range = abs($this->val_min - $this->val_max);
 		$this->number_of_bins = min(30, ceil(sqrt($range)));
 		$this->bin_increment = ($range / $this->number_of_bins);
