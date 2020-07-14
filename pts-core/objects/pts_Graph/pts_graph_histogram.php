@@ -22,7 +22,6 @@
 class pts_graph_histogram extends pts_graph_core
 {
 	protected $make_identifiers_web_links = false;
-	protected $all_values;
 	protected $number_of_bins;
 	protected $bin_increment;
 	protected $val_min;
@@ -44,35 +43,35 @@ class pts_graph_histogram extends pts_graph_core
 		$this->i['identifier_height'] = -1;
 		$this->i['min_identifier_size'] = 6;
 		$this->i['identifier_width'] = -1;
-		$this->all_values = $all_values;
 
-
-		$this->val_min = min($this->all_values);
-		$this->val_max = max($this->all_values);
+		$this->val_min = min($all_values);
+		$this->val_max = max($all_values);
 		$range = abs($this->val_min - $this->val_max);
 		$this->number_of_bins = min(30, ceil(sqrt($range)));
 		$this->bin_increment = ($range / $this->number_of_bins);
 		
-		$this->bins = array();
+		$this->bins = array_fill(0, $this->number_of_bins, 0);
 		sort($all_values);
 		$current_bin = 0;
 		$current_bin_count = 0;
 		$next_bin_value = $this->val_min + $this->bin_increment;
-		foreach($all_values as $value)
+		for($i = 0; $i < $this->number_of_bins; $i++)
 		{
-			if($value < $next_bin_value)
+			$min_for_bin = $this->val_min + ($i * $this->bin_increment);
+			$max_for_bin = $min_for_bin + $this->bin_increment;
+			foreach($all_values as $x => $value)
 			{
-				$current_bin_count++;
-			}
-			else
-			{
-				$this->bins[$current_bin] = $current_bin_count;
-				$current_bin++;
-				$current_bin_count = 0;
-				$next_bin_value += $this->bin_increment;
+				if($value < $max_for_bin && $value >= $min_for_bin)
+				{
+					$this->bins[$i]++;
+					unset($all_values[$x]);
+				}
+				if($value > $max_for_bin)
+				{
+					break;
+				}
 			}
 		}
-		
 	}
 	protected function render_graph_pre_init()
 	{
