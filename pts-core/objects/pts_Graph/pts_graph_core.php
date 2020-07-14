@@ -402,11 +402,11 @@ abstract class pts_graph_core
 
 		return self::$color_cache[$check_branding][$identifier];
 	}
-	protected function maximum_graph_value()
+	protected function maximum_graph_value($v = -1)
 	{
 		$real_maximum = 0;
 
-		$data_max = $this->test_result->test_result_buffer->get_max_value();
+		$data_max = $v == -1 ? $this->test_result->test_result_buffer->get_max_value() : $v;
 		$max_precision = pts_math::get_precision($data_max);
 		if(!is_numeric($data_max))
 		{
