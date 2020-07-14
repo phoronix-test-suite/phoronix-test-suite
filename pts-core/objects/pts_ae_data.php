@@ -234,7 +234,6 @@ class pts_ae_data
 					}
 					$component_data[$component][$related_component]['avg'] = round(pts_math::arithmetic_mean($data), ($peak > 60 ? 0 : 2));
 					$component_data[$component][$related_component]['samples'] = count($data);
-					$component_data[$component][$related_component]['sample_data'] = implode(',', $data);
 					$component_data[$component][$related_component]['first_appeared'] = $component_dates[$component][$related_component]['first_appeared'];
 					$component_data[$component][$related_component]['last_appeared'] = $component_dates[$component][$related_component]['last_appeared'];
 					$component_data[$component][$related_component]['system_type'] = $system_types[$component][$related_component];
@@ -296,6 +295,7 @@ class pts_ae_data
 			$json['hib'] = $row['HigherIsBetter'];
 			$json['unit'] = $row['ResultUnit'];
 			$json['samples'] = count($results);
+			$json['sample_data'] = implode(',', $results);
 			$json['first_appeared'] = $first_appeared;
 			$json['last_appeared'] = $last_appeared;
 			$json['percentiles'] = $percentiles;
