@@ -38,7 +38,7 @@ class pts_graph_histogram extends pts_graph_core
 		$this->val_max = ceil(max($all_values));
 		$result->set_used_arguments_description(count($all_values) . ' Results Range From ' . $this->val_min . ' To ' . $this->val_max . ' ');
 		$range = abs($this->val_min - $this->val_max);
-		$this->number_of_bins = min(30, max(12, ceil(sqrt($range))));
+		$this->number_of_bins = min(40, max(12, ceil(sqrt($range))));
 		$this->bin_increment = ($range / $this->number_of_bins);
 		if($this->bin_increment > 1)
 		{
@@ -72,6 +72,7 @@ class pts_graph_histogram extends pts_graph_core
 		$extra_attributes['no_compact_results_var'] = true;
 		$n = null;
 		parent::__construct($result, $n, $extra_attributes);
+		$this->i['graph_width'] = 960;
 		$this->results = array();
 		$this->i['iveland_view'] = true;
 		$this->i['graph_orientation'] = 'VERTICAL';
