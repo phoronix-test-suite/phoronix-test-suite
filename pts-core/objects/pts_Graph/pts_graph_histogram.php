@@ -36,7 +36,7 @@ class pts_graph_histogram extends pts_graph_core
 			
 		$this->val_min = floor(min($all_values));
 		$this->val_max = ceil(max($all_values));
-		$result->set_used_arguments_description('Range of ' . $this->val_min . ' to ' . $this->val_max . ' using ' . count($all_values) . ' samples');
+		$result->set_used_arguments_description('Range of results of ' . $this->val_min . ' to ' . $this->val_max);
 		$range = abs($this->val_min - $this->val_max);
 		$this->number_of_bins = min(30, ceil(sqrt($range)));
 		$this->bin_increment = ($range / $this->number_of_bins);
@@ -111,7 +111,7 @@ class pts_graph_histogram extends pts_graph_core
 	}
 	protected function maximum_graph_value()
 	{
-		return parent::maximum_graph_value(max($this->bins));
+		return parent::maximum_graph_value(max(max($this->bins), $this->i['mark_count']));
 	}
 	protected function render_graph_histogram()
 	{
