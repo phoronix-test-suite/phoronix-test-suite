@@ -72,7 +72,7 @@ class pts_graph_histogram extends pts_graph_core
 		$extra_attributes['no_compact_results_var'] = true;
 		$n = null;
 		parent::__construct($result, $n, $extra_attributes);
-		$this->update_graph_dimensions(960, 420, true);
+		$this->update_graph_dimensions(920, 420, true);
 		$this->results = array();
 		$this->i['iveland_view'] = true;
 		$this->i['graph_orientation'] = 'VERTICAL';
