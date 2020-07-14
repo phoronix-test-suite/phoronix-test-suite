@@ -122,7 +122,8 @@ class dump_ob_to_ae_db implements pts_option_interface
 								$related_component = 'File-System';
 								break;
 							case 'Network':
-								$component = 'Network';
+								$component = 'Processor';
+							// TODO XXX	$component = 'Network';
 								$related_component = 'OS';
 								break;
 							case 'Memory':
