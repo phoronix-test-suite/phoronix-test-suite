@@ -61,7 +61,7 @@ class pts_graph_histogram extends pts_graph_core
 			$max_for_bin = $min_for_bin + $this->bin_increment;
 			foreach($all_values as $x => $value)
 			{
-				if($value < $max_for_bin && $value >= $min_for_bin)
+				if($value <= $max_for_bin && $value >= $min_for_bin)
 				{
 					$this->bins[$i]++;
 					unset($all_values[$x]);
@@ -93,7 +93,7 @@ class pts_graph_histogram extends pts_graph_core
 			}
 
 			$x = $px_bound_left;
-			if($this->number_of_bins < 12)
+			if($this->number_of_bins < 12 && strlen($this->val_min + ($i * $this->bin_increment)) < 5)
 			{
 				$this->svg_dom->add_text_element($this->val_min + ($i * $this->bin_increment), array('x' => $x, 'y' => ($px_from_top_end + $this->i['identifier_size']), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['headers'], 'text-anchor' => 'middle'));
 			}
