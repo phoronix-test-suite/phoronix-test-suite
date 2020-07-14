@@ -30,22 +30,13 @@ class pts_graph_histogram extends pts_graph_core
 	
 	public function __construct(&$test_profile, $all_values, $extra_attributes = null)
 	{
-		$extra_attributes['skip_multi_way_comparison_check'] = true;
-		$extra_attributes['no_compact_results_var'] = true;
 		$result = new pts_test_result($test_profile);
 		$b = new pts_test_result_buffer();
 		$result->set_test_result_buffer($b);
-		$n = null;
-		parent::__construct($result, $n, $extra_attributes);
-		$this->results = array();
-		$this->i['iveland_view'] = true;
-		$this->i['graph_orientation'] = 'VERTICAL';
-		$this->i['identifier_height'] = -1;
-		$this->i['min_identifier_size'] = 6;
-		$this->i['identifier_width'] = -1;
-
+			
 		$this->val_min = floor(min($all_values));
 		$this->val_max = ceil(max($all_values));
+		$result->set_used_arguments_description('Range of ' . $this->val_min . ' to ' . $this->val_max);
 		$range = abs($this->val_min - $this->val_max);
 		$this->number_of_bins = min(30, ceil(sqrt($range)));
 		$this->bin_increment = ($range / $this->number_of_bins);
@@ -72,6 +63,17 @@ class pts_graph_histogram extends pts_graph_core
 				}
 			}
 		}
+		
+		$extra_attributes['skip_multi_way_comparison_check'] = true;
+		$extra_attributes['no_compact_results_var'] = true;
+		$n = null;
+		parent::__construct($result, $n, $extra_attributes);
+		$this->results = array();
+		$this->i['iveland_view'] = true;
+		$this->i['graph_orientation'] = 'VERTICAL';
+		$this->i['identifier_height'] = -1;
+		$this->i['min_identifier_size'] = 6;
+		$this->i['identifier_width'] = -1;
 	}
 	protected function render_graph_pre_init()
 	{
