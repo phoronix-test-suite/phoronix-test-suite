@@ -36,7 +36,8 @@ class pts_graph_histogram extends pts_graph_core
 			
 		$this->val_min = floor(min($all_values));
 		$this->val_max = ceil(max($all_values));
-		$result->set_used_arguments_description(count($all_values) . ' Results Range From ' . $this->val_min . ' To ' . $this->val_max . ' ');
+		$result->set_used_arguments_description(count($all_values) . ' Results Range From ' . $this->val_min . ' To ' . $this->val_max . ' ' . $test_profile->get_result_scale());
+		$test_profile->set_result_scale('');
 		$range = abs($this->val_min - $this->val_max);
 		$this->number_of_bins = min(50, max(12, ceil(sqrt($range))));
 		$this->bin_increment = ($range / $this->number_of_bins);
