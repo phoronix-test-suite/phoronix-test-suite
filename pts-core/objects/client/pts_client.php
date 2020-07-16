@@ -25,6 +25,7 @@ class pts_client
 	public static $display = false;
 	public static $pts_logger = false;
 	public static $web_result_viewer_active = false;
+	public static $web_result_viewer_access_key = false;
 	public static $has_used_modern_result_viewer = false;
 	public static $last_browser_launch_time = 0;
 	public static $last_browser_duration = 0;
