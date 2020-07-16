@@ -33,11 +33,11 @@ class start_result_viewer implements pts_option_interface
 	{
 		if(pts_client::$web_result_viewer_active)
 		{
-			echo PHP_EOL . PHP_EOL . pts_client::cli_just_bold('Result Viewer: ') . 'http://localhost:' . pts_client::$web_result_viewer_active;
+			echo PHP_EOL . pts_client::cli_just_bold('Result Viewer: ') . 'http://localhost:' . pts_client::$web_result_viewer_active;
 		}
 		if(pts_client::$web_result_viewer_access_key)
 		{
-			echo PHP_EOL . PHP_EOL . pts_client::cli_just_bold('Access Key: ') . 'http://localhost:' . pts_client::$web_result_viewer_access_key;
+			echo PHP_EOL . pts_client::cli_just_bold('Access Key: ') . pts_client::$web_result_viewer_access_key;
 		}
 		echo PHP_EOL . 'Press any key when done accessing the viewer to end the process...';
 		pts_user_io::read_user_input();
