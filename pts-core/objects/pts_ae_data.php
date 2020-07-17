@@ -137,7 +137,7 @@ class pts_ae_data
 
 		if($result && ($row = $result->fetchArray()))
 		{
-			$cache[$component][$category] = $this->category_id_to_category($row['Category']);
+			$cache[$component] = $this->category_id_to_category($row['Category']);
 			return $row['Category'];
 		}
 	}
@@ -194,7 +194,7 @@ class pts_ae_data
 
 		if($result && ($row = $result->fetchArray()))
 		{
-			$cache[$category] = $row['Category'];
+			$cache[$category_id] = $row['Category'];
 			return $row['Category'];
 		}
 	}
