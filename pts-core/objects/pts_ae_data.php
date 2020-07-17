@@ -203,7 +203,7 @@ class pts_ae_data
 		$stmt = $this->db->prepare('SELECT * FROM composite');
 		$result = $stmt ? $stmt->execute() : false;
 		$json_index_master = array();
-		$processor_data = array();
+		$hardware_data['Processor'] = array();
 
 		while($result && ($row = $result->fetchArray()))
 		{
@@ -388,17 +388,17 @@ class pts_ae_data
 					switch($component_category)
 					{
 						case 'Processor':
-							if(!isset($processor_data[$component]))
+							if(!isset($hardware_data['Processor'][$component]))
 							{
-								$processor_data[$component] = array(
-									'percentiles'
+								$hardware_data['Processor'][$component] = array(
+									'percentiles' => array(),
 									);
 							}
-							if(!isset($processor_data[$component]['percentiles'][$json['test_profile']][$json['test_version']]))
+							if(!isset($hardware_data['Processor'][$component]['percentiles'][$json['test_profile']][$json['test_version']]))
 							{
-								$processor_data[$component]['percentiles'][$json['test_profile']][$json['test_version']] = array();
+								$hardware_data['Processor'][$component]['percentiles'][$json['test_profile']][$json['test_version']] = array();
 							}
-							$processor_data[$component]['percentiles'][$json['test_profile']][$json['test_version']] = $this_percentile;
+							$hardware_data['Processor'][$component]['percentiles'][$json['test_profile']][$json['test_version']] = $this_percentile;
 							break;
 					}
 				}
@@ -413,12 +413,19 @@ class pts_ae_data
 				file_put_contents($this->ae_dir . 'comparison-hashes/' . $test_profile_dir . '/index.json', $test_index);
 			}
 		}
-
-		pts_file_io::mkdir($this->ae_dir . 'component-data/Processor');
-		foreach($processor_data as $processor => $data)
+		foreach($hardware_data as $hw_category => $category_data)
 		{
-			$de = json_encode($data);
-			file_put_contents($this->ae_dir . 'component-data/Processor/' . $processor . '.json', $de);
+			pts_file_io::mkdir($this->ae_dir . 'component-data/' . $hw_category);
+			foreach($category_data as $c => $data)
+			{
+				if(!isset($data['percentiles']) || count($data['percentiles']) < 4)
+				{
+					continue;
+				}
+
+				$de = json_encode($data);
+				file_put_contents($this->ae_dir . 'component-data/' . $hw_category . '/' . $c . '.json', $de);
+			}
 		}
 	}
 	public function result_to_percentile($value, $percentiles, $hib)
@@ -498,4 +505,4 @@ class pts_ae_data
 		return $results;
 	}
 }
-?>					pts_file_io::mkdir($this->ae_dir . 'component-data/' . $component_category);
+?>
