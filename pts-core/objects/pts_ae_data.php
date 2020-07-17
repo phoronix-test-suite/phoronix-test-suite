@@ -431,6 +431,11 @@ class pts_ae_data
 	public function result_to_percentile($value, $percentiles, $hib)
 	{
 		$this_percentile = 0;
+		if($hib == 0)
+		{
+			$percentiles = array_reverse($percentiles);
+		}
+		
 		foreach($percentiles as $i => $percentile)
 		{
 			if($hib && $value < $percentile)
