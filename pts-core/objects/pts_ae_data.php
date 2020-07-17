@@ -47,6 +47,7 @@ class pts_ae_data
 		$this->db->exec('PRAGMA journal_mode = WAL');
 		$this->db->exec('PRAGMA synchronous = OFF');
 		pts_file_io::mkdir($this->ae_dir . 'comparison-hashes/');
+		pts_file_io::mkdir($this->ae_dir . 'component-data/');
 
 		$result = $this->db->query('PRAGMA user_version;');
 		$result = $result->fetchArray();
@@ -123,6 +124,23 @@ class pts_ae_data
 		$cache[$component][$category] = $this->db->lastInsertRowid();
 		return $cache[$component][$category];
 	}
+	public function component_to_category($component)
+	{
+		static $cache;
+		if(isset($cache[$component]))
+		{
+			return $cache[$component];
+		}
+		$stmt = $this->db->prepare('SELECT Category FROM components WHERE Component = :c LIMIT 1');
+		$stmt->bindValue(':c', $component);
+		$result = $stmt ? $stmt->execute() : false;
+
+		if($result && ($row = $result->fetchArray()))
+		{
+			$cache[$component][$category] = $this->category_id_to_category($row['Category']);
+			return $row['Category'];
+		}
+	}
 	public function component_id_to_component($component_id)
 	{
 		static $cache;
@@ -163,11 +181,29 @@ class pts_ae_data
 		$cache[$category] = $this->db->lastInsertRowid();
 		return $cache[$category];
 	}
+	public function category_id_to_category($category_id)
+	{
+		static $cache;
+		if(isset($cache[$category_id]))
+		{
+			return $cache[$category_id];
+		}
+		$stmt = $this->db->prepare('SELECT Category FROM component_categories WHERE CategoryID = :c LIMIT 1');
+		$stmt->bindValue(':c', $category_id);
+		$result = $stmt ? $stmt->execute() : false;
+
+		if($result && ($row = $result->fetchArray()))
+		{
+			$cache[$category] = $row['Category'];
+			return $row['Category'];
+		}
+	}
 	public function rebuild_composite_listing()
 	{
 		$stmt = $this->db->prepare('SELECT * FROM composite');
 		$result = $stmt ? $stmt->execute() : false;
 		$json_index_master = array();
+		$processor_data = array();
 
 		while($result && ($row = $result->fetchArray()))
 		{
@@ -332,6 +368,41 @@ class pts_ae_data
 			$stmt->bindValue(':fa', $first_appeared);
 			$stmt->bindValue(':la', $last_appeared);
 			$stmt->execute();
+			
+			//
+			// Update/Create Component JSON
+			//
+			
+			if(count($comparison_components) > 30)
+			{
+				foreach($comparison_components as $component => $value)
+				{
+					$component_category = $this->component_to_category($component);
+					$this_percentile = $this->result_to_percentile($value, $percentiles, $json['hib']);
+					
+					if(!is_numeric($this_percentile) || $this_percentile == 0)
+					{
+						continue;
+					}
+
+					switch($component_category)
+					{
+						case 'Processor':
+							if(!isset($processor_data[$component]))
+							{
+								$processor_data[$component] = array(
+									'percentiles'
+									);
+							}
+							if(!isset($processor_data[$component]['percentiles'][$json['test_profile']][$json['test_version']]))
+							{
+								$processor_data[$component]['percentiles'][$json['test_profile']][$json['test_version']] = array();
+							}
+							$processor_data[$component]['percentiles'][$json['test_profile']][$json['test_version']] = $this_percentile;
+							break;
+					}
+				}
+			}
 		}
 		if(!empty($json_index_master))
 		{
@@ -342,6 +413,36 @@ class pts_ae_data
 				file_put_contents($this->ae_dir . 'comparison-hashes/' . $test_profile_dir . '/index.json', $test_index);
 			}
 		}
+
+		pts_file_io::mkdir($this->ae_dir . 'component-data/Processor');
+		foreach($processor_data as $processor => $data)
+		{
+			$de = json_encode($data);
+			file_put_contents($this->ae_dir . 'component-data/Processor/' . $processor . '.json', $de);
+		}
+	}
+	public function result_to_percentile($value, $percentiles, $hib)
+	{
+		$this_percentile = 0;
+		foreach($percentiles as $i => $percentile)
+		{
+			if($hib && $value < $percentile)
+			{
+				$this_percentile = ($i + 1);
+				break;
+			}
+			else if($hib == 0 && $value > $percentile)
+			{
+				$this_percentile = ($i + 1);
+				break;
+			}
+		}
+		if($this_percentile == 0 && $hib)
+		{
+			$this_percentile = 100;
+		}
+		
+		return $this_percentile > 0 && $this_percentile <= 100 ? $this_percentile : false;
 	}
 	public function sort_array_by_size_of_array_in_value($a, $b)
 	{
@@ -397,4 +498,4 @@ class pts_ae_data
 		return $results;
 	}
 }
-?>
+?>					pts_file_io::mkdir($this->ae_dir . 'component-data/' . $component_category);

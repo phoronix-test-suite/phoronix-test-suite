@@ -162,6 +162,7 @@ function pts_define_directories()
 	}
 	else if(defined('PTS_STORAGE_PATH'))
 	{
+		// e.g. OpenBenchmarking.org
 		pts_define('PTS_OPENBENCHMARKING_SCRATCH_PATH', PTS_STORAGE_PATH . 'openbenchmarking.org/');
 		pts_define('PTS_TEST_PROFILE_PATH', PTS_STORAGE_PATH . 'test-profiles/');
 		pts_define('PTS_TEST_SUITE_PATH', PTS_STORAGE_PATH . 'test-suites/');

@@ -377,7 +377,7 @@ class pts_openbenchmarking
 				{
 					// Refreshing the indexes once every few days should be suffice
 					// Refresh approximately every three days by default
-					$index_cache_ttl = 3;
+					$index_cache_ttl = 1;
 					if(PTS_IS_CLIENT && ($config_ttl = pts_config::read_user_config('PhoronixTestSuite/Options/OpenBenchmarking/IndexCacheTTL')))
 					{
 						if($config_ttl === 0)
