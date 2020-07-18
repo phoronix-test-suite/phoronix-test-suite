@@ -119,6 +119,12 @@ class phodevi_vfs
 				break;
 		}
 
+		$file = strip_tags($file);
+		if(function_exists('preg_replace'))
+		{
+			$file = preg_replace('/\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|$!:,.;]*[A-Z0-9+&@#\/%=~_|$]/i', '', $file);
+		}
+
 		return $file;
 	}
 	public function clear_cache()

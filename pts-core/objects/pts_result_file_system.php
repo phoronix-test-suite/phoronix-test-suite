@@ -217,7 +217,8 @@ class pts_result_file_system
 							{
 								if($read_file !== false && $basename_file == $read_file)
 								{
-									$contents = phodevi_vfs::cleanse_file($zip->getFromName($index), $basename_file);
+									$c = $zip->getFromName($index);
+									$contents = phodevi_vfs::cleanse_file($c, $basename_file);
 									$zip->close();
 									return $contents;
 								}
