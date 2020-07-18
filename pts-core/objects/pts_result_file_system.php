@@ -204,7 +204,7 @@ class pts_result_file_system
 
 				if($res === true)
 				{
-					$log_path = 'system-logs/' . self::$sys_identifier . '/';
+					$log_path = 'system-logs/' . $this->get_identifier() . '/';
 					$log_path_l = strlen($log_path);
 					for($i = 0; $i < $zip->numFiles; $i++)
 					{
