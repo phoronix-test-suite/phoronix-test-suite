@@ -388,17 +388,20 @@ class pts_ae_data
 					switch($component_category)
 					{
 						case 'Processor':
-							if(!isset($hardware_data['Processor'][$component]))
+						case 'Graphics':
+						case 'Disk':
+						case 'Memory':
+							if(!isset($hardware_data[$component_category][$component]))
 							{
-								$hardware_data['Processor'][$component] = array(
+								$hardware_data[$component_category][$component] = array(
 									'percentiles' => array(),
 									);
 							}
-							if(!isset($hardware_data['Processor'][$component]['percentiles'][$json['test_profile']][$json['test_version']]))
+							if(!isset($hardware_data[$component_category][$component]['percentiles'][$json['test_profile']][$json['test_version']]))
 							{
-								$hardware_data['Processor'][$component]['percentiles'][$json['test_profile']][$json['test_version']] = array();
+								$hardware_data[$component_category][$component]['percentiles'][$json['test_profile']][$json['test_version']] = array();
 							}
-							$hardware_data['Processor'][$component]['percentiles'][$json['test_profile']][$json['test_version']] = $this_percentile;
+							$hardware_data[$component_category][$component]['percentiles'][$json['test_profile']][$json['test_version']] = $this_percentile;
 							break;
 					}
 				}
