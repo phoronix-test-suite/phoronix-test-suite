@@ -436,6 +436,23 @@ class pts_ae_data
 			}
 		}
 	}
+	public function append_to_component_data(&$system_logs)
+	{
+		foreach($system_logs as $hw_category => $category_data)
+		{
+			foreach($category_data as $c => $data)
+			{
+				if($data['occurences'] < 5)
+				{
+					continue;
+				}
+				$json_file = $this->ae_dir . 'component-data/' . $hw_category . '/' . $c . '.json';
+				$jsond = is_file($json_file) ? json_decode(file_get_contents($json_file), true) : array();
+				$jsond = array_merge($jsond, $data);
+				file_put_contents($this->ae_dir . 'component-data/' . $hw_category . '/' . $c . '.json', json_encode($jsond));
+			}
+		}
+	}
 	public function result_to_percentile($value, $percentiles, $hib)
 	{
 		$this_percentile = 0;

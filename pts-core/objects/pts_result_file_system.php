@@ -231,7 +231,7 @@ class pts_result_file_system
 			}
 		}
 
-		return $files;
+		return $read_file !== false ? false : $files;
 	}
 }
 

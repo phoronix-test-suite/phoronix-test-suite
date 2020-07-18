@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2019, Phoronix Media
-	Copyright (C) 2019, Michael Larabel
+	Copyright (C) 2019 - 2020, Phoronix Media
+	Copyright (C) 2019 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -41,6 +41,7 @@ class dump_ob_to_ae_db implements pts_option_interface
 		$ae = new pts_ae_data($storage_dir);
 		$xml_files = array();
 		pts_file_io::recursively_find_files_in_directory($dir_to_recursively_scan, $xml_files, '.xml');
+		$system_logs = array();
 
 		foreach($xml_files as $file)
 		{
@@ -55,6 +56,53 @@ class dump_ob_to_ae_db implements pts_option_interface
 				$system_data[$system->get_identifier()] = array_map(array('pts_strings', 'trim_search_query'), array_merge(pts_result_file_analyzer::system_component_string_to_array($system->get_hardware()), pts_result_file_analyzer::system_component_string_to_array($system->get_software())));
 				$timestamps[$system->get_identifier()] = strtotime($system->get_timestamp());
 				$system_types[$system->get_identifier()] = phodevi_base::determine_system_type($system->get_hardware(), $system->get_software());
+
+				if(isset($system_data[$system->get_identifier()]['Processor']) && !phodevi::is_fake_device($system_data[$system->get_identifier()]['Processor']))
+				{
+					$processor = $system_data[$system->get_identifier()]['Processor'];
+					if(!isset($system_logs['Processor'][$processor]))
+					{
+						$system_logs['Processor'][$processor] = array();
+					}
+					foreach(array('cpuinfo', 'lscpu') as $file)
+					{
+						$log_file = $system->log_files($file);
+						if($log_file && !empty($log_file))
+						{
+							if(($x = strpos($log_file, PHP_EOL . PHP_EOL)) !== false)
+							{
+								$log_file = substr($log_file, 0, $x);
+							}
+							
+							if(!isset($system_logs['Processor'][$processor][$file]) || strlen($log_file) > strlen($system_logs['Processor'][$processor][$file]))
+							{
+								$system_logs['Processor'][$processor][$file] = $log_file;
+							}
+						}
+					}
+					if(($v = $system->get_cpu_core_count()) != false)
+					{
+						if(!isset($system_logs['Processor'][$processor]['core-count']) || $v > $system_logs['Processor'][$processor]['core-count'])
+						{
+							$system_logs['Processor'][$processor]['core-count'] = $v;
+						}
+					}
+					if(($v = $system->get_cpu_thread_count()) != false)
+					{
+						if(!isset($system_logs['Processor'][$processor]['thread-count']) || $v > $system_logs['Processor'][$processor]['thread-count'])
+						{
+							$system_logs['Processor'][$processor]['thread-count'] = $v;
+						}
+					}
+					if(($v = $system->get_cpu_clock()) != false)
+					{
+						if(!isset($system_logs['Processor'][$processor]['cpu-clock']) || $v > $system_logs['Processor'][$processor]['cpu-clock'])
+						{
+							$system_logs['Processor'][$processor]['cpu-clock'] = $v;
+						}
+					}
+					$system_logs['Processor'][$processor]['occurences'] = (isset($system_logs['Processor'][$processor]['occurences']) ? $system_logs['Processor'][$processor]['occurences'] : 0) + 1;
+				}
 			}
 
 			foreach($rf->get_result_objects() as $ro)
@@ -157,6 +205,7 @@ class dump_ob_to_ae_db implements pts_option_interface
 		}
 
 		$ae->rebuild_composite_listing();
+		$ae->append_to_component_data($system_logs);
 	}
 }
 
