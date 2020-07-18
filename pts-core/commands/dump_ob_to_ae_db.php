@@ -19,7 +19,7 @@
 	You should have received a copy of the GNU General Public License
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-ini_set('memory_limit', '8G');
+ini_set('memory_limit', '16G');
 
 class dump_ob_to_ae_db implements pts_option_interface
 {
@@ -40,7 +40,7 @@ class dump_ob_to_ae_db implements pts_option_interface
 
 		$ae = new pts_ae_data($storage_dir);
 		$xml_files = array();
-		pts_file_io::recursively_find_files_in_directory($dir_to_recursively_scan, $xml_files, '.xml');
+		pts_file_io::recursively_find_files_in_directory($dir_to_recursively_scan, $xml_files, '.xml', array('embed'));
 		$system_logs = array();
 
 		foreach($xml_files as $file)

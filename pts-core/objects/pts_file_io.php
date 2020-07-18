@@ -149,7 +149,7 @@ class pts_file_io
 
 		return $success;
 	}
-	public static function recursively_find_files_in_directory($dir, &$found_files, $file_extension = null)
+	public static function recursively_find_files_in_directory($dir, &$found_files, $file_extension = null, $skip_directories = false)
 	{
 		$tree = glob(rtrim($dir, '/') . '/*');
 		if(is_array($tree))
@@ -158,6 +158,10 @@ class pts_file_io
 			{
 				if(is_dir($file))
 				{
+					if($skip_directories && in_array(basename($file), $skip_directories))
+					{
+						continue;
+					}
 					self::recursively_find_files_in_directory($file, $found_files, $file_extension);
 				}
 				else if(is_file($file) && ($file_extension == null || substr($file, 0 - strlen($file_extension)) == $file_extension))
