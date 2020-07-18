@@ -78,7 +78,7 @@ class pts_result_file
 		{
 			foreach($xml->System as $s)
 			{
-				$system = new pts_result_file_system(self::clean_input($s->Identifier->__toString()), self::clean_input($s->Hardware->__toString()), self::clean_input($s->Software->__toString()), json_decode(self::clean_input($s->JSON), true), self::clean_input($s->User->__toString()), self::clean_input($s->Notes->__toString()), self::clean_input($s->TimeStamp->__toString()), self::clean_input($s->ClientVersion->__toString()));
+				$system = new pts_result_file_system(self::clean_input($s->Identifier->__toString()), self::clean_input($s->Hardware->__toString()), self::clean_input($s->Software->__toString()), json_decode(self::clean_input($s->JSON), true), self::clean_input($s->User->__toString()), self::clean_input($s->Notes->__toString()), self::clean_input($s->TimeStamp->__toString()), self::clean_input($s->ClientVersion->__toString()), $this);
 				$this->systems[] = $system;
 			}
 		}
@@ -156,6 +156,11 @@ class pts_result_file
 		{
 			return PTS_SAVE_RESULTS_PATH . $this->save_identifier . '/composite.xml';
 		}
+	}
+	public function get_result_dir()
+	{
+		$composite_xml_dir = dirname($this->get_file_location());
+		return empty($composite_xml_dir) || !is_dir($composite_xml_dir) ? false : $composite_xml_dir . '/';
 	}
 	public function get_system_log_dir($result_identifier = null, $dir_check = true)
 	{

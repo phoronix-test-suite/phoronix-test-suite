@@ -907,7 +907,7 @@ class pts_test_run_manager
 
 			// TODO XXX JSON In null and notes
 			$json_attr = $this->generate_json_system_attributes();
-			$sys = new pts_result_file_system($this->results_identifier, phodevi::system_hardware(true), phodevi::system_software(true), $json_attr, pts_client::current_user(), null, date('Y-m-d H:i:s', pts_client::current_time()), PTS_VERSION);
+			$sys = new pts_result_file_system($this->results_identifier, phodevi::system_hardware(true), phodevi::system_software(true), $json_attr, pts_client::current_user(), null, date('Y-m-d H:i:s', pts_client::current_time()), PTS_VERSION, $this->result_file);
 			$this->result_file->add_system($sys);
 		}
 

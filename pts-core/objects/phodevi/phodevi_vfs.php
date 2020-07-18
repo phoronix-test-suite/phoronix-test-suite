@@ -118,6 +118,8 @@ class phodevi_vfs
 				$file = pts_strings::remove_lines_containing($file, array('Serial N', 'S/N', 'Serial #', 'serial:', 'serial='));
 				break;
 		}
+
+		return $file;
 	}
 	public function clear_cache()
 	{

@@ -30,8 +30,9 @@ class pts_result_file_system
 	protected $notes;
 	protected $timestamp;
 	protected $client_version;
+	protected $parent_result_file;
 
-	public function __construct($identifier, $hardware, $software, $json, $username, $notes, $timestamp, $client_version)
+	public function __construct($identifier, $hardware, $software, $json, $username, $notes, $timestamp, $client_version, &$result_file = null)
 	{
 		$this->identifier = $identifier;
 		$this->hardware = $hardware;
@@ -41,6 +42,7 @@ class pts_result_file_system
 		$this->notes = $notes;
 		$this->timestamp = $timestamp;
 		$this->client_version = $client_version;
+		$this->parent_result_file = &$result_file;
 	}
 	public function __toString()
 	{
@@ -177,6 +179,59 @@ class pts_result_file_system
 		}
 
 		return is_numeric($hw) && $hw > 0 ? $hw : 1;
+	}
+	public function log_files($read_file = false)
+	{
+		$files = array();
+		if($this->parent_result_file)
+		{
+			if(($d = $this->parent_result_file->get_system_log_dir($this->get_identifier(), true)))
+			{
+				foreach(pts_file_io::glob($d . '/*') as $file)
+				{
+					$basename_file = basename($file);
+					if($read_file !== false && $basename_file == $read_file)
+					{
+						return phodevi_vfs::cleanse_file(file_get_contents($file), $basename_file);
+					}
+					$files[] = $basename_file;
+				}
+			}
+			else if($this->parent_result_file->get_result_dir() && is_file($this->parent_result_file->get_result_dir() . 'system-logs.zip') && extension_loaded('zip'))
+			{
+				$zip = new ZipArchive();
+				$res = $zip->open($this->parent_result_file->get_result_dir() . 'system-logs.zip');
+
+				if($res === true)
+				{
+					$log_path = 'system-logs/' . self::$sys_identifier . '/';
+					$log_path_l = strlen($log_path);
+					for($i = 0; $i < $zip->numFiles; $i++)
+					{
+						$index = $zip->getNameIndex($i);
+						if(substr($index, 0, $log_path_l) == $log_path)
+						{
+							$basename_file = substr($index, $log_path_l);
+
+							if($basename_file != null)
+							{
+								if($read_file !== false && $basename_file == $read_file)
+								{
+									$contents = phodevi_vfs::cleanse_file($zip->getFromName($index), $basename_file);
+									$zip->close();
+									return $contents;
+								}
+								array_push($files, $basename_file);
+							}
+
+						}
+					}
+					$zip->close();
+				}
+			}
+		}
+
+		return $files;
 	}
 }
 
