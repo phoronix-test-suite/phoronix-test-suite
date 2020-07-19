@@ -746,7 +746,7 @@ class phodevi_cpu extends phodevi_device_interface
 			'sse4a' => (1 << 3), // SSE 4a
 			'sse4_1' => (1 << 4), // SSE 4.1
 			'sse4_2' => (1 << 5), // SSE 4.2
-			'sse5' => (1 << 6), // SSE 5
+			//'sse5' => (1 << 6), // SSE 5
 			'avx' => (1 << 7), // AVX
 			'avx2' => (1 << 8), // AVX2
 			'aes' => (1 << 9), // AES
@@ -762,6 +762,25 @@ class phodevi_cpu extends phodevi_device_interface
 			'avx512cd' => (1 << 19), // AVX-512
 			'avx512_vnni' => (1 << 20), // AVX-512 VNNI (DL BOOST)
 			'avx512_bf16' => (1 << 21), // AVX-512 BFloat16
+			);
+	}
+	public static function prominent_cpu_features()
+	{
+		return array(
+			'sse4_2' => 'SSE 4.2', // SSE 4.2
+			'avx' => 'AVX', // AVX
+			'avx2' => 'AVX2', // AVX2
+			'aes' => 'AES', // AES
+			'svm' => 'AMD SVM virtualization', // AMD SVM (Virtualization)
+			'vmx' => 'Intel VT-d', // Intel Virtualization
+			'fma3' => 'FMA3', // FMA3 Instruction Set
+			'fma4' => 'FMA4', // FMA4 Instruction Set
+			'rdrand' => 'RdRand', // Intel Bull Mountain RDRAND - Ivy Bridge
+			'fsgsbase' => 'FSGSBASE', // FSGSBASE - Ivy Bridge AVX
+			'bmi2' => 'BMI2', // Intel Haswell has BMI2
+			'avx512cd' => 'AVX-512', // AVX-512
+			'avx512_vnni' => 'AVX-512 VNNI / DL-BOOST', // AVX-512 VNNI (DL BOOST)
+			'avx512_bf16' => 'AVX-512 BFloat16', // AVX-512 BFloat16
 			);
 	}
 	public static function get_cpu_feature_constant($constant)
