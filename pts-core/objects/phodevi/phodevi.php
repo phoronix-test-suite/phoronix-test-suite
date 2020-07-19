@@ -844,7 +844,17 @@ class phodevi extends phodevi_base
 		$string_check = array(
 			'Logical Volume',
 			'QEMU',
+			' KVM',
+			'KVM ',
 			'Eng Sample',
+			'Unknown',
+			' virt',
+			'svga',
+			' VM',
+			'Storage ',
+			'Aspeed',
+			'440BX',
+			'Cirrus',
 			);
 
 		foreach($string_check as $check)
@@ -853,6 +863,17 @@ class phodevi extends phodevi_base
 			{
 				return true;
 			}
+		}
+
+		$without_multiplier = $str;
+		if(($x = strpos($without_multiplier, ' x ')) !== false)
+		{
+			$without_multiplier = substr($without_multiplier, $x + 3);
+		}
+		if(!preg_match('~[0-9]+~', $without_multiplier))
+		{
+			// No numbers at all in string so probably not a real device (e.g. some Virtual "Intel" CPU or similar components generic
+			return true;
 		}
 
 		return false;

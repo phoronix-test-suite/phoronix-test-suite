@@ -811,6 +811,24 @@ class phodevi_cpu extends phodevi_device_interface
 
 		// Useful: https://en.wikichip.org/wiki/amd/cpuid / https://en.wikichip.org/wiki/intel/cpuid
 		$map = array(
+			'14' => array(
+				'1' => 'Bobcat',
+				'2' => 'Bobcat',
+				),
+			'15' => array(
+				'1' => 'Bulldozer',
+				'2' => 'Piledriver',
+				'10' => 'Piledriver',
+				'13' => 'Piledriver',
+				'30' => 'Steamroller',
+				),
+			'16' => array(
+				'0' => 'Jaguar',
+				'30' => 'Jaguar',
+				),
+			'21' => array(
+				'2' => 'Bulldozer',
+				),
 			'23' => array(
 				'1' => 'Zen',
 				'17' => 'Zen',
@@ -825,10 +843,12 @@ class phodevi_cpu extends phodevi_device_interface
 				'10' => 'Quark',
 				),
 			'6' => array(
+				'15' => 'Merom',
 				'23' => 'Penryn',
 				'29' => 'Penryn',
 				'26' => 'Nehalem',
 				'30' => 'Nehalem',
+				'37' => 'Arrandale',
 				'46' => 'Nehalem',
 				'44' => 'Westmere',
 				'47' => 'Westmere',
@@ -863,7 +883,7 @@ class phodevi_cpu extends phodevi_device_interface
 				'158' => 'Kaby Lake / Coffee Lake',
 				'102' => 'Cannon Lake',
 				'165' => 'Comet Lake',
-				'85' => 'Cooper Lake',
+				'85' => 'Cascade Lake',
 				'106' => 'Ice Lake',
 				'108' => 'Ice Lake',
 				'125' => 'Ice Lake',
