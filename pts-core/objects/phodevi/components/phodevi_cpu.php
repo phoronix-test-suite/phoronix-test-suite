@@ -798,19 +798,20 @@ class phodevi_cpu extends phodevi_device_interface
 			'taa' => 'TSX Asynchronous Abort',
 			);
 	}
-	public static function get_core_name($family = false, $model = false)
+	public static function get_core_name($family = false, $model = false, $cpu_string = null)
 	{
 		if($family === false && $model === false && (PTS_IS_CLIENT && phodevi::is_linux()))
 		{
 			$cpuinfo = phodevi_linux_parser::cpuinfo_to_array();
 			$family = isset($cpuinfo['cpu family']) ? $cpuinfo['cpu family'] : $family;
 			$model = isset($cpuinfo['model']) ? $cpuinfo['model'] : $model;
+			$cpu_string = isset($cpuinfo['model name']) ? $cpuinfo['model name'] : $model;
 		}
 
 		$name = 'Family ' . $family . ', Model ' . $model;
 
 		// Useful: https://en.wikichip.org/wiki/amd/cpuid / https://en.wikichip.org/wiki/intel/cpuid
-		$map = array(
+		$amd_map = array(
 			'14' => array(
 				'1' => 'Bobcat',
 				'2' => 'Bobcat',
@@ -840,6 +841,7 @@ class phodevi_cpu extends phodevi_device_interface
 				'6' => 'Regor',
 				'8' => 'Istanbul',
 				'9' => 'Maranello',
+				'10' => 'K10',
 				'30' => 'Jaguar',
 				),
 			'17' => array(
@@ -876,6 +878,9 @@ class phodevi_cpu extends phodevi_device_interface
 				'96' => 'Zen 2',
 				'113' => 'Zen 2',
 				),
+			);
+
+		$intel_map = array(
 			'5' => array(
 				'9' => 'Quark',
 				'10' => 'Quark',
@@ -932,11 +937,30 @@ class phodevi_cpu extends phodevi_device_interface
 				'134' => 'Tremont',
 				'140' => 'Tiger Lake',
 				),
+			'15' => array(
+				'3' => 'Prescott',
+				'4' => 'Prescott',
+				'6' => 'Cedar Mill',
+				),
 			);
 
-		if(isset($map[$family][$model]))
+		$other_map = array(
+			'7' => array(
+				'59' => 'Lujiazui', // ZHAOXIN
+				),
+			);
+
+		if(($cpu_string == null || strpos($cpu_string, 'AMD') !== false) && isset($amd_map[$family][$model]))
 		{
-			$name = $map[$family][$model];
+			return $amd_map[$family][$model];
+		}
+		if(($cpu_string == null || strpos($cpu_string, 'Intel') !== false) && isset($intel_map[$family][$model]))
+		{
+			return $intel_map[$family][$model];
+		}
+		if(isset($other_map[$family][$model]))
+		{
+			return $other_map[$family][$model];
 		}
 
 		return $name;
