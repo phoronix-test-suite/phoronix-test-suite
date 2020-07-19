@@ -874,9 +874,9 @@ class phodevi_cpu extends phodevi_device_interface
 				),
 			);
 
-		if(isset($map[$cpuinfo['cpu family']][$cpuinfo['model']]))
+		if(isset($map[$family][$model]))
 		{
-			$name = $map[$cpuinfo['cpu family']][$cpuinfo['model']];
+			$name = $map[$family][$model];
 		}
 
 		return $name;
