@@ -783,6 +783,20 @@ class phodevi_cpu extends phodevi_device_interface
 			'avx512_bf16' => 'AVX-512 BFloat16', // AVX-512 BFloat16
 			);
 	}
+	public static function prominent_cpu_bugs()
+	{
+		return array(
+			'cpu_meltdown' => 'Meltdown',
+			'spectre_v1' => 'Spectre V1',
+			'spectre_v2' => 'Spectre V2',
+			'spec_store_bypass' => 'Spectre V4 / SSBD'.
+			'l1tf' => 'L1 Terminal Fault / Foreshadow',
+			'mds' => 'Microarchitectural Data Sampling',
+			'swapgs' => 'SWAPGS',
+			'itlb_multihit' => 'iTLB Multihit',
+			'taa' => 'TSX Asynchronous Abort',
+			);
+	}
 	public static function get_cpu_feature_constant($constant)
 	{
 		$features = self::get_cpu_feature_constants();
