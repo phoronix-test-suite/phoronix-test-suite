@@ -849,6 +849,7 @@ class phodevi extends phodevi_base
 			'Eng Sample',
 			'Unknown',
 			' virt',
+			'virtual',
 			'svga',
 			' VM',
 			'Storage ',
