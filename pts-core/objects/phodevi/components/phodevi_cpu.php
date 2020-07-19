@@ -814,6 +814,7 @@ class phodevi_cpu extends phodevi_device_interface
 			15 => array(
 				1 => 'Bulldozer',
 				2 => 'Piledriver',
+				5 => 'Sledgehammer',
 				6 => 'Barcelona',
 				10 => 'Piledriver',
 				13 => 'Piledriver',
@@ -881,6 +882,9 @@ class phodevi_cpu extends phodevi_device_interface
 				10 => 'Quark',
 				),
 			6 => array(
+				7 => 'Katmai',
+				8 => 'Coppermine',
+				11 => 'Tualatin',
 				14 => 'Yonah',
 				15 => 'Merom',
 				23 => 'Penryn',
@@ -952,6 +956,9 @@ class phodevi_cpu extends phodevi_device_interface
 				),
 			7 => array(
 				59 => 'Lujiazui', // ZHAOXIN
+				),
+			24 => array(
+				0 => 'Dhyana', // Hygon Dhyana first gen Zen AMD EPYC
 				),
 			);
 
