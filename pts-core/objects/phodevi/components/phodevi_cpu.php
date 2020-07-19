@@ -818,6 +818,7 @@ class phodevi_cpu extends phodevi_device_interface
 			'15' => array(
 				'1' => 'Bulldozer',
 				'2' => 'Piledriver',
+				'6' => 'Barcelona',
 				'10' => 'Piledriver',
 				'13' => 'Piledriver',
 				'30' => 'Steamroller',
@@ -828,6 +829,8 @@ class phodevi_cpu extends phodevi_device_interface
 				'67' => 'Santa Ana',
 				'72' => 'Taylor',
 				'75' => 'Windsor',
+				'104' => 'K8',
+				'107' => 'K8',
 				),
 			'16' => array(
 				'0' => 'Jaguar',
