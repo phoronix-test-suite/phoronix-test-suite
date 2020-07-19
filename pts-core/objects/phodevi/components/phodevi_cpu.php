@@ -938,6 +938,7 @@ class phodevi_cpu extends phodevi_device_interface
 				'140' => 'Tiger Lake',
 				),
 			'15' => array(
+				'1' => 'Clarksfield',
 				'3' => 'Prescott',
 				'4' => 'Prescott',
 				'6' => 'Cedar Mill',
@@ -947,6 +948,10 @@ class phodevi_cpu extends phodevi_device_interface
 		$other_map = array(
 			'4' => array(
 				'7' => 'Elbrus', // ZHAOXIN
+				),
+			'6' => array(
+				'15' => 'Centaur', // Centaur
+				'23' => 'Penryn',
 				),
 			'7' => array(
 				'59' => 'Lujiazui', // ZHAOXIN
