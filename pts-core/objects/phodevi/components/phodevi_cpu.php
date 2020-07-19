@@ -789,7 +789,7 @@ class phodevi_cpu extends phodevi_device_interface
 			'cpu_meltdown' => 'Meltdown',
 			'spectre_v1' => 'Spectre V1',
 			'spectre_v2' => 'Spectre V2',
-			'spec_store_bypass' => 'Spectre V4 / SSBD'.
+			'spec_store_bypass' => 'Spectre V4 / SSBD',
 			'l1tf' => 'L1 Terminal Fault / Foreshadow',
 			'mds' => 'Microarchitectural Data Sampling',
 			'swapgs' => 'SWAPGS',
