@@ -258,26 +258,21 @@ class phodevi_cpu extends phodevi_device_interface
 
 		if(phodevi::is_linux())
 		{
-			$cache_size = self::cpuinfo_cache_size();
-			if(empty($cache_size) && isset(phodevi::$vfs->lscpu) && ($t = strpos(phodevi::$vfs->lscpu, 'L3 cache:')))
+			if(isset(phodevi::$vfs->lscpu) && ($t = strpos(phodevi::$vfs->lscpu, 'L3 cache:')))
 			{
 					$lscpu = substr(phodevi::$vfs->lscpu, $t + strlen('L3 cache:') + 1);
 					$lscpu = substr($lscpu, 0, strpos($lscpu, PHP_EOL));
 					$lscpu = trim($lscpu);
-					if(substr($lscpu, -1) == 'K')
-					{
-						$cache_size = substr($lscpu, 0, -1);
-					}
+					$cache_size = pts_math::number_with_unit_to_mb($lscpu);
+			}
+			if(empty($cache_size) || !is_numeric($cache_size))
+			{
+				$cache_size = self::cpuinfo_cache_size();
 			}
 		}
 		else if(phodevi::is_macosx())
 		{
-			$cache_size = phodevi_osx_parser::read_osx_system_profiler('SPHardwareDataType', 'L3Cache');
-
-			if(strpos($cache_size, ' MB'))
-			{
-				$cache_size = substr($cache_size, 0, strpos($cache_size, ' ')) * 1024;
-			}
+			$cache_size = pts_math::number_with_unit_to_mb(phodevi_osx_parser::read_osx_system_profiler('SPHardwareDataType', 'L3Cache'));
 		}
 		else if(phodevi::is_windows())
 		{
@@ -1154,7 +1149,7 @@ class phodevi_cpu extends phodevi_device_interface
 		$cache_size = phodevi::read_property('cpu', 'cache-size');
 		if($cache_size > 1)
 		{
-			$cache_size .= ' KB';
+			$cache_size .= ' MB';
 		}
 
 		return $cache_size;

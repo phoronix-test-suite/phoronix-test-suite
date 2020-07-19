@@ -206,6 +206,47 @@ class pts_math
 			return ($values[($index - 1)] + $values[($index + 1)]) / 2;
 		}
 	}
+	public static function number_with_unit_to_mb($value)
+	{
+		$value = trim($value);
+		$num = null;
+		$unit = null;
+		if(($x = strpos($value, ' ')) !== false)
+		{
+			$num = substr($value, 0, $x);
+			$unit = substr($value, ($x + 1));
+		}
+		else
+		{
+			switch(substr($value, -1))
+			{
+				case 'K':
+					$num = substr($value, 0, -1);
+					$unit = 'K';
+					break;
+			}
+		}
+
+		return $num != null && $unit != null ? self::unit_to_mb($num, $unit) : null;
+	}
+	public static function unit_to_mb($value, $current_unit)
+	{
+		$v = null;
+		switch($current_unit)
+		{
+			case 'kb':
+				$v = $value / 1000;
+				break;
+			case 'K':
+				$v = $value / 1024;
+				break;
+			case 'MiB':
+				$v = $value;
+				break;
+		}
+
+		return $v;
+	}
 }
 
 ?>
