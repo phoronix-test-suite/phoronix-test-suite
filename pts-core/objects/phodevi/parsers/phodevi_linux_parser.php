@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2019, Phoronix Media
-	Copyright (C) 2008 - 2019, Michael Larabel
+	Copyright (C) 2008 - 2020, Phoronix Media
+	Copyright (C) 2008 - 2020, Michael Larabel
 	phodevi_linux_parser.php: General parsing functions specific to Linux
 
 	This program is free software; you can redistribute it and/or modify
@@ -338,6 +338,35 @@ class phodevi_linux_parser
 		}
 
 		return $cpuinfo_matches;
+	}
+	public static function cpuinfo_to_array($cpuinfo = null)
+	{
+		if($cpuinfo == null && is_file('/proc/cpuinfo'))
+		{
+			$cpuinfo = file_get_contents('/proc/cpuinfo');
+		}
+		
+		$cpuinfo_lines = explode("\n", $cpuinfo);
+		$cpuinfo_r = array();
+
+		foreach(explode("\n", $cpuinfo) as $line)
+		{
+			$line = pts_strings::trim_explode(': ', $line, 2);
+			if(!isset($line[0]))
+			{
+				continue;
+			}
+
+			$this_attribute = $line[0];
+			$this_value = trim(count($line) > 1 ? $line[1] : null);
+			if(in_array($this_attribute, array('flags', 'bugs', 'power management')))
+			{
+				$this_value = explode(' ', $this_value);
+			}
+			$cpuinfo_r[$this_attribute] = $this_value;
+		}
+		
+		return $cpuinfo_r;
 	}
 	public static function read_cpuinfo_single($attribute, $cpuinfo = false)
 	{
