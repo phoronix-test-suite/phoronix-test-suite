@@ -803,81 +803,80 @@ class phodevi_cpu extends phodevi_device_interface
 		if($family === false && $model === false && (PTS_IS_CLIENT && phodevi::is_linux()))
 		{
 			$cpuinfo = phodevi_linux_parser::cpuinfo_to_array();
+			$family = isset($cpuinfo['cpu family']) ? $cpuinfo['cpu family'] : $family;
+			$model = isset($cpuinfo['model']) ? $cpuinfo['model'] : $model;
 		}
 
 		$name = 'Family ' . $family . ', Model ' . $model;
 
-		if(isset($cpuinfo['cpu family']) && isset($cpuinfo['model']))
-		{
-			// Useful: https://en.wikichip.org/wiki/amd/cpuid / https://en.wikichip.org/wiki/intel/cpuid
-			$map = array(
-				'23' => array(
-					'1' => 'Zen',
-					'17' => 'Zen',
-					'24' => 'Zen',
-					'8' => 'Zen+',
-					'49' => 'Zen 2',
-					'96' => 'Zen 2',
-					'113' => 'Zen 2',
-					),
-				'5' => array(
-					'9' => 'Quark',
-					'10' => 'Quark',
-					),
-				'6' => array(
-					'23' => 'Penryn',
-					'29' => 'Penryn',
-					'26' => 'Nehalem',
-					'30' => 'Nehalem',
-					'46' => 'Nehalem',
-					'44' => 'Westmere',
-					'47' => 'Westmere',
-					'28' => 'Bonnell',
-					'38' => 'Bonnell',
-					'42' => 'Sandy Bridge',
-					'45' => 'Sandy Bridge',
-					'58' => 'Ivy Bridge',
-					'62' => 'Ivy Bridge',
-					'60' => 'Haswell',
-					'63' => 'Haswell',
-					'69' => 'Haswell',
-					'70' => 'Haswell',
-					'71' => 'Broadwell',
-					'61' => 'Broadwell',
-					'79' => 'Broadwell',
-					'86' => 'Broadwell',
-					'76' => 'Airmont',
-					'78' => 'Skylake',
-					'94' => 'Skylake',
-					'95' => 'Goldmont',
-					'92' => 'Goldmont',
-					'93' => 'Silvermont',
-					'90' => 'Silvermont',
-					'77' => 'Silvermont',
-					'74' => 'Silvermont',
-					'55' => 'Bay Trail',
-					'54' => 'Saltwell',
-					'53' => 'Saltwell',
-					'39' => 'Saltwell',
-					'142' => 'Kaby/Coffee/Whiskey Lake',
-					'158' => 'Kaby Lake / Coffee Lake',
-					'102' => 'Cannon Lake',
-					'165' => 'Comet Lake',
-					'85' => 'Cooper Lake',
-					'106' => 'Ice Lake',
-					'108' => 'Ice Lake',
-					'125' => 'Ice Lake',
-					'126' => 'Ice Lake',
-					'122' => 'Goldmont Plus',
-					'134' => 'Tremont',
-					'140' => 'Tiger Lake',
-					),
-				);
+		// Useful: https://en.wikichip.org/wiki/amd/cpuid / https://en.wikichip.org/wiki/intel/cpuid
+		$map = array(
+			'23' => array(
+				'1' => 'Zen',
+				'17' => 'Zen',
+				'24' => 'Zen',
+				'8' => 'Zen+',
+				'49' => 'Zen 2',
+				'96' => 'Zen 2',
+				'113' => 'Zen 2',
+				),
+			'5' => array(
+				'9' => 'Quark',
+				'10' => 'Quark',
+				),
+			'6' => array(
+				'23' => 'Penryn',
+				'29' => 'Penryn',
+				'26' => 'Nehalem',
+				'30' => 'Nehalem',
+				'46' => 'Nehalem',
+				'44' => 'Westmere',
+				'47' => 'Westmere',
+				'28' => 'Bonnell',
+				'38' => 'Bonnell',
+				'42' => 'Sandy Bridge',
+				'45' => 'Sandy Bridge',
+				'58' => 'Ivy Bridge',
+				'62' => 'Ivy Bridge',
+				'60' => 'Haswell',
+				'63' => 'Haswell',
+				'69' => 'Haswell',
+				'70' => 'Haswell',
+				'71' => 'Broadwell',
+				'61' => 'Broadwell',
+				'79' => 'Broadwell',
+				'86' => 'Broadwell',
+				'76' => 'Airmont',
+				'78' => 'Skylake',
+				'94' => 'Skylake',
+				'95' => 'Goldmont',
+				'92' => 'Goldmont',
+				'93' => 'Silvermont',
+				'90' => 'Silvermont',
+				'77' => 'Silvermont',
+				'74' => 'Silvermont',
+				'55' => 'Bay Trail',
+				'54' => 'Saltwell',
+				'53' => 'Saltwell',
+				'39' => 'Saltwell',
+				'142' => 'Kaby/Coffee/Whiskey Lake',
+				'158' => 'Kaby Lake / Coffee Lake',
+				'102' => 'Cannon Lake',
+				'165' => 'Comet Lake',
+				'85' => 'Cooper Lake',
+				'106' => 'Ice Lake',
+				'108' => 'Ice Lake',
+				'125' => 'Ice Lake',
+				'126' => 'Ice Lake',
+				'122' => 'Goldmont Plus',
+				'134' => 'Tremont',
+				'140' => 'Tiger Lake',
+				),
+			);
 
-			if(isset($map[$cpuinfo['cpu family']][$cpuinfo['model']]))
-			{
-				$name = $map[$cpuinfo['cpu family']][$cpuinfo['model']];
-			}
+		if(isset($map[$cpuinfo['cpu family']][$cpuinfo['model']]))
+		{
+			$name = $map[$cpuinfo['cpu family']][$cpuinfo['model']];
 		}
 
 		return $name;
