@@ -945,6 +945,9 @@ class phodevi_cpu extends phodevi_device_interface
 			);
 
 		$other_map = array(
+			'4' => array(
+				'7' => 'Elbrus', // ZHAOXIN
+				),
 			'7' => array(
 				'59' => 'Lujiazui', // ZHAOXIN
 				),
