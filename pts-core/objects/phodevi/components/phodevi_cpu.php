@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2019, Phoronix Media
-	Copyright (C) 2008 - 2019, Michael Larabel
+	Copyright (C) 2008 - 2020, Phoronix Media
+	Copyright (C) 2008 - 2020, Michael Larabel
 	phodevi_cpu.php: The PTS Device Interface object for the CPU / processor
 
 	This program is free software; you can redistribute it and/or modify
@@ -41,6 +41,7 @@ class phodevi_cpu extends phodevi_device_interface
 			'node-count' => new phodevi_device_property('cpu_node_count', phodevi::smart_caching),
 			'scaling-governor' => new phodevi_device_property('cpu_scaling_governor', phodevi::std_caching),
 			'microcode-version' => new phodevi_device_property('cpu_microcode_version', phodevi::std_caching),
+			'core-family-name' => new phodevi_device_property('get_core_name', phodevi::smart_caching),
 			'cache-size' => new phodevi_device_property('cpu_cache_size', phodevi::smart_caching),
 			'cache-size-string' => new phodevi_device_property('cpu_cache_size_string', phodevi::smart_caching),
 			'smt' => new phodevi_device_property('cpu_smt', phodevi::std_caching),
@@ -771,7 +772,7 @@ class phodevi_cpu extends phodevi_device_interface
 			'avx' => 'AVX', // AVX
 			'avx2' => 'AVX2', // AVX2
 			'aes' => 'AES', // AES
-			'svm' => 'AMD SVM virtualization', // AMD SVM (Virtualization)
+			'svm' => 'AMD SVM', // AMD SVM (Virtualization)
 			'vmx' => 'Intel VT-d', // Intel Virtualization
 			'fma3' => 'FMA3', // FMA3 Instruction Set
 			'fma4' => 'FMA4', // FMA4 Instruction Set
@@ -796,6 +797,90 @@ class phodevi_cpu extends phodevi_device_interface
 			'itlb_multihit' => 'iTLB Multihit',
 			'taa' => 'TSX Asynchronous Abort',
 			);
+	}
+	public static function get_core_name($family = false, $model = false)
+	{
+		if($family === false && $model === false && (PTS_IS_CLIENT && phodevi::is_linux()))
+		{
+			$cpuinfo = phodevi_linux_parser::cpuinfo_to_array();
+		}
+
+		$name = 'Family ' . $family . ', Model ' . $model;
+
+		if(isset($cpuinfo['cpu family']) && isset($cpuinfo['model']))
+		{
+			// Useful: https://en.wikichip.org/wiki/amd/cpuid / https://en.wikichip.org/wiki/intel/cpuid
+			$map = array(
+				'23' => array(
+					'1' => 'Zen',
+					'17' => 'Zen',
+					'24' => 'Zen',
+					'8' => 'Zen+',
+					'49' => 'Zen 2',
+					'96' => 'Zen 2',
+					'113' => 'Zen 2',
+					),
+				'5' => array(
+					'9' => 'Quark',
+					'10' => 'Quark',
+					),
+				'6' => array(
+					'23' => 'Penryn',
+					'29' => 'Penryn',
+					'26' => 'Nehalem',
+					'30' => 'Nehalem',
+					'46' => 'Nehalem',
+					'44' => 'Westmere',
+					'47' => 'Westmere',
+					'28' => 'Bonnell',
+					'38' => 'Bonnell',
+					'42' => 'Sandy Bridge',
+					'45' => 'Sandy Bridge',
+					'58' => 'Ivy Bridge',
+					'62' => 'Ivy Bridge',
+					'60' => 'Haswell',
+					'63' => 'Haswell',
+					'69' => 'Haswell',
+					'70' => 'Haswell',
+					'71' => 'Broadwell',
+					'61' => 'Broadwell',
+					'79' => 'Broadwell',
+					'86' => 'Broadwell',
+					'76' => 'Airmont',
+					'78' => 'Skylake',
+					'94' => 'Skylake',
+					'95' => 'Goldmont',
+					'92' => 'Goldmont',
+					'93' => 'Silvermont',
+					'90' => 'Silvermont',
+					'77' => 'Silvermont',
+					'74' => 'Silvermont',
+					'55' => 'Bay Trail',
+					'54' => 'Saltwell',
+					'53' => 'Saltwell',
+					'39' => 'Saltwell',
+					'142' => 'Kaby/Coffee/Whiskey Lake',
+					'158' => 'Kaby Lake / Coffee Lake',
+					'102' => 'Cannon Lake',
+					'165' => 'Comet Lake',
+					'85' => 'Cooper Lake',
+					'106' => 'Ice Lake',
+					'108' => 'Ice Lake',
+					'125' => 'Ice Lake',
+					'126' => 'Ice Lake',
+					'122' => 'Goldmont Plus',
+					'134' => 'Tremont',
+					'140' => 'Tiger Lake',
+					),
+				);
+
+			if(isset($map[$cpuinfo['cpu family']][$cpuinfo['model']]))
+			{
+				$name = $map[$cpuinfo['cpu family']][$cpuinfo['model']];
+			}
+		}
+
+		return $name;
 	}
 	public static function get_cpu_feature_constant($constant)
 	{
