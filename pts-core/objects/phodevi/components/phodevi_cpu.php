@@ -953,6 +953,7 @@ class phodevi_cpu extends phodevi_device_interface
 			6 => array(
 				15 => 'Centaur', // Centaur
 				23 => 'Penryn',
+				44 => 'Westmere', // sometimes lacks Intel in CPU string so former map fails
 				),
 			7 => array(
 				59 => 'Lujiazui', // ZHAOXIN
