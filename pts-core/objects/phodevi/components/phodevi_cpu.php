@@ -760,7 +760,8 @@ class phodevi_cpu extends phodevi_device_interface
 			'fsgsbase' => (1 << 17), // FSGSBASE - Ivy Bridge AVX
 			'bmi2' => (1 << 18), // Intel Haswell has BMI2
 			'avx512cd' => (1 << 19), // AVX-512
-			'avx512_vnni' => (1 << 20) // AVX-512 VNNI (DL BOOST)
+			'avx512_vnni' => (1 << 20), // AVX-512 VNNI (DL BOOST)
+			'avx512_bf16' => (1 << 21), // AVX-512 BFloat16
 			);
 	}
 	public static function get_cpu_feature_constant($constant)
