@@ -387,7 +387,6 @@ class pts_ae_data
 
 					switch($component_category)
 					{
-						case 'Processor':
 						case 'Graphics':
 						case 'Disk':
 							if(strpos($component, ' x ') !== false)
@@ -395,6 +394,7 @@ class pts_ae_data
 								// Don't want multi-disk reporting as who knows the RAID setup or if JBOD mixed in, etc
 								break;
 							}
+						case 'Processor':
 						case 'Memory':
 							if(!isset($hardware_data[$component_category][$component]))
 							{
