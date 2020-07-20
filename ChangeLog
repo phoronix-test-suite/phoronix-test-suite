@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 pts-core: Split the dynamic result viewer into its own embed class for result file handling to allow for easy re-use by OpenBenchmarking, Phoromatic, etc
 pts_Graph: Add histogram type
+phodevi: CPU core name / family detection to friendly strings (OpenBenchmarking.org driven)
 
 Phoronix Test Suite 9.8.0
 9 July 2020

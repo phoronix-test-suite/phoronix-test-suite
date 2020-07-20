@@ -146,7 +146,7 @@ class pts_result_viewer_embed
 		{
 			$PAGE .= '<div class="pts_result_table">' . pts_result_file_output::result_file_to_detailed_html_table($result_file, 'grid', $extra_attributes, pts_result_viewer_settings::check_request_for_var($_REQUEST, 'sdt')) . '</div>';
 		}
-		else
+		else if($result_file->get_test_count() > 3)
 		{
 			$intent = null;
 			$table = new pts_ResultFileTable($result_file, $intent);
