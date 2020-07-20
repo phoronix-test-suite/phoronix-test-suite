@@ -82,7 +82,7 @@ class dump_ob_to_ae_db implements pts_option_interface
 					}
 					if(($v = $system->get_cpu_core_count()) != false)
 					{
-						if(!isset($system_logs['Processor'][$processor]['core-count']) || ($v > $system_logs['Processor'][$processor]['core-count'] && $v < $system_logs['Processor'][$processor]['thread-count']))
+						if(!isset($system_logs['Processor'][$processor]['core-count']) || ($v > $system_logs['Processor'][$processor]['core-count'] && $v < $system_logs['Processor'][$processor]['thread-count']) || ($v < $system_logs['Processor'][$processor]['core-count'] && $system_logs['Processor'][$processor]['core-count'] == $system_logs['Processor'][$processor]['thread-count']))
 						{
 							$system_logs['Processor'][$processor]['core-count'] = $v;
 						}
