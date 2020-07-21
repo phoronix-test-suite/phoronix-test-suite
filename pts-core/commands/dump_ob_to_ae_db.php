@@ -96,10 +96,11 @@ class dump_ob_to_ae_db implements pts_option_interface
 					}
 					if(($v = $system->get_cpu_clock()) != false)
 					{
-						if(!isset($system_logs['Processor'][$processor]['cpu-clock']) || $v > $system_logs['Processor'][$processor]['cpu-clock'] && $system_logs['Processor'][$processor]['cpu-clock'] < 100)
+						if(!isset($system_logs['Processor'][$processor]['cpu-clock']))
 						{
-							$system_logs['Processor'][$processor]['cpu-clock'] = $v;
+							$system_logs['Processor'][$processor]['cpu-clock'] = array();
 						}
+						pts_arrays::popularity_tracker($system_logs['Processor'][$processor]['cpu-clock'], $v);
 					}
 					$system_logs['Processor'][$processor]['occurences'] = (isset($system_logs['Processor'][$processor]['occurences']) ? $system_logs['Processor'][$processor]['occurences'] : 0) + 1;
 				}
@@ -128,6 +129,32 @@ class dump_ob_to_ae_db implements pts_option_interface
 						}
 					}
 					$system_logs['Graphics'][$graphics]['occurences'] = (isset($system_logs['Graphics'][$graphics]['occurences']) ? $system_logs['Graphics'][$graphics]['occurences'] : 0) + 1;
+				}
+				if(isset($system_data[$system->get_identifier()]['Motherboard']) && !phodevi::is_fake_device($system_data[$system->get_identifier()]['Motherboard']))
+				{
+					$mobo = $system_data[$system->get_identifier()]['Motherboard'];
+					if(!isset($system_logs['Motherboard'][$mobo]))
+					{
+						$system_logs['Motherboard'][$mobo] = array();
+					}
+					foreach(array('lspci') as $file)
+					{
+						$log_file = $system->log_files($file);
+						if($log_file && !empty($log_file))
+						{
+							if(($x = strpos($log_file, PHP_EOL . PHP_EOL)) !== false)
+							{
+								$log_file = substr($log_file, 0, $x);
+							}
+
+							if(!isset($system_logs['Motherboard'][$mobo][$file]))
+							{
+								$system_logs['Motherboard'][$mobo][$file] = array();
+							}
+							pts_arrays::popularity_tracker($system_logs['Motherboard'][$mobo][$file], $log_file);
+						}
+					}
+					$system_logs['Motherboard'][$mobo]['occurences'] = (isset($system_logs['Motherboard'][$mobo]['occurences']) ? $system_logs['Motherboard'][$mobo]['occurences'] : 0) + 1;
 				}
 			}
 
