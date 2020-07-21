@@ -57,6 +57,11 @@ class dump_ob_to_ae_db implements pts_option_interface
 				$timestamps[$system->get_identifier()] = strtotime($system->get_timestamp());
 				$system_types[$system->get_identifier()] = phodevi_base::determine_system_type($system->get_hardware(), $system->get_software());
 
+				if(isset($system_data[$system->get_identifier()]['System Layer']) && !empty($system_data[$system->get_identifier()]['System Layer']))
+				{
+					continue;
+				}
+
 				if(isset($system_data[$system->get_identifier()]['Processor']) && !phodevi::is_fake_device($system_data[$system->get_identifier()]['Processor']))
 				{
 					$processor = $system_data[$system->get_identifier()]['Processor'];
