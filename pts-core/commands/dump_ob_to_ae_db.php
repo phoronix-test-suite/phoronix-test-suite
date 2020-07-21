@@ -103,6 +103,32 @@ class dump_ob_to_ae_db implements pts_option_interface
 					}
 					$system_logs['Processor'][$processor]['occurences'] = (isset($system_logs['Processor'][$processor]['occurences']) ? $system_logs['Processor'][$processor]['occurences'] : 0) + 1;
 				}
+				if(isset($system_data[$system->get_identifier()]['Graphics']) && !phodevi::is_fake_device($system_data[$system->get_identifier()]['Graphics']))
+				{
+					$graphics = $system_data[$system->get_identifier()]['Graphics'];
+					if(!isset($system_logs['Graphics'][$graphics]))
+					{
+						$system_logs['Graphics'][$graphics] = array();
+					}
+					foreach(array('glxinfo', 'vulkaninfo', 'clinfo') as $file)
+					{
+						$log_file = $system->log_files($file);
+						if($log_file && !empty($log_file))
+						{
+							if(($x = strpos($log_file, PHP_EOL . PHP_EOL)) !== false)
+							{
+								$log_file = substr($log_file, 0, $x);
+							}
+
+							if(!isset($system_logs['Graphics'][$graphics][$file]))
+							{
+								$system_logs['Graphics'][$graphics][$file] = array();
+							}
+							pts_arrays::popularity_tracker($system_logs['Graphics'][$graphics][$file], $log_file);
+						}
+					}
+					$system_logs['Graphics'][$graphics]['occurences'] = (isset($system_logs['Graphics'][$graphics]['occurences']) ? $system_logs['Graphics'][$graphics]['occurences'] : 0) + 1;
+				}
 			}
 
 			foreach($rf->get_result_objects() as $ro)
@@ -205,6 +231,20 @@ class dump_ob_to_ae_db implements pts_option_interface
 		}
 
 		$ae->rebuild_composite_listing();
+		foreach(array_keys($system_logs) as $category)
+		{
+			foreach(array_key($system_logs[$category]) as $component)
+			{
+				foreach($system_logs[$category][$component] as $filename => &$value)
+				{
+					if(is_array($value) && isset($value[0]['popularity']))
+					{
+						$most_popular = pts_arrays::get_most_popular_from_tracker($value);
+						$system_logs[$category][$component][$filename] = $most_popular;
+					}
+				}
+			}
+		}
 		$ae->append_to_component_data($system_logs);
 	}
 }

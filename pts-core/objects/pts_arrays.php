@@ -130,6 +130,52 @@ class pts_arrays
 
 		$array = array_reverse($sorted_array, true);
 	}
+	public static function popularity_tracker(&$popularity_array, $add_to_tracker)
+	{
+		if(!is_array($popularity_array))
+		{
+			$popularity_array = array();
+		}
+		foreach($popularity_array as &$el)
+		{
+			if($el['value'] == $add_to_tracker)
+			{
+				$el['popularity']++;
+				return;
+			}
+		}
+		$popularity_array[] = array('value' => $add_to_tracker, 'popularity' => 1);
+	}
+	public static function get_most_popular_from_tracker(&$popularity_array, $ret = 1)
+	{
+		usort($popularity_array, array('pts_arrays', 'compare_popularity'));
+
+		if($ret == 1)
+		{
+			return $popularity_array[0]['value'];
+		}
+		else
+		{
+			$pops = array();
+			for($i = 0; $i < $ret; $i++)
+			{
+				$pops[] = $popularity_array[$i]['value'];
+			}
+			return $pops;
+		}
+	}
+	public static function compare_popularity($a, $b)
+	{
+		$a = $a['popularity'];
+		$b = $b['popularity'];
+
+		if($a == $b)
+		{
+			return 0;
+		}
+
+		return $a > $b ? -1 : 1;
+	}
 }
 
 ?>
