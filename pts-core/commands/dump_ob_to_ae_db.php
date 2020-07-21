@@ -79,10 +79,11 @@ class dump_ob_to_ae_db implements pts_option_interface
 								$log_file = substr($log_file, 0, $x);
 							}
 							
-							if(!isset($system_logs['Processor'][$processor][$file]) || strlen($log_file) > strlen($system_logs['Processor'][$processor][$file]))
+							if(!isset($system_logs['Processor'][$processor][$file]))
 							{
-								$system_logs['Processor'][$processor][$file] = $log_file;
+								$system_logs['Processor'][$processor][$file] = array();
 							}
+							pts_arrays::popularity_tracker($system_logs['Processor'][$processor][$file], $log_file);
 						}
 					}
 					if(($v = $system->get_cpu_core_count()) != false)
