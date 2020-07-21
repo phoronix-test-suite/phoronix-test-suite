@@ -112,7 +112,7 @@ class pts_graph_histogram extends pts_graph_core
 			}
 		}
 	}
-	protected function maximum_graph_value()
+	protected function maximum_graph_value($v = -1)
 	{
 		return parent::maximum_graph_value(max(max($this->bins), $this->i['mark_count']));
 	}
