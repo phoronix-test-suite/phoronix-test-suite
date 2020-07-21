@@ -96,7 +96,7 @@ class dump_ob_to_ae_db implements pts_option_interface
 					}
 					if(($v = $system->get_cpu_clock()) != false)
 					{
-						if(!isset($system_logs['Processor'][$processor]['cpu-clock']) || $v > $system_logs['Processor'][$processor]['cpu-clock'])
+						if(!isset($system_logs['Processor'][$processor]['cpu-clock']) || $v > $system_logs['Processor'][$processor]['cpu-clock'] && $system_logs['Processor'][$processor]['cpu-clock'] < 100)
 						{
 							$system_logs['Processor'][$processor]['cpu-clock'] = $v;
 						}
@@ -233,14 +233,14 @@ class dump_ob_to_ae_db implements pts_option_interface
 		$ae->rebuild_composite_listing();
 		foreach(array_keys($system_logs) as $category)
 		{
-			foreach(array_key($system_logs[$category]) as $component)
+			foreach(array_keys($system_logs[$category]) as $component)
 			{
-				foreach($system_logs[$category][$component] as $filename => &$value)
+				foreach($system_logs[$category][$component] as $item => &$value)
 				{
 					if(is_array($value) && isset($value[0]['popularity']))
 					{
 						$most_popular = pts_arrays::get_most_popular_from_tracker($value);
-						$system_logs[$category][$component][$filename] = $most_popular;
+						$system_logs[$category][$component][$item] = $most_popular;
 					}
 				}
 			}

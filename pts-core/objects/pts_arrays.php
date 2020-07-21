@@ -130,6 +130,9 @@ class pts_arrays
 
 		$array = array_reverse($sorted_array, true);
 	}
+	//
+	// Popularity Tracking / Most Common Occurences
+	//
 	public static function popularity_tracker(&$popularity_array, $add_to_tracker)
 	{
 		if(!is_array($popularity_array))
