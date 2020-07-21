@@ -86,19 +86,21 @@ class dump_ob_to_ae_db implements pts_option_interface
 							pts_arrays::popularity_tracker($system_logs['Processor'][$processor][$file], $log_file);
 						}
 					}
-					if(($v = $system->get_cpu_core_count()) != false)
+					if(($cores = $system->get_cpu_core_count()) != false && $cores > 1)
 					{
-						if(!isset($system_logs['Processor'][$processor]['core-count']) || ($v > $system_logs['Processor'][$processor]['core-count'] && $v < $system_logs['Processor'][$processor]['thread-count']) || ($v < $system_logs['Processor'][$processor]['core-count'] && $system_logs['Processor'][$processor]['core-count'] == $system_logs['Processor'][$processor]['thread-count']))
+						if(!isset($system_logs['Processor'][$processor]['core-count']))
 						{
-							$system_logs['Processor'][$processor]['core-count'] = $v;
+							$system_logs['Processor'][$processor]['core-count'] = array();
 						}
+						pts_arrays::popularity_tracker($system_logs['Processor'][$processor]['core-count'], $cores);
 					}
-					if(($v = $system->get_cpu_thread_count()) != false)
+					if(($threads = $system->get_cpu_thread_count()) != false && $threads > 1 && $threads > $cores)
 					{
-						if(!isset($system_logs['Processor'][$processor]['thread-count']) || $v > $system_logs['Processor'][$processor]['thread-count'])
+						if(!isset($system_logs['Processor'][$processor]['thread-count']))
 						{
-							$system_logs['Processor'][$processor]['thread-count'] = $v;
+							$system_logs['Processor'][$processor]['thread-count'] = array();
 						}
+						pts_arrays::popularity_tracker($system_logs['Processor'][$processor]['thread-count'], $cores);
 					}
 					if(($v = $system->get_cpu_clock()) != false)
 					{
