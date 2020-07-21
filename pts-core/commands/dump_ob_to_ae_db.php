@@ -121,11 +121,6 @@ class dump_ob_to_ae_db implements pts_option_interface
 						$log_file = $system->log_files($file);
 						if($log_file && !empty($log_file))
 						{
-							if(($x = strpos($log_file, PHP_EOL . PHP_EOL)) !== false)
-							{
-								$log_file = substr($log_file, 0, $x);
-							}
-
 							if(!isset($system_logs['Graphics'][$graphics][$file]))
 							{
 								$system_logs['Graphics'][$graphics][$file] = array();
@@ -147,11 +142,6 @@ class dump_ob_to_ae_db implements pts_option_interface
 						$log_file = $system->log_files($file);
 						if($log_file && !empty($log_file))
 						{
-							if(($x = strpos($log_file, PHP_EOL . PHP_EOL)) !== false)
-							{
-								$log_file = substr($log_file, 0, $x);
-							}
-
 							if(!isset($system_logs['Motherboard'][$mobo][$file]))
 							{
 								$system_logs['Motherboard'][$mobo][$file] = array();

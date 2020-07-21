@@ -139,6 +139,10 @@ class pts_arrays
 		{
 			$popularity_array = array();
 		}
+		if(empty($add_to_tracker))
+		{
+			return;
+		}
 		foreach($popularity_array as &$el)
 		{
 			if($el['value'] == $add_to_tracker)
