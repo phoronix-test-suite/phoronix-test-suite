@@ -100,7 +100,7 @@ class dump_ob_to_ae_db implements pts_option_interface
 						{
 							$system_logs['Processor'][$processor]['thread-count'] = array();
 						}
-						pts_arrays::popularity_tracker($system_logs['Processor'][$processor]['thread-count'], $cores);
+						pts_arrays::popularity_tracker($system_logs['Processor'][$processor]['thread-count'], $threads);
 					}
 					if(($v = $system->get_cpu_clock()) != false)
 					{
