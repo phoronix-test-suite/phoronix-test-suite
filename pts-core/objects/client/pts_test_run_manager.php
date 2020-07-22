@@ -1649,7 +1649,7 @@ class pts_test_run_manager
 					}
 
 					// Check to ensure that nothing extra may have somehow wound up in the execution argument string of a saved result file...
-					if(pts_strings::has_in_string($result_object->get_arguments(), array(';', '&&', '|')))
+					if(pts_strings::has_in_string($result_object->get_arguments(), array('; ', '&&', '|')))
 					{
 						continue;
 					}
@@ -1718,7 +1718,7 @@ class pts_test_run_manager
 			{
 
 				// Check to ensure that nothing extra may have somehow wound up in the execution argument string of a saved result file...
-				if(pts_strings::has_in_string($result_object->get_arguments(), array(';', '&&', '|')))
+				if(pts_strings::has_in_string($result_object->get_arguments(), array('; ', '&&', '|')))
 				{
 					echo PHP_EOL . 'Exception loading a result object.' . PHP_EOL;
 					continue;
