@@ -256,6 +256,9 @@ class pts_render
 					$graph = new pts_graph_vertical_bars($result_object, $result_file, $extra_attributes);
 				}
 				break;
+			case 'VERTICAL_BAR_GRAPH':
+				$graph = new pts_graph_vertical_bars($result_object, $result_file, $extra_attributes);
+				break;
 			case 'PASS_FAIL':
 			case 'MULTI_PASS_FAIL':
 				$graph = new pts_graph_passfail($result_object, $result_file, $extra_attributes);
