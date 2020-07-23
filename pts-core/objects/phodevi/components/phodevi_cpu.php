@@ -882,6 +882,7 @@ class phodevi_cpu extends phodevi_device_interface
 				10 => 'Quark',
 				),
 			6 => array(
+				2 => 'Nehalem',
 				7 => 'Katmai',
 				8 => 'Coppermine',
 				11 => 'Tualatin',
@@ -909,6 +910,7 @@ class phodevi_cpu extends phodevi_device_interface
 				61 => 'Broadwell',
 				79 => 'Broadwell',
 				86 => 'Broadwell',
+				87 => 'Knights Landing',
 				76 => 'Airmont',
 				78 => 'Skylake',
 				94 => 'Skylake',
@@ -933,6 +935,7 @@ class phodevi_cpu extends phodevi_device_interface
 				125 => 'Ice Lake',
 				126 => 'Ice Lake',
 				122 => 'Goldmont Plus',
+				133 => 'Knights Mill',
 				134 => 'Tremont',
 				140 => 'Tiger Lake',
 				),
