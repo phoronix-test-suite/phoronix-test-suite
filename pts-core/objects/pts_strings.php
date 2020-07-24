@@ -86,7 +86,11 @@ class pts_strings
 	{
 		return function_exists('ctype_upper') ? ctype_upper($string) : ($string == strtoupper($string));
 	}
-	public static function trim_search_query($value, $remove_multipliers = false)
+	public static function trim_search_query_leave_hdd_size($value)
+	{
+		return pts_strings::trim_search_query($value, false, true);
+	}
+	public static function trim_search_query($value, $remove_multipliers = false, $keep_hdd_size = false)
 	{
 		$search_break_characters = array('@', '(', '/', '+', '[', '<', '*', '"');
 		for($i = 0, $x = strlen($value); $i < $x; $i++)
@@ -145,7 +149,12 @@ class pts_strings
 					// Version number being appended to product (some mobos) or the MB/GB size for GPUs
 					array_pop($words);
 				}
-				else if(strpos($words[0], 'GB') !== false)
+				else if(!$keep_hdd_size && strpos($words[0], 'GB') !== false)
+				{
+					// Likely disk size in front of string
+					array_shift($words);
+				}
+				else if(!$keep_hdd_size && strpos($words[0], 'TB') !== false)
 				{
 					// Likely disk size in front of string
 					array_shift($words);

@@ -53,7 +53,7 @@ class dump_ob_to_ae_db implements pts_option_interface
 			$system_types = array();
 			foreach($systems as $system)
 			{
-				$system_data[$system->get_identifier()] = array_map(array('pts_strings', 'trim_search_query'), array_merge(pts_result_file_analyzer::system_component_string_to_array($system->get_hardware()), pts_result_file_analyzer::system_component_string_to_array($system->get_software())));
+				$system_data[$system->get_identifier()] = array_map(array('pts_strings', 'trim_search_query_leave_hdd_size'), array_merge(pts_result_file_analyzer::system_component_string_to_array($system->get_hardware()), pts_result_file_analyzer::system_component_string_to_array($system->get_software())));
 				$timestamps[$system->get_identifier()] = strtotime($system->get_timestamp());
 				$system_types[$system->get_identifier()] = phodevi_base::determine_system_type($system->get_hardware(), $system->get_software());
 
