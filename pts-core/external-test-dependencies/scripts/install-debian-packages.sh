@@ -1,4 +1,9 @@
 #!/bin/sh
+
+if [ -f /.dockerenv ]; then
+	su -c "apt-get update $*"
+fi
+
 # Debian, unlike Ubuntu, doesn't sudo it users by default
 if [ -x /usr/bin/aptitude ]; then
 	# aptitude is nice since it doesn't fail if a non-existant package is hit
