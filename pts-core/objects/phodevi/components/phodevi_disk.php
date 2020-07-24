@@ -299,7 +299,7 @@ class phodevi_disk extends phodevi_device_interface
 
 		return $disks;
 	}
-	protected static function prepend_disk_vendor($disk_model)
+	public static function prepend_disk_vendor($disk_model)
 	{
 		if(isset($disk_model[4]))
 		{
@@ -343,15 +343,46 @@ class phodevi_disk extends phodevi_device_interface
 						$disk_manufacturer = 'Seagate';
 					}
 					break;
+				case 'M4':
+					if($third_char == '-')
+					{
+						$disk_manufacturer = 'Crucial';
+					}
+					break;
+				case 'HF':
+					if($third_char == 'S')
+					{
+						$disk_manufacturer = 'SK hynix';
+					}
+					break;
 			}
+
+			// OCZ SSDs aren't spaced
+			$disk_model = str_replace('OCZ-', 'OCZ ', $disk_model);
+			$disk_model = str_replace('TOSHIBA-', 'TOSHIBA ', $disk_model);
+			$disk_model = str_replace('Crucial_', 'Crucial ', $disk_model);
+
+			if(($x = strpos($disk_model, ' ')) != false)
+			{
+				$first_word = substr($disk_model, 0, $x);
+				switch($first_word)
+				{
+					case 'Force':
+						$disk_manufacturer = 'Corsair';
+						break;
+				}
+			}
+
 
 			if($disk_manufacturer != null && strpos($disk_model, $disk_manufacturer) === false)
 			{
 				$disk_model = $disk_manufacturer . ' ' . $disk_model;
 			}
 
-			// OCZ SSDs aren't spaced
-			$disk_model = str_replace('OCZ-', 'OCZ ', $disk_model);
+			if(substr($disk_model, 0, 3) == 'SSD' && strpos($disk_model, ' ') === false)
+			{
+				$disk_model = 'Intel ' . $disk_model;
+			}
 		}
 
 		return $disk_model;

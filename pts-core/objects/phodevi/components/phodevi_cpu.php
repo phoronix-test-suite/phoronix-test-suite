@@ -925,7 +925,7 @@ class phodevi_cpu extends phodevi_device_interface
 				53 => 'Saltwell',
 				39 => 'Saltwell',
 				142 => 'Kaby/Coffee/Whiskey Lake',
-				158 => 'Kaby Lake / Coffee Lake',
+				158 => 'Kaby/Coffee/Whiskey Lake',
 				102 => 'Cannon Lake',
 				165 => 'Comet Lake',
 				166 => 'Comet Lake',
