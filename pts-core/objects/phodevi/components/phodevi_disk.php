@@ -301,6 +301,13 @@ class phodevi_disk extends phodevi_device_interface
 	}
 	public static function prepend_disk_vendor($disk_model)
 	{
+		$disk_size_prepended = null;
+		if(($s = strpos($disk_model, ' ')) !== false && ($gb = strpos($disk_model, 'GB')) !== false && $gb < $s)
+		{
+			$disk_size_prepended = substr($disk_model, 0, $s);
+			$disk_model = substr($disk_mode, $s + 1);
+		}
+
 		if(isset($disk_model[4]))
 		{
 			$disk_manufacturer = null;
@@ -391,6 +398,11 @@ class phodevi_disk extends phodevi_device_interface
 				// For strings with INTEL already present, Intel seems to report it as INTEL
 				$disk_model = 'INTEL ' . $disk_model;
 			}
+		}
+
+		if($disk_size_prepended != null)
+		{
+			$disk_model = $disk_size_prepended . ' ' . $disk_model;
 		}
 
 		return $disk_model;
