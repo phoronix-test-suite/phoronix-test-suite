@@ -368,6 +368,7 @@ class phodevi_disk extends phodevi_device_interface
 				switch($first_word)
 				{
 					case 'Force':
+					case 'Voyager':
 						$disk_manufacturer = 'Corsair';
 						break;
 				}
