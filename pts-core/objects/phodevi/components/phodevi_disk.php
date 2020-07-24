@@ -386,7 +386,7 @@ class phodevi_disk extends phodevi_device_interface
 				$disk_model = $disk_manufacturer . ' ' . $disk_model;
 			}
 
-			if(substr($disk_model, 0, 3) == 'SSD' && strpos($disk_model, ' ') === false)
+			if(substr($disk_model, 0, 3) == 'SSD' && strpos($disk_model, ' ') === false  && strpos($disk_model, '-') === false)
 			{
 				// For strings with INTEL already present, Intel seems to report it as INTEL
 				$disk_model = 'INTEL ' . $disk_model;
