@@ -305,7 +305,7 @@ class phodevi_disk extends phodevi_device_interface
 		if(($s = strpos($disk_model, ' ')) !== false && ($gb = strpos($disk_model, 'GB')) !== false && $gb < $s)
 		{
 			$disk_size_prepended = substr($disk_model, 0, $s);
-			$disk_model = substr($disk_mode, $s + 1);
+			$disk_model = substr($disk_model, $s + 1);
 		}
 
 		if(isset($disk_model[4]))
