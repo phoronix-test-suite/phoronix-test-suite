@@ -355,6 +355,12 @@ class phodevi_disk extends phodevi_device_interface
 						$disk_manufacturer = 'SK hynix';
 					}
 					break;
+				case 'SM':
+					if($third_char == 'C')
+					{
+						$disk_manufacturer = 'Supermicro';
+					}
+					break;
 			}
 
 			// OCZ SSDs aren't spaced
