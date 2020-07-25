@@ -45,6 +45,8 @@ class phodevi_cpu extends phodevi_device_interface
 			'cache-size' => new phodevi_device_property('cpu_cache_size', phodevi::smart_caching),
 			'cache-size-string' => new phodevi_device_property('cpu_cache_size_string', phodevi::smart_caching),
 			'smt' => new phodevi_device_property('cpu_smt', phodevi::std_caching),
+			'cpu-family' => new phodevi_device_property('get_cpu_family', phodevi::smart_caching),
+			'cpu-model' => new phodevi_device_property('get_cpu_model', phodevi::smart_caching),
 			);
 	}
 	public static function cpu_string()
@@ -793,14 +795,51 @@ class phodevi_cpu extends phodevi_device_interface
 			'taa' => 'TSX Asynchronous Abort',
 			);
 	}
+	public static function get_cpu_family()
+	{
+		$family = null;
+		if(phodevi::is_linux())
+		{
+			$cpuinfo = phodevi_linux_parser::cpuinfo_to_array();
+			$family = isset($cpuinfo['cpu family']) ? $cpuinfo['cpu family'] : $family;
+		}
+		else if(phodevi::is_windows())
+		{
+			$processor_identifier = explode(' ', getenv('PROCESSOR_IDENTIFIER'));
+			if(($x = array_search('Family', $processor_identifier)) !== false)
+			{
+				$family = $processor_identifier[($x + 1)];
+			}
+		}
+
+		return $family;
+	}
+	public static function get_cpu_model()
+	{
+		$model = null;
+		if(phodevi::is_linux())
+		{
+			$cpuinfo = phodevi_linux_parser::cpuinfo_to_array();
+			$model = isset($cpuinfo['model']) ? $cpuinfo['model'] : $model;
+		}
+		else if(phodevi::is_windows())
+		{
+			$processor_identifier = explode(' ', getenv('PROCESSOR_IDENTIFIER'));
+			if(($x = array_search('Model', $processor_identifier)) !== false)
+			{
+				$model = $processor_identifier[($x + 1)];
+			}
+		}
+
+		return $model;
+	}
 	public static function get_core_name($family = false, $model = false, $cpu_string = null)
 	{
 		if($family === false && $model === false && (PTS_IS_CLIENT && phodevi::is_linux()))
 		{
-			$cpuinfo = phodevi_linux_parser::cpuinfo_to_array();
-			$family = isset($cpuinfo['cpu family']) ? $cpuinfo['cpu family'] : $family;
-			$model = isset($cpuinfo['model']) ? $cpuinfo['model'] : $model;
-			$cpu_string = isset($cpuinfo['model name']) ? $cpuinfo['model name'] : $model;
+			$family = phodevi::read_property('cpu', 'cpu-family');
+			$model = phodevi::read_property('cpu', 'cpu-model');
+			$cpu_string = phodevi::read_property('cpu', 'model');
 		}
 
 		$name = 'Family ' . $family . ', Model ' . $model;
