@@ -835,7 +835,7 @@ class phodevi_cpu extends phodevi_device_interface
 	}
 	public static function get_core_name($family = false, $model = false, $cpu_string = null)
 	{
-		if($family === false && $model === false && (PTS_IS_CLIENT && phodevi::is_linux()))
+		if($family === false && $model === false && PTS_IS_CLIENT)
 		{
 			$family = phodevi::read_property('cpu', 'cpu-family');
 			$model = phodevi::read_property('cpu', 'cpu-model');
