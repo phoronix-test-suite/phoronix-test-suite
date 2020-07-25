@@ -162,7 +162,7 @@ class pts_compression
 
 		$zip = new ZipArchive();
 
-		if($zip->open($zip_file, ZIPARCHIVE::OVERWRITE) !== true)
+		if($zip->open($zip_file, ZIPARCHIVE::CREATE) !== true)
 		{
 			$success = false;
 		}
