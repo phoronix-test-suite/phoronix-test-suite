@@ -67,6 +67,7 @@ class pts_result_viewer_embed
 	}
 	public function get_html()
 	{
+		$PAGE = null;
 		$result_file = &$this->result_file;
 		$result_file->avoid_duplicate_identifiers();
 		$extra_attributes = null;

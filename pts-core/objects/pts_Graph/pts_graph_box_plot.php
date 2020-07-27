@@ -147,7 +147,7 @@ class pts_graph_box_plot extends pts_graph_horizontal_bars
 		$longest_sub_identifier_width = self::text_string_width('Min: ' . $this->i['graph_max_value'] . ' / Avg: XX / Max: ' . $this->i['graph_max_value'], $this->i['identifier_size']);
 		$this->i['left_start'] = max($this->i['left_start'], $longest_sub_identifier_width);
 	}
-	protected function maximum_graph_value()
+	protected function maximum_graph_value($v = -1)
 	{
 		$max = 0;
 		foreach($this->test_result->test_result_buffer->buffer_items as &$buffer_item)
