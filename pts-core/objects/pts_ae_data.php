@@ -259,7 +259,7 @@ class pts_ae_data
 						// if no new results in 3 years, likely outdated...
 						continue;
 					}
-					if(count($data) < 4)
+					if(count($data) < 3)
 					{
 						continue;
 					}
