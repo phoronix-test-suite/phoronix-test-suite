@@ -842,8 +842,6 @@ class phodevi_cpu extends phodevi_device_interface
 			$cpu_string = phodevi::read_property('cpu', 'model');
 		}
 
-		$name = 'Family ' . $family . ', Model ' . $model;
-
 		// Useful: https://en.wikichip.org/wiki/amd/cpuid / https://en.wikichip.org/wiki/intel/cpuid
 		$amd_map = array(
 			14 => array(
@@ -1016,8 +1014,10 @@ class phodevi_cpu extends phodevi_device_interface
 		{
 			return $other_map[$family][$model];
 		}
-
-		return $name;
+		if($family != null && $model != null)
+		{
+			return 'Family ' . $family . ', Model ' . $model;
+		}
 	}
 	public static function get_cpu_feature_constant($constant)
 	{
