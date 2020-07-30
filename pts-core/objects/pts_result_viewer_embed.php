@@ -312,7 +312,7 @@ class pts_result_viewer_embed
 				if($c_ro)
 				{
 					$desc = str_replace(array(' Monitor', $res_desc_shortened ,'()' ,')', ' - '), '', $c_ro->get_arguments_description_shortened(false));
-					$tabs[($desc == $res_desc_shortened || empty($desc) ? $c_ro->test_profile->get_result_scale() : $desc)] = pts_render::render_graph_inline_embed($c_ro, $result_file, null);
+					$tabs[($desc == $res_desc_shortened || empty($desc) ? $c_ro->test_profile->get_result_scale() : $desc)] = pts_render::render_graph_inline_embed($c_ro, $result_file, $extra_attributes);
 					$result_file->remove_result_object_by_id($child_ro);
 					$skip_ros[] = $child_ro;
 				}
