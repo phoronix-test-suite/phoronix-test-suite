@@ -227,7 +227,15 @@ class pts_result_file_analyzer
 
 				if($result != 0)
 				{
-					$test_result->test_result_buffer->add_test_result($identifier, $result, null, array('install-footnote' => 'Detected ' . strtolower($unit) . ' count of ' . $value));
+					if($title_prepend == 'Performance Per Clock')
+					{
+						$d = 'GHz base clock speed (use PTS sensors for real-time frequency/sensor reporting)';
+					}
+					else
+					{
+						$d = strtolower($unit);
+					}
+					$test_result->test_result_buffer->add_test_result($identifier, $result, null, array('install-footnote' => 'Detected ' . $d . ' count of ' . $value));
 					$added_count++;
 				}
 			}
