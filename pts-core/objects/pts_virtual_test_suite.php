@@ -411,6 +411,11 @@ class pts_virtual_test_suite extends pts_test_suite
 		{
 			foreach($repo_index['tests'] as &$test)
 			{
+				if(!isset($test['internal_tags']))
+				{
+					continue;				
+				}
+
 				foreach($test['internal_tags'] as $tag)
 				{
 					$tags[$tag] = strtolower($tag);
