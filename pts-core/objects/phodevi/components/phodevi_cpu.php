@@ -552,7 +552,12 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 		else if(phodevi::is_macosx())
 		{
-			$info = phodevi_osx_parser::read_osx_system_profiler('SPHardwareDataType', 'ProcessorName');
+			$info = phodevi_bsd_parser::read_sysctl('machdep.cpu.brand_string');
+
+			if(empty($info))
+			{
+				$info = phodevi_osx_parser::read_osx_system_profiler('SPHardwareDataType', 'ProcessorName');
+			}
 		}
 		else if(phodevi::is_windows())
 		{
@@ -811,6 +816,10 @@ class phodevi_cpu extends phodevi_device_interface
 				$family = $processor_identifier[($x + 1)];
 			}
 		}
+		else if(phodevi::is_macosx())
+		{
+			$family = phodevi_bsd_parser::read_sysctl(array('machdep.cpu.family'));
+		}
 
 		return $family;
 	}
@@ -829,6 +838,10 @@ class phodevi_cpu extends phodevi_device_interface
 			{
 				$model = $processor_identifier[($x + 1)];
 			}
+		}
+		else if(phodevi::is_macosx())
+		{
+			$family = phodevi_bsd_parser::read_sysctl(array('machdep.cpu.model'));
 		}
 
 		return $model;
