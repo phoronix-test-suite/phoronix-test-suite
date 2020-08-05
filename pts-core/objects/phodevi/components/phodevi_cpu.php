@@ -647,10 +647,22 @@ class phodevi_cpu extends phodevi_device_interface
 					}
 				}
 
-				if(strpos(phodevi::$vfs->dmesg, 'Ampere eMAG') !== false)
+				if(strpos(phodevi::$vfs->dmesg, 'Ampere eMAG') !== false || stripos(pts_file_io::file_get_contents_if_exists('/sys/devices/virtual/dmi/id'), 'Ampere') !== false)
 				{
-					// Haven't found a better way to detect Ampere eMAG as not exposed via cpuinfo, etc
-					$new_info = 'Ampere eMAG ' . $new_info;
+					$product_family =  pts_file_io::file_get_contents_if_exists('/sys/devices/virtual/dmi/id/product_family');
+					$sys_vendor =  pts_file_io::file_get_contents_if_exists('/sys/devices/virtual/dmi/id/sys_vendor');
+					if(stripos($product_family, 'Quicksilver') !== false)
+					{
+						$new_info = 'Ampere Altra ' . $new_info;
+					}
+					else if(stripos($sys_vendor, 'Lenovo') !== false)
+					{
+						$new_info = 'Ampere eMAG ' . $new_info;
+					}
+					else
+					{
+						$new_info = 'Ampere ' . $new_info;
+					}
 				}
 				else if(strpos(phodevi::$vfs->dmesg, 'thunderx') !== false || strpos(phodevi::$vfs->dmesg, 'Cavium erratum') !== false)
 				{

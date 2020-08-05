@@ -43,6 +43,11 @@ class pts_file_io
 		$r = glob($pattern, $flags);
 		return is_array($r) ? $r : array();
 	}
+	public static function file_get_contents_if_exists($filename, $flags = 0, $context = null)
+	{
+		// Compared to the normal PHP file_get_contents, trim the file as a string when acquired
+		return is_file($filename) ? trim(file_get_contents($filename, $flags, $context)) : false;
+	}
 	public static function file_get_contents($filename, $flags = 0, $context = null)
 	{
 		// Compared to the normal PHP file_get_contents, trim the file as a string when acquired
