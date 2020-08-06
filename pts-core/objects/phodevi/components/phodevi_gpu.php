@@ -1373,7 +1373,7 @@ class phodevi_gpu extends phodevi_device_interface
 		$clean_phrases = array('OpenGL Engine');
 		$info = str_replace($clean_phrases, null, $info);
 
-		if(!empty($info) && $video_ram > 64 && strpos($info, $video_ram) == false) // assume more than 64MB of vRAM
+		if(!empty($info) && $video_ram > 64 && strpos($info, $video_ram) == false && stripos($info, 'llvmpipe') === false) // assume more than 64MB of vRAM
 		{
 			if($video_ram < 1024)
 			{
