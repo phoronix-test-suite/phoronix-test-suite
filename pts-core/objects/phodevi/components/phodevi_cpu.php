@@ -652,7 +652,7 @@ class phodevi_cpu extends phodevi_device_interface
 					}
 				}
 
-				if(strpos(phodevi::$vfs->dmesg, 'Ampere eMAG') !== false || stripos(pts_file_io::file_get_contents_if_exists('/sys/devices/virtual/dmi/id'), 'Ampere') !== false)
+				if(strpos(phodevi::$vfs->dmesg, 'Ampere eMAG') !== false || stripos(pts_file_io::file_get_contents_if_exists('/sys/devices/virtual/dmi/id/sys_vendor'), 'Ampere') !== false)
 				{
 					$product_family =  pts_file_io::file_get_contents_if_exists('/sys/devices/virtual/dmi/id/product_family');
 					$sys_vendor =  pts_file_io::file_get_contents_if_exists('/sys/devices/virtual/dmi/id/sys_vendor');
@@ -660,7 +660,7 @@ class phodevi_cpu extends phodevi_device_interface
 					{
 						$new_info = 'Ampere Altra ' . $new_info;
 					}
-					else if(stripos($sys_vendor, 'Lenovo') !== false)
+					else if(stripos($sys_vendor, 'Lenovo') !== false || stripos($product_family, 'eMAG') !== false)
 					{
 						$new_info = 'Ampere eMAG ' . $new_info;
 					}
