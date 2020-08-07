@@ -23,14 +23,25 @@
 
 class phodevi_osx_parser
 {
-	public static function read_osx_system_profiler($data_type, $object, $multiple_objects = false, $ignore_values = array())
+	public static $cached_results = array();
+
+	private static function run_command_to_lines_cached($command, $cache)
+	{
+		if(!$cache || !$array_key_exists($command, self::$cached_results))
+		{
+			$info = trim(shell_exec($command));
+			self::$cached_results[$command] = explode("\n", $info);
+		}
+
+		return self::$cached_results[$command];
+	}
+	public static function read_osx_system_profiler($data_type, $object, $multiple_objects = false, $ignore_values = array(), $cache = true)
 	{
 		$value = ($multiple_objects ? array() : false);
 
 		if(pts_client::executable_in_path('system_profiler'))
 		{
-			$info = trim(shell_exec('system_profiler ' . $data_type . ' 2>&1'));
-			$lines = explode("\n", $info);
+			$lines = self::run_command_to_lines_cached('system_profiler ' . $data_type . ' 2>&1', $cache);
 
 			for($i = 0; $i < count($lines) && ($value == false || $multiple_objects); $i++)
 			{

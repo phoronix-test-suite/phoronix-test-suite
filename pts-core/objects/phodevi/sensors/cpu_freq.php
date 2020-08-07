@@ -137,7 +137,7 @@ class cpu_freq extends phodevi_sensor
 	}
 	private function cpu_freq_macosx()
 	{
-		$info = phodevi_osx_parser::read_osx_system_profiler('SPHardwareDataType', 'ProcessorSpeed');
+		$info = phodevi_osx_parser::read_osx_system_profiler('SPHardwareDataType', 'ProcessorSpeed', false, array(), false);
 
 		if(($cut_point = strpos($info, ' ')) > 0)
 		{

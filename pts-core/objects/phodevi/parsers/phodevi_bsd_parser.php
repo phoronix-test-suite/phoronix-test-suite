@@ -25,7 +25,7 @@ class phodevi_bsd_parser
 {
 	public static function read_sysctl($desc)
 	{
-		// Read sysctl, used by *BSDs
+		// Read sysctl, used by *BSDs and macOS
 		$info = false;
 
 		if(pts_client::executable_in_path('sysctl'))
