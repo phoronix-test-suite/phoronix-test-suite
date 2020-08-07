@@ -27,7 +27,7 @@ class phodevi_osx_parser
 
 	private static function run_command_to_lines_cached($command, $cache)
 	{
-		if(!$cache || !$array_key_exists($command, self::$cached_results))
+		if(!$cache || !array_key_exists($command, self::$cached_results))
 		{
 			$info = trim(shell_exec($command));
 			self::$cached_results[$command] = explode("\n", $info);
