@@ -853,7 +853,7 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 		else if(phodevi::is_macosx())
 		{
-			$family = phodevi_bsd_parser::read_sysctl(array('machdep.cpu.model'));
+			$model = phodevi_bsd_parser::read_sysctl(array('machdep.cpu.model'));
 		}
 
 		return $model;
