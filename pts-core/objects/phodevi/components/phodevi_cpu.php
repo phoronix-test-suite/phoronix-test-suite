@@ -340,7 +340,7 @@ class phodevi_cpu extends phodevi_device_interface
 
 		if(empty($ucode_version) && phodevi::is_macosx())
 		{
-			$family = phodevi_bsd_parser::read_sysctl(array('machdep.cpu.microcode_version'));
+			$ucode_version = phodevi_bsd_parser::read_sysctl(array('machdep.cpu.microcode_version'));
 		}
 
 		return $ucode_version;
