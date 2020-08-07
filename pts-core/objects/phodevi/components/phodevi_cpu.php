@@ -338,6 +338,11 @@ class phodevi_cpu extends phodevi_device_interface
 			$ucode_version = self::read_cpuinfo_line('microcode');
 		}
 
+		if(empty($ucode_version) && phodevi::is_macosx())
+		{
+			$family = phodevi_bsd_parser::read_sysctl(array('machdep.cpu.microcode_version'));
+		}
+
 		return $ucode_version;
 	}
 	public static function cpu_default_frequency($cpu_core = 0)

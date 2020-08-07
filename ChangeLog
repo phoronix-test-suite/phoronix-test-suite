@@ -9,6 +9,7 @@ phodevi: CPU core name / family detection to friendly strings (OpenBenchmarking.
 phodevi: Report core name via system-info command
 phodevi: Various storage HDD/SSD detection reporting improvements
 phodevi: Ampere Altra detection
+phodevi: macOS/Apple hardware detection improvements
 
 Phoronix Test Suite 9.8.0
 9 July 2020
