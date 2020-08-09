@@ -976,6 +976,7 @@ class phodevi_cpu extends phodevi_device_interface
 				71 => 'Broadwell',
 				61 => 'Broadwell',
 				79 => 'Broadwell',
+				85 => 'Skylake',
 				86 => 'Broadwell',
 				87 => 'Knights Landing',
 				76 => 'Airmont',
