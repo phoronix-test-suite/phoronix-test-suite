@@ -226,7 +226,7 @@ elif [ -x /usr/sbin/mport ]
 then
 	# MidnightBSD
 	echo "The command to likely run for your operating system is: "
-	echo "# mport install php71 php71-dom php71-zip php71-json php71-simplexml"
+	echo "# mport install php74 php74-dom php74-zip php74-json php74-simplexml"
 	echo " "
 elif [ -x /bin/opkg ]
 then
