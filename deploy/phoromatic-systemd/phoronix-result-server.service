@@ -1,0 +1,14 @@
+[Unit]
+Description=Phoronix Test Suite Result viewer
+After=syslog.target network.target
+Documentation=man:phoronix-test-suite(1)
+
+[Service]
+TimeoutStartSec=300
+ExecStart=/usr/bin/phoronix-test-suite start-result-viewer
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
+
