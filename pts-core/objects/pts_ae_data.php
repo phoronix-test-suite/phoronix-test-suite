@@ -373,7 +373,7 @@ class pts_ae_data
 			// Update/Create Component JSON
 			//
 			
-			if(count($comparison_components) > 30)
+			if(count($comparison_components) > 20 && $last_appeared > strtotime('-6 months'))
 			{
 				foreach($comparison_components as $component => $value)
 				{
