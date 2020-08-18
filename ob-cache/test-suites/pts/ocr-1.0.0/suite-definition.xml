@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.8.0-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>OCR</Title>
+    <Version>1.0.0</Version>
+    <TestType>System</TestType>
+    <Description>Optical Character Recognition (OCR) benchmarks for distinguishing printed/handwritten text and converting  them to characters/text.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>system/tesseract-ocr</Test>
+  </Execute>
+  <Execute>
+    <Test>system/ocrmypdf</Test>
+  </Execute>
+</PhoronixTestSuite>
