@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.8.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://montage.ipac.caltech.edu/download/Montage_v6.0.tar.gz</URL>
+      <MD5>68e7372d9994c1137d9f0c3ebe13d716</MD5>
+      <SHA256>1f540a7389d30fcf9f8cd9897617cc68b19350fbcde97c4d1cdc5634de1992c6</SHA256>
+      <FileName>Montage_v6.0.tar.gz</FileName>
+      <FileSize>20681949</FileSize>
+    </Package>
+    <Package>
+      <URL>http://montage.ipac.caltech.edu/docs/Kimages.tar</URL>
+      <MD5>e642566f49174e8c8182ed20bcc672f3</MD5>
+      <SHA256>9076a21354698f70441ec2166696a09441e43e5c0de9811f8f52adc2b19514ee</SHA256>
+      <FileName>Kimages.tar</FileName>
+      <FileSize>192286720</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

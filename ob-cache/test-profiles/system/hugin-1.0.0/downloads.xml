@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.8.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/pano-pto-1.tar.xz</URL>
+      <MD5>38fd5bc38bf8d868b8fdd3cfa7333fdc</MD5>
+      <SHA256>591bb492449f5000c2b7ab832c73497d0b0b798a9dc4f05365675422cead2ef4</SHA256>
+      <FileName>pano-pto-1.tar.xz</FileName>
+      <FileSize>58457080</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

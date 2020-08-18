@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.8.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/text-pdf-example-1.zip</URL>
+      <MD5>6366cabe9f7f33a758ae3e73a586b758</MD5>
+      <SHA256>1bc5df1e2864965b9770e910397db4e8de984c754257fc663e07f518fcf46e9e</SHA256>
+      <FileName>text-pdf-example-1.zip</FileName>
+      <FileSize>2616044</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

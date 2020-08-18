@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.8.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://cdn.geekbench.com/Geekbench-5.2.3-Linux.tar.gz</URL>
+      <MD5>6b09e341998a288fbc6b3f7270ef7bb0</MD5>
+      <SHA256>9ce4ed1a69c67211c0ee26cda32260bd8a2848b54eb876335b3b1dbee2d20a0e</SHA256>
+      <FileName>Geekbench-5.2.3-Linux.tar.gz</FileName>
+      <FileSize>93047726</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://cdn.geekbench.com/Geekbench-5.2.3-WindowsSetup.exe</URL>
+      <MD5>539512cafd6073ca6aa7e044a9d05721</MD5>
+      <SHA256>f344f12e6d0292486315b85b44f64c85fed9bd9c9383abf8f9fcc321c3813f09</SHA256>
+      <FileName>Geekbench-5.2.3-WindowsSetup.exe</FileName>
+      <FileSize>124946752</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

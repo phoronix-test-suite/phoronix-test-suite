@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.8.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Selenium</Title>
+    <Description>This test profile uses the Selenium WebDriver for running various browser benchmarks in different available web browsers.</Description>
+    <ResultScale>Score</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.18</Version>
+    <SupportedPlatforms>Linux, Windows, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>python</ExternalDependencies>
+    <RequiresDisplay>TRUE</RequiresDisplay>
+    <RequiresInternet>TRUE</RequiresInternet>
+    <EnvironmentSize>100</EnvironmentSize>
+    <ProjectURL>https://www.seleniumhq.org/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>firefox, google-chrome</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Benchmark</DisplayName>
+      <Identifier>benchmark</Identifier>
+      <Menu>
+        <Entry>
+          <Name>ARES-6</Name>
+          <Value>ares6</Value>
+        </Entry>
+        <Entry>
+          <Name>Basemark</Name>
+          <Value>basemark</Value>
+        </Entry>
+        <Entry>
+          <Name>MotionMark</Name>
+          <Value>motionmark</Value>
+        </Entry>
+        <Entry>
+          <Name>Speedometer</Name>
+          <Value>speedometer</Value>
+        </Entry>
+        <Entry>
+          <Name>WebXPRT</Name>
+          <Value>webxprt</Value>
+        </Entry>
+        <Entry>
+          <Name>Octane</Name>
+          <Value>octane</Value>
+        </Entry>
+        <Entry>
+          <Name>Jetstream</Name>
+          <Value>jetstream</Value>
+        </Entry>
+        <Entry>
+          <Name>Jetstream 2</Name>
+          <Value>jetstream2</Value>
+        </Entry>
+        <Entry>
+          <Name>CanvasMark</Name>
+          <Value>canvasmark</Value>
+        </Entry>
+        <Entry>
+          <Name>StyleBench</Name>
+          <Value>stylebench</Value>
+        </Entry>
+        <Entry>
+          <Name>Maze Solver</Name>
+          <Value>mazesolver</Value>
+        </Entry>
+        <Entry>
+          <Name>PSPDFKit WASM</Name>
+          <Value>pspdfkit</Value>
+        </Entry>
+        <Entry>
+          <Name>WASM collisionDetection</Name>
+          <Value>wasmcollision</Value>
+        </Entry>
+        <Entry>
+          <Name>WASM imageConvolute</Name>
+          <Value>wasmconvolute</Value>
+        </Entry>
+        <Entry>
+          <Name>Kraken</Name>
+          <Value>kraken</Value>
+        </Entry>
+        <Entry>
+          <Name>GUIMark3 HTML5 Bitmap</Name>
+          <Value>guimark3bitmap</Value>
+        </Entry>
+        <Entry>
+          <Name>GUIMark3 HTML5 Vector</Name>
+          <Value>guimark3vector</Value>
+        </Entry>
+        <Entry>
+          <Name>GUIMark3 HTML5 Compute</Name>
+          <Value>guimark3compute</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Browser</DisplayName>
+      <Identifier>browser</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Firefox</Name>
+          <Value>Firefox</Value>
+        </Entry>
+        <Entry>
+          <Name>Google Chrome</Name>
+          <Value>Chrome</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

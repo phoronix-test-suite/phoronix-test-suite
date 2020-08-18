@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.8.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>AI Benchmark Alpha</Title>
+    <AppVersion>0.1.2</AppVersion>
+    <Description>AI Benchmark Alpha is a Python library for evaluating artificial intelligence (AI) performance on diverse hardware platforms and relies upon the TensorFlow machine learning library.</Description>
+    <ResultScale>Score</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux, BSD, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>python</ExternalDependencies>
+    <RequiresInternet>TRUE</RequiresInternet>
+    <EnvironmentSize>10</EnvironmentSize>
+    <ProjectURL>http://ai-benchmark.com/alpha</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

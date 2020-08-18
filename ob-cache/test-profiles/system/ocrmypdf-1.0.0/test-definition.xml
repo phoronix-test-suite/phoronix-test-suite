@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.8.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>OCRMyPDF</Title>
+    <Description>OCRMyPDF is an optical character recognition (OCR) text layer to scanned PDF files, producing new PDFs with the text now selectable/searchable/copy-paste capable. OCRMyPDF leverages the Tesseract OCR engine and is written in Python.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Processing 60 Page PDF Document</SubTitle>
+    <Executable>ocrmypdf-benchmark</Executable>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux, MacOSX, BSD</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>python</ExternalDependencies>
+    <EnvironmentSize>5</EnvironmentSize>
+    <ProjectURL>https://github.com/jbarlow83/OCRmyPDF</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>ocrmypdf</SystemDependencies>
+  </TestProfile>
+</PhoronixTestSuite>
