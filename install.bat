@@ -2,7 +2,7 @@
 
 :: Phoronix Test Suite
 :: URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-:: Copyright (C) 2018, Phoronix Media
+:: Copyright (C) 2018 - 2020, Phoronix Media
 ::
 :: This program is free software; you can redistribute it and/or modify
 :: it under the terms of the GNU General Public License as published by
@@ -29,5 +29,5 @@ md %destination%
 :: cd /d %destination%
 :: for /F "delims=" %%i in ('dir /b') do (rmdir "%%i" /s/q || del "%%i" /s/q)
 
-xcopy %cd% %destination% /E
+xcopy "%cd%" %destination% /E
 echo Phoronix Test Suite installed to %destination%
