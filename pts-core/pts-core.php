@@ -299,7 +299,7 @@ function pts_version_codenames()
 
 pts_define('PTS_VERSION', '10.0.0m1');
 pts_define('PTS_CORE_VERSION', 9910);
-pts_define('PTS_RELEASE_DATE', '20200813');
+pts_define('PTS_RELEASE_DATE', '20200819');
 pts_define('PTS_CODENAME', 'Finnsnes');
 
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));
