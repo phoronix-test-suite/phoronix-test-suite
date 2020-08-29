@@ -80,12 +80,6 @@ abstract class pts_graph_core
 		if($result_object != null)
 		{
 			$test_version = $result_object->test_profile->get_app_version();
-
-			if(isset($test_version[2]) && is_numeric($test_version[0]))
-			{
-				$test_version = 'v' . $test_version;
-			}
-
 			$this->i['graph_title'] = trim($result_object->test_profile->get_title() . ' ' . $test_version);
 
 			$this->i['graph_y_title'] = $result_object->test_profile->get_result_scale_formatted();
