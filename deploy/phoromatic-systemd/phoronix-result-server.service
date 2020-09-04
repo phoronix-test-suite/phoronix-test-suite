@@ -5,7 +5,7 @@ Documentation=man:phoronix-test-suite(1)
 
 [Service]
 TimeoutStartSec=300
-ExecStart=/usr/bin/phoronix-test-suite start-result-viewer
+ExecStart=/usr/bin/phoronix-test-suite start-result-viewer daemon
 Restart=on-failure
 
 [Install]
