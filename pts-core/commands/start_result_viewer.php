@@ -39,8 +39,11 @@ class start_result_viewer implements pts_option_interface
 		{
 			echo PHP_EOL . pts_client::cli_just_bold('Access Key: ') . pts_client::$web_result_viewer_access_key;
 		}
-		echo PHP_EOL . 'Press any key when done accessing the viewer to end the process...';
-		pts_user_io::read_user_input();
+                echo PHP_EOL . 'Press CTRL^C when done accessing the viewer to end the process...';
+                while(true){
+                    pts_user_io::read_user_input();
+                }
+
 	}
 }
 
