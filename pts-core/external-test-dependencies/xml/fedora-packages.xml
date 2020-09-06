@@ -39,6 +39,10 @@
 			<PackageName>freeglut-devel</PackageName>
 		</Package>
 		<Package>
+			<GenericName>eigen</GenericName>
+			<PackageName>eigen3-devel</PackageName>
+		</Package>
+		<Package>
 			<GenericName>nasm</GenericName>
 			<PackageName>nasm</PackageName>
 		</Package>

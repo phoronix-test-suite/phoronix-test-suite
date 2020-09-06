@@ -60,6 +60,10 @@
 			<PackageName>xorg</PackageName>
 		</Package>
 		<Package>
+			<GenericName>eigen</GenericName>
+			<PackageName>eigen</PackageName>
+		</Package>
+		<Package>
 			<GenericName>openssl-development</GenericName>
 			<PackageName>openssl</PackageName>
 		</Package>

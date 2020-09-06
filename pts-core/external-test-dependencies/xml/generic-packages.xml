@@ -178,6 +178,12 @@
 			<FileCheck>scons</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>eigen</GenericName>
+			<Title>Eigen</Title>
+			<PossibleNames>eigen, libeigen3-dev</PossibleNames>
+			<FileCheck>eigen3/Eigen/src/Core/CoreIterators.h</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>zlib-development</GenericName>
 			<Title>Zlib Compression Library</Title>
 			<PossibleNames>zlib1-devel, zlib-devel, zlib1g-dev</PossibleNames>

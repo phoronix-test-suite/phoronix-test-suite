@@ -445,5 +445,9 @@
 			<GenericName>glfw</GenericName>
 			<PackageName>libglfw3-dev</PackageName>
 		</Package>
+		<Package>
+			<GenericName>eigen</GenericName>
+			<PackageName>libeigen3-dev</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

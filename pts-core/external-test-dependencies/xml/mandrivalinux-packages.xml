@@ -32,6 +32,10 @@
 			<PackageName>libtiff-devel</PackageName>
 		</Package>
 		<Package>
+			<GenericName>eigen</GenericName>
+			<PackageName>eigen3-devel</PackageName>
+		</Package>
+		<Package>
 			<GenericName>p7zip</GenericName>
 			<PackageName>p7zip</PackageName>
 		</Package>

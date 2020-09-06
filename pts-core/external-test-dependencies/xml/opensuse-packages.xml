@@ -99,6 +99,10 @@
 			<PackageName>glew-devel</PackageName>
 		</Package>
 		<Package>
+			<GenericName>eigen</GenericName>
+			<PackageName>eigen3-devel</PackageName>
+		</Package>
+		<Package>
 			<GenericName>meson</GenericName>
 			<PackageName>meson</PackageName>
 		</Package>
