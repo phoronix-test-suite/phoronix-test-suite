@@ -612,7 +612,7 @@ class system_monitor extends pts_module_interface
 	{
 		foreach(self::$perf_per_sensor as $i => $s)
 		{
-			$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_identifier($s), self::$individual_test_run_offsets[phodevi::sensor_identifier($s)]);
+			$sensor_results = self::parse_monitor_log('logs/' . phodevi::sensor_identifier($s), (isset(self::$individual_test_run_offsets[phodevi::sensor_identifier($s)]) ? self::$individual_test_run_offsets[phodevi::sensor_identifier($s)] : 0));
 
 			if(count($sensor_results) > 2 && self::$successful_test_run_request)
 			{
