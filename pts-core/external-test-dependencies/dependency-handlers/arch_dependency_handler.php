@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015 - 2018, Phoronix Media
-	Copyright (C) 2015 - 2018, Michael Larabel
+	Copyright (C) 2015 - 2020, Phoronix Media
+	Copyright (C) 2015 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -62,7 +62,7 @@ class arch_dependency_handler implements pts_dependency_handler
 						foreach(array('/usr/bin/', '/bin/', '/usr/sbin') as $possible_path)
 						{
 							$pkgfile_provides = self::run_pkgfile_provides($possible_path . $file);
-							if($pkgfile_provides != null)
+							if($pkgfile_provides != null && !in_array($pkgfile_provides, array('extra/bash-completion')))
 							{
 								$packages_needed[$file] = $pkgfile_provides;
 								break;
