@@ -747,6 +747,41 @@ class pts_test_result_parser
 									$test_results[] = $seconds;
 								}
 							}
+							else if($is_numeric_check && strpos($r[$template_r_pos], ':') !== false && strtolower(substr($r[$template_r_pos], -1)) == 's')
+							{
+								// e.g. 01h:04m:33s
+								$seconds = 0;
+								$invalid = false;
+								foreach(explode(':', $r[$template_r_pos]) as $time_segment)
+								{
+									$postfix = strtolower(substr($time_segment, -1));
+									$value = substr($time_segment, 0, -1);
+									if($value == 0 || !is_numeric($value))
+									{
+										continue;
+									}
+									switch($postfix)
+									{
+										case 'h':
+											$seconds += ($value * 3600);
+											break;
+										case 'm':
+											$seconds += ($value * 60);
+											break;
+										case 's':
+											$seconds += $value;
+											break;
+										default:
+											$invalid = true;
+											break;
+									}
+								}
+
+								if(!empty($seconds) && $seconds > 0 && !$invalid)
+								{
+									$test_results[] = $seconds;
+								}
+							}
 						}
 						else
 						{
