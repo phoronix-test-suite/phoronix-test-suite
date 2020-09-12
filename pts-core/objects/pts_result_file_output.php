@@ -169,7 +169,7 @@ class pts_result_file_output
 
 		return $csv_output;
 	}
-	public static function result_file_to_text(&$result_file, $terminal_width = 80, $stylize_output = false)
+	public static function result_file_to_text(&$result_file, $terminal_width = 79, $stylize_output = false)
 	{
 		$result_output = null;
 
@@ -194,7 +194,7 @@ class pts_result_file_output
 
 		foreach($result_file->get_result_objects() as $result_object)
 		{
-			$result_output .= self::test_result_to_text($result_object, $terminal_width, $stylize_output, null, true, true);
+			$result_output .= self::test_result_to_text($result_object, $terminal_width, $stylize_output, null, true, true, ($terminal_width > 80 ? '    ' : ''));
 			$result_output .= PHP_EOL . PHP_EOL;
 		}
 
@@ -292,7 +292,7 @@ class pts_result_file_output
 
 		return $result_output;
 	}
-	public static function test_result_to_text($result_object, $terminal_width = 80, $stylize_output = false, $highlight_result = null, $show_title = true, $always_force_title = false)
+	public static function test_result_to_text($result_object, $terminal_width = 80, $stylize_output = false, $highlight_result = null, $show_title = true, $always_force_title = false, $prepend_line = '    ')
 	{
 		$result_output = null;
 		static $last_title_shown = null;
@@ -300,14 +300,14 @@ class pts_result_file_output
 		{
 			if($always_force_title || $last_title_shown != $result_object->test_profile->get_title())
 			{
-				$result_output .= PHP_EOL . '    ' . trim($result_object->test_profile->get_title() . ' ' . $result_object->test_profile->get_app_version());
+				$result_output .= PHP_EOL . $prepend_line . trim($result_object->test_profile->get_title() . ' ' . $result_object->test_profile->get_app_version());
 				$last_title_shown = $result_object->test_profile->get_title();
 			}
-			$result_output .= PHP_EOL . '    ' . $result_object->get_arguments_description();
+			$result_output .= PHP_EOL . $prepend_line . $result_object->get_arguments_description();
 		}
 		if($result_object->test_profile->get_result_scale() != null)
 		{
-			$scale_line = '    ' . $result_object->test_profile->get_result_scale();
+			$scale_line = $prepend_line . $result_object->test_profile->get_result_scale();
 			if($result_object->test_profile->get_result_proportion() == 'LIB')
 			{
 				$scale_line .= ' < Lower Is Better';
@@ -384,7 +384,7 @@ class pts_result_file_output
 			foreach($buffers as &$buffer_item)
 			{
 				$val = $buffer_item->get_result_value();
-				$result_line = '    ' . $buffer_item->get_result_identifier() . ' ';
+				$result_line = $prepend_line . $buffer_item->get_result_identifier() . ' ';
 				$result_length_offset = $longest_identifier_length - strlen($buffer_item->get_result_identifier());
 				if($result_length_offset > 0)
 				{
