@@ -7,6 +7,8 @@ pts-core: Allow launching just the result viewer from systemd (phoronix-result-s
 pts-core: Result viewer UI tweaks
 pts-core: Minor fixes
 pts-core: Add RequiresRootInstall test profile option
+pts-core: Result file text output tweaks
+pts-core: More robust test result parsing in certain time formats
 
 Phoronix Test Suite 10.0.0 Milestone 1
 19 August 2020
