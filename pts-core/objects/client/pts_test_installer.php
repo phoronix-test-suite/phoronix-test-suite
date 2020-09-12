@@ -835,9 +835,15 @@ class pts_test_installer
 					}
 				}
 
+				if($no_prompts && $test_profile->is_root_install_required() && !phodevi::is_root() && !phodevi::is_windows())
+				{
+					self::test_install_error(null, $test_install_request, 'Root/administrator rights are required to install this test.');
+					return false;
+				}
+
 				pts_client::$display->display_interrupt_message($pre_install_message);
 				$install_time_length_start = microtime(true);
-				$install_log = pts_tests::call_test_script($test_install_request->test_profile, 'install', null, '"' . $test_install_directory . '"', $test_install_request->special_environment_vars, false);
+				$install_log = pts_tests::call_test_script($test_install_request->test_profile, 'install', null, '"' . $test_install_directory . '"', $test_install_request->special_environment_vars, false, $no_prompts);
 				$test_install_request->install_time_duration = microtime(true) - $install_time_length_start;
 				pts_client::$display->display_interrupt_message($post_install_message);
 

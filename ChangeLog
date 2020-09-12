@@ -6,6 +6,7 @@ pts-core: Honor NO_COLOR environment variable for disabling terminal coloring
 pts-core: Allow launching just the result viewer from systemd (phoronix-result-server.service)
 pts-core: Result viewer UI tweaks
 pts-core: Minor fixes
+pts-core: Add RequiresRootInstall test profile option
 
 Phoronix Test Suite 10.0.0 Milestone 1
 19 August 2020

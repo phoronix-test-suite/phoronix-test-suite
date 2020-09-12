@@ -107,7 +107,7 @@
 						<set></set>
 						<default></default>
 					</xs:appinfo>
-					<xs:documentation>The Executable is the name of the bash/shell script file to be called from the root/home directory of the test profile installation to actually run the test. By default if this tag is not set, the name of the test profile itself is assumed to be the script file to call.</xs:documentation>
+					<xs:documentation>The Executable is the name of the bash/shell script file to be called from the home directory of the test profile installation to actually run the test. By default if this tag is not set, the name of the test profile itself is assumed to be the script file to call.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="TimesToRun" type="TimesToRun" minOccurs="0" maxOccurs="1">
@@ -279,7 +279,18 @@
 						<default>FALSE</default>
 						<flags>UNCOMMON</flags>
 					</xs:appinfo>
-					<xs:documentation>RequiresRoot allows a value of TRUE or FALSE if the test requires root/administrator rights for successfully running the test. By default the value is assumed to FALSE. If TRUE, the Phoronix Test Suite will attempt to prompt the user at run-time for their root/sudo password to run the test with elevated permissions if the user is not current root/administrator.</xs:documentation>
+					<xs:documentation>RequiresRoot allows a value of TRUE or FALSE if the test requires root/administrator rights for successfully running the test. By default the value is assumed to FALSE. If TRUE, the Phoronix Test Suite will attempt to prompt the user at run-time for their root/sudo password to run the test with elevated permissions if the user is not currently the root/administrator.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RequiresRootInstall" type="Boolean" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>is_root_install_required</get>
+						<set></set>
+						<default>FALSE</default>
+						<flags>UNCOMMON</flags>
+					</xs:appinfo>
+					<xs:documentation>RequiresRootInstall allows a value of TRUE or FALSE if the test requires root/administrator rights for successfully installing the test on the system. By default the value is assumed to FALSE. If TRUE, the Phoronix Test Suite will attempt to prompt the user at install-time for their root/sudo password to install the test with elevated permissions if the user is not currently the root/administrator.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="RequiresDisplay" type="Boolean" minOccurs="0" maxOccurs="1">

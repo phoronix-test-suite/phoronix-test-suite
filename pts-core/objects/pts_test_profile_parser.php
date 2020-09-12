@@ -375,6 +375,10 @@ class pts_test_profile_parser
 	{
 		return pts_strings::string_bool($this->xg('TestProfile/RequiresRoot', 'FALSE'));
 	}
+	public function is_root_install_required()
+	{
+		return pts_strings::string_bool($this->xg('TestProfile/RequiresRootInstall', 'FALSE'));
+	}
 	public function is_display_required()
 	{
 		return pts_strings::string_bool($this->xg('TestProfile/RequiresDisplay', 'FALSE')) || ($this->xg('TestProfile/RequiresDisplay') == null && $this->get_test_hardware_type() == 'Graphics' && !$this->is_gpu_compute_test());

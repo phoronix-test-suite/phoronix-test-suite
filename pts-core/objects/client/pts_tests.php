@@ -276,7 +276,7 @@ class pts_tests
 
 		return $extra_vars;
 	}
-	public static function call_test_script($test_profile, $script_name, $print_string = null, $pass_argument = null, $extra_vars_append = null, $use_ctp = true)
+	public static function call_test_script($test_profile, $script_name, $print_string = null, $pass_argument = null, $extra_vars_append = null, $use_ctp = true, $no_prompts = false)
 	{
 		$extra_vars = pts_tests::extra_environmental_variables($test_profile);
 
@@ -363,6 +363,10 @@ class pts_tests
 					}
 					else
 					{
+						if($script_name == 'install' && $no_prompts == false && $test_profile->is_root_install_required() && !phodevi::is_root())
+						{
+							$sh .= ' ' . PTS_CORE_STATIC_PATH . 'root-access.sh';
+						}
 						$this_result = pts_client::shell_exec('cd ' .  $test_directory . (phodevi::is_windows() ? '; ' : ' && ') . $sh . ' ' . $run_file . ' ' . $pass_argument . (phodevi::is_windows() ? '' : ' 2>&1'), $extra_vars);
 					}
 				}
