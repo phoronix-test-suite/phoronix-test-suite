@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 10.0.0 Milestone 2
+12 September 2020
 
 pts-core: Honor NO_COLOR environment variable for disabling terminal coloring
 pts-core: Allow launching just the result viewer from systemd (phoronix-result-server.service)
