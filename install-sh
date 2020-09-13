@@ -21,6 +21,11 @@
 
 # To install into a chroot, set $DESTDIR to the corresponding directory.
 
+die() {
+	printf '%s\n' "$1" >&2
+	exit "${2:-1}"
+}
+
 if [ "X$1" = "X" ]
 then
 	INSTALL_PREFIX="/usr"
@@ -31,71 +36,67 @@ fi
 # Ensure the user is in the correct directory
 if [ ! -f pts-core/phoronix-test-suite.php ]
 then
-	cat <<'EOT'
-
-To install the Phoronix Test Suite you must first change directories to phoronix-test-suite/. For support visit: http://www.phoronix-test-suite.com/
-
-EOT
-exit
+	die '
+	To install the Phoronix Test Suite you must first change directories to phoronix-test-suite/. For support visit: http://www.phoronix-test-suite.com/
+'
 fi
 
-mkdir -p $DESTDIR$INSTALL_PREFIX
-if [ ! -w $DESTDIR$INSTALL_PREFIX ]
+mkdir -p "$DESTDIR$INSTALL_PREFIX"
+if [ ! -w "$DESTDIR$INSTALL_PREFIX" ]
 then
-	echo "ERROR: $DESTDIR$INSTALL_PREFIX is not writable. Run this installer as root or specify a different directory prefix as the first argument sent to this script."
-	exit
+	die "ERROR: $DESTDIR$INSTALL_PREFIX is not writable. Run this installer as root or specify a different directory prefix as the first argument sent to this script."
 fi
 
-rm -rf $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/
-rm -rf $DESTDIR$INSTALL_PREFIX/share/doc/phoronix-test-suite/
+rm -rf "$DESTDIR$INSTALL_PREFIX"/share/phoronix-test-suite/
+rm -rf "$DESTDIR$INSTALL_PREFIX"/share/doc/phoronix-test-suite/
 
-mkdir -p $DESTDIR$INSTALL_PREFIX/bin/
-mkdir -p $DESTDIR$INSTALL_PREFIX/share/appdata/
-mkdir -p $DESTDIR$INSTALL_PREFIX/share/applications/
-mkdir -p $DESTDIR$INSTALL_PREFIX/share/icons/hicolor/48x48/apps/
-mkdir -p $DESTDIR$INSTALL_PREFIX/share/man/man1/
-mkdir -p $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/
-mkdir -p $DESTDIR$INSTALL_PREFIX/share/doc/phoronix-test-suite/
-mkdir -p $DESTDIR$INSTALL_PREFIX/../etc/bash_completion.d/
+mkdir -p "$DESTDIR$INSTALL_PREFIX"/bin/
+mkdir -p "$DESTDIR$INSTALL_PREFIX"/share/appdata/
+mkdir -p "$DESTDIR$INSTALL_PREFIX"/share/applications/
+mkdir -p "$DESTDIR$INSTALL_PREFIX"/share/icons/hicolor/48x48/apps/
+mkdir -p "$DESTDIR$INSTALL_PREFIX"/share/man/man1/
+mkdir -p "$DESTDIR$INSTALL_PREFIX"/share/phoronix-test-suite/
+mkdir -p "$DESTDIR$INSTALL_PREFIX"/share/doc/phoronix-test-suite/
+mkdir -p "$DESTDIR$INSTALL_PREFIX"/../etc/bash_completion.d/
 #mkdir -p $DESTDIR$INSTALL_PREFIX/../usr/lib/systemd/system/
 #mkdir -p $DESTDIR$INSTALL_PREFIX/../etc/init/
 
-cp ChangeLog $DESTDIR$INSTALL_PREFIX/share/doc/phoronix-test-suite/
-cp COPYING $DESTDIR$INSTALL_PREFIX/share/doc/phoronix-test-suite/
-cp AUTHORS $DESTDIR$INSTALL_PREFIX/share/doc/phoronix-test-suite/
+cp ChangeLog "$DESTDIR$INSTALL_PREFIX"/share/doc/phoronix-test-suite/
+cp COPYING "$DESTDIR$INSTALL_PREFIX"/share/doc/phoronix-test-suite/
+cp AUTHORS "$DESTDIR$INSTALL_PREFIX"/share/doc/phoronix-test-suite/
 
-cd documentation/
-cp -r * $DESTDIR$INSTALL_PREFIX/share/doc/phoronix-test-suite/
+cd documentation/ || exit
+cp -r * "$DESTDIR$INSTALL_PREFIX"/share/doc/phoronix-test-suite/
 cd ..
-rm -rf $DESTDIR$INSTALL_PREFIX/share/doc/phoronix-test-suite/man-pages/
+rm -rf "$DESTDIR$INSTALL_PREFIX"/share/doc/phoronix-test-suite/man-pages/
 
-cp documentation/man-pages/*.1 $DESTDIR$INSTALL_PREFIX/share/man/man1/
-cp pts-core/static/bash_completion $DESTDIR$INSTALL_PREFIX/../etc/bash_completion.d/phoronix-test-suite
-cp pts-core/static/images/phoronix-test-suite.png $DESTDIR$INSTALL_PREFIX/share/icons/hicolor/48x48/apps/phoronix-test-suite.png
-cp pts-core/static/phoronix-test-suite.desktop $DESTDIR$INSTALL_PREFIX/share/applications/
-cp pts-core/static/phoronix-test-suite-launcher.desktop $DESTDIR$INSTALL_PREFIX/share/applications/
-cp pts-core/static/phoronix-test-suite.appdata.xml $DESTDIR$INSTALL_PREFIX/share/appdata/
+cp documentation/man-pages/*.1 "$DESTDIR$INSTALL_PREFIX"/share/man/man1/
+cp pts-core/static/bash_completion "$DESTDIR$INSTALL_PREFIX"/../etc/bash_completion.d/phoronix-test-suite
+cp pts-core/static/images/phoronix-test-suite.png "$DESTDIR$INSTALL_PREFIX"/share/icons/hicolor/48x48/apps/phoronix-test-suite.png
+cp pts-core/static/phoronix-test-suite.desktop "$DESTDIR$INSTALL_PREFIX"/share/applications/
+cp pts-core/static/phoronix-test-suite-launcher.desktop "$DESTDIR$INSTALL_PREFIX"/share/applications/
+cp pts-core/static/phoronix-test-suite.appdata.xml "$DESTDIR$INSTALL_PREFIX"/share/appdata/
 
-mkdir -p $DESTDIR$INSTALL_PREFIX/../usr/lib/systemd/system/
-cp deploy/*-systemd/*.service $DESTDIR$INSTALL_PREFIX/../usr/lib/systemd/system/
+mkdir -p "$DESTDIR$INSTALL_PREFIX"/../usr/lib/systemd/system/
+cp deploy/*-systemd/*.service "$DESTDIR$INSTALL_PREFIX"/../usr/lib/systemd/system/
 
 # mkdir -p $DESTDIR$INSTALL_PREFIX/../etc/init/
 # cp pts-core/static/upstart/*.conf $DESTDIR$INSTALL_PREFIX/../etc/init/
 
-rm -rf $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/pts-core
-cp -r pts-core $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/
-cp -r ob-cache $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/
-cp -r deploy $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/
-rm -f $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/pts-core/static/phoronix-test-suite.desktop
-rm -f $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/pts-core/static/phoronix-test-suite-launcher.desktop
-rm -f $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/pts-core/openbenchmarking.org/openbenchmarking-mime.xml
-rm -f $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/pts-core/static/bash_completion
-rm -f $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/pts-core/static/images/openbenchmarking.png
-rm -f $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/pts-core/static/images/%phoronix-test-suite.png
+rm -rf "$DESTDIR$INSTALL_PREFIX"/share/phoronix-test-suite/pts-core
+cp -r pts-core "$DESTDIR$INSTALL_PREFIX"/share/phoronix-test-suite/
+cp -r ob-cache "$DESTDIR$INSTALL_PREFIX"/share/phoronix-test-suite/
+cp -r deploy "$DESTDIR$INSTALL_PREFIX"/share/phoronix-test-suite/
+rm -f "$DESTDIR$INSTALL_PREFIX"/share/phoronix-test-suite/pts-core/static/phoronix-test-suite.desktop
+rm -f "$DESTDIR$INSTALL_PREFIX"/share/phoronix-test-suite/pts-core/static/phoronix-test-suite-launcher.desktop
+rm -f "$DESTDIR$INSTALL_PREFIX"/share/phoronix-test-suite/pts-core/openbenchmarking.org/openbenchmarking-mime.xml
+rm -f "$DESTDIR$INSTALL_PREFIX"/share/phoronix-test-suite/pts-core/static/bash_completion
+rm -f "$DESTDIR$INSTALL_PREFIX"/share/phoronix-test-suite/pts-core/static/images/openbenchmarking.png
+rm -f "$DESTDIR$INSTALL_PREFIX"/share/phoronix-test-suite/pts-core/static/images/%phoronix-test-suite.png
 
 
-sed 's:export PTS_DIR=$(readlink -f `dirname $0`):export PTS_DIR='"$INSTALL_PREFIX"'\/share\/phoronix-test-suite:g' phoronix-test-suite > $DESTDIR$INSTALL_PREFIX/bin/phoronix-test-suite
-chmod +x $DESTDIR$INSTALL_PREFIX/bin/phoronix-test-suite
+sed -e 's:export PTS_DIR=$(actualpath "$(dirname "$0")"):export PTS_DIR='"$INSTALL_PREFIX"'\/share\/phoronix-test-suite:g'
+chmod +x "$DESTDIR$INSTALL_PREFIX"/bin/phoronix-test-suite
 
 # sed 's:\$url = PTS_PATH . \"documentation\/index.html\";:\$url = \"'"$INSTALL_PREFIX"'\/share\/doc\/packages\/phoronix-test-suite\/index.html\";:g' pts-core/commands/gui_gtk.php > $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/pts-core/commands/gui_gtk.php
 
@@ -107,14 +108,14 @@ then
 	xdg-icon-resource install --context mimetypes --size 64 pts-core/static/images/openbenchmarking.png application-x-openbenchmarking
 else
 	#chroot
-	mkdir -p $DESTDIR$INSTALL_PREFIX/share/mime/packages/
-	mkdir -p $DESTDIR$INSTALL_PREFIX/share/icons/hicolor/64x64/mimetypes/
-	cp pts-core/openbenchmarking.org/openbenchmarking-mime.xml $DESTDIR$INSTALL_PREFIX/share/mime/packages/
-	cp pts-core/static/images/openbenchmarking.png $DESTDIR$INSTALL_PREFIX/share/icons/hicolor/64x64/mimetypes/application-x-openbenchmarking.png
+	mkdir -p "$DESTDIR$INSTALL_PREFIX"/share/mime/packages/
+	mkdir -p "$DESTDIR$INSTALL_PREFIX"/share/icons/hicolor/64x64/mimetypes/
+	cp pts-core/openbenchmarking.org/openbenchmarking-mime.xml "$DESTDIR$INSTALL_PREFIX"/share/mime/packages/
+	cp pts-core/static/images/openbenchmarking.png "$DESTDIR$INSTALL_PREFIX"/share/icons/hicolor/64x64/mimetypes/application-x-openbenchmarking.png
 
 fi
 
-echo -e "\nPhoronix Test Suite Installation Completed\n
+printf '%b\n' "\nPhoronix Test Suite Installation Completed\n
 Executable File: $INSTALL_PREFIX/bin/phoronix-test-suite
 Documentation: $INSTALL_PREFIX/share/doc/phoronix-test-suite/
 Phoronix Test Suite Files: $INSTALL_PREFIX/share/phoronix-test-suite/\n"
