@@ -320,7 +320,14 @@ abstract class pts_graph_core
 		if(defined('OPENBENCHMARKING_BUILD'))
 		{
 			$config['text']['watermark'] = 'OpenBenchmarking.org';
-			$config['text']['watermark_url'] = 'https://www.openbenchmarking.org/';
+			if(defined('OPENBENCHMARKING_WATERMARK_URL'))
+			{
+				$config['text']['watermark_url'] = OPENBENCHMARKING_WATERMARK_URL;
+			}
+			else
+			{
+				$config['text']['watermark_url'] = 'https://www.openbenchmarking.org/';
+			}
 		}
 		else
 		{

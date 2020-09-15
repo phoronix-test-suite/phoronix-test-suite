@@ -264,7 +264,7 @@ class pts_ae_data
 						continue;
 					}
 					$data = pts_math::remove_outliers($data);
-					if(count($data) < 2)
+					if(count($data) < 3)
 					{
 						continue;
 					}
