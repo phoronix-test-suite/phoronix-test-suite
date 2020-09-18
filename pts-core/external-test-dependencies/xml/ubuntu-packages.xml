@@ -446,6 +446,10 @@
 			<PackageName>libglfw3-dev</PackageName>
 		</Package>
 		<Package>
+			<GenericName>protobuf</GenericName>
+			<PackageName>libprotobuf-dev</PackageName>
+		</Package>
+		<Package>
 			<GenericName>eigen</GenericName>
 			<PackageName>libeigen3-dev</PackageName>
 		</Package>

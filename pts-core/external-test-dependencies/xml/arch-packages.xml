@@ -363,5 +363,9 @@
 			<GenericName>glfw</GenericName>
 			<PackageName>glfw-x11</PackageName>
 		</Package>
+		<Package>
+			<GenericName>protobuf</GenericName>
+			<PackageName>protobuf</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

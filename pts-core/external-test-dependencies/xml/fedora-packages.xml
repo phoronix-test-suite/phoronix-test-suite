@@ -188,6 +188,10 @@
 			<PackageName>popt-devel</PackageName>
 		</Package>
 		<Package>
+			<GenericName>protobuf</GenericName>
+			<PackageName>protobuf-devel</PackageName>
+		</Package>
+		<Package>
 			<GenericName>meson</GenericName>
 			<PackageName>meson</PackageName>
 		</Package>

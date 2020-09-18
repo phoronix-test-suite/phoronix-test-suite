@@ -111,6 +111,10 @@
 			<PackageName>libfreeimage3 libfreeimage-devel</PackageName>
 		</Package>
 		<Package>
+			<GenericName>protobuf</GenericName>
+			<PackageName>protobuf-devel</PackageName>
+		</Package>
+		<Package>
 			<GenericName>scons</GenericName>
 			<PackageName>scons</PackageName>
 		</Package>

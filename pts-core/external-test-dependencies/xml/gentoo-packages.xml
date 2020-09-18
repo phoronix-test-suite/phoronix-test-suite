@@ -31,6 +31,10 @@
 			<PackageName>dev-libs/openssl</PackageName>
 		</Package>
 		<Package>
+			<GenericName>protobuf</GenericName>
+			<PackageName>dev-libs/protobuf</PackageName>
+		</Package>
+		<Package>
 			<GenericName>eigen</GenericName>
 			<PackageName>dev-cpp/eigen</PackageName>
 		</Package>

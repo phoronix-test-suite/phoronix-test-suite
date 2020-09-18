@@ -44,6 +44,10 @@
 			<PackageName>expat</PackageName>
 		</Package>
 		<Package>
+			<GenericName>protobuf</GenericName>
+			<PackageName>protobuf-devel</PackageName>
+		</Package>
+		<Package>
 			<GenericName>nasm</GenericName>
 			<PackageName>nasm</PackageName>
 		</Package>
