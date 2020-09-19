@@ -298,7 +298,7 @@ function pts_version_codenames()
 }
 
 pts_define('PTS_VERSION', '10.0.0m2');
-pts_define('PTS_CORE_VERSION', 9920);
+pts_define('PTS_CORE_VERSION', 9921);
 pts_define('PTS_RELEASE_DATE', '20200912');
 pts_define('PTS_CODENAME', 'Finnsnes');
 
