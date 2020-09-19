@@ -391,7 +391,15 @@ class pts_openbenchmarking
 						}
 					}
 
-					if($generated_time > (time() - (86400 * $index_cache_ttl)) && (!defined('FIRST_RUN_ON_PTS_UPGRADE') || FIRST_RUN_ON_PTS_UPGRADE == false))
+					if(defined('OPENBENCHMARKING_BUILD'))
+					{
+						// Allow OB cache to be refreshed hourly
+						if($generated_time > (time() - (3600 * $index_cache_ttl)) && (!defined('FIRST_RUN_ON_PTS_UPGRADE') || FIRST_RUN_ON_PTS_UPGRADE == false))
+						{
+							continue;
+						}
+					}
+					else if($generated_time > (time() - (86400 * $index_cache_ttl)) && (!defined('FIRST_RUN_ON_PTS_UPGRADE') || FIRST_RUN_ON_PTS_UPGRADE == false))
 					{
 						// The index is new enough
 						continue;
