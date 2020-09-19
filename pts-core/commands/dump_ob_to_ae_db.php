@@ -172,6 +172,7 @@ class dump_ob_to_ae_db implements pts_option_interface
 					foreach($buffers as &$buffer_item)
 					{
 						$result = $buffer_item->get_result_value();
+
 						if(stripos($result, ',') !== false || !is_numeric($result))
 						{
 							continue;
@@ -239,9 +240,10 @@ class dump_ob_to_ae_db implements pts_option_interface
 						{
 							continue;
 						}
+						$time_consumed = $buffer_item->get_run_time_total();
 						$component_value = $system_data[$system_identifier][$component];
 						$related_component_value = isset($system_data[$system_identifier][$related_component]) ? $system_data[$system_identifier][$related_component] : null;
-						$ae->insert_result_into_analytic_results($comparison_hash, $result_reference, $component_value, $component, $related_component_value, $related_component, $result, $timestamps[$system_identifier], $system_types[$system_identifier], $system_layer);
+						$ae->insert_result_into_analytic_results($comparison_hash, $result_reference, $component_value, $component, $related_component_value, $related_component, $result, $timestamps[$system_identifier], $system_types[$system_identifier], $system_layer, $time_consumed);
 						$inserts++;
 					}
 

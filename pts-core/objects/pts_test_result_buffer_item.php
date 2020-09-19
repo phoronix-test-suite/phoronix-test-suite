@@ -92,6 +92,16 @@ class pts_test_result_buffer_item
 	{
 		return $this->result_json;
 	}
+	public function get_run_times()
+	{
+		$json_data = $this->get_result_json();
+		return isset($json_data['test-run-times']) ? explode(':', $json_data['test-run-times']) : array();
+	}
+	public function get_run_time_total()
+	{
+		$times = $this->get_run_times();
+		return count($times) > 0 ? array_sum($times) : -1;
+	}
 	public function get_result_json()
 	{
 		if($this->result_json != null && !is_array($this->result_json))

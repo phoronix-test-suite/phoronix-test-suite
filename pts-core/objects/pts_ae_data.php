@@ -71,6 +71,9 @@ class pts_ae_data
 				//$this->db->exec('');
 				//$this->db->exec('');
 				$this->db->exec('PRAGMA user_version = 1');
+			case 1:
+				$this->db->exec('ALTER TABLE analytics_results ADD COLUMN TimeConsumed INTEGER');
+				$this->db->exec('PRAGMA user_version = 2');
 		}
 		return true;
 	}
@@ -87,9 +90,9 @@ class pts_ae_data
 		$stmt->bindValue(':ru', $result_object->test_profile->get_result_scale());
 		$result = $stmt->execute();
 	}
-	public function insert_result_into_analytic_results($comparison_hash, $result_reference, $component, $category, $related_component, $related_category, $result, $datetime, $system_type, $system_layer)
+	public function insert_result_into_analytic_results($comparison_hash, $result_reference, $component, $category, $related_component, $related_category, $result, $datetime, $system_type, $system_layer, $time_consumed)
 	{
-		$stmt = $this->db->prepare('INSERT OR IGNORE INTO analytics_results (ComparisonHash, ResultReference, Component, RelatedComponent, Result, DateTime, SystemType, SystemLayer) VALUES (:ch, :rr, :c, :rc, :r, :dt, :st, :sl)');
+		$stmt = $this->db->prepare('INSERT OR IGNORE INTO analytics_results (ComparisonHash, ResultReference, Component, RelatedComponent, Result, DateTime, SystemType, SystemLayer, TimeConsumed) VALUES (:ch, :rr, :c, :rc, :r, :dt, :st, :sl, :tc)');
 		$stmt->bindValue(':ch', $comparison_hash);
 		$stmt->bindValue(':rr', $result_reference);
 		$stmt->bindValue(':c', $this->component_to_component_id($component, $category));
@@ -98,6 +101,7 @@ class pts_ae_data
 		$stmt->bindValue(':dt', $datetime);
 		$stmt->bindValue(':st', $system_type);
 		$stmt->bindValue(':sl', $system_layer);
+		$stmt->bindValue(':tc', $time_consumed);
 		$result = $stmt->execute();
 	}
 	public function component_to_component_id($component, $category)
@@ -213,7 +217,8 @@ class pts_ae_data
 			$component_results = array();
 			$component_dates = array();
 			$system_types = array();
-			$results = $this->get_results_array_by_comparison_hash($comparison_hash, $first_appeared, $last_appeared, $component_results, $component_dates, $system_types);
+			$timing_data = array();
+			$results = $this->get_results_array_by_comparison_hash($comparison_hash, $first_appeared, $last_appeared, $component_results, $component_dates, $system_types, $timing_data);
 
 			if(count($results) < 12)
 			{
@@ -319,6 +324,21 @@ class pts_ae_data
 				asort($comparison_components);
 			}
 
+			// TIMING DATA Assembly
+			$td = array();
+			foreach($timing_data as $time_consumed)
+			{
+				if($time_consumed > 0)
+				{
+					if(!isset($td[$time_consumed]))
+					{
+						$td[$time_consumed] = 0;
+					}
+
+					$td[$time_consumed]++;
+				}
+			}
+
 
 			// JSON FILE
 			$json = array();
@@ -332,6 +352,7 @@ class pts_ae_data
 			$json['unit'] = $row['ResultUnit'];
 			$json['samples'] = count($results);
 			$json['sample_data'] = implode(',', $results);
+			$json['run_time_data'] = $td;
 			$json['first_appeared'] = $first_appeared;
 			$json['last_appeared'] = $last_appeared;
 			$json['percentiles'] = $percentiles;
@@ -486,7 +507,7 @@ class pts_ae_data
 	{
 		return count($b) - count($a);
 	}
-	public function get_results_array_by_comparison_hash($ch, &$first_appeared, &$last_appeared, &$component_results, &$component_dates, &$system_types)
+	public function get_results_array_by_comparison_hash($ch, &$first_appeared, &$last_appeared, &$component_results, &$component_dates, &$system_types, &$timing_data)
 	{
 		$stmt = $this->db->prepare('SELECT Result, DateTime, Component, RelatedComponent, SystemType, SystemLayer FROM analytics_results WHERE ComparisonHash = :ch');
 		$stmt->bindValue(':ch', $ch);
@@ -510,6 +531,7 @@ class pts_ae_data
 				$last_appeared = $dt;
 			}
 			$results[] = $row['Result'];
+			$timing_data[] = $row['TimeConsumed'];
 			if(!empty($row['SystemLayer']) || strlen($row['Component']) < 3)
 			{
 				continue;

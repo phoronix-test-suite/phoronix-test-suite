@@ -669,11 +669,11 @@ class pts_test_result
 
 		foreach($this->test_result_buffer->get_buffer_items() as $item)
 		{
-			$json_data = $item->get_result_json();
-			if(isset($json_data['test-run-times']))
+			$total_time = $item->get_run_time_total();
+
+			if($total_time > 0)
 			{
-				$test_run_times = explode(':', $json_data['test-run-times']);
-				$total_times[] = array_sum($test_run_times);
+				$total_times[] = $total_time;
 			}
 		}
 
@@ -685,11 +685,11 @@ class pts_test_result
 
 		foreach($this->test_result_buffer->get_buffer_items() as $item)
 		{
-			$json_data = $item->get_result_json();
-			if(isset($json_data['test-run-times']))
+			$total_time = $item->get_run_time_total();
+
+			if($total_time > 0)
 			{
-				$test_run_times = explode(':', $json_data['test-run-times']);
-				$total_times[$item->get_result_identifier()] = array_sum($test_run_times);
+				$total_times[$item->get_result_identifier()] = $total_time;
 			}
 		}
 

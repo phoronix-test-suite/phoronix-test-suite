@@ -56,10 +56,9 @@ class analyze_run_times implements pts_option_interface
 			$avg_time = array();
 			foreach($ro->test_result_buffer->get_buffer_items() as $item)
 			{
-				$json_data = $item->get_result_json();
-				if(isset($json_data['test-run-times']))
+				$test_run_times = $item->get_run_times();
+				if(!empty($test_run_times))
 				{
-					$test_run_times = explode(':', $json_data['test-run-times']);
 					foreach($test_run_times as &$t)
 					{
 						$t = ceil($t);
