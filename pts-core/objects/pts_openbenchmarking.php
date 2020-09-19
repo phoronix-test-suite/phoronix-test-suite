@@ -377,7 +377,8 @@ class pts_openbenchmarking
 				{
 					// Refreshing the indexes once every few days should be suffice
 					// Refresh approximately every three days by default
-					$index_cache_ttl = 1;
+					// Allow more frequent OB cache
+					$index_cache_ttl = defined('OPENBENCHMARKING_BUILD') ? (1 / 24) : 1;
 					if(PTS_IS_CLIENT && ($config_ttl = pts_config::read_user_config('PhoronixTestSuite/Options/OpenBenchmarking/IndexCacheTTL')))
 					{
 						if($config_ttl === 0)
@@ -391,15 +392,7 @@ class pts_openbenchmarking
 						}
 					}
 
-					if(defined('OPENBENCHMARKING_BUILD'))
-					{
-						// Allow OB cache to be refreshed hourly
-						if($generated_time > (time() - (3600 * $index_cache_ttl)) && (!defined('FIRST_RUN_ON_PTS_UPGRADE') || FIRST_RUN_ON_PTS_UPGRADE == false))
-						{
-							continue;
-						}
-					}
-					else if($generated_time > (time() - (86400 * $index_cache_ttl)) && (!defined('FIRST_RUN_ON_PTS_UPGRADE') || FIRST_RUN_ON_PTS_UPGRADE == false))
+					if($generated_time > (time() - (86400 * $index_cache_ttl)) && (!defined('FIRST_RUN_ON_PTS_UPGRADE') || FIRST_RUN_ON_PTS_UPGRADE == false))
 					{
 						// The index is new enough
 						continue;
