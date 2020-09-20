@@ -670,7 +670,7 @@ abstract class pts_graph_core
 			$this->render_graph_identifiers();
 		}
 
-		if($this->i['graph_value_type'] == 'NUMERICAL' && !$this->i['no_graph_value_ticks'])
+		if($this->i['graph_value_type'] == 'NUMERICAL')
 		{
 			$this->render_graph_value_ticks($this->i['left_start'], $this->i['top_start'], $this->i['graph_left_end'], $this->i['graph_top_end']);
 		}
@@ -869,10 +869,6 @@ abstract class pts_graph_core
 	}
 	protected function render_graph_value_ticks($left_start, $top_start, $left_end, $top_end, $show_numbers = true)
 	{
-		if($this->i['no_graph_value_ticks'])
-		{
-			return;
-		}
 		$increment = round(($this->i['graph_max_value'] - $this->i['graph_min_value']) / $this->i['mark_count'], $this->i['graph_max_value'] < 10 ? 4 : 2);
 
 		if($this->i['graph_orientation'] == 'HORIZONTAL')
@@ -894,7 +890,10 @@ abstract class pts_graph_core
 
 				if($i != 0 && $display_value != 0)
 				{
-					$show_numbers && $this->svg_dom->add_text_element($display_value, array('x' => $px_from_left + 2, 'y' => ($top_end + 5 + self::$c['size']['tick_mark'])), $g);
+					if(!$this->i['no_graph_value_ticks'] && $show_numbers)
+					{
+						$this->svg_dom->add_text_element($display_value, array('x' => $px_from_left + 2, 'y' => ($top_end + 5 + self::$c['size']['tick_mark'])), $g);
+					}
 					$this->svg_dom->add_element('line', array('x1' => ($px_from_left + 2), 'y1' => ($top_start), 'x2' => ($px_from_left + 2), 'y2' => ($top_end - 5), 'stroke-dasharray' => '5,5'), $g_lines);
 					$this->svg_dom->add_element('line', array('x1' => ($px_from_left + 2), 'y1' => ($top_end - 4), 'x2' => ($px_from_left + 2), 'y2' => ($top_end + 5)), $g_lines);
 				}
@@ -921,7 +920,10 @@ abstract class pts_graph_core
 
 				if($display_value != 0)
 				{
-					$show_numbers && $this->svg_dom->add_text_element($display_value, array('x' => ($px_from_left_start - 4), 'y' => round($px_from_top + (self::$c['size']['tick_mark'] / 2))), $g_text);
+					if(!$this->i['no_graph_value_ticks'] && $show_numbers)
+					{
+						$this->svg_dom->add_text_element($display_value, array('x' => ($px_from_left_start - 4), 'y' => round($px_from_top + (self::$c['size']['tick_mark'] / 2))), $g_text);
+					}
 
 					if($i != 0 && $this->i['show_background_lines'])
 					{
