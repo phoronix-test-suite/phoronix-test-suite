@@ -31,6 +31,7 @@ class pts_graph_pie_chart extends pts_graph_core
 		$this->i['graph_value_type'] = 'ABSTRACT';
 		$this->i['hide_graph_identifiers'] = false;
 		$this->i['identifier_width'] = 0;
+		$this->i['show_real_pie_values'] = !isset($extra_attributes['no_pie_values']);
 		$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'] + 100);
 	}
 	protected function render_graph_pre_init()
@@ -61,7 +62,7 @@ class pts_graph_pie_chart extends pts_graph_core
 			foreach($group as &$buffer_item)
 			{
 				$percent = pts_math::set_precision($buffer_item->get_result_value() / $this->i['pie_sum'] * 100, 2);
-				array_push($key_strings, $buffer_item->get_result_value() . ' [' . $percent . "%]");
+				array_push($key_strings, ($this->i['show_real_pie_values'] ? $buffer_item->get_result_value() . ' [' . $percent . '%]' : $percent . '%'));
 			}
 		}
 
