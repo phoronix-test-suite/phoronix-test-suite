@@ -169,6 +169,7 @@ abstract class pts_graph_core
 		{
 			$this->generate_results_var();
 		}
+		$this->i['no_graph_value_ticks'] = !isset($extra_attributes['no_graph_value_ticks']);
 
 		// reverve bar paint color (first color) from being used otherwise such as in charts rendered first
 		$this->get_paint_color(0);
@@ -669,7 +670,7 @@ abstract class pts_graph_core
 			$this->render_graph_identifiers();
 		}
 
-		if($this->i['graph_value_type'] == 'NUMERICAL')
+		if($this->i['graph_value_type'] == 'NUMERICAL' && !$this->i['no_graph_value_ticks'])
 		{
 			$this->render_graph_value_ticks($this->i['left_start'], $this->i['top_start'], $this->i['graph_left_end'], $this->i['graph_top_end']);
 		}
@@ -868,6 +869,10 @@ abstract class pts_graph_core
 	}
 	protected function render_graph_value_ticks($left_start, $top_start, $left_end, $top_end, $show_numbers = true)
 	{
+		if($this->i['no_graph_value_ticks'])
+		{
+			return;
+		}
 		$increment = round(($this->i['graph_max_value'] - $this->i['graph_min_value']) / $this->i['mark_count'], $this->i['graph_max_value'] < 10 ? 4 : 2);
 
 		if($this->i['graph_orientation'] == 'HORIZONTAL')
