@@ -1033,6 +1033,7 @@ class pts_result_file_analyzer
 				array('Motherboard', 'Chipset'), // Motherboard comparison
 				array('Motherboard', 'Chipset', 'Audio', 'Network'), // Also a potential motherboard comparison
 				array('Graphics', 'Audio'), // GPU comparison
+				array('Graphics'),
 				), $return_all_changed_indexes);
 		}
 		else if(count($hw_unique) == 1)
