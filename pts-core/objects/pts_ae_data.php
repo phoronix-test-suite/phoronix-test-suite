@@ -326,8 +326,22 @@ class pts_ae_data
 
 			// TIMING DATA Assembly
 			$td = array();
+			$average_time = array_sum($timing_data) / count($timing_data);
+			if($average_time > 1800)
+			{
+				$round_to_nearest = 60;
+			}
+			else if($average_time > 600)
+			{
+				$round_to_nearest = 30;
+			}
+			else
+			{
+				$round_to_nearest = 10;
+			}
 			foreach($timing_data as $time_consumed)
 			{
+				$time_consumed = max(1, round($time_consumed / $round_to_nearest)) * $round_to_nearest;
 				if($time_consumed > 0)
 				{
 					if(!isset($td[$time_consumed]))
@@ -352,6 +366,7 @@ class pts_ae_data
 			$json['unit'] = $row['ResultUnit'];
 			$json['samples'] = count($results);
 			$json['sample_data'] = implode(',', $results);
+			$json['run_time_avg'] = $average_time;
 			$json['run_time_data'] = $td;
 			$json['first_appeared'] = $first_appeared;
 			$json['last_appeared'] = $last_appeared;
@@ -509,7 +524,7 @@ class pts_ae_data
 	}
 	public function get_results_array_by_comparison_hash($ch, &$first_appeared, &$last_appeared, &$component_results, &$component_dates, &$system_types, &$timing_data)
 	{
-		$stmt = $this->db->prepare('SELECT Result, DateTime, Component, RelatedComponent, SystemType, SystemLayer FROM analytics_results WHERE ComparisonHash = :ch');
+		$stmt = $this->db->prepare('SELECT Result, DateTime, Component, RelatedComponent, SystemType, SystemLayer, TimeConsumed FROM analytics_results WHERE ComparisonHash = :ch');
 		$stmt->bindValue(':ch', $ch);
 		$result = $stmt ? $stmt->execute() : false;
 		$results = array();
