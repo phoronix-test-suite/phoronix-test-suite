@@ -283,8 +283,8 @@
 		</Package>
 		<Package>
 			<GenericName>python-numpy</GenericName>
-			<PackageName>python-numpy</PackageName>
-			<FileCheck>/usr/share/pyshared/numpy/version.py OR /usr/lib/python2.7/dist-packages/numpy/version.py</FileCheck>
+			<PackageName>python3-numpy</PackageName>
+			<FileCheck>/usr/share/pyshared/numpy/version.py OR  /usr/lib/python3/dist-packages/numpy/</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>yasm</GenericName>
