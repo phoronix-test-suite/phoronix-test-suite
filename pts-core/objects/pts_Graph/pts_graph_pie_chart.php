@@ -68,7 +68,7 @@ class pts_graph_pie_chart extends pts_graph_core
 
 		$key_count = count($key_strings);
 		$key_item_width = 24 + $this->text_string_width(pts_strings::find_longest_string($this->graph_identifiers), self::$c['size']['key']);
-		$key_item_width_value = 12 + $this->text_string_width(pts_strings::find_longest_string($key_strings), self::$c['size']['key']);
+		$key_item_width_value = 16 + $this->text_string_width(pts_strings::find_longest_string($key_strings), self::$c['size']['key']);
 		$keys_per_line = floor(($this->i['graph_left_end'] - $this->i['left_start'] - 14) / ($key_item_width + $key_item_width_value));
 
 		if($keys_per_line < 1)
