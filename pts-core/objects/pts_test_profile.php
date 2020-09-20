@@ -177,7 +177,7 @@ class pts_test_profile extends pts_test_profile_parser
 	{
 		$times_to_run = parent::get_times_to_run();
 
-		if(($force_runs_multiple = pts_client::read_env('FORCE_TIMES_TO_RUN_MULTIPLE')) && is_numeric($force_runs_multiple) && $force_runs_multiple > 1 && $this->get_estimated_run_time() < (60 * 60 * 2))
+		if(PTS_IS_CLIENT && ($force_runs_multiple = pts_client::read_env('FORCE_TIMES_TO_RUN_MULTIPLE')) && is_numeric($force_runs_multiple) && $force_runs_multiple > 1 && $this->get_estimated_run_time() < (60 * 60 * 2))
 		{
 			$times_to_run *= $force_runs_multiple;
 		}
