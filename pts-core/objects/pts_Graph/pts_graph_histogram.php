@@ -120,7 +120,7 @@ class pts_graph_histogram extends pts_graph_core
 	{
 		$bar_width = floor($this->i['identifier_width']);
 		$bar_font_size_ratio = 1;
-		$paint_color = $this->get_paint_color('');
+		$paint_color = $this->get_paint_color('1');
 
 		for($i = 0; $i < count($this->bins); $i++)
 		{
