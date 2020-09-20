@@ -119,10 +119,10 @@ class pts_graph_lines extends pts_graph_core
 				$this->i['bottom_offset'] += $text_width;
 				$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'] + $text_width);
 
-				if(($text_height + 6) > $this->i['identifier_width'] && $identifier_count > 3)
+				if(($text_height + 10) > $this->i['identifier_width'] && $identifier_count > 3)
 				{
 					// Show the identifiers as frequently as they will fit
-					$this->i['display_select_identifiers'] = ceil(($text_height + 8) / $this->i['identifier_width']);
+					$this->i['display_select_identifiers'] = ceil(($text_height + 10) / $this->i['identifier_width']);
 				}
 			}
 		}
