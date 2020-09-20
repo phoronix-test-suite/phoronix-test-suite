@@ -241,9 +241,18 @@ class dump_ob_to_ae_db implements pts_option_interface
 							continue;
 						}
 						$time_consumed = $buffer_item->get_run_time_total();
+						$stddev = 0;
+						if(($raws = $buffer_item->get_result_raw_array()) && count($raws) > 1)
+						{
+							$stddev_calc = pts_math::percent_standard_deviation($raws);
+							if($stddev_calc > 0)
+							{
+								$stddev = round($stddev_calc, 2);
+							}
+						}
 						$component_value = $system_data[$system_identifier][$component];
 						$related_component_value = isset($system_data[$system_identifier][$related_component]) ? $system_data[$system_identifier][$related_component] : null;
-						$ae->insert_result_into_analytic_results($comparison_hash, $result_reference, $component_value, $component, $related_component_value, $related_component, $result, $timestamps[$system_identifier], $system_types[$system_identifier], $system_layer, $time_consumed);
+						$ae->insert_result_into_analytic_results($comparison_hash, $result_reference, $component_value, $component, $related_component_value, $related_component, $result, $timestamps[$system_identifier], $system_types[$system_identifier], $system_layer, $time_consumed, $stddev);
 						$inserts++;
 					}
 

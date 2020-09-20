@@ -74,6 +74,9 @@ class pts_ae_data
 			case 1:
 				$this->db->exec('ALTER TABLE analytics_results ADD COLUMN TimeConsumed INTEGER');
 				$this->db->exec('PRAGMA user_version = 2');
+			case 2:
+				$this->db->exec('ALTER TABLE analytics_results ADD COLUMN StdDev REAL');
+				$this->db->exec('PRAGMA user_version = 3');
 		}
 		return true;
 	}
@@ -90,9 +93,9 @@ class pts_ae_data
 		$stmt->bindValue(':ru', $result_object->test_profile->get_result_scale());
 		$result = $stmt->execute();
 	}
-	public function insert_result_into_analytic_results($comparison_hash, $result_reference, $component, $category, $related_component, $related_category, $result, $datetime, $system_type, $system_layer, $time_consumed)
+	public function insert_result_into_analytic_results($comparison_hash, $result_reference, $component, $category, $related_component, $related_category, $result, $datetime, $system_type, $system_layer, $time_consumed, $std_dev)
 	{
-		$stmt = $this->db->prepare('INSERT OR IGNORE INTO analytics_results (ComparisonHash, ResultReference, Component, RelatedComponent, Result, DateTime, SystemType, SystemLayer, TimeConsumed) VALUES (:ch, :rr, :c, :rc, :r, :dt, :st, :sl, :tc)');
+		$stmt = $this->db->prepare('INSERT OR IGNORE INTO analytics_results (ComparisonHash, ResultReference, Component, RelatedComponent, Result, DateTime, SystemType, SystemLayer, TimeConsumed, StdDev) VALUES (:ch, :rr, :c, :rc, :r, :dt, :st, :sl, :tc, :std)');
 		$stmt->bindValue(':ch', $comparison_hash);
 		$stmt->bindValue(':rr', $result_reference);
 		$stmt->bindValue(':c', $this->component_to_component_id($component, $category));
@@ -102,6 +105,7 @@ class pts_ae_data
 		$stmt->bindValue(':st', $system_type);
 		$stmt->bindValue(':sl', $system_layer);
 		$stmt->bindValue(':tc', $time_consumed);
+		$stmt->bindValue(':std', $std_dev);
 		$result = $stmt->execute();
 	}
 	public function component_to_component_id($component, $category)
@@ -218,7 +222,8 @@ class pts_ae_data
 			$component_dates = array();
 			$system_types = array();
 			$timing_data = array();
-			$results = $this->get_results_array_by_comparison_hash($comparison_hash, $first_appeared, $last_appeared, $component_results, $component_dates, $system_types, $timing_data);
+			$stddev_data = array();
+			$results = $this->get_results_array_by_comparison_hash($comparison_hash, $first_appeared, $last_appeared, $component_results, $component_dates, $system_types, $timing_data, $stddev_data);
 
 			if(count($results) < 12)
 			{
@@ -328,11 +333,11 @@ class pts_ae_data
 			$td = array();
 			$timing_data = pts_math::remove_outliers($timing_data);
 			$average_time = array_sum($timing_data) / count($timing_data);
-			if($average_time > 1800)
+			if($average_time > 600)
 			{
 				$round_to_nearest = 60;
 			}
-			else if($average_time > 500)
+			else if($average_time > 300)
 			{
 				$round_to_nearest = 30;
 			}
@@ -354,6 +359,20 @@ class pts_ae_data
 				}
 			}
 
+			// Standard Deviation Percent Data Assembly
+			$stddev_data = pts_math::remove_outliers($stddev_data);
+			$average_stddev = round(array_sum($stddev_data) / count($stddev_data), 2);
+			$std = array();
+			foreach($stddev_data as $pdev)
+			{
+				$pdev = round($pdev, 1);
+				if(!isset($std[$pdev]))
+				{
+					$std[$pdev] = 0;
+				}
+				$std[$pdev]++;
+			}
+
 
 			// JSON FILE
 			$json = array();
@@ -369,6 +388,8 @@ class pts_ae_data
 			$json['sample_data'] = implode(',', $results);
 			$json['run_time_avg'] = $average_time;
 			$json['run_time_data'] = $td;
+			$json['stddev_avg'] = $average_stddev;
+			$json['stddev_data'] = $std;
 			$json['first_appeared'] = $first_appeared;
 			$json['last_appeared'] = $last_appeared;
 			$json['percentiles'] = $percentiles;
@@ -523,9 +544,9 @@ class pts_ae_data
 	{
 		return count($b) - count($a);
 	}
-	public function get_results_array_by_comparison_hash($ch, &$first_appeared, &$last_appeared, &$component_results, &$component_dates, &$system_types, &$timing_data)
+	public function get_results_array_by_comparison_hash($ch, &$first_appeared, &$last_appeared, &$component_results, &$component_dates, &$system_types, &$timing_data, &$stddev_data)
 	{
-		$stmt = $this->db->prepare('SELECT Result, DateTime, Component, RelatedComponent, SystemType, SystemLayer, TimeConsumed FROM analytics_results WHERE ComparisonHash = :ch');
+		$stmt = $this->db->prepare('SELECT Result, DateTime, Component, RelatedComponent, SystemType, SystemLayer, TimeConsumed, StdDev FROM analytics_results WHERE ComparisonHash = :ch');
 		$stmt->bindValue(':ch', $ch);
 		$result = $stmt ? $stmt->execute() : false;
 		$results = array();
@@ -548,6 +569,7 @@ class pts_ae_data
 			}
 			$results[] = $row['Result'];
 			$timing_data[] = $row['TimeConsumed'];
+			$stddev_data[] = $row['StdDev'];
 			if(!empty($row['SystemLayer']) || strlen($row['Component']) < 3)
 			{
 				continue;
