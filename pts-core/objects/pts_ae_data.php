@@ -326,12 +326,13 @@ class pts_ae_data
 
 			// TIMING DATA Assembly
 			$td = array();
+			$timing_data = pts_math::remove_outliers($timing_data);
 			$average_time = array_sum($timing_data) / count($timing_data);
 			if($average_time > 1800)
 			{
 				$round_to_nearest = 60;
 			}
-			else if($average_time > 600)
+			else if($average_time > 500)
 			{
 				$round_to_nearest = 30;
 			}
