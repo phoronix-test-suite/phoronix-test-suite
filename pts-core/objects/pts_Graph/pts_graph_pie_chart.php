@@ -61,7 +61,7 @@ class pts_graph_pie_chart extends pts_graph_core
 		{
 			foreach($group as &$buffer_item)
 			{
-				$percent = pts_math::set_precision($buffer_item->get_result_value() / $this->i['pie_sum'] * 100, 2);
+				$percent = pts_math::set_precision($buffer_item->get_result_value() / $this->i['pie_sum'] * 100, 1);
 				array_push($key_strings, ($this->i['show_real_pie_values'] ? $buffer_item->get_result_value() . ' [' . $percent . '%]' : $percent . '%'));
 			}
 		}
