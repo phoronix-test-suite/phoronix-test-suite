@@ -169,7 +169,7 @@ abstract class pts_graph_core
 		{
 			$this->generate_results_var();
 		}
-		$this->i['no_graph_value_ticks'] = !isset($extra_attributes['no_graph_value_ticks']);
+		$this->i['no_graph_value_ticks'] = isset($extra_attributes['no_graph_value_ticks']);
 
 		// reverve bar paint color (first color) from being used otherwise such as in charts rendered first
 		$this->get_paint_color(0);
