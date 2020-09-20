@@ -118,7 +118,7 @@ class pts_graph_lines extends pts_graph_core
 				list($text_width, $text_height) = pts_svg_dom::estimate_text_dimensions($longest_string, $this->i['min_identifier_size'] + 1);
 				$this->i['bottom_offset'] += $text_width;
 				$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'] + $text_width);
-
+var_dump($text_height); var_dump($this->i['identifier_width']);
 				if(($text_height + 12) > $this->i['identifier_width'] && $identifier_count > 3)
 				{
 					// Show the identifiers as frequently as they will fit
