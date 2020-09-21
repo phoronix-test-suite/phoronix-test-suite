@@ -75,6 +75,7 @@ abstract class pts_graph_core
 		$this->i['skip_headers'] = false;
 		$this->i['graph_version'] = false;
 		$this->i['watermark'] = false;
+		$this->i['force_graph_key'] = isset($extra_attributes['force_graph_key']);
 
 		// Reset of setup besides config
 		if($result_object != null)
@@ -950,7 +951,7 @@ abstract class pts_graph_core
 	}
 	protected function graph_key_height()
 	{
-		if((count($this->results) < 2 || $this->i['show_graph_key'] == false) && !$this->i['is_multi_way_comparison'])
+		if((count($this->results) < 2 || $this->i['show_graph_key'] == false) && !$this->i['is_multi_way_comparison'] && !$this->i['force_graph_key'])
 		{
 			return 0;
 		}
