@@ -109,7 +109,7 @@ class pts_graph_lines extends pts_graph_core
 
 		if(!$this->i['hide_graph_identifiers'])
 		{
-			$identifier_count = $this->test_result->test_result_buffer->get_count();
+			//$identifier_count = $this->test_result->test_result_buffer->get_count();
 			$longest_string = pts_strings::find_longest_string($this->graph_identifiers);
 			$this->i['identifier_size'] = $this->text_size_bounds($longest_string, $this->i['identifier_size'], $this->i['min_identifier_size'], $this->i['identifier_width'] - 4);
 
@@ -119,11 +119,10 @@ class pts_graph_lines extends pts_graph_core
 				$this->i['bottom_offset'] += $text_width;
 				$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'] + $text_width);
 
-				if(($text_height + 6) > $this->i['identifier_width'])
+				if(($text_height + 6) > $this->i['identifier_width']) // $identifier_count > 1
 				{
 					// Show the identifiers as frequently as they will fit
 					$this->i['display_select_identifiers'] = ceil(($text_height + 8) / $this->i['identifier_width']);
-					var_dump($this->i['display_select_identifiers']);
 				}
 			}
 		}
