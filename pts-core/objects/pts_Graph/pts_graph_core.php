@@ -72,7 +72,7 @@ abstract class pts_graph_core
 		$this->i['graph_title'] = null;
 		$this->i['header_link'] = null;
 		$this->i['highlight_values'] = false;
-		$this->i['skip_headers'] = false;
+		$this->i['skip_headers'] = isset($extra_attributes['skip_headers']);
 		$this->i['graph_version'] = false;
 		$this->i['watermark'] = false;
 		$this->i['force_graph_key'] = isset($extra_attributes['force_graph_key']);
