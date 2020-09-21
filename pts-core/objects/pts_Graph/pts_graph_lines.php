@@ -64,6 +64,7 @@ class pts_graph_lines extends pts_graph_core
 
 		//$extra_attributes['no_compact_results_var'] = true;
 		parent::__construct($result_object, $result_file, $extra_attributes);
+		$this->i['plot_zero_value_lines'] = isset($extra_attributes['plot_zero_value_lines']);
 		$this->i['show_graph_key'] = true;
 		$this->i['show_background_lines'] = true;
 		$this->i['iveland_view'] = true;
@@ -341,8 +342,11 @@ class pts_graph_lines extends pts_graph_core
 			for($i = 0; $i < $point_counter; $i++)
 			{
 				$value = isset($result_array[$i]) ? $result_array[$i] : -1;
-
-				if($value < 0)
+				if($this->i['plot_zero_value_lines'] && $value == -1)
+				{
+					$value = 0;
+				}
+				else if($value < 0)
 				{
 					// Draw whatever is needed of the line so far, since there is no result here
 					$this->draw_graph_line_process($poly_points, $paint_color, $regression_plots, $point_counter, $g);
