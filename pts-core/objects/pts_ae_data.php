@@ -360,7 +360,7 @@ class pts_ae_data
 			}
 
 			// Standard Deviation Percent Data Assembly
-			//$stddev_data = pts_math::remove_outliers($stddev_data);
+			$stddev_data = pts_math::remove_outliers($stddev_data);
 			$average_stddev = round(array_sum($stddev_data) / count($stddev_data), 2);
 			$std = array();
 			foreach($stddev_data as $pdev)
