@@ -202,6 +202,10 @@ class dump_ob_to_ae_db implements pts_option_interface
 							// loopback / local test so network adapter really not important, moreso the system/CPU
 							$hw_type = 'System';
 						}
+						else if($hw_type == 'Other' || $hw_type == 'OS')
+						{
+							continue;
+						}
 
 						switch($hw_type)
 						{
