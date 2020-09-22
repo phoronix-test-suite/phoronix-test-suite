@@ -409,6 +409,10 @@ class pts_external_dependencies
 			{
 				$present = true;
 			}
+			else if(strpos($file, '.h') !== false && glob('/usr/include/*-linux-gnu/' . $file) != false)
+			{
+				$present = true;
+			}
 			else if(strpos($file, '.so') !== false && glob('/usr/lib*/' . $file) != false)
 			{
 				$present = true;
