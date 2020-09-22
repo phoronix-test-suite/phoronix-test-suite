@@ -98,6 +98,7 @@
 		<xs:enumeration value="Graphics" />
 		<xs:enumeration value="Memory" />
 		<xs:enumeration value="Network" />
+		<xs:enumeration value="OS" />
 		<xs:enumeration value="Other" />
 	</xs:restriction>
 </xs:simpleType>
