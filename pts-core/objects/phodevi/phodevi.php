@@ -850,6 +850,10 @@ class phodevi extends phodevi_base
 			{
 				$supported = false;
 			}
+			else if(strpos($vulkaninfo, 'failed with ERROR_INITIALIZATION_FAILED') !== false)
+			{
+				$supported = false;
+			}
 		}
 
 		return $supported;
