@@ -297,7 +297,7 @@ class pts_ae_data
 				}
 			}
 			uasort($comparison_components, array('pts_ae_data', 'sort_array_by_size_of_array_in_value'));
-			$comparison_components = array_slice($comparison_components, 0, 150);
+			$comparison_components = array_slice($comparison_components, 0, 300);
 			foreach($comparison_components as $component => &$values)
 			{
 				$values = pts_math::arithmetic_mean($values);
