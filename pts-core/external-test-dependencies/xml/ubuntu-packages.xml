@@ -9,7 +9,7 @@
 		</Information>
 		<Package>
 			<GenericName>common-dependencies</GenericName>
-			<PackageName>mesa-utils unzip apt-file unzip</PackageName>
+			<PackageName>mesa-utils vulkan-utils unzip apt-file unzip</PackageName>
 			<FileCheck>glxinfo, unzip, apt-file</FileCheck>
 		</Package>
 		<Package>

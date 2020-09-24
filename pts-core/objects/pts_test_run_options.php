@@ -665,6 +665,12 @@ class pts_test_run_options
 			$error = 'OpenCL support seems to be unavailable.';
 			return false;
 		}
+		if(stripos($test_args, 'Vulkan') !== false && phodevi::vulkan_support_detected() === false)
+		{
+			// Try to only show Vulkan configurations if known to be working
+			$error = 'Vulkan support seems to be unavailable.';
+			return false;
+		}
 		if(stripos($test_args, 'Windows') !== false && !phodevi::is_windows())
 		{
 			// Do not show options mentioning Windows if not on Windows

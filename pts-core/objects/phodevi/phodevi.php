@@ -839,6 +839,21 @@ class phodevi extends phodevi_base
 
 		return $supported;
 	}
+	public static function vulkan_support_detected()
+	{
+		$supported = true;
+
+		if(($vulkaninfo = pts_client::executable_in_path('vulkaninfo')))
+		{
+			$vulkaninfo = shell_exec($vulkaninfo);
+			if(strpos($vulkaninfo, 'Cannot create Vulkan instance') !== false)
+			{
+				$supported = false;
+			}
+		}
+
+		return $supported;
+	}
 	public static function is_fake_device($str)
 	{
 		$string_check = array(
