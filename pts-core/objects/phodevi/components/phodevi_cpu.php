@@ -598,6 +598,7 @@ class phodevi_cpu extends phodevi_device_interface
 							break;
 					}
 					$part = phodevi_linux_parser::read_cpuinfo_single('CPU part');
+					// parts listed @ https://gcc.gnu.org/git/?p=gcc.git;a=blob;f=gcc/config/arm/arm-cpus.in
 					switch($part)
 					{
 						case '0xc07':
@@ -639,8 +640,17 @@ class phodevi_cpu extends phodevi_device_interface
 						case '0xd0b':
 							$new_info .= ' Cortex-A76';
 							break;
+						case '0xd0e':
+							$new_info .= ' Cortex-A76AE';
+							break;
+						case '0xd0d':
+							$new_info .= ' Cortex-A77';
+							break;
 						case '0xd0c':
 							$new_info .= ' Neoverse-N1';
+							break;
+						case '0xd49':
+							$new_info .= ' Neoverse-N2';
 							break;
 						case '0xd4a':
 							$new_info .= ' Neoverse-E1';
