@@ -843,7 +843,7 @@ class phodevi extends phodevi_base
 	{
 		$supported = true;
 
-		if(($vulkaninfo = pts_client::executable_in_path('vulkaninfo')))
+		if(($vulkaninfo = pts_client::executable_in_path('vulkaninfo 2>&1')))
 		{
 			$vulkaninfo = shell_exec($vulkaninfo);
 			if(strpos($vulkaninfo, 'Cannot create Vulkan instance') !== false)
