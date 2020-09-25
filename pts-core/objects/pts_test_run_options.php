@@ -22,6 +22,14 @@
 
 class pts_test_run_options
 {
+	public static function header_print_handler(&$test_profile, &$did_print)
+	{
+		if(!$did_print)
+		{
+			pts_client::$display->test_run_configure($test_profile);
+			$did_print = true;
+		}
+	}
 	public static function prompt_user_options(&$test_profile, $preset_selections = null, $no_prompts = false)
 	{
 		$user_args = array();
@@ -52,12 +60,10 @@ class pts_test_run_options
 		$error_handle = null;
 		$option_objects = $test_profile->get_test_option_objects(true, $error_handle);
 
-		if(count($option_objects) > 0)
-		{
-			pts_client::$display->test_run_configure($test_profile);
-		}
+		$did_print_header = false;
 		if($error_handle)
 		{
+			self::header_print_handler($test_profile, $did_print_header);
 			echo PHP_EOL . pts_client::$display->get_tab() . pts_client::cli_just_italic($error_handle) . PHP_EOL;
 			return false;
 		}
@@ -87,11 +93,13 @@ class pts_test_run_options
 				// User inputs their option as there is nothing to select
 				if(isset($preset_selections[$identifier_short][$option_identifier]))
 				{
+					self::header_print_handler($test_profile, $did_print_header);
 					$value = $preset_selections[$identifier_short][$option_identifier];
 					echo PHP_EOL . '    Using Pre-Set Run Option: ' . $value . PHP_EOL;
 				}
 				else if(isset($preset_selections[$identifier_full][$option_identifier]))
 				{
+					self::header_print_handler($test_profile, $did_print_header);
 					$value = $preset_selections[$identifier_full][$option_identifier];
 					echo PHP_EOL . '    Using Pre-Set Run Option: ' . $value . PHP_EOL;
 				}
@@ -101,6 +109,7 @@ class pts_test_run_options
 				}
 				else
 				{
+					self::header_print_handler($test_profile, $did_print_header);
 					echo PHP_EOL . pts_client::$display->get_tab() . pts_client::cli_just_bold($o->get_name()) . ($o->get_helper_message() ? ' [' . pts_client::cli_just_italic($o->get_helper_message()) . ']' : null) . PHP_EOL;
 					if($o->get_identifier() == 'positive-number')
 					{
@@ -124,11 +133,13 @@ class pts_test_run_options
 				// Have the user select the desired option
 				if(isset($preset_selections[$identifier_short][$option_identifier]))
 				{
+					self::header_print_handler($test_profile, $did_print_header);
 					$bench_choice = $preset_selections[$identifier_short][$option_identifier];
 					echo PHP_EOL . '    Using Pre-Set Run Option: ' . $bench_choice . PHP_EOL;
 				}
 				else if(isset($preset_selections[$identifier_full][$option_identifier]))
 				{
+					self::header_print_handler($test_profile, $did_print_header);
 					$bench_choice = $preset_selections[$identifier_full][$option_identifier];
 					echo PHP_EOL . '    Using Pre-Set Run Option: ' . $bench_choice . PHP_EOL;
 				}
@@ -149,7 +160,10 @@ class pts_test_run_options
 					{
 						$o_name .= ' [' . pts_client::cli_just_italic($o->get_helper_message()) . ']';
 					}
-
+					if(count($option_names) != 1)
+					{
+						self::header_print_handler($test_profile, $did_print_header);
+					}
 					$bench_choice = implode(',', pts_user_io::prompt_text_menu($o_name, $option_names, true, true, pts_client::$display->get_tab() . pts_client::$display->get_tab()));
 					if(count($option_names) != 1)
 					{
