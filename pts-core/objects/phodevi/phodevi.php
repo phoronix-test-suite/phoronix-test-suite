@@ -841,6 +841,12 @@ class phodevi extends phodevi_base
 	}
 	public static function vulkan_support_detected()
 	{
+		static $supported = -1;
+
+		if($supported !== -1)
+		{
+			return $supported;
+		}
 		$supported = true;
 
 		if(($vulkaninfo = pts_client::executable_in_path('vulkaninfo 2>&1')))
