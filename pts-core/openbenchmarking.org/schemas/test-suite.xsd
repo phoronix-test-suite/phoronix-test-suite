@@ -37,6 +37,7 @@
 			<xs:element name="Description" type="xs:string" minOccurs="0" maxOccurs="1" />
 			<xs:element name="Mode" type="RunModes" minOccurs="0" maxOccurs="1" />
 			<xs:element name="OverrideTestOptions" type="xs:string" minOccurs="0" maxOccurs="1" />
+			<xs:element name="OptionSelect" type="xs:string" minOccurs="0" maxOccurs="1" />
 		</xs:sequence>
 		</xs:complexType>
 		</xs:element>

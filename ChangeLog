@@ -4,6 +4,7 @@ Phoronix Test Suite  (Git)
 
 pts-core: Add OS TestType
 pts-core: Don't show Vulkan options if Vulkan support is known to be unavailable/broken
+pts-core: Add OptionSelect tag support within test suite definitions
 phodevi: Add Neoverse N2 detection and other Arm CPU updates
 
 Phoronix Test Suite 10.0.0 Milestone 2

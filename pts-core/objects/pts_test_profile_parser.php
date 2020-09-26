@@ -458,7 +458,7 @@ class pts_test_profile_parser
 	{
 		return $this->get_test_option_objects(false);
 	}
-	public function get_test_option_objects($auto_process = true, &$error = null)
+	public function get_test_option_objects($auto_process = true, &$error = null, $validate_options_now = true)
 	{
 		$test_options = array();
 
@@ -483,7 +483,7 @@ class pts_test_profile_parser
 				if($auto_process)
 				{
 					$auto_process_error_msg = null;
-					$auto_process_error = pts_test_run_options::auto_process_test_option($this, $option->Identifier, $names, $values, $messages, $auto_process_error_msg);
+					$auto_process_error = pts_test_run_options::auto_process_test_option($this, $option->Identifier, $names, $values, $messages, $auto_process_error_msg, $validate_options_now);
 					if($auto_process_error == -1)
 					{
 						$error = $auto_process_error_msg;

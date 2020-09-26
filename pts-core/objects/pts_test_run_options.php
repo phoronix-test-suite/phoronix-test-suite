@@ -242,29 +242,63 @@ class pts_test_run_options
 
 		return array($test_args, $test_args_description);
 	}
-	public static function batch_user_options(&$test_profile)
+	public static function batch_user_options(&$test_profile, $option_select = false, $validate_options_now = true)
 	{
 		// Batch mode for single test
 		$batch_all_args_real = array();
 		$batch_all_args_description = array();
 
 		$error_handle = null;
-		$option_objects = $test_profile->get_test_option_objects(true, $error_handle);
+		$option_objects = $test_profile->get_test_option_objects(true, $error_handle, $validate_options_now);
 		if($error_handle)
 		{
 			echo PHP_EOL . pts_client::$display->get_tab() . pts_client::cli_just_italic($error_handle) . PHP_EOL;
 			return false;
 		}
+		if($option_select != false)
+		{
+			$os = array();
+			foreach(explode(',', $option_select) as $one)
+			{
+				$one = pts_strings::trim_explode('=', $one);
+				if(count($one) != 2)
+				{
+					continue;
+				}
+				list($oi, $ov) = $one;
+
+				if(!isset($os[$oi]))
+				{
+					$os[$oi] = array();
+				}
+
+				$os[$oi][] = $ov;
+			}
+			$option_select = $os;
+		}
 		foreach($option_objects as $o)
 		{
 			$option_args = array();
 			$option_args_description = array();
-			$option_count = $o->option_count();
 
-			for($i = 0; $i < $option_count; $i++)
+			if($option_select != false && isset($option_select[$o->get_identifier()]))
 			{
-				$option_args[] = $o->format_option_value_from_select($i);
-				$option_args_description[] = $o->format_option_display_from_select($i);
+				for($i = 0; $i < $o->option_count(); $i++)
+				{ echo $o->get_option_name($i);
+					if(in_array($o->get_option_name($i), $option_select[$o->get_identifier()]))
+					{
+						$option_args[] = $o->format_option_value_from_select($i);
+						$option_args_description[] = $o->format_option_display_from_select($i);
+					}
+				}
+			}
+			else
+			{
+				for($i = 0; $i < $o->option_count(); $i++)
+				{
+					$option_args[] = $o->format_option_value_from_select($i);
+					$option_args_description[] = $o->format_option_display_from_select($i);
+				}
 			}
 
 			$batch_all_args_real[] = $option_args;
@@ -303,7 +337,7 @@ class pts_test_run_options
 			}
 		}
 	}
-	public static function auto_process_test_option(&$test_profile, $option_identifier, &$option_names, &$option_values, &$option_messages, &$error = null)
+	public static function auto_process_test_option(&$test_profile, $option_identifier, &$option_names, &$option_values, &$option_messages, &$error = null, $validate_config_options = true)
 	{
 		// Some test items have options that are dynamically built
 		switch($option_identifier)
@@ -606,7 +640,7 @@ class pts_test_run_options
 
 				for($i = 0; $i < count($names) && $i < count($values); $i++)
 				{
-					if(self::validate_test_arguments_compatibility($names[$i], $test_profile) == false)
+					if($validate_config_options && self::validate_test_arguments_compatibility($names[$i], $test_profile) == false)
 					{
 						$had_valid_fail = true;
 						continue;
@@ -635,7 +669,7 @@ class pts_test_run_options
 
 				for($i = 0; $i < count($names) && $i < count($values); $i++)
 				{
-					if(self::validate_test_arguments_compatibility($names[$i], $test_profile) == false)
+					if($validate_config_options && self::validate_test_arguments_compatibility($names[$i], $test_profile) == false)
 					{
 						$had_valid_fail = true;
 						continue;

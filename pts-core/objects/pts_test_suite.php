@@ -159,7 +159,8 @@ class pts_test_suite
 					{
 						case 'BATCH':
 							$mode = 'BATCH';
-							$option_output = pts_test_run_options::batch_user_options($obj);
+							$option_select = isset($to_execute->OptionSelect) ? $to_execute->OptionSelect : false;
+							$option_output = pts_test_run_options::batch_user_options($obj, $option_select, false);
 							break;
 						case 'DEFAULTS':
 							$mode = 'DEFAULTS';
