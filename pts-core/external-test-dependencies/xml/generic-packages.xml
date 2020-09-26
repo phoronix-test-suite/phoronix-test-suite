@@ -365,7 +365,7 @@
 			<GenericName>python</GenericName>
 			<Title>Python</Title>
 			<PossibleNames>python</PossibleNames>
-			<FileCheck>python OR python3 OR python2</FileCheck>
+			<FileCheck>python OR python3, pip3</FileCheck>
 			<VirtualSuite>TRUE</VirtualSuite>
 		</Package>
 		<Package>
