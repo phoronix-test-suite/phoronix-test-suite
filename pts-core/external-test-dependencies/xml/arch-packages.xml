@@ -367,5 +367,9 @@
 			<GenericName>protobuf</GenericName>
 			<PackageName>protobuf</PackageName>
 		</Package>
+		<Package>
+			<GenericName>erlang</GenericName>
+			<PackageName>erlang</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

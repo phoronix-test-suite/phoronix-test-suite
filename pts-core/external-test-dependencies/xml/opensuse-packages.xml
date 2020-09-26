@@ -386,5 +386,9 @@
 			<GenericName>vaapi</GenericName>
 			<PackageName>libva-devel</PackageName>
 		</Package>
+		<Package>
+			<GenericName>erlang</GenericName>
+			<PackageName>erlang</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

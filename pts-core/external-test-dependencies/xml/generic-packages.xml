@@ -633,5 +633,11 @@
 			<PossibleNames>libprotobuf-dev</PossibleNames>
 			<FileCheck>google/protobuf/map.h</FileCheck>
 		</Package>
+		<Package>
+			<GenericName>erlang</GenericName>
+			<Title>Erlang</Title>
+			<PossibleNames>erlang</PossibleNames>
+			<FileCheck>erl</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

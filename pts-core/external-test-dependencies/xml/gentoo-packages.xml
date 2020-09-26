@@ -372,5 +372,9 @@
 			<GenericName>glfw</GenericName>
 			<PackageName>media-libs/glfw</PackageName>
 		</Package>
+		<Package>
+			<GenericName>erlang</GenericName>
+			<PackageName>dev-lang/erlang</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

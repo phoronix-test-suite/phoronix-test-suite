@@ -453,5 +453,9 @@
 			<GenericName>eigen</GenericName>
 			<PackageName>libeigen3-dev</PackageName>
 		</Package>
+		<Package>
+			<GenericName>erlang</GenericName>
+			<PackageName>erlang</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
