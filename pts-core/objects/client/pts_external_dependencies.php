@@ -451,6 +451,10 @@ class pts_external_dependencies
 
 		return $needed_os_packages;
 	}
+	private static function is_present($file)
+	{
+		return is_file($file) || (strpos($file, '*') != false && !empty(glob($file)));
+	}
 	private static function file_missing_check($file_arr)
 	{
 		// Checks if file is missing
@@ -470,7 +474,7 @@ class pts_external_dependencies
 			{
 				$file[$i] = trim($file[$i]);
 
-				if(is_file($file[$i]) || is_dir($file[$i]) || is_link($file[$i]))
+				if(is_dir($file[$i]) || self::is_present($file[$i]))
 				{
 					$file_is_there = true;
 				}
@@ -484,7 +488,7 @@ class pts_external_dependencies
 						$possible_paths = array_merge(array('/usr/local/include/', '/usr/target/include/', '/usr/include/'), pts_file_io::glob('/usr/include/*-linux-gnu/'));
 						foreach($possible_paths as $path)
 						{
-							if(is_file($path . '/' . $file[$i]) || is_link($path . '/' . $file[$i]))
+							if(self::is_present($path . '/' . $file[$i]))
 							{
 								$file_is_there = true;
 							}
@@ -505,7 +509,7 @@ class pts_external_dependencies
 
 						foreach($possible_paths as $path)
 						{
-							if(is_file($path . '/' . $file[$i]) || is_link($path . '/' . $file[$i]))
+							if(self::is_present($path . '/' . $file[$i]))
 							{
 								$file_is_there = true;
 							}
