@@ -214,7 +214,8 @@
 		</Package>
 		<Package>
 			<GenericName>blas-development</GenericName>
-			<PackageName>blas blas-devel</PackageName>
+			<PackageName>blas blas-devel openblas-devel</PackageName>
+			<FileCheck>openblas/cblas.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>lapack-development</GenericName>
