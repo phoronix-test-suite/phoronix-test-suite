@@ -628,6 +628,12 @@ class phodevi_cpu extends phodevi_device_interface
 						case '0xd07':
 							$new_info .= ' Cortex-A57';
 							break;
+						case '0xd06':
+							$new_info .= ' Cortex-A65';
+							break;
+						case '0xd43':
+							$new_info .= ' Cortex-A65AE';
+							break;
 						case '0xd08':
 							$new_info .= ' Cortex-A72';
 							break;
@@ -648,6 +654,9 @@ class phodevi_cpu extends phodevi_device_interface
 							break;
 						case '0xd0c':
 							$new_info .= ' Neoverse-N1';
+							break;
+						case '0xd44':
+							$new_info .= ' Cortex-X1';
 							break;
 						case '0xd49':
 							$new_info .= ' Neoverse-N2';

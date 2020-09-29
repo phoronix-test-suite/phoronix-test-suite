@@ -8,7 +8,7 @@ pts-core: Allow * wildcard match in FileCheck handling within external dependenc
 pts-core: Add "OS" TestType
 pts-core: Various external dependency updates
 pts-core: Continued tweaking to the analytics engine
-phodevi: Add Neoverse N2 detection and other Arm CPU updates
+phodevi: Add Neoverse N2, Cortex-X1 detection and other Arm CPU updates
 pts_Graph: Various improvements
 
 Phoronix Test Suite 10.0.0 Milestone 2
