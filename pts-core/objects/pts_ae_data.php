@@ -48,6 +48,7 @@ class pts_ae_data
 		$this->db->exec('PRAGMA synchronous = OFF');
 		pts_file_io::mkdir($this->ae_dir . 'comparison-hashes/');
 		pts_file_io::mkdir($this->ae_dir . 'component-data/');
+		pts_file_io::mkdir($this->ae_dir . 'component-heavy/');
 
 		$result = $this->db->query('PRAGMA user_version;');
 		$result = $result->fetchArray();
@@ -212,6 +213,7 @@ class pts_ae_data
 		$result = $stmt ? $stmt->execute() : false;
 		$json_index_master = array();
 		$hardware_data['Processor'] = array();
+		$hardware_heavy = array();
 
 		while($result && ($row = $result->fetchArray()))
 		{
@@ -245,6 +247,7 @@ class pts_ae_data
 
 			$component_data = array();
 			$comparison_components = array();
+			$comparison_components_raw = array();
 			foreach($component_results as $component => $d)
 			{
 				if(stripos($component . ' ', 'device ') !== false || stripos($component, 'unknown') !== false  || stripos($component, 'common ') !== false || is_numeric($component))
@@ -300,6 +303,7 @@ class pts_ae_data
 			$comparison_components = array_slice($comparison_components, 0, 300);
 			foreach($comparison_components as $component => &$values)
 			{
+				$comparison_components_raw[$component] = $values;
 				$values = pts_math::arithmetic_mean($values);
 				if($values < 5)
 				{
@@ -431,7 +435,7 @@ class pts_ae_data
 			// Update/Create Component JSON
 			//
 			
-			if(count($comparison_components) > 20 && $json['stddev_avg'] < 2.6 && $json['run_time_avg'] > 50 && $last_appeared > strtotime('-5 months'))
+			if(count($comparison_components) >= 20 && $json['stddev_avg'] < 2.9 && $json['run_time_avg'] > 45 && $last_appeared > strtotime('-5 months'))
 			{
 				foreach($comparison_components as $component => $value)
 				{
@@ -465,6 +469,22 @@ class pts_ae_data
 								$hardware_data[$component_category][$component]['percentiles'][$json['test_profile']][$json['test_version']] = array();
 							}
 							$hardware_data[$component_category][$component]['percentiles'][$json['test_profile']][$json['test_version']] = $this_percentile;
+
+							// heavy
+							if(!isset($hardware_heavy[$component_category][$component]))
+							{
+								$hardware_heavy[$component_category][$component] = array();
+							}
+							$hardware_heavy[$component_category][$component][$json['comparison_hash']] = array(
+								'test_profile' => $row['TestProfile'] . '-' . $row['TestVersion'],
+								'title' => $row['Title'],
+								'app_version' => $row['AppVersion'],
+								'description' => $row['ArgumentsDescription'],
+								'hib' => $row['HigherIsBetter'] ? 'HIB': 'LIB',
+								'unit' => $row['ResultUnit'],
+								'value' => $value,
+								'raw_values' => implode(':', $comparison_components_raw[$component]),
+								);
 							break;
 					}
 				}
@@ -491,6 +511,20 @@ class pts_ae_data
 
 				$de = json_encode($data);
 				file_put_contents($this->ae_dir . 'component-data/' . $hw_category . '/' . $c . '.json', $de);
+			}
+		}
+		foreach($hardware_heavy as $hw_category => $category_data)
+		{
+			pts_file_io::mkdir($this->ae_dir . 'component-heavy/' . $hw_category);
+			foreach($category_data as $c => $data)
+			{
+				if(count($data) < 5)
+				{
+					continue;
+				}
+
+				$de = json_encode($data);
+				file_put_contents($this->ae_dir . 'component-heavy/' . $hw_category . '/' . $c . '.json', $de);
 			}
 		}
 	}

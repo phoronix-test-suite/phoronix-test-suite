@@ -2,11 +2,14 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite  (Git)
 
-pts-core: Add OS TestType
 pts-core: Don't show Vulkan options if Vulkan support is known to be unavailable/broken
 pts-core: Add OptionSelect tag support within test suite definitions
 pts-core: Allow * wildcard match in FileCheck handling within external dependency XML
+pts-core: Add "OS" TestType
+pts-core: Various external dependency updates
+pts-core: Continued tweaking to the analytics engine
 phodevi: Add Neoverse N2 detection and other Arm CPU updates
+pts_Graph: Various improvements
 
 Phoronix Test Suite 10.0.0 Milestone 2
 12 September 2020
