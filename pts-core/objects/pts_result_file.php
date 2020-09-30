@@ -570,6 +570,16 @@ class pts_result_file
 		}
 		return $did_remove;
 	}
+	public function remove_noisy_results()
+	{
+		foreach($this->get_result_objects() as $i => &$ro)
+		{
+			if($ro->has_noisy_result())
+			{
+				$this->remove_result_object_by_id($i);
+			}
+		}
+	}
 	public function update_annotation_for_result_object_by_id($index, $annotation)
 	{
 		if(isset($this->result_objects[$index]))

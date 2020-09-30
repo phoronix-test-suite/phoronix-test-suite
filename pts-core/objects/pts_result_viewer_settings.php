@@ -574,13 +574,7 @@ if($result_file->get_test_count() > 1)
 		}
 		if(self::check_request_for_var($request, 'hnr'))
 		{
-			foreach($result_file->get_result_objects() as $i => $result_object)
-			{
-				if($result_object->has_noisy_result())
-				{
-					$result_file->remove_result_object_by_id($i);
-				}
-			}
+			$result_file->remove_noisy_results();
 		}
 		if(self::check_request_for_var($request, 'hni'))
 		{
