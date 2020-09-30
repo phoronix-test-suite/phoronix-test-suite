@@ -518,7 +518,7 @@ class pts_ae_data
 			pts_file_io::mkdir($this->ae_dir . 'component-heavy/' . $hw_category);
 			foreach($category_data as $c => $data)
 			{
-				if(count($data) < 10)
+				if(count($data) < 12)
 				{
 					continue;
 				}
