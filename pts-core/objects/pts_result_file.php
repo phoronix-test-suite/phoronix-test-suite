@@ -127,7 +127,7 @@ class pts_result_file
 
 		unset($xml);
 	}
-	public function add_system($identifier, $hw = null, $sw = null, $json = null, $user = null, $notes = null, $timestamp = null, $version = null)
+	public function add_system_direct($identifier, $hw = null, $sw = null, $json = null, $user = null, $notes = null, $timestamp = null, $version = null)
 	{
 		$this->systems[] = new pts_result_file_system($identifier, $hw, $sw, $json, $user, $notes, $timestamp, $version, $this);
 	}
