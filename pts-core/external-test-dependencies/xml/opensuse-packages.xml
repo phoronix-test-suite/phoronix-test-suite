@@ -216,7 +216,7 @@
 		</Package>
 		<Package>
 			<GenericName>vulkan-development</GenericName>
-			<PackageName>vulkan</PackageName>
+			<PackageName>vulkan-tools</PackageName>
 		</Package>
 		<Package>
 			<GenericName>tcl</GenericName>
@@ -228,7 +228,7 @@
 		</Package>
 		<Package>
 			<GenericName>python</GenericName>
-			<PackageName>python python3-pip</PackageName>
+			<PackageName>python3-pip</PackageName>
 		</Package>
 		<Package>
 			<GenericName>bc</GenericName>

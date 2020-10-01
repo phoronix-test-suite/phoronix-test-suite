@@ -127,10 +127,6 @@ class pts_result_file
 
 		unset($xml);
 	}
-	public function add_system_direct($identifier, $hw = null, $sw = null, $json = null, $user = null, $notes = null, $timestamp = null, $version = null)
-	{
-		$this->systems[] = new pts_result_file_system($identifier, $hw, $sw, $json, $user, $notes, $timestamp, $version, $this);
-	}
 	public function __clone()
 	{
 		foreach($this->result_objects as $i => $v)
@@ -262,6 +258,10 @@ class pts_result_file
 		{
 			$this->systems[] = $system;
 		}
+	}
+	public function add_system_direct($identifier, $hw = null, $sw = null, $json = null, $user = null, $notes = null, $timestamp = null, $version = null)
+	{
+		$this->systems[] = new pts_result_file_system($identifier, $hw, $sw, $json, $user, $notes, $timestamp, $version, $this);
 	}
 	public function get_systems()
 	{
