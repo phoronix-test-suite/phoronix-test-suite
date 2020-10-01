@@ -572,12 +572,19 @@ class pts_result_file
 	}
 	public function remove_noisy_results()
 	{
-		foreach($this->get_result_objects() as $i => &$ro)
+		foreach($this->result_objects as $i => &$ro)
 		{
 			if($ro->has_noisy_result())
 			{
 				$this->remove_result_object_by_id($i);
 			}
+		}
+	}
+	public function reduce_precision()
+	{
+		foreach($this->result_objects as $i => &$ro)
+		{
+			$ro->test_result_buffer->reduce_precision();
 		}
 	}
 	public function update_annotation_for_result_object_by_id($index, $annotation)

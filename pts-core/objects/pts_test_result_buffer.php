@@ -392,6 +392,33 @@ class pts_test_result_buffer
 			return pts_math::set_precision($value, $precision);
 		}
 	}
+	public function get_max_precision()
+	{
+		$max_precision = 0;
+
+		foreach($this->buffer_items as &$buffer_item)
+		{
+			$max_precision = max($max_precision, pts_math::get_precision($buffer_item->get_result_value()));
+		}
+
+		return $max_precision;
+	}
+	public function reset_precision($precision)
+	{
+		foreach($this->buffer_items as &$buffer_item)
+		{
+			$p = pts_math::set_precision($buffer_item->get_result_value(), $precision);
+			$buffer_item->reset_result_value($p, false);
+		}
+	}
+	public function reduce_precision()
+	{
+		$max_precision = $this->get_max_precision();
+		if($max_precision >= 1)
+		{
+			$this->reset_precision(($max_precision - 1));
+		}
+	}
 	public function get_min_value($return_identifier = false)
 	{
 		$bi = null;

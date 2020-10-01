@@ -1,6 +1,6 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite  10.0.0 Milestone 3
+Phoronix Test Suite 10.0.0 Milestone 3
 1 October 2020
 
 pts-core: Don't show Vulkan options if Vulkan support is known to be unavailable/broken
