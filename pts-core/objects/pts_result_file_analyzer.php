@@ -297,17 +297,17 @@ class pts_result_file_analyzer
 	}
 	public static function generate_executive_summary($result_file, $selected_result = null,  &$error = null)
 	{
-		$summary = null;
+		$summary = array();
 
 		if($result_file->get_test_count() < 10)
 		{
 			$error = 'Not enough tests to analyze...';
-			return false;
+			return $summary;
 		}
 		if($result_file->get_system_count() < 2)
 		{
 			$error = 'Not enough results to analyze...';
-			return false;
+			return $summary;
 		}
 
 		$wins_result = pts_result_file_analyzer::generate_wins_losses_results($result_file, true);
