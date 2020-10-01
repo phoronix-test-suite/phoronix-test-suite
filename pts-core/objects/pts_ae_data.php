@@ -227,7 +227,7 @@ class pts_ae_data
 			$stddev_data = array();
 			$results = $this->get_results_array_by_comparison_hash($comparison_hash, $first_appeared, $last_appeared, $component_results, $component_dates, $system_types, $timing_data, $stddev_data);
 
-			if(count($results) < 12)
+			if(count($results) < 10)
 			{
 				continue;
 			}
@@ -518,7 +518,7 @@ class pts_ae_data
 			pts_file_io::mkdir($this->ae_dir . 'component-heavy/' . $hw_category);
 			foreach($category_data as $c => $data)
 			{
-				if(count($data) < 12)
+				if(count($data) < 15)
 				{
 					continue;
 				}
