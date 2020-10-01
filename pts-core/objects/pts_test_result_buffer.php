@@ -413,10 +413,19 @@ class pts_test_result_buffer
 	}
 	public function reduce_precision()
 	{
-		$max_precision = $this->get_max_precision();
-		if($max_precision >= 1)
+		$min_value = $this->get_min_value();
+		$max_value = $this->get_max_value();
+		if($min_value < 20 && ($max_value / $min_value) > 1.4)
 		{
-			$this->reset_precision(($max_precision - 1));
+			$this->reset_precision(0);
+		}
+		else
+		{
+			$max_precision = $this->get_max_precision();
+			if($max_precision >= 1)
+			{
+				$this->reset_precision(($max_precision - 1));
+			}
 		}
 	}
 	public function get_min_value($return_identifier = false)
