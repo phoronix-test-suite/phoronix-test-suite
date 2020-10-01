@@ -78,8 +78,7 @@ class pts_result_file
 		{
 			foreach($xml->System as $s)
 			{
-				$system = new pts_result_file_system(self::clean_input($s->Identifier->__toString()), self::clean_input($s->Hardware->__toString()), self::clean_input($s->Software->__toString()), json_decode(self::clean_input($s->JSON), true), self::clean_input($s->User->__toString()), self::clean_input($s->Notes->__toString()), self::clean_input($s->TimeStamp->__toString()), self::clean_input($s->ClientVersion->__toString()), $this);
-				$this->systems[] = $system;
+				$this->systems[] = new pts_result_file_system(self::clean_input($s->Identifier->__toString()), self::clean_input($s->Hardware->__toString()), self::clean_input($s->Software->__toString()), json_decode(self::clean_input($s->JSON), true), self::clean_input($s->User->__toString()), self::clean_input($s->Notes->__toString()), self::clean_input($s->TimeStamp->__toString()), self::clean_input($s->ClientVersion->__toString()), $this);
 			}
 		}
 
@@ -127,6 +126,10 @@ class pts_result_file
 		}
 
 		unset($xml);
+	}
+	public function add_system($identifier, $hw = null, $sw = null, $json = null, $user = null, $notes = null, $timestamp = null, $version = null)
+	{
+		$this->systems[] = new pts_result_file_system($identifier, $hw, $sw, $json, $user, $notes, $timestamp, $version, $this);
 	}
 	public function __clone()
 	{
