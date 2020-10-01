@@ -428,6 +428,10 @@ class pts_test_result_buffer
 				{
 					$max_precision = 2;
 				}
+				else if($max_precision > 3 && ($max_value / $min_value) > 1.35)
+				{
+					$max_precision = 3;
+				}
 
 				$this->reset_precision(($max_precision - 1));
 			}
