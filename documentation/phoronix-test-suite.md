@@ -1028,6 +1028,9 @@ Virtual test suites can be installed and run just like a normal XML test suite a
 #### All Tests In Pts  pts/all
 This is a collection of all supported test profiles found within the specified OpenBenchmarking.org repository.
 
+#### Application Tests  pts/application
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a application software test.
+
 #### Benchmark Tests  pts/benchmark
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a benchmark software test.
 
@@ -1087,6 +1090,9 @@ This is a collection of test profiles having an external dependency on OpenCV
 
 #### Openmpi Tests  pts/openmpi
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing openmpi.
+
+#### Os Subsystem Tests  pts/os
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the os sub-system.
 
 #### Processor Subsystem Tests  pts/processor
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the processor sub-system.
@@ -1154,6 +1160,9 @@ This is a collection of test profiles found within the specified OpenBenchmarkin
 #### All Tests In System  system/all
 This is a collection of all supported test profiles found within the specified OpenBenchmarking.org repository.
 
+#### Application Tests  system/application
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a application software test.
+
 #### Benchmark Tests  system/benchmark
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a benchmark software test.
 
@@ -1190,6 +1199,9 @@ This is a collection of test profiles found within the specified OpenBenchmarkin
 #### Network Subsystem Tests  system/network
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the network sub-system.
 
+#### OpenCV Tests  system/opencv
+This is a collection of test profiles having an external dependency on OpenCV
+
 #### OpenMPI Tests  system/openmpi
 This is a collection of test profiles having an external dependency on OpenMPI
 
@@ -1198,6 +1210,9 @@ This is a collection of test profiles found within the specified OpenBenchmarkin
 
 #### Python Tests  system/python
 This is a collection of test profiles having an external dependency on Python
+
+#### Scientific Tests  system/scientific
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a scientific software test.
 
 #### Solaris Operating System Tests  system/solaris
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the solaris Operating System.
@@ -1246,39 +1261,6 @@ This is a collection of test profiles found within the specified OpenBenchmarkin
 
 #### Smp Tests  git/smp
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing smp.
-
-#### All Tests In Windows  windows/all
-This is a collection of all supported test profiles found within the specified OpenBenchmarking.org repository.
-
-#### Benchmark Tests  windows/benchmark
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a benchmark software test.
-
-#### Bsd Operating System Tests  windows/bsd
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the bsd Operating System.
-
-#### Everything In Windows  windows/everything
-This is a collection of all test profiles found within the specified OpenBenchmarking.org repository, including unsupported tests, etc.
-
-#### Linux Operating System Tests  windows/linux
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the linux Operating System.
-
-#### Macosx Operating System Tests  windows/macosx
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the macosx Operating System.
-
-#### Processor Subsystem Tests  windows/processor
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the processor sub-system.
-
-#### Solaris Operating System Tests  windows/solaris
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the solaris Operating System.
-
-#### System Subsystem Tests  windows/system
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the system sub-system.
-
-#### Utility Tests  windows/utility
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a utility software test.
-
-#### Windows Operating System Tests  windows/windows
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the windows Operating System.
 
 
 # Component Testing
