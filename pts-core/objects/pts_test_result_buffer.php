@@ -424,6 +424,11 @@ class pts_test_result_buffer
 			$max_precision = $this->get_max_precision();
 			if($max_precision >= 1)
 			{
+				if($min_value > 10 && $max_precision > 1)
+				{
+					$max_precision = 2;
+				}
+
 				$this->reset_precision(($max_precision - 1));
 			}
 		}
