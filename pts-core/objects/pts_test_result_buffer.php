@@ -415,7 +415,7 @@ class pts_test_result_buffer
 	{
 		$min_value = $this->get_min_value();
 		$max_value = $this->get_max_value();
-		if($min_value < 20 && ($max_value / $min_value) > 1.29)
+		if($min_value > 20 && ($max_value / $min_value) > 1.25)
 		{
 			$this->reset_precision(0);
 		}
