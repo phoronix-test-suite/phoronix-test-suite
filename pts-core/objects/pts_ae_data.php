@@ -276,7 +276,7 @@ class pts_ae_data
 					{
 						continue;
 					}
-					$data = pts_math::remove_outliers($data);
+					$data = pts_math::remove_outliers($data, 3);
 					if(count($data) < 3)
 					{
 						continue;
@@ -291,7 +291,7 @@ class pts_ae_data
 
 			foreach($comparison_components as $component => &$values)
 			{
-				$values = pts_math::remove_outliers($values);
+				$values = pts_math::remove_outliers($values, 3);
 
 				if(phodevi::is_fake_device($component) || count($values) < 3)
 				{
@@ -335,7 +335,7 @@ class pts_ae_data
 
 			// TIMING DATA Assembly
 			$td = array();
-			$timing_data = pts_math::remove_outliers($timing_data);
+			$timing_data = pts_math::remove_outliers($timing_data, 3);
 			$average_time = array_sum($timing_data) / count($timing_data);
 			if($average_time > 600)
 			{
