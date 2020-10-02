@@ -801,6 +801,7 @@ class phodevi_cpu extends phodevi_device_interface
 			'avx512cd' => (1 << 19), // AVX-512
 			'avx512_vnni' => (1 << 20), // AVX-512 VNNI (DL BOOST)
 			'avx512_bf16' => (1 << 21), // AVX-512 BFloat16
+			'amx_tile' => (1 << 22), // AMX
 			);
 	}
 	public static function prominent_cpu_features()
@@ -820,6 +821,7 @@ class phodevi_cpu extends phodevi_device_interface
 			'avx512cd' => 'AVX-512', // AVX-512
 			'avx512_vnni' => 'AVX-512 VNNI / DL-BOOST', // AVX-512 VNNI (DL BOOST)
 			'avx512_bf16' => 'AVX-512 BFloat16', // AVX-512 BFloat16
+			'amx_tile' => 'AMX', // Advanced Matrix Extensions
 			);
 	}
 	public static function prominent_cpu_bugs()
