@@ -107,9 +107,12 @@ abstract class pts_graph_core
 			}
 		}
 
-		if(!isset($extra_attributes['pdf_generation']) && !isset($extra_attributes['skip_graph_version_and_watermark']))
+		if(!isset($extra_attributes['pdf_generation']))
 		{
-			$this->i['graph_version'] = 'Phoronix Test Suite ' . PTS_VERSION;
+			if(!isset($extra_attributes['skip_graph_version']))
+			{
+				$this->i['graph_version'] = 'Phoronix Test Suite ' . PTS_VERSION;
+			}
 			$this->i['watermark'] = self::$c['text']['watermark'];
 		}
 
