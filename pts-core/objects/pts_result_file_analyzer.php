@@ -385,8 +385,8 @@ class pts_result_file_analyzer
 					$prev_buffer = $bi;
 					continue;
 				}
-				$rounded = round($bi->get_result_value() / $prev_buffer->get_result_value(), 2) . 'x';
-				if($rounded === '1.00x')
+				$rounded = round($bi->get_result_value() / $prev_buffer->get_result_value(), 3) . 'x';
+				if($rounded === '1.000x')
 				{
 					continue;
 				}
@@ -415,7 +415,7 @@ class pts_result_file_analyzer
 				break;
 		}
 
-		$summary[] = trim('Based on the geometric mean of all complete results, the fastest (' . $first_place_buffer->get_result_identifier() . ') was ' . round($first_place_buffer->get_result_value() / $last_place_buffer->get_result_value(), 2) . 'x the speed of the slowest (' . $last_place_buffer->get_result_identifier() . '). ' . $geo_bits);
+		$summary[] = trim('Based on the geometric mean of all complete results, the fastest (' . $first_place_buffer->get_result_identifier() . ') was ' . round($first_place_buffer->get_result_value() / $last_place_buffer->get_result_value(), 3) . 'x the speed of the slowest (' . $last_place_buffer->get_result_identifier() . '). ' . $geo_bits);
 
 		if($result_file->get_test_count() > 20)
 		{
@@ -438,7 +438,7 @@ class pts_result_file_analyzer
 					{
 						continue;
 					}
-					$spread_text[] = $ro[0]->test_profile->get_title() . ($ro[0]->get_arguments_description() != null ? ' (' . $ro[0]->get_arguments_description() . ')' : null) . ' at ' . round($spread, 2) . 'x';
+					$spread_text[] = $ro[0]->test_profile->get_title() . ($ro[0]->get_arguments_description() != null ? ' (' . $ro[0]->get_arguments_description() . ')' : null) . ' at ' . round($spread, 3) . 'x';
 				}
 				if(!empty($spread_text))
 				{
