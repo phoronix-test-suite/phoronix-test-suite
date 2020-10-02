@@ -295,7 +295,7 @@ class pts_result_file_analyzer
 		$test_result->set_parent_hash($original_parent_hash);
 		$result_file->add_result($test_result);
 	}
-	public static function generate_executive_summary($result_file, $selected_result = null,  &$error = null)
+	public static function generate_executive_summary($result_file, $selected_result = null,  &$error = null, $separator = PHP_EOL)
 	{
 		$summary = array();
 
@@ -396,7 +396,7 @@ class pts_result_file_analyzer
 				}
 				if(!empty($spread_text))
 				{
-					$summary[] = 'The results with the greatest spread from best to worst included: ' . PHP_EOL . PHP_EOL . implode(PHP_EOL . '', $spread_text) . '.';
+					$summary[] = 'The results with the greatest spread from best to worst included: ' . PHP_EOL . PHP_EOL . implode($separator, $spread_text) . '.';
 				}
 			}
 		}
