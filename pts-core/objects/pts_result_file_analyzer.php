@@ -249,7 +249,7 @@ class pts_result_file_analyzer
 
 		return false;
 	}
-	public static function generate_perf_per_dollar(&$input, $generate, $unit = 'Dollar')
+	public static function generate_perf_per_dollar(&$input, $generate, $unit = 'Dollar', $yield_on_unqualified_ros = false)
 	{
 		if($input instanceof pts_result_file)
 		{
@@ -264,7 +264,7 @@ class pts_result_file_analyzer
 
 		foreach($ros as &$result_object)
 		{
-			if($result_object->test_profile->get_identifier() == null || $result_object->test_profile->get_display_format() != 'BAR_GRAPH')
+			if((!$yield_on_unqualified_ros && $result_object->test_profile->get_identifier() == null) || $result_object->test_profile->get_display_format() != 'BAR_GRAPH')
 			{
 				continue;
 			}
