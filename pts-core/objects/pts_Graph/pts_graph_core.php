@@ -107,7 +107,7 @@ abstract class pts_graph_core
 			}
 		}
 
-		if(!isset($extra_attributes['pdf_generation']))
+		if(!isset($extra_attributes['pdf_generation']) && !isset($extra_attributes['skip_graph_version_and_watermark']))
 		{
 			$this->i['graph_version'] = 'Phoronix Test Suite ' . PTS_VERSION;
 			$this->i['watermark'] = self::$c['text']['watermark'];
