@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Allow batch processing of performance per dollar metrics
 phodevi: Add Intel AMX presence detection
 
 Phoronix Test Suite 10.0.0 Milestone 3

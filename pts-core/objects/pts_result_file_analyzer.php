@@ -249,7 +249,7 @@ class pts_result_file_analyzer
 
 		return false;
 	}
-	public static function generate_perf_per_dollar(&$input, $identifier, $value, $unit = 'Dollar')
+	public static function generate_perf_per_dollar(&$input, $generate, $unit = 'Dollar')
 	{
 		if($input instanceof pts_result_file)
 		{
@@ -264,39 +264,58 @@ class pts_result_file_analyzer
 
 		foreach($ros as &$result_object)
 		{
-			$result = $result_object->test_result_buffer->get_value_from_identifier($identifier);
-			if($result_object->test_profile->get_identifier() != null && $result_object->test_profile->get_display_format() == 'BAR_GRAPH' && is_numeric($result) && $result > 0)
+			if($result_object->test_profile->get_identifier() == null || $result_object->test_profile->get_display_format() != 'BAR_GRAPH')
 			{
-				if($result_object->test_profile->get_result_proportion() == 'HIB')
-				{
-					$result = pts_math::set_precision($result / $value, 3);
-					$scale = $result_object->test_profile->get_result_scale() . ' Per ' . $unit;
-				}
-				else if($result_object->test_profile->get_result_proportion() == 'LIB')
-				{
-					$result = pts_math::set_precision($result * $value, 3);
-					$scale = $result_object->test_profile->get_result_scale() . ' x ' . $unit;
-				}
-				else
-				{
-					break;
-				}
+				continue;
+			}
 
-				if($result != 0)
+			$computed = array();
+			$footnotes = array();
+
+			foreach($generate as $identifier => $value)
+			{
+				$result = $result_object->test_result_buffer->get_value_from_identifier($identifier);
+				if(is_numeric($result) && $result > 0)
 				{
-					$ret = pts_result_file_analyzer::add_perf_per_graph($result_file, $result_object, $identifier, $result, $scale, '$' . $value . ' reported cost.');
-					if($result_file == false && $ret)
+					if($result_object->test_profile->get_result_proportion() == 'HIB')
 					{
-						return $ret;
+						$result = pts_math::set_precision($result / $value, 3);
+						$scale = $result_object->test_profile->get_result_scale() . ' Per ' . $unit;
 					}
+					else if($result_object->test_profile->get_result_proportion() == 'LIB')
+					{
+						$result = pts_math::set_precision($result * $value, 3);
+						$scale = $result_object->test_profile->get_result_scale() . ' x ' . $unit;
+					}
+					else
+					{
+						continue;
+					}
+
+					if($result != 0)
+					{
+						$computed[$identifier] = $result;
+						$footnotes[$identifier] = '$' . $value . ' reported cost.';
+					}
+				}
+			}
+
+			if(!empty($computed))
+			{
+				$ret = pts_result_file_analyzer::add_perf_per_graph($result_file, $result_object, $computed, $scale, $footnotes);
+				if($result_file == false && $ret)
+				{
+					return $ret;
 				}
 			}
 		}
 	}
-	public static function add_perf_per_graph(&$result_file, $test_result, $result_identifier, $result, $scale, $footnote = null)
+	public static function add_perf_per_graph(&$result_file, $test_result, $results, $scale, $footnote = null)
 	{
-		if(empty($result))
+		if(empty($results))
+		{
 			return false;
+		}
 
 		// This copy isn't needed but it's shorter and from port from system_monitor where there can be multiple items tracked
 		$original_parent_hash = $test_result->get_comparison_hash(true, false);
@@ -306,7 +325,10 @@ class pts_result_file_analyzer
 		$test_result->set_used_arguments('dollar comparison ' . $test_result->get_arguments());
 		$test_result->test_profile->set_result_scale($scale);
 		$test_result->test_result_buffer = new pts_test_result_buffer();
-		$test_result->test_result_buffer->add_test_result($result_identifier, $result, null, array('install-footnote' => $footnote));
+		foreach($results as $result_identifier => $result)
+		{
+			$test_result->test_result_buffer->add_test_result($result_identifier, $result, null, array('install-footnote' => (isset($footnote[$result_identifier]) ? $footnote[$result_identifier] : null)));
+		}
 		$test_result->set_parent_hash($original_parent_hash);
 
 		if($result_file)

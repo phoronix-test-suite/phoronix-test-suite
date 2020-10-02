@@ -62,7 +62,7 @@ class perf_per_dollar extends pts_module_interface
 		self::$result_identifier = pts_user_io::prompt_text_menu('Select the test run to use', $result_file_identifiers);
 		self::$COST_PERF_PER_DOLLAR = pts_user_io::prompt_numeric_input('Enter the performance-per value');
 
-		pts_result_file_analyzer::generate_perf_per_dollar($result_file, self::$result_identifier, self::$COST_PERF_PER_DOLLAR, self::$COST_PERF_PER_UNIT);
+		pts_result_file_analyzer::generate_perf_per_dollar($result_file, array(self::$result_identifier => self::$COST_PERF_PER_DOLLAR), self::$COST_PERF_PER_UNIT);
 		pts_client::save_test_result($result_file->get_file_location(), $result_file->get_xml());
 		pts_client::display_result_view($r[0], false);
 	}
@@ -153,7 +153,7 @@ class perf_per_dollar extends pts_module_interface
 
 			if($result != 0)
 			{
-				pts_result_file_analyzer::add_perf_per_graph($result_file, self::$successful_test_run_request, self::$result_identifier, $result, $scale, $footnote);
+				pts_result_file_analyzer::add_perf_per_graph($result_file, self::$successful_test_run_request, array(self::$result_identifier => $result), $scale, array(self::$result_identifier => $footnote));
 				self::$perf_per_dollar_collection[] = self::$successful_test_run_request->active->get_result();
 			}
 		}

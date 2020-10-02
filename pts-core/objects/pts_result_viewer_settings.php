@@ -741,13 +741,19 @@ if($result_file->get_test_count() > 1)
 			}
 		}
 
+		$perf_per_dollar_values = array();
 		foreach($result_file->get_system_identifiers() as $si)
 		{
 			$ppd = self::check_request_for_var($request, 'ppd_' . rtrim(base64_encode($si), '='));
 			if($ppd && $ppd > 0 && is_numeric($ppd))
 			{
-				pts_result_file_analyzer::generate_perf_per_dollar($result_file, $si, $ppd);
+				$perf_per_dollar_values[$si] = $ppd;
 			}
+		}
+
+		if(!empty($perf_per_dollar_values))
+		{
+			pts_result_file_analyzer::generate_perf_per_dollar($result_file, $perf_per_dollar_values);
 		}
 	}
 	public static function html_input_field($name, $id, $on_change = null)
