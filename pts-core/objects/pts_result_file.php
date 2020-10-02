@@ -573,11 +573,11 @@ class pts_result_file
 		}
 		return $did_remove;
 	}
-	public function remove_noisy_results()
+	public function remove_noisy_results($noise_level_percent = 6)
 	{
 		foreach($this->result_objects as $i => &$ro)
 		{
-			if($ro->has_noisy_result())
+			if($ro->has_noisy_result($noise_level_percent))
 			{
 				$this->remove_result_object_by_id($i);
 			}

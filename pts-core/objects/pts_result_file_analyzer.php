@@ -299,7 +299,7 @@ class pts_result_file_analyzer
 	{
 		$summary = array();
 
-		if($result_file->get_test_count() < 10)
+		if($result_file->get_test_count() < 6)
 		{
 			$error = 'Not enough tests to analyze...';
 			return $summary;
@@ -392,7 +392,7 @@ class pts_result_file_analyzer
 					{
 						continue;
 					}
-					$spread_text[] = $ro[0]->test_profile->get_title() . ' (' . $ro[0]->get_arguments_description() . ') at ' . round($spread, 2) . 'x';
+					$spread_text[] = $ro[0]->test_profile->get_title() . ($ro[0]->get_arguments_description() != null ? ' (' . $ro[0]->get_arguments_description() . ')' : null) . ' at ' . round($spread, 2) . 'x';
 				}
 				if(!empty($spread_text))
 				{
