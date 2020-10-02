@@ -249,9 +249,20 @@ class pts_result_file_analyzer
 
 		return false;
 	}
-	public static function generate_perf_per_dollar(&$result_file, $identifier, $value, $unit = 'Dollar')
+	public static function generate_perf_per_dollar(&$input, $identifier, $value, $unit = 'Dollar')
 	{
-		foreach($result_file->get_result_objects() as $result_object)
+		if($input instanceof pts_result_file)
+		{
+			$result_file = &$input;
+			$ros = $input->get_result_objects();
+		}
+		else if($input instanceof pts_test_result)
+		{
+			$result_file = false;
+			$ros = array($input);
+		}
+
+		foreach($ros as &$result_object)
 		{
 			$result = $result_object->test_result_buffer->get_value_from_identifier($identifier);
 			if($result_object->test_profile->get_identifier() != null && $result_object->test_profile->get_display_format() == 'BAR_GRAPH' && is_numeric($result) && $result > 0)
@@ -273,7 +284,11 @@ class pts_result_file_analyzer
 
 				if($result != 0)
 				{
-					pts_result_file_analyzer::add_perf_per_graph($result_file, $result_object, $identifier, $result, $scale, '$' . $value . ' reported cost.');
+					$ret = pts_result_file_analyzer::add_perf_per_graph($result_file, $result_object, $identifier, $result, $scale, '$' . $value . ' reported cost.');
+					if($result_file == false && $ret)
+					{
+						return $ret;
+					}
 				}
 			}
 		}
@@ -293,7 +308,15 @@ class pts_result_file_analyzer
 		$test_result->test_result_buffer = new pts_test_result_buffer();
 		$test_result->test_result_buffer->add_test_result($result_identifier, $result, null, array('install-footnote' => $footnote));
 		$test_result->set_parent_hash($original_parent_hash);
-		$result_file->add_result($test_result);
+
+		if($result_file)
+		{
+			$result_file->add_result($test_result);
+		}
+		else
+		{
+			return $test_result;
+		}
 	}
 	public static function generate_executive_summary($result_file, $selected_result = null,  &$error = null, $separator = PHP_EOL)
 	{
