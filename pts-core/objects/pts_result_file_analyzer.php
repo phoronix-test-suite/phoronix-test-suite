@@ -279,7 +279,11 @@ class pts_result_file_analyzer
 				{
 					if($result_object->test_profile->get_result_proportion() == 'HIB')
 					{
-						$result = pts_math::set_precision($result / $value, 3);
+						$result = $result / $value;
+						if($result > 0.1)
+						{
+							$result = pts_math::set_precision($result, 3);
+						}
 						$scale = $result_object->test_profile->get_result_scale() . ' Per ' . $unit;
 					}
 					else if($result_object->test_profile->get_result_proportion() == 'LIB')
