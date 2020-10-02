@@ -153,7 +153,7 @@ class pts_graph_horizontal_bars extends pts_graph_core
 
 				$this->svg_dom->add_element('rect', array('x' => $this->i['left_start'], 'y' => $px_bound_top, 'height' => $bar_height, 'width' => $graph_size, 'fill' => $this->adjust_color($buffer_item->get_result_identifier(), $paint_color)), $g_bars);
 
-				if($std_error != -1 && $std_error >= 0 && $value != null)
+				if($std_error != -1 && ($std_error > 0 || ($std_error == 0 && count($raw_values) > 1)) && $value != null)
 				{
 					$std_error_height = 8;
 					if($std_error > 0 && is_numeric($std_error))
