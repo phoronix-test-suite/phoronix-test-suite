@@ -894,6 +894,7 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 
 		// Useful: https://en.wikichip.org/wiki/amd/cpuid / https://en.wikichip.org/wiki/intel/cpuid
+		// https://github.com/torvalds/linux/blob/master/arch/x86/include/asm/intel-family.h
 		$amd_map = array(
 			14 => array(
 				1 => 'Bobcat',
@@ -1013,11 +1014,15 @@ class phodevi_cpu extends phodevi_device_interface
 				54 => 'Saltwell',
 				53 => 'Saltwell',
 				39 => 'Saltwell',
+				138 => 'Lakefield',
 				142 => 'Kaby/Coffee/Whiskey Lake',
+				142 => 'Sapphire Rapids',
+				157 => 'Ice Lake',
 				158 => 'Kaby/Coffee/Whiskey Lake',
 				102 => 'Cannon Lake',
 				165 => 'Comet Lake',
 				166 => 'Comet Lake',
+				167 => 'Rocket Lake',
 				85 => 'Cascade Lake',
 				106 => 'Ice Lake',
 				108 => 'Ice Lake',
@@ -1027,6 +1032,10 @@ class phodevi_cpu extends phodevi_device_interface
 				133 => 'Knights Mill',
 				134 => 'Tremont',
 				140 => 'Tiger Lake',
+				141 => 'Tiger Lake',
+				150 => 'Elkhart Lake',
+				151 => 'Alder Lake',
+				156 => 'Jasper Lake',
 				),
 			15 => array(
 				1 => 'Clarksfield',
