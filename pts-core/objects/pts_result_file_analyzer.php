@@ -341,7 +341,7 @@ class pts_result_file_analyzer
 			return $test_result;
 		}
 	}
-	public static function generate_executive_summary($result_file, $selected_result = null,  &$error = null, $separator = PHP_EOL)
+	public static function generate_executive_summary($result_file, $selected_result = null,  &$error = null, $separator = PHP_EOL, $do_html = false)
 	{
 		$summary = array();
 
@@ -361,12 +361,20 @@ class pts_result_file_analyzer
 
 		if($selected_result && ($sw = $wins_result->test_result_buffer->find_buffer_item($selected_result)))
 		{
+			if($do_html)
+			{
+				$selected_result = '<strong>' . $selected_result . '</strong>';
+			}
 			$summary[] = $selected_result . ' came in first place for ' . floor($sw->get_result_value() / $wins_result->test_result_buffer->get_total_value_sum() * 100) . '% of the tests.';
 		}
-
-		if($first_place_buffer->get_result_identifier() != $selected_result)
+		else if($first_place_buffer->get_result_identifier() != $selected_result)
 		{
 			// Most wins
+			$selected_result = $first_place_buffer->get_result_identifier();
+			if($do_html)
+			{
+				$selected_result = '<strong>' . $selected_result . '</strong>';
+			}
 			$summary[] = $first_place_buffer->get_result_identifier() . ' had the most wins, coming in first place for ' . floor($first_place_buffer->get_result_value() / $wins_result->test_result_buffer->get_total_value_sum() * 100) . '% of the tests.';
 		}
 
@@ -417,7 +425,7 @@ class pts_result_file_analyzer
 
 		$summary[] = trim('Based on the geometric mean of all complete results, the fastest (' . $first_place_buffer->get_result_identifier() . ') was ' . round($first_place_buffer->get_result_value() / $last_place_buffer->get_result_value(), 3) . 'x the speed of the slowest (' . $last_place_buffer->get_result_identifier() . '). ' . $geo_bits);
 
-		if($result_file->get_test_count() > 20)
+		if($result_file->get_test_count() > 16)
 		{
 			$results = $result_file->get_result_objects();
 			$spreads = array();
@@ -438,7 +446,14 @@ class pts_result_file_analyzer
 					{
 						continue;
 					}
-					$spread_text[] = $ro[0]->test_profile->get_title() . ($ro[0]->get_arguments_description() != null ? ' (' . $ro[0]->get_arguments_description() . ')' : null) . ' at ' . round($spread, 3) . 'x';
+					if($do_html)
+					{
+						$spread_text[] = '<strong>' . $ro[0]->test_profile->get_title() . '</strong>' . ($ro[0]->get_arguments_description() != null ? ' (<em>' . $ro[0]->get_arguments_description() . '</em>)' : null) . ' at ' . round($spread, 3) . 'x';
+					}
+					else
+					{
+						$spread_text[] = $ro[0]->test_profile->get_title() . ($ro[0]->get_arguments_description() != null ? ' (' . $ro[0]->get_arguments_description() . ')' : null) . ' at ' . round($spread, 3) . 'x';
+					}
 				}
 				if(!empty($spread_text))
 				{
