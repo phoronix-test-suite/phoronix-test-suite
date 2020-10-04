@@ -284,8 +284,8 @@ class pts_test_run_options
 			if($option_select != false && isset($option_select[$o->get_identifier()]))
 			{
 				for($i = 0; $i < $o->option_count(); $i++)
-				{ echo $o->get_option_name($i);
-					if(in_array($o->get_option_name($i), $option_select[$o->get_identifier()]))
+				{
+					if(in_array(trim($o->get_option_name($i)), $option_select[$o->get_identifier()]))
 					{
 						$option_args[] = $o->format_option_value_from_select($i);
 						$option_args_description[] = $o->format_option_display_from_select($i);
