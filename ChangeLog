@@ -5,6 +5,7 @@ Phoronix Test Suite (Git)
 pts-core: Allow batch processing of performance per dollar metrics
 phodevi: Add Intel AMX presence detection
 phodevi: Add detection for Intel Alder Lake, Jasper Lake, Sapphire Rapids, and others
+phoromatic: Ensure Windows tests get displayed even if running the Phoromatic Server on Linux
 
 Phoronix Test Suite 10.0.0 Milestone 3
 1 October 2020

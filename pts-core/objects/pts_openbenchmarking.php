@@ -480,7 +480,7 @@ class pts_openbenchmarking
 	{
 		$repos = array('local', 'pts', 'system', 'git');
 
-		if(PTS_IS_CLIENT && phodevi::is_windows())
+		if((PTS_IS_CLIENT && phodevi::is_windows()) || defined('PHOROMATIC_SERVER_WEB_INTERFACE'))
 		{
 			// Various windows tests for compatibility where there isn't mainline support in the test profile otherwise
 			array_unshift($repos, 'windows');
