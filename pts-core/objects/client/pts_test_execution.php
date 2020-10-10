@@ -508,8 +508,7 @@ class pts_test_execution
 
 			if(is_file(PTS_USER_PATH . 'halt-testing') || is_file(PTS_USER_PATH . 'skip-test'))
 			{
-				pts_client::release_lock($lock_file);
-				return false;
+				break;
 			}
 
 			pts_client::$display->test_run_instance_complete($test_run_request);
@@ -538,7 +537,11 @@ class pts_test_execution
 				}
 			}
 		}
-
+		if(is_file(PTS_USER_PATH . 'halt-testing') || is_file(PTS_USER_PATH . 'skip-test'))
+		{
+			pts_client::release_lock($lock_file);
+			return false;
+		}
 		if($abort_testing && !is_dir('/mnt/c/Windows')) // bash on Windows has issues where this is always called, looks like bad exit status on Windows
 		{
 			self::test_run_error($test_run_manager, $test_run_request, 'This test execution has been abandoned.');

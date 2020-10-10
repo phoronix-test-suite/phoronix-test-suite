@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2018, Phoronix Media
-	Copyright (C) 2009 - 2018, Michael Larabel
+	Copyright (C) 2009 - 2020, Phoronix Media
+	Copyright (C) 2009 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ class pts_module_manager
 	private static $var_storage = array();
 	private static $module_process = array();
 	private static $current_module = null;
+	public static $stop_manager = false;
 
 	//
 	// Module Handling
@@ -99,6 +100,10 @@ class pts_module_manager
 	}
 	public static function module_process($process, &$object_pass = null, $select_modules = false)
 	{
+		if(self::$stop_manager)
+		{
+			return;
+		}
 		// Run a module process on all registered modules
 		foreach(pts_module_manager::attached_modules($process, $select_modules) as $module)
 		{

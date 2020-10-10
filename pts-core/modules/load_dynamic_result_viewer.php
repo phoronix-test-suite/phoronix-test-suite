@@ -69,6 +69,11 @@ class load_dynamic_result_viewer extends pts_module_interface
 				proc_terminate(self::$process);
 			}
 			proc_close(self::$process);
+			if(isset($ps['pid']))
+			{
+				sleep(1);
+				pts_client::kill_process_with_children_processes($ps['pid']);
+			}
 
 			// Fallback for sometimes the child process not getting killed
 			foreach(pts_file_io::glob('/proc/' . ($ps['pid'] + 1) . '/comm') as $proc_check)

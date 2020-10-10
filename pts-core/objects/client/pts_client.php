@@ -1391,6 +1391,33 @@ class pts_client
 			}
 		}
 	}
+	public static function kill_process_with_children_processes($pid)
+	{
+		if(is_dir('/proc/' . $pid) && is_file('/proc/' . $pid . '/task/' . $pid . '/children'))
+		{
+			$child_processes = pts_strings::trim_explode(' ', file_get_contents('/proc/' . $pid . '/task/' . $pid . '/children'));
+
+			foreach($child_processes as $p)
+			{
+				if(!empty($p) && is_dir('/proc/' . $p))
+				{
+					self::kill_process_with_children_processes($p);
+				}
+			}
+		}
+		if(!empty($pid) && is_dir('/proc/' . $pid))
+		{
+			if(function_exists('posix_kill'))
+			{
+				posix_kill($pid, SIGKILL);
+			}
+			else
+			{
+				shell_exec('kill -9 ' . $pid);
+			}
+			sleep(1);
+		}
+	}
 	public static function do_anonymous_usage_reporting()
 	{
 		return pts_config::read_bool_config('PhoronixTestSuite/Options/OpenBenchmarking/AnonymousUsageReporting', 0);

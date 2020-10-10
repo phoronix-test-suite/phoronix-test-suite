@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Ensure any post-run script is triggered still under halt-testing/skip-test conditions
 pts-core: Allow batch processing of performance per dollar metrics
 phodevi: Add Intel AMX presence detection
 phodevi: Add detection for Intel Alder Lake, Jasper Lake, Sapphire Rapids, and others
