@@ -7,7 +7,8 @@ pts-core: Allow batch processing of performance per dollar metrics
 phodevi: Add Intel AMX presence detection
 phodevi: Add detection for Intel Alder Lake, Jasper Lake, Sapphire Rapids, and others
 phoromatic: Ensure Windows tests get displayed even if running the Phoromatic Server on Linux
-flush_caches: Add module
+flush_caches: Add module to flush system caches between runs
+test_timeout: Add module to quit a test run if it exceeds a predefined time limit or 'auto' determination
 
 Phoronix Test Suite 10.0.0 Milestone 3
 1 October 2020
