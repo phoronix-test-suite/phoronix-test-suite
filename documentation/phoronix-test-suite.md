@@ -448,6 +448,12 @@ Setting FLAME_GRAPH_PATH=<path to flamegraph path> will auto-load and enable thi
 This module utilizes the following environmental variables: FLAME_GRAPH_PATH.
 
 
+### Flush Caches
+Loading this module will ensure caches (page cache, swap, etc) automatically get flushed prior to running any test.
+
+This module utilizes the following environmental variables: PTS_FLUSH_CACHES.
+
+
 ### Graphics Override
 This module allows you to override some graphics rendering settings for the ATI and NVIDIA drivers while running the Phoronix Test Suite.
 
@@ -645,6 +651,12 @@ Supported Options:
 NOTE: Use the "system-sensors" command to see what sensors are available for monitoring on the system.
 
 
+### Test Timeout
+This module allows killing a test if it exceeds a defined threshold, such as if the test is hung, etc. TEST_TIMEOUT_AFTER= environment variable can be used for controlling the behavior. When this variable is set, the value will can be set to "auto" or a positive integer. The value indicates the number of minutes until a test run should be aborted, such as for a safeguard against hung/deadlocked processes or other issues. Setting this to a high number as a backup would be recommended for fending off possible hangs / stalls in the testing process if the test does not quit on its own for whatever reason. If the value is "auto", it will quit if the time of a test run exceeds 3x the average time it normally takes the particular test to complete its run.
+
+This module utilizes the following environmental variables: TEST_TIMEOUT_AFTER.
+
+
 ### Timed Screenshot
 This is a module that will take a screenshot of the system at a pre-defined interval. ImageMagick must be installed onto the system prior to using this module.
 
@@ -799,6 +811,10 @@ This is the directory where test suites are stored.
 
 
 ## Environment Variables
+**TEST_TIMEOUT_AFTER**
+
+When this variable is set, the value will can be set to *auto* or a positive integer. The value indicates the number of minutes until a test run should be aborted, such as for a safeguard against hung/deadlocked processes or other issues. Setting this to a high number as a backup would be recommended for fending off possible hangs / stalls in the testing process if the test does not quit. If the value is *auto* , it will quit if the time of a test run exceeds 3x the average time it normally takes the particular test to complete its run. In the future, auto might be enabled by default in a future PTS release.
+
 **TEST_RESULTS_NAME**
 
 When this variable is set, the value will be used as the name for automatically saving the test results.

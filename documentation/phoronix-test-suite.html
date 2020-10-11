@@ -613,6 +613,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <h2>Generate Perf FlameGraphs For Tests</h2>
 <p>Setting FLAME_GRAPH_PATH=&lt;path to flamegraph path&gt; will auto-load and enable this Phoronix Test Suite module. The module will generate a Linux perf FlameGraph for each test run during the benchmarking process. Details on FlameGraph @ https://github.com/brendangregg/FlameGraph</p>
 <p>This module utilizes the following environmental variables: FLAME_GRAPH_PATH.</p>
+<h2>Flush Caches</h2>
+<p>Loading this module will ensure caches (page cache, swap, etc) automatically get flushed prior to running any test.</p>
+<p>This module utilizes the following environmental variables: PTS_FLUSH_CACHES.</p>
 <h2>Graphics Override</h2>
 <p>This module allows you to override some graphics rendering settings for the ATI and NVIDIA drivers while running the Phoronix Test Suite.</p>
 <p>This module utilizes the following environmental variables: FORCE_AA, FORCE_AF.</p>
@@ -751,6 +754,9 @@ Supported Options:
   - all.sys.voltage
 
 NOTE: Use the "system-sensors" command to see what sensors are available for monitoring on the system.</p>
+<h2>Test Timeout</h2>
+<p>This module allows killing a test if it exceeds a defined threshold, such as if the test is hung, etc. TEST_TIMEOUT_AFTER= environment variable can be used for controlling the behavior. When this variable is set, the value will can be set to "auto" or a positive integer. The value indicates the number of minutes until a test run should be aborted, such as for a safeguard against hung/deadlocked processes or other issues. Setting this to a high number as a backup would be recommended for fending off possible hangs / stalls in the testing process if the test does not quit on its own for whatever reason. If the value is "auto", it will quit if the time of a test run exceeds 3x the average time it normally takes the particular test to complete its run.</p>
+<p>This module utilizes the following environmental variables: TEST_TIMEOUT_AFTER.</p>
 <h2>Timed Screenshot</h2>
 <p>This is a module that will take a screenshot of the system at a pre-defined interval. ImageMagick must be installed onto the system prior to using this module.</p>
 <p>This module utilizes the following environmental variables: SCREENSHOT_INTERVAL.</p>
@@ -828,6 +834,8 @@ NOTE: Use the "system-sensors" command to see what sensors are available for mon
 <p><strong>~/.phoronix-test-suite/test-suites/</strong></p>
 <p>This is the directory where test suites are stored.</p>
 <h1>Environment Variables</h1>
+<p><strong>TEST_TIMEOUT_AFTER</strong></p>
+<p>When this variable is set, the value will can be set to <em>auto</em> or a positive integer. The value indicates the number of minutes until a test run should be aborted, such as for a safeguard against hung/deadlocked processes or other issues. Setting this to a high number as a backup would be recommended for fending off possible hangs / stalls in the testing process if the test does not quit. If the value is <em>auto</em>, it will quit if the time of a test run exceeds 3x the average time it normally takes the particular test to complete its run. In the future, auto might be enabled by default in a future PTS release.</p>
 <p><strong>TEST_RESULTS_NAME</strong></p>
 <p>When this variable is set, the value will be used as the name for automatically saving the test results.</p>
 <p><strong>TEST_RESULTS_IDENTIFIER</strong></p>
