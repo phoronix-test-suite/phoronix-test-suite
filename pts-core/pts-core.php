@@ -297,9 +297,9 @@ function pts_version_codenames()
 		);
 }
 
-pts_define('PTS_VERSION', '10.0.0m3');
-pts_define('PTS_CORE_VERSION', 9931);
-pts_define('PTS_RELEASE_DATE', '20201001');
+pts_define('PTS_VERSION', '10.0.0');
+pts_define('PTS_CORE_VERSION', 10000);
+pts_define('PTS_RELEASE_DATE', '20201013');
 pts_define('PTS_CODENAME', 'Finnsnes');
 
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));

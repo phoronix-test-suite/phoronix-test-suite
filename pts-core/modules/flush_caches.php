@@ -43,6 +43,8 @@ class flush_caches extends pts_module_interface
 			echo PHP_EOL . 'The flush_caches module requires root access, unloading...' . PHP_EOL;
 			return pts_module::MODULE_UNLOAD;
 		}
+
+		echo PHP_EOL . 'Flush_Caches module enabled...' . PHP_EOL;
 	}
 	public static function __pre_test_run()
 	{
