@@ -838,7 +838,7 @@ class pts_test_installer
 					}
 				}
 
-				if($no_prompts && $test_profile->is_root_install_required() && !phodevi::is_root() && !phodevi::is_windows())
+				if($no_prompts && $test_install_request->test_profile->is_root_install_required() && !phodevi::is_root() && !phodevi::is_windows())
 				{
 					self::test_install_error(null, $test_install_request, 'Root/administrator rights are required to install this test.');
 					return false;
