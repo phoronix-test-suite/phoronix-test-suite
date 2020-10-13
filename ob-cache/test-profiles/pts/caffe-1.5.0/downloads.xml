@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/caffe-git-20200213.tar.xz</URL>
+      <MD5>849c81b932e57edee35da41b22ff4310</MD5>
+      <SHA256>c60bb0d6a85a340f0e9c5be189a1afe1e3b05d567ae3dbc19f246f7e82a5bffd</SHA256>
+      <FileName>caffe-git-20200213.tar.xz</FileName>
+      <FileSize>7852188</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

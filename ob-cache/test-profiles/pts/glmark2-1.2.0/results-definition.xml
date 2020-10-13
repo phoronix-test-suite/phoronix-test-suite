@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>glmark2 Score: #_RESULT_#</OutputTemplate>
+    <LineHint>glmark2 Score</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/mocassin-20190324.tar.xz</URL>
+      <MD5>b2bad66bd5e2ca12bd187e6f9a13d070</MD5>
+      <SHA256>49ac2ae6e4789ca5c56975fd34a59db3105cdb47dd8f4ce80e71fa1ec83d669c</SHA256>
+      <FileName>mocassin-20190324.tar.xz</FileName>
+      <FileSize>1465712</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

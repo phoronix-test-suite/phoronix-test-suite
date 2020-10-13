@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Nodes/second    : #_RESULT_#</OutputTemplate>
+    <LineHint>Nodes/second</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

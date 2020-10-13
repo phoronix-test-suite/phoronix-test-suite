@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m3-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>FAHBench</Title>
+    <AppVersion>2.3.2</AppVersion>
+    <Description>FAHBench is a Folding@Home benchmark on the GPU.</Description>
+    <ResultScale>Ns Per Day</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.2</Version>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>opencl</ExternalDependencies>
+    <EnvironmentSize>172</EnvironmentSize>
+    <ProjectURL>http://fahbench.github.io/</ProjectURL>
+    <InternalTags>OpenCL</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

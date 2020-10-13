@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Timed MAFFT Alignment</Title>
+    <AppVersion>7.471</AppVersion>
+    <Description>This test performs an alignment of 100 pyruvate decarboxylase sequences.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Multiple Sequence Alignment - LSU RNA</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.6.1</Version>
+    <SupportedPlatforms>Linux, MacOSX, BSD, Windows</SupportedPlatforms>
+    <SoftwareType>Scientific</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>18</EnvironmentSize>
+    <ProjectURL>http://align.bmr.kyushu-u.ac.jp/mafft/software/</ProjectURL>
+    <Maintainer>Andrew Schofield</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

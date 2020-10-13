@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://pkgs.fedoraproject.org/repo/pkgs/wavpack/wavpack-5.1.0.tar.bz2/sha512/4c31616ae63c3a875afa20f26ce935f7a8f9921e2892b4b8388eca3ccd83b2d686f43eed8b9ec1dead934a1148401b9dced3b05f509b7942c48d7af31cf80a54/wavpack-5.1.0.tar.bz2</URL>
+      <MD5>7f06272651f0c2292c1d0ba353386782</MD5>
+      <SHA256>1939627d5358d1da62bc6158d63f7ed12905552f3a799c799ee90296a7612944</SHA256>
+      <FileName>wavpack-5.1.0.tar.bz2</FileName>
+      <FileSize>824331</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

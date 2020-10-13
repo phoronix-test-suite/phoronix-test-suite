@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m3-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>SPEEDOMETER RUNS PER MINUTE RESULT: #_RESULT_#</OutputTemplate>
+    <LineHint>SPEEDOMETER</LineHint>
+    <ResultScale>Runs Per Minute</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>MOTIONMARK RESULT: #_RESULT_#</OutputTemplate>
+    <LineHint>MOTIONMARK</LineHint>
+    <ResultScale>Score</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>BASEMARK OVERALL SCORE RESULT: #_RESULT_#</OutputTemplate>
+    <LineHint>BASEMARK</LineHint>
+    <ResultScale>Overall Score</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>WEBXPRT SCORE RESULT: #_RESULT_#</OutputTemplate>
+    <LineHint>WEBXPRT</LineHint>
+    <ResultScale>Score</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>ARES-6 GEOMETRIC MEAN RESULT: #_RESULT_#</OutputTemplate>
+    <LineHint>ARES-6</LineHint>
+    <ResultScale>ms</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>OCTANE RESULT: #_RESULT_#</OutputTemplate>
+    <LineHint>OCTANE</LineHint>
+    <ResultScale>Geometric Mean</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>JETSTREAM RESULT: #_RESULT_#</OutputTemplate>
+    <LineHint>JETSTREAM</LineHint>
+    <ResultScale>Score</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>JSTREAM2 RESULT: #_RESULT_#</OutputTemplate>
+    <LineHint>JSTREAM2</LineHint>
+    <ResultScale>Score</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>CANVASMARK RESULT: #_RESULT_#</OutputTemplate>
+    <LineHint>CANVASMARK</LineHint>
+    <ResultScale>Score</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>STYLEBENCH RESULT: #_RESULT_#</OutputTemplate>
+    <LineHint>STYLEBENCH</LineHint>
+    <ResultScale>Runs / Minute</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>MAZESOLVER RESULT: #_RESULT_#</OutputTemplate>
+    <LineHint>MAZESOLVER</LineHint>
+    <ResultScale>Seconds</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>PSPDFKitWASM RESULT: #_RESULT_#</OutputTemplate>
+    <LineHint>PSPDFKitWASM</LineHint>
+    <ResultScale>Score</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>KRAKEN RESULT:                         #_RESULT_# +/- 1.1%</OutputTemplate>
+    <LineHint>KRAKEN</LineHint>
+    <StripFromResult>ms</StripFromResult>
+    <ResultScale>ms</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>WASM COLLISION RESULT: #_RESULT_#</OutputTemplate>
+    <LineHint>WASM COLLISION</LineHint>
+    <ResultScale>ms</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>WASM CONVOLUTE RESULT: #_RESULT_#</OutputTemplate>
+    <LineHint>WASM CONVOLUTE</LineHint>
+    <ResultScale>ms</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>GUIMARK3 BITMAP RESULT:                         #_RESULT_# +/- 1.1%</OutputTemplate>
+    <LineHint>GUIMARK3 BITMAP</LineHint>
+    <ResultScale>fps</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>GUIMARK3 VECTOR RESULT:                         #_RESULT_# +/- 1.1%</OutputTemplate>
+    <LineHint>GUIMARK3 VECTOR</LineHint>
+    <ResultScale>fps</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>GUIMARK3 COMPUTE RESULT:                         #_RESULT_# +/- 1.1%</OutputTemplate>
+    <LineHint>GUIMARK3 COMPUTE</LineHint>
+    <ResultScale>fps</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+</PhoronixTestSuite>

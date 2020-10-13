@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://netactuate.dl.sourceforge.net/project/sunflow/sunflow-bin/v0.07.2/sunflow-bin-v0.07.2.zip, http://managedway.dl.sourceforge.net/project/sunflow/sunflow-bin/v0.07.2/sunflow-bin-v0.07.2.zip, http://kumisystems.dl.sourceforge.net/project/sunflow/sunflow-bin/v0.07.2/sunflow-bin-v0.07.2.zip</URL>
+      <MD5>5806cafff80db23c275203589ce2f5d4</MD5>
+      <SHA256>10b812de7a74938297b49916307e60817437814122151a9ae32925f396c02702</SHA256>
+      <FileName>sunflow-bin-v0.07.2.zip</FileName>
+      <FileSize>1238244</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

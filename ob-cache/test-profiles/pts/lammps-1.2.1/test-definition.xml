@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>LAMMPS Molecular Dynamics Simulator</Title>
+    <AppVersion>24Aug2020</AppVersion>
+    <Description>LAMMPS is a classical molecular dynamics code, and an acronym for Large-scale Atomic/Molecular Massively Parallel Simulator.</Description>
+    <ResultScale>ns/day</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.1</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD</SupportedPlatforms>
+    <SoftwareType>Scientific</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>fortran-compiler, openmpi-development, fftw3-development, cmake, build-utilities</ExternalDependencies>
+    <EnvironmentSize>555</EnvironmentSize>
+    <ProjectURL>http://lammps.sandia.gov/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Model</DisplayName>
+      <Identifier>run-model</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Rhodopsin Protein</Name>
+          <Value>in.rhodo</Value>
+          <Message>Small input, runs very quickly on modern hardware.</Message>
+        </Entry>
+        <Entry>
+          <Name>20k Atoms</Name>
+          <Value>benchmark_20k_atoms.in</Value>
+          <Message>A larger input for large core-count systems.</Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

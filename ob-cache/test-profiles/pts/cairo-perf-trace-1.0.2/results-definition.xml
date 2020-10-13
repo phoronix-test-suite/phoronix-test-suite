@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>[  0]     xlib           test   49.295   #_RESULT_#   0.00%    1/1</OutputTemplate>
+    <LineHint>xlib</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://render.otoy.com/downloads/a/61/2d40eddf-65a5-4c96-bc10-ab527f31dbee/OctaneBench_2020_1_5_linux.zip</URL>
+      <MD5>c6b0c60f4be7090b76993fb09572b8d1</MD5>
+      <SHA256>5c1c9612236a75f372e131054d30d69ed6a1206f8d73a01114c7b2161c0f185d</SHA256>
+      <FileName>OctaneBench_2020_1_5_linux.zip</FileName>
+      <FileSize>160884311</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://render.otoy.com/downloads/a/61/d26aef36-44d9-4434-b726-413ecde76ecf/OctaneBench_2020_1_5_win.zip</URL>
+      <MD5>0075c8ff60bbdf6b1208bcfd9ff5869e</MD5>
+      <SHA256>e647ae65980bad2f50227813ee61103b056f8247ee58728d6bb7a23230527f43</SHA256>
+      <FileName>OctaneBench_2020_1_5_win.zip</FileName>
+      <FileSize>143334539</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

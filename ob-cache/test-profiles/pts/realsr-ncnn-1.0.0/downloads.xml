@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/lowend-image-samples-1.tar.xz</URL>
+      <MD5>faed1d4ca6e4c781786a78e697f2b691</MD5>
+      <SHA256>87732c1d6fb7b778f1970ba9f59246aa4290908ae0f9d1cea1d5fd64198df535</SHA256>
+      <FileName>lowend-image-samples-1.tar.xz</FileName>
+      <FileSize>346412</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/nihui/realsr-ncnn-vulkan/releases/download/20200818/realsr-ncnn-vulkan-20200818-linux.zip</URL>
+      <MD5>a6b4290bc1915c60ecac6f71e1c5b2a2</MD5>
+      <SHA256>ef9d4cd112fc4ab66afa5d001500130f7bfca23fffa06d31e37f4da565a760a3</SHA256>
+      <FileName>realsr-ncnn-vulkan-20200818-linux.zip</FileName>
+      <FileSize>63191916</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/nihui/realsr-ncnn-vulkan/releases/download/20200818/realsr-ncnn-vulkan-20200818-windows.zip</URL>
+      <MD5>60c0bdfa2d18e4e9c5368baaaaf08a8f</MD5>
+      <SHA256>24bf51b7f8e7f3f4f65ede8e5c16c56468b9c1478d8a8ca90d310cca08feec43</SHA256>
+      <FileName>realsr-ncnn-vulkan-20200818-windows.zip</FileName>
+      <FileSize>63205509</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

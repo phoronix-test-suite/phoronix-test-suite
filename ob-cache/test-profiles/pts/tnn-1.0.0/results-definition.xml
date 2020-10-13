@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>squeezenet_v1.0.tnnproto                      time cost: min = #_MIN_RESULT_#  ms  |  max = #_MAX_RESULT_#  ms  |  avg = #_RESULT_#  ms </OutputTemplate>
+    <LineHint>time cost:</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

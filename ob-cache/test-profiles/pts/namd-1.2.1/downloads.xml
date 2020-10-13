@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.ks.uiuc.edu/Research/namd/2.14/download/946183/NAMD_2.14_Linux-x86_64-multicore.tar.gz</URL>
+      <MD5>5abb6040da5c9e35889bd64a77d46c95</MD5>
+      <SHA256>44a64a4bb0968e4f83c34483b9afe16016e85cc0767aa9777257573fb11da9f0</SHA256>
+      <FileName>NAMD_2.14_Linux-x86_64-multicore.tar.gz</FileName>
+      <FileSize>14201948</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.ks.uiuc.edu/Research/namd/2.14/download/946183/NAMD_2.14_Win64-multicore.zip</URL>
+      <MD5>157f2a167d5b5ea3f1cf4526723c86ab</MD5>
+      <SHA256>f059189e90f627bfb22af2c7f3b5d89214ad2208311b688396a4b976ed5cffd6</SHA256>
+      <FileName>NAMD_2.14_Win64-multicore.zip</FileName>
+      <FileSize>6824629</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.ks.uiuc.edu/Research/namd/2.14/download/946183/NAMD_2.14_MacOSX-x86_64-multicore.tar.gz</URL>
+      <MD5>a06a3f8ab12bfcc55021a81fd8f9f039</MD5>
+      <SHA256>12c0c0a854c5a22a7a896c609b61f2329e84c4f285a0a57e5e5b6da2086034e3</SHA256>
+      <FileName>NAMD_2.14_MacOSX-x86_64-multicore.tar.gz</FileName>
+      <FileSize>8947149</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.ks.uiuc.edu/Research/namd/utilities/f1atpase.zip</URL>
+      <MD5>bec570545a4297dc89ac402b8a59753a</MD5>
+      <SHA256>26b37eb20ad532238a85724c43cbaedd58a507ec71ad8a40aff20b98da949fa8</SHA256>
+      <FileName>f1atpase.zip</FileName>
+      <FileSize>28241682</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

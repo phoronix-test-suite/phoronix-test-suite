@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/MNN-20200917.tar.xz</URL>
+      <MD5>3ff6ec706704f5f83c6e4766e40491f6</MD5>
+      <SHA256>547724ab279f2b1a8f83e64d327be7cd17b9ddda17636c64d5a0cdfb9a7ee118</SHA256>
+      <FileName>MNN-20200917.tar.xz</FileName>
+      <FileSize>4831952</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

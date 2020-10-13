@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://fsbench.filesystems.org/bench/aio-stress.c</URL>
+      <MD5>727e5fc3566837b3ea72f887d048769b</MD5>
+      <FileName>aio-stress.c</FileName>
+      <FileSize>39513</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/cairo-demos-20120130.tar.bz2</URL>
+      <MD5>db115a3a83cca459d4089870eff59688</MD5>
+      <FileName>cairo-demos-20120130.tar.bz2</FileName>
+      <FileSize>3283909</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

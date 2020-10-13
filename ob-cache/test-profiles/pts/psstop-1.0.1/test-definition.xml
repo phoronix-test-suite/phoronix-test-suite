@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>PSSTOP Memory test</Title>
+    <Description>Shows the total number of processes running and the memory they consume</Description>
+    <ResultScale>kb</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Deprecated</Status>
+    <Maintainer>Victor Rodriguez</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

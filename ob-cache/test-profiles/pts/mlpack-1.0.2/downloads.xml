@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/mlpack-benchmarks-20200110.zip</URL>
+      <MD5>5c64e39100243ffeb0586efa6887195b</MD5>
+      <SHA256>10123cd85eff747230bcdb05e0b93254b2642d62370009ac3e461ddaef59b768</SHA256>
+      <FileName>mlpack-benchmarks-20200110.zip</FileName>
+      <FileSize>233570</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

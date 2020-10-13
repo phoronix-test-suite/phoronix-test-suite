@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <FileName>stresscpu2</FileName>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

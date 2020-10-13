@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Mlpack Benchmark</Title>
+    <Description>Mlpack benchmark scripts for machine learning libraries</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.2</Version>
+    <SupportedPlatforms>Linux, BSD</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>python-scipy, python-sklearn, python, build-utilities</ExternalDependencies>
+    <ProjectURL>https://github.com/mlpack/benchmarks</ProjectURL>
+    <Maintainer>Yu Ma</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Benchmark</DisplayName>
+      <Identifier>benchmark</Identifier>
+      <Menu>
+        <Entry>
+          <Name>scikit_svm</Name>
+          <Value>SCIKIT_SVM</Value>
+        </Entry>
+        <Entry>
+          <Name>scikit_linearridgeregression</Name>
+          <Value>SCIKIT_LINEARRIDGEREGRESSION</Value>
+        </Entry>
+        <Entry>
+          <Name>scikit_qda</Name>
+          <Value>SCIKIT_QDA</Value>
+        </Entry>
+        <Entry>
+          <Name>scikit_ica</Name>
+          <Value>SCIKIT_ICA</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

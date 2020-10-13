@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-1.1.0.tar.gz</URL>
+      <MD5>7e047f2cbaf584dff7a8a7e0f8572f18</MD5>
+      <SHA256>98a052268cc4d5ece27f76572a7f50293f439c17a98e67c4ea0c7ed6f50ef043</SHA256>
+      <FileName>libwebp-1.1.0.tar.gz</FileName>
+      <FileSize>4033877</FileSize>
+      <PlatformSpecific>Linux, Solaris, BSD</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-1.1.0-windows-x64.zip</URL>
+      <MD5>e19767e577d5bc74877b17cd3cef2d8a</MD5>
+      <SHA256>e7026022be0d18e16bb0ab5cc322266be64778dedf22bc54efdc2be43c77ec27</SHA256>
+      <FileName>libwebp-1.1.0-windows-x64.zip</FileName>
+      <FileSize>3769998</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-1.1.0-mac-10.15.tar.gz</URL>
+      <MD5>941ae609d3eefe9eace56ea8ea24c313</MD5>
+      <SHA256>1aa2db35e3befc661e38a427bf372126d49939438c5d272d00941b5b2c0979f4</SHA256>
+      <FileName>libwebp-1.1.0-mac-10.15.tar.gz</FileName>
+      <FileSize>5293500</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/sample-photo-6000x4000-1.zip</URL>
+      <MD5>3da40124023e94f63d96c22c07e7e9c2</MD5>
+      <SHA256>cadcd434abcdc82a220e7022c749b6fa5f46bb7a32ec14423ca8aab067b0e989</SHA256>
+      <FileName>sample-photo-6000x4000-1.zip</FileName>
+      <FileSize>7824306</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

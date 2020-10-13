@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Caffe</Title>
+    <AppVersion>2020-02-13</AppVersion>
+    <Description>This is a benchmark of the Caffe deep learning framework and currently supports the AlexNet and Googlenet model and execution on both CPUs and NVIDIA GPUs.</Description>
+    <ResultScale>Milli-Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <Executable>caffe-benchmark</Executable>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Scientific</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Deprecated</Status>
+    <ExternalDependencies>build-utilities, cuda, cmake, python, blas-development, boost-development, atlas-development, snappy, gflags, opencv, hdf5</ExternalDependencies>
+    <Extends>pts/caffe</Extends>
+    <EnvironmentSize>268</EnvironmentSize>
+    <ProjectURL>http://caffe.berkeleyvision.org/</ProjectURL>
+    <InternalTags>CUDA, SMP</InternalTags>
+    <Maintainer>Athenas Jimenez</Maintainer>
+    <SystemDependencies>google/protobuf/any.h, protoc, leveldb/c.h, glog/logging.h, liblmdb.so</SystemDependencies>
+  </TestProfile>
+</PhoronixTestSuite>

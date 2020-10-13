@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://src.fedoraproject.org/lookaside/extras/dbench/dbench-4.0.tar.gz/1fe56ff71b9a416f8889d7150ac54da4/dbench-4.0.tar.gz</URL>
+      <MD5>1fe56ff71b9a416f8889d7150ac54da4</MD5>
+      <FileName>dbench-4.0.tar.gz</FileName>
+      <FileSize>2055359</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

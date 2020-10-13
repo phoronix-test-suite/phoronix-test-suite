@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Blender</Title>
+    <AppVersion>2.90</AppVersion>
+    <Description>Blender is an open-source 3D creation software project. This test is of Blender's Cycles benchmark with various sample files. GPU computing via OpenCL or CUDA is supported.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.8.0</Version>
+    <SupportedPlatforms>Linux, Windows, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <ExternalDependencies>bzip2-development, glut, opencl</ExternalDependencies>
+    <EnvironmentSize>950</EnvironmentSize>
+    <ProjectURL>https://www.blender.org/</ProjectURL>
+    <InternalTags>OpenCL, CUDA</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-noaudio --enable-autoexec</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Blend File</DisplayName>
+      <Identifier>blend</Identifier>
+      <ArgumentPrefix>-b </ArgumentPrefix>
+      <ArgumentPostfix> -o output.test -x 1 -F JPEG -f 1</ArgumentPostfix>
+      <Menu>
+        <Entry>
+          <Name>BMW27</Name>
+          <Value>../bmw27_gpu.blend</Value>
+        </Entry>
+        <Entry>
+          <Name>Classroom</Name>
+          <Value>../classroom_gpu.blend</Value>
+        </Entry>
+        <Entry>
+          <Name>Fishy Cat</Name>
+          <Value>../fishy_cat_gpu.blend</Value>
+        </Entry>
+        <Entry>
+          <Name>Pabellon Barcelona</Name>
+          <Value>../pavillon_barcelone_gpu.blend</Value>
+        </Entry>
+        <Entry>
+          <Name>Barbershop</Name>
+          <Value>../barbershop_interior_gpu.blend</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Compute</DisplayName>
+      <Identifier>compute</Identifier>
+      <ArgumentPrefix> </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>CPU-Only</Name>
+          <Value>NONE</Value>
+        </Entry>
+        <Entry>
+          <Name>OpenCL</Name>
+          <Value>OPENCL</Value>
+        </Entry>
+        <Entry>
+          <Name>CUDA</Name>
+          <Value>CUDA</Value>
+        </Entry>
+        <Entry>
+          <Name>NVIDIA OptiX</Name>
+          <Value>OPTIX</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

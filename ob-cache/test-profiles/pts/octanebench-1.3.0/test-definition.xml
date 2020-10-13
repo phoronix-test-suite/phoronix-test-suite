@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m3-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>OctaneBench</Title>
+    <AppVersion>2020.1</AppVersion>
+    <Description>OctaneBench is a test of the OctaneRender on the GPU and requires the use of NVIDIA CUDA.</Description>
+    <ResultScale>Score</ResultScale>
+    <Proportion>HIB</Proportion>
+    <SubTitle>Total Score</SubTitle>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.3.0</Version>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Non-Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <RequiresDisplay>TRUE</RequiresDisplay>
+    <EnvironmentSize>303</EnvironmentSize>
+    <ProjectURL>https://render.otoy.com/octanebench/</ProjectURL>
+    <InternalTags>CUDA</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

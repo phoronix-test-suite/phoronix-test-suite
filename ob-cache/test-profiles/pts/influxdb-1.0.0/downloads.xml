@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://dl.influxdata.com/influxdb/releases/influxdb-1.8.2_linux_amd64.tar.gz</URL>
+      <MD5>ba8920ce4b1ace5a5da56ad25e38b885</MD5>
+      <SHA256>50399c8624b89c65f5a744d040bd985fb6950b11cadf0b8d5225c96c5021b032</SHA256>
+      <FileName>influxdb-1.8.2_linux_amd64.tar.gz</FileName>
+      <FileSize>63461822</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

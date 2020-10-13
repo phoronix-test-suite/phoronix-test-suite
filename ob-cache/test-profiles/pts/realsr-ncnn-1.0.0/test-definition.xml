@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>RealSR-NCNN</Title>
+    <AppVersion>20200818</AppVersion>
+    <Description>RealSR-NCNN is an NCNN neural network implementation of the RealSR project and accelerated using the Vulkan API. RealSR is the Real-World Super Resolution via Kernel Estimation and Noise Injection. NCNN is a high performance neural network inference framework optimized for mobile and other platforms developed by Tencent. This test profile times how long it takes to increase the resolution of a sample image by a scale of 4x with Vulkan.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
+    <SoftwareType>Application</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <ExternalDependencies>vulkan-development</ExternalDependencies>
+    <RequiresDisplay>TRUE</RequiresDisplay>
+    <EnvironmentSize>90</EnvironmentSize>
+    <ProjectURL>https://github.com/nihui/realsr-ncnn-vulkan</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Scale</DisplayName>
+      <Identifier>scale</Identifier>
+      <ArgumentPrefix>-s </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>4x</Name>
+          <Value>4</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>TAA</DisplayName>
+      <Identifier>taa</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Yes</Name>
+          <Value>-x</Value>
+        </Entry>
+        <Entry>
+          <Name>No</Name>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

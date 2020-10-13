@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>  Throughput:         #_RESULT_# [unknowns/(second/iteration)]</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>
