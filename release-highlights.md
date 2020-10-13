@@ -1,5 +1,12 @@
 # Phoronix Test Suite Release History
 
+Phoronix Test Suite 10.0
+======
+#### Release Date: 13 October 2020 | Codename: Finnsnes
+* New version/overhaul of OpenBenchmarking.org
+* Various hardware/software detection improvements with Phodevi
+* New modules: flush_caches, test_timeout
+
 Phoronix Test Suite 9.8
 ======
 #### Release Date: 9 July 2020 | Codename: Nesodden
