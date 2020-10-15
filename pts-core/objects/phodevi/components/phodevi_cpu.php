@@ -767,6 +767,11 @@ class phodevi_cpu extends phodevi_device_interface
 					$info = implode(' ', $cpu_words);
 				}
 			}
+			else if(($gen = strpos($info, ' Gen')) !== false && ($intel = strpos($info, 'Intel ')) !== false && $gen < $intel)
+			{
+				// Tiger Lake reports "11th Gen Intel" as CPU string
+				$info = substr($info, $intel);
+			}
 		}
 
 		if(($c = strpos($info, '-Core ')) !== false && $c < strpos($info, ' '))
