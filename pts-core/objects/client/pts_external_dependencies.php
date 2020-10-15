@@ -453,7 +453,7 @@ class pts_external_dependencies
 	}
 	private static function is_present($file)
 	{
-		return is_file($file) || (strpos($file, '*') != false && !empty(glob($file)));
+		return is_file($file) || (strpos($file, '*') != false && glob($file));
 	}
 	private static function file_missing_check($file_arr)
 	{
