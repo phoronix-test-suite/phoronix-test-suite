@@ -165,7 +165,7 @@ class pts_graph_box_plot extends pts_graph_horizontal_bars
 			$raw = is_numeric($raw) ? max($raw) : 0;
 			$max = max($max, $val, $raw);
 		}
-
+var_dump($max);
 		$maximum = (ceil(round($max * 1.04) 
 		
 		
