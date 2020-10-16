@@ -119,13 +119,14 @@ class pts_test_result_buffer_item
 	{
 		$a = $a->get_result_value();
 		$b = $b->get_result_value();
-		if(strpos($a, ',') != false && strpos($b, ',') != false)
+		if(!is_array($a) && strpos($a, ',') != false && strpos($b, ',') != false)
 		{
 			$a = explode(',', $a);
 			$b = explode(',', $b);
-			$a = pts_math::arithmetic_mean($a);
-			$b = pts_math::arithmetic_mean($b);
 		}
+
+		$a = pts_math::arithmetic_mean($a);
+		$b = pts_math::arithmetic_mean($b);
 
 		if($a == $b)
 		{
