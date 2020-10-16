@@ -2,7 +2,9 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Fix for older versions of PHP such as in RHEL7
 phodevi: Avoid "11th Gen Intel" CPU string
+phodevi: Update for NVMe drive reporting with KIOXIA sometimes not reporting their brand first
 
 Phoronix Test Suite 10.0.0
 13 October 2020

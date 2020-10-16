@@ -166,7 +166,13 @@ class pts_graph_box_plot extends pts_graph_horizontal_bars
 			$max = max($max, $val, $raw);
 		}
 
-		$maximum = (ceil(round($max * 1.04) / $this->i['mark_count']) + 1) * $this->i['mark_count'];
+		$maximum = (ceil(round($max * 1.04) 
+		
+		
+		/ $this->i['mark_count']) + 1) *
+		
+		
+		 $this->i['mark_count'];
 		$maximum = round(ceil($maximum / $this->i['mark_count']), (0 - strlen($maximum) + 2)) * $this->i['mark_count'];
 		return $maximum;
 	}
