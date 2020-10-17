@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 pts-core: Fix for older versions of PHP such as in RHEL7
+pts-core: Add Thermald version reporting to system table when active
 phodevi: Avoid "11th Gen Intel" CPU string
 phodevi: Update for NVMe drive reporting with KIOXIA sometimes not reporting their brand first
 

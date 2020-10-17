@@ -996,6 +996,15 @@ class pts_test_run_manager
 				$notes['cpu-microcode'] = $cpu_microcode;
 			}
 
+			if(phodevi::is_linux() && pts_client::executable_in_path('thermald') && (pts_client::is_process_running('thermald') || phodevi_linux_parser::systemctl_active('thermald')))
+			{
+				$thermald_version = trim(shell_exec('thermald --version 2>/dev/null'));
+				if(!empty($thermald_version) && pts_strings::is_version($thermald_version))
+				{
+					$notes['cpu-thermald'] = $thermald_version;
+				}
+			}
+
 			// POWER processors have configurable SMT, 1-8 per core.
 			$smt = phodevi::read_property('cpu', 'smt');
 			if($smt)

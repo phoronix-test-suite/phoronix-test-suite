@@ -1447,7 +1447,7 @@ class pts_result_file_analyzer
 			unset($json['disk-scheduler']);
 			unset($json['disk-mount-options']);
 		}
-		if(isset($json['cpu-scaling-governor']) || isset($json['cpu-microcode']))
+		if(isset($json['cpu-scaling-governor']) || isset($json['cpu-microcode']) || isset($json['cpu-thermald']))
 		{
 			$cpu_data = array();
 
@@ -1461,6 +1461,12 @@ class pts_result_file_analyzer
 			{
 				$cpu_data[] = 'CPU Microcode: ' . $json['cpu-microcode'];
 				unset($json['cpu-microcode']);
+			}
+
+			if(!empty($json['cpu-thermald']))
+			{
+				$cpu_data[] = 'Thermald ' . $json['cpu-thermald'];
+				unset($json['cpu-thermald']);
 			}
 
 			$system_attributes['Processor'][$identifier] = implode(' - ', $cpu_data);
