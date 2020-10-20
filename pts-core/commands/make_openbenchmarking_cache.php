@@ -78,6 +78,7 @@ class make_openbenchmarking_cache implements pts_option_interface
 					}
 					$total_cache_count++;
 					$total_cache_size += $file_size;
+					$x = new pts_test_profile($qualified_identifier);
 				}
 				else
 				{
@@ -109,6 +110,11 @@ class make_openbenchmarking_cache implements pts_option_interface
 					echo ' ' . str_repeat('.', ($dot_size >= 0 ? $dot_size : 0)) . ' ' . $info . PHP_EOL;
 					$total_cache_count++;
 					$total_cache_size += $file_size;
+				}
+				$x = new pts_test_suite($qualified_identifier);
+				if(isset($r[0]) && $r[0] == 'lean')
+				{
+					break;
 				}
 			}
 			echo PHP_EOL;

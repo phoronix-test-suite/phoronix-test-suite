@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>OpenGL Demos Test Suite</Title>
+    <Version>1.0.2</Version>
+    <TestType>System</TestType>
+    <Description>The opengl-demos suite contains tests that are considered OpenGL demos and not directly a game or other real-world OpenGL software test.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/lightsmark</Test>
+    <Arguments>$VIDEO_WIDTH'x'$VIDEO_HEIGHT</Arguments>
+    <Description>$VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/unigine</Test>
+  </Execute>
+</PhoronixTestSuite>

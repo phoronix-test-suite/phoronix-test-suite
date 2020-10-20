@@ -1,0 +1,375 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Common Kernel Benchmarks</Title>
+    <Version>1.2.3</Version>
+    <TestType>System</TestType>
+    <Description>This suite consists of tests that look at different aspects of the system's kernel performance.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/apache</Test>
+  </Execute>
+  <Execute>
+    <Test>system/wireguard</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/postmark</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/sqlite-speedtest</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/pgbench</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/pmbench</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/perf-bench</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/tinymembench</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/mbw</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/t-test1</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/openssl</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/ctx-clock</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/hackbench</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/mutex</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/ipc-benchmark</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/schbench</Test>
+    <Arguments>-m 8 -t 4</Arguments>
+    <Description>Message Threads: 8 - Workers Per Message Thread: 4</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/stress-ng</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/osbench</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/rocksdb</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/leveldb</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p tcp -t b -n 1</Arguments>
+    <Description>Server Address: localhost - Protocol: TCP - Test: Bandwidth - Threads: 1</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p tcp -t b -n 8</Arguments>
+    <Description>Server Address: localhost - Protocol: TCP - Test: Bandwidth - Threads: 8</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p tcp -t b -n 32</Arguments>
+    <Description>Server Address: localhost - Protocol: TCP - Test: Bandwidth - Threads: 32</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p tcp -t b -n 64</Arguments>
+    <Description>Server Address: localhost - Protocol: TCP - Test: Bandwidth - Threads: 64</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p tcp -t c -n 1</Arguments>
+    <Description>Server Address: localhost - Protocol: TCP - Test: Connections/s - Threads: 1</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p tcp -t c -n 8</Arguments>
+    <Description>Server Address: localhost - Protocol: TCP - Test: Connections/s - Threads: 8</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p tcp -t c -n 32</Arguments>
+    <Description>Server Address: localhost - Protocol: TCP - Test: Connections/s - Threads: 32</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p tcp -t c -n 64</Arguments>
+    <Description>Server Address: localhost - Protocol: TCP - Test: Connections/s - Threads: 64</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p tcp -t l -n 1</Arguments>
+    <Description>Server Address: localhost - Protocol: TCP - Test: Latency - Threads: 1</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p tcp -t l -n 8</Arguments>
+    <Description>Server Address: localhost - Protocol: TCP - Test: Latency - Threads: 8</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p tcp -t l -n 32</Arguments>
+    <Description>Server Address: localhost - Protocol: TCP - Test: Latency - Threads: 32</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p tcp -t l -n 64</Arguments>
+    <Description>Server Address: localhost - Protocol: TCP - Test: Latency - Threads: 64</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p udp -t b -n 1</Arguments>
+    <Description>Server Address: localhost - Protocol: UDP - Test: Bandwidth - Threads: 1</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p udp -t b -n 8</Arguments>
+    <Description>Server Address: localhost - Protocol: UDP - Test: Bandwidth - Threads: 8</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p udp -t b -n 32</Arguments>
+    <Description>Server Address: localhost - Protocol: UDP - Test: Bandwidth - Threads: 32</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p udp -t b -n 64</Arguments>
+    <Description>Server Address: localhost - Protocol: UDP - Test: Bandwidth - Threads: 64</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p udp -t c -n 1</Arguments>
+    <Description>Server Address: localhost - Protocol: UDP - Test: Connections/s - Threads: 1</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p udp -t c -n 8</Arguments>
+    <Description>Server Address: localhost - Protocol: UDP - Test: Connections/s - Threads: 8</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p udp -t c -n 32</Arguments>
+    <Description>Server Address: localhost - Protocol: UDP - Test: Connections/s - Threads: 32</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p udp -t c -n 64</Arguments>
+    <Description>Server Address: localhost - Protocol: UDP - Test: Connections/s - Threads: 64</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p udp -t l -n 1</Arguments>
+    <Description>Server Address: localhost - Protocol: UDP - Test: Latency - Threads: 1</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p udp -t l -n 8</Arguments>
+    <Description>Server Address: localhost - Protocol: UDP - Test: Latency - Threads: 8</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p udp -t l -n 32</Arguments>
+    <Description>Server Address: localhost - Protocol: UDP - Test: Latency - Threads: 32</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p udp -t l -n 64</Arguments>
+    <Description>Server Address: localhost - Protocol: UDP - Test: Latency - Threads: 64</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p http -t b -n 1</Arguments>
+    <Description>Server Address: localhost - Protocol: HTTP - Test: Bandwidth - Threads: 1</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p http -t b -n 8</Arguments>
+    <Description>Server Address: localhost - Protocol: HTTP - Test: Bandwidth - Threads: 8</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p http -t b -n 32</Arguments>
+    <Description>Server Address: localhost - Protocol: HTTP - Test: Bandwidth - Threads: 32</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p http -t b -n 64</Arguments>
+    <Description>Server Address: localhost - Protocol: HTTP - Test: Bandwidth - Threads: 64</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p http -t c -n 1</Arguments>
+    <Description>Server Address: localhost - Protocol: HTTP - Test: Connections/s - Threads: 1</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p http -t c -n 8</Arguments>
+    <Description>Server Address: localhost - Protocol: HTTP - Test: Connections/s - Threads: 8</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p http -t c -n 32</Arguments>
+    <Description>Server Address: localhost - Protocol: HTTP - Test: Connections/s - Threads: 32</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p http -t c -n 64</Arguments>
+    <Description>Server Address: localhost - Protocol: HTTP - Test: Connections/s - Threads: 64</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p http -t l -n 1</Arguments>
+    <Description>Server Address: localhost - Protocol: HTTP - Test: Latency - Threads: 1</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p http -t l -n 8</Arguments>
+    <Description>Server Address: localhost - Protocol: HTTP - Test: Latency - Threads: 8</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p http -t l -n 32</Arguments>
+    <Description>Server Address: localhost - Protocol: HTTP - Test: Latency - Threads: 32</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ethr</Test>
+    <Arguments>-c localhost -p http -t l -n 64</Arguments>
+    <Description>Server Address: localhost - Protocol: HTTP - Test: Latency - Threads: 64</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/iperf</Test>
+    <Arguments>-c localhost -p 5201 -t 10  -P 1</Arguments>
+    <Description>Server Address: localhost - Server Port: 5201 - Duration: 10 Seconds - Test: TCP - Parallel: 1</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/iperf</Test>
+    <Arguments>-c localhost -p 5201 -t 10  -P 32</Arguments>
+    <Description>Server Address: localhost - Server Port: 5201 - Duration: 10 Seconds - Test: TCP - Parallel: 32</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/iperf</Test>
+    <Arguments>-c localhost -p 5201 -t 10  -P 64</Arguments>
+    <Description>Server Address: localhost - Server Port: 5201 - Duration: 10 Seconds - Test: TCP - Parallel: 64</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/iperf</Test>
+    <Arguments>-c localhost -p 5201 -t 10 -u -P 1</Arguments>
+    <Description>Server Address: localhost - Server Port: 5201 - Duration: 10 Seconds - Test: UDP - Parallel: 1</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/iperf</Test>
+    <Arguments>-c localhost -p 5201 -t 10 -u -P 32</Arguments>
+    <Description>Server Address: localhost - Server Port: 5201 - Duration: 10 Seconds - Test: UDP - Parallel: 32</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/iperf</Test>
+    <Arguments>-c localhost -p 5201 -t 10 -u -P 64</Arguments>
+    <Description>Server Address: localhost - Server Port: 5201 - Duration: 10 Seconds - Test: UDP - Parallel: 64</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/iperf</Test>
+    <Arguments>-c localhost -p 5201 -t 10 -u -b 100m -P 1</Arguments>
+    <Description>Server Address: localhost - Server Port: 5201 - Duration: 10 Seconds - Test: UDP - 100Mbit Objective - Parallel: 1</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/iperf</Test>
+    <Arguments>-c localhost -p 5201 -t 10 -u -b 100m -P 32</Arguments>
+    <Description>Server Address: localhost - Server Port: 5201 - Duration: 10 Seconds - Test: UDP - 100Mbit Objective - Parallel: 32</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/iperf</Test>
+    <Arguments>-c localhost -p 5201 -t 10 -u -b 100m -P 64</Arguments>
+    <Description>Server Address: localhost - Server Port: 5201 - Duration: 10 Seconds - Test: UDP - 100Mbit Objective - Parallel: 64</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/iperf</Test>
+    <Arguments>-c localhost -p 5201 -t 10 -u -b 1000m -P 1</Arguments>
+    <Description>Server Address: localhost - Server Port: 5201 - Duration: 10 Seconds - Test: UDP - 1000Mbit Objective - Parallel: 1</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/iperf</Test>
+    <Arguments>-c localhost -p 5201 -t 10 -u -b 1000m -P 32</Arguments>
+    <Description>Server Address: localhost - Server Port: 5201 - Duration: 10 Seconds - Test: UDP - 1000Mbit Objective - Parallel: 32</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/iperf</Test>
+    <Arguments>-c localhost -p 5201 -t 10 -u -b 1000m -P 64</Arguments>
+    <Description>Server Address: localhost - Server Port: 5201 - Duration: 10 Seconds - Test: UDP - 1000Mbit Objective - Parallel: 64</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+</PhoronixTestSuite>

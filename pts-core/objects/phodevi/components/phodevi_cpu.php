@@ -970,6 +970,7 @@ class phodevi_cpu extends phodevi_device_interface
 				),
 			25 => array(
 				32 => 'Zen 3',
+				33 => 'Zen 3',
 				47 => 'Zen 3',
 				),
 			);

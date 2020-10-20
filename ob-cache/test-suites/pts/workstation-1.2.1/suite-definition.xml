@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Common Workstation Benchmarks</Title>
+    <Version>1.2.1</Version>
+    <TestType>System</TestType>
+    <Description>This is a collection of sample tests designed to test a system's workstation performance.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+	<Status>Deprecated</Status>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/blender</Test>
+    <Arguments>-b ../bmw27_gpu.blend -o output.test -x 1 -F JPEG -f 1  NONE</Arguments>
+    <Description>Blend File: BMW27 - Compute: CPU-Only</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/blender</Test>
+    <Arguments>-b ../classroom_gpu.blend -o output.test -x 1 -F JPEG -f 1  NONE</Arguments>
+    <Description>Blend File: Classroom - Compute: CPU-Only</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/blender</Test>
+    <Arguments>-b ../barbershop_interior_gpu.blend -o output.test -x 1 -F JPEG -f 1  NONE</Arguments>
+    <Description>Blend File: Barbershop - Compute: CPU-Only</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/rodinia</Test>
+    <Arguments>OMP_CFD</Arguments>
+    <Description>Test: OpenMP CFD Solver</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/rodinia</Test>
+    <Arguments>OMP_LAVAMD</Arguments>
+    <Description>Test: OpenMP LavaMD</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/parboil</Test>
+    <Arguments>cutcp omp_base large</Arguments>
+    <Description>Test: OpenMP CUTCP</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/himeno</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/brl-cad</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/x265</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/paraview</Test>
+    <Arguments>manyspheres.py -s 100 -r 726 -f 30 -v 1920,1080</Arguments>
+    <Description>Test: Many Spheres - Resolution: 1920 x 1080</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/paraview</Test>
+    <Arguments>waveletcontour.py -d 256 -f 30 -v 1920,1080</Arguments>
+    <Description>Test: Wavelet Contour - Resolution: 1920 x 1080</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/paraview</Test>
+    <Arguments>/waveletvolume.py -d 256 -f 30 -v 1920,1080</Arguments>
+    <Description>Test: Wavelet Volume - Resolution: 1920 x 1080</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/swet</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/sysbench</Test>
+    <Arguments>cpu run</Arguments>
+    <Description>Test: CPU</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/sysbench</Test>
+    <Arguments>memory run</Arguments>
+    <Description>Test: Memory</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/git</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+</PhoronixTestSuite>
