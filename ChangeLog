@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 10.0.1
+21 October 2020
 
 pts-core: Fix for older versions of PHP such as in RHEL7
 pts-core: Add Thermald version reporting to system table when active
