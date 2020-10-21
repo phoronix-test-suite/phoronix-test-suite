@@ -374,6 +374,7 @@ class phodevi_disk extends phodevi_device_interface
 			$disk_model = str_replace('OCZ-', 'OCZ ', $disk_model);
 			$disk_model = str_replace('TOSHIBA-', 'TOSHIBA ', $disk_model);
 			$disk_model = str_replace('Crucial_', 'Crucial ', $disk_model);
+			$disk_model = str_ireplace('SKHynix_', 'SK hynix ', $disk_model);
 
 			if(($x = strpos($disk_model, ' ')) != false)
 			{
