@@ -379,6 +379,10 @@ class pts_result_viewer_embed
 			{
 				$button_area .= ' <button onclick="javascript:delete_result_from_result_file(\'' . $this->result_public_id . '\', \'' . $i . '\'); return false;">Delete Result</button> ';
 			}
+			else if($result_object->dynamically_generated)
+			{
+				$button_area .= ' <button onclick="javascript:hide_result_in_result_file(\'' . $this->result_public_id . '\', \'' . $i . '\'); return false;">Hide Result</button> ';
+			}
 			if($this->can_modify_results && !$result_object->dynamically_generated)
 			{
 				if($result_object->get_annotation() == null)

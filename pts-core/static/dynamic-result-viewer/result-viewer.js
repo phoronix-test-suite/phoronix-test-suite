@@ -45,6 +45,10 @@ function delete_result_from_result_file(result_file, result_hash)
 	}
 	return false;
 }
+function hide_result_in_result_file(result_file, result_hash)
+{
+	document.getElementById("result-" + result_hash).style.display = "none";
+}
 function delete_run_from_result_file(result_file, system_identifier, ppd)
 {
 	if(confirm("Permanently delete this '" + system_identifier + "' run?"))
