@@ -268,37 +268,42 @@ class pts_result_viewer_embed
 				$res_variability = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
 				unset($extra_attributes['graph_render_type']);
 			}
-
-			if(!empty($identifier_mapping_to_cores))
+			if(in_array($result_object->test_profile->get_test_hardware_type(), array('System', 'Processor', 'OS')))
 			{
-				$ro = pts_result_file_analyzer::get_result_object_custom($result_file, $result_object, $identifier_mapping_to_cores, 'Performance Per Core', 'Core');
-				if($ro)
+				if(!empty($identifier_mapping_to_cores))
 				{
-					$res_per_core = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
+					$ro = pts_result_file_analyzer::get_result_object_custom($result_file, $result_object, $identifier_mapping_to_cores, 'Performance Per Core', 'Core');
+					if($ro)
+					{
+						$res_per_core = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
+					}
+				}
+				if(!empty($identifier_mapping_to_threads))
+				{
+					$ro = pts_result_file_analyzer::get_result_object_custom($result_file, $result_object, $identifier_mapping_to_threads, 'Performance Per Thread', 'Thread');
+					if($ro)
+					{
+						$res_per_thread = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
+					}
+				}
+				if(!empty($identifier_mapping_to_cpu_clock))
+				{
+					$ro = pts_result_file_analyzer::get_result_object_custom($result_file, $result_object, $identifier_mapping_to_cpu_clock, 'Performance Per Clock', 'GHz');
+					if($ro)
+					{
+						$res_per_clock = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
+					}
 				}
 			}
-			if(!empty($identifier_mapping_to_threads))
+			if(in_array($result_object->test_profile->get_test_hardware_type(), array('System', 'Processor', 'Memory')))
 			{
-				$ro = pts_result_file_analyzer::get_result_object_custom($result_file, $result_object, $identifier_mapping_to_threads, 'Performance Per Thread', 'Thread');
-				if($ro)
+				if(!empty($identifier_mapping_to_ram_channels))
 				{
-					$res_per_thread = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
-				}
-			}
-			if(!empty($identifier_mapping_to_cpu_clock))
-			{
-				$ro = pts_result_file_analyzer::get_result_object_custom($result_file, $result_object, $identifier_mapping_to_cpu_clock, 'Performance Per Clock', 'GHz');
-				if($ro)
-				{
-					$res_per_clock = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
-				}
-			}
-			if(!empty($identifier_mapping_to_ram_channels))
-			{
-				$ro = pts_result_file_analyzer::get_result_object_custom($result_file, $result_object, $identifier_mapping_to_ram_channels, 'Performance Per Memory Channel', 'Channel');
-				if($ro)
-				{
-					$res_per_ram = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
+					$ro = pts_result_file_analyzer::get_result_object_custom($result_file, $result_object, $identifier_mapping_to_ram_channels, 'Performance Per Memory Channel', 'Channel');
+					if($ro)
+					{
+						$res_per_ram = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
+					}
 				}
 			}
 
