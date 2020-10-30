@@ -263,7 +263,26 @@ class ob_auto_compare extends pts_module_interface
 
 					$reference_results_added = 0;
 					$this_percentile = pts_strings::number_suffix_handler($this_result_percentile);
-					foreach(array_merge(array('This Result' . ($this_percentile > 0 && $this_percentile < 100 ? ' (' . $this_percentile . ' Percentile)' : null) => ($active_result > 99 ? round($active_result) : $active_result)), $other_data_in_result_file, (is_array($json_response['openbenchmarking']['result']['ae']['reference_results']) ? $json_response['openbenchmarking']['result']['ae']['reference_results'] : array())) as $component => $value)
+
+					$rr = array();
+					if(is_array($json_response['openbenchmarking']['result']['ae']['reference_results']))
+					{
+						$st = phodevi_base::determine_system_type(phodevi::system_hardware(), phodevi::system_software());
+						foreach($json_response['openbenchmarking']['result']['ae']['reference_results'] as $component => $value)
+						{
+							$this_type = phodevi_base::determine_system_type($component, $component);
+							if($this_type == $st)
+							{
+								$rr[$component] = $value;
+								unset($json_response['openbenchmarking']['result']['ae']['reference_results'][$component]);
+							}
+						}
+						foreach($json_response['openbenchmarking']['result']['ae']['reference_results'] as $component => $value)
+						{
+							$rr[$component] = $value;
+						}
+					}
+					foreach(array_merge(array('This Result' . ($this_percentile > 0 && $this_percentile < 100 ? ' (' . $this_percentile . ' Percentile)' : null) => ($active_result > 99 ? round($active_result) : $active_result)), $other_data_in_result_file, $rr) as $component => $value)
 					{
 						if($value > $max_value)
 						{
@@ -342,7 +361,7 @@ class ob_auto_compare extends pts_module_interface
 						}
 
 						// validate no overwrites
-						$complement_line = ($reference_results_added % 4);
+						$complement_line = ($reference_results_added % 5);
 						if($complement_line == 0 && strpos($component, 'This Result') === false)
 						{
 							$complement_line = 1;

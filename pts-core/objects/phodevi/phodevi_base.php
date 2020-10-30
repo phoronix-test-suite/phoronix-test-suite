@@ -67,9 +67,8 @@ class phodevi_base
 		{
 			$type = 'M';
 		}
-		else if(strpos($hw, '-U') !== false && stripos($hw, 'wireless'))
+		else if($hw == $sw && pts_strings::has_element_in_string($hw . ' ', array('Mobile ', 'M ', 'U ')) && pts_strings::has_element_in_string($hw, array('Intel ', 'AMD ')))
 		{
-			// Perhaps too easy of a check?
 			$type = 'M';
 		}
 		else if(strpos($sw, 'System Layer') !== false || stripos($sw, 'amazon') !== false || stripos($sw, 'xen') !== false || stripos($sw, 'qemu') !== false)
