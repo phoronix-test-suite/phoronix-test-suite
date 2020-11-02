@@ -420,6 +420,10 @@ abstract class pts_graph_core
 			{
 				$data_max = max($data_max);
 			}
+			if(is_array($data_max))
+			{
+				$data_max = max($data_max);
+			}
 
 			if(!is_numeric($data_max))
 			{
