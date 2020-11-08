@@ -28,7 +28,7 @@ class pts_result_viewer_settings
 		$drop_down_menus = array('Export Benchmark Data' => array(
 						'export=pdf' => 'Result File To PDF',
 						'export=txt' => 'Result File To Text',
-						'export=xml' => 'Result File To XML',
+					//	'export=xml' => 'Result File To XML',
 						'export=xml-suite' => 'Result File To Test Suite (XML)',
 						'export=csv' => 'Result File To CSV/Excel',
 						'export=csv-all' => 'Individual Run Data To CSV/Excel',
