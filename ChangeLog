@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 ob_auto_compare: Intelligently choose more relevant reference results
+phodevi: macOS CPU monitoring support
 
 Phoronix Test Suite 10.0.1
 21 October 2020

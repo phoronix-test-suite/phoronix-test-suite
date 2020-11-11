@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2019, Phoronix Media
-	Copyright (C) 2009 - 2019, Michael Larabel
+	Copyright (C) 2009 - 2020, Phoronix Media
+	Copyright (C) 2009 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -38,6 +38,10 @@ class cpu_temp extends phodevi_sensor
 		{
 			$temp_c = $this->cpu_temp_bsd();
 		}
+		else if(phodevi::is_macosx())
+		{
+			$temp_c = $this->cpu_temp_macosx();
+		}
 		else if(phodevi::is_linux())
 		{
 			$temp_c = $this->cpu_temp_linux();
@@ -45,7 +49,24 @@ class cpu_temp extends phodevi_sensor
 
 		return $temp_c;
 	}
-	
+	private function cpu_temp_macosx()
+	{
+		$temp_c = -1;
+
+		if(pts_client::executable_in_path('osx-cpu-temp'))
+		{
+			$osx_cpu_temp = trim(shell_exec('osx-cpu-temp 2>&1'));
+			if(($x = strpos($osx_cpu_temp, '°C')) !== false)
+			{
+				$osx_cpu_temp = substr($osx_cpu_temp, 0, $x);
+				if(is_numeric($osx_cpu_temp) && $osx_cpu_temp > 0)
+				{
+					$temp_c = $osx_cpu_temp;
+				}
+			}
+		}
+		return $temp_c;
+	}
 	private function cpu_temp_bsd()
 	{
 		$temp_c = -1;
