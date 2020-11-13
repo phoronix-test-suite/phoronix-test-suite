@@ -699,6 +699,12 @@ class pts_test_run_options
 			$error = 'Direct3D renderer is not supported here.';
 			return false;
 		}
+		if(stripos($test_args, 'Apple ') !== false && phodevi::os_under_test() != 'MacOSX')
+		{
+			// Only show Apple (namely Metal) renderer options when running on macOS
+			$error = 'Apple option is not supported here.';
+			return false;
+		}
 		if((stripos($test_args, 'NVIDIA ') !== false || stripos($test_args . ' ', 'CUDA ') !== false) && stripos(phodevi::read_property('gpu', 'model'), 'NVIDIA') === false)
 		{
 			// Only show NVIDIA / CUDA options when running with NVIDIA hardware

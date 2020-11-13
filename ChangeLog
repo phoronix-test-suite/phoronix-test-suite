@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Only show Apple options when running on macOS
 ob_auto_compare: Intelligently choose more relevant reference results
 phodevi: macOS CPU monitoring support
 

@@ -23,6 +23,10 @@
 			<PackageName>freeglut</PackageName>
 		</Package>
 		<Package>
+			<GenericName>glfw</GenericName>
+			<PackageName>glfw</PackageName>
+		</Package>
+		<Package>
 			<GenericName>swig</GenericName>
 			<PackageName>swig</PackageName>
 		</Package>
@@ -196,7 +200,7 @@
 		</Package>
 		<Package>
 			<GenericName>yasm</GenericName>
-			<PackageName>yasm</PackageName>
+			<PackageName>yasm nasm</PackageName>
 		</Package>
 		<Package>
 			<GenericName>gmp-library</GenericName>
