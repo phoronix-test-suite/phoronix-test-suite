@@ -65,7 +65,7 @@ class sys_power extends phodevi_sensor
 			}
 			return true;
 		}
-		if(($m = getenv('WATTSUP_METER')) != false && is_file($m))
+		if(($m = getenv('WATTSUP_METER')) != false && is_readable($m))
 		{
 			$wattsup = self::watts_up_power_meter_raw($m);
 
@@ -222,6 +222,7 @@ class sys_power extends phodevi_sensor
 	}
 	private static function watts_up_power_meter_raw($meter)
 	{
+		// https://arcb.csc.ncsu.edu/~mueller/cluster/arc/wattsup/metertools-1.0.0/docs/meters/wattsup/comprotocol.pdf
 		$buffer = null;
 		$handle = @fopen($meter, 'r');
 		if($handle)
