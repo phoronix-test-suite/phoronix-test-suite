@@ -143,7 +143,7 @@ class pts_result_viewer_settings
 				break;
 			}
 		}
-		$suites_in_result_file = $system_identifier_count > 1 ? pts_test_suites::suites_in_result_file($result_file, true, 0) : 0;
+		$suites_in_result_file = $system_identifier_count > 1 ? pts_test_suites::suites_in_result_file($result_file, true, 0) : array();
 		// END OF CHECKS
 
 		$analyze_options .= '<form action="' . $_SERVER['REQUEST_URI'] . '" method="post">';
