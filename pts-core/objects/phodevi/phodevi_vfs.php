@@ -115,7 +115,7 @@ class phodevi_vfs
 				}
 				break;
 			default:
-				$file = pts_strings::remove_lines_containing($file, array('Serial N', 'S/N', 'Serial #', 'serial:', 'serial='));
+				$file = pts_strings::remove_lines_containing($file, array('Serial N', 'S/N', 'UUID', ' seed:', 'Serial #', 'serial:', 'serial='));
 				break;
 		}
 
