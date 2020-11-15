@@ -592,7 +592,6 @@ class pts_client
 					'/proc/version',
 					'/proc/mdstat',
 					'/proc/lock_stat',
-					'/proc/config.gz',
 					'/etc/X11/xorg.conf',
 					'/sys/kernel/debug/dri/0/radeon_pm_info',
 					'/sys/kernel/debug/dri/0/i915_capabilities',
@@ -618,6 +617,21 @@ class pts_client
 						$file_contents = pts_strings::remove_line_timestamps($file_contents);
 						file_put_contents($system_log_dir . basename($file), $file_contents);
 					}
+				}
+
+				$kconfig = null;
+				if(is_file('/proc/config.gz') && pts_client::executable_in_path('zcat'))
+				{
+					$kconfig = shell_exec('zcat /proc/config.gz');
+				}
+				else if(pts_client::executable_in_path('uname') && ($uname_r = trim(shell_exec('uname -r 2>&1'))) && is_file('/boot/config-' . $uname_r))
+				{
+					$kconfig = file_get_contents('/boot/config-' . $uname_r);
+				}
+				if($kconfig != null)
+				{
+					$kconfig = phodevi_vfs::cleanse_and_shorten_kernel_config($kconfig);
+					file_put_contents($system_log_dir . 'config', $kconfig);
 				}
 
 				// Generate logs from system commands to backup

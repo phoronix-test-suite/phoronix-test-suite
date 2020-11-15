@@ -127,6 +127,28 @@ class phodevi_vfs
 
 		return $file;
 	}
+	public static function cleanse_and_shorten_kernel_config($kconfig)
+	{
+		$kconfig = explode(PHP_EOL, $kconfig);
+		foreach($kconfig as $i => &$line)
+		{
+			if(empty($line) || substr($line, 0, 1) == '#')
+			{
+				unset($kconfig[$i]);
+			}
+			if(isset($line[9]) && substr($line, 0, 7) == 'CONFIG_')
+			{
+				$line = substr($line, 7);
+			}
+		}
+
+		$kconfig = implode(PHP_EOL, $kconfig);
+		if(!empty($kconfig))
+		{
+			$kconfig = '# CONFIG_ prefix dropped, comment lines removed' . PHP_EOL . $kconfig;
+		}
+		return $kconfig;
+	}
 	public function clear_cache()
 	{
 		$this->cache = array();
