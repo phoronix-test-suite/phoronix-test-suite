@@ -517,7 +517,7 @@ class phodevi_motherboard extends phodevi_device_interface
 
 		if($info == 'Google Compute Engine')
 		{
-			$opt = array('http' => array('method' => 'GET', 'header' => 'Metadata-Flavor:Google\r\n'));
+			$opt = array('http' => array('method' => 'GET', 'header' => "Metadata-Flavor: Google\r\n"));
 			$ctx = stream_context_create($opt);
 			$machine_type = trim(file_get_contents('http://169.254.169.254/computeMetadata/v1/instance/machine-type', false, $ctx));
 			if(stripos($machine_type, 'machine') !== false)
