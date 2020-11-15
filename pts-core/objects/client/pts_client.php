@@ -636,7 +636,7 @@ class pts_client
 					'vulkaninfo',
 					'uname -a',
 					// 'udisks --dump',
-					'upower --dump',
+					//'upower --dump',
 					'dmidecode',
 					);
 
@@ -662,6 +662,10 @@ class pts_client
 						{
 							// Don't preserve really large logs, likely filled with lots of junk
 							$cmd_output = null;
+							continue;
+						}
+						if(strpos($cmd_output, 'read kernel buffer failed: Operation not permitted') !== false)
+						{
 							continue;
 						}
 
