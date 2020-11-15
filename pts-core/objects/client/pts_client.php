@@ -654,14 +654,15 @@ class pts_client
 					'dmidecode',
 					);
 
+				if(phodevi::is_linux() && phodevi::read_property('system', 'filesystem') == 'ext4' && phodevi::is_root())
+				{
+					$system_log_commands[] = 'dumpe2fs -h ' . phodevi::read_property('disk', 'device-providing-storage');
+				}
+
 				if(phodevi::is_bsd())
 				{
 					$system_log_commands[] = 'sysctl -a';
 					$system_log_commands[] = 'kenv';
-				}
-				if(is_readable('/dev/mem'))
-				{
-					$system_log_commands[] = 'dmidecode';
 				}
 
 				foreach($system_log_commands as $command_string)

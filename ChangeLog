@@ -8,6 +8,7 @@ ob_auto_compare: Intelligently choose more relevant reference results
 phodevi: macOS CPU monitoring support
 phodevi: Support for reading WattsUp Pro power meter data directly without utility using WATTS_UP_METER=<USB TTY>
 phodevi: Report Google Compute Engine machine type as part of motherboard string
+phodevi: Add dumpe2fs to system logs when running on EXT4 and root
 phodevi: Add block size reporting
 
 Phoronix Test Suite 10.0.1
