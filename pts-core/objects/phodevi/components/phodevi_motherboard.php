@@ -365,6 +365,11 @@ class phodevi_motherboard extends phodevi_device_interface
 			$bios_version = trim(str_ireplace(array('smbiosbiosversion', "\n"), '', shell_exec('wmic bios get smbiosbiosversion')));
 		}
 
+		if($bios_version == 'Google')
+		{
+			$bios_version = null;
+		}
+
 		return trim(str_replace(array('(', ')'), '', $bios_version));
 	}
 	public static function motherboard_string()
