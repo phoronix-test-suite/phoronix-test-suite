@@ -591,6 +591,8 @@ class pts_client
 					'/proc/cmdline',
 					'/proc/version',
 					'/proc/mdstat',
+					'/proc/lock_stat',
+					'/proc/config.gz',
 					'/etc/X11/xorg.conf',
 					'/sys/kernel/debug/dri/0/radeon_pm_info',
 					'/sys/kernel/debug/dri/0/i915_capabilities',
@@ -635,6 +637,7 @@ class pts_client
 					'uname -a',
 					// 'udisks --dump',
 					'upower --dump',
+					'dmidecode',
 					);
 
 				if(phodevi::is_bsd())
