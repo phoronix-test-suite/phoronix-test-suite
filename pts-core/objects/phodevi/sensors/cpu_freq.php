@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2015, Phoronix Media
-	Copyright (C) 2009 - 2015, Michael Larabel
+	Copyright (C) 2009 - 2020, Phoronix Media
+	Copyright (C) 2009 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -139,6 +139,7 @@ class cpu_freq extends phodevi_sensor
 	{
 		$info = phodevi_osx_parser::read_osx_system_profiler('SPHardwareDataType', 'ProcessorSpeed', false, array(), false);
 
+		$frequency = 0;
 		if(($cut_point = strpos($info, ' ')) > 0)
 		{
 			$cut_str = substr($info, 0, $cut_point);
