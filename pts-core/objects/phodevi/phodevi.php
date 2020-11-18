@@ -814,6 +814,10 @@ class phodevi extends phodevi_base
 		{
 			$compatible = false;
 		}
+		if(phodevi::is_macosx())
+		{
+			$compatible = true;
+		}
 
 		return $compatible;
 	}

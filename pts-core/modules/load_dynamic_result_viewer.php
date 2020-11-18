@@ -140,7 +140,7 @@ class load_dynamic_result_viewer extends pts_module_interface
 		}
 
 		$remote_access = is_numeric($remote_access) && $remote_access > 1 ? $remote_access : false;
-		$blocked_ports = array(2049, 3659, 4045, 6000, 9000);
+		$blocked_ports = array(2049, 3659, 4045, 5060, 5061, 6000, 9000);
 
 		$access_limited_to_localhost = true;
 		if(pts_config::read_bool_config('PhoronixTestSuite/Options/ResultViewer/LimitAccessToLocalHost', 'TRUE'))
