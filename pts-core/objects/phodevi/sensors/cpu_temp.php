@@ -116,6 +116,11 @@ class cpu_temp extends phodevi_sensor
 
 		if($raw_temp == -1)
 		{
+			$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/temp*_input', 'POSITIVE_NUMERIC', array('temp1_label' => 'SoC Temperature'));
+		}
+
+		if($raw_temp == -1)
+		{
 			// Try ACPI thermal
 			$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/thermal/thermal_zone*/temp', 'POSITIVE_NUMERIC', array('type' => 'cpu_thermal'));
 		}
