@@ -90,7 +90,6 @@ class cpu_power extends phodevi_sensor
 					{
 						self::$cpu_power_inputs[] = $hwmon;
 					}
-					break;
 				}
 			}
 		}
