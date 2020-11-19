@@ -11,6 +11,7 @@ phodevi: Support for reading WattsUp Pro power meter data directly without utili
 phodevi: Report Google Compute Engine machine type as part of motherboard string
 phodevi: Add dumpe2fs to system logs when running on EXT4 and root
 phodevi: Add block size reporting
+phodevi: CPU power reporting for Ampere Altra
 
 Phoronix Test Suite 10.0.1
 21 October 2020

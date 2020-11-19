@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2019, Phoronix Media
-	Copyright (C) 2009 - 2019, Michael Larabel
+	Copyright (C) 2009 - 2020, Phoronix Media
+	Copyright (C) 2009 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ class cpu_power extends phodevi_sensor
 	static $cpu_energy = 0;
 	static $last_time = 0;
 	protected static $amd_energy_sockets = false;
+	protected static $cpu_power_inputs = false;
 
 	public function read_sensor()
 	{
@@ -71,6 +72,23 @@ class cpu_power extends phodevi_sensor
 						{
 							self::$amd_energy_sockets[] = str_replace('_label', '_input', $label);
 						}
+					}
+					break;
+				}
+			}
+		}
+		if(self::$cpu_power_inputs === false)
+		{
+			self::$cpu_power_inputs = array();
+			foreach(pts_file_io::glob('/sys/class/hwmon/hwmon*/power*_label') as $hwmon)
+			{
+				if(pts_file_io::file_get_contents($hwmon) == 'CPU power')
+				{
+					$hwmon = str_replace('_label', '_input', $hwmon);
+
+					if(pts_file_io::file_get_contents($hwmon) > 0)
+					{
+						self::$cpu_power_inputs[] = $hwmon;
 					}
 					break;
 				}
@@ -144,6 +162,16 @@ class cpu_power extends phodevi_sensor
 				// This loop is in case the counters roll over
 			}
 			while($cpu_power < 1 && $tries < 2);
+		}
+		else if(!empty(self::$cpu_power_inputs))
+		{
+			// APM XGene / Ampere Computing
+			$cpu_uwatts = 0;
+			foreach(self::$cpu_power_inputs as $power_input)
+			{
+				$cpu_uwatts += pts_file_io::file_get_contents($power_input);
+			}
+			$cpu_power = $cpu_uwatts / 1000000;
 		}
 		else if(is_readable('/sys/class/hwmon/hwmon0/name') && pts_file_io::file_get_contents('/sys/class/hwmon/hwmon0/name') == 'zenpower')
 		{
