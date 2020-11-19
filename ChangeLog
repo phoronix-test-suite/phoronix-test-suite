@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 pts-core: Log lock_stat, config.gz, dmidecode to system logs
 pts-core: Only show Apple options when running on macOS
+pts-core: Add extra safeguard around FORCE_TIMES_TO_RUN for disabling dynamic run count
 ob_auto_compare: Intelligently choose more relevant reference results
 phodevi: macOS CPU monitoring support
 phodevi: Support for reading WattsUp Pro power meter data directly without utility using WATTS_UP_METER=<USB TTY>
