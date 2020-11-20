@@ -87,7 +87,7 @@ class sys_power extends phodevi_sensor
 		}
 
 		$test = self::sys_battery_power();
-		if(is_numeric($test) && $test != -1)
+		if(is_numeric($test) && $test != -1 && $test > 0)
 		{
 			self::$battery_sys = true;
 			return true;
