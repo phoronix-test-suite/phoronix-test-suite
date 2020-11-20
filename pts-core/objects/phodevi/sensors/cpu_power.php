@@ -35,13 +35,17 @@ class cpu_power extends phodevi_sensor
 		{
 			return $this->cpu_power_linux();
 		}
+		else if(phodevi::is_macosx())
+		{
+			return self::read_macosx_power_metrics();
+		}
 		return -1;		// TODO make -1 a named constant
 	}
 	public static function get_unit()
 	{
 		$unit = null;
 
-		if(is_readable('/sys/bus/i2c/drivers/ina3221x/0-0041/iio:device1/in_power1_input'))
+		if(phodevi::is_linux() && is_readable('/sys/bus/i2c/drivers/ina3221x/0-0041/iio:device1/in_power1_input'))
 		{
 			$unit = 'Milliwatts';
 		}
@@ -188,6 +192,30 @@ class cpu_power extends phodevi_sensor
 		}
 
 		return round($cpu_power, 2);
+	}
+	public static function read_macosx_power_metrics()
+	{
+		$watts = 0;
+		if(pts_client::executable_in_path('powermetrics'))
+		{
+			$powermetrics = shell_exec("sudo -n powermetrics -n 1 -i 1 --samplers cpu_power 2>&1");
+
+			if(($x = strpos($powermetrics, 'Package Power: ')) !== false)
+			{
+				$powermetrics = substr($powermetrics, $x + strlen('Package Power: '));
+				if(($x = strpos($powermetrics, ' mW')) !== false)
+				{
+					$powermetrics = substr($powermetrics, 0, $x);
+
+					if(is_numeric($powermetrics) && $powermetrics > 0)
+					{
+						$watts = $powermetrics / 1000;
+					}
+				}
+			}
+		}
+
+		return $watts;
 	}
 }
 

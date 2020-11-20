@@ -13,6 +13,7 @@ phodevi: Add dumpe2fs to system logs when running on EXT4 and root
 phodevi: Add block size reporting
 phodevi: CPU power reporting for Ampere Altra
 phodevi: Various Ampere Altra hardware detection/reporting improvements
+phodevi: Support reading CPU package power consumption on macOS using powermetrics
 
 Phoronix Test Suite 10.0.1
 21 October 2020
