@@ -294,6 +294,10 @@ function pts_version_codenames()
 		'9.8' => 'Nesodden',
 		//  Senja Municipality in Troms og Finnmark - Norway
 		'10.0' => 'Finnsnes',
+		'10.2' => 'Harstad',
+		'10.4' => 'Ibestad',
+		'10.6' => 'Tjeldsund',
+		'10.8' => 'Nesseby',
 		);
 }
 

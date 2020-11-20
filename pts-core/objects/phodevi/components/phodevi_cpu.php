@@ -559,6 +559,11 @@ class phodevi_cpu extends phodevi_device_interface
 		{
 			$info = phodevi_bsd_parser::read_sysctl('machdep.cpu.brand_string');
 
+			if(empty($info) || strtolower($info) == 'apple processor')
+			{
+				$info = phodevi_osx_parser::read_osx_system_profiler('SPHardwareDataType', 'Chip');
+			}
+
 			if(empty($info))
 			{
 				$info = phodevi_osx_parser::read_osx_system_profiler('SPHardwareDataType', 'ProcessorName');
