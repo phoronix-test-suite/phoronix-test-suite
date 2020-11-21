@@ -172,7 +172,12 @@ class cpu_power extends phodevi_sensor
 			$cpu_uwatts = 0;
 			foreach(self::$cpu_power_inputs as $power_input)
 			{
-				$cpu_uwatts += pts_file_io::file_get_contents($power_input);
+				$pi = pts_file_io::file_get_contents($power_input);
+
+				if(is_numeric($pi))
+				{
+					$cpu_uwatts += $pi;
+				}
 			}
 			$cpu_power = $cpu_uwatts / 1000000;
 		}

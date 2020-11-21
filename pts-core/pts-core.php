@@ -301,10 +301,10 @@ function pts_version_codenames()
 		);
 }
 
-pts_define('PTS_VERSION', '10.0.1');
-pts_define('PTS_CORE_VERSION', 10011);
-pts_define('PTS_RELEASE_DATE', '20201021');
-pts_define('PTS_CODENAME', 'Finnsnes');
+pts_define('PTS_VERSION', '10.2.0m1');
+pts_define('PTS_CORE_VERSION', 10100);
+pts_define('PTS_RELEASE_DATE', '20201121');
+pts_define('PTS_CODENAME', 'Harstad');
 
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));
 pts_define('PTS_IS_WEB_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'WEB_CLIENT'));
