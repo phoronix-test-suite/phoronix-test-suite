@@ -133,7 +133,7 @@ class pts_graph_lines extends pts_graph_core
 		foreach($this->test_result->test_result_buffer->buffer_items as &$buffer_item)
 		{
 			$v = $buffer_item->get_result_value();
-			if(strpos($v, ',') !== false)
+			if(!is_array($v) && strpos($v, ',') !== false)
 			{
 				$v = explode(',', $v);
 			}
