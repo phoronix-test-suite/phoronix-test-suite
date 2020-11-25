@@ -431,7 +431,7 @@ class pts_render
 					$intersect = array();
 					if($key == 'compiler-options')
 					{
-						$intersect = count($unique_compiler_data) == 1 ? reset($unique_compiler_data) : call_user_func_array('array_intersect', $unique_compiler_data);
+						$intersect = count($unique_compiler_data) == 1 ? reset($unique_compiler_data) : call_user_func_array('array_intersect', array_values($unique_compiler_data));
 						$graph->addTestNote($compiler_options_string . implode(' ', $intersect));
 					}
 

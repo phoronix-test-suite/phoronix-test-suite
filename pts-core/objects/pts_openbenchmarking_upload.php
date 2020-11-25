@@ -133,7 +133,7 @@ class pts_openbenchmarking_upload extends pts_openbenchmarking
 		// Compress the result file XML if it's big
 		if(isset($composite_xml[40000]) && function_exists('bzcompress'))
 		{
-			$composite_xml_bz = bzcompress($composite_xml);
+			$composite_xml_bz = bzcompress($composite_xml, 8);
 
 			if($composite_xml_bz != false)
 			{
@@ -141,9 +141,9 @@ class pts_openbenchmarking_upload extends pts_openbenchmarking
 				$composite_xml_type = 'composite_xml_bz';
 			}
 		}
-		else if(isset($composite_xml[40000]) && function_exists('gzdeflate'))
+		else if(isset($composite_xml[10000]) && function_exists('gzdeflate'))
 		{
-			$composite_xml_gz = gzdeflate($composite_xml);
+			$composite_xml_gz = gzdeflate($composite_xml, 9);
 
 			if($composite_xml_gz != false)
 			{

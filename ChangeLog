@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+pts-core: Increase compression factor when uploading benchmark results
+
 Phoronix Test Suite 10.2.0 Milestone 1
 21 November 2020
 
