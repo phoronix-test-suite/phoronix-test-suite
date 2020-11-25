@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2019, Phoronix Media
-	Copyright (C) 2008 - 2019, Michael Larabel
+	Copyright (C) 2008 - 2020, Phoronix Media
+	Copyright (C) 2008 - 2020, Michael Larabel
 	pts_LineGraph.php: The line graph object that extends pts_Graph.php.
 
 	This program is free software; you can redistribute it and/or modify
@@ -132,19 +132,24 @@ class pts_graph_lines extends pts_graph_core
 		$min_value = -1;
 		foreach($this->test_result->test_result_buffer->buffer_items as &$buffer_item)
 		{
-			if(!is_array($buffer_item->get_result_value()))
+			$v = $buffer_item->get_result_value();
+			if(strpos($v, ',') !== false)
 			{
-				$max_value = max($max_value,  $buffer_item->get_result_value());
+				$v = explode(',', $v);
+			}
+			if(!is_array($v))
+			{
+				$max_value = max($max_value,  $v);
 				if($min_value == -1)
 					$min_value = $max_value;
-				$min_value = min($min_value,  $buffer_item->get_result_value());
+				$min_value = min($min_value,  $v);
 			}
 			else
 			{
-				$max_value = max($max_value,  max($buffer_item->get_result_value()));
+				$max_value = max($max_value,  max($v));
 				if($min_value == -1)
 					$min_value = $max_value;
-				$min_value = min($min_value,  min($buffer_item->get_result_value()));
+				$min_value = min($min_value,  min($v));
 			}
 		}
 
