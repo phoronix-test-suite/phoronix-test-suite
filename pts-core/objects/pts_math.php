@@ -88,7 +88,7 @@ class pts_math
 		{
 			return $a;
 		}
-		else if($bn)
+		else if(isset($bn) && $bn)
 		{
 			return $b;
 		}
