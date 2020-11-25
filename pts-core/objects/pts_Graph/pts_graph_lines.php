@@ -139,6 +139,10 @@ class pts_graph_lines extends pts_graph_core
 			}
 			if(!is_array($v))
 			{
+				if(!is_numeric($v))
+				{
+					continue;
+				}
 				$max_value = max($max_value,  $v);
 				if($min_value == -1)
 					$min_value = $max_value;
@@ -146,7 +150,12 @@ class pts_graph_lines extends pts_graph_core
 			}
 			else
 			{
-				$max_value = max($max_value,  max($v));
+				$max_v = max($v);
+				if(!is_numeric($max_v))
+				{
+					continue;
+				}
+				$max_value = max($max_value,  $max_v);
 				if($min_value == -1)
 					$min_value = $max_value;
 				$min_value = min($min_value,  min($v));
