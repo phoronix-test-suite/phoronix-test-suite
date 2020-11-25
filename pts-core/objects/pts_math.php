@@ -78,6 +78,25 @@ class pts_math
 		}
 		return (1 / $sum) * count($values);
 	}
+	public static function max_number($a, $b, $fallback_on_no_number = 1)
+	{
+		if(($an = is_numeric($a)) && ($bn = is_numeric($b)))
+		{
+			return max($a, $b);
+		}
+		else if($an)
+		{
+			return $a;
+		}
+		else if($bn)
+		{
+			return $b;
+		}
+		else
+		{
+			return $fallback_on_no_number;
+		}
+	}
 	public static function standard_error($values)
 	{
 		self::clean_numeric_array($values);
