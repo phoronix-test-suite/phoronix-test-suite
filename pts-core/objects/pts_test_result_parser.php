@@ -234,11 +234,8 @@ class pts_test_result_parser
 							{
 								$frametime = substr($v, 10);
 								$frametime = substr($frametime, 0, -3);
-								if($frametime > 2000)
-								{
-									$frametime = $frametime / 1000;
-									$frame_all_times[] = $frametime;
-								}
+								$frametime = $frametime / 1000;
+								$frame_all_times[] = $frametime / 1000;
 							}
 						}
 						$frame_all_times = pts_math::remove_outliers($frame_all_times);
@@ -1068,11 +1065,8 @@ class pts_test_result_parser
 					{
 						$frametime = substr($v, 10);
 						$frametime = substr($frametime, 0, -3);
-						if($frametime > 2000)
-						{
-							$frametime = $frametime / 1000;
-							$frame_time_values[] = $frametime;
-						}
+						$frametime = $frametime / 1000;
+						$frame_time_values[] = $frametime;
 					}
 				}
 				$frame_time_values = pts_math::remove_outliers($frame_time_values);
