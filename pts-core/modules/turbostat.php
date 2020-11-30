@@ -24,14 +24,14 @@ class turbostat extends pts_module_interface
 {
 	const module_name = 'Linux Turbostat Dumper';
 	const module_version = '1.0.0';
-	const module_description = 'Setting TURBOSTAT_DUMPS=_DIR_ will auto-load and enable this Phoronix Test Suite module. The module will -- if turbostat is installed on the system and the user is root -- allow dumping of the TurboStat data to the specified directly on a per-test basis. This allows easily collecting of turbostat logs for each test being run.';
+	const module_description = 'Setting TURBOSTAT_LOG_DIR=_DIR_ will auto-load and enable this Phoronix Test Suite module. The module will -- if turbostat is installed on the system and the user is root -- allow dumping of the TurboStat data to the specified directly on a per-test basis. This allows easily collecting of turbostat logs for each test being run.';
 	const module_author = 'Michael Larabel';
 
 	private static $turbostat_log_dir;
 
 	public static function module_environmental_variables()
 	{
-		return array('TURBOSTAT_DUMPS');
+		return array('TURBOSTAT_LOG_DIR');
 	}
 	public static function module_info()
 	{
@@ -39,7 +39,7 @@ class turbostat extends pts_module_interface
 	}
 	public static function __run_manager_setup(&$test_run_manager)
 	{
-		$dump_dir = getenv('TURBOSTAT_DUMPS');
+		$dump_dir = getenv('TURBOSTAT_LOG_DIR');
 		if(empty($dump_dir))
 		{
 			return pts_module::MODULE_UNLOAD; // This module doesn't have anything else to do
@@ -51,7 +51,7 @@ class turbostat extends pts_module_interface
 		}
 		if(!is_dir($dump_dir) || !is_writable($dump_dir))
 		{
-			echo PHP_EOL . pts_client::cli_just_bold('TURBOSTAT_DUMPS must be pointed to an existing, writable directory.') . PHP_EOL;
+			echo PHP_EOL . pts_client::cli_just_bold('TURBOSTAT_LOG_DIR must be pointed to an existing, writable directory.') . PHP_EOL;
 			return pts_module::MODULE_UNLOAD;
 		}
 		if(!phodevi::is_root())
