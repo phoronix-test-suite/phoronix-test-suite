@@ -39,7 +39,8 @@ class turbostat extends pts_module_interface
 	}
 	public static function __run_manager_setup(&$test_run_manager)
 	{
-		if(($dump_dir = getenv('TURBOSTAT_DUMPS')) == 0)
+		$dump_dir = getenv('TURBOSTAT_DUMPS');
+		if(empty($dump_dir))
 		{
 			return pts_module::MODULE_UNLOAD; // This module doesn't have anything else to do
 		}
@@ -58,15 +59,15 @@ class turbostat extends pts_module_interface
 			echo PHP_EOL . pts_client::cli_just_bold('turbostat requires root access.') . PHP_EOL;
 			return pts_module::MODULE_UNLOAD;
 		}
-		$this->turbostat_log_dir = $dump_dir . '/';
-		echo PHP_EOL . 'Linux TurboStats Dumping Enabled To ' . $this->turbostat_log_dir . '.' . PHP_EOL . PHP_EOL;
+		self::$turbostat_log_dir = $dump_dir . '/';
+		echo PHP_EOL . 'Linux TurboStats Dumping Enabled To ' . self::$turbostat_log_dir . '.' . PHP_EOL . PHP_EOL;
 	}
 	public static function __pre_test_run(&$test_run_request)
 	{
 		// Set the perf command to pass in front of all tests to run
 		self::$tmp_file = tempnam(sys_get_temp_dir(), 'perf');
 		// -d or below is more exhaustive list
-		$test_run_request->exec_binary_prepend = 'turbostat -o ' . $this->turbostat_log_dir . str_replace(array(' ', '/', '.'), '_', trim($test_run_request->test_profile->get_identifier() . ' ' . $test_run_request->get_arguments_description())) . '.log';
+		$test_run_request->exec_binary_prepend = 'turbostat -o ' . self::$turbostat_log_dir . str_replace(array(' ', '/', '.'), '_', trim($test_run_request->test_profile->get_identifier() . ' ' . $test_run_request->get_arguments_description())) . '.log';
 	}
 }
 ?>
