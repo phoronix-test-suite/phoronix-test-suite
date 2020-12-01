@@ -183,7 +183,13 @@ class pts_installed_test
 	}
 	public function save_test_install_metadata()
 	{
-		// Refresh/generate an install XML for pts-install.xml
+		// Refresh/generate an PTS install file
+		// The pts-install.xml XML file is traditionally how PTS install metadata was installed...
+		// With PTS 10.2, JSON is preferred for storing the data more easily
+		// But continue generating the install XML for backwards compatibility and for parts of PTS checking for 'pts-install.xml' to determine if test installed, etc.
+		// But PTS 10.2+ will use the data actually stored in the JSON file....
+		// TODO XXX PTS 11.0 or so drop the pts-install.xml and use just pts-install.json
+
 		$xml_writer = new nye_XmlWriter('file://' . PTS_USER_PATH . 'xsl/' . 'pts-test-installation-viewer.xsl');
 		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/Identifier', $this->get_associated_test_identifier());
 		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/Version', $this->get_installed_version());

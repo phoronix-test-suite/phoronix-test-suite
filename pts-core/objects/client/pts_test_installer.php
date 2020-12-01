@@ -878,8 +878,9 @@ class pts_test_installer
 					{
 						$install_error = null;
 
-						// TODO: perhaps better way to handle this than to remove pts-install.xml
+						// TODO: perhaps better way to handle this than to remove pts-install file(s)
 						pts_file_io::unlink($test_install_directory . 'pts-install.xml');
+						pts_file_io::unlink($test_install_directory . 'pts-install.json');
 
 						if($test_install_request->test_profile->test_installation->has_install_log())
 						{
@@ -967,7 +968,7 @@ class pts_test_installer
 		if($remove_old_files && $test_install_request->test_profile->do_remove_test_install_directory_on_reinstall())
 		{
 			// Remove any (old) files that were installed
-			$ignore_files = array('pts-install.xml', 'install-failed.log');
+			$ignore_files = array('pts-install.xml', 'pts-install.json', 'install-failed.log');
 			foreach($test_install_request->get_download_objects() as $download_object)
 			{
 				$ignore_files[] = $download_object->get_filename();
