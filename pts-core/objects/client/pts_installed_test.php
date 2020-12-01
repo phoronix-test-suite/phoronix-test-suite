@@ -43,8 +43,25 @@ class pts_installed_test
 	{
 		$this->install_path = $test_profile->get_install_dir();
 
-		if(is_file($this->install_path . 'pts-install.xml'))
+		if(is_file($this->install_path . 'pts-install.json'))
 		{
+			$jsonf = json_decode(file_get_contents($this->install_path . 'pts-install.json'), true);
+			$this->install_date_time = isset($jsonf['test_installation']['history']['install_date_time']) ? $jsonf['test_installation']['history']['install_date_time'] : null;
+			$this->last_run_date_time = isset($jsonf['test_installation']['history']['last_run_date_time']) ? $jsonf['test_installation']['history']['last_run_date_time'] : null;
+			$this->installed_version = isset($jsonf['test_installation']['environment']['test_version']) ? $jsonf['test_installation']['environment']['test_version'] : null;
+			$this->average_runtime = isset($jsonf['test_installation']['history']['average_runtime']) ? $jsonf['test_installation']['history']['average_runtime'] : null;
+			$this->last_runtime = isset($jsonf['test_installation']['history']['latest_runtime']) ? $jsonf['test_installation']['history']['latest_runtime'] : null;
+			$this->last_install_time = isset($jsonf['test_installation']['history']['install_time_length']) ? $jsonf['test_installation']['history']['install_time_length'] : null;
+			$this->times_run = isset($jsonf['test_installation']['history']['times_run']) ? $jsonf['test_installation']['history']['times_run'] : 0;
+			$this->compiler_data = isset($jsonf['test_installation']['environment']['compiler_data']) ? $jsonf['test_installation']['environment']['compiler_data'] : null;
+			$this->install_footnote = isset($jsonf['test_installation']['environment']['install_footnote']) ? $jsonf['test_installation']['environment']['install_footnote'] : null;
+			$this->install_checksum = isset($jsonf['test_installation']['environment']['install_checksum']) ? $jsonf['test_installation']['environment']['install_checksum'] : null;
+			$this->system_hash = isset($jsonf['test_installation']['environment']['system_hash']) ? $jsonf['test_installation']['environment']['system_hash'] : null;
+			$this->associated_test_identifier = isset($jsonf['test_installation']['environment']['test_identifier']) ? $jsonf['test_installation']['environment']['test_identifier'] : null;
+		}
+		else if(is_file($this->install_path . 'pts-install.xml'))
+		{
+			// Fallback to pre PTS 10.2 XML based data
 			$this->installed = true;
 			$xml_options = LIBXML_COMPACT | LIBXML_PARSEHUGE;
 			$xml = simplexml_load_file($this->install_path . 'pts-install.xml', 'SimpleXMLElement', $xml_options);
