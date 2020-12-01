@@ -25,16 +25,40 @@ class pts_installed_test
 	private $xml;
 	private $footnote_override = null;
 	private $install_path = null;
-	private $installed;
+	private $installed = false;
+
+	private $install_date_time = null;
+	private $last_run_date_time = null;
+	private $installed_version = null;
+	private $average_runtime = null;
+	private $last_runtime = null;
+	private $last_install_time = null;
+	private $times_run = 0;
+	private $compiler_data = null;
+	private $install_footnote = null;
+	private $install_checksum = null;
+	private $system_identifier = null;
 
 	public function __construct(&$test_profile)
 	{
 		$this->install_path = $test_profile->get_install_dir();
-		$this->installed = is_file($this->install_path . 'pts-install.xml') ? $this->install_path . 'pts-install.xml' : false;
-		if($this->installed)
+
+		if(is_file($this->install_path . 'pts-install.xml'))
 		{
+			$this->installed = true;
 			$xml_options = LIBXML_COMPACT | LIBXML_PARSEHUGE;
-			$this->xml = simplexml_load_file($this->installed, 'SimpleXMLElement', $xml_options);
+			$xml = simplexml_load_file($this->install_path . 'pts-install.xml', 'SimpleXMLElement', $xml_options);
+			$this->install_date_time = isset($xml->TestInstallation->History->InstallTime) ? $xml->TestInstallation->History->InstallTime->__toString() : null;
+			$this->last_run_date_time = isset($xml->TestInstallation->History->LastRunTime) ? $xml->TestInstallation->History->LastRunTime->__toString() : null;
+			$this->installed_version = isset($xml->TestInstallation->Environment->Version) ? $xml->TestInstallation->Environment->Version->__toString() : null;
+			$this->average_runtime = isset($xml->TestInstallation->History->AverageRunTime) ? $xml->TestInstallation->History->AverageRunTime->__toString() : null;
+			$this->last_runtime = isset($xml->TestInstallation->History->LatestRunTime) ? $xml->TestInstallation->History->LatestRunTime->__toString() : null;
+			$this->last_install_time = isset($xml->TestInstallation->History->InstallTimeLength) ? $xml->TestInstallation->History->InstallTimeLength->__toString() : null;
+			$this->times_run = isset($xml->TestInstallation->History->TimesRun) ? $xml->TestInstallation->History->TimesRun->__toString() : 0;
+			$this->compiler_data = isset($xml->TestInstallation->Environment->CompilerData) ? json_decode($xml->TestInstallation->Environment->CompilerData->__toString(), true) : null;
+			$this->install_footnote = isset($xml->TestInstallation->Environment->InstallFootnote) ? $xml->TestInstallation->Environment->InstallFootnote->__toString() : null;
+			$this->install_checksum = isset($xml->TestInstallation->Environment->CheckSum) ? $xml->TestInstallation->Environment->CheckSum->__toString() : null;
+			$this->system_identifier = isset($xml->TestInstallation->Environment->SystemIdentifier) ? $xml->TestInstallation->Environment->SystemIdentifier->__toString() : null;
 		}
 	}
 	public function is_installed()
@@ -51,7 +75,7 @@ class pts_installed_test
 	}
 	public function get_install_date_time()
 	{
-		return isset($this->xml->TestInstallation->History->InstallTime) ? $this->xml->TestInstallation->History->InstallTime->__toString() : null;
+		return $this->install_date_time;
 	}
 	public function get_install_date()
 	{
@@ -59,7 +83,7 @@ class pts_installed_test
 	}
 	public function get_last_run_date_time()
 	{
-		return isset($this->xml->TestInstallation->History->LastRunTime) ? $this->xml->TestInstallation->History->LastRunTime->__toString() : null;
+		return $this->last_run_date_time;
 	}
 	public function get_last_run_date()
 	{
@@ -67,31 +91,31 @@ class pts_installed_test
 	}
 	public function get_installed_version()
 	{
-		return isset($this->xml->TestInstallation->Environment->Version) ? $this->xml->TestInstallation->Environment->Version->__toString() : null;
+		return $this->installed_version;
 	}
 	public function get_average_run_time()
 	{
-		return isset($this->xml->TestInstallation->History->AverageRunTime) ? $this->xml->TestInstallation->History->AverageRunTime->__toString() : null;
+		return $this->average_runtime;
 	}
 	public function get_latest_run_time()
 	{
-		return isset($this->xml->TestInstallation->History->LatestRunTime) ? $this->xml->TestInstallation->History->LatestRunTime->__toString() : null;
+		return $this->last_runtime;
 	}
 	public function get_latest_install_time()
 	{
-		return isset($this->xml->TestInstallation->History->InstallTimeLength) ? $this->xml->TestInstallation->History->InstallTimeLength->__toString() : null;
+		return $this->last_install_time;
 	}
 	public function get_run_count()
 	{
-		return isset($this->xml->TestInstallation->History->TimesRun) ? $this->xml->TestInstallation->History->TimesRun->__toString() : 0;
+		return $this->times_run;
 	}
 	public function get_compiler_data()
 	{
-		return isset($this->xml->TestInstallation->Environment->CompilerData) ? json_decode($this->xml->TestInstallation->Environment->CompilerData->__toString(), true) : null;
+		return $this->compiler_data;
 	}
 	public function get_install_footnote()
 	{
-		return !empty($this->footnote_override) ? $this->footnote_override : (isset($this->xml->TestInstallation->Environment->InstallFootnote) ? $this->xml->TestInstallation->Environment->InstallFootnote->__toString() : null);
+		return !empty($this->footnote_override) ? $this->footnote_override : $this->install_footnote;
 	}
 	public function set_install_footnote($f = null)
 	{
@@ -99,11 +123,11 @@ class pts_installed_test
 	}
 	public function get_installed_checksum()
 	{
-		return isset($this->xml->TestInstallation->Environment->CheckSum) ? $this->xml->TestInstallation->Environment->CheckSum->__toString() : null;
+		return $this->install_checksum;
 	}
 	public function get_installed_system_identifier()
 	{
-		return isset($this->xml->TestInstallation->Environment->SystemIdentifier) ? $this->xml->TestInstallation->Environment->SystemIdentifier->__toString() : null;
+		return $this->system_identifier;
 	}
 	public function get_install_size()
 	{

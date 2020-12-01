@@ -137,7 +137,7 @@ class info implements pts_option_interface
 				if($o->test_installation != false && $o->test_installation->is_installed())
 				{
 					$last_run = $o->test_installation->get_last_run_date();
-					$last_run = $last_run == '0000-00-00' ? 'Never' : $last_run;
+					$last_run = $last_run == '0000-00-00' || empty($last_run) ? 'Never' : $last_run;
 
 					$avg_time = $o->test_installation->get_average_run_time();
 					$avg_time = !empty($avg_time) ? pts_strings::format_time($avg_time, 'SECONDS') : 'N/A';
