@@ -271,7 +271,7 @@ class pts_test_suite
 	{
 		foreach(pts_types::identifiers_to_test_profile_objects($this->get_identifier(), false, true) as $test_profile)
 		{
-			if($test_profile->test_installation == false || $test_profile->test_installation->get_installed_system_identifier() != phodevi::system_id_string())
+			if($test_profile->test_installation == false || $test_profile->test_installation->get_system_hash() != phodevi::system_id_string())
 			{
 				return true;
 			}

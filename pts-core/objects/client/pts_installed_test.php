@@ -37,7 +37,7 @@ class pts_installed_test
 	private $compiler_data = null;
 	private $install_footnote = null;
 	private $install_checksum = null;
-	private $system_identifier = null;
+	private $system_hash = null;
 	private $associated_test_identifier = null;
 
 	public function __construct(&$test_profile)
@@ -59,7 +59,7 @@ class pts_installed_test
 			$this->compiler_data = isset($xml->TestInstallation->Environment->CompilerData) ? json_decode($xml->TestInstallation->Environment->CompilerData->__toString(), true) : null;
 			$this->install_footnote = isset($xml->TestInstallation->Environment->InstallFootnote) ? $xml->TestInstallation->Environment->InstallFootnote->__toString() : null;
 			$this->install_checksum = isset($xml->TestInstallation->Environment->CheckSum) ? $xml->TestInstallation->Environment->CheckSum->__toString() : null;
-			$this->system_identifier = isset($xml->TestInstallation->Environment->SystemIdentifier) ? $xml->TestInstallation->Environment->SystemIdentifier->__toString() : null;
+			$this->system_hash = isset($xml->TestInstallation->Environment->SystemIdentifier) ? $xml->TestInstallation->Environment->SystemIdentifier->__toString() : null;
 			$this->associated_test_identifier = isset($xml->TestInstallation->Environment->Identifier) ? $xml->TestInstallation->Environment->Identifier->__toString() : null;
 		}
 	}
@@ -131,9 +131,9 @@ class pts_installed_test
 	{
 		return $this->install_checksum;
 	}
-	public function get_installed_system_identifier()
+	public function get_system_hash()
 	{
-		return $this->system_identifier;
+		return $this->system_hash;
 	}
 	public function get_install_size()
 	{
@@ -161,7 +161,7 @@ class pts_installed_test
 
 		if(empty($this->average_runtime))
 		{
-			$this->average_runtime = $t;
+			$this->average_runtime = ceil($t);
 		}
 		else
 		{
@@ -178,12 +178,30 @@ class pts_installed_test
 		$this->associated_test_identifier = $test_profile->get_identifier();
 		$this->installed_version = $test_profile->get_test_profile_version();
 		$this->install_checksum = $test_profile->get_installer_checksum();
-		$this->system_identifier = phodevi::system_id_string();
+		$this->system_hash = phodevi::system_id_string();
 		$this->install_date_time = date('Y-m-d H:i:s');
 	}
 	public function save_test_install_metadata()
 	{
 		// Refresh/generate an PTS install file
+
+		// JSON output
+
+		$to_json = array();
+		$to_json['test_installation']['environment']['test_identifier'] = $this->get_associated_test_identifier();
+		$to_json['test_installation']['environment']['test_version'] = $this->get_installed_version();
+		$to_json['test_installation']['environment']['install_checksum'] = $this->get_installed_checksum();
+		$to_json['test_installation']['environment']['system_hash'] = $this->get_system_hash();
+		$to_json['test_installation']['environment']['compiler_data'] = $this->get_compiler_data();
+		$to_json['test_installation']['environment']['install_footnote'] = $this->get_install_footnote();
+		$to_json['test_installation']['history']['install_date_time'] = $this->get_install_date_time();
+		$to_json['test_installation']['history']['install_time_length'] = $this->get_latest_install_time();
+		$to_json['test_installation']['history']['times_run'] = $this->get_run_count();
+		$to_json['test_installation']['history']['last_run_date_time'] = $this->get_last_run_date_time();
+		$to_json['test_installation']['history']['average_runtime'] = $this->get_average_run_time();
+		$to_json['test_installation']['history']['latest_runtime'] = $this->get_latest_run_time();
+		file_put_contents($this->install_path . 'pts-install.json', json_encode($to_json, JSON_PRETTY_PRINT));
+
 		// The pts-install.xml XML file is traditionally how PTS install metadata was installed...
 		// With PTS 10.2, JSON is preferred for storing the data more easily
 		// But continue generating the install XML for backwards compatibility and for parts of PTS checking for 'pts-install.xml' to determine if test installed, etc.
@@ -196,7 +214,7 @@ class pts_installed_test
 		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/CheckSum', $this->get_installed_checksum());
 		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/CompilerData', json_encode($this->get_compiler_data()));
 		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/InstallFootnote', $this->get_install_footnote());
-		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/SystemIdentifier', $this->get_installed_system_identifier());
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/SystemIdentifier', $this->get_system_hash());
 		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/InstallTime', $this->get_install_date_time());
 		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/InstallTimeLength', $this->get_latest_install_time());
 		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/LastRunTime', $this->get_last_run_date_time());
