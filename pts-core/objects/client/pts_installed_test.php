@@ -22,7 +22,6 @@
 
 class pts_installed_test
 {
-	private $xml;
 	private $footnote_override = null;
 	private $install_path = null;
 	private $installed = false;
@@ -208,7 +207,7 @@ class pts_installed_test
 		// But PTS 10.2+ will use the data actually stored in the JSON file....
 		// TODO XXX PTS 11.0 or so drop the pts-install.xml and use just pts-install.json
 
-		$xml_writer = new nye_XmlWriter('file://' . PTS_USER_PATH . 'xsl/' . 'pts-test-installation-viewer.xsl');
+		$xml_writer = new nye_XmlWriter();
 		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/Identifier', $this->get_associated_test_identifier());
 		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/Version', $this->get_installed_version());
 		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/CheckSum', $this->get_installed_checksum());

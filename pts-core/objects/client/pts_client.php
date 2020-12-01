@@ -236,12 +236,6 @@ class pts_client
 			}
 		}
 
-		// Setup ~/.phoronix-test-suite/xsl/
-		pts_file_io::mkdir(PTS_USER_PATH . 'xsl/');
-		copy(PTS_CORE_STATIC_PATH . 'xsl/pts-test-installation-viewer.xsl', PTS_USER_PATH . 'xsl/' . 'pts-test-installation-viewer.xsl');
-		copy(PTS_CORE_STATIC_PATH . 'xsl/pts-user-config-viewer.xsl', PTS_USER_PATH . 'xsl/' . 'pts-user-config-viewer.xsl');
-		copy(PTS_CORE_STATIC_PATH . 'images/pts-308x160.png', PTS_USER_PATH . 'xsl/' . 'pts-logo.png');
-
 		// pts_compatibility ops here
 
 		pts_client::init_display_mode();

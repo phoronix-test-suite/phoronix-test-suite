@@ -98,7 +98,7 @@ class pts_config
 		// Validate the config files, update them (or write them) if needed, and other configuration file tasks
 
 		$read_config = new pts_config_nye_XmlReader($new_config_values, self::get_override_default_config());
-		$config = new nye_XmlWriter('xsl/pts-user-config-viewer.xsl');
+		$config = new nye_XmlWriter();
 
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/OpenBenchmarking/AnonymousUsageReporting', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/OpenBenchmarking/IndexCacheTTL', $read_config);
