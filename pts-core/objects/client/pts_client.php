@@ -1559,7 +1559,7 @@ class pts_client
 					}
 
 					echo PHP_EOL . pts_client::cli_just_bold('CORRECT SYNTAX:') . PHP_EOL . 'phoronix-test-suite ' . str_replace('_', '-', $command_alias) . ' ' . pts_client::cli_just_italic(implode(' ', $argument_checks)) . PHP_EOL . PHP_EOL;
-					pts_tests::invalid_command_helper($pass_args, $argument_checks);
+					pts_client::invalid_command_helper($pass_args, $argument_checks);
 
 					return false;
 				}
@@ -1598,6 +1598,155 @@ class pts_client
 		echo PHP_EOL;
 
 		pts_module_manager::module_process('__post_option_process', $command);
+	}
+	public static function invalid_command_helper($passed_args, &$argument_checks)
+	{
+		$supports_passing_a_test = false;
+		foreach($argument_checks as $check)
+		{
+			if($check->get_function_check_type() == 'Test' || strpos($check->get_function_check_type(), 'Test |') !== false)
+			{
+				$supports_passing_a_test = true;
+			}
+		}
+
+		$showed_recent_results = pts_tests::recently_saved_results();
+
+		if($supports_passing_a_test)
+		{
+			$tests_to_show = array_keys(pts_openbenchmarking_client::new_and_recently_updated_tests(14, 31, true));
+			$tests_to_show_title = 'New Tests';
+
+			if(count($tests_to_show) < 3)
+			{
+				$tests_to_show = array_keys(pts_openbenchmarking_client::new_and_recently_updated_tests(14, 31));
+				$tests_to_show_title = 'New + Updated Tests';
+			}
+
+			if(count($tests_to_show) < 3)
+			{
+				$tests_to_show = array_keys(pts_openbenchmarking_client::most_popular_tests(20));
+				$tests_to_show_title = 'Popular Tests';
+			}
+
+			if(count($tests_to_show) > 3)
+			{
+				$longest_test = strlen(pts_strings::find_longest_string($tests_to_show)) + 3;
+				$terminal_width = pts_client::terminal_width();
+				$tests_per_line = floor($terminal_width / $longest_test);
+				shuffle($tests_to_show);
+				$tests_to_show = array_slice($tests_to_show, 0, min(count($tests_to_show), $tests_per_line * 2 -1));
+
+				echo pts_client::cli_just_bold($tests_to_show_title . ':') . PHP_EOL;
+				$i = 0;
+				foreach($tests_to_show as $test)
+				{
+					if($i % $tests_per_line == 0)
+					{
+						echo '   ';
+					}
+					echo $test . str_repeat(' ', $longest_test - strlen($test));
+
+					$i++;
+					if($i % $tests_per_line == 0 || $i == count($tests_to_show))
+					{
+						echo PHP_EOL;
+					}
+				}
+			}
+		}
+
+		if(count($result_uploads = pts_openbenchmarking::result_uploads_from_this_ip()) > 0)
+		{
+			echo PHP_EOL . pts_client::cli_just_bold('Recent OpenBenchmarking.org Results From This IP:') . PHP_EOL;
+			$t = array();
+			foreach($result_uploads as $id => $title)
+			{
+				$t[] = array(pts_client::cli_colored_text($id, 'gray', true), $title);
+
+				if(count($t) == 5)
+				{
+					break;
+				}
+			}
+			echo pts_user_io::display_text_table($t, '   ') . PHP_EOL . PHP_EOL;
+		}
+
+		$similar_tests = array();
+		if(!empty($passed_args))
+		{
+			foreach(pts_arrays::to_array($passed_args) as $passed_arg)
+			{
+				$arg_soundex = soundex($passed_arg);
+				$arg_save_identifier_like = pts_test_run_manager::clean_save_name($passed_arg);
+
+				foreach(pts_openbenchmarking::linked_repositories() as $repo)
+				{
+					$repo_index = pts_openbenchmarking::read_repository_index($repo);
+
+					foreach(array('tests', 'suites') as $type)
+					{
+						if(isset($repo_index[$type]) && is_array($repo_index[$type]))
+						{
+							foreach(array_keys($repo_index[$type]) as $identifier)
+							{
+								if(soundex($identifier) == $arg_soundex)
+								{
+									pts_arrays::unique_push($similar_tests, array($identifier, ' [' . ucwords(substr($type, 0, -1)) . ']'));
+								}
+								else if(isset($passed_arg[3]) && strpos($identifier, $passed_arg) !== false)
+								{
+									pts_arrays::unique_push($similar_tests, array($identifier, ' [' . ucwords(substr($type, 0, -1)) . ']'));
+								}
+							}
+						}
+					}
+				}
+
+				foreach(pts_results::saved_test_results() as $result)
+				{
+					if(soundex($result) == $arg_soundex || (isset($passed_arg[3]) && strpos($identifier, $arg_save_identifier_like) !== false))
+					{
+						pts_arrays::unique_push($similar_tests, array($result, ' [Test Result]'));
+					}
+				}
+
+				if(strpos($passed_arg, '-') !== false)
+				{
+					$possible_identifier = str_replace('-', '', $passed_arg);
+					if(pts_test_profile::is_test_profile($possible_identifier))
+					{
+						pts_arrays::unique_push($similar_tests, array($possible_identifier, ' [Test]'));
+					}
+				}
+				if($passed_arg != ($possible_identifier = strtolower($passed_arg)))
+				{
+					if(pts_test_profile::is_test_profile($possible_identifier))
+					{
+						pts_arrays::unique_push($similar_tests, array($possible_identifier, ' [Test]'));
+					}
+				}
+			}
+		}
+		if(count($similar_tests) > 0)
+		{
+			echo pts_client::cli_just_bold('Possible Suggestions:') . PHP_EOL;
+			//$similar_tests = array_unique($similar_tests);
+			if(isset($similar_tests[12]))
+			{
+				// lots of tests... trim it down
+				$similar_tests = array_rand($similar_tests, 12);
+			}
+			echo pts_user_io::display_text_table($similar_tests, '- ') . PHP_EOL . PHP_EOL;
+		}
+
+		if($showed_recent_results == false)
+		{
+			echo 'See available tests to run by visiting OpenBenchmarking.org or running:' . PHP_EOL . PHP_EOL;
+			echo '    phoronix-test-suite list-tests' . PHP_EOL . PHP_EOL;
+			echo 'Tests can be installed by running:' . PHP_EOL . PHP_EOL;
+			echo '    phoronix-test-suite install <test-name>' . PHP_EOL . PHP_EOL;
+		}
 	}
 	public static function get_sent_command()
 	{
