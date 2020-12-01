@@ -301,6 +301,26 @@ class phodevi_cpu extends phodevi_device_interface
 			$scaling_governor .= pts_file_io::file_get_contents('/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor');
 		}
 
+		if(!empty($scaling_governor) && is_file('/sys/devices/system/cpu/cpufreq/boost'))
+		{
+
+			$boost = pts_file_io::file_get_contents('/sys/devices/system/cpu/cpufreq/boost');
+			$boosted = null;
+
+			if($boost === '0')
+			{
+				$boosted = 'Disabled';
+			}
+			else if($boost === '1')
+			{
+				$boosted = 'Enabled';
+			}
+			if($boosted != null)
+			{
+				$scaling_governor = trim($scaling_governor) . ' (Boost: ' . $boosted . ')';
+			}
+		}
+
 		return trim($scaling_governor);
 	}
 	public static function cpu_smt()
