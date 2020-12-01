@@ -666,7 +666,7 @@ class pts_test_execution
 		$report_elapsed_time = $cache_share_present == false && $times_result_produced > 0; // XXX maybe add: && $test_run_request->test_profile->get_default_times_to_run() == $test_run_request->test_profile->get_times_to_run()
 		if($report_elapsed_time)
 		{
-			$test_run_request->test_profile->test_installation->add_latest_run_time($time_test_elapsed);
+			$test_run_request->test_profile->test_installation->add_latest_run_time($test_run_request, $time_test_elapsed);
 		}
 		$test_run_request->test_profile->test_installation->save_test_install_metadata();
 		pts_storage_object::add_in_file(PTS_CORE_STORAGE, 'total_testing_time', ($time_test_elapsed / 60));

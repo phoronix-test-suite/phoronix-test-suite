@@ -38,6 +38,7 @@ class pts_installed_test
 	private $install_checksum = null;
 	private $system_hash = null;
 	private $associated_test_identifier = null;
+	private $run_times = null;
 
 	public function __construct(&$test_profile)
 	{
@@ -53,6 +54,7 @@ class pts_installed_test
 			$this->last_runtime = isset($jsonf['test_installation']['history']['latest_runtime']) ? $jsonf['test_installation']['history']['latest_runtime'] : null;
 			$this->last_install_time = isset($jsonf['test_installation']['history']['install_time_length']) ? $jsonf['test_installation']['history']['install_time_length'] : null;
 			$this->times_run = isset($jsonf['test_installation']['history']['times_run']) ? $jsonf['test_installation']['history']['times_run'] : 0;
+			$this->run_times = isset($jsonf['test_installation']['history']['run_times']) ? $jsonf['test_installation']['history']['run_times'] : array();
 			$this->compiler_data = isset($jsonf['test_installation']['environment']['compiler_data']) ? $jsonf['test_installation']['environment']['compiler_data'] : null;
 			$this->install_footnote = isset($jsonf['test_installation']['environment']['install_footnote']) ? $jsonf['test_installation']['environment']['install_footnote'] : null;
 			$this->install_checksum = isset($jsonf['test_installation']['environment']['install_checksum']) ? $jsonf['test_installation']['environment']['install_checksum'] : null;
@@ -123,6 +125,10 @@ class pts_installed_test
 	{
 		return $this->last_runtime;
 	}
+	public function get_run_times()
+	{
+		return $this->run_times;
+	}
 	public function get_latest_install_time()
 	{
 		return $this->last_install_time;
@@ -171,7 +177,7 @@ class pts_installed_test
 	{
 		$this->last_install_time = ceil($t);
 	}
-	public function add_latest_run_time($t)
+	public function add_latest_run_time(&$test_result_obj, $t)
 	{
 		$this->last_runtime = ceil($t);
 
@@ -186,6 +192,25 @@ class pts_installed_test
 		}
 		$this->times_run++;
 		$this->last_run_date_time = date('Y-m-d H:i:s');
+		$this->add_to_run_times($this->run_times, 'all', $this->last_runtime);
+		$this->add_to_run_times($this->run_times, $test_result_obj->get_comparison_hash(true, false), $this->last_runtime);
+	}
+	protected function add_to_run_times(&$run_times, $index, $value)
+	{
+		if(!isset($run_times[$index]))
+		{
+			$run_times[$index] = array();
+			$run_times[$index]['values'] = array();
+			$run_times[$index]['total_times'] = 0;
+		}
+
+		$run_times[$index]['total_times']++;
+		array_unshift($run_times[$index]['values'], $value);
+
+		if(isset($run_times[$index]['values'][30]))
+		{
+			$run_times[$index]['values'] = array_slice($run_times[$index]['values'], 0, 30);
+		}
 	}
 	public function update_install_data(&$test_profile, $compiler_data, $install_footnote)
 	{
@@ -216,6 +241,7 @@ class pts_installed_test
 		$to_json['test_installation']['history']['last_run_date_time'] = $this->get_last_run_date_time();
 		$to_json['test_installation']['history']['average_runtime'] = $this->get_average_run_time();
 		$to_json['test_installation']['history']['latest_runtime'] = $this->get_latest_run_time();
+		$to_json['test_installation']['history']['run_times'] = $this->get_run_times();
 		file_put_contents($this->install_path . 'pts-install.json', json_encode($to_json, JSON_PRETTY_PRINT));
 
 		// The pts-install.xml XML file is traditionally how PTS install metadata was installed...
