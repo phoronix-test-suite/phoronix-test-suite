@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2018, Phoronix Media
-	Copyright (C) 2009 - 2018, Michael Larabel
+	Copyright (C) 2009 - 2020, Phoronix Media
+	Copyright (C) 2009 - 2020, Michael Larabel
 	pts_concise_display_mode.php: The batch / concise display mode
 
 	This program is free software; you can redistribute it and/or modify
@@ -311,7 +311,7 @@ class pts_web_display_mode implements pts_display_mode_interface
 		$this->trial_run_count_current = 0;
 		$this->expected_trial_run_count = $test_result->test_profile->get_times_to_run();
 		$remaining_length = $test_run_manager->get_estimated_run_time();
-		$estimated_length = $test_result->test_profile->get_estimated_run_time();
+		$estimated_length = $test_result->get_estimated_run_time();
 		$display_table = array();
 
 		array_push($display_table, array($this->tab . 'Estimated Trial Run Count:', $this->expected_trial_run_count));

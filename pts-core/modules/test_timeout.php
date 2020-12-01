@@ -57,7 +57,7 @@ class test_timeout extends pts_module_interface
 	}
 	public static function __pre_test_run(&$test_run_request)
 	{
-		self::$current_test_estimated_run_time = $test_run_request->test_profile->get_estimated_run_time();
+		self::$current_test_estimated_run_time = $test_run_request->get_estimated_run_time();
 	}
 	public static function check_for_processes_to_kill()
 	{

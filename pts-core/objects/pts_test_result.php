@@ -52,6 +52,10 @@ class pts_test_result
 		$this->result = 0;
 		$this->test_run_times = array();
 	}
+	public function get_estimated_run_time()
+	{
+		return $this->test_profile->get_estimated_run_time();
+	}
 	public function __clone()
 	{
 		$this->test_profile = clone $this->test_profile;

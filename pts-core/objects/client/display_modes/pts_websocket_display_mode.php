@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2018, Phoronix Media
-	Copyright (C) 2009 - 2018, Michael Larabel
+	Copyright (C) 2009 - 2020, Phoronix Media
+	Copyright (C) 2009 - 2020, Michael Larabel
 	pts_concise_display_mode.php: The batch / concise display mode
 
 	This program is free software; you can redistribute it and/or modify
@@ -118,7 +118,7 @@ class pts_websocket_display_mode implements pts_display_mode_interface
 		// CURRENT RUN QUEUE
 		//$j['pts']['msg']['test_run_pos'] = $this->trial_run_count_current;
 		//$j['pts']['msg']['test_run_total'] = $this->expected_trial_run_count;
-		//$j['pts']['msg']['test_run_estimated_time'] = $test_result->test_profile->get_estimated_run_time();
+		//$j['pts']['msg']['test_run_estimated_time'] = $test_result->get_estimated_run_time();
 
 		// TOTAL QUEUE
 		$j['pts']['msg']['test_install_pos'] = $this->test_install_pos;
@@ -340,12 +340,12 @@ class pts_websocket_display_mode implements pts_display_mode_interface
 		// CURRENT RUN QUEUE
 		$j['pts']['msg']['test_run_pos'] = $this->trial_run_count_current;
 		$j['pts']['msg']['test_run_total'] = $this->expected_trial_run_count;
-		$j['pts']['msg']['test_run_estimated_time'] = $test_result->test_profile->get_estimated_run_time();
+		$j['pts']['msg']['test_run_estimated_time'] = $test_result->get_estimated_run_time();
 
 		if($j['pts']['msg']['test_run_pos'] > $j['pts']['msg']['test_run_total'])
 		{
 			// Don't let the run_pos go over run_total so instead dynamically increase run total and try to roughly compensate for increased dynamic run count
-			$j['pts']['msg']['test_run_estimated_time'] = ($test_result->test_profile->get_estimated_run_time() / $j['pts']['msg']['test_run_total']) * ($j['pts']['msg']['test_run_pos'] + 2);
+			$j['pts']['msg']['test_run_estimated_time'] = ($test_result->get_estimated_run_time() / $j['pts']['msg']['test_run_total']) * ($j['pts']['msg']['test_run_pos'] + 2);
 			$j['pts']['msg']['test_run_total'] = $j['pts']['msg']['test_run_pos'] + 1;
 		}
 
