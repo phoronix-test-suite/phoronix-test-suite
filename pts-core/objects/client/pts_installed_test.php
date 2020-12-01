@@ -38,6 +38,7 @@ class pts_installed_test
 	private $install_footnote = null;
 	private $install_checksum = null;
 	private $system_identifier = null;
+	private $associated_test_identifier = null;
 
 	public function __construct(&$test_profile)
 	{
@@ -59,6 +60,7 @@ class pts_installed_test
 			$this->install_footnote = isset($xml->TestInstallation->Environment->InstallFootnote) ? $xml->TestInstallation->Environment->InstallFootnote->__toString() : null;
 			$this->install_checksum = isset($xml->TestInstallation->Environment->CheckSum) ? $xml->TestInstallation->Environment->CheckSum->__toString() : null;
 			$this->system_identifier = isset($xml->TestInstallation->Environment->SystemIdentifier) ? $xml->TestInstallation->Environment->SystemIdentifier->__toString() : null;
+			$this->associated_test_identifier = isset($xml->TestInstallation->Environment->Identifier) ? $xml->TestInstallation->Environment->Identifier->__toString() : null;
 		}
 	}
 	public function is_installed()
@@ -68,6 +70,10 @@ class pts_installed_test
 	public function get_install_log_location()
 	{
 		return $this->install_path . 'install.log';
+	}
+	public function get_associated_test_identifier()
+	{
+		return $this->associated_test_identifier;
 	}
 	public function has_install_log()
 	{
@@ -87,7 +93,7 @@ class pts_installed_test
 	}
 	public function get_last_run_date()
 	{
-		return substr($this->get_install_date_time(), 0, 10);
+		return substr($this->get_last_run_date_time(), 0, 10);
 	}
 	public function get_installed_version()
 	{
@@ -144,6 +150,54 @@ class pts_installed_test
 		}
 
 		return $install_size;
+	}
+	public function update_install_time($t)
+	{
+		$this->last_install_time = ceil($t);
+	}
+	public function add_latest_run_time($t)
+	{
+		$this->last_runtime = ceil($t);
+
+		if(empty($this->average_runtime))
+		{
+			$this->average_runtime = $t;
+		}
+		else
+		{
+			// Yeah this isn't the true average, but once rework is complete allow for more easily storing all the run-times... XXX
+			$this->average_runtime = ceil((($this->get_average_run_time() * $this->get_run_count()) + $t) / ($this->get_run_count() + 1));
+		}
+		$this->times_run++;
+		$this->last_run_date_time = date('Y-m-d H:i:s');
+	}
+	public function update_install_data(&$test_profile, $compiler_data, $install_footnote)
+	{
+		$this->compiler_data = $compiler_data;
+		$this->install_footnote = $install_footnote;
+		$this->associated_test_identifier = $test_profile->get_identifier();
+		$this->installed_version = $test_profile->get_test_profile_version();
+		$this->install_checksum = $test_profile->get_installer_checksum();
+		$this->system_identifier = phodevi::system_id_string();
+		$this->install_date_time = date('Y-m-d H:i:s');
+	}
+	public function save_test_install_metadata()
+	{
+		// Refresh/generate an install XML for pts-install.xml
+		$xml_writer = new nye_XmlWriter('file://' . PTS_USER_PATH . 'xsl/' . 'pts-test-installation-viewer.xsl');
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/Identifier', $this->get_associated_test_identifier());
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/Version', $this->get_installed_version());
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/CheckSum', $this->get_installed_checksum());
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/CompilerData', json_encode($this->get_compiler_data()));
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/InstallFootnote', $this->get_install_footnote());
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/SystemIdentifier', $this->get_installed_system_identifier());
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/InstallTime', $this->get_install_date_time());
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/InstallTimeLength', $this->get_latest_install_time());
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/LastRunTime', $this->get_last_run_date_time());
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/TimesRun', $this->get_run_count());
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/AverageRunTime', $this->get_average_run_time());
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/LatestRunTime', $this->get_latest_run_time());
+		$xml_writer->saveXMLFile($this->install_path . 'pts-install.xml');
 	}
 }
 

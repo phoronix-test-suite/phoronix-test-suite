@@ -152,10 +152,10 @@ class pts_test_installer
 
 			if($installed)
 			{
-				if(pts_client::do_anonymous_usage_reporting() && $test_install_request->install_time_duration > 0)
+				if(pts_client::do_anonymous_usage_reporting() && $test_install_request->test_profile->test_installation->get_latest_install_time() > 0)
 				{
 					// If anonymous usage reporting enabled, report install time to OpenBenchmarking.org
-					pts_openbenchmarking_client::upload_usage_data('test_install', array($test_install_request, $test_install_request->install_time_duration));
+					pts_openbenchmarking_client::upload_usage_data('test_install', array($test_install_request, $test_install_request->test_profile->test_installation->get_latest_install_time()));
 				}
 
 				$install_footnote = null;
@@ -164,7 +164,8 @@ class pts_test_installer
 					$install_footnote = pts_file_io::file_get_contents($test_install_request->special_environment_vars['INSTALL_FOOTNOTE']);
 				}
 
-				pts_tests::update_test_install_xml($test_install_request->test_profile, $test_install_request->install_time_duration, true, $compiler_data, $install_footnote);
+				$test_install_request->test_profile->test_installation->update_install_data($test_install_request->test_profile, $compiler_data, $install_footnote);
+				$test_install_request->test_profile->test_installation->save_test_install_metadata();
 				$test_profiles[] = $test_install_request->test_profile;
 			}
 			else
@@ -847,7 +848,7 @@ class pts_test_installer
 				pts_client::$display->display_interrupt_message($pre_install_message);
 				$install_time_length_start = microtime(true);
 				$install_log = pts_tests::call_test_script($test_install_request->test_profile, 'install', null, '"' . $test_install_directory . '"', $test_install_request->special_environment_vars, false, $no_prompts);
-				$test_install_request->install_time_duration = microtime(true) - $install_time_length_start;
+				$test_install_request->test_profile->test_installation->update_install_time(microtime(true) - $install_time_length_start);
 				pts_client::$display->display_interrupt_message($post_install_message);
 
 				if(!empty($install_log))
