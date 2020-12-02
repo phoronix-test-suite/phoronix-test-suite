@@ -29,6 +29,7 @@ class test_timeout extends pts_module_interface
 
 	protected static $timeout_after_mins = 'auto';
 	protected static $current_test_estimated_run_time;
+	protected static $current_test_estimated_run_accuracy;
 	public static function module_environmental_variables()
 	{
 		return array('TEST_TIMEOUT_AFTER');
@@ -57,7 +58,8 @@ class test_timeout extends pts_module_interface
 	}
 	public static function __pre_test_run(&$test_run_request)
 	{
-		self::$current_test_estimated_run_time = $test_run_request->get_estimated_run_time();
+		self::$current_test_estimated_run_accuracy = 0;
+		self::$current_test_estimated_run_time = $test_run_request->get_estimated_per_run_time(self::$current_test_estimated_run_accuracy);
 	}
 	public static function check_for_processes_to_kill()
 	{
@@ -96,7 +98,8 @@ class test_timeout extends pts_module_interface
 		{
 			if(self::$current_test_estimated_run_time > 0)
 			{
-				$time_to_allow = self::$current_test_estimated_run_time * 3;
+				// use 3x time if previously run, 6x time otherwise if generic estimate....
+				$time_to_allow = self::$current_test_estimated_run_time * (self::$current_test_estimated_run_accuracy == 1 ? 3 : 6);
 			}
 			else
 			{

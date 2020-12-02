@@ -233,8 +233,12 @@ class pts_installed_test
 			$per_run_avg = ceil(array_sum($individual_run_times) / count($individual_run_times));
 			$this->add_to_run_times($this->per_run_times, 'all', $per_run_avg);
 			$this->add_to_run_times($this->per_run_times, $test_result_obj->get_comparison_hash(true, false), $per_run_avg, $test_result_obj->get_arguments_description());
-			$this->average_runtime = $this->per_run_times['all']['avg'] * $test_result_obj->test_profile->get_default_times_to_run();
+			$this->average_runtime = $this->get_average_time_per_run('all') * $test_result_obj->test_profile->get_default_times_to_run();
 		}
+	}
+	public function get_average_time_per_run($index, $fallback_value = 0)
+	{
+		return isset($this->per_run_times[$index]['avg']) && $this->per_run_times[$index]['avg'] > 0 ? $this->per_run_times[$index]['avg'] : $fallback_value;
 	}
 	protected function add_to_run_times(&$run_times, $index, $value, $description = null)
 	{

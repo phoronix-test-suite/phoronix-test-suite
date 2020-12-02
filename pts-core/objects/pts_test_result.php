@@ -54,7 +54,29 @@ class pts_test_result
 	}
 	public function get_estimated_run_time()
 	{
-		return $this->test_profile->get_estimated_run_time();
+		// More accurate time tracking than just test_profile->get_estimated_run_time() ....
+		return $this->get_estimated_per_run_time() * $this->test_profile->get_times_to_run();
+	}
+	public function get_estimated_per_run_time(&$accuracy = 0)
+	{
+		$per_run_time = 0;
+		if(($t = $this->test_profile->test_installation->get_average_time_per_run($this->get_comparison_hash(true, false))) > 0)
+		{
+			$accuracy = 1;
+			$per_run_time = $t;
+		}
+		else if(($t = $this->test_profile->test_installation->get_average_time_per_run('avg')) > 0)
+		{
+			$accuracy = 0;
+			$per_run_time = $t;
+		}
+		else
+		{
+			$accuracy = 0;
+			$per_run_time = $this->test_profile->get_estimated_run_time() / $this->test_profile->get_default_times_to_run();
+		}
+
+		return round($per_run_time);
 	}
 	public function __clone()
 	{
