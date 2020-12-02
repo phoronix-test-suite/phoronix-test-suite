@@ -64,6 +64,7 @@ class pts_installed_test
 		else if(is_file($this->install_path . 'pts-install.xml'))
 		{
 			// Fallback to pre PTS 10.2 XML based data
+			// Around PTS11 this path will likely be dropped....
 			$this->installed = true;
 			$xml_options = LIBXML_COMPACT | LIBXML_PARSEHUGE;
 			$xml = simplexml_load_file($this->install_path . 'pts-install.xml', 'SimpleXMLElement', $xml_options);
@@ -80,6 +81,49 @@ class pts_installed_test
 			$this->system_hash = isset($xml->TestInstallation->Environment->SystemIdentifier) ? $xml->TestInstallation->Environment->SystemIdentifier->__toString() : null;
 			$this->associated_test_identifier = isset($xml->TestInstallation->Environment->Identifier) ? $xml->TestInstallation->Environment->Identifier->__toString() : null;
 		}
+	}
+	public function save_test_install_metadata()
+	{
+		// Refresh/generate an PTS install file
+
+		// JSON output
+
+		$to_json = array();
+		$to_json['test_installation']['environment']['test_identifier'] = $this->get_associated_test_identifier();
+		$to_json['test_installation']['environment']['test_version'] = $this->get_installed_version();
+		$to_json['test_installation']['environment']['install_checksum'] = $this->get_installed_checksum();
+		$to_json['test_installation']['environment']['system_hash'] = $this->get_system_hash();
+		$to_json['test_installation']['environment']['compiler_data'] = $this->get_compiler_data();
+		$to_json['test_installation']['environment']['install_footnote'] = $this->get_install_footnote();
+		$to_json['test_installation']['history']['install_date_time'] = $this->get_install_date_time();
+		$to_json['test_installation']['history']['last_run_date_time'] = $this->get_last_run_date_time();
+		$to_json['test_installation']['history']['install_time_length'] = $this->get_latest_install_time();
+		$to_json['test_installation']['history']['times_run'] = $this->get_run_count();
+		$to_json['test_installation']['history']['average_runtime'] = $this->get_average_run_time();
+		$to_json['test_installation']['history']['latest_runtime'] = $this->get_latest_run_time();
+		$to_json['test_installation']['history']['run_times'] = $this->get_run_times();
+		file_put_contents($this->install_path . 'pts-install.json', json_encode($to_json, JSON_PRETTY_PRINT));
+
+		// The pts-install.xml XML file is traditionally how PTS install metadata was installed...
+		// With PTS 10.2, JSON is preferred for storing the data more easily
+		// But continue generating the install XML for backwards compatibility and for parts of PTS checking for 'pts-install.xml' to determine if test installed, etc.
+		// But PTS 10.2+ will use the data actually stored in the JSON file....
+		// TODO XXX PTS 11.0 or so drop the pts-install.xml and use just pts-install.json
+
+		$xml_writer = new nye_XmlWriter();
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/Identifier', $this->get_associated_test_identifier());
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/Version', $this->get_installed_version());
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/CheckSum', $this->get_installed_checksum());
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/CompilerData', json_encode($this->get_compiler_data()));
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/InstallFootnote', $this->get_install_footnote());
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/SystemIdentifier', $this->get_system_hash());
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/InstallTime', $this->get_install_date_time());
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/InstallTimeLength', $this->get_latest_install_time());
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/LastRunTime', $this->get_last_run_date_time());
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/TimesRun', $this->get_run_count());
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/AverageRunTime', $this->get_average_run_time());
+		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/LatestRunTime', $this->get_latest_run_time());
+		$xml_writer->saveXMLFile($this->install_path . 'pts-install.xml');
 	}
 	public function is_installed()
 	{
@@ -180,28 +224,24 @@ class pts_installed_test
 	public function add_latest_run_time(&$test_result_obj, $t)
 	{
 		$this->last_runtime = ceil($t);
-
-		if(empty($this->average_runtime))
-		{
-			$this->average_runtime = ceil($t);
-		}
-		else
-		{
-			// Yeah this isn't the true average, but once rework is complete allow for more easily storing all the run-times... XXX
-			$this->average_runtime = ceil((($this->get_average_run_time() * $this->get_run_count()) + $t) / ($this->get_run_count() + 1));
-		}
 		$this->times_run++;
 		$this->last_run_date_time = date('Y-m-d H:i:s');
 		$this->add_to_run_times($this->run_times, 'all', $this->last_runtime);
-		$this->add_to_run_times($this->run_times, $test_result_obj->get_comparison_hash(true, false), $this->last_runtime);
+		$this->add_to_run_times($this->run_times, $test_result_obj->get_comparison_hash(true, false), $this->last_runtime, $test_result_obj->get_arguments_description());
+		$this->average_runtime = $this->run_times['all']['avg'];
 	}
-	protected function add_to_run_times(&$run_times, $index, $value)
+	protected function add_to_run_times(&$run_times, $index, $value, $description = null)
 	{
 		if(!isset($run_times[$index]))
 		{
 			$run_times[$index] = array();
 			$run_times[$index]['values'] = array();
 			$run_times[$index]['total_times'] = 0;
+		}
+
+		if($description != null)
+		{
+			$run_times[$index]['desc'] = $description;
 		}
 
 		$run_times[$index]['total_times']++;
@@ -211,6 +251,7 @@ class pts_installed_test
 		{
 			$run_times[$index]['values'] = array_slice($run_times[$index]['values'], 0, 30);
 		}
+		$run_times[$index]['avg'] = ceil(array_sum($run_times[$index]['values']) / count($run_times[$index]['values']));
 	}
 	public function update_install_data(&$test_profile, $compiler_data, $install_footnote)
 	{
@@ -221,49 +262,6 @@ class pts_installed_test
 		$this->install_checksum = $test_profile->get_installer_checksum();
 		$this->system_hash = phodevi::system_id_string();
 		$this->install_date_time = date('Y-m-d H:i:s');
-	}
-	public function save_test_install_metadata()
-	{
-		// Refresh/generate an PTS install file
-
-		// JSON output
-
-		$to_json = array();
-		$to_json['test_installation']['environment']['test_identifier'] = $this->get_associated_test_identifier();
-		$to_json['test_installation']['environment']['test_version'] = $this->get_installed_version();
-		$to_json['test_installation']['environment']['install_checksum'] = $this->get_installed_checksum();
-		$to_json['test_installation']['environment']['system_hash'] = $this->get_system_hash();
-		$to_json['test_installation']['environment']['compiler_data'] = $this->get_compiler_data();
-		$to_json['test_installation']['environment']['install_footnote'] = $this->get_install_footnote();
-		$to_json['test_installation']['history']['install_date_time'] = $this->get_install_date_time();
-		$to_json['test_installation']['history']['install_time_length'] = $this->get_latest_install_time();
-		$to_json['test_installation']['history']['times_run'] = $this->get_run_count();
-		$to_json['test_installation']['history']['last_run_date_time'] = $this->get_last_run_date_time();
-		$to_json['test_installation']['history']['average_runtime'] = $this->get_average_run_time();
-		$to_json['test_installation']['history']['latest_runtime'] = $this->get_latest_run_time();
-		$to_json['test_installation']['history']['run_times'] = $this->get_run_times();
-		file_put_contents($this->install_path . 'pts-install.json', json_encode($to_json, JSON_PRETTY_PRINT));
-
-		// The pts-install.xml XML file is traditionally how PTS install metadata was installed...
-		// With PTS 10.2, JSON is preferred for storing the data more easily
-		// But continue generating the install XML for backwards compatibility and for parts of PTS checking for 'pts-install.xml' to determine if test installed, etc.
-		// But PTS 10.2+ will use the data actually stored in the JSON file....
-		// TODO XXX PTS 11.0 or so drop the pts-install.xml and use just pts-install.json
-
-		$xml_writer = new nye_XmlWriter();
-		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/Identifier', $this->get_associated_test_identifier());
-		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/Version', $this->get_installed_version());
-		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/CheckSum', $this->get_installed_checksum());
-		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/CompilerData', json_encode($this->get_compiler_data()));
-		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/InstallFootnote', $this->get_install_footnote());
-		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/SystemIdentifier', $this->get_system_hash());
-		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/InstallTime', $this->get_install_date_time());
-		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/InstallTimeLength', $this->get_latest_install_time());
-		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/LastRunTime', $this->get_last_run_date_time());
-		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/TimesRun', $this->get_run_count());
-		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/AverageRunTime', $this->get_average_run_time());
-		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/LatestRunTime', $this->get_latest_run_time());
-		$xml_writer->saveXMLFile($this->install_path . 'pts-install.xml');
 	}
 }
 
