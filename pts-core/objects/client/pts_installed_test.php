@@ -38,7 +38,7 @@ class pts_installed_test
 	private $install_checksum = null;
 	private $system_hash = null;
 	private $associated_test_identifier = null;
-	private $run_times = null;
+	private $per_run_times = null;
 
 	public function __construct(&$test_profile)
 	{
@@ -54,7 +54,7 @@ class pts_installed_test
 			$this->last_runtime = isset($jsonf['test_installation']['history']['latest_runtime']) ? $jsonf['test_installation']['history']['latest_runtime'] : null;
 			$this->last_install_time = isset($jsonf['test_installation']['history']['install_time_length']) ? $jsonf['test_installation']['history']['install_time_length'] : null;
 			$this->times_run = isset($jsonf['test_installation']['history']['times_run']) ? $jsonf['test_installation']['history']['times_run'] : 0;
-			$this->run_times = isset($jsonf['test_installation']['history']['run_times']) ? $jsonf['test_installation']['history']['run_times'] : array();
+			$this->per_run_times = isset($jsonf['test_installation']['history']['per_run_times']) ? $jsonf['test_installation']['history']['per_run_times'] : array();
 			$this->compiler_data = isset($jsonf['test_installation']['environment']['compiler_data']) ? $jsonf['test_installation']['environment']['compiler_data'] : null;
 			$this->install_footnote = isset($jsonf['test_installation']['environment']['install_footnote']) ? $jsonf['test_installation']['environment']['install_footnote'] : null;
 			$this->install_checksum = isset($jsonf['test_installation']['environment']['install_checksum']) ? $jsonf['test_installation']['environment']['install_checksum'] : null;
@@ -101,7 +101,7 @@ class pts_installed_test
 		$to_json['test_installation']['history']['times_run'] = $this->get_run_count();
 		$to_json['test_installation']['history']['average_runtime'] = $this->get_average_run_time();
 		$to_json['test_installation']['history']['latest_runtime'] = $this->get_latest_run_time();
-		$to_json['test_installation']['history']['run_times'] = $this->get_run_times();
+		$to_json['test_installation']['history']['per_run_times'] = $this->get_per_run_times();
 		file_put_contents($this->install_path . 'pts-install.json', json_encode($to_json, JSON_PRETTY_PRINT));
 
 		// The pts-install.xml XML file is traditionally how PTS install metadata was installed...
@@ -169,9 +169,9 @@ class pts_installed_test
 	{
 		return $this->last_runtime;
 	}
-	public function get_run_times()
+	public function get_per_run_times()
 	{
-		return $this->run_times;
+		return $this->per_run_times;
 	}
 	public function get_latest_install_time()
 	{
@@ -226,9 +226,15 @@ class pts_installed_test
 		$this->last_runtime = ceil($t);
 		$this->times_run++;
 		$this->last_run_date_time = date('Y-m-d H:i:s');
-		$this->add_to_run_times($this->run_times, 'all', $this->last_runtime);
-		$this->add_to_run_times($this->run_times, $test_result_obj->get_comparison_hash(true, false), $this->last_runtime, $test_result_obj->get_arguments_description());
-		$this->average_runtime = $this->run_times['all']['avg'];
+		$individual_run_times = $test_result_obj->test_run_times;
+
+		if(!empty($individual_run_times))
+		{
+			$per_run_avg = ceil(array_sum($individual_run_times) / count($individual_run_times));
+			$this->add_to_run_times($this->per_run_times, 'all', $per_run_avg);
+			$this->add_to_run_times($this->per_run_times, $test_result_obj->get_comparison_hash(true, false), $per_run_avg, $test_result_obj->get_arguments_description());
+			$this->average_runtime = $this->per_run_times['all']['avg'] * $test_result_obj->test_profile->get_default_times_to_run();
+		}
 	}
 	protected function add_to_run_times(&$run_times, $index, $value, $description = null)
 	{
@@ -247,9 +253,9 @@ class pts_installed_test
 		$run_times[$index]['total_times']++;
 		array_unshift($run_times[$index]['values'], $value);
 
-		if(isset($run_times[$index]['values'][30]))
+		if(isset($run_times[$index]['values'][20]))
 		{
-			$run_times[$index]['values'] = array_slice($run_times[$index]['values'], 0, 30);
+			$run_times[$index]['values'] = array_slice($run_times[$index]['values'], 0, 20);
 		}
 		$run_times[$index]['avg'] = ceil(array_sum($run_times[$index]['values']) / count($run_times[$index]['values']));
 	}
