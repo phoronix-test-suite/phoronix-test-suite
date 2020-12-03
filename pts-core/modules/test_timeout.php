@@ -89,7 +89,7 @@ class test_timeout extends pts_module_interface
 			if($estimated_run_time > 0)
 			{
 				// use 3x time if previously run, 6x time otherwise if generic estimate....
-				self::$time_to_allow_for_current_test = $estimated_run_time * ($estimated_run_accuracy == 1 ? 3 : 6);
+				self::$time_to_allow_for_current_test = $estimated_run_time * ($estimated_run_accuracy == 1 ? 3.5 : 6.5);
 			}
 		}
 		else if(is_numeric(self::$timeout_after_mins) && self::$timeout_after_mins > 0)
@@ -100,7 +100,7 @@ class test_timeout extends pts_module_interface
 		if(self::$time_to_allow_for_current_test > 0)
 		{
 			self::$time_to_allow_for_current_test = max(self::$time_to_allow_for_current_test, 180);
-			$test_run_request->pre_run_message = 'Test will timeout after ~' . pts_strings::format_time(self::$time_to_allow_for_current_test, 'SECONDS', true, 60) . ' if incomplete or hung.';
+			$test_run_request->pre_run_message = 'Test will timeout after ~' . strtolower(pts_strings::format_time(self::$time_to_allow_for_current_test, 'SECONDS', true, 60)) . ' if incomplete or hung.';
 		}
 	}
 	public static function __post_run_process()
