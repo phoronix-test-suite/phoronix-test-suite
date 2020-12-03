@@ -100,7 +100,7 @@ class test_timeout extends pts_module_interface
 		if(self::$time_to_allow_for_current_test > 0)
 		{
 			self::$time_to_allow_for_current_test = max(self::$time_to_allow_for_current_test, 180);
-			$test_run_request->pre_run_message = 'Test will timeout after ~' . strtolower(pts_strings::format_time(self::$time_to_allow_for_current_test, 'SECONDS', true, 60)) . ' for any run if incomplete/hung.';
+			$test_run_request->pre_run_message = 'Test will timeout after ~' . strtolower(pts_strings::format_time(self::$time_to_allow_for_current_test, 'SECONDS', true, 60)) . ' if any individual run incomplete/hung.';
 		}
 	}
 	public static function __post_run_process()
