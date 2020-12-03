@@ -72,7 +72,7 @@ class test_timeout extends pts_module_interface
 
 		if(isset($process_file[1]) && is_numeric($process_file[1]) && time() >= $process_file[1])
 		{
-			echo PHP_EOL . pts_client::cli_colored_text('        Killing test due to timer elapsed - possible hung process or other issue.', 'red', true);
+			echo PHP_EOL . pts_client::cli_colored_text('        Killing test due to timer elapsed - possible hung process / issue.', 'red', true);
 			pts_client::kill_process_with_children_processes($process_file[0]);
 			file_put_contents(PTS_USER_PATH . 'skip-test', '');
 		}

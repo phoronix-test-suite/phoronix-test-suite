@@ -194,7 +194,7 @@ class ob_auto_compare extends pts_module_interface
 				$box_plot = str_repeat(' ', $terminal_width - 4);
 				$box_plot_size = strlen($box_plot);
 				$box_plot = str_split($box_plot);
-				$max_value = array_pop($percentiles);
+				$max_value = max(array_pop($percentiles), $active_result);
 				$results_at_pos = array(0, 1, ($box_plot_size - 1));
 
 				// BOX PLOT
