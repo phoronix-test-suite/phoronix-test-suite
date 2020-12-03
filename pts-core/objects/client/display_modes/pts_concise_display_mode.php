@@ -380,7 +380,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		{
 			foreach(pts_arrays::to_array($test_result->pre_run_message) as $l)
 			{
-				echo $this->tab . pts_client::cli_just_italic($l) . PHP_EOL;
+				echo PHP_EOL . $this->tab . pts_client::cli_just_italic($l);
 			}
 			$test_result->pre_run_message = null;
 		}
