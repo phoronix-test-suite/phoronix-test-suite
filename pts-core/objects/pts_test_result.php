@@ -45,6 +45,7 @@ class pts_test_result
 	protected $already_normalized = false;
 	public $dynamically_generated = false;
 	public $belongs_to_suite = false;
+	public $pre_run_message = null;
 
 	public function __construct($test_profile)
 	{
