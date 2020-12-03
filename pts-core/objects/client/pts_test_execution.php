@@ -663,7 +663,7 @@ class pts_test_execution
 
 		// End Finalize
 		pts_module_manager::module_process('__post_test_run', $test_run_request);
-		$report_elapsed_time = $cache_share_present == false && $times_result_produced > 0; // XXX maybe add: && $test_run_request->test_profile->get_default_times_to_run() == $test_run_request->test_profile->get_times_to_run()
+		$report_elapsed_time = $cache_share_present == false && $times_result_produced > 0;
 		if($report_elapsed_time)
 		{
 			$test_run_request->test_profile->test_installation->add_latest_run_time($test_run_request, $time_test_elapsed);

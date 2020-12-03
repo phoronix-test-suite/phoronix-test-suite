@@ -46,6 +46,7 @@ class pts_installed_test
 
 		if(is_file($this->install_path . 'pts-install.json'))
 		{
+			$this->installed = true;
 			$jsonf = json_decode(file_get_contents($this->install_path . 'pts-install.json'), true);
 			$this->install_date_time = isset($jsonf['test_installation']['history']['install_date_time']) ? $jsonf['test_installation']['history']['install_date_time'] : null;
 			$this->last_run_date_time = isset($jsonf['test_installation']['history']['last_run_date_time']) ? $jsonf['test_installation']['history']['last_run_date_time'] : null;
@@ -127,7 +128,7 @@ class pts_installed_test
 	}
 	public function is_installed()
 	{
-		return $this->installed != false;
+		return $this->installed;
 	}
 	public function get_install_log_location()
 	{
