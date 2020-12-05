@@ -8,6 +8,7 @@ pts-core: Increase compression factor when uploading benchmark results
 pts-core: Last minute fixes for PHP 8.x
 phodevi: Report if CPUFreq Boost enabled/disabled
 turbostat: Add TurboStat module to easily generate turbostat dumps on a per-test basis to log files
+phoromatic: Much faster web viewer performance especially with large databases
 
 Phoronix Test Suite 10.2.0 Milestone 1
 21 November 2020

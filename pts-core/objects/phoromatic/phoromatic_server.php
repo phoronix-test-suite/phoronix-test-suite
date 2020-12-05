@@ -182,10 +182,6 @@ class phoromatic_server
 			return true;
 		}
 
-		// TODO XXX make this a rootadmin option or something
-		self::$db->exec('PRAGMA journal_mode = WAL');
-		self::$db->exec('PRAGMA synchronous = NORMAL');
-
 		switch(self::read_database_version())
 		{
 			case 0:
@@ -361,6 +357,11 @@ class phoromatic_server
 				// Change made 30 May 2017 for introducing run priority
 				self::$db->exec('ALTER TABLE phoromatic_schedules ADD COLUMN RunPriority INTEGER DEFAULT 100');
 				self::$db->exec('PRAGMA user_version = 37');
+			case 37:
+				// Previously these were called on each load but no reason to redundantly do so...
+				self::$db->exec('PRAGMA journal_mode = WAL');
+				self::$db->exec('PRAGMA synchronous = NORMAL');
+				self::$db->exec('PRAGMA user_version = 38');
 		}
 		chmod($db_file, 0600);
 		if(!defined('PHOROMATIC_DB_INIT'))
