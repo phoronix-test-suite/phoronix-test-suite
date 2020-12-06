@@ -1460,20 +1460,6 @@ class pts_client
 
 		return $in_option;
 	}
-	public static function regenerate_graphs($result_file_identifier, $full_process_string = false, $extra_graph_attributes = null)
-	{
-		$save_to_dir = pts_client::setup_test_result_directory($result_file_identifier);
-		$generated_graphs = pts_client::generate_result_file_graphs($result_file_identifier, $save_to_dir, $extra_graph_attributes);
-		$generated = count($generated_graphs) > 0;
-
-		if($generated && $full_process_string)
-		{
-			echo PHP_EOL . $full_process_string . PHP_EOL;
-			pts_client::display_result_view($result_file_identifier, false);
-		}
-
-		return $generated;
-	}
 	public static function execute_command($command, $pass_args = null)
 	{
 		if(!class_exists($command, false) && is_file(PTS_COMMAND_PATH . $command . '.php'))
@@ -2306,16 +2292,6 @@ class pts_client
 
 		return -1;
 	}
-	public static function cache_hardware_calls()
-	{
-		phodevi::system_hardware(true);
-		phodevi::supported_sensors();
-		phodevi::unsupported_sensors();
-	}
-	public static function cache_software_calls()
-	{
-		phodevi::system_software(true);
-	}
 	public static function timed_function($function, $function_parameters, $time, $continue_while_true_function = false, $continue_while_true_function_parameters = null)
 	{
 		if(($time < 0.5 && $time != -1) || $time > 300)
@@ -2529,6 +2505,7 @@ class pts_client
 	}
 	public static function is_debug_mode()
 	{
+		// debug mode for tests
 		return self::$debug_mode == true;
 	}
 	public static function update_download_speed_average($download_size, $elapsed_time)
