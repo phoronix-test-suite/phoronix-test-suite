@@ -667,6 +667,12 @@ This module toggles the system's screensaver while the Phoronix Test Suite is ru
 This module utilizes the following environmental variables: HALT_SCREENSAVER.
 
 
+### Linux Turbostat Dumper
+Setting TURBOSTAT_LOG_DIR=_DIR_ will auto-load and enable this Phoronix Test Suite module. The module will -- if turbostat is installed on the system and the user is root -- allow dumping of the TurboStat data to the specified directly on a per-test basis. This allows easily collecting of turbostat logs for each test being run.
+
+This module utilizes the following environmental variables: TURBOSTAT_LOG_DIR.
+
+
 ### Update Checker
 This module checks to see if the Phoronix Test Suite -- and its tests and suites -- are up to date plus also handles message of the day information.
 

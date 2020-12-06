@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 10.2.0 Milestone 2
+6 December 2020
 
 pts-core: Transition to new JSON-based data format for managing test install metadata while maintaining backwards compatibility with prior XML format
 pts-core: Begin tracking test run-times per-hash (all configured test options) for more detailed time tracking and in turn time estimates on subsequent runs
