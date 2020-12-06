@@ -1,12 +1,14 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
 Phoronix Test Suite 10.2.0 Milestone 2
 6 December 2020
 
 pts-core: Transition to new JSON-based data format for managing test install metadata while maintaining backwards compatibility with prior XML format
 pts-core: Begin tracking test run-times per-hash (all configured test options) for more detailed time tracking and in turn time estimates on subsequent runs
 pts-core: Increase compression factor when uploading benchmark results
-pts-core: Last minute fixes for PHP 8.x
+pts-core: Last minute fixes for PHP 8.0 compatibility
 phodevi: Report if CPUFreq Boost enabled/disabled
 turbostat: Add TurboStat module to easily generate turbostat dumps on a per-test basis to log files
 phoromatic: Much faster web viewer performance especially with large databases
