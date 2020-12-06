@@ -66,13 +66,13 @@ class pts_test_result_parser
 			if(count($sensor) != 2 || !phodevi::is_sensor_supported($sensor))
 			{
 				// Not a sensor or it's not supported
-				pts_client::test_profile_debug_message('No supported sensor found');
+				pts_test_result_parser::debug_message('No supported sensor found');
 				continue;
 			}
 
 			if(!is_numeric($polling_freq) || $polling_freq < 0.5)
 			{
-				pts_client::test_profile_debug_message('No polling frequency defined, defaulting to 2 seconds');
+				pts_test_result_parser::debug_message('No polling frequency defined, defaulting to 2 seconds');
 				$polling_freq = 2;
 			}
 
@@ -80,7 +80,7 @@ class pts_test_result_parser
 			if(!in_array($report_as, array('ALL', 'MAX', 'MIN', 'AVG')))
 			{
 				// Not a valid reporting type
-				pts_client::test_profile_debug_message('No valid Report entry found.');
+				pts_test_result_parser::debug_message('No valid Report entry found.');
 				continue;
 			}
 			if(!function_exists('pcntl_fork'))
@@ -135,7 +135,7 @@ class pts_test_result_parser
 				if($result_value < $minimal_test_time)
 				{
 					// The test ended too fast
-					pts_client::test_profile_debug_message('Test Run-Time Too Short: ' . $result_value);
+					pts_test_result_parser::debug_message('Test Run-Time Too Short: ' . $result_value);
 					$result_value = null;
 				}
 			}
@@ -182,7 +182,7 @@ class pts_test_result_parser
 			{
 				// For now it's only possible to return one result per test XXX actually with PTS7 this can be changed....
 				// TODO XXX for some sensors may make sense for min/max values?
-				pts_client::test_profile_debug_message('Test Result Montioring Process Returning: ' . $result_value);
+				pts_test_result_parser::debug_message('Test Result Montioring Process Returning: ' . $result_value);
 				self::gen_result_active_handle($test_run_request)->add_trial_run_result($result_value);
 				$did_post_result = true;
 			}
@@ -496,7 +496,7 @@ class pts_test_result_parser
 		if(!empty($match_test_arguments) && strpos($pts_test_arguments, $match_test_arguments) === false)
 		{
 			// This is not the ResultsParser XML section to use as the MatchToTestArguments does not match the PTS test arguments
-			pts_client::test_profile_debug_message('Failed Initial Check For Matching: ' . $pts_test_arguments . ' not in ' . $match_test_arguments);
+			pts_test_result_parser::debug_message('Failed Initial Check For Matching: ' . $pts_test_arguments . ' not in ' . $match_test_arguments);
 			return false;
 		}
 
@@ -519,22 +519,22 @@ class pts_test_result_parser
 		if($prefix != null && $start_result_pos === false && $template != 'csv-dump-frame-latencies' && $template != 'libframetime-output' && $e->get_file_format() == null)
 		{
 			// XXX: technically the $prefix check shouldn't be needed, verify whether safe to have this check be unconditional on start_result_pos failing...
-			//pts_client::test_profile_debug_message('Failed Additional Check');
+			//pts_test_result_parser::debug_message('Failed Additional Check');
 			return false;
 		}
-		pts_client::test_profile_debug_message('Result Key: ' . $key_for_result);
+		pts_test_result_parser::debug_message('Result Key: ' . $key_for_result);
 
 		if(is_file($log_file))
 		{
 			if(filesize($log_file) > 52428800)
 			{
-				pts_client::test_profile_debug_message('File Too Big To Parse: ' . $log_file);
+				pts_test_result_parser::debug_message('File Too Big To Parse: ' . $log_file);
 			}
 			$output = file_get_contents($log_file);
 		}
 		else
 		{
-			pts_client::test_profile_debug_message('No Log File Found To Parse');
+			pts_test_result_parser::debug_message('No Log File Found To Parse');
 			return false;
 		}
 
@@ -550,14 +550,14 @@ class pts_test_result_parser
 				$x = $xml;
 				foreach(explode('/', $template) as $p)
 				{
-					pts_client::test_profile_debug_message('XML Trying ' . $p);
+					pts_test_result_parser::debug_message('XML Trying ' . $p);
 					if(isset($x[$p]))
 					{
 						$x = $x[$p];
 					}
 					else
 					{
-						pts_client::test_profile_debug_message('XML Failed To Find ' . $p);
+						pts_test_result_parser::debug_message('XML Failed To Find ' . $p);
 						break;
 					}
 				}
@@ -565,7 +565,7 @@ class pts_test_result_parser
 				{
 					if(!is_array($x))
 					{
-						pts_client::test_profile_debug_message('XML Value Found: ' . $x);
+						pts_test_result_parser::debug_message('XML Value Found: ' . $x);
 						$test_results[] = trim($x);
 					}
 				}
@@ -582,7 +582,7 @@ class pts_test_result_parser
 		$end_result_line_pos = strpos($template, "\n", $end_result_pos);
 		$template_line = substr($template, 0, ($end_result_line_pos === false ? strlen($template) : $end_result_line_pos));
 		$template_line = substr($template_line, strrpos($template_line, "\n"));
-		pts_client::test_profile_debug_message('Template Line: ' . $template_line);
+		pts_test_result_parser::debug_message('Template Line: ' . $template_line);
 		$template_r = explode(' ', pts_strings::trim_spaces(str_replace($space_out_chars, ' ', str_replace('=', ' = ', $template_line))));
 		$template_r_pos = array_search($key_for_result, $template_r);
 
@@ -632,14 +632,14 @@ class pts_test_result_parser
 
 					if($line_before_hint != null)
 					{
-						pts_client::test_profile_debug_message('Result Parsing Line Before Hint: ' . $line_before_hint);
+						pts_test_result_parser::debug_message('Result Parsing Line Before Hint: ' . $line_before_hint);
 						$line = substr($output, strpos($output, "\n", strrpos($output, $line_before_hint)));
 						$line = substr($line, 0, strpos($line, "\n", 1));
 						$output = substr($output, 0, strrpos($output, "\n", strrpos($output, $line_before_hint))) . "\n";
 					}
 					else if($line_after_hint != null)
 					{
-						pts_client::test_profile_debug_message('Result Parsing Line After Hint: ' . $line_after_hint);
+						pts_test_result_parser::debug_message('Result Parsing Line After Hint: ' . $line_after_hint);
 						$line = substr($output, 0, strrpos($output, "\n", strrpos($output, $line_after_hint)));
 						$line = substr($line, strrpos($line, "\n", 1) + 1);
 						$output = null;
@@ -650,7 +650,7 @@ class pts_test_result_parser
 						{
 							$search_key = trim($search_key);
 						}
-						pts_client::test_profile_debug_message('Result Parsing Search Key: "' . $search_key . '"');
+						pts_test_result_parser::debug_message('Result Parsing Search Key: "' . $search_key . '"');
 
 						while(($line_x = strrpos($output, $search_key)) !== false)
 						{
@@ -671,14 +671,14 @@ class pts_test_result_parser
 					else
 					{
 						// Condition $template_r[0] == $key, include entire file since there is nothing to search
-						pts_client::test_profile_debug_message('No Result Parsing Hint, Including Entire Result Output');
+						pts_test_result_parser::debug_message('No Result Parsing Hint, Including Entire Result Output');
 						$line = trim($output);
 					}
 					if($e->get_turn_chars_to_space() != null)
 					{
 						$line = str_replace($e->get_turn_chars_to_space(), ' ', $line);
 					}
-					pts_client::test_profile_debug_message('Result Line: ' . $line);
+					pts_test_result_parser::debug_message('Result Line: ' . $line);
 
 					// FALLBACK HELPERS FOR BELOW
 					$did_try_colon_fallback = false;
@@ -796,7 +796,7 @@ class pts_test_result_parser
 						if($try_again == false && empty($test_results) && !empty($possible_lines))
 						{
 							$line = array_shift($possible_lines);
-							pts_client::test_profile_debug_message('Trying Backup Result Line: ' . $line);
+							pts_test_result_parser::debug_message('Trying Backup Result Line: ' . $line);
 							$try_again = true;
 						}
 						else if(!empty($test_results) && $is_multi_match && !empty($possible_lines) && $search_key != null)
@@ -814,7 +814,7 @@ class pts_test_result_parser
 		RESULTPOSTPROCESSING:
 		if(empty($test_results))
 		{
-			pts_client::test_profile_debug_message('No Test Results');
+			pts_test_result_parser::debug_message('No Test Results');
 			return false;
 		}
 
@@ -858,7 +858,7 @@ class pts_test_result_parser
 
 		if(empty($test_results))
 		{
-			pts_client::test_profile_debug_message('No Test Results #2');
+			pts_test_result_parser::debug_message('No Test Results #2');
 			return false;
 		}
 
@@ -965,7 +965,7 @@ class pts_test_result_parser
 			}
 		}
 
-		pts_client::test_profile_debug_message('Test Result Parser Returning: ' . $test_result);
+		pts_test_result_parser::debug_message('Test Result Parser Returning: ' . $test_result);
 		return $test_result;
 	}
 	protected static function strip_result_cleaner(&$test_result, &$e)
@@ -1118,6 +1118,26 @@ class pts_test_result_parser
 		}
 
 		return $returns;
+	}
+	public static function debug_message($message)
+	{
+		$reported = false;
+
+		if(PTS_IS_CLIENT && pts_client::is_debug_mode())
+		{
+			if(($x = strpos($message, ': ')) !== false)
+			{
+				$message = pts_client::cli_colored_text(substr($message, 0, $x + 1), 'yellow', true) . pts_client::cli_colored_text(substr($message, $x + 1), 'yellow', false);
+			}
+			else
+			{
+				$message = pts_client::cli_colored_text($message, 'yellow', false);
+			}
+			pts_client::$display->test_run_instance_error($message);
+			$reported = true;
+		}
+
+		return $reported;
 	}
 }
 

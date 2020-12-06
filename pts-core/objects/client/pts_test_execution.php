@@ -172,12 +172,12 @@ class pts_test_execution
 				{
 					if(!isset($find_log_file[0]) || empty($find_log_file[0]))
 					{
-						pts_client::test_profile_debug_message('No existing log file found for this test profile. Generate one by using the run/benchmark or debug-run commands.');
+						pts_test_result_parser::debug_message('No existing log file found for this test profile. Generate one by using the run/benchmark or debug-run commands.');
 						return false;
 					}
 
 					$test_log_file = $find_log_file[0];
-					pts_client::test_profile_debug_message('Log File: ' . $test_log_file);
+					pts_test_result_parser::debug_message('Log File: ' . $test_log_file);
 				}
 			}
 			else if(phodevi::is_windows() && strpos($test_directory, ' ') !== false)
@@ -234,7 +234,7 @@ class pts_test_execution
 				sleep(2);
 				$test_run_command = 'cd ' . $to_execute . ' && ' . $test_prepend . $execute_binary_prepend . './' . $execute_binary . ' ' . $pts_test_arguments . ' 2>&1';
 
-				pts_client::test_profile_debug_message('Test Run Command: ' . $test_run_command);
+				pts_test_result_parser::debug_message('Test Run Command: ' . $test_run_command);
 
 				$host_env = $_SERVER;
 				unset($host_env['argv']);
@@ -500,7 +500,7 @@ class pts_test_execution
 					file_put_contents($backup_test_log_file, '#####' . PHP_EOL . $test_run_manager->get_results_identifier() . ' - Run ' . ($i + 1) . PHP_EOL . date('Y-m-d H:i:s') . PHP_EOL . '#####' . PHP_EOL . file_get_contents($test_log_file) . PHP_EOL, FILE_APPEND);
 				}
 
-				if(pts_client::test_profile_debug_message('Log File At: ' . $test_log_file) == false)
+				if(pts_test_result_parser::debug_message('Log File At: ' . $test_log_file) == false)
 				{
 					unlink($test_log_file);
 				}

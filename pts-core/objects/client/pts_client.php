@@ -1207,26 +1207,6 @@ class pts_client
 		// Current system user
 		return ($pts_user = pts_openbenchmarking_client::user_name()) != null ? $pts_user : phodevi::read_property('system', 'username');
 	}
-	public static function test_profile_debug_message($message)
-	{
-		$reported = false;
-
-		if(pts_client::is_debug_mode())
-		{
-			if(($x = strpos($message, ': ')) !== false)
-			{
-				$message = pts_client::cli_colored_text(substr($message, 0, $x + 1), 'yellow', true) . pts_client::cli_colored_text(substr($message, $x + 1), 'yellow', false);
-			}
-			else
-			{
-				$message = pts_client::cli_colored_text($message, 'yellow', false);
-			}
-			pts_client::$display->test_run_instance_error($message);
-			$reported = true;
-		}
-
-		return $reported;
-	}
 	public static function generate_result_file_graphs($test_results_identifier, $save_to_dir = false, $extra_attributes = null)
 	{
 		if($save_to_dir)
