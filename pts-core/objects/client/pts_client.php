@@ -424,29 +424,6 @@ class pts_client
 	{
 		return pts_strings::add_trailing_slash(pts_config::read_path_config('PhoronixTestSuite/Options/Installation/CacheDirectory', PTS_DOWNLOAD_CACHE_PATH));
 	}
-	public static function user_run_save_variables()
-	{
-		static $runtime_variables = null;
-
-		if($runtime_variables == null)
-		{
-			$runtime_variables = array(
-			'VIDEO_RESOLUTION' => phodevi::read_property('gpu', 'screen-resolution-string'),
-			'VIDEO_CARD' => phodevi::read_name('gpu'),
-			'VIDEO_DRIVER' => phodevi::read_property('system', 'display-driver-string'),
-			'OPENGL_DRIVER' => str_replace('(', '', phodevi::read_property('system', 'opengl-driver')),
-			'OPERATING_SYSTEM' => phodevi::read_property('system', 'operating-system'),
-			'PROCESSOR' => phodevi::read_name('cpu'),
-			'MOTHERBOARD' => phodevi::read_name('motherboard'),
-			'CHIPSET' => phodevi::read_name('chipset'),
-			'KERNEL_VERSION' => phodevi::read_property('system', 'kernel'),
-			'COMPILER' => phodevi::read_property('system', 'compiler'),
-			'HOSTNAME' => phodevi::read_property('system', 'hostname')
-			);
-		}
-
-		return $runtime_variables;
-	}
 	public static function supports_colored_text_output()
 	{
 		static $supports = -1;

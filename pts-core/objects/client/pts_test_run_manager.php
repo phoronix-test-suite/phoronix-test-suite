@@ -604,7 +604,7 @@ class pts_test_run_manager
 	}
 	public static function clean_results_identifier($results_identifier)
 	{
-		$results_identifier = trim(pts_client::swap_variables($results_identifier, array('pts_client', 'user_run_save_variables')));
+		$results_identifier = trim(pts_client::swap_variables($results_identifier, array('pts_test_run_manager', 'user_run_save_variables')));
 		$results_identifier = pts_strings::remove_redundant(pts_strings::keep_in_string($results_identifier, pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_UNDERSCORE | pts_strings::CHAR_COLON | pts_strings::CHAR_COMMA | pts_strings::CHAR_SLASH | pts_strings::CHAR_SPACE | pts_strings::CHAR_DECIMAL | pts_strings::CHAR_AT | pts_strings::CHAR_PLUS | pts_strings::CHAR_SEMICOLON | pts_strings::CHAR_EQUAL), ' ');
 
 		return $results_identifier;
@@ -838,7 +838,7 @@ class pts_test_run_manager
 	}
 	public static function clean_save_name($input, $is_new_save = true)
 	{
-		$input = pts_client::swap_variables($input, array('pts_client', 'user_run_save_variables'));
+		$input = pts_client::swap_variables($input, array('pts_test_run_manager', 'user_run_save_variables'));
 		$input = pts_strings::remove_redundant(pts_strings::keep_in_string(str_replace(' ', '-', trim($input)), pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH), '-');
 
 		if($is_new_save)
@@ -1954,6 +1954,29 @@ class pts_test_run_manager
 		$this->pre_execution_process();
 		$this->call_test_runs();
 		$this->post_execution_process();
+	}
+	public static function user_run_save_variables()
+	{
+		static $runtime_variables = null;
+
+		if($runtime_variables == null)
+		{
+			$runtime_variables = array(
+			'VIDEO_RESOLUTION' => phodevi::read_property('gpu', 'screen-resolution-string'),
+			'VIDEO_CARD' => phodevi::read_name('gpu'),
+			'VIDEO_DRIVER' => phodevi::read_property('system', 'display-driver-string'),
+			'OPENGL_DRIVER' => str_replace('(', '', phodevi::read_property('system', 'opengl-driver')),
+			'OPERATING_SYSTEM' => phodevi::read_property('system', 'operating-system'),
+			'PROCESSOR' => phodevi::read_name('cpu'),
+			'MOTHERBOARD' => phodevi::read_name('motherboard'),
+			'CHIPSET' => phodevi::read_name('chipset'),
+			'KERNEL_VERSION' => phodevi::read_property('system', 'kernel'),
+			'COMPILER' => phodevi::read_property('system', 'compiler'),
+			'HOSTNAME' => phodevi::read_property('system', 'hostname')
+			);
+		}
+
+		return $runtime_variables;
 	}
 }
 
