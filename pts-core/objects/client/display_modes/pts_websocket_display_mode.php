@@ -208,7 +208,7 @@ class pts_websocket_display_mode implements pts_display_mode_interface
 	{
 		$stats['test_download_count'] = $test_install_request->get_download_objects();
 
-		if(($size = $test_install_request->test_profile->get_download_size(false, 1048576)) > 0 && ($avg_speed = pts_download_speed_manager::get_average_download_speed()) > 0)
+		if(($size = $test_install_request->test_profile->get_download_size(false, 1048576)) > 0 && ($avg_speed = pts_client::get_average_download_speed()) > 0)
 		{
 			$stats['test_download_time'] = ($size * 1048576) / $avg_speed;
 		}
@@ -239,7 +239,7 @@ class pts_websocket_display_mode implements pts_display_mode_interface
 			case 'DOWNLOAD':
 				$process_string = 'Downloading';
 				$progress_prefix = 'Downloading';
-				if(($avg_speed = pts_download_speed_manager::get_average_download_speed()) > 0 && ($this_size = $pts_test_file_download->get_filesize()) > 0)
+				if(($avg_speed = pts_client::get_average_download_speed()) > 0 && ($this_size = $pts_test_file_download->get_filesize()) > 0)
 				{
 					$expected_time = $this_size / $avg_speed;
 				}

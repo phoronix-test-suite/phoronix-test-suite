@@ -155,7 +155,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 			echo ' [' . $size . ' MB';
 
-			if(($avg_speed = pts_download_speed_manager::get_average_download_speed()) > 0)
+			if(($avg_speed = pts_client::get_average_download_speed()) > 0)
 			{
 				$avg_time = ($size * 1048576) / $avg_speed;
 				echo ' / ' . pts_strings::format_time($avg_time, 'SECONDS', true, 60);
@@ -199,7 +199,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 			case 'DOWNLOAD':
 				$process_string = 'Downloading';
 				$progress_prefix = 'Downloading';
-				if(($avg_speed = pts_download_speed_manager::get_average_download_speed()) > 0 && ($this_size = $pts_test_file_download->get_filesize()) > 0)
+				if(($avg_speed = pts_client::get_average_download_speed()) > 0 && ($this_size = $pts_test_file_download->get_filesize()) > 0)
 				{
 					$expected_time = $this_size / $avg_speed;
 				}

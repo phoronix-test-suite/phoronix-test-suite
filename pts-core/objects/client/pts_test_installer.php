@@ -182,7 +182,7 @@ class pts_test_installer
 			pts_file_io::unlink($test_install_request->special_environment_vars['INSTALL_FOOTNOTE']);
 		}
 		pts_module_manager::module_process('__post_install_process', $test_install_manager);
-		pts_download_speed_manager::save_data();
+		pts_client::save_download_speed_averages();
 
 		if(count($failed_installs) > 1)
 		{
@@ -431,7 +431,7 @@ class pts_test_installer
 
 								if($download_package->get_filesize() > 0 && $download_end != $download_start)
 								{
-									pts_download_speed_manager::update_download_speed_average($download_package->get_filesize(), ($download_end - $download_start));
+									pts_client::update_download_speed_average($download_package->get_filesize(), ($download_end - $download_start));
 								}
 							}
 							else if($download_package->is_optional())

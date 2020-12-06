@@ -38,6 +38,8 @@ class pts_client
 	protected static $sent_command = null;
 	private static $current_command = null;
 	private static $forked_pids = array();
+	private static $download_speed_average_count = -1;
+	private static $download_speed_average_speed = -1;
 
 	public static function create_lock($lock_file)
 	{
@@ -2528,6 +2530,46 @@ class pts_client
 	public static function is_debug_mode()
 	{
 		return self::$debug_mode == true;
+	}
+	public static function update_download_speed_average($download_size, $elapsed_time)
+	{
+		if(self::$download_speed_average_count == -1)
+		{
+			self::load_download_speed_averages();
+		}
+
+		$download_speed = floor($download_size / $elapsed_time); // bytes per second
+
+		if(self::$download_speed_average_count > 0 && self::$download_speed_average_speed > 0)
+		{
+			// bytes per second
+			self::$download_speed_average_speed = floor(((self::$download_speed_average_speed * self::$download_speed_average_count) + $download_speed) / (self::$download_speed_average_count + 1));
+			self::$download_speed_average_count++;
+		}
+		else
+		{
+			self::$download_speed_average_speed = $download_speed;
+			self::$download_speed_average_count = 1;
+		}
+	}
+	public static function get_average_download_speed()
+	{
+		if(self::$download_speed_average_count == -1)
+		{
+			self::load_download_speed_averages();
+		}
+
+		return self::$download_speed_average_speed;
+	}
+	private static function load_download_speed_averages()
+	{
+		self::$download_speed_average_count = pts_storage_object::read_from_file(PTS_CORE_STORAGE, 'download_average_count');
+		self::$download_speed_average_speed = pts_storage_object::read_from_file(PTS_CORE_STORAGE, 'download_average_speed');
+	}
+	private static function save_download_speed_averages()
+	{
+		pts_storage_object::set_in_file(PTS_CORE_STORAGE, 'download_average_count', self::$download_speed_average_count);
+		pts_storage_object::set_in_file(PTS_CORE_STORAGE, 'download_average_speed', self::$download_speed_average_speed);
 	}
 }
 
