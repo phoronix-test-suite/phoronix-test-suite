@@ -43,9 +43,6 @@ class pts_ae_data
 		$db_flags = SQLITE3_OPEN_READWRITE | SQLITE3_OPEN_CREATE;
 		$this->db = new SQLite3($this->ae_dir . 'temp.db', $db_flags);
 		$this->db->busyTimeout(10000);
-		// TODO XXX make this a rootadmin option or something
-		$this->db->exec('PRAGMA journal_mode = WAL');
-		$this->db->exec('PRAGMA synchronous = OFF');
 		pts_file_io::mkdir($this->ae_dir . 'comparison-hashes/');
 		pts_file_io::mkdir($this->ae_dir . 'component-data/');
 		pts_file_io::mkdir($this->ae_dir . 'component-heavy/');
@@ -78,6 +75,10 @@ class pts_ae_data
 			case 2:
 				$this->db->exec('ALTER TABLE analytics_results ADD COLUMN StdDev REAL');
 				$this->db->exec('PRAGMA user_version = 3');
+			case 3:
+				$this->db->exec('PRAGMA journal_mode = WAL');
+				$this->db->exec('PRAGMA synchronous = OFF');
+				$this->db->exec('PRAGMA user_version = 4');
 		}
 		return true;
 	}
