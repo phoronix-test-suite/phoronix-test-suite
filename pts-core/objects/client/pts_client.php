@@ -2069,12 +2069,6 @@ class pts_client
 		{
 			return false;
 		}
-		if(TIME_PTS_LAUNCHED > (time() - 6))
-		{
-			// Avoid a race condition on start-up if the dynamic result viewer PHP server isn't yet active
-			// and running a command like 'refresh-graphs' where you may be viewing a result right away
-			sleep(5);
-		}
 
 		if(!is_object($result_file))
 		{
@@ -2092,6 +2086,13 @@ class pts_client
 		}
 		else
 		{
+			if(TIME_PTS_LAUNCHED > (time() - 6))
+			{
+				// Avoid a race condition on start-up if the dynamic result viewer PHP server isn't yet active
+				// and running a command like 'refresh-graphs' where you may be viewing a result right away
+				sleep(5);
+			}
+
 			$dynamic_urls_to_try = array();
 			if(pts_client::$web_result_viewer_active)
 			{
@@ -2500,7 +2501,7 @@ class pts_client
 		self::$download_speed_average_count = pts_storage_object::read_from_file(PTS_CORE_STORAGE, 'download_average_count');
 		self::$download_speed_average_speed = pts_storage_object::read_from_file(PTS_CORE_STORAGE, 'download_average_speed');
 	}
-	private static function save_download_speed_averages()
+	public static function save_download_speed_averages()
 	{
 		pts_storage_object::set_in_file(PTS_CORE_STORAGE, 'download_average_count', self::$download_speed_average_count);
 		pts_storage_object::set_in_file(PTS_CORE_STORAGE, 'download_average_speed', self::$download_speed_average_speed);
