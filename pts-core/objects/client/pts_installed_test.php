@@ -243,7 +243,7 @@ class pts_installed_test
 	}
 	protected function add_to_run_times(&$run_times, $index, $value, $description = null)
 	{
-		if(count($run_times) > 80)
+		if(is_array($run_times) && count($run_times) > 80)
 		{
 			// Only show the last 80 to avoid this file becoming too large...
 			$all = $run_times['all'];
