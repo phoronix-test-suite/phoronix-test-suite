@@ -243,12 +243,12 @@ class pts_installed_test
 	}
 	protected function add_to_run_times(&$run_times, $index, $value, $description = null)
 	{
-		if(count($run_times[$index]) > 80)
+		if(count($run_times) > 80)
 		{
 			// Only show the last 80 to avoid this file becoming too large...
-			$avg = $run_times[$index]['avg'];
-			$run_times[$index] = array_slice($run_times[$index], -80, null, true);
-			$run_times[$index]['avg'] = $avg;
+			$all = $run_times['all'];
+			$run_times = array_slice($run_times, -80, null, true);
+			$run_times['all'] = $all;
 		}
 
 		if(!isset($run_times[$index]))
