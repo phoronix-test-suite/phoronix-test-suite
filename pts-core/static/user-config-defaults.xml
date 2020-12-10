@@ -38,7 +38,7 @@
 		<TestResultValidation>
 			<DynamicRunCount>TRUE</DynamicRunCount>
 			<LimitDynamicToTestLength>20</LimitDynamicToTestLength>
-			<StandardDeviationThreshold>3.0</StandardDeviationThreshold>
+			<StandardDeviationThreshold>2.5</StandardDeviationThreshold>
 			<ExportResultsTo></ExportResultsTo>
 			<MinimalTestTime>2</MinimalTestTime>
 			<DropNoisyResults>FALSE</DropNoisyResults>

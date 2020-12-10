@@ -2,6 +2,8 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Default to 2.5% std dev threshold default on new installs
+
 Phoronix Test Suite 10.2.0 Milestone 2
 6 December 2020
 
