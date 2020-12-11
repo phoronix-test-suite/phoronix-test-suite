@@ -185,7 +185,7 @@
 		</Package>
 		<Package>
 			<GenericName>qt5-development</GenericName>
-			<PackageName>qml-module-qtquick2 qtdeclarative5-dev qt5-default qtbase5-dev</PackageName>
+			<PackageName>qml-module-qtquick2 qtdeclarative5-dev qt5-default qtbase5-dev qt5svg5-dev qttools5-dev libqca-qt5-2-dev qt5keychain-dev pyqt5-dev pyqt5-dev-tools qtpositioning5-dev</PackageName>
 			<FileCheck>qmake</FileCheck>
 		</Package>
 		<Package>
@@ -289,6 +289,10 @@
 		<Package>
 			<GenericName>yasm</GenericName>
 			<PackageName>yasm nasm</PackageName>
+		</Package>
+		<Package>
+			<GenericName>nasm</GenericName>
+			<PackageName>nasm</PackageName>
 		</Package>
 		<Package>
 			<GenericName>gmp-library</GenericName>

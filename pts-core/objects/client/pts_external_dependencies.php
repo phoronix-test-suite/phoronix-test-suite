@@ -558,7 +558,7 @@ class pts_external_dependencies
 			echo 'Distribution install script not found!';
 		}
 	}
-	private static function vendor_identifier($type)
+	public static function vendor_identifier($type)
 	{
 		$os_vendor = phodevi::read_property('system', 'vendor-identifier');
 
