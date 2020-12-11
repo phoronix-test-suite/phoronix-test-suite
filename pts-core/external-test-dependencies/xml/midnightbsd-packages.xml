@@ -21,7 +21,7 @@
 		</Package>
 		<Package>
 			<GenericName>java</GenericName>
-			<PackageName>openjdk7-bin</PackageName>
+			<PackageName>openjdk11-bin</PackageName>
 		</Package>
 		<Package>
 			<GenericName>swig</GenericName>
