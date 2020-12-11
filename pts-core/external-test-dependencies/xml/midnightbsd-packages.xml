@@ -164,6 +164,70 @@
 			<PackageName>openmpi</PackageName>
 		</Package>
 		<Package>
+			<GenericName>meson</GenericName>
+			<PackageName>meson</PackageName>
+		</Package>
+		<Package>
+			<GenericName>eigen</GenericName>
+			<PackageName>eigen</PackageName>
+		</Package>
+		<Package>
+			<GenericName>openal-development</GenericName>
+			<PackageName>openal</PackageName>
+		</Package>
+		<Package>
+			<GenericName>libevent</GenericName>
+			<PackageName>libevent</PackageName>
+		</Package>
+		<Package>
+			<GenericName>rust</GenericName>
+			<PackageName>rust</PackageName>
+		</Package>
+		<Package>
+			<GenericName>golang</GenericName>
+			<PackageName>go</PackageName>
+		</Package>
+		<Package>
+			<GenericName>opencv</GenericName>
+			<PackageName>opencv</PackageName>
+		</Package>
+		<Package>
+			<GenericName>ruby</GenericName>
+			<PackageName>ruby</PackageName>
+		</Package>
+		<Package>
+			<GenericName>node-npm</GenericName>
+			<PackageName>node npm</PackageName>
+		</Package>
+		<Package>
+			<GenericName>hdf5</GenericName>
+			<PackageName>hdf5</PackageName>
+		</Package>
+		<Package>
+			<GenericName>libxml2</GenericName>
+			<PackageName>libxml2</PackageName>
+		</Package>
+		<Package>
+			<GenericName>gflags</GenericName>
+			<PackageName>gflags</PackageName>
+		</Package>
+		<Package>
+			<GenericName>snappy</GenericName>
+			<PackageName>snappy</PackageName>
+		</Package>
+		<Package>
+			<GenericName>openexr</GenericName>
+			<PackageName>openexr</PackageName>
+		</Package>
+		<Package>
+			<GenericName>protobuf</GenericName>
+			<PackageName>protobuf</PackageName>
+		</Package>
+		<Package>
+			<GenericName>erlang</GenericName>
+			<PackageName>erlang</PackageName>
+		</Package>
+		<Package>
 			<GenericName>git</GenericName>
 			<PackageName>git</PackageName>
 		</Package>
