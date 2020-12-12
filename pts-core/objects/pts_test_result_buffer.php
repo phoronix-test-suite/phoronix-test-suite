@@ -133,7 +133,7 @@ class pts_test_result_buffer
 			if($buffer_item->get_result_value() < $value_below)
 			{
 				$other_value += $buffer_item->get_result_value();
-				unset($buffer_items[$key]);
+				unset($this->buffer_items[$key]);
 			}
 		}
 	}

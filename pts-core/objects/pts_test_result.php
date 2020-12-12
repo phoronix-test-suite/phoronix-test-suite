@@ -50,7 +50,6 @@ class pts_test_result
 	public function __construct($test_profile)
 	{
 		$this->test_profile = clone $test_profile;
-		$this->result = 0;
 		$this->test_run_times = array();
 	}
 	public function get_estimated_run_time()

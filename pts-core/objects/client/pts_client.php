@@ -257,7 +257,7 @@ class pts_client
 				if(count($module_r) == 2)
 				{
 					// Ideally end up hooking this into pts_module::read_variable() rather than using the real env
-					pts_client::set_environment_variable($module_r[0], $module_r[1]);
+					pts_client::pts_set_environment_variable($module_r[0], $module_r[1]);
 				}
 				else
 				{

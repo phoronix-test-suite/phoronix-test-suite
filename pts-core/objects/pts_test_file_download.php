@@ -44,8 +44,6 @@ class pts_test_file_download
 		$this->filesize = !is_numeric($filesize) ? 0 : $filesize;
 		$this->md5 = $md5;
 		$this->sha256 = $sha256;
-		$this->location_type = null;
-		$this->location_path = array();
 		$this->platform = $platform;
 		$this->architecture = $architecture;
 		$this->is_optional = $is_optional || strtolower($is_optional) == 'true';

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2019, Phoronix Media
-	Copyright (C) 2010 - 2019, Michael Larabel
+	Copyright (C) 2010 - 2020, Phoronix Media
+	Copyright (C) 2010 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -158,7 +158,6 @@ class pts_graph_radar_chart extends pts_graph_core
 		$this->i['top_start'] = $this->i['top_heading_height'];
 		$this->i['left_start'] = pts_graph_core::text_string_width(str_repeat('Z', $longest_header), self::$c['size']['tick_mark']) * 0.85;
 		$this->i['graph_title'] = ($this->logarithmic_view ? 'Logarithmic ' : '') . ($this->selection_view ? $this->selection_view . ' ' : null) . 'Result Overview';
-		//$this->graph_data_title = ' vs  Comparison';
 		$this->i['iveland_view'] = true;
 		$this->i['show_graph_key'] = true;
 		$this->i['is_multi_way_comparison'] = false;

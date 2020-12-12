@@ -60,7 +60,7 @@ class pts_result_merge_select
 	}
 	public function set_result_file($f)
 	{
-		$this->reset_file = $f;
+		$this->result_file = $f;
 	}
 }
 

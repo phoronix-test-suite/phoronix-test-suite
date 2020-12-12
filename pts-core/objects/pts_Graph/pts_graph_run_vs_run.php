@@ -88,7 +88,6 @@ class pts_graph_run_vs_run extends pts_graph_core
 		$this->i['graph_height'] = 20 + $this->i['top_start'] + ((count($this->result_objects) * 2) * (self::$c['size']['tick_mark'] + 4));
 		$this->i['left_start'] = ceil(pts_graph_core::text_string_width(str_repeat('Z', $longest_header), self::$c['size']['tick_mark']) * 0.85);
 		$this->i['graph_title'] = $this->system_left . ' vs. ' . $this->system_right . ' Comparison';
-		$this->graph_data_title = ' vs  Comparison';
 		$this->i['iveland_view'] = true;
 		$this->i['graph_width'] *= 1.5;
 

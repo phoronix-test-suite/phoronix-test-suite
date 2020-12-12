@@ -162,7 +162,7 @@ class phodevi_gpu extends phodevi_device_interface
 			$gl_msaa = getenv('__GL_FSAA_MODE');
 			if(is_numeric($gl_msaa) && $gl_msaa > 0)
 			{
-				$aa_level = '__GL_FSAA_MODE=' . $gallium_msaa;
+				$aa_level = '__GL_FSAA_MODE=' . $gl_msaa;
 			}
 		}
 

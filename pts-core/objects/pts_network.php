@@ -148,7 +148,7 @@ class pts_network
 
 		if($download_port_number)
 		{
-			curl_setopt($cr, CURLOPT_PORT, $port);
+			curl_setopt($cr, CURLOPT_PORT, $download_port_number);
 		}
 
 		if(stripos($download, 'sourceforge') === false)

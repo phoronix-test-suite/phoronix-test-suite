@@ -103,12 +103,11 @@ class pts_OverviewGraph extends pts_graph_core
 		{
 			return false;
 		}
-		$this->graph_data_title = &$this->system_identifiers;
 		$this->i['graph_max_value'] = 1.0;
 		$l_height = 15;
 		$this->i['key_line_height'] = $l_height;
 
-		if(($key_count = count($this->graph_data_title)) > 8)
+		if(($key_count = count($this->system_identifiers)) > 8)
 		{
 			$this->update_graph_dimensions(-1, $this->i['graph_height'] + (floor(($key_count - 8) / 4) * 14), true);
 		}

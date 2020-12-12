@@ -47,6 +47,7 @@ class pts_external_dependencies
 		$pkg_vendor = self::vendor_identifier('package-list');
 		if(is_file(pts_exdep_generic_parser::get_external_dependency_path() . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php'))
 		{
+			$startup = null;
 			require_once(pts_exdep_generic_parser::get_external_dependency_path() . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php');
 			eval("\$startup = {$pkg_vendor}_dependency_handler::startup_handler();");
 			return $startup;

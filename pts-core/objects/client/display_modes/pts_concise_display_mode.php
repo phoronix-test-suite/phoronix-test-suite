@@ -38,8 +38,8 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	private $test_install_count = 0;
 
 	// Run bits
-	private $expected_trial_run_count = 0;
-	private $trial_run_count_current = 0;
+	protected $expected_trial_run_count = 0;
+	protected $trial_run_count_current = 0;
 	private $current_saved_test_identifier = null;
 	private $current_test = null;
 
@@ -242,7 +242,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 			return;
 		}
 
-		$terminal_width = pts_client::terminal_width() > 1 ? pts_client::terminal_width() : $terminal_width;
+		$terminal_width = pts_client::terminal_width() > 1 ? pts_client::terminal_width() : 80;
 		$text_width = $terminal_width - (strlen($this->tab) * 3);
 		echo PHP_EOL . $this->tab . $this->tab . pts_client::cli_colored_text(wordwrap(($prefix_tag != null ? '[' . $prefix_tag . '] ' : null) . $message, $text_width, PHP_EOL . $this->tab . $this->tab), $text_color, true) . PHP_EOL;
 	}

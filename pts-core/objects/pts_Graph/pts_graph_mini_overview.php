@@ -119,7 +119,6 @@ class pts_graph_mini_overview extends pts_graph_core
 		$this->i['top_start'] = $this->i['top_heading_height'];
 		$this->i['left_start'] = pts_graph_core::text_string_width(str_repeat('Z', $longest_header), self::$c['size']['tick_mark']) * 0.85;
 		$this->i['graph_title'] = ($this->selection_view ? $this->selection_view . ' ' : null) . 'Result Overview';
-		//$this->graph_data_title = ' vs  Comparison';
 		$this->i['iveland_view'] = true;
 		$this->i['show_graph_key'] = true;
 		$this->i['is_multi_way_comparison'] = false;

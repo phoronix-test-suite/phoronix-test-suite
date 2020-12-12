@@ -134,7 +134,7 @@ class pts_module_manager
 				if(strpos($ev, '=') != false)
 				{
 					list($var, $value) = pts_strings::trim_explode('=', $ev);
-					pts_client::set_environment_variable($var, $value);
+					pts_client::pts_set_environment_variable($var, $value);
 					pts_module_manager::var_store_add($var, $value);
 				}
 			}

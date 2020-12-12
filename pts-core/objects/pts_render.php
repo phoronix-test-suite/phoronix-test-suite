@@ -273,28 +273,15 @@ class pts_render
 				$graph = new pts_graph_scatter_plot($result_object, $result_file, $extra_attributes);
 				break;
 			default:
-
-				switch($requested_graph_type)
+				if($horizontal_bars)
 				{
-					case 'LINE_GRAPH':
-						$graph = new pts_graph_lines($result_object, $result_file, $extra_attributes);
-						break;
-					case 'HORIZONTAL_BOX_PLOT':
-						$graph = new pts_graph_box_plot($result_object, $result_file, $extra_attributes);
-						break;
-					default:
-						if($horizontal_bars)
-						{
-							$graph = new pts_graph_horizontal_bars($result_object, $result_file, $extra_attributes);
-						}
-						else
-						{
-							$graph = new pts_graph_vertical_bars($result_object, $result_file, $extra_attributes);
-						}
-						break;
+					$graph = new pts_graph_horizontal_bars($result_object, $result_file, $extra_attributes);
+				}
+				else
+				{
+					$graph = new pts_graph_vertical_bars($result_object, $result_file, $extra_attributes);
 				}
 				break;
-
 		}
 
 		self::report_test_notes_to_graph($graph, $result_object);

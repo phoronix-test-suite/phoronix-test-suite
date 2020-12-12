@@ -30,7 +30,6 @@ class pts_graph_iqc extends pts_graph_core
 		parent::__construct($result_object, $result_file, $extra_attributes);
 		$this->i['graph_value_type'] = 'ABSTRACT';
 		$this->i['hide_graph_identifiers'] = true;
-		$this->graph_data_title = array('PASSED', 'FAILED');
 	}
 	protected function render_graph_pre_init()
 	{

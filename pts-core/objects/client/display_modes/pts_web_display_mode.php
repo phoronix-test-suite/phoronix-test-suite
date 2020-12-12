@@ -226,7 +226,7 @@ class pts_web_display_mode implements pts_display_mode_interface
 			return;
 		}
 
-		$terminal_width = pts_client::terminal_width() > 1 ? pts_client::terminal_width() : $terminal_width;
+		$terminal_width = pts_client::terminal_width() > 1 ? pts_client::terminal_width() : 80;
 		$text_width = $terminal_width - (strlen($this->tab) * 3);
 		echo PHP_EOL . $this->tab . $this->tab . wordwrap('[NOTICE] ' . $message, $text_width, PHP_EOL . $this->tab . $this->tab) . PHP_EOL;
 	}

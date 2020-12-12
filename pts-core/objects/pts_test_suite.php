@@ -244,11 +244,11 @@ class pts_test_suite
 		}
 		return $dom->schemaValidate(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/test-suite.xsd');
 	}
-	protected static function clean_input($value)
+	public static function clean_input($value)
 	{
 		if(is_array($value))
 		{
-			return array_map(array($this, 'clean_input'), $value);
+			return array_map(array('ots_test_suite', 'clean_input'), $value);
 		}
 		else
 		{

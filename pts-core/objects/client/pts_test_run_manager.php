@@ -1835,7 +1835,7 @@ class pts_test_run_manager
 		{
 			if($report_errors)
 			{
-				$report_errors && pts_client::$display->test_run_error($test_profile . ': ' . $error);
+				$report_errors && pts_client::$display->test_run_error($test_result->test_profile . ': ' . $error);
 			}
 			return false;
 		}

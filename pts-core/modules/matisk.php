@@ -326,7 +326,7 @@ class matisk extends pts_module_interface
 
 			if($xdg_config_home == false)
 			{
-				$xdg_config_home = pts_client::user_home_directory() . '.config';
+				$xdg_config_home = pts_core::user_home_directory() . '.config';
 			}
 
 			if($xdg_config_home != false && is_dir($xdg_config_home))
