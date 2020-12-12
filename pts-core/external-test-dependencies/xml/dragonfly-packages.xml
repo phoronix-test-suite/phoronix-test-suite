@@ -61,6 +61,26 @@
 			<PackageName>devel/boost-all</PackageName>
 		</Package>
 		<Package>
+			<GenericName>libevent</GenericName>
+			<PackageName>libevent</PackageName>
+		</Package>
+		<Package>
+			<GenericName>freeimage</GenericName>
+			<PackageName>freeimage</PackageName>
+		</Package>
+		<Package>
+			<GenericName>glew</GenericName>
+			<PackageName>glew</PackageName>
+		</Package>
+		<Package>
+			<GenericName>tiff</GenericName>
+			<PackageName>tiff</PackageName>
+		</Package>
+		<Package>
+			<GenericName>glut</GenericName>
+			<PackageName>freeglut</PackageName>
+		</Package>
+		<Package>
 			<GenericName>tinyxml</GenericName>
 			<PackageName>tinyxml</PackageName>
 		</Package>
