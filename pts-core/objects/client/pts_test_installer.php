@@ -762,7 +762,7 @@ class pts_test_installer
 				$compiler_options = implode(' ', array_unique($compiler_options));
 				//sort($compiler_options);
 
-				// TODO: right now just keep overwriting $compiler to take the last compiler.. so TODO add support for multiple compiler reporting or decide what todo
+				// right now just keep overwriting $compiler to take the last compiler.. so add support for multiple compiler reporting or decide what should report if not just the last
 				$compiler = array('compiler-type' => $compiler_type, 'compiler' => $compiler_choice, 'compiler-options' => $compiler_options);
 				//echo PHP_EOL . 'DEBUG: ' . $compiler_type . ' ' . $compiler_choice . ' :: ' . $compiler_options . PHP_EOL;
 			}
@@ -878,7 +878,6 @@ class pts_test_installer
 					{
 						$install_error = null;
 
-						// TODO: perhaps better way to handle this than to remove pts-install file(s)
 						pts_file_io::unlink($test_install_directory . 'pts-install.xml');
 						pts_file_io::unlink($test_install_directory . 'pts-install.json');
 

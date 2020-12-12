@@ -1072,11 +1072,7 @@ class pts_result_file_analyzer
 		if(count($hw_unique) == 1 && count($sw_unique) == 1)
 		{
 			// The hardware and software is maintained throughout the testing, so if there's a change in results its something we aren't monitoring
-			// TODO XXX: Not sure this below check is needed anymore...
-			if(true || (count($hw) > 2 && $result_file->get_test_count() != count($hw)))
-			{
-				$desc = array('Unknown', implode(', ', $identifiers));
-			}
+			$desc = array('Unknown', implode(', ', $identifiers));
 		}
 		else if(count($sw_unique) == 1)
 		{
@@ -1336,19 +1332,6 @@ class pts_result_file_analyzer
 	}
 	public static function system_value_to_ir_value($value, $index)
 	{
-		// TODO XXX: Move this logic off to OpenBenchmarking.org script
-		/*
-		!in_array($index, array('Memory', 'System Memory', 'Desktop', 'Screen Resolution', 'System Layer')) &&
-			$search_break_characters = array('@', '(', '/', '+', '[', '<', '*', '"');
-			for($i = 0, $x = strlen($value); $i < $x; $i++)
-			{
-				if(in_array($value[$i], $search_break_characters))
-				{
-					$value = substr($value, 0, $i);
-					break;
-				}
-			}
-		*/
 		$ir = new pts_graph_ir_value($value);
 
 		if($value != 'Unknown' && $value != null)

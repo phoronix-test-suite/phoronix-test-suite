@@ -204,7 +204,7 @@ class pts_test_run_manager
 					return true;
 				}
 
-				// TODO: could add more checks and take better advantage of the array of data to better determine if it's still worth increasing
+				// could add more checks and take better advantage of the array of data to better determine if it's still worth increasing
 			}
 
 		}
@@ -1535,7 +1535,6 @@ class pts_test_run_manager
 
 		foreach($to_run_objects as &$run_object)
 		{
-			// TODO: determine whether to print the titles of what's being run?
 			if($run_object instanceof pts_test_profile)
 			{
 				if($run_object->get_identifier() == null || $run_object->get_title() == null || $this->validate_test_to_run($run_object) == false)

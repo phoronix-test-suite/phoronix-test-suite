@@ -491,7 +491,6 @@ class pts_test_execution
 				if($is_expected_last_run)
 				{
 					// For now just passing the last test log file...
-					// TODO XXX: clean this up with log files to preserve when needed, let multiple log files exist for extra_data, etc
 					pts_test_result_parser::generate_extra_data($test_run_request, $test_log_file);
 				}
 				pts_module_manager::module_process('__test_log_output', $test_log_file);

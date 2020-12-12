@@ -259,9 +259,7 @@ class pts_openbenchmarking
 		if($host == null)
 		{
 			// Use HTTPS if OpenSSL is available as a check to see if HTTPS can be handled
-			// OpenSSL seems to have problems on OpenIndiana at least, TODO: investigate
-			// Using a proxy seems to have problems for HTTPS
-			// TODO XXX
+			// Using a proxy may have problems for HTTPS
 			$host = ((extension_loaded('openssl') && getenv('NO_OPENSSL') == false && (!PTS_IS_CLIENT || !pts_network::is_proxy_setup())) ? 'https://' : 'http://') . 'openbenchmarking.org/';
 			//$host = 'http://openbenchmarking.org/';
 		}
@@ -919,7 +917,6 @@ class pts_openbenchmarking
 		{
 			$version = substr($test, ($c + 1));
 
-			// TODO: functionalize this and read against types.xsd
 			if(isset($version[2]) && !isset($version[8]) && pts_strings::string_only_contains($version, (pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL)))
 			{
 				$test = substr($test, 0, $c);
