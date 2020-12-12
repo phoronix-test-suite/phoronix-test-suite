@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class debug_unhandled_dependencies implements pts_option_interface
+class dump_unhandled_dependencies implements pts_option_interface
 {
 	const doc_section = 'Asset Creation';
 	const doc_description = 'This option will list missing entries in the external dependencies XML file for the operating system under test. This option is used if wanting to help find missing dependency XML data to fill in for contributing to upstream Phoronix Test Suite.';

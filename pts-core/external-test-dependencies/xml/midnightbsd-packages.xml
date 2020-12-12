@@ -56,12 +56,20 @@
 			<PackageName>nasm</PackageName>
 		</Package>
 		<Package>
+			<GenericName>csh</GenericName>
+			<PackageName>shells/bsd44-csh</PackageName>
+		</Package>
+		<Package>
 			<GenericName>pcre</GenericName>
 			<PackageName>pcre</PackageName>
 		</Package>
 		<Package>
 			<GenericName>bison</GenericName>
 			<PackageName>bison</PackageName>
+		</Package>
+		<Package>
+			<GenericName>tcl</GenericName>
+			<PackageName>devel/tcllib</PackageName>
 		</Package>
 		<Package>
 			<GenericName>imlib2-development</GenericName>
