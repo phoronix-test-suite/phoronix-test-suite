@@ -29,6 +29,54 @@
 			<PackageName>freetype</PackageName>
 		</Package>
 		<Package>
+			<GenericName>eigen</GenericName>
+			<PackageName>eigen</PackageName>
+		</Package>
+		<Package>
+			<GenericName>protobuf</GenericName>
+			<PackageName>protobuf</PackageName>
+		</Package>
+		<Package>
+			<GenericName>glfw</GenericName>
+			<PackageName>glfw</PackageName>
+		</Package>
+		<Package>
+			<GenericName>openexr</GenericName>
+			<PackageName>openexr</PackageName>
+		</Package>
+		<Package>
+			<GenericName>V8</GenericName>
+			<PackageName>V8</PackageName>
+		</Package>
+		<Package>
+			<GenericName>opencv</GenericName>
+			<PackageName>opencv</PackageName>
+		</Package>
+		<Package>
+			<GenericName>tcl</GenericName>
+			<PackageName>lang/tcl-wrapper</PackageName>
+		</Package>
+		<Package>
+			<GenericName>boost-development</GenericName>
+			<PackageName>devel/boost-all</PackageName>
+		</Package>
+		<Package>
+			<GenericName>tinyxml</GenericName>
+			<PackageName>tinyxml</PackageName>
+		</Package>
+		<Package>
+			<GenericName>opencl</GenericName>
+			<PackageName>opencl</PackageName>
+		</Package>
+		<Package>
+			<GenericName>suitesparse</GenericName>
+			<PackageName>suitesparse</PackageName>
+		</Package>
+		<Package>
+			<GenericName>lib3ds</GenericName>
+			<PackageName>lib3ds</PackageName>
+		</Package>
+		<Package>
 			<GenericName>java</GenericName>
 			<PackageName>java/openjdk11</PackageName>
 		</Package>
