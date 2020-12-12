@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011 - 2013, Phoronix Media
-	Copyright (C) 2011 - 2013, Michael Larabel
+	Copyright (C) 2011 - 2020, Phoronix Media
+	Copyright (C) 2011 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -44,20 +44,19 @@ class dump_openbenchmarking_indexes implements pts_option_interface
 				foreach($repo_index[$t] as $identifier => $test)
 				{
 					echo 'Identifier: ' . $identifier . PHP_EOL;
+					$table = array();
 					foreach($test as $i => $j)
 					{
-						echo sprintf('%-22ls', $i) . ': ';
-
 						if(is_array($j))
 						{
-							echo implode(', ', $j);
+							$table[] = array($i . ': ', implode(', ', $j));
 						}
 						else
 						{
-							echo $j;
+							$table[] = array($i . ': ', trim($j));
 						}
-						echo PHP_EOL;
 					}
+					echo pts_user_io::display_text_table($table) . PHP_EOL;
 					echo PHP_EOL;
 				}
 			}

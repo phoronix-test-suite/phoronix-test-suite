@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2018, Phoronix Media
-	Copyright (C) 2008 - 2018, Michael Larabel
+	Copyright (C) 2008 - 2020, Phoronix Media
+	Copyright (C) 2008 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -39,6 +39,7 @@ class list_all_tests implements pts_option_interface
 		}
 
 		$test_count = 0;
+		$table = array();
 		foreach(pts_openbenchmarking::available_tests(false) as $identifier)
 		{
 			$repo = substr($identifier, 0, strpos($identifier, '/'));
@@ -54,8 +55,7 @@ class list_all_tests implements pts_option_interface
 				// Don't show unsupported tests
 				continue;
 			}
-
-			echo sprintf('%-30ls - %-39ls %-9ls', $identifier, $repo_index['tests'][$id]['title'], $repo_index['tests'][$id]['test_type']) . PHP_EOL;
+			$table[] = array($identifier, pts_client::cli_just_bold($repo_index['tests'][$id]['title']), $repo_index['tests'][$id]['test_type']);
 			$test_count++;
 		}
 
@@ -65,7 +65,7 @@ class list_all_tests implements pts_option_interface
 
 			if($test_profile->get_title() != null && $test_profile->is_supported(false))
 			{
-				echo sprintf('%-30ls - %-39ls %-9ls', $test_profile->get_identifier(), $test_profile->get_title(), $test_profile->get_test_hardware_type()) . PHP_EOL;
+				$table[] = array($test_profile->get_identifier(), pts_client::cli_just_bold($test_profile->get_title()), $test_profile->get_test_hardware_type());
 				$test_count++;
 			}
 		}
@@ -73,6 +73,10 @@ class list_all_tests implements pts_option_interface
 		if($test_count == 0)
 		{
 			echo PHP_EOL . 'No tests found. Please check that you have Internet connectivity to download test profile data from OpenBenchmarking.org. The Phoronix Test Suite has documentation on configuring the network setup, proxy settings, and PHP network options. Please contact Phoronix Media if you continuing to experience problems.' . PHP_EOL . PHP_EOL;
+		}
+		else
+		{
+			echo pts_user_io::display_text_table($table) . PHP_EOL;
 		}
 	}
 }
