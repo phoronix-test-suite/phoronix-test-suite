@@ -4,6 +4,8 @@ Phoronix Test Suite (Git)
 
 pts-core: Add debug-unhandled-dependencies option
 pts-core: Default to 2.5% std dev threshold default on new installs
+pts-core: BSD external dependency updates
+pts-core: Various refinements to the text user interface
 
 Phoronix Test Suite 10.2.0 Milestone 2
 6 December 2020

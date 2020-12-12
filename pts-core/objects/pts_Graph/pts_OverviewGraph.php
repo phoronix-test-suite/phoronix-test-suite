@@ -192,7 +192,7 @@ class pts_OverviewGraph extends pts_graph_core
 		if($has_graphed_a_bar == false)
 		{
 			// Don't show an empty overview graph...
-			$this->skip_graph = true;
+			//$this->skip_graph = true;
 		}
 
 
