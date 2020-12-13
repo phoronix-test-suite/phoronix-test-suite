@@ -59,7 +59,7 @@ class phodevi_base
 		// Assume desktop by default as fallback
 		$type = 'D';
 
-		if(pts_strings::has_element_in_string($hw, array('ARMv', 'Cortex', 'Exynos', 'jetson')) || stripos($sw, 'mips64') !== false)
+		if((pts_strings::has_element_in_string($hw, array('ARMv', 'Cortex', 'Exynos', 'jetson')) && !pts_strings::has_element_in_string($hw, array('Ampere '))) || stripos($sw, 'mips64') !== false)
 		{
 			$type = 'E';
 		}
@@ -79,7 +79,7 @@ class phodevi_base
 		{
 			$type = 'W';
 		}
-		else if(pts_strings::has_element_in_string($hw, array(' Xeon', 'Opteron', 'EPYC', 'POWER ')) || pts_strings::has_element_in_string($hw, array('Tyan', 'Supermicro')))
+		else if(pts_strings::has_element_in_string($hw, array(' Xeon', 'Opteron', 'EPYC', 'POWER ', 'Ampere ')) || pts_strings::has_element_in_string($hw, array('Tyan', 'Supermicro')))
 		{
 			$type = 'S';
 		}
