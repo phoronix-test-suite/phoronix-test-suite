@@ -93,6 +93,9 @@ then
 elif [ -x /usr/local/bin/php-7.4 ]
 then
 	export PHP_BIN="/usr/local/bin/php-7.4"
+elif [ -x /usr/local/bin/php-8.0 ]
+then
+	export PHP_BIN="/usr/local/bin/php-8.0"
 elif [ -x /opt/bin/php ]
 then
 	export PHP_BIN="/opt/bin/php"
