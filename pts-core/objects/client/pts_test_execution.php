@@ -55,7 +55,7 @@ class pts_test_execution
 		$error = null;
 		if(pts_test_run_options::validate_test_arguments_compatibility($test_run_request->get_arguments_description(), $test_run_request->test_profile, $error) == false)
 		{
-			self::test_run_error($test_run_manager, $test_run_request, $error);
+			self::test_run_error($test_run_manager, $test_run_request, '[' . $test_run_request->test_profile->get_identifier() . ' ' . $test_run_request->get_arguments_description() . '] ' . $error);
 			return false;
 		}
 		$lock_file = $test_directory . 'run_lock';
