@@ -305,6 +305,7 @@ class pts_ae_data
 			foreach($comparison_components as $component => &$values)
 			{
 				$comparison_components_raw[$component] = $values;
+				$max_value_precision = pts_math::get_precision($values);
 				$values = pts_math::arithmetic_mean($values);
 				if($values < 5)
 				{
@@ -322,7 +323,8 @@ class pts_ae_data
 				{
 					$precision = 0;
 				}
-				$values = round($values, $precision);
+
+				$values = round($values, min($precision, $max_value_precision));
 			}
 
 			if($row['HigherIsBetter'] == '1')
