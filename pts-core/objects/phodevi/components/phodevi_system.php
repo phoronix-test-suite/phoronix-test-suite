@@ -753,6 +753,7 @@ class phodevi_system extends phodevi_device_interface
 				// e.g. clang version 3.0 (branches/release_30 142590)
 
 				$compiler_info = substr($compiler_info, ($cv_pos + 14));
+				$compiler_info = str_replace(PHP_EOL, ' ', $compiler_info);
 				$clang_version = substr($compiler_info, 0, strpos($compiler_info, ' '));
 
 				// XXX: the below check bypass now because e.g. Ubuntu appends '-ubuntuX', etc that breaks check

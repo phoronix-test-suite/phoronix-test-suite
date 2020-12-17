@@ -281,5 +281,9 @@
 			<GenericName>tiff</GenericName>
 			<PackageName>tiff</PackageName>
 		</Package>
+		<Package>
+			<GenericName>curl</GenericName>
+			<PackageName>curl</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
