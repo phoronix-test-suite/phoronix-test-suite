@@ -195,6 +195,10 @@ class ob_auto_compare extends pts_module_interface
 				$box_plot_size = strlen($box_plot);
 				$box_plot = str_split($box_plot);
 				$max_value = max(array_pop($percentiles), $active_result);
+				if($result_object->test_profile->get_result_proportion() == 'HIB')
+				{
+					$max_value = $max_value * 1.02;
+				}
 				$results_at_pos = array(0, 1, ($box_plot_size - 1));
 
 				// BOX PLOT
