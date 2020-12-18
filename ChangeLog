@@ -6,6 +6,7 @@ pts-core: Add debug-unhandled-dependencies option
 pts-core: Default to 2.5% std dev threshold default on new installs
 pts-core: BSD external dependency updates
 pts-core: Various refinements to the text user interface
+phodevi: Don't restore the Phodevi cache if the /etc/machine-id changed (or /etc/hostname as fallback)
 
 Phoronix Test Suite 10.2.0 Milestone 2
 6 December 2020
