@@ -59,7 +59,12 @@ class phodevi_base
 		// Assume desktop by default as fallback
 		$type = 'D';
 
-		if((pts_strings::has_element_in_string($hw, array('ARMv', 'Cortex', 'Exynos', 'jetson')) && !pts_strings::has_element_in_string($hw, array('Ampere '))) || stripos($sw, 'mips64') !== false)
+		if(pts_strings::has_element_in_string($hw, array('Ampere ', 'Amazon EC2', 'Google Compute')))
+		{
+			// Dp this check first so ARM servers won't be classified as embedded E
+			$type = 'S';
+		}
+		else if(pts_strings::has_element_in_string($hw, array('ARMv', 'Cortex', 'Exynos', 'jetson')) || stripos($sw, 'mips64') !== false)
 		{
 			$type = 'E';
 		}
