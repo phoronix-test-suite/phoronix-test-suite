@@ -446,17 +446,17 @@ class pts_test_installer
 								if(is_file($download_destination_temp) && filesize($download_destination_temp) < 500 && (stripos(file_get_contents($download_destination_temp), 'not found') !== false || strpos(file_get_contents($download_destination_temp), 404) !== false))
 								{
 									self::test_install_error(null, $test_install_request, 'File Not Found: ' . $url);
-									$md5_failed = false;
+									$checksum_failed = false;
 								}
 								else if(is_file($download_destination_temp) && filesize($download_destination_temp) > 0)
 								{
 									self::test_install_error(null, $test_install_request, 'Checksum Failed: ' . $url);
-									$md5_failed = true;
+									$checksum_failed = true;
 								}
 								else
 								{
 									self::test_install_error(null, $test_install_request, 'Download Failed: ' . $url);
-									$md5_failed = false;
+									$checksum_failed = false;
 								}
 
 								pts_file_io::unlink($download_destination_temp);
@@ -479,7 +479,7 @@ class pts_test_installer
 										{
 											$try_again = false;
 										}
-										else if($md5_failed)
+										else if($checksum_failed)
 										{
 											$try_again = pts_user_io::prompt_bool_input('Try downloading the file again', true, 'TRY_DOWNLOAD_AGAIN');
 										}
