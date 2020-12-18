@@ -459,6 +459,8 @@ class pts_test_installer
 									$checksum_failed = false;
 								}
 
+								pts_openbenchmarking_client::upload_usage_data('download_failure', array($test_install_request, $url));
+
 								pts_file_io::unlink($download_destination_temp);
 								$fail_count++;
 

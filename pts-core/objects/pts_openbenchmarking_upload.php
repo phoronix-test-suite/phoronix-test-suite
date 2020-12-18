@@ -230,6 +230,11 @@ class pts_openbenchmarking_upload extends pts_openbenchmarking
 				$upload_data = array('test_identifier' => $test_install->test_profile->get_identifier(), 'error' => $error, 'os' => phodevi::read_property('system', 'vendor-identifier'));
 				pts_network::http_upload_via_post(pts_openbenchmarking::openbenchmarking_host() . 'extern/statistics/report-test-install-failure.php', $upload_data);
 				break;
+			case 'download_failure':
+				list($test_install, $broken_url) = $data;
+				$upload_data = array('test_identifier' => $test_install->test_profile->get_identifier(), 'broken_url' => $broken_url);
+				pts_network::http_upload_via_post(pts_openbenchmarking::openbenchmarking_host() . 'extern/statistics/report-download-failure.php', $upload_data);
+				break;
 		}
 	}
 	protected static function result_upload_supported(&$result_file)
