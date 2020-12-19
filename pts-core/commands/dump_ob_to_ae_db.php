@@ -68,7 +68,7 @@ class dump_ob_to_ae_db implements pts_option_interface
 					{
 						if(($cores = $system->get_cpu_core_count()) != false && $cores > 1 && stripos($system_data[$system->get_identifier()]['Processor'], 'Core') === false)
 						{
-							$system_data[$system->get_identifier()]['Processor'] .= ' ' . pts_strings::plural_handler($cores, 'Core');
+							$system_data[$system->get_identifier()]['Processor'] .= ' ' . $cores . '-Core';
 						}
 					}
 					$processor = $system_data[$system->get_identifier()]['Processor'];
