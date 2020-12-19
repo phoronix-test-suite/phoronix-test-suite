@@ -226,6 +226,14 @@
 			<PackageName>cmake</PackageName>
 		</Package>
 		<Package>
+			<GenericName>dune</GenericName>
+			<PackageName>dune</PackageName>
+		</Package>
+		<Package>
+			<GenericName>python-numpy</GenericName>
+			<PackageName>python3-numpy</PackageName>
+		</Package>
+		<Package>
 			<GenericName>boost-development</GenericName>
 			<PackageName>boost-devel boost-thread</PackageName>
 		</Package>
