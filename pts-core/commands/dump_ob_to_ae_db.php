@@ -64,6 +64,13 @@ class dump_ob_to_ae_db implements pts_option_interface
 
 				if(isset($system_data[$system->get_identifier()]['Processor']) && !phodevi::is_fake_device($system_data[$system->get_identifier()]['Processor']))
 				{
+					if(stripos($system_data[$system->get_identifier()]['Processor'], 'ARMv') !== false || stripos($system_data[$system->get_identifier()]['Processor'], 'POWER9'))
+					{
+						if(($cores = $system->get_cpu_core_count()) != false && $cores > 1 && stripos($system_data[$system->get_identifier()]['Processor'], 'Core') === false)
+						{
+							$system_data[$system->get_identifier()]['Processor'] .= ' ' . pts_strings::plural_handler($cores, 'Core');
+						}
+					}
 					$processor = $system_data[$system->get_identifier()]['Processor'];
 					if(!isset($system_logs['Processor'][$processor]))
 					{

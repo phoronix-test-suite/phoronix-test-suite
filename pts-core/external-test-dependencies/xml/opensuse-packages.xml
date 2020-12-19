@@ -252,7 +252,7 @@
 		</Package>
 		<Package>
 			<GenericName>openmpi-development</GenericName>
-			<PackageName>openmpi</PackageName>
+			<PackageName>openmpi-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>yasm</GenericName>
@@ -352,7 +352,7 @@
 		</Package>
 		<Package>
 			<GenericName>node-npm</GenericName>
-			<PackageName>npm</PackageName>
+			<PackageName>nodejs nodejs-npm</PackageName>
 		</Package>
 		<Package>
 			<GenericName>snappy</GenericName>
