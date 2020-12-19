@@ -87,6 +87,18 @@
 			<FileCheck>/usr/lib/jvm/ OR /usr/lib64/jvm/</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>maven</GenericName>
+			<PackageName>maven</PackageName>
+		</Package>
+		<Package>
+			<GenericName>python-numpy</GenericName>
+			<PackageName>python3-numpy</PackageName>
+		</Package>
+		<Package>
+			<GenericName>python-sklearn</GenericName>
+			<PackageName>python-scikit-learn</PackageName>
+		</Package>
+		<Package>
 			<GenericName>portaudio-development</GenericName>
 			<PackageName>portaudio-devel</PackageName>
 		</Package>
