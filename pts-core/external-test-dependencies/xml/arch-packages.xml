@@ -371,5 +371,33 @@
 			<GenericName>erlang</GenericName>
 			<PackageName>erlang</PackageName>
 		</Package>
+		<Package>
+			<GenericName>csh</GenericName>
+			<PackageName>tcsh</PackageName>
+		</Package>
+		<Package>
+			<GenericName>popt</GenericName>
+			<PackageName>popt</PackageName>
+		</Package>
+		<Package>
+			<GenericName>libaio-development</GenericName>
+			<PackageName>libaio</PackageName>
+		</Package>
+		<Package>
+			<GenericName>ncurses-development</GenericName>
+			<PackageName>ncurses</PackageName>
+		</Package>
+		<Package>
+			<GenericName>bzip2-development</GenericName>
+			<PackageName>bzip2</PackageName>
+		</Package>
+		<Package>
+			<GenericName>steam</GenericName>
+			<PackageName>steam</PackageName>
+		</Package>
+		<Package>
+			<GenericName>python-numpy</GenericName>
+			<PackageName>python-numpy</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
