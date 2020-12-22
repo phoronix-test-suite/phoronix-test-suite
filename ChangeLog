@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 10.2.0 Milestone 3
+21 December 2020
 
 pts-core: Add debug-unhandled-dependencies option
 pts-core: Default to 2.5% std dev threshold default on new installs
