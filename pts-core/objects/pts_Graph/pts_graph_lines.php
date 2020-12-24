@@ -65,6 +65,7 @@ class pts_graph_lines extends pts_graph_core
 		//$extra_attributes['no_compact_results_var'] = true;
 		parent::__construct($result_object, $result_file, $extra_attributes);
 		$this->i['plot_zero_value_lines'] = isset($extra_attributes['plot_zero_value_lines']);
+		$this->i['on_zero_plot_former_value'] = isset($extra_attributes['on_zero_plot_former_value']);
 		$this->i['show_graph_key'] = true;
 		$this->i['show_background_lines'] = true;
 		$this->i['iveland_view'] = true;
@@ -356,6 +357,11 @@ class pts_graph_lines extends pts_graph_core
 			for($i = 0; $i < $point_counter; $i++)
 			{
 				$value = isset($result_array[$i]) ? $result_array[$i] : -1;
+				if($this->i['on_zero_plot_former_value'] && $value <= 0 && $i > 0)
+				{
+					$value = isset($result_array[($i - 1)]) ? $result_array[($i - 1)] : -1;
+				}
+
 				if($this->i['plot_zero_value_lines'] && $value == -1)
 				{
 					$value = 0;
