@@ -359,7 +359,7 @@ class pts_graph_lines extends pts_graph_core
 				$value = isset($result_array[$i]) ? $result_array[$i] : -1;
 				if($this->i['on_zero_plot_former_value'] && $value <= 0 && $i > 0)
 				{
-					$value = isset($result_array[($i - 1)]) ? $result_array[($i - 1)] : -1;
+					$value = $prev_value;
 				}
 
 				if($this->i['plot_zero_value_lines'] && $value == -1)
