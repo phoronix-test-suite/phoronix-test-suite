@@ -342,8 +342,6 @@ class pts_graph_lines extends pts_graph_core
 	}
 	protected function renderGraphLines()
 	{
-		$prev_value = 0;
-
 		foreach($this->test_result->test_result_buffer->buffer_items as &$buffer_item)
 		{
 			$paint_color = $this->get_paint_color($buffer_item->get_result_identifier());
@@ -353,7 +351,7 @@ class pts_graph_lines extends pts_graph_core
 			$regression_plots = array();
 			$poly_points = array();
 			$g = $this->svg_dom->make_g(array('stroke' => $paint_color, 'stroke-width' => 1, 'fill' => $paint_color));
-
+			$prev_value = 0;
 			for($i = 0; $i < $point_counter; $i++)
 			{
 				$value = isset($result_array[$i]) ? $result_array[$i] : -1;
