@@ -537,7 +537,7 @@ class pts_ae_data
 		{
 			foreach($category_data as $c => $data)
 			{
-				if($data['occurences'] < 5)
+				if($data['occurences'] < 4)
 				{
 					continue;
 				}
