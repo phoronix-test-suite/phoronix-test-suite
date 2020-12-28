@@ -318,13 +318,18 @@ class sys_power extends phodevi_sensor
 
 			if($rate == -1 && is_file('/sys/class/power_supply/BAT0/voltage_now') && is_file('/sys/class/power_supply/BAT0/current_now'))
 			{
-				$voltage_now = pts_file_io::file_get_contents('/sys/class/power_supply/BAT0/voltage_now') / 1000;
-				$current_now = pts_file_io::file_get_contents('/sys/class/power_supply/BAT0/current_now') / 1000;
-				$power_now = $voltage_now * $current_now / 1000;
-
-				if($power_now > 1)
+				$voltage_now = pts_file_io::file_get_contents('/sys/class/power_supply/BAT0/voltage_now');
+				$current_now = pts_file_io::file_get_contents('/sys/class/power_supply/BAT0/current_now');
+				if(is_numeric($voltage_now) && is_numeric($current_now))
 				{
-					$rate = $power_now;
+					$voltage_now = $voltage_now / 1000;
+					$current_now = $current_now / 1000;
+					$power_now = $voltage_now * $current_now / 1000;
+
+					if($power_now > 1)
+					{
+						$rate = $power_now;
+					}
 				}
 			}
 			if($rate == -1 && is_file('/sys/class/power_supply/BAT1/voltage_now') && is_file('/sys/class/power_supply/BAT1/current_now'))
