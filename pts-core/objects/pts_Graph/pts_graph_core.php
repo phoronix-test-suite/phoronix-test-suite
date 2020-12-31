@@ -879,6 +879,19 @@ abstract class pts_graph_core
 	{
 		$increment = round(($this->i['graph_max_value'] - $this->i['graph_min_value']) / $this->i['mark_count'], $this->i['graph_max_value'] < 10 ? 4 : 2);
 
+		$dv_divide = 1;
+		$dv_postfix = null;
+		if($increment > 1000000 && ($increment % 1000) == 0)
+		{
+			$dv_divide = 1000000;
+			$dv_postfix = 'M';
+		}
+		else if($increment > 1000 && ($increment % 1000) == 0)
+		{
+			$dv_divide = 1000;
+			$dv_postfix = 'K';
+		}
+
 		if($this->i['graph_orientation'] == 'HORIZONTAL')
 		{
 			$tick_width = round(($left_end - $left_start) / $this->i['mark_count']);
@@ -900,7 +913,12 @@ abstract class pts_graph_core
 				{
 					if(!$this->i['no_graph_value_ticks'] && $show_numbers)
 					{
-						$this->svg_dom->add_text_element($display_value, array('x' => $px_from_left + 2, 'y' => ($top_end + 5 + self::$c['size']['tick_mark'])), $g);
+						$dv = $display_value;
+						if($dv_divide > 1)
+						{
+							$dv = round($dv / $dv_divide, 2) . $dv_postfix;
+						}
+						$this->svg_dom->add_text_element($dv, array('x' => $px_from_left + 2, 'y' => ($top_end + 5 + self::$c['size']['tick_mark'])), $g);
 					}
 					$this->svg_dom->add_element('line', array('x1' => ($px_from_left + 2), 'y1' => ($top_start), 'x2' => ($px_from_left + 2), 'y2' => ($top_end - 5), 'stroke-dasharray' => '5,5'), $g_lines);
 					$this->svg_dom->add_element('line', array('x1' => ($px_from_left + 2), 'y1' => ($top_end - 4), 'x2' => ($px_from_left + 2), 'y2' => ($top_end + 5)), $g_lines);
@@ -930,7 +948,12 @@ abstract class pts_graph_core
 				{
 					if(!$this->i['no_graph_value_ticks'] && $show_numbers)
 					{
-						$this->svg_dom->add_text_element($display_value, array('x' => ($px_from_left_start - 4), 'y' => round($px_from_top + (self::$c['size']['tick_mark'] / 2))), $g_text);
+						$dv = $display_value;
+						if($dv_divide > 1)
+						{
+							$dv = round($dv / $dv_divide, 2) . $dv_postfix;
+						}
+						$this->svg_dom->add_text_element($dv, array('x' => ($px_from_left_start - 4), 'y' => round($px_from_top + (self::$c['size']['tick_mark'] / 2))), $g_text);
 					}
 
 					if($i != 0 && $this->i['show_background_lines'])
