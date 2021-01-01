@@ -341,7 +341,7 @@ class phodevi_cpu extends phodevi_device_interface
 		{
 			// Intel INT340x Workload Type
 			$workload_type = pts_file_io::file_get_contents('/sys/bus/pci/devices/0000:00:04.0/workload_request/workload_type');
-			if(!empty($workload_type))
+			if(!empty($workload_type) && $workload_type != 'none')
 			{
 				$pm[] = 'INT340x Workload Type: ' . $workload_type;
 			}
