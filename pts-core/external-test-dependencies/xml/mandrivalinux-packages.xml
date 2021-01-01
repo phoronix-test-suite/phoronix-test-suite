@@ -13,7 +13,7 @@
 		</Package>
 		<Package>
 			<GenericName>sdl-development</GenericName>
-			<PackageName>libSDL1.2_0 libSDL_gfx13 libSDL_image1.2_0 libSDL_net1.2_0 libSDL_ttf2.0_0</PackageName>
+			<PackageName></PackageName>
 		</Package>
 		<Package>
 			<GenericName>smartmontools</GenericName>
@@ -69,10 +69,6 @@
 			<FileCheck>/usr/bin/clang, /usr/bin/bison, /usr/bin/flex</FileCheck>
 		</Package>
 		<Package>
-			<GenericName>xorg-development</GenericName>
-			<PackageName>libxorg-x11-devel</PackageName>
-		</Package>
-		<Package>
 			<GenericName>bison</GenericName>
 			<PackageName>bison</PackageName>
 		</Package>
@@ -122,7 +118,7 @@
 		</Package>
 		<Package>
 			<GenericName>jpeg-development</GenericName>
-			<PackageName>libopenjpeg-devel</PackageName>
+			<PackageName>libjpeg-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>libaio-development</GenericName>
