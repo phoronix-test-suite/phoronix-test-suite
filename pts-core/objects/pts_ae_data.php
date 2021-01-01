@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2020, Phoronix Media
-	Copyright (C) 2010 - 2020, Michael Larabel
+	Copyright (C) 2010 - 2021, Phoronix Media
+	Copyright (C) 2010 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -289,19 +289,22 @@ class pts_ae_data
 					$component_data[$component][$related_component]['system_type'] = $system_types[$component][$related_component];
 				}
 			}
-
+			$component_sample_counts = array();
 			foreach($comparison_components as $component => &$values)
 			{
+				$component_sample_counts[$component] = count($values);
 				$values = pts_math::remove_outliers($values, 3);
 
 				if(phodevi::is_fake_device($component) || count($values) < 3)
 				{
+					unset($component_sample_counts[$component]);
 					unset($comparison_components[$component]);
 					continue;
 				}
 			}
 			uasort($comparison_components, array('pts_ae_data', 'sort_array_by_size_of_array_in_value'));
 			$comparison_components = array_slice($comparison_components, 0, 300);
+			$csc = array();
 			foreach($comparison_components as $component => &$values)
 			{
 				$comparison_components_raw[$component] = $values;
@@ -325,6 +328,7 @@ class pts_ae_data
 				}
 
 				$values = round($values, min($precision, $max_value_precision));
+				$csc[$component] = $component_sample_counts[$component];
 			}
 
 			if($row['HigherIsBetter'] == '1')
@@ -402,6 +406,7 @@ class pts_ae_data
 			$json['percentiles'] = $percentiles;
 			$json['components'] = $component_data;
 			$json['reference_results'] = $comparison_components;
+			$json['reference_results_counts'] = $csc;
 
 			$json_encoded = json_encode($json);
 			if(!empty($json_encoded))
