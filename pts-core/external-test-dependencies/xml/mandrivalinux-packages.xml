@@ -52,6 +52,14 @@
 			<PackageName>nasm</PackageName>
 		</Package>
 		<Package>
+			<GenericName>vulkan-development</GenericName>
+			<PackageName>vulkan-headers libvulkan-devel vulkan-tools</PackageName>
+		</Package>
+		<Package>
+			<GenericName>rust</GenericName>
+			<PackageName>rust cargo</PackageName>
+		</Package>
+		<Package>
 			<GenericName>csh</GenericName>
 			<PackageName>tcsh</PackageName>
 		</Package>
@@ -65,7 +73,7 @@
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
-			<PackageName>clang automake autoconf bison flex</PackageName>
+			<PackageName>clang automake make autoconf bison flex</PackageName>
 			<FileCheck>/usr/bin/clang, /usr/bin/bison, /usr/bin/flex</FileCheck>
 		</Package>
 		<Package>
@@ -127,6 +135,14 @@
 		<Package>
 			<GenericName>perl</GenericName>
 			<PackageName>perl perl-SDL</PackageName>
+		</Package>
+		<Package>
+			<GenericName>sdl2-development</GenericName>
+			<PackageName>libSDL2-devel</PackageName>
+		</Package>
+		<Package>
+			<GenericName>glut</GenericName>
+			<PackageName>libglut-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>perl-opengl</GenericName>
