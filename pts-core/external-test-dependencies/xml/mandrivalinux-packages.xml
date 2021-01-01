@@ -217,7 +217,7 @@
 		</Package>
 		<Package>
 			<GenericName>bzip2-development</GenericName>
-			<PackageName>libbzip2-devel</PackageName>
+			<PackageName>libbz2-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>tcl</GenericName>
