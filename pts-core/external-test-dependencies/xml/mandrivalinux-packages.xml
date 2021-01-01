@@ -213,7 +213,7 @@
 		</Package>
 		<Package>
 			<GenericName>python</GenericName>
-			<PackageName>python</PackageName>
+			<PackageName>python python-pip python3-pip</PackageName>
 		</Package>
 		<Package>
 			<GenericName>atlas-development</GenericName>
@@ -221,7 +221,7 @@
 		</Package>
 		<Package>
 			<GenericName>openmpi-development</GenericName>
-			<PackageName>libopenmpi</PackageName>
+			<PackageName>libopenmpi libopenmpi-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>yasm</GenericName>
