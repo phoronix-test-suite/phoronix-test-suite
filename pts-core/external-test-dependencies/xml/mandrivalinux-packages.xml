@@ -201,7 +201,7 @@
 		</Package>
 		<Package>
 			<GenericName>blas-development</GenericName>
-			<PackageName>libblas-devel</PackageName>
+			<PackageName>lib64blas-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>lapack-development</GenericName>
