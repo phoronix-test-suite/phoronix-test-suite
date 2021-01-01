@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2020, Phoronix Media
-	Copyright (C) 2008 - 2020, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 	phodevi_cpu.php: The PTS Device Interface object for the CPU / processor
 
 	This program is free software; you can redistribute it and/or modify
@@ -40,6 +40,7 @@ class phodevi_cpu extends phodevi_device_interface
 			'thread-count' => new phodevi_device_property('cpu_thread_count', phodevi::std_caching),
 			'node-count' => new phodevi_device_property('cpu_node_count', phodevi::smart_caching),
 			'scaling-governor' => new phodevi_device_property('cpu_scaling_governor', phodevi::std_caching),
+			'power-management' => new phodevi_device_property('cpu_power_management', phodevi::std_caching),
 			'microcode-version' => new phodevi_device_property('cpu_microcode_version', phodevi::std_caching),
 			'core-family-name' => new phodevi_device_property('get_core_name', phodevi::smart_caching),
 			'cache-size' => new phodevi_device_property('cpu_cache_size', phodevi::smart_caching),
@@ -322,6 +323,31 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 
 		return trim($scaling_governor);
+	}
+	public static function cpu_power_management()
+	{
+		$pm = array();
+
+		if(is_file('/sys/firmware/acpi/platform_profile'))
+		{
+			$platform_profile = pts_file_io::file_get_contents('/sys/firmware/acpi/platform_profile');
+			if(!empty($platform_profile))
+			{
+				$pm[] = 'ACPI Platform Profile: ' . $platform_profile;
+			}
+		}
+
+		if(is_file('/sys/bus/pci/devices/0000:00:04.0/workload_request/workload_type'))
+		{
+			// Intel INT340x Workload Type
+			$workload_type = pts_file_io::file_get_contents('/sys/bus/pci/devices/0000:00:04.0/workload_request/workload_type');
+			if(!empty($workload_type))
+			{
+				$pm[] = 'INT340x Workload Type: ' . $workload_type;
+			}
+		}
+
+		return implode(' - ', $pm);
 	}
 	public static function cpu_smt()
 	{

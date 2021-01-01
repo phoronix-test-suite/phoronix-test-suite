@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+phodevi: Add support for reporting ACPI Platform Profile and INT340x Workload Hint
+
 Phoronix Test Suite 10.2.0 Milestone 3
 21 December 2020
 

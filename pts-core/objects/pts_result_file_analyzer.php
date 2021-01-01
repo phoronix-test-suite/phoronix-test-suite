@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2020, Phoronix Media
-	Copyright (C) 2010 - 2020, Michael Larabel
+	Copyright (C) 2010 - 2021, Phoronix Media
+	Copyright (C) 2010 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -1446,10 +1446,16 @@ class pts_result_file_analyzer
 				unset($json['cpu-microcode']);
 			}
 
-			if(!empty($json['cpu-thermald']))
+			if(isset($json['cpu-thermald']) && !empty($json['cpu-thermald']))
 			{
 				$cpu_data[] = 'Thermald ' . $json['cpu-thermald'];
 				unset($json['cpu-thermald']);
+			}
+
+			if(isset($json['cpu-pm']) && !empty($json['cpu-pm']))
+			{
+				$cpu_data[] = $json['cpu-pm'];
+				unset($json['cpu-pm']);
 			}
 
 			$system_attributes['Processor'][$identifier] = implode(' - ', $cpu_data);

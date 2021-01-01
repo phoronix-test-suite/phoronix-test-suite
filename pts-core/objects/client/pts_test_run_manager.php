@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2020, Phoronix Media
-	Copyright (C) 2009 - 2020, Michael Larabel
+	Copyright (C) 2009 - 2021, Phoronix Media
+	Copyright (C) 2009 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -1010,6 +1010,12 @@ class pts_test_run_manager
 			if($smt)
 			{
 				$notes['cpu-smt'] = $smt;
+			}
+
+			$cpu_pm = phodevi::read_property('cpu', 'power-management');
+			if($cpu_pm)
+			{
+				$notes['cpu-pm'] = $cpu_pm;
 			}
 		}
 		if($show_all || in_array('Graphics', $test_hardware_types))
