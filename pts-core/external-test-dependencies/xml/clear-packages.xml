@@ -21,7 +21,7 @@
 		</Package>
 		<Package>
 			<GenericName>vulkan-development</GenericName>
-			<PackageName>vulkan-utils libvulkan-dev</PackageName>
+			<PackageName>developer-gpu</PackageName>
 		</Package>
 		<Package>
 			<GenericName>glut</GenericName>
