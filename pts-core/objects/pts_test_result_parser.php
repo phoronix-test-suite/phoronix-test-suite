@@ -862,6 +862,7 @@ class pts_test_result_parser
 			return false;
 		}
 
+		$test_results_group_precision = pts_math::get_precision($test_results);
 		switch($multi_match)
 		{
 			case 'REPORT_ALL':
@@ -872,7 +873,7 @@ class pts_test_result_parser
 			case 'GEOMETRIC_MEAN':
 				if($is_numeric_check)
 				{
-					$test_result = pts_math::geometric_mean($test_results);
+					$test_result = round(pts_math::geometric_mean($test_results), $test_results_group_precision);
 					if(count($test_results) > 1)
 					{
 						$min_test_result = min($test_results);
@@ -883,7 +884,7 @@ class pts_test_result_parser
 			case 'HARMONIC_MEAN':
 				if($is_numeric_check)
 				{
-					$test_result = pts_math::harmonic_mean($test_results);
+					$test_result = round(pts_math::harmonic_mean($test_results), $test_results_group_precision);
 					if(count($test_results) > 1)
 					{
 						$min_test_result = min($test_results);
@@ -896,7 +897,7 @@ class pts_test_result_parser
 			default:
 				if($is_numeric_check)
 				{
-					$test_result = pts_math::arithmetic_mean($test_results);
+					$test_result = round(pts_math::arithmetic_mean($test_results), $test_results_group_precision);
 					if(count($test_results) > 1)
 					{
 						$min_test_result = min($test_results);
