@@ -289,10 +289,16 @@ class pts_test_run_manager
 			$index = $this->last_test_run_index;
 		}
 
+		$already_added = array();
 		$estimated_time = 0;
 		foreach(array_slice($this->tests_to_run, $index) as $test_run_request)
 		{
+			if($test_run_request->has_test_options() == false && in_array($test_run_request->get_identifier(), $already_added))
+			{
+				continue;
+			}
 			$estimated_time += $test_run_request->get_estimated_run_time();
+			$already_added[] = $test_run_request->get_identifier();
 		}
 
 		return $estimated_time;

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2017 - 2019, Phoronix Media
-	Copyright (C) 2017 - 2019, Michael Larabel
+	Copyright (C) 2017 - 2021, Phoronix Media
+	Copyright (C) 2017 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -43,6 +43,7 @@ class estimate_run_time implements pts_option_interface
 		$tests = array();
 		$total_time = 0;
 		$test_count = 0;
+		$already_added = array();
 		foreach($args as $arg)
 		{
 			foreach(pts_types::identifiers_to_test_profile_objects($arg, false, false) as $t)
@@ -52,9 +53,15 @@ class estimate_run_time implements pts_option_interface
 					continue;
 				}
 
+				if($t->has_test_options() == false && in_array($t->get_identifier(), $already_added))
+				{
+					continue;
+				}
+
 				$tests[] = array($t->get_identifier(), pts_strings::format_time($t->get_estimated_run_time()));
 				$total_time += $t->get_estimated_run_time();
 				$test_count++;
+				$already_added[] = $t->get_identifier();
 			}
 		}
 		if($test_count > 1 && $total_time > 0)

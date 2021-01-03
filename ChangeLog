@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: For estimated run time, avoid over-calculating time if test has no options but multiple outputs
 pts-core: Updated (Open)Mandriva external dependencies
 pts_Graph: Minor enhancements
 phodevi: Add support for reporting ACPI Platform Profile and INT340x Workload Hint

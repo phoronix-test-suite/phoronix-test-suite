@@ -458,6 +458,10 @@ class pts_test_profile_parser
 	{
 		return $this->get_test_option_objects(false);
 	}
+	public function has_test_options()
+	{
+		return $this->xml && $this->xml->TestSettings && $this->xml->TestSettings->Option;
+	}
 	public function get_test_option_objects($auto_process = true, &$error = null, $validate_options_now = true)
 	{
 		$test_options = array();
