@@ -66,12 +66,18 @@ then
 elif [ -x /usr/bin/php7 ] || [ -x /usr/local/bin/php7 ] || [ -x /usr/pkg/bin/php7 ]
 then
 	export PHP_BIN="php7"
+elif [ -x /usr/bin/php8 ] || [ -x /usr/local/bin/php8 ] || [ -x /usr/pkg/bin/php8 ]
+then
+	export PHP_BIN="php8"
 elif [ -x /usr/bin/php ] || [ -x /usr/pkg/bin/php ]
 then
 	export PHP_BIN="php"
 elif [ -x /usr/php7/bin/php ]
 then
 	export PHP_BIN="/usr/php7/bin/php"
+elif [ -x /usr/php8/bin/php ]
+then
+	export PHP_BIN="/usr/php8/bin/php"
 elif [ -x /usr/php/bin/php ]
 then
 	export PHP_BIN="/usr/php/bin/php"
@@ -108,6 +114,9 @@ then
 elif which php7 >/dev/null 2>&1 ;
 then
 	export PHP_BIN="php7"
+elif which php8 >/dev/null 2>&1 ;
+then
+	export PHP_BIN="php8"
 elif [ -x /usr/php5/bin/php ]
 then
 	export PHP_BIN="/usr/php5/bin/php"
@@ -136,7 +145,7 @@ then
 	cat <<'EOT'
 
 PHP must be installed for the Phoronix Test Suite
-The PHP command-line package is commonly called php-cli, php7-cli, or php.
+The PHP command-line package is commonly called php-cli, php7-cli, php8-cli, or php.
 For more information visit: https://www.phoronix-test-suite.com/
 
 EOT

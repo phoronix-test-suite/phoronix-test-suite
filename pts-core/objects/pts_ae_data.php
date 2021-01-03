@@ -443,7 +443,7 @@ class pts_ae_data
 			// Update/Create Component JSON
 			//
 			
-			if(count($comparison_components) >= 20 && $json['stddev_avg'] < 2.9 && $json['run_time_avg'] > 45 && $last_appeared > strtotime('-5 months'))
+			if(count($comparison_components) >= 20 && $json['stddev_avg'] < 3 && $json['run_time_avg'] > 45 && $last_appeared > strtotime('-5 months'))
 			{
 				foreach($comparison_components as $component => $value)
 				{
