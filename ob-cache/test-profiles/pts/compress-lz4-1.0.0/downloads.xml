@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://old-releases.ubuntu.com/releases/18.04.3/ubuntu-18.04.3-desktop-amd64.iso</URL>
+      <MD5>72491db7ef6f3cd4b085b9fe1f232345</MD5>
+      <SHA256>add4614b6fe3bb8e7dddcaab0ea97c476fbd4ffe288f2a4912cb06f1a47dcfa0</SHA256>
+      <FileName>ubuntu-18.04.3-desktop-amd64.iso</FileName>
+      <FileSize>2082816000</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/lz4/lz4/archive/v1.9.3.tar.gz</URL>
+      <MD5>3a1ab1684e14fc1afc66228ce61b2db3</MD5>
+      <SHA256>030644df4611007ff7dc962d981f390361e6c97a34e5cbc393ddfbe019ffe2c1</SHA256>
+      <FileName>lz4-1.9.3.tar.gz</FileName>
+      <FileSize>320958</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/lz4/lz4/releases/download/v1.9.3/lz4_win64_v1_9_3.zip</URL>
+      <MD5>e5bae647fa491b10a36126eb2c2c2eef</MD5>
+      <SHA256>519cb3bfc4975cce8747b1ecba5053137b6ce2a77b653e4d2c63fae057985449</SHA256>
+      <FileName>lz4_win64_v1_9_3.zip</FileName>
+      <FileSize>600375</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

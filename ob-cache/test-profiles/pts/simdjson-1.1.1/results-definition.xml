@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>LargeRandom  119607993 ns    119073845 ns            6 best_bytes_per_sec=387.236M best_docs_per_sec=8.41839 best_items_per_sec=8.41839M bytes=45.9988M bytes_per_second=368.409M/s docs_per_sec=8.39815/s items=1000k items_per_second=8.39815M/s [best: throughput=  0.39 GB/s doc_throughput=     8 docs/s items=   1000000 avg_time= 119603127 ns]</OutputTemplate>
+    <LineHint>throughput=</LineHint>
+    <ResultBeforeString>GB/s</ResultBeforeString>
+  </ResultsParser>
+</PhoronixTestSuite>

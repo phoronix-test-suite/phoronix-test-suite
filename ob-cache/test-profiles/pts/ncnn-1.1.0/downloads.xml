@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/Tencent/ncnn/archive/20201218.tar.gz</URL>
+      <MD5>0d3abc60b767b969baa1a4ac65276754</MD5>
+      <SHA256>94a2ce7d6ba4eb76d99f9f0a0e74e08a0d51b973346b091254dde844c95168ac</SHA256>
+      <FileName>ncnn-20201218.tar.gz</FileName>
+      <FileSize>11194495</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://github.com/DTolm/VkResample/archive/1.0.0.tar.gz</URL>
+      <MD5>b8da095a4a8242f362d1d36d5367b985</MD5>
+      <SHA256>a9db8e5ac4a325d34dcb79b9d0440cff712e2cdc021d2e1d1a416777ee971354</SHA256>
+      <FileName>VkResample-1.0.0.tar.gz</FileName>
+      <FileSize>53607649</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/DTolm/VkResample/releases/download/1.0.0/VkResample.exe</URL>
+      <MD5>dd894b9ed516e8927f385b713893a27d</MD5>
+      <SHA256>d26f95884dc312d46001726d5816f08a8abd12db401cf976d459de89385129a6</SHA256>
+      <FileName>VkResample-100.exe</FileName>
+      <FileSize>1646080</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

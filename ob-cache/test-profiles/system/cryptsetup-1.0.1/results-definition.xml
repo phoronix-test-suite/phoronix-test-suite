@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m3-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>PBKDF2-sha512    #_RESULT_# iterations per second for 256-bit key</OutputTemplate>
+    <ArgumentsDescription>PBKDF2-sha512</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>PBKDF2-whirlpool  #_RESULT_# iterations per second for 256-bit key</OutputTemplate>
+    <ArgumentsDescription>PBKDF2-whirlpool</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>        aes-xts        256b      #_RESULT_# MiB/s      4487.1 MiB/s</OutputTemplate>
+    <ResultScale>MiB/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <ArgumentsDescription>AES-XTS 256b Encryption</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>        aes-xts        256b      111 MiB/s      #_RESULT_# MiB/s</OutputTemplate>
+    <LineHint>aes-xts        256b</LineHint>
+    <ResultScale>MiB/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <ArgumentsDescription>AES-XTS 256b Decryption</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>        serpent-xts        256b      #_RESULT_# MiB/s      4487.1 MiB/s</OutputTemplate>
+    <ResultScale>MiB/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <ArgumentsDescription>Serpent-XTS 256b Encryption</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>        serpent-xts        256b      111 MiB/s      #_RESULT_# MiB/s</OutputTemplate>
+    <LineHint>serpent-xts        256b</LineHint>
+    <ResultScale>MiB/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <ArgumentsDescription>Serpent-XTS 256b Decryption</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>        twofish-xts        256b      #_RESULT_# MiB/s      4487.1 MiB/s</OutputTemplate>
+    <ResultScale>MiB/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <ArgumentsDescription>Twofish-XTS 256b Encryption</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>        twofish-xts        256b      111 MiB/s      #_RESULT_# MiB/s</OutputTemplate>
+    <LineHint>twofish-xts        256b</LineHint>
+    <ResultScale>MiB/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <ArgumentsDescription>Twofish-XTS 256b Decryption</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>        aes-xts        512b      #_RESULT_# MiB/s      4487.1 MiB/s</OutputTemplate>
+    <ResultScale>MiB/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <ArgumentsDescription>AES-XTS 512b Encryption</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>        aes-xts        512b      111 MiB/s      #_RESULT_# MiB/s</OutputTemplate>
+    <LineHint>aes-xts        512b</LineHint>
+    <ResultScale>MiB/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <ArgumentsDescription>AES-XTS 512b Decryption</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>        serpent-xts        512b      #_RESULT_# MiB/s      4487.1 MiB/s</OutputTemplate>
+    <ResultScale>MiB/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <ArgumentsDescription>Serpent-XTS 512b Encryption</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>        serpent-xts        512b      111 MiB/s      #_RESULT_# MiB/s</OutputTemplate>
+    <LineHint>serpent-xts        512b</LineHint>
+    <ResultScale>MiB/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <ArgumentsDescription>Serpent-XTS 512b Decryption</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>        twofish-xts        512b      #_RESULT_# MiB/s      4487.1 MiB/s</OutputTemplate>
+    <ResultScale>MiB/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <ArgumentsDescription>Twofish-XTS 512b Encryption</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>        twofish-xts        512b      111 MiB/s      #_RESULT_# MiB/s</OutputTemplate>
+    <LineHint>twofish-xts        512b</LineHint>
+    <ResultScale>MiB/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <ArgumentsDescription>Twofish-XTS 512b Decryption</ArgumentsDescription>
+  </ResultsParser>
+</PhoronixTestSuite>

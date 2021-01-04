@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Numpy Benchmark</Title>
+    <Description>This is a test to obtain the general Numpy performance.</Description>
+    <ResultScale>Score</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.1</Version>
+    <SupportedPlatforms>Linux, BSD, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>python</ExternalDependencies>
+    <EnvironmentSize>12.4</EnvironmentSize>
+    <ProjectURL>http://github.com/serge-sans-paille/</ProjectURL>
+    <Maintainer>Victor Rodriguez Bahena</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

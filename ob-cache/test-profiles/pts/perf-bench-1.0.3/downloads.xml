@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.9.tar.xz, http://ftp.jaist.ac.jp/pub/Linux/kernel.org/linux/kernel/v5.x/linux-5.9.tar.xz, http://sources.buildroot.net/linux/linux-5.9.tar.xz</URL>
+      <MD5>0959d759fd19e146367221aff504ad91</MD5>
+      <SHA256>3239a4ee1250bf2048be988cc8cb46c487b2c8a0de5b1b032d38394d5c6b1a06</SHA256>
+      <FileName>linux-5.9.tar.xz</FileName>
+      <FileSize>115507140</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

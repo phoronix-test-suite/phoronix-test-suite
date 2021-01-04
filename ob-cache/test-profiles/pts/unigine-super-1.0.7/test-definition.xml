@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Unigine Superposition</Title>
+    <AppVersion>1.0</AppVersion>
+    <Description>This test calculates the average frame-rate within the Superposition demo for the Unigine engine, released in 2017. This engine is extremely demanding on the system's graphics card.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.7</Version>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
+    <SoftwareType>Game</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Non-Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <RequiresDisplay>TRUE</RequiresDisplay>
+    <EnvironmentSize>2600</EnvironmentSize>
+    <ProjectURL>http://www.unigine.com/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>-video_width $VIDEO_WIDTH -video_height $VIDEO_HEIGHT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Mode</DisplayName>
+      <Identifier>mode</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Fullscreen</Name>
+          <Value>-video_fullscreen 1</Value>
+        </Entry>
+        <Entry>
+          <Name>Windowed</Name>
+          <Value>-video_fullscreen 0</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Quality</DisplayName>
+      <Identifier>quality</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Low</Name>
+          <Value>-shaders_quality 0 -textures_quality 0</Value>
+        </Entry>
+        <Entry>
+          <Name>Medium</Name>
+          <Value>-shaders_quality 1 -textures_quality 1</Value>
+        </Entry>
+        <Entry>
+          <Name>High</Name>
+          <Value>-shaders_quality 2 -textures_quality 2</Value>
+        </Entry>
+        <Entry>
+          <Name>Ultra</Name>
+          <Value>-shaders_quality 3 -textures_quality 2</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Renderer</DisplayName>
+      <Identifier>renderer</Identifier>
+      <Menu>
+        <Entry>
+          <Name>OpenGL</Name>
+          <Value>-video_app opengl</Value>
+        </Entry>
+        <Entry>
+          <Name>D3D11</Name>
+          <Value>-video_app direct3d11</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

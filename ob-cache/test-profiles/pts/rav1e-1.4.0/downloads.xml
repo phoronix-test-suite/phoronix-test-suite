@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ultravideo.cs.tut.fi/video/Bosphorus_1920x1080_120fps_420_8bit_YUV_Y4M.7z</URL>
+      <MD5>84ae521c95aa2537e16b34bbf72f2def</MD5>
+      <SHA256>e2f60b904789a60f6d1edc194d8540d401dd882e3ee3605b9b1de8feacc72133</SHA256>
+      <FileName>Bosphorus_1920x1080_120fps_420_8bit_YUV_Y4M.7z</FileName>
+      <FileSize>676792531</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/xiph/rav1e/archive/v0.4.0-alpha.tar.gz</URL>
+      <MD5>4a6b92c4aa9933a62548904920b3c22e</MD5>
+      <SHA256>c846cc64a2b712b27951c101ec8dc8518e531360a69b67fed230e31dd0337be8</SHA256>
+      <FileName>rav1e-0.4.0-alpha.tar.gz</FileName>
+      <FileSize>4445009</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/xiph/rav1e/releases/download/v0.4.0-alpha/rav1e-0.4.0-alpha-linux.tar.gz</URL>
+      <MD5>0141b12aca450ecf1e1ae077c4ffee0e</MD5>
+      <SHA256>4c38bc7659ae899540da59750416dc138e082725b961c881b610f72cc6450933</SHA256>
+      <FileName>rav1e-0.4.0-alpha-linux.tar.gz</FileName>
+      <FileSize>1315884</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+      <ArchitectureSpecific>x86_64</ArchitectureSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/xiph/rav1e/releases/download/v0.4.0-alpha/rav1e-0.4.0-alpha-aarch64-linux.tar.gz</URL>
+      <MD5>9b9af2de07aad80301379b0520de2b2f</MD5>
+      <SHA256>e48d42c3d7117f42b13d8dbbe80db4b0dc7c928db895eb3907459c657ed77b34</SHA256>
+      <FileName>rav1e-0.4.0-alpha-aarch64-linux.tar.gz</FileName>
+      <FileSize>1096990</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+      <ArchitectureSpecific>aarch64, armv8</ArchitectureSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/xiph/rav1e/releases/download/v0.4.0-alpha/rav1e.exe</URL>
+      <MD5>2329322f39ff71976a82199af21ddaaf</MD5>
+      <SHA256>4603b73fe48ee20712b39eb67ab1a28eca6815004a25b70e30545f0cdd74ee6e</SHA256>
+      <FileName>rav1e-04-alpha.exe</FileName>
+      <FileSize>3409920</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/xiph/rav1e/releases/download/v0.4.0-alpha/rav1e-0.4.0-alpha-macos.zip</URL>
+      <MD5>2aee0d56af93228858abb90ab355ba37</MD5>
+      <SHA256>ea2e2d515368cc7c18551d2454e2d7d69a35b637c42bf81f2170f27ad815ad23</SHA256>
+      <FileName>rav1e-0.4.0-alpha-macos.zip</FileName>
+      <FileSize>1162039</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

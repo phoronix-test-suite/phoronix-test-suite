@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://asc.llnl.gov/sites/asc/files/2020-09/clomp_v1.2.zip</URL>
+      <MD5>26838cfe516b17f2a4cacb48342d7266</MD5>
+      <SHA256>76c208529a3b2779252f68f4ef222f28bd7d8aafdf9200bad0d288060220702c</SHA256>
+      <FileName>clomp_v1.2.zip</FileName>
+      <FileSize>22868</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

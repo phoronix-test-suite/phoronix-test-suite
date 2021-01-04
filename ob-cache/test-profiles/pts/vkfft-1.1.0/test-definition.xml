@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>VkFFT</Title>
+    <AppVersion>1.1.1</AppVersion>
+    <Description>VkFFT is a Fast Fourier Transform (FFT) Library that is GPU accelerated by means of the Vulkan API. The VkFFT benchmark runs FFT performance differences of many different sizes before returning an overall benchmark score.</Description>
+    <ResultScale>Benchmark Score</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, vulkan-development, cmake, fftw3-development</ExternalDependencies>
+    <EnvironmentSize>4</EnvironmentSize>
+    <ProjectURL>https://github.com/DTolm/VkFFT</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

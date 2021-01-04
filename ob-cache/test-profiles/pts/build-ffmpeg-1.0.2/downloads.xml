@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://ffmpeg.org/releases/ffmpeg-4.2.2.tar.bz2</URL>
+      <MD5>829d56f158832dbf669b5b417af48060</MD5>
+      <SHA256>b620d187c26f76ca19e74210a0336c3b8380b97730df5cdf45f3e69e89000e5c</SHA256>
+      <FileName>ffmpeg-4.2.2.tar.bz2</FileName>
+      <FileSize>10953320</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

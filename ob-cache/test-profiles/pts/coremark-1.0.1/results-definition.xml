@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Iterations/Sec   : #_RESULT_#</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

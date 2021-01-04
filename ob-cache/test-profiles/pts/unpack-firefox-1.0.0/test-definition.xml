@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m3-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Unpacking Firefox</Title>
+    <AppVersion>84.0</AppVersion>
+    <Description>This simple test profile measures how long it takes to extract the .tar.xz source package of the Mozilla Firefox Web Browser.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Extracting: firefox-84.0.source.tar.xz</SubTitle>
+    <TimesToRun>4</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux, BSD, Solaris, MacOSX, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <EnvironmentTestingSize>2100</EnvironmentTestingSize>
+    <ProjectURL>http://www.kernel.org/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>tar</SystemDependencies>
+  </TestProfile>
+</PhoronixTestSuite>

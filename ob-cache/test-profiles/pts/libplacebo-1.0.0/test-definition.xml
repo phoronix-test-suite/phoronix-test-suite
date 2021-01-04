@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Libplacebo</Title>
+    <AppVersion>2.72.2</AppVersion>
+    <Description>Libplacebo is a multimedia rendering library based on the core rendering code of the MPV player. The libplacebo benchmark relies on the Vulkan API and tests various primitives.</Description>
+    <ResultScale>FPS</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, vulkan-development, meson</ExternalDependencies>
+    <EnvironmentSize>16</EnvironmentSize>
+    <ProjectURL>https://github.com/haasn/libplacebo</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>glslang/SPIRV/spirv.hpp, spirv-remap, glslangValidator</SystemDependencies>
+  </TestProfile>
+</PhoronixTestSuite>

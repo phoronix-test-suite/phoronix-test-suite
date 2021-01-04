@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>[  7]   0.00-10.00  sec   298 MBytes   #_RESULT_# Mbits/sec    0             sender</OutputTemplate>
+    <MatchToTestArguments>-P 1 </MatchToTestArguments>
+    <LineHint>sender</LineHint>
+    <DeleteOutputBefore>Test Complete. Summary Results:</DeleteOutputBefore>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>[SUM]   0.00-10.00  sec   314 MBytes   #_RESULT_# Mbits/sec    0             sender</OutputTemplate>
+    <LineHint>SUM</LineHint>
+    <DeleteOutputBefore>Test Complete. Summary Results:</DeleteOutputBefore>
+  </ResultsParser>
+</PhoronixTestSuite>

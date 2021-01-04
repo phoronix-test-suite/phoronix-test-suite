@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Compile Bench</Title>
+    <AppVersion>0.6</AppVersion>
+    <Description>Compilebench tries to age a filesystem by simulating some of the disk IO common in creating, compiling, patching, stating and reading kernel trees. It indirectly measures how well filesystems can maintain directory locality as the disk fills up and directories age. This current test is setup to use the makej mode with 10 initial directories</Description>
+    <ResultScale>MB/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.3</Version>
+    <SupportedPlatforms>Linux, Solaris, MacOSX, BSD</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Disk</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>python</ExternalDependencies>
+    <EnvironmentSize>100</EnvironmentSize>
+    <ProjectURL>http://oss.oracle.com/~mason/compilebench/</ProjectURL>
+    <InternalTags>Python</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>python2</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-D t -i 10 --makej</Arguments>
+      <AllowCacheShare>TRUE</AllowCacheShare>
+    </Default>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>run-test</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Initial Create</Name>
+          <Value>INITIAL_CREATE</Value>
+        </Entry>
+        <Entry>
+          <Name>Compile</Name>
+          <Value>COMPILE</Value>
+        </Entry>
+        <Entry>
+          <Name>Read Compiled Tree</Name>
+          <Value>READ_COMPILED_TREE</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

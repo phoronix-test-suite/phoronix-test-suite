@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ftp.mozilla.org/pub/firefox/releases/84.0/source/firefox-84.0.source.tar.xz</URL>
+      <MD5>a00c545b22b6149f6e9faa1b165b393d</MD5>
+      <SHA256>23273ef0165b243f5d0908c38e7854d38070282c9b526e8d93b7503cd5f69138</SHA256>
+      <FileName>firefox-84.0.source.tar.xz</FileName>
+      <FileSize>366395172</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

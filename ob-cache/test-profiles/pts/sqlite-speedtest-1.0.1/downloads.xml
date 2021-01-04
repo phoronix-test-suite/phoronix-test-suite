@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/sqlite-330-for-speedtest.tar.gz</URL>
+      <MD5>2f18e8fa835b7a6d7366bc6109614031</MD5>
+      <SHA256>7ce167db515e3ea48681a2cbcf62f454cdaa181a25b376d4123f532cfbe3e510</SHA256>
+      <FileName>sqlite-330-for-speedtest.tar.gz</FileName>
+      <FileSize>11158769</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

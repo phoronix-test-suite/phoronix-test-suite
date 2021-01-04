@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Geometric mean:  #_RESULT_# runs/s</OutputTemplate>
+    <LineHint>Geometric mean</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

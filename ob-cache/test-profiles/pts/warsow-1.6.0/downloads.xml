@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://warsow.net/warsow-2.5beta.zip, http://people.cs.uchicago.edu/~kauffman/warsow/warsow-2.5beta.zip</URL>
+      <MD5>14501102b945e53461c0c72065a876f7</MD5>
+      <SHA256>e902752af211780fa9897158a9294199ffdb73b7c7d465331c0eaeab7e7a81b5</SHA256>
+      <FileName>warsow-2.5beta.zip</FileName>
+      <FileSize>596478975</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/warsow25-pts11.zip</URL>
+      <MD5>9112b158b467e7627360b1a8dd638b59</MD5>
+      <SHA256>3e30002dc38537def4f19312890ecd16174a45a80fbf71f6ce8dfb4264dee200</SHA256>
+      <FileName>warsow25-pts11.zip</FileName>
+      <FileSize>132246</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

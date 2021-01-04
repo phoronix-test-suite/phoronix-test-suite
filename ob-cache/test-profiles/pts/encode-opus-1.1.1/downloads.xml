@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://archive.mozilla.org/pub/opus/opus-1.3.1.tar.gz, https://ftp.osuosl.org/pub/xiph/releases/opus/opus-1.3.1.tar.gz</URL>
+      <MD5>d7c07db796d21c9cf1861e0c2b0c0617</MD5>
+      <SHA256>65b58e1e25b2a114157014736a3d9dfeaad8d41be1c8179866f144a2fb44ff9d</SHA256>
+      <FileName>opus-1.3.1.tar.gz</FileName>
+      <FileSize>1040054</FileSize>
+    </Package>
+    <Package>
+      <URL>https://archive.mozilla.org/pub/opus/opus-tools-0.2.tar.gz, https://ftp.osuosl.org/pub/xiph/releases/opus/opus-tools-0.2.tar.gz</URL>
+      <MD5>ff2d0536e960cabbfb8ca7c8c1759b6c</MD5>
+      <SHA256>b4e56cb00d3e509acfba9a9b627ffd8273b876b4e2408642259f6da28fa0ff86</SHA256>
+      <FileName>opus-tools-0.2.tar.gz</FileName>
+      <FileSize>457680</FileSize>
+    </Package>
+    <Package>
+      <URL>https://ftp.osuosl.org/pub/xiph/releases/opus/opusfile-0.12.tar.gz</URL>
+      <MD5>45e8c62f6cd413395223c82f06bfa8ec</MD5>
+      <SHA256>118d8601c12dd6a44f52423e68ca9083cc9f2bfe72da7a8c1acb22a80ae3550b</SHA256>
+      <FileName>opusfile-0.12.tar.gz</FileName>
+      <FileSize>471354</FileSize>
+    </Package>
+    <Package>
+      <URL>https://ftp.osuosl.org/pub/xiph/releases/opus/libopusenc-0.2.tar.gz</URL>
+      <MD5>6307af3b94bb35742c1f57d3c2fcc657</MD5>
+      <SHA256>c79e95eeee43a0b965e9b2c59a243763a8f8b0a7e71441df2aa9084f6171c73a</SHA256>
+      <FileName>libopusenc-0.2.tar.gz</FileName>
+      <FileSize>388027</FileSize>
+    </Package>
+    <Package>
+      <URL>https://ftp.osuosl.org/pub/xiph/releases/flac/flac-1.3.3.tar.xz</URL>
+      <MD5>26703ed2858c1fc9ffc05136d13daa69</MD5>
+      <SHA256>213e82bd716c9de6db2f98bcadbc4c24c7e2efe8c75939a1a84e28539c4e1748</SHA256>
+      <FileName>flac-1.3.3.tar.xz</FileName>
+      <FileSize>1044472</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.lindberg.no/hires/test/2L38_01_192kHz.flac</URL>
+      <MD5>c561bb980051336da2409f5eb5628e7e</MD5>
+      <SHA256>9dae8590821cbed0f47dce71076b34a749bc823412686c17b59703c3c821db8d</SHA256>
+      <FileName>2L38_01_192kHz.flac</FileName>
+      <FileSize>354537588</FileSize>
+    </Package>
+    <Package>
+      <URL>https://archive.mozilla.org/pub/opus/win32/opus-tools-0.2-opus-1.3.1.zip</URL>
+      <MD5>5648d560a933ef3cdc2de58017a36702</MD5>
+      <SHA256>ef23dc3ffa79fb0cea2ac3559c61317ea663e5372dec3b775e47b87b27d47329</SHA256>
+      <FileName>opus-tools-0.2-opus-1.3.1.zip</FileName>
+      <FileSize>1042824</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

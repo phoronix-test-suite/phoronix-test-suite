@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://assets.unigine.com/d/Unigine_Superposition-1.0.run</URL>
+      <FileName>Unigine_Superposition-1.0.run</FileName>
+      <FileSize>1641749718</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://assets.unigine.com/d/Unigine_Superposition-1.0.exe</URL>
+      <FileName>Unigine_Superposition-1.0.exe</FileName>
+      <FileSize>1338586016</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://cdn.geekbench.com/Geekbench-5.3.0-Linux.tar.gz</URL>
+      <MD5>8d061dee51afdd1a0c7599b5b48e179a</MD5>
+      <SHA256>9194039037998bec9cb098ffa4b01eba179e0ec6f2a3618152aa35369490fe3c</SHA256>
+      <FileName>Geekbench-5.3.0-Linux.tar.gz</FileName>
+      <FileSize>93049032</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://cdn.geekbench.com/Geekbench-5.3.0-WindowsSetup.exe</URL>
+      <MD5>8096b4b1076a1f5f53ff84196207f0ff</MD5>
+      <SHA256>4c009f5064e51ccd4cb35be1601e8641b33992433123c4da31ab8a6d772a1aa0</SHA256>
+      <FileName>Geekbench-5.3.0-WindowsSetup.exe</FileName>
+      <FileSize>124951744</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://cdn.geekbench.com/Geekbench-5.3.0-Mac.zip</URL>
+      <MD5>cffec3d77d863adb93e991a9f2f885d8</MD5>
+      <SHA256>bb517678a7ac516fabe281fb6b8a52f5994d21f4ed91f20e5c1b74c338bb168c</SHA256>
+      <FileName>Geekbench-5.3.0-Mac.zip</FileName>
+      <FileSize>162231460</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

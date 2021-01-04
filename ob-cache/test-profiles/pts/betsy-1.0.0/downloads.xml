@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/png-samples-1.tar.xz</URL>
+      <MD5>3f928e4d08777e6e84c54202a00429de</MD5>
+      <SHA256>9810c8fd3afd35b4755c2a46f14fc66e2b9199c22e46a5946123c9250f2d1ccd</SHA256>
+      <FileName>png-samples-1.tar.xz</FileName>
+      <FileSize>58346628</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/darksylinc/betsy/archive/v1.1-beta.tar.gz</URL>
+      <MD5>da3c8e4fdeefc6fa391dbd56d4ae358e</MD5>
+      <SHA256>aa67f9a9749e3845766678fdb366b45cde139470ee2f96962275422ba769065e</SHA256>
+      <FileName>betsy-1.1-beta.tar.gz</FileName>
+      <FileSize>6784294</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

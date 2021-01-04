@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>libframetime-output</OutputTemplate>
+  </ResultsParser>
+  <ExtraData>
+    <Identifier>libframetime-output</Identifier>
+  </ExtraData>
+</PhoronixTestSuite>

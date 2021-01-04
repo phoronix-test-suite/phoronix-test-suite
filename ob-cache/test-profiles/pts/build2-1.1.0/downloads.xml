@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://download.build2.org/0.13.0/build2-install-0.13.0.sh</URL>
+      <MD5>50fa69b78b92aa7995a715027d56f606</MD5>
+      <SHA256>aeec2ac0e7080341159bbbc95d8264521ddf82bda01c5c253d63cae5b4558b15</SHA256>
+      <FileName>build2-install-0.13.0.sh</FileName>
+      <FileSize>21769</FileSize>
+    </Package>
+    <Package>
+      <URL>https://download.build2.org/0.13.0/build2-toolchain-0.13.0.tar.xz</URL>
+      <MD5>e60589ca9ab954295adb40473df61c0c</MD5>
+      <SHA256>bafabcab4d5efdc489af59755a3ba7ce90834b479125cf21c34828857cc91506</SHA256>
+      <FileName>build2-toolchain-0.13.0.tar.xz</FileName>
+      <FileSize>4218940</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

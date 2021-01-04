@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://github.com/fernandotcl/monkeys-audio/archive/release-3.99.6.tar.gz</URL>
+      <MD5>0c617d12bbd4a3b9ac0502287654086b</MD5>
+      <SHA256>0d279bf2042ac5a8fc57674de0f20a4c78f8f33926346d98949bc312c76860f1</SHA256>
+      <FileName>monkeys-audio-release-3.99.6.tar.gz</FileName>
+      <FileSize>78937</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

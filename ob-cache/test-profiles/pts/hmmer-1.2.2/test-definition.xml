@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Timed HMMer Search</Title>
+    <AppVersion>3.3.1</AppVersion>
+    <Description>This test searches through the Pfam database of profile hidden markov models. The search finds the domain structure of Drosophila Sevenless protein.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Pfam Database Search</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.2</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD, MacOSX</SupportedPlatforms>
+    <SoftwareType>Scientific</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>719</EnvironmentSize>
+    <ProjectURL>http://hmmer.org/</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Andrew Schofield</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

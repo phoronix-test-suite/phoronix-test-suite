@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://distfiles.macports.org/iperf3/iperf-3.7.tar.gz, http://sources.buildroot.net/iperf3/iperf-3.7.tar.gz, https://src.fedoraproject.org/lookaside/pkgs/iperf3/iperf-3.7.tar.gz/</URL>
+      <MD5>79e496c723ad8edc4ac5e430f633c1bd</MD5>
+      <SHA256>d846040224317caf2f75c843d309a950a7db23f9b44b94688ccbe557d6d1710c</SHA256>
+      <FileName>iperf-3.7.tar.gz</FileName>
+      <FileSize>605708</FileSize>
+      <PlatformSpecific>Linux, BSD, Solaris, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://iperf.fr/download/windows/iperf-3.1.3-win64.zip</URL>
+      <MD5>c0239bfae22d15010f02bf23160d51fe</MD5>
+      <SHA256>3c3db693c1bdcc902ca9198fc716339373658233b3392ffe3d467f7695762cd1</SHA256>
+      <FileName>iperf-3.1.3-win64.zip</FileName>
+      <FileSize>1397048</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>
