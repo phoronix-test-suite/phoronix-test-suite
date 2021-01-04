@@ -1,5 +1,17 @@
 # Phoronix Test Suite Release History
 
+Phoronix Test Suite 10.2
+======
+#### Release Date: 5 January 2021 | Codename: Harstad
+* Significantly faster Phoromatic Web UI performance
+* Improved support for macOS 11 Big Sur, Apple Silicon (Apple M1)
+* Improved tracking of per-test/configuration run-time time requirements, improved test run-time estimation
+* Support for reporting broken download mirrors to OpenBenchmarking.org
+* BSD support updates (FreeBSD, DragonFlyBSD, OpenBSD, NetBSD)
+* Full PHP 8.0 compatibility
+* Various Phodevi software/hardware detection reporting improvements
+* New modules: turbostat
+
 Phoronix Test Suite 10.0
 ======
 #### Release Date: 13 October 2020 | Codename: Finnsnes

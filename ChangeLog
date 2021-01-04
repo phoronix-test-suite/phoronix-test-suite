@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 10.2.0
+5 January 2020
 
 pts-core: PHP8 detection improvements
 pts-core: For estimated run time, avoid over-calculating time if test has no options but multiple outputs
