@@ -1,4 +1,4 @@
-# Phoronix Test Suite 10.2.0m3
+# Phoronix Test Suite 10.2.0
 https://www.phoronix-test-suite.com/
 
 The **Phoronix Test Suite** is the most comprehensive testing and benchmarking
