@@ -54,7 +54,7 @@ class pts_graph_horizontal_bars extends pts_graph_core
 		$g = array('font-size' => $this->i['identifier_size'] + 1, 'fill' => self::$c['color']['headers'], 'font-weight' => 'bold');
 		if($this->i['is_multi_way_comparison'])
 		{
-			$g['font-size']-=2;
+			$g['font-size']--;
 			unset($g['font-weight']);
 		}
 		$g = $this->svg_dom->make_g($g);

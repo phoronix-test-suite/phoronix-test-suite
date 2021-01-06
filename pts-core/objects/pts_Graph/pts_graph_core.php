@@ -556,7 +556,7 @@ abstract class pts_graph_core
 				{
 					$longest_r = $longest_identifier;
 					$longest_r = explode(' - ', $longest_r);
-					$plus_extra = 22;
+					$plus_extra = 0;
 
 					if(count($longest_r) > 1)
 					{
@@ -620,7 +620,7 @@ abstract class pts_graph_core
 						$per_identifier_height = 20; // default
 						$this->i['identifier_size'] = floor($this->i['identifier_size'] * 0.88);
 					}
-					$rotated_text = round(self::text_string_width($longest_string, $this->i['identifier_size']) * 0.9);
+					$rotated_text = round(self::text_string_width($longest_string, $this->i['identifier_size']) * 1.02);
 
 					if(ceil($rotated_text * 1.2) >= floor($per_identifier_height * count($this->results)))
 					{
