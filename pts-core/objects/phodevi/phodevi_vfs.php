@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2012 - 2016, Phoronix Media
-	Copyright (C) 2012 - 2016, Michael Larabel
+	Copyright (C) 2012 - 2021, Phoronix Media
+	Copyright (C) 2012 - 2021, Michael Larabel
 	phodevi.php: The object for an effective VFS with PTS/Phodevi
 
 	This program is free software; you can redistribute it and/or modify
@@ -186,7 +186,7 @@ class phodevi_vfs
 					$try['F'] = str_replace('~/', pts_core::user_home_directory(), $try['F']);
 				}
 
-				if($try['type'] == 'F' && is_file($try['F']))
+				if($try['type'] == 'F' && is_file($try['F']) && filesize($try['F']) < 5242880)
 				{
 					$contents = file_get_contents($try['F']);
 				}
