@@ -168,7 +168,7 @@
 <xs:simpleType name="CoreVersion">
 	<xs:restriction base="xs:integer">
 		<xs:minInclusive value="2950" />
-		<xs:maxInclusive value="9999" />
+		<xs:maxInclusive value="99999" />
 	</xs:restriction>
 </xs:simpleType>
 <xs:simpleType name="RunModes">
