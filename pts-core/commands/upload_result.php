@@ -39,7 +39,7 @@ class upload_result implements pts_option_interface
 	{
 		if(empty($r))
 		{
-			return
+			return;
 		}
 		if(!pts_openbenchmarking::ob_upload_support_available())
 		{
