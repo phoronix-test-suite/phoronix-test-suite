@@ -212,6 +212,11 @@ class phodevi_vfs
 						$contents = stream_get_contents($pipes[1]);
 						fclose($pipes[1]);
 						$return_value = proc_close($proc);
+					
+						if(isset($contents[5242880]))
+						{
+							$contents = null;
+						}
 					}
 				}
 
