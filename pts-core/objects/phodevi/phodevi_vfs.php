@@ -186,9 +186,16 @@ class phodevi_vfs
 					$try['F'] = str_replace('~/', pts_core::user_home_directory(), $try['F']);
 				}
 
-				if($try['type'] == 'F' && is_file($try['F']) && filesize($try['F']) < 5242880)
+				if($try['type'] == 'F' && is_file($try['F']))
 				{
-					$contents = file_get_contents($try['F']);
+					if(filesize($try['F']) < 5242880)
+					{
+						$contents = file_get_contents($try['F']);
+					}
+					else
+					{
+						continue;
+					}
 				}
 				else if($try['type'] == 'C')
 				{
