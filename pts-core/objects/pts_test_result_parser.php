@@ -697,7 +697,7 @@ class pts_test_result_parser
 							{
 								$possible_res = $r[($before_this - 1)];
 								self::strip_result_cleaner($possible_res, $e);
-								if($before_this !== false && (!$is_numeric_check || is_numeric($possible_res)))
+								if($before_this !== false && (!$is_numeric_check || self::valid_numeric_input_handler($possible_res)))
 								{
 									$test_results[] = $possible_res;
 								}
@@ -718,7 +718,7 @@ class pts_test_result_parser
 										continue;
 									}
 									self::strip_result_cleaner($r[$f], $e);
-									if(!$is_numeric_check || is_numeric($r[$f]))
+									if(!$is_numeric_check || self::valid_numeric_input_handler($r[$f]))
 									{
 										$test_results[] = $r[$f];
 									}
@@ -729,7 +729,7 @@ class pts_test_result_parser
 						else if(isset($r[$template_r_pos]))
 						{
 							self::strip_result_cleaner($r[$template_r_pos], $e);
-							if(!$is_numeric_check || is_numeric($r[$template_r_pos]))
+							if(!$is_numeric_check || self::valid_numeric_input_handler($r[$template_r_pos]))
 							{
 								$test_results[] = $r[$template_r_pos];
 							}
@@ -968,6 +968,42 @@ class pts_test_result_parser
 
 		pts_test_result_parser::debug_message('Test Result Parser Returning: ' . $test_result);
 		return $test_result;
+	}
+	protected static function valid_numeric_input_handler(&$numeric_input)
+	{
+		if(is_numeric($numeric_input))
+		{
+			return true;
+		}
+		else if(is_numeric(str_ireplace(array('m', 'h', 's'), '', $numeric_input)))
+		{
+			// XXhXXmXXs format
+			$vtime = 0;
+			$ni = $numeric_input;
+			foreach(array(3600 => 'h', 60 => 'm', 1 => 's') as $m => $u)
+			{
+				if(($x = stripos($ni, $u)) !== false)
+				{
+					$extracted = substr($ni, 0, $u);
+					$ni = substr($ni, ($x + 1));
+					if(is_numeric($extracted))
+					{
+						$vtime += $extracted * $m;
+					}
+					else
+					{
+						return false;
+					}
+				}
+			}
+			if($vtime > 0 && is_numeric($vtime))
+			{
+				$numeric_input = $vtime;
+				return true;
+			}
+		}
+
+		return false;
 	}
 	protected static function strip_result_cleaner(&$test_result, &$e)
 	{
