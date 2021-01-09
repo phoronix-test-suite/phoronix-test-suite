@@ -984,7 +984,7 @@ class pts_test_result_parser
 			{
 				if(($x = stripos($ni, $u)) !== false)
 				{
-					$extracted = substr($ni, 0, $u);
+					$extracted = substr($ni, 0, $x);
 					$ni = substr($ni, ($x + 1));
 					if(is_numeric($extracted))
 					{
