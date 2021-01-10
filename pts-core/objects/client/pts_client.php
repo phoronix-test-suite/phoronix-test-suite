@@ -1466,7 +1466,7 @@ class pts_client
 				}
 
 				// VARIABLE_LENGTH_MAYBE when handling is optional or VARIABLE_LENGTH
-				if(($maybe = ($argument_check->get_argument_index() == 'VARIABLE_LENGTH_MAYBE')) || $argument_check->get_argument_index() == 'VARIABLE_LENGTH')
+				if(($maybe = ($argument_check->get_argument_index() === 'VARIABLE_LENGTH_MAYBE')) || $argument_check->get_argument_index() == 'VARIABLE_LENGTH')
 				{
 					$return_value = $maybe ? true : null;
 
