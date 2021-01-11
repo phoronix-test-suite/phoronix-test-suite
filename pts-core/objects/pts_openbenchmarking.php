@@ -719,8 +719,24 @@ class pts_openbenchmarking
 					{
 						continue;
 					}
-
-					if($all_versions)
+					if($all_versions === 2)
+					{
+						// When $all_versions is 2, only the latest version in each XX.YY stream is shown.
+						// no reason in some cases to check each XX.YY.ZZ version but only the last
+						$versions = $repo_index['tests'][$identifier]['versions'];
+						$minor_series_shown = array();
+						foreach($versions as $i => $v)
+						{
+							$version_wo_minor = substr($v, 0, strrpos($v, '.'));
+							if(isset($minor_series_shown[$version_wo_minor]))
+							{
+								unset($versions[$i]);
+							}
+							$minor_series_shown[$version_wo_minor] = true;
+						}
+						$append_versions = true;
+					}
+					else if($all_versions)
 					{
 						$versions = $repo_index['tests'][$identifier]['versions'];
 						$append_versions = true;
