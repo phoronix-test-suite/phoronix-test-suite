@@ -62,7 +62,7 @@ class arch_dependency_handler implements pts_dependency_handler
 						foreach(array('/usr/bin/', '/bin/', '/usr/sbin') as $possible_path)
 						{
 							$pkgfile_provides = self::run_pkgfile_provides($possible_path . $file);
-							if($pkgfile_provides != null && !in_array($pkgfile_provides, array('extra/bash-completion')))
+							if($pkgfile_provides != null)
 							{
 								$packages_needed[$file] = $pkgfile_provides;
 								break;
@@ -70,6 +70,14 @@ class arch_dependency_handler implements pts_dependency_handler
 						}
 					}
 				}
+			}
+		}
+		$ignore_pkgs = array('extra/bash-completion');
+		foreach($packages_needed as $i => $pkg_check)
+		{
+			if($pkg_check == null || in_array($pkg_check, $ignore_pkgs))
+			{
+				unset($packages_needed[$i]);
 			}
 		}
 		return $packages_needed;
