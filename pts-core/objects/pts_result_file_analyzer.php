@@ -379,51 +379,53 @@ class pts_result_file_analyzer
 		}
 
 		$geo_mean_result = pts_result_file_analyzer::generate_geometric_mean_result($result_file, true);
-		$first_place_buffer = $geo_mean_result->test_result_buffer->get_max_value(2);
-		$last_place_buffer = $geo_mean_result->test_result_buffer->get_min_value(2);
-
-		$geo_bits = array();
-		if($result_file->get_system_count() >= 3)
+		if($geo_mean_result)
 		{
-			$prev_buffer = null;
-			foreach($geo_mean_result->test_result_buffer->get_buffer_items() as $bi)
+			$first_place_buffer = $geo_mean_result->test_result_buffer->get_max_value(2);
+			$last_place_buffer = $geo_mean_result->test_result_buffer->get_min_value(2);
+			$geo_bits = array();
+			if($result_file->get_system_count() >= 3)
 			{
-				if($prev_buffer == null)
+				$prev_buffer = null;
+				foreach($geo_mean_result->test_result_buffer->get_buffer_items() as $bi)
 				{
+					if($prev_buffer == null)
+					{
+						$prev_buffer = $bi;
+						continue;
+					}
+					$rounded = round($bi->get_result_value() / $prev_buffer->get_result_value(), 3) . 'x';
+					if($rounded === '1.000x')
+					{
+						continue;
+					}
+					$geo_bits[] = $bi->get_result_identifier() . ' was ' . $rounded . ' the speed of ' . $prev_buffer->get_result_identifier();
 					$prev_buffer = $bi;
-					continue;
 				}
-				$rounded = round($bi->get_result_value() / $prev_buffer->get_result_value(), 3) . 'x';
-				if($rounded === '1.000x')
-				{
-					continue;
-				}
-				$geo_bits[] = $bi->get_result_identifier() . ' was ' . $rounded . ' the speed of ' . $prev_buffer->get_result_identifier();
-				$prev_buffer = $bi;
 			}
-		}
-		switch(count($geo_bits))
-		{
-			case 0:
-				$geo_bits = null;
-				break;
-			case 1:
-				$geo_bits = array_pop($geo_bits) . '.';
-				break;
-			case 2:
-				$geo_bits = implode(' and ', $geo_bits) . '.';
-				break;
-			default:
-				if(count($geo_bits) > 10)
-				{
+			switch(count($geo_bits))
+			{
+				case 0:
 					$geo_bits = null;
 					break;
-				}
-				$geo_bits = implode(', ', $geo_bits) . '.';
-				break;
-		}
+				case 1:
+					$geo_bits = array_pop($geo_bits) . '.';
+					break;
+				case 2:
+					$geo_bits = implode(' and ', $geo_bits) . '.';
+					break;
+				default:
+					if(count($geo_bits) > 10)
+					{
+						$geo_bits = null;
+						break;
+					}
+					$geo_bits = implode(', ', $geo_bits) . '.';
+					break;
+			}
 
-		$summary[] = trim('Based on the geometric mean of all complete results, the fastest (' . $first_place_buffer->get_result_identifier() . ') was ' . round($first_place_buffer->get_result_value() / $last_place_buffer->get_result_value(), 3) . 'x the speed of the slowest (' . $last_place_buffer->get_result_identifier() . '). ' . $geo_bits);
+			$summary[] = trim('Based on the geometric mean of all complete results, the fastest (' . $first_place_buffer->get_result_identifier() . ') was ' . round($first_place_buffer->get_result_value() / $last_place_buffer->get_result_value(), 3) . 'x the speed of the slowest (' . $last_place_buffer->get_result_identifier() . '). ' . $geo_bits);
+		}
 
 		if($result_file->get_test_count() > 16)
 		{
