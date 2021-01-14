@@ -311,15 +311,15 @@ PTS_PREPEND_LAUNCH=""
 # check for systemd-inhibit to handle suspending screensaver/idle
 if which systemd-inhibit >/dev/null 2>&1
 then
-	# At least as of September 2019, some versions of systemd-inhibit are buggy around argv handling
-	# PTS_PREPEND_LAUNCH="systemd-inhibit --what=idle:sleep --who=\"Phoronix Test Suite\" --why=\"Phoronix Test Suite benchmarking\" "
-	export PTS_SYSTEMD_INHIBITED=0 # Setting to 1 will make toggle_screensaver PTS module disable
+	PTS_PREPEND_LAUNCH='systemd-inhibit --what=idle:sleep --who="Phoronix Test Suite" --why="Phoronix Test Suite benchmarking" '
+	export PTS_SYSTEMD_INHIBITED=1 # Setting to 1 will make toggle_screensaver PTS module disable
 fi
 
 # Run The Phoronix Test Suite
 PTS_EXIT_STATUS=8
 while [ $PTS_EXIT_STATUS -eq 8 ]; do
-	$PTS_PREPEND_LAUNCH $PHP_BIN $PTS_DIR/pts-core/phoronix-test-suite.php $@
+	PTS_LAUNCH_ARGS="$@"
+	sh -c "$PTS_PREPEND_LAUNCH $PHP_BIN $PTS_DIR/pts-core/phoronix-test-suite.php $PTS_LAUNCH_ARGS"
 	PTS_EXIT_STATUS=$?
 done
 
