@@ -563,11 +563,11 @@ abstract class pts_graph_core
 						$plus_extra += floor(count($longest_r) * $this->i['identifier_size'] * 1.2);
 					}
 
-					$longest_identifier_width = self::text_string_width($this->i['graph_max_value'], $this->i['identifier_size']) + 60 + $plus_extra;
+					$longest_identifier_width = self::text_string_width($this->i['graph_max_value'], $this->i['identifier_size']) + 62 + $plus_extra;
 				}
 				else
 				{
-					$longest_identifier_width = max($se_width, ceil(self::text_string_width($longest_identifier, $this->i['identifier_size']) * 1.09) + 16);
+					$longest_identifier_width = max($se_width, ceil(self::text_string_width($longest_identifier, $this->i['identifier_size']) * 1.09) + 22);
 				}
 
 				$longest_identifier_max = ceil(($this->i['graph_width'] * 0.55) + 0.01);
