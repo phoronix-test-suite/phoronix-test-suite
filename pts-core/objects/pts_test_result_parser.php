@@ -697,7 +697,7 @@ class pts_test_result_parser
 							{
 								$possible_res = $r[($before_this - 1)];
 								self::strip_result_cleaner($possible_res, $e);
-								if($before_this !== false && (!$is_numeric_check || self::valid_numeric_input_handler($possible_res)))
+								if($before_this !== false && (!$is_numeric_check || self::valid_numeric_input_handler($possible_res, $line)))
 								{
 									$test_results[] = $possible_res;
 								}
@@ -718,7 +718,7 @@ class pts_test_result_parser
 										continue;
 									}
 									self::strip_result_cleaner($r[$f], $e);
-									if(!$is_numeric_check || self::valid_numeric_input_handler($r[$f]))
+									if(!$is_numeric_check || self::valid_numeric_input_handler($r[$f], $line))
 									{
 										$test_results[] = $r[$f];
 									}
@@ -729,7 +729,7 @@ class pts_test_result_parser
 						else if(isset($r[$template_r_pos]))
 						{
 							self::strip_result_cleaner($r[$template_r_pos], $e);
-							if(!$is_numeric_check || self::valid_numeric_input_handler($r[$template_r_pos]))
+							if(!$is_numeric_check || self::valid_numeric_input_handler($r[$template_r_pos], $line))
 							{
 								$test_results[] = $r[$template_r_pos];
 							}
@@ -920,7 +920,7 @@ class pts_test_result_parser
 		pts_test_result_parser::debug_message('Test Result Parser Returning: ' . $test_result);
 		return $test_result;
 	}
-	protected static function valid_numeric_input_handler(&$numeric_input)
+	protected static function valid_numeric_input_handler(&$numeric_input, $line)
 	{
 		if(is_numeric($numeric_input))
 		{
