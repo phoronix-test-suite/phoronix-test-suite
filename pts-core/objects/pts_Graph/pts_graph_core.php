@@ -567,7 +567,7 @@ abstract class pts_graph_core
 				}
 				else
 				{
-					$longest_identifier_width = max($se_width, ceil(self::text_string_width($longest_identifier, $this->i['identifier_size']) * 1.09) + 22);
+					$longest_identifier_width = max($se_width, ceil(self::text_string_width($longest_identifier, $this->i['identifier_size']) * 1.09) + 24);
 				}
 
 				$longest_identifier_max = ceil(($this->i['graph_width'] * 0.55) + 0.01);
