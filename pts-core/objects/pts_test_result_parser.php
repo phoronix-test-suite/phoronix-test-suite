@@ -733,55 +733,6 @@ class pts_test_result_parser
 							{
 								$test_results[] = $r[$template_r_pos];
 							}
-							else if($is_numeric_check && strpos($r[$template_r_pos], ':') !== false && strpos($r[$template_r_pos], '.') !== false && is_numeric(str_replace(array(':', '.'), null, $r[$template_r_pos])) && stripos($line, 'time') !== false)
-							{
-								// Convert e.g. 03:03.17 to seconds, relevant for at least pts/blender
-								$seconds = 0;
-								$formatted_time = $r[$template_r_pos];
-								if(($c = strpos($formatted_time, ':')) !== false && strrpos($formatted_time, ':') == $c && is_numeric(substr($formatted_time, 0, $c)))
-								{
-									$seconds = (substr($formatted_time, 0, $c) * 60) + substr($formatted_time, ($c + 1));
-								}
-								if(!empty($seconds))
-								{
-									$test_results[] = $seconds;
-								}
-							}
-							else if($is_numeric_check && strpos($r[$template_r_pos], ':') !== false && strtolower(substr($r[$template_r_pos], -1)) == 's')
-							{
-								// e.g. 01h:04m:33s
-								$seconds = 0;
-								$invalid = false;
-								foreach(explode(':', $r[$template_r_pos]) as $time_segment)
-								{
-									$postfix = strtolower(substr($time_segment, -1));
-									$value = substr($time_segment, 0, -1);
-									if($value == 0 || !is_numeric($value))
-									{
-										continue;
-									}
-									switch($postfix)
-									{
-										case 'h':
-											$seconds += ($value * 3600);
-											break;
-										case 'm':
-											$seconds += ($value * 60);
-											break;
-										case 's':
-											$seconds += $value;
-											break;
-										default:
-											$invalid = true;
-											break;
-									}
-								}
-
-								if(!empty($seconds) && $seconds > 0 && !$invalid)
-								{
-									$test_results[] = $seconds;
-								}
-							}
 						}
 						else
 						{
@@ -999,6 +950,56 @@ class pts_test_result_parser
 			if($vtime > 0 && is_numeric($vtime))
 			{
 				$numeric_input = $vtime;
+				return true;
+			}
+		}
+		else if(strpos($numeric_input, ':') !== false && strpos($numeric_input, '.') !== false && is_numeric(str_replace(array(':', '.'), null, $numeric_input)) && stripos($line, 'time') !== false)
+		{
+			// Convert e.g. 03:03.17 to seconds, relevant for at least pts/blender
+			$seconds = 0;
+			$formatted_time = $numeric_input;
+			if(($c = strpos($formatted_time, ':')) !== false && strrpos($formatted_time, ':') == $c && is_numeric(substr($formatted_time, 0, $c)))
+			{
+				$seconds = (substr($formatted_time, 0, $c) * 60) + substr($formatted_time, ($c + 1));
+			}
+			if(!empty($seconds))
+			{
+				$numeric_input = $seconds;
+				return true;
+			}
+		}
+		else if(strpos($numeric_input, ':') !== false && strtolower(substr($numeric_input, -1)) == 's')
+		{
+			// e.g. 01h:04m:33s
+			$seconds = 0;
+			$invalid = false;
+			foreach(explode(':', $numeric_input) as $time_segment)
+			{
+				$postfix = strtolower(substr($time_segment, -1));
+				$value = substr($time_segment, 0, -1);
+				if($value == 0 || !is_numeric($value))
+				{
+					continue;
+				}
+				switch($postfix)
+				{
+					case 'h':
+						$seconds += ($value * 3600);
+						break;
+					case 'm':
+						$seconds += ($value * 60);
+						break;
+					case 's':
+						$seconds += $value;
+						break;
+					default:
+						$invalid = true;
+						break;
+				}
+			}
+			if(!empty($seconds) && $seconds > 0 && !$invalid)
+			{
+				$numeric_input = $seconds;
 				return true;
 			}
 		}
