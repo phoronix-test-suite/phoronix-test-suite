@@ -305,11 +305,10 @@ class pts_ae_data
 			uasort($comparison_components, array('pts_ae_data', 'sort_array_by_size_of_array_in_value'));
 			$comparison_components = array_slice($comparison_components, 0, 300);
 			$csc = array();
+			$csstd = array();
 			foreach($comparison_components as $component => &$values)
 			{
 				$comparison_components_raw[$component] = $values;
-				$max_value_precision = pts_math::get_precision($values);
-				$values = pts_math::arithmetic_mean($values);
 				if($values < 5)
 				{
 					$precision = 5;
@@ -326,8 +325,10 @@ class pts_ae_data
 				{
 					$precision = 0;
 				}
+				$precision = $precision > 0 ? min($precision, pts_math::get_precision($values)) : 0;
 
-				$values = round($values, min($precision, $max_value_precision));
+				$csstd[$component] = round(pts_math::standard_deviation($values), $precision);
+				$values = round(pts_math::arithmetic_mean($values), $precision);
 				$csc[$component] = $component_sample_counts[$component];
 			}
 
@@ -407,6 +408,7 @@ class pts_ae_data
 			$json['components'] = $component_data;
 			$json['reference_results'] = $comparison_components;
 			$json['reference_results_counts'] = $csc;
+			$json['reference_results_std_dev'] = $csstd;
 
 			$json_encoded = json_encode($json);
 			if(!empty($json_encoded))
