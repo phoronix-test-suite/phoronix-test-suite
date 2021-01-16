@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2020, Phoronix Media
-	Copyright (C) 2008 - 2020, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -397,6 +397,10 @@ class pts_test_profile_parser
 	public function is_internet_required()
 	{
 		return pts_strings::string_bool($this->xg('TestProfile/RequiresInternet', 'FALSE'));
+	}
+	public function is_internet_required_for_install()
+	{
+		return pts_strings::string_bool($this->xg('TestProfile/InstallRequiresInternet', 'FALSE'));
 	}
 	public function allow_cache_share()
 	{

@@ -323,7 +323,18 @@
 						<default>FALSE</default>
 						<flags>UNCOMMON</flags>
 					</xs:appinfo>
-					<xs:documentation>RequiresInternet allows a value of TRUE or FALSE if the test requires a working Internet connection to successfully run the test. By default the value is assumed to FALSE. If TRUE, the Phoronix Test Suite will attempt to prompt the user at run-time if an Internet connection is needed for the test but the Phoronix Test Suite has Internet support disabled or no Internet connection appears to be working. RequiresInternet is mainly for test profiles that may be cloning from a Git repository or manually downloading files from within the test install script, outside of the scope of the downloads.xml functionality where caching may be handled and where the Phoronix Test Suite already manages the network/downloading behavior.</xs:documentation>
+					<xs:documentation>RequiresInternet allows a value of TRUE or FALSE if the test requires a working Internet connection to successfully run the test. By default the value is assumed to FALSE. If TRUE, the Phoronix Test Suite will attempt to prompt the user at run-time if an Internet connection is needed for the test but the Phoronix Test Suite has Internet support disabled or no Internet connection appears to be working. RequiresInternet is mainly for test profiles that may be cloning from a Git repository or manually downloading files from within the script at run-time, outside of the scope of the downloads.xml functionality where caching may be handled and where the Phoronix Test Suite already manages the network/downloading behavior.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InstallRequiresInternet" type="Boolean" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>is_internet_required_for_install</get>
+						<set></set>
+						<default>FALSE</default>
+						<flags>UNCOMMON</flags>
+					</xs:appinfo>
+					<xs:documentation>InstallRequiresInternet allows a value of TRUE or FALSE if the test requires a working Internet connection to successfully install the test. By default the value is assumed to FALSE. If TRUE, the Phoronix Test Suite will attempt to prompt the user at run-time if an Internet connection is needed for the test installation but the Phoronix Test Suite has Internet support disabled or no Internet connection appears to be working. InstallRequiresInternet is mainly for test profiles that may be cloning from a Git repository or manually downloading files from within the test install script, outside of the scope of the downloads.xml functionality where caching may be handled and where the Phoronix Test Suite already manages the network/downloading behavior.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="EnvironmentSize" type="PositiveDecimal" minOccurs="0" maxOccurs="1">

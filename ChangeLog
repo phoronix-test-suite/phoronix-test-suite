@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Add "InstallRequiresInternet" option for test profiles that is more narrow (install time only) than the existing "RequiresInternet"
 pts-core: Add check-tests sub-command
 pts-core: Fix possible crash on PDF output
 pts-core: Make use of systemd-inhibit when available rather than handling screensaver toggling internally
