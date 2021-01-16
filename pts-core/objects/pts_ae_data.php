@@ -325,6 +325,10 @@ class pts_ae_data
 				{
 					$precision = 0;
 				}
+				else
+				{
+					$precision = 2;
+				}
 				$precision = $precision > 0 ? min($precision, pts_math::get_precision($values)) : 0;
 
 				$csstd[$component] = round(pts_math::standard_deviation($values), $precision);
