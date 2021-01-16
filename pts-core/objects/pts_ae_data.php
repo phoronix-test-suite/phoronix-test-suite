@@ -306,9 +306,13 @@ class pts_ae_data
 			$comparison_components = array_slice($comparison_components, 0, 300);
 			$csc = array();
 			$csstd = array();
+			$precision = 2;
 			foreach($comparison_components as $component => &$values)
 			{
 				$comparison_components_raw[$component] = $values;
+				$csstd[$component] = pts_math::standard_deviation($values);
+				$values = pts_math::arithmetic_mean($values);
+
 				if($values < 5)
 				{
 					$precision = 5;
@@ -325,14 +329,10 @@ class pts_ae_data
 				{
 					$precision = 0;
 				}
-				else
-				{
-					$precision = 2;
-				}
-				$precision = $precision > 0 ? min($precision, pts_math::get_precision($values)) : 0;
+				$precision = $precision > 0 ? min($precision, pts_math::get_precision($comparison_components_raw[$component])) : 0;
 
-				$csstd[$component] = round(pts_math::standard_deviation($values), $precision);
-				$values = round(pts_math::arithmetic_mean($values), $precision);
+				$csstd[$component] = round($csstd[$component], $precision);
+				$values = round($values, $precision);
 				$csc[$component] = $component_sample_counts[$component];
 			}
 
