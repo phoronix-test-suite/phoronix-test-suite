@@ -784,7 +784,7 @@ abstract class pts_graph_core
 				$estimated_height = 0;
 				foreach($this->i['notes'] as $i => $note_r)
 				{
-					$this->svg_dom->add_textarea_element(($i + 1) . '. ' . $note_r['note'], array('x' => 5, 'y' => ($bottom_heading_start + (self::$c['size']['key'] * 2) + $estimated_height), 'font-size' => (self::$c['size']['key'] - 1), 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'start', 'xlink:title' => $note_r['hover-title']), $estimated_height);
+					$this->svg_dom->add_textarea_element(($i + 1) . '. ' . $note_r['note'], array('x' => 5, 'y' => ($bottom_heading_start + (self::$c['size']['key'] * 2) + $estimated_height), 'font-size' => (self::$c['size']['key'] - 1), 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'start'), $estimated_height);
 				}
 			}
 		}

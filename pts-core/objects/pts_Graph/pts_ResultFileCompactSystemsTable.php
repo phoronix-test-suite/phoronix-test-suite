@@ -153,7 +153,7 @@ class pts_ResultFileCompactSystemsTable extends pts_graph_core
 			foreach($component as $c)
 			{
 				$c = pts_result_file_analyzer::system_value_to_ir_value($c, $type);
-				$this->svg_dom->add_text_element($c, array('x' => ($this->i['graph_width'] / 2), 'y' => ($offset + $component_header_height - 5), 'xlink:title' => $type . ': ' . $c, 'xlink:href' => $c->get_attribute('href')), $g3);
+				$this->svg_dom->add_text_element($c, array('x' => ($this->i['graph_width'] / 2), 'y' => ($offset + $component_header_height - 5), 'xlink:href' => $c->get_attribute('href')), $g3);
 				$offset += $component_header_height;
 			}
 
@@ -179,7 +179,7 @@ class pts_ResultFileCompactSystemsTable extends pts_graph_core
 			$estimated_height = 0;
 			foreach($this->i['notes'] as $i => $note_r)
 			{
-				$this->svg_dom->add_textarea_element('- ' . $note_r['note'], array('x' => 4, 'y' => ($this->i['graph_height'] - $bottom_footer + $estimated_height + 21), 'font-size' => self::$c['size']['key'], 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'start', 'xlink:title' => $note_r['hover-title']), $estimated_height);
+				$this->svg_dom->add_textarea_element('- ' . $note_r['note'], array('x' => 4, 'y' => ($this->i['graph_height'] - $bottom_footer + $estimated_height + 21), 'font-size' => self::$c['size']['key'], 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'start'), $estimated_height);
 			}
 		}
 	}
