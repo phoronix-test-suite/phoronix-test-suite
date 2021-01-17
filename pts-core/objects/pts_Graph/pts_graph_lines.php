@@ -452,7 +452,7 @@ class pts_graph_lines extends pts_graph_core
 
 			if($point_counter < 6 || $plotted_error_bar || $i == 0 || $i == ($poly_points_count  - 1))
 			{
-				$this->svg_dom->add_element('ellipse', array('cx' => $x_y_pair[0], 'cy' => $x_y_pair[1], 'rx' => 3, 'ry' => 3, 'xlink:title' => $x_y_pair[2]), $g);
+				$this->svg_dom->add_element('ellipse', array('cx' => $x_y_pair[0], 'cy' => $x_y_pair[1], 'rx' => 3, 'ry' => 3), $g);
 			}
 		}
 
