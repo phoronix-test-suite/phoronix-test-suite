@@ -196,7 +196,7 @@ class pts_SideViewTable extends pts_graph_core
 				if(isset($value[64]))
 				{
 					// If it's a long string that needs to be broken to multiple linesd we need textarea to do automatic word wrapping
-					$this->svg_dom->add_textarea_element($value, array('x' => $x, 'y' => ($row_offset + 16), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['text'], 'text-anchor' => 'middle', 'width' => ($column_widths[$column_count] - 8)));
+					$this->svg_dom->add_textarea_element($value, array('x' => $x, 'y' => ($row_offset + 16), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['text'], 'text-anchor' => 'middle'))); // , 'width' => ($column_widths[$column_count] - 8
 				}
 				else
 				{
