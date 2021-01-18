@@ -268,6 +268,7 @@ class pts_svg_dom
 		if($queue_dimensions[0] < $attributes['width'])
 		{
 			// No wrapping is occuring, so stuff it in a more efficient text element instead
+			unset($attributes['width']);
 			$this->add_text_element($text_string, $attributes);
 			$estimated_height += ($attributes['font-size'] + 3);
 			return;

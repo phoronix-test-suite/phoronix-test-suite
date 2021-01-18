@@ -783,6 +783,10 @@ if($result_file->get_test_count() > 1)
 			{
 				$value = $name;
 			}
+			if($name == null)
+			{
+				$name = '[SELECT]';
+			}
 
 			$html_menu .= '<option value="' . $value . '"' . ($value == $selected || $force_select ? ' selected="selected"' : null) . '>' . $name . '</option>';
 		}
