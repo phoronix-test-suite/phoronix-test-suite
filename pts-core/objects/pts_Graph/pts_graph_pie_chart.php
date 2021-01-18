@@ -112,7 +112,7 @@ class pts_graph_pie_chart extends pts_graph_core
 			foreach($group as &$buffer_item)
 			{
 				$percent = pts_math::set_precision($buffer_item->get_result_value() / $this->i['pie_sum'] * 100, 3);
-				$this->svg_dom->draw_svg_arc($center_x, $center_y, $radius, $offset_percent / 100, $percent/ 100, array('fill' => $this->get_paint_color($buffer_item->get_result_identifier()), 'stroke' => self::$c['color']['border'], 'stroke-width' => 2, 'xlink:title' =>  $buffer_item->get_result_identifier() . ': ' . $buffer_item->get_result_value()));
+				$this->svg_dom->draw_svg_arc($center_x, $center_y, $radius, $offset_percent / 100, $percent/ 100, array('fill' => $this->get_paint_color($buffer_item->get_result_identifier()), 'stroke' => self::$c['color']['border'], 'stroke-width' => 2));
 				$offset_percent += $percent;
 			}
 		}
