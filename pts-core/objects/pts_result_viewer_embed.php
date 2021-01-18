@@ -157,7 +157,7 @@ class pts_result_viewer_embed
 		}
 		$PAGE .= '</div>';
 
-		$PAGE .= '<a name="table"></a><div id="results">';
+		$PAGE .= '<a id="table"></a><div id="results">';
 		$prev_title = null;
 
 		$identifier_mapping_to_cores = array();
