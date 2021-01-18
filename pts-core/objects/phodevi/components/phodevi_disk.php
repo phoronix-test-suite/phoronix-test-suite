@@ -432,9 +432,9 @@ class phodevi_disk extends phodevi_device_interface
 
 		foreach(array('Kioxia ', 'Toshiba ', 'SK hynix ') as $brand)
 		{
-			if(($k = stripos($disk_model, $brand)) !== false && $k > 0)
+			if(($k = stripos($disk_model . ' ', $brand)) !== false && $k > 0)
 			{
-				$disk_model = $brand . str_ireplace($brand, '', $disk_model);
+				$disk_model = trim($brand . str_ireplace($brand, '', $disk_model . ' '));
 				break;
 			}
 		}
