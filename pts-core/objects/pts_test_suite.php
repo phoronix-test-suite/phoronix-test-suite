@@ -501,7 +501,7 @@ class pts_test_suite
 	{
 		$a_comp = $a->test_profile->get_title();
 		$b_comp = $b->test_profile->get_title();
-		return strcmp($a_comp, $b_comp);
+		return strcmp(strtolower($a_comp), strtolower($b_comp));
 	}
 	public function get_xml($to = null, $force_nice_formatting = false, $bind_versions = true)
 	{
