@@ -206,7 +206,15 @@ class pts_test_suite
 	{
 		foreach($suite->get_contained_test_result_objects() as $test_result)
 		{
-			$this->test_objects[] = $test_result;
+			$this->add_test_result_object_to_suite($test_result);
+		}
+	}
+	public function add_test_result_object_to_suite(&$test_result)
+	{
+		$this_ch = $test_result->get_comparison_hash(true, false);
+		if(!isset($this->test_objects[$this_ch]))
+		{
+			$this->test_objects[$this_ch] = $test_result;
 		}
 	}
 	public function add_to_suite($test, $arguments = null, $arguments_description = null, $mode = null)
@@ -220,7 +228,7 @@ class pts_test_suite
 		$test_result->set_used_arguments($arguments);
 		$test_result->set_used_arguments_description($arguments_description);
 		$test_result->set_suite_parent($this->get_identifier(false));
-		$this->test_objects[] = $test_result;
+		$this->add_test_result_object_to_suite($test_result);
 
 		if($mode != null)
 		{
@@ -487,7 +495,7 @@ class pts_test_suite
 	}
 	public function sort_contained_tests()
 	{
-		usort($this->test_objects, array($this, 'cmp_result_object_sort_title'));
+		uasort($this->test_objects, array($this, 'cmp_result_object_sort_title'));
 	}
 	public function cmp_result_object_sort_title($a, $b)
 	{
