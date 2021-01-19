@@ -282,14 +282,14 @@ class pts_openbenchmarking
 			{
 				if(!isset($old_index['tests'][$test]))
 				{
-					$table[] = array(pts_client::cli_just_bold('New Test Available: '), $repo . '/' . $test, pts_client::cli_colored_text('v' . array_shift($new_index['tests'][$test]['versions']), 'gray'), $new_index['tests'][$test]['title']);
+					$table[] = array(pts_client::cli_just_bold('New Test: '), $repo . '/' . $test, pts_client::cli_colored_text('v' . array_shift($new_index['tests'][$test]['versions']), 'gray'), $new_index['tests'][$test]['title']);
 				}
 				else if($new_index['tests'][$test]['versions'] != $old_index['tests'][$test]['versions'])
 				{
 					$version_diff = array_diff($new_index['tests'][$test]['versions'], $old_index['tests'][$test]['versions']);
 					if(!empty($version_diff) && $new_index['tests'][$test]['status'] != 'Deprecated')
 					{
-						$table[] = array(pts_client::cli_just_bold('Updated Test Available: '), $repo . '/' . $test, pts_client::cli_colored_text('v' . array_shift($version_diff), 'gray'), $new_index['tests'][$test]['title']);
+						$table[] = array(pts_client::cli_just_bold('Updated Test: '), $repo . '/' . $test, pts_client::cli_colored_text('v' . array_shift($version_diff), 'gray'), $new_index['tests'][$test]['title']);
 					}
 				}
 			}
@@ -301,21 +301,21 @@ class pts_openbenchmarking
 				{
 					if(!isset($old_index['suites'][$suite]))
 					{
-						$table[] = array(pts_client::cli_just_bold('New Suite Available: '), $repo . '/' . $suite, pts_client::cli_colored_text('v' . array_shift($new_index['suites'][$suite]['versions']), 'gray'), $new_index['suites'][$suite]['title']);
+						$table[] = array(pts_client::cli_just_bold('New Suite: '), $repo . '/' . $suite, pts_client::cli_colored_text('v' . array_shift($new_index['suites'][$suite]['versions']), 'gray'), $new_index['suites'][$suite]['title']);
 					}
 					else if($new_index['suites'][$suite]['versions'] != $old_index['suites'][$suite]['versions'])
 					{
 						$version_diff = array_diff($new_index['suites'][$suite]['versions'], $old_index['suites'][$suite]['versions']);
 						if(!empty($version_diff) && $new_index['suites'][$suite]['status'] != 'Deprecated')
 						{
-							$table[] = array(pts_client::cli_just_bold('Updated Suite Available: '), $repo . '/' . $suite, pts_client::cli_colored_text('v' . array_shift($version_diff), 'gray'), $new_index['suites'][$suite]['title']);
+							$table[] = array(pts_client::cli_just_bold('Updated Suite: '), $repo . '/' . $suite, pts_client::cli_colored_text('v' . array_shift($version_diff), 'gray'), $new_index['suites'][$suite]['title']);
 						}
 					}
 				}
 			}
 			if(!empty($table))
 			{
-				echo pts_client::cli_just_italic('Changes Since ' . date('j F' . (date('Y') != date('Y', $old_index['main']['generated']) ? ' Y' : ''), $old_index['main']['generated']) . ' To ' . date('j F', $new_index['main']['generated'])) . PHP_EOL;
+				echo pts_client::cli_just_italic('Available Changes Since ' . date('j F' . (date('Y') != date('Y', $old_index['main']['generated']) ? ' Y' : ''), $old_index['main']['generated']) . ' To ' . date('j F', $new_index['main']['generated'])) . PHP_EOL;
 				echo pts_user_io::display_text_table($table) . PHP_EOL;
 			}
 		}
