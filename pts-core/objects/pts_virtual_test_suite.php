@@ -102,7 +102,7 @@ class pts_virtual_test_suite extends pts_test_suite
 				$test_version = array_shift($test['versions']);
 				$test_profile = new pts_test_profile($this->repo . '/' . $test_identifier . '-' . $test_version);
 
-				if($test_profile->get_display_format() != 'BAR_GRAPH' || !in_array($test_profile->get_license(), array('Free', 'Non-Free')))
+				if($test_profile->get_display_format() != 'BAR_GRAPH' || !in_array($test_profile->get_license(), array('Free', 'Non-Free')) || $test_profile->get_status() == 'Deprecated')
 				{
 					// Also ignore these tests
 					continue;
