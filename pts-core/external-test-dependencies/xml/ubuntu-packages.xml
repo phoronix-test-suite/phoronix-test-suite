@@ -180,7 +180,7 @@
 		</Package>
 		<Package>
 			<GenericName>qt4-development</GenericName>
-			<PackageName>libqt4-dev libqt4-opengl-dev</PackageName>
+			<PackageName> </PackageName>
 			<FileCheck>qmake-qt4, qt4/Qt/qgl.h</FileCheck>
 		</Package>
 		<Package>
