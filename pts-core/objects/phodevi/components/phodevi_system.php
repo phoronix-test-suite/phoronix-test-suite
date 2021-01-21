@@ -56,7 +56,8 @@ class phodevi_system extends phodevi_device_interface
 			'compiler' => new phodevi_device_property('sw_compiler', phodevi::no_caching),
 			'system-layer' => new phodevi_device_property('sw_system_layer', phodevi::no_caching),
 			'environment-variables' => new phodevi_device_property('sw_environment_variables', phodevi::std_caching),
-			'security-features' => new phodevi_device_property('sw_security_features', phodevi::std_caching)
+			'security-features' => new phodevi_device_property('sw_security_features', phodevi::std_caching),
+			'kernel-extra-details' => new phodevi_device_property('sw_kernel_extra_details', phodevi::std_caching)
 			);
 	}
 	public static function sw_username()
@@ -73,6 +74,33 @@ class phodevi_system extends phodevi_device_interface
 		}
 
 		return $username;
+	}
+	public static function sw_kernel_extra_details()
+	{
+		$extra = array();
+
+		if(phodevi::is_linux())
+		{
+			if(is_file('/sys/kernel/mm/transparent_hugepage/enabled'))
+			{
+				$thp_enabled = file_get_contents('/sys/kernel/mm/transparent_hugepage/enabled');
+				if(($x = strpos($thp_enabled, '[')) !== false)
+				{
+					$thp_enabled = substr($thp_enabled, $x + 1);
+					if(($x = strpos($thp_enabled, ']')) !== false)
+					{
+						$thp_enabled = trim(substr($thp_enabled, 0, $x));
+						if(!empty($thp_enabled))
+						{
+							$extra[] = 'Transparent Huge Pages: ' . $thp_enabled;
+						}
+					}
+				}
+
+			}
+		}
+
+		return implode(' - ', $extra);
 	}
 	public static function sw_system_layer()
 	{

@@ -1411,6 +1411,11 @@ class pts_result_file_analyzer
 			$system_attributes['Kernel'][$identifier] = $json['kernel-parameters'];
 			unset($json['kernel-parameters']);
 		}
+		if(isset($json['kernel-extra-details']) && $json['kernel-extra-details'] != null)
+		{
+			$system_attributes['Kernel'][$identifier] = (isset($system_attributes['Kernel'][$identifier]) ? $system_attributes['Kernel'][$identifier] . ' - ' : null) . $json['kernel-extra-details'];
+			unset($json['kernel-extra-details']);
+		}
 		if(isset($json['environment-variables']) && $json['environment-variables'] != null)
 		{
 			$system_attributes['Environment'][$identifier] = $json['environment-variables'];

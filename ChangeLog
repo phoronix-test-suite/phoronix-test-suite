@@ -8,6 +8,7 @@ pts-core: Fix possible crash on PDF output
 pts-core: Make use of systemd-inhibit when available rather than handling screensaver toggling internally
 pts-core: Various small fixes and tweaks
 pts_Graph: A number of minor SVG standards compliance updates
+phodevi: Log Transparent Huge Pages setting as part of system details
 
 Phoronix Test Suite 10.2.0
 5 January 2021
