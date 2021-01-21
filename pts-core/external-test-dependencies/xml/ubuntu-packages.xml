@@ -179,11 +179,6 @@
 			<PackageName>p7zip-full</PackageName>
 		</Package>
 		<Package>
-			<GenericName>qt4-development</GenericName>
-			<PackageName> </PackageName>
-			<FileCheck>qmake-qt4, qt4/Qt/qgl.h</FileCheck>
-		</Package>
-		<Package>
 			<GenericName>qt5-development</GenericName>
 			<PackageName>qml-module-qtquick2 qtdeclarative5-dev qt5-default qtbase5-dev qt5svg5-dev qttools5-dev libqca-qt5-2-dev qt5keychain-dev pyqt5-dev pyqt5-dev-tools qtpositioning5-dev</PackageName>
 			<FileCheck>qmake</FileCheck>
