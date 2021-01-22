@@ -1092,6 +1092,7 @@ class phodevi_cpu extends phodevi_device_interface
 				143 => 'Sapphire Rapids',
 				150 => 'Elkhart Lake',
 				151 => 'Alder Lake',
+				154 => 'Alder Lake',
 				156 => 'Jasper Lake',
 				157 => 'Ice Lake',
 				158 => 'Kaby/Coffee/Whiskey Lake',

@@ -171,7 +171,7 @@ class pts_ResultFileCompactSystemsTable extends pts_graph_core
 			$g_ob = $this->svg_dom->make_g(array('text-anchor' => 'end', 'fill' => self::$c['color']['main_headers'], 'font-size' => 8));
 			$this->svg_dom->add_text_element(OPENBENCHMARKING_TITLE, array('x' => $back_width, 'y' => ($this->i['graph_height'] - $bottom_footer + 12), 'font-weight' => 'bold', 'xlink:href' => 'https://openbenchmarking.org/result/' . OPENBENCHMARKING_IDS), $g_ob);
 			$this->svg_dom->add_text_element('System Logs', array('x' => $back_width, 'y' => ($this->i['graph_height'] - 20), 'xlink:href' => 'https://openbenchmarking.org/system/' . OPENBENCHMARKING_IDS), $g_ob);
-			$this->svg_dom->add_text_element('OPC Classification', array('x' => $back_width, 'y' => ($this->i['graph_height'] - 6), 'xlink:href' => 'https://openbenchmarking.org/opc/' . OPENBENCHMARKING_IDS), $g_ob);
+			//$this->svg_dom->add_text_element('OPC Classification', array('x' => $back_width, 'y' => ($this->i['graph_height'] - 6), 'xlink:href' => 'https://openbenchmarking.org/opc/' . OPENBENCHMARKING_IDS), $g_ob);
 		}
 
 		if(!empty($this->i['notes']))
