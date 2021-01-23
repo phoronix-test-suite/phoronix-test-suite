@@ -8,38 +8,38 @@
 		</Package>
 		<Package>
 			<GenericName>32bit-compatibility</GenericName>
-			<Title>32-bit Libraries / Compatibility For Linux</Title>
+			<Title>32-bit Compatibility Libraries</Title>
 			<ArchitectureSpecific>x86_64</ArchitectureSpecific>
 			<PossibleNames>ia32-libs</PossibleNames>
 			<FileCheck>/usr/lib32/</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>gtk-development</GenericName>
-			<Title>GTK Development Files</Title>
+			<Title>GTK2</Title>
 			<PossibleNames>libgtk2.0-dev</PossibleNames>
 			<FileCheck>gtk-2.0/gtk/gtk.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>sdl-development</GenericName>
-			<Title>SDL 1.x Development Files</Title>
+			<Title>SDL 1.x</Title>
 			<PossibleNames>libsdl1.2-dev, sdl-net, sdl-image</PossibleNames>
 			<FileCheck>SDL/SDL.h, SDL/SDL_net.h, SDL/SDL_image.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>sdl2-development</GenericName>
-			<Title>SDL 2.x Development Files</Title>
+			<Title>SDL 2.x</Title>
 			<PossibleNames>libsdl2-dev</PossibleNames>
 			<FileCheck>SDL2/SDL.h, SDL2/SDL_image.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>glut</GenericName>
-			<Title>OpenGL Utility Kit / GLUT</Title>
+			<Title>OpenGL Utility Kit (GLUT)</Title>
 			<PossibleNames>freeglut3-dev, freeglut-devel</PossibleNames>
 			<FileCheck>libglut.so.3, GL/glut.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>vulkan-development</GenericName>
-			<Title>Vulkan Development</Title>
+			<Title>Vulkan</Title>
 			<PossibleNames>libvulkan-dev, vulkan-devel</PossibleNames>
 			<FileCheck>vulkan/vulkan.h, libvulkan.so.1</FileCheck>
 		</Package>
@@ -51,37 +51,37 @@
 		</Package>
 		<Package>
 			<GenericName>libpng-development</GenericName>
-			<Title>PNG Library Development Files</Title>
+			<Title>PNG Library</Title>
 			<PossibleNames>libpng12-dev</PossibleNames>
 			<FileCheck>libpng12/png.h OR png.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>openssl-development</GenericName>
-			<Title>OpenSSL Development Files</Title>
+			<Title>OpenSSL</Title>
 			<PossibleNames>libssl-dev, openssl-devel</PossibleNames>
 			<FileCheck>openssl/ssl.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
-			<Title>C/C++ Compiler + Common Toolchain Components</Title>
+			<Title>C/C++ Compiler Toolchain</Title>
 			<PossibleNames>gcc</PossibleNames>
 			<FileCheck>gcc OR clang OR cc</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>tiff</GenericName>
-			<Title>TIFF Image Development Files</Title>
+			<Title>TIFF Image</Title>
 			<PossibleNames>libtiff-dev, libtiff, libtiff-devel</PossibleNames>
 			<FileCheck>tiff.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>xorg-development</GenericName>
-			<Title>X.Org Development Files and Libraries</Title>
+			<Title>X.Org Development</Title>
 			<PossibleNames>xserver-xorg-development, xorg-devel</PossibleNames>
 			<FileCheck>xorg/xf86.h OR X11/Xlib.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>cairo-development</GenericName>
-			<Title>Cairo Development Files and Libraries</Title>
+			<Title>Cairo</Title>
 			<PossibleNames>cairo-devel, libcairo2-dev, libcairo-devel</PossibleNames>
 			<FileCheck>cairo/cairo.h</FileCheck>
 		</Package>
@@ -111,7 +111,7 @@
 		</Package>
 		<Package>
 			<GenericName>imlib2-development</GenericName>
-			<Title>Imlib2 Development Files</Title>
+			<Title>Imlib2</Title>
 			<PossibleNames>libimlib2-dev</PossibleNames>
 			<FileCheck>Imlib2.h, libImlib2.so</FileCheck>
 		</Package>
@@ -136,13 +136,13 @@
 		</Package>
 		<Package>
 			<GenericName>portaudio-development</GenericName>
-			<Title>PortAudio Development Files</Title>
+			<Title>PortAudio</Title>
 			<PossibleNames>libportaudio-dev, portaudio-devel</PossibleNames>
 			<FileCheck>portaudio.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>ncurses-development</GenericName>
-			<Title>NCurses Development Files</Title>
+			<Title>NCurses</Title>
 			<PossibleNames>libncurses5-dev</PossibleNames>
 			<FileCheck>ncurses.h</FileCheck>
 		</Package>
@@ -167,7 +167,7 @@
 		</Package>
 		<Package>
 			<GenericName>freeimage</GenericName>
-			<Title>FreeImage Graphics Library</Title>
+			<Title>FreeImage</Title>
 			<PossibleNames>libfreeimage3, libfreeimage-dev, </PossibleNames>
 			<FileCheck>libfreeimage.so.3, FreeImage.h</FileCheck>
 		</Package>
@@ -185,19 +185,19 @@
 		</Package>
 		<Package>
 			<GenericName>zlib-development</GenericName>
-			<Title>Zlib Compression Library</Title>
+			<Title>Zlib</Title>
 			<PossibleNames>zlib1-devel, zlib-devel, zlib1g-dev</PossibleNames>
 			<FileCheck>zlib.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>jpeg-development</GenericName>
-			<Title>Development Files For IJG JPEG Library</Title>
+			<Title>JPEG Library</Title>
 			<PossibleNames>libjpeg62-devel, libjpeg62-dev, libjpeg-devel</PossibleNames>
 			<FileCheck>jpeglib.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>libaio-development</GenericName>
-			<Title>Linux Kernel AIO Development Files</Title>
+			<Title>Linux Kernel AIO</Title>
 			<PossibleNames>libaio-dev, libaio-devel</PossibleNames>
 			<FileCheck>libaio.h</FileCheck>
 		</Package>
@@ -209,19 +209,19 @@
 		</Package>
 		<Package>
 			<GenericName>perl</GenericName>
-			<Title>Support For PERL Language</Title>
+			<Title>PERL</Title>
 			<PossibleNames>perl, perl-base</PossibleNames>
 			<FileCheck>perl</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>perl-opengl</GenericName>
-			<Title>OpenGL Support For PERL Language</Title>
+			<Title>PERL OpenGL</Title>
 			<PossibleNames>perl-opengl, perl-OpenGL-Simple</PossibleNames>
 			<FileCheck>perl5/auto/OpenGL/OpenGL.so</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>xorg-video</GenericName>
-			<Title>Xv and XvMC Library Files</Title>
+			<Title>Xv and XvMC</Title>
 			<PossibleNames>xorg-x11-libXv-devel, xorg-x11-devel, libxv-dev, libxvmc-dev</PossibleNames>
 			<FileCheck>X11/extensions/Xvlib.h, X11/extensions/XvMClib.h</FileCheck>
 		</Package>
@@ -233,13 +233,13 @@
 		</Package>
 		<Package>
 			<GenericName>openal-development</GenericName>
-			<Title>OpenAL Library And Development Files</Title>
+			<Title>OpenAL</Title>
 			<PossibleNames>openal, openal-devel, libopenal0a, libopenal-dev</PossibleNames>
 			<FileCheck>AL/al.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>vorbis-development</GenericName>
-			<Title>Vorbis Audio Development Files</Title>
+			<Title>Vorbis</Title>
 			<PossibleNames>libvorbis-dev, vorbis-devel</PossibleNames>
 			<FileCheck>vorbis/vorbisfile.h</FileCheck>
 		</Package>
@@ -251,13 +251,13 @@
 		</Package>
 		<Package>
 			<GenericName>qt4-development</GenericName>
-			<Title>Qt4 Development Files</Title>
+			<Title>Qt4</Title>
 			<PossibleNames>libqt4-dev, libqt4-devel, qt4-devel</PossibleNames>
 			<FileCheck>qmake OR qmake-qt4</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>qt5-development</GenericName>
-			<Title>Qt5 Development Files</Title>
+			<Title>Qt5</Title>
 			<PossibleNames>libqt5-dev, qt5-devel</PossibleNames>
 			<FileCheck>qmake</FileCheck>
 		</Package>
@@ -287,7 +287,7 @@
 		</Package>
 		<Package>
 			<GenericName>numa-development</GenericName>
-			<Title>NUMA Development Files</Title>
+			<Title>NUMA</Title>
 			<PossibleNames>libnuma-dev, numactl-devel</PossibleNames>
 			<FileCheck>numa.h</FileCheck>
 		</Package>
@@ -299,13 +299,13 @@
 		</Package>
 		<Package>
 			<GenericName>fftw3-development</GenericName>
-			<Title>Fast Fourier Transform 3 Library</Title>
+			<Title>Fast Fourier Transform 3</Title>
 			<PossibleNames>fftw3, libfftw3-dev, libfftw3-devel, fftw3-devel</PossibleNames>
 			<FileCheck>fftw3.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>blas-development</GenericName>
-			<Title>BLAS (Basic Linear Algebra Sub-Routine) Library</Title>
+			<Title>BLAS (Basic Linear Algebra Sub-Routine)</Title>
 			<PossibleNames>libblas-dev, libblas-devel, blas-devel, blas</PossibleNames>
 			<FileCheck>libblas.so OR openblas_config.h</FileCheck>
 			<VirtualSuite>TRUE</VirtualSuite>
@@ -338,14 +338,14 @@
 		</Package>
 		<Package>
 			<GenericName>boost-development</GenericName>
-			<Title>Boost Development Libraries</Title>
+			<Title>C++ Boost</Title>
 			<PossibleNames>boost-devel, libboost-dev, libboost-devel</PossibleNames>
 			<FileCheck>boost/regex.hpp</FileCheck>
 			<VirtualSuite>TRUE</VirtualSuite>
 		</Package>
 		<Package>
 			<GenericName>bzip2-development</GenericName>
-			<Title>BZIP2 Development Libraries</Title>
+			<Title>BZIP2</Title>
 			<PossibleNames>bzip2-devel, libbz2-dev, libbzip2-devel</PossibleNames>
 			<FileCheck>bzlib.h</FileCheck>
 		</Package>
@@ -357,7 +357,7 @@
 		</Package>
 		<Package>
 			<GenericName>glibc-development</GenericName>
-			<Title>GNU C Development Libraries w/ 32-bit Support</Title>
+			<Title>GNU C Library</Title>
 			<PossibleNames>libc6-dev, libc6-dev-i386, glibc-devel</PossibleNames>
 			<FileCheck>gnu/stubs-32.h OR gnu-versions.h, libc.a</FileCheck>
 		</Package>
@@ -370,13 +370,13 @@
 		</Package>
 		<Package>
 			<GenericName>python-boost-development</GenericName>
-			<Title>Python Boost Development Libraries</Title>
+			<Title>Python Boost</Title>
 			<PossibleNames>libboost-python-dev</PossibleNames>
 			<FileCheck>boost/python.hpp</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>boost-thread-development</GenericName>
-			<Title>Boost Thread Development Libraries</Title>
+			<Title>Boost Thread Development</Title>
 			<PossibleNames>libboost-thread-dev</PossibleNames>
 			<FileCheck>boost/thread.hpp</FileCheck>
 		</Package>
@@ -400,13 +400,13 @@
 		</Package>
 		<Package>
 			<GenericName>lib3ds</GenericName>
-			<Title>AutoDesk 3DS File Support</Title>
+			<Title>AutoDesk 3DS</Title>
 			<PossibleNames>lib3ds libs3ds-devel</PossibleNames>
 			<FileCheck>lib3ds/atmosphere.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>gmp-library</GenericName>
-			<Title>The GNU Multiple Precision Arithmetic Library</Title>
+			<Title>GNU Multiple Precision Arithmetic</Title>
 			<PossibleNames>libgmp3-dev, libgmp3, gmp-devel</PossibleNames>
 			<FileCheck>gmp.h</FileCheck>
 		</Package>
@@ -455,7 +455,7 @@
 		</Package>
 		<Package>
 			<GenericName>tinyxml</GenericName>
-			<Title>TinyXML Library</Title>
+			<Title>TinyXML</Title>
 			<PossibleNames>tinyxml-dev</PossibleNames>
 			<FileCheck>tinyxml.h</FileCheck>
 		</Package>
@@ -500,7 +500,7 @@
 		</Package>
 		<Package>
                         <GenericName>perl-digest-md5</GenericName>
-                        <Title>Perl interface to the MD5 Algorithm</Title>
+                        <Title>Perl Interface to the MD5 Algorithm</Title>
                         <PossibleNames>perl-Digest-MD5, perl-Digest-Perl-MD5, libdigest-md5</PossibleNames>
                         <FileCheck>Digest/MD5.pm OR /usr/share/doc/perl-Digest-MD5 OR /usr/share/perl5/Digest/</FileCheck>
                 </Package>
