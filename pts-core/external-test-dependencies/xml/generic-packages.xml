@@ -197,7 +197,7 @@
 		</Package>
 		<Package>
 			<GenericName>libaio-development</GenericName>
-			<Title>Linux Kernel AIO</Title>
+			<Title>Linux AIO</Title>
 			<PossibleNames>libaio-dev, libaio-devel</PossibleNames>
 			<FileCheck>libaio.h</FileCheck>
 		</Package>
