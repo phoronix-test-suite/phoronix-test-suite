@@ -1126,7 +1126,7 @@ class phodevi_cpu extends phodevi_device_interface
 				),
 			);
 
-		if(($cpu_string == null || strpos($cpu_string, 'AMD') !== false) && isset($amd_map[$family][$model]))
+		if(($cpu_string == null || strpos($cpu_string, 'AMD') !== false || strpos($cpu_string, ' Athlon') !== false) && isset($amd_map[$family][$model]))
 		{
 			return $amd_map[$family][$model];
 		}
