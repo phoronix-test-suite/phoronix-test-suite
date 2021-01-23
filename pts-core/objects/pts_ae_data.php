@@ -295,7 +295,7 @@ class pts_ae_data
 				$component_sample_counts[$component] = count($values);
 				$values = pts_math::remove_outliers($values, 3);
 
-				if(phodevi::is_fake_device($component) || count($values) < 3)
+				if(phodevi::is_fake_device($component) || count($values) < 3 || pts_math::percent_standard_deviation($values) > 15)
 				{
 					unset($component_sample_counts[$component]);
 					unset($comparison_components[$component]);

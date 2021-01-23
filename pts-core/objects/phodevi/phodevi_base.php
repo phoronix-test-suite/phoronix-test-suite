@@ -54,7 +54,7 @@ class phodevi_base
 		'System Layer' => array('system', 'system-layer')
 		);
 	}
-	public static function determine_system_type($hw, $sw)
+	public static function determine_system_type($hw, $sw = null)
 	{
 		// Assume desktop by default as fallback
 		$type = 'D';
