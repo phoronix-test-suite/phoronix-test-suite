@@ -66,6 +66,7 @@ class pts_graph_lines extends pts_graph_core
 		parent::__construct($result_object, $result_file, $extra_attributes);
 		$this->i['plot_zero_value_lines'] = isset($extra_attributes['plot_zero_value_lines']);
 		$this->i['on_zero_plot_former_value'] = isset($extra_attributes['on_zero_plot_former_value']);
+		$this->i['on_zero_plot_connect'] = isset($extra_attributes['on_zero_plot_connect']);
 		$this->i['show_graph_key'] = true;
 		$this->i['show_background_lines'] = true;
 		$this->i['iveland_view'] = true;
@@ -367,7 +368,10 @@ class pts_graph_lines extends pts_graph_core
 				else if($value < 0)
 				{
 					// Draw whatever is needed of the line so far, since there is no result here
-					$this->draw_graph_line_process($poly_points, $paint_color, $regression_plots, $point_counter, $g);
+					if(!$this->i['on_zero_plot_connect'])
+					{
+						$this->draw_graph_line_process($poly_points, $paint_color, $regression_plots, $point_counter, $g);
+					}
 					continue;
 				}
 
