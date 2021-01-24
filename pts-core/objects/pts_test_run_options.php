@@ -385,7 +385,7 @@ class pts_test_run_options
 				// Base options off available disk partitions
 				if(PTS_IS_CLIENT == false)
 				{
-					echo 'ERROR: This option is not supported in this configuration.';
+					//echo 'ERROR: This option is not supported in this configuration.';
 					return;
 				}
 
@@ -463,7 +463,7 @@ class pts_test_run_options
 				// Base options off attached disks
 				if(PTS_IS_CLIENT == false)
 				{
-					echo 'ERROR: This option is not supported in this configuration.';
+					//echo 'ERROR: This option is not supported in this configuration.';
 					return;
 				}
 
@@ -487,7 +487,7 @@ class pts_test_run_options
 			case 'auto-removable-media':
 				if(PTS_IS_CLIENT == false)
 				{
-					echo 'ERROR: This option is not supported in this configuration.';
+					//echo 'ERROR: This option is not supported in this configuration.';
 					return;
 				}
 
@@ -503,7 +503,7 @@ class pts_test_run_options
 			case 'auto-file-select':
 				if(PTS_IS_CLIENT == false)
 				{
-					echo 'ERROR: This option is not supported in this configuration.';
+					//echo 'ERROR: This option is not supported in this configuration.';
 					return;
 				}
 
@@ -545,7 +545,7 @@ class pts_test_run_options
 			case 'auto-directory-select':
 				if(PTS_IS_CLIENT == false)
 				{
-					echo 'ERROR: This option is not supported in this configuration.';
+					//echo 'ERROR: This option is not supported in this configuration.';
 					return;
 				}
 
