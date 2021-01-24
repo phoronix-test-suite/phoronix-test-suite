@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2020, Phoronix Media
-	Copyright (C) 2008 - 2020, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -156,22 +156,6 @@ class pts_test_profile extends pts_test_profile_parser
 		}
 
 		return $extensions;
-	}
-	public function get_dependency_names()
-	{
-		$dependency_names = array();
-		$exdep_generic_parser = new pts_exdep_generic_parser();
-
-		foreach($this->get_external_dependencies() as $dependency)
-		{
-			if($exdep_generic_parser->is_package($dependency))
-			{
-				$package_data = $exdep_generic_parser->get_package_data($dependency);
-				$dependency_names[] = $package_data['title'];
-			}
-		}
-
-		return $dependency_names;
 	}
 	public function get_times_to_run()
 	{

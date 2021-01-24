@@ -126,6 +126,22 @@ class pts_test_profile_parser
 	{
 		$this->overrides[$xpath] = $value;
 	}
+	public function get_dependency_names()
+	{
+		$dependency_names = array();
+		$exdep_generic_parser = new pts_exdep_generic_parser();
+
+		foreach($this->get_external_dependencies() as $dependency)
+		{
+			if($exdep_generic_parser->is_package($dependency))
+			{
+				$package_data = $exdep_generic_parser->get_package_data($dependency);
+				$dependency_names[] = $package_data['title'];
+			}
+		}
+
+		return $dependency_names;
+	}
 	public function xg($xpath, $default_on_null = null)
 	{
 		if(isset($this->overrides[$xpath]))
