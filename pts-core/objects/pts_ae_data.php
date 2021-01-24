@@ -25,6 +25,7 @@ class pts_ae_data
 {
 	private $db;
 	private $ae_dir;
+	private $cpu_index;
 
 	public function __construct($output_dir)
 	{
@@ -80,6 +81,8 @@ class pts_ae_data
 				$this->db->exec('PRAGMA synchronous = OFF');
 				$this->db->exec('PRAGMA user_version = 4');
 		}
+
+		$this->cpu_index = json_decode(file_get_contents('http://openbenchmarking.org/extern/cpu-trans-index.php'), true);
 		return true;
 	}
 	public function insert_composite_hash_entry_by_result_object($comparison_hash, &$result_object)
@@ -226,6 +229,7 @@ class pts_ae_data
 			$system_types = array();
 			$timing_data = array();
 			$stddev_data = array();
+			$family_perf = array();
 			$results = $this->get_results_array_by_comparison_hash($comparison_hash, $first_appeared, $last_appeared, $component_results, $component_dates, $system_types, $timing_data, $stddev_data);
 
 			if(count($results) < 10)
@@ -273,6 +277,7 @@ class pts_ae_data
 						// if no new results in 3 years, likely outdated...
 						continue;
 					}
+
 					if(count($data) < 3)
 					{
 						continue;
@@ -294,6 +299,59 @@ class pts_ae_data
 			{
 				$component_sample_counts[$component] = count($values);
 				$values = pts_math::remove_outliers($values, 3);
+
+				// FAMILY DATA
+				if(isset($this->cpu_index[$component]) && !phodevi::is_fake_device($component))
+				{
+					// Per Core Calculations
+					$brand = false;
+					if(stripos($component, 'Intel') !== false)
+					{
+						$brand = 'Intel';
+					}
+					else if(stripos($component, 'AMD') !== false)
+					{
+						$brand = 'AMD';
+					}
+
+					if($brand)
+					{
+						$core_family = $this->cpu_index[$component]['CoreFamily'];
+						$series = str_ireplace(array('AMD ', 'Intel ', ), null, $component);
+						if(($x = stripos($series, '-Core')) !== false)
+						{
+							$series = substr($series, 0, $x);
+							$series = substr($series, 0, strrpos($series, ' '));
+						}
+						if(($x = stripos($series, ' x ')) !== false)
+						{
+							$series = substr($series, ($x + 3));
+						}
+						$series = str_replace('-', ' ', $series);
+						$series = substr($series, 0, strrpos($series, ' '));
+						$series = str_replace(array('Dual '), '', $series);
+						if(!empty($series))
+						{
+							$brand_comp_type = phodevi_base::system_type_to_string(phodevi_base::determine_system_type($component));
+							$core_family_compare = $brand . ' ' . $core_family . ' ' . $brand_comp_type;
+							if(!isset($family_perf[$core_family_compare][$series]))
+							{
+								$family_perf[$core_family_compare][$series] = array();
+							}
+							$series_compare = $brand . ' ' . $series . ' ' . $this->cpu_index[$component]['CoreCount'] . '-Core ' . $brand_comp_type;
+							if(!isset($family_perf[$series_compare][$core_family]))
+							{
+								$family_perf[$series_compare][$core_family] = array();
+							}
+
+							$value = pts_math::arithmetic_mean($values);
+							$always_hib_value = ($row['HigherIsBetter'] == 0 ? (1 / $value) * 1000 : $value) / $this->cpu_index[$component]['CPUClock'];
+							$family_perf[$core_family_compare][$series][] = $always_hib_value;
+							$family_perf[$series_compare][$core_family][] = $always_hib_value;
+						}
+					}
+				}
+				// END OF FAMILY DATA
 
 				if(phodevi::is_fake_device($component) || count($values) < 3 || pts_math::percent_standard_deviation($values) > 15)
 				{
@@ -413,6 +471,37 @@ class pts_ae_data
 			$json['reference_results'] = $comparison_components;
 			$json['reference_results_counts'] = $csc;
 			$json['reference_results_std_dev'] = $csstd;
+
+			// FAMILY PERFORMANCE
+			foreach($family_perf as $brand => &$data)
+			{
+				foreach($data as $family => &$sp)
+				{
+					if(count($sp) < 4)
+					{
+						// Not enough data to potentially too off...
+						unset($family_perf[$brand][$family]);
+						continue;
+					}
+					$sp = array_sum($sp) / count($sp);
+				}
+				if(count($family_perf[$brand]) < 3)
+				{
+					unset($family_perf[$brand]);
+				}
+			}
+			foreach($family_perf as $brand => &$data)
+			{
+				$min_family_perf = min($family_perf[$brand]);
+				foreach($data as $family => &$sp)
+				{
+					$sp = round($sp / $min_family_perf, 2);
+				}
+				arsort($family_perf[$brand]);
+			}
+			ksort($family_perf);
+			$json['family_perf'] = $family_perf;
+			// EO Family Perf
 
 			$json_encoded = json_encode($json);
 			if(!empty($json_encoded))
