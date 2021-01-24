@@ -236,7 +236,7 @@ class pts_result_viewer_embed
 				if(is_file(PTS_INTERNAL_OB_CACHE . 'test-profiles/' . $result_object->test_profile->get_identifier() . '/test-definition.xml'))
 				{
 					$tp = new pts_test_profile(PTS_INTERNAL_OB_CACHE . 'test-profiles/' . $result_object->test_profile->get_identifier() . '/test-definition.xml');
-					$PAGE .= '<p class="mini">' . $tp->get_description() . ' <a href="https://openbenchmarking.org/test/' . $result_object->test_profile->get_identifier() . '"><em class="hide_on_print">Learn more via the OpenBenchmarking.org test page</em></a>.</p>';
+					$PAGE .= '<p class="mini">' . $tp->get_description() . ' <a href="https://openbenchmarking.org/test/' . $result_object->test_profile->get_identifier(false) . '"><em class="hide_on_print">Learn more via the OpenBenchmarking.org test page</em></a>.</p>';
 
 				/*	$suites_containing_test = pts_test_suites::suites_containing_test_profile($result_object->test_profile);
 					if(!empty($suites_containing_test))
