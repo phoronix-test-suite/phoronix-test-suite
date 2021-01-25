@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2012 - 2016, Phoronix Media
-	Copyright (C) 2012 - 2016, Michael Larabel
+	Copyright (C) 2012 - 2021, Phoronix Media
+	Copyright (C) 2012 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -43,16 +43,6 @@ class ob_test_profile_analyze implements pts_option_interface
 		{
 			$qualified_identifier = $test_profile->get_identifier();
 
-			// First make sure the test profile is already in the OpenBenchmarking.org database...
-			$json = pts_openbenchmarking::make_openbenchmarking_request('is_test_profile', array('i' => $qualified_identifier));
-			$json = json_decode($json, true);
-
-			if(!isset($json['openbenchmarking']['test']['valid']) || $json['openbenchmarking']['test']['valid'] != 'TRUE')
-			{
-				echo PHP_EOL . $qualified_identifier . ' must first be uploaded to OpenBenchmarking.org.' . PHP_EOL;
-			//	break;
-			}
-
 			// Set some other things...
 			pts_client::pts_set_environment_variable('FORCE_TIMES_TO_RUN', 1);
 			pts_client::pts_set_environment_variable('TEST_RESULTS_NAME', $test_profile->get_title() . ' Testing ' . date('Y-m-d'));
@@ -62,104 +52,6 @@ class ob_test_profile_analyze implements pts_option_interface
 			pts_openbenchmarking_client::override_client_setting('AutoUploadResults', true);
 			pts_openbenchmarking_client::override_client_setting('UploadSystemLogsByDefault', true);
 
-			// Take screenshots
-			pts_client::pts_set_environment_variable('SCREENSHOT_INTERVAL', 9);
-			pts_module_manager::attach_module('timed_screenshot');
-
-			$force_ss = true;
-			$reference_ss_file = pts_module_manager::module_call('timed_screenshot', 'take_screenshot', $force_ss);
-			sleep(2);
-
-			$apitrace = pts_file_io::glob('/usr/local/lib/*/apitrace/wrappers/glxtrace.so');
-
-			if(!empty($apitrace) && pts_client::executable_in_path('apitrace'))
-			{
-				$apitrace = array_shift($apitrace);
-				putenv('LD_PRELOAD=' . $apitrace);
-			}
-			else
-			{
-				$apitrace = false;
-			}
-
-			// So for any compiling tasks they will try to use the most aggressive instructions possible
-			putenv('CFLAGS=-march=native -O3');
-			putenv('CXXFLAGS=-march=native -O3');
-			pts_test_installer::standard_install($qualified_identifier, true);
-			$run_manager = new pts_test_run_manager(false, 2);
-			$run_manager->standard_run($qualified_identifier);
-
-			if($apitrace)
-			{
-				putenv('LD_PRELOAD=');
-			}
-
-			if($reference_ss_file)
-			{
-				$reference_ss = pts_image::image_file_to_gd($reference_ss_file);
-				unlink($reference_ss_file);
-
-				$screenshots_gd = array();
-				$screenshots = pts_module_manager::module_call('timed_screenshot', 'get_screenshots');
-var_dump($screenshots);
-				foreach($screenshots as $ss_file)
-				{
-					$screenshots_gd[$ss_file] = pts_image::image_file_to_gd($ss_file);
-
-					if($screenshots_gd[$ss_file] == false)
-					{
-						continue;
-					}
-
-					$ss_delta = pts_image::gd_image_delta_composite($reference_ss, $screenshots_gd[$ss_file], true);
-
-					if(count($ss_delta) < floor(imagesx($reference_ss) * 0.56) || filesize($ss_file) > 2097152)
-					{
-						// If less than 56% of the pixels are changing on X, then likely not much to show off... (CLI only likely)
-						// Or if filesize of image is beyond 2MB
-						//echo 'dropping' . $ss_file . PHP_EOL;
-						unset($screenshots_gd[$ss_file]);
-						pts_file_io::unlink($ss_file);
-					}
-				}
-
-				$ss_files = array_keys($screenshots_gd);
-				shuffle($ss_files);
-
-				// Don't upload more than 4MB worth of screenshots
-				while(pts_file_io::array_filesize($ss_files) > (1048576 * 2))
-				{
-					$f = array_pop($ss_files);
-					unlink($f);
-				}
-
-				if(count($ss_files) > 0)
-				{
-					$c = 1;
-					foreach($ss_files as $i => $file)
-					{
-						$new_file = dirname($file) . '/screenshot-' . $c . '.png';
-						rename($file, $new_file);
-						$ss_files[$i] = $new_file;
-						$c++;
-					}
-
-					$ss_zip_file = PTS_OPENBENCHMARKING_SCRATCH_PATH . 'screenshots-' . $test_profile->get_identifier_base_name() . '-' . $test_profile->get_test_profile_version() . '.zip';
-					$zip_created = pts_compression::zip_archive_create($ss_zip_file, $ss_files);
-					if($zip_created)
-					{
-						echo count($ss_files) . ' screenshots captured for use.';
-						//'tp_sha1' => sha1_file($zip_file),
-						//'tp_zip' => base64_encode(file_get_contents($zip_file)),
-					}
-
-					foreach($ss_files as $file)
-					{
-					//	pts_file_io::unlink($file);
-					}
-				}
-			}
-
 			$test_binary = self::locate_test_profile_lead_binary($test_profile);
 
 			$shared_library_dependencies = array();
@@ -168,25 +60,6 @@ var_dump($screenshots);
 
 			if(is_executable($test_binary))
 			{
-				if($apitrace)
-				{
-					// Find the trace...
-					$test_binary_dir = dirname($test_binary);
-					$trace_file = glob($test_binary_dir . '/*.trace');
-
-					if($trace_file)
-					{
-						echo 'Analyzing GL traces';
-						$trace_file = array_shift($trace_file);
-						$gl_usage = self::analyze_apitrace_trace_glpop($trace_file);
-
-						if(!empty($gl_usage))
-						{
-							$gl_calls = implode(',', $gl_usage);
-						}
-					}
-				}
-
 				$ldd = trim(shell_exec('ldd ' . $test_binary));
 
 				foreach(explode(PHP_EOL, $ldd) as $line)
@@ -236,17 +109,16 @@ var_dump($screenshots);
 		var_dump($shared_library_dependencies);
 		var_dump($instruction_usage);
 		var_dump($gl_calls);
-
+/*
 		$server_response = pts_openbenchmarking::make_openbenchmarking_request('upload_test_meta', array(
 			'i' => $test_profile->get_identifier(),
-			'screenshots_zip' => ($ss_zip_conts = base64_encode(file_get_contents($ss_zip_file))),
-			'screenshots_zip_sha1' => sha1($ss_zip_conts),
 			'ldd_libraries' => implode(',', $shared_library_dependencies),
 			'opengl_calls' => $gl_calls,
 			'instruction_set_usage' => base64_encode(json_encode($instruction_usage))
 			));
 var_dump($server_response);
 			$json = json_decode($server_response, true);
+			*/
 
 		pts_file_io::unlink($ss_zip_file);
 	}
@@ -345,35 +217,6 @@ var_dump($server_response);
 		}
 
 		return $instruction_usage;
-	}
-	public static function analyze_apitrace_trace_glpop($apitrace_file)
-	{
-		$tracedump = trim(shell_exec('apitrace dump --call-nos=no ' . $apitrace_file));
-		$gl_usage = array();
-
-		while($tracedump && ($break = strpos($tracedump, PHP_EOL)) != false)
-		{
-			$line = substr($tracedump, 0, $break);
-			$tracedump = substr($tracedump, $break + 1);
-			$line = substr($line, 0, strpos($line, '('));
-
-			if(strtolower(substr($line, 0, 2)) == 'gl')
-			{
-				if(isset($gl_usage[$line]))
-				{
-					$gl_usage[$line]++;
-				}
-				else if(pts_strings::is_alnum($line))
-				{
-					$gl_usage[$line] = 1;
-				}
-			}
-		}
-
-		arsort($gl_usage);
-		$gl_usage = array_keys($gl_usage);
-
-		return $gl_usage;
 	}
 }
 
