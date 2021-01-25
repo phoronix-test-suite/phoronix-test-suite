@@ -384,6 +384,10 @@ class pts_test_result
 		{
 			return -1;
 		}
+		if($this->get_parent_hash() != null)
+		{
+			return -1;
+		}
 
 		$best = $this->get_result_first(false);
 		$worst = $this->get_result_last(false);
