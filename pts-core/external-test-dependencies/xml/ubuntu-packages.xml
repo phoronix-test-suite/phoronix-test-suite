@@ -152,7 +152,7 @@
 		<Package>
 			<GenericName>perl-opengl</GenericName>
 			<PackageName>libopengl-perl</PackageName>
-			<FileCheck>perl5/auto/OpenGL/OpenGL.so</FileCheck>
+			<FileCheck>perl5/auto/OpenGL/OpenGL.so OR /usr/lib/x86_64-linux-gnu/perl5/5.30/OpenGL/Config.pm</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>xorg-video</GenericName>
