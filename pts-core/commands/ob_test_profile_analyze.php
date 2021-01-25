@@ -29,14 +29,14 @@ class ob_test_profile_analyze implements pts_option_interface
 	const doc_description = 'This option is intended for test profile creators and generates a range of meta-data and other useful information that can be submitted to OpenBenchmarking.org to provide more verbose information for users of your test profiles.';
 
 	public static function run($r)
-	{
+	{/*
 		if(pts_openbenchmarking_client::user_name() == false)
 		{
 			echo PHP_EOL . 'You must first be logged into an OpenBenchmarking.org account.' . PHP_EOL;
 			echo PHP_EOL . 'Create An Account: http://openbenchmarking.org/';
 			echo PHP_EOL . 'Log-In Command: phoronix-test-suite openbenchmarking-setup' . PHP_EOL . PHP_EOL;
 			return false;
-		}
+		} */
 
 		ini_set('memory_limit', '2048M');
 		foreach(pts_types::identifiers_to_test_profile_objects($r, false, true) as $test_profile)
@@ -49,9 +49,9 @@ class ob_test_profile_analyze implements pts_option_interface
 			pts_client::pts_set_environment_variable('TEST_RESULTS_IDENTIFIER', 'Sample Run');
 			pts_client::pts_set_environment_variable('TEST_RESULTS_DESCRIPTION', 1);
 
-			pts_openbenchmarking_client::override_client_setting('AutoUploadResults', true);
+			pts_openbenchmarking_client::override_client_setting('AutoUploadResults', false);
 			pts_openbenchmarking_client::override_client_setting('UploadSystemLogsByDefault', true);
-
+			pts_test_installer::standard_install($qualified_identifier, true);
 			$test_binary = self::locate_test_profile_lead_binary($test_profile);
 
 			$shared_library_dependencies = array();
