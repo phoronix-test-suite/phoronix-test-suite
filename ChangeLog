@@ -9,6 +9,7 @@ pts-core: Make use of systemd-inhibit when available rather than handling screen
 pts-core: Various small fixes and tweaks
 pts_Graph: A number of minor SVG standards compliance updates
 phodevi: Log Transparent Huge Pages setting as part of system details
+phodevi: Don't bother parsing the X.org log if it grows too big
 
 Phoronix Test Suite 10.2.0
 5 January 2021
