@@ -1640,8 +1640,7 @@ class phodevi_system extends phodevi_device_interface
 		}
 
 		// XXX: As of PTS 10.2.1, commented out due to xorg logs growing too big on recent Ubuntu/bug causing slow perf
-		/*
-		if(!empty($display_driver))
+		if(false && !empty($display_driver))
 		{
 			$driver_version = phodevi_parser::read_xorg_module_version($display_driver . '_drv');
 
@@ -1721,7 +1720,6 @@ class phodevi_system extends phodevi_device_interface
 						break;
 				}
 			}
-			*/
 
 			if($driver_version == false)
 			{
@@ -1741,11 +1739,10 @@ class phodevi_system extends phodevi_device_interface
 					}
 				}
 			}
-
-			if(!empty($driver_version) && $with_version && $driver_version != '0.0.0')
-			{
-				$display_driver .= ' ' . $driver_version;
-			}
+		}
+		if(!empty($driver_version) && $with_version && $driver_version != '0.0.0')
+		{
+			$display_driver .= ' ' . $driver_version;
 		}
 
 		return $display_driver;
