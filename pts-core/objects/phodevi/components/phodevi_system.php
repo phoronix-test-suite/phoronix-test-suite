@@ -1611,12 +1611,24 @@ class phodevi_system extends phodevi_device_interface
 		$display_driver = phodevi::read_property('system', 'dri-display-driver');
 		$driver_version = null;
 
-		if(empty($display_driver))
+		if(empty($display_driver) || $display_driver == 'NVIDIA')
 		{
 			if(phodevi::is_nvidia_graphics() || is_file('/proc/driver/nvidia/version'))
 			{
-				$display_driver = 'nvidia';
-				$driver_version = pts_file_io::file_get_contents('/proc/driver/nvidia/version');
+				$display_driver = 'NVIDIA';
+				if(($nvs_value = phodevi_parser::read_nvidia_extension('NvidiaDriverVersion')))
+				{
+					$driver_version = $nvs_value;
+				}
+				else
+				{
+					// NVIDIA's binary driver appends their driver version on the end of the OpenGL version string
+					$glxinfo = phodevi_parser::software_glxinfo_version();
+					if(($pos = strpos($glxinfo, 'NVIDIA ')) != false)
+					{
+						$driver_version = substr($glxinfo, ($pos + 7));
+					}
+				}
 			}
 			else if((phodevi::is_mesa_graphics() || phodevi::is_bsd()) && stripos(phodevi::read_property('gpu', 'model'), 'NVIDIA') !== false)
 			{
