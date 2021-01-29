@@ -76,11 +76,11 @@ class ob_test_profile_analyze implements pts_option_interface
 					}
 				}
 
-				echo PHP_EOL . 'SHARED LIBRARY DEPENDENCIES: ' . PHP_EOL;
-				print_r($shared_library_dependencies);
+				//echo PHP_EOL . 'SHARED LIBRARY DEPENDENCIES: ' . PHP_EOL;
+				//print_r($shared_library_dependencies);
 
 				$external_dependencies = $test_profile->get_external_dependencies();
-				foreach(array('default', 'sandybridge', 'skylake', 'cascadelake -mprefer-vector-width=512', 'sapphirerapids -mprefer-vector-width=512', 'alderlake', 'znver2', 'znver3') as $march)
+				foreach(array('default', 'sandybridge', 'skylake', 'tigerlake', 'cascadelake -mprefer-vector-width=512', 'sapphirerapids -mprefer-vector-width=512', 'alderlake', 'znver2', 'znver3') as $march)
 				{
 					// So for any compiling tasks they will try to use the most aggressive instructions possible
 					if($march != 'default')
@@ -116,11 +116,16 @@ class ob_test_profile_analyze implements pts_option_interface
 						}
 					}
 				}
-
-				var_dump($shared_library_dependencies);
-				var_dump($instruction_usage);
-				echo "HONORS: ";
-				var_dump($honors_cflags);
+				
+				echo PHP_EOL . pts_client::cli_just_bold('SHARED LIBRARIES: ') . implode(' ', $shared_library_dependencies);
+				echo PHP_EOL . pts_client::cli_just_bold('INSTRUCTION USE: ') . PHP_EOL;
+				$table = array();
+				foreach($instruction_usage as $target => $values)
+				{
+					$table[] = array_merge(array('   ' . pts_client::cli_just_bold($target . ': ')), array_keys($values));
+				}
+				echo pts_user_io::display_text_table($table);
+				echo PHP_EOL . pts_client::cli_just_bold('HONORS FLAGS: ') . ($honors_cflags ? 'YES' : 'NO') . PHP_EOL;
 
 				if(pts_openbenchmarking_client::user_name() != false)
 				{
@@ -130,7 +135,7 @@ class ob_test_profile_analyze implements pts_option_interface
 						'instruction_set_usage' => base64_encode(json_encode($instruction_usage)),
 						'honors_cflags' => ($honors_cflags ? 1 : 0)
 						));
-						var_dump($server_response);
+						//var_dump($server_response);
 						$json = json_decode($server_response, true);
 				}
 			}
@@ -158,7 +163,57 @@ class ob_test_profile_analyze implements pts_option_interface
 		if(($s = strpos($original_launcher_contents, '$LOG_FILE')))
 		{
 			$launcher_contents = substr($original_launcher_contents, 0, $s);
-			$test_binary = pts_strings::first_in_string(trim(str_replace(array('	', '   ', 'mpirun', 'mpiexec', './'), '', substr($launcher_contents, strrpos($launcher_contents, PHP_EOL) + 1))));
+			$tline = trim(str_replace(array('	', '   ', 'mpirun', 'mpiexec', './'), '', substr($launcher_contents, strrpos($launcher_contents, PHP_EOL) + 1)));
+			$test_binary = pts_strings::first_in_string($tline);
+			if(strpos($test_binary, '=') !== false)
+			{
+				// Likely an env var being set first, so go to 2nd word
+				$test_binary = pts_strings::first_in_string(trim(str_replace($test_binary, '', $tline)));
+			}
+			
+			if($test_binary && substr($test_binary, 0, 1) == '-')
+			{
+				$tline = substr($launcher_contents, strrpos($launcher_contents, PHP_EOL) + 1);
+				if(strpos($tline, 'mpirun') !== false || strpos($tline, 'mpiexec') !== false)
+				{
+					$tline = trim(str_replace(array('	', '   ', 'mpirun', 'mpiexec', './'), '', $tline));
+					foreach(explode(' ', $tline) as $possible_cmd)
+					{
+						if(substr($possible_cmd, 0, 1) == '-')
+						{
+							continue;
+						}
+
+						if(is_executable(($cmd = $test_profile->get_test_executable_dir() . $test_binary)) || ($cmd = pts_client::executable_in_path($possible_cmd)) || ($cmd = self::recursively_find_executable($test_profile->get_test_executable_dir(), $possible_cmd)))
+						{
+							$test_binary = $cmd;
+							break;
+						}
+						else if(($cmd = self::recursively_find_executable($test_profile->get_test_executable_dir(), basename($possible_cmd))))
+						{
+							$test_binary = $cmd;
+							break;
+						}
+					}
+				}
+			}
+		}
+		else if($s = strpos($original_launcher_contents, './'))
+		{
+			$launcher_contents = $original_launcher_contents;
+			$test_binary = substr($original_launcher_contents, ($s + 2));
+			$test_binary = substr($test_binary, 0, strpos($test_binary, ' '));
+		}
+		
+		if($test_binary == 'echo' && ($s = strpos($original_launcher_contents, '$LOG_FILE')))
+		{
+			$launcher_contents = substr($original_launcher_contents, 0, $s);
+			$exec_line = trim(str_replace(array('	', '   ', 'mpirun', 'mpiexec', './'), '', substr($launcher_contents, strrpos($launcher_contents, PHP_EOL) + 1)));
+			if(($x = strpos($exec_line, '| ')) !== false)
+			{
+				$exec_line = substr($exec_line, ($x + 2));
+			}
+			$test_binary = pts_strings::first_in_string($exec_line);
 		}
 
 		if(strpos($test_binary, '.app') && strpos($original_launcher_contents, '$LOG_FILE') != ($s = strrpos($original_launcher_contents, '$LOG_FILE')))
@@ -183,6 +238,23 @@ class ob_test_profile_analyze implements pts_option_interface
 					$test_binary = $test_profile->get_test_executable_dir() . '/' . $cd . '/' . $test_binary;
 				}
 			}
+			else if(($e = pts_client::executable_in_path($test_binary)))
+			{
+				$test_binary = $e;
+			}
+
+			if($test_binary != null && !is_executable($test_binary))
+			{
+				// Helping qe and others that use ../ relative path handling not handled by above code, just scan directory for matching binary name...
+				$basename_binary = basename($test_binary);
+				$search_binary = self::recursively_find_executable($test_profile->get_test_executable_dir(), $basename_binary);
+				if($search_binary)
+				{
+					$test_binary = $search_binary;
+				}
+			}
+			
+			//var_dump($test_binary);
 		}
 
 		return $test_binary;
@@ -217,6 +289,27 @@ class ob_test_profile_analyze implements pts_option_interface
 			}
 		}
 	}
+	public static function recursively_find_executable($search_in, $search_for)
+	{
+		foreach(pts_file_io::glob($search_in . '*') as $to_read)
+		{
+			if(is_file($to_read) && is_executable($to_read) && basename($to_read) == $search_for)
+			{
+				return $to_read;
+				
+			}
+			else if(is_dir($to_read))
+			{
+				$found = self::recursively_find_executable($to_read . '/', $search_for);
+				if($found)
+				{
+					return $found;
+				}
+			}
+		}
+		
+		return false;
+	}
 	public static function analyze_binary_instruction_usage(&$binary)
 	{
 		// Based on data from https://github.com/dirtyepic/scripts/blob/master/analyze-x86
@@ -232,9 +325,13 @@ class ob_test_profile_analyze implements pts_option_interface
 		'AVX' => 'VBROADCASTSS VBROADCASTSD VBROADCASTF128 VINSERTF128 VEXTRACTF128 VMASKMOVPS VPERMILPS VPERMILPD VPERM2F128 VZEROALL VZEROUPPER',
 		'AVX2' => 'VPBROADCASTB VPBROADCASTW VPBROADCASTD VPBROADCASTQ VINSERTI128 VEXTRACTI128 VGATHERDPD VGATHERQPD VGATHERDPS VGATHERQPS VPGATHERDD VPGATHERDQ VPGATHERQD VPGATHERQQ VPMASKMOVD VPMASKMOVQ VPERMPS VPERMD VPERMPD VPERMQ VPERM2I128 VPBLENDD VPSLLVD VPSLLVQ  VPSRLVD VPSRLVQ  VPSRAVD',
 		'AES' => 'AESENC AESENCLAST AESDEC AESDECLAST AESKEYGENASSIST AESIMC',
-		'AVX512' => 'AVX512F AVX512CD AVX512DQ AVX512PF AVX512ER AVX512VL AVX512BW AVX512IFMA AVX512VBMI AVX512VBMI2 AVX512VAES AVX512BITALG AVX5124FMAPS AVX512VPCLMULQDQ AVX512GFNI AVX512_VNNI AVX5124VNNIW AVX512VPOPCNTDQ AVX512_BF16',
+		'AVX512' => 'AVX512F AVX512CD AVX512DQ AVX512PF AVX512ER AVX512VL AVX512BW AVX512IFMA AVX512VBMI AVX512VBMI2 AVX512VAES AVX512BITALG AVX5124FMAPS AVX512VPCLMULQDQ AVX512GFNI AVX512_VNNI AVX5124VNNIW AVX512VPOPCNTDQ AVX512_BF16 avx512vp2intersect',
 		'VAES' => 'VAESDEC VAESDECLAST VAESENC VAESENCLAST',
-		'AVX-VNNI' => 'avxvnni',
+		'AVX-VNNI' => 'vpdpbusd vpdpwssd vpdpbusds vpdpwssds',
+		'SERIALIZE' => 'serialize',
+		'WAITPKG' => 'umwait tpause umonitor',
+		'ENQCMD' => 'enqcmd enqcmds',
+		'MOVDIRI' => 'movdiri movdir64b',
 		'AMX' => 'LDTILECFG STTILECFG TILELOADD TILELOADDT1 TILESTORED TILERELEASE TILEZERO TDPBF16PS',
 		'FMA' => array('vfmadd123pd', 'vfmadd123ps', 'vfmadd123sd', 'vfmadd123ss', 'vfmadd132pd', 'vfmadd132ps', 'vfmadd132sd', 'vfmadd132ss', 'vfmadd213pd', 'vfmadd213ps', 'vfmadd213sd', 'vfmadd213ss', 'vfmadd231pd', 'vfmadd231ps', 'vfmadd231sd', 'vfmadd231ss', 'vfmadd312pd', 'vfmadd312ps', 'vfmadd312sd', 'vfmadd312ss', 'vfmadd321pd', 'vfmadd321ps', 'vfmadd321sd', 'vfmadd321ss', 'vfmaddsub123pd', 'vfmaddsub123ps', 'vfmaddsub132pd', 'vfmaddsub132ps', 'vfmaddsub213pd', 'vfmaddsub213ps', 'vfmaddsub231pd', 'vfmaddsub231ps', 'vfmaddsub312pd', 'vfmaddsub312ps', 'vfmaddsub321pd', 'vfmaddsub321ps', 'vfmsub123pd', 'vfmsub123ps', 'vfmsub123sd', 'vfmsub123ss', 'vfmsub132pd', 'vfmsub132ps', 'vfmsub132sd', 'vfmsub132ss', 'vfmsub213pd', 'vfmsub213ps', 'vfmsub213sd', 'vfmsub213ss', 'vfmsub231pd', 'vfmsub231ps', 'vfmsub231sd', 'vfmsub231ss', 'vfmsub312pd', 'vfmsub312ps', 'vfmsub312sd', 'vfmsub312ss', 'vfmsub321pd', 'vfmsub321ps', 'vfmsub321sd', 'vfmsub321ss', 'vfmsubadd123pd', 'vfmsubadd123ps', 'vfmsubadd132pd', 'vfmsubadd132ps', 'vfmsubadd213pd', 'vfmsubadd213ps', 'vfmsubadd231pd', 'vfmsubadd231ps', 'vfmsubadd312pd', 'vfmsubadd312ps', 'vfmsubadd321pd', 'vfmsubadd321ps', 'vfnmadd123pd', 'vfnmadd123ps', 'vfnmadd123sd', 'vfnmadd123ss', 'vfnmadd132pd', 'vfnmadd132ps', 'vfnmadd132sd', 'vfnmadd132ss', 'vfnmadd213pd', 'vfnmadd213ps', 'vfnmadd213sd', 'vfnmadd213ss', 'vfnmadd231pd', 'vfnmadd231ps', 'vfnmadd231sd', 'vfnmadd231ss', 'vfnmadd312pd', 'vfnmadd312ps', 'vfnmadd312sd', 'vfnmadd312ss', 'vfnmadd321pd', 'vfnmadd321ps', 'vfnmadd321sd', 'vfnmadd321ss', 'vfnmsub123pd', 'vfnmsub123ps', 'vfnmsub123sd', 'vfnmsub123ss', 'vfnmsub132pd', 'vfnmsub132ps', 'vfnmsub132sd', 'vfnmsub132ss', 'vfnmsub213pd', 'vfnmsub213ps', 'vfnmsub213sd', 'vfnmsub213ss', 'vfnmsub231pd', 'vfnmsub231ps', 'vfnmsub231sd', 'vfnmsub231ss', 'vfnmsub312pd', 'vfnmsub312ps', 'vfnmsub312sd', 'vfnmsub312ss', 'vfnmsub321pd', 'vfnmsub321ps', 'vfnmsub321sd', 'vfnmsub321ss'),
 		'BMI2' => 'BZHI MULX PDEP PEXT RORX SARX SHRX SHLX',
