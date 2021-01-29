@@ -174,7 +174,8 @@ class phodevi_parser
 		{
 			$xorg_log = phodevi::$vfs->xorg_log;
 
-			if(($module_start = strpos($xorg_log, $module)) > 0)
+			// Don't bother parsing the xorg log if too big
+			if(!isset($xorg_log[500000]) && ($module_start = strpos($xorg_log, $module)) > 0)
 			{
 				$xorg_log = substr($xorg_log, $module_start);
 				$temp_version = substr($xorg_log, strpos($xorg_log, 'module version =') + 17);

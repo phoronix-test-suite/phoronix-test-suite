@@ -61,7 +61,6 @@ class ob_test_profile_analyze implements pts_option_interface
 			$honors_cflags = false;
 			$shared_library_dependencies = array();
 			$instruction_usage = array();
-			$gl_calls = null;
 
 			if(is_executable($test_binary))
 			{

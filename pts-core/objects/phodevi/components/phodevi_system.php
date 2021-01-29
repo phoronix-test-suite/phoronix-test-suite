@@ -1609,12 +1609,26 @@ class phodevi_system extends phodevi_device_interface
 		}
 
 		$display_driver = phodevi::read_property('system', 'dri-display-driver');
+		$driver_version = null;
 
-		if(empty($display_driver))
+		if(empty($display_driver) || $display_driver == 'NVIDIA')
 		{
 			if(phodevi::is_nvidia_graphics() || is_file('/proc/driver/nvidia/version'))
 			{
-				$display_driver = 'nvidia';
+				$display_driver = 'NVIDIA';
+				if(($nvs_value = phodevi_parser::read_nvidia_extension('NvidiaDriverVersion')))
+				{
+					$driver_version = $nvs_value;
+				}
+				else
+				{
+					// NVIDIA's binary driver appends their driver version on the end of the OpenGL version string
+					$glxinfo = phodevi_parser::software_glxinfo_version();
+					if(($pos = strpos($glxinfo, 'NVIDIA ')) != false)
+					{
+						$driver_version = substr($glxinfo, ($pos + 7));
+					}
+				}
 			}
 			else if((phodevi::is_mesa_graphics() || phodevi::is_bsd()) && stripos(phodevi::read_property('gpu', 'model'), 'NVIDIA') !== false)
 			{
@@ -1637,7 +1651,8 @@ class phodevi_system extends phodevi_device_interface
 			}
 		}
 
-		if(!empty($display_driver))
+		// XXX: As of PTS 10.2.1, commented out due to xorg logs growing too big on recent Ubuntu/bug causing slow perf
+		if(false && !empty($display_driver))
 		{
 			$driver_version = phodevi_parser::read_xorg_module_version($display_driver . '_drv');
 
@@ -1736,11 +1751,10 @@ class phodevi_system extends phodevi_device_interface
 					}
 				}
 			}
-
-			if(!empty($driver_version) && $with_version && $driver_version != '0.0.0')
-			{
-				$display_driver .= ' ' . $driver_version;
-			}
+		}
+		if(!empty($driver_version) && $with_version && $driver_version != '0.0.0')
+		{
+			$display_driver .= ' ' . $driver_version;
 		}
 
 		return $display_driver;
