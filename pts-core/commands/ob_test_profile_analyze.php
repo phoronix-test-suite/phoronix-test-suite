@@ -122,7 +122,6 @@ class ob_test_profile_analyze implements pts_option_interface
 							if(is_file($lib_check))
 							{
 								// Scan locally built libs too
-								echo 'LIB CHECK!!! ';
 								self::analyze_binary_instruction_usage($lib_check, $iu);
 							}
 						}
@@ -366,9 +365,9 @@ class ob_test_profile_analyze implements pts_option_interface
 				$instr = trim(strtolower($instruction));
 				if($instr != null && in_array($instr, $instructions))
 				{
-					if(!isset($instruction_usage[$set][$instr]))
+					if(!in_array($instr, $instruction_usage[$set]))
 					{
-						$instruction_usage[$set][$instr] = $instr;
+						$instruction_usage[$set][] = $instr;
 					}
 					$matched_instruction = true;
 					break;
@@ -382,20 +381,13 @@ class ob_test_profile_analyze implements pts_option_interface
 		}
 		fclose($handle);
 		unlink($objdump_file);
-
 		foreach($instruction_usage as $instruction => $usage)
 		{
 			if(!is_array($instruction_usage[$instruction]) || empty($instruction_usage[$instruction]))
 			{
 				unset($instruction_usage[$instruction]);
 			}
-			else
-			{
-				$instruction_usage[$instruction] = array_keys($usage);
-			}
 		}
-
-		return $instruction_usage;
 	}
 }
 
