@@ -910,6 +910,8 @@ class phodevi_cpu extends phodevi_device_interface
 	{
 		return array(
 			//'MMX' => 'MMX',
+			'SSE2' => 'SSE2',
+			'SSE3' => 'SSE3',
 			'SSE4_2' => 'SSE4.2',
 			'SSE4A' => 'SSE4A',
 			'AVX' => 'Advanced Vector Extensions',
