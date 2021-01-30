@@ -851,13 +851,14 @@ class phodevi_cpu extends phodevi_device_interface
 			'xop' => (1 << 13), // AMD XOP Instruction Set
 			'fma3' => (1 << 14), // FMA3 Instruction Set
 			'fma4' => (1 << 15), // FMA4 Instruction Set
-			'rdrand' => (1 << 16), // Intel Bull Mountain RDRAND - Ivy Bridge
-			'fsgsbase' => (1 << 17), // FSGSBASE - Ivy Bridge AVX
-			'bmi2' => (1 << 18), // Intel Haswell has BMI2
-			'avx512cd' => (1 << 19), // AVX-512
-			'avx512_vnni' => (1 << 20), // AVX-512 VNNI (DL BOOST)
-			'avx512_bf16' => (1 << 21), // AVX-512 BFloat16
-			'amx_tile' => (1 << 22), // AMX
+			'fma' => (1 << 16), // FMA4 Instruction Set
+			'rdrand' => (1 << 17), // Intel Bull Mountain RDRAND - Ivy Bridge
+			'fsgsbase' => (1 << 18), // FSGSBASE - Ivy Bridge AVX
+			'bmi2' => (1 << 19), // Intel Haswell has BMI2
+			'avx512cd' => (1 << 20), // AVX-512
+			'avx512_vnni' => (1 << 21), // AVX-512 VNNI (DL BOOST)
+			'avx512_bf16' => (1 << 22), // AVX-512 BFloat16
+			'amx_tile' => (1 << 23), // AMX
 			);
 	}
 	public static function prominent_cpu_features()
@@ -869,6 +870,7 @@ class phodevi_cpu extends phodevi_device_interface
 			'aes' => 'AES', // AES
 			'svm' => 'AMD SVM', // AMD SVM (Virtualization)
 			'vmx' => 'Intel VT-d', // Intel Virtualization
+			'fma' => 'FMA', // FMA Instruction Set
 			'fma3' => 'FMA3', // FMA3 Instruction Set
 			'fma4' => 'FMA4', // FMA4 Instruction Set
 			'rdrand' => 'RdRand', // Intel Bull Mountain RDRAND - Ivy Bridge
