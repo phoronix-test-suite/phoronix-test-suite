@@ -76,6 +76,16 @@ class ob_test_profile_analyze implements pts_option_interface
 					}
 				}
 
+				$libraries_found_in_test_dir = array();
+				foreach($shared_library_dependencies as $look_for_so)
+				{
+					$looked_so = self::recursively_find_file($test_profile->get_test_executable_dir(), $look_for_so, false);
+					if($looked_so)
+					{
+						$libraries_found_in_test_dir[] = $looked_so;
+					}
+				}
+
 				//echo PHP_EOL . 'SHARED LIBRARY DEPENDENCIES: ' . PHP_EOL;
 				//print_r($shared_library_dependencies);
 
@@ -104,7 +114,18 @@ class ob_test_profile_analyze implements pts_option_interface
 					pts_test_installer::standard_install($qualified_identifier, true);
 					if($test_profile->is_test_installed())
 					{
-						$iu = self::analyze_binary_instruction_usage($test_binary);
+						$iu = array();
+						self::analyze_binary_instruction_usage($test_binary, $iu);
+
+						foreach($libraries_found_in_test_dir as $lib_check)
+						{
+							if(is_file($lib_check))
+							{
+								// Scan locally built libs too
+								echo 'LIB CHECK!!! ';
+								self::analyze_binary_instruction_usage($lib_check, $iu);
+							}
+						}
 
 						if($iu != null)
 						{
@@ -184,12 +205,12 @@ class ob_test_profile_analyze implements pts_option_interface
 							continue;
 						}
 
-						if(is_executable(($cmd = $test_profile->get_test_executable_dir() . $test_binary)) || ($cmd = pts_client::executable_in_path($possible_cmd)) || ($cmd = self::recursively_find_executable($test_profile->get_test_executable_dir(), $possible_cmd)))
+						if(is_executable(($cmd = $test_profile->get_test_executable_dir() . $test_binary)) || ($cmd = pts_client::executable_in_path($possible_cmd)) || ($cmd = self::recursively_find_file($test_profile->get_test_executable_dir(), $possible_cmd)))
 						{
 							$test_binary = $cmd;
 							break;
 						}
-						else if(($cmd = self::recursively_find_executable($test_profile->get_test_executable_dir(), basename($possible_cmd))))
+						else if(($cmd = self::recursively_find_file($test_profile->get_test_executable_dir(), basename($possible_cmd))))
 						{
 							$test_binary = $cmd;
 							break;
@@ -247,7 +268,7 @@ class ob_test_profile_analyze implements pts_option_interface
 			{
 				// Helping qe and others that use ../ relative path handling not handled by above code, just scan directory for matching binary name...
 				$basename_binary = basename($test_binary);
-				$search_binary = self::recursively_find_executable($test_profile->get_test_executable_dir(), $basename_binary);
+				$search_binary = self::recursively_find_file($test_profile->get_test_executable_dir(), $basename_binary);
 				if($search_binary)
 				{
 					$test_binary = $search_binary;
@@ -289,18 +310,18 @@ class ob_test_profile_analyze implements pts_option_interface
 			}
 		}
 	}
-	public static function recursively_find_executable($search_in, $search_for)
+	public static function recursively_find_file($search_in, $search_for, $executable_check = true)
 	{
 		foreach(pts_file_io::glob($search_in . '*') as $to_read)
 		{
-			if(is_file($to_read) && is_executable($to_read) && basename($to_read) == $search_for)
+			if(is_file($to_read) && (!$executable_check || is_executable($to_read)) && basename($to_read) == $search_for)
 			{
 				return $to_read;
 				
 			}
 			else if(is_dir($to_read))
 			{
-				$found = self::recursively_find_executable($to_read . '/', $search_for);
+				$found = self::recursively_find_file($to_read . '/', $search_for, $executable_check);
 				if($found)
 				{
 					return $found;
@@ -310,7 +331,7 @@ class ob_test_profile_analyze implements pts_option_interface
 		
 		return false;
 	}
-	public static function analyze_binary_instruction_usage(&$binary)
+	public static function analyze_binary_instruction_usage(&$binary, &$instruction_usage = null)
 	{
 		// Based on data from https://github.com/dirtyepic/scripts/blob/master/analyze-x86
 		$instruction_checks = array(
@@ -349,9 +370,11 @@ class ob_test_profile_analyze implements pts_option_interface
 
 		foreach(array_keys($instruction_checks) as $set)
 		{
-			$instruction_usage[$set] = array();
+			if(!isset($instruction_usage[$set]))
+			{
+				$instruction_usage[$set] = array();
+			}
 		}
-		$instruction_usage['OTHER'] = 0;
 		
 		$objdump_file =  tempnam('/tmp', 'objdump');
 		shell_exec('objdump -d ' . $binary . ' | cut -f3 | cut -d\' \' -f1 > ' . $objdump_file);
