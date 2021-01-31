@@ -1555,12 +1555,12 @@ class pts_client
 
 		if($supports_passing_a_test)
 		{
-			$tests_to_show = array_keys(pts_openbenchmarking_client::new_and_recently_updated_tests(14, 31, true));
+			$tests_to_show = array_keys(pts_openbenchmarking_client::new_and_recently_updated_tests(30, 31, true));
 			$tests_to_show_title = 'New Tests';
 
 			if(count($tests_to_show) < 3)
 			{
-				$tests_to_show = array_keys(pts_openbenchmarking_client::new_and_recently_updated_tests(14, 31));
+				$tests_to_show = array_keys(pts_openbenchmarking_client::new_and_recently_updated_tests(60, 31));
 				$tests_to_show_title = 'New + Updated Tests';
 			}
 
