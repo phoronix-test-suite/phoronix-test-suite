@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Disk Test Suite</Title>
+    <Version>1.3.2</Version>
+    <TestType>Disk</TestType>
+    <Description>This test suite is designed to contain real-world disk and file-system tests.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/sqlite</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/fs-mark</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/compilebench</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/ior</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/iozone</Test>
+    <Arguments>-r 4k -s 8192M -i0</Arguments>
+    <Description>8GB Write Performance</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/dbench</Test>
+    <Arguments>1</Arguments>
+    <Description>1 Clients</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/dbench</Test>
+    <Arguments>12</Arguments>
+    <Description>12 Clients</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/postmark</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/fio</Test>
+    <Arguments>randread libaio 0 1 4k</Arguments>
+    <Description>Type: Random Read - IO Engine: Linux AIO - Buffered: No - Direct: Yes - Block Size: 4KB - Disk Target: Default Test Directory</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/fio</Test>
+    <Arguments>randread libaio 0 1 2m</Arguments>
+    <Description>Type: Random Read - IO Engine: Linux AIO - Buffered: No - Direct: Yes - Block Size: 2MB - Disk Target: Default Test Directory</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/fio</Test>
+    <Arguments>randwrite libaio 0 1 4k</Arguments>
+    <Description>Type: Random Write - IO Engine: Linux AIO - Buffered: No - Direct: Yes - Block Size: 4KB - Disk Target: Default Test Directory</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/fio</Test>
+    <Arguments>randwrite libaio 0 1 2m</Arguments>
+    <Description>Type: Random Write - IO Engine: Linux AIO - Buffered: No - Direct: Yes - Block Size: 2MB - Disk Target: Default Test Directory</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/fio</Test>
+    <Arguments>read libaio 0 1 4k</Arguments>
+    <Description>Type: Sequential Read - IO Engine: Linux AIO - Buffered: No - Direct: Yes - Block Size: 4KB - Disk Target: Default Test Directory</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/fio</Test>
+    <Arguments>read libaio 0 1 2m</Arguments>
+    <Description>Type: Sequential Read - IO Engine: Linux AIO - Buffered: No - Direct: Yes - Block Size: 2MB - Disk Target: Default Test Directory</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/fio</Test>
+    <Arguments>write libaio 0 1 4k</Arguments>
+    <Description>Type: Sequential Write - IO Engine: Linux AIO - Buffered: No - Direct: Yes - Block Size: 4KB - Disk Target: Default Test Directory</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/fio</Test>
+    <Arguments>write libaio 0 1 2m</Arguments>
+    <Description>Type: Sequential Write - IO Engine: Linux AIO - Buffered: No - Direct: Yes - Block Size: 2MB - Disk Target: Default Test Directory</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+</PhoronixTestSuite>

@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0m2-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Scientific Computing</Title>
+    <Version>1.0.3</Version>
+    <TestType>System</TestType>
+    <Description>A collection of scientific computing benchmarks and test suites.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/ffte</Test>
+    <Arguments>echo 256; exec tests/speed1d</Arguments>
+    <Description>Test: N=256, 1D Complex FFT Routine</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/fftw</Test>
+    <Arguments>fftw-stock/tests/bench  --time-repeat 100 -opatient ibc32</Arguments>
+    <Description>Build: Stock - Size: 1D FFT Size 32</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/fftw</Test>
+    <Arguments>fftw-stock/tests/bench  --time-repeat 100 -opatient ibc4096</Arguments>
+    <Description>Build: Stock - Size: 1D FFT Size 4096</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/fftw</Test>
+    <Arguments>fftw-stock/tests/bench  --time-repeat 100 -opatient ibc32x32</Arguments>
+    <Description>Build: Stock - Size: 2D FFT Size 32</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/fftw</Test>
+    <Arguments>fftw-stock/tests/bench  --time-repeat 100 -opatient ibc4096x4096</Arguments>
+    <Description>Build: Stock - Size: 2D FFT Size 4096</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/fftw</Test>
+    <Arguments>fftw-mr/tests/bench  --time-repeat 100 -opatient ibc32</Arguments>
+    <Description>Build: Float + SSE - Size: 1D FFT Size 32</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/fftw</Test>
+    <Arguments>fftw-mr/tests/bench  --time-repeat 100 -opatient ibc4096</Arguments>
+    <Description>Build: Float + SSE - Size: 1D FFT Size 4096</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/fftw</Test>
+    <Arguments>fftw-mr/tests/bench  --time-repeat 100 -opatient ibc32x32</Arguments>
+    <Description>Build: Float + SSE - Size: 2D FFT Size 32</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/fftw</Test>
+    <Arguments>fftw-mr/tests/bench  --time-repeat 100 -opatient ibc4096x4096</Arguments>
+    <Description>Build: Float + SSE - Size: 2D FFT Size 4096</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>system/octave-benchmark</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/neat</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/linear-algebra</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/molecular-dynamics</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/bioinformatics</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/quantum-mechanics</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/mocassin</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/kripke</Test>
+  </Execute>
+</PhoronixTestSuite>

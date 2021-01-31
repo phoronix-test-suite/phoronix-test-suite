@@ -5,8 +5,8 @@ Phoronix Test Suite (Git)
 pts-core: Add "InstallRequiresInternet" option for test profiles that is more narrow (install time only) than the existing "RequiresInternet"
 pts-core: Add check-tests sub-command
 pts-core: Fix possible crash on PDF output
-pts-core: Make use of systemd-inhibit when available rather than handling screensaver toggling internally
 pts-core: Various small fixes and tweaks
+pts-core: Fix PHP8 + cURL download error
 pts_Graph: A number of minor SVG standards compliance updates
 phodevi: Log Transparent Huge Pages setting as part of system details
 phodevi: Don't bother parsing the X.org log if it grows too big

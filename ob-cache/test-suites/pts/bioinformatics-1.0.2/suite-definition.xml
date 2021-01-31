@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0m2-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Bioinformatics</Title>
+    <Version>1.0.2</Version>
+    <TestType>System</TestType>
+    <Description>A collection of bioinformatics programs for benchmarking.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/himeno</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/mrbayes</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/hmmer</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/mafft</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/qmcpack</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+</PhoronixTestSuite>
