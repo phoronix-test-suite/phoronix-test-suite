@@ -301,9 +301,9 @@ function pts_version_codenames()
 		);
 }
 
-pts_define('PTS_VERSION', '10.2.0');
-pts_define('PTS_CORE_VERSION', 10203);
-pts_define('PTS_RELEASE_DATE', '20210105');
+pts_define('PTS_VERSION', '10.2.1');
+pts_define('PTS_CORE_VERSION', 10210);
+pts_define('PTS_RELEASE_DATE', '20210201');
 pts_define('PTS_CODENAME', 'Harstad');
 
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));

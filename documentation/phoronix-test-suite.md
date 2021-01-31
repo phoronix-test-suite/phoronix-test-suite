@@ -169,6 +169,9 @@ This option can be used for uploading a test suite to your account on OpenBenchm
 
 
 ## Information
+#### check-tests  [Test]
+This option will perform a check on one or more test profiles to determine if there have been any vendor changes to the filename, filesize, url location, md5 and sha256 checksums.
+
 #### info  [Test | Suite | OpenBenchmarking ID | Test Result]
 This option will show details about the supplied test, suite, virtual suite, or result file.
 
@@ -1048,11 +1051,11 @@ This is a collection of test profiles found within the specified OpenBenchmarkin
 #### Benchmark Tests  pts/benchmark
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a benchmark software test.
 
-#### BLAS (Basic Linear Algebra Sub-Routine) Library Tests  pts/blas
-This is a collection of test profiles having an external dependency on BLAS (Basic Linear Algebra Sub-Routine) Library
+#### BLAS (Basic Linear Algebra Sub-Routine) Tests  pts/blas
+This is a collection of test profiles having an external dependency on BLAS (Basic Linear Algebra Sub-Routine)
 
-#### Boost Development Libraries Tests  pts/boost
-This is a collection of test profiles having an external dependency on Boost Development Libraries
+#### C++ Boost Tests  pts/boost
+This is a collection of test profiles having an external dependency on C++ Boost
 
 #### Bsd Operating System Tests  pts/bsd
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the bsd Operating System.
@@ -1180,11 +1183,11 @@ This is a collection of test profiles found within the specified OpenBenchmarkin
 #### Benchmark Tests  system/benchmark
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a benchmark software test.
 
-#### BLAS (Basic Linear Algebra Sub-Routine) Library Tests  system/blas
-This is a collection of test profiles having an external dependency on BLAS (Basic Linear Algebra Sub-Routine) Library
+#### BLAS (Basic Linear Algebra Sub-Routine) Tests  system/blas
+This is a collection of test profiles having an external dependency on BLAS (Basic Linear Algebra Sub-Routine)
 
-#### Boost Development Libraries Tests  system/boost
-This is a collection of test profiles having an external dependency on Boost Development Libraries
+#### C++ Boost Tests  system/boost
+This is a collection of test profiles having an external dependency on C++ Boost
 
 #### Bsd Operating System Tests  system/bsd
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the bsd Operating System.
