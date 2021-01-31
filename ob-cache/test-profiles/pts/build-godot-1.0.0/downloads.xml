@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/godotengine/godot/archive/3.2.3-stable.tar.gz</URL>
+      <MD5>1b97cd5b2f64519b51062429c306b30c</MD5>
+      <SHA256>4c2a8e7da1ad05c6223b0ff6cf2be124dad6708b56a8ec9910dc2aaf82a553ae</SHA256>
+      <FileName>godot-3.2.3-stable.tar.gz</FileName>
+      <FileSize>22459811</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>CloverLeaf</Title>
+    <Description>CloverLeaf is a Lagrangian-Eulerian hydrodynamics benchmark. This test profile currently makes use of CloverLeaf's OpenMP version and benchmarked with the clover_bm.in input file (Problem 5).</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Lagrangian-Eulerian Hydrodynamics</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux, BSD</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, openmpi-development, fortran-compiler</ExternalDependencies>
+    <EnvironmentSize>2</EnvironmentSize>
+    <ProjectURL>http://uk-mac.github.io/CloverLeaf/</ProjectURL>
+    <InternalTags>SMP, OpenMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>gluxMark</Title>
+    <AppVersion>2.2</AppVersion>
+    <Description>This test runs gluxMark, an OpenGL 3.2 benchmark and supports OpenCL. This test is run with 4x anti-aliasing.</Description>
+    <ResultScale>Total Score</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.2</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Game</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Deprecated</Status>
+    <SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+    <ExternalDependencies>glut, glew, build-utilities, sdl-development, lib3ds</ExternalDependencies>
+    <EnvironmentSize>87.4</EnvironmentSize>
+    <InternalTags>OpenCL</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-aa 4</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Mode</DisplayName>
+      <Identifier>mode</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Fullscreen</Name>
+          <Value>-f</Value>
+        </Entry>
+        <Entry>
+          <Name>Windowed</Name>
+          <Value>-w</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>$VIDEO_WIDTH $VIDEO_HEIGHT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Fill-Rate</Name>
+          <Value>-t fillrate</Value>
+        </Entry>
+        <Entry>
+          <Name>Fragment</Name>
+          <Value>-t fragment</Value>
+        </Entry>
+        <Entry>
+          <Name>Geometry</Name>
+          <Value>-t geometry</Value>
+        </Entry>
+        <Entry>
+          <Name>Vertex</Name>
+          <Value>-t vertex</Value>
+        </Entry>
+        <Entry>
+          <Name>Complex</Name>
+          <Value>-t complex</Value>
+        </Entry>
+        <Entry>
+          <Name>Compute</Name>
+          <Value>-t compute</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

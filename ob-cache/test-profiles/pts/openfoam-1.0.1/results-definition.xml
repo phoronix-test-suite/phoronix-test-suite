@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>ExecutionTime = #_RESULT_# s  ClockTime = 136 s</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>IOR</Title>
+    <AppVersion>3.3.0</AppVersion>
+    <Description>IOR is a parallel I/O storage benchmark making use of MPI with a particular focus on HPC (High Performance Computing) systems. IOR is developed at the Lawrence Livermore National Laboratory (LLNL).</Description>
+    <ResultScale>MB/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Disk</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, openmpi-development</ExternalDependencies>
+    <EnvironmentSize>3</EnvironmentSize>
+    <ProjectURL>https://github.com/hpc/ior</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-v -w -r -i 100 -e -q</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Block Size</DisplayName>
+      <Identifier>size</Identifier>
+      <ArgumentPrefix>-b </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>2MB</Name>
+          <Value>2m</Value>
+        </Entry>
+        <Entry>
+          <Name>4MB</Name>
+          <Value>4m</Value>
+        </Entry>
+        <Entry>
+          <Name>8MB</Name>
+          <Value>8m</Value>
+        </Entry>
+        <Entry>
+          <Name>16MB</Name>
+          <Value>16m</Value>
+        </Entry>
+        <Entry>
+          <Name>32MB</Name>
+          <Value>32m</Value>
+        </Entry>
+        <Entry>
+          <Name>64MB</Name>
+          <Value>64m</Value>
+        </Entry>
+        <Entry>
+          <Name>256MB</Name>
+          <Value>256m</Value>
+        </Entry>
+        <Entry>
+          <Name>512MB</Name>
+          <Value>512m</Value>
+        </Entry>
+        <Entry>
+          <Name>1024MB</Name>
+          <Value>1024m</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Disk Target</DisplayName>
+      <Identifier>auto-disk-mount-points</Identifier>
+      <ArgumentPrefix>-o </ArgumentPrefix>
+      <ArgumentPostfix>testFile</ArgumentPostfix>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

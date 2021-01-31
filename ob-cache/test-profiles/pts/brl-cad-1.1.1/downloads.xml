@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://iweb.dl.sourceforge.net/project/brlcad/BRL-CAD%20Source/7.30.8/brlcad-7.30.8.tar.bz2, https://managedway.dl.sourceforge.net/project/brlcad/BRL-CAD%20Source/7.30.8/brlcad-7.30.8.tar.bz2</URL>
+      <MD5>4e2f34eaca6e6f224f63a29a0735b4fb</MD5>
+      <SHA256>bb5dbcffb2a58d17963e74ed9ac83b2659fd2451b366b50e4961a9ea799aef7f</SHA256>
+      <FileName>brlcad-7.30.8.tar.bz2</FileName>
+      <FileSize>125443351</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

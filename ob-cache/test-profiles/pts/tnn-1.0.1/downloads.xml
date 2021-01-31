@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/TNN-0.2.3.tar.gz</URL>
+      <MD5>7cde1553c68943dd998bd21ce3395d7a</MD5>
+      <SHA256>ea710a5e3a92e7c6f87edc4f9e89851c58c88f3cc28337b343fdd78dc09b1c73</SHA256>
+      <FileName>TNN-0.2.3.tar.gz</FileName>
+      <FileSize>17136288</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

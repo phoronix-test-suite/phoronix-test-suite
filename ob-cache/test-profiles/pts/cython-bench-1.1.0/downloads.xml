@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/cython/cython/archive/0.29.21.tar.gz</URL>
+      <MD5>e14ffbc4019f9bbb37d977dac46f7d0d</MD5>
+      <SHA256>e2e38e1f0572ca54d6085df3dec8b607d20e81515fb80215aed19c81e8fe2079</SHA256>
+      <FileName>cython-0.29.21.tar.gz</FileName>
+      <FileSize>2088511</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

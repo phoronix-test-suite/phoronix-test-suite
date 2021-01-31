@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Timed Firefox Compilation</Title>
+    <AppVersion>84.0</AppVersion>
+    <Description>This test times how long it takes to build the Firefox Web Browser.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Time To Compile</SubTitle>
+    <TimesToRun>1</TimesToRun>
+    <PreInstallMessage>Some build dependencies might be needed that currently aren't handled by the Phoronix Test Suite including: mercurial, glib, dbus, libdbus-glib, libasound2, libcurl4-openssl, libiw, libxt, mesa-common, libgstreamer0.10, libgstreamer-plugins-base0.10, libpulse</PreInstallMessage>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux, MacOSX, Solaris, BSD</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Deprecated</Status>
+    <ExternalDependencies>build-utilities, yasm, gtk-development, glibc-development</ExternalDependencies>
+    <ProjectURL>http://www.mozilla.org/</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Luke Wolf</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

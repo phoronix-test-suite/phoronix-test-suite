@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>CB #_RESULT_# (0.00)</OutputTemplate>
+    <LineHint>CB </LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

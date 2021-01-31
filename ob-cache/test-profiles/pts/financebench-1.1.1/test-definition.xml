@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>FinanceBench</Title>
+    <AppVersion>2016-07-25</AppVersion>
+    <Description>FinanceBench is a collection of financial program benchmarks with support for benchmarking on the GPU via OpenCL and CPU benchmarking with OpenMP. The FinanceBench test cases are focused on Black-Sholes-Merton Process with Analytic European Option engine, QMC (Sobol) Monte-Carlo method (Equity Option Example), Bonds Fixed-rate bond with flat forward curve, and Repo Securities repurchase agreement. FinanceBench was originally written by the  Cavazos Lab at University of Delaware.</Description>
+    <ResultScale>ms</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, opencl</ExternalDependencies>
+    <EnvironmentSize>2</EnvironmentSize>
+    <ProjectURL>https://cavazos-lab.github.io/FinanceBench/</ProjectURL>
+    <InternalTags>CUDA, OpenCL, OpenMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Benchmark</DisplayName>
+      <Identifier>benchmark</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Black-Scholes OpenCL</Name>
+          <Value>Black-Scholes/OpenCL/blackScholesAnalyticEngine.exe</Value>
+        </Entry>
+        <Entry>
+          <Name>Monte-Carlo OpenCL</Name>
+          <Value>Monte-Carlo/OpenCL/monteCarloEngine.exe</Value>
+        </Entry>
+        <Entry>
+          <Name>Bonds OpenMP</Name>
+          <Value>Bonds/OpenMP/bondsEngine.exe</Value>
+        </Entry>
+        <Entry>
+          <Name>Repo OpenMP</Name>
+          <Value>Repo/OpenMP/repoEngine.exe</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

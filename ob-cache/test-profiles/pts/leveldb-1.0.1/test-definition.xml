@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>LevelDB</Title>
+    <AppVersion>1.22</AppVersion>
+    <Description>LevelDB is a key-value storage library developed by Google that supports making use of Snappy for data compression and has other modern features.</Description>
+    <ResultScale>Microseconds Per Op</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux, BSD, MacOSX</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, cmake, snappy</ExternalDependencies>
+    <EnvironmentSize>18</EnvironmentSize>
+    <ProjectURL>https://github.com/google/leveldb</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Benchmark</DisplayName>
+      <Identifier>benchmark</Identifier>
+      <ArgumentPrefix>--benchmarks=</ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>Sequential Fill</Name>
+          <Value>fillseq --num=500000</Value>
+        </Entry>
+        <Entry>
+          <Name>Random Fill</Name>
+          <Value>fillrandom --num=100000</Value>
+        </Entry>
+        <Entry>
+          <Name>Overwrite</Name>
+          <Value>overwrite --num=100000</Value>
+        </Entry>
+        <Entry>
+          <Name>Fill Sync</Name>
+          <Value>fillsync --num=1000000</Value>
+        </Entry>
+        <Entry>
+          <Name>Random Read</Name>
+          <Value>readrandom --num=1000000</Value>
+        </Entry>
+        <Entry>
+          <Name>Random Delete</Name>
+          <Value>deleterandom --num=500000</Value>
+        </Entry>
+        <Entry>
+          <Name>Hot Read</Name>
+          <Value>readhot --num=1000000</Value>
+        </Entry>
+        <Entry>
+          <Name>Seek Random</Name>
+          <Value>seekrandom --num=1000000</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

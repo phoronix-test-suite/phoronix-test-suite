@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/synthmark-20201109.tar.xz</URL>
+      <MD5>7e3e1bd1e6545e25cc21dc250de64586</MD5>
+      <SHA256>4e7ca5854b57735af67ff0c4c46fa718d54cbdadc1bb5ab49ce89f0b2142c6f6</SHA256>
+      <FileName>synthmark-20201109.tar.xz</FileName>
+      <FileSize>224640</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>
