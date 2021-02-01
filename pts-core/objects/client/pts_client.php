@@ -197,6 +197,8 @@ class pts_client
 			PTS_TEST_PROFILE_PATH . 'local/',
 			PTS_TEST_SUITE_PATH . 'local/'
 			);
+		
+		$tp_pts_dir_not = is_dir(PTS_TEST_PROFILE_PATH . 'pts/');
 
 		foreach($directory_check as $dir)
 		{
@@ -204,7 +206,7 @@ class pts_client
 		}
 
 		// Copy files (without overwrite) from internal OB program cache if present, to help those without Internet
-		if(!phodevi::is_windows() && FIRST_RUN_ON_PTS_UPGRADE)
+		if(!phodevi::is_windows() && (FIRST_RUN_ON_PTS_UPGRADE || !$tp_pts_dir_not))
 		{
 			if(PTS_INTERNAL_OB_CACHE && is_dir(PTS_INTERNAL_OB_CACHE . 'test-profiles'))
 			{
