@@ -204,7 +204,7 @@ class pts_client
 		}
 
 		// Copy files (without overwrite) from internal OB program cache if present, to help those without Internet
-		if(!phodevi::is_windows())
+		if(!phodevi::is_windows() && FIRST_RUN_ON_PTS_UPGRADE)
 		{
 			if(PTS_INTERNAL_OB_CACHE && is_dir(PTS_INTERNAL_OB_CACHE . 'test-profiles'))
 			{
