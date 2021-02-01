@@ -48,6 +48,12 @@ class check_tests implements pts_option_interface
 	const V_DOWNLOAD_SIZE = "downloadSize";		// size of downloaded file
 	const V_DUPLICATE = "duplicate";			// indicates if we have already downloaded the file as part of an earlier test profile version
 	const V_REDIRECT = "redirectTo";			// If a url is redirected, this is the original url location. V_URL will contain the redirection 
+	
+	// Don't use const for these as it breaks PHP 5.6
+	// See https://stackoverflow.com/questions/10969342/parse-error-syntax-error-unexpected-expecting-or for details
+	protected static $TESTED_FILES;
+	protected static $JSON_FILE;
+	protected static $DOWNLOADED_VENDOR_FILES;
 
 	/**
 	 * Determines if the test profile is valid. If invalid 'Invalid Arguement' Problem reported.
@@ -69,17 +75,14 @@ class check_tests implements pts_option_interface
 	public static function run($r)
 	{
 
-		// Don't use const for these as it breaks PHP 5.6
-		// See https://stackoverflow.com/questions/10969342/parse-error-syntax-error-unexpected-expecting-or for details
-
 		// File contains a list of all the tests that have already been tested
-		protected static $TESTED_FILES = PTS_OPENBENCHMARKING_SCRATCH_PATH . 'check-tests-tested.txt';
+		self::$TESTED_FILES = PTS_OPENBENCHMARKING_SCRATCH_PATH . 'check-tests-tested.txt';
 
 		// The file holding the final json results
-		protected static $JSON_FILE = PTS_OPENBENCHMARKING_SCRATCH_PATH . 'check-tests-results.json';
+		self::$JSON_FILE = PTS_OPENBENCHMARKING_SCRATCH_PATH . 'check-tests-results.json';
 
 		// Downloaded file from vendors
-		protected static $DOWNLOADED_VENDOR_FILES = PTS_OPENBENCHMARKING_SCRATCH_PATH . "checkTestsDownloads" . "/";
+		self::$DOWNLOADED_VENDOR_FILES = PTS_OPENBENCHMARKING_SCRATCH_PATH . "checkTestsDownloads" . "/";
 	
 		if (!function_exists('curl_init')) {
 			echo pts_client::cli_colored_text("Test Failed. cURL must be installed to proceed." . PHP_EOL . PHP_EOL, 'red', true);
