@@ -33,17 +33,8 @@ class check_tests implements pts_option_interface
 	const doc_section = 'Information';
 	const doc_description = 'This option will perform a check on one or more test profiles to determine if there have been any vendor changes to the filename, filesize, url location, md5 and sha256 checksums.';
 
-	// The file holding the final json results
-	const JSON_FILE = PTS_OPENBENCHMARKING_SCRATCH_PATH . 'check-tests-results.json';
-
-	// File contains a list of all the tests that have already been tested
-	const TESTED_FILES = PTS_OPENBENCHMARKING_SCRATCH_PATH . 'check-tests-tested.txt';
-
 	// Delimiter in the TESTED_FILES
 	const DELIMITER = ":::";
-
-	// Downloaded file from vendors
-	const DOWNLOADED_VENDOR_FILES = PTS_OPENBENCHMARKING_SCRATCH_PATH . "checkTestsDownloads" . "/";
 
 	// Number of child process to spawn
 	const CHILD_PROCS = 8;
@@ -57,6 +48,18 @@ class check_tests implements pts_option_interface
 	const V_DOWNLOAD_SIZE = "downloadSize";		// size of downloaded file
 	const V_DUPLICATE = "duplicate";			// indicates if we have already downloaded the file as part of an earlier test profile version
 	const V_REDIRECT = "redirectTo";			// If a url is redirected, this is the original url location. V_URL will contain the redirection 
+
+	// Don't use const for these as it breaks PHP 5.6
+	// See https://stackoverflow.com/questions/10969342/parse-error-syntax-error-unexpected-expecting-or for details
+
+	// File contains a list of all the tests that have already been tested
+	protected static $TESTED_FILES = PTS_OPENBENCHMARKING_SCRATCH_PATH . 'check-tests-tested.txt';
+
+	// The file holding the final json results
+	protected static $JSON_FILE = PTS_OPENBENCHMARKING_SCRATCH_PATH . 'check-tests-results.json';
+
+	// Downloaded file from vendors
+	protected static $DOWNLOADED_VENDOR_FILES = PTS_OPENBENCHMARKING_SCRATCH_PATH . "checkTestsDownloads" . "/";
 
 	/**
 	 * Determines if the test profile is valid. If invalid 'Invalid Arguement' Problem reported.
@@ -88,9 +91,9 @@ class check_tests implements pts_option_interface
 		echo pts_client::cli_colored_text('Running check-tests with ' . $procs . ' processes.' . PHP_EOL . PHP_EOL, 'green', true);
 
 		// Set up the file in which the results will be stored
-		if (file_exists(self::JSON_FILE)) {
-			if (!unlink(self::JSON_FILE))
-				echo pts_client::cli_colored_text("File " . self::JSON_FILE . " could not be deleted." . PHP_EOL . PHP_EOL, 'red', true);
+		if (file_exists(self::$JSON_FILE)) {
+			if (!unlink(self::$JSON_FILE))
+				echo pts_client::cli_colored_text("File " . self::$JSON_FILE . " could not be deleted." . PHP_EOL . PHP_EOL, 'red', true);
 		}
 
 		if ($r == null) {
@@ -143,24 +146,24 @@ class check_tests implements pts_option_interface
 		}
 
 		// Clean any temp json files that might remain
-		$deleteFiles = self::JSON_FILE . '.*';
+		$deleteFiles = self::$JSON_FILE . '.*';
 		array_map('unlink', glob($deleteFiles));
 
 		// Count and report on number of downloads
-		$noOfDownloads = count(scandir(self::DOWNLOADED_VENDOR_FILES)) - 2; // remove ./ and ../ from the array count
+		$noOfDownloads = count(scandir(self::$DOWNLOADED_VENDOR_FILES)) - 2; // remove ./ and ../ from the array count
 
 		// PROD: delete all files... In DEV: comment out to prevent files from downloading with each test run.
-		if (file_exists(self::TESTED_FILES))
-			unlink(self::TESTED_FILES);
-		if (is_dir(self::DOWNLOADED_VENDOR_FILES)) {
-			$deleteFiles = self::DOWNLOADED_VENDOR_FILES . '*';
+		if (file_exists(self::$TESTED_FILES))
+			unlink(self::$TESTED_FILES);
+		if (is_dir(self::$DOWNLOADED_VENDOR_FILES)) {
+			$deleteFiles = self::$DOWNLOADED_VENDOR_FILES . '*';
 			array_map('unlink', glob($deleteFiles));
-			rmdir(self::DOWNLOADED_VENDOR_FILES);
+			rmdir(self::$DOWNLOADED_VENDOR_FILES);
 		}
 
 		echo PHP_EOL . pts_client::cli_colored_text("Total Tests Performed: " . $processed . PHP_EOL, 'white', true);
 		echo pts_client::cli_colored_text("Total Downloads in Cache: " . $noOfDownloads . PHP_EOL, 'white', true);
-		echo PHP_EOL . pts_client::cli_colored_text("Test Completed in " . self::timeToString(microtime(true) - $startTime) . "." . PHP_EOL . "Results reported in " . self::JSON_FILE .  PHP_EOL . PHP_EOL, 'green', true);
+		echo PHP_EOL . pts_client::cli_colored_text("Test Completed in " . self::timeToString(microtime(true) - $startTime) . "." . PHP_EOL . "Results reported in " . self::$JSON_FILE .  PHP_EOL . PHP_EOL, 'green', true);
 	}
 
 	/**
@@ -365,7 +368,7 @@ class check_tests implements pts_option_interface
 	 */
 	public static function logStatus($results, $id)
 	{
-		$writeFile = self::JSON_FILE . '.' . $id;
+		$writeFile = self::$JSON_FILE . '.' . $id;
 
 		if ($results)
 			if (!file_put_contents($writeFile, json_encode($results), FILE_APPEND)) {
@@ -381,16 +384,16 @@ class check_tests implements pts_option_interface
 	 */
 	public static function mergeResults($id)
 	{
-		if (!file_exists(self::JSON_FILE . '.' . $id)) {
-			//echo PHP_EOL . "File " . self::JSON_FILE . '.' . $id . " could not be merged. Does not exist." . PHP_EOL . PHP_EOL;
+		if (!file_exists(self::$JSON_FILE . '.' . $id)) {
+			//echo PHP_EOL . "File " . self::$JSON_FILE . '.' . $id . " could not be merged. Does not exist." . PHP_EOL . PHP_EOL;
 			return;
 		}
 
-		$mergedArray = json_decode(file_get_contents(self::JSON_FILE), true);
+		$mergedArray = json_decode(file_get_contents(self::$JSON_FILE), true);
 		if (!$mergedArray)
 			$mergedArray = array();
 
-		$dataArray = json_decode(file_get_contents(self::JSON_FILE . '.' . $id), true);
+		$dataArray = json_decode(file_get_contents(self::$JSON_FILE . '.' . $id), true);
 
 		$mergedArray[count($mergedArray)] =  array(
 
@@ -398,13 +401,13 @@ class check_tests implements pts_option_interface
 			"packages" => $dataArray
 		);
 
-		if (!file_put_contents(self::JSON_FILE, json_encode($mergedArray))) {
-			echo PHP_EOL . pts_client::cli_colored_text("Failed to merge results to  " . self::JSON_FILE . PHP_EOL . PHP_EOL, 'red', true);
+		if (!file_put_contents(self::$JSON_FILE, json_encode($mergedArray))) {
+			echo PHP_EOL . pts_client::cli_colored_text("Failed to merge results to  " . self::$JSON_FILE . PHP_EOL . PHP_EOL, 'red', true);
 		}
 
 		// Delete the temp files
-		if (!unlink(self::JSON_FILE . '.' . $id))
-			echo "Unable to delete file " . self::JSON_FILE . '.' . $id;
+		if (!unlink(self::$JSON_FILE . '.' . $id))
+			echo "Unable to delete file " . self::$JSON_FILE . '.' . $id;
 	}
 
 	/**
@@ -421,8 +424,8 @@ class check_tests implements pts_option_interface
 	 */
 	public static function downloadVendorData($url, $filename, $identifier)
 	{
-		if (!is_dir(self::DOWNLOADED_VENDOR_FILES))
-			mkdir(self::DOWNLOADED_VENDOR_FILES);
+		if (!is_dir(self::$DOWNLOADED_VENDOR_FILES))
+			mkdir(self::$DOWNLOADED_VENDOR_FILES);
 
 		$download = array();
 
@@ -440,7 +443,7 @@ class check_tests implements pts_option_interface
 
 			echo pts_client::cli_colored_text($downloaded[0] . " extracted " . basename($download[self::V_DOWNLOAD_FILE])  . " for reuse by " . $identifier . PHP_EOL, 'gray', false);
 		} else {
-			$temp_filename = self::DOWNLOADED_VENDOR_FILES . $filename . getmypid();
+			$temp_filename = self::$DOWNLOADED_VENDOR_FILES . $filename . getmypid();
 
 			$ch = curl_init($url);
 			$fh = fopen($temp_filename, 'w');
@@ -504,8 +507,8 @@ class check_tests implements pts_option_interface
 			$redirect . self::DELIMITER;
 
 
-		if (!file_put_contents(self::TESTED_FILES, $recordedData . PHP_EOL, FILE_APPEND | LOCK_EX))
-			echo PHP_EOL . pts_client::cli_colored_text("Failed to write " . $data[self::V_URL] . " test status to file " . self::TESTED_FILES . PHP_EOL . PHP_EOL, 'cyan', true);
+		if (!file_put_contents(self::$TESTED_FILES, $recordedData . PHP_EOL, FILE_APPEND | LOCK_EX))
+			echo PHP_EOL . pts_client::cli_colored_text("Failed to write " . $data[self::V_URL] . " test status to file " . self::$TESTED_FILES . PHP_EOL . PHP_EOL, 'cyan', true);
 	}
 
 	/**
@@ -517,7 +520,7 @@ class check_tests implements pts_option_interface
 	 */
 	public static function alreadyTested($search)
 	{
-		$handle = @fopen(self::TESTED_FILES, "r");
+		$handle = @fopen(self::$TESTED_FILES, "r");
 		if ($handle) {
 			while (!feof($handle)) {
 				$buffer = fgets($handle);
