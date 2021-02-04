@@ -1637,17 +1637,6 @@ class phodevi_system extends phodevi_device_interface
 					// If there's DRM loaded and NVIDIA, it should be Nouveau
 					$display_driver = 'nouveau';
 				}
-				else
-				{
-					// The dead xf86-video-nv doesn't use any DRM
-					$display_driver = 'nv';
-				}
-			}
-			else
-			{
-				// Fallback to hopefully detect the module, takes the first word off the GPU string and sees if it is the module
-				// This works in at least the case of the Cirrus driver
-				$display_driver = strtolower(pts_strings::first_in_string(phodevi::read_property('gpu', 'model')));
 			}
 		}
 
