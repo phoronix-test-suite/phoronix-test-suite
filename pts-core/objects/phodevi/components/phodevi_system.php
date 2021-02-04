@@ -2016,16 +2016,6 @@ class phodevi_system extends phodevi_device_interface
 		{
 			$dri_driver = 'nvidia';
 		}
-		else if(is_file('/proc/dri/0/name'))
-		{
-			$driver_info = file_get_contents('/proc/dri/0/name');
-			$dri_driver = substr($driver_info, 0, strpos($driver_info, ' '));
-
-			if(in_array($dri_driver, array('i915', 'i965')))
-			{
-				$dri_driver = 'intel';
-			}
-		}
 		else if(is_file('/sys/class/drm/card0/device/vendor'))
 		{
 			$vendor_id = pts_file_io::file_get_contents('/sys/class/drm/card0/device/vendor');
