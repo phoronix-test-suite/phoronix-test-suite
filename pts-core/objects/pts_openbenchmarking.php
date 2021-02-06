@@ -474,7 +474,7 @@ class pts_openbenchmarking
 	{
 		return self::$openbenchmarking_index_refreshed;
 	}
-	public static function linked_repositories()
+	public static function official_repositories()
 	{
 		$repos = array('local', 'pts', 'system', 'git');
 
@@ -483,6 +483,12 @@ class pts_openbenchmarking
 			// Various windows tests for compatibility where there isn't mainline support in the test profile otherwise
 			array_unshift($repos, 'windows');
 		}
+
+		return $repos;
+	}
+	public static function linked_repositories()
+	{
+		$repos = self::official_repositories();
 
 		if(PTS_IS_CLIENT && pts_openbenchmarking_client::user_name() != false)
 		{

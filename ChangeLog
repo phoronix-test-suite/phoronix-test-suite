@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Add enable-repo sub-command for more easily enabling new OpenBenchmarking.org repos
 phodevi: Fix display driver name potentially being reported inaccurate for some obscure graphics cards / driver configurations
 
 Phoronix Test Suite 10.2.1
