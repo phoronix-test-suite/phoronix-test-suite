@@ -518,6 +518,17 @@ class pts_openbenchmarking
 	{
 		return is_file(PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . '.index') ? PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . '.index' : false;
 	}
+	public static function is_local_repo($repo_name)
+	{
+		return is_file(PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . '.index') ? PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . '.index' : false;
+	}
+	public static function ob_repo_exists($name)
+	{
+		$login_state = pts_openbenchmarking::make_openbenchmarking_request('repo_exists', array('s_u' => $name));
+		$json = json_decode($login_state, true);
+
+		return isset($json['openbenchmarking']['repo']['name']) ? array($json['openbenchmarking']['repo']['name'], $json['openbenchmarking']['repo']['alias']) : false;
+	}
 	public static function read_repository_index($repo_name, $do_decode = true)
 	{
 		static $caches;
