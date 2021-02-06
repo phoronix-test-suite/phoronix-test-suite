@@ -155,11 +155,11 @@
 		</Package>
 		<Package>
 			<GenericName>scons</GenericName>
-			<PackageName>scons</PackageName>
+			<PackageName>devel/scons</PackageName>
 		</Package>
 		<Package>
 			<GenericName>jpeg-development</GenericName>
-			<PackageName>jpeg</PackageName>
+			<PackageName>jpeg-turbo</PackageName>
 		</Package>
 		<Package>
 			<GenericName>perl</GenericName>
