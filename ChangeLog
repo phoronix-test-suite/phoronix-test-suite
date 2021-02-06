@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+phodevi: Fix display driver name potentially being reported inaccurate for some obscure graphics cards / driver configurations
+
 Phoronix Test Suite 10.2.1
 1 February 2021
 

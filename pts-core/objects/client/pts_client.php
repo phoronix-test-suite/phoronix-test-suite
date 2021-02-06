@@ -1578,7 +1578,7 @@ class pts_client
 				$terminal_width = pts_client::terminal_width();
 				$tests_per_line = floor($terminal_width / $longest_test);
 				shuffle($tests_to_show);
-				$tests_to_show = array_slice($tests_to_show, 0, min(count($tests_to_show), $tests_per_line * 2 -1));
+				$tests_to_show = array_slice($tests_to_show, 0, min(count($tests_to_show), $tests_per_line * 3 - 1));
 
 				echo pts_client::cli_just_bold($tests_to_show_title . ':') . PHP_EOL;
 				$i = 0;
@@ -1588,12 +1588,16 @@ class pts_client
 					{
 						echo '   ';
 					}
-					echo $test . str_repeat(' ', $longest_test - strlen($test));
+					echo $test;
 
 					$i++;
 					if($i % $tests_per_line == 0 || $i == count($tests_to_show))
 					{
 						echo PHP_EOL;
+					}
+					else
+					{
+						echo str_repeat(' ', $longest_test - strlen($test));
 					}
 				}
 			}
