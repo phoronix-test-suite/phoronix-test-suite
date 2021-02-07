@@ -299,7 +299,7 @@
 		</Package>
 		<Package>
 			<GenericName>fftw3-development</GenericName>
-			<Title>Fast Fourier Transform 3</Title>
+			<Title>FFTW</Title>
 			<PossibleNames>fftw3, libfftw3-dev, libfftw3-devel, fftw3-devel</PossibleNames>
 			<FileCheck>fftw3.h</FileCheck>
 		</Package>
