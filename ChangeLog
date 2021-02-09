@@ -2,6 +2,8 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Add helper text when hitting a download with no working mirrors
+pts-core: Various external dependency updates
 pts-core: Add enable-repo sub-command for more easily enabling new OpenBenchmarking.org repos
 phodevi: Fix display driver name potentially being reported inaccurate for some obscure graphics cards / driver configurations
 

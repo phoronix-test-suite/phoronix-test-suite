@@ -499,6 +499,20 @@ class pts_test_installer
 
 								if(!$try_again)
 								{
+									pts_client::$display->test_install_prompt('If able to locate the file elsewhere, place it in the download cache and re-run the command.' . PHP_EOL . PHP_EOL);
+									pts_client::$display->test_install_prompt(pts_client::cli_just_bold('Download Cache: ') . pts_client::download_cache_path() . PHP_EOL);
+									if($download_package->get_filename() != null)
+									{
+										pts_client::$display->test_install_prompt(pts_client::cli_just_bold('File Name: ') . $download_package->get_filename() . PHP_EOL);
+									}
+									if($download_package->get_sha256() != null)
+									{
+										pts_client::$display->test_install_prompt(pts_client::cli_just_bold('SHA256: ') . $download_package->get_sha256() . PHP_EOL);
+									}
+									else if($download_package->get_md5() != null)
+									{
+										pts_client::$display->test_install_prompt(pts_client::cli_just_bold('MD5: ') . $download_package->get_md5() . PHP_EOL);
+									}
 									//self::test_install_error(null, $test_install_request, 'Download of Needed Test Dependencies Failed!');
 									return false;
 								}
