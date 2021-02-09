@@ -155,15 +155,21 @@ class pts_test_suite
 						}
 					}
 
-					switch((isset($to_execute->Mode) ? self::clean_input($to_execute->Mode) : null))
+					$mode = isset($to_execute->Mode) ? self::clean_input($to_execute->Mode) : null;
+
+					if($mode == null && $obj->has_test_options() && (!isset($to_execute->Description) || empty($to_execute->Description)))
+					{
+						// Set to BATCH mode if no options passed but expecting themm...
+						$mode = 'BATCH';
+					}
+
+					switch($mode)
 					{
 						case 'BATCH':
-							$mode = 'BATCH';
 							$option_select = isset($to_execute->OptionSelect) ? $to_execute->OptionSelect : false;
 							$option_output = pts_test_run_options::batch_user_options($obj, $option_select, false);
 							break;
 						case 'DEFAULTS':
-							$mode = 'DEFAULTS';
 							$option_output = pts_test_run_options::default_user_options($obj);
 							break;
 						default:
