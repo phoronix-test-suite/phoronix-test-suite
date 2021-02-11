@@ -181,6 +181,10 @@ class pts_result_viewer_settings
 		{
 			$suite_limit = '<h3>Limit displaying results to tests within:</h3>';
 			$stis = self::check_request_for_var($request, 'stis');
+			if(!is_array($stis))
+			{
+				$stis = explode(',', $stis);
+			}
 			ksort($suites_in_result_file);
 			$suite_limit .= '<div style="max-height: 250px; overflow: scroll;">';
 			foreach($suites_in_result_file as $suite_identifier => $s)
@@ -530,6 +534,10 @@ if($result_file->get_test_count() > 1)
 		}
 		if(($stis = self::check_request_for_var($request, 'stis')))
 		{
+			if(!is_array($stis))
+			{
+				$stis = explode(',', $stis);
+			}
 			$suites_in_result_file = pts_test_suites::suites_in_result_file($result_file, true, 0);
 			$tests_to_show = array();
 			foreach($stis as $suite_to_show)
