@@ -415,7 +415,7 @@ class ob_auto_compare extends pts_module_interface
 					}
 
 					echo PHP_EOL;
-					echo '    ' . pts_client::cli_just_italic('Comparison to ' . pts_client::cli_just_bold(number_format($sample_count)) . ' OpenBenchmarking.org samples since ' . pts_client::cli_just_bold($first_appeared) . '; median result: ' . pts_client::cli_just_bold(round($percentiles[50], ($percentiles[50] < 100 ? 2 : 0))) . '. Box plot of samples:') . PHP_EOL;
+					echo '    Comparison to ' . pts_client::cli_just_bold(number_format($sample_count)) . ' OpenBenchmarking.org samples since ' . pts_client::cli_just_bold($first_appeared) . '; median result: ' . pts_client::cli_just_bold(round($percentiles[50], ($percentiles[50] < 100 ? 2 : 0))) . '. Box plot of samples:' . PHP_EOL;
 					echo '    ' . implode('', $box_plot) . PHP_EOL;
 					foreach($box_plot_complement as $line_r)
 					{
