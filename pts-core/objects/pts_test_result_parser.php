@@ -221,9 +221,10 @@ class pts_test_result_parser
 		foreach($definitions->get_system_monitor_definitions() as $entry)
 		{
 			$frame_all_times = array();
-			switch($entry->get_identifier())
+			switch(($eid = $entry->get_identifier()))
 			{
 				case 'libframetime-output':
+				case 'libframetime-output-no-limit':
 					// libframetime output
 					$line_values = explode(PHP_EOL, file_get_contents($test_log_file));
 					if(!empty($line_values) && isset($line_values[3]))
@@ -234,7 +235,7 @@ class pts_test_result_parser
 							{
 								$frametime = substr($v, 10);
 								$frametime = substr($frametime, 0, -3);
-								if($frametime > 2000)
+								if($eid == 'libframetime-output-no-limit' || $frametime > 2000)
 								{
 									$frametime = $frametime / 1000;
 									$frame_all_times[] = $frametime;
@@ -1093,7 +1094,7 @@ class pts_test_result_parser
 		$frame_time_values = null;
 		$returns = false;
 
-		if($template == 'libframetime-output')
+		if($template == 'libframetime-output' || $template == 'libframetime-output-no-limit')
 		{
 			$returns = true;
 			$frame_time_values = array();
@@ -1106,7 +1107,7 @@ class pts_test_result_parser
 					{
 						$frametime = substr($v, 10);
 						$frametime = substr($frametime, 0, -3);
-						if($frametime > 2000)
+						if($template == 'libframetime-output-no-limit' || $frametime > 2000)
 						{
 							$frametime = $frametime / 1000;
 							$frame_time_values[] = $frametime;
