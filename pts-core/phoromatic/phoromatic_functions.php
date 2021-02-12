@@ -640,7 +640,7 @@ function create_new_phoromatic_account($register_username, $register_password, $
 	}
 
 	$valid_user_name_chars = '1234567890-_.abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-	for($i = 0; $i < count($register_username); $i++)
+	for($i = 0; $i < strlen($register_username); $i++)
 	{
 		if(strpos($valid_user_name_chars, substr($register_username, $i, 1)) === false)
 		{
