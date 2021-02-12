@@ -772,7 +772,7 @@ class phoromatic_server
 
 		return false;
 	}
-	public static function system_check_for_open_schedule_run($account_id, $system_id, $time_offset = 0, &$sys_row, $include_low_priority_work = true)
+	public static function system_check_for_open_schedule_run($account_id, $system_id, $time_offset = 0, &$sys_row = null, $include_low_priority_work = true)
 	{
 		if($include_low_priority_work)
 		{
