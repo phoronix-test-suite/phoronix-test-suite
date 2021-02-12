@@ -131,7 +131,7 @@ class phoromatic_sched implements pts_webui_interface
 			$stmt->bindValue(':title', $title);
 			$stmt->bindValue(':description', $description);
 			$stmt->bindValue(':state', 1);
-			$stmt->bindValue(':active_on', implode(',', $days_active));
+			$stmt->bindValue(':active_on', (is_array($days_active) ? implode(',', $days_active) : $days_active));
 			$stmt->bindValue(':run_at', $schedule_hour . '.' . $schedule_minute);
 			$stmt->bindValue(':context_pre_install', $pre_install_set_context);
 			$stmt->bindValue(':context_post_install', $post_install_set_context);
