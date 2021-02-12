@@ -49,6 +49,11 @@ class start_phoromatic_server implements pts_option_interface
 			echo 'PHP Sockets support is needed to use the Phoromatic Server.' . PHP_EOL . PHP_EOL;
 			return false;
 		}
+		if(!function_exists('pcntl_signal'))
+		{
+			echo 'PHP pcntl_signal support is needed to use the Phoromatic Server.' . PHP_EOL . PHP_EOL;
+			return false;
+		}
 
 		$server_launcher = '#!/bin/sh' . PHP_EOL;
 		$web_port = 0;
