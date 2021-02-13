@@ -315,7 +315,7 @@ class pts_openbenchmarking
 			}
 			if(!empty($table))
 			{
-				echo pts_client::cli_just_italic('Available Changes Since ' . date('j F' . (date('Y') != date('Y', $old_index['main']['generated']) ? ' Y' : ''), $old_index['main']['generated']) . ' To ' . date('j F', $new_index['main']['generated'])) . PHP_EOL;
+				echo pts_client::cli_just_italic('Available Changes From ' . date('j F' . (date('Y') != date('Y', $old_index['main']['generated']) ? ' Y' : ''), $old_index['main']['generated']) . ' To ' . date('j F', $new_index['main']['generated'])) . PHP_EOL;
 				echo pts_user_io::display_text_table($table) . PHP_EOL;
 			}
 		}
