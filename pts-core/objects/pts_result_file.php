@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2020, Phoronix Media
-	Copyright (C) 2008 - 2020, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -682,11 +682,11 @@ class pts_result_file
 					$new_identifier = $duplicate . ' #' . $i;
 				}
 				while($this->is_system_identifier_in_result_file($new_identifier));
-				$this->rename_run($duplicate, $new_identifier);
+				$this->rename_run($duplicate, $new_identifier, false);
 			}
 		}
 	}
-	public function rename_run($from, $to)
+	public function rename_run($from, $to, $rename_logs = true)
 	{
 		if($from == 'PREFIX')
 		{
@@ -708,12 +708,24 @@ class pts_result_file
 		}
 		else
 		{
+			$found = false;
 			foreach($this->systems as &$s)
 			{
 				if($s->get_identifier() == $from)
 				{
+					$found = true;
 					$s->set_identifier($to);
 					break;
+				}
+			}
+			if($found && $rename_logs && PTS_IS_CLIENT && defined(PTS_SAVE_RESULTS_PATH) && is_dir(($dir_base = PTS_SAVE_RESULTS_PATH . $this->get_identifier() . '/')))
+			{
+				foreach(array('test-logs', 'system-logs', 'installation-logs') as $dir_name)
+				{
+					if(is_dir($dir_base . $dir_name . '/' . $rename_identifier))
+					{
+						rename($dir_base . $dir_name . '/' . $rename_identifier, $dir_base . $dir_name . '/' . $rename_identifier_new);
+					}
 				}
 			}
 		}
