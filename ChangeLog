@@ -10,6 +10,7 @@ pts-core: Allow renaming runs within the result viewer
 phoromatic: Ensure pcntl_signal is present before starting Phoromatic Server
 phoromatic: PHP 8 compatibility fixes
 phodevi: Fix display driver name potentially being reported inaccurate for some obscure graphics cards / driver configurations
+phodevi: Export current GPU graphics card PCI device ID (GPU_DEVICE_ID) for some games/tests relying on it for configuration
 
 Phoronix Test Suite 10.2.1
 1 February 2021

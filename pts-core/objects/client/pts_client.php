@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2020, Phoronix Media
-	Copyright (C) 2008 - 2020, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -370,6 +370,7 @@ class pts_client
 			'SYSTEM_TYPE' => phodevi_base::system_type_to_string(phodevi_base::determine_system_type(phodevi::system_hardware(), phodevi::system_software())),
 			'TERMINAL_WIDTH' => pts_client::terminal_width(),
 			'C_CXX_FLAGS_DEFAULT' => '-O3 -march=native', // mostly for future use
+			'GPU_DEVICE_ID' => phodevi::read_property('gpu', 'device-id'),
 			//'PATH' => pts_client::get_path()
 			);
 
