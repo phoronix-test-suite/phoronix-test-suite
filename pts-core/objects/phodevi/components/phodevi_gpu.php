@@ -710,8 +710,14 @@ class phodevi_gpu extends phodevi_device_interface
 		}
 		else
 		{
-			$freq_string = phodevi::read_property('gpu', 'frequency');
-			return phodevi::read_property('gpu', 'model') . ($freq_string != null ? ' (' . $freq_string . ')' : null);
+			$model = phodevi::read_property('gpu', 'model');
+			$freq_string = null;
+			if(stripos($model, 'NVIDIA') === false)
+			{
+				// 2021: NVIDIA dynamic frequency handling is too sporadic, wish there was a way to query peak freq
+				$freq_string = phodevi::read_property('gpu', 'frequency');
+			}
+			return $model . ($freq_string != null ? ' (' . $freq_string . ')' : null);
 		}
 	}
 	public static function gpu_frequency_string()
