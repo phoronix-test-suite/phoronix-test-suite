@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>toyBrot Fractal Generator</Title>
+    <AppVersion>2020-11-18</AppVersion>
+    <Description>ToyBrot is a Mandelbrot fractal generator supporting C++ threads/tasks, OpenMP, Intel Threaded Building Blocks (TBB), and other targets.</Description>
+    <ResultScale>ms</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, cmake, sdl2-development, libpng-development</ExternalDependencies>
+    <EnvironmentSize>48</EnvironmentSize>
+    <ProjectURL>https://gitlab.com/VileLasagna/toyBrot</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>tbb/atomic.h</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <PostArguments>-g -d 2000 2000 -i 1</PostArguments>
+    </Default>
+    <Option>
+      <DisplayName>Implementation</DisplayName>
+      <Identifier>implementation</Identifier>
+      <Menu>
+        <Entry>
+          <Name>OpenMP</Name>
+          <Value>raymarched/OMP/rmOpenMP</Value>
+        </Entry>
+        <Entry>
+          <Name>C++ Tasks</Name>
+          <Value>raymarched/STDTASKS/rmSTD_TASKS</Value>
+        </Entry>
+        <Entry>
+          <Name>C++ Threads</Name>
+          <Value>raymarched/STDTHREADS/rmSTD_THREADS</Value>
+        </Entry>
+        <Entry>
+          <Name>TBB</Name>
+          <Value>raymarched/TBB/rmTBB</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

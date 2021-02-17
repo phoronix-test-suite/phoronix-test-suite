@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0m2-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Quantum Mechanics</Title>
+    <Version>1.0.2</Version>
+    <TestType>System</TestType>
+    <Description>A collection of benchmarks around quantum mechanics and modelling like density-functional theory.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/gpaw</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/qe</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+</PhoronixTestSuite>

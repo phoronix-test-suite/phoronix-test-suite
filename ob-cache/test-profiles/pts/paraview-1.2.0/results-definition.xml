@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Frames / Sec: #_RESULT_#</OutputTemplate>
+    <ResultScale>Frames / Sec</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>MiPolys / Sec: #_RESULT_#</OutputTemplate>
+    <LineHint>MiPolys</LineHint>
+    <ResultScale>MiPolys / Sec</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>MiVoxels / Sec: #_RESULT_#</OutputTemplate>
+    <LineHint>MiVoxels</LineHint>
+    <ResultScale>MiVoxels / Sec</ResultScale>
+  </ResultsParser>
+</PhoronixTestSuite>

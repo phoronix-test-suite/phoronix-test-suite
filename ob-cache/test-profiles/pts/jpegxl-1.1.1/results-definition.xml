@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>6000 x 4000, geomean: #_RESULT_# MP/s [42.09, 57.74], 20 reps, 6 threads.</OutputTemplate>
+    <LineHint>MP/s</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

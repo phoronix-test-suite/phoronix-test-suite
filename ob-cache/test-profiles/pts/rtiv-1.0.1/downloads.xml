@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/GPSnoopy/RayTracingInVulkan/archive/r6.tar.gz</URL>
+      <MD5>5e025b47514bcdb9568745d57c3249b2</MD5>
+      <SHA256>28989933d34b5467dced472672c1db2f4a1c5d77e038f0065db43ab2d7f27ddc</SHA256>
+      <FileName>RayTracingInVulkan-r6.tar.gz</FileName>
+      <FileSize>20200697</FileSize>
+    </Package>
+    <Package>
+      <URL>https://sdk.lunarg.com/sdk/download/1.2.162.1/linux/vulkansdk-linux-x86_64-1.2.162.1.tar.gz</URL>
+      <MD5>ee59ff763ead2790562e55a2b123aec4</MD5>
+      <SHA256>8314c1b000ed3f18f9e3c1f32c496dd3e654662249861371aa1724edef809177</SHA256>
+      <FileName>vulkansdk-linux-x86_64-1.2.162.1.tar.gz</FileName>
+      <FileSize>208170329</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/GPSnoopy/RayTracingInVulkan/releases/download/r6/RayTracingInVulkan.r6.7z</URL>
+      <MD5>341be8ff5884a506a64bd6d2676071ef</MD5>
+      <SHA256>45ccc63fb1696be738fc8037e260c3f6f3b4cad3bc928cf4cde782cea097d5a6</SHA256>
+      <FileName>RayTracingInVulkan.r6.7z</FileName>
+      <FileSize>17593348</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

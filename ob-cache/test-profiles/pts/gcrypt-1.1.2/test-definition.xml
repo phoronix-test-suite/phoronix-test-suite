@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Gcrypt Library</Title>
+    <AppVersion>1.9</AppVersion>
+    <Description>Libgcrypt is a general purpose cryptographic library developed as part of the GnuPG project. This is a benchmark of libgcrypt's integrated benchmark and is measuring the time to run the benchmark command with a cipher/mac/hash repetition count set for 50 times as simple, high level look at the overall crypto performance of the system under test.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.2</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>148</EnvironmentSize>
+    <ProjectURL>https://gnupg.org/software/libgcrypt/index.html</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>--cipher-repetitions 50 --mac-repetitions 50 --hash-repetitions 50</Arguments>
+    </Default>
+  </TestSettings>
+</PhoronixTestSuite>

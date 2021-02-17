@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoenixnap.dl.sourceforge.net/project/ngspice/ng-spice-rework/34/ngspice-34.tar.gz, http://versaweb.dl.sourceforge.net/project/ngspice/ng-spice-rework/34/ngspice-34.tar.gz, http://www.phoronix-test-suite.com/benchmark-files/ngspice-34.tar.gz</URL>
+      <MD5>e88377ff1e5a466dcd240fa235de7551</MD5>
+      <SHA256>2263fffc6694754972af7072ef01cfe62ac790800dad651bc290bfcae79bd7b5</SHA256>
+      <FileName>ngspice-34.tar.gz</FileName>
+      <FileSize>7800546</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/iscas85Circuits-1.tar.xz</URL>
+      <MD5>2467b59a9a312114941bb56227e36134</MD5>
+      <SHA256>5d160b3496e95fa4861558b95388bf346c914216e1c3b29690d2573f88df6892</SHA256>
+      <FileName>iscas85Circuits-1.tar.xz</FileName>
+      <FileSize>865096</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

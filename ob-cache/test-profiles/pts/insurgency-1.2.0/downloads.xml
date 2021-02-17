@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/insurgency_pts_2021-1.zip</URL>
+      <MD5>dc9e8b5bd733e8c2ca2ab898d51bbb87</MD5>
+      <SHA256>54a32f7bcca5dd4845241210eb984b535036943ed9dfb436da06219836050c56</SHA256>
+      <FileName>insurgency_pts_2021-1.zip</FileName>
+      <FileSize>2561452</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>
