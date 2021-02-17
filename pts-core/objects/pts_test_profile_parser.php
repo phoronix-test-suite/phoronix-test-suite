@@ -30,6 +30,7 @@ class pts_test_profile_parser
 	protected $block_test_extension_support = false;
 	private $file_location = false;
 	public $no_fallbacks_on_null = false;
+	protected static $xml_file_cache;
 
 	public function __construct($read = null, $normal_init = true)
 	{
@@ -42,7 +43,7 @@ class pts_test_profile_parser
 			return;
 		}
 
-		if(!isset($read[200]) && strpos($read, '<?xml version="1.0"?>') === false)
+		if(!isset($read[200]) && strpos($read, '<?xml version="1.0"?>') === false && $read != null)
 		{
 			if(PTS_IS_CLIENT && (!defined('PTS_TEST_PROFILE_PATH') || !is_file(PTS_TEST_PROFILE_PATH . $read . '/test-definition.xml')))
 			{
@@ -87,10 +88,16 @@ class pts_test_profile_parser
 			$xml_options = LIBXML_COMPACT | LIBXML_PARSEHUGE;
 		//}
 
-		if(is_file($read))
+		if(isset(self::$xml_file_cache[$read]))
 		{
 			$this->file_location = $read;
-			$this->xml = simplexml_load_file($read, 'SimpleXMLElement', $xml_options);
+			$this->xml = &self::$xml_file_cache[$this->file_location];
+		}
+		else if(is_file($read))
+		{
+			$this->file_location = $read;
+			self::$xml_file_cache[$this->file_location] = simplexml_load_file($read, 'SimpleXMLElement', $xml_options);
+			$this->xml = &self::$xml_file_cache[$this->file_location];
 		}
 		else
 		{
