@@ -34,6 +34,7 @@ class pts_test_profile_parser
 
 	public function __construct($read = null, $normal_init = true)
 	{
+		$original_read = $read;
 		$this->overrides = array();
 		$this->tp_extends = null;
 
@@ -41,6 +42,13 @@ class pts_test_profile_parser
 		{
 			$this->identifier = $read;
 			return;
+		}
+		if(isset(self::$xml_file_cache[$read]))
+		{
+			// Found in cache so can avoid extra work below...
+			$this->identifier = $read;
+			$this->file_location = $read;
+			$this->xml = &self::$xml_file_cache[$this->file_location];
 		}
 
 		if(!isset($read[200]) && strpos($read, '<?xml version="1.0"?>') === false && $read != null)
@@ -97,6 +105,10 @@ class pts_test_profile_parser
 		{
 			$this->file_location = $read;
 			self::$xml_file_cache[$this->file_location] = simplexml_load_file($read, 'SimpleXMLElement', $xml_options);
+			if($read != $original_read && !isset(self::$xml_file_cache[$original_read]))
+			{
+				self::$xml_file_cache[$original_read] = &self::$xml_file_cache[$this->file_location];
+			}
 			$this->xml = &self::$xml_file_cache[$this->file_location];
 		}
 		else
