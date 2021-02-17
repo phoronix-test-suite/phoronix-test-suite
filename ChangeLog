@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 10.2.2
+17 February 2021
 
 pts-core: Add helper text when hitting a download with no working mirrors
 pts-core: Various external dependency updates

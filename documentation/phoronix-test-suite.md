@@ -134,6 +134,9 @@ This option and its arguments pre-set the Phoronix Test Suite batch run mode wit
 #### clone-result  [OpenBenchmarking ID]  ...
 This option will download a local copy of a file that was saved to OpenBenchmarking.org, as long as a valid public ID is supplied.
 
+#### enable-repo
+This option is used if wanting to add a new OpenBenchmarking.org account/repository to your system for enabling third-party/unofficial test profiles and test suites.
+
 #### list-recommended-tests
 This option will list recommended test profiles for benchmarking sorted by hardware sub-system. The recommended tests are determined via querying OpenBenchmarking.org and determining the most popular tests for a given environment based upon the number of times a test profile has been downloaded, the number of test results available on OpenBenchmarking.org for a given test profile, the age of the test profile, and other weighted factors.
 
