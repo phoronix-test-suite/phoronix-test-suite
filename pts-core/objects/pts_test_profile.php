@@ -23,6 +23,7 @@
 class pts_test_profile extends pts_test_profile_parser
 {
 	public $test_installation = false;
+	protected static $test_installation_cache;
 
 	public function __construct($identifier = null, $override_values = null, $normal_init = true)
 	{
@@ -35,7 +36,12 @@ class pts_test_profile extends pts_test_profile_parser
 
 		if($normal_init && PTS_IS_CLIENT && $this->identifier != null)
 		{
-			$this->test_installation = new pts_installed_test($this);
+			if(!isset(self::$test_installation_cache[$identifier]))
+			{
+				self::$test_installation_cache[$identifier] = new pts_installed_test($this);
+			}
+
+			$this->test_installation = &self::$test_installation_cache[$identifier];
 		}
 	}
 	public function validate()
