@@ -46,7 +46,7 @@ class check_tests implements pts_option_interface
 	const V_STATUS = 'status';					// http status code for the download
 	const V_DOWNLOAD_TIME = "downloadTime";		// complete time to connect to url and download
 	const V_DOWNLOAD_SIZE = "downloadSize";		// size of downloaded file
-	const V_DUPLICATE = "duplicate";			// indicates if we have already downloaded the file as part of an earlier test profile version
+	const V_DUPLICATE = "source";				// indicates if we have already downloaded the file as part of an earlier test profile version
 	const V_REDIRECT = "redirectTo";			// If a url is redirected, this is the original url location. V_URL will contain the redirection 
 	
 	// Don't use const for these as it breaks PHP 5.6
@@ -111,7 +111,6 @@ class check_tests implements pts_option_interface
 		$noOfForks = 0;
 		$processed = 0;
 		while ($processed < count($available_tests)) {
-
 			// If we have more then $procs running, wait for one to free up before proceeding.
 			if ($noOfForks >= $procs) {
 				$pid = pcntl_waitpid(0, $status);
@@ -218,16 +217,18 @@ class check_tests implements pts_option_interface
 
 			// need to massage into a format for frontend use.
 			$xmlFile = $testProfile->get_downloads();
-			if ($xmlFile == null)
+			if ($xmlFile == null) {
 				$packages[0] =
 					array(
 						"identifier" => $identifier,	// repeated for front end
-						"mirror" =>	array(
-							"status" => 'Not Tested',
-							"failures" => "downloads.xml file not found"
-						)
+						"mirror" => [
+							[					// keep format consistent for json parsing in frontend
+								"status" => 'Not Tested',
+								"failures" => "downloads.xml file not found",
+							]
+						]
 					);
-
+			}
 			foreach ($xmlFile as $checks) {
 				$packages[count($packages)] = self::performChecksOnTestProfile($checks, $identifier);
 			}
@@ -319,7 +320,7 @@ class check_tests implements pts_option_interface
 
 				$filesize_status = ($filesize > 0) && ($filesize == $vendorData[self::V_DOWNLOAD_SIZE]);
 				if (!$filesize_status) {
-					$results["failures"]["filesize"] = $vendorData[self::V_DOWNLOAD_SIZE];
+					$results["failures"]["fileSize"] = $vendorData[self::V_DOWNLOAD_SIZE];
 				}
 
 
