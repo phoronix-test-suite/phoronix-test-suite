@@ -86,7 +86,7 @@ class cpu_power extends phodevi_sensor
 			self::$cpu_power_inputs = array();
 			foreach(pts_file_io::glob('/sys/class/hwmon/hwmon*/power*_label') as $hwmon)
 			{
-				if(pts_file_io::file_get_contents($hwmon) == 'CPU power')
+				if(in_array(pts_file_io::file_get_contents($hwmon), array('CPU power', 'IO power')))
 				{
 					$hwmon = str_replace('_label', '_input', $hwmon);
 
