@@ -320,7 +320,7 @@
 		<Package>
 			<GenericName>opencl</GenericName>
 			<PackageName>opencl-headers ocl-icd-libopencl1 clinfo ocl-icd-opencl-dev</PackageName>
-			<FileCheck>/usr/lib/x86_64-linux-gnu/libOpenCL.so, /usr/bin/clinfo</FileCheck>
+			<FileCheck>/usr/lib/x86_64-linux-gnu/libOpenCL.so OR /usr/lib/aarch64-linux-gnu/libOpenCL.so, /usr/bin/clinfo</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>attr</GenericName>
