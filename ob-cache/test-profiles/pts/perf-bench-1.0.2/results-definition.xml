@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>         #_RESULT_# ops/sec</OutputTemplate>
+    <LineHint>ops/sec</LineHint>
+    <ResultScale>ops/sec</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>      #_RESULT_# GB/sec</OutputTemplate>
+    <LineHint>GB/sec</LineHint>
+    <ResultScale>GB/sec</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Averaged #_RESULT_# operations/sec (+- 0.64%), total secs = 10</OutputTemplate>
+    <LineHint>operations/sec</LineHint>
+    <ResultScale>ops/sec</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -259,9 +259,7 @@ class pts_openbenchmarking
 		if($host == null)
 		{
 			// Use HTTPS if OpenSSL is available as a check to see if HTTPS can be handled
-			// OpenSSL seems to have problems on OpenIndiana at least, TODO: investigate
-			// Using a proxy seems to have problems for HTTPS
-			// TODO XXX
+			// Using a proxy may have problems for HTTPS
 			$host = ((extension_loaded('openssl') && getenv('NO_OPENSSL') == false && (!PTS_IS_CLIENT || !pts_network::is_proxy_setup())) ? 'https://' : 'http://') . 'openbenchmarking.org/';
 			//$host = 'http://openbenchmarking.org/';
 		}
@@ -278,20 +276,20 @@ class pts_openbenchmarking
 				$test_versions_count += count($t['versions']);
 			}
 			echo pts_client::cli_colored_text('Updated OpenBenchmarking.org Repository Index', 'green', true) . PHP_EOL;
-			echo pts_client::cli_colored_text($repo . ': ' . pts_strings::plural_handler(count($new_index['tests']), 'Distinct Test') . ', ' . pts_strings::plural_handler($test_versions_count, 'Test Version') . ', ' . pts_strings::plural_handler(count($new_index['suites']), 'Suite'), 'green', true) . PHP_EOL;
+			echo pts_client::cli_colored_text($repo . ': ' . pts_strings::plural_handler(count($new_index['tests']), 'Distinct Test') . ', ' . pts_strings::plural_handler($test_versions_count, 'Test Version') . (count($new_index['suites']) > 0 ? ', ' . pts_strings::plural_handler(count($new_index['suites']), 'Suite') : null), 'green', true) . PHP_EOL;
 			$table = array();
 			foreach(array_keys($new_index['tests']) as $test)
 			{
 				if(!isset($old_index['tests'][$test]))
 				{
-					$table[] = array(pts_client::cli_just_bold('New Test Available: '), $repo . '/' . $test, pts_client::cli_colored_text('v' . array_shift($new_index['tests'][$test]['versions']), 'gray'));
+					$table[] = array(pts_client::cli_just_bold('New Test: '), $repo . '/' . $test, pts_client::cli_colored_text('v' . array_shift($new_index['tests'][$test]['versions']), 'gray'), $new_index['tests'][$test]['title']);
 				}
 				else if($new_index['tests'][$test]['versions'] != $old_index['tests'][$test]['versions'])
 				{
 					$version_diff = array_diff($new_index['tests'][$test]['versions'], $old_index['tests'][$test]['versions']);
 					if(!empty($version_diff) && $new_index['tests'][$test]['status'] != 'Deprecated')
 					{
-						$table[] = array(pts_client::cli_just_bold('Updated Test Available: '), $repo . '/' . $test, pts_client::cli_colored_text('v' . array_shift($version_diff), 'gray'));
+						$table[] = array(pts_client::cli_just_bold('Updated Test: '), $repo . '/' . $test, pts_client::cli_colored_text('v' . array_shift($version_diff), 'gray'), $new_index['tests'][$test]['title']);
 					}
 				}
 			}
@@ -303,19 +301,23 @@ class pts_openbenchmarking
 				{
 					if(!isset($old_index['suites'][$suite]))
 					{
-						$table[] = array(pts_client::cli_just_bold('New Suite Available: '), $repo . '/' . $suite, pts_client::cli_colored_text('v' . array_shift($new_index['suites'][$suite]['versions']), 'gray'));
+						$table[] = array(pts_client::cli_just_bold('New Suite: '), $repo . '/' . $suite, pts_client::cli_colored_text('v' . array_shift($new_index['suites'][$suite]['versions']), 'gray'), $new_index['suites'][$suite]['title']);
 					}
 					else if($new_index['suites'][$suite]['versions'] != $old_index['suites'][$suite]['versions'])
 					{
 						$version_diff = array_diff($new_index['suites'][$suite]['versions'], $old_index['suites'][$suite]['versions']);
 						if(!empty($version_diff) && $new_index['suites'][$suite]['status'] != 'Deprecated')
 						{
-							$table[] = array(pts_client::cli_just_bold('Updated Suite Available: '), $repo . '/' . $suite, pts_client::cli_colored_text('v' . array_shift($version_diff), 'gray'));
+							$table[] = array(pts_client::cli_just_bold('Updated Suite: '), $repo . '/' . $suite, pts_client::cli_colored_text('v' . array_shift($version_diff), 'gray'), $new_index['suites'][$suite]['title']);
 						}
 					}
 				}
 			}
-			echo pts_user_io::display_text_table($table) . PHP_EOL;
+			if(!empty($table))
+			{
+				echo pts_client::cli_just_italic('Available Changes From ' . date('j F' . (date('Y') != date('Y', $old_index['main']['generated']) ? ' Y' : ''), $old_index['main']['generated']) . ' To ' . date('j F', $new_index['main']['generated'])) . PHP_EOL;
+				echo pts_user_io::display_text_table($table) . PHP_EOL;
+			}
 		}
 	}
 	public static function get_generated_time_from_index($index_file)
@@ -377,7 +379,8 @@ class pts_openbenchmarking
 				{
 					// Refreshing the indexes once every few days should be suffice
 					// Refresh approximately every three days by default
-					$index_cache_ttl = 1;
+					// Allow more frequent OB cache
+					$index_cache_ttl = defined('OPENBENCHMARKING_BUILD') ? (1 / 24) : 1;
 					if(PTS_IS_CLIENT && ($config_ttl = pts_config::read_user_config('PhoronixTestSuite/Options/OpenBenchmarking/IndexCacheTTL')))
 					{
 						if($config_ttl === 0)
@@ -461,7 +464,7 @@ class pts_openbenchmarking
 
 				if(!isset($reported_read_failure_notice[$repo_name]) && PTS_IS_CLIENT)
 				{
-					trigger_error('Failed To Fetch OpenBenchmarking.org Repository Data: ' . $repo_name . '. If this issue persists, contact support@phoronix-test-suite.com.', E_USER_WARNING);
+					trigger_error('Failed To Fetch OpenBenchmarking.org Repository Data: ' . $repo_name . '. If this issue persists, file an issue @ https://github.com/phoronix-test-suite/phoronix-test-suite/issues', E_USER_WARNING);
 					$reported_read_failure_notice[$repo_name] = true;
 				}
 			}
@@ -471,15 +474,21 @@ class pts_openbenchmarking
 	{
 		return self::$openbenchmarking_index_refreshed;
 	}
-	public static function linked_repositories()
+	public static function official_repositories()
 	{
 		$repos = array('local', 'pts', 'system', 'git');
 
-		if(PTS_IS_CLIENT && phodevi::is_windows())
+		if((PTS_IS_CLIENT && phodevi::is_windows()) || defined('PHOROMATIC_SERVER_WEB_INTERFACE'))
 		{
 			// Various windows tests for compatibility where there isn't mainline support in the test profile otherwise
 			array_unshift($repos, 'windows');
 		}
+
+		return $repos;
+	}
+	public static function linked_repositories()
+	{
+		$repos = self::official_repositories();
 
 		if(PTS_IS_CLIENT && pts_openbenchmarking_client::user_name() != false)
 		{
@@ -514,6 +523,17 @@ class pts_openbenchmarking
 	public static function is_repository($repo_name)
 	{
 		return is_file(PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . '.index') ? PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . '.index' : false;
+	}
+	public static function is_local_repo($repo_name)
+	{
+		return is_file(PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . '.index') ? PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name . '.index' : false;
+	}
+	public static function ob_repo_exists($name)
+	{
+		$login_state = pts_openbenchmarking::make_openbenchmarking_request('repo_exists', array('s_u' => $name));
+		$json = json_decode($login_state, true);
+
+		return isset($json['openbenchmarking']['repo']['name']) ? array($json['openbenchmarking']['repo']['name'], $json['openbenchmarking']['repo']['alias']) : false;
 	}
 	public static function read_repository_index($repo_name, $do_decode = true)
 	{
@@ -614,7 +634,7 @@ class pts_openbenchmarking
 			{
 				if(!defined('PHOROMATIC_SERVER'))
 				{
-					trigger_error('Unable to obtain ' . $qualified_identifier . ' from OpenBenchmarking.org. If this issue persists, contact support@phoronix-test-suite.com.' . PHP_EOL, E_USER_ERROR);
+					trigger_error('Unable to obtain ' . $qualified_identifier . ' from OpenBenchmarking.org. If this issue persists, file an issue @ https://github.com/phoronix-test-suite/phoronix-test-suite/issues' . PHP_EOL, E_USER_ERROR);
 				}
 				return false;
 			}
@@ -716,8 +736,24 @@ class pts_openbenchmarking
 					{
 						continue;
 					}
-
-					if($all_versions)
+					if($all_versions === 2)
+					{
+						// When $all_versions is 2, only the latest version in each XX.YY stream is shown.
+						// no reason in some cases to check each XX.YY.ZZ version but only the last
+						$versions = $repo_index['tests'][$identifier]['versions'];
+						$minor_series_shown = array();
+						foreach($versions as $i => $v)
+						{
+							$version_wo_minor = substr($v, 0, strrpos($v, '.'));
+							if(isset($minor_series_shown[$version_wo_minor]))
+							{
+								unset($versions[$i]);
+							}
+							$minor_series_shown[$version_wo_minor] = true;
+						}
+						$append_versions = true;
+					}
+					else if($all_versions)
 					{
 						$versions = $repo_index['tests'][$identifier]['versions'];
 						$append_versions = true;
@@ -853,7 +889,7 @@ class pts_openbenchmarking
 			{
 				if(!defined('PHOROMATIC_SERVER'))
 				{
-					trigger_error('Unable to obtain ' . $qualified_identifier . ' from OpenBenchmarking.org.  If this issue persists, contact support@phoronix-test-suite.com.' . PHP_EOL, E_USER_ERROR);
+					trigger_error('Unable to obtain ' . $qualified_identifier . ' from OpenBenchmarking.org.  If this issue persists, file an issue @ https://github.com/phoronix-test-suite/phoronix-test-suite/issues' . PHP_EOL, E_USER_ERROR);
 				}
 				return false;
 			}
@@ -914,7 +950,6 @@ class pts_openbenchmarking
 		{
 			$version = substr($test, ($c + 1));
 
-			// TODO: functionalize this and read against types.xsd
 			if(isset($version[2]) && !isset($version[8]) && pts_strings::string_only_contains($version, (pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL)))
 			{
 				$test = substr($test, 0, $c);

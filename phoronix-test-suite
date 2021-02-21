@@ -3,8 +3,8 @@
 #
 #	Phoronix Test Suite
 #	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-#	Copyright (C) 2008 - 2020, Phoronix Media
-#	Copyright (C) 2008 - 2020, Michael Larabel
+#	Copyright (C) 2008 - 2021, Phoronix Media
+#	Copyright (C) 2008 - 2021, Michael Larabel
 #	phoronix-test-suite: The Phoronix Test Suite is an extensible open-source testing / benchmarking platform
 #
 #	This program is free software; you can redistribute it and/or modify
@@ -67,12 +67,18 @@ then
 elif [ -x /usr/bin/php7 ] || [ -x /usr/local/bin/php7 ] || [ -x /usr/pkg/bin/php7 ]
 then
 	export PHP_BIN="php7"
+elif [ -x /usr/bin/php8 ] || [ -x /usr/local/bin/php8 ] || [ -x /usr/pkg/bin/php8 ]
+then
+	export PHP_BIN="php8"
 elif [ -x /usr/bin/php ] || [ -x /usr/pkg/bin/php ]
 then
 	export PHP_BIN="php"
 elif [ -x /usr/php7/bin/php ]
 then
 	export PHP_BIN="/usr/php7/bin/php"
+elif [ -x /usr/php8/bin/php ]
+then
+	export PHP_BIN="/usr/php8/bin/php"
 elif [ -x /usr/php/bin/php ]
 then
 	export PHP_BIN="/usr/php/bin/php"
@@ -88,6 +94,15 @@ then
 elif [ -x /usr/local/bin/php-7.2 ]
 then
 	export PHP_BIN="/usr/local/bin/php-7.2"
+elif [ -x /usr/local/bin/php-7.3 ]
+then
+	export PHP_BIN="/usr/local/bin/php-7.3"
+elif [ -x /usr/local/bin/php-7.4 ]
+then
+	export PHP_BIN="/usr/local/bin/php-7.4"
+elif [ -x /usr/local/bin/php-8.0 ]
+then
+	export PHP_BIN="/usr/local/bin/php-8.0"
 elif [ -x /opt/bin/php ]
 then
 	export PHP_BIN="/opt/bin/php"
@@ -100,6 +115,9 @@ then
 elif which php7 >/dev/null 2>&1 ;
 then
 	export PHP_BIN="php7"
+elif which php8 >/dev/null 2>&1 ;
+then
+	export PHP_BIN="php8"
 elif [ -x /usr/php5/bin/php ]
 then
 	export PHP_BIN="/usr/php5/bin/php"
@@ -128,7 +146,7 @@ then
 	cat <<'EOT'
 
 PHP must be installed for the Phoronix Test Suite
-The PHP command-line package is commonly called php-cli, php7-cli, or php.
+The PHP command-line package is commonly called php-cli, php7-cli, php8-cli, or php.
 For more information visit: https://www.phoronix-test-suite.com/
 
 EOT
@@ -227,7 +245,7 @@ elif [ -x /usr/sbin/mport ]
 then
 	# MidnightBSD
 	echo "The command to likely run for your operating system is: "
-	echo "# mport install php74 php74-dom php74-zip php74-json php74-simplexml"
+	echo "# mport install php74 php74-dom php74-zip php74-json php74-simplexml php74-openssl"
 	echo " "
 elif [ -x /bin/opkg ]
 then
@@ -292,18 +310,19 @@ export PTS_EXT_LAUNCH_SCRIPT_DIR=$(mktemp -d 2>/dev/null || mktemp -d -t ptstmp)
 PTS_PREPEND_LAUNCH=""
 
 # check for systemd-inhibit to handle suspending screensaver/idle
-if which systemd-inhibit >/dev/null 2>&1
-then
-	# At least as of September 2019, some versions of systemd-inhibit are buggy around argv handling
-	# PTS_PREPEND_LAUNCH="systemd-inhibit --what=idle:sleep --who=\"Phoronix Test Suite\" --why=\"Phoronix Test Suite benchmarking\" "
-	export PTS_SYSTEMD_INHIBITED=0 # Setting to 1 will make toggle_screensaver PTS module disable
-fi
+#if which systemd-inhibit >/dev/null 2>&1
+#then
+# Disable by default again due to https://github.com/phoronix-test-suite/phoronix-test-suite/pull/491#issuecomment-762899039
+#	PTS_PREPEND_LAUNCH='systemd-inhibit --what=idle:sleep --who="Phoronix Test Suite" --why="Phoronix Test Suite benchmarking" '
+#	export PTS_SYSTEMD_INHIBITED=1 # Setting to 1 will make toggle_screensaver PTS module disable
+#fi
 
 # Run The Phoronix Test Suite
 PTS_EXIT_STATUS=8
 while [ $PTS_EXIT_STATUS -eq 8 ]; do
-	$PTS_PREPEND_LAUNCH "$PHP_BIN" "$PTS_DIR"/pts-core/phoronix-test-suite.php "$@"
-	PTS_EXIT_STATUS=$?
+	PTS_LAUNCH_ARGS="$@"
+	sh -c "$PTS_PREPEND_LAUNCH $PHP_BIN $PTS_DIR/pts-core/phoronix-test-suite.php $PTS_LAUNCH_ARGS"
+  PTS_EXIT_STATUS=$?
 done
 
 if [ -f "$PTS_EXT_LAUNCH_SCRIPT_DIR"/web-server-launcher ]

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/VkFFT_20200929.tar.xz</URL>
+      <MD5>a4a56f56bc64289f308dea5258030dd3</MD5>
+      <SHA256>a8db6953f4666c276f898263c3bfce5caba114066ca7d948b8b18609d8042407</SHA256>
+      <FileName>VkFFT_20200929.tar.xz</FileName>
+      <FileSize>695412</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

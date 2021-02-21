@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://internode.dl.sourceforge.net/project/systester/systester/1.1.0/systester-1.1.0-src.tar.bz2</URL>
+      <MD5>f8b42fc2e9bdb08f76aa11bbb1d27ef9</MD5>
+      <FileName>systester-1.1.0-src.tar.bz2</FileName>
+      <FileSize>119766</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

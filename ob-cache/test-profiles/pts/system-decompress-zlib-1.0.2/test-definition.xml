@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>System ZLIB Decompression</Title>
+    <AppVersion>1.2.7</AppVersion>
+    <Description>This test measures the time to decompress a Linux kernel tarball using ZLIB.</Description>
+    <ResultScale>ms</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>10</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.2</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Deprecated</Status>
+    <ExternalDependencies>build-utilities zlib-development</ExternalDependencies>
+    <Maintainer>Jim Kukunas</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

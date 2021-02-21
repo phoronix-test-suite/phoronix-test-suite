@@ -117,7 +117,7 @@ class phoromatic_create_test implements pts_webui_interface
 			}
 		}
 
-		if(strpos($PATH[1], '&delete') !== false)
+		if(isset($PATH[1]) && strpos($PATH[1], '&delete') !== false)
 		{
 			$identifier_item = isset($PATH[1]) ? $PATH[0] . '/' . str_replace('&delete', '', $PATH[1]) : false;
 			if($identifier_item && pts_test_profile::is_test_profile($identifier_item))

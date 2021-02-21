@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://craftychess.com/downloads/source/crafty-25.2.zip, http://ftp.belnet.be/mirror/pub/fink.sourceforge.net/distfiles/sha1/84bc571e771027c503eb1c407fcd53fba625f9ac/crafty-25.2.zip, http://ftp.mirrorservice.org/sites/distfiles.finkmirrors.net/sha1/84bc571e771027c503eb1c407fcd53fba625f9ac/crafty-25.2.zip</URL>
+      <MD5>d8ad87d9b0fc39a437595203d7b302fc</MD5>
+      <SHA256>337e00bab79c33739fbaa71cd26c65f986886ee0d8ce181f2cb62f2efd317710</SHA256>
+      <FileName>crafty-25.2.zip</FileName>
+      <FileSize>433320</FileSize>
+      <PlatformSpecific>BSD, Linux, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/Crafty-25.2-Win64.zip</URL>
+      <MD5>1ec9b294b47d8eb7cfa518692ff887a8</MD5>
+      <SHA256>5ecdd1b480e4b11e1572d5b21d50ad39a70cc34e0eb181494d707ffd8dad8530</SHA256>
+      <FileName>Crafty-25.2-Win64.zip</FileName>
+      <FileSize>705014</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

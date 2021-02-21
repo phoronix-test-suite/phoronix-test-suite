@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/png-samples-1.tar.xz</URL>
+      <MD5>3f928e4d08777e6e84c54202a00429de</MD5>
+      <SHA256>9810c8fd3afd35b4755c2a46f14fc66e2b9199c22e46a5946123c9250f2d1ccd</SHA256>
+      <FileName>png-samples-1.tar.xz</FileName>
+      <FileSize>58346628</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/wolfpld/etcpak/archive/0.7.tar.gz</URL>
+      <MD5>004c946498dd1b7ea2233958ff8c7cc1</MD5>
+      <SHA256>bfdf2fbde2262671358f9094784d7967c1ddec50ecb7f8194f01fc562da78e9f</SHA256>
+      <FileName>etcpak-0.7.tar.gz</FileName>
+      <FileSize>512795</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/wolfpld/tracy/archive/v0.7.4.tar.gz</URL>
+      <MD5>70f9b143d1d6ce84b59d49a275a5646c</MD5>
+      <SHA256>89d61b0a2ac4db119e4f63344ed58a9414bbc6987c7d620520891478427cec49</SHA256>
+      <FileName>tracy-0.7.4.tar.gz</FileName>
+      <FileSize>4204990</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

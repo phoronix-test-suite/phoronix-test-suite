@@ -461,10 +461,11 @@ class pts_openbenchmarking_client
 		uasort($tests, array('pts_openbenchmarking_client', 'compare_test_json_download_counts'));
 		return array_slice($tests, 0, $limit);
 	}
-	public static function new_and_recently_updated_tests($days_old_limit = 14, $test_limit = 10)
+	public static function new_and_recently_updated_tests($days_old_limit = 14, $test_limit = 10, $just_new = false)
 	{
 		$only_show_available_cached_tests = pts_network::internet_support_available() == false;
 		$tests = array();
+		$q = $just_new ? 'first_added' : 'last_updated';
 
 		$cutoff_time = time() - ($days_old_limit * 86400);
 		foreach(pts_openbenchmarking::available_tests(false, false, false, false, $only_show_available_cached_tests) as $identifier)
@@ -472,7 +473,7 @@ class pts_openbenchmarking_client
 			$repo = substr($identifier, 0, strpos($identifier, '/'));
 			$id = substr($identifier, strlen($repo) + 1);
 			$repo_index = pts_openbenchmarking::read_repository_index($repo);
-			if($repo_index['tests'][$id]['last_updated'] < $cutoff_time)
+			if($repo_index['tests'][$id][$q] < $cutoff_time)
 			{
 				// Don't show tests not actively maintained
 				continue;

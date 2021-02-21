@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2019, Phoronix Media
-	Copyright (C) 2009 - 2019, Michael Larabel
+	Copyright (C) 2009 - 2020, Phoronix Media
+	Copyright (C) 2009 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ class cpu_power extends phodevi_sensor
 	static $cpu_energy = 0;
 	static $last_time = 0;
 	protected static $amd_energy_sockets = false;
+	protected static $cpu_power_inputs = false;
 
 	public function read_sensor()
 	{
@@ -34,13 +35,17 @@ class cpu_power extends phodevi_sensor
 		{
 			return $this->cpu_power_linux();
 		}
+		else if(phodevi::is_macosx())
+		{
+			return self::read_macosx_power_metrics();
+		}
 		return -1;		// TODO make -1 a named constant
 	}
 	public static function get_unit()
 	{
 		$unit = null;
 
-		if(is_readable('/sys/bus/i2c/drivers/ina3221x/0-0041/iio:device1/in_power1_input'))
+		if(phodevi::is_linux() && is_readable('/sys/bus/i2c/drivers/ina3221x/0-0041/iio:device1/in_power1_input'))
 		{
 			$unit = 'Milliwatts';
 		}
@@ -73,6 +78,22 @@ class cpu_power extends phodevi_sensor
 						}
 					}
 					break;
+				}
+			}
+		}
+		if(self::$cpu_power_inputs === false)
+		{
+			self::$cpu_power_inputs = array();
+			foreach(pts_file_io::glob('/sys/class/hwmon/hwmon*/power*_label') as $hwmon)
+			{
+				if(in_array(pts_file_io::file_get_contents($hwmon), array('CPU power', 'IO power')))
+				{
+					$hwmon = str_replace('_label', '_input', $hwmon);
+
+					if(pts_file_io::file_get_contents($hwmon) > 0)
+					{
+						self::$cpu_power_inputs[] = $hwmon;
+					}
 				}
 			}
 		}
@@ -145,6 +166,21 @@ class cpu_power extends phodevi_sensor
 			}
 			while($cpu_power < 1 && $tries < 2);
 		}
+		else if(!empty(self::$cpu_power_inputs))
+		{
+			// APM XGene / Ampere Computing
+			$cpu_uwatts = 0;
+			foreach(self::$cpu_power_inputs as $power_input)
+			{
+				$pi = pts_file_io::file_get_contents($power_input);
+
+				if(is_numeric($pi))
+				{
+					$cpu_uwatts += $pi;
+				}
+			}
+			$cpu_power = $cpu_uwatts / 1000000;
+		}
 		else if(is_readable('/sys/class/hwmon/hwmon0/name') && pts_file_io::file_get_contents('/sys/class/hwmon/hwmon0/name') == 'zenpower')
 		{
 			foreach(pts_file_io::glob('/sys/class/hwmon/hwmon*/power*_label') as $label)
@@ -161,6 +197,30 @@ class cpu_power extends phodevi_sensor
 		}
 
 		return round($cpu_power, 2);
+	}
+	public static function read_macosx_power_metrics()
+	{
+		$watts = 0;
+		if(pts_client::executable_in_path('powermetrics'))
+		{
+			$powermetrics = shell_exec("sudo -n powermetrics -n 1 -i 1 --samplers cpu_power 2>&1");
+
+			if(($x = strpos($powermetrics, 'Package Power: ')) !== false)
+			{
+				$powermetrics = substr($powermetrics, $x + strlen('Package Power: '));
+				if(($x = strpos($powermetrics, ' mW')) !== false)
+				{
+					$powermetrics = substr($powermetrics, 0, $x);
+
+					if(is_numeric($powermetrics) && $powermetrics > 0)
+					{
+						$watts = $powermetrics / 1000;
+					}
+				}
+			}
+		}
+
+		return $watts;
 	}
 }
 

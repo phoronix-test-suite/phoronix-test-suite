@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011 - 2019, Phoronix Media
-	Copyright (C) 2011 - 2019, Michael Larabel
+	Copyright (C) 2011 - 2020, Phoronix Media
+	Copyright (C) 2011 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -32,13 +32,15 @@ class recently_added_tests implements pts_option_interface
 	public static function run($r)
 	{
 		pts_client::$display->generic_heading('Recently Added OpenBenchmarking.org Tests');
+		$table = array();
 		foreach(pts_openbenchmarking_client::recently_added_tests(20) as $added => $test_identifier)
 		{
 			$test_profile = new pts_test_profile($test_identifier);
-			echo sprintf('%-36ls - %-35ls', pts_client::cli_just_bold($test_profile->get_identifier(false)), $test_profile->get_title()) . PHP_EOL;
-			echo sprintf('%-36ls    %-35ls', pts_client::cli_just_italic(date('d F Y', $added)), $test_profile->get_test_hardware_type() . ' Test') . PHP_EOL . PHP_EOL;
+			$table[] = array(pts_client::cli_just_bold($test_profile->get_identifier(false)), pts_client::cli_just_bold($test_profile->get_title()));
+			$table[] = array(pts_client::cli_just_italic(date('d F Y', $added)), $test_profile->get_test_hardware_type() . ' Test');
+			$table[] = array('', '');
 		}
-		echo PHP_EOL;
+		echo pts_user_io::display_text_table($table) . PHP_EOL;
 	}
 }
 

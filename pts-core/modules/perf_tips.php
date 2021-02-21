@@ -4,7 +4,7 @@
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
 	Copyright (C) 2017, Paolo Valente <paolo.valente@linaro.org>
-	Copyright (C) 2017, Michael Larabel
+	Copyright (C) 2017 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -120,9 +120,19 @@ class perf_tips extends pts_module_interface
 			// BELOW ARE CHECKS TO MAKE IF WANTING TO SHOW FOR 'Processor' OR 'System' TESTS
 			$cpu_scaling_governor = phodevi::read_property('cpu', 'scaling-governor');
 
-			if(stripos($cpu_scaling_governor, 'powersave') !== false)
+			if(stripos($cpu_scaling_governor, 'performance') === false)
 			{
 				$perf_tips[] = new pts_perf_tip_msg('The powersave CPU scaling governor is currently in use. It\'s possible to obtain greater performance if using the performance governor.', 'echo performance | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor', 'https://openbenchmarking.org/result/1706268-TR-CPUGOVERN32');
+			}
+
+			if(is_file('/sys/devices/system/cpu/cpufreq/boost'))
+			{
+				$cpufreq_boost = pts_file_io::file_get_contents('/sys/devices/system/cpu/cpufreq/boost');
+
+				if($cpufreq_boost === '0')
+				{
+					$perf_tips[] = new pts_perf_tip_msg('CPUFreq Boost support is disabled on this system. Enabling boost should allow the CPU to achieve its rated boost frequencies.', 'echo 1 > /sys/devices/system/cpu/cpufreq/boost', '');
+				}
 			}
 		}
 

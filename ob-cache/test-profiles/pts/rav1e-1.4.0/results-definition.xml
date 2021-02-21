@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>encoded 53/60 frames, #_RESULT_# fps, 2422.07 Kb/s, est. size: 0.58 MB, est. time: 5s                    </OutputTemplate>
+    <LineHint>encoded </LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

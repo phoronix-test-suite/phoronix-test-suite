@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Pass 1/2 frame    3/4        768B    2048b/f   61440b/s  165907 us #_RESULT_# fps)</OutputTemplate>
+    <LineHint>fps</LineHint>
+    <TurnCharsToSpace>(</TurnCharsToSpace>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -935,8 +935,9 @@ class phoromatic extends pts_module_interface
 		{
 			foreach($server_response['phoromatic']['results'] as $pprid => $result)
 			{
-				echo sprintf('%-26ls - %-25ls - %-30ls', $result['Title'], $pprid, date('j M H:i', strtotime($result['UploadTime']))) . PHP_EOL;
-				echo sprintf('    %-20ls - %-25ls' . PHP_EOL, $result['SystemName'], $result['GroupName']) . PHP_EOL;
+				echo pts_client::cli_just_bold($result['Title']) . ' ' . $pprid . ' ' . date('j M H:i', strtotime($result['UploadTime'])) . PHP_EOL;
+				echo '   ' . $result['SystemName'] . ' ' . $result['GroupName'];
+				echo PHP_EOL . PHP_EOL;
 			}
 		}
 		else
@@ -1098,7 +1099,7 @@ class phoromatic extends pts_module_interface
 			ceil(self::$test_run_manager->get_estimated_run_time() / 60),
 			self::$test_run_manager->get_percent_complete(),
 			null,
-			ceil($pts_test_result->test_profile->get_estimated_run_time() / 60));
+			ceil($pts_test_result->get_estimated_run_time() / 60));
 	}
 	public static function __event_results_saved($test_run_manager)
 	{

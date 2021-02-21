@@ -452,7 +452,7 @@ class pts_strings
 			// to get rid of Scheisse like 'Gtk-WARNING **: Unable'
 			$str = substr($str, 0, strrpos($str, ' ', (0 - (strlen($str) - $w))));
 		}
-		if(($w = stripos($str, ' with Radeon')) !== false)
+		if(($w = stripos($str, ' with Radeon')) !== false || ($w = stripos($str, ' w/ Radeon')) !== false)
 		{
 			$str = substr($str, 0, $w);
 		}

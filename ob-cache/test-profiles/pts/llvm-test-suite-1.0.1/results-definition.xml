@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Testing Time: #_RESULT_#</OutputTemplate>
+    <StripFromResult>s</StripFromResult>
+  </ResultsParser>
+</PhoronixTestSuite>

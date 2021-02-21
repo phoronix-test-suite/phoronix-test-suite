@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://installer.maxon.net/cinebench/CinebenchR23.zip</URL>
+      <MD5>ab936936b97c7b54a05fda185f846bf8</MD5>
+      <SHA256>fff6d34b8f696de64a534fc9f0788ec1e9f1bda880a88aed92df8b96d1797c42</SHA256>
+      <FileName>CinebenchR23.zip</FileName>
+      <FileSize>261956799</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://installer.maxon.net/cinebench/CinebenchR23.dmg</URL>
+      <MD5>2060548d3d5e7deab94280acb437ee1b</MD5>
+      <SHA256>c8826647af0c7c8cc9bfa2533b254a37deb9852caeea1a47cbacec5e577cdda9</SHA256>
+      <FileName>CinebenchR23.dmg</FileName>
+      <FileSize>292082055</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

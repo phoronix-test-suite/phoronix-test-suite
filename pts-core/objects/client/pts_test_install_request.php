@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2018, Phoronix Media
-	Copyright (C) 2010 - 2018, Michael Larabel
+	Copyright (C) 2010 - 2020, Phoronix Media
+	Copyright (C) 2010 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -24,7 +24,6 @@ class pts_test_install_request
 {
 	public $test_profile;
 	public $test_files;
-	public $install_time_duration = -1;
 	public $compiler_mask_dir = false;
 	public $install_error = null;
 	public $special_environment_vars;
@@ -142,7 +141,6 @@ class pts_test_install_request
 	}
 	public static function test_files_available_on_local_system(&$test_profile)
 	{
-		// TODO XXX: rework this check into something more versatile for tests that could have files in cache
 		if(!is_file(PTS_TEST_PROFILE_PATH . $test_profile . '/test-definition.xml'))
 		{
 			return false;

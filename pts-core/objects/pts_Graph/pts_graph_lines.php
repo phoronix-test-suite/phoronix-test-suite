@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2019, Phoronix Media
-	Copyright (C) 2008 - 2019, Michael Larabel
+	Copyright (C) 2008 - 2020, Phoronix Media
+	Copyright (C) 2008 - 2020, Michael Larabel
 	pts_LineGraph.php: The line graph object that extends pts_Graph.php.
 
 	This program is free software; you can redistribute it and/or modify
@@ -64,6 +64,9 @@ class pts_graph_lines extends pts_graph_core
 
 		//$extra_attributes['no_compact_results_var'] = true;
 		parent::__construct($result_object, $result_file, $extra_attributes);
+		$this->i['plot_zero_value_lines'] = isset($extra_attributes['plot_zero_value_lines']);
+		$this->i['on_zero_plot_former_value'] = isset($extra_attributes['on_zero_plot_former_value']);
+		$this->i['on_zero_plot_connect'] = isset($extra_attributes['on_zero_plot_connect']);
 		$this->i['show_graph_key'] = true;
 		$this->i['show_background_lines'] = true;
 		$this->i['iveland_view'] = true;
@@ -109,7 +112,7 @@ class pts_graph_lines extends pts_graph_core
 
 		if(!$this->i['hide_graph_identifiers'])
 		{
-			$identifier_count = $this->test_result->test_result_buffer->get_count();
+			//$identifier_count = $this->test_result->test_result_buffer->get_count();
 			$longest_string = pts_strings::find_longest_string($this->graph_identifiers);
 			$this->i['identifier_size'] = $this->text_size_bounds($longest_string, $this->i['identifier_size'], $this->i['min_identifier_size'], $this->i['identifier_width'] - 4);
 
@@ -119,10 +122,10 @@ class pts_graph_lines extends pts_graph_core
 				$this->i['bottom_offset'] += $text_width;
 				$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'] + $text_width);
 
-				if(($text_height + 4) > $this->i['identifier_width'] && $identifier_count > 3)
+				if(($text_height + 6) > $this->i['identifier_width']) // $identifier_count > 1
 				{
 					// Show the identifiers as frequently as they will fit
-					$this->i['display_select_identifiers'] = ceil(($text_height + 4) / $this->i['identifier_width']);
+					$this->i['display_select_identifiers'] = ceil(($text_height + 8) / $this->i['identifier_width']);
 				}
 			}
 		}
@@ -131,19 +134,33 @@ class pts_graph_lines extends pts_graph_core
 		$min_value = -1;
 		foreach($this->test_result->test_result_buffer->buffer_items as &$buffer_item)
 		{
-			if(!is_array($buffer_item->get_result_value()))
+			$v = $buffer_item->get_result_value();
+			if(!is_array($v) && strpos($v, ',') !== false)
 			{
-				$max_value = max($max_value,  $buffer_item->get_result_value());
+				$v = explode(',', $v);
+			}
+			if(!is_array($v))
+			{
+				if(!is_numeric($v))
+				{
+					continue;
+				}
+				$max_value = max($max_value,  $v);
 				if($min_value == -1)
 					$min_value = $max_value;
-				$min_value = min($min_value,  $buffer_item->get_result_value());
+				$min_value = min($min_value,  $v);
 			}
 			else
 			{
-				$max_value = max($max_value,  max($buffer_item->get_result_value()));
+				$max_v = max($v);
+				if(!is_numeric($max_v))
+				{
+					continue;
+				}
+				$max_value = max($max_value,  $max_v);
 				if($min_value == -1)
 					$min_value = $max_value;
-				$min_value = min($min_value,  min($buffer_item->get_result_value()));
+				$min_value = min($min_value,  min($v));
 			}
 		}
 
@@ -156,20 +173,20 @@ class pts_graph_lines extends pts_graph_core
 		{
 			if($max_value < 10)
 			{
-				$this->i['graph_max_value'] = max($this->i['graph_max_value'], $max_value) * 1.25; // leave room at top of graph
+				$this->i['graph_max_value'] = pts_math::max_number($this->i['graph_max_value'], $max_value) * 1.25; // leave room at top of graph
 				$this->i['graph_max_value'] += $this->i['graph_max_value'] % $this->i['mark_count'];
 			}
 			else
 			{
-				$max_value = max($this->i['graph_max_value'], $max_value) * 1.2; // leave room at top of graph
+				$max_value = pts_math::max_number($this->i['graph_max_value'], $max_value) * 1.2; // leave room at top of graph
 				$this->i['graph_max_value'] = round($max_value, $max_value < 10 ? 1 : 0);
 				$this->i['graph_max_value'] = round(ceil($this->i['graph_max_value'] / $this->i['mark_count']), (0 - strlen($this->i['graph_max_value']) + 2)) * $this->i['mark_count'];
-				if($min_value > 20)
+				/*if($min_value > 20)
 				{
 					// Adjust bottom of graph to make it fit nicer on display
 					$this->i['graph_min_value'] = floor($min_value * 0.95);
 					$this->i['graph_max_value'] += $this->i['graph_min_value'] % $this->i['mark_count'];
-				}
+				}*/
 			}
 		}
 	}
@@ -326,8 +343,6 @@ class pts_graph_lines extends pts_graph_core
 	}
 	protected function renderGraphLines()
 	{
-		$prev_value = 0;
-
 		foreach($this->test_result->test_result_buffer->buffer_items as &$buffer_item)
 		{
 			$paint_color = $this->get_paint_color($buffer_item->get_result_identifier());
@@ -337,15 +352,26 @@ class pts_graph_lines extends pts_graph_core
 			$regression_plots = array();
 			$poly_points = array();
 			$g = $this->svg_dom->make_g(array('stroke' => $paint_color, 'stroke-width' => 1, 'fill' => $paint_color));
-
+			$prev_value = 0;
 			for($i = 0; $i < $point_counter; $i++)
 			{
 				$value = isset($result_array[$i]) ? $result_array[$i] : -1;
+				if($this->i['on_zero_plot_former_value'] && $value <= 0 && $i > 0)
+				{
+					$value = $prev_value;
+				}
 
-				if($value < 0)
+				if($this->i['plot_zero_value_lines'] && $value == -1)
+				{
+					$value = 0;
+				}
+				else if($value < 0)
 				{
 					// Draw whatever is needed of the line so far, since there is no result here
-					$this->draw_graph_line_process($poly_points, $paint_color, $regression_plots, $point_counter, $g);
+					if(!$this->i['on_zero_plot_connect'])
+					{
+						$this->draw_graph_line_process($poly_points, $paint_color, $regression_plots, $point_counter, $g);
+					}
 					continue;
 				}
 
@@ -430,7 +456,7 @@ class pts_graph_lines extends pts_graph_core
 
 			if($point_counter < 6 || $plotted_error_bar || $i == 0 || $i == ($poly_points_count  - 1))
 			{
-				$this->svg_dom->add_element('ellipse', array('cx' => $x_y_pair[0], 'cy' => $x_y_pair[1], 'rx' => 3, 'ry' => 3, 'xlink:title' => $x_y_pair[2]), $g);
+				$this->svg_dom->add_element('ellipse', array('cx' => $x_y_pair[0], 'cy' => $x_y_pair[1], 'rx' => 3, 'ry' => 3), $g);
 			}
 		}
 

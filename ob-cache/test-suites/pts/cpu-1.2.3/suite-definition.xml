@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>CPU / Processor Suite</Title>
+    <Version>1.2.3</Version>
+    <TestType>Processor</TestType>
+    <Description>This test suite contains tests designed to test the system's CPU / processor.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+	<Status>Deprecated</Status>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/rodinia-1.2.2</Test>
+    <Arguments>OMP_CFD</Arguments>
+    <Description>Test: OpenMP CFD Solver</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/rodinia-1.2.2</Test>
+    <Arguments>OMP_LAVAMD</Arguments>
+    <Description>Test: OpenMP LavaMD</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/namd-1.0.1</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/stockfish-1.1.1</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/x264-2.5.0</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/x265</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/kvazaar</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-7zip-1.7.0</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/blender-1.4.1</Test>
+    <Arguments>-b ../barbershop_interior_gpu.blend -o output.test -x 1 -F JPEG -f 1  NONE</Arguments>
+    <Description>Blend File: Barbershop - Compute: CPU-Only</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/asmfish-1.1.1</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/build-linux-kernel-1.9.1</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/build-gcc-1.1.1</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/radiance-1.0.0</Test>
+    <Arguments>make all</Arguments>
+    <Description>Test: Serial</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/radiance-1.0.0</Test>
+    <Arguments>make smp</Arguments>
+    <Description>Test: SMP Parallel</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/openssl-1.11.0</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/ctx-clock-1.0.0</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/sysbench-1.0.0</Test>
+    <Arguments>cpu run</Arguments>
+    <Description>Test: CPU</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/povray-1.2.1</Test>
+    <Arguments></Arguments>
+    <Description></Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+</PhoronixTestSuite>

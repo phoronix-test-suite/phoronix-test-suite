@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2020, Phoronix Media
-	Copyright (C) 2008 - 2020, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -30,9 +30,11 @@ class pts_test_profile_parser
 	protected $block_test_extension_support = false;
 	private $file_location = false;
 	public $no_fallbacks_on_null = false;
+	protected static $xml_file_cache;
 
 	public function __construct($read = null, $normal_init = true)
 	{
+		$original_read = $read;
 		$this->overrides = array();
 		$this->tp_extends = null;
 
@@ -41,8 +43,15 @@ class pts_test_profile_parser
 			$this->identifier = $read;
 			return;
 		}
+		if(isset(self::$xml_file_cache[$read]))
+		{
+			// Found in cache so can avoid extra work below...
+			$this->identifier = $read;
+			$this->file_location = $read;
+			$this->xml = &self::$xml_file_cache[$this->file_location];
+		}
 
-		if(!isset($read[200]) && strpos($read, '<?xml version="1.0"?>') === false)
+		if(!isset($read[200]) && strpos($read, '<?xml version="1.0"?>') === false && $read != null)
 		{
 			if(PTS_IS_CLIENT && (!defined('PTS_TEST_PROFILE_PATH') || !is_file(PTS_TEST_PROFILE_PATH . $read . '/test-definition.xml')))
 			{
@@ -87,10 +96,20 @@ class pts_test_profile_parser
 			$xml_options = LIBXML_COMPACT | LIBXML_PARSEHUGE;
 		//}
 
-		if(is_file($read))
+		if(isset(self::$xml_file_cache[$read]))
 		{
 			$this->file_location = $read;
-			$this->xml = simplexml_load_file($read, 'SimpleXMLElement', $xml_options);
+			$this->xml = &self::$xml_file_cache[$this->file_location];
+		}
+		else if(is_file($read))
+		{
+			$this->file_location = $read;
+			self::$xml_file_cache[$this->file_location] = simplexml_load_file($read, 'SimpleXMLElement', $xml_options);
+			if($read != $original_read && !isset(self::$xml_file_cache[$original_read]))
+			{
+				self::$xml_file_cache[$original_read] = &self::$xml_file_cache[$this->file_location];
+			}
+			$this->xml = &self::$xml_file_cache[$this->file_location];
 		}
 		else
 		{
@@ -125,6 +144,22 @@ class pts_test_profile_parser
 	public function xs($xpath, &$value)
 	{
 		$this->overrides[$xpath] = $value;
+	}
+	public function get_dependency_names()
+	{
+		$dependency_names = array();
+		$exdep_generic_parser = new pts_exdep_generic_parser();
+
+		foreach($this->get_external_dependencies() as $dependency)
+		{
+			if($exdep_generic_parser->is_package($dependency))
+			{
+				$package_data = $exdep_generic_parser->get_package_data($dependency);
+				$dependency_names[] = $package_data['title'];
+			}
+		}
+
+		return $dependency_names;
 	}
 	public function xg($xpath, $default_on_null = null)
 	{
@@ -398,6 +433,10 @@ class pts_test_profile_parser
 	{
 		return pts_strings::string_bool($this->xg('TestProfile/RequiresInternet', 'FALSE'));
 	}
+	public function is_internet_required_for_install()
+	{
+		return pts_strings::string_bool($this->xg('TestProfile/InstallRequiresInternet', 'FALSE'));
+	}
 	public function allow_cache_share()
 	{
 		return pts_strings::string_bool($this->xg('TestSettings/Default/AllowCacheShare'));
@@ -458,7 +497,11 @@ class pts_test_profile_parser
 	{
 		return $this->get_test_option_objects(false);
 	}
-	public function get_test_option_objects($auto_process = true, &$error = null)
+	public function has_test_options()
+	{
+		return $this->xml && $this->xml->TestSettings && $this->xml->TestSettings->Option;
+	}
+	public function get_test_option_objects($auto_process = true, &$error = null, $validate_options_now = true)
 	{
 		$test_options = array();
 
@@ -483,7 +526,7 @@ class pts_test_profile_parser
 				if($auto_process)
 				{
 					$auto_process_error_msg = null;
-					$auto_process_error = pts_test_run_options::auto_process_test_option($this, $option->Identifier, $names, $values, $messages, $auto_process_error_msg);
+					$auto_process_error = pts_test_run_options::auto_process_test_option($this, $option->Identifier, $names, $values, $messages, $auto_process_error_msg, $validate_options_now);
 					if($auto_process_error == -1)
 					{
 						$error = $auto_process_error_msg;

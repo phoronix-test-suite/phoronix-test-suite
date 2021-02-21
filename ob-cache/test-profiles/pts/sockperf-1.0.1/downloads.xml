@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/sockperf-3.4.zip</URL>
+      <MD5>92440eec5f328bee5bd31f78321d6d64</MD5>
+      <SHA256>b153daff1229d57dcc085cb425b0df171cea691c134db2928a9eb188252d93b8</SHA256>
+      <FileName>sockperf-3.4.zip</FileName>
+      <FileSize>226572</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

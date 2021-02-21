@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>StressCPU2 Stress-Test</Title>
+    <AppVersion>2</AppVersion>
+    <Description>This test runs a series of GROMACS inner loops hand coded in assembly for speed and efficiency on SSE units. The short run lengths are only useful for heating up your CPU, for a proper test, use the 6 or 12 hour run length. This test will cause unstable hardware to stop responding and require a hard reboot.</Description>
+    <ResultScale>Stress Test</ResultScale>
+    <DisplayFormat>PASS_FAIL</DisplayFormat>
+    <SubTitle>Tight GROMACS Inner-Loops</SubTitle>
+    <Executable>launch</Executable>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.2</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Deprecated</Status>
+    <SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+    <EnvironmentSize>2</EnvironmentSize>
+    <Maintainer>Andrew Schofield</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Run-Time</DisplayName>
+      <Identifier>runtime</Identifier>
+      <Menu>
+        <Entry>
+          <Name>5 Minutes</Name>
+          <Value>00:05:00</Value>
+        </Entry>
+        <Entry>
+          <Name>30 Minutes</Name>
+          <Value>00:30:00</Value>
+        </Entry>
+        <Entry>
+          <Name>1 Hour</Name>
+          <Value>01:00:00</Value>
+        </Entry>
+        <Entry>
+          <Name>6 Hours</Name>
+          <Value>06:00:00</Value>
+        </Entry>
+        <Entry>
+          <Name>12 Hours</Name>
+          <Value>12:00:00</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

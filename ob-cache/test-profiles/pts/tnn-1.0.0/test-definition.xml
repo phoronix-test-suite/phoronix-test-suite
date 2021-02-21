@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>TNN</Title>
+    <AppVersion>0.2.3</AppVersion>
+    <Description>TNN is an open-source deep learning reasoning framework developed by Tencent.</Description>
+    <ResultScale>ms</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Scientific</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>cmake, build-utilities</ExternalDependencies>
+    <EnvironmentSize>65</EnvironmentSize>
+    <ProjectURL>https://github.com/Tencent/TNN</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Target</DisplayName>
+      <Identifier>target</Identifier>
+      <ArgumentPrefix>-dt </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>CPU</Name>
+          <Value>NAIVE</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Model</DisplayName>
+      <Identifier>model</Identifier>
+      <ArgumentPrefix>-mp </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>MobileNet v2</Name>
+          <Value>../benchmark/benchmark-model/mobilenet_v2.tnnproto</Value>
+        </Entry>
+        <Entry>
+          <Name>SqueezeNet v1.1</Name>
+          <Value>../benchmark/benchmark-model/squeezenet_v1.1.tnnproto</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

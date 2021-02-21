@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/hpc/ior/releases/download/3.3.0/ior-3.3.0.tar.gz</URL>
+      <MD5>ef78a6106c4febfa8ba13fc7b26aa2a6</MD5>
+      <SHA256>94df708a7b9dd804bbcaee24dbee76939ed572e8950c7c766aee7609d51e75e2</SHA256>
+      <FileName>ior-3.3.0.tar.gz</FileName>
+      <FileSize>308331</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

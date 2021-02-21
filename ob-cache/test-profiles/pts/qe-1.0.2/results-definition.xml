@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>     PWSCF        :      1h21mCPU  #_RESULT_# WALL</OutputTemplate>
+    <LineHint>PWSCF</LineHint>
+    <ResultBeforeString>WALL</ResultBeforeString>
+  </ResultsParser>
+</PhoronixTestSuite>

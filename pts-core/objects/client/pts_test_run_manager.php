@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2020, Phoronix Media
-	Copyright (C) 2009 - 2020, Michael Larabel
+	Copyright (C) 2009 - 2021, Phoronix Media
+	Copyright (C) 2009 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -65,7 +65,7 @@ class pts_test_run_manager
 
 	public function __construct($batch_mode = false, $auto_mode = false)
 	{
-		$this->do_dynamic_run_count = pts_config::read_bool_config('PhoronixTestSuite/Options/TestResultValidation/DynamicRunCount', 'TRUE');
+		$this->do_dynamic_run_count = pts_config::read_bool_config('PhoronixTestSuite/Options/TestResultValidation/DynamicRunCount', 'TRUE') && getenv('FORCE_TIMES_TO_RUN') == false;
 		$this->dynamic_run_count_on_length_or_less = 60; //pts_config::read_user_config('PhoronixTestSuite/Options/TestResultValidation/LimitIncreasingRunCountForTestsOverLength', 60);
 		$this->dynamic_run_count_std_deviation_threshold = pts_config::read_user_config('PhoronixTestSuite/Options/TestResultValidation/StandardDeviationThreshold', 3.0);
 		$this->dynamic_run_count_export_script = pts_config::read_user_config('PhoronixTestSuite/Options/TestResultValidation/ExportResultsTo', null);
@@ -204,7 +204,7 @@ class pts_test_run_manager
 					return true;
 				}
 
-				// TODO: could add more checks and take better advantage of the array of data to better determine if it's still worth increasing
+				// could add more checks and take better advantage of the array of data to better determine if it's still worth increasing
 			}
 
 		}
@@ -289,10 +289,16 @@ class pts_test_run_manager
 			$index = $this->last_test_run_index;
 		}
 
+		$already_added = array();
 		$estimated_time = 0;
 		foreach(array_slice($this->tests_to_run, $index) as $test_run_request)
 		{
-			$estimated_time += $test_run_request->test_profile->get_estimated_run_time();
+			if($test_run_request->test_profile->has_test_options() == false && in_array($test_run_request->test_profile->get_identifier(), $already_added))
+			{
+				continue;
+			}
+			$estimated_time += $test_run_request->get_estimated_run_time();
+			$already_added[] = $test_run_request->test_profile->get_identifier();
 		}
 
 		return $estimated_time;
@@ -604,7 +610,7 @@ class pts_test_run_manager
 	}
 	public static function clean_results_identifier($results_identifier)
 	{
-		$results_identifier = trim(pts_client::swap_variables($results_identifier, array('pts_client', 'user_run_save_variables')));
+		$results_identifier = trim(pts_client::swap_variables($results_identifier, array('pts_test_run_manager', 'user_run_save_variables')));
 		$results_identifier = pts_strings::remove_redundant(pts_strings::keep_in_string($results_identifier, pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_UNDERSCORE | pts_strings::CHAR_COLON | pts_strings::CHAR_COMMA | pts_strings::CHAR_SLASH | pts_strings::CHAR_SPACE | pts_strings::CHAR_DECIMAL | pts_strings::CHAR_AT | pts_strings::CHAR_PLUS | pts_strings::CHAR_SEMICOLON | pts_strings::CHAR_EQUAL), ' ');
 
 		return $results_identifier;
@@ -838,7 +844,7 @@ class pts_test_run_manager
 	}
 	public static function clean_save_name($input, $is_new_save = true)
 	{
-		$input = pts_client::swap_variables($input, array('pts_client', 'user_run_save_variables'));
+		$input = pts_client::swap_variables($input, array('pts_test_run_manager', 'user_run_save_variables'));
 		$input = pts_strings::remove_redundant(pts_strings::keep_in_string(str_replace(' ', '-', trim($input)), pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH), '-');
 
 		if($is_new_save)
@@ -996,11 +1002,26 @@ class pts_test_run_manager
 				$notes['cpu-microcode'] = $cpu_microcode;
 			}
 
+			if(phodevi::is_linux() && pts_client::executable_in_path('thermald') && (pts_client::is_process_running('thermald') || phodevi_linux_parser::systemctl_active('thermald')))
+			{
+				$thermald_version = trim(shell_exec('thermald --version 2>/dev/null'));
+				if(!empty($thermald_version) && pts_strings::is_version($thermald_version))
+				{
+					$notes['cpu-thermald'] = $thermald_version;
+				}
+			}
+
 			// POWER processors have configurable SMT, 1-8 per core.
 			$smt = phodevi::read_property('cpu', 'smt');
 			if($smt)
 			{
 				$notes['cpu-smt'] = $smt;
+			}
+
+			$cpu_pm = phodevi::read_property('cpu', 'power-management');
+			if($cpu_pm)
+			{
+				$notes['cpu-pm'] = $cpu_pm;
 			}
 		}
 		if($show_all || in_array('Graphics', $test_hardware_types))
@@ -1033,6 +1054,10 @@ class pts_test_run_manager
 		if($show_all || phodevi::read_property('system', 'kernel-parameters'))
 		{
 			$notes['kernel-parameters'] = phodevi::read_property('system', 'kernel-parameters');
+		}
+		if($show_all || phodevi::read_property('system', 'kernel-extra-details'))
+		{
+			$notes['kernel-extra-details'] = phodevi::read_property('system', 'kernel-extra-details');
 		}
 
 		if($show_all || phodevi::read_property('system', 'environment-variables', false))
@@ -1526,7 +1551,6 @@ class pts_test_run_manager
 
 		foreach($to_run_objects as &$run_object)
 		{
-			// TODO: determine whether to print the titles of what's being run?
 			if($run_object instanceof pts_test_profile)
 			{
 				if($run_object->get_identifier() == null || $run_object->get_title() == null || $this->validate_test_to_run($run_object) == false)
@@ -1827,7 +1851,7 @@ class pts_test_run_manager
 		{
 			if($report_errors)
 			{
-				$report_errors && pts_client::$display->test_run_error($test_profile . ': ' . $error);
+				pts_client::$display->test_run_error('[' . $test_result->test_profile->get_identifier() . ' ' . $test_result->get_arguments_description() . '] ' . $error);
 			}
 			return false;
 		}
@@ -1911,7 +1935,7 @@ class pts_test_run_manager
 			}
 			else if($test_profile->get_test_executable_dir() == null)
 			{
-				pts_client::$display->test_run_error('The test executable for ' . $test_profile . ' could not be located. Looking for ' . $test_profile->get_test_executable() . ' in ' . $test_profile->get_install_dir());
+				pts_client::$display->test_run_error('The test executable for ' . pts_client::cli_just_bold($test_profile) . ' could not be located. Looking for ' . pts_client::cli_just_bold($test_profile->get_test_executable()) . ' in ' . pts_client::cli_just_italic($test_profile->get_install_dir()));
 				$valid_test_profile = false;
 			}
 
@@ -1945,6 +1969,29 @@ class pts_test_run_manager
 		$this->pre_execution_process();
 		$this->call_test_runs();
 		$this->post_execution_process();
+	}
+	public static function user_run_save_variables()
+	{
+		static $runtime_variables = null;
+
+		if($runtime_variables == null)
+		{
+			$runtime_variables = array(
+			'VIDEO_RESOLUTION' => phodevi::read_property('gpu', 'screen-resolution-string'),
+			'VIDEO_CARD' => phodevi::read_name('gpu'),
+			'VIDEO_DRIVER' => phodevi::read_property('system', 'display-driver-string'),
+			'OPENGL_DRIVER' => str_replace('(', '', phodevi::read_property('system', 'opengl-driver')),
+			'OPERATING_SYSTEM' => phodevi::read_property('system', 'operating-system'),
+			'PROCESSOR' => phodevi::read_name('cpu'),
+			'MOTHERBOARD' => phodevi::read_name('motherboard'),
+			'CHIPSET' => phodevi::read_name('chipset'),
+			'KERNEL_VERSION' => phodevi::read_property('system', 'kernel'),
+			'COMPILER' => phodevi::read_property('system', 'compiler'),
+			'HOSTNAME' => phodevi::read_property('system', 'hostname')
+			);
+		}
+
+		return $runtime_variables;
 	}
 }
 

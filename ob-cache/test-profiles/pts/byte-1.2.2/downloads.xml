@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/byte-benchmark-2.tar.gz</URL>
+      <MD5>0f6256db9ec78a9998394db2bd141edb</MD5>
+      <SHA256>aeb9fcfd223dc2c0bd5dc63f5f680f40bcaa6af88dad7ec3e0b212568cb9a838</SHA256>
+      <FileName>byte-benchmark-2.tar.gz</FileName>
+      <FileSize>176336</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

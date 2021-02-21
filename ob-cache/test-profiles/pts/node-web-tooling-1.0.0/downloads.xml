@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/v8/web-tooling-benchmark/archive/v0.5.3.tar.gz</URL>
+      <MD5>84487c991a8f2a1c470564bc628413d6</MD5>
+      <SHA256>5d09d6f3eb19c02d9e858079efb0bd1b7303a5878f83462e6ddb93f21a1635c0</SHA256>
+      <FileName>web-tooling-benchmark-0.5.3.tar.gz</FileName>
+      <FileSize>856155</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

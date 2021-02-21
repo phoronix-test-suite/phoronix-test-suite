@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>AOM AV1</Title>
+    <AppVersion>2.0</AppVersion>
+    <Description>This is a simple test of the AOMedia AV1 encoder run on the CPU with a sample video file.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>2.1.2</Version>
+    <SupportedPlatforms>Linux, MacOSX, BSD, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, p7zip, cmake, perl, yasm</ExternalDependencies>
+    <EnvironmentSize>950</EnvironmentSize>
+    <ProjectURL>https://aomedia.googlesource.com/aom/</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>--tile-columns=2 --tile-rows=1</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Encoder Mode</DisplayName>
+      <Identifier>enc-mode</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Speed 8 Realtime</Name>
+          <Value>--cpu-used=8 --rt</Value>
+        </Entry>
+        <Entry>
+          <Name>Speed 6 Realtime</Name>
+          <Value>--cpu-used=6 --rt</Value>
+        </Entry>
+        <Entry>
+          <Name>Speed 6 Two-Pass</Name>
+          <Value>--cpu-used=6 --limit=80</Value>
+        </Entry>
+        <Entry>
+          <Name>Speed 4 Two-Pass</Name>
+          <Value>--cpu-used=4 --limit=40</Value>
+        </Entry>
+        <Entry>
+          <Name>Speed 0 Two-Pass</Name>
+          <Value>--cpu-used=0 --limit=10</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

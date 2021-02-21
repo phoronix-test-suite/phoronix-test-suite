@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2019, Phoronix Media
-	Copyright (C) 2008 - 2019, Michael Larabel
+	Copyright (C) 2008 - 2020, Phoronix Media
+	Copyright (C) 2008 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -25,6 +25,10 @@ class show_result implements pts_option_interface
 	const doc_section = 'Result Management';
 	const doc_description = 'Open up the test results in the Phoronix Test Suite Result Viewer or on OpenBenchmarking.org.';
 
+	public static function command_aliases()
+	{
+		return array('refresh_graphs', 'refresh_graph');
+	}
 	public static function argument_checks()
 	{
 		return array(
@@ -34,12 +38,6 @@ class show_result implements pts_option_interface
 	public static function run($r)
 	{
 		$URL = PTS_SAVE_RESULTS_PATH . $r[0];
-
-		if(!is_dir($URL . '/result-graphs/'))
-		{
-			pts_client::generate_result_file_graphs($r[0], PTS_SAVE_RESULTS_PATH . $r[0] . '/');
-		}
-
 		pts_client::display_result_view($r[0], false);
 	}
 }

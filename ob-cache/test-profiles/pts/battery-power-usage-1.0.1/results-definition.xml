@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <SystemMonitor>
+    <Sensor>sys.power</Sensor>
+    <PollingFrequency>1</PollingFrequency>
+    <Report>ALL</Report>
+  </SystemMonitor>
+</PhoronixTestSuite>

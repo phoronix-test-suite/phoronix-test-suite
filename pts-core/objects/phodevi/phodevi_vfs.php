@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2012 - 2016, Phoronix Media
-	Copyright (C) 2012 - 2016, Michael Larabel
+	Copyright (C) 2012 - 2021, Phoronix Media
+	Copyright (C) 2012 - 2021, Michael Larabel
 	phodevi.php: The object for an effective VFS with PTS/Phodevi
 
 	This program is free software; you can redistribute it and/or modify
@@ -115,7 +115,7 @@ class phodevi_vfs
 				}
 				break;
 			default:
-				$file = pts_strings::remove_lines_containing($file, array('Serial N', 'S/N', 'Serial #', 'serial:', 'serial='));
+				$file = pts_strings::remove_lines_containing($file, array('Serial N', 'S/N', 'UUID', ' seed:', 'Serial #', 'serial:', 'serial='));
 				break;
 		}
 
@@ -126,6 +126,28 @@ class phodevi_vfs
 		}
 
 		return $file;
+	}
+	public static function cleanse_and_shorten_kernel_config($kconfig)
+	{
+		$kconfig = explode(PHP_EOL, $kconfig);
+		foreach($kconfig as $i => &$line)
+		{
+			if(empty($line) || substr($line, 0, 1) == '#')
+			{
+				unset($kconfig[$i]);
+			}
+			if(isset($line[9]) && substr($line, 0, 7) == 'CONFIG_')
+			{
+				$line = substr($line, 7);
+			}
+		}
+
+		$kconfig = implode(PHP_EOL, $kconfig);
+		if(!empty($kconfig))
+		{
+			$kconfig = '# CONFIG_ prefix dropped, comment lines removed' . PHP_EOL . $kconfig;
+		}
+		return $kconfig;
 	}
 	public function clear_cache()
 	{
@@ -166,7 +188,14 @@ class phodevi_vfs
 
 				if($try['type'] == 'F' && is_file($try['F']))
 				{
-					$contents = file_get_contents($try['F']);
+					if(filesize($try['F']) < 5242880)
+					{
+						$contents = file_get_contents($try['F']);
+					}
+					else
+					{
+						continue;
+					}
 				}
 				else if($try['type'] == 'C')
 				{
@@ -183,6 +212,11 @@ class phodevi_vfs
 						$contents = stream_get_contents($pipes[1]);
 						fclose($pipes[1]);
 						$return_value = proc_close($proc);
+					
+						if(isset($contents[5242880]))
+						{
+							$contents = null;
+						}
 					}
 				}
 

@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Zstd Compression</Title>
+    <AppVersion>1.4.5</AppVersion>
+    <Description>This test measures the time needed to compress a sample file (an Ubuntu ISO) using Zstd compression.</Description>
+    <ResultScale>MB/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.1</Version>
+    <SupportedPlatforms>Linux, BSD, MacOSX, Solaris, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>2000</EnvironmentSize>
+    <ProjectURL>http://github.com/facebook/zstd</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-S -i10</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Compression Level</DisplayName>
+      <Identifier>compression</Identifier>
+      <Menu>
+        <Entry>
+          <Name>3</Name>
+          <Value>-b3</Value>
+        </Entry>
+        <Entry>
+          <Name>19</Name>
+          <Value>-b19</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

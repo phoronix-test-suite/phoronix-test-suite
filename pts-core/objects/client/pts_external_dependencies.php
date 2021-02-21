@@ -47,6 +47,7 @@ class pts_external_dependencies
 		$pkg_vendor = self::vendor_identifier('package-list');
 		if(is_file(pts_exdep_generic_parser::get_external_dependency_path() . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php'))
 		{
+			$startup = null;
 			require_once(pts_exdep_generic_parser::get_external_dependency_path() . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php');
 			eval("\$startup = {$pkg_vendor}_dependency_handler::startup_handler();");
 			return $startup;
@@ -409,6 +410,10 @@ class pts_external_dependencies
 			{
 				$present = true;
 			}
+			else if(strpos($file, '.h') !== false && glob('/usr/include/*-linux-gnu/' . $file) != false)
+			{
+				$present = true;
+			}
 			else if(strpos($file, '.so') !== false && glob('/usr/lib*/' . $file) != false)
 			{
 				$present = true;
@@ -447,6 +452,10 @@ class pts_external_dependencies
 
 		return $needed_os_packages;
 	}
+	private static function is_present($file)
+	{
+		return is_file($file) || (strpos($file, '*') != false && glob($file));
+	}
 	private static function file_missing_check($file_arr)
 	{
 		// Checks if file is missing
@@ -466,7 +475,7 @@ class pts_external_dependencies
 			{
 				$file[$i] = trim($file[$i]);
 
-				if(is_file($file[$i]) || is_dir($file[$i]) || is_link($file[$i]))
+				if(is_dir($file[$i]) || self::is_present($file[$i]))
 				{
 					$file_is_there = true;
 				}
@@ -480,7 +489,7 @@ class pts_external_dependencies
 						$possible_paths = array_merge(array('/usr/local/include/', '/usr/target/include/', '/usr/include/'), pts_file_io::glob('/usr/include/*-linux-gnu/'));
 						foreach($possible_paths as $path)
 						{
-							if(is_file($path . '/' . $file[$i]) || is_link($path . '/' . $file[$i]))
+							if(self::is_present($path . '/' . $file[$i]))
 							{
 								$file_is_there = true;
 							}
@@ -501,7 +510,7 @@ class pts_external_dependencies
 
 						foreach($possible_paths as $path)
 						{
-							if(is_file($path . '/' . $file[$i]) || is_link($path . '/' . $file[$i]))
+							if(self::is_present($path . '/' . $file[$i]))
 							{
 								$file_is_there = true;
 							}
@@ -541,6 +550,7 @@ class pts_external_dependencies
 		}
 		else if(is_file(pts_exdep_generic_parser::get_external_dependency_path() . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php'))
 		{
+			$installed = null;
 			require_once(pts_exdep_generic_parser::get_external_dependency_path() . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php');
 			eval("\$installed = {$pkg_vendor}_dependency_handler::install_dependencies(\$os_packages_to_install);");
 			return $installed;
@@ -550,7 +560,7 @@ class pts_external_dependencies
 			echo 'Distribution install script not found!';
 		}
 	}
-	private static function vendor_identifier($type)
+	public static function vendor_identifier($type)
 	{
 		$os_vendor = phodevi::read_property('system', 'vendor-identifier');
 

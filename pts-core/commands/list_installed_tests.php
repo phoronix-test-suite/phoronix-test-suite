@@ -39,7 +39,7 @@ class list_installed_tests implements pts_option_interface
 
 				if($name != false)
 				{
-					echo sprintf('%-26ls - %-30ls' . PHP_EOL, $identifier, $name);
+					echo sprintf('%-36ls - %-30ls' . PHP_EOL, $identifier, $name);
 				}
 			}
 		}

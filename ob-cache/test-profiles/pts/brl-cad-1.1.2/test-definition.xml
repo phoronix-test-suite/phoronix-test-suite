@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>BRL-CAD</Title>
+    <AppVersion>7.30.8</AppVersion>
+    <Description>BRL-CAD 7.28.0 is a cross-platform, open-source solid modeling system with built-in benchmark mode.</Description>
+    <ResultScale>VGR Performance Metric</ResultScale>
+    <Proportion>HIB</Proportion>
+    <SubTitle>VGR Performance Metric</SubTitle>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.2</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, cmake, flex, tcl, zlib-development, libpng-development</ExternalDependencies>
+    <EnvironmentSize>48</EnvironmentSize>
+    <ProjectURL>http://brlcad.org/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

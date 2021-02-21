@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2020, Phoronix Media
-	Copyright (C) 2008 - 2020, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 class pts_test_profile extends pts_test_profile_parser
 {
 	public $test_installation = false;
+	protected static $test_installation_cache;
 
 	public function __construct($identifier = null, $override_values = null, $normal_init = true)
 	{
@@ -35,7 +36,12 @@ class pts_test_profile extends pts_test_profile_parser
 
 		if($normal_init && PTS_IS_CLIENT && $this->identifier != null)
 		{
-			$this->test_installation = new pts_installed_test($this);
+			if(!isset(self::$test_installation_cache[$identifier]))
+			{
+				self::$test_installation_cache[$identifier] = new pts_installed_test($this);
+			}
+
+			$this->test_installation = &self::$test_installation_cache[$identifier];
 		}
 	}
 	public function validate()
@@ -157,25 +163,14 @@ class pts_test_profile extends pts_test_profile_parser
 
 		return $extensions;
 	}
-	public function get_dependency_names()
-	{
-		$dependency_names = array();
-		$exdep_generic_parser = new pts_exdep_generic_parser();
-
-		foreach($this->get_external_dependencies() as $dependency)
-		{
-			if($exdep_generic_parser->is_package($dependency))
-			{
-				$package_data = $exdep_generic_parser->get_package_data($dependency);
-				$dependency_names[] = $package_data['title'];
-			}
-		}
-
-		return $dependency_names;
-	}
 	public function get_times_to_run()
 	{
 		$times_to_run = parent::get_times_to_run();
+
+		if(!PTS_IS_CLIENT)
+		{
+			return $times_to_run;
+		}
 
 		if(($force_runs_multiple = pts_client::read_env('FORCE_TIMES_TO_RUN_MULTIPLE')) && is_numeric($force_runs_multiple) && $force_runs_multiple > 1 && $this->get_estimated_run_time() < (60 * 60 * 2))
 		{
@@ -471,7 +466,7 @@ class pts_test_profile extends pts_test_profile_parser
 	public function needs_updated_install()
 	{
 		// Checks if test needs updating
-		return $this->test_installation == false || $this->get_test_profile_version() != $this->test_installation->get_installed_version() || $this->get_installer_checksum() != $this->test_installation->get_installed_checksum() || $this->test_installation->get_installed_system_identifier() != phodevi::system_id_string();
+		return $this->test_installation == false || $this->get_test_profile_version() != $this->test_installation->get_installed_version() || $this->get_installer_checksum() != $this->test_installation->get_installed_checksum() || $this->test_installation->get_system_hash() != phodevi::system_id_string();
 	}
 	public function to_json()
 	{

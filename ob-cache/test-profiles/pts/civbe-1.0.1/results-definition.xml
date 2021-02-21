@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>csv-dump-frame-latencies</OutputTemplate>
+  </ResultsParser>
+  <ExtraData>
+    <Identifier>csv-dump-frame-latencies</Identifier>
+  </ExtraData>
+</PhoronixTestSuite>

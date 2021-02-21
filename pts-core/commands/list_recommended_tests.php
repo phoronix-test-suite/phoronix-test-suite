@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2012 - 2018, Phoronix Media
-	Copyright (C) 2012 - 2018, Michael Larabel
+	Copyright (C) 2012 - 2020, Phoronix Media
+	Copyright (C) 2012 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -65,10 +65,12 @@ class list_recommended_tests implements pts_option_interface
 			uasort($test_json, array('pts_openbenchmarking_client', 'compare_test_json_download_counts'));
 			$test_json = array_slice($test_json, 0, 10);
 			pts_client::$display->generic_heading($subsystem . ' Tests');
+			$table = array();
 			foreach($test_json as $identifier => $test_individual_json)
 			{
-				echo sprintf('%-30ls - %-39ls', $identifier, $test_individual_json['title']) . PHP_EOL;
+				$table[] = array($identifier, pts_client::cli_just_bold($test_individual_json['title']));
 			}
+			echo pts_user_io::display_text_table($table);
 		}
 	}
 }

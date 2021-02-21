@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://phoenixnap.dl.sourceforge.net/project/fifth-browser/v0.5/webkitfltk-0.5.1.txz</URL>
+      <MD5>9d40919c6bac0c376d5078d781cd65d8</MD5>
+      <SHA256>73c72b26f874578b78c3ce575743cdd476dfbf0a208d5aee6275e5c8883af253</SHA256>
+      <FileName>webkitfltk-0.5.1.txz</FileName>
+      <FileSize>24230808</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

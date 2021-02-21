@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/Unigine_Heaven-4.0.run, http://assets.unigine.com/d/Unigine_Heaven-4.0.run</URL>
+      <FileName>Unigine_Heaven-4.0.run</FileName>
+      <FileSize>286329188</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>ftp://ftp.cstula.ru/software/test/unigine_heaven/Unigine_Heaven-4.0.exe, http://assets.unigine.com/d/Unigine_Heaven-4.0.exe, http://www.servodata.com.pl/ftp/testy/Unigine_Heaven-4.0.exe, http://assets.unigine.com/d/Unigine_Heaven-4.0.exe</URL>
+      <FileName>Unigine_Heaven-4.0.exe</FileName>
+      <FileSize>258728440</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Compression Tests</Title>
+    <Version>1.1.4</Version>
+    <TestType>Processor</TestType>
+    <Description>This test suite consists of tests that measure various forms of file compression such as gzip, bzip2, and 7zip. This suite is good for testing the system's processor, memory, and overall system performance.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/compress-7zip</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-gzip</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-pbzip2</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-zstd</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-lz4</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-rar</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-xz</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/system-decompress-xz</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/system-decompress-gzip</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/system-decompress-zlib</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/lzbench</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/blosc</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+</PhoronixTestSuite>

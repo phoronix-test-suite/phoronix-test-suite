@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/Norne-4C.tar.gz</URL>
+      <MD5>959a9b3bba0bb9460b664d9050f04733</MD5>
+      <SHA256>77fded959718348695f9ee257c2e2b83ba7f211c83f181f67cac008554a6bcd2</SHA256>
+      <FileName>Norne-4C.tar.gz</FileName>
+      <FileSize>4363239</FileSize>
+    </Package>
+    <Package>
+      <FileName>omega-opm-2.tar.gz</FileName>
+      <FileSize>440350494</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

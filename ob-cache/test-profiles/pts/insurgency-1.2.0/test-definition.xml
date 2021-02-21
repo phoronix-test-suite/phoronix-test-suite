@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Insurgency</Title>
+    <Description>This is a benchmark of the Source Engine Insurgency game, a tactical first person shooter developed by New World Interactive. The test profile assumes you have a Steam account, have Steam installed for the system, and that Insurgency is already installed. This automates the process of executing the game and using a standardized time demo.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+    <PreInstallMessage>This test will attempt to install the necessary game using your Steam account. If the test appears hung you may need to manually exit the Steam client.</PreInstallMessage>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Game</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Retail</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86, x86_64</SupportedArchitectures>
+    <RequiresDisplay>TRUE</RequiresDisplay>
+    <EnvironmentSize>2</EnvironmentSize>
+    <ProjectURL>http://store.steampowered.com/app/222880/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>resolution</Identifier>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>-w $VIDEO_WIDTH -h $VIDEO_HEIGHT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

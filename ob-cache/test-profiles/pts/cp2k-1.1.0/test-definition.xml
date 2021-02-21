@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>CP2K Molecular Dynamics</Title>
+    <AppVersion>8.1</AppVersion>
+    <Description>CP2K is an open-source molecular dynamics software package focused on quantum chemistry and solid-state physics.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Fayalite-FIST Data</SubTitle>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <ExternalDependencies>openmpi-development</ExternalDependencies>
+    <EnvironmentSize>244</EnvironmentSize>
+    <ProjectURL>https://www.cp2k.org/</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

@@ -1,0 +1,1180 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.8.0m1-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>CPU Massive</Title>
+    <Version>1.0.4</Version>
+    <TestType>System</TestType>
+    <Description>A "massive" collection of primarily CPU benchmarks but also some memory (RAM) benchmarks for stressing modern processor hardware.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+	<Status>Deprecated</Status>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/apache</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/apache-siege</Test>
+    <Arguments>-c100</Arguments>
+    <Description>Concurrent Users: 100</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/apache-siege</Test>
+    <Arguments>-c200</Arguments>
+    <Description>Concurrent Users: 200</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/apache-siege</Test>
+    <Arguments>-c250</Arguments>
+    <Description>Concurrent Users: 250</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/mysqlslap</Test>
+    <Arguments>--concurrency=1</Arguments>
+    <Description>Clients: 1</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/mysqlslap</Test>
+    <Arguments>--concurrency=16</Arguments>
+    <Description>Clients: 16</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/mysqlslap</Test>
+    <Arguments>--concurrency=64</Arguments>
+    <Description>Clients: 64</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/mysqlslap</Test>
+    <Arguments>--concurrency=256</Arguments>
+    <Description>Clients: 256</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/asmfish</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/blake2</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/blogbench</Test>
+    <Arguments>READ</Arguments>
+    <Description>Test: Read</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/blogbench</Test>
+    <Arguments>WRITE</Arguments>
+    <Description>Test: Write</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/brl-cad</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/build-apache</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/build-gcc</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/build-llvm</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/build-linux-kernel</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/build-php</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/c-ray</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/cachebench</Test>
+    <Arguments>-r</Arguments>
+    <Description>Test: Read</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/cachebench</Test>
+    <Arguments>-w</Arguments>
+    <Description>Test: Write</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/cachebench</Test>
+    <Arguments>-b</Arguments>
+    <Description>Test: Read / Modify / Write</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/cloverleaf</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/compilebench</Test>
+    <Arguments>INITIAL_CREATE</Arguments>
+    <Description>Test: Initial Create</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/compilebench</Test>
+    <Arguments>COMPILE</Arguments>
+    <Description>Test: Compile</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/compilebench</Test>
+    <Arguments>READ_COMPILED_TREE</Arguments>
+    <Description>Test: Read Compiled Tree</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-7zip</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-pbzip2</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-xz</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-zstd</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/cpp-perf-bench</Test>
+    <Arguments>functionobjects</Arguments>
+    <Description>Test: Function Objects</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/cpp-perf-bench</Test>
+    <Arguments>atol</Arguments>
+    <Description>Test: Atol</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/cpp-perf-bench</Test>
+    <Arguments>ctype</Arguments>
+    <Description>Test: Ctype</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/cpp-perf-bench</Test>
+    <Arguments>mathlib</Arguments>
+    <Description>Test: Math Library</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/crafty</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/ctx-clock</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/cython-bench</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/dacapobench</Test>
+    <Arguments>eclipse</Arguments>
+    <Description>Java Test: Eclipse</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/dacapobench</Test>
+    <Arguments>h2</Arguments>
+    <Description>Java Test: H2</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/dacapobench</Test>
+    <Arguments>jython</Arguments>
+    <Description>Java Test: Jython</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/dacapobench</Test>
+    <Arguments>tradebeans</Arguments>
+    <Description>Java Test: Tradebeans</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/dacapobench</Test>
+    <Arguments>tradesoap</Arguments>
+    <Description>Java Test: Tradesoap</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/dav1d</Test>
+    <Arguments>-i summer_nature_1080p.ivf</Arguments>
+    <Description>Video Input: Summer Nature 1080p</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/dav1d</Test>
+    <Arguments>-i summer_nature_4k.ivf</Arguments>
+    <Description>Video Input: Summer Nature 4K</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/svt-av1</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/svt-hevc</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/svt-vp9</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/vpxenc</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/x264</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/x265</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/kvazaar</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/dolfyn</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/ebizzy</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/encode-flac</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/encode-mp3</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/fftw</Test>
+    <Arguments>fftw-stock/tests/bench  --time-repeat 100 -opatient ibc4096</Arguments>
+    <Description>Build: Stock - Size: 1D FFT Size 4096</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/fftw</Test>
+    <Arguments>fftw-stock/tests/bench  --time-repeat 100 -opatient ibc4096x4096</Arguments>
+    <Description>Build: Stock - Size: 2D FFT Size 4096</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/fftw</Test>
+    <Arguments>fftw-mr/tests/bench  --time-repeat 100 -opatient ibc4096</Arguments>
+    <Description>Build: Float + SSE - Size: 1D FFT Size 4096</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/fftw</Test>
+    <Arguments>fftw-mr/tests/bench  --time-repeat 100 -opatient ibc4096x4096</Arguments>
+    <Description>Build: Float + SSE - Size: 2D FFT Size 4096</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/geekbench</Test>
+    <Arguments>--single-core</Arguments>
+    <Description>Test: Single Core</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/geekbench</Test>
+    <Arguments>--multi-core</Arguments>
+    <Description>Test: Multi Core</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/novabench</Test>
+    <Arguments>--test=cpu</Arguments>
+    <Description>Test: CPU</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/novabench</Test>
+    <Arguments>--test=ram</Arguments>
+    <Description>Test: RAM</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/glibc-bench</Test>
+    <Arguments>bench-ffsll</Arguments>
+    <Description>Benchmark: ffsll</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/glibc-bench</Test>
+    <Arguments>bench-ffs</Arguments>
+    <Description>Benchmark: ffs</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/glibc-bench</Test>
+    <Arguments>bench-pthread_once</Arguments>
+    <Description>Benchmark: pthread_once</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/glibc-bench</Test>
+    <Arguments>bench-ffsll</Arguments>
+    <Description>Benchmark: ffsll</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/glibc-bench</Test>
+    <Arguments>bench-tanh</Arguments>
+    <Description>Benchmark: tanh</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/glibc-bench</Test>
+    <Arguments>bench-sqrt</Arguments>
+    <Description>Benchmark: sqrt</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/glibc-bench</Test>
+    <Arguments>bench-sin</Arguments>
+    <Description>Benchmark: sin</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/glibc-bench</Test>
+    <Arguments>bench-cos</Arguments>
+    <Description>Benchmark: cos</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/go-benchmark</Test>
+    <Arguments>build</Arguments>
+    <Description>Test: build</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/go-benchmark</Test>
+    <Arguments>http</Arguments>
+    <Description>Test: http</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/go-benchmark</Test>
+    <Arguments>json</Arguments>
+    <Description>Test: json</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/go-benchmark</Test>
+    <Arguments>garbage</Arguments>
+    <Description>Test: garbage</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/graphics-magick</Test>
+    <Arguments>-enhance</Arguments>
+    <Description>Operation: Enhanced</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/graphics-magick</Test>
+    <Arguments>-resize 50%</Arguments>
+    <Description>Operation: Resizing</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/graphics-magick</Test>
+    <Arguments>-rotate 90</Arguments>
+    <Description>Operation: Rotate</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/graphics-magick</Test>
+    <Arguments>-sharpen 0x2.0</Arguments>
+    <Description>Operation: Sharpen</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/hackbench</Test>
+    <Arguments>32 process</Arguments>
+    <Description>Count: 32 - Type: Process</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/hackbench</Test>
+    <Arguments>32 thread</Arguments>
+    <Description>Count: 32 - Type: Thread</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/himeno</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/hint</Test>
+    <Arguments>DOUBLE</Arguments>
+    <Description>Test: DOUBLE</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/hint</Test>
+    <Arguments>FLOAT</Arguments>
+    <Description>Test: FLOAT</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/hmmer</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/hpcc</Test>
+    <Arguments>HPL</Arguments>
+    <Description>Test / Class: G-HPL</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/hpcc</Test>
+    <Arguments>PTRANS</Arguments>
+    <Description>Test / Class: G-Ptrans</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/hpcc</Test>
+    <Arguments>MPIRANDOMACCESS</Arguments>
+    <Description>Test / Class: G-Random Access</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/hpcc</Test>
+    <Arguments>MPIFFT</Arguments>
+    <Description>Test / Class: G-Ffte</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/hpcc</Test>
+    <Arguments>STARSTREAMTRIAD</Arguments>
+    <Description>Test / Class: EP-STREAM Triad</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/hpcc</Test>
+    <Arguments>STARDGEMMFLOPS</Arguments>
+    <Description>Test / Class: EP-DGEMM</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/hpcc</Test>
+    <Arguments>RRINGLATENCY</Arguments>
+    <Description>Test / Class: Random Ring Latency</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/hpcc</Test>
+    <Arguments>RRINGBANDWIDTH</Arguments>
+    <Description>Test / Class: Random Ring Bandwidth</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/hpcc</Test>
+    <Arguments>MAXPPBANDWIDTH</Arguments>
+    <Description>Test / Class: Max Ping Pong Bandwidth</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/hpcg</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/java-scimark2</Test>
+    <Arguments>TEST_COMPOSITE</Arguments>
+    <Description>Computational Test: Composite</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/java-scimark2</Test>
+    <Arguments>TEST_FFT</Arguments>
+    <Description>Computational Test: Fast Fourier Transform</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/java-scimark2</Test>
+    <Arguments>TEST_SOR</Arguments>
+    <Description>Computational Test: Jacobi Successive Over-Relaxation</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/java-scimark2</Test>
+    <Arguments>TEST_MONTE</Arguments>
+    <Description>Computational Test: Monte Carlo</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/java-scimark2</Test>
+    <Arguments>TEST_SPARSE</Arguments>
+    <Description>Computational Test: Sparse Matrix Multiply</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/java-scimark2</Test>
+    <Arguments>TEST_DENSE</Arguments>
+    <Description>Computational Test: Dense LU Matrix Factorization</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/java-gradle-perf</Test>
+    <Arguments>TEST_REACTOR</Arguments>
+    <Description>Gradle Build: Reactor</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/john-the-ripper</Test>
+    <Arguments>--format=descrypt</Arguments>
+    <Description>Test: Traditional DES</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/john-the-ripper</Test>
+    <Arguments>--format=md5crypt</Arguments>
+    <Description>Test: MD5</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/john-the-ripper</Test>
+    <Arguments>--format=bcrypt</Arguments>
+    <Description>Test: Blowfish</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/openssl</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/lammps</Test>
+    <Arguments>in.rhodo</Arguments>
+    <Description>Test: Rhodopsin Protein</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/lczero</Test>
+    <Arguments>-b blas</Arguments>
+    <Description>Backend: BLAS</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/lzbench</Test>
+    <Arguments>-ezstd,1</Arguments>
+    <Description>Test: Zstd 1</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/lzbench</Test>
+    <Arguments>-ebrotli,0</Arguments>
+    <Description>Test: Brotli 0</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/lzbench</Test>
+    <Arguments>-elibdeflate,1</Arguments>
+    <Description>Test: Libdeflate 1</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/lzbench</Test>
+    <Arguments>-exz,0</Arguments>
+    <Description>Test: XZ 0</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/m-queens</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/mafft</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/mbw</Test>
+    <Arguments>-t0 128</Arguments>
+    <Description>Test: Memory Copy - Array Size: 128 MiB</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/mbw</Test>
+    <Arguments>-t0 1024</Arguments>
+    <Description>Test: Memory Copy - Array Size: 1024 MiB</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/mbw</Test>
+    <Arguments>-t0 4096</Arguments>
+    <Description>Test: Memory Copy - Array Size: 4096 MiB</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/mbw</Test>
+    <Arguments>-t0 8192</Arguments>
+    <Description>Test: Memory Copy - Array Size: 8192 MiB</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/mbw</Test>
+    <Arguments>-t2 128</Arguments>
+    <Description>Test: Memory Copy, Fixed Block Size - Array Size: 128 MiB</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/mbw</Test>
+    <Arguments>-t2 1024</Arguments>
+    <Description>Test: Memory Copy, Fixed Block Size - Array Size: 1024 MiB</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/mbw</Test>
+    <Arguments>-t2 4096</Arguments>
+    <Description>Test: Memory Copy, Fixed Block Size - Array Size: 4096 MiB</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/mbw</Test>
+    <Arguments>-t2 8192</Arguments>
+    <Description>Test: Memory Copy, Fixed Block Size - Array Size: 8192 MiB</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/mcperf</Test>
+    <Arguments>--method=get</Arguments>
+    <Description>Method: Get</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/mcperf</Test>
+    <Arguments>--method=set</Arguments>
+    <Description>Method: Set</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/mcperf</Test>
+    <Arguments>--method=delete</Arguments>
+    <Description>Method: Delete</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/mcperf</Test>
+    <Arguments>--method=add</Arguments>
+    <Description>Method: Add</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/mcperf</Test>
+    <Arguments>--method=replace</Arguments>
+    <Description>Method: Replace</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/mcperf</Test>
+    <Arguments>--method=append</Arguments>
+    <Description>Method: Append</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/mcperf</Test>
+    <Arguments>--method=prepend</Arguments>
+    <Description>Method: Prepend</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/minion</Test>
+    <Arguments>benchmarks/graceful/k6p2_table.minion</Arguments>
+    <Description>Benchmark: Graceful</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/minion</Test>
+    <Arguments>benchmarks/Quasigroup/qg-watchelement-7-10.minion</Arguments>
+    <Description>Benchmark: Quasigroup</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/minion</Test>
+    <Arguments>benchmarks/solitaire/solitaire_benchmark_8.minion</Arguments>
+    <Description>Benchmark: Solitaire</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/onednn</Test>
+    <Arguments>--conv --batch=inputs/conv_alexnet --cfg=f32</Arguments>
+    <Description>Harness: Convolution Batch conv_alexnet - Data Type: f32</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/onednn</Test>
+    <Arguments>--conv --batch=inputs/conv_googlenet_v3 --cfg=f32</Arguments>
+    <Description>Harness: Convolution Batch conv_googlenet_v3 - Data Type: f32</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/onednn</Test>
+    <Arguments>--deconv --batch=inputs/deconv/deconv_1d --cfg=f32</Arguments>
+    <Description>Harness: Deconvolution Batch deconv_1d - Data Type: f32</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/onednn</Test>
+    <Arguments>--deconv --batch=inputs/deconv/deconv_3d --cfg=f32</Arguments>
+    <Description>Harness: Deconvolution Batch deconv_3d - Data Type: f32</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/onednn</Test>
+    <Arguments>--ip --batch=inputs/ip/ip_1d --cfg=f32</Arguments>
+    <Description>Harness: IP Batch 1D - Data Type: f32</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/mrbayes</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/multichase</Test>
+    <Arguments>multichase</Arguments>
+    <Description>Test: 256MB Array, 256 Byte Stride</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/multichase</Test>
+    <Arguments>multichase -m 4m -s 64</Arguments>
+    <Description>Test: 4MB Array, 64 Byte Stride</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/multichase</Test>
+    <Arguments>multichase -m 1g</Arguments>
+    <Description>Test: 1GB Array, 256 Byte Stride</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/multichase</Test>
+    <Arguments>multichase -m 1g -t 2</Arguments>
+    <Description>Test: 1GB Array, 256 Byte Stride, 2 Threads</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/multichase</Test>
+    <Arguments>multichase -m 1g -t 4</Arguments>
+    <Description>Test: 1GB Array, 256 Byte Stride, 4 Threads</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/namd</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/nero2d</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/nginx</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/node-express-loadtest</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/npb</Test>
+    <Arguments>bt.A</Arguments>
+    <Description>Test / Class: BT.A</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/npb</Test>
+    <Arguments>ep.C</Arguments>
+    <Description>Test / Class: EP.C</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/npb</Test>
+    <Arguments>ft.A</Arguments>
+    <Description>Test / Class: FT.A</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/npb</Test>
+    <Arguments>ft.B</Arguments>
+    <Description>Test / Class: FT.B</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/npb</Test>
+    <Arguments>lu.A</Arguments>
+    <Description>Test / Class: LU.A</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/npb</Test>
+    <Arguments>lu.C</Arguments>
+    <Description>Test / Class: LU.C</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/npb</Test>
+    <Arguments>sp.A</Arguments>
+    <Description>Test / Class: SP.A</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/numenta-nab</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/numpy</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/parboil</Test>
+    <Arguments>cutcp omp_base large</Arguments>
+    <Description>Test: OpenMP CUTCP</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/parboil</Test>
+    <Arguments>mri-q omp_base large</Arguments>
+    <Description>Test: OpenMP MRI-Q</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/parboil</Test>
+    <Arguments>mri-gridding omp_base small</Arguments>
+    <Description>Test: OpenMP MRI Gridding</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/parboil</Test>
+    <Arguments>stencil omp_base default</Arguments>
+    <Description>Test: OpenMP Stencil</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/parboil</Test>
+    <Arguments>lbm omp_cpu long</Arguments>
+    <Description>Test: OpenMP LBM</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/pgbench</Test>
+    <Arguments>BUFFER_TEST NORMAL_LOAD READ_WRITE</Arguments>
+    <Description>Scaling: Buffer Test - Test: Normal Load - Mode: Read Write</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/pgbench</Test>
+    <Arguments>BUFFER_TEST NORMAL_LOAD READ_ONLY</Arguments>
+    <Description>Scaling: Buffer Test - Test: Normal Load - Mode: Read Only</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/pgbench</Test>
+    <Arguments>BUFFER_TEST HEAVY_CONTENTION READ_WRITE</Arguments>
+    <Description>Scaling: Buffer Test - Test: Heavy Contention - Mode: Read Write</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/pgbench</Test>
+    <Arguments>BUFFER_TEST HEAVY_CONTENTION READ_ONLY</Arguments>
+    <Description>Scaling: Buffer Test - Test: Heavy Contention - Mode: Read Only</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/phpbench</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/plaidml</Test>
+    <Arguments>--no-fp16 --train resnet50 CPU</Arguments>
+    <Description>FP16: No - Mode: Training - Network: ResNet 50 - Device: CPU</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/plaidml</Test>
+    <Arguments>--no-fp16 --train vgg16 CPU</Arguments>
+    <Description>FP16: No - Mode: Training - Network: VGG16 - Device: CPU</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/plaidml</Test>
+    <Arguments>--no-fp16 --no-train resnet50 CPU</Arguments>
+    <Description>FP16: No - Mode: Inference - Network: ResNet 50 - Device: CPU</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/plaidml</Test>
+    <Arguments>--no-fp16 --no-train vgg16 CPU</Arguments>
+    <Description>FP16: No - Mode: Inference - Network: VGG16 - Device: CPU</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/povray</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/c-ray</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/primesieve</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/pymongo-inserts</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/radiance</Test>
+    <Arguments>make all</Arguments>
+    <Description>Test: Serial</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/radiance</Test>
+    <Arguments>make smp</Arguments>
+    <Description>Test: SMP Parallel</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/rbenchmark</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/redis</Test>
+    <Arguments>-t set</Arguments>
+    <Description>Test: SET</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/redis</Test>
+    <Arguments>-t get</Arguments>
+    <Description>Test: GET</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/redis</Test>
+    <Arguments>-t lpush</Arguments>
+    <Description>Test: LPUSH</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/redis</Test>
+    <Arguments>-t lpop</Arguments>
+    <Description>Test: LPOP</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/redis</Test>
+    <Arguments>-t sadd</Arguments>
+    <Description>Test: SADD</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/rodinia</Test>
+    <Arguments>OMP_CFD</Arguments>
+    <Description>Test: OpenMP CFD Solver</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/rodinia</Test>
+    <Arguments>OMP_LAVAMD</Arguments>
+    <Description>Test: OpenMP LavaMD</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/rodinia</Test>
+    <Arguments>OMP_LEUKOCYTE</Arguments>
+    <Description>Test: OpenMP Leukocyte</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/rodinia</Test>
+    <Arguments>OMP_STREAMCLUSTER</Arguments>
+    <Description>Test: OpenMP Streamcluster</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/rust-prime</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/rust-mandel</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/scikit-learn</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/sockperf</Test>
+    <Arguments>under-load</Arguments>
+    <Description>Test: Latency Under Load</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/sockperf</Test>
+    <Arguments>ping-pong</Arguments>
+    <Description>Test: Latency Ping Pong</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/sockperf</Test>
+    <Arguments>throughput</Arguments>
+    <Description>Test: Throughput</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/spec-jbb2015</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/stockfish</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/ramspeed</Test>
+    <Arguments>COPY -b 3</Arguments>
+    <Description>Type: Copy - Benchmark: Integer</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/ramspeed</Test>
+    <Arguments>COPY -b 6</Arguments>
+    <Description>Type: Copy - Benchmark: Floating Point</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/ramspeed</Test>
+    <Arguments>SCALE -b 3</Arguments>
+    <Description>Type: Scale - Benchmark: Integer</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/ramspeed</Test>
+    <Arguments>SCALE -b 6</Arguments>
+    <Description>Type: Scale - Benchmark: Floating Point</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/ramspeed</Test>
+    <Arguments>ADD -b 3</Arguments>
+    <Description>Type: Add - Benchmark: Integer</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/ramspeed</Test>
+    <Arguments>ADD -b 6</Arguments>
+    <Description>Type: Add - Benchmark: Floating Point</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/ramspeed</Test>
+    <Arguments>TRIAD -b 3</Arguments>
+    <Description>Type: Triad - Benchmark: Integer</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/ramspeed</Test>
+    <Arguments>TRIAD -b 6</Arguments>
+    <Description>Type: Triad - Benchmark: Floating Point</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/ramspeed</Test>
+    <Arguments>AVERAGE -b 3</Arguments>
+    <Description>Type: Average - Benchmark: Integer</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/ramspeed</Test>
+    <Arguments>AVERAGE -b 6</Arguments>
+    <Description>Type: Average - Benchmark: Floating Point</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/stream</Test>
+    <Arguments>Copy</Arguments>
+    <Description>Type: Copy</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/stream</Test>
+    <Arguments>Scale</Arguments>
+    <Description>Type: Scale</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/stream</Test>
+    <Arguments>Add</Arguments>
+    <Description>Type: Add</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/stream</Test>
+    <Arguments>Triad</Arguments>
+    <Description>Type: Triad</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/stress-ng</Test>
+    <Arguments>--cpu 0 --cpu-method all</Arguments>
+    <Description>Test: CPU Stress</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/stress-ng</Test>
+    <Arguments>--crypt 0</Arguments>
+    <Description>Test: Crypto</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/stress-ng</Test>
+    <Arguments>--memcpy 0</Arguments>
+    <Description>Test: Memory Copying</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/stress-ng</Test>
+    <Arguments>--fork 0</Arguments>
+    <Description>Test: Forking</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/stress-ng</Test>
+    <Arguments>--msg 0</Arguments>
+    <Description>Test: System V Message Passing</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/stress-ng</Test>
+    <Arguments>--sem 0</Arguments>
+    <Description>Test: Semaphores</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/stress-ng</Test>
+    <Arguments>--sock 0</Arguments>
+    <Description>Test: Socket Activity</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/stress-ng</Test>
+    <Arguments>--switch 0</Arguments>
+    <Description>Test: Context Switching</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/swet</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/sysbench</Test>
+    <Arguments>cpu run</Arguments>
+    <Description>Test: CPU</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/sysbench</Test>
+    <Arguments>memory run</Arguments>
+    <Description>Test: Memory</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/t-test1</Test>
+    <Arguments>1</Arguments>
+    <Description>Threads: 1</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/t-test1</Test>
+    <Arguments>2</Arguments>
+    <Description>Threads: 2</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/tachyon</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/tensorflow</Test>
+    <Arguments>400</Arguments>
+    <Description>Build: Cifar10</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/tinymembench</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/ttsiod-renderer</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/v-ray</Test>
+    <Arguments>-m vray</Arguments>
+    <Description>Mode: CPU</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/blender</Test>
+    <Arguments>-b ../bmw27_gpu.blend -o output.test -x 1 -F JPEG -f 1  NONE</Arguments>
+    <Description>Blend File: BMW27 - Compute: CPU-Only</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/blender</Test>
+    <Arguments>-b ../classroom_gpu.blend -o output.test -x 1 -F JPEG -f 1  NONE</Arguments>
+    <Description>Blend File: Classroom - Compute: CPU-Only</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/blender</Test>
+    <Arguments>-b ../fishy_cat_gpu.blend -o output.test -x 1 -F JPEG -f 1  NONE</Arguments>
+    <Description>Blend File: Fishy Cat - Compute: CPU-Only</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/blender</Test>
+    <Arguments>-b ../pavillon_barcelone_gpu.blend -o output.test -x 1 -F JPEG -f 1  NONE</Arguments>
+    <Description>Blend File: Pabellon Barcelona - Compute: CPU-Only</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/blender</Test>
+    <Arguments>-b ../barbershop_interior_gpu.blend -o output.test -x 1 -F JPEG -f 1  NONE</Arguments>
+    <Description>Blend File: Barbershop - Compute: CPU-Only</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/xsbench</Test>
+  </Execute>
+  <Execute>
+    <Test>system/cryptsetup</Test>
+  </Execute>
+  <Execute>
+    <Test>system/darktable</Test>
+    <Arguments>bench.SRW output.jpg --core -d perf --disable-opencl</Arguments>
+    <Description>Test: Boat - Acceleration: CPU-only</Description>
+  </Execute>
+  <Execute>
+    <Test>system/darktable</Test>
+    <Arguments>masskrug.NEF output.jpg --core -d perf --disable-opencl</Arguments>
+    <Description>Test: Masskrug - Acceleration: CPU-only</Description>
+  </Execute>
+  <Execute>
+    <Test>system/darktable</Test>
+    <Arguments>server_room.NEF output.jpg --core -d perf --disable-opencl</Arguments>
+    <Description>Test: Server Room - Acceleration: CPU-only</Description>
+  </Execute>
+  <Execute>
+    <Test>system/darktable</Test>
+    <Arguments>server-rack.dng output.jpg --core -d perf --disable-opencl</Arguments>
+    <Description>Test: Server Rack - Acceleration: CPU-only</Description>
+  </Execute>
+  <Execute>
+    <Test>system/octave-benchmark</Test>
+  </Execute>
+  <Execute>
+    <Test>system/tesseract-ocr</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/botan</Test>
+    <Arguments>AES-256</Arguments>
+    <Description>Test: AES-256</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/botan</Test>
+    <Arguments>Blowfish</Arguments>
+    <Description>Test: Blowfish</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/botan</Test>
+    <Arguments>CAST-256</Arguments>
+    <Description>Test: CAST-256</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/botan</Test>
+    <Arguments>KASUMI</Arguments>
+    <Description>Test: KASUMI</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/botan</Test>
+    <Arguments>Twofish</Arguments>
+    <Description>Test: Twofish</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/clomp</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/tjbench</Test>
+    <Arguments>decompression-throughput</Arguments>
+    <Description>Test: Decompression Throughput</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/cpuminer-opt</Test>
+    <Arguments>-a sha256t</Arguments>
+    <Description>Algorithm: sha256t</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/cpuminer-opt</Test>
+    <Arguments>-a skein</Arguments>
+    <Description>Algorithm: skein</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/cpuminer-opt</Test>
+    <Arguments>-a m7m</Arguments>
+    <Description>Algorithm: m7m</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/cpuminer-opt</Test>
+    <Arguments>-a deep</Arguments>
+    <Description>Algorithm: deep</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/renaissance</Test>
+    <Arguments>akka-uct</Arguments>
+    <Description>Test: Akka Unbalanced Cobwebbed Tree</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/renaissance</Test>
+    <Arguments>reactors</Arguments>
+    <Description>Test: Savina Reactors.IO</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/renaissance</Test>
+    <Arguments>als</Arguments>
+    <Description>Test: Apache Spark ALS</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/renaissance</Test>
+    <Arguments>naive-bayes</Arguments>
+    <Description>Test: Apache Spark Bayes</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/renaissance</Test>
+    <Arguments>page-rank</Arguments>
+    <Description>Test: Apache Spark PageRank</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/renaissance</Test>
+    <Arguments>db-shootout</Arguments>
+    <Description>Test: In-Memory Database Shootout</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/renaissance</Test>
+    <Arguments>dotty</Arguments>
+    <Description>Test: Scala Dotty</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/renaissance</Test>
+    <Arguments>finagle-chirper</Arguments>
+    <Description>Test: Twitter Finagle</Description>
+  </Execute>
+</PhoronixTestSuite>

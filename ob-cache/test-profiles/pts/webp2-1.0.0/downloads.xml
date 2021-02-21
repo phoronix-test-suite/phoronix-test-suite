@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/libwebp2-20210126.tar.xz</URL>
+      <MD5>a9c9860468d9d236d403fdcf53eaa786</MD5>
+      <SHA256>26f722c3ca41885243af3815eda944d904d61f03999daa2eeb68c03e435f44bf</SHA256>
+      <FileName>libwebp2-20210126.tar.xz</FileName>
+      <FileSize>7636980</FileSize>
+      <PlatformSpecific>Linux, Solaris, BSD</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/libwebp2-win64-20210126.zip</URL>
+      <MD5>ae50a46d0bcd40f6c148c71155ead172</MD5>
+      <SHA256>54b8f31c23ffe81fdcad76593cff9e848b206c959fdb42845cb3b123962b7cc1</SHA256>
+      <FileName>libwebp2-win64-20210126.zip</FileName>
+      <FileSize>627628</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/sample-photo-6000x4000-1.zip</URL>
+      <MD5>3da40124023e94f63d96c22c07e7e9c2</MD5>
+      <SHA256>cadcd434abcdc82a220e7022c749b6fa5f46bb7a32ec14423ca8aab067b0e989</SHA256>
+      <FileName>sample-photo-6000x4000-1.zip</FileName>
+      <FileSize>7824306</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -199,9 +199,9 @@ class phoromatic_systems implements pts_webui_interface
 
 					if($row['CoreVersion'] >= 5730)
 					{
-						$main .= '<p><form action="' . $_SERVER['REQUEST_URI'] . '" name="update_groups" method="post"><input type="hidden" name="tick_thread_reboot" value="1" /><input type="submit" value="Reboot System" style="float: left; margin: 0 20px 5px 0;" /></form> If the system is currently powered up and connected to the Phoromatic Server, this will send a message to the system to issue a reboot -- in case the system is hung on a test or you wish to otherwise manually reboot the server. This feature was added with Phoronix Test Suite 5.8.</p>';
+						$main .= '<p><form action="' . $_SERVER['REQUEST_URI'] . '" name="update_groups" method="post"><input type="hidden" name="tick_thread_reboot" value="1" /><input type="submit" value="Reboot System" style="float: left; margin: 0 20px 5px 0;" /></form> If the system is currently powered up and connected to the Phoromatic Server, this will send a message to the system to issue a reboot -- in case the system is hung on a test or you wish to otherwise manually reboot the server.</p>';
 
-						$main .= '<p><form action="' . $_SERVER['REQUEST_URI'] . '" name="update_groups" method="post"><input type="hidden" name="tick_thread_halt" value="1" /><input type="submit" value="Halt Testing" style="float: left; margin: 0 20px 5px 0;" /></form> If the system is currently powered up and running a test/benchmark via the Phoromatic Server, this will tell the system to halt the testing prematurely as soon as the currently-active test has finished. The results successfully ran will then be uploaded to the Phoromatic Server. This feature was added with Phoronix Test Suite 5.8.</p>';
+						$main .= '<p><form action="' . $_SERVER['REQUEST_URI'] . '" name="update_groups" method="post"><input type="hidden" name="tick_thread_halt" value="1" /><input type="submit" value="Halt Testing" style="float: left; margin: 0 20px 5px 0;" /></form> If the system is currently powered up and running a test/benchmark via the Phoromatic Server, this will tell the system to halt the testing prematurely as soon as the currently-active test has finished. The results successfully ran will then be uploaded to the Phoromatic Server.</p>';
 					}
 				}
 

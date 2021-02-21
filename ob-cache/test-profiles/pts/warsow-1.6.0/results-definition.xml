@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m3-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>48.9 seconds: #_RESULT_# mean fps</OutputTemplate>
+    <LineHint>mean fps</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

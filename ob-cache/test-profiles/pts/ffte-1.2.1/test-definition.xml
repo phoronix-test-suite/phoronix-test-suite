@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>FFTE</Title>
+    <AppVersion>7.0</AppVersion>
+    <Description>FFTE is a package by Daisuke Takahashi to compute Discrete Fourier Transforms of 1-, 2- and 3- dimensional sequences of length (2^p)*(3^q)*(5^r).</Description>
+    <ResultScale>MFLOPS</ResultScale>
+    <Proportion>HIB</Proportion>
+    <SubTitle>N=256, 3D Complex FFT Routine</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.1</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD, Windows</SupportedPlatforms>
+    <SoftwareType>Scientific</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, fortran-compiler</ExternalDependencies>
+    <EnvironmentSize>2</EnvironmentSize>
+    <ProjectURL>http://www.ffte.jp/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

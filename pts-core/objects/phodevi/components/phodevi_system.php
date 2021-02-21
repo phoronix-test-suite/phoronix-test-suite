@@ -56,7 +56,8 @@ class phodevi_system extends phodevi_device_interface
 			'compiler' => new phodevi_device_property('sw_compiler', phodevi::no_caching),
 			'system-layer' => new phodevi_device_property('sw_system_layer', phodevi::no_caching),
 			'environment-variables' => new phodevi_device_property('sw_environment_variables', phodevi::std_caching),
-			'security-features' => new phodevi_device_property('sw_security_features', phodevi::std_caching)
+			'security-features' => new phodevi_device_property('sw_security_features', phodevi::std_caching),
+			'kernel-extra-details' => new phodevi_device_property('sw_kernel_extra_details', phodevi::std_caching)
 			);
 	}
 	public static function sw_username()
@@ -73,6 +74,33 @@ class phodevi_system extends phodevi_device_interface
 		}
 
 		return $username;
+	}
+	public static function sw_kernel_extra_details()
+	{
+		$extra = array();
+
+		if(phodevi::is_linux())
+		{
+			if(is_file('/sys/kernel/mm/transparent_hugepage/enabled'))
+			{
+				$thp_enabled = file_get_contents('/sys/kernel/mm/transparent_hugepage/enabled');
+				if(($x = strpos($thp_enabled, '[')) !== false)
+				{
+					$thp_enabled = substr($thp_enabled, $x + 1);
+					if(($x = strpos($thp_enabled, ']')) !== false)
+					{
+						$thp_enabled = trim(substr($thp_enabled, 0, $x));
+						if(!empty($thp_enabled))
+						{
+							$extra[] = 'Transparent Huge Pages: ' . $thp_enabled;
+						}
+					}
+				}
+
+			}
+		}
+
+		return implode(' - ', $extra);
 	}
 	public static function sw_system_layer()
 	{
@@ -753,6 +781,7 @@ class phodevi_system extends phodevi_device_interface
 				// e.g. clang version 3.0 (branches/release_30 142590)
 
 				$compiler_info = substr($compiler_info, ($cv_pos + 14));
+				$compiler_info = str_replace(PHP_EOL, ' ', $compiler_info);
 				$clang_version = substr($compiler_info, 0, strpos($compiler_info, ' '));
 
 				// XXX: the below check bypass now because e.g. Ubuntu appends '-ubuntuX', etc that breaks check
@@ -1580,12 +1609,26 @@ class phodevi_system extends phodevi_device_interface
 		}
 
 		$display_driver = phodevi::read_property('system', 'dri-display-driver');
+		$driver_version = null;
 
-		if(empty($display_driver))
+		if(empty($display_driver) || $display_driver == 'NVIDIA')
 		{
 			if(phodevi::is_nvidia_graphics() || is_file('/proc/driver/nvidia/version'))
 			{
-				$display_driver = 'nvidia';
+				$display_driver = 'NVIDIA';
+				if(($nvs_value = phodevi_parser::read_nvidia_extension('NvidiaDriverVersion')))
+				{
+					$driver_version = $nvs_value;
+				}
+				else
+				{
+					// NVIDIA's binary driver appends their driver version on the end of the OpenGL version string
+					$glxinfo = phodevi_parser::software_glxinfo_version();
+					if(($pos = strpos($glxinfo, 'NVIDIA ')) != false)
+					{
+						$driver_version = substr($glxinfo, ($pos + 7));
+					}
+				}
 			}
 			else if((phodevi::is_mesa_graphics() || phodevi::is_bsd()) && stripos(phodevi::read_property('gpu', 'model'), 'NVIDIA') !== false)
 			{
@@ -1594,21 +1637,11 @@ class phodevi_system extends phodevi_device_interface
 					// If there's DRM loaded and NVIDIA, it should be Nouveau
 					$display_driver = 'nouveau';
 				}
-				else
-				{
-					// The dead xf86-video-nv doesn't use any DRM
-					$display_driver = 'nv';
-				}
-			}
-			else
-			{
-				// Fallback to hopefully detect the module, takes the first word off the GPU string and sees if it is the module
-				// This works in at least the case of the Cirrus driver
-				$display_driver = strtolower(pts_strings::first_in_string(phodevi::read_property('gpu', 'model')));
 			}
 		}
 
-		if(!empty($display_driver))
+		// XXX: As of PTS 10.2.1, commented out due to xorg logs growing too big on recent Ubuntu/bug causing slow perf
+		if(false && !empty($display_driver))
 		{
 			$driver_version = phodevi_parser::read_xorg_module_version($display_driver . '_drv');
 
@@ -1707,11 +1740,10 @@ class phodevi_system extends phodevi_device_interface
 					}
 				}
 			}
-
-			if(!empty($driver_version) && $with_version && $driver_version != '0.0.0')
-			{
-				$display_driver .= ' ' . $driver_version;
-			}
+		}
+		if(!empty($driver_version) && $with_version && $driver_version != '0.0.0')
+		{
+			$display_driver .= ' ' . $driver_version;
 		}
 
 		return $display_driver;
@@ -1972,16 +2004,6 @@ class phodevi_system extends phodevi_device_interface
 		if(is_file('/proc/driver/nvidia/version'))
 		{
 			$dri_driver = 'nvidia';
-		}
-		else if(is_file('/proc/dri/0/name'))
-		{
-			$driver_info = file_get_contents('/proc/dri/0/name');
-			$dri_driver = substr($driver_info, 0, strpos($driver_info, ' '));
-
-			if(in_array($dri_driver, array('i915', 'i965')))
-			{
-				$dri_driver = 'intel';
-			}
 		}
 		else if(is_file('/sys/class/drm/card0/device/vendor'))
 		{

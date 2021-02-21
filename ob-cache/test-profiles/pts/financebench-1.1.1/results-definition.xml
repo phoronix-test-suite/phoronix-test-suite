@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Processing time on GPU: #_RESULT_# (ms)</OutputTemplate>
+    <LineHint>Processing time on GPU</LineHint>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Processing time on CPU using OpenMP: #_RESULT_# (ms)</OutputTemplate>
+    <LineHint>Processing time on CPU using OpenMP</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -72,9 +72,10 @@ abstract class pts_graph_core
 		$this->i['graph_title'] = null;
 		$this->i['header_link'] = null;
 		$this->i['highlight_values'] = false;
-		$this->i['skip_headers'] = false;
+		$this->i['skip_headers'] = isset($extra_attributes['skip_headers']);
 		$this->i['graph_version'] = false;
 		$this->i['watermark'] = false;
+		$this->i['force_graph_key'] = isset($extra_attributes['force_graph_key']);
 
 		// Reset of setup besides config
 		if($result_object != null)
@@ -108,7 +109,10 @@ abstract class pts_graph_core
 
 		if(!isset($extra_attributes['pdf_generation']))
 		{
-			$this->i['graph_version'] = 'Phoronix Test Suite ' . PTS_VERSION;
+			if(!isset($extra_attributes['skip_graph_version']))
+			{
+				$this->i['graph_version'] = 'Phoronix Test Suite ' . PTS_VERSION;
+			}
 			$this->i['watermark'] = self::$c['text']['watermark'];
 		}
 
@@ -169,6 +173,7 @@ abstract class pts_graph_core
 		{
 			$this->generate_results_var();
 		}
+		$this->i['no_graph_value_ticks'] = isset($extra_attributes['no_graph_value_ticks']);
 
 		// reverve bar paint color (first color) from being used otherwise such as in charts rendered first
 		$this->get_paint_color(0);
@@ -320,7 +325,14 @@ abstract class pts_graph_core
 		if(defined('OPENBENCHMARKING_BUILD'))
 		{
 			$config['text']['watermark'] = 'OpenBenchmarking.org';
-			$config['text']['watermark_url'] = 'https://www.openbenchmarking.org/';
+			if(defined('OPENBENCHMARKING_WATERMARK_URL'))
+			{
+				$config['text']['watermark_url'] = OPENBENCHMARKING_WATERMARK_URL;
+			}
+			else
+			{
+				$config['text']['watermark_url'] = 'https://www.openbenchmarking.org/';
+			}
 		}
 		else
 		{
@@ -404,6 +416,10 @@ abstract class pts_graph_core
 		$max_precision = pts_math::get_precision($data_max);
 		if(!is_numeric($data_max))
 		{
+			if(is_array($data_max))
+			{
+				$data_max = max($data_max);
+			}
 			if(is_array($data_max))
 			{
 				$data_max = max($data_max);
@@ -540,18 +556,18 @@ abstract class pts_graph_core
 				{
 					$longest_r = $longest_identifier;
 					$longest_r = explode(' - ', $longest_r);
-					$plus_extra = 22;
+					$plus_extra = 0;
 
 					if(count($longest_r) > 1)
 					{
 						$plus_extra += floor(count($longest_r) * $this->i['identifier_size'] * 1.2);
 					}
 
-					$longest_identifier_width = self::text_string_width($this->i['graph_max_value'], $this->i['identifier_size']) + 60 + $plus_extra;
+					$longest_identifier_width = self::text_string_width($this->i['graph_max_value'], $this->i['identifier_size']) + 64 + $plus_extra;
 				}
 				else
 				{
-					$longest_identifier_width = max($se_width, ceil(self::text_string_width($longest_identifier, $this->i['identifier_size']) * 1.09) + 16);
+					$longest_identifier_width = max($se_width, ceil(self::text_string_width($longest_identifier, $this->i['identifier_size']) * 1.09) + 24);
 				}
 
 				$longest_identifier_max = ceil(($this->i['graph_width'] * 0.55) + 0.01);
@@ -562,7 +578,7 @@ abstract class pts_graph_core
 			}
 			else if($this->i['graph_value_type'] == 'NUMERICAL')
 			{
-				$this->i['left_start'] += max(20, self::text_string_width($this->i['graph_max_value'] + 0.01, self::$c['size']['tick_mark']) + 2);
+				$this->i['left_start'] += max(20, self::text_string_width($this->i['graph_max_value'], self::$c['size']['tick_mark']) + 3);
 			}
 
 			// Pad 8px on top and bottom + title bar + sub-headings
@@ -604,7 +620,7 @@ abstract class pts_graph_core
 						$per_identifier_height = 20; // default
 						$this->i['identifier_size'] = floor($this->i['identifier_size'] * 0.88);
 					}
-					$rotated_text = round(self::text_string_width($longest_string, $this->i['identifier_size']) * 0.9);
+					$rotated_text = round(self::text_string_width($longest_string, $this->i['identifier_size']) * 1.02);
 
 					if(ceil($rotated_text * 1.2) >= floor($per_identifier_height * count($this->results)))
 					{
@@ -715,7 +731,7 @@ abstract class pts_graph_core
 				}
 			}
 
-			$this->svg_dom->add_text_element($this->i['graph_title'], array('x' => 6, 'y' => (self::$c['size']['headers'] + 2), 'font-size' => self::$c['size']['headers'], 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'start', 'xlink:show' => 'new', 'xlink:href' => $this->i['header_link'], 'font-weight' => 'bold'));
+			$this->svg_dom->add_text_element($this->i['graph_title'], array('x' => 6, 'y' => (self::$c['size']['headers'] + 2), 'font-size' => self::$c['size']['headers'], 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'start', 'xlink:href' => $this->i['header_link'], 'font-weight' => 'bold'));
 
 			foreach($this->graph_sub_titles as $i => $sub_title)
 			{
@@ -732,12 +748,12 @@ abstract class pts_graph_core
 			// SVG version of PTS thanks to https://gist.github.com/xorgy/65c6d0e87757dbb56a75
 			if($this->i['graph_version'])
 			{
-				$this->svg_dom->add_element('path', array('d' => 'm74 22v9m-5-16v16m-5-28v28m-23-2h12.5c2.485281 0 4.5-2.014719 4.5-4.5s-2.014719-4.5-4.5-4.5h-8c-2.485281 0-4.5-2.014719-4.5-4.5s2.014719-4.5 4.5-4.5h12.5m-21 5h-11m11 13h-2c-4.970563 0-9-4.029437-9-9v-20m-24 40v-20c0-4.970563 4.0294373-9 9-9 4.970563 0 9 4.029437 9 9s-4.029437 9-9 9h-9', 'stroke' => self::$c['color']['main_headers'], 'stroke-width' => 4, 'fill' => 'none', 'xlink:show' => 'new', 'xlink:href' => 'https://www.phoronix-test-suite.com/', 'transform' => 'translate(' . ceil($this->i['graph_left_end'] - 77) . ',' . (ceil($this->i['top_heading_height'] / 40 + 2)) . ')'));
+				$this->svg_dom->add_element('path', array('d' => 'm74 22v9m-5-16v16m-5-28v28m-23-2h12.5c2.485281 0 4.5-2.014719 4.5-4.5s-2.014719-4.5-4.5-4.5h-8c-2.485281 0-4.5-2.014719-4.5-4.5s2.014719-4.5 4.5-4.5h12.5m-21 5h-11m11 13h-2c-4.970563 0-9-4.029437-9-9v-20m-24 40v-20c0-4.970563 4.0294373-9 9-9 4.970563 0 9 4.029437 9 9s-4.029437 9-9 9h-9', 'stroke' => self::$c['color']['main_headers'], 'stroke-width' => 4, 'fill' => 'none', 'xlink:href' => 'https://www.phoronix-test-suite.com/', 'transform' => 'translate(' . ceil($this->i['graph_left_end'] - 77) . ',' . (ceil($this->i['top_heading_height'] / 40 + 2)) . ')'));
 			}
 		}
 		else
 		{
-			$this->svg_dom->add_text_element($this->i['graph_title'], array('x' => round($this->i['graph_left_end'] / 2), 'y' => (self::$c['size']['headers'] + 2), 'font-size' => self::$c['size']['headers'], 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'middle', 'xlink:show' => 'new', 'xlink:href' => $this->i['header_link']));
+			$this->svg_dom->add_text_element($this->i['graph_title'], array('x' => round($this->i['graph_left_end'] / 2), 'y' => (self::$c['size']['headers'] + 2), 'font-size' => self::$c['size']['headers'], 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'middle', 'xlink:href' => $this->i['header_link']));
 
 			foreach($this->graph_sub_titles as $i => $sub_title)
 			{
@@ -746,7 +762,7 @@ abstract class pts_graph_core
 
 			if($with_version && !empty($this->i['graph_version']))
 			{
-				$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => $this->i['graph_left_end'] , 'y' => ($this->i['top_start'] - 3), 'font-size' => 7, 'fill' => self::$c['color']['body_light'], 'text-anchor' => 'end', 'xlink:show' => 'new', 'xlink:href' => 'https://www.phoronix-test-suite.com/'));
+				$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => $this->i['graph_left_end'] , 'y' => ($this->i['top_start'] - 3), 'font-size' => 7, 'fill' => self::$c['color']['body_light'], 'text-anchor' => 'end', 'xlink:href' => 'https://www.phoronix-test-suite.com/'));
 			}
 		}
 	}
@@ -761,14 +777,14 @@ abstract class pts_graph_core
 		{
 			$bottom_heading_start = $this->i['graph_top_end'] + $this->i['bottom_offset'] + 22;
 			//$this->svg_dom->add_element('rect', array('x' => 0, 'y' => $bottom_heading_start, 'width' => $this->i['graph_width'], 'height' => ($this->i['graph_height'] - $bottom_heading_start), 'fill' => self::$c['color']['main_headers']));
-			//$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => $this->i['graph_left_end'], 'y' => ($bottom_heading_start + self::$c['size']['key'] + 3), 'font-size' => self::$c['size']['key'], 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'end', 'font-weight' => 'bold', 'xlink:show' => 'new', 'xlink:href' => 'https://www.phoronix-test-suite.com/'));
+			//$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => $this->i['graph_left_end'], 'y' => ($bottom_heading_start + self::$c['size']['key'] + 3), 'font-size' => self::$c['size']['key'], 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'end', 'font-weight' => 'bold', 'xlink:href' => 'https://www.phoronix-test-suite.com/'));
 
 			if(!empty($this->i['notes']))
 			{
 				$estimated_height = 0;
 				foreach($this->i['notes'] as $i => $note_r)
 				{
-					$this->svg_dom->add_textarea_element(($i + 1) . '. ' . $note_r['note'], array('x' => 5, 'y' => ($bottom_heading_start + (self::$c['size']['key'] * 2) + $estimated_height), 'font-size' => (self::$c['size']['key'] - 1), 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'start', 'xlink:title' => $note_r['hover-title']), $estimated_height);
+					$this->svg_dom->add_textarea_element(($i + 1) . '. ' . $note_r['note'], array('x' => 5, 'y' => ($bottom_heading_start + (self::$c['size']['key'] * 2) + $estimated_height), 'font-size' => (self::$c['size']['key'] - 1), 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'start'), $estimated_height);
 				}
 			}
 		}
@@ -791,11 +807,11 @@ abstract class pts_graph_core
 				$this->svg_dom->add_element('path', array('d' => 'M5 16V9l5-4.5V11l-5 5', 'fill' => '#e4f4fd'), $g);
 				$this->svg_dom->add_element('path', array('d' => 'M5 16V9L0 4.5V11l5 5', 'fill' => '#65cbf4'), $g);
 
-				$this->svg_dom->add_text_element($this->i['watermark'], array('x' => $left_end - 12, 'y' => ($top_start - 5), 'font-size' => 8, 'fill' => self::$c['color']['text'], 'text-anchor' => 'end', 'font-weight' => 'bold', 'xlink:show' => 'new', 'xlink:href' => self::$c['text']['watermark_url']));
+				$this->svg_dom->add_text_element($this->i['watermark'], array('x' => $left_end - 12, 'y' => ($top_start - 5), 'font-size' => 8, 'fill' => self::$c['color']['text'], 'text-anchor' => 'end', 'font-weight' => 'bold', 'xlink:href' => self::$c['text']['watermark_url']));
 			}
 			else if(!empty($this->i['watermark']))
 			{
-				$this->svg_dom->add_text_element($this->i['watermark'], array('x' => $left_end, 'y' => ($top_start - 5), 'font-size' => 8, 'fill' => self::$c['color']['text'], 'text-anchor' => 'end', 'font-weight' => 'bold', 'xlink:show' => 'new', 'xlink:href' => self::$c['text']['watermark_url']));
+				$this->svg_dom->add_text_element($this->i['watermark'], array('x' => $left_end, 'y' => ($top_start - 5), 'font-size' => 8, 'fill' => self::$c['color']['text'], 'text-anchor' => 'end', 'font-weight' => 'bold', 'xlink:href' => self::$c['text']['watermark_url']));
 			}
 		}
 		else
@@ -804,7 +820,7 @@ abstract class pts_graph_core
 
 			if($this->i['watermark'] != null)
 			{
-				$this->svg_dom->add_text_element($this->i['watermark'], array('x' => ($left_end - 2), 'y' => ($top_start + 12), 'font-size' => 10, 'fill' => self::$c['color']['text'], 'text-anchor' => 'end', 'font-weight' => 'bold', 'xlink:show' => 'new', 'xlink:href' => self::$c['text']['watermark_url']));
+				$this->svg_dom->add_text_element($this->i['watermark'], array('x' => ($left_end - 2), 'y' => ($top_start + 12), 'font-size' => 10, 'fill' => self::$c['color']['text'], 'text-anchor' => 'end', 'font-weight' => 'bold', 'xlink:href' => self::$c['text']['watermark_url']));
 			}
 		}
 
@@ -863,6 +879,19 @@ abstract class pts_graph_core
 	{
 		$increment = round(($this->i['graph_max_value'] - $this->i['graph_min_value']) / $this->i['mark_count'], $this->i['graph_max_value'] < 10 ? 4 : 2);
 
+		$dv_divide = 1;
+		$dv_postfix = null;
+		if($increment > 1000000 && ($increment % 1000) == 0)
+		{
+			$dv_divide = 1000000;
+			$dv_postfix = 'M';
+		}
+		else if($increment > 1000 && ($increment % 1000) == 0)
+		{
+			$dv_divide = 1000;
+			$dv_postfix = 'K';
+		}
+
 		if($this->i['graph_orientation'] == 'HORIZONTAL')
 		{
 			$tick_width = round(($left_end - $left_start) / $this->i['mark_count']);
@@ -882,7 +911,15 @@ abstract class pts_graph_core
 
 				if($i != 0 && $display_value != 0)
 				{
-					$show_numbers && $this->svg_dom->add_text_element($display_value, array('x' => $px_from_left + 2, 'y' => ($top_end + 5 + self::$c['size']['tick_mark'])), $g);
+					if(!$this->i['no_graph_value_ticks'] && $show_numbers)
+					{
+						$dv = $display_value;
+						if($dv_divide > 1)
+						{
+							$dv = round($dv / $dv_divide, 2) . $dv_postfix;
+						}
+						$this->svg_dom->add_text_element($dv, array('x' => $px_from_left + 2, 'y' => ($top_end + 5 + self::$c['size']['tick_mark'])), $g);
+					}
 					$this->svg_dom->add_element('line', array('x1' => ($px_from_left + 2), 'y1' => ($top_start), 'x2' => ($px_from_left + 2), 'y2' => ($top_end - 5), 'stroke-dasharray' => '5,5'), $g_lines);
 					$this->svg_dom->add_element('line', array('x1' => ($px_from_left + 2), 'y1' => ($top_end - 4), 'x2' => ($px_from_left + 2), 'y2' => ($top_end + 5)), $g_lines);
 				}
@@ -909,7 +946,15 @@ abstract class pts_graph_core
 
 				if($display_value != 0)
 				{
-					$show_numbers && $this->svg_dom->add_text_element($display_value, array('x' => ($px_from_left_start - 4), 'y' => round($px_from_top + (self::$c['size']['tick_mark'] / 2))), $g_text);
+					if(!$this->i['no_graph_value_ticks'] && $show_numbers)
+					{
+						$dv = $display_value;
+						if($dv_divide > 1)
+						{
+							$dv = round($dv / $dv_divide, 2) . $dv_postfix;
+						}
+						$this->svg_dom->add_text_element($dv, array('x' => ($px_from_left_start - 4), 'y' => round($px_from_top + (self::$c['size']['tick_mark'] / 2))), $g_text);
+					}
 
 					if($i != 0 && $this->i['show_background_lines'])
 					{
@@ -936,7 +981,7 @@ abstract class pts_graph_core
 	}
 	protected function graph_key_height()
 	{
-		if((count($this->results) < 2 || $this->i['show_graph_key'] == false) && !$this->i['is_multi_way_comparison'])
+		if((count($this->results) < 2 || $this->i['show_graph_key'] == false) && !$this->i['is_multi_way_comparison'] && !$this->i['force_graph_key'])
 		{
 			return 0;
 		}

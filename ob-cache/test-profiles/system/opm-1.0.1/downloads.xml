@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/opm-data-norne-202007.tar.xz</URL>
+      <MD5>68989a00178a2deaaa4d4351aeb278ae</MD5>
+      <SHA256>2c58722df82e2fe60a22a3846addcb344a3785ed8698048631c1f1880cd63118</SHA256>
+      <FileName>opm-data-norne-202007.tar.xz</FileName>
+      <FileSize>36908856</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/Norne-4C.tar.gz</URL>
+      <MD5>959a9b3bba0bb9460b664d9050f04733</MD5>
+      <SHA256>77fded959718348695f9ee257c2e2b83ba7f211c83f181f67cac008554a6bcd2</SHA256>
+      <FileName>Norne-4C.tar.gz</FileName>
+      <FileSize>4363239</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

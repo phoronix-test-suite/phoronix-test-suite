@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2020, Phoronix Media
-	Copyright (C) 2010 - 2020, Michael Larabel
+	Copyright (C) 2010 - 2021, Phoronix Media
+	Copyright (C) 2010 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -152,10 +152,10 @@ class pts_test_installer
 
 			if($installed)
 			{
-				if(pts_client::do_anonymous_usage_reporting() && $test_install_request->install_time_duration > 0)
+				if(pts_client::do_anonymous_usage_reporting() && $test_install_request->test_profile->test_installation->get_latest_install_time() > 0)
 				{
 					// If anonymous usage reporting enabled, report install time to OpenBenchmarking.org
-					pts_openbenchmarking_client::upload_usage_data('test_install', array($test_install_request, $test_install_request->install_time_duration));
+					pts_openbenchmarking_client::upload_usage_data('test_install', array($test_install_request, $test_install_request->test_profile->test_installation->get_latest_install_time()));
 				}
 
 				$install_footnote = null;
@@ -164,7 +164,8 @@ class pts_test_installer
 					$install_footnote = pts_file_io::file_get_contents($test_install_request->special_environment_vars['INSTALL_FOOTNOTE']);
 				}
 
-				pts_tests::update_test_install_xml($test_install_request->test_profile, $test_install_request->install_time_duration, true, $compiler_data, $install_footnote);
+				$test_install_request->test_profile->test_installation->update_install_data($test_install_request->test_profile, $compiler_data, $install_footnote);
+				$test_install_request->test_profile->test_installation->save_test_install_metadata();
 				$test_profiles[] = $test_install_request->test_profile;
 			}
 			else
@@ -181,7 +182,7 @@ class pts_test_installer
 			pts_file_io::unlink($test_install_request->special_environment_vars['INSTALL_FOOTNOTE']);
 		}
 		pts_module_manager::module_process('__post_install_process', $test_install_manager);
-		pts_download_speed_manager::save_data();
+		pts_client::save_download_speed_averages();
 
 		if(count($failed_installs) > 1)
 		{
@@ -430,7 +431,7 @@ class pts_test_installer
 
 								if($download_package->get_filesize() > 0 && $download_end != $download_start)
 								{
-									pts_download_speed_manager::update_download_speed_average($download_package->get_filesize(), ($download_end - $download_start));
+									pts_client::update_download_speed_average($download_package->get_filesize(), ($download_end - $download_start));
 								}
 							}
 							else if($download_package->is_optional())
@@ -445,18 +446,20 @@ class pts_test_installer
 								if(is_file($download_destination_temp) && filesize($download_destination_temp) < 500 && (stripos(file_get_contents($download_destination_temp), 'not found') !== false || strpos(file_get_contents($download_destination_temp), 404) !== false))
 								{
 									self::test_install_error(null, $test_install_request, 'File Not Found: ' . $url);
-									$md5_failed = false;
+									$checksum_failed = false;
 								}
 								else if(is_file($download_destination_temp) && filesize($download_destination_temp) > 0)
 								{
 									self::test_install_error(null, $test_install_request, 'Checksum Failed: ' . $url);
-									$md5_failed = true;
+									$checksum_failed = true;
 								}
 								else
 								{
 									self::test_install_error(null, $test_install_request, 'Download Failed: ' . $url);
-									$md5_failed = false;
+									$checksum_failed = false;
 								}
+
+								pts_openbenchmarking_client::upload_usage_data('download_failure', array($test_install_request, $url));
 
 								pts_file_io::unlink($download_destination_temp);
 								$fail_count++;
@@ -478,7 +481,7 @@ class pts_test_installer
 										{
 											$try_again = false;
 										}
-										else if($md5_failed)
+										else if($checksum_failed)
 										{
 											$try_again = pts_user_io::prompt_bool_input('Try downloading the file again', true, 'TRY_DOWNLOAD_AGAIN');
 										}
@@ -496,6 +499,20 @@ class pts_test_installer
 
 								if(!$try_again)
 								{
+									pts_client::$display->test_install_prompt('If able to locate the file elsewhere, place it in the download cache and re-run the command.' . PHP_EOL . PHP_EOL);
+									pts_client::$display->test_install_prompt(pts_client::cli_just_bold('Download Cache: ') . pts_client::download_cache_path() . PHP_EOL);
+									if($download_package->get_filename() != null)
+									{
+										pts_client::$display->test_install_prompt(pts_client::cli_just_bold('File Name: ') . $download_package->get_filename() . PHP_EOL);
+									}
+									if($download_package->get_sha256() != null)
+									{
+										pts_client::$display->test_install_prompt(pts_client::cli_just_bold('SHA256: ') . $download_package->get_sha256() . PHP_EOL);
+									}
+									else if($download_package->get_md5() != null)
+									{
+										pts_client::$display->test_install_prompt(pts_client::cli_just_bold('MD5: ') . $download_package->get_md5() . PHP_EOL);
+									}
 									//self::test_install_error(null, $test_install_request, 'Download of Needed Test Dependencies Failed!');
 									return false;
 								}
@@ -761,7 +778,7 @@ class pts_test_installer
 				$compiler_options = implode(' ', array_unique($compiler_options));
 				//sort($compiler_options);
 
-				// TODO: right now just keep overwriting $compiler to take the last compiler.. so TODO add support for multiple compiler reporting or decide what todo
+				// right now just keep overwriting $compiler to take the last compiler.. so add support for multiple compiler reporting or decide what should report if not just the last
 				$compiler = array('compiler-type' => $compiler_type, 'compiler' => $compiler_choice, 'compiler-options' => $compiler_options);
 				//echo PHP_EOL . 'DEBUG: ' . $compiler_type . ' ' . $compiler_choice . ' :: ' . $compiler_options . PHP_EOL;
 			}
@@ -778,7 +795,11 @@ class pts_test_installer
 		pts_file_io::mkdir($test_install_directory);
 		$installed = false;
 
-		if(ceil(disk_free_space($test_install_directory) / 1048576) < ($test_install_request->test_profile->get_download_size() + 128))
+		if($test_install_request->test_profile->is_internet_required_for_install() && !pts_network::internet_support_available())
+		{
+			self::test_install_error(null, $test_install_request, 'This test profile requires a working/active Internet connection to install.');
+		}
+		else if(ceil(disk_free_space($test_install_directory) / 1048576) < ($test_install_request->test_profile->get_download_size() + 128))
 		{
 			self::test_install_error(null, $test_install_request, 'There is not enough space at ' . $test_install_directory . ' for the test files.');
 		}
@@ -838,7 +859,7 @@ class pts_test_installer
 					}
 				}
 
-				if($no_prompts && $test_profile->is_root_install_required() && !phodevi::is_root() && !phodevi::is_windows())
+				if($no_prompts && $test_install_request->test_profile->is_root_install_required() && !phodevi::is_root() && !phodevi::is_windows())
 				{
 					self::test_install_error(null, $test_install_request, 'Root/administrator rights are required to install this test.');
 					return false;
@@ -847,7 +868,7 @@ class pts_test_installer
 				pts_client::$display->display_interrupt_message($pre_install_message);
 				$install_time_length_start = microtime(true);
 				$install_log = pts_tests::call_test_script($test_install_request->test_profile, 'install', null, '"' . $test_install_directory . '"', $test_install_request->special_environment_vars, false, $no_prompts);
-				$test_install_request->install_time_duration = microtime(true) - $install_time_length_start;
+				$test_install_request->test_profile->test_installation->update_install_time(microtime(true) - $install_time_length_start);
 				pts_client::$display->display_interrupt_message($post_install_message);
 
 				if(!empty($install_log))
@@ -877,8 +898,8 @@ class pts_test_installer
 					{
 						$install_error = null;
 
-						// TODO: perhaps better way to handle this than to remove pts-install.xml
 						pts_file_io::unlink($test_install_directory . 'pts-install.xml');
+						pts_file_io::unlink($test_install_directory . 'pts-install.json');
 
 						if($test_install_request->test_profile->test_installation->has_install_log())
 						{
@@ -966,7 +987,7 @@ class pts_test_installer
 		if($remove_old_files && $test_install_request->test_profile->do_remove_test_install_directory_on_reinstall())
 		{
 			// Remove any (old) files that were installed
-			$ignore_files = array('pts-install.xml', 'install-failed.log');
+			$ignore_files = array('pts-install.xml', 'pts-install.json', 'install-failed.log');
 			foreach($test_install_request->get_download_objects() as $download_object)
 			{
 				$ignore_files[] = $download_object->get_filename();

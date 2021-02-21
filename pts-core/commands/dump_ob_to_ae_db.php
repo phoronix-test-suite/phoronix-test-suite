@@ -64,6 +64,13 @@ class dump_ob_to_ae_db implements pts_option_interface
 
 				if(isset($system_data[$system->get_identifier()]['Processor']) && !phodevi::is_fake_device($system_data[$system->get_identifier()]['Processor']))
 				{
+					if(stripos($system_data[$system->get_identifier()]['Processor'], 'ARMv') !== false || stripos($system_data[$system->get_identifier()]['Processor'], 'POWER9') !== false)
+					{
+						if(($cores = $system->get_cpu_core_count()) != false && $cores > 1 && stripos($system_data[$system->get_identifier()]['Processor'], 'Core') === false)
+						{
+							$system_data[$system->get_identifier()]['Processor'] .= ' ' . $cores . '-Core';
+						}
+					}
 					$processor = $system_data[$system->get_identifier()]['Processor'];
 					if(!isset($system_logs['Processor'][$processor]))
 					{
@@ -172,6 +179,7 @@ class dump_ob_to_ae_db implements pts_option_interface
 					foreach($buffers as &$buffer_item)
 					{
 						$result = $buffer_item->get_result_value();
+
 						if(stripos($result, ',') !== false || !is_numeric($result))
 						{
 							continue;
@@ -184,7 +192,7 @@ class dump_ob_to_ae_db implements pts_option_interface
 						$args_desc = $ro->get_arguments_description();
 
 						// Since some tests could stress multiple subsystems, see what the argument descriptions string says
-						if(strpos($args_desc, ' GPU') || strpos($args_desc, ' CUDA') || strpos($args_desc, ' OpenCL'))
+						if(strpos($args_desc, ' GPU') || strpos($args_desc, ' CUDA') || strpos($args_desc, ' OptiX') || strpos($args_desc, ' OpenCL'))
 						{
 							$hw_type = 'Graphics';
 						}
@@ -196,10 +204,18 @@ class dump_ob_to_ae_db implements pts_option_interface
 						{
 							$hw_type = 'Disk';
 						}
+						else if(strpos($args_desc, ' CPU'))
+						{
+							$hw_type = 'Processor';
+						}
 						else if($hw_type == 'Network' && (strpos($args_desc, 'localhost') || strpos($args_desc, '127.0.0.1')))
 						{
 							// loopback / local test so network adapter really not important, moreso the system/CPU
 							$hw_type = 'System';
+						}
+						else if($hw_type == 'Other' || $hw_type == 'OS')
+						{
+							continue;
 						}
 
 						switch($hw_type)
@@ -239,9 +255,19 @@ class dump_ob_to_ae_db implements pts_option_interface
 						{
 							continue;
 						}
+						$time_consumed = $buffer_item->get_run_time_total();
+						$stddev = 0;
+						if(($raws = $buffer_item->get_result_raw_array()) && count($raws) > 1)
+						{
+							$stddev_calc = pts_math::percent_standard_deviation($raws);
+							if($stddev_calc > 0)
+							{
+								$stddev = round($stddev_calc, 2);
+							}
+						}
 						$component_value = $system_data[$system_identifier][$component];
 						$related_component_value = isset($system_data[$system_identifier][$related_component]) ? $system_data[$system_identifier][$related_component] : null;
-						$ae->insert_result_into_analytic_results($comparison_hash, $result_reference, $component_value, $component, $related_component_value, $related_component, $result, $timestamps[$system_identifier], $system_types[$system_identifier], $system_layer);
+						$ae->insert_result_into_analytic_results($comparison_hash, $result_reference, $component_value, $component, $related_component_value, $related_component, $result, $timestamps[$system_identifier], $system_types[$system_identifier], $system_layer, $time_consumed, $stddev);
 						$inserts++;
 					}
 

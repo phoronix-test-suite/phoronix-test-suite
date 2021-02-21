@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/OpenFOAM/OpenFOAM-8/archive/20201114.tar.gz</URL>
+      <MD5>a754470e3d988186976bf8a8a73a7a84</MD5>
+      <SHA256>08baeb33797219ca33cda991a6dd55cae57e70346f0780db7abadb5019a282e0</SHA256>
+      <FileName>OpenFOAM-8-20201114.tar.gz</FileName>
+      <FileSize>40332187</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/OpenFOAM-Intel-20170512.tar.xz</URL>
+      <MD5>120c92c743dc545655510db1e4caa9a4</MD5>
+      <SHA256>68dc67a1ed994a96c0d4ae664c5606f47516242ac820fd10f063af083b36f3d8</SHA256>
+      <FileName>OpenFOAM-Intel-20170512.tar.xz</FileName>
+      <FileSize>3801072</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

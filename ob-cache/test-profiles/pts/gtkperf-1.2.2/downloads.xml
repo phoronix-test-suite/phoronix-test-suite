@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://jaist.dl.sourceforge.net/sourceforge/gtkperf/gtkperf_0.40.tar.gz</URL>
+      <MD5>4331dde4bb83865e15482885fcb0cc53</MD5>
+      <FileName>gtkperf_0.40.tar.gz</FileName>
+      <FileSize>402982</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

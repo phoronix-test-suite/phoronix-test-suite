@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://mirrors.dotsrc.org/blender/blender-demo/movies/BBB/bbb_sunflower_1080p_30fps_normal.mp4, https://mirror.clarkson.edu/blender/demo/movies/BBB/bbb_sunflower_1080p_30fps_normal.mp4</URL>
+      <MD5>babbe51b47146187a66632daa791484b</MD5>
+      <SHA256>ae51005850b0ff757fe60c3dd7a12d754d3cd2397d87d939b55235e457f97658</SHA256>
+      <FileName>bbb_sunflower_1080p_30fps_normal.mp4</FileName>
+      <FileSize>276134947</FileSize>
+    </Package>
+    <Package>
+      <URL>https://mirror.clarkson.edu/blender/demo/movies/BBB/bbb_sunflower_2160p_30fps_normal.mp4, https://mirrors.dotsrc.org/blender/blender-demo/movies/BBB/bbb_sunflower_2160p_30fps_normal.mp4</URL>
+      <MD5>fca22c88d7cf72c02df69a6157d2185b</MD5>
+      <SHA256>37f0ff251a606c2dcfa26c19fe6bf843234b4e7a8889cfab50bc26f644e55520</SHA256>
+      <FileName>bbb_sunflower_2160p_30fps_normal.mp4</FileName>
+      <FileSize>633016449</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

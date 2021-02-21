@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Copy:           #_RESULT_#   2.294437     0.574828     4.509079</OutputTemplate>
+    <AppendToArgumentsDescription>Copy</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Scale:           #_RESULT_#   2.294437     0.574828     4.509079</OutputTemplate>
+    <AppendToArgumentsDescription>Scale</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Add:           #_RESULT_#   2.294437     0.574828     4.509079</OutputTemplate>
+    <AppendToArgumentsDescription>Add</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Triad:           #_RESULT_#   2.294437     0.574828     4.509079</OutputTemplate>
+    <AppendToArgumentsDescription>Triad</AppendToArgumentsDescription>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>[  30.156][s][statusline] FPS: #_RESULT_#</OutputTemplate>
+    <LineHint>FPS: </LineHint>
+    <MultiMatch>HARMONIC_MEAN</MultiMatch>
+  </ResultsParser>
+</PhoronixTestSuite>

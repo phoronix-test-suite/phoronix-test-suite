@@ -162,7 +162,7 @@ class pts_svg_dom
 	{
 		$el = $this->dom->createElement('a');
 		$el->setAttribute('xlink:href', $url);
-		$el->setAttribute('xlink:show', 'new');
+		$el->setAttribute('target', '_blank');
 		return $this->svg->appendChild($el);
 	}
 	public function make_g($attributes = array(), $append_to = false)
@@ -184,7 +184,7 @@ class pts_svg_dom
 			$link_key = ($element_type == 'image' ? 'http_link' : 'xlink:href');
 			$link = $this->dom->createElement('a');
 			$link->setAttribute('xlink:href', $attributes[$link_key]);
-			$link->setAttribute('xlink:show', 'new');
+			$link->setAttribute('target', '_blank');
 			$link->appendChild($el);
 			if($append_to)
 			{
@@ -223,7 +223,7 @@ class pts_svg_dom
 		{
 			$link = $this->dom->createElement('a');
 			$link->setAttribute('xlink:href', $attributes['xlink:href']);
-			$link->setAttribute('xlink:show', 'new');
+			$link->setAttribute('target', '_blank');
 			$link->appendChild($el);
 			if($append_to)
 			{
@@ -268,6 +268,7 @@ class pts_svg_dom
 		if($queue_dimensions[0] < $attributes['width'])
 		{
 			// No wrapping is occuring, so stuff it in a more efficient text element instead
+			unset($attributes['width']);
 			$this->add_text_element($text_string, $attributes);
 			$estimated_height += ($attributes['font-size'] + 3);
 			return;
@@ -313,7 +314,7 @@ class pts_svg_dom
 		{
 			$link = $this->dom->createElement('a');
 			$link->setAttribute('xlink:href', $attributes['xlink:href']);
-			$link->setAttribute('xlink:show', 'new');
+			$link->setAttribute('target', '_blank');
 			$link->appendChild($el);
 			if($append_to)
 			{

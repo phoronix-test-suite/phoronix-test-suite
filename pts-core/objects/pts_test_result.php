@@ -45,12 +45,38 @@ class pts_test_result
 	protected $already_normalized = false;
 	public $dynamically_generated = false;
 	public $belongs_to_suite = false;
+	public $pre_run_message = null;
 
 	public function __construct($test_profile)
 	{
 		$this->test_profile = clone $test_profile;
-		$this->result = 0;
 		$this->test_run_times = array();
+	}
+	public function get_estimated_run_time()
+	{
+		// More accurate time tracking than just test_profile->get_estimated_run_time() ....
+		return $this->get_estimated_per_run_time() * $this->test_profile->get_times_to_run();
+	}
+	public function get_estimated_per_run_time(&$accuracy = 0)
+	{
+		$per_run_time = 0;
+		if(($t = $this->test_profile->test_installation->get_average_time_per_run($this->get_comparison_hash(true, false))) > 0)
+		{
+			$accuracy = 1;
+			$per_run_time = $t;
+		}
+		else if(($t = $this->test_profile->test_installation->get_average_time_per_run('avg')) > 0)
+		{
+			$accuracy = 0;
+			$per_run_time = $t;
+		}
+		else
+		{
+			$accuracy = 0;
+			$per_run_time = $this->test_profile->get_estimated_run_time() / $this->test_profile->get_default_times_to_run();
+		}
+
+		return round($per_run_time);
 	}
 	public function __clone()
 	{
@@ -355,6 +381,10 @@ class pts_test_result
 	public function get_spread($noisy_check = true)
 	{
 		if($noisy_check && $this->has_noisy_result())
+		{
+			return -1;
+		}
+		if($this->get_parent_hash() != null)
 		{
 			return -1;
 		}
@@ -669,11 +699,11 @@ class pts_test_result
 
 		foreach($this->test_result_buffer->get_buffer_items() as $item)
 		{
-			$json_data = $item->get_result_json();
-			if(isset($json_data['test-run-times']))
+			$total_time = $item->get_run_time_total();
+
+			if($total_time > 0)
 			{
-				$test_run_times = explode(':', $json_data['test-run-times']);
-				$total_times[] = array_sum($test_run_times);
+				$total_times[] = $total_time;
 			}
 		}
 
@@ -685,11 +715,11 @@ class pts_test_result
 
 		foreach($this->test_result_buffer->get_buffer_items() as $item)
 		{
-			$json_data = $item->get_result_json();
-			if(isset($json_data['test-run-times']))
+			$total_time = $item->get_run_time_total();
+
+			if($total_time > 0)
 			{
-				$test_run_times = explode(':', $json_data['test-run-times']);
-				$total_times[$item->get_result_identifier()] = array_sum($test_run_times);
+				$total_times[$item->get_result_identifier()] = $total_time;
 			}
 		}
 

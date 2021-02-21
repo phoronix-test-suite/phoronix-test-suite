@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>22     4M  N/A   #_RESULT_#</OutputTemplate>
+    <LineBeforeHint>Checksum validation...</LineBeforeHint>
+    <StripResultPostfix>s</StripResultPostfix>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>21     4M  N/A   #_RESULT_#</OutputTemplate>
+    <LineBeforeHint>Checksum validation...</LineBeforeHint>
+    <StripResultPostfix>s</StripResultPostfix>
+  </ResultsParser>
+</PhoronixTestSuite>

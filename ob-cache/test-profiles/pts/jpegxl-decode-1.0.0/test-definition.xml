@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>JPEG XL Decoding</Title>
+    <AppVersion>0.3.1</AppVersion>
+    <Description>The JPEG XL Image Coding System is designed to provide next-generation JPEG image capabilities with JPEG XL offering better image quality and compression over legacy JPEG. This test profile is suited for JPEG XL decode performance testing to PNG output file, the pts/jpexl test is for encode performance.</Description>
+    <ResultScale>MP/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux, MacOSX, BSD</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, jpeg-development, cmake, curl</ExternalDependencies>
+    <Extends>pts/jpegxl-1.1.1</Extends>
+    <EnvironmentSize>252</EnvironmentSize>
+    <ProjectURL>https://jpeg.org/jpegxl/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>gif_lib.h, gtest/gtest.h, brotli/encode.h</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>CPU Threads</DisplayName>
+      <Identifier>threads</Identifier>
+      <Menu>
+        <Entry>
+          <Name>1</Name>
+          <Value>--num_threads=1 --num_reps=100</Value>
+        </Entry>
+        <Entry>
+          <Name>All</Name>
+          <Value>--num_reps=300</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

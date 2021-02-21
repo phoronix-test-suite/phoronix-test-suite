@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>KeyDB</Title>
+    <AppVersion>6.0.16</AppVersion>
+    <Description>A benchmark of KeyDB as a multi-threaded fork of the Redis server. The KeyDB benchmark is conducted using memtier-benchmark.</Description>
+    <ResultScale>Ops/sec</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, libevent, pcre, openssl-development, libtool, curl, uuid</ExternalDependencies>
+    <EnvironmentSize>69</EnvironmentSize>
+    <ProjectURL>https://keydb.dev/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>--test-time 60</Arguments>
+    </Default>
+  </TestSettings>
+</PhoronixTestSuite>

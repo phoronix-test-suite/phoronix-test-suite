@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Desktop Graphics</Title>
+    <Version>1.3.0</Version>
+    <TestType>System</TestType>
+    <Description>This test suite contains free and retail graphics tests designed to test out the desktop graphics performance.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/xonotic</Test>
+    <Arguments>+vid_width $VIDEO_WIDTH +vid_height $VIDEO_HEIGHT +exec effects-low.cfg</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Effects Quality: Low</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/xonotic</Test>
+    <Arguments>+vid_width $VIDEO_WIDTH +vid_height $VIDEO_HEIGHT +exec effects-high.cfg</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Effects Quality: High</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/xonotic</Test>
+    <Arguments>+vid_width $VIDEO_WIDTH +vid_height $VIDEO_HEIGHT +exec effects-ultra.cfg</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Effects Quality: Ultra</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/xonotic</Test>
+    <Arguments>+vid_width $VIDEO_WIDTH +vid_height $VIDEO_HEIGHT +exec effects-ultimate.cfg</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Effects Quality: Ultimate</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/openarena</Test>
+    <Arguments>+set r_customWidth 1920 +set r_customHeight 1080</Arguments>
+    <Description>Resolution: 1920 x 1080</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/tesseract</Test>
+    <Arguments>-w$VIDEO_WIDTH -h$VIDEO_HEIGHT</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/paraview</Test>
+    <Arguments>manyspheres.py -s 100 -r 726 -f 30 -v $VIDEO_WIDTH,$VIDEO_HEIGHT</Arguments>
+    <Description>Test: Many Spheres - Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/paraview</Test>
+    <Arguments>waveletcontour.py -d 256 -f 30 -v $VIDEO_WIDTH,$VIDEO_HEIGHT</Arguments>
+    <Description>Test: Wavelet Contour - Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/paraview</Test>
+    <Arguments>/waveletvolume.py -d 256 -f 30 -v $VIDEO_WIDTH,$VIDEO_HEIGHT</Arguments>
+    <Description>Test: Wavelet Volume - Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/unigine-valley</Test>
+    <Arguments>-video_width $VIDEO_WIDTH -video_height $VIDEO_HEIGHT -video_fullscreen 1 -video_app opengl</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Mode: Fullscreen - Renderer: OpenGL</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/unigine-heaven</Test>
+    <Arguments>-video_width $VIDEO_WIDTH -video_height $VIDEO_HEIGHT -video_fullscreen 1 -video_app opengl</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Mode: Fullscreen - Renderer: OpenGL</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/glmark2</Test>
+    <Arguments>-s $VIDEO_WIDTHx$VIDEO_HEIGHT</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+</PhoronixTestSuite>

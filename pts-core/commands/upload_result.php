@@ -37,6 +37,10 @@ class upload_result implements pts_option_interface
 	}
 	public static function run($r)
 	{
+		if(empty($r))
+		{
+			return;
+		}
 		if(!pts_openbenchmarking::ob_upload_support_available())
 		{
 			trigger_error('No OpenBenchmarking.org upload support available.', E_USER_ERROR);

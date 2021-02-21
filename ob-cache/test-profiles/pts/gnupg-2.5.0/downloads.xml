@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://gnupg.org/ftp/gcrypt/gnupg/gnupg-2.2.27.tar.bz2</URL>
+      <MD5>a9c002b5356103c97412955a1956ae0c</MD5>
+      <SHA256>34e60009014ea16402069136e0a5f63d9b65f90096244975db5cea74b3d02399</SHA256>
+      <FileName>gnupg-2.2.27.tar.bz2</FileName>
+      <FileSize>7191555</FileSize>
+    </Package>
+    <Package>
+      <URL>http://old-releases.ubuntu.com/releases/20.04/ubuntu-20.04-desktop-amd64.iso</URL>
+      <MD5>ea28c4fd933be55f9f01a5fa9e868490</MD5>
+      <SHA256>e5b72e9cfe20988991c9cd87bde43c0b691e3b67b01f76d23f8150615883ce11</SHA256>
+      <FileName>ubuntu-20.04-desktop-amd64.iso</FileName>
+      <FileSize>2715254784</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

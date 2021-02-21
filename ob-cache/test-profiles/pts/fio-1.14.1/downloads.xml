@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://brick.kernel.dk/snaps/fio-3.25.tar.gz</URL>
+      <MD5>a32c40b5d5736cb78b43575735900c9f</MD5>
+      <SHA256>4b7f29bbc638d2f70c66740f230360698df1926421fc7ada17137b89154a99ce</SHA256>
+      <FileName>fio-3.25.tar.gz</FileName>
+      <FileSize>1027463</FileSize>
+      <PlatformSpecific>Linux, BSD, Solaris, MacOSX</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

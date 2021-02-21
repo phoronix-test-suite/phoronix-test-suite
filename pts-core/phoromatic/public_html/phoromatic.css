@@ -783,6 +783,70 @@ form:hover div.search_expander
 	display: none;
 }
 
+.div_table
+{
+	display: table;
+}
+div#main_area .div_table_cell input
+{
+	font-size: 12px;
+	padding: 0;
+}
+.div_table_row
+{
+	display: table-row;
+}
+.div_table_first_row
+{
+	display: table-row;
+	font-size: 11px;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+.div_table_cell
+{
+	border: 0;
+	display: table-cell;
+	padding: 1px 0 1px 4px;
+}
+.div_table_body
+{
+	display: table-row-group;
+}
+
+a div.table_test_box:hover
+{
+	background: #f1f1f1;
+	border-color: #1F1F1F;
+}
+div.pts_test_boxes
+{
+	overflow: hidden;
+}
+div.table_test_box
+{
+	background: #fff;
+	color: #000;
+	font-size: 12px;
+	border: solid #949494 1px;
+	display: block;
+	margin: 3px;
+	padding: 2px 4px;
+	float: left;
+	width: 280px;
+}
+div.table_test_box strong
+{
+	color: #044374;
+	font-size: 14px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+div.table_test_box em, div.pts_test_boxes em
+{
+	color: #ef5e09;
+}
 
 @media screen and (max-width: 1200px) {
 	div#pts_phoromatic_top_header ul li > ul

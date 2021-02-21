@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>OpenVINO</Title>
+    <AppVersion>2021.1</AppVersion>
+    <Description>This is a test of the Intel OpenVINO, a toolkit around neural networks, using its built-in benchmarking support and analyzing the throughput and latency for various models.</Description>
+    <ResultScale>FPS</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.4</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>python, build-utilities, cmake</ExternalDependencies>
+    <RequiresInternet>TRUE</RequiresInternet>
+    <EnvironmentSize>2200</EnvironmentSize>
+    <ProjectURL>https://github.com/openvinotoolkit/openvino</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>usb.h, libusb-1.0/libusb.h, opencv_version, opencv4/opencv2/cvdef.h, python2</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Model</DisplayName>
+      <Identifier>model</Identifier>
+      <ArgumentPrefix>-m </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>Face Detection 0106 FP16</Name>
+          <Value>models/intel/face-detection-0106/FP16/face-detection-0106.xml</Value>
+        </Entry>
+        <Entry>
+          <Name>Face Detection 0106 FP32</Name>
+          <Value>models/intel/face-detection-0106/FP32/face-detection-0106.xml</Value>
+        </Entry>
+        <Entry>
+          <Name>Age Gender Recognition Retail 0013 FP16</Name>
+          <Value>models/intel/age-gender-recognition-retail-0013/FP16/age-gender-recognition-retail-0013.xml</Value>
+        </Entry>
+        <Entry>
+          <Name>Age Gender Recognition Retail 0013 FP32</Name>
+          <Value>models/intel/age-gender-recognition-retail-0013/FP32/age-gender-recognition-retail-0013.xml</Value>
+        </Entry>
+        <Entry>
+          <Name>Person Detection 0106 FP16</Name>
+          <Value>models/intel/person-detection-0106/FP16/person-detection-0106.xml</Value>
+        </Entry>
+        <Entry>
+          <Name>Person Detection 0106 FP32</Name>
+          <Value>models/intel/person-detection-0106/FP32/person-detection-0106.xml</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Device</DisplayName>
+      <Identifier>Device</Identifier>
+      <ArgumentPrefix>-d </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>CPU</Name>
+          <Value>CPU</Value>
+        </Entry>
+        <Entry>
+          <Name>Intel GPU</Name>
+          <Value>GPU</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

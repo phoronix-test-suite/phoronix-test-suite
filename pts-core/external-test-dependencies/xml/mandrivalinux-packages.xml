@@ -13,7 +13,7 @@
 		</Package>
 		<Package>
 			<GenericName>sdl-development</GenericName>
-			<PackageName>libSDL1.2_0 libSDL_gfx13 libSDL_image1.2_0 libSDL_net1.2_0 libSDL_ttf2.0_0</PackageName>
+			<PackageName></PackageName>
 		</Package>
 		<Package>
 			<GenericName>smartmontools</GenericName>
@@ -44,8 +44,20 @@
 			<PackageName>expat</PackageName>
 		</Package>
 		<Package>
+			<GenericName>protobuf</GenericName>
+			<PackageName>protobuf-devel</PackageName>
+		</Package>
+		<Package>
 			<GenericName>nasm</GenericName>
 			<PackageName>nasm</PackageName>
+		</Package>
+		<Package>
+			<GenericName>vulkan-development</GenericName>
+			<PackageName>vulkan-headers libvulkan-devel vulkan-tools</PackageName>
+		</Package>
+		<Package>
+			<GenericName>rust</GenericName>
+			<PackageName>rust cargo</PackageName>
 		</Package>
 		<Package>
 			<GenericName>csh</GenericName>
@@ -61,12 +73,8 @@
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
-			<PackageName>clang automake autoconf bison flex</PackageName>
+			<PackageName>clang automake make autoconf bison flex</PackageName>
 			<FileCheck>/usr/bin/clang, /usr/bin/bison, /usr/bin/flex</FileCheck>
-		</Package>
-		<Package>
-			<GenericName>xorg-development</GenericName>
-			<PackageName>libxorg-x11-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>bison</GenericName>
@@ -118,7 +126,7 @@
 		</Package>
 		<Package>
 			<GenericName>jpeg-development</GenericName>
-			<PackageName>libopenjpeg-devel</PackageName>
+			<PackageName>libjpeg-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>libaio-development</GenericName>
@@ -127,6 +135,14 @@
 		<Package>
 			<GenericName>perl</GenericName>
 			<PackageName>perl perl-SDL</PackageName>
+		</Package>
+		<Package>
+			<GenericName>sdl2-development</GenericName>
+			<PackageName>libSDL2-devel</PackageName>
+		</Package>
+		<Package>
+			<GenericName>glut</GenericName>
+			<PackageName>libglut-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>perl-opengl</GenericName>
@@ -185,7 +201,7 @@
 		</Package>
 		<Package>
 			<GenericName>blas-development</GenericName>
-			<PackageName>libblas-devel</PackageName>
+			<PackageName>lib64blas-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>lapack-development</GenericName>
@@ -201,7 +217,7 @@
 		</Package>
 		<Package>
 			<GenericName>bzip2-development</GenericName>
-			<PackageName>libbzip2-devel</PackageName>
+			<PackageName>libbz2-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>tcl</GenericName>
@@ -213,7 +229,7 @@
 		</Package>
 		<Package>
 			<GenericName>python</GenericName>
-			<PackageName>python</PackageName>
+			<PackageName>python python-pip python3-pip</PackageName>
 		</Package>
 		<Package>
 			<GenericName>atlas-development</GenericName>
@@ -221,7 +237,7 @@
 		</Package>
 		<Package>
 			<GenericName>openmpi-development</GenericName>
-			<PackageName>libopenmpi</PackageName>
+			<PackageName>libopenmpi libopenmpi-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>yasm</GenericName>

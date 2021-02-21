@@ -1,5 +1,113 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+pts-core: Optimization to avoid re-parsing test profile definition multiple times
+pts-core: Optimization to avoid re-parsing installed test metadata multiple times
+
+Phoronix Test Suite 10.2.2
+17 February 2021
+
+pts-core: Add helper text when hitting a download with no working mirrors
+pts-core: Various external dependency updates
+pts-core: Add enable-repo sub-command for more easily enabling new OpenBenchmarking.org repos
+pts-core: Result viewer fix for the limit drop down menu potentially not being activated in some cases
+pts-core: Allow renaming runs within the result viewer
+phoromatic: Ensure pcntl_signal is present before starting Phoromatic Server
+phoromatic: PHP 8 compatibility fixes
+phodevi: Fix display driver name potentially being reported inaccurate for some obscure graphics cards / driver configurations
+phodevi: Export current GPU graphics card PCI device ID (GPU_DEVICE_ID) for some games/tests relying on it for configuration
+
+Phoronix Test Suite 10.2.1
+1 February 2021
+
+pts-core: Add "InstallRequiresInternet" option for test profiles that is more narrow (install time only) than the existing "RequiresInternet"
+pts-core: Add check-tests sub-command
+pts-core: Fix possible crash on PDF output
+pts-core: Various small fixes and tweaks
+pts-core: Fix PHP8 + cURL download error
+pts_Graph: A number of minor SVG standards compliance updates
+phodevi: Log Transparent Huge Pages setting as part of system details
+phodevi: Don't bother parsing the X.org log if it grows too big
+
+Phoronix Test Suite 10.2.0
+5 January 2021
+
+pts-core: PHP8 detection improvements
+pts-core: For estimated run time, avoid over-calculating time if test has no options but multiple outputs
+pts-core: Updated (Open)Mandriva external dependencies
+pts_Graph: Minor enhancements
+phodevi: Add support for reporting ACPI Platform Profile and INT340x Workload Hint
+
+Phoronix Test Suite 10.2.0 Milestone 3
+21 December 2020
+
+pts-core: Add debug-unhandled-dependencies option
+pts-core: Default to 2.5% std dev threshold default on new installs
+pts-core: BSD external dependency updates
+pts-core: Various refinements to the text user interface
+pts-core: When a test profile hits a failed download / broken mirror, report that URL to OpenBenchmarking.org
+phodevi: Don't restore the Phodevi cache if the /etc/machine-id changed (or /etc/hostname as fallback)
+
+Phoronix Test Suite 10.2.0 Milestone 2
+6 December 2020
+
+pts-core: Transition to new JSON-based data format for managing test install metadata while maintaining backwards compatibility with prior XML format
+pts-core: Begin tracking test run-times per-hash (all configured test options) for more detailed time tracking and in turn time estimates on subsequent runs
+pts-core: Increase compression factor when uploading benchmark results
+pts-core: Last minute fixes for PHP 8.0 compatibility
+phodevi: Report if CPUFreq Boost enabled/disabled
+turbostat: Add TurboStat module to easily generate turbostat dumps on a per-test basis to log files
+phoromatic: Much faster web viewer performance especially with large databases
+
+Phoronix Test Suite 10.2.0 Milestone 1
+21 November 2020
+
+pts-core: Log lock_stat, config.gz, dmidecode to system logs
+pts-core: Only show Apple options when running on macOS
+pts-core: Add extra safeguard around FORCE_TIMES_TO_RUN for disabling dynamic run count
+ob_auto_compare: Intelligently choose more relevant reference results
+phodevi: macOS CPU temperature monitoring support
+phodevi: Support for reading WattsUp Pro power meter data directly without utility using WATTS_UP_METER=<USB TTY>
+phodevi: Report Google Compute Engine machine type as part of motherboard string
+phodevi: Add dumpe2fs to system logs when running on EXT4 and root
+phodevi: Add block size reporting
+phodevi: CPU power reporting for Ampere Altra
+phodevi: Various Ampere Altra hardware detection/reporting improvements
+phodevi: Support reading CPU package power consumption on macOS using powermetrics
+
+Phoronix Test Suite 10.0.1
+21 October 2020
+
+pts-core: Fix for older versions of PHP such as in RHEL7
+pts-core: Add Thermald version reporting to system table when active
+phodevi: Detection improvements for new CPUs
+phodevi: Avoid "11th Gen Intel" CPU string
+phodevi: Update for NVMe drive reporting with KIOXIA, Toshiba sometimes not reporting their brand first
+
+Phoronix Test Suite 10.0.0
+13 October 2020
+
+pts-core: Ensure any post-run script is triggered still under halt-testing/skip-test conditions
+pts-core: Allow batch processing of performance per dollar metrics
+phodevi: Add Intel AMX presence detection
+phodevi: Add detection for Intel Alder Lake, Jasper Lake, Sapphire Rapids, and others
+phoromatic: Ensure Windows tests get displayed even if running the Phoromatic Server on Linux
+flush_caches: Add module to flush system caches between runs
+test_timeout: Add module to quit a test run if it exceeds a predefined time limit or 'auto' determination
+
+Phoronix Test Suite 10.0.0 Milestone 3
+1 October 2020
+
+pts-core: Don't show Vulkan options if Vulkan support is known to be unavailable/broken
+pts-core: Add OptionSelect tag support within test suite definitions
+pts-core: Allow * wildcard match in FileCheck handling within external dependency XML
+pts-core: Add "OS" TestType
+pts-core: Various external dependency updates
+pts-core: Continued tweaking to the analytics engine
+phodevi: Add Neoverse N2, Cortex-X1 detection and other Arm CPU updates
+pts_Graph: Various improvements
+
 Phoronix Test Suite 10.0.0 Milestone 2
 12 September 2020
 

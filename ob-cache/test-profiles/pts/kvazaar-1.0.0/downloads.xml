@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/ultravideo/kvazaar/releases/download/v2.0.0/kvazaar-2.0.0.tar.bz2</URL>
+      <MD5>42f4f939c90503b884ce2c6426bca1af</MD5>
+      <SHA256>21f7cefc7fa1fc52bd7ba28a3849373c31033ba43eab9e2e63468e22ccdfc880</SHA256>
+      <FileName>kvazaar-2.0.0.tar.bz2</FileName>
+      <FileSize>825708</FileSize>
+    </Package>
+    <Package>
+      <URL>http://ultravideo.cs.tut.fi/video/Bosphorus_3840x2160_120fps_420_8bit_YUV_Y4M.7z</URL>
+      <MD5>815ca5830c8ea2f95545429817b96b1f</MD5>
+      <SHA256>d0fcb7d8cfc6e51c47ce8b427dab41ce38300c4b1a51a1903ddd5d86067c4c79</SHA256>
+      <FileName>Bosphorus_3840x2160_120fps_420_8bit_YUV_Y4M.7z</FileName>
+      <FileSize>2804470345</FileSize>
+    </Package>
+    <Package>
+      <URL>http://ultravideo.cs.tut.fi/video/Bosphorus_1920x1080_120fps_420_8bit_YUV_Y4M.7z</URL>
+      <MD5>84ae521c95aa2537e16b34bbf72f2def</MD5>
+      <SHA256>e2f60b904789a60f6d1edc194d8540d401dd882e3ee3605b9b1de8feacc72133</SHA256>
+      <FileName>Bosphorus_1920x1080_120fps_420_8bit_YUV_Y4M.7z</FileName>
+      <FileSize>676792531</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/ultravideo/kvazaar/releases/download/v2.0.0/Win64-Release.zip</URL>
+      <MD5>72c23354566d657ba206b9d1697290a4</MD5>
+      <SHA256>1249bb26138985029e53a07539cd92b4e6a7d7bb8fa3c7a7c7c87805c124663a</SHA256>
+      <FileName>kvazaar-2.0.0-Win64-Release.zip</FileName>
+      <FileSize>329959</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

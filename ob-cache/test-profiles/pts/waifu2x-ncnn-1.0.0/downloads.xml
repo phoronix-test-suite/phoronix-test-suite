@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/lowend-image-samples-1.tar.xz</URL>
+      <MD5>faed1d4ca6e4c781786a78e697f2b691</MD5>
+      <SHA256>87732c1d6fb7b778f1970ba9f59246aa4290908ae0f9d1cea1d5fd64198df535</SHA256>
+      <FileName>lowend-image-samples-1.tar.xz</FileName>
+      <FileSize>346412</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/nihui/waifu2x-ncnn-vulkan/releases/download/20200818/waifu2x-ncnn-vulkan-20200818-linux.zip</URL>
+      <MD5>ac995a70dfdb030561f6695b8d2ea065</MD5>
+      <SHA256>249f59628cf750c93f49654c317b41a0ee4743236e23ad05cf413f7fda40d4ba</SHA256>
+      <FileName>waifu2x-ncnn-vulkan-20200818-linux.zip</FileName>
+      <FileSize>34790822</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/nihui/waifu2x-ncnn-vulkan/releases/download/20200818/waifu2x-ncnn-vulkan-20200818-windows.zip</URL>
+      <MD5>7a6bd44ac14d37e7539632acaefe514e</MD5>
+      <SHA256>0e3eb91d832a3b3cf88d061bd3421fb22100d23fae91952411f4d263ec3badcc</SHA256>
+      <FileName>waifu2x-ncnn-vulkan-20200818-windows.zip</FileName>
+      <FileSize>34800325</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

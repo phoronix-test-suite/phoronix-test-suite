@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Kripke</Title>
+    <AppVersion>1.2.4</AppVersion>
+    <Description>Kripke is a simple, scalable, 3D Sn deterministic particle transport code. Its primary purpose is to research how data layout, programming paradigms and architectures effect the implementation and performance of Sn transport. Kripke is developed by LLNL.</Description>
+    <ResultScale>Throughput FoM</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, cmake</ExternalDependencies>
+    <EnvironmentSize>81</EnvironmentSize>
+    <ProjectURL>https://github.com/LLNL/Kripke</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>--groups 32 --zones 48,48,48</Arguments>
+    </Default>
+  </TestSettings>
+</PhoronixTestSuite>

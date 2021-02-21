@@ -33,16 +33,17 @@ class list_available_virtual_suites implements pts_option_interface
 	{
 		pts_client::$display->generic_heading('Available Virtual Suites');
 
+		$table = array();
 		foreach(pts_virtual_test_suite::available_virtual_suites() as $virtual_suite)
 		{
 			$size = count($virtual_suite->get_contained_test_profiles());
 
 			if($size > 0)
 			{
-				echo sprintf('%-22ls - %-32ls %-9ls', $virtual_suite->get_identifier(), $virtual_suite->get_title(), $size . ' Tests') . PHP_EOL;
+				$table[] = array($virtual_suite->get_identifier(), pts_client::cli_just_bold($virtual_suite->get_title()), pts_client::cli_just_italic($size . ' Tests'));
 			}
 		}
-		echo PHP_EOL;
+		echo pts_user_io::display_text_table($table) . PHP_EOL;
 	}
 }
 

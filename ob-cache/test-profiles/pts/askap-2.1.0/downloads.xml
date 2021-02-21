@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/ATNF/askap-benchmarks/archive/v1.0.tar.gz</URL>
+      <MD5>4155097c3b7f32002f97be4abf078bb9</MD5>
+      <SHA256>25ec60886de40d27c6100324224c724b3a0d3847d1f619f8aab45866d9cf857b</SHA256>
+      <FileName>askap-benchmarks-1.0.tar.gz</FileName>
+      <FileSize>129002812</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Finance</Title>
+    <Version>1.0.0</Version>
+    <TestType>System</TestType>
+    <Description>Various benchmarks related to financial workloads like quantitative finance.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/financebench</Test>
+    <Arguments>Bonds/OpenMP/bondsEngine.exe</Arguments>
+    <Description>Benchmark: Bonds OpenMP</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/financebench</Test>
+    <Arguments>Monte-Carlo/OpenMP/monteCarloEngine.exe</Arguments>
+    <Description>Benchmark: Monte-Carlo OpenMP</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/financebench</Test>
+    <Arguments>Repo/OpenMP/repoEngine.exe</Arguments>
+    <Description>Benchmark: Repo OpenMP</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/quantlib</Test>
+  </Execute>
+</PhoronixTestSuite>

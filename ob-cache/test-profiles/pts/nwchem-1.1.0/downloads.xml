@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/nwchemgit/nwchem/releases/download/v7.0.2-release/nwchem-7.0.2-release.revision-b9985dfa-srconly.2020-10-12.tar.bz2</URL>
+      <MD5>b39f42eeacd7e984eee8b7ebc3dfe9f8</MD5>
+      <SHA256>9bf913b811b97c8ed51bc5a02bf1c8e18456d0719c0a82b2e71223a596d945a7</SHA256>
+      <FileName>nwchem-7.0.2-release.revision-b9985dfa-srconly.2020-10-12.tar.bz2</FileName>
+      <FileSize>54075548</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/Input_c240_pbe0.nw</URL>
+      <MD5>735d8f56573fc0e4de1136a70e1d183d</MD5>
+      <SHA256>ea83a5d0aae60660463f7ba83f8cb19ce45a4f46859b9233ba2fb2851fb4a523</SHA256>
+      <FileName>Input_c240_pbe0.nw</FileName>
+      <FileSize>10834</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

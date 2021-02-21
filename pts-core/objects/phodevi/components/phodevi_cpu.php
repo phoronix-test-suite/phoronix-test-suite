@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2020, Phoronix Media
-	Copyright (C) 2008 - 2020, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 	phodevi_cpu.php: The PTS Device Interface object for the CPU / processor
 
 	This program is free software; you can redistribute it and/or modify
@@ -40,6 +40,7 @@ class phodevi_cpu extends phodevi_device_interface
 			'thread-count' => new phodevi_device_property('cpu_thread_count', phodevi::std_caching),
 			'node-count' => new phodevi_device_property('cpu_node_count', phodevi::smart_caching),
 			'scaling-governor' => new phodevi_device_property('cpu_scaling_governor', phodevi::std_caching),
+			'power-management' => new phodevi_device_property('cpu_power_management', phodevi::std_caching),
 			'microcode-version' => new phodevi_device_property('cpu_microcode_version', phodevi::std_caching),
 			'core-family-name' => new phodevi_device_property('get_core_name', phodevi::smart_caching),
 			'cache-size' => new phodevi_device_property('cpu_cache_size', phodevi::smart_caching),
@@ -301,7 +302,52 @@ class phodevi_cpu extends phodevi_device_interface
 			$scaling_governor .= pts_file_io::file_get_contents('/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor');
 		}
 
+		if(!empty($scaling_governor) && is_file('/sys/devices/system/cpu/cpufreq/boost'))
+		{
+
+			$boost = pts_file_io::file_get_contents('/sys/devices/system/cpu/cpufreq/boost');
+			$boosted = null;
+
+			if($boost === '0')
+			{
+				$boosted = 'Disabled';
+			}
+			else if($boost === '1')
+			{
+				$boosted = 'Enabled';
+			}
+			if($boosted != null)
+			{
+				$scaling_governor = trim($scaling_governor) . ' (Boost: ' . $boosted . ')';
+			}
+		}
+
 		return trim($scaling_governor);
+	}
+	public static function cpu_power_management()
+	{
+		$pm = array();
+
+		if(is_file('/sys/firmware/acpi/platform_profile'))
+		{
+			$platform_profile = pts_file_io::file_get_contents('/sys/firmware/acpi/platform_profile');
+			if(!empty($platform_profile))
+			{
+				$pm[] = 'ACPI Platform Profile: ' . $platform_profile;
+			}
+		}
+
+		if(is_file('/sys/bus/pci/devices/0000:00:04.0/workload_request/workload_type'))
+		{
+			// Intel INT340x Workload Type
+			$workload_type = pts_file_io::file_get_contents('/sys/bus/pci/devices/0000:00:04.0/workload_request/workload_type');
+			if(!empty($workload_type) && $workload_type != 'none')
+			{
+				$pm[] = 'INT340x Workload Type: ' . $workload_type;
+			}
+		}
+
+		return implode(' - ', $pm);
 	}
 	public static function cpu_smt()
 	{
@@ -559,6 +605,11 @@ class phodevi_cpu extends phodevi_device_interface
 		{
 			$info = phodevi_bsd_parser::read_sysctl('machdep.cpu.brand_string');
 
+			if(empty($info) || strtolower($info) == 'apple processor')
+			{
+				$info = phodevi_osx_parser::read_osx_system_profiler('SPHardwareDataType', 'Chip');
+			}
+
 			if(empty($info))
 			{
 				$info = phodevi_osx_parser::read_osx_system_profiler('SPHardwareDataType', 'ProcessorName');
@@ -598,6 +649,7 @@ class phodevi_cpu extends phodevi_device_interface
 							break;
 					}
 					$part = phodevi_linux_parser::read_cpuinfo_single('CPU part');
+					// parts listed @ https://gcc.gnu.org/git/?p=gcc.git;a=blob;f=gcc/config/arm/arm-cpus.in
 					switch($part)
 					{
 						case '0xc07':
@@ -627,6 +679,12 @@ class phodevi_cpu extends phodevi_device_interface
 						case '0xd07':
 							$new_info .= ' Cortex-A57';
 							break;
+						case '0xd06':
+							$new_info .= ' Cortex-A65';
+							break;
+						case '0xd43':
+							$new_info .= ' Cortex-A65AE';
+							break;
 						case '0xd08':
 							$new_info .= ' Cortex-A72';
 							break;
@@ -639,8 +697,20 @@ class phodevi_cpu extends phodevi_device_interface
 						case '0xd0b':
 							$new_info .= ' Cortex-A76';
 							break;
+						case '0xd0e':
+							$new_info .= ' Cortex-A76AE';
+							break;
+						case '0xd0d':
+							$new_info .= ' Cortex-A77';
+							break;
 						case '0xd0c':
 							$new_info .= ' Neoverse-N1';
+							break;
+						case '0xd44':
+							$new_info .= ' Cortex-X1';
+							break;
+						case '0xd49':
+							$new_info .= ' Neoverse-N2';
 							break;
 						case '0xd4a':
 							$new_info .= ' Neoverse-E1';
@@ -657,7 +727,7 @@ class phodevi_cpu extends phodevi_device_interface
 					}
 				}
 
-				if(strpos(phodevi::$vfs->dmesg, 'Ampere eMAG') !== false || stripos(pts_file_io::file_get_contents_if_exists('/sys/devices/virtual/dmi/id/sys_vendor'), 'Ampere') !== false)
+				if(strpos(phodevi::$vfs->dmesg, 'Ampere eMAG') !== false || stripos(pts_file_io::file_get_contents_if_exists('/sys/devices/virtual/dmi/id/sys_vendor'), 'Ampere') !== false || stripos(pts_file_io::file_get_contents_if_exists('/sys/devices/virtual/dmi/id/bios_vendor'), 'Ampere') !== false)
 				{
 					$product_family =  pts_file_io::file_get_contents_if_exists('/sys/devices/virtual/dmi/id/product_family');
 					$sys_vendor =  pts_file_io::file_get_contents_if_exists('/sys/devices/virtual/dmi/id/sys_vendor');
@@ -748,6 +818,11 @@ class phodevi_cpu extends phodevi_device_interface
 					$info = implode(' ', $cpu_words);
 				}
 			}
+			else if(($gen = strpos($info, ' Gen')) !== false && ($intel = strpos($info, 'Intel ')) !== false && $gen < $intel)
+			{
+				// Tiger Lake reports "11th Gen Intel" as CPU string
+				$info = substr($info, $intel);
+			}
 		}
 
 		if(($c = strpos($info, '-Core ')) !== false && $c < strpos($info, ' '))
@@ -776,12 +851,15 @@ class phodevi_cpu extends phodevi_device_interface
 			'xop' => (1 << 13), // AMD XOP Instruction Set
 			'fma3' => (1 << 14), // FMA3 Instruction Set
 			'fma4' => (1 << 15), // FMA4 Instruction Set
-			'rdrand' => (1 << 16), // Intel Bull Mountain RDRAND - Ivy Bridge
-			'fsgsbase' => (1 << 17), // FSGSBASE - Ivy Bridge AVX
-			'bmi2' => (1 << 18), // Intel Haswell has BMI2
-			'avx512cd' => (1 << 19), // AVX-512
-			'avx512_vnni' => (1 << 20), // AVX-512 VNNI (DL BOOST)
-			'avx512_bf16' => (1 << 21), // AVX-512 BFloat16
+			'fma' => (1 << 16), // FMA4 Instruction Set
+			'rdrand' => (1 << 17), // Intel Bull Mountain RDRAND - Ivy Bridge
+			'fsgsbase' => (1 << 18), // FSGSBASE - Ivy Bridge AVX
+			'bmi2' => (1 << 19), // Intel Haswell has BMI2
+			'avx512cd' => (1 << 20), // AVX-512
+			'avx512_vnni' => (1 << 21), // AVX-512 VNNI (DL BOOST)
+			'avx512_bf16' => (1 << 22), // AVX-512 BFloat16
+			'amx_tile' => (1 << 23), // AMX
+			'vaes' => (1 << 24),
 			);
 	}
 	public static function prominent_cpu_features()
@@ -791,8 +869,10 @@ class phodevi_cpu extends phodevi_device_interface
 			'avx' => 'AVX', // AVX
 			'avx2' => 'AVX2', // AVX2
 			'aes' => 'AES', // AES
+			'vaes' => 'VAES', // AES
 			'svm' => 'AMD SVM', // AMD SVM (Virtualization)
 			'vmx' => 'Intel VT-d', // Intel Virtualization
+			'fma' => 'FMA', // FMA Instruction Set
 			'fma3' => 'FMA3', // FMA3 Instruction Set
 			'fma4' => 'FMA4', // FMA4 Instruction Set
 			'rdrand' => 'RdRand', // Intel Bull Mountain RDRAND - Ivy Bridge
@@ -801,6 +881,63 @@ class phodevi_cpu extends phodevi_device_interface
 			'avx512cd' => 'AVX-512', // AVX-512
 			'avx512_vnni' => 'AVX-512 VNNI / DL-BOOST', // AVX-512 VNNI (DL BOOST)
 			'avx512_bf16' => 'AVX-512 BFloat16', // AVX-512 BFloat16
+			'amx_tile' => 'AMX', // Advanced Matrix Extensions
+			);
+	}
+	public static function interesting_instructions()
+	{
+		return array(
+		'MMX' => array('emms', 'maskmovq', 'movq', 'movntq', 'packssdw', 'packsswb', 'packuswb', 'paddb', 'paddd', 'paddsb', 'paddsw', 'paddusb', 'paddusw', 'paddw', 'pand', 'pandn', 'pavgusb', 'pavgb', 'pavgw', 'pcmpeqb', 'pcmpeqd', 'pcmpeqw', 'pcmpgtb', 'pcmpgtd', 'pcmpgtw', 'pextrw', 'pinsrw', 'pmaddwd', 'pmaxsw', 'pmaxub', 'pminsw', 'pminub', 'pmovmskb', 'pmulhw', 'pmullw', 'pmulhuw', 'por', 'psadbw', 'pshufw', 'pslld', 'psllq', 'psllw', 'psrad', 'psraw', 'psrld', 'psrlq', 'psrlw', 'psubb', 'psubd', 'psubsb', 'psubsw', 'psubusb', 'psubusw', 'psubw', 'punpckhbw', 'punpckhdq', 'punpckhwd', 'punpcklbw', 'punpckldq', 'punpcklwd', 'pxor'),
+		'SSE' => array('addps', 'addss', 'andnps', 'andps', 'cmpeqps', 'cmpeqss', 'cmpleps', 'cmpless', 'cmpltps', 'cmpltss', 'cmpneqps', 'cmpneqss', 'cmpnleps', 'cmpnless', 'cmpnltps', 'cmpnltss', 'cmpordps', 'cmpordss', 'cmpps', 'cmpss', 'cmpunordps', 'cmpunordss', 'comiss', 'cvtpi2ps', 'cvtps2pi', 'cvtsi2ss', 'cvtss2si', 'cvttps2pi', 'cvttss2si', 'divps', 'divss', 'ldmxcsr', 'maxps', 'maxss', 'minps', 'minss', 'movaps', 'movhlps', 'movhps', 'movlhps', 'movlps', 'movmskps', 'movntps', 'movss', 'movups', 'mulps', 'mulss', 'orps', 'rcpps', 'rcpss', 'rsqrtps', 'rsqrtss', 'shufps', 'sqrtps', 'sqrtss', 'stmxcsr', 'subps', 'subss', 'ucomiss', 'unpckhps', 'unpcklps', 'xorps'),
+		'SSE2' => array('addpd', 'addsd', 'andnpd', 'andpd', 'clflush', 'cmpeqpd', 'cmpeqsd', 'cmplepd', 'cmplesd', 'cmpltpd', 'cmpltsd', 'cmpneqpd', 'cmpneqsd', 'cmpnlepd', 'cmpnlesd', 'cmpnltpd', 'cmpnltsd', 'cmpordpd', 'cmpordsd', 'cmppd', 'cmpunordpd', 'cmpunordsd', 'comisd', 'cvtdq2pd', 'cvtdq2ps', 'cvtpd2dq', 'cvtpd2pi', 'cvtpd2ps', 'cvtpi2pd', 'cvtps2dq', 'cvtps2pd', 'cvtsd2si', 'cvtsd2ss', 'cvtsi2sd', 'cvtss2sd', 'cvttpd2dq', 'cvttpd2pi', 'cvttps2dq', 'cvttsd2si', 'divpd', 'divsd', 'maskmovdqu', 'maxpd', 'maxsd', 'minpd', 'minsd', 'movapd', 'movdq2q', 'movdqa', 'movdqu', 'movhpd', 'movlpd', 'movmskpd', 'movntdq', 'movnti', 'movntpd', 'movq2dq', 'movupd', 'mulpd', 'mulsd', 'orpd', 'paddq', 'pmuludq', 'pshufd', 'pshufhw', 'pshuflw', 'pslldq', 'psrldq', 'psubq', 'punpckhqdq', 'punpcklqdq', 'shufpd', 'sqrtpd', 'sqrtsd', 'subpd', 'subsd', 'ucomisd', 'unpckhpd', 'unpcklpd', 'xorpd', 'movd'),
+		'SSE3' => array('addsubpd', 'addsubps', 'fisttp', 'haddpd', 'haddps', 'hsubpd', 'hsubps', 'lddqu', 'monitor', 'movddup', 'movshdup', 'movsldup', 'mwait'),
+		'SSSE3' => array('pabsb', 'pabsd', 'pabsw', 'palignr', 'phaddd', 'phaddsw', 'phaddw', 'phsubd', 'phsubsw', 'phsubw', 'pmaddubsw', 'pmulhrsw', 'pshufb', 'psignb', 'psignd', 'psignw'),
+		'SSE4_1' => array('blendpd', 'blendps', 'blendvpd', 'blendvps', 'dppd', 'dpps', 'extractps', 'insertps', 'movntdqa', 'mpsadbw', 'packusdw', 'pblendvb', 'pblendw', 'pcmpeqq', 'pextrb', 'pextrd', 'pextrq', 'phminposuw', 'pinsrb', 'pinsrd', 'pinsrq', 'pmaxsb', 'pmaxsd', 'pmaxud', 'pmaxuw', 'pminsb', 'pminsd', 'pminud', 'pminuw', 'pmovsxbd', 'pmovsxbq', 'pmovsxbw', 'pmovsxdq', 'pmovsxwd', 'pmovsxwq', 'pmovzxbd', 'pmovzxbq', 'pmovzxbw', 'pmovzxdq', 'pmovzxwd', 'pmovzxwq', 'pmuldq', 'pmulld', 'ptest', 'roundpd', 'roundps', 'roundsd', 'roundss'),
+		'SSE4_2' => array('crc32', 'pcmpestri', 'pcmpestrm', 'pcmpgtq', 'pcmpistri', 'pcmpistrm', 'popcnt'),
+		'SSE4A' => array('extrq', 'insertq', 'movntsd', 'movntss'),
+		'AVX' => 'VBROADCASTSS VBROADCASTSD VBROADCASTF128 VINSERTF128 VEXTRACTF128 VMASKMOVPS VPERMILPS VPERMILPD VPERM2F128 VZEROALL VZEROUPPER',
+		'AVX2' => 'VPBROADCASTB VPBROADCASTW VPBROADCASTD VPBROADCASTQ VINSERTI128 VEXTRACTI128 VGATHERDPD VGATHERQPD VGATHERDPS VGATHERQPS VPGATHERDD VPGATHERDQ VPGATHERQD VPGATHERQQ VPMASKMOVD VPMASKMOVQ VPERMPS VPERMD VPERMPD VPERMQ VPERM2I128 VPBLENDD VPSLLVD VPSLLVQ  VPSRLVD VPSRLVQ  VPSRAVD',
+		'AES' => 'AESENC AESENCLAST AESDEC AESDECLAST AESKEYGENASSIST AESIMC',
+		'AVX512' => 'AVX512F AVX512CD AVX512DQ AVX512PF AVX512ER AVX512VL AVX512BW AVX512IFMA AVX512VBMI AVX512VBMI2 AVX512VAES AVX512BITALG AVX5124FMAPS AVX512VPCLMULQDQ AVX512GFNI AVX512_VNNI AVX5124VNNIW AVX512VPOPCNTDQ AVX512_BF16 avx512vp2intersect',
+		'VAES' => 'VAESDEC VAESDECLAST VAESENC VAESENCLAST VPCLMULQDQ',
+		'AVX-VNNI' => 'vpdpbusd vpdpwssd vpdpbusds vpdpwssds',
+		'SERIALIZE' => 'serialize',
+		'WAITPKG' => 'umwait tpause umonitor',
+		'ENQCMD' => 'enqcmd enqcmds',
+		'MOVDIRI' => 'movdiri movdir64b',
+		'CLWB' => 'clwb',
+		'RDPRU' => 'rdpru',
+		'FSGSBASE' => 'RDFSBASE RDGSBASE WRFSBASE WRGSBASE',
+		'AMX' => 'LDTILECFG STTILECFG TILELOADD TILELOADDT1 TILESTORED TILERELEASE TILEZERO TDPBF16PS',
+		'FMA' => array('vfmadd123pd', 'vfmadd123ps', 'vfmadd123sd', 'vfmadd123ss', 'vfmadd132pd', 'vfmadd132ps', 'vfmadd132sd', 'vfmadd132ss', 'vfmadd213pd', 'vfmadd213ps', 'vfmadd213sd', 'vfmadd213ss', 'vfmadd231pd', 'vfmadd231ps', 'vfmadd231sd', 'vfmadd231ss', 'vfmadd312pd', 'vfmadd312ps', 'vfmadd312sd', 'vfmadd312ss', 'vfmadd321pd', 'vfmadd321ps', 'vfmadd321sd', 'vfmadd321ss', 'vfmaddsub123pd', 'vfmaddsub123ps', 'vfmaddsub132pd', 'vfmaddsub132ps', 'vfmaddsub213pd', 'vfmaddsub213ps', 'vfmaddsub231pd', 'vfmaddsub231ps', 'vfmaddsub312pd', 'vfmaddsub312ps', 'vfmaddsub321pd', 'vfmaddsub321ps', 'vfmsub123pd', 'vfmsub123ps', 'vfmsub123sd', 'vfmsub123ss', 'vfmsub132pd', 'vfmsub132ps', 'vfmsub132sd', 'vfmsub132ss', 'vfmsub213pd', 'vfmsub213ps', 'vfmsub213sd', 'vfmsub213ss', 'vfmsub231pd', 'vfmsub231ps', 'vfmsub231sd', 'vfmsub231ss', 'vfmsub312pd', 'vfmsub312ps', 'vfmsub312sd', 'vfmsub312ss', 'vfmsub321pd', 'vfmsub321ps', 'vfmsub321sd', 'vfmsub321ss', 'vfmsubadd123pd', 'vfmsubadd123ps', 'vfmsubadd132pd', 'vfmsubadd132ps', 'vfmsubadd213pd', 'vfmsubadd213ps', 'vfmsubadd231pd', 'vfmsubadd231ps', 'vfmsubadd312pd', 'vfmsubadd312ps', 'vfmsubadd321pd', 'vfmsubadd321ps', 'vfnmadd123pd', 'vfnmadd123ps', 'vfnmadd123sd', 'vfnmadd123ss', 'vfnmadd132pd', 'vfnmadd132ps', 'vfnmadd132sd', 'vfnmadd132ss', 'vfnmadd213pd', 'vfnmadd213ps', 'vfnmadd213sd', 'vfnmadd213ss', 'vfnmadd231pd', 'vfnmadd231ps', 'vfnmadd231sd', 'vfnmadd231ss', 'vfnmadd312pd', 'vfnmadd312ps', 'vfnmadd312sd', 'vfnmadd312ss', 'vfnmadd321pd', 'vfnmadd321ps', 'vfnmadd321sd', 'vfnmadd321ss', 'vfnmsub123pd', 'vfnmsub123ps', 'vfnmsub123sd', 'vfnmsub123ss', 'vfnmsub132pd', 'vfnmsub132ps', 'vfnmsub132sd', 'vfnmsub132ss', 'vfnmsub213pd', 'vfnmsub213ps', 'vfnmsub213sd', 'vfnmsub213ss', 'vfnmsub231pd', 'vfnmsub231ps', 'vfnmsub231sd', 'vfnmsub231ss', 'vfnmsub312pd', 'vfnmsub312ps', 'vfnmsub312sd', 'vfnmsub312ss', 'vfnmsub321pd', 'vfnmsub321ps', 'vfnmsub321sd', 'vfnmsub321ss'),
+		'BMI2' => 'BZHI MULX PDEP PEXT RORX SARX SHRX SHLX',
+		);
+	}
+	public static function interesting_instructions_names()
+	{
+		return array(
+			//'MMX' => 'MMX',
+			'SSE2' => 'SSE2',
+			'SSE3' => 'SSE3',
+			'SSSE3' => 'SSSE3',
+			'SSE4_2' => 'SSE 4.2',
+			'SSE4A' => 'SSE4A',
+			'AVX' => 'Advanced Vector Extensions',
+			'AVX2' => 'Advanced Vector Extensions 2',
+			'AVX512' => 'Advanced Vector Extensions 512',
+			'AMX' => 'Advanced Matrix Extensions',
+			'AES' => 'Advanced Encryption Standard',
+			'VAES' => 'Vector AES',
+			'AVX-VNNI' => 'AVX Vector Neural Network Instructions',
+			'SERIALIZE' => 'SERIALIZE',
+			'WAITPKG' => 'WAITPKG / UMWAIT / TPAUSE',
+			'ENQCMD' => 'Data Streaming Accelerator',
+			'FSGSBASE' => 'FSGSBASE',
+			'MOVDIRI' => 'MOVDIRx',
+			'CLWB' => 'Cache Line Write Back',
+			'RDPRU' => 'Read Processor Register',
+			'FMA' => 'FMA',
+			'BMI2' => 'Bit Manipulation Instruction Set 2',
 			);
 	}
 	public static function prominent_cpu_bugs()
@@ -873,6 +1010,7 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 
 		// Useful: https://en.wikichip.org/wiki/amd/cpuid / https://en.wikichip.org/wiki/intel/cpuid
+		// https://github.com/torvalds/linux/blob/master/arch/x86/include/asm/intel-family.h
 		$amd_map = array(
 			14 => array(
 				1 => 'Bobcat',
@@ -941,6 +1079,14 @@ class phodevi_cpu extends phodevi_device_interface
 				96 => 'Zen 2',
 				113 => 'Zen 2',
 				),
+			25 => array(
+				0 => 'Zen 3',
+				1 => 'Zen 3',
+				32 => 'Zen 3',
+				33 => 'Zen 3',
+				47 => 'Zen 3',
+				48 => 'Zen 3',
+				),
 			);
 
 		$intel_map = array(
@@ -965,47 +1111,55 @@ class phodevi_cpu extends phodevi_device_interface
 				47 => 'Westmere',
 				28 => 'Bonnell',
 				38 => 'Bonnell',
+				39 => 'Saltwell',
 				42 => 'Sandy Bridge',
 				45 => 'Sandy Bridge',
+				53 => 'Saltwell',
+				54 => 'Saltwell',
+				55 => 'Bay Trail',
 				58 => 'Ivy Bridge',
 				62 => 'Ivy Bridge',
 				60 => 'Haswell',
+				61 => 'Broadwell',
 				63 => 'Haswell',
 				69 => 'Haswell',
 				70 => 'Haswell',
 				71 => 'Broadwell',
-				61 => 'Broadwell',
+				74 => 'Silvermont',
+				76 => 'Airmont',
+				77 => 'Silvermont',
+				78 => 'Skylake',
 				79 => 'Broadwell',
-				85 => 'Skylake',
+				85 => 'Cascade Lake',
 				86 => 'Broadwell',
 				87 => 'Knights Landing',
-				76 => 'Airmont',
-				78 => 'Skylake',
-				94 => 'Skylake',
-				95 => 'Goldmont',
+				90 => 'Silvermont',
 				92 => 'Goldmont',
 				93 => 'Silvermont',
-				90 => 'Silvermont',
-				77 => 'Silvermont',
-				74 => 'Silvermont',
-				55 => 'Bay Trail',
-				54 => 'Saltwell',
-				53 => 'Saltwell',
-				39 => 'Saltwell',
-				142 => 'Kaby/Coffee/Whiskey Lake',
-				158 => 'Kaby/Coffee/Whiskey Lake',
+				94 => 'Skylake',
+				95 => 'Goldmont',
 				102 => 'Cannon Lake',
-				165 => 'Comet Lake',
-				166 => 'Comet Lake',
-				85 => 'Cascade Lake',
 				106 => 'Ice Lake',
 				108 => 'Ice Lake',
+				122 => 'Gemini Lake',
 				125 => 'Ice Lake',
 				126 => 'Ice Lake',
-				122 => 'Goldmont Plus',
 				133 => 'Knights Mill',
-				134 => 'Tremont',
+				134 => 'Jacobsville',
+				138 => 'Lakefield',
 				140 => 'Tiger Lake',
+				141 => 'Tiger Lake',
+				142 => 'Kaby/Coffee/Whiskey Lake',
+				143 => 'Sapphire Rapids',
+				150 => 'Elkhart Lake',
+				151 => 'Alder Lake',
+				154 => 'Alder Lake',
+				156 => 'Jasper Lake',
+				157 => 'Ice Lake',
+				158 => 'Kaby/Coffee/Whiskey Lake',
+				165 => 'Comet Lake',
+				166 => 'Comet Lake',
+				167 => 'Rocket Lake',
 				),
 			15 => array(
 				1 => 'Clarksfield',
@@ -1033,7 +1187,7 @@ class phodevi_cpu extends phodevi_device_interface
 				),
 			);
 
-		if(($cpu_string == null || strpos($cpu_string, 'AMD') !== false) && isset($amd_map[$family][$model]))
+		if(($cpu_string == null || strpos($cpu_string, 'AMD') !== false || strpos($cpu_string, ' Athlon') !== false) && isset($amd_map[$family][$model]))
 		{
 			return $amd_map[$family][$model];
 		}

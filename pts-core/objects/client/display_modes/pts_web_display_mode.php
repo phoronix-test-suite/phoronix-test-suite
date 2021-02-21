@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2018, Phoronix Media
-	Copyright (C) 2009 - 2018, Michael Larabel
+	Copyright (C) 2009 - 2020, Phoronix Media
+	Copyright (C) 2009 - 2020, Michael Larabel
 	pts_concise_display_mode.php: The batch / concise display mode
 
 	This program is free software; you can redistribute it and/or modify
@@ -155,7 +155,7 @@ class pts_web_display_mode implements pts_display_mode_interface
 
 			echo ' [' . $size . ' MB';
 
-			if(($avg_speed = pts_download_speed_manager::get_average_download_speed()) > 0)
+			if(($avg_speed = pts_client::get_average_download_speed()) > 0)
 			{
 				$avg_time = ($size * 1048576) / $avg_speed;
 				echo ' / ' . pts_strings::format_time($avg_time, 'SECONDS', true, 60);
@@ -190,7 +190,7 @@ class pts_web_display_mode implements pts_display_mode_interface
 			case 'DOWNLOAD':
 				$process_string = 'Downloading';
 				$progress_prefix = 'Downloading';
-				if(($avg_speed = pts_download_speed_manager::get_average_download_speed()) > 0 && ($this_size = $pts_test_file_download->get_filesize()) > 0)
+				if(($avg_speed = pts_client::get_average_download_speed()) > 0 && ($this_size = $pts_test_file_download->get_filesize()) > 0)
 				{
 					$expected_time = $this_size / $avg_speed;
 				}
@@ -226,7 +226,7 @@ class pts_web_display_mode implements pts_display_mode_interface
 			return;
 		}
 
-		$terminal_width = pts_client::terminal_width() > 1 ? pts_client::terminal_width() : $terminal_width;
+		$terminal_width = pts_client::terminal_width() > 1 ? pts_client::terminal_width() : 80;
 		$text_width = $terminal_width - (strlen($this->tab) * 3);
 		echo PHP_EOL . $this->tab . $this->tab . wordwrap('[NOTICE] ' . $message, $text_width, PHP_EOL . $this->tab . $this->tab) . PHP_EOL;
 	}
@@ -311,7 +311,7 @@ class pts_web_display_mode implements pts_display_mode_interface
 		$this->trial_run_count_current = 0;
 		$this->expected_trial_run_count = $test_result->test_profile->get_times_to_run();
 		$remaining_length = $test_run_manager->get_estimated_run_time();
-		$estimated_length = $test_result->test_profile->get_estimated_run_time();
+		$estimated_length = $test_result->get_estimated_run_time();
 		$display_table = array();
 
 		array_push($display_table, array($this->tab . 'Estimated Trial Run Count:', $this->expected_trial_run_count));

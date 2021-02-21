@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Compression succeeded to file "sample-1.basis" in #_RESULT_# secs</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

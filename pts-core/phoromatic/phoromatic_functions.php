@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2013 - 2018, Phoronix Media
-	Copyright (C) 2013 - 2018, Michael Larabel
+	Copyright (C) 2013 - 2020, Phoronix Media
+	Copyright (C) 2013 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+define('PHOROMATIC_SERVER_WEB_INTERFACE', true);
 define('PAGE_LOAD_START_TIME', microtime(true));
 
 function phoromatic_annotate_entry($type, $id, $secondary_id)
@@ -639,7 +640,7 @@ function create_new_phoromatic_account($register_username, $register_password, $
 	}
 
 	$valid_user_name_chars = '1234567890-_.abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-	for($i = 0; $i < count($register_username); $i++)
+	for($i = 0; $i < strlen($register_username); $i++)
 	{
 		if(strpos($valid_user_name_chars, substr($register_username, $i, 1)) === false)
 		{

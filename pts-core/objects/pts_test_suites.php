@@ -181,7 +181,7 @@ class pts_test_suites
 	{
 		$suites_containing_test = array();
 
-		foreach(pts_test_suites::suites_on_disk(true) as $suite)
+		foreach(pts_test_suites::suites_on_disk(true, true) as $suite)
 		{
 			$contained_tests = $suite->get_contained_test_identifiers(false);
 			if(in_array($test_profile->get_identifier(false), $contained_tests))

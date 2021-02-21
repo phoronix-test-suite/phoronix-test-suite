@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/render_bench.tar.gz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/render_bench.tar.gz</URL>
+      <MD5>a3b6b8e4dc8017d948eeb81e4308acb5</MD5>
+      <FileName>render_bench.tar.gz</FileName>
+      <FileSize>22512</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

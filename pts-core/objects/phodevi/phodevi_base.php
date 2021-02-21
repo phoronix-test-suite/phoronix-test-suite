@@ -54,12 +54,17 @@ class phodevi_base
 		'System Layer' => array('system', 'system-layer')
 		);
 	}
-	public static function determine_system_type($hw, $sw)
+	public static function determine_system_type($hw, $sw = null)
 	{
 		// Assume desktop by default as fallback
 		$type = 'D';
 
-		if(pts_strings::has_element_in_string($hw, array('ARMv', 'Cortex', 'Exynos', 'jetson')) || stripos($sw, 'mips64') !== false)
+		if(pts_strings::has_element_in_string($hw, array('Ampere ', 'Amazon EC2', 'Google Compute')))
+		{
+			// Dp this check first so ARM servers won't be classified as embedded E
+			$type = 'S';
+		}
+		else if(pts_strings::has_element_in_string($hw, array('ARMv', 'Cortex', 'Exynos', 'jetson')) || stripos($sw, 'mips64') !== false)
 		{
 			$type = 'E';
 		}
@@ -67,9 +72,8 @@ class phodevi_base
 		{
 			$type = 'M';
 		}
-		else if(strpos($hw, '-U') !== false && stripos($hw, 'wireless'))
+		else if($hw == $sw && pts_strings::has_element_in_string($hw . ' ', array('Mobile ', 'M ', 'U ')) && pts_strings::has_element_in_string($hw, array('Intel ', 'AMD ')))
 		{
-			// Perhaps too easy of a check?
 			$type = 'M';
 		}
 		else if(strpos($sw, 'System Layer') !== false || stripos($sw, 'amazon') !== false || stripos($sw, 'xen') !== false || stripos($sw, 'qemu') !== false)
@@ -80,7 +84,7 @@ class phodevi_base
 		{
 			$type = 'W';
 		}
-		else if(pts_strings::has_element_in_string($hw, array(' Xeon', 'Opteron', 'EPYC', 'POWER ')) || pts_strings::has_element_in_string($hw, array('Tyan', 'Supermicro')))
+		else if(pts_strings::has_element_in_string($hw, array(' Xeon', 'Opteron', 'EPYC', 'POWER ', 'Ampere ')) || pts_strings::has_element_in_string($hw, array('Tyan', 'Supermicro')))
 		{
 			$type = 'S';
 		}

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/sample-audio-long-1.tar.xz</URL>
+      <MD5>7009308d604b7f093eddcf1d66be7765</MD5>
+      <SHA256>55edc8460fc23085bdc0745ff92233a8e975f4928010bdd9db4a7aa1e9e3c1bf</SHA256>
+      <FileName>sample-audio-long-1.tar.xz</FileName>
+      <FileSize>110304308</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/rnnoise-20200628.tar.xz</URL>
+      <MD5>9cd933a532942557be41d9f5f7d0999a</MD5>
+      <SHA256>64802facfbb1c0825397effa4cea5177c84aae1aeaf2cd24480a59ccc029f0e8</SHA256>
+      <FileName>rnnoise-20200628.tar.xz</FileName>
+      <FileSize>261112</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

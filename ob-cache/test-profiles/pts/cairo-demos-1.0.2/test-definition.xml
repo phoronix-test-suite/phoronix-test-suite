@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Cairo Performance Demos</Title>
+    <AppVersion>2012-01-30</AppVersion>
+    <Description>The cairo-demos test is a benchmark of Cairo using a collection of Cairo demos created by Chris Wilson at Intel OSTC. This test profile tests Cairo's Xlib back-end (others could be supported upon request) expecting an existing Cairo installation on the test system.</Description>
+    <ResultScale>FPS</ResultScale>
+    <Proportion>HIB</Proportion>
+    <Executable>cairo-perf-demos</Executable>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.2</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Deprecated</Status>
+    <ExternalDependencies>build-utilities, xorg-development, libpng-development, cairo-development</ExternalDependencies>
+    <RequiresDisplay>TRUE</RequiresDisplay>
+    <EnvironmentSize>13</EnvironmentSize>
+    <ProjectURL>http://www.cairographics.org/FAQ/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <PostArguments>--antialias=none --benchmark</PostArguments>
+    </Default>
+    <Option>
+      <DisplayName>Demo</DisplayName>
+      <Identifier>cairo-demo</Identifier>
+      <Menu>
+        <Entry>
+          <Name>PostScript Tiger</Name>
+          <Value>tiger-demo</Value>
+        </Entry>
+        <Entry>
+          <Name>Charts</Name>
+          <Value>chart-demo</Value>
+        </Entry>
+        <Entry>
+          <Name>Gradients</Name>
+          <Value>gradient-demo</Value>
+        </Entry>
+        <Entry>
+          <Name>Fish</Name>
+          <Value>fish-demo</Value>
+        </Entry>
+        <Entry>
+          <Name>Gears</Name>
+          <Value>gears-demo</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

@@ -9,7 +9,7 @@
 		</Information>
 		<Package>
 			<GenericName>common-dependencies</GenericName>
-			<PackageName>mesa-utils unzip apt-file unzip</PackageName>
+			<PackageName>mesa-utils vulkan-utils unzip apt-file unzip</PackageName>
 			<FileCheck>glxinfo, unzip, apt-file</FileCheck>
 		</Package>
 		<Package>
@@ -152,7 +152,7 @@
 		<Package>
 			<GenericName>perl-opengl</GenericName>
 			<PackageName>libopengl-perl</PackageName>
-			<FileCheck>perl5/auto/OpenGL/OpenGL.so</FileCheck>
+			<FileCheck>perl5/auto/OpenGL/OpenGL.so OR /usr/lib/x86_64-linux-gnu/perl5/5.30/OpenGL/Config.pm</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>xorg-video</GenericName>
@@ -179,13 +179,8 @@
 			<PackageName>p7zip-full</PackageName>
 		</Package>
 		<Package>
-			<GenericName>qt4-development</GenericName>
-			<PackageName>libqt4-dev libqt4-opengl-dev</PackageName>
-			<FileCheck>qmake-qt4, qt4/Qt/qgl.h</FileCheck>
-		</Package>
-		<Package>
 			<GenericName>qt5-development</GenericName>
-			<PackageName>qml-module-qtquick2 qtdeclarative5-dev qt5-default qtbase5-dev</PackageName>
+			<PackageName>qml-module-qtquick2 qtdeclarative5-dev qt5-default qtbase5-dev libqt5svg5-dev qttools5-dev libqca-qt5-2-dev qt5keychain-dev pyqt5-dev pyqt5-dev-tools qtpositioning5-dev</PackageName>
 			<FileCheck>qmake</FileCheck>
 		</Package>
 		<Package>
@@ -223,7 +218,7 @@
 		<Package>
 			<GenericName>blas-development</GenericName>
 			<PackageName>libblas-dev libopenblas-base libopenblas-dev</PackageName>
-			<FileCheck>/usr/include/x86_64-linux-gnu/openblas_config.h OR /usr/include/openblas/openblas_config.h</FileCheck>
+			<FileCheck>/usr/include/x86_64-linux-gnu/openblas_config.h OR /usr/include/aarch64-linux-gnu/openblas_config.h OR /usr/include/openblas/openblas_config.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>lapack-development</GenericName>
@@ -283,12 +278,16 @@
 		</Package>
 		<Package>
 			<GenericName>python-numpy</GenericName>
-			<PackageName>python-numpy</PackageName>
-			<FileCheck>/usr/share/pyshared/numpy/version.py OR /usr/lib/python2.7/dist-packages/numpy/version.py</FileCheck>
+			<PackageName>python3-numpy</PackageName>
+			<FileCheck>/usr/share/pyshared/numpy/version.py OR  /usr/lib/python3/dist-packages/numpy/</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>yasm</GenericName>
 			<PackageName>yasm nasm</PackageName>
+		</Package>
+		<Package>
+			<GenericName>nasm</GenericName>
+			<PackageName>nasm</PackageName>
 		</Package>
 		<Package>
 			<GenericName>gmp-library</GenericName>
@@ -321,7 +320,7 @@
 		<Package>
 			<GenericName>opencl</GenericName>
 			<PackageName>opencl-headers ocl-icd-libopencl1 clinfo ocl-icd-opencl-dev</PackageName>
-			<FileCheck>/usr/lib/x86_64-linux-gnu/libOpenCL.so, /usr/bin/clinfo</FileCheck>
+			<FileCheck>/usr/lib/x86_64-linux-gnu/libOpenCL.so OR /usr/lib/aarch64-linux-gnu/libOpenCL.so, /usr/bin/clinfo</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>attr</GenericName>
@@ -358,12 +357,10 @@
 		<Package>
 			<GenericName>python-scipy</GenericName>
 			<PackageName>python3-scipy</PackageName>
-			<FileCheck>/usr/lib/python3/dist-packages/scipy</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>python-sklearn</GenericName>
 			<PackageName>python3-sklearn</PackageName>
-			<FileCheck>/usr/lib/python3/dist-packages/sklearn/</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>V8</GenericName>
@@ -446,8 +443,16 @@
 			<PackageName>libglfw3-dev</PackageName>
 		</Package>
 		<Package>
+			<GenericName>protobuf</GenericName>
+			<PackageName>libprotobuf-dev</PackageName>
+		</Package>
+		<Package>
 			<GenericName>eigen</GenericName>
 			<PackageName>libeigen3-dev</PackageName>
+		</Package>
+		<Package>
+			<GenericName>erlang</GenericName>
+			<PackageName>erlang</PackageName>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

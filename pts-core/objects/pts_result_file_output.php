@@ -674,43 +674,53 @@ class pts_result_file_output
 			$html .= '<h2>' . $system->get_identifier() . '</h2>';
 			if(isset($systems[($i + 1)]) && $systems[($i + 1)]->get_hardware() == $system->get_hardware() && $systems[($i + 1)]->get_software() == $system->get_software())
 			{
-				continue;
+				//continue;
 			}
-			$hw = $system->get_hardware();
-			$sw = $system->get_software();
-
-			$hw = pts_strings::highlight_words_with_colon($hw);
-			$sw = pts_strings::highlight_words_with_colon($sw);
-
-			if($hw != $prev_hw)
+			else
 			{
-				$html .= '<p>' . pts_strings::highlight_diff_two_structured_strings($hw, $prev_hw) . '</p>';
-				$prev_hw = $hw;
-			}
-			if($sw != $prev_sw)
-			{
-				$html .= '<p>' . $sw . '</p>';
-				$prev_sw = $sw;
-			}
+				$hw = $system->get_hardware();
+				$sw = $system->get_software();
 
-			$attributes = array();
-			pts_result_file_analyzer::system_to_note_array($system, $attributes);
-			if(!empty($attributes))
-			{
-				$notes = '<p class="mini"><em>';
-				foreach($attributes as $section => $data)
+				$hw = pts_strings::highlight_words_with_colon($hw);
+				$sw = pts_strings::highlight_words_with_colon($sw);
+
+				if($hw != $prev_hw)
 				{
-					foreach($data as $c => $val)
-					{
-						$notes .= '<strong>' .$section . ' Notes:</strong> ' . $val . '<br />';
-					}
+					$html .= '<p>' . pts_strings::highlight_diff_two_structured_strings($hw, $prev_hw) . '</p>';
+					$prev_hw = $hw;
 				}
-				$notes .= '</em></p>';
-
-				if($notes != $prev_notes)
+				if($sw != $prev_sw)
 				{
-					$html .= $notes;
-					$prev_notes = $notes;
+					$html .= '<p>' . $sw . '</p>';
+					$prev_sw = $sw;
+				}
+			}
+
+			if(isset($systems[($i + 1)]) && $systems[($i + 1)]->get_json() == $system->get_json() && $systems[($i + 1)]->get_notes() == $system->get_notes())
+			{
+			
+			}
+			else
+			{
+				$attributes = array();
+				pts_result_file_analyzer::system_to_note_array($system, $attributes);
+				if(!empty($attributes))
+				{
+					$notes = '<p class="mini"><em>';
+					foreach($attributes as $section => $data)
+					{
+						foreach($data as $c => $val)
+						{
+							$notes .= '<strong>' .$section . ' Notes:</strong> ' . $val . '<br />';
+						}
+					}
+					$notes .= '</em></p>';
+
+					if($notes != $prev_notes)
+					{
+						$html .= $notes;
+						$prev_notes = $notes;
+					}
 				}
 			}
 		}

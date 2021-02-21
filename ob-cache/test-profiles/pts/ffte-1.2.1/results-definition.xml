@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>   #_RESULT_#       MFLOPS</OutputTemplate>
+    <LineHint>MFLOPS</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

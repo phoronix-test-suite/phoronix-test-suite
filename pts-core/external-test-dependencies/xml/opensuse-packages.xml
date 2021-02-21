@@ -87,6 +87,18 @@
 			<FileCheck>/usr/lib/jvm/ OR /usr/lib64/jvm/</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>maven</GenericName>
+			<PackageName>maven</PackageName>
+		</Package>
+		<Package>
+			<GenericName>python-numpy</GenericName>
+			<PackageName>python3-numpy</PackageName>
+		</Package>
+		<Package>
+			<GenericName>python-sklearn</GenericName>
+			<PackageName>python-scikit-learn</PackageName>
+		</Package>
+		<Package>
 			<GenericName>portaudio-development</GenericName>
 			<PackageName>portaudio-devel</PackageName>
 		</Package>
@@ -109,6 +121,10 @@
 		<Package>
 			<GenericName>freeimage</GenericName>
 			<PackageName>libfreeimage3 libfreeimage-devel</PackageName>
+		</Package>
+		<Package>
+			<GenericName>protobuf</GenericName>
+			<PackageName>protobuf-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>scons</GenericName>
@@ -212,7 +228,7 @@
 		</Package>
 		<Package>
 			<GenericName>vulkan-development</GenericName>
-			<PackageName>vulkan</PackageName>
+			<PackageName>vulkan-tools</PackageName>
 		</Package>
 		<Package>
 			<GenericName>tcl</GenericName>
@@ -224,7 +240,7 @@
 		</Package>
 		<Package>
 			<GenericName>python</GenericName>
-			<PackageName>python python3-pip</PackageName>
+			<PackageName>python3-pip</PackageName>
 		</Package>
 		<Package>
 			<GenericName>bc</GenericName>
@@ -236,7 +252,7 @@
 		</Package>
 		<Package>
 			<GenericName>openmpi-development</GenericName>
-			<PackageName>openmpi</PackageName>
+			<PackageName>openmpi-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>yasm</GenericName>
@@ -336,7 +352,7 @@
 		</Package>
 		<Package>
 			<GenericName>node-npm</GenericName>
-			<PackageName>npm</PackageName>
+			<PackageName>nodejs nodejs-npm</PackageName>
 		</Package>
 		<Package>
 			<GenericName>snappy</GenericName>
@@ -381,6 +397,10 @@
 		<Package>
 			<GenericName>vaapi</GenericName>
 			<PackageName>libva-devel</PackageName>
+		</Package>
+		<Package>
+			<GenericName>erlang</GenericName>
+			<PackageName>erlang</PackageName>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>MPEG DECODING (1920x1080): #_MPEG_DECODING_1920x1080_# frames/s
+MPEG DECODING (1280x720): #_MPEG_DECODING_1280x720_# frames/s
+H264 DECODING (1920x1080): #_H264_DECODING_1920x1080_# frames/s
+H264 DECODING (1280x720): #_H264_DECODING_1280x720_# frames/s
+VC1 DECODING (1440x1080): #_VC1_DECODING_1440x1080_# frames/s
+MPEG4 DECODING (1920x1080): #_MPEG4_DECODING_1920x1080_# frames/s
+MULTITHREADED MPEG DECODING (1920x1080): #_MPEG_MULTI_DECODING_# frames/s
+
+</OutputTemplate>
+    <ResultKey>PTS_TEST_ARGUMENTS</ResultKey>
+  </ResultsParser>
+</PhoronixTestSuite>

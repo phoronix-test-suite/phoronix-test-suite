@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/phpbench-081-patched2.zip</URL>
+      <MD5>3e5fa1ad60261ff052bb38f505c8c4e5</MD5>
+      <SHA256>32503bd4ace0c8429493de864ca48bb16febed867e52b75f4369d7145f797718</SHA256>
+      <FileName>phpbench-081-patched2.zip</FileName>
+      <FileSize>32897</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

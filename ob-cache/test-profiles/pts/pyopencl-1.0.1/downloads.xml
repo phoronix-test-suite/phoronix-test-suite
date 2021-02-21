@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/pyopencl-2009-10-03.tgz, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/pyopencl-2009-10-03.tgz</URL>
+      <MD5>23be187de61f6732cbddd918c34472ae</MD5>
+      <FileName>pyopencl-2009-10-03.tgz</FileName>
+    </Package>
+    <Package>
+      <FileName>pyopencl-0.91.3.tar.gz</FileName>
+      <FileSize>46318</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

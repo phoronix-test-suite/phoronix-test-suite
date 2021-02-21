@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2019, Phoronix Media
-	Copyright (C) 2008 - 2019, Michael Larabel
+	Copyright (C) 2008 - 2020, Phoronix Media
+	Copyright (C) 2008 - 2020, Michael Larabel
 	phodevi_disk.php: The PTS Device Interface object for the system disk(s)
 
 	This program is free software; you can redistribute it and/or modify
@@ -30,6 +30,8 @@ class phodevi_disk extends phodevi_device_interface
 			'scheduler' => new phodevi_device_property('hdd_scheduler', phodevi::no_caching),
 			'mount-options' => new phodevi_device_property('proc_mount_options', phodevi::no_caching),
 			'mount-options-string' => new phodevi_device_property('proc_mount_options_string', phodevi::no_caching),
+			'device-providing-storage' => new phodevi_device_property('device_providing_storage', phodevi::std_caching),
+			'block-size' => new phodevi_device_property('block_size', phodevi::std_caching),
 			'extra-disk-details' => new phodevi_device_property('extra_disk_details', phodevi::no_caching)
 			);
 	}
@@ -89,6 +91,33 @@ class phodevi_disk extends phodevi_device_interface
 		}
 
 		return $mount_options;
+	}
+	public static function block_size()
+	{
+		$path = PTS_IS_CLIENT ? pts_client::test_install_root_path() : '.';
+		$block_size = -1;
+		if(PTS_IS_CLIENT && pts_client::executable_in_path('stat'))
+		{
+			$stat = trim(shell_exec('stat -f -c %S ' . $path));
+
+			if(is_numeric($stat) && $stat > 0)
+			{
+				$block_size = $stat;
+			}
+		}
+
+		return $block_size;
+	}
+	public static function device_providing_storage($mount_point = null, $mounts = null)
+	{
+		$mo = phodevi::read_property('disk', 'mount-options');
+
+		if(isset($mo['device']))
+		{
+			return $mo['device'];
+		}
+
+		return null;
 	}
 	public static function proc_mount_options_string($mount_point = null, $mounts = null)
 	{
@@ -374,6 +403,7 @@ class phodevi_disk extends phodevi_device_interface
 			$disk_model = str_replace('OCZ-', 'OCZ ', $disk_model);
 			$disk_model = str_replace('TOSHIBA-', 'TOSHIBA ', $disk_model);
 			$disk_model = str_replace('Crucial_', 'Crucial ', $disk_model);
+			$disk_model = str_ireplace('SKHynix_', 'SK hynix ', $disk_model);
 
 			if(($x = strpos($disk_model, ' ')) != false)
 			{
@@ -397,6 +427,15 @@ class phodevi_disk extends phodevi_device_interface
 			{
 				// For strings with INTEL already present, Intel seems to report it as INTEL
 				$disk_model = 'INTEL ' . $disk_model;
+			}
+		}
+
+		foreach(array('Kioxia ', 'Toshiba ', 'SK hynix ') as $brand)
+		{
+			if(($k = stripos($disk_model . ' ', $brand)) !== false && $k > 0)
+			{
+				$disk_model = trim($brand . str_ireplace($brand, '', $disk_model . ' '));
+				break;
 			}
 		}
 
@@ -466,7 +505,7 @@ class phodevi_disk extends phodevi_device_interface
 			return null;
 		}
 		$mount_point = $device['mount-point'];
-		$extra_details = null;
+		$extra_details = array();
 
 		if(strtolower($device['file-system']) == 'btrfs' && pts_client::executable_in_path('btrfs'))
 		{
@@ -478,7 +517,7 @@ class phodevi_disk extends phodevi_device_interface
 
 				if(strpos($btrfs_fi_df, 'RAID') !== false)
 				{
-					$extra_details = $btrfs_fi_df;
+					$extra_details[] = $btrfs_fi_df;
 				}
 			}
 		}
@@ -489,7 +528,7 @@ class phodevi_disk extends phodevi_device_interface
 			$md = substr($md, 0, strpos($md, PHP_EOL));
 			if(($x = strpos($md, 'active')) !== false)
 			{
-				$extra_details = trim(substr($md, $x + 7));
+				$extra_details[] = trim(substr($md, $x + 7));
 			}
 		}
 		if($extra_details == null && strpos($device['device'], 'bcache') !== false)
@@ -504,13 +543,18 @@ class phodevi_disk extends phodevi_device_interface
 					$cache_mode = substr($cache_mode, $x + 1);
 					$cache_mode = substr($cache_mode, 0, strpos($cache_mode, ']'));
 
-					$extra_details = trim('Bcache ' . $cache_mode);
+					$extra_details[] = trim('Bcache ' . $cache_mode);
 				}
 			}
 		}
 
+		if(($bs = phodevi::read_property('disk', 'block-size')) > 0)
+		{
+			$extra_details[] = 'Block Size: ' . $bs;
+		}
 
-		return $extra_details;
+
+		return implode(' - ', $extra_details);
 	}
 }
 

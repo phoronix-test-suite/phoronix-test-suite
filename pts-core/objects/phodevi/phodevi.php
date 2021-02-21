@@ -358,6 +358,7 @@ class phodevi extends phodevi_base
 				array(
 				'File-System' => phodevi::read_property('system', 'filesystem'),
 				'Mount Options' => phodevi::read_property('disk', 'mount-options-string'),
+				//'Block Size' => phodevi::read_property('disk', 'block-size'),
 				'Disk Scheduler' => phodevi::read_property('disk', 'scheduler'),
 				'Disk Details' => phodevi::read_property('disk', 'extra-disk-details'),
 				),
@@ -813,6 +814,10 @@ class phodevi extends phodevi_base
 		{
 			$compatible = false;
 		}
+		if(phodevi::is_macosx())
+		{
+			$compatible = true;
+		}
 
 		return $compatible;
 	}
@@ -832,6 +837,31 @@ class phodevi extends phodevi_base
 		{
 			$clinfo = shell_exec($clinfo);
 			if(strpos($clinfo, 'Number of platforms                               0') !== false)
+			{
+				$supported = false;
+			}
+		}
+
+		return $supported;
+	}
+	public static function vulkan_support_detected()
+	{
+		static $supported = -1;
+
+		if($supported !== -1)
+		{
+			return $supported;
+		}
+		$supported = true;
+
+		if(($vulkaninfo = pts_client::executable_in_path('vulkaninfo 2>&1')))
+		{
+			$vulkaninfo = shell_exec($vulkaninfo);
+			if(strpos($vulkaninfo, 'Cannot create Vulkan instance') !== false)
+			{
+				$supported = false;
+			}
+			else if(strpos($vulkaninfo, 'failed with ERROR_INITIALIZATION_FAILED') !== false)
 			{
 				$supported = false;
 			}

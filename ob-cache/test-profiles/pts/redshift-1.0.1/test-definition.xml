@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>RedShift Demo</Title>
+    <AppVersion>3.0</AppVersion>
+    <Description>This is a test of MAXON's RedShift demo build that currently requires NVIDIA GPU acceleration.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+    <PreInstallMessage>You must manually download the RedShift demo program from https://www.redshift3d.com/downloads/redshift_v3.0.28_linux_demo.run and place it in your Phoronix Test Suite download cache ($DOWNLOAD_CACHE) for this test profile to work. Downloading RedShift Demo requires a free registration at RedShift3d.com.</PreInstallMessage>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Non-Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <RequiresRootInstall>TRUE</RequiresRootInstall>
+    <EnvironmentSize>1074</EnvironmentSize>
+    <ProjectURL>https://www.redshift3d.com/demo</ProjectURL>
+    <RequiresCoreVersionMin>9911</RequiresCoreVersionMin>
+    <InternalTags>CUDA</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

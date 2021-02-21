@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2010, Phoronix Media
-	Copyright (C) 2008 - 2010, Michael Larabel
+	Copyright (C) 2008 - 2020, Phoronix Media
+	Copyright (C) 2008 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -42,7 +42,7 @@ class list_saved_results implements pts_option_interface
 
 				if(($title = $result_file->get_title()) != null)
 				{
-					echo sprintf('Saved Name: %-18ls Title: %-18ls', $saved_results_identifier, $title) . PHP_EOL;
+					echo pts_client::cli_just_bold($saved_results_identifier) . ' ' . pts_client::cli_just_italic($title) . PHP_EOL;
 
 					foreach($result_file->get_system_identifiers() as $id)
 					{

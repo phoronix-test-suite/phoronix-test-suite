@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Gridding rate   #_RESULT_#</OutputTemplate>
+    <ResultScale>Million Grid Points Per Second</ResultScale>
+    <AppendToArgumentsDescription>Gridding</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Degridding rate   #_RESULT_#</OutputTemplate>
+    <ResultScale>Million Grid Points Per Second</ResultScale>
+    <AppendToArgumentsDescription>Degridding</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>    Degridding rate (total)    #_RESULT_# (Mpix/sec)</OutputTemplate>
+    <LineHint>Degridding rate (total)</LineHint>
+    <ResultScale>Mpix/sec</ResultScale>
+    <AppendToArgumentsDescription>Degridding</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>    Gridding rate (total)      #_RESULT_# (Mpix/sec)</OutputTemplate>
+    <LineHint>Gridding rate (total</LineHint>
+    <ResultScale>Mpix/sec</ResultScale>
+    <AppendToArgumentsDescription>Gridding</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>    Cleaning rate  #_RESULT_# (iterations per second)</OutputTemplate>
+    <ResultScale>Iterations Per Second</ResultScale>
+  </ResultsParser>
+</PhoronixTestSuite>

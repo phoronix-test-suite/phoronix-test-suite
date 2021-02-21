@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://git.kernel.org/torvalds/t/linux-5.9-rc3.tar.gz</URL>
+      <MD5>bbbea8c9dd77d4dcd28d95cbec5e14fa</MD5>
+      <SHA256>83ff5e9c25ea910b078ece8d1f1e593dec91c93a76b8c11f1db178e07b9bccaf</SHA256>
+      <FileName>linux-5.9-rc3.tar.gz</FileName>
+      <FileSize>183609079</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

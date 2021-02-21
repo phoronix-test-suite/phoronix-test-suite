@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>asmFish</Title>
+    <AppVersion>2018-07-23</AppVersion>
+    <Description>This is a test of asmFish, an advanced chess benchmark written in Assembly.</Description>
+    <ResultScale>Nodes/second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <SubTitle>1024 Hash Memory, 26 Depth</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.2</Version>
+    <SupportedPlatforms>Linux, Windows, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <EnvironmentSize>5</EnvironmentSize>
+    <ProjectURL>https://github.com/lantonov/asmFish/</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

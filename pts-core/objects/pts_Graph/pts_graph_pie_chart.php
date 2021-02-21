@@ -31,6 +31,7 @@ class pts_graph_pie_chart extends pts_graph_core
 		$this->i['graph_value_type'] = 'ABSTRACT';
 		$this->i['hide_graph_identifiers'] = false;
 		$this->i['identifier_width'] = 0;
+		$this->i['show_real_pie_values'] = !isset($extra_attributes['no_pie_values']);
 		$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'] + 100);
 	}
 	protected function render_graph_pre_init()
@@ -60,14 +61,14 @@ class pts_graph_pie_chart extends pts_graph_core
 		{
 			foreach($group as &$buffer_item)
 			{
-				$percent = pts_math::set_precision($buffer_item->get_result_value() / $this->i['pie_sum'] * 100, 2);
-				array_push($key_strings, $buffer_item->get_result_value() . ' [' . $percent . "%]");
+				$percent = pts_math::set_precision($buffer_item->get_result_value() / $this->i['pie_sum'] * 100, 1);
+				array_push($key_strings, ($this->i['show_real_pie_values'] ? $buffer_item->get_result_value() . ' [' . $percent . '%]' : $percent . '%'));
 			}
 		}
 
 		$key_count = count($key_strings);
-		$key_item_width = 18 + $this->text_string_width(pts_strings::find_longest_string($this->graph_identifiers), self::$c['size']['key']);
-		$key_item_width_value = 12 + $this->text_string_width(pts_strings::find_longest_string($key_strings), self::$c['size']['key']);
+		$key_item_width = 25 + $this->text_string_width(pts_strings::find_longest_string($this->graph_identifiers), self::$c['size']['key']);
+		$key_item_width_value = 18 + $this->text_string_width(pts_strings::find_longest_string($key_strings), self::$c['size']['key']);
 		$keys_per_line = floor(($this->i['graph_left_end'] - $this->i['left_start'] - 14) / ($key_item_width + $key_item_width_value));
 
 		if($keys_per_line < 1)
@@ -93,7 +94,7 @@ class pts_graph_pie_chart extends pts_graph_core
 
 			$this->svg_dom->add_element('rect', array('x' => ($c_x - 13), 'y' => ($c_y - 5), 'width' => 10, 'height' => 10, 'fill' => $this_color, 'stroke' => self::$c['color']['notches'], 'stroke-width' => 1));
 			$this->svg_dom->add_text_element($this->graph_identifiers[$i], array('x' => $c_x, 'y' => $c_y, 'font-size' => self::$c['size']['key'], 'fill' => $this_color, 'text-anchor' => 'start', 'dominant-baseline' => 'middle'));
-			$this->svg_dom->add_text_element($key_strings[$i], array('x' => ($c_x + $key_item_width + 30), 'y' => $c_y, 'font-size' => self::$c['size']['key'], 'fill' => $this_color, 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
+			$this->svg_dom->add_text_element($key_strings[$i], array('x' => ($c_x + $key_item_width + 20), 'y' => $c_y, 'font-size' => self::$c['size']['key'], 'fill' => $this_color, 'text-anchor' => 'end', 'dominant-baseline' => 'middle'));
 		}
 	}
 	public function render_graph_finish()
@@ -111,7 +112,7 @@ class pts_graph_pie_chart extends pts_graph_core
 			foreach($group as &$buffer_item)
 			{
 				$percent = pts_math::set_precision($buffer_item->get_result_value() / $this->i['pie_sum'] * 100, 3);
-				$this->svg_dom->draw_svg_arc($center_x, $center_y, $radius, $offset_percent / 100, $percent/ 100, array('fill' => $this->get_paint_color($buffer_item->get_result_identifier()), 'stroke' => self::$c['color']['border'], 'stroke-width' => 2, 'xlink:title' =>  $buffer_item->get_result_identifier() . ': ' . $buffer_item->get_result_value()));
+				$this->svg_dom->draw_svg_arc($center_x, $center_y, $radius, $offset_percent / 100, $percent/ 100, array('fill' => $this->get_paint_color($buffer_item->get_result_identifier()), 'stroke' => self::$c['color']['border'], 'stroke-width' => 2));
 				$offset_percent += $percent;
 			}
 		}

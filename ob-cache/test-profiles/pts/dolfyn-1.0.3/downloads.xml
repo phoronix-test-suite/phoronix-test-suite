@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/dolfyn-cfd_0.527.tgz</URL>
+      <MD5>3db5d2111bfa52675007a02e7ae3f189</MD5>
+      <SHA256>4c4fb694dd7472fb9698caee45be2ddc1507d13324f1c53c59c96075d812faeb</SHA256>
+      <FileName>dolfyn-cfd_0.527.tgz</FileName>
+      <FileSize>1107929</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2020, Phoronix Media
-	Copyright (C) 2008 - 2020, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ class pts_result_viewer_settings
 		$drop_down_menus = array('Export Benchmark Data' => array(
 						'export=pdf' => 'Result File To PDF',
 						'export=txt' => 'Result File To Text',
-						'export=xml' => 'Result File To XML',
+					//	'export=xml' => 'Result File To XML',
 						'export=xml-suite' => 'Result File To Test Suite (XML)',
 						'export=csv' => 'Result File To CSV/Excel',
 						'export=csv-all' => 'Individual Run Data To CSV/Excel',
@@ -143,7 +143,7 @@ class pts_result_viewer_settings
 				break;
 			}
 		}
-		$suites_in_result_file = pts_test_suites::suites_in_result_file($result_file, true, 0);
+		$suites_in_result_file = $system_identifier_count > 1 ? pts_test_suites::suites_in_result_file($result_file, true, 0) : array();
 		// END OF CHECKS
 
 		$analyze_options .= '<form action="' . $_SERVER['REQUEST_URI'] . '" method="post">';
@@ -181,6 +181,10 @@ class pts_result_viewer_settings
 		{
 			$suite_limit = '<h3>Limit displaying results to tests within:</h3>';
 			$stis = self::check_request_for_var($request, 'stis');
+			if(!is_array($stis))
+			{
+				$stis = explode(',', $stis);
+			}
 			ksort($suites_in_result_file);
 			$suite_limit .= '<div style="max-height: 250px; overflow: scroll;">';
 			foreach($suites_in_result_file as $suite_identifier => $s)
@@ -302,7 +306,7 @@ $t .= '
 
 	if($can_delete_results && !empty($public_id))
 	{
-		$t .= '<div class="div_table_cell"><button type="button" onclick="javascript:delete_run_from_result_file(\'' . $public_id . '\', \'' . $si . '\', \'' . $ppdx . '\'); return false;">Delete Run</button></div>';
+		$t .= '<div class="div_table_cell"><button type="button" onclick="javascript:delete_run_from_result_file(\'' . $public_id . '\', \'' . $si . '\', \'' . $ppdx . '\'); return false;">Delete Run</button> <button type="button" onclick="javascript:rename_run_in_result_file(\'' . $public_id . '\', \'' . $si . '\'); return false;">Rename Run</button></div>';
 	}
 	$t .= '</div>';
 }
@@ -530,6 +534,10 @@ if($result_file->get_test_count() > 1)
 		}
 		if(($stis = self::check_request_for_var($request, 'stis')))
 		{
+			if(!is_array($stis))
+			{
+				$stis = explode(',', $stis);
+			}
 			$suites_in_result_file = pts_test_suites::suites_in_result_file($result_file, true, 0);
 			$tests_to_show = array();
 			foreach($stis as $suite_to_show)
@@ -574,13 +582,7 @@ if($result_file->get_test_count() > 1)
 		}
 		if(self::check_request_for_var($request, 'hnr'))
 		{
-			foreach($result_file->get_result_objects() as $i => $result_object)
-			{
-				if($result_object->has_noisy_result())
-				{
-					$result_file->remove_result_object_by_id($i);
-				}
-			}
+			$result_file->remove_noisy_results();
 		}
 		if(self::check_request_for_var($request, 'hni'))
 		{
@@ -747,13 +749,19 @@ if($result_file->get_test_count() > 1)
 			}
 		}
 
+		$perf_per_dollar_values = array();
 		foreach($result_file->get_system_identifiers() as $si)
 		{
 			$ppd = self::check_request_for_var($request, 'ppd_' . rtrim(base64_encode($si), '='));
 			if($ppd && $ppd > 0 && is_numeric($ppd))
 			{
-				pts_result_file_analyzer::generate_perf_per_dollar($result_file, $si, $ppd);
+				$perf_per_dollar_values[$si] = $ppd;
 			}
+		}
+
+		if(!empty($perf_per_dollar_values))
+		{
+			pts_result_file_analyzer::generate_perf_per_dollar($result_file, $perf_per_dollar_values);
 		}
 	}
 	public static function html_input_field($name, $id, $on_change = null)
@@ -782,6 +790,10 @@ if($result_file->get_test_count() > 1)
 			if($use_index == false)
 			{
 				$value = $name;
+			}
+			if($name == null)
+			{
+				$name = '[SELECT]';
 			}
 
 			$html_menu .= '<option value="' . $value . '"' . ($value == $selected || $force_select ? ' selected="selected"' : null) . '>' . $name . '</option>';

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://mirrors.dotsrc.org/gcrypt/libgcrypt/libgcrypt-1.9.0.tar.bz2, ftp://ftp.gnupg.org/gcrypt/libgcrypt/libgcrypt-1.9.0.tar.bz2</URL>
+      <MD5>5ef99d1838092bc15c0ddafb22830a02</MD5>
+      <SHA256>4d9ccaa5f99db59ebcb64d73f62825b05ce8a6b7f86d19178559ef84de1381cb</SHA256>
+      <FileName>libgcrypt-1.9.0.tar.bz2</FileName>
+      <FileSize>3183699</FileSize>
+    </Package>
+    <Package>
+      <URL>ftp://ftp.gnupg.org/gcrypt/libgpg-error/libgpg-error-1.41.tar.bz2, http://mirrors.dotsrc.org/gcrypt/libgpg-error/libgpg-error-1.41.tar.bz2</URL>
+      <MD5>36e9e7e6fffefac1eae5a1a49f14ac4f</MD5>
+      <SHA256>64b078b45ac3c3003d7e352a5e05318880a5778c42331ce1ef33d1a0d9922742</SHA256>
+      <FileName>libgpg-error-1.41.tar.bz2</FileName>
+      <FileSize>967117</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

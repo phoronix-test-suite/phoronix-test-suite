@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2020, Phoronix Media
-	Copyright (C) 2008 - 2020, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -102,7 +102,7 @@ class pts_virtual_test_suite extends pts_test_suite
 				$test_version = array_shift($test['versions']);
 				$test_profile = new pts_test_profile($this->repo . '/' . $test_identifier . '-' . $test_version);
 
-				if($test_profile->get_display_format() != 'BAR_GRAPH' || !in_array($test_profile->get_license(), array('Free', 'Non-Free')))
+				if($test_profile->get_display_format() != 'BAR_GRAPH' || !in_array($test_profile->get_license(), array('Free', 'Non-Free')) || $test_profile->get_status() != 'Verified')
 				{
 					// Also ignore these tests
 					continue;

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Build2</Title>
+    <AppVersion>0.13</AppVersion>
+    <Description>This test profile measures the time to bootstrap/install the build2 C++ build toolchain from source. Build2 is a cross-platform build toolchain for C/C++ code and features Cargo-like features.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Time To Compile</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux, BSD, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, curl</ExternalDependencies>
+    <ProjectURL>https://build2.org/</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

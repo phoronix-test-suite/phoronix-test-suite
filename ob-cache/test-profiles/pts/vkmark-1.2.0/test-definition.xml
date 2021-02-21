@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>VKMark</Title>
+    <AppVersion>2020-05-21</AppVersion>
+    <Description>VKMark is a collection of Vulkan tests/benchmarks.</Description>
+    <ResultScale>VKMark Score</ResultScale>
+    <Proportion>HIB</Proportion>
+    <Executable>vkmark-run</Executable>
+    <TimesToRun>3</TimesToRun>
+    <PreInstallMessage>Some external dependencies needed for this test are may not be currently covered by the Phoronix Test Suite - depending upon distribution/version. You might need to manually install those packages; on an Ubuntu system it would be - sudo apt install libvulkan-dev libglm-dev libassimp-dev libxcb1-dev libxcb-icccm4-dev libwayland-dev libdrm-dev libgbm-dev.</PreInstallMessage>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, vulkan-development, meson, xorg-development</ExternalDependencies>
+    <RequiresDisplay>TRUE</RequiresDisplay>
+    <EnvironmentSize>111</EnvironmentSize>
+    <ProjectURL>https://github.com/vkmark/vkmark</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>/usr/share/pkgconfig/wayland-protocols.pc, vulkan/vk_icd.h, glm/simd/common.h, assimp/Defines.h, xcb/xcb.h, xcb/xcb_icccm.h, wayland-client.h, libdrm/drm.h, gbm.h</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>--winsys-dir=build/src --data-dir=data </Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>--size $VIDEO_WIDTHx$VIDEO_HEIGHT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

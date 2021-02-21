@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Stream-Dynamic</Title>
+    <AppVersion>1.0</AppVersion>
+    <Description>This is an open-source AMD modified copy of the Stream memory benchmark catered towards running the RAM benchmark on systems with the AMD Optimizing C/C++ Compiler (AOCC) among other by-default optimizations aiming for an easy and standardized deployment. This test profile though will attempt to fall-back to GCC / Clang for systems lacking AOCC, otherwise there is the existing "stream" test profile.</Description>
+    <ResultScale>MB/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <SubTitle>Best Rate</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Memory</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <ExternalDependencies>build-utilities, python, numa-development</ExternalDependencies>
+    <RequiresRoot>TRUE</RequiresRoot>
+    <EnvironmentSize>10</EnvironmentSize>
+    <ProjectURL>http://www.cs.virginia.edu/stream/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>jemalloc/jemalloc.h</SystemDependencies>
+  </TestProfile>
+</PhoronixTestSuite>

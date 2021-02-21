@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/dcraw-test-1.tar.bz2, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/dcraw-test-1.tar.bz2</URL>
+      <MD5>fa2e1f2d3ae8a505c4b89462144ebd3d</MD5>
+      <FileName>dcraw-test-1.tar.bz2</FileName>
+      <FileSize>70875984</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

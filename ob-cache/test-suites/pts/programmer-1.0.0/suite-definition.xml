@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m3-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Programmer / Developer System Benchmarks</Title>
+    <Version>1.0.0</Version>
+    <TestType>System</TestType>
+    <Description>Various benchmarks / test profiles that are common / likely to be of interest to programmers/developers. Other test profiles and test suites exist for specific domain areas while this test suite is comprised of general tests likely to be of interest to programmers in evaluating system performance.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/simdjson</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/sqlite-speedtest</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/node-web-tooling</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/git</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/blosc</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-zstd</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/pyperformance</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/pybench</Test>
+  </Execute>
+  <Execute>
+    <Test>system/cryptsetup</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/compilation</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/linear-algebra</Test>
+  </Execute>
+</PhoronixTestSuite>

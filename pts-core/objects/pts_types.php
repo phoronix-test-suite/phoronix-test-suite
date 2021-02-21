@@ -188,6 +188,15 @@ class pts_types
 		}
 		else
 		{
+			if(PTS_IS_CLIENT && strpos($identifier_item, '/') !== false && ($ei = explode('/', $identifier_item)) && count($ei) == 2)
+			{
+				if(!pts_openbenchmarking::is_local_repo($ei[0]) && strlen($ei[0]) > 2 && ($ob_info = pts_openbenchmarking::ob_repo_exists($ei[0])))
+				{
+					echo '    ' . pts_client::cli_just_italic($identifier_item) . ' appears to be associated with the OpenBenchmarking.org account ' . pts_client::cli_just_bold($ob_info[1]) . ' (' . pts_client::cli_just_bold($ob_info[0]) . ') but is not currently enabled.' . PHP_EOL;
+					echo '    Enable this OpenBenchmarking.org repository by running: ' . pts_client::cli_just_bold('phoronix-test-suite enable-repo ' . $ob_info[0]) . PHP_EOL;
+				}
+			}
+
 			return false;
 		}
 

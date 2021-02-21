@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://icl.cs.utk.edu/projectsfiles/hpcc/download/hpcc-1.5.0.tar.gz, http://fossies.org/linux/privat/hpcc-1.5.0.tar.gz</URL>
+      <MD5>bf6df65a2d690034db79151d53cf0791</MD5>
+      <SHA256>0a6fef7ab9f3347e549fed65ebb98234feea9ee18aea0c8f59baefbe3cf7ffb8</SHA256>
+      <FileName>hpcc-1.5.0.tar.gz</FileName>
+      <FileSize>655993</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

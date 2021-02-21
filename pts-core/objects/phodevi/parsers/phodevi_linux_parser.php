@@ -339,6 +339,19 @@ class phodevi_linux_parser
 
 		return $cpuinfo_matches;
 	}
+	public static function systemctl_active($service)
+	{
+		$active = false;
+		if(pts_client::executable_in_path('systemctl'))
+		{
+			$is_active = trim(shell_exec('systemctl is-active ' . $service . ' 2>/dev/null'));
+			if($is_active == 'active')
+			{
+				$active = true;
+			}
+		}
+		return $active;
+	}
 	public static function cpuinfo_to_array($cpuinfo = null)
 	{
 		if($cpuinfo == null && is_file('/proc/cpuinfo'))

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <FileName>omega-opm-2.tar.gz</FileName>
+      <FileSize>440350494</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

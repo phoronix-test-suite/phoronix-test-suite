@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://s3.amazonaws.com/s3.redshift3d.com/public/benchmark/RedshiftBenchmarkScenes.tar.gz</URL>
+      <MD5>3f680b81d8025f1244c7abe47271b09f</MD5>
+      <SHA256>1ee8798a8f22585c6ce4088d249e27bc7821f2cb37e980f69b274411ede05d2b</SHA256>
+      <FileName>RedshiftBenchmarkScenes.tar.gz</FileName>
+      <FileSize>178209779</FileSize>
+    </Package>
+    <Package>
+      <URL>http://s3.amazonaws.com/s3.redshift3d.com/public/benchmark/RedshiftBenchmarkScenes.zip</URL>
+      <MD5>a4fc35edb55dd08af367d80e91e47c73</MD5>
+      <SHA256>724510619f340eb6b8ed8b5926379dd2fe09e635508a6c6a2c3c586d456ab7de</SHA256>
+      <FileName>RedshiftBenchmarkScenes.zip</FileName>
+      <FileSize>176152228</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <MD5>b31d6bc885c0e6e2207243f47931a5f3</MD5>
+      <SHA256>0f5e9be67a7a4bc062eaf722ed4b876eb31ec4f149249b8afc36feb6ba486865</SHA256>
+      <FileName>redshift_v3.0.28_linux_demo.run</FileName>
+      <FileSize>550985308</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <MD5>eacadd51342cfbe0277fd6160e0758ef</MD5>
+      <SHA256>3a828b70d7bd0772b0abce0b4f51a7c9ed3249cba731cdd3343d88eeb8324bef</SHA256>
+      <FileName>redshift_v3.0.28_demo_setup.exe</FileName>
+      <FileSize>575251200</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -98,7 +98,7 @@ class pts_test_install_manager
 			{
 				$json_dc = json_decode($json_dc_file, true);
 
-				foreach($json_download_cache['phoronix-test-suite']['download-cache'] as $cached_file)
+				foreach($json_dc['phoronix-test-suite']['download-cache'] as $cached_file)
 				{
 					if(!isset($remote_download_files[$cached_file['file_name']]))
 					{

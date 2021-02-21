@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/amd-stream-dynamic-1.tar.xz</URL>
+      <MD5>5f8e08620e40b08bcf8f33affa2cb969</MD5>
+      <SHA256>206d9c315d1d220e7ed56ee332f1bbb4454cd18a390fa810b94c0d3ea4c2d20e</SHA256>
+      <FileName>amd-stream-dynamic-1.tar.xz</FileName>
+      <FileSize>1980288</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

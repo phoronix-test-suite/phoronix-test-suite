@@ -55,7 +55,7 @@ class pts_test_execution
 		$error = null;
 		if(pts_test_run_options::validate_test_arguments_compatibility($test_run_request->get_arguments_description(), $test_run_request->test_profile, $error) == false)
 		{
-			self::test_run_error($test_run_manager, $test_run_request, $error);
+			self::test_run_error($test_run_manager, $test_run_request, '[' . $test_run_request->test_profile->get_identifier() . ' ' . $test_run_request->get_arguments_description() . '] ' . $error);
 			return false;
 		}
 		$lock_file = $test_directory . 'run_lock';
@@ -172,12 +172,12 @@ class pts_test_execution
 				{
 					if(!isset($find_log_file[0]) || empty($find_log_file[0]))
 					{
-						pts_client::test_profile_debug_message('No existing log file found for this test profile. Generate one by using the run/benchmark or debug-run commands.');
+						pts_test_result_parser::debug_message('No existing log file found for this test profile. Generate one by using the run/benchmark or debug-run commands.');
 						return false;
 					}
 
 					$test_log_file = $find_log_file[0];
-					pts_client::test_profile_debug_message('Log File: ' . $test_log_file);
+					pts_test_result_parser::debug_message('Log File: ' . $test_log_file);
 				}
 			}
 			else if(phodevi::is_windows() && strpos($test_directory, ' ') !== false)
@@ -234,7 +234,7 @@ class pts_test_execution
 				sleep(2);
 				$test_run_command = 'cd ' . $to_execute . ' && ' . $test_prepend . $execute_binary_prepend . './' . $execute_binary . ' ' . $pts_test_arguments . ' 2>&1';
 
-				pts_client::test_profile_debug_message('Test Run Command: ' . $test_run_command);
+				pts_test_result_parser::debug_message('Test Run Command: ' . $test_run_command);
 
 				$host_env = $_SERVER;
 				unset($host_env['argv']);
@@ -392,7 +392,7 @@ class pts_test_execution
 				if($has_result)
 				{
 					$times_result_produced++;
-					if($test_run_time < 2 && $test_run_request->test_profile->get_estimated_run_time() > 60 && !$restored_from_cache && !$test_run_manager->DEBUG_no_test_execution_just_result_parse)
+					if($test_run_time < 2 && $test_run_request->get_estimated_run_time() > 60 && !$restored_from_cache && !$test_run_manager->DEBUG_no_test_execution_just_result_parse)
 					{
 						// If the test ended in less than two seconds, outputted some int, and normally the test takes much longer, then it's likely some invalid run
 						self::test_run_instance_error($test_run_manager, $test_run_request, 'The test run ended quickly.');
@@ -491,7 +491,6 @@ class pts_test_execution
 				if($is_expected_last_run)
 				{
 					// For now just passing the last test log file...
-					// TODO XXX: clean this up with log files to preserve when needed, let multiple log files exist for extra_data, etc
 					pts_test_result_parser::generate_extra_data($test_run_request, $test_log_file);
 				}
 				pts_module_manager::module_process('__test_log_output', $test_log_file);
@@ -500,7 +499,7 @@ class pts_test_execution
 					file_put_contents($backup_test_log_file, '#####' . PHP_EOL . $test_run_manager->get_results_identifier() . ' - Run ' . ($i + 1) . PHP_EOL . date('Y-m-d H:i:s') . PHP_EOL . '#####' . PHP_EOL . file_get_contents($test_log_file) . PHP_EOL, FILE_APPEND);
 				}
 
-				if(pts_client::test_profile_debug_message('Log File At: ' . $test_log_file) == false)
+				if(pts_test_result_parser::debug_message('Log File At: ' . $test_log_file) == false)
 				{
 					unlink($test_log_file);
 				}
@@ -508,8 +507,7 @@ class pts_test_execution
 
 			if(is_file(PTS_USER_PATH . 'halt-testing') || is_file(PTS_USER_PATH . 'skip-test'))
 			{
-				pts_client::release_lock($lock_file);
-				return false;
+				break;
 			}
 
 			pts_client::$display->test_run_instance_complete($test_run_request);
@@ -538,7 +536,11 @@ class pts_test_execution
 				}
 			}
 		}
-
+		if(is_file(PTS_USER_PATH . 'halt-testing') || is_file(PTS_USER_PATH . 'skip-test'))
+		{
+			pts_client::release_lock($lock_file);
+			return false;
+		}
 		if($abort_testing && !is_dir('/mnt/c/Windows')) // bash on Windows has issues where this is always called, looks like bad exit status on Windows
 		{
 			self::test_run_error($test_run_manager, $test_run_request, 'This test execution has been abandoned.');
@@ -661,7 +663,11 @@ class pts_test_execution
 		// End Finalize
 		pts_module_manager::module_process('__post_test_run', $test_run_request);
 		$report_elapsed_time = $cache_share_present == false && $times_result_produced > 0;
-		pts_tests::update_test_install_xml($test_run_request->test_profile, ($report_elapsed_time ? $time_test_elapsed : 0));
+		if($report_elapsed_time)
+		{
+			$test_run_request->test_profile->test_installation->add_latest_run_time($test_run_request, $time_test_elapsed);
+		}
+		$test_run_request->test_profile->test_installation->save_test_install_metadata();
 		pts_storage_object::add_in_file(PTS_CORE_STORAGE, 'total_testing_time', ($time_test_elapsed / 60));
 
 		if($report_elapsed_time && pts_client::do_anonymous_usage_reporting() && $time_test_elapsed >= 10)

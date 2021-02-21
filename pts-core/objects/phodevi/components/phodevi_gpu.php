@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2018, Phoronix Media
-	Copyright (C) 2008 - 2018, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 	phodevi_gpu.php: The PTS Device Interface object for the graphics processor
 
 	This program is free software; you can redistribute it and/or modify
@@ -38,8 +38,34 @@ class phodevi_gpu extends phodevi_device_interface
 			'available-modes' => new phodevi_device_property('gpu_available_modes', phodevi::std_caching),
 			'screen-resolution' => new phodevi_device_property('gpu_screen_resolution', phodevi::std_caching),
 			'screen-resolution-string' => new phodevi_device_property('gpu_screen_resolution_string', phodevi::std_caching),
-			'2d-acceleration' => new phodevi_device_property('gpu_2d_acceleration', phodevi::std_caching)
+			'2d-acceleration' => new phodevi_device_property('gpu_2d_acceleration', phodevi::std_caching),
+			'device-id' => new phodevi_device_property('gpu_pci_device_id', phodevi::smart_caching),
 			);
+	}
+	public static function gpu_pci_device_id()
+	{
+		$device_id = null;
+		if(phodevi::is_nvidia_graphics())
+		{
+			$nvidia_id = explode(',', phodevi_parser::read_nvidia_extension('PCIID'));
+			if(!empty($nvidia_id))
+			{
+				$device_id = array_pop($nvidia_id);
+			}
+		}
+		else if(phodevi::is_linux())
+		{
+			foreach(pts_file_io::glob('/sys/class/drm/card*/device/device') as $device)
+			{
+				$device_id = str_replace('0x', '', pts_file_io::file_get_contents($device));
+				if(!empty($device_id))
+				{
+					break;
+				}
+			}
+		}
+
+		return $device_id;
 	}
 	public static function gpu_2d_acceleration()
 	{
@@ -162,7 +188,7 @@ class phodevi_gpu extends phodevi_device_interface
 			$gl_msaa = getenv('__GL_FSAA_MODE');
 			if(is_numeric($gl_msaa) && $gl_msaa > 0)
 			{
-				$aa_level = '__GL_FSAA_MODE=' . $gallium_msaa;
+				$aa_level = '__GL_FSAA_MODE=' . $gl_msaa;
 			}
 		}
 
@@ -600,7 +626,7 @@ class phodevi_gpu extends phodevi_device_interface
 			$info = explode(' ', $info);
 			$video_ram = $info[0];
 
-			if($info[1] == 'GB')
+			if(isset($info[1]) && $info[1] == 'GB')
 			{
 				$video_ram *= 1024;
 			}
@@ -710,8 +736,14 @@ class phodevi_gpu extends phodevi_device_interface
 		}
 		else
 		{
-			$freq_string = phodevi::read_property('gpu', 'frequency');
-			return phodevi::read_property('gpu', 'model') . ($freq_string != null ? ' (' . $freq_string . ')' : null);
+			$model = phodevi::read_property('gpu', 'model');
+			$freq_string = null;
+			if(stripos($model, 'NVIDIA') === false)
+			{
+				// 2021: NVIDIA dynamic frequency handling is too sporadic, wish there was a way to query peak freq
+				$freq_string = phodevi::read_property('gpu', 'frequency');
+			}
+			return $model . ($freq_string != null ? ' (' . $freq_string . ')' : null);
 		}
 	}
 	public static function gpu_frequency_string()

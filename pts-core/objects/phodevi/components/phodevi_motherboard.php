@@ -365,6 +365,11 @@ class phodevi_motherboard extends phodevi_device_interface
 			$bios_version = trim(str_ireplace(array('smbiosbiosversion', "\n"), '', shell_exec('wmic bios get smbiosbiosversion')));
 		}
 
+		if($bios_version == 'Google')
+		{
+			$bios_version = null;
+		}
+
 		return trim(str_replace(array('(', ')'), '', $bios_version));
 	}
 	public static function motherboard_string()
@@ -509,6 +514,21 @@ class phodevi_motherboard extends phodevi_device_interface
 
 		// ensure words aren't repeated (e.g. VMware VMware Virtual and MSI MSI X58M (MS-7593))
 		$info = implode(' ', array_unique(explode(' ', $info)));
+
+		if($info == 'Google Compute Engine')
+		{
+			$opt = array('http' => array('method' => 'GET', 'header' => "Metadata-Flavor: Google\r\n"));
+			$ctx = stream_context_create($opt);
+			$machine_type = trim(file_get_contents('http://169.254.169.254/computeMetadata/v1/instance/machine-type', false, $ctx));
+			if(stripos($machine_type, 'machine') !== false)
+			{
+				$machine_type = basename($machine_type);
+				if(!empty($machine_type))
+				{
+					$info .= ' ' . $machine_type;
+				}
+			}
+		}
 
 		$bios = phodevi::read_property('motherboard', 'bios-version');
 		if(!empty($bios) && strpos($info, $bios) === false)

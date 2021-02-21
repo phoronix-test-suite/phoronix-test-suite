@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Timed WebKitFLTK Compilation</Title>
+    <AppVersion>0.5.1</AppVersion>
+    <Description>This test times how long it takes to build the WebKitFLTK web library.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Time To Compile</SubTitle>
+    <TimesToRun>1</TimesToRun>
+    <PreInstallMessage>Some build dependencies might be needed that might not be handled by the Phoronix Test Suite including: FLTK, Ruby, sqlite, icu, harfbuzz, gperf</PreInstallMessage>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Deprecated</Status>
+    <ExternalDependencies>build-utilities, gtk-development, glibc-development, cairo-development, bison, perl, python, curl, openssl-development</ExternalDependencies>
+    <ProjectURL>http://fifth-browser.sourceforge.net/</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Curaga</Maintainer>
+    <SystemDependencies>gperf, harfbuzz/hb-face.h, icu-config, sqlite, ruby, FL/fl_types.h</SystemDependencies>
+  </TestProfile>
+</PhoronixTestSuite>

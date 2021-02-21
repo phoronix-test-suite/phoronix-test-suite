@@ -137,7 +137,8 @@
 		</Package>
 		<Package>
 			<GenericName>perl</GenericName>
-			<PackageName>perl perl-SDL</PackageName>
+			<PackageName>perl perl-SDL perl-Time-HiRes</PackageName>
+			<FileCheck>/usr/lib64/perl5/vendor_perl/Time/HiRes.pm</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>xorg-video</GenericName>
@@ -188,6 +189,10 @@
 			<PackageName>popt-devel</PackageName>
 		</Package>
 		<Package>
+			<GenericName>protobuf</GenericName>
+			<PackageName>protobuf-devel</PackageName>
+		</Package>
+		<Package>
 			<GenericName>meson</GenericName>
 			<PackageName>meson</PackageName>
 		</Package>
@@ -209,7 +214,8 @@
 		</Package>
 		<Package>
 			<GenericName>blas-development</GenericName>
-			<PackageName>blas blas-devel</PackageName>
+			<PackageName>blas blas-devel openblas-devel</PackageName>
+			<FileCheck>openblas/cblas.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>lapack-development</GenericName>
@@ -218,6 +224,14 @@
 		<Package>
 			<GenericName>cmake</GenericName>
 			<PackageName>cmake</PackageName>
+		</Package>
+		<Package>
+			<GenericName>dune</GenericName>
+			<PackageName>dune</PackageName>
+		</Package>
+		<Package>
+			<GenericName>python-numpy</GenericName>
+			<PackageName>python3-numpy</PackageName>
 		</Package>
 		<Package>
 			<GenericName>boost-development</GenericName>
@@ -387,6 +401,10 @@
 		<Package>
 			<GenericName>glfw</GenericName>
 			<PackageName>glfw-devel</PackageName>
+		</Package>
+		<Package>
+			<GenericName>erlang</GenericName>
+			<PackageName>erlang</PackageName>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

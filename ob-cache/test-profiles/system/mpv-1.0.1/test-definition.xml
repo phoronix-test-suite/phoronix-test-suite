@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>MPV</Title>
+    <Description>MPV is an open-source, cross-platform media player. This test profile tests the frame-rate that can be achieved unsynchronized in a desynchronized mode.</Description>
+    <ResultScale>FPS</ResultScale>
+    <Proportion>HIB</Proportion>
+    <Executable>mpv-run</Executable>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Application</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <EnvironmentSize>1200</EnvironmentSize>
+    <ProjectURL>https://mpv.io/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>mpv</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Video Input</DisplayName>
+      <Identifier>video</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Big Buck Bunny Sunflower 1080p</Name>
+          <Value> bbb_sunflower_1080p_30fps_normal.mp4</Value>
+        </Entry>
+        <Entry>
+          <Name>Big Buck Bunny Sunflower 4K</Name>
+          <Value> bbb_sunflower_2160p_30fps_normal.mp4</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Decode</DisplayName>
+      <Identifier>decode</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Software Only</Name>
+          <Value>--hwdec=no </Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

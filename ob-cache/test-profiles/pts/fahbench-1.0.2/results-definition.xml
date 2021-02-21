@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m3-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Final score:   #_RESULT_#</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Hierarchical INTegration</Title>
+    <AppVersion>1.0</AppVersion>
+    <Description>This test runs the U.S. Department of Energy's Ames Laboratory Hierarchical INTegration (HINT) benchmark.</Description>
+    <ResultScale>QUIPs</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.3</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>0.2</EnvironmentSize>
+    <ProjectURL>http://www.ima.umn.edu/~coult/hint.tar.gz</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test</Identifier>
+      <Menu>
+        <Entry>
+          <Name>FLOAT</Name>
+          <Value>FLOAT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

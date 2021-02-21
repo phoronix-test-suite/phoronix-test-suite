@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Render Bench</Title>
+    <Description>This test runs render_bench, which tests the performance of X.Org and the video driver's RENDER extension.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <Executable>render-bench-test</Executable>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.3</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Deprecated</Status>
+    <ExternalDependencies>build-utilities, imlib2-development, xorg-development</ExternalDependencies>
+    <RequiresDisplay>TRUE</RequiresDisplay>
+    <EnvironmentSize>0.12</EnvironmentSize>
+    <ProjectURL>http://www.freedesktop.org/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

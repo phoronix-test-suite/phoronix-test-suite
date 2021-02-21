@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Finished with #_RESULT_# net QUIPs
+</OutputTemplate>
+    <LineHint>net QUIPs</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

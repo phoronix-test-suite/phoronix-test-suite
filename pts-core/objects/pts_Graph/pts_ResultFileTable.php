@@ -74,8 +74,7 @@ class pts_ResultFileTable extends pts_Table
 		{
 			if($result_object->test_profile->get_identifier() == null)
 			{
-			// XXX FOR PTS 7.2 Let's try this to show all results, see how it works and revisit later TODO if doesn't look good
-			//	continue;
+				continue;
 			}
 
 			if($extra_attributes != null)

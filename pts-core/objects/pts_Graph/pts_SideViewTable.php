@@ -196,7 +196,7 @@ class pts_SideViewTable extends pts_graph_core
 				if(isset($value[64]))
 				{
 					// If it's a long string that needs to be broken to multiple linesd we need textarea to do automatic word wrapping
-					$this->svg_dom->add_textarea_element($value, array('x' => $x, 'y' => ($row_offset + 16), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['text'], 'text-anchor' => 'middle', 'width' => ($column_widths[$column_count] - 8)));
+					$this->svg_dom->add_textarea_element($value, array('x' => $x, 'y' => ($row_offset + 16), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['text'], 'text-anchor' => 'middle'))); // , 'width' => ($column_widths[$column_count] - 8
 				}
 				else
 				{
@@ -213,7 +213,7 @@ class pts_SideViewTable extends pts_graph_core
 
 		// Bottom part
 		$this->svg_dom->add_element('rect', array('x' => 0, 'y' => $table_proper_height, 'width' => $this->i['graph_width'], 'height' => ($this->i['graph_height'] - $table_proper_height), 'fill' => self::$c['color']['headers']));
-		$this->svg_dom->add_text_element(self::$c['text']['watermark'], array('x' => ($this->i['graph_width'] - 2), 'y' => ($this->i['graph_height'] - 3), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'end', 'xlink:show' => 'new', 'xlink:href' => self::$c['text']['watermark_url']));
+		$this->svg_dom->add_text_element(self::$c['text']['watermark'], array('x' => ($this->i['graph_width'] - 2), 'y' => ($this->i['graph_height'] - 3), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'end', 'xlink:href' => self::$c['text']['watermark_url']));
 
 		if(!empty($this->i['notes']))
 		{
@@ -224,12 +224,12 @@ class pts_SideViewTable extends pts_graph_core
 				if($note_r['section'] != null && $note_r['section'] !== $previous_section)
 				{
 					$estimated_height += 2;
-					$this->svg_dom->add_textarea_element($note_r['section'] . ' Details', array('x' => 6, 'y' => ($table_proper_height + 14 + $estimated_height), 'font-size' => (self::$c['size']['key'] - 1), 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'xlink:title' => $note_r['hover-title'], 'style' => 'font-weight: bold'), $estimated_height);
+					$this->svg_dom->add_textarea_element($note_r['section'] . ' Details', array('x' => 6, 'y' => ($table_proper_height + 14 + $estimated_height), 'font-size' => (self::$c['size']['key'] - 1), 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'style' => 'font-weight: bold'), $estimated_height);
 					$estimated_height += 2;
 					$previous_section = $note_r['section'];
 				}
 
-				$this->svg_dom->add_textarea_element('- ' . $note_r['note'], array('x' => 6, 'y' => ($table_proper_height + 14 + $estimated_height), 'font-size' => (self::$c['size']['key'] - 1), 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'xlink:title' => $note_r['hover-title']), $estimated_height);
+				$this->svg_dom->add_textarea_element('- ' . $note_r['note'], array('x' => 6, 'y' => ($table_proper_height + 14 + $estimated_height), 'font-size' => (self::$c['size']['key'] - 1), 'fill' => self::$c['color']['background'], 'text-anchor' => 'start'), $estimated_height);
 			}
 		}
 	}

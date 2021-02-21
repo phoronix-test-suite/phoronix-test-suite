@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m3-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Warsow</Title>
+    <AppVersion>2.5 Beta</AppVersion>
+    <Description>This is a benchmark of Warsow, a popular open-source first-person shooter. This game uses the QFusion engine.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.6.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Game</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <RequiresDisplay>TRUE</RequiresDisplay>
+    <EnvironmentSize>600</EnvironmentSize>
+    <ProjectURL>http://www.warsow.net/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>+logconsole pts-log +exec profiles/high+.cfg +timedemo 1 +cg_showFPS 0 +cl_maxfps 999 +cl_checkForUpdate 0 +demo pts11 +next "quit" +r_mode -1</Arguments>
+      <PostArguments>+vid_restart</PostArguments>
+    </Default>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>+vid_width $VIDEO_WIDTH +vid_height $VIDEO_HEIGHT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

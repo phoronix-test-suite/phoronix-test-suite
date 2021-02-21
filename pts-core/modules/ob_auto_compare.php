@@ -194,7 +194,11 @@ class ob_auto_compare extends pts_module_interface
 				$box_plot = str_repeat(' ', $terminal_width - 4);
 				$box_plot_size = strlen($box_plot);
 				$box_plot = str_split($box_plot);
-				$max_value = array_pop($percentiles);
+				$max_value = max(array_pop($percentiles), $active_result);
+				if($result_object->test_profile->get_result_proportion() == 'HIB')
+				{
+					$max_value = $max_value * 1.02;
+				}
 				$results_at_pos = array(0, 1, ($box_plot_size - 1));
 
 				// BOX PLOT
@@ -263,7 +267,26 @@ class ob_auto_compare extends pts_module_interface
 
 					$reference_results_added = 0;
 					$this_percentile = pts_strings::number_suffix_handler($this_result_percentile);
-					foreach(array_merge(array('This Result' . ($this_percentile > 0 && $this_percentile < 100 ? ' (' . $this_percentile . ' Percentile)' : null) => ($active_result > 99 ? round($active_result) : $active_result)), $other_data_in_result_file, (is_array($json_response['openbenchmarking']['result']['ae']['reference_results']) ? $json_response['openbenchmarking']['result']['ae']['reference_results'] : array())) as $component => $value)
+
+					$rr = array();
+					if(is_array($json_response['openbenchmarking']['result']['ae']['reference_results']))
+					{
+						$st = phodevi_base::determine_system_type(phodevi::system_hardware(), phodevi::system_software());
+						foreach($json_response['openbenchmarking']['result']['ae']['reference_results'] as $component => $value)
+						{
+							$this_type = phodevi_base::determine_system_type($component, $component);
+							if($this_type == $st)
+							{
+								$rr[$component] = $value;
+								unset($json_response['openbenchmarking']['result']['ae']['reference_results'][$component]);
+							}
+						}
+						foreach($json_response['openbenchmarking']['result']['ae']['reference_results'] as $component => $value)
+						{
+							$rr[$component] = $value;
+						}
+					}
+					foreach(array_merge(array('This Result' . ($this_percentile > 0 && $this_percentile < 100 ? ' (' . $this_percentile . ' Percentile)' : null) => ($active_result > 99 ? round($active_result) : $active_result)), $other_data_in_result_file, $rr) as $component => $value)
 					{
 						if($value > $max_value)
 						{
@@ -298,7 +321,9 @@ class ob_auto_compare extends pts_module_interface
 						if($terminal_width <= 80)
 						{
 							// Try to shorten up some components/identifiers if terminal narrow to fit in more data
-							$component = trim(str_replace(array('AMD', 'Intel', 'NVIDIA', 'Radeon', 'GeForce', '  '), '', str_replace(' x ', ' x  ', $component)));
+							$component = str_replace(array('AMD ', 'Intel ', 'NVIDIA ', 'Radeon ', 'GeForce ', '  '), ' ', str_replace(' x ', ' x  ', $component));
+							$component = str_replace('Ryzen Threadripper', 'Threadripper', $component);
+							$component = trim($component);
 						}
 
 						foreach(array('-Core', ' with ') as $cutoff)
@@ -342,7 +367,7 @@ class ob_auto_compare extends pts_module_interface
 						}
 
 						// validate no overwrites
-						$complement_line = ($reference_results_added % 4);
+						$complement_line = ($reference_results_added % 5);
 						if($complement_line == 0 && strpos($component, 'This Result') === false)
 						{
 							$complement_line = 1;
@@ -390,7 +415,7 @@ class ob_auto_compare extends pts_module_interface
 					}
 
 					echo PHP_EOL;
-					echo '    ' . pts_client::cli_just_italic('Result compared to ' . pts_client::cli_just_bold(number_format($sample_count)) . ' OpenBenchmarking.org samples since ' . pts_client::cli_just_bold($first_appeared) . '; median result: ' . pts_client::cli_just_bold(round($percentiles[50], ($percentiles[50] < 100 ? 2 : 0))) . '. Box plot of samples:') . PHP_EOL;
+					echo '    Comparison to ' . pts_client::cli_just_bold(number_format($sample_count)) . ' OpenBenchmarking.org samples since ' . pts_client::cli_just_bold($first_appeared) . '; median result: ' . pts_client::cli_just_bold(round($percentiles[50], ($percentiles[50] < 100 ? 2 : 0))) . '. Box plot of samples:' . PHP_EOL;
 					echo '    ' . implode('', $box_plot) . PHP_EOL;
 					foreach($box_plot_complement as $line_r)
 					{

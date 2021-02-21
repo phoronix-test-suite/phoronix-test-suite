@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/inikep/lzbench/archive/v1.8.1.tar.gz</URL>
+      <MD5>faaf3031868cea811ce3c46b9d82fd8f</MD5>
+      <SHA256>57c9d18d0da90d980cd26d746ca5407a2fdfdbc0622df8f276a8462a705c9096</SHA256>
+      <FileName>lzbench-1.8.1.tar.gz</FileName>
+      <FileSize>3053502</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/inikep/lzbench/releases/download/v1.8/lzbench-1.8-windows.zip</URL>
+      <MD5>763735f1b851ca7251357f589b8e9962</MD5>
+      <SHA256>afc45226a260bede50f7d6f86210792f32190eeffa45d73258a895a497f8efdd</SHA256>
+      <FileName>lzbench-1.8-windows.zip</FileName>
+      <FileSize>4413763</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://mirrors.edge.kernel.org/pub/linux/kernel/v5.x/linux-5.5.tar.gz, http://mirrors.mit.edu/kernel/linux/kernel/v5.x/linux-5.5.tar.gz</URL>
+      <MD5>09f098e6480b33c4a137e2e6e40e886f</MD5>
+      <SHA256>b7feea0a1d505f26098d596e6ad6a2e8b476c8f63c52eabf435deab2bb9a5559</SHA256>
+      <FileName>linux-5.5.tar.gz</FileName>
+      <FileSize>172094365</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

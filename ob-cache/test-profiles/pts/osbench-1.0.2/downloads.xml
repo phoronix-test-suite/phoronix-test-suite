@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/osbench-master-1.zip</URL>
+      <MD5>bb0d5466cd628ce7105f8e4b7325ba7f</MD5>
+      <SHA256>a23807b36eb4d3ea74dc91e90159261e423a7117e93104908a2c44168df153c0</SHA256>
+      <FileName>osbench-master-1.zip</FileName>
+      <FileSize>9411</FileSize>
+      <PlatformSpecific>Linux, BSD, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.bitsnbites.eu/files/osbench-win64-20170529.zip</URL>
+      <MD5>ccdaa89fe21fc19226932f23559e6c02</MD5>
+      <SHA256>ce19a6c843bb6eb417a36352e4142b228c44b7d3e43ef498d734c460fc7f5081</SHA256>
+      <FileName>osbench-win64-20170529.zip</FileName>
+      <FileSize>30251</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

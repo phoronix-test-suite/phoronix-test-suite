@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2020, Phoronix Media
-	Copyright (C) 2008 - 2020, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 	phoronix-test-suite.php: The main code for initalizing the Phoronix Test Suite
 
 	This program is free software; you can redistribute it and/or modify
@@ -34,10 +34,7 @@ if(!defined('PTS_MODE'))
 }
 
 // Any PHP default memory limit should be fine for PTS, until you run image quality comparison tests that begins to consume memory
-if(stripos(phpversion(), 'hhvm') === false)
-{
-	ini_set('memory_limit', '256M');
-}
+ini_set('memory_limit', '1024M');
 
 if(getenv('PTS_MODE') == 'CLIENT' && ini_get('open_basedir') != false)
 {

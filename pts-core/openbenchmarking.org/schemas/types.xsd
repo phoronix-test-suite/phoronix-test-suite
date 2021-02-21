@@ -3,8 +3,8 @@
 <xs:annotation>
 	<xs:documentation xml:lang="en">
 		Phoronix Test Suite / OpenBenchmarking.org
-		Copyright (C) 2008 - 2018, Phoronix Media
-		Copyright (C) 2008 - 2018, Michael Larabel
+		Copyright (C) 2008 - 2020, Phoronix Media
+		Copyright (C) 2008 - 2020, Michael Larabel
 	</xs:documentation>
 </xs:annotation>
 <xs:simpleType name="ResultTitleString">
@@ -98,6 +98,7 @@
 		<xs:enumeration value="Graphics" />
 		<xs:enumeration value="Memory" />
 		<xs:enumeration value="Network" />
+		<xs:enumeration value="OS" />
 		<xs:enumeration value="Other" />
 	</xs:restriction>
 </xs:simpleType>
@@ -167,7 +168,7 @@
 <xs:simpleType name="CoreVersion">
 	<xs:restriction base="xs:integer">
 		<xs:minInclusive value="2950" />
-		<xs:maxInclusive value="9999" />
+		<xs:maxInclusive value="99999" />
 	</xs:restriction>
 </xs:simpleType>
 <xs:simpleType name="RunModes">

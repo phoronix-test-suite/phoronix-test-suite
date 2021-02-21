@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2020, Phoronix Media
-	Copyright (C) 2010 - 2020, Michael Larabel
+	Copyright (C) 2010 - 2021, Phoronix Media
+	Copyright (C) 2010 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@ class pts_ae_data
 {
 	private $db;
 	private $ae_dir;
+	private $cpu_index;
 
 	public function __construct($output_dir)
 	{
@@ -43,11 +44,9 @@ class pts_ae_data
 		$db_flags = SQLITE3_OPEN_READWRITE | SQLITE3_OPEN_CREATE;
 		$this->db = new SQLite3($this->ae_dir . 'temp.db', $db_flags);
 		$this->db->busyTimeout(10000);
-		// TODO XXX make this a rootadmin option or something
-		$this->db->exec('PRAGMA journal_mode = WAL');
-		$this->db->exec('PRAGMA synchronous = OFF');
 		pts_file_io::mkdir($this->ae_dir . 'comparison-hashes/');
 		pts_file_io::mkdir($this->ae_dir . 'component-data/');
+		pts_file_io::mkdir($this->ae_dir . 'component-heavy/');
 
 		$result = $this->db->query('PRAGMA user_version;');
 		$result = $result->fetchArray();
@@ -71,7 +70,19 @@ class pts_ae_data
 				//$this->db->exec('');
 				//$this->db->exec('');
 				$this->db->exec('PRAGMA user_version = 1');
+			case 1:
+				$this->db->exec('ALTER TABLE analytics_results ADD COLUMN TimeConsumed INTEGER');
+				$this->db->exec('PRAGMA user_version = 2');
+			case 2:
+				$this->db->exec('ALTER TABLE analytics_results ADD COLUMN StdDev REAL');
+				$this->db->exec('PRAGMA user_version = 3');
+			case 3:
+				$this->db->exec('PRAGMA journal_mode = WAL');
+				$this->db->exec('PRAGMA synchronous = OFF');
+				$this->db->exec('PRAGMA user_version = 4');
 		}
+
+		$this->cpu_index = json_decode(file_get_contents('http://openbenchmarking.org/extern/cpu-trans-index.php'), true);
 		return true;
 	}
 	public function insert_composite_hash_entry_by_result_object($comparison_hash, &$result_object)
@@ -87,9 +98,9 @@ class pts_ae_data
 		$stmt->bindValue(':ru', $result_object->test_profile->get_result_scale());
 		$result = $stmt->execute();
 	}
-	public function insert_result_into_analytic_results($comparison_hash, $result_reference, $component, $category, $related_component, $related_category, $result, $datetime, $system_type, $system_layer)
+	public function insert_result_into_analytic_results($comparison_hash, $result_reference, $component, $category, $related_component, $related_category, $result, $datetime, $system_type, $system_layer, $time_consumed, $std_dev)
 	{
-		$stmt = $this->db->prepare('INSERT OR IGNORE INTO analytics_results (ComparisonHash, ResultReference, Component, RelatedComponent, Result, DateTime, SystemType, SystemLayer) VALUES (:ch, :rr, :c, :rc, :r, :dt, :st, :sl)');
+		$stmt = $this->db->prepare('INSERT OR IGNORE INTO analytics_results (ComparisonHash, ResultReference, Component, RelatedComponent, Result, DateTime, SystemType, SystemLayer, TimeConsumed, StdDev) VALUES (:ch, :rr, :c, :rc, :r, :dt, :st, :sl, :tc, :std)');
 		$stmt->bindValue(':ch', $comparison_hash);
 		$stmt->bindValue(':rr', $result_reference);
 		$stmt->bindValue(':c', $this->component_to_component_id($component, $category));
@@ -98,6 +109,8 @@ class pts_ae_data
 		$stmt->bindValue(':dt', $datetime);
 		$stmt->bindValue(':st', $system_type);
 		$stmt->bindValue(':sl', $system_layer);
+		$stmt->bindValue(':tc', $time_consumed);
+		$stmt->bindValue(':std', $std_dev);
 		$result = $stmt->execute();
 	}
 	public function component_to_component_id($component, $category)
@@ -204,6 +217,7 @@ class pts_ae_data
 		$result = $stmt ? $stmt->execute() : false;
 		$json_index_master = array();
 		$hardware_data['Processor'] = array();
+		$hardware_heavy = array();
 
 		while($result && ($row = $result->fetchArray()))
 		{
@@ -213,9 +227,12 @@ class pts_ae_data
 			$component_results = array();
 			$component_dates = array();
 			$system_types = array();
-			$results = $this->get_results_array_by_comparison_hash($comparison_hash, $first_appeared, $last_appeared, $component_results, $component_dates, $system_types);
+			$timing_data = array();
+			$stddev_data = array();
+			$family_perf = array();
+			$results = $this->get_results_array_by_comparison_hash($comparison_hash, $first_appeared, $last_appeared, $component_results, $component_dates, $system_types, $timing_data, $stddev_data);
 
-			if(count($results) < 12)
+			if(count($results) < 10)
 			{
 				continue;
 			}
@@ -235,6 +252,7 @@ class pts_ae_data
 
 			$component_data = array();
 			$comparison_components = array();
+			$comparison_components_raw = array();
 			foreach($component_results as $component => $d)
 			{
 				if(stripos($component . ' ', 'device ') !== false || stripos($component, 'unknown') !== false  || stripos($component, 'common ') !== false || is_numeric($component))
@@ -259,12 +277,13 @@ class pts_ae_data
 						// if no new results in 3 years, likely outdated...
 						continue;
 					}
+
 					if(count($data) < 3)
 					{
 						continue;
 					}
-					$data = pts_math::remove_outliers($data);
-					if(count($data) < 2)
+					$data = pts_math::remove_outliers($data, 3);
+					if(count($data) < 3)
 					{
 						continue;
 					}
@@ -275,22 +294,83 @@ class pts_ae_data
 					$component_data[$component][$related_component]['system_type'] = $system_types[$component][$related_component];
 				}
 			}
-
+			$component_sample_counts = array();
 			foreach($comparison_components as $component => &$values)
 			{
-				$values = pts_math::remove_outliers($values);
+				$component_sample_counts[$component] = count($values);
+				$values = pts_math::remove_outliers($values, 3);
 
-				if(phodevi::is_fake_device($component) || count($values) < 3)
+				// FAMILY DATA
+				if(isset($this->cpu_index[$component]) && !phodevi::is_fake_device($component))
 				{
+					// Per Core Calculations
+					$brand = false;
+					if(stripos($component, 'Intel') !== false)
+					{
+						$brand = 'Intel';
+					}
+					else if(stripos($component, 'AMD') !== false)
+					{
+						$brand = 'AMD';
+					}
+
+					if($brand)
+					{
+						$core_family = $this->cpu_index[$component]['CoreFamily'];
+						$series = str_ireplace(array('AMD ', 'Intel ', ), null, $component);
+						if(($x = stripos($series, '-Core')) !== false)
+						{
+							$series = substr($series, 0, $x);
+							$series = substr($series, 0, strrpos($series, ' '));
+						}
+						if(($x = stripos($series, ' x ')) !== false)
+						{
+							$series = substr($series, ($x + 3));
+						}
+						$series = str_replace('-', ' ', $series);
+						$series = substr($series, 0, strrpos($series, ' '));
+						$series = str_replace(array('Dual '), '', $series);
+						if(!empty($series))
+						{
+							$brand_comp_type = phodevi_base::system_type_to_string(phodevi_base::determine_system_type($component));
+							$core_family_compare = $brand . ' ' . $core_family . ' ' . $brand_comp_type;
+							if(!isset($family_perf[$core_family_compare][$series]))
+							{
+								$family_perf[$core_family_compare][$series] = array();
+							}
+							$series_compare = $brand . ' ' . $series . ' ' . $this->cpu_index[$component]['CoreCount'] . '-Core ' . $brand_comp_type;
+							if(!isset($family_perf[$series_compare][$core_family]))
+							{
+								$family_perf[$series_compare][$core_family] = array();
+							}
+
+							$value = pts_math::arithmetic_mean($values);
+							$always_hib_value = ($row['HigherIsBetter'] == 0 ? (1 / $value) * 1000 : $value) / $this->cpu_index[$component]['CPUClock'];
+							$family_perf[$core_family_compare][$series][] = $always_hib_value;
+							$family_perf[$series_compare][$core_family][] = $always_hib_value;
+						}
+					}
+				}
+				// END OF FAMILY DATA
+
+				if(phodevi::is_fake_device($component) || count($values) < 3 || pts_math::percent_standard_deviation($values) > 15)
+				{
+					unset($component_sample_counts[$component]);
 					unset($comparison_components[$component]);
 					continue;
 				}
 			}
 			uasort($comparison_components, array('pts_ae_data', 'sort_array_by_size_of_array_in_value'));
-			$comparison_components = array_slice($comparison_components, 0, 150);
+			$comparison_components = array_slice($comparison_components, 0, 300);
+			$csc = array();
+			$csstd = array();
+			$precision = 2;
 			foreach($comparison_components as $component => &$values)
 			{
+				$comparison_components_raw[$component] = $values;
+				$csstd[$component] = pts_math::standard_deviation($values);
 				$values = pts_math::arithmetic_mean($values);
+
 				if($values < 5)
 				{
 					$precision = 5;
@@ -307,7 +387,11 @@ class pts_ae_data
 				{
 					$precision = 0;
 				}
+				$precision = $precision > 0 ? min($precision, pts_math::get_precision($comparison_components_raw[$component])) : 0;
+
+				$csstd[$component] = round($csstd[$component], $precision);
 				$values = round($values, $precision);
+				$csc[$component] = $component_sample_counts[$component];
 			}
 
 			if($row['HigherIsBetter'] == '1')
@@ -317,6 +401,50 @@ class pts_ae_data
 			else
 			{
 				asort($comparison_components);
+			}
+
+			// TIMING DATA Assembly
+			$td = array();
+			$timing_data = pts_math::remove_outliers($timing_data, 3);
+			$average_time = array_sum($timing_data) / count($timing_data);
+			if($average_time > 600)
+			{
+				$round_to_nearest = 60;
+			}
+			else if($average_time > 300)
+			{
+				$round_to_nearest = 30;
+			}
+			else
+			{
+				$round_to_nearest = 10;
+			}
+			foreach($timing_data as $time_consumed)
+			{
+				$time_consumed = max(1, round($time_consumed / $round_to_nearest)) * $round_to_nearest;
+				if($time_consumed > 0)
+				{
+					if(!isset($td[$time_consumed]))
+					{
+						$td[$time_consumed] = 0;
+					}
+
+					$td[$time_consumed]++;
+				}
+			}
+
+			// Standard Deviation Percent Data Assembly
+			$stddev_data = pts_math::remove_outliers($stddev_data);
+			$average_stddev = round(array_sum($stddev_data) / count($stddev_data), 2);
+			$std = array();
+			foreach($stddev_data as $pdev)
+			{
+				$pdev = round($pdev, 1);
+				if(!isset($std[$pdev]))
+				{
+					$std[$pdev] = 0;
+				}
+				$std[$pdev]++;
 			}
 
 
@@ -332,11 +460,48 @@ class pts_ae_data
 			$json['unit'] = $row['ResultUnit'];
 			$json['samples'] = count($results);
 			$json['sample_data'] = implode(',', $results);
+			$json['run_time_avg'] = $average_time;
+			$json['run_time_data'] = $td;
+			$json['stddev_avg'] = $average_stddev;
+			$json['stddev_data'] = $std;
 			$json['first_appeared'] = $first_appeared;
 			$json['last_appeared'] = $last_appeared;
 			$json['percentiles'] = $percentiles;
 			$json['components'] = $component_data;
 			$json['reference_results'] = $comparison_components;
+			$json['reference_results_counts'] = $csc;
+			$json['reference_results_std_dev'] = $csstd;
+
+			// FAMILY PERFORMANCE
+			foreach($family_perf as $brand => &$data)
+			{
+				foreach($data as $family => &$sp)
+				{
+					if(count($sp) < 4)
+					{
+						// Not enough data to potentially too off...
+						unset($family_perf[$brand][$family]);
+						continue;
+					}
+					$sp = array_sum($sp) / count($sp);
+				}
+				if(count($family_perf[$brand]) < 3)
+				{
+					unset($family_perf[$brand]);
+				}
+			}
+			foreach($family_perf as $brand => &$data)
+			{
+				$min_family_perf = min($family_perf[$brand]);
+				foreach($data as $family => &$sp)
+				{
+					$sp = round($sp / $min_family_perf, 2);
+				}
+				arsort($family_perf[$brand]);
+			}
+			ksort($family_perf);
+			$json['family_perf'] = $family_perf;
+			// EO Family Perf
 
 			$json_encoded = json_encode($json);
 			if(!empty($json_encoded))
@@ -373,7 +538,7 @@ class pts_ae_data
 			// Update/Create Component JSON
 			//
 			
-			if(count($comparison_components) > 20 && $last_appeared > strtotime('-5 months'))
+			if(count($comparison_components) >= 20 && $json['stddev_avg'] < 3 && $json['run_time_avg'] > 45 && $last_appeared > strtotime('-5 months'))
 			{
 				foreach($comparison_components as $component => $value)
 				{
@@ -407,6 +572,22 @@ class pts_ae_data
 								$hardware_data[$component_category][$component]['percentiles'][$json['test_profile']][$json['test_version']] = array();
 							}
 							$hardware_data[$component_category][$component]['percentiles'][$json['test_profile']][$json['test_version']] = $this_percentile;
+
+							// heavy
+							if(!isset($hardware_heavy[$component_category][$component]))
+							{
+								$hardware_heavy[$component_category][$component] = array();
+							}
+							$hardware_heavy[$component_category][$component][$json['comparison_hash']] = array(
+								'test_profile' => $row['TestProfile'] . '-' . $row['TestVersion'],
+								'title' => $row['Title'],
+								'app_version' => $row['AppVersion'],
+								'description' => $row['ArgumentsDescription'],
+								'hib' => $row['HigherIsBetter'] ? 'HIB': 'LIB',
+								'unit' => $row['ResultUnit'],
+								'value' => $value,
+								'raw_values' => implode(':', $comparison_components_raw[$component]),
+								);
 							break;
 					}
 				}
@@ -435,6 +616,20 @@ class pts_ae_data
 				file_put_contents($this->ae_dir . 'component-data/' . $hw_category . '/' . $c . '.json', $de);
 			}
 		}
+		foreach($hardware_heavy as $hw_category => $category_data)
+		{
+			pts_file_io::mkdir($this->ae_dir . 'component-heavy/' . $hw_category);
+			foreach($category_data as $c => $data)
+			{
+				if(count($data) < 15)
+				{
+					continue;
+				}
+
+				$de = json_encode($data);
+				file_put_contents($this->ae_dir . 'component-heavy/' . $hw_category . '/' . $c . '.json', $de);
+			}
+		}
 	}
 	public function append_to_component_data(&$system_logs)
 	{
@@ -442,7 +637,7 @@ class pts_ae_data
 		{
 			foreach($category_data as $c => $data)
 			{
-				if($data['occurences'] < 5)
+				if($data['occurences'] < 4)
 				{
 					continue;
 				}
@@ -486,9 +681,9 @@ class pts_ae_data
 	{
 		return count($b) - count($a);
 	}
-	public function get_results_array_by_comparison_hash($ch, &$first_appeared, &$last_appeared, &$component_results, &$component_dates, &$system_types)
+	public function get_results_array_by_comparison_hash($ch, &$first_appeared, &$last_appeared, &$component_results, &$component_dates, &$system_types, &$timing_data, &$stddev_data)
 	{
-		$stmt = $this->db->prepare('SELECT Result, DateTime, Component, RelatedComponent, SystemType, SystemLayer FROM analytics_results WHERE ComparisonHash = :ch');
+		$stmt = $this->db->prepare('SELECT Result, DateTime, Component, RelatedComponent, SystemType, SystemLayer, TimeConsumed, StdDev FROM analytics_results WHERE ComparisonHash = :ch');
 		$stmt->bindValue(':ch', $ch);
 		$result = $stmt ? $stmt->execute() : false;
 		$results = array();
@@ -510,6 +705,8 @@ class pts_ae_data
 				$last_appeared = $dt;
 			}
 			$results[] = $row['Result'];
+			$timing_data[] = $row['TimeConsumed'];
+			$stddev_data[] = $row['StdDev'];
 			if(!empty($row['SystemLayer']) || strlen($row['Component']) < 3)
 			{
 				continue;

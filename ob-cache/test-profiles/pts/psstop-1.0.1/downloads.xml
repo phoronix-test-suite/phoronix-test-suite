@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/psstop-3.tar.gz</URL>
+      <MD5>cd36a951fc7817a95024549bd85fb0eb</MD5>
+      <FileName>psstop-3.tar.gz</FileName>
+      <FileSize>7664</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

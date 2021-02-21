@@ -2,8 +2,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2019 - 2020, Phoronix Media
-	Copyright (C) 2019 - 2020, Michael Larabel
+	Copyright (C) 2019 - 2021, Phoronix Media
+	Copyright (C) 2019 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -197,6 +197,14 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		{
 			$result_file = new pts_result_file($_REQUEST['result_file_id']);
 			$result_file->remove_run($_REQUEST['result_run']);
+			$result_file->save();
+		}
+		exit;
+	case 'rename-result-run':
+		if(VIEWER_CAN_MODIFY_RESULTS && isset($_REQUEST['result_file_id']) && isset($_REQUEST['result_run']) && isset($_REQUEST['new_result_run']))
+		{
+			$result_file = new pts_result_file($_REQUEST['result_file_id']);
+			$result_file->rename_run($_REQUEST['result_run'], $_REQUEST['new_result_run']);
 			$result_file->save();
 		}
 		exit;

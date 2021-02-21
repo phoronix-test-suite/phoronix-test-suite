@@ -69,6 +69,11 @@ class load_dynamic_result_viewer extends pts_module_interface
 				proc_terminate(self::$process);
 			}
 			proc_close(self::$process);
+			if(isset($ps['pid']))
+			{
+				sleep(1);
+				pts_client::kill_process_with_children_processes($ps['pid']);
+			}
 
 			// Fallback for sometimes the child process not getting killed
 			foreach(pts_file_io::glob('/proc/' . ($ps['pid'] + 1) . '/comm') as $proc_check)
@@ -135,7 +140,7 @@ class load_dynamic_result_viewer extends pts_module_interface
 		}
 
 		$remote_access = is_numeric($remote_access) && $remote_access > 1 ? $remote_access : false;
-		$blocked_ports = array(2049, 3659, 4045, 6000, 9000);
+		$blocked_ports = array(2049, 3659, 4045, 5060, 5061, 6000, 9000);
 
 		$access_limited_to_localhost = true;
 		if(pts_config::read_bool_config('PhoronixTestSuite/Options/ResultViewer/LimitAccessToLocalHost', 'TRUE'))

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Algebraic Multi-Grid Benchmark</Title>
+    <AppVersion>1.2</AppVersion>
+    <Description>AMG is a parallel algebraic multigrid solver for linear systems arising from problems on unstructured grids.  The driver provided with AMG builds linear systems for various 3-dimensional problems.</Description>
+    <ResultScale>Figure Of Merit</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Scientific</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>openmpi-development, build-utilities</ExternalDependencies>
+    <EnvironmentSize>10</EnvironmentSize>
+    <ProjectURL>https://github.com/LLNL/AMG</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

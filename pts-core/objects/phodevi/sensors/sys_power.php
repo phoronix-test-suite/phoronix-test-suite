@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2019, Phoronix Media
-	Copyright (C) 2009 - 2019, Michael Larabel
+	Copyright (C) 2009 - 2020, Phoronix Media
+	Copyright (C) 2009 - 2020, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@ class sys_power extends phodevi_sensor
 	private static $battery_cur = false;
 	private static $tegra_power = false;
 	private static $wattsup_meter = false;
+	private static $wattsup_meter_raw = false;
 	private static $ipmitool = false;
 	private static $ipmitool_ps = false;
 	private static $ipmitool_dcmi = false;
@@ -64,6 +65,16 @@ class sys_power extends phodevi_sensor
 			}
 			return true;
 		}
+		if(($m = getenv('WATTSUP_METER')) != false && is_readable($m))
+		{
+			$wattsup = self::watts_up_power_meter_raw($m);
+
+			if($wattsup > 0.5 && is_numeric($wattsup))
+			{
+				self::$wattsup_meter_raw = $m;
+				return true;
+			}
+		}
 		if(pts_client::executable_in_path('wattsup'))
 		{
 			$wattsup = self::watts_up_power_meter();
@@ -76,7 +87,7 @@ class sys_power extends phodevi_sensor
 		}
 
 		$test = self::sys_battery_power();
-		if(is_numeric($test) && $test != -1)
+		if(is_numeric($test) && $test != -1 && $test > 0)
 		{
 			self::$battery_sys = true;
 			return true;
@@ -143,6 +154,10 @@ class sys_power extends phodevi_sensor
 		{
 			return self::sys_power_current();
 		}
+		else if(self::$wattsup_meter_raw)
+		{
+			return self::watts_up_power_meter_raw(self::$wattsup_meter_raw);
+		}
 		else if(self::$wattsup_meter)
 		{
 			return self::watts_up_power_meter();
@@ -204,6 +219,34 @@ class sys_power extends phodevi_sensor
 		while(!is_numeric($value) && count($output) > 0);
 
 		return is_numeric($value) ? $value : -1;
+	}
+	private static function watts_up_power_meter_raw($meter)
+	{
+		// https://arcb.csc.ncsu.edu/~mueller/cluster/arc/wattsup/metertools-1.0.0/docs/meters/wattsup/comprotocol.pdf
+		$buffer = null;
+		$handle = @fopen($meter, 'r');
+		if($handle)
+		{
+			$times = 0;
+			while(($buffer = fgets($handle, 4096)) !== false)
+			{
+				$times++;
+				if($times == 4 || strpos($buffer, '#d') !== false)
+					break;
+			}
+			fclose($handle);
+		}
+		$watts = -1;
+		if(strpos($buffer, '#d') !== false)
+		{
+			$buffer = explode(',', $buffer);
+			if(isset($buffer[3]) && $buffer[3] > 10)
+			{
+				$watts = $buffer[3] / 10;
+			}
+		}
+
+		return $watts;
 	}
 	private static function sys_power_current()
 	{
@@ -275,13 +318,18 @@ class sys_power extends phodevi_sensor
 
 			if($rate == -1 && is_file('/sys/class/power_supply/BAT0/voltage_now') && is_file('/sys/class/power_supply/BAT0/current_now'))
 			{
-				$voltage_now = pts_file_io::file_get_contents('/sys/class/power_supply/BAT0/voltage_now') / 1000;
-				$current_now = pts_file_io::file_get_contents('/sys/class/power_supply/BAT0/current_now') / 1000;
-				$power_now = $voltage_now * $current_now / 1000;
-
-				if($power_now > 1)
+				$voltage_now = pts_file_io::file_get_contents('/sys/class/power_supply/BAT0/voltage_now');
+				$current_now = pts_file_io::file_get_contents('/sys/class/power_supply/BAT0/current_now');
+				if(is_numeric($voltage_now) && is_numeric($current_now))
 				{
-					$rate = $power_now;
+					$voltage_now = $voltage_now / 1000;
+					$current_now = $current_now / 1000;
+					$power_now = $voltage_now * $current_now / 1000;
+
+					if($power_now > 1)
+					{
+						$rate = $power_now;
+					}
 				}
 			}
 			if($rate == -1 && is_file('/sys/class/power_supply/BAT1/voltage_now') && is_file('/sys/class/power_supply/BAT1/current_now'))

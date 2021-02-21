@@ -66,13 +66,13 @@ class pts_test_result_parser
 			if(count($sensor) != 2 || !phodevi::is_sensor_supported($sensor))
 			{
 				// Not a sensor or it's not supported
-				pts_client::test_profile_debug_message('No supported sensor found');
+				pts_test_result_parser::debug_message('No supported sensor found');
 				continue;
 			}
 
 			if(!is_numeric($polling_freq) || $polling_freq < 0.5)
 			{
-				pts_client::test_profile_debug_message('No polling frequency defined, defaulting to 2 seconds');
+				pts_test_result_parser::debug_message('No polling frequency defined, defaulting to 2 seconds');
 				$polling_freq = 2;
 			}
 
@@ -80,7 +80,7 @@ class pts_test_result_parser
 			if(!in_array($report_as, array('ALL', 'MAX', 'MIN', 'AVG')))
 			{
 				// Not a valid reporting type
-				pts_client::test_profile_debug_message('No valid Report entry found.');
+				pts_test_result_parser::debug_message('No valid Report entry found.');
 				continue;
 			}
 			if(!function_exists('pcntl_fork'))
@@ -135,7 +135,7 @@ class pts_test_result_parser
 				if($result_value < $minimal_test_time)
 				{
 					// The test ended too fast
-					pts_client::test_profile_debug_message('Test Run-Time Too Short: ' . $result_value);
+					pts_test_result_parser::debug_message('Test Run-Time Too Short: ' . $result_value);
 					$result_value = null;
 				}
 			}
@@ -182,7 +182,7 @@ class pts_test_result_parser
 			{
 				// For now it's only possible to return one result per test XXX actually with PTS7 this can be changed....
 				// TODO XXX for some sensors may make sense for min/max values?
-				pts_client::test_profile_debug_message('Test Result Montioring Process Returning: ' . $result_value);
+				pts_test_result_parser::debug_message('Test Result Montioring Process Returning: ' . $result_value);
 				self::gen_result_active_handle($test_run_request)->add_trial_run_result($result_value);
 				$did_post_result = true;
 			}
@@ -221,9 +221,10 @@ class pts_test_result_parser
 		foreach($definitions->get_system_monitor_definitions() as $entry)
 		{
 			$frame_all_times = array();
-			switch($entry->get_identifier())
+			switch(($eid = $entry->get_identifier()))
 			{
 				case 'libframetime-output':
+				case 'libframetime-output-no-limit':
 					// libframetime output
 					$line_values = explode(PHP_EOL, file_get_contents($test_log_file));
 					if(!empty($line_values) && isset($line_values[3]))
@@ -234,7 +235,7 @@ class pts_test_result_parser
 							{
 								$frametime = substr($v, 10);
 								$frametime = substr($frametime, 0, -3);
-								if($frametime > 2000)
+								if($eid == 'libframetime-output-no-limit' || $frametime > 2000)
 								{
 									$frametime = $frametime / 1000;
 									$frame_all_times[] = $frametime;
@@ -496,7 +497,7 @@ class pts_test_result_parser
 		if(!empty($match_test_arguments) && strpos($pts_test_arguments, $match_test_arguments) === false)
 		{
 			// This is not the ResultsParser XML section to use as the MatchToTestArguments does not match the PTS test arguments
-			pts_client::test_profile_debug_message('Failed Initial Check For Matching: ' . $pts_test_arguments . ' not in ' . $match_test_arguments);
+			pts_test_result_parser::debug_message('Failed Initial Check For Matching: ' . $pts_test_arguments . ' not in ' . $match_test_arguments);
 			return false;
 		}
 
@@ -519,22 +520,22 @@ class pts_test_result_parser
 		if($prefix != null && $start_result_pos === false && $template != 'csv-dump-frame-latencies' && $template != 'libframetime-output' && $e->get_file_format() == null)
 		{
 			// XXX: technically the $prefix check shouldn't be needed, verify whether safe to have this check be unconditional on start_result_pos failing...
-			//pts_client::test_profile_debug_message('Failed Additional Check');
+			//pts_test_result_parser::debug_message('Failed Additional Check');
 			return false;
 		}
-		pts_client::test_profile_debug_message('Result Key: ' . $key_for_result);
+		pts_test_result_parser::debug_message('Result Key: ' . $key_for_result);
 
 		if(is_file($log_file))
 		{
 			if(filesize($log_file) > 52428800)
 			{
-				pts_client::test_profile_debug_message('File Too Big To Parse: ' . $log_file);
+				pts_test_result_parser::debug_message('File Too Big To Parse: ' . $log_file);
 			}
 			$output = file_get_contents($log_file);
 		}
 		else
 		{
-			pts_client::test_profile_debug_message('No Log File Found To Parse');
+			pts_test_result_parser::debug_message('No Log File Found To Parse');
 			return false;
 		}
 
@@ -550,14 +551,14 @@ class pts_test_result_parser
 				$x = $xml;
 				foreach(explode('/', $template) as $p)
 				{
-					pts_client::test_profile_debug_message('XML Trying ' . $p);
+					pts_test_result_parser::debug_message('XML Trying ' . $p);
 					if(isset($x[$p]))
 					{
 						$x = $x[$p];
 					}
 					else
 					{
-						pts_client::test_profile_debug_message('XML Failed To Find ' . $p);
+						pts_test_result_parser::debug_message('XML Failed To Find ' . $p);
 						break;
 					}
 				}
@@ -565,7 +566,7 @@ class pts_test_result_parser
 				{
 					if(!is_array($x))
 					{
-						pts_client::test_profile_debug_message('XML Value Found: ' . $x);
+						pts_test_result_parser::debug_message('XML Value Found: ' . $x);
 						$test_results[] = trim($x);
 					}
 				}
@@ -582,7 +583,7 @@ class pts_test_result_parser
 		$end_result_line_pos = strpos($template, "\n", $end_result_pos);
 		$template_line = substr($template, 0, ($end_result_line_pos === false ? strlen($template) : $end_result_line_pos));
 		$template_line = substr($template_line, strrpos($template_line, "\n"));
-		pts_client::test_profile_debug_message('Template Line: ' . $template_line);
+		pts_test_result_parser::debug_message('Template Line: ' . $template_line);
 		$template_r = explode(' ', pts_strings::trim_spaces(str_replace($space_out_chars, ' ', str_replace('=', ' = ', $template_line))));
 		$template_r_pos = array_search($key_for_result, $template_r);
 
@@ -632,14 +633,14 @@ class pts_test_result_parser
 
 					if($line_before_hint != null)
 					{
-						pts_client::test_profile_debug_message('Result Parsing Line Before Hint: ' . $line_before_hint);
+						pts_test_result_parser::debug_message('Result Parsing Line Before Hint: ' . $line_before_hint);
 						$line = substr($output, strpos($output, "\n", strrpos($output, $line_before_hint)));
 						$line = substr($line, 0, strpos($line, "\n", 1));
 						$output = substr($output, 0, strrpos($output, "\n", strrpos($output, $line_before_hint))) . "\n";
 					}
 					else if($line_after_hint != null)
 					{
-						pts_client::test_profile_debug_message('Result Parsing Line After Hint: ' . $line_after_hint);
+						pts_test_result_parser::debug_message('Result Parsing Line After Hint: ' . $line_after_hint);
 						$line = substr($output, 0, strrpos($output, "\n", strrpos($output, $line_after_hint)));
 						$line = substr($line, strrpos($line, "\n", 1) + 1);
 						$output = null;
@@ -650,7 +651,7 @@ class pts_test_result_parser
 						{
 							$search_key = trim($search_key);
 						}
-						pts_client::test_profile_debug_message('Result Parsing Search Key: "' . $search_key . '"');
+						pts_test_result_parser::debug_message('Result Parsing Search Key: "' . $search_key . '"');
 
 						while(($line_x = strrpos($output, $search_key)) !== false)
 						{
@@ -671,14 +672,14 @@ class pts_test_result_parser
 					else
 					{
 						// Condition $template_r[0] == $key, include entire file since there is nothing to search
-						pts_client::test_profile_debug_message('No Result Parsing Hint, Including Entire Result Output');
+						pts_test_result_parser::debug_message('No Result Parsing Hint, Including Entire Result Output');
 						$line = trim($output);
 					}
 					if($e->get_turn_chars_to_space() != null)
 					{
 						$line = str_replace($e->get_turn_chars_to_space(), ' ', $line);
 					}
-					pts_client::test_profile_debug_message('Result Line: ' . $line);
+					pts_test_result_parser::debug_message('Result Line: ' . $line);
 
 					// FALLBACK HELPERS FOR BELOW
 					$did_try_colon_fallback = false;
@@ -697,7 +698,7 @@ class pts_test_result_parser
 							{
 								$possible_res = $r[($before_this - 1)];
 								self::strip_result_cleaner($possible_res, $e);
-								if($before_this !== false && (!$is_numeric_check || is_numeric($possible_res)))
+								if($before_this !== false && (!$is_numeric_check || self::valid_numeric_input_handler($possible_res, $line)))
 								{
 									$test_results[] = $possible_res;
 								}
@@ -718,7 +719,7 @@ class pts_test_result_parser
 										continue;
 									}
 									self::strip_result_cleaner($r[$f], $e);
-									if(!$is_numeric_check || is_numeric($r[$f]))
+									if(!$is_numeric_check || self::valid_numeric_input_handler($r[$f], $line))
 									{
 										$test_results[] = $r[$f];
 									}
@@ -729,58 +730,9 @@ class pts_test_result_parser
 						else if(isset($r[$template_r_pos]))
 						{
 							self::strip_result_cleaner($r[$template_r_pos], $e);
-							if(!$is_numeric_check || is_numeric($r[$template_r_pos]))
+							if(!$is_numeric_check || self::valid_numeric_input_handler($r[$template_r_pos], $line))
 							{
 								$test_results[] = $r[$template_r_pos];
-							}
-							else if($is_numeric_check && strpos($r[$template_r_pos], ':') !== false && strpos($r[$template_r_pos], '.') !== false && is_numeric(str_replace(array(':', '.'), null, $r[$template_r_pos])) && stripos($line, 'time') !== false)
-							{
-								// Convert e.g. 03:03.17 to seconds, relevant for at least pts/blender
-								$seconds = 0;
-								$formatted_time = $r[$template_r_pos];
-								if(($c = strpos($formatted_time, ':')) !== false && strrpos($formatted_time, ':') == $c && is_numeric(substr($formatted_time, 0, $c)))
-								{
-									$seconds = (substr($formatted_time, 0, $c) * 60) + substr($formatted_time, ($c + 1));
-								}
-								if(!empty($seconds))
-								{
-									$test_results[] = $seconds;
-								}
-							}
-							else if($is_numeric_check && strpos($r[$template_r_pos], ':') !== false && strtolower(substr($r[$template_r_pos], -1)) == 's')
-							{
-								// e.g. 01h:04m:33s
-								$seconds = 0;
-								$invalid = false;
-								foreach(explode(':', $r[$template_r_pos]) as $time_segment)
-								{
-									$postfix = strtolower(substr($time_segment, -1));
-									$value = substr($time_segment, 0, -1);
-									if($value == 0 || !is_numeric($value))
-									{
-										continue;
-									}
-									switch($postfix)
-									{
-										case 'h':
-											$seconds += ($value * 3600);
-											break;
-										case 'm':
-											$seconds += ($value * 60);
-											break;
-										case 's':
-											$seconds += $value;
-											break;
-										default:
-											$invalid = true;
-											break;
-									}
-								}
-
-								if(!empty($seconds) && $seconds > 0 && !$invalid)
-								{
-									$test_results[] = $seconds;
-								}
 							}
 						}
 						else
@@ -796,7 +748,7 @@ class pts_test_result_parser
 						if($try_again == false && empty($test_results) && !empty($possible_lines))
 						{
 							$line = array_shift($possible_lines);
-							pts_client::test_profile_debug_message('Trying Backup Result Line: ' . $line);
+							pts_test_result_parser::debug_message('Trying Backup Result Line: ' . $line);
 							$try_again = true;
 						}
 						else if(!empty($test_results) && $is_multi_match && !empty($possible_lines) && $search_key != null)
@@ -814,7 +766,7 @@ class pts_test_result_parser
 		RESULTPOSTPROCESSING:
 		if(empty($test_results))
 		{
-			pts_client::test_profile_debug_message('No Test Results');
+			pts_test_result_parser::debug_message('No Test Results');
 			return false;
 		}
 
@@ -858,10 +810,11 @@ class pts_test_result_parser
 
 		if(empty($test_results))
 		{
-			pts_client::test_profile_debug_message('No Test Results #2');
+			pts_test_result_parser::debug_message('No Test Results #2');
 			return false;
 		}
 
+		$test_results_group_precision = pts_math::get_precision($test_results);
 		switch($multi_match)
 		{
 			case 'REPORT_ALL':
@@ -872,7 +825,7 @@ class pts_test_result_parser
 			case 'GEOMETRIC_MEAN':
 				if($is_numeric_check)
 				{
-					$test_result = pts_math::geometric_mean($test_results);
+					$test_result = round(pts_math::geometric_mean($test_results), $test_results_group_precision);
 					if(count($test_results) > 1)
 					{
 						$min_test_result = min($test_results);
@@ -883,7 +836,7 @@ class pts_test_result_parser
 			case 'HARMONIC_MEAN':
 				if($is_numeric_check)
 				{
-					$test_result = pts_math::harmonic_mean($test_results);
+					$test_result = round(pts_math::harmonic_mean($test_results), $test_results_group_precision);
 					if(count($test_results) > 1)
 					{
 						$min_test_result = min($test_results);
@@ -896,7 +849,7 @@ class pts_test_result_parser
 			default:
 				if($is_numeric_check)
 				{
-					$test_result = pts_math::arithmetic_mean($test_results);
+					$test_result = round(pts_math::arithmetic_mean($test_results), $test_results_group_precision);
 					if(count($test_results) > 1)
 					{
 						$min_test_result = min($test_results);
@@ -965,8 +918,94 @@ class pts_test_result_parser
 			}
 		}
 
-		pts_client::test_profile_debug_message('Test Result Parser Returning: ' . $test_result);
+		pts_test_result_parser::debug_message('Test Result Parser Returning: ' . $test_result);
 		return $test_result;
+	}
+	protected static function valid_numeric_input_handler(&$numeric_input, $line)
+	{
+		if(is_numeric($numeric_input))
+		{
+			return true;
+		}
+		else if(is_numeric(str_ireplace(array('m', 'h', 's'), '', $numeric_input)))
+		{
+			// XXhXXmXXs format
+			$vtime = 0;
+			$ni = $numeric_input;
+			foreach(array(3600 => 'h', 60 => 'm', 1 => 's') as $m => $u)
+			{
+				if(($x = stripos($ni, $u)) !== false)
+				{
+					$extracted = substr($ni, 0, $x);
+					$ni = substr($ni, ($x + 1));
+					if(is_numeric($extracted))
+					{
+						$vtime += $extracted * $m;
+					}
+					else
+					{
+						return false;
+					}
+				}
+			}
+			if($vtime > 0 && is_numeric($vtime))
+			{
+				$numeric_input = $vtime;
+				return true;
+			}
+		}
+		else if(strpos($numeric_input, ':') !== false && strpos($numeric_input, '.') !== false && is_numeric(str_replace(array(':', '.'), null, $numeric_input)) && stripos($line, 'time') !== false)
+		{
+			// Convert e.g. 03:03.17 to seconds, relevant for at least pts/blender
+			$seconds = 0;
+			$formatted_time = $numeric_input;
+			if(($c = strpos($formatted_time, ':')) !== false && strrpos($formatted_time, ':') == $c && is_numeric(substr($formatted_time, 0, $c)))
+			{
+				$seconds = (substr($formatted_time, 0, $c) * 60) + substr($formatted_time, ($c + 1));
+			}
+			if(!empty($seconds))
+			{
+				$numeric_input = $seconds;
+				return true;
+			}
+		}
+		else if(strpos($numeric_input, ':') !== false && strtolower(substr($numeric_input, -1)) == 's')
+		{
+			// e.g. 01h:04m:33s
+			$seconds = 0;
+			$invalid = false;
+			foreach(explode(':', $numeric_input) as $time_segment)
+			{
+				$postfix = strtolower(substr($time_segment, -1));
+				$value = substr($time_segment, 0, -1);
+				if($value == 0 || !is_numeric($value))
+				{
+					continue;
+				}
+				switch($postfix)
+				{
+					case 'h':
+						$seconds += ($value * 3600);
+						break;
+					case 'm':
+						$seconds += ($value * 60);
+						break;
+					case 's':
+						$seconds += $value;
+						break;
+					default:
+						$invalid = true;
+						break;
+				}
+			}
+			if(!empty($seconds) && $seconds > 0 && !$invalid)
+			{
+				$numeric_input = $seconds;
+				return true;
+			}
+		}
+
+		return false;
 	}
 	protected static function strip_result_cleaner(&$test_result, &$e)
 	{
@@ -1055,7 +1094,7 @@ class pts_test_result_parser
 		$frame_time_values = null;
 		$returns = false;
 
-		if($template == 'libframetime-output')
+		if($template == 'libframetime-output' || $template == 'libframetime-output-no-limit')
 		{
 			$returns = true;
 			$frame_time_values = array();
@@ -1068,7 +1107,7 @@ class pts_test_result_parser
 					{
 						$frametime = substr($v, 10);
 						$frametime = substr($frametime, 0, -3);
-						if($frametime > 2000)
+						if($template == 'libframetime-output-no-limit' || $frametime > 2000)
 						{
 							$frametime = $frametime / 1000;
 							$frame_time_values[] = $frametime;
@@ -1118,6 +1157,26 @@ class pts_test_result_parser
 		}
 
 		return $returns;
+	}
+	public static function debug_message($message)
+	{
+		$reported = false;
+
+		if(PTS_IS_CLIENT && pts_client::is_debug_mode())
+		{
+			if(($x = strpos($message, ': ')) !== false)
+			{
+				$message = pts_client::cli_colored_text(substr($message, 0, $x + 1), 'yellow', true) . pts_client::cli_colored_text(substr($message, $x + 1), 'yellow', false);
+			}
+			else
+			{
+				$message = pts_client::cli_colored_text($message, 'yellow', false);
+			}
+			pts_client::$display->test_run_instance_error($message);
+			$reported = true;
+		}
+
+		return $reported;
 	}
 }
 

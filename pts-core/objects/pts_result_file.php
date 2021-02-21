@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2020, Phoronix Media
-	Copyright (C) 2008 - 2020, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -78,8 +78,7 @@ class pts_result_file
 		{
 			foreach($xml->System as $s)
 			{
-				$system = new pts_result_file_system(self::clean_input($s->Identifier->__toString()), self::clean_input($s->Hardware->__toString()), self::clean_input($s->Software->__toString()), json_decode(self::clean_input($s->JSON), true), self::clean_input($s->User->__toString()), self::clean_input($s->Notes->__toString()), self::clean_input($s->TimeStamp->__toString()), self::clean_input($s->ClientVersion->__toString()), $this);
-				$this->systems[] = $system;
+				$this->systems[] = new pts_result_file_system(self::clean_input($s->Identifier->__toString()), self::clean_input($s->Hardware->__toString()), self::clean_input($s->Software->__toString()), json_decode(self::clean_input($s->JSON), true), self::clean_input($s->User->__toString()), self::clean_input($s->Notes->__toString()), self::clean_input($s->TimeStamp->__toString()), self::clean_input($s->ClientVersion->__toString()), $this);
 			}
 		}
 
@@ -259,6 +258,10 @@ class pts_result_file
 		{
 			$this->systems[] = $system;
 		}
+	}
+	public function add_system_direct($identifier, $hw = null, $sw = null, $json = null, $user = null, $notes = null, $timestamp = null, $version = null)
+	{
+		$this->systems[] = new pts_result_file_system($identifier, $hw, $sw, $json, $user, $notes, $timestamp, $version, $this);
 	}
 	public function get_systems()
 	{
@@ -570,6 +573,23 @@ class pts_result_file
 		}
 		return $did_remove;
 	}
+	public function remove_noisy_results($noise_level_percent = 6)
+	{
+		foreach($this->result_objects as $i => &$ro)
+		{
+			if($ro->has_noisy_result($noise_level_percent))
+			{
+				$this->remove_result_object_by_id($i);
+			}
+		}
+	}
+	public function reduce_precision()
+	{
+		foreach($this->result_objects as $i => &$ro)
+		{
+			$ro->test_result_buffer->reduce_precision();
+		}
+	}
 	public function update_annotation_for_result_object_by_id($index, $annotation)
 	{
 		if(isset($this->result_objects[$index]))
@@ -662,11 +682,11 @@ class pts_result_file
 					$new_identifier = $duplicate . ' #' . $i;
 				}
 				while($this->is_system_identifier_in_result_file($new_identifier));
-				$this->rename_run($duplicate, $new_identifier);
+				$this->rename_run($duplicate, $new_identifier, false);
 			}
 		}
 	}
-	public function rename_run($from, $to)
+	public function rename_run($from, $to, $rename_logs = true)
 	{
 		if($from == 'PREFIX')
 		{
@@ -688,12 +708,24 @@ class pts_result_file
 		}
 		else
 		{
+			$found = false;
 			foreach($this->systems as &$s)
 			{
 				if($s->get_identifier() == $from)
 				{
+					$found = true;
 					$s->set_identifier($to);
 					break;
+				}
+			}
+			if($found && $rename_logs && PTS_IS_CLIENT && defined(PTS_SAVE_RESULTS_PATH) && is_dir(($dir_base = PTS_SAVE_RESULTS_PATH . $this->get_identifier() . '/')))
+			{
+				foreach(array('test-logs', 'system-logs', 'installation-logs') as $dir_name)
+				{
+					if(is_dir($dir_base . $dir_name . '/' . $rename_identifier))
+					{
+						rename($dir_base . $dir_name . '/' . $rename_identifier, $dir_base . $dir_name . '/' . $rename_identifier_new);
+					}
 				}
 			}
 		}

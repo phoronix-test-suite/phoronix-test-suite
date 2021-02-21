@@ -31,6 +31,10 @@
 			<PackageName>dev-libs/openssl</PackageName>
 		</Package>
 		<Package>
+			<GenericName>protobuf</GenericName>
+			<PackageName>dev-libs/protobuf</PackageName>
+		</Package>
+		<Package>
 			<GenericName>eigen</GenericName>
 			<PackageName>dev-cpp/eigen</PackageName>
 		</Package>
@@ -367,6 +371,10 @@
 		<Package>
 			<GenericName>glfw</GenericName>
 			<PackageName>media-libs/glfw</PackageName>
+		</Package>
+		<Package>
+			<GenericName>erlang</GenericName>
+			<PackageName>dev-lang/erlang</PackageName>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2020, Phoronix Media
-	Copyright (C) 2008 - 2020, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 	pts-core.php: To boot-strap the Phoronix Test Suite start-up
 
 	This program is free software; you can redistribute it and/or modify
@@ -294,13 +294,17 @@ function pts_version_codenames()
 		'9.8' => 'Nesodden',
 		//  Senja Municipality in Troms og Finnmark - Norway
 		'10.0' => 'Finnsnes',
+		'10.2' => 'Harstad',
+		'10.4' => 'Ibestad',
+		'10.6' => 'Tjeldsund',
+		'10.8' => 'Nesseby',
 		);
 }
 
-pts_define('PTS_VERSION', '10.0.0m2');
-pts_define('PTS_CORE_VERSION', 9920);
-pts_define('PTS_RELEASE_DATE', '20200912');
-pts_define('PTS_CODENAME', 'Finnsnes');
+pts_define('PTS_VERSION', '10.2.2');
+pts_define('PTS_CORE_VERSION', 10220);
+pts_define('PTS_RELEASE_DATE', '20210217');
+pts_define('PTS_CODENAME', 'Harstad');
 
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));
 pts_define('PTS_IS_WEB_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'WEB_CLIENT'));

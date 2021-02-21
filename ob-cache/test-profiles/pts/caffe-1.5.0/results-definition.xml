@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>I0926 21:03:30.920398 1827262 caffe.cpp:414] Total Time: #_RESULT_# ms.</OutputTemplate>
+    <LineHint>Total Time</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

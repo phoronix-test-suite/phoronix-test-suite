@@ -370,7 +370,6 @@ class pts_Table extends pts_graph_core
 			foreach($table_values as $i => &$result_table_value)
 			{
 				$row = $i - 1; // if using $row, the alignment may be off sometimes
-				$hover = array();
 				$text_color = null;
 				$bold = false;
 
@@ -381,20 +380,10 @@ class pts_Table extends pts_graph_core
 
 				if($result_table_value instanceof pts_graph_ir_value)
 				{
-					if(($t = $result_table_value->get_attribute('std_percent')) > 0)
-					{
-						$hover[] = 'STD Dev: ' . $t . '%';
-					}
-					if(($t = $result_table_value->get_attribute('std_error')) != 0)
-					{
-						$hover[] = ' STD Error: ' . $t;
-					}
-
 					if(defined('PHOROMATIC_TRACKER') && ($t = $result_table_value->get_attribute('delta')) != 0)
 					{
 						$bold = true;
 						$text_color = $t < 0 ? self::$c['color']['alert'] : self::$c['color']['headers'];
-						$hover[] = ' Change: ' . pts_math::set_precision(100 * $t, 2) . '%';
 					}
 					else if($result_table_value->get_attribute('highlight') == true)
 					{
@@ -439,7 +428,7 @@ class pts_Table extends pts_graph_core
 				}
 
 				$x = round($left_bounds + (($right_bounds - $left_bounds) / 2));
-				$gbr = array('x' => $x, 'y' => round($this->i['top_heading_height'] + $top_identifier_height + (($row + 2) * $table_line_height) - 3), 'xlink:title' => implode('; ', $hover), 'xlink:href' => $result_table_value->get_attribute('href'));
+				$gbr = array('x' => $x, 'y' => round($this->i['top_heading_height'] + $top_identifier_height + (($row + 2) * $table_line_height) - 3), 'xlink:href' => $result_table_value->get_attribute('href'));
 				if($text_color != null)
 				{
 					$gbr['fill'] = $text_color;
@@ -455,11 +444,11 @@ class pts_Table extends pts_graph_core
 		// Bottom part
 
 		$this->svg_dom->add_element('rect', array('x' => 0, 'y' => $table_proper_height, 'width' => $this->i['graph_width'], 'height' => ($this->i['graph_height'] - $table_proper_height), 'fill' => self::$c['color']['headers']));
-		$this->svg_dom->add_text_element(self::$c['text']['watermark'], array('x' => ($this->i['graph_width'] - 2), 'y' => ($this->i['graph_height'] - 3), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'end', 'xlink:show' => 'new', 'xlink:href' => self::$c['text']['watermark_url']));
+		$this->svg_dom->add_text_element(self::$c['text']['watermark'], array('x' => ($this->i['graph_width'] - 2), 'y' => ($this->i['graph_height'] - 3), 'font-size' => $this->i['identifier_size'], 'fill' => self::$c['color']['body_text'], 'text-anchor' => 'end', 'xlink:href' => self::$c['text']['watermark_url']));
 
 		if(isset($this->d['link_alternate_view']) && $this->d['link_alternate_view'])
 		{
-			$this->svg_dom->add_text_element(0, array('x' => 6, 'y' => ($this->i['graph_height'] - 3), 'font-size' => 7, 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'xlink:show' => 'new', 'xlink:href' => $this->d['link_alternate_view'], 'show' => 'replace', 'font-weight' => 'bold'));
+			$this->svg_dom->add_text_element(0, array('x' => 6, 'y' => ($this->i['graph_height'] - 3), 'font-size' => 7, 'fill' => self::$c['color']['background'], 'text-anchor' => 'start', 'xlink:href' => $this->d['link_alternate_view'], 'show' => 'replace', 'font-weight' => 'bold'));
 		}
 
 		if(!empty($this->i['notes']))
@@ -471,12 +460,12 @@ class pts_Table extends pts_graph_core
 				if($note_r['section'] != null && $note_r['section'] !== $previous_section)
 				{
 					$estimated_height += 2;
-					$this->svg_dom->add_textarea_element($note_r['section'] . ' Details', array('x' => 6, 'y' => ($table_proper_height + $table_line_height + $estimated_height), 'xlink:title' => $note_r['hover-title'], 'style' => 'font-weight: bold', 'text-anchor' => 'start', 'fill' => self::$c['color']['background'], 'font-size' => (self::$c['size']['key'] - 1)), $estimated_height);
+					$this->svg_dom->add_textarea_element($note_r['section'] . ' Details', array('x' => 6, 'y' => ($table_proper_height + $table_line_height + $estimated_height), 'style' => 'font-weight: bold', 'text-anchor' => 'start', 'fill' => self::$c['color']['background'], 'font-size' => (self::$c['size']['key'] - 1)), $estimated_height);
 					$estimated_height += 2;
 					$previous_section = $note_r['section'];
 				}
 
-				$this->svg_dom->add_textarea_element('- ' . $note_r['note'], array('x' => 6, 'y' => ($table_proper_height + $table_line_height + $estimated_height), 'xlink:title' => $note_r['hover-title'], 'text-anchor' => 'start', 'fill' => self::$c['color']['background'], 'font-size' => (self::$c['size']['key'] - 1)), $estimated_height);
+				$this->svg_dom->add_textarea_element('- ' . $note_r['note'], array('x' => 6, 'y' => ($table_proper_height + $table_line_height + $estimated_height), 'text-anchor' => 'start', 'fill' => self::$c['color']['background'], 'font-size' => (self::$c['size']['key'] - 1)), $estimated_height);
 			}
 		}
 

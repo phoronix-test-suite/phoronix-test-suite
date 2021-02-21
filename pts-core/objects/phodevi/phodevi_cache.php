@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2011, Phoronix Media
-	Copyright (C) 2009 - 2011, Michael Larabel
+	Copyright (C) 2009 - 2020, Phoronix Media
+	Copyright (C) 2009 - 2020, Michael Larabel
 	phodevi_cache.php: The phodevi_cache object for storing the device cache
 
 	This program is free software; you can redistribute it and/or modify
@@ -28,6 +28,7 @@ class phodevi_cache
 	private $phodevi_time;
 	private $storage_dir;
 	private $client_version;
+	private $machine_id;
 
 	public function __construct($phodevi_cache, $storage_dir = null, $client_version = null)
 	{
@@ -36,12 +37,13 @@ class phodevi_cache
 		$this->phodevi_time = time();
 		$this->storage_dir = $storage_dir;
 		$this->client_version = $client_version;
+		$this->machine_id = self::get_current_machine_id();
 	}
 	public function restore_cache($storage_dir = null, $client_version = null)
 	{
 		$restore_cache = null;
 
-		if(($this->storage_dir == $storage_dir || $storage_dir == null) && $this->client_version == $client_version)
+		if(($this->storage_dir == $storage_dir || $storage_dir == null) && $this->client_version == $client_version && $this->machine_id == self::get_current_machine_id())
 		{
 			if($this->phodevi_time > (time() - phodevi::system_uptime()))
 			{
@@ -57,6 +59,22 @@ class phodevi_cache
 	public function read_cache()
 	{
 		return $this->phodevi_cache;
+	}
+	public static function get_current_machine_id()
+	{
+		// A means to try to indentify the system uniquely so in case the Phodevi cache is shared across systems will not be reused
+		$machine_id = null;
+
+		if(is_file('/etc/machine-id'))
+		{
+			$machine_id = pts_file_io::file_get_contents('/etc/machine-id');
+		}
+		else if(is_file('/etc/hostname'))
+		{
+			$machine_id = pts_file_io::file_get_contents('/etc/hostname');
+		}
+
+		return $machine_id;
 	}
 }
 

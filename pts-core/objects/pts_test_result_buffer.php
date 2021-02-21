@@ -133,7 +133,7 @@ class pts_test_result_buffer
 			if($buffer_item->get_result_value() < $value_below)
 			{
 				$other_value += $buffer_item->get_result_value();
-				unset($buffer_items[$key]);
+				unset($this->buffer_items[$key]);
 			}
 		}
 	}
@@ -390,6 +390,55 @@ class pts_test_result_buffer
 		else
 		{
 			return pts_math::set_precision($value, $precision);
+		}
+	}
+	public function get_max_precision()
+	{
+		$max_precision = 0;
+
+		foreach($this->buffer_items as &$buffer_item)
+		{
+			$max_precision = max($max_precision, pts_math::get_precision($buffer_item->get_result_value()));
+		}
+
+		return $max_precision;
+	}
+	public function reset_precision($precision)
+	{
+		foreach($this->buffer_items as &$buffer_item)
+		{
+			$p = pts_math::set_precision($buffer_item->get_result_value(), $precision);
+			$buffer_item->reset_result_value($p, false);
+		}
+	}
+	public function reduce_precision()
+	{
+		$min_value = $this->get_min_value();
+		$max_value = $this->get_max_value();
+		if($min_value > 20 && ($max_value / $min_value) > 1.25)
+		{
+			$this->reset_precision(0);
+		}
+		else
+		{
+			$max_precision = $this->get_max_precision();
+			if($max_precision >= 1)
+			{
+				if($min_value > 10 && $max_precision > 1)
+				{
+					$max_precision = 2;
+				}
+				/*else if($max_precision > 3 && ($max_value / $min_value) > 1.3)
+				{
+					$max_precision = 3;
+				}*/
+				else if($max_precision > 3)
+				{
+					$max_precision = 3;
+				}
+
+				$this->reset_precision(($max_precision - 1));
+			}
 		}
 	}
 	public function get_min_value($return_identifier = false)

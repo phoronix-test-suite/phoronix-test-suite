@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://github.com/dbry/WavPack/archive/5.3.0.tar.gz</URL>
+      <MD5>ab0fa7086790b4c0e7a99ff3237b5ff6</MD5>
+      <SHA256>361ca0f4970c1e86b47fb8c3796693048306a9c0ae4c96191d7619aaa8b26828</SHA256>
+      <FileName>WavPack-5.3.0.tar.gz</FileName>
+      <FileSize>2042463</FileSize>
+    </Package>
+    <Package>
+      <URL>http://github.com/dbry/WavPack/releases/download/5.3.0/wavpack-5.3.0-x64.zip</URL>
+      <MD5>608f692e9dc1889584cf2b632039aab6</MD5>
+      <SHA256>9c591e397b73fa5ac8373c1715e2ebbb88260b1ad0c4c250491a5563abd4e8d7</SHA256>
+      <FileName>wavpack-5.3.0-x64.zip</FileName>
+      <FileSize>488958</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>
