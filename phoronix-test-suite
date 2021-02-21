@@ -21,33 +21,34 @@
 #	along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 
+# realpath is deprecated anyways.
+if readlink --version >/dev/null 2>&1; then
+	actualpath() { readlink -f -- "$1"; }
+elif greadlink --version >/dev/null 2>&1
+then
+	# BSD, macOS
+	actualpath() { greadlink -f -- "$1"; }
+else
+	echo "WARNING: The Phoronix Test Suite requires a GNU version of 'readlink' or 'greadlink' to reliably determine where it is located." >&2
+	actualpath() { printf '%s' "$1"; return 1; }
+fi
+
 if which sed >/dev/null 2>&1 ;
 then
 	# Remove the current dir from PATH if present, as it causes infinitely resursive shell scripts.
-	PATH="`echo $PATH | sed -e s/:[\.]:/:/g -e s/:[\.]// -e  s/[\.]://`"
+	PATH="$(echo "$PATH" | sed -e s/:[\.]:/:/g -e s/:[\.]// -e  s/[\.]://)"
 fi
 
 # Full path to root directory of the actual Phoronix Test Suite code
-if [ -d /Applications ]
-then
-	# macOS has problems with the readlink code
-	export PTS_DIR=`pwd`
-else
-	export PTS_DIR=$(readlink -f `dirname $0`)
-fi
+export PTS_DIR=$(actualpath "$(dirname "$0")")
 #export PTS_DIR=`pwd`
 
 export PTS_MODE="CLIENT"
-if which realpath >/dev/null 2>&1 ;
-then
-	export PTS_LAUNCHER=`realpath $0`
-else
-	export PTS_LAUNCHER="$PTS_DIR/phoronix-test-suite"
-fi
+export PTS_LAUNCHER="${PTS_DIR}/$(basename "$0")"
 
-if [ $PTS_DIR != "`pwd`" ]
+if [ "$PTS_DIR" != "$(pwd)" ]
 then
-	cd $PTS_DIR
+	cd "$PTS_DIR" || exit
 fi
 
 # Run any start-up hooks, such as to pre-seed environment variables or other non-default behaviors / customizations
@@ -55,12 +56,12 @@ if [ -d pts-core/hooks/startup ]
 then
 	for file in pts-core/hooks/startup/*.sh
 	do
-		./$file
+		./"$file"
 	done
 fi
 
 # Determine PHP binary location
-if [ ! "X$PHP_BIN" = "X" ] && [ -x $PHP_BIN ]
+if [ ! "X$PHP_BIN" = "X" ] && [ -x "$PHP_BIN" ]
 then
 	export PHP_BIN=$PHP_BIN
 elif [ -x /usr/bin/php7 ] || [ -x /usr/local/bin/php7 ] || [ -x /usr/pkg/bin/php7 ]
@@ -266,12 +267,12 @@ then
 	echo " "
 fi
 
-exit
+exit 1
 fi
 
-if [ ! -f pts-core/phoronix-test-suite.php ] && [ -f `dirname $0`/pts-core/phoronix-test-suite.php ]
+if [ ! -f pts-core/phoronix-test-suite.php ] && [ -f $(dirname "$0")/pts-core/phoronix-test-suite.php ]
 then
-	cd `dirname $0`
+	cd $(dirname "$0") || exit
 fi
 
 # Ensure the user is in the correct directory
@@ -287,7 +288,7 @@ For support visit:
                    https://github.com/phoronix-test-suite/phoronix-test-suite
 
 EOT
-exit
+exit 1
 fi
 
 # Command-specific conditions
@@ -304,7 +305,7 @@ case "$1" in
 	;;
 esac
 
-export PTS_EXT_LAUNCH_SCRIPT_DIR=`mktemp -d 2>/dev/null || mktemp -d -t ptstmp`
+export PTS_EXT_LAUNCH_SCRIPT_DIR=$(mktemp -d 2>/dev/null || mktemp -d -t ptstmp)
 
 PTS_PREPEND_LAUNCH=""
 
@@ -321,18 +322,18 @@ PTS_EXIT_STATUS=8
 while [ $PTS_EXIT_STATUS -eq 8 ]; do
 	PTS_LAUNCH_ARGS="$@"
 	sh -c "$PTS_PREPEND_LAUNCH $PHP_BIN $PTS_DIR/pts-core/phoronix-test-suite.php $PTS_LAUNCH_ARGS"
-	PTS_EXIT_STATUS=$?
+  PTS_EXIT_STATUS=$?
 done
 
-if [ -f $PTS_EXT_LAUNCH_SCRIPT_DIR/web-server-launcher ]
+if [ -f "$PTS_EXT_LAUNCH_SCRIPT_DIR"/web-server-launcher ]
 then
-	chmod +x $PTS_EXT_LAUNCH_SCRIPT_DIR/web-server-launcher
-	exec $PTS_EXT_LAUNCH_SCRIPT_DIR/web-server-launcher
-	rm -f $PTS_EXT_LAUNCH_SCRIPT_DIR/web-server-launcher
-elif [ -f $PTS_EXT_LAUNCH_SCRIPT_DIR/phoromatic-server-launcher ]
+	chmod +x "$PTS_EXT_LAUNCH_SCRIPT_DIR"/web-server-launcher
+	exec "$PTS_EXT_LAUNCH_SCRIPT_DIR"/web-server-launcher
+	rm -f "$PTS_EXT_LAUNCH_SCRIPT_DIR"/web-server-launcher
+elif [ -f "$PTS_EXT_LAUNCH_SCRIPT_DIR"/phoromatic-server-launcher ]
 then
-	chmod +x $PTS_EXT_LAUNCH_SCRIPT_DIR/phoromatic-server-launcher
-	exec $PTS_EXT_LAUNCH_SCRIPT_DIR/phoromatic-server-launcher
-	rm -f $PTS_EXT_LAUNCH_SCRIPT_DIR/phoromatic-server-launcher
+	chmod +x "$PTS_EXT_LAUNCH_SCRIPT_DIR"/phoromatic-server-launcher
+	exec "$PTS_EXT_LAUNCH_SCRIPT_DIR"/phoromatic-server-launcher
+	rm -f "$PTS_EXT_LAUNCH_SCRIPT_DIR"/phoromatic-server-launcher
 fi
 # rm -rf $PTS_EXT_LAUNCH_SCRIPT_DIR
