@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2020, Phoronix Media
-	Copyright (C) 2008 - 2020, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -67,7 +67,7 @@ class pts_network
 	{
 		return pts_network::http_get_contents('http://phoronix.net/PTS') == 'PTS';
 	}
-	public static function http_upload_via_post($url, $to_post_data, $supports_proxy = true)
+	public static function http_upload_via_post($url, $to_post_data, $supports_proxy = true, $http_timeout = -1)
 	{
 		if(!pts_network::network_support_available())
 		{
@@ -77,11 +77,11 @@ class pts_network
 		$http_parameters = array('http' => array('method' => 'POST', 'content' => http_build_query($to_post_data)));
 		if($supports_proxy)
 		{
-			$stream_context = pts_network::stream_context_create($http_parameters);
+			$stream_context = pts_network::stream_context_create($http_parameters, false, false, false, false, $http_timeout);
 		}
 		else
 		{
-			$stream_context = pts_network::stream_context_create($http_parameters, false, -1, -1);
+			$stream_context = pts_network::stream_context_create($http_parameters, false, -1, -1, false, $http_timeout);
 		}
 		$opened_url = fopen($url, 'rb', false, $stream_context);
 		$response = $opened_url ? stream_get_contents($opened_url) : false;

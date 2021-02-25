@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2020, Phoronix Media
-	Copyright (C) 2010 - 2020, Michael Larabel
+	Copyright (C) 2010 - 2021, Phoronix Media
+	Copyright (C) 2010 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -166,14 +166,15 @@ class pts_openbenchmarking_upload extends pts_openbenchmarking
 			$to_post['display_status'] = pts_openbenchmarking_client::$client_settings['ResultUploadsDefaultDisplayStatus'];
 		}
 
-		$json_response = pts_openbenchmarking::make_openbenchmarking_request('upload_test_result', $to_post);
+		$result_upload_timeout = 55;
+		$json_response = pts_openbenchmarking::make_openbenchmarking_request('upload_test_result', $to_post, $result_upload_timeout);
 		$json_response = json_decode($json_response, true);
 		if(!is_array($json_response) && !empty($system_logs))
 		{
 			// Sometimes OpenBenchmarking has issues with large result files, so for now try uploading again with no logs
 			$to_post['system_logs_zip'] = null;
 			$to_post['system_logs_hash'] = null;
-			$json_response = pts_openbenchmarking::make_openbenchmarking_request('upload_test_result', $to_post);
+			$json_response = pts_openbenchmarking::make_openbenchmarking_request('upload_test_result', $to_post, $result_upload_timeout);
 			$json_response = json_decode($json_response, true);
 		}
 
