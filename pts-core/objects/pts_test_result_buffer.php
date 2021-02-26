@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2020, Phoronix Media
-	Copyright (C) 2009 - 2020, Michael Larabel
+	Copyright (C) 2009 - 2021, Phoronix Media
+	Copyright (C) 2009 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -25,6 +25,11 @@ class pts_test_result_buffer
 	public $buffer_items;
 	protected $buffer_contains;
 	protected $added_multi_sample_result = false;
+	protected $max_precision = 0;
+	protected $min_bi;
+	protected $min_value = 0;
+	protected $max_bi;
+	protected $max_value = 0;
 
 	public function __construct($buffer_items = array())
 	{
@@ -32,10 +37,66 @@ class pts_test_result_buffer
 
 		if(!empty($buffer_items))
 		{
-			foreach($buffer_items as $buffer_item)
+			foreach($buffer_items as &$buffer_item)
 			{
 				$this->buffer_contains[$buffer_item->get_result_identifier() . $buffer_item->get_result_value()] = 1;
+				$this->max_precision = max($this->max_precision, pts_math::get_precision($buffer_item->get_result_value()));
+				$this->check_buffer_item_for_min_max($buffer_item);
 			}
+		}
+	}
+	public function add_buffer_item($buffer_item)
+	{
+		if(!$this->buffer_contained($buffer_item))
+		{
+			$this->buffer_items[] = $buffer_item;
+			$this->buffer_contains[$buffer_item->get_result_identifier() . $buffer_item->get_result_value()] = 1;
+			$this->max_precision = max($this->max_precision, pts_math::get_precision($buffer_item->get_result_value()));
+
+			$this->check_buffer_item_for_min_max($buffer_item);
+		}
+	}
+	public function add_test_result($identifier, $value, $raw_value = null, $json = null, $min_value = null, $max_value = null)
+	{
+		$buffer_item = new pts_test_result_buffer_item($identifier, $value, $raw_value, $json, $min_value, $max_value);
+
+		$this->check_buffer_item_for_min_max($buffer_item);
+		$this->buffer_items[] = $buffer_item;
+		$this->max_precision = max($this->max_precision, pts_math::get_precision($value));
+
+		if(is_array($value))
+		{
+			$value = implode(':', $value);
+		}
+
+		if($this->added_multi_sample_result == false && $raw_value && !is_array($raw_value))
+		{
+			$this->added_multi_sample_result = strpos($raw_value, ':') !== false;
+		}
+
+		$this->buffer_contains[$identifier . $value] = 1;
+	}
+	protected function recalculate_buffer_items_min_max()
+	{
+		$this->min_value = 0;
+		$this->max_value = 0;
+
+		foreach($this->buffer_items as &$buffer_item)
+		{
+			$this->check_buffer_item_for_min_max($buffer_item);
+		}
+	}
+	protected function check_buffer_item_for_min_max(&$buffer_item)
+	{
+		if($buffer_item->get_result_value() < $this->min_value || $this->min_value == 0)
+		{
+			$this->min_value = $buffer_item->get_result_value();
+			$this->min_bi = $buffer_item;
+		}
+		if($buffer_item->get_result_value() > $this->max_value)
+		{
+			$this->max_value = $buffer_item->get_result_value();
+			$this->max_bi = $buffer_item;
 		}
 	}
 	public function __clone()
@@ -90,14 +151,6 @@ class pts_test_result_buffer
 
 		return false;
 	}
-	public function add_buffer_item($buffer_item)
-	{
-		if(!$this->buffer_contained($buffer_item))
-		{
-			$this->buffer_items[] = $buffer_item;
-			$this->buffer_contains[$buffer_item->get_result_identifier() . $buffer_item->get_result_value()] = 1;
-		}
-	}
 	public function buffer_contained(&$buffer_item)
 	{
 		return isset($this->buffer_contains[$buffer_item->get_result_identifier() . $buffer_item->get_result_value()]);
@@ -106,35 +159,26 @@ class pts_test_result_buffer
 	{
 		return isset($this->buffer_items[$i]) ? $this->buffer_items[$i] : false;
 	}
-	public function add_test_result($identifier, $value, $raw_value = null, $json = null, $min_value = null, $max_value = null)
-	{
-		$this->buffer_items[] = new pts_test_result_buffer_item($identifier, $value, $raw_value, $json, $min_value, $max_value);
-
-		if(is_array($value))
-		{
-			$value = implode(':', $value);
-		}
-
-		if($this->added_multi_sample_result == false && $raw_value && !is_array($raw_value))
-		{
-			$this->added_multi_sample_result = strpos($raw_value, ':') !== false;
-		}
-
-		$this->buffer_contains[$identifier . $value] = 1;
-	}
 	public function detected_multi_sample_result()
 	{
 		return $this->added_multi_sample_result;
 	}
 	public function clear_outlier_results($value_below)
 	{
+		$cleared = false;
 		foreach($this->buffer_items as $key => &$buffer_item)
 		{
 			if($buffer_item->get_result_value() < $value_below)
 			{
 				$other_value += $buffer_item->get_result_value();
 				unset($this->buffer_items[$key]);
+				$cleared = true;
 			}
+		}
+
+		if($cleared)
+		{
+			$this->recalculate_buffer_items_min_max();
 		}
 	}
 	public function rename($from, $to)
@@ -186,13 +230,22 @@ class pts_test_result_buffer
 	public function remove($remove)
 	{
 		$remove = pts_arrays::to_array($remove);
+		$removed = false;
 		foreach($this->buffer_items as $i => &$buffer_item)
 		{
 			if(in_array($buffer_item->get_result_identifier(), $remove))
 			{
 				unset($this->buffer_items[$i]);
+				$removed = true;
 			}
 		}
+
+		if($removed)
+		{
+			$this->recalculate_buffer_items_min_max();
+		}
+
+		return $removed;
 	}
 	public function auto_shorten_buffer_identifiers($identifier_shorten_index = false)
 	{
@@ -228,6 +281,7 @@ class pts_test_result_buffer
 	public function clear_iqr_outlier_results()
 	{
 		$is_multi_way = pts_render::multi_way_identifier_check($this->get_identifiers());
+		$cleared = false;
 
 		if($is_multi_way)
 		{
@@ -264,6 +318,7 @@ class pts_test_result_buffer
 					if($value > $top_cut || $value < $bottom_cut)
 					{
 						unset($this->buffer_items[$key]);
+						$cleared = true;
 					}
 				}
 			}
@@ -285,8 +340,14 @@ class pts_test_result_buffer
 				if($value > $top_cut || $value < $bottom_cut)
 				{
 					unset($this->buffer_items[$key]);
+					$cleared = true;
 				}
 			}
+		}
+
+		if($cleared)
+		{
+			$this->recalculate_buffer_items_min_max();
 		}
 	}
 	public function buffer_values_sort()
@@ -363,14 +424,7 @@ class pts_test_result_buffer
 	}
 	public function get_max_precision()
 	{
-		$max_precision = 0;
-
-		foreach($this->buffer_items as &$buffer_item)
-		{
-			$max_precision = max($max_precision, pts_math::get_precision($buffer_item->get_result_value()));
-		}
-
-		return $max_precision;
+		return $this->max_precision;
 	}
 	public function reset_precision($precision)
 	{
@@ -412,74 +466,32 @@ class pts_test_result_buffer
 	}
 	public function get_min_value($return_identifier = false)
 	{
-		static $bi = null;
-		static $value = 0;
-		static $min_id = null;
-		static $last_size = -1;
-
-		if($last_size != ($curr_size = count($this->buffer_items)))
-		{
-			$precision = 0;
-			foreach($this->buffer_items as &$buffer_item)
-			{
-				$precision = max($precision, pts_math::get_precision($buffer_item->get_result_value()));
-				if($buffer_item->get_result_value() < $value || $value == 0)
-				{
-					$value = pts_math::set_precision($buffer_item->get_result_value(), $precision);
-					$min_id = $buffer_item->get_result_identifier();
-					$bi = $buffer_item;
-				}
-			}
-			$last_size = $curr_size;
-		}
-
 		if($return_identifier === 2)
 		{
-			return $bi;
+			return $this->min_bi;
 		}
 		else if($return_identifier)
 		{
-			return $min_id;
+			return $this->min_bi->get_result_identifier();
 		}
 		else
 		{
-			return $value;
+			return pts_math::set_precision($this->min_bi->get_result_value(), $this->get_max_precision());
 		}
 	}
 	public function get_max_value($return_identifier = false)
 	{
-		static $bi = null;
-		static $value = 0;
-		static $max_id = null;
-		static $last_size = -1;
-
-		if($last_size != ($curr_size = count($this->buffer_items)))
-		{
-			$precision = 0;
-			foreach($this->buffer_items as &$buffer_item)
-			{
-				$precision = max($precision, pts_math::get_precision($buffer_item->get_result_value()));
-				if($buffer_item->get_result_value() > $value)
-				{
-					$value = pts_math::set_precision($buffer_item->get_result_value(), $precision);
-					$max_id = $buffer_item->get_result_identifier();
-					$bi = $buffer_item;
-				}
-			}
-			$last_size = $curr_size;
-		}
-
 		if($return_identifier === 2)
 		{
-			return $bi;
+			return $this->max_bi;
 		}
 		else if($return_identifier)
 		{
-			return $max_id;
+			return $this->max_bi->get_result_identifier();
 		}
 		else
 		{
-			return $value;
+			return pts_math::set_precision($this->max_bi->get_result_value(), $this->get_max_precision());
 		}
 	}
 	public function has_run_with_multiple_samples()
