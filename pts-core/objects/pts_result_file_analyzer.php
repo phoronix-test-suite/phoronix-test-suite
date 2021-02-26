@@ -209,9 +209,14 @@ class pts_result_file_analyzer
 			$test_result->set_used_arguments($title_prepend . ' ' . $test_result->get_arguments());
 			$test_result->test_result_buffer = new pts_test_result_buffer();
 
+			$iv_map = $result_object->test_result_buffer->get_identifier_value_map();
 			foreach($identifier_mapping as $identifier => $value)
 			{
-				$result = $result_object->test_result_buffer->get_value_from_identifier($identifier);
+				if(!isset($iv_map[$identifier]))
+				{
+					continue;
+				}
+				$result = $iv_map[$identifier];
 
 				if($result_object->test_profile->get_result_proportion() == 'HIB')
 				{
@@ -271,10 +276,14 @@ class pts_result_file_analyzer
 
 			$computed = array();
 			$footnotes = array();
-
+			$iv_map = $result_object->test_result_buffer->get_identifier_value_map();
 			foreach($generate as $identifier => $value)
 			{
-				$result = $result_object->test_result_buffer->get_value_from_identifier($identifier);
+				if(!isset($iv_map[$identifier]))
+				{
+					continue;
+				}
+				$result = $iv_map[$identifier];
 				if(is_numeric($result) && $result > 0)
 				{
 					if($result_object->test_profile->get_result_proportion() == 'HIB')

@@ -517,6 +517,17 @@ class pts_test_result_buffer
 
 		return false;
 	}
+	public function get_identifier_value_map()
+	{
+		$m = array();
+
+		foreach($this->buffer_items as &$buffer_item)
+		{
+			$m[$buffer_item->get_result_identifier()] = $buffer_item->get_result_value();
+		}
+
+		return $m;
+	}
 	public function buffer_values_to_percent()
 	{
 		$is_multi_way = pts_render::multi_way_identifier_check($this->get_identifiers());
