@@ -40,7 +40,6 @@ class pts_test_result_buffer
 			foreach($buffer_items as &$buffer_item)
 			{
 				$this->buffer_contains[$buffer_item->get_result_identifier() . $buffer_item->get_result_value()] = 1;
-				$this->max_precision = max($this->max_precision, pts_math::get_precision($buffer_item->get_result_value()));
 				$this->check_buffer_item_for_min_max($buffer_item);
 			}
 		}
@@ -51,8 +50,6 @@ class pts_test_result_buffer
 		{
 			$this->buffer_items[] = $buffer_item;
 			$this->buffer_contains[$buffer_item->get_result_identifier() . $buffer_item->get_result_value()] = 1;
-			$this->max_precision = max($this->max_precision, pts_math::get_precision($buffer_item->get_result_value()));
-
 			$this->check_buffer_item_for_min_max($buffer_item);
 		}
 	}
@@ -62,7 +59,6 @@ class pts_test_result_buffer
 
 		$this->check_buffer_item_for_min_max($buffer_item);
 		$this->buffer_items[] = $buffer_item;
-		$this->max_precision = max($this->max_precision, pts_math::get_precision($value));
 
 		if(is_array($value))
 		{
@@ -98,6 +94,9 @@ class pts_test_result_buffer
 			$this->max_value = $buffer_item->get_result_value();
 			$this->max_bi = $buffer_item;
 		}
+
+		// Also check precision
+		$this->max_precision = max($this->max_precision, pts_math::get_precision($buffer_item->get_result_value()));
 	}
 	public function __clone()
 	{
@@ -566,15 +565,7 @@ class pts_test_result_buffer
 				$precision = 2;
 			}
 
-			$current_precision = 0;
-			foreach($this->buffer_items as &$buffer_item)
-			{
-				if(is_numeric(($val = $buffer_item->get_result_value())))
-				{
-					$current_precision = max($current_precision, pts_math::get_precision($val));
-				}
-			}
-
+			$current_precision = $this->get_max_precision();
 			$precision = $precision == -1 ? $current_precision : min($precision, $current_precision);
 		}
 
