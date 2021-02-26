@@ -271,7 +271,7 @@ class pts_result_file
 	{
 		// XXX this is deprecated
 		$hw = array();
-		foreach($this->get_systems() as $s)
+		foreach($this->systems as &$s)
 		{
 			$hw[] = $s->get_hardware();
 		}
@@ -281,7 +281,7 @@ class pts_result_file
 	{
 		// XXX this is deprecated
 		$sw = array();
-		foreach($this->get_systems() as $s)
+		foreach($this->systems as &$s)
 		{
 			$sw[] = $s->get_software();
 		}
@@ -291,7 +291,7 @@ class pts_result_file
 	{
 		// XXX this is deprecated
 		$ids = array();
-		foreach($this->get_systems() as $s)
+		foreach($this->systems as &$s)
 		{
 			$ids[] = $s->get_identifier();
 		}
@@ -299,7 +299,7 @@ class pts_result_file
 	}
 	public function is_system_identifier_in_result_file($identifier)
 	{
-		foreach($this->get_systems() as $s)
+		foreach($this->systems as &$s)
 		{
 			if($s->get_identifier() == $identifier)
 			{
