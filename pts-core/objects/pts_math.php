@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2020, Phoronix Media
-	Copyright (C) 2009 - 2020, Michael Larabel
+	Copyright (C) 2009 - 2021, Phoronix Media
+	Copyright (C) 2009 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -176,9 +176,12 @@ class pts_math
 		// This is better than using round() with precision because of the $precision is > than the current value, 0s will not be appended
 		return is_numeric($number) ? number_format($number, $precision, '.', '') : $number;
 	}
-	public static function find_percentile($values, $quartile)
+	public static function find_percentile($values, $quartile, $values_sorted = false)
 	{
-		sort($values, SORT_NUMERIC);
+		if($values_sorted == false)
+		{
+			sort($values, SORT_NUMERIC);
+		}
 		$qr_index = count($values) * $quartile;
 		$qr = $values[floor($qr_index)];
 

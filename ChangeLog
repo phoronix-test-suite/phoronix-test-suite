@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Optimize out sorting percentile values array excess times
 pts-core: Optimization to avoid re-parsing test profile definition multiple times
 pts-core: Optimization to avoid re-parsing installed test metadata multiple times
 pts-core: Allow longer HTTP timeouts on OpenBenchmarking.org result uploads if needed

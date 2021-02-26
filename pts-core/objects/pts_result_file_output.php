@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2019, Phoronix Media
-	Copyright (C) 2010 - 2019, Michael Larabel
+	Copyright (C) 2010 - 2021, Phoronix Media
+	Copyright (C) 2010 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -410,8 +410,9 @@ class pts_result_file_output
 						$box_plot = str_split($box_plot);
 
 						// BOX PLOT
-						$whisker_bottom = pts_math::find_percentile($values, 0.02);
-						$whisker_top = pts_math::find_percentile($values, 0.98);
+						sort($values, SORT_NUMERIC);
+						$whisker_bottom = pts_math::find_percentile($values, 0.02, true);
+						$whisker_top = pts_math::find_percentile($values, 0.98, true);
 						$unique_values = array_unique($values);
 						foreach($unique_values as &$val)
 						{
@@ -430,9 +431,9 @@ class pts_result_file_output
 							$box_plot[$i] = '-';
 						}
 
-						$box_left = round((pts_math::find_percentile($values, 0.25) / $max_value) * $box_plot_size);
-						$box_middle = round((pts_math::find_percentile($values, 0.5) / $max_value) * $box_plot_size);
-						$box_right = round((pts_math::find_percentile($values, 0.75) / $max_value) * $box_plot_size);
+						$box_left = round((pts_math::find_percentile($values, 0.25, true) / $max_value) * $box_plot_size);
+						$box_middle = round((pts_math::find_percentile($values, 0.5, true) / $max_value) * $box_plot_size);
+						$box_right = round((pts_math::find_percentile($values, 0.75, true) / $max_value) * $box_plot_size);
 						for($i = $box_left; $i <= $box_right; $i++)
 						{
 							$box_plot[$i] = '#';
