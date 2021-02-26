@@ -361,37 +361,6 @@ class pts_test_result_buffer
 		}
 		return true;
 	}
-	public function get_max_value($return_identifier = false)
-	{
-		$bi = null;
-		$value = 0;
-		$max_id = null;
-		$precision = 2;
-
-		foreach($this->buffer_items as &$buffer_item)
-		{
-			$precision = max($precision, pts_math::get_precision($buffer_item->get_result_value()));
-			if($buffer_item->get_result_value() > $value)
-			{
-				$value = $buffer_item->get_result_value();
-				$max_id = $buffer_item->get_result_identifier();
-				$bi = $buffer_item;
-			}
-		}
-
-		if($return_identifier === 2)
-		{
-			return $bi;
-		}
-		else if($return_identifier)
-		{
-			return $max_id;
-		}
-		else
-		{
-			return pts_math::set_precision($value, $precision);
-		}
-	}
 	public function get_max_precision()
 	{
 		$max_precision = 0;
@@ -443,20 +412,25 @@ class pts_test_result_buffer
 	}
 	public function get_min_value($return_identifier = false)
 	{
-		$bi = null;
-		$value = 0;
-		$min_id = null;
-		$precision = 2;
+		static $bi = null;
+		static $value = 0;
+		static $min_id = null;
+		static $last_size = -1;
 
-		foreach($this->buffer_items as &$buffer_item)
+		if($last_size != ($curr_size = count($this->buffer_items)))
 		{
-			$precision = max($precision, pts_math::get_precision($buffer_item->get_result_value()));
-			if($buffer_item->get_result_value() < $value || $value == 0)
+			$precision = 0;
+			foreach($this->buffer_items as &$buffer_item)
 			{
-				$value = $buffer_item->get_result_value();
-				$min_id = $buffer_item->get_result_identifier();
-				$bi = $buffer_item;
+				$precision = max($precision, pts_math::get_precision($buffer_item->get_result_value()));
+				if($buffer_item->get_result_value() < $value || $value == 0)
+				{
+					$value = pts_math::set_precision($buffer_item->get_result_value(), $precision);
+					$min_id = $buffer_item->get_result_identifier();
+					$bi = $buffer_item;
+				}
 			}
+			$last_size = $curr_size;
 		}
 
 		if($return_identifier === 2)
@@ -469,7 +443,43 @@ class pts_test_result_buffer
 		}
 		else
 		{
-			return pts_math::set_precision($value, $precision);
+			return $value;
+		}
+	}
+	public function get_max_value($return_identifier = false)
+	{
+		static $bi = null;
+		static $value = 0;
+		static $max_id = null;
+		static $last_size = -1;
+
+		if($last_size != ($curr_size = count($this->buffer_items)))
+		{
+			$precision = 0;
+			foreach($this->buffer_items as &$buffer_item)
+			{
+				$precision = max($precision, pts_math::get_precision($buffer_item->get_result_value()));
+				if($buffer_item->get_result_value() > $value)
+				{
+					$value = pts_math::set_precision($buffer_item->get_result_value(), $precision);
+					$max_id = $buffer_item->get_result_identifier();
+					$bi = $buffer_item;
+				}
+			}
+			$last_size = $curr_size;
+		}
+
+		if($return_identifier === 2)
+		{
+			return $bi;
+		}
+		else if($return_identifier)
+		{
+			return $max_id;
+		}
+		else
+		{
+			return $value;
 		}
 	}
 	public function has_run_with_multiple_samples()
