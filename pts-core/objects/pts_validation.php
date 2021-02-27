@@ -497,7 +497,11 @@ class pts_validation
 			$do_require = in_array('TEST_REQUIRES', $node->get_flags_array());
 			if(!empty($enums))
 			{
-				$input = implode(',', pts_user_io::prompt_text_menu('Select from the supported options', $enums, $type->multi_enum_select(), false, null));
+				$input = pts_user_io::prompt_text_menu('Select from the supported options', $enums, $type->multi_enum_select(), false, null);
+				if(is_array($input))
+				{
+					$input = implode(',', $input);
+				}
 			}
 			else
 			{
