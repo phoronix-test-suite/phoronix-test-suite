@@ -19,6 +19,16 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+/*
+	Future Reworks: 
+	1. In the Failure object, rewrite with a given key/value pair
+	to allow for easier filtering on front end.
+	For example, replace { failures => "downloads not tested}
+				with { failures => {type : "Not Tested", reason : "downloads.xml file dne"}}
+
+	Future Developers: Environment Variable DEBUG_TIMEOUT is your friend. Restricts long downloads while debugging.
+*/
+
 /**
  * check_tests
  * 
@@ -45,15 +55,23 @@ class check_tests implements pts_option_interface
 	const V_DOWNLOAD_FILE = 'downloadFile';		// name of file downloaded. Usuall basename of url
 	const V_STATUS = 'status';					// http status code for the download
 	const V_DOWNLOAD_TIME = "downloadTime";		// complete time to connect to url and download
+	const V_DOWNLOAD_ERROR = "downloadError";	// curl error details if download timed out. 
 	const V_DOWNLOAD_SIZE = "downloadSize";		// size of downloaded file
 	const V_DUPLICATE = "source";				// indicates if we have already downloaded the file as part of an earlier test profile version
 	const V_REDIRECT = "redirectTo";			// If a url is redirected, this is the original url location. V_URL will contain the redirection 
-	
+	const V_MD5_CHECKSUM = "md5";				// md5 checksum calculated against the downloaded file
+	const V_SHA256_CHECKSUM = "sha256";			// sha256 checksum calculated against the downloaded file
+
+	//const DOWNLOAD_RATE = 50000;				// conservative expected rate for a file to download ie 50 kB/sec. 
+	const TIMED_OUT = 0;						// Flag indicating that the curl operation timed out
+
 	// Don't use const for these as it breaks PHP 5.6
 	// See https://stackoverflow.com/questions/10969342/parse-error-syntax-error-unexpected-expecting-or for details
 	protected static $TESTED_FILES;
 	protected static $JSON_FILE;
 	protected static $DOWNLOADED_VENDOR_FILES;
+	protected static $CURL_TIMEOUT_RATE = 50000;
+	protected static $DEBUG_TIMEOUT = 0;		// The number of secs before a curl download times out
 
 	/**
 	 * Determines if the test profile is valid. If invalid 'Invalid Arguement' Problem reported.
@@ -74,6 +92,21 @@ class check_tests implements pts_option_interface
 	 */
 	public static function run($r)
 	{
+		// Interpret any env vars.
+		// set curl to time out based on the download rate. ie If download rate is 50 kB/sec, 100kB file will time after 2 secs
+		$downloadRate = getenv('DOWNLOAD_RATE');
+		$downloadTimeOut = getenv('DEBUG_TIMEOUT');
+		if (!$downloadRate && !$downloadTimeOut) {
+			echo pts_client::cli_colored_text("Download Rate set to " . number_format(self::$CURL_TIMEOUT_RATE) . " kB/sec. Set environment variable DOWNLOAD_RATE=(seconds) to overwrite. " . PHP_EOL . PHP_EOL, 'green', true);
+		} else if (!$downloadRate && $downloadTimeOut) {
+			self::$DEBUG_TIMEOUT = $downloadTimeOut;
+			echo pts_client::cli_colored_text("Download Rate overwritten to set curl time out at " . number_format(self::$DEBUG_TIMEOUT) . " secs. " . PHP_EOL . PHP_EOL, 'red', true);
+		} else if ($downloadRate && $downloadTimeOut) {
+			echo pts_client::cli_colored_text("DOWNLOAD_RATE and DEBUG_TIMEOUT cannot be used simultaneously. " . PHP_EOL . PHP_EOL, 'red', true);
+		} else if ($downloadRate && !$downloadTimeOut) {
+			self::$CURL_TIMEOUT_RATE = $downloadRate;
+			echo pts_client::cli_colored_text("Download Rate set to " . number_format(self::$CURL_TIMEOUT_RATE) . " kB/sec." . PHP_EOL . PHP_EOL, 'red', true);
+		}
 
 		// File contains a list of all the tests that have already been tested
 		self::$TESTED_FILES = PTS_OPENBENCHMARKING_SCRATCH_PATH . 'check-tests-tested.txt';
@@ -83,7 +116,7 @@ class check_tests implements pts_option_interface
 
 		// Downloaded file from vendors
 		self::$DOWNLOADED_VENDOR_FILES = PTS_OPENBENCHMARKING_SCRATCH_PATH . "checkTestsDownloads" . "/";
-	
+
 		if (!function_exists('curl_init')) {
 			echo pts_client::cli_colored_text("Test Failed. cURL must be installed to proceed." . PHP_EOL . PHP_EOL, 'red', true);
 			return false;
@@ -108,9 +141,17 @@ class check_tests implements pts_option_interface
 			$available_tests = $r;
 		}
 
-		$noOfForks = 0;
-		$processed = 0;
-		while ($processed < count($available_tests)) {
+		$noOfForks = 0;				// number of active forks
+		$processed = 0;	//PROD			// number of the available tests that have been processed
+		$totalTests = count($available_tests);
+
+		while ($processed < $totalTests) {
+			//while ($processed < 100) {
+
+			if (($processed % $procs) === 0) {
+				echo pts_client::cli_colored_text("Tests Remaining: " . ($totalTests - $processed) . PHP_EOL, 'white', true);
+			}
+
 			// If we have more then $procs running, wait for one to free up before proceeding.
 			if ($noOfForks >= $procs) {
 				$pid = pcntl_waitpid(0, $status);
@@ -118,7 +159,7 @@ class check_tests implements pts_option_interface
 				$noOfForks--;
 			}
 
-			// TODO: try to getting a test profile that is currently being worked on. This will prevent potentially
+			// FUTURE TODO: try to getting a test profile that is currently being worked on. This will prevent potentially
 			// downloading the file twice as each process takes a different version of the test profile with the same
 			// download. ie create 3 groups, namely done, doing, toDo 
 			$currentTest = $available_tests[$processed];
@@ -129,13 +170,15 @@ class check_tests implements pts_option_interface
 				die('Unable to fork.');
 			} else if ($pid) {
 				// Parent Code
-				echo pts_client::cli_colored_text("Testing " . $currentTest . PHP_EOL, 'grey', true);
+				echo pts_client::cli_just_italic($pid) . pts_client::cli_colored_text(" Testing " . $currentTest . PHP_EOL, 'grey', true);
 				$noOfForks++;
 			} else {
 				// Child Code
 				$results = self::processTestFile($currentTest);
 				if ($results)
 					self::logStatus($results, getmypid());
+
+				echo pts_client::cli_colored_text("..... " . pts_client::cli_just_italic(getmypid()) . " " . $currentTest . " completed" . PHP_EOL, 'grey', true);
 
 				exit(0);
 			}
@@ -148,16 +191,26 @@ class check_tests implements pts_option_interface
 			self::mergeResults($pid);
 		}
 
+		// Be nice to the frontend and perform a final sort
+		$allResults = json_decode(file_get_contents(self::$JSON_FILE), true);
+		$sorted = usort($allResults, "self::profileSort");
+		foreach ($allResults as $curr)
+			echo ($curr['profile-name']) . PHP_EOL;
+		if ($sorted)
+			file_put_contents(self::$JSON_FILE, json_encode($allResults));
+
+
 		// Clean any temp json files that might remain
 		$deleteFiles = self::$JSON_FILE . '.*';
 		array_map('unlink', glob($deleteFiles));
 
 		// Count and report on number of downloads
-		$noOfDownloads = count(scandir(self::$DOWNLOADED_VENDOR_FILES)) - 2; // remove ./ and ../ from the array count
+		$noOfDownloads = count(file(self::$TESTED_FILES));
 
 		// PROD: delete all files... In DEV: comment out to prevent files from downloading with each test run.
 		if (file_exists(self::$TESTED_FILES))
 			unlink(self::$TESTED_FILES);
+
 		if (is_dir(self::$DOWNLOADED_VENDOR_FILES)) {
 			$deleteFiles = self::$DOWNLOADED_VENDOR_FILES . '*';
 			array_map('unlink', glob($deleteFiles));
@@ -167,6 +220,10 @@ class check_tests implements pts_option_interface
 		echo PHP_EOL . pts_client::cli_colored_text("Total Tests Performed: " . $processed . PHP_EOL, 'white', true);
 		echo pts_client::cli_colored_text("Total Downloads in Cache: " . $noOfDownloads . PHP_EOL, 'white', true);
 		echo PHP_EOL . pts_client::cli_colored_text("Test Completed in " . self::timeToString(microtime(true) - $startTime) . "." . PHP_EOL . "Results reported in " . self::$JSON_FILE .  PHP_EOL . PHP_EOL, 'green', true);
+	}
+	public static function profileSort($a, $b)
+	{
+		return strcmp($a['profile-name'], $b['profile-name']);
 	}
 
 	/**
@@ -205,11 +262,17 @@ class check_tests implements pts_option_interface
 	 */
 	public static function processTestFile($identifier)
 	{
-		// Determine if the identifer has is valid before proceeding.
+		// By default we assume that the profile does not include an Extend Directive
+		$extended_profile = false;
+
+		// Determine if the identifer is valid before proceeding.
 		$testProfileObjects = pts_types::identifiers_to_test_profile_objects($identifier, true, true);
 		if (count($testProfileObjects) == 0) {
 			echo PHP_EOL . pts_client::cli_colored_text($identifier . " could not be found." .  PHP_EOL, 'cyan', true);
 			return;
+		} elseif (count($testProfileObjects) > 1) {
+			// Flag that we have an extended profile
+			$extended_profile = true;
 		}
 
 		$packages = array();
@@ -217,12 +280,13 @@ class check_tests implements pts_option_interface
 
 			// need to massage into a format for frontend use.
 			$xmlFile = $testProfile->get_downloads();
-			if ($xmlFile == null) {
+
+			if (($extended_profile != true) && ($xmlFile == null)) {
 				$packages[0] =
 					array(
 						"identifier" => $identifier,	// repeated for front end
-						"mirror" => [
-							[					// keep format consistent for json parsing in frontend
+						"mirror" => [					// keep format consistent for json parsing in frontend
+							[
 								"status" => 'Not Tested',
 								"failures" => "downloads.xml file not found",
 							]
@@ -280,55 +344,59 @@ class check_tests implements pts_option_interface
 			"pts-md5" => $md5,
 		);
 
-		$results = array(
-			"status" => null
-		);
-
 		// Set up a structure that will handle any number of mirrors
 		$mirrorCount = 0;
 		$mirrorResults = array();
 
 		foreach ($url as $mirror) {
+			$results = array(
+				"status" => null
+			);
 
 			// Filename is derived from the $URL so no comparison is necessary
 			$remote_filename = basename($mirror);
 
 			// Check to see if the URL has already been tested and grab the download.
-			$vendorData = self::downloadVendorData($mirror, $remote_filename, $identifier);
+			$vendorData = self::downloadVendorData($mirror, $remote_filename, $identifier, $filesize);
 
+			// the identifier that download this url first
 			if ($vendorData[self::V_DUPLICATE])
-				$results[self::V_DUPLICATE] = $vendorData[self::V_IDENTIFIER] . " copied from " . $vendorData[self::V_URL];
+				$results[self::V_DUPLICATE] = $vendorData[self::V_IDENTIFIER];
 
 			$results["url"] = $mirror;
 			if (array_key_exists(self::V_REDIRECT, $vendorData) && $vendorData[self::V_REDIRECT] != "0")
 				$results[self::V_REDIRECT] = $vendorData[self::V_REDIRECT];
 
-
 			// Initiate where all the Discrepancies reside
 			$results['failures'] = array();
 
-			// Determine validity of url. If url d.n.e then all other tests are irrelevant
-			if ($vendorData['status'] != '200') {
-				$results["failures"]['vendor'] = "HTTP Code: " . $vendorData['status'];
+			if ($vendorData[self::V_DOWNLOAD_ERROR] !== 'none') {
+				$results['status'] =  "Failed";
+				$results["failures"]['httpStatus'] = $vendorData['status'];
+				$results["failures"]['error'] = $vendorData[self::V_DOWNLOAD_ERROR];
+			}
+
+			if (($vendorData['status'] !== 200) && ($vendorData['status'] !== 226)) {
 				$results['status'] = "Failed";
+				$results["failures"]['httpStatus'] = $vendorData['status'];
 			} else {
 				// Record the results downloaded from the vendor
-				$results["download-time"] = $vendorData[self::V_DOWNLOAD_TIME];
+				$results["download-time"] = round($vendorData[self::V_DOWNLOAD_TIME], 2);
+				$results["httpStatus"] = $vendorData['status'];
 
 				// Local filesize should be the same as the downloaded bytes. In older versions
 				// of test-profiles, the filesize may not be set. This does not constitute a failure.
-
 				$filesize_status = ($filesize > 0) && ($filesize == $vendorData[self::V_DOWNLOAD_SIZE]);
 				if (!$filesize_status) {
 					$results["failures"]["fileSize"] = $vendorData[self::V_DOWNLOAD_SIZE];
 				}
 
-
 				// In some cases the checksum d.n.e and does not constitue a failure, test it only
 				// if it exists.
 				$sha256_status = true;
 				if (!is_null($sha256)) {
-					$remote_sha256 = hash_file('sha256', $vendorData[self::V_DOWNLOAD_FILE]);
+					//$remote_sha256 = hash_file('sha256', $vendorData[self::V_DOWNLOAD_FILE]);
+					$remote_sha256 = $vendorData[self::V_SHA256_CHECKSUM];
 					$sha256_status = ($sha256 == $remote_sha256);
 					if (!$sha256_status) {
 						$results["failures"]["sha256"] =  $remote_sha256;
@@ -337,7 +405,8 @@ class check_tests implements pts_option_interface
 
 				$md5_status = true;
 				if (!is_null($md5)) {
-					$remote_md5 = md5_file($vendorData[self::V_DOWNLOAD_FILE]);
+					//$remote_md5 = md5_file($vendorData[self::V_DOWNLOAD_FILE]);
+					$remote_md5 = $vendorData[self::V_MD5_CHECKSUM];
 					$md5_status = ($md5 == $remote_md5);
 					if (!$md5_status) {
 						$results["failures"]["md5"] = $remote_md5;
@@ -412,7 +481,7 @@ class check_tests implements pts_option_interface
 
 		// Delete the temp files
 		if (!unlink(self::$JSON_FILE . '.' . $id))
-			echo "Unable to delete file " . self::$JSON_FILE . '.' . $id;
+			echo PHP_EOL . pts_client::cli_colored_text("Unable to delete file " . self::$JSON_FILE . '.' . $id . PHP_EOL . PHP_EOL, 'red', true);
 	}
 
 	/**
@@ -427,13 +496,14 @@ class check_tests implements pts_option_interface
 	 * 						'downloadSize' 	=> Test size
 	 * 						self::D_DOWNLOAD_FILE 	=> Location where the file was downloaded. 	
 	 */
-	public static function downloadVendorData($url, $filename, $identifier)
+	public static function downloadVendorData($url, $filename, $identifier, $filesize)
 	{
 		if (!is_dir(self::$DOWNLOADED_VENDOR_FILES))
 			mkdir(self::$DOWNLOADED_VENDOR_FILES);
 
 		$download = array();
 
+		// FUTURE TODO: store in a db instead of file
 		// Check to see if the file has already been downloaded
 		$downloaded = self::alreadyTested($url);
 		if ($downloaded) {
@@ -441,12 +511,15 @@ class check_tests implements pts_option_interface
 			$download[self::V_IDENTIFIER] = $downloaded[0];
 			$download[self::V_URL] = $downloaded[1];
 			$download[self::V_DOWNLOAD_FILE] = $downloaded[2];
-			$download[self::V_STATUS] = $downloaded[3];
-			$download[self::V_DOWNLOAD_TIME] = $downloaded[4];
-			$download[self::V_DOWNLOAD_SIZE] = $downloaded[5];
-			$download[self::V_REDIRECT] = $downloaded[6];
+			$download[self::V_MD5_CHECKSUM] = $downloaded[3];
+			$download[self::V_SHA256_CHECKSUM] = $downloaded[4];
+			$download[self::V_STATUS] = intval($downloaded[5]);  // force to int
+			$download[self::V_DOWNLOAD_TIME] = $downloaded[6];
+			$download[self::V_DOWNLOAD_SIZE] = intval($downloaded[7]); // force to int
+			$download[self::V_DOWNLOAD_ERROR] = $downloaded[8];
+			$download[self::V_REDIRECT] = $downloaded[9];
 
-			echo pts_client::cli_colored_text($downloaded[0] . " extracted " . basename($download[self::V_DOWNLOAD_FILE])  . " for reuse by " . $identifier . PHP_EOL, 'gray', false);
+			echo pts_client::cli_colored_text($identifier . " extracted " . basename($download[self::V_DOWNLOAD_FILE])  . " from cache, downloaded by " . $download[self::V_IDENTIFIER] . PHP_EOL, 'gray', false);
 		} else {
 			$temp_filename = self::$DOWNLOADED_VENDOR_FILES . $filename . getmypid();
 
@@ -467,25 +540,73 @@ class check_tests implements pts_option_interface
 			// Perform the standard curl
 			curl_setopt($ch, CURLOPT_NOBODY, FALSE);
 			curl_setopt($ch, CURLOPT_FILE, $fh);
+
+
+			if ($filesize)
+				curl_setopt($ch, CURLOPT_TIMEOUT, self::curlTimeOut($filesize));
+
+
 			curl_exec($ch);
 			$info = curl_getinfo($ch);
+
+			// Deal with unexpected download errors
+			$errno = curl_errno($ch);
+			if (!$errno) {
+				$download[self::V_DOWNLOAD_TIME] = $info['total_time'];
+				$download[self::V_DOWNLOAD_ERROR] = "none";
+				//echo pts_client::cli_colored_text($identifier . " Download Time: " . $download[self::V_DOWNLOAD_TIME] . " ERROR " . $errno . " " . $download[self::V_DOWNLOAD_ERROR] . PHP_EOL, 'yellow', false);
+			} else if ($errno === 28) { //CURL TIMED OUT 
+				// If the download timed out, flag the download time. Save the rest of the data to prevent retries.
+				$download[self::V_DOWNLOAD_TIME] = self::TIMED_OUT;
+				$download[self::V_DOWNLOAD_ERROR] = curl_error($ch);
+				echo pts_client::cli_colored_text($identifier . " Download Time: " . $download[self::V_DOWNLOAD_TIME] . " ERROR " . $errno . " " . $download[self::V_DOWNLOAD_ERROR] . PHP_EOL, 'cyan', false);
+			} else {
+				$download[self::V_DOWNLOAD_TIME] = $info['total_time'];
+				$download[self::V_DOWNLOAD_ERROR] = curl_error($ch);
+				echo pts_client::cli_colored_text($identifier . " Download Time: " . $download[self::V_DOWNLOAD_TIME] . " ERROR " . $errno . " " . $download[self::V_DOWNLOAD_ERROR] . PHP_EOL, 'red', false);
+			}
 
 			curl_close($ch);
 			fclose($fh);
 
+			$download[self::V_STATUS] = $info['http_code'];
 			$download[self::V_IDENTIFIER] = $identifier;
 			$download[self::V_DUPLICATE] = false;
 			$download[self::V_URL] = $info['url'];
-			$download[self::V_STATUS] = $info['http_code'];
-			$download[self::V_DOWNLOAD_TIME] = $info['total_time'];
 			$download[self::V_DOWNLOAD_SIZE] = $info['size_download'];
 			$download[self::V_DOWNLOAD_FILE] = $temp_filename;
 
+			// get the checksums before we delete the file
+			$download[self::V_MD5_CHECKSUM] = md5_file($temp_filename);
+			$download[self::V_SHA256_CHECKSUM] = hash_file('sha256', $temp_filename);
+
 			//echo "Downloaded " . $temp_filename . " and saving to tested.txt" . PHP_EOL;
 			self::preventDuplicates($download);
+
+			// clean up the downloaded file
+			if (file_exists($temp_filename))
+				unlink($temp_filename);
 		}
 
 		return $download;
+	}
+	/**
+	 * Set a timeout for curl.
+	 * Can be overwritted using DEBUG_TIMEOUT=x secs. ie DEBUG_TIMEOUT=180
+	 * 
+	 * @param $filename Size of file in download.xml
+	 * 
+	 */
+	public static function curlTimeOut($filesize)
+	{
+		// When in DEV mode mode, the wait time to download large files is a waste.
+		// The download can be cut to a hard x secs for each file by setting the env var DEBUG_TIMEOUT. 
+		// Note: this is different to the CURL_TIMEOUT_RATE which calculates the time based on the filesize and download size.
+		if (self::$DEBUG_TIMEOUT > 0) {
+			return self::$DEBUG_TIMEOUT;
+		}
+
+		return $filesize / self::$CURL_TIMEOUT_RATE;
 	}
 
 	/**
@@ -503,13 +624,16 @@ class check_tests implements pts_option_interface
 			$redirect = $data[self::V_URL];
 		}
 
-		$recordedData = $data[self::V_IDENTIFIER] . self::DELIMITER .
-			$url . self::DELIMITER .
-			$data[self::V_DOWNLOAD_FILE] . self::DELIMITER .
+		$recordedData = $data[self::V_IDENTIFIER] . self::DELIMITER .	//0
+			$url . self::DELIMITER .									//1
+			$data[self::V_DOWNLOAD_FILE] . self::DELIMITER .			//2
+			$data[self::V_MD5_CHECKSUM] . self::DELIMITER .
+			$data[self::V_SHA256_CHECKSUM] . self::DELIMITER .
 			$data[self::V_STATUS] . self::DELIMITER .
 			$data[self::V_DOWNLOAD_TIME] . self::DELIMITER .
 			$data[self::V_DOWNLOAD_SIZE] . self::DELIMITER .
-			$redirect . self::DELIMITER;
+			$data[self::V_DOWNLOAD_ERROR] . self::DELIMITER .
+			$redirect . self::DELIMITER;								//9
 
 
 		if (!file_put_contents(self::$TESTED_FILES, $recordedData . PHP_EOL, FILE_APPEND | LOCK_EX))
