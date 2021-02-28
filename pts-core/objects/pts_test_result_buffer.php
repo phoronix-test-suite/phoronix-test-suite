@@ -488,7 +488,7 @@ class pts_test_result_buffer
 		{
 			return $this->max_bi->get_result_identifier();
 		}
-		else
+		else if($this->max_bi != null)
 		{
 			return pts_math::set_precision($this->max_bi->get_result_value(), $this->get_max_precision());
 		}
