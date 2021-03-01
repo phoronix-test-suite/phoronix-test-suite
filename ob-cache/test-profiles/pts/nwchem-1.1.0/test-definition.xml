@@ -19,7 +19,7 @@
     <Status>Verified</Status>
     <ExternalDependencies>build-utilities, openmpi-development, fortran-compiler, blas-development, lapack-development, atlas-development, tcl</ExternalDependencies>
     <EnvironmentSize>1100</EnvironmentSize>
-    <ProjectURL>http://www.nwchem-sw.org/</ProjectURL>
+    <ProjectURL>https://nwchemgit.github.io/</ProjectURL>
     <InternalTags>SMP, MPI</InternalTags>
     <Maintainer>Michael Larabel</Maintainer>
   </TestProfile>
