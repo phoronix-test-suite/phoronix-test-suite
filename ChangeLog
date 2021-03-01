@@ -6,6 +6,7 @@ pts-core: Optimize out sorting percentile values array excess times
 pts-core: Optimization to avoid re-parsing test profile definition multiple times
 pts-core: Optimization to avoid re-parsing installed test metadata multiple times
 pts-core: Allow longer HTTP timeouts on OpenBenchmarking.org result uploads if needed
+pts-core: Allow sorting runs within a result file from within the result viewer web interface
 
 Phoronix Test Suite 10.2.2
 17 February 2021

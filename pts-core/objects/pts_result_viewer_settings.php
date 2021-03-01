@@ -311,7 +311,7 @@ $t .= '
 	$t .= '</div>';
 }
 
-if($result_file->get_system_count() > 2)
+if($result_file->get_system_count() > 1)
 {
 	$t .= '
 	<div class="div_table_row">
@@ -327,8 +327,13 @@ if($result_file->get_system_count() > 2)
 	$t .= '<div class="div_table_cell"> </div>
 	<div class="div_table_cell"> </div>
 	<div class="div_table_cell"> &nbsp; <em>' . pts_strings::format_time(array_sum($test_run_times) / count($test_run_times), 'SECONDS', true, 60) . '</em></div>
-	<div class="div_table_cell"> </div>
-	</div>';
+	<div class="div_table_cell">';
+
+	if($can_delete_results)
+	{
+		$t .= '<button type="button" onclick="javascript:reorder_result_file(\'' . $public_id . '\'); return false;">Sort / Reorder Runs</button>';
+	}
+	$t .= '</div></div>';
 }
 
 $t .= '
