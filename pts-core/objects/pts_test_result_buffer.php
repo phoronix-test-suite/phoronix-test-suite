@@ -84,14 +84,26 @@ class pts_test_result_buffer
 	}
 	protected function check_buffer_item_for_min_max(&$buffer_item)
 	{
-		if($buffer_item->get_result_value() < $this->min_value || $this->min_value == 0)
+		$value = $buffer_item->get_result_value();
+		if(!is_numeric($value))
 		{
-			$this->min_value = $buffer_item->get_result_value();
+			$values = explode(',', $value);
+			$min_value = min($values);
+			$max_value = max($values);
+		}
+		else
+		{
+			$min_value = $value;
+			$max_value = $value;
+		}
+		if($min_value < $this->min_value || $this->min_value == 0)
+		{
+			$this->min_value = $min_value;
 			$this->min_bi = $buffer_item;
 		}
-		if($buffer_item->get_result_value() > $this->max_value)
+		if($max_value > $this->max_value)
 		{
-			$this->max_value = $buffer_item->get_result_value();
+			$this->max_value = $max_value;
 			$this->max_bi = $buffer_item;
 		}
 
@@ -475,7 +487,7 @@ class pts_test_result_buffer
 		}
 		else
 		{
-			return pts_math::set_precision($this->min_bi->get_result_value(), $this->get_max_precision());
+			return pts_math::set_precision($this->min_value, $this->get_max_precision());
 		}
 	}
 	public function get_max_value($return_identifier = false)
@@ -488,9 +500,9 @@ class pts_test_result_buffer
 		{
 			return $this->max_bi->get_result_identifier();
 		}
-		else if($this->max_bi != null)
+		else
 		{
-			return pts_math::set_precision($this->max_bi->get_result_value(), $this->get_max_precision());
+			return pts_math::set_precision($this->max_value, $this->get_max_precision());
 		}
 	}
 	public function has_run_with_multiple_samples()
