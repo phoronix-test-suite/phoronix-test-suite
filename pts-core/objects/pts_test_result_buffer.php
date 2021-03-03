@@ -72,7 +72,7 @@ class pts_test_result_buffer
 
 		$this->buffer_contains[$identifier . $value] = 1;
 	}
-	protected function recalculate_buffer_items_min_max()
+	public function recalculate_buffer_items_min_max()
 	{
 		$this->min_value = 0;
 		$this->max_value = 0;

@@ -504,6 +504,7 @@ class pts_test_result
 
 		$this->test_profile->set_result_proportion('HIB');
 		$this->test_profile->set_result_scale('Relative Performance');
+		$this->test_result_buffer->recalculate_buffer_items_min_max();
 		return true;
 	}
 	public function sort_results_by_performance()
