@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2020, Phoronix Media
-	Copyright (C) 2008 - 2020, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -570,6 +570,7 @@ class pts_test_result
 				}
 			}
 		}
+		$this->test_result_buffer->recalculate_buffer_items_min_max();
 		return true;
 	}
 	public function get_result_value_from_name($name)
@@ -671,6 +672,7 @@ class pts_test_result
 				}
 			}
 		}
+		$this->test_result_buffer->recalculate_buffer_items_min_max();
 		return true;
 	}
 	public function recalculate_averages_without_outliers($mag = 2)
@@ -693,6 +695,7 @@ class pts_test_result
 				}
 			}
 		}
+		$this->test_result_buffer->recalculate_buffer_items_min_max();
 	}
 	public function get_run_time_avg()
 	{
