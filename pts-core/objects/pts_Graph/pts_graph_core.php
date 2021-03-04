@@ -567,10 +567,10 @@ abstract class pts_graph_core
 				}
 				else
 				{
-					$longest_identifier_width = max($se_width, ceil(self::text_string_width($longest_identifier, $this->i['identifier_size']) * 1.1) + 24);
+					$longest_identifier_width = max($se_width, ceil(self::text_string_width($longest_identifier, $this->i['identifier_size']) * 1.09) + 24);
 				}
 
-				$longest_identifier_max = ceil(($this->i['graph_width'] * 0.55) + 0.001);
+				$longest_identifier_max = ceil(($this->i['graph_width'] * 0.55) + 0.01);
 
 				$this->i['left_start'] = min($longest_identifier_max, max($longest_identifier_width, 70));
 				$this->i['left_end_right'] = 15;
@@ -580,6 +580,7 @@ abstract class pts_graph_core
 			{
 				$this->i['left_start'] += max(20, self::text_string_width($this->i['graph_max_value'], self::$c['size']['tick_mark']) + 3);
 			}
+			$this->i['left_start'] += 8;
 
 			// Pad 8px on top and bottom + title bar + sub-headings
 			$this->i['top_heading_height'] = 16 + self::$c['size']['headers'] + (count($this->graph_sub_titles) * (self::$c['size']['sub_headers'] + 4));
