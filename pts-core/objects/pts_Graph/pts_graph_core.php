@@ -580,7 +580,7 @@ abstract class pts_graph_core
 			{
 				$this->i['left_start'] += max(20, self::text_string_width($this->i['graph_max_value'], self::$c['size']['tick_mark']) + 3);
 			}
-			$this->i['left_start'] += 8;
+			$this->i['left_start'] += 10;
 
 			// Pad 8px on top and bottom + title bar + sub-headings
 			$this->i['top_heading_height'] = 16 + self::$c['size']['headers'] + (count($this->graph_sub_titles) * (self::$c['size']['sub_headers'] + 4));
