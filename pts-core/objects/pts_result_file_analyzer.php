@@ -1345,7 +1345,7 @@ class pts_result_file_analyzer
 	{
 		$ir = new pts_graph_ir_value($value);
 
-		if($value != 'Unknown' && $value != null && !in_array($index, array('Screen Resolution', 'File-System', 'Kernel', 'Network', 'Monitor', 'Display Server', 'Chipset')))
+		if($value != 'Unknown' && strpos($value, ' ') !== false && $value != null && !in_array($index, array('Screen Resolution', 'File-System', 'Kernel', 'Network', 'Monitor', 'Display Server', 'Chipset')))
 		{
 			$ir->set_attribute('href', 'http://openbenchmarking.org/s/' . $value);
 		}
