@@ -661,6 +661,25 @@ class pts_result_file_output
 
 		return $html;
 	}
+	public static function diff_in_system($from, $to)
+	{
+		$from = explode(', ', $from);
+		$to = explode(', ', $to);
+		$changed = array();
+		foreach($from as $i => &$word)
+		{
+			if(isset($to[$i]) && $to[$i] != $from[$i])
+			{
+				list($component_type, $component) = explode(': ', $to[$i]);
+				if(in_array($component_type, array('Audio', 'Monitor')))
+				{
+					continue;
+				}
+				$changed[$component_type] = $component;
+			}
+		}
+		return !empty($changed) ? $changed : false;
+	}
 	public static function result_file_to_system_html(&$result_file)
 	{
 		$html = null;
@@ -682,17 +701,24 @@ class pts_result_file_output
 				$hw = $system->get_hardware();
 				$sw = $system->get_software();
 
-				$hw = pts_strings::highlight_words_with_colon($hw);
-				$sw = pts_strings::highlight_words_with_colon($sw);
-
 				if($hw != $prev_hw)
 				{
-					$html .= '<p>' . pts_strings::highlight_diff_two_structured_strings($hw, $prev_hw) . '</p>';
+					if(($diff = self::diff_in_system($prev_hw, $hw)) && count($diff) < 4 && $sw == $prev_sw)
+					{
+						foreach($diff as $type => $c)
+						{
+							$html .= '<p>Changed <strong>' . $type . '</strong> to <strong>' . $c . '</strong>.</p>';
+						}
+					}
+					else
+					{
+						$html .= '<p>' . pts_strings::highlight_diff_two_structured_strings(pts_strings::highlight_words_with_colon($hw), pts_strings::highlight_words_with_colon($prev_hw)) . '</p>';
+					}
 					$prev_hw = $hw;
 				}
 				if($sw != $prev_sw)
 				{
-					$html .= '<p>' . $sw . '</p>';
+					$html .= '<p>' . pts_strings::highlight_words_with_colon($sw) . '</p>';
 					$prev_sw = $sw;
 				}
 			}
