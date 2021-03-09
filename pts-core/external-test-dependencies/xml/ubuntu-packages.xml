@@ -454,5 +454,9 @@
 			<GenericName>erlang</GenericName>
 			<PackageName>erlang</PackageName>
 		</Package>
+		<Package>
+			<GenericName>libconfigpp</GenericName>
+			<PackageName>libconfig++-dev</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

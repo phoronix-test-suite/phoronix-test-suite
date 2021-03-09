@@ -376,5 +376,9 @@
 			<GenericName>erlang</GenericName>
 			<PackageName>dev-lang/erlang</PackageName>
 		</Package>
+		<Package>
+			<GenericName>libconfigpp</GenericName>
+			<PackageName>dev-libs/libconfig</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>

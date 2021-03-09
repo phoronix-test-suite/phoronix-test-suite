@@ -568,6 +568,12 @@
 			<FileCheck>libxml2/libxml/parser.h</FileCheck>
 		</Package>
 		<Package>
+			<GenericName>libconfigpp</GenericName>
+			<Title>Libconfig++</Title>
+			<PossibleNames>libconfig++, libconfig++-dev</PossibleNames>
+			<FileCheck>/usr/include/libconfig.h++</FileCheck>
+		</Package>
+		<Package>
 			<GenericName>uuid</GenericName>
 			<Title>UUID</Title>
 			<PossibleNames>uuid-dev, libuuid-devel</PossibleNames>

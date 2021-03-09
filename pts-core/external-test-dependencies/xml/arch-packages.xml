@@ -399,5 +399,9 @@
 			<GenericName>python-numpy</GenericName>
 			<PackageName>python-numpy</PackageName>
 		</Package>
+		<Package>
+			<GenericName>libconfigpp</GenericName>
+			<PackageName>libconfig</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
