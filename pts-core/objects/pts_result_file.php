@@ -1056,7 +1056,7 @@ class pts_result_file
 	}
 	public static function result_title_comparison($a, $b)
 	{
-		return ($a->test_profile->get_identifier() == null ? 'Z ' : '') . strcmp(strtolower($a->test_profile->get_title()) . ' ' . $a->test_profile->get_app_version(), strtolower($b->test_profile->get_title()) . ' ' . $b->test_profile->get_app_version());
+		return ($a->test_profile->get_identifier() == null ? 'Z ' : $a->test_profile->get_identifier()) . strcmp(strtolower($a->test_profile->get_title()) . ' ' . $a->test_profile->get_app_version(), strtolower($b->test_profile->get_title()) . ' ' . $b->test_profile->get_app_version());
 	}
 	public function sort_result_object_order_by_result_scale($asc = true)
 	{
