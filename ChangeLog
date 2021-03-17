@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 10.4.0 Milestone 1
+17 March 2021
 
 pts-core: Optimize out sorting percentile values array excess times
 pts-core: Optimization to avoid re-parsing test profile definition multiple times
