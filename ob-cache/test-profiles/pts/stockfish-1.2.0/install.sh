@@ -5,7 +5,7 @@ cd Stockfish-sf_12/src/
 
 if [ $OS_ARCH = "x86_64" ]
 then
-	ARCH=x86-64-modern
+	ARCH=x86-64-avx2
 elif [ $OS_ARCH = "ppc64" ]
 then
 	ARCH=ppc-64

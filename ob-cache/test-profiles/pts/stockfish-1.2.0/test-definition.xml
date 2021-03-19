@@ -4,7 +4,7 @@
   <TestInformation>
     <Title>Stockfish</Title>
     <AppVersion>12</AppVersion>
-    <Description>This is a test of Stockfish, an advanced C++11 chess benchmark that can scale up to 128 CPU cores.</Description>
+    <Description>This is a test of Stockfish, an advanced C++11 chess benchmark that can scale up to 512 CPU cores.</Description>
     <ResultScale>Nodes Per Second</ResultScale>
     <Proportion>HIB</Proportion>
     <SubTitle>Total Time</SubTitle>
