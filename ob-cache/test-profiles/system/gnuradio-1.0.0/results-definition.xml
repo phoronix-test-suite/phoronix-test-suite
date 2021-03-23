@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>	Average Five Back to Back FIR Filters (FFT, 256 Real taps, Complex input) - 116.4 MS/s, #_RESULT_# MiB/s</OutputTemplate>
+    <LineHint>Average Five Back to Back FIR Filters</LineHint>
+    <ArgumentsDescription>Test: Five Back to Back FIR Filters</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>	Average Signal Source (Cosine) - 116.4 MS/s, #_RESULT_# MiB/s</OutputTemplate>
+    <LineHint>Average Signal Source (Cosine)</LineHint>
+    <ArgumentsDescription>Test: Signal Source (Cosine)</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>	Average FIR Filter (FFT, 128 Real taps, Real input) - 116.4 MS/s, #_RESULT_# MiB/s</OutputTemplate>
+    <LineHint>Average FIR Filter (FFT, 128 Real taps, Real input)</LineHint>
+    <ArgumentsDescription>Test: FIR Filter</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>	Average IIR Filter (5 ff 3 fb Real taps, Complex input) - 116.4 MS/s, #_RESULT_# MiB/s</OutputTemplate>
+    <LineHint>Average IIR Filter (5 ff 3 fb Real taps, Complex input)</LineHint>
+    <ArgumentsDescription>Test: IIR Filter</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>	Average FM Deemphasis Filter - 116.4 MS/s, #_RESULT_# MiB/s</OutputTemplate>
+    <LineHint>Average FM Deemphasis Filter</LineHint>
+    <ArgumentsDescription>Test: FM Deemphasis Filter</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>	Average Hilbert Transform (129 taps) - 116.4 MS/s, #_RESULT_# MiB/s</OutputTemplate>
+    <LineHint>Average Hilbert Transform (129 taps)</LineHint>
+    <ArgumentsDescription>Test: Hilbert Transform</ArgumentsDescription>
+  </ResultsParser>
+</PhoronixTestSuite>

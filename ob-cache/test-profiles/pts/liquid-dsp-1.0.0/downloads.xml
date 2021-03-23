@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/liquid-dsp-20210131.tar.xz</URL>
+      <MD5>e55ba39f9d6ce3b935860bcd7b233452</MD5>
+      <SHA256>ae36274d588c3f9451d9c82f0162162bdccf819dfc4c7d3785afdf1bc507a7c4</SHA256>
+      <FileName>liquid-dsp-20210131.tar.xz</FileName>
+      <FileSize>777736</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

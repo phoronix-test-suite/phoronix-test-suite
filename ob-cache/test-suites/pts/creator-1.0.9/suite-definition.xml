@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Creator Workloads</Title>
+    <Version>1.0.9</Version>
+    <TestType>System</TestType>
+    <Description>This test suite consists of different "creator" workloads from image manipulation/editing to 3D modeling and other software common to creators and creative software packages.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/renderers</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/ocr</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/video-encoding</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/audio-encoding</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/imaging</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/oneapi</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/neatbench</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/game-dev</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/speech</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/electronic-design</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/cad</Test>
+  </Execute>
+</PhoronixTestSuite>

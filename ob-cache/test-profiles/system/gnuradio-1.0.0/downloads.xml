@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/gnuradio_benchmark-1.tar.xz</URL>
+      <MD5>6bd9052920c6f52dd6c817d3efb5b64b</MD5>
+      <SHA256>3861f042dd675d1a5ac60293a3cd51a17cb1a76a1dad033700708cddd07f1521</SHA256>
+      <FileName>gnuradio_benchmark-1.tar.xz</FileName>
+      <FileSize>1940</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

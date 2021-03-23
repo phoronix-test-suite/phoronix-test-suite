@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>LuaRadio</Title>
+    <AppVersion>0.9.1</AppVersion>
+    <Description>LuaRadio is a lightweight software-defined radio (SDR) framework built atop LuaJIT. LuaRadio provides a suite of source, sink, and processing blocks, with a simple API for defining flow graphs, running flow graphs, creating blocks, and creating data types.</Description>
+    <ResultScale>MiB/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux, BSD, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>fftw3-development</ExternalDependencies>
+    <EnvironmentSize>15</EnvironmentSize>
+    <ProjectURL>https://luaradio.io/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>luajit, liquid/liquid.h, libliquid.so, volk/volk.h, fftw3.h</SystemDependencies>
+  </TestProfile>
+</PhoronixTestSuite>

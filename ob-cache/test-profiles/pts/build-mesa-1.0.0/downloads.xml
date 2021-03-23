@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://archive.mesa3d.org/mesa-21.0.0.tar.xz</URL>
+      <MD5>a9ae9bf8f2de3758fe4605f8b3f571da</MD5>
+      <SHA256>e6204e98e6a8d77cf9dc5d34f99dd8e3ef7144f3601c808ca0dd26ba522e0d84</SHA256>
+      <FileName>mesa-21.0.0.tar.xz</FileName>
+      <FileSize>14617108</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

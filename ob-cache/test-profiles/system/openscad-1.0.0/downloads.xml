@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/openscad-benchmark-2.zip</URL>
+      <MD5>aedbb08e7e09a079c6cfab187975972b</MD5>
+      <SHA256>1a3e3b64cee43301a94f34fdfbeef6f0719349a7fe07a987237c801f7c01ce4f</SHA256>
+      <FileName>openscad-benchmark-2.zip</FileName>
+      <FileSize>90136</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/oneapi-src/oneDNN/archive/v2.1.2.tar.gz</URL>
+      <MD5>1df4f16f650b7ea08610a10af013faa3</MD5>
+      <SHA256>cca53231ec99878dc7ef3cf4984525df4691b8174e703b40dd530c50531ecea0</SHA256>
+      <FileName>oneDNN-2.1.2.tar.gz</FileName>
+      <FileSize>9277121</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

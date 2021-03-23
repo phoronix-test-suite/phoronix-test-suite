@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/sample-photo-6000x4000-jxl-1.tar.xz</URL>
+      <MD5>0c51ccd3e5d111f5dc791d576813b219</MD5>
+      <SHA256>09b896485264da90a5fa4665e682d8d21d366075db895c47d5e895ab9032f430</SHA256>
+      <FileName>sample-photo-6000x4000-jxl-1.tar.xz</FileName>
+      <FileSize>1290208</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

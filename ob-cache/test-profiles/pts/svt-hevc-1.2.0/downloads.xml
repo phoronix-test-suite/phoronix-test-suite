@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ultravideo.cs.tut.fi/video/Bosphorus_1920x1080_120fps_420_8bit_YUV_RAW.7z</URL>
+      <MD5>db7c7ff09acd5d7820cc4d1eb0939cf9</MD5>
+      <SHA256>e73a54088e88e6465f578625d185933e85c3209ab7105deb755a8b8918b78cab</SHA256>
+      <FileName>Bosphorus_1920x1080_120fps_420_8bit_YUV_RAW.7z</FileName>
+      <FileSize>680772328</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/OpenVisualCloud/SVT-HEVC/archive/v1.5.0.tar.gz</URL>
+      <MD5>89996d0611932f688effb191e178bb84</MD5>
+      <SHA256>5331213ce3fe73d5fe2887cf3aabcd8ffde2fafd0e5f09928d412dc8306f3992</SHA256>
+      <FileName>SVT-HEVC-1.5.0.tar.gz</FileName>
+      <FileSize>1218974</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/SVT-HEVC-1.4.1-Windows.zip</URL>
+      <MD5>9301281217cd3055a7a3a7af40b4e331</MD5>
+      <SHA256>6e77cf0e5063c7e38ee487e947c9d9c4df64991e977d91670ee0fa14559a7a7d</SHA256>
+      <FileName>SVT-HEVC-1.4.1-Windows.zip</FileName>
+      <FileSize>1460352</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

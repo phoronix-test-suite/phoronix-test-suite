@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>GeeXLab Vulkan Ray-Tracing Demo</Title>
+    <AppVersion>2021.2.18.0</AppVersion>
+    <Description>GeeXLab is a cross-platform tool for 3D programming and demo creation. The GeeXLab Vulkan Ray-Tracing Demo from Geeks3D.com is a path tracer based demo making use of the Vulkan ray-tracing extensions with supported graphics processors.</Description>
+    <ResultScale>FPS</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Non-Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <RequiresDisplay>TRUE</RequiresDisplay>
+    <EnvironmentSize>89</EnvironmentSize>
+    <ProjectURL>https://www.geeks3d.com/20210219/vulkan-ray-tracing-tested-on-geforce-rtx-20-30-radeon-rx-6000-and-even-on-geforce-gtx/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>/demofile=\"./v30/main_p1080.xml\" /nogui /no_menubar /benchmark_duration_ms=20000  /no_online_check /benchmark_log_score</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>/width=$VIDEO_WIDTH /height=$VIDEO_HEIGHT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

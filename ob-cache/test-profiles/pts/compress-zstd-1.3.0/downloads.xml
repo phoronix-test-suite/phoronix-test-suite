@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://download.freebsd.org/ftp/releases/amd64/amd64/ISO-IMAGES/12.2/FreeBSD-12.2-RELEASE-amd64-memstick.img, http://ftp6.us.freebsd.org/pub/FreeBSD-Archive/old-releases/ISO-IMAGES/12.2/FreeBSD-12.2-RELEASE-amd64-memstick.img, http://mirror.sale-dedic.com/freebsd-archive/old-releases/ISO-IMAGES/12.2/FreeBSD-12.2-RELEASE-amd64-memstick.img, http://ftp-archive.freebsd.org/pub/FreeBSD-Archive/old-releases/amd64/amd64/ISO-IMAGES/12.2/FreeBSD-12.2-RELEASE-amd64-memstick.img</URL>
+      <MD5>b7913bfd1882796fc646f49c3f967333</MD5>
+      <SHA256>c7fae987dc652aca219d8b1c4941a1ae48bccefa41b7d82a0656a6a3f9e04775</SHA256>
+      <FileName>FreeBSD-12.2-RELEASE-amd64-memstick.img</FileName>
+      <FileSize>1055957504</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/facebook/zstd/releases/download/v1.4.9/zstd-1.4.9.tar.gz</URL>
+      <MD5>eb718b8aae0302cabe20f968e500534d</MD5>
+      <SHA256>29ac74e19ea28659017361976240c4b5c5c24db3b89338731a6feb97c038d293</SHA256>
+      <FileName>zstd-1.4.9.tar.gz</FileName>
+      <FileSize>1821109</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/facebook/zstd/releases/download/v1.4.9/zstd-v1.4.9-win64.zip</URL>
+      <MD5>a9e6b9ec52aef450b4f39947df16e8f3</MD5>
+      <SHA256>51bf3ebaf46d9de643521d6514fa5b0bdfef049c487d5e76e3b5bc8662785e54</SHA256>
+      <FileName>zstd-v1.4.9-win64.zip</FileName>
+      <FileSize>1497569</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

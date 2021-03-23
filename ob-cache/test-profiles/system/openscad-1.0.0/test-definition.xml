@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>OpenSCAD</Title>
+    <Description>OpenSCAD is a programmer-focused solid 3D CAD modeller. OpenSCAD is free software and allows creating 3D CAD objects in a script-based modelling environment. This test profile will use the system-provided OpenSCAD program otherwise and time how long it takes tn render different SCAD assets to PNG output.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux, BSD, MacOSX, Solaris</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <EnvironmentSize>2</EnvironmentSize>
+    <ProjectURL>https://www.openscad.org/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>openscad</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <PostArguments>--render -o out.png --imgsize 1920,1080</PostArguments>
+    </Default>
+    <Option>
+      <DisplayName>Render</DisplayName>
+      <Identifier>render</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Projector Mount Swivel</Name>
+          <Value>swivel.scad</Value>
+        </Entry>
+        <Entry>
+          <Name>Leonardo Phone Case Slim</Name>
+          <Value>leonardo_case_slim_lid_v1_2.scad</Value>
+        </Entry>
+        <Entry>
+          <Name>Pistol</Name>
+          <Value>Pistol.scad</Value>
+        </Entry>
+        <Entry>
+          <Name>Retro Car</Name>
+          <Value>RetroCar.scad</Value>
+        </Entry>
+        <Entry>
+          <Name>Mini-ITX Case</Name>
+          <Value>mini-itx.scad</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

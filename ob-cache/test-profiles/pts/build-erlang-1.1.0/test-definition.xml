@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Timed Erlang/OTP Compilation</Title>
+    <AppVersion>23.2</AppVersion>
+    <Description>This test times how long it takes to compile Erlang/OTP. Erlang is a programming language and run-time for massively scalable soft real-time systems with high availability requirements.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Time To Compile</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <ExternalDependencies>build-utilities, ncurses-development, perl</ExternalDependencies>
+    <EnvironmentSize>15</EnvironmentSize>
+    <ProjectURL>https://www.erlang.org/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>sed</SystemDependencies>
+  </TestProfile>
+</PhoronixTestSuite>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/vsergeev/luaradio/archive/v0.9.1.tar.gz</URL>
+      <MD5>98b67a63f36d4adefde8a95fffe63aa2</MD5>
+      <SHA256>25150fa6b2cfd885d59453a9c4599811573176451c659278c12d50fece69f7f3</SHA256>
+      <FileName>luaradio-0.9.1.tar.gz</FileName>
+      <FileSize>9253374</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/luaradio_benchmark_modified-1.tar.xz</URL>
+      <MD5>374a4f9c64f1e506df2134c847eedef4</MD5>
+      <SHA256>2f4ac148d700db628ee12280259b0fa959c5eb048eba959ae1620f4d1044228e</SHA256>
+      <FileName>luaradio_benchmark_modified-1.tar.xz</FileName>
+      <FileSize>1944</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

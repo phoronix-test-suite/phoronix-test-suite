@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>    events per second: $_RESULT_#</OutputTemplate>
+    <ResultScale>Events Per Second</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>102400.00 MiB transferred #_RESULT_# MiB/sec)</OutputTemplate>
+    <LineHint>MiB/sec</LineHint>
+    <ResultScale>MiB/sec</ResultScale>
+    <TurnCharsToSpace>(</TurnCharsToSpace>
+  </ResultsParser>
+</PhoronixTestSuite>

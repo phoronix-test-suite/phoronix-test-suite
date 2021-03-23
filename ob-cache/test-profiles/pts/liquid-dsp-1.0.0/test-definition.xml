@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Liquid-DSP</Title>
+    <AppVersion>2021.01.31</AppVersion>
+    <Description>LiquidSDR's Liquid-DSP is a software-defined radio (SDR) digital signal processing library. This test profile runs a multi-threaded benchmark of this SDR/DSP library focused on embedded platform usage.</Description>
+    <ResultScale>samples/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, fftw3-development</ExternalDependencies>
+    <EnvironmentSize>68</EnvironmentSize>
+    <ProjectURL>https://liquidsdr.org/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>fec.h</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Threads</DisplayName>
+      <Identifier>cpu-threads</Identifier>
+      <ArgumentPrefix>-n </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>1</Name>
+          <Value>1</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Buffer Length</DisplayName>
+      <Identifier>buffer-length</Identifier>
+      <ArgumentPrefix>-b </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>256</Name>
+          <Value>256</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Filter Length</DisplayName>
+      <Identifier>filter-length</Identifier>
+      <ArgumentPrefix>-f </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>57</Name>
+          <Value>57</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

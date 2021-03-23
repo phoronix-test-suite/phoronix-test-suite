@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>total perf  min(ms) #_MIN_RESULT_# avg(ms) #_RESULT_#</OutputTemplate>
+    <LineHint>total perf</LineHint>
+    <TurnCharsToSpace>:</TurnCharsToSpace>
+  </ResultsParser>
+</PhoronixTestSuite>

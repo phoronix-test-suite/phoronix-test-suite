@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.1-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>CAD</Title>
+    <Version>1.0.1</Version>
+    <TestType>System</TestType>
+    <Description>CAD and CAD-related benchmarks for computer-aided design software.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>system/openscad</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/brl-cad</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+</PhoronixTestSuite>

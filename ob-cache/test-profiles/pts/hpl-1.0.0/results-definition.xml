@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>WR01R2R4       46272   192     4     4            1214.00             #_RESULT_#</OutputTemplate>
+    <LineHint>WR01R2R4</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

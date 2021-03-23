@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Xonotic</Title>
+    <AppVersion>0.8.2</AppVersion>
+    <Description>This is a benchmark of Xonotic, which is a fork of the DarkPlaces-based Nexuiz game. Development began in March of 2010 on the Xonotic game.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.5.2</Version>
+    <SupportedPlatforms>Linux, MacOSX, Windows</SupportedPlatforms>
+    <SoftwareType>Game</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <ExternalDependencies>sdl2-development</ExternalDependencies>
+    <RequiresDisplay>TRUE</RequiresDisplay>
+    <EnvironmentSize>1100</EnvironmentSize>
+    <ProjectURL>http://www.xonotic.org/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-nohome -benchmark demos/the-big-keybench +r_glsl 1</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>resolution</Identifier>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>+vid_width $VIDEO_WIDTH +vid_height $VIDEO_HEIGHT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Effects Quality</DisplayName>
+      <Identifier>effects-quality</Identifier>
+      <ArgumentPrefix>+exec </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>Low</Name>
+          <Value>effects-low.cfg</Value>
+        </Entry>
+        <Entry>
+          <Name>High</Name>
+          <Value>effects-high.cfg</Value>
+        </Entry>
+        <Entry>
+          <Name>Ultra</Name>
+          <Value>effects-ultra.cfg</Value>
+        </Entry>
+        <Entry>
+          <Name>Ultimate</Name>
+          <Value>effects-ultimate.cfg</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

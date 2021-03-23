@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://fr2.rpmfind.net/linux/kernel/v5.x/linux-5.10.20.tar.xz, http://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.10.20.tar.xz, http://ftp.jaist.ac.jp/pub/Linux/kernel.org/linux/kernel/v5.x/linux-5.10.20.tar.xz</URL>
+      <MD5>65d45ac356dce16b7316b57658e740cb</MD5>
+      <SHA256>9be37146feba42be05137cf900a7d9012990b5a1d5e59bc0c8da1f86952930a3</SHA256>
+      <FileName>linux-5.10.20.tar.xz</FileName>
+      <FileSize>116279592</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

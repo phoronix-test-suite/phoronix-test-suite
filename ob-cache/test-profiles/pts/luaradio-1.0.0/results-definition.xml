@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>	Five Back to Back FIR Filters (FFT, 256 Real taps, Complex input) Average - 208.9 MS/s, #_RESULT_# MiB/s</OutputTemplate>
+    <LineHint>Five Back to Back FIR Filters (FFT, 256 Real taps, Complex input) Average</LineHint>
+    <ArgumentsDescription>Test: Five Back to Back FIR Filters</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>	FM Deemphasis Filter Average - 208.9 MS/s, #_RESULT_# MiB/s</OutputTemplate>
+    <LineHint>FM Deemphasis Filter Average</LineHint>
+    <ArgumentsDescription>Test: FM Deemphasis Filter</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>	Hilbert Transform (129 taps) Average - 208.9 MS/s, #_RESULT_# MiB/s</OutputTemplate>
+    <LineHint>Hilbert Transform (129 taps) Average</LineHint>
+    <ArgumentsDescription>Test: Hilbert Transform</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>	Complex Phase Average - 208.9 MS/s, #_RESULT_# MiB/s</OutputTemplate>
+    <LineHint>Complex Phase Average</LineHint>
+    <ArgumentsDescription>Test: Complex Phase</ArgumentsDescription>
+  </ResultsParser>
+</PhoronixTestSuite>

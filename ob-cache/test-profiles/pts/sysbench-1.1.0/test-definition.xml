@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Sysbench</Title>
+    <AppVersion>1.0.20</AppVersion>
+    <Description>This is a benchmark of Sysbench with the built-in CPU and memory sub-tests. Sysbench is a scriptable multi-threaded benchmark tool based on LuaJIT.</Description>
+    <ResultScale>Events Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, libtool, libaio-development</ExternalDependencies>
+    <EnvironmentSize>30</EnvironmentSize>
+    <ProjectURL>https://github.com/akopytov/sysbench</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>run-test</Identifier>
+      <ArgumentPostfix> run</ArgumentPostfix>
+      <Menu>
+        <Entry>
+          <Name>CPU</Name>
+          <Value>cpu</Value>
+        </Entry>
+        <Entry>
+          <Name>RAM / Memory</Name>
+          <Value>memory</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>ASTC Encoder</Title>
+    <AppVersion>2.4</AppVersion>
+    <Description>ASTC Encoder (astcenc) is for the Adaptive Scalable Texture Compression (ASTC) format commonly used with OpenGL, OpenGL ES, and Vulkan graphics APIs. This test profile does a coding test of both compression/decompression.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux, Windows, MacOSX</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, cmake</ExternalDependencies>
+    <EnvironmentSize>66</EnvironmentSize>
+    <ProjectURL>https://github.com/ARM-software/astc-encoder</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Preset</DisplayName>
+      <Identifier>preset</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Medium</Name>
+          <Value>-medium</Value>
+        </Entry>
+        <Entry>
+          <Name>Thorough</Name>
+          <Value>-thorough</Value>
+        </Entry>
+        <Entry>
+          <Name>Exhaustive</Name>
+          <Value>-exhaustive</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

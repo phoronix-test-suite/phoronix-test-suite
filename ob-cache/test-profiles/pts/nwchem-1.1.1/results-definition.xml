@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate> Total times  cpu:     9772.1s     wall:    #_RESULT_#</OutputTemplate>
+    <LineHint>Total times</LineHint>
+    <StripFromResult>s</StripFromResult>
+  </ResultsParser>
+</PhoronixTestSuite>

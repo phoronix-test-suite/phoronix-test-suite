@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/erlang/otp/archive/OTP-23.2.6.tar.gz</URL>
+      <MD5>784864d71e44e50b2ecf036b3108a1d0</MD5>
+      <SHA256>5bc6b31b36b949bf06e84d51986311fc1d2ace5e717aae3186dc057d4838445d</SHA256>
+      <FileName>otp-OTP-23.2.6.tar.gz</FileName>
+      <FileSize>56603314</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

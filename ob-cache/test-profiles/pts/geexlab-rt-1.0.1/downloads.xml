@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/GeeXLab_Vulkan_Raytracing_Demo_v2021.2.18.0_linux64.zip</URL>
+      <MD5>d4bba3418b2f90f15bea37eafa811122</MD5>
+      <SHA256>271a4b1bb7b583545060b928cbb47d17a9edf98c9157b1b39420a3603e425f7f</SHA256>
+      <FileName>GeeXLab_Vulkan_Raytracing_Demo_v2021.2.18.0_linux64.zip</FileName>
+      <FileSize>22261620</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

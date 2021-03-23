@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>GNU Radio</Title>
+    <Description>GNU Radio is a free software development toolkit providing signal processing blocks to implement software-defined radios (SDR) and signal processing systems.</Description>
+    <ResultScale>MiB/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux, BSD, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>python</ExternalDependencies>
+    <EnvironmentSize>15</EnvironmentSize>
+    <ProjectURL>https://www.gnuradio.org/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>gnuradio-config-info, volk_profile</SystemDependencies>
+  </TestProfile>
+</PhoronixTestSuite>

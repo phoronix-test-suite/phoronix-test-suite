@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://www.netlib.org/benchmark/hpl/hpl-2.3.tar.gz</URL>
+      <MD5>2789bbadd6d75ae0d64d9b9f2fa8a136</MD5>
+      <SHA256>32c5c17d22330e6f2337b681aded51637fb6008d3f0eb7c277b163fadd612830</SHA256>
+      <FileName>hpl-2.3.tar.gz</FileName>
+      <FileSize>660871</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

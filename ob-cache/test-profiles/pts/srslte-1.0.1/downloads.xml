@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/srsLTE/srsLTE/archive/release_20_10_1.tar.gz</URL>
+      <MD5>b1f92177671ea2c992b85303da975e48</MD5>
+      <SHA256>64dcf9fc50bbe591f46e44ce59357e908b118bf89dfbe745583f9736e30ccea2</SHA256>
+      <FileName>srsLTE-release_20_10_1.tar.gz</FileName>
+      <FileSize>8098321</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

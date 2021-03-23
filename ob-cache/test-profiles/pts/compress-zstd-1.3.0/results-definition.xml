@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate> 3#desktop-amd64.iso :2082816000 -&gt;2063395360 (1.009) #_RESULT_# MB/s 8080.3 MB/s </OutputTemplate>
+    <LineHint>MB/s</LineHint>
+    <ResultBeforeString>MB/s</ResultBeforeString>
+    <AppendToArgumentsDescription>Compression Speed</AppendToArgumentsDescription>
+    <TurnCharsToSpace>,</TurnCharsToSpace>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> 3#desktop-amd64.iso :2082816000 -&gt;2063395360 (1.009) 111 MB/s #_RESULT_# MB/s </OutputTemplate>
+    <LineHint>MB/s</LineHint>
+    <ResultAfterString>MB/s</ResultAfterString>
+    <AppendToArgumentsDescription>Decompression Speed</AppendToArgumentsDescription>
+    <TurnCharsToSpace>,</TurnCharsToSpace>
+  </ResultsParser>
+</PhoronixTestSuite>
