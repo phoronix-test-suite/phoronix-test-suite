@@ -218,9 +218,15 @@ then
 	echo " "
 elif [ -x /usr/sbin/netpkg ]
 then
-	# Zenwalk / Slackware
+	# Zenwalk
 	echo "The command to likely run for your operating system is: "
 	echo "# netpkg php"
+	echo " "
+elif [ -x /usr/sbin/slackpkg ]
+then
+	# Slackware
+	echo "The command to likely run for your operating system is: "
+	echo "# slackpkg install php"
 	echo " "
 elif [ -x /sbin/apk ]
 then
