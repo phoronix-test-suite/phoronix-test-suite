@@ -732,71 +732,79 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		break;
 	case 'index':
 	default:
-		define('TITLE', 'Phoronix Test Suite ' . PTS_VERSION . ' Result Portal');
-		$PAGE .= '<form name="search_results" id="search_results" action="' . CURRENT_URI . '" method="post"><input type="text" name="search" id="u_search" placeholder="Search Test Results" value="' . (isset($_POST['search']) ? $_POST['search'] : null) . '" /> <select name="sort_results_by"><option value="date">Sort By Date</option><option value="title">Sort By Title</option><option value="test_count">Sort By Test Count</option><option value="system_count">Sort By System Count</option></select> <input class="primary-button" type="submit" value="Update" />
-</form>';
-		$leading_msg = null;
-		if(VIEWER_CAN_DELETE_RESULTS && isset($_GET['remove_result']) && $_GET['remove_result'] && pts_results::is_saved_result_file($_GET['remove_result']))
+		if(isset($uri_segments[0]) && is_file($uri_segments[0] . '.html'))
 		{
-			$deleted = pts_results::remove_saved_result_file($_GET['remove_result']);
-			if($deleted)
-			{
-				$leading_msg = 'Deleted the <em>' . $_GET['remove_result'] . '</em> result file.';
-			}
+			define('TITLE', 'Phoronix Test Suite ' . PTS_VERSION);
+			$PAGE = file_get_contents($uri_segments[0] . '.html');
 		}
-
-		$results = pts_results::query_saved_result_files((isset($_POST['search']) ? $_POST['search'] : null), (isset($_REQUEST['sort_results_by']) ? $_REQUEST['sort_results_by'] : null));
-
-		$total_result_points = 0;
-		foreach($results as $id => $result_file)
+		else
 		{
-			$total_result_points += $result_file->get_test_count();
-		}
-
-		$PAGE .= '<div class="sub" style="margin: 6px 0 30px">' . count($results) . ' Result Files Containing A Combined ' . $total_result_points . ' Test Results</div>';
-		$PAGE .= '<form name="compare_results" id="compare_results_id" action="' . CURRENT_URI . '" method="post"><input type="submit" value="Compare Results" id="compare_results_submit" />';
-		$i = 0;
-		foreach($results as $id => $result_file)
-		{
-			$i++;
-			$PAGE .= '<h2><a href="' . WEB_URL_PATH . 'result/' . $id . '">' . $result_file->get_title() . '</a></h2>';
-			$PAGE .= '<div class="sub"><input type="checkbox" name="checkbox_compare_results[]" value="' . $id . '" id="cr_checkbox_' . $i . '" /> <label for="cr_checkbox_' . $i . '"><span onclick="javascript:document.getElementById(\'compare_results_id\').submit(); return false;">Compare Results</span></label> ' . $result_file->get_test_count() . ' Tests &nbsp; &nbsp; ' . $result_file->get_system_count() . ' Systems &nbsp; &nbsp; ' . date('l j F H:i', strtotime($result_file->get_last_modified())) . ' ' . (VIEWER_CAN_DELETE_RESULTS ? ' &nbsp; &nbsp; <span onclick="javascript:delete_result_file(\'' . $id . '\'); return false;">DELETE RESULT FILE</span>' : null) . '</div>';
-			$PAGE .= '<div class="desc">' . $result_file->get_description() . '</div>';
-
-			$geometric_mean = pts_result_file_analyzer::generate_geometric_mean_result($result_file);
-			if($geometric_mean)
+			define('TITLE', 'Phoronix Test Suite ' . PTS_VERSION . ' Result Portal');
+			$PAGE .= '<form name="search_results" id="search_results" action="' . CURRENT_URI . '" method="post"><input type="text" name="search" id="u_search" placeholder="Search Test Results" value="' . (isset($_POST['search']) ? $_POST['search'] : null) . '" /> <select name="sort_results_by"><option value="date">Sort By Date</option><option value="title">Sort By Title</option><option value="test_count">Sort By Test Count</option><option value="system_count">Sort By System Count</option></select> <input class="primary-button" type="submit" value="Update" />
+	</form>';
+			$leading_msg = null;
+			if(VIEWER_CAN_DELETE_RESULTS && isset($_GET['remove_result']) && $_GET['remove_result'] && pts_results::is_saved_result_file($_GET['remove_result']))
 			{
-				$geo_display = null;
-				$geo_display_count = 0;
-				$best_result = $geometric_mean->test_result_buffer->get_max_value(false);
-				foreach($geometric_mean->test_result_buffer as &$buffers)
+				$deleted = pts_results::remove_saved_result_file($_GET['remove_result']);
+				if($deleted)
 				{
-					if(empty($buffers))
-						continue;
+					$leading_msg = 'Deleted the <em>' . $_GET['remove_result'] . '</em> result file.';
+				}
+			}
 
-					$max_value = 0;
-					foreach($buffers as &$buffer_item)
+			$results = pts_results::query_saved_result_files((isset($_POST['search']) ? $_POST['search'] : null), (isset($_REQUEST['sort_results_by']) ? $_REQUEST['sort_results_by'] : null));
+
+			$total_result_points = 0;
+			foreach($results as $id => $result_file)
+			{
+				$total_result_points += $result_file->get_test_count();
+			}
+
+			$PAGE .= '<div class="sub" style="margin: 6px 0 30px">' . count($results) . ' Result Files Containing A Combined ' . $total_result_points . ' Test Results</div>';
+			$PAGE .= '<form name="compare_results" id="compare_results_id" action="' . CURRENT_URI . '" method="post"><input type="submit" value="Compare Results" id="compare_results_submit" />';
+			$i = 0;
+			foreach($results as $id => $result_file)
+			{
+				$i++;
+				$PAGE .= '<h2><a href="' . WEB_URL_PATH . 'result/' . $id . '">' . $result_file->get_title() . '</a></h2>';
+				$PAGE .= '<div class="sub"><input type="checkbox" name="checkbox_compare_results[]" value="' . $id . '" id="cr_checkbox_' . $i . '" /> <label for="cr_checkbox_' . $i . '"><span onclick="javascript:document.getElementById(\'compare_results_id\').submit(); return false;">Compare Results</span></label> ' . $result_file->get_test_count() . ' Tests &nbsp; &nbsp; ' . $result_file->get_system_count() . ' Systems &nbsp; &nbsp; ' . date('l j F H:i', strtotime($result_file->get_last_modified())) . ' ' . (VIEWER_CAN_DELETE_RESULTS ? ' &nbsp; &nbsp; <span onclick="javascript:delete_result_file(\'' . $id . '\'); return false;">DELETE RESULT FILE</span>' : null) . '</div>';
+				$PAGE .= '<div class="desc">' . $result_file->get_description() . '</div>';
+
+				$geometric_mean = pts_result_file_analyzer::generate_geometric_mean_result($result_file);
+				if($geometric_mean)
+				{
+					$geo_display = null;
+					$geo_display_count = 0;
+					$best_result = $geometric_mean->test_result_buffer->get_max_value(false);
+					foreach($geometric_mean->test_result_buffer as &$buffers)
 					{
-						$v = $buffer_item->get_result_value();
-						if(!is_numeric($v)) continue;
-						$percentage = ($v / $best_result) * 100;
-						$bg = pts_render::identifier_to_brand_color($buffer_item->get_result_identifier(), '');
-						if($bg)
+						if(empty($buffers))
+							continue;
+
+						$max_value = 0;
+						foreach($buffers as &$buffer_item)
 						{
-							$bg = 'background: ' . $bg . '; color: #FFF';
+							$v = $buffer_item->get_result_value();
+							if(!is_numeric($v)) continue;
+							$percentage = ($v / $best_result) * 100;
+							$bg = pts_render::identifier_to_brand_color($buffer_item->get_result_identifier(), '');
+							if($bg)
+							{
+								$bg = 'background: ' . $bg . '; color: #FFF';
+							}
+							$geo_display .=  '<div class="geo_bg_graph" style="margin-right: ' . round(100 - $percentage, 1) . '%; ' . $bg . '"><strong>' . $buffer_item->get_result_identifier() . ':</strong> ' . $v . ' (' . round($percentage, 2) . '%)</div>';
+							$geo_display_count++;
 						}
-						$geo_display .=  '<div class="geo_bg_graph" style="margin-right: ' . round(100 - $percentage, 1) . '%; ' . $bg . '"><strong>' . $buffer_item->get_result_identifier() . ':</strong> ' . $v . ' (' . round($percentage, 2) . '%)</div>';
-						$geo_display_count++;
+					}
+					if($geo_display_count > 1)
+					{
+						$PAGE .= '<span class="sub_header">Geometric Mean</span>' . $geo_display;
 					}
 				}
-				if($geo_display_count > 1)
-				{
-					$PAGE .= '<span class="sub_header">Geometric Mean</span>' . $geo_display;
-				}
+				$PAGE .= '<br />';
 			}
-			$PAGE .= '<br />';
+			$PAGE .= '</form>';
 		}
-		$PAGE .= '</form>';
 		break;
 
 }
