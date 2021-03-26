@@ -9,7 +9,7 @@
 		</Information>
 		<Package>
 			<GenericName>common-dependencies</GenericName>
-			<PackageName>mesa-utils vulkan-utils unzip apt-file unzip</PackageName>
+			<PackageName>mesa-utils vulkan-tools unzip apt-file unzip</PackageName>
 			<FileCheck>glxinfo, unzip, apt-file</FileCheck>
 		</Package>
 		<Package>
@@ -39,7 +39,7 @@
 		</Package>
 		<Package>
 			<GenericName>vulkan-development</GenericName>
-			<PackageName>vulkan-utils libvulkan-dev</PackageName>
+			<PackageName>vulkan-tools libvulkan-dev</PackageName>
 		</Package>
 		<Package>
 			<GenericName>glut</GenericName>

@@ -408,7 +408,7 @@
 		</Package>
 		<Package>
 			<GenericName>libconfigpp</GenericName>
-			<PackageName>libconfig++-devel</PackageName>
+			<PackageName>libconfig-devel</PackageName>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
