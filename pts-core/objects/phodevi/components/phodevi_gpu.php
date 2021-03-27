@@ -1197,12 +1197,17 @@ class phodevi_gpu extends phodevi_device_interface
 				// to remove section like "Gallium 0.4 on AMD POLARIS"
 				$info = substr($info, $x + 4);
 			}
+			if(strpos($info, 'Intel ') !== false)
+			{
+				// Intel usually has e.g. TGL GT2 or other info within
+				$info = str_replace(array('(', ')'), null, $info);
+			}
 			if(($x = strpos($info, ' (')) !== false)
 			{
 				$info = substr($info, 0, $x);
 			}
 
-			if(phodevi::is_windows() == false)
+			if(phodevi::is_windows() == false && strpos($info, 'Intel ') === false)
 			{
 				$info_pci = phodevi_linux_parser::read_pci('VGA compatible controller', false);
 
