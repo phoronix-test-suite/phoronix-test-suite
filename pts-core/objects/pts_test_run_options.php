@@ -380,6 +380,51 @@ class pts_test_run_options
 					}
 				}
 				break;
+			case 'auto-resolution-wide':
+				// Base options off available screen resolutions (wide format)
+				if(count($option_names) == 1 && count($option_values) == 1)
+				{
+					if(PTS_IS_CLIENT && !defined('PHOROMATIC_SERVER'))
+					{
+						$current_resolution = phodevi::read_property('gpu', 'screen-resolution');
+					}
+					else
+					{
+						$current_resolution = array(3840, 2160);
+					}
+
+					$stock_modes = array(
+						array(1280, 960),
+						array(1600, 1200),
+						array(1280, 1024),
+						array(1920, 1080),
+						array(2560, 1080),
+						array(2560, 1440),
+						array(2880, 1620),
+						array(3840, 1600));
+					$available_modes = array();
+
+					for($i = 0; $i < count($stock_modes); $i++)
+					{
+						if($stock_modes[$i][0] <= $current_resolution[0] && $stock_modes[$i][1] <= $current_resolution[1])
+						{
+							array_push($available_modes, $stock_modes[$i]);
+						}
+					}
+
+					foreach($available_modes as $video_mode)
+					{
+						$this_name = str_replace('$VIDEO_WIDTH', $video_mode[0], $format_name);
+						$this_name = str_replace('$VIDEO_HEIGHT', $video_mode[1], $this_name);
+
+						$this_value = str_replace('$VIDEO_WIDTH', $video_mode[0], $format_value);
+						$this_value = str_replace('$VIDEO_HEIGHT', $video_mode[1], $this_value);
+
+						$option_names[] = $this_name;
+						$option_values[] = $this_value;
+					}
+				}
+				break;
 			case 'auto-disk-partitions':
 			case 'auto-disk-mount-points':
 				// Base options off available disk partitions
