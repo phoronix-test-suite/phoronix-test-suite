@@ -414,6 +414,8 @@ class pts_test_run_options
 
 					$format_name = $option_names[0];
 					$format_value = $option_values[0];
+					$option_names = array();
+					$option_values = array();
 					foreach($available_modes as $video_mode)
 					{
 						$this_name = str_replace('$VIDEO_WIDTH', $video_mode[0], $format_name);
