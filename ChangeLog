@@ -3,8 +3,9 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite (Git)
 
 pts-core: Ubuntu 21.04 dependency updates
-phodevi: Intel Linux graphics string reporting improvement
 pts-core: Add "auto-resolution-wide" option
+phodevi: Intel Linux graphics string reporting improvement
+system_monitor: Adjust perf-per precision
 
 Phoronix Test Suite 10.4.0 Milestone 1
 17 March 2021
