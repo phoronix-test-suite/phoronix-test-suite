@@ -4,6 +4,7 @@ Phoronix Test Suite (Git)
 
 pts-core: Ubuntu 21.04 dependency updates
 pts-core: Add "auto-resolution-wide" option
+pts-core: Add $CPU_THREADS_PER_CORE helper
 phodevi: Intel Linux graphics string reporting improvement
 system_monitor: Adjust perf-per precision
 
