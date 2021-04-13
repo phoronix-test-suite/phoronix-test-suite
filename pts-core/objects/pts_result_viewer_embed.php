@@ -278,7 +278,7 @@ class pts_result_viewer_embed
 						$res_per_core = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
 					}
 				}
-				if(!empty($identifier_mapping_to_threads))
+				if(!empty($identifier_mapping_to_threads) && $identifier_mapping_to_cores != $identifier_mapping_to_threads)
 				{
 					$ro = pts_result_file_analyzer::get_result_object_custom($result_file, $result_object, $identifier_mapping_to_threads, 'Performance Per Thread', 'Thread');
 					if($ro)
