@@ -683,7 +683,7 @@ class pts_result_file_analyzer
 			$test_result->test_profile->set_display_format('BAR_GRAPH');
 			$test_result->test_profile->set_result_scale('Geometric Mean');
 			$test_result->test_profile->set_result_proportion('HIB');
-			$test_result->set_used_arguments_description('Result Composite');
+			$test_result->set_used_arguments_description('Result Composite' . ($result_file->get_title() != null ? ' - ' . $result_file->get_title() : null));
 			$test_result->set_used_arguments('Geometric-Mean');
 			$test_result->test_result_buffer = new pts_test_result_buffer();
 			foreach($results as $identifier => $values)
