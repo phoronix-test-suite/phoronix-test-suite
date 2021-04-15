@@ -254,7 +254,7 @@ class pts_result_file_analyzer
 
 		return false;
 	}
-	public static function generate_perf_per_dollar(&$input, $generate, $unit = 'Dollar', $yield_on_unqualified_ros = false)
+	public static function generate_perf_per_dollar(&$input, $generate, $unit = 'Dollar', $yield_on_unqualified_ros = false, $per_hour = false)
 	{
 		if($input instanceof pts_result_file)
 		{
@@ -276,16 +276,36 @@ class pts_result_file_analyzer
 
 			$computed = array();
 			$footnotes = array();
-			$iv_map = $result_object->test_result_buffer->get_identifier_value_map();
+			$bi_map = $result_object->test_result_buffer->get_map_by_identifier();
 			foreach($generate as $identifier => $value)
 			{
-				if(!isset($iv_map[$identifier]))
+				if(!isset($bi_map[$identifier]))
 				{
 					continue;
 				}
-				$result = $iv_map[$identifier];
+				$result = $bi_map[$identifier]->get_result_value();
 				if(is_numeric($result) && $result > 0)
 				{
+					if($per_hour)
+					{
+						$test_run_times = $bi_map[$identifier]->get_run_times();
+						if(!empty($test_run_times))
+						{
+							$avg_time = round(array_sum($test_run_times) / count($test_run_times));
+							// Cost-perf-per-hour calculation, e.g. cloud costs...
+							// self::$TEST_RUN_TIME_ELAPSED is seconds run.....
+							$cost_to_run_test = round(($value / 60 / 60) * $avg_time, 3);
+
+							if($cost_to_run_test < 0.01)
+							{
+								continue;
+							}
+
+							$footnotes[$identifier] = '$' . $value . ' reported cost per hour, test took average of ' . ($avg_time < 240 ? $avg_time . ' seconds ' : strtolower(pts_strings::format_time($avg_time))) . ' per run: cost approximately ' . $cost_to_run_test . ' ' . strtolower($unit) . 's.';
+							$value = $cost_to_run_test;
+						}
+					}
+
 					if($result_object->test_profile->get_result_proportion() == 'HIB')
 					{
 						$result = $result / $value;
@@ -305,7 +325,10 @@ class pts_result_file_analyzer
 					if($result != 0)
 					{
 						$computed[$identifier] = $result;
-						$footnotes[$identifier] = '$' . $value . ' reported cost.';
+						if(!isset($footnotes[$identifier]))
+						{
+							$footnotes[$identifier] = '$' . $value . ' reported cost.';
+						}
 					}
 				}
 			}

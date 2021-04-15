@@ -338,7 +338,7 @@ p.mini
 {
 	display: table;
 }
-div#main_area .div_table_cell input
+div#main_area .div_table_cell input, div#main_area .div_table_cell select
 {
 	font-size: 12px;
 	padding: 0;

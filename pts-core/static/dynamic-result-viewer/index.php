@@ -686,7 +686,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 					{
 						$_REQUEST[$key] = implode(',', $_REQUEST[$key]);
 					}
-					$result_link .= '&' . $key . '=' . urlencode($_REQUEST[$key]);
+					$result_link .= '&' . $key . '=' . urlencode(str_replace('.', '_DD_', $_REQUEST[$key]));
 				}
 			}
 			$server_uri = $_SERVER['REQUEST_URI'];

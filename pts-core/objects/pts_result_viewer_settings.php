@@ -265,7 +265,7 @@ if($has_system_logs)
 	$t .= '<div class="div_table_cell">View Logs</div>';
 }
 
-$t .= '<div class="div_table_cell">Perf-Per<br />Dollar</div>
+$t .= '<div class="div_table_cell">Performance Per<br />Dollar</div>
 <div class="div_table_cell">Date<br />Triggered</div>
 <div class="div_table_cell"> &nbsp; Test<br /> &nbsp; Duration</div>
 <div class="div_table_cell"> </div>
@@ -300,7 +300,7 @@ $t .= '
 		$t .= '<div class="div_table_cell">' . ($system_log_count > 0 ? '<button type="button" onclick="javascript:display_system_logs_for_result(\'' . $public_id . '\', \'' . $si . '\'); return false;">View System Logs</button>' : ' ') . '</div>';
 	}
 	$stime = strtotime($sys->get_timestamp());
-	$t .= '<div class="div_table_cell"><input type="number" min="0" step="1" name="ppd_' . $ppdx . '" value="' . ($ppd && $ppd !== true ? strip_tags($ppd) : '0') . '" /></div>
+	$t .= '<div class="div_table_cell"><input type="number" min="0" step="0.001" name="ppd_' . $ppdx . '" value="' . ($ppd && $ppd !== true ? strip_tags($ppd) : '0') . '" /></div>
 <div class="div_table_cell">' . date(($stime > $start_of_year ? 'F d' : 'F d Y'), $stime) . '</div>
 <div class="div_table_cell"> &nbsp; ' . (isset($test_run_times[$si]) && $test_run_times[$si] > 0 ? pts_strings::format_time($test_run_times[$si], 'SECONDS', true, 60) : ' ') . '</div>';
 
@@ -324,7 +324,7 @@ if($result_file->get_system_count() > 1)
 		$t .= '<div class="div_table_cell"> </div>';
 	}
 
-	$t .= '<div class="div_table_cell"> </div>
+	$t .= '<div class="div_table_cell">' . self::html_select_menu('ppt', 'ppt', null, array('DOLLAR' => 'Dollar', 'DOLLAR_PER_HOUR' => 'Dollar / Hour'), true) . '</div>
 	<div class="div_table_cell"> </div>
 	<div class="div_table_cell"> &nbsp; <em>' . pts_strings::format_time(array_sum($test_run_times) / count($test_run_times), 'SECONDS', true, 60) . '</em></div>
 	<div class="div_table_cell">';
@@ -345,7 +345,7 @@ $analyze_options .= $t;
 
 if($system_identifier_count > 2)
 {
-	$analyze_options .= '<div>Only show results where ' . self::html_select_menu('ftt', 'ftt', null, array_merge(array(null), $result_file->get_system_identifiers()), false) . ' is faster than ' . self::html_select_menu('ftb', 'ftb', null, array_merge(array(null), $result_file->get_system_identifiers()), false) . '</div>';
+	$analyze_options .= '<br /><div>Only show results where ' . self::html_select_menu('ftt', 'ftt', null, array_merge(array(null), $result_file->get_system_identifiers()), false) . ' is faster than ' . self::html_select_menu('ftb', 'ftb', null, array_merge(array(null), $result_file->get_system_identifiers()), false) . '</div>';
 }
 
 if($result_file->get_test_count() > 1)
@@ -459,14 +459,22 @@ if($result_file->get_test_count() > 1)
 	public static function check_request_for_var(&$request, $check)
 	{
 		// the obr_ check is to maintain OpenBenchmarking.org compatibility for its original variable naming to preserve existing URLs
+		$ret = false;
 		if(defined('OPENBENCHMARKING_BUILD') && isset($request['obr_' . $check]))
 		{
-			return empty($request['obr_' . $check]) ? true : $request['obr_' . $check];
+			$ret = empty($request['obr_' . $check]) ? true : $request['obr_' . $check];
 		}
 		if(isset($request[$check]))
 		{
-			return empty($request[$check]) ? true : $request[$check];
+			$ret = empty($request[$check]) ? true : $request[$check];
 		}
+
+		if($ret && isset($ret[5]))
+		{
+			$ret = str_replace('_DD_', '.', $ret);
+		}
+
+		return $ret;
 	}
 	public static function process_request_to_attributes(&$request, &$result_file, &$extra_attributes)
 	{
@@ -766,7 +774,8 @@ if($result_file->get_test_count() > 1)
 
 		if(!empty($perf_per_dollar_values))
 		{
-			pts_result_file_analyzer::generate_perf_per_dollar($result_file, $perf_per_dollar_values);
+			$perf_per_hour = self::check_request_for_var($request, 'ppt') == 'DOLLAR_PER_HOUR';
+			pts_result_file_analyzer::generate_perf_per_dollar($result_file, $perf_per_dollar_values, 'Dollar', false, $perf_per_hour);
 		}
 	}
 	public static function html_input_field($name, $id, $on_change = null)
