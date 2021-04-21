@@ -324,7 +324,7 @@ if($result_file->get_system_count() > 1)
 		$t .= '<div class="div_table_cell"> </div>';
 	}
 
-	$t .= '<div class="div_table_cell">' . self::html_select_menu('ppt', 'ppt', null, array('DOLLAR' => 'Dollar', 'DOLLAR_PER_HOUR' => 'Dollar / Hour'), true) . '</div>
+	$t .= '<div class="div_table_cell">' . self::html_select_menu('ppt', 'ppt', null, array('D' => 'Dollar', 'DPH' => 'Dollar / Hour'), true) . '</div>
 	<div class="div_table_cell"> </div>
 	<div class="div_table_cell"> &nbsp; <em>' . pts_strings::format_time(array_sum($test_run_times) / count($test_run_times), 'SECONDS', true, 60) . '</em></div>
 	<div class="div_table_cell">';
@@ -774,7 +774,7 @@ if($result_file->get_test_count() > 1)
 
 		if(!empty($perf_per_dollar_values))
 		{
-			$perf_per_hour = self::check_request_for_var($request, 'ppt') == 'DOLLAR_PER_HOUR';
+			$perf_per_hour = self::check_request_for_var($request, 'ppt') == 'DPH';
 			pts_result_file_analyzer::generate_perf_per_dollar($result_file, $perf_per_dollar_values, 'Dollar', false, $perf_per_hour);
 		}
 	}
