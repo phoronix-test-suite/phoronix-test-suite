@@ -663,6 +663,8 @@ class pts_result_file_analyzer
 				}
 			}
 
+			$result_hash = $result->get_comparison_hash(true, false);
+
 			foreach($result->test_result_buffer->get_buffer_items() as $buffer_item)
 			{
 				$r = $buffer_item->get_result_value();
@@ -682,7 +684,7 @@ class pts_result_file_analyzer
 				{
 					$results[$ri] = array();
 				}
-				$results[$ri][] = $r;
+				$results[$ri][$result_hash] = $r;
 			}
 		}
 
@@ -750,6 +752,8 @@ class pts_result_file_analyzer
 				continue;
 			}
 
+			$result_hash = $result->get_comparison_hash(true, false);
+
 			foreach($result->test_result_buffer->get_buffer_items() as $buffer_item)
 			{
 				$r = $buffer_item->get_result_value();
@@ -773,7 +777,7 @@ class pts_result_file_analyzer
 				{
 					$results[$result->test_profile->get_title()][$ri] = array();
 				}
-				$results[$result->test_profile->get_title()][$ri][] = $r;
+				$results[$result->test_profile->get_title()][$ri][$result_hash] = $r;
 			}
 		}
 
