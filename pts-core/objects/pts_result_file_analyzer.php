@@ -638,7 +638,7 @@ class pts_result_file_analyzer
 	{
 		$results = array();
 		$system_count = $result_file->get_system_count();
-		foreach($result_file->get_result_objects() as $result)
+		foreach($result_file->get_result_objects() as $result_hash => $result)
 		{
 			if($result->test_profile->get_identifier() == null || $result->test_profile->get_display_format() != 'BAR_GRAPH' || $system_count > $result->test_result_buffer->get_count())
 			{
@@ -662,8 +662,6 @@ class pts_result_file_analyzer
 					}
 				}
 			}
-
-			$result_hash = $result->get_comparison_hash(true, false);
 
 			foreach($result->test_result_buffer->get_buffer_items() as $buffer_item)
 			{
@@ -740,7 +738,7 @@ class pts_result_file_analyzer
 		$geo_results = array();
 		$results = array();
 		$system_count = $result_file->get_system_count();
-		foreach($result_file->get_result_objects() as $result)
+		foreach($result_file->get_result_objects() as $result_hash => $result)
 		{
 			if(($selector == null && $result->test_profile->get_identifier() == null) || $result->test_profile->get_display_format() != 'BAR_GRAPH' || $system_count > $result->test_result_buffer->get_count())
 			{
@@ -751,8 +749,6 @@ class pts_result_file_analyzer
 			{
 				continue;
 			}
-
-			$result_hash = $result->get_comparison_hash(true, false);
 
 			foreach($result->test_result_buffer->get_buffer_items() as $buffer_item)
 			{
