@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2011 - 2019, Phoronix Media
-	Copyright (C) 2011 - 2019, Michael Larabel
+	Copyright (C) 2011 - 2021, Phoronix Media
+	Copyright (C) 2011 - 2021, Michael Larabel
 	pts_Table.php: A charting table object for pts_Graph
 
 	This program is free software; you can redistribute it and/or modify
@@ -99,7 +99,7 @@ class pts_ResultFileCompactSystemsTable extends pts_graph_core
 		$this->svg_dom->add_text_element($this->i['graph_title'], array('x' => ($this->i['graph_width'] / 2), 'y' => (2 + self::$c['size']['headers']), 'font-size' => self::$c['size']['headers'], 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'middle', 'font-weight' => 'bold'));
 
 		$this->svg_dom->add_text_element(self::$c['text']['watermark'], array('x' => 4, 'y' => ($this->i['top_heading_height'] - 3), 'font-size' => 8, 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'start', 'xlink:href' => self::$c['text']['watermark_url'], 'font-weight' => 'bold'));
-		$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => ($this->i['graph_width'] - 4), 'y' => ($this->i['top_heading_height'] - 3), 'font-size' => 8, 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'end', 'xlink:href' => 'https://www.phoronix-test-suite.com/', 'font-weight' => 'bold'));
+		$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => ($this->i['graph_width'] - 4), 'y' => ($this->i['top_heading_height'] - 3), 'font-size' => 8, 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'end', 'font-weight' => 'bold'));
 
 		// Body
 		$offset = $this->i['top_heading_height'];

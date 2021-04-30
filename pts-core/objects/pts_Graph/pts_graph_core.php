@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2019, Phoronix Media
-	Copyright (C) 2008 - 2019, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 	pho_graph.php: The core graph object that is used by the different graphing objects.
 
 	This program is free software; you can redistribute it and/or modify
@@ -86,7 +86,7 @@ abstract class pts_graph_core
 			$this->i['graph_y_title'] = $result_object->test_profile->get_result_scale_formatted();
 			if(($test_identifier = $result_object->test_profile->get_identifier()))
 			{
-				$this->i['header_link'] = 'https://openbenchmarking.org/test/' . $result_object->test_profile->get_identifier();
+				$this->i['header_link'] = 'https://openbenchmarking.org/test/' . $result_object->test_profile->get_identifier(false);
 			}
 			$this->i['graph_proportion'] = $result_object->test_profile->get_result_proportion();
 			$this->addSubTitle($result_object->get_arguments_description());
@@ -287,15 +287,7 @@ abstract class pts_graph_core
 		foreach(self::$c['color']['paint'] as $color)
 		{
 			self::$c['color']['seeded_paint'][] = $color;
-		/*	foreach(array(0.8, 0.4) as $p)
-			{
-				foreach(array(0, 220) as $o)
-				{
-					self::$c['color']['seeded_paint'][] = self::shift_color($color, $p, $o);
-				}
-			} */
 		}
-		//shuffle(self::$c['color']['seeded_paint']);
 	}
 	public static function set_default_graph_values(&$config)
 	{
@@ -337,7 +329,7 @@ abstract class pts_graph_core
 		else
 		{
 			$config['text']['watermark'] = 'Phoronix Test Suite ' . PTS_VERSION;
-			$config['text']['watermark_url'] = 'https://www.phoronix-test-suite.com/';
+			$config['text']['watermark_url'] = '';
 		}
 
 		$config['size']['headers'] = 17;
@@ -749,7 +741,7 @@ abstract class pts_graph_core
 			// SVG version of PTS thanks to https://gist.github.com/xorgy/65c6d0e87757dbb56a75
 			if($this->i['graph_version'])
 			{
-				$this->svg_dom->add_element('path', array('d' => 'm74 22v9m-5-16v16m-5-28v28m-23-2h12.5c2.485281 0 4.5-2.014719 4.5-4.5s-2.014719-4.5-4.5-4.5h-8c-2.485281 0-4.5-2.014719-4.5-4.5s2.014719-4.5 4.5-4.5h12.5m-21 5h-11m11 13h-2c-4.970563 0-9-4.029437-9-9v-20m-24 40v-20c0-4.970563 4.0294373-9 9-9 4.970563 0 9 4.029437 9 9s-4.029437 9-9 9h-9', 'stroke' => self::$c['color']['main_headers'], 'stroke-width' => 4, 'fill' => 'none', 'xlink:href' => 'https://www.phoronix-test-suite.com/', 'transform' => 'translate(' . ceil($this->i['graph_left_end'] - 77) . ',' . (ceil($this->i['top_heading_height'] / 40 + 2)) . ')'));
+				$this->svg_dom->add_element('path', array('d' => 'm74 22v9m-5-16v16m-5-28v28m-23-2h12.5c2.485281 0 4.5-2.014719 4.5-4.5s-2.014719-4.5-4.5-4.5h-8c-2.485281 0-4.5-2.014719-4.5-4.5s2.014719-4.5 4.5-4.5h12.5m-21 5h-11m11 13h-2c-4.970563 0-9-4.029437-9-9v-20m-24 40v-20c0-4.970563 4.0294373-9 9-9 4.970563 0 9 4.029437 9 9s-4.029437 9-9 9h-9', 'stroke' => self::$c['color']['main_headers'], 'stroke-width' => 4, 'fill' => 'none', 'transform' => 'translate(' . ceil($this->i['graph_left_end'] - 77) . ',' . (ceil($this->i['top_heading_height'] / 40 + 2)) . ')'));
 			}
 		}
 		else
@@ -763,7 +755,7 @@ abstract class pts_graph_core
 
 			if($with_version && !empty($this->i['graph_version']))
 			{
-				$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => $this->i['graph_left_end'] , 'y' => ($this->i['top_start'] - 3), 'font-size' => 7, 'fill' => self::$c['color']['body_light'], 'text-anchor' => 'end', 'xlink:href' => 'https://www.phoronix-test-suite.com/'));
+				$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => $this->i['graph_left_end'] , 'y' => ($this->i['top_start'] - 3), 'font-size' => 7, 'fill' => self::$c['color']['body_light'], 'text-anchor' => 'end'));
 			}
 		}
 	}
@@ -777,8 +769,6 @@ abstract class pts_graph_core
 		if($this->i['iveland_view'])
 		{
 			$bottom_heading_start = $this->i['graph_top_end'] + $this->i['bottom_offset'] + 22;
-			//$this->svg_dom->add_element('rect', array('x' => 0, 'y' => $bottom_heading_start, 'width' => $this->i['graph_width'], 'height' => ($this->i['graph_height'] - $bottom_heading_start), 'fill' => self::$c['color']['main_headers']));
-			//$this->svg_dom->add_text_element($this->i['graph_version'], array('x' => $this->i['graph_left_end'], 'y' => ($bottom_heading_start + self::$c['size']['key'] + 3), 'font-size' => self::$c['size']['key'], 'fill' => self::$c['color']['main_headers'], 'text-anchor' => 'end', 'font-weight' => 'bold', 'xlink:href' => 'https://www.phoronix-test-suite.com/'));
 
 			if(!empty($this->i['notes']))
 			{
@@ -800,7 +790,6 @@ abstract class pts_graph_core
 
 			if($this->i['watermark'] && isset($this->d['link_alternate_view']) && $this->d['link_alternate_view'])
 			{
-				// add SVG version: https://gist.github.com/xorgy/169a65e29a3c2cc41e7f
 				$a = $this->svg_dom->make_a($this->d['link_alternate_view']);
 				$g = $this->svg_dom->make_g(array('transform' => 'translate(' . ($left_end - 10) . ',' . ($top_start - 5 - 10) . ')', 'width' => 10, 'height' => 16), $a);
 				$this->svg_dom->add_element('path', array('d' => 'M5 0v6.5L0 11l3-3-3-3.5L5 0', 'fill' => '#038bb8'), $g);
@@ -1051,7 +1040,7 @@ abstract class pts_graph_core
 		{
 			// Horizontal arrow
 			$arrow_length = sqrt(pow(($tail_x1 - $tip_x1), 2) + pow(($tail_y1 - $tip_y1), 2));
-			$arrow_length_half = $arrow_length / 2;
+			$arrow_length_half = round($arrow_length / 2);
 
 			$arrow_points = array(
 				$tip_x1 . ',' . $tip_y1,
