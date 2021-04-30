@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>GMPbench:         #_RESULT_#</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

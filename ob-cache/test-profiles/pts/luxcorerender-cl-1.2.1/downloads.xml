@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/LuxCoreRender/LuxCore/releases/download/luxcorerender_v2.3/luxcorerender-v2.3-linux64-opencl-sdk.tar.bz2</URL>
+      <MD5>0e3d5585f518a3bc4bbff2d7f8826d28</MD5>
+      <SHA256>109673ad605e7a87c71e1778795752a88c59596eccc2f06d895b6771450e04bc</SHA256>
+      <FileName>luxcorerender-v2.3-linux64-opencl-sdk.tar.bz2</FileName>
+      <FileSize>130798515</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/LuxCoreRender/LuxCore/releases/download/luxcorerender_v2.3/luxcorerender-v2.3-win64-opencl-sdk.zip</URL>
+      <MD5>fe455024f87b0f1dfbb80978c18e931f</MD5>
+      <SHA256>cc860c3c1c5d0b4f2ab92aafb166424505b1a00eae0c44512b9d9d1350f2453b</SHA256>
+      <FileName>luxcorerender-v2.3-win64-opencl-sdk.zip</FileName>
+      <FileSize>114317963</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/LuxCoreRender/LuxCoreTestScenes/releases/download/v2.1/DLSC.zip</URL>
+      <FileName>DLSC.zip</FileName>
+      <FileSize>20477185</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/LuxCoreRender/LuxCoreTestScenes/releases/download/v2.1/RainbowColorsAndPrism.zip</URL>
+      <FileName>RainbowColorsAndPrism.zip</FileName>
+      <FileSize>1962157</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/LuxCoreRender/LuxCoreTestScenes/releases/download/v2.1/LuxCore2.1Benchmark.zip</URL>
+      <FileName>LuxCore2.1Benchmark.zip</FileName>
+      <FileSize>66172678</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/LuxCoreRender/LuxCoreTestScenes/releases/download/v2.1/Food.zip</URL>
+      <FileName>Food.zip</FileName>
+      <FileSize>225393264</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

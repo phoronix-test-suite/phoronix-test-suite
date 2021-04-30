@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>result for bspeed_download:                 #_RESULT_# GB/s</OutputTemplate>
+    <MatchToTestArguments>BusSpeedDownload</MatchToTestArguments>
+    <ResultScale>GB/s</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>result for bspeed_readback:                 #_RESULT_# GB/s</OutputTemplate>
+    <MatchToTestArguments>BusSpeedReadback</MatchToTestArguments>
+    <ResultScale>GB/s</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>result for maxspflops:                 #_RESULT_# GFLOPS</OutputTemplate>
+    <MatchToTestArguments>MaxFlops</MatchToTestArguments>
+    <ResultScale>GFLOPS</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>result for tex_readbw:                 #_RESULT_# GB/s</OutputTemplate>
+    <MatchToTestArguments>DeviceMemory</MatchToTestArguments>
+    <LineHint>tex_readbw</LineHint>
+    <ResultScale>GB/s</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>result for fft_sp:                 #_RESULT_# GFLOPS</OutputTemplate>
+    <MatchToTestArguments>FFT</MatchToTestArguments>
+    <ResultScale>GFLOPS</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>result for sgemm_n:                 #_RESULT_# GFLOPS</OutputTemplate>
+    <MatchToTestArguments>GEMM</MatchToTestArguments>
+    <ResultScale>GFLOPS</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>result for md5hash:                 #_RESULT_# GHash/s</OutputTemplate>
+    <MatchToTestArguments>MD5Hash</MatchToTestArguments>
+    <ResultScale>GHash/s</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>result for reduction:                 #_RESULT_# GB/s</OutputTemplate>
+    <MatchToTestArguments>Reduction</MatchToTestArguments>
+    <ResultScale>GB/s</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>result for triad_bw:                 #_RESULT_# GB/s</OutputTemplate>
+    <MatchToTestArguments>Triad</MatchToTestArguments>
+    <ResultScale>GB/s</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>result for s3d:                 #_RESULT_# GFLOPS</OutputTemplate>
+    <MatchToTestArguments>S3D</MatchToTestArguments>
+    <ResultScale>GFLOPS</ResultScale>
+  </ResultsParser>
+</PhoronixTestSuite>

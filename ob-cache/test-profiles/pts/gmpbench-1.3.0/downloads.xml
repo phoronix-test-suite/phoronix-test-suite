@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://gmplib.org/download/gmp/gmp-6.2.1.tar.bz2, https://ftp.gnu.org/gnu/gmp/gmp-6.2.1.tar.bz2</URL>
+      <MD5>28971fc21cf028042d4897f02fd355ea</MD5>
+      <SHA256>eae9326beb4158c386e39a356818031bd28f3124cf915f8c5b1dc4c7a36b4d7c</SHA256>
+      <FileName>gmp-6.2.1.tar.bz2</FileName>
+      <FileSize>2493916</FileSize>
+    </Package>
+    <Package>
+      <URL>https://gmplib.org/download/misc/gmpbench-0.2.tar.bz2</URL>
+      <MD5>5437655d34cc81663d080c3bbbb22139</MD5>
+      <SHA256>b77e936a5b1cde2fb4ce2d591463ebcbb6113b23384dc168e0600622e083b42d</SHA256>
+      <FileName>gmpbench-0.2.tar.bz2</FileName>
+      <FileSize>19992</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/gexpr.c.tar.gz</URL>
+      <MD5>ee936a79be9f00de7e8ea2b55171167d</MD5>
+      <SHA256>2a8f3af6f84ed8588d6ab19add28b0a7300f273188ae87307b92e1e6bae774d9</SHA256>
+      <FileName>gexpr.c.tar.gz</FileName>
+      <FileSize>2367</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

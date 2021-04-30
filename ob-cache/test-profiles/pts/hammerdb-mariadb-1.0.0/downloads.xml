@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://ftp.osuosl.org/pub/mariadb/mariadb-10.5.9/source/mariadb-10.5.9.tar.gz, https://archive.mariadb.org/mariadb-10.5.9/source/mariadb-10.5.9.tar.gz</URL>
+      <MD5>d5ff75792dde53ba487567bd7e658198</MD5>
+      <SHA256>40ab19aeb8de141fdc188cf2251213c9e7351bee4d0cd29db704fae68d1068cf</SHA256>
+      <FileName>mariadb-10.5.9.tar.gz</FileName>
+      <FileSize>88639930</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/TPC-Council/HammerDB/releases/download/v4.0/HammerDB-4.0-Linux.tar.gz</URL>
+      <MD5>fa9c4e2654a49f856cecf63c8ca9be5b</MD5>
+      <SHA256>9274d8158ba0830e5aafa9263fd865cf61163a0b2c190dfad4d4bf1b61bd6c90</SHA256>
+      <FileName>HammerDB-4.0-Linux.tar.gz</FileName>
+      <FileSize>5036787</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/alphacep/vosk-api/archive/refs/tags/0.3.21.tar.gz</URL>
+      <MD5>6ca3f83573328770d30661853fb3cbe1</MD5>
+      <SHA256>c680ab331fa357be7843081d558f71bc478ca02cecf79d3fa42bd2c9b8b51555</SHA256>
+      <FileName>vosk-api-0.3.21.tar.gz</FileName>
+      <FileSize>238388</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/sample-speech-1.tar.xz</URL>
+      <MD5>ba4b83806b70a3595f6b220accb7852d</MD5>
+      <SHA256>a827b58aa79c23b3842d52af64a08fa3d050752a7643b803d7d18f740f73141e</SHA256>
+      <FileName>sample-speech-1.tar.xz</FileName>
+      <FileSize>9809032</FileSize>
+    </Package>
+    <Package>
+      <URL>https://alphacephei.com/vosk/models/vosk-model-en-us-daanzu-20200905.zip</URL>
+      <MD5>524063ab68feb510a6a030e80e9e7f96</MD5>
+      <SHA256>b7147e3081d2d52c859364937e213d0e37a7cee07eb365355ec8fb0a2465e8b8</SHA256>
+      <FileName>vosk-model-en-us-daanzu-20200905.zip</FileName>
+      <FileSize>967693575</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

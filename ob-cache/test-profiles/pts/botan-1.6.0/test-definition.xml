@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Botan</Title>
+    <AppVersion>2.17.3</AppVersion>
+    <Description>Botan is a BSD-licensed cross-platform open-source C++ crypto library "cryptography toolkit" that supports most publicly known cryptographic algorithms. The project's stated goal is to be "the best option for cryptography in C++ by offering the tools necessary to implement a range of practical systems, such as TLS protocol, X.509 certificates, modern AEAD ciphers, PKCS#11 and TPM hardware support, password hashing, and post quantum crypto schemes."</Description>
+    <ResultScale>MiB/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.6.0</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>90</EnvironmentSize>
+    <ProjectURL>http://botan.randombit.net/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>--format=table --msec=15000 </Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>run-test</Identifier>
+      <Menu>
+        <Entry>
+          <Name>AES-256</Name>
+          <Value>AES-256</Value>
+        </Entry>
+        <Entry>
+          <Name>Blowfish</Name>
+          <Value>Blowfish</Value>
+        </Entry>
+        <Entry>
+          <Name>CAST-256</Name>
+          <Value>CAST-256</Value>
+        </Entry>
+        <Entry>
+          <Name>KASUMI</Name>
+          <Value>KASUMI</Value>
+        </Entry>
+        <Entry>
+          <Name>Twofish</Name>
+          <Value>Twofish</Value>
+        </Entry>
+        <Entry>
+          <Name>ChaCha20Poly1305</Name>
+          <Value>ChaCha20Poly1305</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>GNU GMP GMPbench</Title>
+    <AppVersion>6.2.1</AppVersion>
+    <Description>GMPbench is a test of the GNU Multiple Precision Arithmetic (GMP) Library. GMPbench is a single-threaded integer benchmark that leverages the GMP library to stress the CPU with widening integer multiplication.</Description>
+    <ResultScale>GMPbench Score</ResultScale>
+    <Proportion>HIB</Proportion>
+    <SubTitle>Total Time</SubTitle>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.3.0</Version>
+    <SupportedPlatforms>Linux, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>6</EnvironmentSize>
+    <ProjectURL>https://gmplib.org/gmpbench</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/qmlbench-20210302.tar.xz</URL>
+      <MD5>0fcdf15409884fc5f6b465400631fa0d</MD5>
+      <SHA256>f6cfbb7a2acd71c818dcf1b2fdf395830dbd4153c73dfd9688f8957abdf2c6c6</SHA256>
+      <FileName>qmlbench-20210302.tar.xz</FileName>
+      <FileSize>4021368</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

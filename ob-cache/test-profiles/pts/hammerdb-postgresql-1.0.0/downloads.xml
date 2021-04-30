@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ftp.postgresql.org/pub/source/v13.0/postgresql-13.0.tar.bz2</URL>
+      <MD5>4ebb1fd40b647c6127623f2a737f8e88</MD5>
+      <SHA256>80e750be8d436b54197636a02636f8fd3263ba6779bf865b04832495ea592296</SHA256>
+      <FileName>postgresql-13.0.tar.bz2</FileName>
+      <FileSize>20999465</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/TPC-Council/HammerDB/releases/download/v4.0/HammerDB-4.0-Linux.tar.gz</URL>
+      <MD5>fa9c4e2654a49f856cecf63c8ca9be5b</MD5>
+      <SHA256>9274d8158ba0830e5aafa9263fd865cf61163a0b2c190dfad4d4bf1b61bd6c90</SHA256>
+      <FileName>HammerDB-4.0-Linux.tar.gz</FileName>
+      <FileSize>5036787</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

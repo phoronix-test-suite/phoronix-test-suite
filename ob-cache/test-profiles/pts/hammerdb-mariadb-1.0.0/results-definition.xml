@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Vuser 1:TEST RESULT : System achieved #_RESULT_# NOPM from 16917 MySQL TPM</OutputTemplate>
+    <LineHint>System achieved</LineHint>
+    <ResultScale>New Orders Per Minute</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Vuser 1:TEST RESULT : System achieved 555 NOPM from #_RESULT_# MySQL TPM</OutputTemplate>
+    <LineHint>System achieved</LineHint>
+    <ResultScale>Transactions Per Minute</ResultScale>
+  </ResultsParser>
+</PhoronixTestSuite>

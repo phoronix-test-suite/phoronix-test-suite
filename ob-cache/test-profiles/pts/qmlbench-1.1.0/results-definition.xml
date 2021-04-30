@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>    Average: #_RESULT_#  frames; using  samples; MedianAll=317; StdDev=3.36155, CoV=0.0105909</OutputTemplate>
+    <LineHint>Average</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

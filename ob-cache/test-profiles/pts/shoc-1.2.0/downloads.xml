@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/shoc-master-20200417.tar.xz</URL>
+      <MD5>73d4eb7d42523bf636541e46e4edb6e0</MD5>
+      <SHA256>80b6aff4852c98c47b4db835262915d1d32544dfde52265bbfcaee75072dbe22</SHA256>
+      <FileName>shoc-master-20200417.tar.xz</FileName>
+      <FileSize>2129056</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

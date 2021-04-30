@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>SecureMark-TLS Score is #_RESULT_# marks</OutputTemplate>
+    <ResultPrecision>0</ResultPrecision>
+  </ResultsParser>
+</PhoronixTestSuite>

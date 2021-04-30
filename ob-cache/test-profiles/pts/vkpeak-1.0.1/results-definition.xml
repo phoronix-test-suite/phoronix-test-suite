@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>fp32-scalar  = #_RESULT_# GFLOPS</OutputTemplate>
+    <LineHint>fp32-scalar</LineHint>
+    <ResultScale>GFLOPS</ResultScale>
+    <ArgumentsDescription>fp32-scalar</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>fp32-vec4    = #_RESULT_# GFLOPS</OutputTemplate>
+    <LineHint>fp32-vec4</LineHint>
+    <ResultScale>GFLOPS</ResultScale>
+    <ArgumentsDescription>fp32-vec4</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>fp16-scalar  = #_RESULT_# GFLOPS</OutputTemplate>
+    <LineHint>fp16-scalar</LineHint>
+    <ResultScale>GFLOPS</ResultScale>
+    <ArgumentsDescription>fp16-scalar</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>fp16-vec4    = #_RESULT_# GFLOPS</OutputTemplate>
+    <LineHint>fp16-vec4</LineHint>
+    <ResultScale>GFLOPS</ResultScale>
+    <ArgumentsDescription>fp16-vec4</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>fp64-scalar  = #_RESULT_# GFLOPS</OutputTemplate>
+    <LineHint>fp64-scalar</LineHint>
+    <ResultScale>GFLOPS</ResultScale>
+    <ArgumentsDescription>fp64-scalar</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>int32-scalar  = #_RESULT_# GIOPS</OutputTemplate>
+    <LineHint>int32-scalar</LineHint>
+    <ResultScale>GIOPS</ResultScale>
+    <ArgumentsDescription>int32-scalar</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>int32-vec4  = #_RESULT_# GIOPS</OutputTemplate>
+    <LineHint>int32-vec4</LineHint>
+    <ResultScale>GIOPS</ResultScale>
+    <ArgumentsDescription>int32-vec4</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>int16-scalar  = #_RESULT_# GIOPS</OutputTemplate>
+    <LineHint>int16-scalar</LineHint>
+    <ResultScale>GIOPS</ResultScale>
+    <ArgumentsDescription>int16-scalar</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>int16-vec4  = #_RESULT_# GIOPS</OutputTemplate>
+    <LineHint>int16-vec4</LineHint>
+    <ResultScale>GIOPS</ResultScale>
+    <ArgumentsDescription>int16-vec4</ArgumentsDescription>
+  </ResultsParser>
+</PhoronixTestSuite>

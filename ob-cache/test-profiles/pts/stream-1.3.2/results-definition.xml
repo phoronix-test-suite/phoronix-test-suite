@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Function      Rate (MB/s)   Avg time     Min time     Max time
+Copy:       #_Copy_#       0.0029       0.0029       0.0030
+Scale:      #_Scale_#       0.0031       0.0030       0.0034
+Add:        #_Add_#       0.0042       0.0041       0.0044
+Triad:      #_Triad_#       0.0040       0.0040       0.0041</OutputTemplate>
+    <ResultKey>PTS_TEST_ARGUMENTS</ResultKey>
+  </ResultsParser>
+</PhoronixTestSuite>

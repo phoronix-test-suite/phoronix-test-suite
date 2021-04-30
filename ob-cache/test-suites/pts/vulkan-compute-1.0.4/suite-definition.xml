@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m3-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Vulkan Compute</Title>
+    <Version>1.0.4</Version>
+    <TestType>Graphics</TestType>
+    <Description>A collection of test profiles making use of the Vulkan API for compute purposes.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/vkfft</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/vkresample</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/vkpeak</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/ncnn</Test>
+    <Arguments>0</Arguments>
+    <Description>Target: Vulkan GPU</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/realsr-ncnn</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/waifu2x-ncnn</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/betsy</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/libplacebo</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+</PhoronixTestSuite>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>[2021-04-24 13:02:32.324]  bench    benchmark finished in 826.465 seconds #_RESULT_# h/s) hash sum = 898B6E0431C28A6B</OutputTemplate>
+    <LineHint>benchmark finished</LineHint>
+    <ResultAfterString>seconds</ResultAfterString>
+  </ResultsParser>
+</PhoronixTestSuite>

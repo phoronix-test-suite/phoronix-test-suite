@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>                  Throughput:         #_RESULT_# Megapixels/sec</OutputTemplate>
+    <LineHint>Throughput</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

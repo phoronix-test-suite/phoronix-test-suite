@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Systemd Total Boot Time</Title>
+    <Description>This test uses systemd-analyze to report the entire boot time.</Description>
+    <ResultScale>ms</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.6</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>python</ExternalDependencies>
+    <Maintainer>Jim Kukunas</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>run-test</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Total</Name>
+          <Value>total</Value>
+        </Entry>
+        <Entry>
+          <Name>Userspace</Name>
+          <Value>userspace</Value>
+        </Entry>
+        <Entry>
+          <Name>Kernel</Name>
+          <Value>kernel</Value>
+        </Entry>
+        <Entry>
+          <Name>Loader</Name>
+          <Value>loader</Value>
+        </Entry>
+        <Entry>
+          <Name>Firmware</Name>
+          <Value>firmware</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

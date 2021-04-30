@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>DDraceNetwork</Title>
+    <AppVersion>15.3.1</AppVersion>
+    <Description>This is a test of DDraceNetwork, an open-source cooperative platformer. OpenGL 3.3 is used for rendering, with fallbacks for older OpenGL versions.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux, Windows, Solaris, BSD, MacOSX</SupportedPlatforms>
+    <SoftwareType>Game</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64, x86</SupportedArchitectures>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <RequiresDisplay>TRUE</RequiresDisplay>
+    <EnvironmentSize>250</EnvironmentSize>
+    <ProjectURL>https://ddnet.tw/</ProjectURL>
+    <Maintainer>Dennis Felsing</Maintainer>
+    <SystemDependencies>opus/opusfile.h, libopusfile.so, wavpack/wavpack.h, wavpack, sqlite3, sqlite3.h, freetype2/ft2build.h, libnotify/notify.h</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>"gfx_vsync 0" "gfx_refresh_rate 0" "cl_refresh_rate 0" "cl_refresh_rate_inactive 0" "cl_show_welcome 0" "snd_enable 0" "cl_showfps 1"</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>"gfx_screen_width $VIDEO_WIDTH" "gfx_screen_height $VIDEO_HEIGHT"</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Mode</DisplayName>
+      <Identifier>windowing</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Windowed</Name>
+          <Value>"gfx_fullscreen 0"</Value>
+        </Entry>
+        <Entry>
+          <Name>Fullscreen</Name>
+          <Value>"gfx_fullscreen 1"</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Renderer</DisplayName>
+      <Identifier>renderer</Identifier>
+      <Menu>
+        <Entry>
+          <Name>OpenGL 3.3</Name>
+          <Value>"gfx_opengl_major 3" "gfx_opengl_minor 3" "gfx_opengl_patch 0"</Value>
+        </Entry>
+        <Entry>
+          <Name>OpenGL 3.0</Name>
+          <Value>"gfx_opengl_major 3" "gfx_opengl_minor 0" "gfx_opengl_patch 0"</Value>
+        </Entry>
+        <Entry>
+          <Name>OpenGL 2.0</Name>
+          <Value>"gfx_opengl_major 2" "gfx_opengl_minor 0" "gfx_opengl_patch 0"</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Zoom</DisplayName>
+      <Identifier>zoom</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Default</Name>
+          <Value>"cl_default_zoom 10"</Value>
+        </Entry>
+        <Entry>
+          <Name>Zoomed out</Name>
+          <Value>"cl_default_zoom 0"</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Demo</DisplayName>
+      <Identifier>demo</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Multeasymap</Name>
+          <Value>"play demos/Multeasymap_bench.demo"</Value>
+          <Message>63 players, showall, CPU-intensive</Message>
+        </Entry>
+        <Entry>
+          <Name>RaiNyMore2</Name>
+          <Value>"play demos/RaiNyMore2_bench.demo"</Value>
+          <Message>1 player, intricate background, GPU-intensive</Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

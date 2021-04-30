@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://software.intel.com/content/dam/develop/external/us/en/protected/mlc_v3.9.tgz</URL>
+      <MD5>00a24ef07c99fbb9765e61c3568eada8</MD5>
+      <SHA256>abc1662c08eca68078e8ef930808f5cc8f4a0035bf3f36149e30ed05535deaf4</SHA256>
+      <FileName>mlc_v3.9.tgz</FileName>
+      <FileSize>810709</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

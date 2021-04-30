@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>VOSK Speech Recognition Toolkit</Title>
+    <AppVersion>0.3.21</AppVersion>
+    <Description>VOSK is an open-source offline speech recognition API/toolkit. VOSK supports speech recognition in 17 languages and has a variety of models available and interfaces for different programming languages. This test profile times the speech-to-text process for a roughly three minute audio recording.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux, BSD, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>python</ExternalDependencies>
+    <EnvironmentSize>4700</EnvironmentSize>
+    <ProjectURL>https://alphacephei.com/vosk/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

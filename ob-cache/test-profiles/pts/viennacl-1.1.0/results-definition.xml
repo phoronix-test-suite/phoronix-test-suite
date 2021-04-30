@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>sCOPY : #_RESULT_# GB/s</OutputTemplate>
+    <LineHint>sCOPY :</LineHint>
+    <ResultScale>GB/s</ResultScale>
+    <AppendToArgumentsDescription>sCOPY</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>sAXPY : #_RESULT_# GB/s</OutputTemplate>
+    <LineHint>sAXPY :</LineHint>
+    <ResultScale>GB/s</ResultScale>
+    <AppendToArgumentsDescription>sAXPY</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>sDOT : #_RESULT_# GB/s</OutputTemplate>
+    <LineHint>sDOT :</LineHint>
+    <ResultScale>GB/s</ResultScale>
+    <AppendToArgumentsDescription>sDOT</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>dCOPY : #_RESULT_# GB/s</OutputTemplate>
+    <LineHint>dCOPY :</LineHint>
+    <ResultScale>GB/s</ResultScale>
+    <AppendToArgumentsDescription>dCOPY</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>dAXPY : #_RESULT_# GB/s</OutputTemplate>
+    <LineHint>dAXPY :</LineHint>
+    <ResultScale>GB/s</ResultScale>
+    <AppendToArgumentsDescription>dAXPY</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>dDOT : #_RESULT_# GB/s</OutputTemplate>
+    <LineHint>dDOT :</LineHint>
+    <ResultScale>GB/s</ResultScale>
+    <AppendToArgumentsDescription>dDOT</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>dGEMV-N : #_RESULT_# GB/s</OutputTemplate>
+    <LineHint>dGEMV-N :</LineHint>
+    <ResultScale>GB/s</ResultScale>
+    <AppendToArgumentsDescription>dGEMV-N</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>dGEMV-T : #_RESULT_# GB/s</OutputTemplate>
+    <LineHint>dGEMV-T :</LineHint>
+    <ResultScale>GB/s</ResultScale>
+    <AppendToArgumentsDescription>dGEMV-T</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>dGEMM-NN : #_RESULT_# GFLOPs/s</OutputTemplate>
+    <LineHint>dGEMM-NN :</LineHint>
+    <ResultScale>GFLOPs/s</ResultScale>
+    <AppendToArgumentsDescription>dGEMM-NN</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>dGEMM-NT : #_RESULT_# GFLOPs/s</OutputTemplate>
+    <LineHint>dGEMM-NT :</LineHint>
+    <ResultScale>GFLOPs/s</ResultScale>
+    <AppendToArgumentsDescription>dGEMM-NT</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>dGEMM-TN : #_RESULT_# GFLOPs/s</OutputTemplate>
+    <LineHint>dGEMM-TN :</LineHint>
+    <ResultScale>GFLOPs/s</ResultScale>
+    <AppendToArgumentsDescription>dGEMM-TN</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>dGEMM-TT : #_RESULT_# GFLOPs/s</OutputTemplate>
+    <LineHint>dGEMM-TT :</LineHint>
+    <ResultScale>GFLOPs/s</ResultScale>
+    <AppendToArgumentsDescription>dGEMM-TT</AppendToArgumentsDescription>
+  </ResultsParser>
+</PhoronixTestSuite>

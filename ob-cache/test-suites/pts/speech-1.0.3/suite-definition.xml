@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Speech</Title>
+    <Version>1.0.3</Version>
+    <TestType>System</TestType>
+    <Description>Speech to text, text to speech, and any other speech synthesis and audio handling benchmarks.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/espeak</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/deepspeech</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/vosk</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/rnnoise</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/synthmark</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+</PhoronixTestSuite>

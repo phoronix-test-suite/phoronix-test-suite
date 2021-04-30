@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/Incompact3d-20210311.tar.xz</URL>
+      <MD5>b9800bcf43d5c9b53202369453f74811</MD5>
+      <SHA256>f7bae505738ed4c27d0f4fa5c2f152602a9a7531ba2a4e1402419e1ad234151a</SHA256>
+      <FileName>Incompact3d-20210311.tar.xz</FileName>
+      <FileSize>481772</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

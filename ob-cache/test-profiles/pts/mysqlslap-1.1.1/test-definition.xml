@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>MariaDB</Title>
+    <AppVersion>10.5.2</AppVersion>
+    <Description>This is a MariaDB MySQL database server benchmark making use of mysqlslap.</Description>
+    <ResultScale>Queries Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.1</Version>
+    <SupportedPlatforms>Linux, MacOSX, BSD</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, cmake, libevent, ncurses-development, bison, flex, openssl-development, zlib-development</ExternalDependencies>
+    <EnvironmentSize>2200</EnvironmentSize>
+    <ProjectURL>https://mariadb.com/</ProjectURL>
+    <RequiresCoreVersionMin>8111</RequiresCoreVersionMin>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>--auto-generate-sql --iterations=200 --number-int-cols=4 --number-char-cols=4 --auto-generate-sql-add-autoincrement  --auto-generate-sql-execute-number=1000</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Clients</DisplayName>
+      <Identifier>clients</Identifier>
+      <ArgumentPrefix>--concurrency=</ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>1</Name>
+          <Value>1</Value>
+        </Entry>
+        <Entry>
+          <Name>4</Name>
+          <Value>4</Value>
+        </Entry>
+        <Entry>
+          <Name>8</Name>
+          <Value>8</Value>
+        </Entry>
+        <Entry>
+          <Name>16</Name>
+          <Value>16</Value>
+        </Entry>
+        <Entry>
+          <Name>32</Name>
+          <Value>32</Value>
+        </Entry>
+        <Entry>
+          <Name>64</Name>
+          <Value>64</Value>
+        </Entry>
+        <Entry>
+          <Name>128</Name>
+          <Value>128</Value>
+        </Entry>
+        <Entry>
+          <Name>256</Name>
+          <Value>256</Value>
+        </Entry>
+        <Entry>
+          <Name>512</Name>
+          <Value>512</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

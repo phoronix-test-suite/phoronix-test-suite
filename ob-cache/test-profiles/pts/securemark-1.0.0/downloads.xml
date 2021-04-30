@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/eembc/securemark-tls/archive/refs/tags/v1.0.4.tar.gz</URL>
+      <MD5>22a482ce9ee91422bce5446f9c5d308c</MD5>
+      <SHA256>c24288829ff4ef912dcab69f43a93da835a2a99283874317f45ecbe4ade5826e</SHA256>
+      <FileName>securemark-tls-1.0.4.tar.gz</FileName>
+      <FileSize>497020</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

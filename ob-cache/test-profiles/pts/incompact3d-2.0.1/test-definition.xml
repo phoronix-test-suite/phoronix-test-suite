@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Xcompact3d Incompact3d</Title>
+    <AppVersion>2021-03-11</AppVersion>
+    <Description>Xcompact3d Incompact3d is a Fortran-MPI based, finite difference high-performance code for solving the incompressible Navier-Stokes equation and as many as you need scalar transport equations.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>2.0.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Scientific</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>fortran-compiler, openmpi-development, fftw3-development, build-utilities</ExternalDependencies>
+    <EnvironmentSize>20</EnvironmentSize>
+    <ProjectURL>https://github.com/xcompact3d</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Input</DisplayName>
+      <Identifier>input</Identifier>
+      <Menu>
+        <Entry>
+          <Name>X3D-benchmarking input.i3d</Name>
+          <Value>input.i3d</Value>
+          <Message>Requires ~96GB of Available RAM</Message>
+        </Entry>
+        <Entry>
+          <Name>input.i3d 192 Cells Per Direction</Name>
+          <Value>input_192_nodes.i3d</Value>
+        </Entry>
+        <Entry>
+          <Name>input.i3d 129 Cells Per Direction</Name>
+          <Value>input_129_nodes.i3d</Value>
+          <Message>Intended For Small Systems</Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

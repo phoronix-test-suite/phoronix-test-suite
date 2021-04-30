@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/xmrig/xmrig/archive/refs/tags/v6.12.1.tar.gz</URL>
+      <MD5>da6657d4685c665255a32bae4229f644</MD5>
+      <SHA256>7570030c4b3e257bda190a100dc59f78b74c823af7561222a99b296f5e7b1ac2</SHA256>
+      <FileName>xmrig-6.12.1.tar.gz</FileName>
+      <FileSize>1626568</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

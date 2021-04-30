@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>ET: Legacy</Title>
+    <AppVersion>2.77</AppVersion>
+    <Description>ETLegacy is an open-source engine evolution of Wolfenstein: Enemy Territory, a World War II era first person shooter that was released for free by Splash Damage using the id Tech 3 engine.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Game</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <ExternalDependencies>sdl2-development</ExternalDependencies>
+    <RequiresDisplay>TRUE</RequiresDisplay>
+    <EnvironmentSize>380</EnvironmentSize>
+    <ProjectURL>https://www.etlegacy.com/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>+exec preset_high +set ui_r_mode -1 +set r_fullscreen 0 +set r_mode -1 +timedemo 1 +set demodone "quit" +set demoloop1 "demo etlegac277-pts1; set nextdemo vstr demodone" +vstr demoloop1 +vid_restart</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>+set r_customwidth $VIDEO_WIDTH +set r_customheight $VIDEO_HEIGHT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

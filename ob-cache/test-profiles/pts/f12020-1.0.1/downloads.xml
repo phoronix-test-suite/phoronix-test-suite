@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/f1-2020-proton-prefs-1.zip</URL>
+      <MD5>02151fb162a0dcddc88aaa5ced33e0f3</MD5>
+      <SHA256>7a6b0a77c14a7f0240bb5a4a68f2e72cede616e9436a32ee6bf8533feb5acf0e</SHA256>
+      <FileName>f1-2020-proton-prefs-1.zip</FileName>
+      <FileSize>5628</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

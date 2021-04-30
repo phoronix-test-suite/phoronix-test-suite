@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://www.mcs.anl.gov/petsc/mirror/externalpackages/ViennaCL-1.7.1.tar.gz, https://distfiles.macports.org/viennacl/ViennaCL-1.7.1.tar.gz, http://iweb.dl.sourceforge.net/project/viennacl/1.7.x/ViennaCL-1.7.1.tar.gz, https://mirrors.xtom.com/freebsd-ports/distfiles/ViennaCL-1.7.1.tar.gz</URL>
+      <MD5>00939858309689d32247d6fe60383b88</MD5>
+      <SHA256>a596b77972ad3d2bab9d4e63200b171cd0e709fb3f0ceabcaf3668c87d3a238b</SHA256>
+      <FileName>ViennaCL-1.7.1.tar.gz</FileName>
+      <FileSize>16990366</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>
