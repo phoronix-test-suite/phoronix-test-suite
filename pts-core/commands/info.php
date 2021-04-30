@@ -262,7 +262,7 @@ class info implements pts_option_interface
 					$tt = array_unique($test_titles);
 					natcasesort($tt);
 					echo pts_user_io::display_text_list($tt);
-					echo '  ' . pts_client::cli_just_italic(pts_strings::plural_handler(count($tt), 'Distinct Test Profiles')) . PHP_EOL;
+					echo '  ' . pts_client::cli_just_italic(pts_strings::plural_handler(count($tt), 'Distinct Test Profile')) . PHP_EOL;
 					echo '  ' . pts_client::cli_just_italic(pts_strings::plural_handler($o->get_test_count(), 'Test')) . PHP_EOL;
 					echo '  ' . pts_client::cli_just_italic(pts_strings::plural_handler($o->get_qualified_test_count(), 'Qualified Test')) . PHP_EOL;
 				}
