@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/plerros/helsing/archive/refs/tags/1.0-beta2.tar.gz</URL>
+      <MD5>924177818202db3d06aaecd5fab4179f</MD5>
+      <SHA256>77122b4d31f1c8491a1bc63760f9973ceb74b0fe04362323772386d3614412ae</SHA256>
+      <FileName>helsing-1.0-beta2.tar.gz</FileName>
+      <FileSize>15300</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>
