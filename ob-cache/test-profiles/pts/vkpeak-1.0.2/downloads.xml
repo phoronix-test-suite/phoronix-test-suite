@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/nihui/vkpeak/releases/download/20210430/vkpeak-20210430-ubuntu.zip</URL>
+      <MD5>7fdab93b02f666765d658350f34c0833</MD5>
+      <SHA256>a9144ce2e1cc61c256e5770732bba7cc4733dd53173ef1859562d46124695bd4</SHA256>
+      <FileName>vkpeak-20210430-ubuntu.zip</FileName>
+      <FileSize>840959</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/nihui/vkpeak/releases/download/20210430/vkpeak-20210430-windows.zip</URL>
+      <MD5>9f3277defca6e76caea85c1cee3733fd</MD5>
+      <SHA256>8b5f2c954e86a158c3fb3c766eecd00fa6d949357a034661b42d0a48abe5c8e3</SHA256>
+      <FileName>vkpeak-20210430-windows.zip</FileName>
+      <FileSize>525853</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/nihui/vkpeak/releases/download/20210430/vkpeak-20210430-macos.zip</URL>
+      <MD5>7bdd79dbe9b0121353314a90c1f4498d</MD5>
+      <SHA256>c7e03c5ac424fa5e9ccd7921f55d58b2c690d75776b5f9b8df2d06f4b9d45d06</SHA256>
+      <FileName>vkpeak-20210430-macos.zip</FileName>
+      <FileSize>4693303</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

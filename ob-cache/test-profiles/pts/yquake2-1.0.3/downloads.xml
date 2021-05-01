@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/yquake2/yquake2/archive/QUAKE2_7_45.zip</URL>
+      <MD5>1c0f383a158e83beaea07da4e061aaf2</MD5>
+      <SHA256>fcc2004796908db07b69c2f9a3a829acf6e38551799f7768ccae77f66ea8e356</SHA256>
+      <FileName>QUAKE2_7_45.zip</FileName>
+      <FileSize>2588621</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://master.dl.sourceforge.net/project/dcquake/quake2/demo/q2-314-demo-x86.exe, https://deponie.yamagi.org/quake2/idstuff/q2-314-demo-x86.exe</URL>
+      <MD5>4d1cd4618e80a38db59304132ea0856c</MD5>
+      <SHA256>7ace5a43983f10d6bdc9d9b6e17a1032ba6223118d389bd170df89b945a04a1e</SHA256>
+      <FileName>q2-314-demo-x86.exe</FileName>
+      <FileSize>39015499</FileSize>
+    </Package>
+    <Package>
+      <URL>https://deponie.yamagi.org/quake2/windows/quake2-7.45a.zip</URL>
+      <MD5>c44cad214d602fbcb40172c27362670c</MD5>
+      <SHA256>f536888bb408ee7340b511adcfa769ef023990b9ccf93cbac51ba2198d119d43</SHA256>
+      <FileName>quake2-7.45a.zip</FileName>
+      <FileSize>5415592</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>
