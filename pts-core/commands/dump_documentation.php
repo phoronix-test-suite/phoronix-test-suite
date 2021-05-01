@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2019, Phoronix Media
-	Copyright (C) 2010 - 2019, Michael Larabel
+	Copyright (C) 2010 - 2021, Phoronix Media
+	Copyright (C) 2010 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -260,7 +260,7 @@ class dump_documentation implements pts_option_interface
 					$man_page .= '.B ' . trim($option[0] . ' ' . (!empty($option[1]) && is_array($option[1]) ? implode(' ', $option[1]) : null)) . PHP_EOL . $option[2] . PHP_EOL . '.TP' . PHP_EOL;
 				}
 			}
-			$man_page .= '.SH SEE ALSO' . PHP_EOL . '.B Websites:' . PHP_EOL . '.br' . PHP_EOL . 'https://www.phoronix-test-suite.com/' . PHP_EOL . '.br' . PHP_EOL . 'https://commercial.phoronix-test-suite.com/' . PHP_EOL . '.br' . PHP_EOL . 'https://www.openbenchmarking.org/' . PHP_EOL . '.br' . PHP_EOL . 'https://www.phoronix.com/' . PHP_EOL . '.br' . PHP_EOL . 'https://www.phoronix.com/forums/' . PHP_EOL;
+			$man_page .= '.SH SEE ALSO' . PHP_EOL . '.B Websites:' . PHP_EOL . '.br' . PHP_EOL . 'https://www.phoronix-test-suite.com/' . PHP_EOL . '.br' . PHP_EOL . 'https://commercial.phoronix-test-suite.com/' . PHP_EOL . '.br' . PHP_EOL . 'https://www.openbenchmarking.org/' . PHP_EOL . '.br' . PHP_EOL . 'https://www.phoronix.com/' . PHP_EOL . '.br' . PHP_EOL;
 			$man_page .= '.SH AUTHORS' . PHP_EOL . 'Copyright 2008 - ' . date('Y') . ' by Phoronix Media, Michael Larabel.' . PHP_EOL . '.TP' . PHP_EOL;
 
 			file_put_contents(PTS_PATH . 'documentation/man-pages/phoronix-test-suite.1', $man_page);
