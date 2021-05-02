@@ -1,7 +1,7 @@
 ::	Phoronix Test Suite
 ::	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-::	Copyright (C) 2008 - 2020, Phoronix Media
-::	Copyright (C) 2008 - 2020, Michael Larabel
+::	Copyright (C) 2008 - 2021, Phoronix Media
+::	Copyright (C) 2008 - 2021, Michael Larabel
 ::	phoronix-test-suite: The Phoronix Test Suite is an extensible open-source testing / benchmarking platform
 ::
 ::	This program is free software; you can redistribute it and/or modify
@@ -42,7 +42,7 @@ powershell -command "& { Expand-Archive php.zip -DestinationPath C:\PHP }"
 If not exist VC_redist.x64.exe (
 echo Attempting to download and run Visual C++ Redistributable for Visual Studio 2019 support.
 powershell -command "& { $ProgressPreference = 'SilentlyContinue'; iwr https://aka.ms/vs/16/release/VC_redist.x64.exe -OutFile VC_redist.x64.exe; $ProgressPreference = 'Continue' }"
-VC_redist.x64.exe
+VC_redist.x64.exe /install /quiet
 )
   )
 :: Use the newly downloaded PHP location
