@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2020, Phoronix Media
-	Copyright (C) 2009 - 2020, Michael Larabel
+	Copyright (C) 2009 - 2021, Phoronix Media
+	Copyright (C) 2009 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -265,7 +265,7 @@ class sys_power extends phodevi_sensor
 				}
 			}
 		}
-		else if(phodevi::is_macosx())
+		else if(phodevi::is_macos())
 		{
 			$current = abs(phodevi_osx_parser::read_osx_system_profiler('SPPowerDataType', 'Amperage', false, array(), false)); // in mA
 		}
@@ -344,7 +344,7 @@ class sys_power extends phodevi_sensor
 				}
 			}
 		}
-		else if(phodevi::is_macosx())
+		else if(phodevi::is_macos())
 		{
 			$amperage = phodevi_osx_parser::read_osx_system_profiler('SPPowerDataType', 'Amperage', false, array(), false); // in mA
 			$voltage = phodevi_osx_parser::read_osx_system_profiler('SPPowerDataType', 'Voltage'); // in mV (no need to uncache since we just ran it)

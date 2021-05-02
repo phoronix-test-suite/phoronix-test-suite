@@ -131,7 +131,7 @@ class phodevi_cpu extends phodevi_device_interface
 		{
 			$info = intval(phodevi_bsd_parser::read_sysctl(array('hw.ncpufound', 'hw.ncpu')));
 		}
-		else if(phodevi::is_macosx())
+		else if(phodevi::is_macos())
 		{
 			$info = intval(phodevi_bsd_parser::read_sysctl(array('hw.ncpu')));
 
@@ -212,7 +212,7 @@ class phodevi_cpu extends phodevi_device_interface
 				}
 			}
 		}
-		else if(phodevi::is_macosx())
+		else if(phodevi::is_macos())
 		{
 			$physical_cores = intval(phodevi_bsd_parser::read_sysctl(array('hw.physicalcpu')));
 		}
@@ -273,7 +273,7 @@ class phodevi_cpu extends phodevi_device_interface
 				$cache_size = self::cpuinfo_cache_size();
 			}
 		}
-		else if(phodevi::is_macosx())
+		else if(phodevi::is_macos())
 		{
 			$cache_size = pts_math::number_with_unit_to_mb(phodevi_osx_parser::read_osx_system_profiler('SPHardwareDataType', 'L3Cache'));
 		}
@@ -384,7 +384,7 @@ class phodevi_cpu extends phodevi_device_interface
 			$ucode_version = self::read_cpuinfo_line('microcode');
 		}
 
-		if(empty($ucode_version) && phodevi::is_macosx())
+		if(empty($ucode_version) && phodevi::is_macos())
 		{
 			$ucode_version = phodevi_bsd_parser::read_sysctl(array('machdep.cpu.microcode_version'));
 		}
@@ -601,7 +601,7 @@ class phodevi_cpu extends phodevi_device_interface
 		{
 			$info = phodevi_bsd_parser::read_sysctl('hw.model');
 		}
-		else if(phodevi::is_macosx())
+		else if(phodevi::is_macos())
 		{
 			$info = phodevi_bsd_parser::read_sysctl('machdep.cpu.brand_string');
 
@@ -970,7 +970,7 @@ class phodevi_cpu extends phodevi_device_interface
 				$family = $processor_identifier[($x + 1)];
 			}
 		}
-		else if(phodevi::is_macosx())
+		else if(phodevi::is_macos())
 		{
 			$family = phodevi_bsd_parser::read_sysctl(array('machdep.cpu.family'));
 		}
@@ -993,7 +993,7 @@ class phodevi_cpu extends phodevi_device_interface
 				$model = $processor_identifier[($x + 1)];
 			}
 		}
-		else if(phodevi::is_macosx())
+		else if(phodevi::is_macos())
 		{
 			$model = phodevi_bsd_parser::read_sysctl(array('machdep.cpu.model'));
 		}

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2018, Phoronix Media
-	Copyright (C) 2009 - 2018, Michael Larabel
+	Copyright (C) 2009 - 2021, Phoronix Media
+	Copyright (C) 2009 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -90,7 +90,7 @@ class cpu_usage extends phodevi_sensor
 		{
 			$percent = $this->cpu_usage_solaris();
 		}
-		else if(phodevi::is_macosx())
+		else if(phodevi::is_macos())
 		{
 			$percent = $this->cpu_usage_macosx();
 		}

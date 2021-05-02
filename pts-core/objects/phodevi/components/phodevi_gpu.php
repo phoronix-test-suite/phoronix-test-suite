@@ -115,7 +115,7 @@ class phodevi_gpu extends phodevi_device_interface
 	}
 	public static function gpu_set_resolution($args)
 	{
-		if(count($args) != 2 || phodevi::is_windows() || phodevi::is_macosx() || !pts_client::executable_in_path('xrandr'))
+		if(count($args) != 2 || phodevi::is_windows() || phodevi::is_macos() || !pts_client::executable_in_path('xrandr'))
 		{
 			return false;
 		}
@@ -315,7 +315,7 @@ class phodevi_gpu extends phodevi_device_interface
 			}
 		}
 
-		if(phodevi::is_macosx())
+		if(phodevi::is_macos())
 		{
 			$info = pts_strings::trim_explode(' ', phodevi_osx_parser::read_osx_system_profiler('SPDisplaysDataType', 'Resolution'));
 			$resolution = array();
@@ -450,7 +450,7 @@ class phodevi_gpu extends phodevi_device_interface
 		}
 
 		// Attempt reading available modes from xrandr
-		if(pts_client::executable_in_path('xrandr') && !phodevi::is_macosx()) // MacOSX has xrandr but currently on at least my setup will emit a Bus Error when called
+		if(pts_client::executable_in_path('xrandr') && !phodevi::is_macos()) // MacOSX has xrandr but currently on at least my setup will emit a Bus Error when called
 		{
 			$xrandr_lines = array_reverse(explode("\n", shell_exec('xrandr 2>&1')));
 
@@ -620,7 +620,7 @@ class phodevi_gpu extends phodevi_device_interface
 				}
 			}
 		}
-		else if(phodevi::is_macosx())
+		else if(phodevi::is_macos())
 		{
 			$info = phodevi_osx_parser::read_osx_system_profiler('SPDisplaysDataType', 'VRAM');
 			$info = explode(' ', $info);
@@ -771,7 +771,7 @@ class phodevi_gpu extends phodevi_device_interface
 		$core_freq = 0;
 		$mem_freq = 0;
 
-		if(phodevi::is_nvidia_graphics() && phodevi::is_macosx() == false) // NVIDIA GPU
+		if(phodevi::is_nvidia_graphics() && phodevi::is_macos() == false) // NVIDIA GPU
 		{
 			// GPUDefault3DClockFreqs is the default and does not show under/over-clocking
 			$clock_freqs_3d = pts_strings::comma_explode(phodevi_parser::read_nvidia_extension('GPU3DClockFreqs'));
@@ -1067,7 +1067,7 @@ class phodevi_gpu extends phodevi_device_interface
 		$info = str_replace('(R)', '', phodevi_parser::read_glx_renderer());
 		$video_ram = phodevi::read_property('gpu', 'memory-capacity');
 
-		if(phodevi::is_macosx())
+		if(phodevi::is_macos())
 		{
 			$system_profiler_info = implode(' + ', phodevi_osx_parser::read_osx_system_profiler('SPDisplaysDataType', 'ChipsetModel', true));
 

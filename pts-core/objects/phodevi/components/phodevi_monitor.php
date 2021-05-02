@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2020, Phoronix Media
-	Copyright (C) 2008 - 2020, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 	phodevi_monitor.php: The PTS Device Interface object for the display monitor
 
 	This program is free software; you can redistribute it and/or modify
@@ -36,7 +36,7 @@ class phodevi_monitor extends phodevi_device_interface
 	{
 		$monitor = array();
 
-		if(phodevi::is_macosx())
+		if(phodevi::is_macos())
 		{
 			$system_profiler = shell_exec('system_profiler SPDisplaysDataType 2>&1');
 			$system_profiler = substr($system_profiler, strrpos($system_profiler, 'Displays:'));

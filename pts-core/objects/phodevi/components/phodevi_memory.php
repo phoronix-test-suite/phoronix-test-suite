@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2019, Phoronix Media
-	Copyright (C) 2008 - 2019, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 	phodevi_memory.php: The PTS Device Interface object for system memory
 
 	This program is free software; you can redistribute it and/or modify
@@ -40,7 +40,7 @@ class phodevi_memory extends phodevi_device_interface
 		$mem_manufacturer = false;
 		$mem_part = false;
 
-		if(phodevi::is_macosx())
+		if(phodevi::is_macos())
 		{
 			$mem_size = phodevi_osx_parser::read_osx_system_profiler('SPMemoryDataType', 'Size', true, array('Empty'));
 			$mem_speed = phodevi_osx_parser::read_osx_system_profiler('SPMemoryDataType', 'Speed');
@@ -302,7 +302,7 @@ class phodevi_memory extends phodevi_device_interface
 
 			$info = ceil(floor($mem_size / 1048576) / 256) * 256;
 		}
-		else if(phodevi::is_macosx())
+		else if(phodevi::is_macos())
 		{
 			$info = phodevi_osx_parser::read_osx_system_profiler('SPHardwareDataType', 'Memory');
 			$info = explode(' ', $info);

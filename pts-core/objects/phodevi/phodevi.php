@@ -814,7 +814,7 @@ class phodevi extends phodevi_base
 		{
 			$compatible = false;
 		}
-		if(phodevi::is_macosx())
+		if(phodevi::is_macos())
 		{
 			$compatible = true;
 		}
@@ -944,7 +944,7 @@ class phodevi extends phodevi_base
 	{
 		return self::$operating_systems['bsd'];
 	}
-	public static function is_macosx()
+	public static function is_macos()
 	{
 		return self::$operating_systems['macosx'];
 	}
@@ -978,7 +978,7 @@ class phodevi extends phodevi_base
 			return false;
 		}
 
-		return pts_client::read_env('DISPLAY') != false || pts_client::read_env('WAYLAND_DISPLAY') != false || phodevi::is_windows() || phodevi::is_macosx();
+		return pts_client::read_env('DISPLAY') != false || pts_client::read_env('WAYLAND_DISPLAY') != false || phodevi::is_windows() || phodevi::is_macos();
 	}
 }
 

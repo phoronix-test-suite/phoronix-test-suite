@@ -4,8 +4,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2019, Phoronix Media
-	Copyright (C) 2008 - 2019, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 	phodevi_system.php: The PTS Device Interface object for the system software
 
 	This program is free software; you can redistribute it and/or modify
@@ -168,7 +168,7 @@ class phodevi_system extends phodevi_device_interface
 		// Determine file-system type
 		$fs = null;
 
-		if(phodevi::is_macosx())
+		if(phodevi::is_macos())
 		{
 			$fs = phodevi_osx_parser::read_osx_system_profiler('SPSerialATADataType', 'FileSystem', false, array('MS-DOS FAT32'));
 
@@ -916,7 +916,7 @@ class phodevi_system extends phodevi_device_interface
 			$compilers['icc'] = 'ICC';
 		}
 
-		if(phodevi::is_macosx() && pts_client::executable_in_path('xcodebuild'))
+		if(phodevi::is_macos() && pts_client::executable_in_path('xcodebuild'))
 		{
 			$xcode = phodevi_osx_parser::read_osx_system_profiler('SPDeveloperToolsDataType', 'Xcode');
 			$xcode = substr($xcode, 0, strpos($xcode, ' '));
@@ -1076,7 +1076,7 @@ class phodevi_system extends phodevi_device_interface
 	public static function sw_os_version()
 	{
 		// Returns OS version
-		if(phodevi::is_macosx())
+		if(phodevi::is_macos())
 		{
 			$os = phodevi_osx_parser::read_osx_system_profiler('SPSoftwareDataType', 'SystemVersion');
 		
@@ -1260,7 +1260,7 @@ class phodevi_system extends phodevi_device_interface
 			$os = substr($os, $break_point + 1);
 		}
 		
-		if(phodevi::is_macosx())
+		if(phodevi::is_macos())
 		{
 			$os = phodevi_osx_parser::read_osx_system_profiler('SPSoftwareDataType', 'SystemVersion');
 		}
