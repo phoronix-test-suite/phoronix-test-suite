@@ -711,6 +711,21 @@ class pts_client
 					file_put_contents($system_log_dir . 'environment-variables', $variable_dump);
 				}
 
+				if(($extra_logs_dir = getenv('PTS_EXTRA_SYSTEM_LOGS_DIR')) != false && is_dir($extra_logs_dir))
+				{
+					// Allow extra arbitrary system logs to be collected within PTS_EXTRA_SYSTEM_LOGS_DIR
+					foreach(pts_file_io::glob($extra_logs_dir . '/*') as $extra_log)
+					{
+						$extra_log_basename = basename($extra_log);
+
+						// Don't overwrite existing auto-generated system log files + also ensure log file is text and not binary etc payload
+						if(!is_file($system_log_dir . $extra_log_basename) && mime_content_type($extra_log) == 'text/plain')
+						{
+							copy($extra_log, $system_log_dir . $extra_log_basename);
+						}
+					}
+				}
+
 				pts_module_manager::module_process('__post_test_run_system_logs', $system_log_dir);
 			}
 		}
@@ -2532,4 +2547,4 @@ if(PTS_IS_CLIENT && (PTS_IS_DEV_BUILD || pts_client::is_debug_mode()))
 	error_reporting(E_ALL | E_NOTICE | E_STRICT);
 }
 
-?>
+?>a

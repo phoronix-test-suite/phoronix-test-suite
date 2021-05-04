@@ -988,6 +988,10 @@ If Phodevi fails to detect the system's monitor standard / default resolution, t
 
 To skip the Phoronix Test Suite external dependency checking/installation when installing a test, set this environment variable to *1* . If wishing to skip only certain external dependencies, set this variable's value to the name of the external dependencies (the generic dependency names used by the Phoronix Test Suite) to not install. Multiple dependencies to skip can be delimited by a comma.
 
+**PTS_EXTRA_SYSTEM_LOGS_DIR**
+
+By default the Phoronix Test Suite collects common system logs (cpuinfo, lscpu, dmesg) during the benchmarking process when saving test results. If wanting to collect additional, arbitrary system log files specific to your operating environment or for other niche system information, the *PTS_EXTRA_SYSTEM_LOGS_DIR* environment variable can be set as a path to a directory containing such log files. Prior to running the Phoronix Test Suite simply set *PTS_EXTRA_SYSTEM_LOGS_DIR* to the directory where any text files should be captured from following test completion.
+
 
 # General Information
 
