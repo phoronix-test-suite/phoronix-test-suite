@@ -2547,4 +2547,4 @@ if(PTS_IS_CLIENT && (PTS_IS_DEV_BUILD || pts_client::is_debug_mode()))
 	error_reporting(E_ALL | E_NOTICE | E_STRICT);
 }
 
-?>a
+?>
