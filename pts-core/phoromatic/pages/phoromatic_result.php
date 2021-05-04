@@ -111,6 +111,7 @@ class phoromatic_result implements pts_webui_interface
 					echo 'File Not Found: ' . $composite_xml;
 					return false;
 				}
+				$has_system_logs = is_file(phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $row['UploadID']) . 'system-logs.zip');
 				$display_rows[$composite_xml] = $row;
 				pts_arrays::unique_push($benchmark_tickets, $row['BenchmarkTicketID']);
 				pts_arrays::unique_push($upload_times, $row['UploadTime']);
@@ -442,7 +443,7 @@ class phoromatic_result implements pts_webui_interface
 			$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&upload_to_openbenchmarking">Upload To OpenBenchmarking.org</a></p>';
 		}
 
-		if(is_file(phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $row['UploadID']) . 'system-logs.zip'))
+		if($has_system_logs)
 		{
 				$right .= '<hr /><p><a href="?logs/system/' . $row['UploadID'] . '">View System Logs</a></p>';
 		}
