@@ -274,32 +274,9 @@ class dump_documentation implements pts_option_interface
 		$readme = wordwrap($readme, 80, PHP_EOL);
 		file_put_contents(PTS_PATH . 'README.md', $readme);
 
-		// Phoromatic Documentation
-		$pdf = new pts_pdf_template(pts_core::program_title(false), 'Phoromatic Documentation');
-		$html_doc = new pts_html_template(pts_core::program_title(false), 'Phoromatic Documentation');
-
-		$pdf->AddPage();
-		$pdf->Image(PTS_CORE_STATIC_PATH . 'images/pts-308x160.png', 69, 85, 73, 38, 'PNG', 'https://www.phoronix-test-suite.com/');
-		$pdf->Ln(120);
-		$pdf->WriteStatement('www.phoronix-test-suite.com', 'C', 'https://www.phoronix-test-suite.com/');
-		$pdf->Ln(15);
-		$pdf->Image(PTS_CORE_STATIC_PATH . 'images/phoromatic-390x56.png', 55, 250, 0, 0, 'PNG', 'https://www.phoronix-test-suite.com/');
-		//$pdf->Image(PTS_CORE_STATIC_PATH . 'images/phoromatic-390x56.png', 69, 85, 73, 38, 'PNG', 'https://www.phoromatic.com/');
-		$pdf->WriteBigHeaderCenter(pts_core::program_title(true));
-		$pdf->WriteHeaderCenter('Phoromatic User Manual');
-		$pdf->html_to_pdf(PTS_PATH . 'documentation/phoromatic.html');
-		$pdf_file = PTS_PATH . 'documentation/phoromatic.pdf';
-		$pdf->Output($pdf_file);
-
-		echo PHP_EOL . 'Saved To: ' . $pdf_file . PHP_EOL . PHP_EOL;
-
-		$md = new pts_md_template();
-		$md->html_to_md(PTS_PATH . 'documentation/phoromatic.html');
-		$md->Output(PTS_PATH . 'documentation/phoromatic.md');
-
-		$md = new pts_md_template();
-		$md->html_to_md(PTS_PATH . 'documentation/phoronix-test-suite-windows.html');
-		$md->Output(PTS_PATH . 'documentation/phoronix-test-suite-window.md');
+		//$md = new pts_md_template();
+		//$md->html_to_md(PTS_PATH . 'documentation/phoronix-test-suite-windows.html');
+		//$md->Output(PTS_PATH . 'documentation/phoronix-test-suite-window.md');
 
 	}
 }
