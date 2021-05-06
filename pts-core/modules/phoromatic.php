@@ -1017,7 +1017,7 @@ class phoromatic extends pts_module_interface
 			$env_vars['PHOROMATIC_SCHEDULE_ID'] = $schedule_id;
 			$env_vars['PHOROMATIC_SCHEDULE_PROCESS'] = $process;
 			$env_vars['PHOROMATIC_LOG_FILE'] = $notes_log_file;
-			$log_output = pts_client::shell_exec('./' . $context_script . ' ' . $trigger . ' 2>&1', $env_vars);
+			$log_output = pts_client::shell_exec($context_file . ' ' . $trigger . ' 2>&1', $env_vars);
 			self::check_user_context_log($trigger, $schedule_id, $process, $notes_log_file, $log_output);
 
 			// Just simply return true for now, perhaps check exit code status and do something
