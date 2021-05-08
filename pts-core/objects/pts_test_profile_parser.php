@@ -257,6 +257,10 @@ class pts_test_profile_parser
 	{
 		return $this->xg('TestProfile/ProjectURL');
 	}
+	public function get_repo_url()
+	{
+		return $this->xg('TestProfile/RepositoryURL');
+	}
 	public function get_description()
 	{
 		return $this->xg('TestInformation/Description');
