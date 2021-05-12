@@ -3,8 +3,8 @@
 <xs:annotation>
 	<xs:documentation xml:lang="en">
 		Phoronix Test Suite / OpenBenchmarking.org XML Test Profile Specification
-		Copyright (C) 2008 - 2020, Phoronix Media
-		Copyright (C) 2008 - 2020, Michael Larabel
+		Copyright (C) 2008 - 2021, Phoronix Media
+		Copyright (C) 2008 - 2021, Michael Larabel
 	</xs:documentation>
 </xs:annotation>
 <xs:include schemaLocation="types.xsd" />
@@ -377,6 +377,16 @@
 						<default></default>
 					</xs:appinfo>
 					<xs:documentation>ProjectURL allows for an informational URL for indicating the upstream software under test if the user would like to learn more about the program/application/software.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RepositoryURL" type="URLString" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_repo_url</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
+					<xs:documentation>RepositoryURL allows specifying the URL of the project's Git/SVN/source repository for the software under test if different from the ProjectURL. E.g. the GitHub source site versus project site.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="RequiresCoreVersionMin" type="CoreVersion" minOccurs="0" maxOccurs="1">

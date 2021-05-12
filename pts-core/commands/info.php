@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2020, Phoronix Media
-	Copyright (C) 2008 - 2020, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -95,6 +95,10 @@ class info implements pts_option_interface
 				$table[] = array(pts_client::cli_just_bold('Test Status: '), $o->get_status());
 				$table[] = array(pts_client::cli_just_bold('Supported Platforms: '), implode(', ', $o->get_supported_platforms()));
 				$table[] = array(pts_client::cli_just_bold('Project Web-Site: '), $o->get_project_url());
+				if($o->get_repo_url())
+				{
+					$table[] = array(pts_client::cli_just_bold('Source Repository Location: '), $o->get_repo_url());
+				}
 
 				if($o->get_estimated_run_time() > 1)
 				{
