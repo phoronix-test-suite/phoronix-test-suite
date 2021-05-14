@@ -10,6 +10,7 @@ pts-core: Add PTS_EXTRA_SYSTEM_LOGS_DIR environment variable to allow pointing t
 pts-core: Add RepositoryURL option for test profiles
 phodevi: Intel Linux graphics string reporting improvement
 phoromatic: Treat set context scripts as a file rather than executing it as a buffer
+phodevi: Add some new properties, port some pts_network info to phodevi interfaces
 system_monitor: Adjust perf-per precision
 
 Phoronix Test Suite 10.4.0 Milestone 1

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014 - 2020, Phoronix Media
-	Copyright (C) 2014 - 2020, Michael Larabel
+	Copyright (C) 2014 - 2021, Phoronix Media
+	Copyright (C) 2014 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -138,7 +138,7 @@ class start_phoromatic_server implements pts_option_interface
 		$pts_logger = new pts_logger();
 		$pts_logger->clear_log();
 		echo pts_core::program_title(true) . ' starting Phoromatic Server' . PHP_EOL;
-		$pts_logger->log(pts_core::program_title(true) . ' starting Phoromatic Server on ' . pts_network::get_local_ip());
+		$pts_logger->log(pts_core::program_title(true) . ' starting Phoromatic Server on ' . phodevi::read_property('network', 'ip'));
 
 		echo 'Phoronix Test Suite User-Data Directory Path: ' . PTS_USER_PATH . PHP_EOL;
 		echo 'Phoronix Test Suite Configuration File: ' . pts_config::get_config_file_location() . PHP_EOL;
@@ -267,7 +267,7 @@ class start_phoromatic_server implements pts_option_interface
 		// Zeroconf via OpenBenchmarking.org
 		if(pts_config::read_user_config('PhoronixTestSuite/Options/Server/AdvertiseServiceOpenBenchmarkRelay', 'TRUE') && pts_network::internet_support_available())
 		{
-			pts_openbenchmarking::make_openbenchmarking_request('phoromatic_server_relay', array('local_ip' => pts_network::get_local_ip(), 'local_port' => $web_port));
+			pts_openbenchmarking::make_openbenchmarking_request('phoromatic_server_relay', array('local_ip' => phodevi::read_property('network', 'ip'), 'local_port' => $web_port));
 		}
 
 		// Wait for input to shutdown process..

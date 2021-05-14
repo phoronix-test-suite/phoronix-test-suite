@@ -35,7 +35,22 @@ class dump_phodevi_properties implements pts_option_interface
 
 				if(is_array($value))
 				{
-					var_dump($value);
+					foreach($value as $si => $sv)
+					{
+						if(is_array($sv))
+						{
+							foreach($sv as $ssi => $ssv)
+							{
+								echo PHP_EOL . '          ' . $ssi . ' = ' . $ssv;
+							}
+							echo PHP_EOL;
+						}
+						else
+						{
+							echo PHP_EOL . '          ' . $sv . ' = ' . $sv . PHP_EOL;
+						}
+						//echo PHP_EOL;
+					}
 /*					echo PHP_EOL;
 					foreach($value as $i => $j)
 						echo '         ' . $i . ' = ' . $j . PHP_EOL; */
