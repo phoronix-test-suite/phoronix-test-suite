@@ -363,9 +363,10 @@ class phoromatic_server
 				self::$db->exec('PRAGMA synchronous = NORMAL');
 				self::$db->exec('PRAGMA user_version = 38');
 			case 38:
+			case 39:
 				// Change made 15 May 2021
-				self::$db->exec('ALTER TABLE phoromatic_results_systems ADD COLUMN SystemProperties TEXT');
-				self::$db->exec('PRAGMA user_version = 39');
+				self::$db->exec('ALTER TABLE phoromatic_systems ADD COLUMN SystemProperties TEXT');
+				self::$db->exec('PRAGMA user_version = 40');
 		}
 		chmod($db_file, 0600);
 		if(!defined('PHOROMATIC_DB_INIT'))
