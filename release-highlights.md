@@ -1,5 +1,10 @@
 # Phoronix Test Suite Release History
 
+Phoronix Test Suite 10.4
+======
+#### Release Date: 16 May 2021 | Codename: Ibestad
+* Various optimizations and enhancements
+
 Phoronix Test Suite 10.2
 ======
 #### Release Date: 5 January 2021 | Codename: Harstad
