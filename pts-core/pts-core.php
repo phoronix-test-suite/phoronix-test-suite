@@ -301,9 +301,9 @@ function pts_version_codenames()
 		);
 }
 
-pts_define('PTS_VERSION', '10.4.0m1');
-pts_define('PTS_CORE_VERSION', 10311);
-pts_define('PTS_RELEASE_DATE', '20210317');
+pts_define('PTS_VERSION', '10.4.0');
+pts_define('PTS_CORE_VERSION', 10400);
+pts_define('PTS_RELEASE_DATE', '20210516');
 pts_define('PTS_CODENAME', 'Ibestad');
 
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));

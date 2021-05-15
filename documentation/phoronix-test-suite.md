@@ -45,6 +45,9 @@ A simple text-driven shell interface / helper to the Phoronix Test Suite. Ideal 
 #### system-info
 Display the installed system hardware and software information as detected by the Phoronix Test Suite Phodevi Library.
 
+#### system-properties
+Display various hardware/software system properties detected by the Phoronix Device Interface (Phodevi) library.
+
 #### system-sensors
 Display the installed system hardware and software sensors in real-time as detected by the Phoronix Test Suite Phodevi Library.
 
