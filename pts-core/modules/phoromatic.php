@@ -288,6 +288,7 @@ class phoromatic extends pts_module_interface
 		$to_post['nw'] = implode(', ', pts_network::get_network_wol());
 		$to_post['s'] = phodevi::system_software(true);
 		$to_post['n'] = phodevi::read_property('system', 'hostname');
+		$to_post['pp'] = json_encode(phodevi::read_all_properties());
 		$to_post['msi'] = PTS_MACHINE_SELF_ID;
 		return pts_network::http_upload_via_post('http://' . $server_address . ':' . $server_http_port .  '/phoromatic.php', $to_post, false);
 	}

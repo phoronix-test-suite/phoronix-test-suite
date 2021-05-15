@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -234,6 +234,46 @@ class phoromatic_systems implements pts_webui_interface
 				$main .= pts_webui::r2d_array_to_table($components) . '</div><div style="float: left; width: 50%;">';
 				$components = pts_result_file_analyzer::system_component_string_to_array($row['Software']);
 				$main .= pts_webui::r2d_array_to_table($components) . '</div>';
+
+				if(!empty($row['SystemProperties']))
+				{
+					$properties = json_decode($row['SystemProperties'], true);
+					$main .= '<blockquote style="max-height: 400px;">';
+					foreach($properties as $component => $component_properties)
+					{
+						$main .= '<strong>' . strtoupper($component) . '</strong><br />';
+						foreach($component_properties as $property => $value)
+						{
+							$main .= '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . $property . ' = ';
+
+							if(is_array($value))
+							{
+								foreach($value as $si => $sv)
+								{
+									if(is_array($sv))
+									{
+										foreach($sv as $ssi => $ssv)
+										{
+											$main .= '<br />' . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . $ssi . ' = ' . $ssv;
+										}
+										$main .= '<br />';
+									}
+									else
+									{
+										$main .= '<br />' . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . $sv . ' = ' . $sv . PHP_EOL;
+									}
+									//echo PHP_EOL;
+								}
+							}
+							else
+							{
+								$main .= $value . '<br />';
+							}
+						}
+						$main .= '<br />';
+					}
+					$main .= '</blockquote>';
+				}
 
 				$system_path = phoromatic_server::phoromatic_account_system_path($_SESSION['AccountID'], $row['SystemID']);
 				$main .= '<hr />';
