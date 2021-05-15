@@ -383,6 +383,20 @@ class phodevi_cpu extends phodevi_device_interface
 		{
 			$ucode_version = self::read_cpuinfo_line('microcode');
 		}
+		else if(phodevi::is_windows())
+		{
+			$reg = shell_exec('reg query HKLM\HARDWARE\DESCRIPTION\System\CentralProcessor\0');
+			if(($x = strpos($reg, 'Update Revision')) !== false)
+			{
+				$reg = substr($reg, $x);
+				$reg = substr($reg, 0, strpos($reg, "\n"));
+				$ucode = substr($reg, strrpos($reg, ' '));
+				if(is_numeric($ucode))
+				{
+					$ucode_version = $ucode;
+				}
+			}
+		}
 
 		if(empty($ucode_version) && phodevi::is_macos())
 		{

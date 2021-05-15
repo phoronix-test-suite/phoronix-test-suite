@@ -53,6 +53,18 @@ class phodevi_motherboard extends phodevi_device_interface
 				$status = 'Disabled';
 			}
 		}
+		else if(phodevi::is_windows())
+		{
+			$confirm = shell_exec('powershell "Confirm-SecureBootUEFI"');
+			if(strpos($confirm, 'True') !== false)
+			{
+				$status = 'Enabled';
+			}
+			else if(strpos($confirm, 'False') !== false)
+			{
+				$status = 'Disabled';
+			}
+		}
 
 		return $status;
 	}
@@ -69,6 +81,18 @@ class phodevi_motherboard extends phodevi_device_interface
 			else
 			{
 				$boot_mode = 'EFI';
+			}
+		}
+		else if(phodevi::is_windows())
+		{
+			$bcdedit = shell_exec('bcdedit');
+			if(strpos($bcdedit, '.efi') !== false)
+			{
+				$boot_mode = 'EFI';
+			}
+			else if(strpos($bcdedit, 'path') !== false)
+			{
+				$boot_mode = 'Legacy BIOS';
 			}
 		}
 

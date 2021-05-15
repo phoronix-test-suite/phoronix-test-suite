@@ -96,13 +96,26 @@ class phodevi_disk extends phodevi_device_interface
 	{
 		$path = PTS_IS_CLIENT ? pts_client::test_install_root_path() : '.';
 		$block_size = -1;
-		if(PTS_IS_CLIENT && pts_client::executable_in_path('stat'))
+		if(PTS_IS_CLIENT && pts_client::executable_in_path('stat') && !phodevi::is_windows())
 		{
 			$stat = trim(shell_exec('stat -f -c %S ' . $path));
 
 			if(is_numeric($stat) && $stat > 0)
 			{
 				$block_size = $stat;
+			}
+		}
+		else if(phodevi::is_windows())
+		{
+			$wmi = shell_exec('powershell "Get-WmiObject -Class Win32_Volume | Select-Object DriveLetter, BlockSize"');
+			if(($x = strpos($wmi, 'C:')) !== false)
+			{
+				$wmi = substr($wmi, ($x + 3));
+				$wmi = trim(substr($wmi, 0, strpos($wmi, "\n")));
+				if(is_numeric($wmi))
+				{
+					$block_size = $wmi;
+				}
 			}
 		}
 
