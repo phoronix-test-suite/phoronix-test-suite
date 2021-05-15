@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Helsing</Title>
+    <AppVersion>1.0-beta</AppVersion>
+    <Description>Helsing is an open-source POSIX vampire number generator. This test profile measures the time it takes to generate vampire numbers between varying numbers of digits.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.2</Version>
+    <SupportedPlatforms>Linux, BSD, MacOSX, Solaris</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>1</EnvironmentSize>
+    <ProjectURL>https://github.com/plerros/helsing/</ProjectURL>
+    <Maintainer>Pierro Zachareas</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Digit Range</DisplayName>
+      <Identifier>digitrange</Identifier>
+      <Menu>
+        <Entry>
+          <Name>12 digit</Name>
+          <Value>100000000000 999999999999</Value>
+        </Entry>
+        <Entry>
+          <Name>14 digit</Name>
+          <Value>10000000000000 99999999999999</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

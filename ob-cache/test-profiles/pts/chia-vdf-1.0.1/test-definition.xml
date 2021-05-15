@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Chia Blockchain VDF</Title>
+    <AppVersion>1.0.1</AppVersion>
+    <Description>Chia is a blockchain and smart transaction platform based on proofs of space and time rather than proofs of work with other cryptocurrencies. This test profile is benchmarking the CPU performance for Chia VDF performance using the Chia VDF benchmark. The Chia VDF is for the Chia Verifiable Delay Function (Proof of Time).</Description>
+    <ResultScale>IPS</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>cmake, build-utilities, gmp-library, python, boost-development</ExternalDependencies>
+    <EnvironmentSize>33</EnvironmentSize>
+    <ProjectURL>https://www.chia.net/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>Test</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Square Plain C++</Name>
+          <Value>square</Value>
+        </Entry>
+        <Entry>
+          <Name>Square Assembly Optimized</Name>
+          <Value>square_asm</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

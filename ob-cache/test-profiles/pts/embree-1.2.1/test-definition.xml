@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Embree</Title>
+    <AppVersion>3.13</AppVersion>
+    <Description>Intel Embree is a collection of high-performance ray-tracing kernels for execution on CPUs and supporting instruction sets such as SSE, AVX, AVX2, and AVX-512. Embree also supports making use of the Intel SPMD Program Compiler (ISPC).</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.1</Version>
+    <SupportedPlatforms>Linux, Windows, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <ExternalDependencies>glfw</ExternalDependencies>
+    <EnvironmentSize>1400</EnvironmentSize>
+    <ProjectURL>http://www.embree.org/</ProjectURL>
+    <RepositoryURL>https://github.com/embree/embree</RepositoryURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <PostArguments> --benchmark 20 600</PostArguments>
+    </Default>
+    <Option>
+      <DisplayName>Binary</DisplayName>
+      <Identifier>bin</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Pathtracer</Name>
+          <Value>pathtracer</Value>
+        </Entry>
+        <Entry>
+          <Name>Pathtracer ISPC</Name>
+          <Value>pathtracer_ispc</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Model</DisplayName>
+      <Identifier>model</Identifier>
+      <ArgumentPrefix>-c </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>Asian Dragon</Name>
+          <Value>asian_dragon/asian_dragon.ecs</Value>
+        </Entry>
+        <Entry>
+          <Name>Asian Dragon Obj</Name>
+          <Value>asian_dragon_obj/asian_dragon.ecs</Value>
+        </Entry>
+        <Entry>
+          <Name>Crown</Name>
+          <Value>crown/crown.ecs</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

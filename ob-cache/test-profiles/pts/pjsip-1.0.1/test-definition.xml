@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>PJSIP</Title>
+    <AppVersion>2.11</AppVersion>
+    <Description>PJSIP is a free and open source multimedia communication library written in C language implementing standard based protocols such as SIP, SDP, RTP, STUN, TURN, and ICE. It combines signaling protocol (SIP) with rich multimedia framework and NAT traversal functionality into high level API that is portable and suitable for almost any type of systems ranging from desktops, embedded systems, to mobile handsets. This test profile is making use of pjsip-perf with both the client/server on teh system. More details on the PJSIP benchmark at https://www.pjsip.org/high-performance-sip.htm</Description>
+    <ResultScale>Responses Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>287</EnvironmentSize>
+    <ProjectURL>https://www.pjsip.org/</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Method</DisplayName>
+      <Identifier>method</Identifier>
+      <Menu>
+        <Entry>
+          <Name>OPTIONS, Stateful</Name>
+          <Value>--method=OPTIONS 'sip:1@127.0.0.1'</Value>
+        </Entry>
+        <Entry>
+          <Name>OPTIONS, Stateless</Name>
+          <Value>--method=OPTIONS --stateless 'sip:0@127.0.0.1'</Value>
+        </Entry>
+        <Entry>
+          <Name>INVITE</Name>
+          <Value>--method=INVITE 'sip:2@127.0.0.1'</Value>
+          <Message>Call Performance</Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>
