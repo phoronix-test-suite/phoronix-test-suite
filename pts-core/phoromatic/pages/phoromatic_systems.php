@@ -238,7 +238,7 @@ class phoromatic_systems implements pts_webui_interface
 				if(!empty($row['SystemProperties']))
 				{
 					$properties = json_decode($row['SystemProperties'], true);
-					$main .= '<blockquote style="max-height: 400px;">';
+					$main .= '<blockquote style="max-height: 440px; overflow: scroll; clear: both;">';
 					foreach($properties as $component => $component_properties)
 					{
 						$main .= '<strong>' . strtoupper($component) . '</strong><br />';
