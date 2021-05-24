@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/rwesson/NEAT/archive/refs/tags/v2.3.tar.gz</URL>
+      <MD5>5ff6715f342170a68d3b8f57211393b7</MD5>
+      <SHA256>89fc4d9576585a7bae9fc7cd14d4e7e6cc0305f248d220081125adf1cb5dbe78</SHA256>
+      <FileName>NEAT-2.3.tar.gz</FileName>
+      <FileSize>860886</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>time to decode input: 171277355 us (8929 frames, #_RESULT_# fps)</OutputTemplate>
+    <LineHint>fps</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

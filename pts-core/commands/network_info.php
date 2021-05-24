@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2016 - 2018, Phoronix Media
-	Copyright (C) 2016 - 2018, Michael Larabel
+	Copyright (C) 2016 - 2021, Phoronix Media
+	Copyright (C) 2016 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -28,9 +28,9 @@ class network_info implements pts_option_interface
 	public static function run($r)
 	{
 		$table = array();
-		$table[] = array('Local IP:', pts_network::get_local_ip());
-		$table[] = array('Interface:', pts_network::get_active_network_interface());
-		$table[] = array('Network MAC: ', pts_network::get_network_mac());
+		$table[] = array('Local IP:', phodevi::read_property('network', 'ip'));
+		$table[] = array('Interface:', phodevi::read_property('network', 'active-network-interface'));
+		$table[] = array('Network MAC: ', phodevi::read_property('network', 'mac-address'));
 		$table[] = array('Wake On LAN: ', implode(' ', pts_network::get_network_wol()));
 
 		if(pts_network::get_network_proxy() != false)

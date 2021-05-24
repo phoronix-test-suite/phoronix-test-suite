@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014 - 2018, Phoronix Media
-	Copyright (C) 2014 - 2018, Michael Larabel
+	Copyright (C) 2014 - 2021, Phoronix Media
+	Copyright (C) 2014 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -362,6 +362,11 @@ class phoromatic_server
 				self::$db->exec('PRAGMA journal_mode = WAL');
 				self::$db->exec('PRAGMA synchronous = NORMAL');
 				self::$db->exec('PRAGMA user_version = 38');
+			case 38:
+			case 39:
+				// Change made 15 May 2021
+				self::$db->exec('ALTER TABLE phoromatic_systems ADD COLUMN SystemProperties TEXT');
+				self::$db->exec('PRAGMA user_version = 40');
 		}
 		chmod($db_file, 0600);
 		if(!defined('PHOROMATIC_DB_INIT'))

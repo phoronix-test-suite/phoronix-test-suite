@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>GROMACS</Title>
+    <AppVersion>2020.3</AppVersion>
+    <Description>The CUDA version of the Gromacs molecular dynamics package.</Description>
+    <ResultScale>Ns Per Day</ResultScale>
+    <Proportion>HIB</Proportion>
+    <SubTitle>Water Benchmark</SubTitle>
+    <TimesToRun>3</TimesToRun>
+    <PreInstallMessage>The pts/gromacs-gpu test profile has been replaced by pts/gromacs that now has the GPU/CUDA support exposed as a run-time option rather than being maintained as a separate test profile.</PreInstallMessage>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Deprecated</Status>
+    <ExternalDependencies>build-utilities, cuda, cmake</ExternalDependencies>
+    <EnvironmentSize>1100</EnvironmentSize>
+    <ProjectURL>http://www.gromacs.org/</ProjectURL>
+    <InternalTags>CUDA</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

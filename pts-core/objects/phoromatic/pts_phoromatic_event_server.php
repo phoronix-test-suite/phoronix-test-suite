@@ -198,7 +198,7 @@ class pts_phoromatic_event_server
 				// Zeroconf via OpenBenchmarking.org
 				if(pts_config::read_user_config('PhoronixTestSuite/Options/Server/AdvertiseServiceOpenBenchmarkRelay', 'TRUE') && pts_network::internet_support_available())
 				{
-					pts_openbenchmarking::make_openbenchmarking_request('phoromatic_server_relay', array('local_ip' => pts_network::get_local_ip(), 'local_port' => getenv('PTS_WEB_PORT')));
+					pts_openbenchmarking::make_openbenchmarking_request('phoromatic_server_relay', array('local_ip' => phodevi::read_property('network', 'ip'), 'local_port' => getenv('PTS_WEB_PORT')));
 				}
 			}
 			phoromatic_server::close_database();

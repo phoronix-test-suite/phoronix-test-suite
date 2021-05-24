@@ -57,7 +57,8 @@ class phodevi_system extends phodevi_device_interface
 			'system-layer' => new phodevi_device_property('sw_system_layer', phodevi::no_caching),
 			'environment-variables' => new phodevi_device_property('sw_environment_variables', phodevi::std_caching),
 			'security-features' => new phodevi_device_property('sw_security_features', phodevi::std_caching),
-			'kernel-extra-details' => new phodevi_device_property('sw_kernel_extra_details', phodevi::std_caching)
+			'kernel-extra-details' => new phodevi_device_property('sw_kernel_extra_details', phodevi::std_caching),
+			'battery' => new phodevi_device_property('battery', phodevi::smart_caching),
 			);
 	}
 	public static function sw_username()
@@ -2094,6 +2095,25 @@ class phodevi_system extends phodevi_device_interface
 		}
 
 		return $wine_version;
+	}
+	public static function battery()
+	{
+		$batteries = array();
+		if(phodevi::is_linux())
+		{
+			foreach(pts_file_io::glob('/sys/class/power_supply/BAT*/model_name') as $bat_path)
+			{
+				$bat_model = pts_file_io::file_get_contents($bat_path);
+				$bat_dir = dirname($bat_path);
+				$bat_manufacturer = is_file($bat_dir . '/manufacturer') ? pts_file_io::file_get_contents($bat_dir . '/manufacturer') : null;
+				if(!empty($bat_model))
+				{
+					$batteries[] = trim($bat_manufacturer . ' ' . $bat_model);
+				}
+			}
+		}
+
+		return implode(' + ', $batteries);
 	}
 }
 

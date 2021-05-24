@@ -875,7 +875,7 @@ class pts_client
 				$binary_ns .= chr(hexdec($ns[$i] . $ns[$i + 1]));
 			}
 
-			$msi_hash = sha1($binary_ns . uniqid(PTS_CORE_VERSION, true) . getenv('USERNAME') . getenv('USER') . getenv('HOSTNAME') . pts_network::get_local_ip());
+			$msi_hash = sha1($binary_ns . uniqid(PTS_CORE_VERSION, true) . getenv('USERNAME') . getenv('USER') . getenv('HOSTNAME') . phodevi::read_property('network', 'ip'));
 
 			$machine_self_id = sprintf('%08s-%04s-%04x-%04x-%12s', substr($msi_hash, 0, 8), substr($msi_hash, 8, 4), (hexdec(substr($msi_hash, 12, 4)) & 0x0fff) | 0x5000, (hexdec(substr($msi_hash, 16, 4)) & 0x3fff) | 0x8000, substr($msi_hash, 20, 12));
 			// machine_self_id is self-generated unique name for Phoromatic/OB purposes in UUIDv5 format
@@ -983,7 +983,7 @@ class pts_client
 
 			foreach(self::$phoromatic_servers as $server)
 			{
-				if(pts_network::get_local_ip() != $server['ip'])
+				if(phodevi::read_property('network', 'ip') != $server['ip'])
 				{
 					$possible_servers[] = array($server['ip'], $server['http_port']);
 				}
@@ -1018,7 +1018,7 @@ class pts_client
 				$ob_relay = pts_openbenchmarking::possible_phoromatic_servers();
 				foreach($ob_relay as $s)
 				{
-					$local_ip = pts_network::get_local_ip();
+					$local_ip = phodevi::read_property('network', 'ip');
 					$local_ip_segments = explode('.', $local_ip);
 					$s_segments = explode('.', $s[0]);
 
@@ -1034,7 +1034,7 @@ class pts_client
 				// possible_server[0] is the Phoromatic Server IP
 				// possible_server[1] is the Phoromatic Server HTTP PORT
 
-				if(in_array($possible_server[0], array_keys($phoromatic_servers)) || pts_network::get_local_ip() ==  $possible_server[0])
+				if(in_array($possible_server[0], array_keys($phoromatic_servers)) || phodevi::read_property('network', 'ip') ==  $possible_server[0])
 				{
 					continue;
 				}

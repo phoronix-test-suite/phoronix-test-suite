@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2016, Phoronix Media
-	Copyright (C) 2009 - 2016, Michael Larabel
+	Copyright (C) 2009 - 2021, Phoronix Media
+	Copyright (C) 2009 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -42,6 +42,7 @@ $environmental_variables = array(
 	'pts_core' => 'CLIENT_CORE_VERSION',
 	'h' => 'CLIENT_HARDWARE',
 	's' => 'CLIENT_SOFTWARE',
+	'pp' => 'PHODEVI_PROPERTIES',
 	'i' => 'ID',
 	'o' => 'OTHER',
 	'nm' => 'NETWORK_CLIENT_MAC',
@@ -182,11 +183,12 @@ if(empty($result))
 		$matching_system = phoromatic_server::$db->querySingle('SELECT AccountID FROM phoromatic_systems WHERE SystemID = \'' . $system_id . '\'');
 	}
 	while(!empty($matching_system));
-	$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_systems (AccountID, SystemID, Hardware, Software, ClientVersion, GSID, CurrentTask, CreatedOn, LastCommunication, LastIP, LocalIP, Title, State, MachineSelfID, CoreVersion, NetworkMAC) VALUES (:account_id, :system_id, :client_hardware, :client_software, :client_version, :gsid, :current_task, :current_time, :current_time, :access_ip, :local_ip, :title, :preset_state, :machine_self_id, :core_version, :network_mac)');
+	$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_systems (AccountID, SystemID, Hardware, Software, SystemProperties, ClientVersion, GSID, CurrentTask, CreatedOn, LastCommunication, LastIP, LocalIP, Title, State, MachineSelfID, CoreVersion, NetworkMAC) VALUES (:account_id, :system_id, :client_hardware, :client_software, :phodevi_properties, :client_version, :gsid, :current_task, :current_time, :current_time, :access_ip, :local_ip, :title, :preset_state, :machine_self_id, :core_version, :network_mac)');
 	$stmt->bindValue(':account_id', ACCOUNT_ID);
 	$stmt->bindValue(':system_id', $system_id);
 	$stmt->bindValue(':client_hardware', $CLIENT_HARDWARE);
 	$stmt->bindValue(':client_software', $CLIENT_SOFTWARE);
+	$stmt->bindValue(':phodevi_properties', $PHODEVI_PROPERTIES);
 	$stmt->bindValue(':client_version', $CLIENT_VERSION);
 	$stmt->bindValue(':gsid', $GSID);
 	$stmt->bindValue(':access_ip', $_SERVER['REMOTE_ADDR']);
@@ -237,11 +239,12 @@ define('SYSTEM_IN_MAINTENANCE_MODE', ($result['MaintenanceMode'] == 1));
 if(strtotime($result['LastCommunication']) < (time() - 300))
 {
 	// Avoid useless updates to the database if it's close to the same info in past 2 minutes
-	$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET LastIP = :access_ip, LocalIP = :local_ip, LastCommunication = :current_time, Hardware = :client_hardware, Software = :client_software, ClientVersion = :client_version, MachineSelfID = :machine_self_id, NetworkMAC = :network_mac, NetworkWakeOnLAN = :network_wol, CoreVersion = :core_version WHERE AccountID = :account_id AND SystemID = :system_id');
+	$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET LastIP = :access_ip, LocalIP = :local_ip, LastCommunication = :current_time, Hardware = :client_hardware, Software = :client_software, SystemProperties = :phodevi_properties, ClientVersion = :client_version, MachineSelfID = :machine_self_id, NetworkMAC = :network_mac, NetworkWakeOnLAN = :network_wol, CoreVersion = :core_version WHERE AccountID = :account_id AND SystemID = :system_id');
 	$stmt->bindValue(':account_id', $ACCOUNT_ID);
 	$stmt->bindValue(':system_id', SYSTEM_ID);
 	$stmt->bindValue(':client_hardware', $CLIENT_HARDWARE);
 	$stmt->bindValue(':client_software', $CLIENT_SOFTWARE);
+	$stmt->bindValue(':phodevi_properties', $PHODEVI_PROPERTIES);
 	$stmt->bindValue(':client_version', $CLIENT_VERSION);
 	$stmt->bindValue(':core_version', $CLIENT_CORE_VERSION);
 	$stmt->bindValue(':access_ip', $_SERVER['REMOTE_ADDR']);

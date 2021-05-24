@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2018, Phoronix Media
-	Copyright (C) 2018, Michael Larabel
+	Copyright (C) 2018 - 2021, Phoronix Media
+	Copyright (C) 2018 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -20,8 +20,11 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-class dump_phodevi_properties implements pts_option_interface
+class system_properties implements pts_option_interface
 {
+	const doc_section = 'System';
+	const doc_description = 'Display various hardware/software system properties detected by the Phoronix Device Interface (Phodevi) library.';
+
 	public static function run($r)
 	{
 		$properties = phodevi::read_all_properties();
@@ -35,7 +38,22 @@ class dump_phodevi_properties implements pts_option_interface
 
 				if(is_array($value))
 				{
-					var_dump($value);
+					foreach($value as $si => $sv)
+					{
+						if(is_array($sv))
+						{
+							foreach($sv as $ssi => $ssv)
+							{
+								echo PHP_EOL . '          ' . $ssi . ' = ' . $ssv;
+							}
+							echo PHP_EOL;
+						}
+						else
+						{
+							echo PHP_EOL . '          ' . $sv . ' = ' . $sv . PHP_EOL;
+						}
+						//echo PHP_EOL;
+					}
 /*					echo PHP_EOL;
 					foreach($value as $i => $j)
 						echo '         ' . $i . ' = ' . $j . PHP_EOL; */

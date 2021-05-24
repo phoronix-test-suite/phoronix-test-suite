@@ -282,12 +282,13 @@ class phoromatic extends pts_module_interface
 		$to_post['pts'] = PTS_VERSION;
 		$to_post['pts_core'] = PTS_CORE_VERSION;
 		$to_post['gsid'] = defined('PTS_GSID') ? PTS_GSID : null;
-		$to_post['lip'] = pts_network::get_local_ip();
+		$to_post['lip'] = phodevi::read_property('network', 'ip');
 		$to_post['h'] = phodevi::system_hardware(true);
-		$to_post['nm'] = pts_network::get_network_mac();
+		$to_post['nm'] = phodevi::read_property('network', 'mac-address');
 		$to_post['nw'] = implode(', ', pts_network::get_network_wol());
 		$to_post['s'] = phodevi::system_software(true);
 		$to_post['n'] = phodevi::read_property('system', 'hostname');
+		$to_post['pp'] = json_encode(phodevi::read_all_properties());
 		$to_post['msi'] = PTS_MACHINE_SELF_ID;
 		return pts_network::http_upload_via_post('http://' . $server_address . ':' . $server_http_port .  '/phoromatic.php', $to_post, false);
 	}

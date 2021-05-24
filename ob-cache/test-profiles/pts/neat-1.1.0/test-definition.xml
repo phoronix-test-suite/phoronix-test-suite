@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Nebular Empirical Analysis Tool</Title>
+    <AppVersion>2.3</AppVersion>
+    <Description>NEAT is the Nebular Empirical Analysis Tool for empirical analysis of ionised nebulae, with uncertainty propagation.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux, MacOSX, BSD</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, fortran-compiler</ExternalDependencies>
+    <EnvironmentSize>9</EnvironmentSize>
+    <ProjectURL>https://www.nebulousresearch.org/codes/neat/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>fitsio2.h</SystemDependencies>
+  </TestProfile>
+</PhoronixTestSuite>

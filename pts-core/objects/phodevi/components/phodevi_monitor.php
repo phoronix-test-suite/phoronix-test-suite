@@ -52,6 +52,14 @@ class phodevi_monitor extends phodevi_device_interface
 				$monitor = array($monitor);
 			}
 		}
+		else if(phodevi::is_windows())
+		{
+			$windows_monitor = trim(shell_exec('powershell "$((Get-WmiObject WmiMonitorID -Namespace root\wmi) | %{ $Name = $($_.UserFriendlyName -notmatch 0 | ForEach{[char]$_}) -join \"\"; Write-Output $Name }) -join \";\""'));
+			if(strpos($windows_monitor, ':') === false)
+			{
+				$monitor[] = $windows_monitor;
+			}
+		}
 		else if(phodevi::is_nvidia_graphics() && isset(phodevi::$vfs->xorg_log))
 		{
 			$log_parse = phodevi::$vfs->xorg_log;

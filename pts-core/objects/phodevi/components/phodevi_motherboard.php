@@ -31,8 +31,91 @@ class phodevi_motherboard extends phodevi_device_interface
 			'power-mode' => new phodevi_device_property('power_mode', phodevi::smart_caching),
 			'pci-devices' => new phodevi_device_property('pci_devices', phodevi::smart_caching),
 			'bios-version' => new phodevi_device_property('bios_version', phodevi::smart_caching),
-			'usb-devices' => new phodevi_device_property('usb_devices', phodevi::std_caching)
+			'secure-boot' => new phodevi_device_property('secure_boot', phodevi::smart_caching),
+			'boot-mode' => new phodevi_device_property('boot_mode', phodevi::smart_caching),
+			'tpm-devices' => new phodevi_device_property('tpm_devices', phodevi::smart_caching),
+			'usb-devices' => new phodevi_device_property('usb_devices', phodevi::std_caching),
 			);
+	}
+	public static function secure_boot()
+	{
+		$status = 'Unknown';
+
+		if(pts_client::executable_in_path('mokutil'))
+		{
+			$mokutil = shell_exec('mokutil --sb-state 2>&1');
+			if(stripos($mokutil, 'enabled') !== false)
+			{
+				$status = 'Enabled';
+			}
+			else if(stripos($mokutil, 'disabled') !== false)
+			{
+				$status = 'Disabled';
+			}
+		}
+		else if(phodevi::is_windows())
+		{
+			$confirm = shell_exec('powershell "Confirm-SecureBootUEFI"');
+			if(strpos($confirm, 'True') !== false)
+			{
+				$status = 'Enabled';
+			}
+			else if(strpos($confirm, 'False') !== false)
+			{
+				$status = 'Disabled';
+			}
+		}
+
+		return $status;
+	}
+	public static function boot_mode()
+	{
+		$boot_mode = 'Unknown';
+
+		if(phodevi::is_linux())
+		{
+			if(!is_dir('/sys/firmware/efi'))
+			{
+				$boot_mode = 'Legacy BIOS';
+			}
+			else
+			{
+				$boot_mode = 'EFI';
+			}
+		}
+		else if(phodevi::is_windows())
+		{
+			$bcdedit = shell_exec('bcdedit');
+			if(strpos($bcdedit, '.efi') !== false)
+			{
+				$boot_mode = 'EFI';
+			}
+			else if(strpos($bcdedit, 'path') !== false)
+			{
+				$boot_mode = 'Legacy BIOS';
+			}
+		}
+
+		return $boot_mode;
+	}
+	public static function tpm_devices()
+	{
+		$tpm = array();
+		if(phodevi::is_linux())
+		{
+			foreach(pts_file_io::glob('/sys/class/tpm/tpm*/device/description') as $tpm_desc)
+			{
+				$model = pts_file_io::file_get_contents($tpm_desc);
+				$dir = dirname($tpm_desc);
+				if(is_file($dir . '/hid'))
+				{
+					$model .= ' ' . pts_file_io::file_get_contents($dir . '/hid');
+				}
+				$tpm[] = $model;
+			}
+		}
+
+		return implode(' + ', $tpm);
 	}
 	public static function usb_devices()
 	{

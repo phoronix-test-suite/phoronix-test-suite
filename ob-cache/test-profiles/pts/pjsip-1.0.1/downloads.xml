@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/pjsip/pjproject/archive/refs/tags/2.11.tar.gz</URL>
+      <MD5>f0bea41f506ca2d6c86f49e3c5edf8f5</MD5>
+      <SHA256>c89b155a38daef6e92c8e1ae5c6895357fe5c5406dfdee2f3717962e21565f1c</SHA256>
+      <FileName>pjproject-2.11.tar.gz</FileName>
+      <FileSize>8968137</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

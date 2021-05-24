@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://eddylab.org/software/hmmer/hmmer-3.3.2.tar.gz</URL>
+      <MD5>ea03d88b4e8228a1dc6d84d56af27195</MD5>
+      <SHA256>92fee9b5efe37a5276352d3502775e7c46e9f7a0ee45a331eacb2a0cac713c69</SHA256>
+      <FileName>hmmer-3.3.2.tar.gz</FileName>
+      <FileSize>18213049</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/Pfam_ls.gz</URL>
+      <MD5>bcc3ea17f61eb22dc0d4375f79e0ced5</MD5>
+      <SHA256>8cee7f076530c743042e32fdbf32b816af4459f1ebf1cb39586928018c918c52</SHA256>
+      <FileName>Pfam_ls.gz</FileName>
+      <FileSize>83797216</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

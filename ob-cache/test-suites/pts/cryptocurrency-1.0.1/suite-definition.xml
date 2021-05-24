@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Cryptocurrency Benchmarks, CPU Mining Tests</Title>
+    <Version>1.0.1</Version>
+    <TestType>Processor</TestType>
+    <Description>This test suite consists of cryptocurrency benchmarks, primarily CPU mining test profiles for measuring the performance of various cryptocurrency algorithms.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/cpuminer-opt</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/xmrig</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/chia-vdf</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+</PhoronixTestSuite>

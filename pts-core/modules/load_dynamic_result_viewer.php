@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2019 - 2020, Phoronix Media
-	Copyright (C) 2019 - 2020, Michael Larabel
+	Copyright (C) 2019 - 2021, Phoronix Media
+	Copyright (C) 2019 - 2021, Michael Larabel
 	toggle_screensaver.php: A module to toggle the screensaver while tests are running on GNOME
 
 	This program is free software; you can redistribute it and/or modify
@@ -201,9 +201,9 @@ class load_dynamic_result_viewer extends pts_module_interface
 		pts_client::$web_result_viewer_active = $web_port;
 		pts_client::$web_result_viewer_access_key = $ak;
 
-		if(pts_network::get_local_ip() && !$access_limited_to_localhost)
+		if(($ip = phodevi::read_property('network', 'ip')) && !$access_limited_to_localhost)
 		{
-			echo pts_client::cli_just_bold('Result Viewer: http://' . pts_network::get_local_ip() . ':' . $web_port) . PHP_EOL;
+			echo pts_client::cli_just_bold('Result Viewer: http://' . $ip . ':' . $web_port) . PHP_EOL;
 			if(!empty($ak))
 			{
 				echo PHP_EOL . pts_client::cli_just_bold('Result Viewer Access Key: ' . $ak) . PHP_EOL;

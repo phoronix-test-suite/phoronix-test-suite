@@ -518,7 +518,7 @@ function phoromatic_web_socket_server_ip()
 
 	if($server_ip == 'localhost' || $server_ip == '0.0.0.0')
 	{
-		$local_ip = pts_network::get_local_ip();
+		$local_ip = phodevi::read_property('network', 'ip');
 		if($local_ip)
 		{
 			$server_ip = $local_ip;

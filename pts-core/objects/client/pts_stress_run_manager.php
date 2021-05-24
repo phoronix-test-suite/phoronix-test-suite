@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015 - 2020, Phoronix Media
-	Copyright (C) 2015 - 2020, Michael Larabel
+	Copyright (C) 2015 - 2021, Phoronix Media
+	Copyright (C) 2015 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -516,7 +516,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 		{
 			$report_buffer .= 'WAITING FOR CURRENT TEST RUN QUEUE TO FINISH.' . PHP_EOL;
 		}
-		$report_buffer .= pts_client::cli_just_bold('SYSTEM IP: ') . pts_network::get_local_ip() . PHP_EOL;
+		$report_buffer .= pts_client::cli_just_bold('SYSTEM IP: ') . phodevi::read_property('network', 'ip') . PHP_EOL;
 		$report_buffer .= pts_client::cli_just_bold('HOSTNAME: ') . phodevi::read_property('system', 'hostname') . PHP_EOL;
 		$report_buffer .= pts_client::cli_just_bold('# OF CONCURRENT TESTS: ') . $this->multi_test_stress_run . PHP_EOL . PHP_EOL;
 

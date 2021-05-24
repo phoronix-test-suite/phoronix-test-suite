@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/embree/models/releases/download/release/asian_dragon.zip</URL>
+      <FileName>asian_dragon.zip</FileName>
+      <FileSize>103961493</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/embree/models/releases/download/release/asian_dragon_obj.zip</URL>
+      <FileName>asian_dragon_obj.zip</FileName>
+      <FileSize>157616423</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/embree/models/releases/download/release/crown.zip</URL>
+      <FileName>crown.zip</FileName>
+      <FileSize>68853062</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/embree/embree/releases/download/v3.13.0/embree-3.13.0.x86_64.linux.tar.gz</URL>
+      <MD5>80e667ab1bbd2cb91a36bf280665a612</MD5>
+      <SHA256>22ff3fff6ba9f29dff7e8134a9e9434a7ea4497d259051ece7bec34391d4f0b7</SHA256>
+      <FileName>embree-3.13.0.x86_64.linux.tar.gz</FileName>
+      <FileSize>96162228</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/embree/embree/releases/download/v3.13.0/embree-3.13.0.x86_64.macosx.zip</URL>
+      <MD5>41db6f63d50365f099cb481cf95c57d0</MD5>
+      <SHA256>bd10cefae71c6ddea664d923a7b7a4d9f931c101d08ca03a542636f3513e159d</SHA256>
+      <FileName>embree-3.13.0.x86_64.macosx.zip</FileName>
+      <FileSize>123527096</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/embree/embree/releases/download/v3.13.0/embree-3.13.0.x64.vc14.windows.zip</URL>
+      <MD5>226304396bff87a34768e942e2c5011e</MD5>
+      <SHA256>3677cbb589edc4a1608ab66ed7c5e31ba2b24f7e4e133d553a551cfc198eb052</SHA256>
+      <FileName>embree-3.13.0.x64.vc14.windows.zip</FileName>
+      <FileSize>57789712</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -51,7 +51,21 @@ class phodevi_audio extends phodevi_device_interface
 		}
 		else if(phodevi::is_windows())
 		{
-			// TODO: implement
+			$win_sound = array();
+			$win32_sounddevice = shell_exec('powershell "(Get-WMIObject -Class win32_sounddevice | Select Name)"');
+			if(($x = strpos($win32_sounddevice, '----')) !== false)
+			{
+				$win32_sounddevice = trim(substr($win32_sounddevice, $x + 4));
+				foreach(explode("\n", $win32_sounddevice) as $sd)
+				{
+					if(!empty($sd))
+					{
+						$win_sound[] = $sd;
+					}
+				}
+			}
+			$win_sound = array_unique($win_sound);
+			$audio = implode(' + ', $win_sound);
 		}
 		else if(phodevi::is_linux())
 		{
