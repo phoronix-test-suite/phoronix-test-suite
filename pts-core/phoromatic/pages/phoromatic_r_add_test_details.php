@@ -72,7 +72,8 @@ class phoromatic_r_add_test_details implements pts_webui_interface
 
 				if($option_count == 0)
 				{
-					echo '<p><input type="text" name="' . $test_prefix . $o->get_identifier() . '" id="' . $test_prefix . $o->get_identifier() . '" /></p>';
+					echo '<input name="' . $test_prefix . $o->get_identifier() . '_selected" id="' . $test_prefix . $o->get_identifier() . '_selected" type="hidden" value="" />';
+					echo '<p><input type="text" name="' . $test_prefix . $o->get_identifier() . '" id="' . $test_prefix . $o->get_identifier() . '"  onChange="phoromatic_test_select_update_selected_name_custom_input(this);" /></p>';
 				}
 				else
 				{
