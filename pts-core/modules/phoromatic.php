@@ -581,7 +581,12 @@ class phoromatic extends pts_module_interface
 					}
 				}
 
-				switch(isset($json['phoromatic']['task']) ? $json['phoromatic']['task'] : null)
+				$task = isset($json['phoromatic']['task']) ? $json['phoromatic']['task'] : null;
+
+				if ($task != 'idle')
+					pts_client::$pts_logger->log("Received " . $json['phoromatic']['task'] . " command");
+
+				switch($task)
 				{
 					case 'install':
 						phoromatic::update_system_status('Installing Tests');
