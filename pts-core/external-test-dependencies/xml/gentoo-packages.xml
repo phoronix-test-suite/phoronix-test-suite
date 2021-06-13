@@ -24,7 +24,7 @@
 		</Package>
 		<Package>
 			<GenericName>vulkan-development</GenericName>
-			<PackageName>media-libs/vulkan-loder</PackageName>
+			<PackageName>media-libs/vulkan-loader</PackageName>
 		</Package>
 		<Package>
 			<GenericName>openssl-development</GenericName>
