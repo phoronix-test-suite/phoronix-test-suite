@@ -2444,7 +2444,8 @@ class pts_client
 						'file_get_contents',
 						'failed to connect',
 						'unable to connect',
-						'directory not empty'
+						'directory not empty',
+						'_lock', // likely multi-process issue, etc for unlinking lock
 						);
 
 					foreach($ignore_errors as $error_check)
