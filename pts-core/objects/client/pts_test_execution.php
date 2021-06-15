@@ -172,12 +172,17 @@ class pts_test_execution
 				{
 					if(!isset($find_log_file[0]) || empty($find_log_file[0]))
 					{
-						pts_test_result_parser::debug_message('No existing log file found for this test profile. Generate one by using the run/benchmark or debug-run commands.');
+						pts_test_result_parser::debug_message('No existing log file found for this test profile. Generate one by first trying the debug-run command.');
 						return false;
 					}
 
 					$test_log_file = $find_log_file[0];
 					pts_test_result_parser::debug_message('Log File: ' . $test_log_file);
+				}
+				else
+				{
+					pts_test_result_parser::debug_message('No existing log file found for this test profile. Generate one by first trying the debug-run command.');
+					return false;
 				}
 			}
 			else if(phodevi::is_windows() && strpos($test_directory, ' ') !== false)
