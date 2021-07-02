@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2018, Phoronix Media
-	Copyright (C) 2008 - 2018, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -175,6 +175,35 @@ class pts_file_io
 				}
 			}
 		}
+	}
+	public static function is_text_file($to_read)
+	{
+		$is_text_file = false;
+
+		if(is_file($to_read))
+		{
+			// Surprisingly some systems don't have mine_content_type()
+			if(function_exists('mime_content_type'))
+			{
+				$is_text_file = mime_content_type($to_read) == 'text/plain';
+			}
+			else if(function_exists('finfo_file'))
+			{
+				$finfo = finfo_open(FILEINFO_MIME_TYPE);
+				$is_text_file = strpos(finfo_file($finfo, $to_read), 'text') !== false;
+			}
+			else if(function_exists('ctype_print'))
+			{
+				$str_check = file_get_contents($to_read);
+				$str_check = str_replace("\t", '', $str_check);
+				$str_check = str_replace("\r", '', $str_check);
+				$str_check = str_replace("\n", '', $str_check);
+				$is_text_file = ctype_print($str_check);
+			}
+			// else the PHP install is rather hopeless...
+		}
+
+		return $is_text_file;
 	}
 }
 

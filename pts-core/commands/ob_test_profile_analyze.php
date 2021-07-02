@@ -288,7 +288,7 @@ class ob_test_profile_analyze implements pts_option_interface
 
 		foreach(pts_file_io::glob($object . '*') as $to_read)
 		{
-			if(is_file($to_read) && mime_content_type($to_remove) == 'text/plain')
+			if(pts_file_io::is_text_file($to_read))
 			{
 				$to_read_contents = file_get_contents($to_read);
 				foreach($search_for as $search => $report)

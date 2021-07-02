@@ -173,6 +173,14 @@ class phoromatic_server
 		{
 			$db_flags = SQLITE3_OPEN_READONLY;
 		}
+		else if(is_file($db_file) && !is_writable($db_file))
+		{
+			echo 'The database file is not writable!' . PHP_EOL . 'DB: ' . $db_file . PHP_EOL;
+		}
+		else if(!is_writable(dirname($db_file)))
+		{
+			echo 'The database directory is not writable!' . PHP_EOL . 'DB: ' . dirname($db_file) . PHP_EOL;
+		}
 
 		self::$db = new SQLite3($db_file, $db_flags);
 		self::$db->busyTimeout(10000);

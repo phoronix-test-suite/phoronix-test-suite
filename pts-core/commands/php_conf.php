@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2016 - 2018, Phoronix Media
-	Copyright (C) 2016 - 2018, Michael Larabel
+	Copyright (C) 2016 - 2021, Phoronix Media
+	Copyright (C) 2016 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -71,7 +71,10 @@ class php_conf implements pts_option_interface
 			'imageantialias',
 			'json_decode',
 			'simplexml_load_string',
-			'timezone_name_from_abbr'
+			'timezone_name_from_abbr',
+			'mime_content_type',
+			'finfo_file',
+			'ctype_print',
 			);
 		sort($functions_to_check);
 		$table = array();

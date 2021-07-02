@@ -26,7 +26,7 @@ class microsoft_dependency_handler implements pts_dependency_handler
 	{
 		// Ensure OpenSSL support is enabled otherwise HTTPS downloads will fail
 		$likely_php_openssl_dll = dirname(getenv('PHP_BIN')) . '\ext\php_openssl.dll';
-		if(!extension_loaded('openssl') && is_file($likely_php_openssl_dll))
+		if(!extension_loaded('openssl') && is_file($likely_php_openssl_dll) && ini_get('enable_dl'))
 		{
 			dl('php_openssl.dll');
 		}

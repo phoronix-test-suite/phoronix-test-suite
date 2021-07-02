@@ -719,7 +719,7 @@ class pts_client
 						$extra_log_basename = basename($extra_log);
 
 						// Don't overwrite existing auto-generated system log files + also ensure log file is text and not binary etc payload
-						if(!is_file($system_log_dir . $extra_log_basename) && mime_content_type($extra_log) == 'text/plain')
+						if(!is_file($system_log_dir . $extra_log_basename) && pts_file_io::is_text_file($extra_log))
 						{
 							copy($extra_log, $system_log_dir . $extra_log_basename);
 						}
@@ -2444,7 +2444,8 @@ class pts_client
 						'file_get_contents',
 						'failed to connect',
 						'unable to connect',
-						'directory not empty'
+						'directory not empty',
+						'_lock', // likely multi-process issue, etc for unlinking lock
 						);
 
 					foreach($ignore_errors as $error_check)
