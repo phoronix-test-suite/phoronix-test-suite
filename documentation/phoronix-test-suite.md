@@ -1485,6 +1485,22 @@ Unscheduled test results and other results found on connected systems to a Phoro
 For those utilizing custom set context script files as part of the Phoromatic test schedule, any important notes / log information can be written to the file specified by the *PHOROMATIC_LOG_FILE* environment variable set while running the user context scripts. The contents of that file is then sent to the Phoromatic Server otherwise the standard output of the script's execution is submitted to the Phoromatic Server for logging. These logs can then be viewed by the Phoromatic Server along with the test results. Other environment variables accessible when running a user context script include *PHOROMATIC_TRIGGER* , *PHOROMATIC_SCHEDULE_ID* , and *PHOROMATIC_SCHEDULE_PROCESS* .
 
 
+# Offline Testing
+
+## Offline Testing/Benchmarking For Single System Environments
+The Phoronix Test Suite ships with a cache (up to date as of release time) of the available OpenBenchmarking.org test profile / test suite metadata but external download files are necessary for the test profiles to function. Due to hundreds of different test profiles and consisting of software under test that is of varying software licenses, there is no centralized archive of all possible test files.
+
+To obtain a cache of the files needed for the desired test(s), from a machine with a working Internet connection, run the **phoronix-test-suite make-download-cache** sub-command and pass the name of the tests/suites you wish to download. The make-download-cache will download the files for the desired test profiles so you can then transfer them for use on individual computer(s) lacking an Internet connection.
+
+By default the files will be cached to *~/.phoronix-test-suite/download-cache* and when transferred to an offline system in the same location it should then be automatically utilized by the Phoronix Test Suite when going to install the test(s). The individual download-cache directory can be copied to the offline system or otherwise more broadly the *~/.phoronix-test-suite* directory can also be copied to the offline system(s). If running as root, the default download cache directory is **/var/cache/phoronix-test-suite/download-cache/** .
+
+When the Phoronix Test Suite download cache is transferred to the offline system, the Phoronix Test Suite should begin automatically making use of those files when detected in the appropriate directory and having a matching hash-sum for the given file.
+
+If not able to run the Phoronix Test Suite on a machine with a working Internet connection, manually downloading the files referenced within the test profiles XML metadata and placing them within the respective download-cache directory on a system is another manual alternative.
+
+Note that the make-download-cache will only cache the files downloaded by the Phoronix Test Suite. Depending upon the test(s) and the state of your operating system, you may also need packages obtained from your package manager / distribution (e.g. compiler, dependency libraries, etc) that are not cached by the Phoronix Test Suite due to the diverse nature of different supported operating systems.
+
+
 # Offline Improvements + Confidential Testing / Avoiding Accidental Result Uploads
 
 ## Offline Enhancement Via Local Cache

@@ -1,0 +1,14 @@
+<html>
+<head>
+<Title>Offline Testing</Title>
+</head>
+<body>
+<h1>Offline Testing/Benchmarking For Single System Environments</h1>
+<p>The Phoronix Test Suite ships with a cache (up to date as of release time) of the available OpenBenchmarking.org test profile / test suite metadata but external download files are necessary for the test profiles to function. Due to hundreds of different test profiles and consisting of software under test that is of varying software licenses, there is no centralized archive of all possible test files.</p>
+<p>To obtain a cache of the files needed for the desired test(s), from a machine with a working Internet connection, run the <strong>phoronix-test-suite make-download-cache</strong> sub-command and pass the name of the tests/suites you wish to download. The make-download-cache will download the files for the desired test profiles so you can then transfer them for use on individual computer(s) lacking an Internet connection.</p>
+<p>By default the files will be cached to <em>~/.phoronix-test-suite/download-cache</em> and when transferred to an offline system in the same location it should then be automatically utilized by the Phoronix Test Suite when going to install the test(s). The individual download-cache directory can be copied to the offline system or otherwise more broadly the <em>~/.phoronix-test-suite</em> directory can also be copied to the offline system(s). If running as root, the default download cache directory is <strong>/var/cache/phoronix-test-suite/download-cache/</strong>.</p>
+<p>When the Phoronix Test Suite download cache is transferred to the offline system, the Phoronix Test Suite should begin automatically making use of those files when detected in the appropriate directory and having a matching hash-sum for the given file.</p>
+<p>If not able to run the Phoronix Test Suite on a machine with a working Internet connection, manually downloading the files referenced within the test profiles XML metadata and placing them within the respective download-cache directory on a system is another manual alternative.</p>
+<p>Note that the make-download-cache will only cache the files downloaded by the Phoronix Test Suite. Depending upon the test(s) and the state of your operating system, you may also need packages obtained from your package manager / distribution (e.g. compiler, dependency libraries, etc) that are not cached by the Phoronix Test Suite due to the diverse nature of different supported operating systems.</p>
+</body>
+</html>
