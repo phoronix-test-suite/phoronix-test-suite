@@ -98,6 +98,7 @@ else if(isset($_GET['test']))
 		{
 			pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' requested a fallback copy of the ' . $test_profile->get_identifier() . ' test profile');
 			$zip_file = tempnam(sys_get_temp_dir(), 'phoromatic-zip') . '.zip';
+			pts_file_io::unlink(substr($zip_file, 0, -4)); // clear the original tempnam without .zip
 			$zip_created = pts_compression::zip_archive_create($zip_file, pts_file_io::glob($test_profile->get_resource_dir() . '*'));
 			if($zip_created == false)
 			{

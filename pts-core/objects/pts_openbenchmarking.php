@@ -694,6 +694,7 @@ class pts_openbenchmarking
 						}
 					}
 					unlink($zip_file);
+					unlink(substr($zip_file, 0, -4)); // clear original tempnam
 				}
 			}
 		}
