@@ -676,7 +676,7 @@ class pts_openbenchmarking
 				$test_zip = base64_decode($test_profile);
 				if(!empty($test_zip))
 				{
-					$zip_file = tempnam(sys_get_temp_dir(), 'phoromatic-zip');
+					$zip_file = tempnam(sys_get_temp_dir(), 'phoromatic-zip') . '.zip';
 					file_put_contents($zip_file, $test_zip);
 
 					// Extract the temp zip
