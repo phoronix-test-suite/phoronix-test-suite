@@ -583,7 +583,8 @@ class pts_render
 		$selected_renderer = 'SVG';
 
 		// Yahoo Slurp, msnbot, and googlebot should always be served SVG so no problems there
-
+		// 2021: all relatively recent browsers of thep ast decade should be fine...
+		/*
 		if(($p = strpos($user_agent, 'Gecko/')) !== false)
 		{
 			// Mozilla Gecko-based browser (Firefox, etc)
@@ -646,6 +647,7 @@ class pts_render
 			// Facebook uses this string for its Like/Share crawler, so serve it a PNG so it can use it as an image
 			$selected_renderer = 'PNG';
 		}
+		*/
 
 		return $selected_renderer;
 	}
