@@ -30,6 +30,7 @@ class pts_client
 	public static $last_browser_launch_time = 0;
 	public static $last_browser_duration = 0;
 	public static $last_result_view_url = null;
+	public static $skip_log_file_type_checks = false;
 	protected static $lock_pointers = null;
 	protected static $phoromatic_servers = array();
 	protected static $debug_mode = false;
@@ -719,7 +720,7 @@ class pts_client
 						$extra_log_basename = basename($extra_log);
 
 						// Don't overwrite existing auto-generated system log files + also ensure log file is text and not binary etc payload
-						if(!is_file($system_log_dir . $extra_log_basename) && pts_file_io::is_text_file($extra_log))
+						if(!is_file($system_log_dir . $extra_log_basename) && (self::$skip_log_file_type_checks || pts_file_io::is_text_file($extra_log)))
 						{
 							copy($extra_log, $system_log_dir . $extra_log_basename);
 						}

@@ -375,6 +375,10 @@ class phoromatic_server
 				// Change made 15 May 2021
 				self::$db->exec('ALTER TABLE phoromatic_systems ADD COLUMN SystemProperties TEXT');
 				self::$db->exec('PRAGMA user_version = 40');
+			case 40:
+				// Change made 6 July 2021
+				self::$db->exec('ALTER TABLE phoromatic_account_settings ADD COLUMN AllowAnyDataForLogFiles INTEGER DEFAULT 0');
+				self::$db->exec('PRAGMA user_version = 41');
 		}
 		chmod($db_file, 0600);
 		if(!defined('PHOROMATIC_DB_INIT'))
