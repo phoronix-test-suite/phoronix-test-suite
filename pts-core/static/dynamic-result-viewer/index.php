@@ -376,7 +376,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		}
 		exit;
 	case 'view_system_logs':
-		echo '<!doctype html>
+		$system_log_html = '<!doctype html>
 		<html lang="en">
 		<head>
 		  <title>Log Viewer</title>
@@ -394,22 +394,40 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 				if($system->get_identifier() == $_REQUEST['system_id'])
 				{
 					$system_logs = $system->log_files();
-					echo '<div style="text-align: center;"><form action="' . CURRENT_URI . '" method="post"><select name="log_select" id="log_select">';
+					$system_log_html .= '<div style="text-align: center;"><form action="' . CURRENT_URI . '" method="post"><select name="log_select" id="log_select">';
 					foreach($system_logs as $b)
 					{
-						echo '<option value="' . $b . '"' . ($b == $_REQUEST['log_select'] ? 'selected="selected"' : null) . '>' . $b . '</option>';
+						$system_log_html .= '<option value="' . $b . '"' . (isset($_REQUEST['log_select']) && $b == $_REQUEST['log_select'] ? 'selected="selected"' : null) . '>' . $b . '</option>';
 					}
-					echo '</select> &nbsp; <input type="submit" value="Show Log"></form></div><br /><hr />';
+					$system_log_html .= '</select> &nbsp; <input type="submit" value="Show Log"></form></div><br /><hr />';
 					$show_log = isset($_REQUEST['log_select']) ? $_REQUEST['log_select'] : array_shift($system_logs);
-					$log_file = htmlentities($system->log_files($show_log));
-					$log_file = str_replace(PHP_EOL, '<br />', $log_file);
-					echo '<br /><div style="font-family: monospace;">' . $log_file . '</div>';
+					$log_contents = $system->log_files($show_log, false);
+					if(pts_strings::is_text_string($log_contents))
+					{
+						$log_contents = phodevi_vfs::cleanse_file($log_contents);
+						$log_file = htmlentities($log_contents);
+						$log_file = str_replace(PHP_EOL, '<br />', $log_file);
+						$system_log_html .= '<br /><div style="font-family: monospace;">' . $log_file . '</div>';
+					}
+					else
+					{
+						if(class_exists('finfo'))
+						{
+							$finfo = new finfo(FILEINFO_MIME);
+							header('Content-type: '. $finfo->buffer($log_contents));
+						}
+						//header('Content-Type: application/octet-stream');
+						header('Content-Length: ' . strlen($log_contents));
+						header('Content-Disposition: attachment; filename="' . $show_log . '"');
+						echo $log_contents;
+						exit;
+					}
 					break;
 				}
 			}
 
 		}
-		echo '</body></html>';
+		echo $system_log_html . '</body></html>';
 		exit;
 	case 'test':
 		$o = new pts_test_profile($_GET['test']);

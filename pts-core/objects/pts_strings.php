@@ -813,6 +813,20 @@ class pts_strings
 		}
 		return implode(', ', $str1);
 	}
+	public static function is_text_string($str_check)
+	{
+		$is_text = false;
+
+		if(function_exists('ctype_print'))
+		{
+			$str_check = str_replace("\t", '', $str_check);
+			$str_check = str_replace("\r", '', $str_check);
+			$str_check = str_replace("\n", '', $str_check);
+			$is_text = ctype_print($str_check);
+		}
+
+		return $is_text;
+	}
 }
 
 ?>

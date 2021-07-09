@@ -251,7 +251,7 @@ class pts_result_viewer_settings
 
 		if($system_identifier_count > 1)
 		{
-			$has_system_logs = ($result_file->get_system_log_dir() && glob($result_file->get_system_log_dir() . '/*/*')) || is_file($result_file->get_result_dir() . 'system-logs.zip');
+			$has_system_logs = $result_file->system_logs_available();
 			$t .= '<div style="clear: both;"><h2>Run Management</h2>
 <div class="div_table">
 <div class="div_table_body">
@@ -296,8 +296,7 @@ $t .= '
 
 	if($has_system_logs)
 	{
-		$system_log_count = count($sys->log_files());
-		$t .= '<div class="div_table_cell">' . ($system_log_count > 0 ? '<button type="button" onclick="javascript:display_system_logs_for_result(\'' . $public_id . '\', \'' . $si . '\'); return false;">View System Logs</button>' : ' ') . '</div>';
+		$t .= '<div class="div_table_cell">' . ($sys->has_log_files() ? '<button type="button" onclick="javascript:display_system_logs_for_result(\'' . $public_id . '\', \'' . $si . '\'); return false;">View System Logs</button>' : ' ') . '</div>';
 	}
 	$stime = strtotime($sys->get_timestamp());
 	$t .= '<div class="div_table_cell"><input type="number" min="0" step="0.001" name="ppd_' . $ppdx . '" value="' . ($ppd && $ppd !== true ? strip_tags($ppd) : '0') . '" /></div>

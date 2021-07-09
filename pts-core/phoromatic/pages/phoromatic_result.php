@@ -445,7 +445,7 @@ class phoromatic_result implements pts_webui_interface
 
 		if($has_system_logs)
 		{
-				$right .= '<hr /><p><a href="?logs/system/' . $row['UploadID'] . '">View System Logs</a></p>';
+				$right .= '<hr /><p><a href="?logs/system/' . $upload_ids[0] . '">View System Logs</a></p>';
 		}
 
 		echo phoromatic_webui_header_logged_in();

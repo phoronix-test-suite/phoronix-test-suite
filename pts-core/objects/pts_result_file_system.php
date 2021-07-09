@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015 - 2020, Phoronix Media
-	Copyright (C) 2015 - 2020, Michael Larabel
+	Copyright (C) 2015 - 2021, Phoronix Media
+	Copyright (C) 2015 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@ class pts_result_file_system
 	protected $timestamp;
 	protected $client_version;
 	protected $parent_result_file;
+	protected $has_log_files = -1;
 
 	public function __construct($identifier, $hardware, $software, $json, $username, $notes, $timestamp, $client_version, &$result_file = null)
 	{
@@ -180,7 +181,16 @@ class pts_result_file_system
 
 		return is_numeric($hw) && $hw > 0 ? $hw : 1;
 	}
-	public function log_files($read_file = false)
+	public function has_log_files()
+	{
+		if($this->has_log_files == -1)
+		{
+			$this->has_log_files = count($this->log_files()) > 0;
+		}
+
+		return $this->has_log_files;
+	}
+	public function log_files($read_file = false, $cleanse_file = true)
 	{
 		$files = array();
 		if($this->parent_result_file)
@@ -192,7 +202,8 @@ class pts_result_file_system
 					$basename_file = basename($file);
 					if($read_file !== false && $basename_file == $read_file)
 					{
-						return phodevi_vfs::cleanse_file(file_get_contents($file), $basename_file);
+						$file = file_get_contents($file);
+						return $cleanse_file ? phodevi_vfs::cleanse_file($file, $basename_file) : $file;
 					}
 					$files[] = $basename_file;
 				}
@@ -218,7 +229,7 @@ class pts_result_file_system
 								if($read_file !== false && $basename_file == $read_file)
 								{
 									$c = $zip->getFromName($index);
-									$contents = phodevi_vfs::cleanse_file($c, $basename_file);
+									$contents = $cleanse_file ? phodevi_vfs::cleanse_file($c, $basename_file) : $r;
 									$zip->close();
 									return $contents;
 								}

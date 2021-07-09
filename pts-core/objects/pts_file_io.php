@@ -192,13 +192,9 @@ class pts_file_io
 				$finfo = finfo_open(FILEINFO_MIME_TYPE);
 				$is_text_file = strpos(finfo_file($finfo, $to_read), 'text') !== false;
 			}
-			else if(function_exists('ctype_print'))
+			else
 			{
-				$str_check = file_get_contents($to_read);
-				$str_check = str_replace("\t", '', $str_check);
-				$str_check = str_replace("\r", '', $str_check);
-				$str_check = str_replace("\n", '', $str_check);
-				$is_text_file = ctype_print($str_check);
+				$is_text_file = pts_strings::is_text_string(file_get_contents($to_read));
 			}
 			// else the PHP install is rather hopeless...
 		}

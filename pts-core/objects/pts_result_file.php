@@ -309,6 +309,18 @@ class pts_result_file
 
 		return false;
 	}
+	public function system_logs_available()
+	{
+		foreach($this->systems as &$s)
+		{
+			if($s->has_log_files())
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
 	public function get_system_count()
 	{
 		return count($this->systems);
