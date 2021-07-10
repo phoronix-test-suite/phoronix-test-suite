@@ -32,10 +32,12 @@ class pts_result_file_system
 	protected $client_version;
 	protected $parent_result_file;
 	protected $has_log_files = -1;
+	protected $original_identifier;
 
 	public function __construct($identifier, $hardware, $software, $json, $username, $notes, $timestamp, $client_version, &$result_file = null)
 	{
 		$this->identifier = $identifier;
+		$this->original_identifier = $identifier; // track if the run was later renamed (i.e. dynamically on page load)
 		$this->hardware = $hardware;
 		$this->software = $software;
 		$this->json = $json;
@@ -52,6 +54,10 @@ class pts_result_file_system
 	public function get_identifier()
 	{
 		return $this->identifier;
+	}
+	public function get_original_identifier()
+	{
+		return $this->original_identifier;
 	}
 	public function get_hardware()
 	{
@@ -195,7 +201,7 @@ class pts_result_file_system
 		$files = array();
 		if($this->parent_result_file)
 		{
-			if(($d = $this->parent_result_file->get_system_log_dir($this->get_identifier(), true)))
+			if(($d = $this->parent_result_file->get_system_log_dir($this->get_identifier(), true)) || (($this->get_identifier() != $this->get_original_identifier() && ($d = $this->parent_result_file->get_system_log_dir($this->get_original_identifier(), true)))))
 			{
 				foreach(pts_file_io::glob($d . '/*') as $file)
 				{
@@ -215,27 +221,44 @@ class pts_result_file_system
 
 				if($res === true)
 				{
-					$log_path = 'system-logs/' . $this->get_identifier() . '/';
-					$log_path_l = strlen($log_path);
-					for($i = 0; $i < $zip->numFiles; $i++)
+					$possible_log_paths = array('system-logs/' . $this->get_identifier() . '/');
+
+					if($this->get_identifier() != $this->get_original_identifier())
 					{
-						$index = $zip->getNameIndex($i);
-						if(substr($index, 0, $log_path_l) == $log_path)
+						// If the identifier was dynamically renamed, check back to see if the archived zip data is of the old name
+						// i.e. when dynamically renaming a run just on the web page for a given page load but not altering the archived data
+						$possible_log_paths[] = 'system-logs/' . $this->get_original_identifier() . '/';
+					}
+
+					foreach($possible_log_paths as $log_path)
+					{
+						$log_path_l = strlen($log_path);
+						for($i = 0; $i < $zip->numFiles; $i++)
 						{
-							$basename_file = substr($index, $log_path_l);
-
-							if($basename_file != null)
+							$index = $zip->getNameIndex($i);
+							if(substr($index, 0, $log_path_l) == $log_path)
 							{
-								if($read_file !== false && $basename_file == $read_file)
-								{
-									$c = $zip->getFromName($index);
-									$contents = $cleanse_file ? phodevi_vfs::cleanse_file($c, $basename_file) : $r;
-									$zip->close();
-									return $contents;
-								}
-								array_push($files, $basename_file);
-							}
+								$basename_file = substr($index, $log_path_l);
 
+								if($basename_file != null)
+								{
+									if($read_file !== false && $basename_file == $read_file)
+									{
+										$c = $zip->getFromName($index);
+										$contents = $cleanse_file ? phodevi_vfs::cleanse_file($c, $basename_file) : $c;
+										$zip->close();
+										return $contents;
+									}
+									$files[] = $basename_file;
+								}
+
+							}
+						}
+
+						if(!empty($files))
+						{
+							// If files found, no use iterating to check any original identifier
+							break;
 						}
 					}
 					$zip->close();
