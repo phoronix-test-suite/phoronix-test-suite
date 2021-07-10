@@ -394,7 +394,8 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 				if($system->get_identifier() == $_REQUEST['system_id'])
 				{
 					$system_logs = $system->log_files();
-					$system_log_html .= '<div style="text-align: center;"><form action="' . CURRENT_URI . '" method="post"><select name="log_select" id="log_select">';
+					$system_log_html .= '<h2 align="center">' . $_REQUEST['system_id'] . ' Logs</h2>';
+					$system_log_html .= '<div style="text-align: center;"><form action="' . str_replace('&download', '', CURRENT_URI) . '" method="post"><select name="log_select" id="log_select">';
 					foreach($system_logs as $b)
 					{
 						$system_log_html .= '<option value="' . $b . '"' . (isset($_REQUEST['log_select']) && $b == $_REQUEST['log_select'] ? 'selected="selected"' : null) . '>' . $b . '</option>';
@@ -402,14 +403,15 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 					$system_log_html .= '</select> &nbsp; <input type="submit" value="Show Log"></form></div><br /><hr />';
 					$show_log = isset($_REQUEST['log_select']) ? $_REQUEST['log_select'] : array_shift($system_logs);
 					$log_contents = $system->log_files($show_log, false);
-					if(pts_strings::is_text_string($log_contents))
+					if(pts_strings::is_text_string($log_contents) && !isset($_GET['download']))
 					{
 						$log_contents = phodevi_vfs::cleanse_file($log_contents);
 						$log_file = htmlentities($log_contents);
 						$log_file = str_replace(PHP_EOL, '<br />', $log_file);
 						$system_log_html .= '<br /><div style="font-family: monospace;">' . $log_file . '</div>';
+						$system_log_html .= '<br /><p><a href="' . CURRENT_URI . '&download&log_select=' . $show_log . '">Download Log File</a></p>';
 					}
-					else
+					else if(isset($_REQUEST['log_select'])) // to avoid blocking the popup window in first place
 					{
 						if(class_exists('finfo'))
 						{
@@ -418,7 +420,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 						}
 						//header('Content-Type: application/octet-stream');
 						header('Content-Length: ' . strlen($log_contents));
-						header('Content-Disposition: attachment; filename="' . $show_log . '"');
+						header('Content-Disposition: attachment; filename="' . str_ireplace(array('/', '\\', '.'), '', $_REQUEST['system_id']) . ' - ' . $show_log . '"');
 						echo $log_contents;
 						exit;
 					}

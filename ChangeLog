@@ -7,6 +7,7 @@ pts-core: Minor fixes
 phoromatic: Fix possible case of local test profile download issues from Phoromatic Server
 phoromatic: Warn when lacking database write access for Phoromatic Server
 phoromatic: Support (opt-in) for non-text file log files
+phoromatic: System log viewer improvements
 
 Phoronix Test Suite 10.4.0
 16 May 2021
