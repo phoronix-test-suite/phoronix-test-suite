@@ -305,7 +305,7 @@ $t .= '
 
 	if($has_system_logs)
 	{
-		$t .= '<div class="div_table_cell">' . ($sys->has_log_files() ? '<button type="button" onclick="javascript:display_system_logs_for_result(\'' . $public_id . '\', \'' . $si . '\'); return false;">View System Logs</button>' : ' ') . '</div>';
+		$t .= '<div class="div_table_cell">' . ($sys->has_log_files() ? '<button type="button" onclick="javascript:display_system_logs_for_result(\'' . $public_id . '\', \'' . $sys->get_original_identifier() . '\'); return false;">View System Logs</button>' : ' ') . '</div>';
 	}
 	$stime = strtotime($sys->get_timestamp());
 	$t .= '<div class="div_table_cell"><input type="number" min="0" step="0.001" name="ppd_' . $ppdx . '" value="' . ($ppd && $ppd !== true ? strip_tags($ppd) : '0') . '" /></div>

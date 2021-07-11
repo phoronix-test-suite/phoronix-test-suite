@@ -286,7 +286,7 @@ class phoromatic_result implements pts_webui_interface
 
 			pts_result_viewer_settings::process_request_to_attributes($_REQUEST, $result_file, $extra_attributes);
 			$main .= pts_result_viewer_settings::get_html_sort_bar($result_file, $_REQUEST);
-			$main .= '<hr /><div style="font-size: 12pt;">' . pts_result_viewer_settings::get_html_options_markup($result_file, $_REQUEST) . '</div><hr />';
+			$main .= '<hr /><div style="font-size: 12pt;">' . pts_result_viewer_settings::get_html_options_markup($result_file, $_REQUEST, $has_system_logs) . '</div><hr />';
 			$main .= pts_result_viewer_settings::process_helper_html($_REQUEST, $result_file, $extra_attributes);
 
 			$main .= phoromatic_annotate_entry('RESULT', implode(',', $upload_ids), 'TOP');

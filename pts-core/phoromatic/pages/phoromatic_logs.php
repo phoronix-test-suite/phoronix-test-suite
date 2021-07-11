@@ -66,6 +66,11 @@ class phoromatic_logs implements pts_webui_interface
 					{
 						for($i = 0; $i < $zip->numFiles; $i++)
 						{
+							if(isset($PATH[2]) && strpos($zip->getNameIndex($i), $PATH[2]) === false)
+							{
+								// Only show log files matching a given system identifier
+								continue;
+							}
 							$log_file = $zip->getFromIndex($i);
 							if($log_file != null && pts_strings::is_text_string($log_file))
 							{
