@@ -659,11 +659,11 @@ class pts_strings
 				break;
 		}
 
+		$time_in_seconds = (int)$time_in_seconds;
 		if($round_to > 0)
 		{
 			$time_in_seconds += $round_to - ($time_in_seconds % $round_to);
 		}
-		$time_in_seconds = (int)$time_in_seconds;
 
 		$formatted_time = array();
 
