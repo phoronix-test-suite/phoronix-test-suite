@@ -487,7 +487,10 @@ class pts_strings
 	{
 		// Try to strip out timestamps from lines like Xorg.0.log and dmesg, e.g.:
 		// [  326.390358] EXT4-fs (dm-1): initial error at 1306235400: ext4_journal_start_sb:251
-
+		if($log === null)
+		{
+			$log = '';
+		}
 		$log = explode(PHP_EOL, $log);
 		foreach($log as &$line)
 		{

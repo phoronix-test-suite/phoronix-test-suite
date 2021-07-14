@@ -362,7 +362,7 @@ class pts_test_profile extends pts_test_profile_parser
 
 		return $supported;
 	}
-	public static function generate_comparison_hash($test_identifier, $arguments, $attributes = null, $version = null, $result_scale = null, $raw_output = true)
+	public static function generate_comparison_hash($test_identifier, $arguments, $attributes = null, $version = '', $result_scale = '', $raw_output = true)
 	{
 		$hash_table = array(
 		$test_identifier,

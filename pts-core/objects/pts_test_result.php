@@ -247,7 +247,7 @@ class pts_test_result
 				$tp = $this->test_profile->get_title();
 			}
 
-			return pts_test_profile::generate_comparison_hash($tp, $this->get_arguments(), null, null, $raw_output);
+			return pts_test_profile::generate_comparison_hash($tp, $this->get_arguments(), '', '', $raw_output);
 		}
 	}
 	public function __toString()

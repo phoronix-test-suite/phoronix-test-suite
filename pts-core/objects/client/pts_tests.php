@@ -371,7 +371,7 @@ class pts_tests
 					}
 				}
 
-				if(trim($this_result) != null)
+				if($this_result && trim($this_result) != null)
 				{
 					$result = $this_result;
 				}
