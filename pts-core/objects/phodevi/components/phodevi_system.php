@@ -1859,7 +1859,7 @@ class phodevi_system extends phodevi_device_interface
 		{
 			$info = shell_exec('glxinfo 2>&1 | grep vendor');
 
-			if(($pos = strpos($info, 'OpenGL vendor string:')) !== false)
+			if($info && ($pos = strpos($info, 'OpenGL vendor string:')) !== false)
 			{
 				$info = substr($info, $pos + 22);
 				$info = trim(substr($info, 0, strpos($info, "\n")));
