@@ -94,6 +94,12 @@ class pts_graph_lines extends pts_graph_core
 				foreach($results as &$buffer_item)
 				{
 					$result_r[$buffer_item->get_result_identifier()] = $buffer_item->get_result_value();
+					/*
+					// might be needed for backup....
+					if(is_array($result_r[$buffer_item->get_result_identifier()]) && count($result_r[$buffer_item->get_result_identifier()]) == 1)
+					{
+						$result_r[$buffer_item->get_result_identifier()] = $result_r[$buffer_item->get_result_identifier()][0];
+					}*/
 					$raw_r[$buffer_item->get_result_identifier()] = $buffer_item->get_result_raw();
 					$json_r[$buffer_item->get_result_identifier()] = $buffer_item->get_result_json();
 				}

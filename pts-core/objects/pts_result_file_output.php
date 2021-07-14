@@ -124,7 +124,7 @@ class pts_result_file_output
 			{
 				$buffer_item = $result_object->test_result_buffer->find_buffer_item($column);
 				$value = $buffer_item != false ? $buffer_item->get_result_value() : null;
-				if(strpos($value, ',') !== false)
+				if($value != null && strpos($value, ',') !== false)
 				{
 					$value = explode(',', $value);
 					$value = round(array_sum($value) / count($value), 2);
@@ -663,6 +663,11 @@ class pts_result_file_output
 	}
 	public static function diff_in_system($from, $to)
 	{
+		if($from == null)
+		{
+			return false;
+		}
+
 		$from = explode(', ', $from);
 		$to = explode(', ', $to);
 		$changed = array();

@@ -215,7 +215,7 @@ class pts_test_profile_parser
 	{
 		$identifier = $this->identifier;
 
-		if($bind_version == false && ($c = strrpos($identifier, '-')))
+		if($bind_version == false && $identifier != null && ($c = strrpos($identifier, '-')))
 		{
 			if(pts_strings::is_version(substr($identifier, ($c + 1))))
 			{

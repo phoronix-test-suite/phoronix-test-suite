@@ -67,7 +67,7 @@ class pts_svg_dom_gd
 	{
 		if(!defined('BILDE_DEFAULT_FONT'))
 		{
-			if(is_readable($find_font))
+			if($find_font != null && is_readable($find_font))
 			{
 				$default_font = $find_font;
 			}/*

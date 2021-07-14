@@ -785,10 +785,15 @@ class pts_strings
 	}
 	public static function simplify_string_for_file_handling($str)
 	{
-		return pts_strings::keep_in_string(trim(str_replace(array('/', '\\'), '_', $str)), pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_DECIMAL | pts_strings::CHAR_SPACE | pts_strings::CHAR_UNDERSCORE | pts_strings::CHAR_COMMA | pts_strings::CHAR_AT | pts_strings::CHAR_PLUS | pts_strings::CHAR_SEMICOLON | pts_strings::CHAR_EQUAL);
+		return $str == null ? '' : pts_strings::keep_in_string(trim(str_replace(array('/', '\\'), '_', $str)), pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_DECIMAL | pts_strings::CHAR_SPACE | pts_strings::CHAR_UNDERSCORE | pts_strings::CHAR_COMMA | pts_strings::CHAR_AT | pts_strings::CHAR_PLUS | pts_strings::CHAR_SEMICOLON | pts_strings::CHAR_EQUAL);
 	}
 	public static function highlight_words_with_colon($str, $pre = '<strong>', $post = '</strong>')
 	{
+		if($str == null)
+		{
+			return $str;
+		}
+
 		$str_r = explode(' ', $str);
 		foreach($str_r as &$word)
 		{

@@ -215,7 +215,7 @@ class pts_openbenchmarking
 	{
 		$valid = false;
 
-		if(strlen($id) == 22)
+		if($id != null && strlen($id) == 22)
 		{
 			$segments = explode('-', $id);
 
@@ -922,6 +922,11 @@ class pts_openbenchmarking
 	}
 	public static function evaluate_string_to_qualifier($supplied, $bind_version = true, $check_only_type = false)
 	{
+		if($supplied == null)
+		{
+			return false;
+		}
+
 		$qualified = false;
 		$c_repo = null;
 		$repos = self::linked_repositories();

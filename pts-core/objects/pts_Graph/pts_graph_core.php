@@ -547,7 +547,7 @@ abstract class pts_graph_core
 				if($this->i['is_multi_way_comparison'] && count($this->results) > 1)
 				{
 					$longest_r = $longest_identifier;
-					$longest_r = explode(' - ', $longest_r);
+					$longest_r = $longest_r == null ? array() : explode(' - ', $longest_r);
 					$plus_extra = 0;
 
 					if(count($longest_r) > 1)
@@ -605,7 +605,7 @@ abstract class pts_graph_core
 			{
 				if($this->i['is_multi_way_comparison'] && count($this->results) > 1)
 				{
-					$longest_string = explode(' - ', $longest_identifier);
+					$longest_string = $longest_identifier != null ? explode(' - ', $longest_identifier) : array();
 					$longest_string = pts_strings::find_longest_string($longest_string);
 					$per_identifier_height = 22; // default
 					if($this->test_result->test_result_buffer->get_count() > 9)

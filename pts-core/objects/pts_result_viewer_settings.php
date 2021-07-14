@@ -452,7 +452,7 @@ if($result_file->get_test_count() > 1)
 				$spreads[$i] = $result_object->get_spread();
 			}
 			arsort($spreads);
-			$spreads = array_slice($spreads, 0, min(count($results) / 4, 10), true);
+			$spreads = array_slice($spreads, 0, min((int)(count($results) / 4), 10), true);
 
 			if(!empty($spreads))
 			{

@@ -575,7 +575,7 @@ class pts_result_file
 				{
 					foreach($this->get_relation_map($index) as $child_ro)
 					{
-						if($this->result_objects[$child_ro])
+						if(isset($this->result_objects[$child_ro]))
 						{
 							unset($this->result_objects[$child_ro]);
 						}
