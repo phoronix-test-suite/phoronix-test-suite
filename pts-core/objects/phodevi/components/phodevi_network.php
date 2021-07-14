@@ -279,7 +279,7 @@ class phodevi_network extends phodevi_device_interface
 				{
 					unset($network[$i]);
 				}
-				$n = str_replace(array('(2)', '(R)'), null, $n);
+				$n = str_replace(array('(2)', '(R)'), '', $n);
 			}
 		}
 		else if(phodevi::is_linux())

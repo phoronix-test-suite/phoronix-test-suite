@@ -62,7 +62,7 @@ class pts_result_viewer_settings
 				$uri = $_SERVER['REQUEST_URI'];
 				foreach(array_reverse(array_keys($sub_menu)) as $rem)
 				{
-					$uri = str_replace('&' . $rem, null, $uri);
+					$uri = str_replace('&' . $rem, '', $uri);
 				}
 				$analyze_options .= '<li><a href="' . $uri . '&' . $option . '">' . $txt . '</a></li>';
 			}

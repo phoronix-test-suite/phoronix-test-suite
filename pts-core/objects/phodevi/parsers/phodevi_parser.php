@@ -126,7 +126,7 @@ class phodevi_parser
 			$info = false;
 		}
 
-		return str_replace('Mesa DRI ', null, $info);
+		return str_replace('Mesa DRI ', '', $info);
 	}
 	public static function read_hddtemp($disk = null)
 	{
@@ -181,7 +181,7 @@ class phodevi_parser
 				$temp_version = substr($xorg_log, strpos($xorg_log, 'module version =') + 17);
 				$temp_version = substr($temp_version, 0, strpos($temp_version, "\n"));
 
-				if(is_numeric(str_replace('.', null, $temp_version)))
+				if(is_numeric(str_replace('.', '', $temp_version)))
 				{
 					$module_version = $temp_version;
 				}
@@ -246,16 +246,16 @@ class phodevi_parser
 			{
 				$info = substr($glxinfo, $pos + strlen($gl_v_string));
 				$info = substr($info, 0, strpos($info, "\n"));
-				$info = trim(str_replace(array(' Release', '(Core Profile)'), null, $info));
+				$info = trim(str_replace(array(' Release', '(Core Profile)'), '', $info));
 
 				// The Catalyst Linux Driver now does something stupid for this string like:
 				//  1.4 (2.1 (3.3.11005 Compatibility Profile Context))
 				if(($pos = strrpos($info, 'Compatibility Profile Context')) !== false && strpos($info, '(') != ($last_p = strrpos($info, '(')))
 				{
-					if(is_numeric(str_replace(array('(', '.', ' '), null, substr($info, 0, $last_p))))
+					if(is_numeric(str_replace(array('(', '.', ' '), '', substr($info, 0, $last_p))))
 					{
 						// This looks like a stupid Catalyst driver string, so grab the last GL version reported
-						$info = str_replace(array('(', ')'), null, substr($info, ($last_p + 1)));
+						$info = str_replace(array('(', ')'), '', substr($info, ($last_p + 1)));
 						break;
 					}
 				}

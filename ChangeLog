@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: PHP 8.1 deprecation warning fixes
 pts-core: Support launching PHP web server with PHP_CLI_SERVER_WORKERS to allow multiple workers
 pts-core: Minor fixes
 phoromatic: Fix possible case of local test profile download issues from Phoromatic Server

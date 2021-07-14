@@ -62,7 +62,7 @@ class phodevi_solaris_parser
 				foreach($lines as $line)
 				{
 					$line = pts_strings::colon_explode($line);
-					$line_object = isset($line[0]) ? str_replace(' ', null, $line[0]) : null;
+					$line_object = isset($line[0]) ? str_replace(' ', '', $line[0]) : null;
 					$this_value = count($line) > 1 ? $line[1] : null;
 
 					if(empty($this_value) && !empty($section))

@@ -620,7 +620,7 @@ class phodevi extends phodevi_base
 		// OpenGL / graphics detection
 		$graphics_detection = array('NVIDIA', array('Mesa', 'SGI'), array('AMD'));
 		$opengl_driver = phodevi::read_property('system', 'opengl-vendor') . ' ' . phodevi::read_property('system', 'opengl-driver') . ' ' . phodevi::read_property('system', 'dri-display-driver');
-		$opengl_driver = trim(str_replace('Corporation', null, $opengl_driver)); // Prevents a possible false positive for ATI being in CorporATIon
+		$opengl_driver = trim(str_replace('Corporation', '', $opengl_driver)); // Prevents a possible false positive for ATI being in CorporATIon
 
 		foreach($graphics_detection as $gpu_check)
 		{

@@ -45,7 +45,7 @@ if(isset($_REQUEST['checkbox_compare_results']))
 	echo '<script> window.location.href = "http://' . $_SERVER['HTTP_HOST'] . WEB_URL_PATH . 'result/' . implode(',', $_REQUEST['checkbox_compare_results']) . '"; </script>';
 	exit;
 }
-$uri_segments = explode('/', trim((WEB_URL_PATH == '/' ? $uri_stripped : str_replace(WEB_URL_PATH, null, $uri_stripped)), '/'));
+$uri_segments = explode('/', trim((WEB_URL_PATH == '/' ? $uri_stripped : str_replace(WEB_URL_PATH, '', $uri_stripped)), '/'));
 switch((isset($uri_segments[0]) ? $uri_segments[0] : null))
 {
 	case 'result':

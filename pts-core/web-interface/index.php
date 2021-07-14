@@ -38,7 +38,7 @@ interface pts_webui_interface
 
 $URI = substr($_SERVER['REQUEST_URI'], strpos($_SERVER['REQUEST_URI'], '?') + 1);
 $PATH = explode('/', $URI);
-$PAGE_REQUEST = str_replace('.', null, array_shift($PATH));
+$PAGE_REQUEST = str_replace('.', '', array_shift($PATH));
 
 if(is_file('web-interfaces/pts_webui_' . $PAGE_REQUEST . '.php'))
 {

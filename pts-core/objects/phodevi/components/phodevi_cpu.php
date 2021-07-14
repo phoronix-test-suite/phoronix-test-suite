@@ -57,7 +57,7 @@ class phodevi_cpu extends phodevi_device_interface
 		// Append the processor frequency to string
 		if(($freq = phodevi::read_property('cpu', 'default-frequency')) > 0)
 		{
-			$model = str_replace($freq . 'GHz', null, $model); // we'll replace it if it's already in the string
+			$model = str_replace($freq . 'GHz', '', $model); // we'll replace it if it's already in the string
 			$model .= ' @ ' . $freq . 'GHz';
 		}
 
@@ -81,7 +81,7 @@ class phodevi_cpu extends phodevi_device_interface
 		// Append the processor frequency to string
 		if(($freq = phodevi::read_property('cpu', 'default-frequency')) > 0)
 		{
-			$model = str_replace($freq . 'GHz', null, $model); // we'll replace it if it's already in the string
+			$model = str_replace($freq . 'GHz', '', $model); // we'll replace it if it's already in the string
 			$model .= ' @ ' . $freq . 'GHz';
 		}
 

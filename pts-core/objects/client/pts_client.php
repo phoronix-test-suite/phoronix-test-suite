@@ -539,7 +539,7 @@ class pts_client
 		{
 			$save_to .= '.xml';
 		}
-		$save_to = str_replace(PTS_SAVE_RESULTS_PATH, null, $save_to);
+		$save_to = str_replace(PTS_SAVE_RESULTS_PATH, '', $save_to);
 
 		$save_to_dir = pts_client::setup_test_result_directory($save_to);
 

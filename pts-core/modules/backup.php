@@ -196,7 +196,7 @@ class backup extends pts_module_interface
 			$p = realpath($dir . '/' . $value);
 			if(!is_dir($p))
 			{
-				$checksums[] = str_replace($remove_base_dir, null, $p) . ': ' . sha1_file($p) . PHP_EOL;
+				$checksums[] = str_replace($remove_base_dir, '', $p) . ': ' . sha1_file($p) . PHP_EOL;
 			}
 			else if($value != '.' && $value != '..')
 			{

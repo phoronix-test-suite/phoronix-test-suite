@@ -500,7 +500,7 @@ abstract class pts_graph_core
 	public static function shift_color($paint_color, $percent = 0.7, $mask = 0)
 	{
 		$new_color = null;
-		foreach(str_split(str_replace('#', null, $paint_color), 2) as $color)
+		foreach(str_split(str_replace('#', '', $paint_color), 2) as $color)
 		{
 			$dec = hexdec($color);
 			$dec = min(max(0, round($dec * $percent) + round($mask * (1 - $percent))), 255);

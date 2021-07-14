@@ -448,7 +448,7 @@ class phodevi_system extends phodevi_device_interface
 			{
 				$modinfo = trim(shell_exec('modinfo -F version vboxguest 2> /dev/null'));
 
-				if($modinfo != null && pts_strings::is_version(str_ireplace(array('_', 'RC', 'beta'), null, $modinfo)))
+				if($modinfo != null && pts_strings::is_version(str_ireplace(array('_', 'RC', 'beta'), '', $modinfo)))
 				{
 					$virtualized .= ' ' . $modinfo;
 				}
@@ -727,7 +727,7 @@ class phodevi_system extends phodevi_device_interface
 			$v = trim(shell_exec('pgcc --version 2>&1'));
 			$v = substr($v, strpos($v, 'pgcc ') + 5);
 			$v = substr($v, 0, strpos($v, ' '));
-			if(pts_strings::is_version(str_replace('-', null, $v)))
+			if(pts_strings::is_version(str_replace('-', '', $v)))
 			{
 				$compilers['pgcc'] .= ' ' . $v;
 			}
@@ -838,7 +838,7 @@ class phodevi_system extends phodevi_device_interface
 				$info = substr($info, 0, strpos($info, PHP_EOL, $s));
 				$info = substr($info, (strrpos($info, ' ') + 1));
 
-				if(pts_strings::is_version(str_replace('svn', null, $info)))
+				if(pts_strings::is_version(str_replace('svn', '', $info)))
 				{
 					$compilers['llvmc'] = 'LLVM ' . $info;
 				}
@@ -848,7 +848,7 @@ class phodevi_system extends phodevi_device_interface
 		{
 			// LLVM - Low Level Virtual Machine config
 			$info = trim(shell_exec('llvm-config --version 2> /dev/null'));
-			if(pts_strings::is_version(str_replace('svn', null, $info)))
+			if(pts_strings::is_version(str_replace('svn', '', $info)))
 			{
 				$compilers['llvmc'] = 'LLVM ' . $info;
 			}
@@ -935,7 +935,7 @@ class phodevi_system extends phodevi_device_interface
 			$nvcc = shell_exec($nvcc . ' --version 2>&1');
 			if(($s = strpos($nvcc, 'release ')) !== false)
 			{
-				$nvcc = str_replace(array(','), null, substr($nvcc, ($s + 8)));
+				$nvcc = str_replace(array(','), '', substr($nvcc, ($s + 8)));
 				$nvcc = substr($nvcc, 0, strpos($nvcc, ' '));
 
 				if(pts_strings::is_version($nvcc))
@@ -1162,7 +1162,7 @@ class phodevi_system extends phodevi_device_interface
 				$vendor = substr($vendor, 0, $x);
 			}
 
-			$vendor = str_replace(array(' Software'), null, $vendor);
+			$vendor = str_replace(array(' Software'), '', $vendor);
 		}
 		else if(phodevi::is_hurd())
 		{
@@ -1523,7 +1523,7 @@ class phodevi_system extends phodevi_device_interface
 			}
 			if(pts_client::is_process_running('unity-system-compositor'))
 			{
-				$unity_system_comp = trim(str_replace('unity-system-compositor', null, shell_exec('unity-system-compositor --version 2>&1')));
+				$unity_system_comp = trim(str_replace('unity-system-compositor', '', shell_exec('unity-system-compositor --version 2>&1')));
 
 				if(pts_strings::is_version($unity_system_comp))
 				{
@@ -1716,7 +1716,7 @@ class phodevi_system extends phodevi_device_interface
 						{
 							// This path works for at least finding NVIDIA Tegra 2 DDX (via tegra_fb)
 							$display_driver = file_get_contents('/sys/class/graphics/fb0/name');
-							$display_driver = str_replace(array('drm', '_fb'), null, $display_driver);
+							$display_driver = str_replace(array('drm', '_fb'), '', $display_driver);
 							$driver_version = phodevi_parser::read_xorg_module_version($display_driver . '_drv');
 						}
 						break;

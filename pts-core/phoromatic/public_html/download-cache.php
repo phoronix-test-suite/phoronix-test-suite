@@ -38,7 +38,7 @@ if(isset($_GET['repo']))
 }
 else if(isset($_GET['download']))
 {
-	$requested_file = str_replace(array('..', '/'), null, $_GET['download']);
+	$requested_file = str_replace(array('..', '/'), '', $_GET['download']);
 
 	pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' is attempting to download ' . $requested_file . ' from the download cache');
 	if(($dc = pts_client::download_cache_path()) && is_file($dc . $requested_file))

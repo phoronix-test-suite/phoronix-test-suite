@@ -108,7 +108,7 @@ class pts_exdep_platform_parser
 
 		foreach($aliases as &$alias)
 		{
-			$alias = strtolower(str_replace(' ', null, $alias));
+			$alias = strtolower(str_replace(' ', '', $alias));
 		}
 
 		return $aliases;

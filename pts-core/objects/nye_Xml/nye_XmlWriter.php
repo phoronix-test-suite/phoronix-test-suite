@@ -78,6 +78,11 @@ class nye_XmlWriter
 
 					if($i == ($node_count - 1))
 					{
+						if($xml_value === null)
+						{
+							// Otherwise null throws PHP deprecation error with PHP 8.1+
+							$xml_value = '';
+						}
 						$t = $this->dom->createTextNode($xml_value);
 						$pointer[$nodes[$i]][0]->appendChild($t);
 					}

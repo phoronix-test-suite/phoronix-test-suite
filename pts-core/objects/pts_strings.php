@@ -117,7 +117,7 @@ class pts_strings
 			}
 		}
 
-		$value = str_replace('& ', null, $value);
+		$value = str_replace('& ', '', $value);
 
 		if(substr($value, -1) == '.')
 		{
