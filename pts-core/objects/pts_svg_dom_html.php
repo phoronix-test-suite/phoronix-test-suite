@@ -29,7 +29,7 @@ class pts_svg_dom_html
 	{
 		$new_dom = new DOMImplementation();
 		$dtd = $new_dom->createDocumentType('html', '', '');
-		$this->html_dom = $new_dom->createDocument(null, null, $dtd);
+		$this->html_dom = $new_dom->createDocument(null, '', $dtd);
 		$this->html_dom->formatOutput = true;
 
 		$width = $dom->childNodes->item(2)->attributes->getNamedItem('width')->nodeValue;

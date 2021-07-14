@@ -31,7 +31,7 @@ class pts_svg_dom
 	{
 		$dom = new DOMImplementation();
 		$dtd = $dom->createDocumentType('svg', '-//W3C//DTD SVG 1.1//EN', 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd');
-		$this->dom = $dom->createDocument(null, null, $dtd);
+		$this->dom = $dom->createDocument(null, '', $dtd);
 		$this->dom->formatOutput = PTS_IS_CLIENT && PTS_IS_DEV_BUILD;
 
 		$pts_comment = $this->dom->createComment(pts_core::program_title(false) . ' [ http://www.phoronix-test-suite.com/ ]');
@@ -440,6 +440,10 @@ class pts_svg_dom
 	}
 	public static function estimate_text_dimensions($text_string, $font_size)
 	{
+		if($text_string == null)
+		{
+			return array(0, 0);
+		}
 		$box_height = ceil(0.76 * $font_size);
 		$box_width = ceil((0.76 * strlen($text_string) * $font_size) - ceil(strlen($text_string) * 1.05));
 
