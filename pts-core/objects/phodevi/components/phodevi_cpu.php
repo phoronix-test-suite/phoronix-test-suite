@@ -108,7 +108,8 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 		else if(phodevi::is_linux())
 		{
-			if(is_file('/sys/devices/system/cpu/online') && stripos(phodevi::read_property('system', 'system-layer'), 'lxc') === false)
+			$sl = phodevi::read_property('system', 'system-layer');
+			if(is_file('/sys/devices/system/cpu/online') && ($sl == null || stripos($sl, 'lxc') === false))
 			{
 				$present = pts_file_io::file_get_contents('/sys/devices/system/cpu/online');
 

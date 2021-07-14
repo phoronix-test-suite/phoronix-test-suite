@@ -204,7 +204,7 @@ class system_monitor extends pts_module_interface
 		echo PHP_EOL;
 		foreach(self::$monitor_pids as $pid)
 		{
-			if(function_exists('posix_kill'))
+			if(function_exists('posix_kill') && defined('SIGTERM'))
 			{
 				posix_kill($pid, SIGTERM);
 			}

@@ -46,12 +46,12 @@ class pts_test_file_download
 		$this->sha256 = $sha256;
 		$this->platform = $platform;
 		$this->architecture = $architecture;
-		$this->is_optional = $is_optional || strtolower($is_optional) == 'true';
+		$this->is_optional = $is_optional || ($is_optional != null && strtolower($is_optional) == 'true');
 
 		if(phodevi::is_windows() || !extension_loaded('openssl'))
 		{
 			// Windows with PHP stock binaries has problems downloading from HTTPS
-			$this->url = str_replace('https://', 'http://', $this->url);
+			$this->url = $this->url != null ? str_replace('https://', 'http://', $this->url) : null;
 		}
 
 		// Check for longest file name length as the text UI takes advantage of it

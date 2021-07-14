@@ -86,7 +86,7 @@ class pts_test_execution
 		}
 
 		$to_execute = $test_run_request->test_profile->get_test_executable_dir();
-		$pts_test_arguments = trim($test_run_request->test_profile->get_default_arguments() . ' ' . str_replace($test_run_request->test_profile->get_default_arguments(), '', $extra_arguments) . ' ' . $test_run_request->test_profile->get_default_post_arguments());
+		$pts_test_arguments = trim($test_run_request->test_profile->get_default_arguments() . ' ' . ($test_run_request->test_profile->get_default_arguments() != null ? str_replace($test_run_request->test_profile->get_default_arguments(), '', $extra_arguments) : $extra_arguments) . ' ' . $test_run_request->test_profile->get_default_post_arguments());
 		$extra_runtime_variables = pts_tests::extra_environmental_variables($test_run_request->test_profile);
 
 		// Start
@@ -283,7 +283,7 @@ class pts_test_execution
 					//$test_result_std_output = pts_client::shell_exec($test_run_command, $test_extra_runtime_variables);
 					$descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
 
-					if(pts_client::executable_in_path(trim($test_prepend)))
+					if($test_prepend != null && pts_client::executable_in_path(trim($test_prepend)))
 					{
 						$to_exec = '';
 					}
@@ -790,7 +790,12 @@ class pts_test_execution
 
 							if(count($min = $test_result->active->min_results) > 0)
 							{
-								$min = round(min($min), 2);
+								$min = min($min);
+								if($min === null)
+								{
+									$min = 0;
+								}
+								$min = round($min, 2);
 
 								if($min < $END_RESULT && is_numeric($min) && $min != 0)
 								{
@@ -799,7 +804,12 @@ class pts_test_execution
 							}
 							if(count($max = $test_result->active->max_results) > 0)
 							{
-								$max = round(max($max), 2);
+								$max = max($max);
+								if($max === null)
+								{
+									$max = 0;
+								}
+								$max = round($max, 2);
 
 								if($max > $END_RESULT && is_numeric($max) && $max != 0)
 								{

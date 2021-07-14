@@ -87,7 +87,7 @@ class pts_test_result_buffer
 		$value = $buffer_item->get_result_value();
 		if(!is_numeric($value))
 		{
-			$values = explode(',', $value);
+			$values = !is_array($value) ? explode(',', $value) : $value;
 			$min_value = min($values);
 			$max_value = max($values);
 		}

@@ -663,6 +663,7 @@ class pts_strings
 		{
 			$time_in_seconds += $round_to - ($time_in_seconds % $round_to);
 		}
+		$time_in_seconds = (int)$time_in_seconds;
 
 		$formatted_time = array();
 

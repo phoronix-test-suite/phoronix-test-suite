@@ -418,7 +418,7 @@ class pts_test_run_manager
 				pts_tests::recently_saved_results('    ');
 
 			}
-			$save_name_length = strlen($save_name);
+			$save_name_length = $save_name != null ? strlen($save_name) : 0;
 			while(empty($save_name) || ($is_reserved_word = pts_types::is_test_or_suite($save_name)) || $save_name_length > 126)
 			{
 				if($is_reserved_word)

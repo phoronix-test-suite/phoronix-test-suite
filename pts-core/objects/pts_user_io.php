@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2019, Phoronix Media
-	Copyright (C) 2008 - 2019, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -33,9 +33,9 @@ class pts_user_io
 	{
 		if(function_exists('preg_replace'))
 		{
-			$output = preg_replace('/\x1b(\[|\(|\))[;?0-9]*[0-9A-Za-z]/', null, $output);
-			$output = preg_replace('/\x1b(\[|\(|\))[;?0-9]*[0-9A-Za-z]/', null, $output);
-			$output = preg_replace('/[\x03|\x1a]/', null, $output);
+			$output = preg_replace('/\x1b(\[|\(|\))[;?0-9]*[0-9A-Za-z]/', '', $output);
+			$output = preg_replace('/\x1b(\[|\(|\))[;?0-9]*[0-9A-Za-z]/', '', $output);
+			$output = preg_replace('/[\x03|\x1a]/', '', $output);
 		}
 
 		return $output;
@@ -134,7 +134,7 @@ class pts_user_io
 
 				$line .= $table[$r][$c];
 
-				$m = (max($min_width, 1 + $extra_width_to_column + $column_widths[$c]) - strlen($table[$r][$c]));
+				$m = (max($min_width, 1 + $extra_width_to_column + $column_widths[$c]) - ($table[$r][$c] != null ? strlen($table[$r][$c]) : 0));
 				if($m > 0)
 				{
 					$line .= str_repeat(' ', $m);

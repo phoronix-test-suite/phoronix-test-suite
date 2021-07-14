@@ -366,10 +366,10 @@ class pts_test_profile extends pts_test_profile_parser
 	{
 		$hash_table = array(
 		$test_identifier,
-		trim($arguments),
-		trim($attributes),
-		trim($version),
-		trim($result_scale)
+		($arguments != null ? trim($arguments) : ''),
+		($attributes != null ? trim($attributes) : ''),
+		($version != null ? trim($version) : ''),
+		($result_scale != null ? trim($result_scale) : '')
 		);
 
 		return sha1(implode(',', $hash_table), $raw_output);
