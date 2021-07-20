@@ -500,7 +500,7 @@ class pts_result_file_analyzer
 	}
 	public static function generate_wins_losses_results($result_file, $only_wins = false)
 	{
-		$results = null;
+		$results = array();
 		$result_file_identifiers_count = $result_file->get_system_count();
 		$wins = array();
 		$losses = array();
@@ -544,7 +544,7 @@ class pts_result_file_analyzer
 
 		if(empty($wins) || empty($losses))
 		{
-			return;
+			return array();
 		}
 
 		arsort($wins);

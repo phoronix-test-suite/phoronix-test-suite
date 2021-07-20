@@ -148,7 +148,7 @@ class gpu_freq extends phodevi_sensor
 				$core_string = array_search('core', $performance_level);
 				if($core_string !== false && isset($performance_level[($core_string + 1)]))
 				{
-					$core_string = str_ireplace('MHz', null, $performance_level[($core_string + 1)]);
+					$core_string = str_ireplace('MHz', '', $performance_level[($core_string + 1)]);
 					if(is_numeric($core_string) && $core_string > $core_freq)
 					{
 						$core_freq = $core_string;
@@ -158,7 +158,7 @@ class gpu_freq extends phodevi_sensor
 				$mem_string = array_search('memory', $performance_level);
 				if($mem_string !== false && isset($performance_level[($mem_string + 1)]))
 				{
-					$mem_string = str_ireplace('MHz', null, $performance_level[($mem_string + 1)]);
+					$mem_string = str_ireplace('MHz', '', $performance_level[($mem_string + 1)]);
 					if(is_numeric($mem_string) && $mem_string > $mem_freq)
 					{
 						$mem_freq = $mem_string;

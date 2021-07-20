@@ -62,7 +62,7 @@ class pts_result_viewer_settings
 				$uri = $_SERVER['REQUEST_URI'];
 				foreach(array_reverse(array_keys($sub_menu)) as $rem)
 				{
-					$uri = str_replace('&' . $rem, null, $uri);
+					$uri = str_replace('&' . $rem, '', $uri);
 				}
 				$analyze_options .= '<li><a href="' . $uri . '&' . $option . '">' . $txt . '</a></li>';
 			}
@@ -84,7 +84,7 @@ class pts_result_viewer_settings
 		$has_box_plot = false;
 		$has_line_graph = false;
 		$is_multi_way = $result_file->is_multi_way_comparison();
-		$system_identifier_count = count($result_file->get_system_identifiers());
+		$system_count = $result_file->get_system_count();
 
 		foreach($result_file->get_system_identifiers() as $sys)
 		{
@@ -143,7 +143,7 @@ class pts_result_viewer_settings
 				break;
 			}
 		}
-		$suites_in_result_file = $system_identifier_count > 1 ? pts_test_suites::suites_in_result_file($result_file, true, 0) : array();
+		$suites_in_result_file = $system_count > 1 ? pts_test_suites::suites_in_result_file($result_file, true, 0) : array();
 		// END OF CHECKS
 
 		$analyze_options .= '<form action="' . $_SERVER['REQUEST_URI'] . '" method="post">';
@@ -155,7 +155,7 @@ class pts_result_viewer_settings
 			'Multi-Way Comparison' => array(),
 			);
 
-		if($system_identifier_count > 1)
+		if($system_count > 1)
 		{
 			$analyze_checkboxes['Statistics'][] = array('shm', 'Show Overall Harmonic Mean(s)');
 			$analyze_checkboxes['Statistics'][] = array('sgm', 'Show Overall Geometric Mean');
@@ -207,11 +207,11 @@ class pts_result_viewer_settings
 			$analyze_checkboxes['Graph Settings'][] = array('nbp', 'No Box Plots');
 		}
 
-		if($is_multi_way && $system_identifier_count > 1)
+		if($is_multi_way && $system_count > 1)
 		{
 			$analyze_checkboxes['Multi-Way Comparison'][] = array('cmw', 'Condense Comparison');
 		}
-		if(($is_multi_way && $system_identifier_count > 1) || self::check_request_for_var($request, 'cmv') || self::check_request_for_var($request, 'cts'))
+		if(($is_multi_way && $system_count > 1) || self::check_request_for_var($request, 'cmv') || self::check_request_for_var($request, 'cts'))
 		{
 			$analyze_checkboxes['Multi-Way Comparison'][] = array('imw', 'Transpose Comparison');
 		}
@@ -249,16 +249,21 @@ class pts_result_viewer_settings
 			$t .= '</div>';
 		}
 
-		if($system_identifier_count > 1)
+		if($system_count > 0)
 		{
-			$has_system_logs = ($result_file->get_system_log_dir() && glob($result_file->get_system_log_dir() . '/*/*')) || is_file($result_file->get_result_dir() . 'system-logs.zip');
+			$has_system_logs = $result_file->system_logs_available();
 			$t .= '<div style="clear: both;"><h2>Run Management</h2>
 <div class="div_table">
 <div class="div_table_body">
-<div class="div_table_first_row">
-<div class="div_table_cell">Highlight<br />Result</div>
-<div class="div_table_cell">Hide<br />Result</div>
-<div class="div_table_cell">Result<br />Identifier</div>';
+<div class="div_table_first_row">';
+
+if($system_count > 1)
+{
+	$t .= '<div class="div_table_cell">Highlight<br />Result</div>
+<div class="div_table_cell">Hide<br />Result</div>';
+}
+
+$t .= '<div class="div_table_cell">Result<br />Identifier</div>';
 
 if($has_system_logs)
 {
@@ -266,7 +271,7 @@ if($has_system_logs)
 }
 
 $t .= '<div class="div_table_cell">Performance Per<br />Dollar</div>
-<div class="div_table_cell">Date<br />Triggered</div>
+<div class="div_table_cell">Date<br />Run</div>
 <div class="div_table_cell"> &nbsp; Test<br /> &nbsp; Duration</div>
 <div class="div_table_cell"> </div>
 </div>
@@ -289,15 +294,18 @@ foreach($result_file->get_systems() as $sys)
 	$ppdx = rtrim(base64_encode($si), '=');
 	$ppd = self::check_request_for_var($request, 'ppd_' . $ppdx);
 $t .= '
-	<div id="table-line-' . $ppdx . '" class="div_table_row">
-	<div class="div_table_cell"><input type="checkbox" name="hgv[]" value="' . $si . '"' . (is_array($hgv) && in_array($si, $hgv) ? ' checked="checked"' : null) . ' /></div>
-	<div class="div_table_cell"><input type="checkbox" name="rmm[]" value="' . $si . '"' . (is_array($rmm) && in_array($si, $rmm) ? ' checked="checked"' : null) . ' /></div>
-	<div class="div_table_cell"><strong>' . $si . '</strong></div>';
+	<div id="table-line-' . $ppdx . '" class="div_table_row">';
+	if($system_count > 1)
+	{
+		$t .= '<div class="div_table_cell"><input type="checkbox" name="hgv[]" value="' . $si . '"' . (is_array($hgv) && in_array($si, $hgv) ? ' checked="checked"' : null) . ' /></div>
+	<div class="div_table_cell"><input type="checkbox" name="rmm[]" value="' . $si . '"' . (is_array($rmm) && in_array($si, $rmm) ? ' checked="checked"' : null) . ' /></div>';
+	}
+
+	$t .= '<div class="div_table_cell"><strong>' . $si . '</strong></div>';
 
 	if($has_system_logs)
 	{
-		$system_log_count = count($sys->log_files());
-		$t .= '<div class="div_table_cell">' . ($system_log_count > 0 ? '<button type="button" onclick="javascript:display_system_logs_for_result(\'' . $public_id . '\', \'' . $si . '\'); return false;">View System Logs</button>' : ' ') . '</div>';
+		$t .= '<div class="div_table_cell">' . ($sys->has_log_files() ? '<button type="button" onclick="javascript:display_system_logs_for_result(\'' . $public_id . '\', \'' . $sys->get_original_identifier() . '\'); return false;">View System Logs</button>' : ' ') . '</div>';
 	}
 	$stime = strtotime($sys->get_timestamp());
 	$t .= '<div class="div_table_cell"><input type="number" min="0" step="0.001" name="ppd_' . $ppdx . '" value="' . ($ppd && $ppd !== true ? strip_tags($ppd) : '0') . '" /></div>
@@ -306,12 +314,18 @@ $t .= '
 
 	if($can_delete_results && !empty($public_id))
 	{
-		$t .= '<div class="div_table_cell"><button type="button" onclick="javascript:delete_run_from_result_file(\'' . $public_id . '\', \'' . $si . '\', \'' . $ppdx . '\'); return false;">Delete Run</button> <button type="button" onclick="javascript:rename_run_in_result_file(\'' . $public_id . '\', \'' . $si . '\'); return false;">Rename Run</button></div>';
+		$t .= '<div class="div_table_cell">';
+		if($system_count > 1)
+		{
+			$t .= '<button type="button" onclick="javascript:delete_run_from_result_file(\'' . $public_id . '\', \'' . $si . '\', \'' . $ppdx . '\'); return false;">Delete Run</button> ';
+		}
+
+		$t .= '<button type="button" onclick="javascript:rename_run_in_result_file(\'' . $public_id . '\', \'' . $si . '\'); return false;">Rename Run</button></div>';
 	}
 	$t .= '</div>';
 }
 
-if($result_file->get_system_count() > 1)
+if($system_count > 1)
 {
 	$t .= '
 	<div class="div_table_row">
@@ -343,7 +357,7 @@ $t .= '
 
 $analyze_options .= $t;
 
-if($system_identifier_count > 2)
+if($system_count > 2)
 {
 	$analyze_options .= '<br /><div>Only show results where ' . self::html_select_menu('ftt', 'ftt', null, array_merge(array(null), $result_file->get_system_identifiers()), false) . ' is faster than ' . self::html_select_menu('ftb', 'ftb', null, array_merge(array(null), $result_file->get_system_identifiers()), false) . '</div>';
 }
@@ -438,7 +452,7 @@ if($result_file->get_test_count() > 1)
 				$spreads[$i] = $result_object->get_spread();
 			}
 			arsort($spreads);
-			$spreads = array_slice($spreads, 0, min(count($results) / 4, 10), true);
+			$spreads = array_slice($spreads, 0, min((int)(count($results) / 4), 10), true);
 
 			if(!empty($spreads))
 			{

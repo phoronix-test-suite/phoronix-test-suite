@@ -199,7 +199,7 @@ class pts_test_result_parser
 		}
 
 		$extra_arguments = $test_run_request->get_arguments();
-		$pts_test_arguments = trim($test_run_request->test_profile->get_default_arguments() . ' ' . str_replace($test_run_request->test_profile->get_default_arguments(), '', $extra_arguments) . ' ' . $test_run_request->test_profile->get_default_post_arguments());
+		$pts_test_arguments = trim($test_run_request->test_profile->get_default_arguments() . ' ' . ($test_run_request->test_profile->get_default_arguments() != null ? str_replace($test_run_request->test_profile->get_default_arguments(), '', $extra_arguments) : $extra_arguments) . ' ' . $test_run_request->test_profile->get_default_post_arguments());
 
 		switch($test_run_request->test_profile->get_display_format())
 		{
@@ -861,7 +861,7 @@ class pts_test_result_parser
 
 		if($is_pass_fail_test)
 		{
-			if(str_replace(array('PASS', 'FAIL', ','), null, $test_result) == null)
+			if(str_replace(array('PASS', 'FAIL', ','), '', $test_result) == null)
 			{
 				// already a properly formatted multi-pass fail
 			}
@@ -954,7 +954,7 @@ class pts_test_result_parser
 				return true;
 			}
 		}
-		else if(strpos($numeric_input, ':') !== false && strpos($numeric_input, '.') !== false && is_numeric(str_replace(array(':', '.'), null, $numeric_input)) && stripos($line, 'time') !== false)
+		else if(strpos($numeric_input, ':') !== false && strpos($numeric_input, '.') !== false && is_numeric(str_replace(array(':', '.'), '', $numeric_input)) && stripos($line, 'time') !== false)
 		{
 			// Convert e.g. 03:03.17 to seconds, relevant for at least pts/blender
 			$seconds = 0;
@@ -1011,7 +1011,7 @@ class pts_test_result_parser
 	{
 		if($e->get_strip_from_result() != null)
 		{
-			$test_result = str_replace($e->get_strip_from_result(), null, $test_result);
+			$test_result = str_replace($e->get_strip_from_result(), '', $test_result);
 		}
 		if($e->get_strip_result_postfix() != null && substr($test_result, 0 - strlen($e->get_strip_result_postfix())) == $e->get_strip_result_postfix())
 		{

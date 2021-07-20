@@ -215,7 +215,7 @@ class pts_openbenchmarking
 	{
 		$valid = false;
 
-		if(strlen($id) == 22)
+		if($id != null && strlen($id) == 22)
 		{
 			$segments = explode('-', $id);
 
@@ -676,7 +676,7 @@ class pts_openbenchmarking
 				$test_zip = base64_decode($test_profile);
 				if(!empty($test_zip))
 				{
-					$zip_file = tempnam(sys_get_temp_dir(), 'phoromatic-zip');
+					$zip_file = tempnam(sys_get_temp_dir(), 'phoromatic-zip') . '.zip';
 					file_put_contents($zip_file, $test_zip);
 
 					// Extract the temp zip
@@ -694,6 +694,7 @@ class pts_openbenchmarking
 						}
 					}
 					unlink($zip_file);
+					unlink(substr($zip_file, 0, -4)); // clear original tempnam
 				}
 			}
 		}
@@ -921,6 +922,11 @@ class pts_openbenchmarking
 	}
 	public static function evaluate_string_to_qualifier($supplied, $bind_version = true, $check_only_type = false)
 	{
+		if($supplied == null)
+		{
+			return false;
+		}
+
 		$qualified = false;
 		$c_repo = null;
 		$repos = self::linked_repositories();

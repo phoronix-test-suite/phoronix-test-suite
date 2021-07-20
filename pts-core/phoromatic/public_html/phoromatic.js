@@ -375,3 +375,7 @@ function phoromatic_ajax_append_element(r, d)
 		}}
 	http[rnow].send(null);
 }
+function display_system_logs_for_result(result_file, system_id)
+{
+	window.location.href = "?logs/system/" + result_file + "/" + system_id;
+}

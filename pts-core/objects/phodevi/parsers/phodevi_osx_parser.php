@@ -52,7 +52,7 @@ class phodevi_osx_parser
 					continue;
 				}
 
-				$line_object = str_replace(' ', null, $line[0]);
+				$line_object = str_replace(' ', '', $line[0]);
 		
 				if(($cut_point = strpos($line_object, '(')) > 0)
 				{

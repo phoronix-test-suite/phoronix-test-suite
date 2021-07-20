@@ -233,6 +233,7 @@ class start_phoromatic_server implements pts_option_interface
 		{
 			// PHP Web Server
 			echo PHP_EOL . 'Launching with PHP built-in web server.' . PHP_EOL;
+			$server_launcher .= 'export PHP_CLI_SERVER_WORKERS=8' . PHP_EOL;
 			$server_launcher .= getenv('PHP_BIN') . ' -S ' . $server_ip . ':' . $web_port . ' -t ' . PTS_CORE_PATH . 'phoromatic/public_html/ > /dev/null 2>> $PTS_PHOROMATIC_LOG_LOCATION &' . PHP_EOL; //2> /dev/null
 		}
 		$server_launcher .= 'http_server_pid=$!'. PHP_EOL;

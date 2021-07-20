@@ -88,7 +88,7 @@ class pts_tests
 					$lf = substr($lf, ($line_start_e + 1));
 				}
 
-				$lf = str_replace(array(PTS_TEST_PROFILE_PATH, $strip_string), null, $lf);
+				$lf = str_replace(array(PTS_TEST_PROFILE_PATH, $strip_string), '', $lf);
 
 				if(isset($lf[8]) && substr($lf, -7) == 'error: ')
 				{
@@ -371,7 +371,7 @@ class pts_tests
 					}
 				}
 
-				if(trim($this_result) != null)
+				if($this_result && trim($this_result) != null)
 				{
 					$result = $this_result;
 				}

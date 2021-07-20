@@ -82,7 +82,7 @@ class pts_test_result_buffer_item
 	}
 	public function get_result_raw_array()
 	{
-		return explode(':', $this->result_raw);
+		return $this->result_raw != null ? explode(':', $this->result_raw) : array();
 	}
 	public function get_sample_count()
 	{

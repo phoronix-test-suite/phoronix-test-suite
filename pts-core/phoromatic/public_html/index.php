@@ -40,7 +40,7 @@ if(strpos($_SERVER['REQUEST_URI'], '?') === false && isset($_SERVER['QUERY_STRIN
 
 $URI = substr($_SERVER['REQUEST_URI'], strpos($_SERVER['REQUEST_URI'], '?') + 1);
 $PATH = explode('/', $URI);
-$PAGE_REQUEST = str_replace('.', null, array_shift($PATH));
+$PAGE_REQUEST = str_replace('.', '', array_shift($PATH));
 
 if($PAGE_REQUEST == 'logout' || (isset($_SESSION['AccountID']) && $_SESSION['CoreVersionOnSignOn'] != PTS_CORE_VERSION))
 {

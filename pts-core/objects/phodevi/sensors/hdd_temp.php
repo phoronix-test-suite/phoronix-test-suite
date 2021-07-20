@@ -98,7 +98,7 @@ class hdd_temp extends phodevi_sensor
 
 		if($temp == -1 && strpos($this->disk_to_monitor, 'nvme') !== false && ($nvme_cli = pts_client::executable_in_path('nvme')) && is_writable($disk_path))
 		{
-			$nvme_cli = shell_exec($nvme_cli . ' smart-log ' . str_replace(array('n1'), null, $disk_path));
+			$nvme_cli = shell_exec($nvme_cli . ' smart-log ' . str_replace(array('n1'), '', $disk_path));
 			if(($x = strpos($nvme_cli, 'temperature')) !== false)
 			{
 				$nvme_cli = substr($nvme_cli, $x);

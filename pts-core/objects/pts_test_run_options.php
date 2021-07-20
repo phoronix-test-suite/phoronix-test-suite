@@ -318,7 +318,7 @@ class pts_test_run_options
 		// In batch mode, find all possible combinations for test options
 		if(count($options) <= $counter)
 		{
-			$return_arr[] = trim($current_string);
+			$return_arr[] = $current_string != null ? trim($current_string) : '';
 		}
 		else
 		{

@@ -32,7 +32,7 @@ pts_core::init();
 
 if(isset($_GET['index']))
 {
-	$requested_repo = str_replace(array('..', '/'), null, $_GET['repo']);
+	$requested_repo = str_replace(array('..', '/'), '', $_GET['repo']);
 	$repo_index = pts_openbenchmarking::read_repository_index($requested_repo, false);
 	echo $repo_index;
 		pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' downloaded a copy of the ' . $requested_repo . ' OpenBenchmarking.org repository index');
@@ -54,8 +54,8 @@ else if(isset($_GET['repos']))
 }
 else if(isset($_GET['suite']))
 {
-	$repo = str_replace(array('..', '/'), null, $_GET['repo']);
-	$test = str_replace(array('..', '/'), null, $_GET['test']);
+	$repo = str_replace(array('..', '/'), '', $_GET['repo']);
+	$test = str_replace(array('..', '/'), '', $_GET['test']);
 
 	if(pts_openbenchmarking::is_repository($repo))
 	{
@@ -74,8 +74,8 @@ else if(isset($_GET['is_test']))
 }
 else if(isset($_GET['test']))
 {
-	$repo = str_replace(array('..', '/'), null, $_GET['repo']);
-	$test = str_replace(array('..', '/'), null, $_GET['test']);
+	$repo = str_replace(array('..', '/'), '', $_GET['repo']);
+	$test = str_replace(array('..', '/'), '', $_GET['test']);
 
 	// First see if zip is already in a cache/zip
 	if(pts_openbenchmarking::is_repository($repo))
@@ -97,7 +97,8 @@ else if(isset($_GET['test']))
 		if(true || pts_validation::validate_test_profile($test_profile)) // TODO decide whether validate_test_profile is really desired for local tests where they might be sloppy
 		{
 			pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' requested a fallback copy of the ' . $test_profile->get_identifier() . ' test profile');
-			$zip_file = tempnam(sys_get_temp_dir(), 'phoromatic-zip');
+			$zip_file = tempnam(sys_get_temp_dir(), 'phoromatic-zip') . '.zip';
+			pts_file_io::unlink(substr($zip_file, 0, -4)); // clear the original tempnam without .zip
 			$zip_created = pts_compression::zip_archive_create($zip_file, pts_file_io::glob($test_profile->get_resource_dir() . '*'));
 			if($zip_created == false)
 			{

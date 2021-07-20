@@ -500,7 +500,7 @@ abstract class pts_graph_core
 	public static function shift_color($paint_color, $percent = 0.7, $mask = 0)
 	{
 		$new_color = null;
-		foreach(str_split(str_replace('#', null, $paint_color), 2) as $color)
+		foreach(str_split(str_replace('#', '', $paint_color), 2) as $color)
 		{
 			$dec = hexdec($color);
 			$dec = min(max(0, round($dec * $percent) + round($mask * (1 - $percent))), 255);
@@ -547,7 +547,7 @@ abstract class pts_graph_core
 				if($this->i['is_multi_way_comparison'] && count($this->results) > 1)
 				{
 					$longest_r = $longest_identifier;
-					$longest_r = explode(' - ', $longest_r);
+					$longest_r = $longest_r == null ? array() : explode(' - ', $longest_r);
 					$plus_extra = 0;
 
 					if(count($longest_r) > 1)
@@ -605,7 +605,7 @@ abstract class pts_graph_core
 			{
 				if($this->i['is_multi_way_comparison'] && count($this->results) > 1)
 				{
-					$longest_string = explode(' - ', $longest_identifier);
+					$longest_string = $longest_identifier != null ? explode(' - ', $longest_identifier) : array();
 					$longest_string = pts_strings::find_longest_string($longest_string);
 					$per_identifier_height = 22; // default
 					if($this->test_result->test_result_buffer->get_count() > 9)

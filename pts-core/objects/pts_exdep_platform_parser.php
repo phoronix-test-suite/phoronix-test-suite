@@ -36,7 +36,7 @@ class pts_exdep_platform_parser
 
 			$this->struct['external-dependencies']['name'] = isset($xml->ExternalDependencies->Information->Name) ? $xml->ExternalDependencies->Information->Name->__toString() : null;
 			$this->struct['external-dependencies']['package_manager'] = isset($xml->ExternalDependencies->Information->PackageManager) ? $xml->ExternalDependencies->Information->PackageManager->__toString() : null;
-			$this->struct['external-dependencies']['warn_on_unmet_dependencies'] = isset($xml->ExternalDependencies->Information->WarnOnUnmetDependencies) ? $xml->ExternalDependencies->Information->WarnOnUnmetDependencies->__toString() : null;
+			$this->struct['external-dependencies']['warn_on_unmet_dependencies'] = isset($xml->ExternalDependencies->Information->WarnOnUnmetDependencies) ? $xml->ExternalDependencies->Information->WarnOnUnmetDependencies->__toString() : '';
 
 			if(isset($xml->ExternalDependencies) && isset($xml->ExternalDependencies->Package))
 			{
@@ -79,7 +79,7 @@ class pts_exdep_platform_parser
 	}
 	public function skip_warning_on_unmet_dependencies()
 	{
-		return strtolower($this->struct['external-dependencies']['warn_on_unmet_dependencies']) == 'false';
+		return $this->struct['external-dependencies']['warn_on_unmet_dependencies'] && strtolower($this->struct['external-dependencies']['warn_on_unmet_dependencies']) == 'false';
 	}
 	public function get_package_format($distro_package = null, $file_check = null, $arch_specific = null)
 	{
@@ -108,7 +108,7 @@ class pts_exdep_platform_parser
 
 		foreach($aliases as &$alias)
 		{
-			$alias = strtolower(str_replace(' ', null, $alias));
+			$alias = strtolower(str_replace(' ', '', $alias));
 		}
 
 		return $aliases;

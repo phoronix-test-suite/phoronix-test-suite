@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2014, Phoronix Media
-	Copyright (C) 2008 - 2014, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -56,6 +56,8 @@ class phoromatic_logs implements pts_webui_interface
 			}
 			else if($PATH[0] == 'system' && isset($PATH[1]))
 			{
+				// TODO XXX: Ultimately much nicer to make this unified with the local result viewer code that is in better shape than this...
+
 				$zip_file = phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $PATH[1]) . 'system-logs.zip';
 				if(is_file($zip_file))
 				{
@@ -66,10 +68,48 @@ class phoromatic_logs implements pts_webui_interface
 					{
 						for($i = 0; $i < $zip->numFiles; $i++)
 						{
-							if($zip->getFromIndex($i) != null)
+							if(isset($PATH[2]) && strpos($zip->getNameIndex($i), $PATH[2]) === false)
 							{
-								$main .= '<h2>' . basename($zip->getNameIndex($i)) . '</h2><p>' . str_replace(PHP_EOL, '<br />', $zip->getFromIndex($i)) . '</p><hr />';
+								// Only show log files matching a given system identifier
+								continue;
 							}
+							if(isset($PATH[3]) && $i != $PATH[3])
+							{
+								// Only show log files matching a given file
+								continue;
+							}
+
+							$log_file = $zip->getFromIndex($i);
+							if(isset($PATH[4]) && $PATH[4] == 'download')
+							{
+								// Download given file
+								if(class_exists('finfo'))
+								{
+									$finfo = new finfo(FILEINFO_MIME);
+									header('Content-type: '. $finfo->buffer($log_file));
+								}
+								//header('Content-Type: application/octet-stream');
+								header('Content-Length: ' . strlen($log_file));
+								header('Content-Disposition: attachment; filename="' . basename($zip->getNameIndex($i)) . '"');
+								echo $log_file;
+								exit;
+							}
+							if($log_file == null)
+							{
+								continue;
+							}
+							$main .= '<h2>' . basename($zip->getNameIndex($i)) . '</h2>';
+							if(pts_strings::is_text_string($log_file))
+							{
+								$main .= '<p>' . str_replace(PHP_EOL, '<br />', $log_file) . '</p>';
+							}
+							else
+							{
+								$main .= '<p>Binary log file detected.</p>';
+							}
+
+							// TODO XXX the below download code (primarily for viewing non-text logs) currently has issue due to some HTML pre-formatting...
+							//$main .= '<p><a href="?logs/system/' . $PATH[1] . '/' . (isset($PATH[2]) ? $PATH[2] : '') . '/' . $i . '/download">Download ' . basename($zip->getNameIndex($i)) . '</a><hr />';
 						}
 						$zip->close();
 					}

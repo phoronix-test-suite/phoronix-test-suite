@@ -309,6 +309,18 @@ class pts_result_file
 
 		return false;
 	}
+	public function system_logs_available()
+	{
+		foreach($this->systems as &$s)
+		{
+			if($s->has_log_files())
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
 	public function get_system_count()
 	{
 		return count($this->systems);
@@ -563,7 +575,7 @@ class pts_result_file
 				{
 					foreach($this->get_relation_map($index) as $child_ro)
 					{
-						if($this->result_objects[$child_ro])
+						if(isset($this->result_objects[$child_ro]))
 						{
 							unset($this->result_objects[$child_ro]);
 						}
@@ -718,13 +730,15 @@ class pts_result_file
 					break;
 				}
 			}
-			if($found && $rename_logs && PTS_IS_CLIENT && defined(PTS_SAVE_RESULTS_PATH) && is_dir(($dir_base = PTS_SAVE_RESULTS_PATH . $this->get_identifier() . '/')))
+			if($found && $rename_logs && ($d = $this->get_system_log_dir($from, true)))
 			{
+				$d = dirname(dirname($d)) . '/';
+
 				foreach(array('test-logs', 'system-logs', 'installation-logs') as $dir_name)
 				{
-					if(is_dir($dir_base . $dir_name . '/' . $rename_identifier))
+					if(is_dir($d . $dir_name . '/' . $from))
 					{
-						rename($dir_base . $dir_name . '/' . $rename_identifier, $dir_base . $dir_name . '/' . $rename_identifier_new);
+						rename($d . $dir_name . '/' . $from, $d . $dir_name . '/' . $to);
 					}
 				}
 			}

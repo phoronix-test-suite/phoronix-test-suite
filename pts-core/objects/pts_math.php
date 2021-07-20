@@ -156,7 +156,11 @@ class pts_math
 	public static function get_precision($number)
 	{
 		// number of decimal digits
-		if(is_array($number))
+		if($number === null)
+		{
+			return 0;
+		}
+		else if(is_array($number))
 		{
 			$max_precision = 0;
 			foreach($number as $n)

@@ -38,7 +38,7 @@ class pts_test_profile_parser
 		$this->overrides = array();
 		$this->tp_extends = null;
 
-		if($normal_init == false)
+		if($normal_init == false || $read == null)
 		{
 			$this->identifier = $read;
 			return;
@@ -51,7 +51,7 @@ class pts_test_profile_parser
 			$this->xml = &self::$xml_file_cache[$this->file_location];
 		}
 
-		if(!isset($read[200]) && strpos($read, '<?xml version="1.0"?>') === false && $read != null)
+		if(!isset($read[200]) && strpos($read, '<?xml version="1.0"?>') === false)
 		{
 			if(PTS_IS_CLIENT && (!defined('PTS_TEST_PROFILE_PATH') || !is_file(PTS_TEST_PROFILE_PATH . $read . '/test-definition.xml')))
 			{
@@ -101,7 +101,7 @@ class pts_test_profile_parser
 			$this->file_location = $read;
 			$this->xml = &self::$xml_file_cache[$this->file_location];
 		}
-		else if(is_file($read))
+		else if($read && is_file($read))
 		{
 			$this->file_location = $read;
 			self::$xml_file_cache[$this->file_location] = simplexml_load_file($read, 'SimpleXMLElement', $xml_options);
@@ -215,7 +215,7 @@ class pts_test_profile_parser
 	{
 		$identifier = $this->identifier;
 
-		if($bind_version == false && ($c = strrpos($identifier, '-')))
+		if($bind_version == false && $identifier != null && ($c = strrpos($identifier, '-')))
 		{
 			if(pts_strings::is_version(substr($identifier, ($c + 1))))
 			{

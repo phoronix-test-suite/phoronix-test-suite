@@ -494,7 +494,7 @@ class phoromatic_systems implements pts_webui_interface
 				$result = $stmt->execute();
 				while($row = $result->fetchArray())
 				{
-					$revised_groups = str_replace('#' . $_POST['remove_group'] . '#', null, $row['Groups']);
+					$revised_groups = str_replace('#' . $_POST['remove_group'] . '#', '', $row['Groups']);
 
 					$stmt1 = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET Groups = :new_groups WHERE AccountID = :account_id AND SystemID = :system_id');
 					$stmt1->bindValue(':account_id', $_SESSION['AccountID']);

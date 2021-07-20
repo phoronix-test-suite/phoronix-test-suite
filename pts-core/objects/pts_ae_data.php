@@ -317,7 +317,7 @@ class pts_ae_data
 					if($brand)
 					{
 						$core_family = $this->cpu_index[$component]['CoreFamily'];
-						$series = str_ireplace(array('AMD ', 'Intel ', ), null, $component);
+						$series = str_ireplace(array('AMD ', 'Intel ', ), '', $component);
 						if(($x = stripos($series, '-Core')) !== false)
 						{
 							$series = substr($series, 0, $x);

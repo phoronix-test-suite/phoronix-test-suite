@@ -195,6 +195,7 @@ class load_dynamic_result_viewer extends pts_module_interface
 		'PTS_VIEWER_CONFIG_FILE' => pts_config::get_config_file_location(),
 		'PTS_VIEWER_ID' => self::$random_id,
 		'PTS_CORE_STORAGE' => PTS_CORE_STORAGE,
+		'PHP_CLI_SERVER_WORKERS' => 4,
 		);
 
 		pts_storage_object::set_in_file(PTS_CORE_STORAGE, 'last_web_result_viewer_active_port', $web_port);

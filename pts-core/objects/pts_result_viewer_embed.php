@@ -98,10 +98,11 @@ class pts_result_viewer_embed
 		{
 			$table = new pts_ResultFileCompactSystemsTable($result_file, $intent);
 		}
-		else
+		else if($result_file->get_system_count() > 0)
 		{
 			$table = new pts_ResultFileSystemsTable($result_file);
 		}
+
 		$rendered = pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes);
 		$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object" id="result_file_system_table">' . $rendered . '</p>';
 		$PAGE .= $this->graph_export_handler($rendered);

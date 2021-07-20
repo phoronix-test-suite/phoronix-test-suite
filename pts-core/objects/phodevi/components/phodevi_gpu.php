@@ -642,7 +642,7 @@ class phodevi_gpu extends phodevi_device_interface
 		else
 		{
 			// Try reading video memoty from GLX_MESA_query_renderer output in glxinfo
-			$glxinfo_video_mem = str_replace('MB', null, phodevi_parser::glxinfo_read_line('Video memory'));
+			$glxinfo_video_mem = str_replace('MB', '', phodevi_parser::glxinfo_read_line('Video memory'));
 
 			if(is_numeric($glxinfo_video_mem) && $glxinfo_video_mem > 1)
 			{
@@ -805,7 +805,7 @@ class phodevi_gpu extends phodevi_device_interface
 				$core_string = array_search('core', $performance_level);
 				if($core_string !== false && isset($performance_level[($core_string + 1)]))
 				{
-					$core_string = str_ireplace('MHz', null, $performance_level[($core_string + 1)]);
+					$core_string = str_ireplace('MHz', '', $performance_level[($core_string + 1)]);
 					if(is_numeric($core_string))
 					{
 						$core_freq = $core_string;
@@ -814,7 +814,7 @@ class phodevi_gpu extends phodevi_device_interface
 				$mem_string = array_search('memory', $performance_level);
 				if($mem_string !== false && isset($performance_level[($mem_string + 1)]))
 				{
-					$mem_string = str_ireplace('MHz', null, $performance_level[($mem_string + 1)]);
+					$mem_string = str_ireplace('MHz', '', $performance_level[($mem_string + 1)]);
 					if(is_numeric($mem_string))
 					{
 						$mem_freq = $mem_string;
@@ -846,7 +846,7 @@ class phodevi_gpu extends phodevi_device_interface
 				$core_string = array_search('core', $performance_level);
 				if($core_string !== false && isset($performance_level[($core_string + 1)]))
 				{
-					$core_string = str_ireplace('MHz', null, $performance_level[($core_string + 1)]);
+					$core_string = str_ireplace('MHz', '', $performance_level[($core_string + 1)]);
 					if(strpos($core_string, '-') !== false)
 					{
 						// to work around a range of values, e.g.
@@ -861,7 +861,7 @@ class phodevi_gpu extends phodevi_device_interface
 				$mem_string = array_search('memory', $performance_level);
 				if($mem_string !== false && isset($performance_level[($mem_string + 1)]))
 				{
-					$mem_string = str_ireplace('MHz', null, $performance_level[($mem_string + 1)]);
+					$mem_string = str_ireplace('MHz', '', $performance_level[($mem_string + 1)]);
 					if(strpos($mem_string, '-') !== false)
 					{
 						// to work around a range of values, e.g.
@@ -1121,7 +1121,7 @@ class phodevi_gpu extends phodevi_device_interface
 				if(($x = strpos($xorg_log, '(0): Chipset: ')) !== false)
 				{
 					$xorg_log = substr($xorg_log, ($x + 14));
-					$xorg_log = str_replace(array('(R)', '"'), null, substr($xorg_log, 0, strpos($xorg_log, PHP_EOL)));
+					$xorg_log = str_replace(array('(R)', '"'), '', substr($xorg_log, 0, strpos($xorg_log, PHP_EOL)));
 
 					if(($c = strpos($xorg_log, '[')) || ($c = strpos($xorg_log, '(')))
 					{
@@ -1187,7 +1187,7 @@ class phodevi_gpu extends phodevi_device_interface
 			{
 				unset($windows_gpu[$x]);
 			}
-			$info = str_replace('(TM)', null, implode(' + ', $windows_gpu));
+			$info = str_replace('(TM)', '', implode(' + ', $windows_gpu));
 		}
 
 		if(empty($info) || strpos($info, 'Mesa ') !== false || strpos($info, 'Gallium ') !== false || strpos($info, 'DRM ') !== false)
@@ -1200,7 +1200,7 @@ class phodevi_gpu extends phodevi_device_interface
 			if(strpos($info, 'Intel ') !== false)
 			{
 				// Intel usually has e.g. TGL GT2 or other info within
-				$info = str_replace(array('(', ')'), null, $info);
+				$info = str_replace(array('(', ')'), '', $info);
 			}
 			if(($x = strpos($info, ' (')) !== false)
 			{
@@ -1233,7 +1233,7 @@ class phodevi_gpu extends phodevi_device_interface
 							if(($x = strpos($xorg_log, 'Integrated Graphics Chipset: ')) !== false)
 							{
 								$xorg_log = substr($xorg_log, ($x + 29));
-								$xorg_log = str_replace(array('(R)', '"'), null, substr($xorg_log, 0, strpos($xorg_log, PHP_EOL)));
+								$xorg_log = str_replace(array('(R)', '"'), '', substr($xorg_log, 0, strpos($xorg_log, PHP_EOL)));
 
 								if(stripos($xorg_log, 'Intel') === false)
 								{
@@ -1250,7 +1250,7 @@ class phodevi_gpu extends phodevi_device_interface
 							else if(($x = strpos($xorg_log, '(0): Chipset: ')) !== false)
 							{
 								$xorg_log = substr($xorg_log, ($x + 14));
-								$xorg_log = str_replace(array('(R)', '"'), null, substr($xorg_log, 0, strpos($xorg_log, PHP_EOL)));
+								$xorg_log = str_replace(array('(R)', '"'), '', substr($xorg_log, 0, strpos($xorg_log, PHP_EOL)));
 
 								if(stripos($xorg_log, 'Intel') === false)
 								{
@@ -1408,7 +1408,7 @@ class phodevi_gpu extends phodevi_device_interface
 		}
 
 		$clean_phrases = array('OpenGL Engine');
-		$info = str_replace($clean_phrases, null, $info);
+		$info = str_replace($clean_phrases, '', $info);
 
 		if(!empty($info) && $video_ram > 64 && strpos($info, $video_ram) == false && stripos($info, 'llvmpipe') === false) // assume more than 64MB of vRAM
 		{

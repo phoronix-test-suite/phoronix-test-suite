@@ -69,7 +69,7 @@ if(($uc = strpos($URI, '&')) !== false)
 	$URI = substr($URI, 0, $uc);
 }
 $PATH = explode('/', $URI);
-$REQUESTED = str_replace('.', null, array_shift($PATH));
+$REQUESTED = str_replace('.', '', array_shift($PATH));
 
 if(empty($REQUESTED) || !isset($export_index_json['phoromatic'][$REQUESTED]))
 {

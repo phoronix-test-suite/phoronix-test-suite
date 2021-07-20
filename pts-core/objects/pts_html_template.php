@@ -55,7 +55,7 @@ class pts_html_template
 		$section_title = trim($dom->getElementsByTagName('html')->item(0)->getElementsByTagName('head')->item(0)->nodeValue);
 
 		$section_li_a = $this->dom->createElement('a', $section_title);
-		$section_li_a->setAttribute('href', '#' . str_replace(' ', null, $section_title));
+		$section_li_a->setAttribute('href', '#' . str_replace(' ', '', $section_title));
 		$section_li = $this->dom->createElement('li');
 		$section_li->appendChild($section_li_a);
 		$this->section_list->appendChild($section_li);
@@ -64,7 +64,7 @@ class pts_html_template
 		$p->setAttribute('style', 'height: 50px; border: 0;');
 		$this->dom_body->appendChild($p);
 		$p = $this->dom->createElement('a');
-		$p->setAttribute('name', str_replace(' ', null, $section_title));
+		$p->setAttribute('name', str_replace(' ', '', $section_title));
 		$this->dom_body->appendChild($p);
 		$p = $this->dom->createElement('h1', $section_title);
 		$this->dom_body->appendChild($p);

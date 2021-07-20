@@ -610,6 +610,7 @@ class phoromatic extends pts_module_interface
 						$benchmark_ticket_id = isset($json['phoromatic']['benchmark_ticket_id']) ? $json['phoromatic']['benchmark_ticket_id'] : null;
 						self::$benchmark_ticket_id = $benchmark_ticket_id;
 						phoromatic::update_system_status('Running Benchmarks For: ' . $phoromatic_save_identifier);
+						pts_client::$skip_log_file_type_checks = isset($json['phoromatic']['settings']['AllowAnyDataForLogFiles']) && pts_strings::string_bool($json['phoromatic']['settings']['AllowAnyDataForLogFiles']);
 
 						if(pts_strings::string_bool($json['phoromatic']['settings']['RunInstallCommand']))
 						{

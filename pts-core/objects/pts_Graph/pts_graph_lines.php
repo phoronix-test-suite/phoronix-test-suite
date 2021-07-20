@@ -94,6 +94,12 @@ class pts_graph_lines extends pts_graph_core
 				foreach($results as &$buffer_item)
 				{
 					$result_r[$buffer_item->get_result_identifier()] = $buffer_item->get_result_value();
+					/*
+					// might be needed for backup....
+					if(is_array($result_r[$buffer_item->get_result_identifier()]) && count($result_r[$buffer_item->get_result_identifier()]) == 1)
+					{
+						$result_r[$buffer_item->get_result_identifier()] = $result_r[$buffer_item->get_result_identifier()][0];
+					}*/
 					$raw_r[$buffer_item->get_result_identifier()] = $buffer_item->get_result_raw();
 					$json_r[$buffer_item->get_result_identifier()] = $buffer_item->get_result_json();
 				}
@@ -174,7 +180,7 @@ class pts_graph_lines extends pts_graph_core
 			if($max_value < 10)
 			{
 				$this->i['graph_max_value'] = pts_math::max_number($this->i['graph_max_value'], $max_value) * 1.25; // leave room at top of graph
-				$this->i['graph_max_value'] += $this->i['graph_max_value'] % $this->i['mark_count'];
+				$this->i['graph_max_value'] += (int)$this->i['graph_max_value'] % $this->i['mark_count'];
 			}
 			else
 			{
@@ -365,7 +371,7 @@ class pts_graph_lines extends pts_graph_core
 				{
 					$value = 0;
 				}
-				else if($value < 0)
+				else if($value < 0 || !is_numeric($value))
 				{
 					// Draw whatever is needed of the line so far, since there is no result here
 					if(!$this->i['on_zero_plot_connect'])

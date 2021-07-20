@@ -70,6 +70,17 @@ class pts_logger
 			return;
 		file_put_contents($this->log_file, null);
 	}
+	public static function is_debug_mode()
+	{
+		return PTS_IS_DEV_BUILD || getenv('PTS_DEBUG_LOG');
+	}
+	public function debug_log($message, $date_prefix = true)
+	{
+		if(self::is_debug_mode())
+		{
+			$this->log($message, $date_prefix);
+		}
+	}
 	public function log($message, $date_prefix = true)
 	{
 		if($this->log_file == null)

@@ -188,7 +188,7 @@ class pts_types
 		}
 		else
 		{
-			if(PTS_IS_CLIENT && strpos($identifier_item, '/') !== false && ($ei = explode('/', $identifier_item)) && count($ei) == 2)
+			if(PTS_IS_CLIENT && $identifier_item != null && strpos($identifier_item, '/') !== false && ($ei = explode('/', $identifier_item)) && count($ei) == 2)
 			{
 				if(!pts_openbenchmarking::is_local_repo($ei[0]) && strlen($ei[0]) > 2 && ($ob_info = pts_openbenchmarking::ob_repo_exists($ei[0])))
 				{

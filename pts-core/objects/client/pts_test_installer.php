@@ -827,11 +827,11 @@ class pts_test_installer
 				pts_client::$display->test_install_begin($test_install_request);
 
 				$pre_install_message = $test_install_request->test_profile->get_pre_install_message();
-				$pre_install_message = str_replace('$DOWNLOAD_CACHE', PTS_DOWNLOAD_CACHE_PATH, $pre_install_message);
+				$pre_install_message = $pre_install_message ? str_replace('$DOWNLOAD_CACHE', PTS_DOWNLOAD_CACHE_PATH, $pre_install_message) : '';
 				$post_install_message = $test_install_request->test_profile->get_post_install_message();
-				$post_install_message = str_replace('$DOWNLOAD_CACHE', PTS_DOWNLOAD_CACHE_PATH, $post_install_message);
+				$post_install_message = $post_install_message ? str_replace('$DOWNLOAD_CACHE', PTS_DOWNLOAD_CACHE_PATH, $post_install_message) : '';
 				$install_agreement = $test_install_request->test_profile->get_installation_agreement_message();
-				$install_agreement = str_replace('$DOWNLOAD_CACHE', PTS_DOWNLOAD_CACHE_PATH, $install_agreement);
+				$install_agreement = $install_agreement ? str_replace('$DOWNLOAD_CACHE', PTS_DOWNLOAD_CACHE_PATH, $install_agreement) : '';
 
 				if(!empty($install_agreement))
 				{

@@ -70,7 +70,7 @@ function delete_run_from_result_file(result_file, system_identifier, ppd)
 function rename_run_in_result_file(result_file, system_identifier)
 {
 	var new_system_identifier = prompt("Please enter new result identifier:", system_identifier);
-	if(new_system_identifier == "")
+	if(new_system_identifier == "" || new_system_identifier == null)
 	{
 		alert("Result identifier cannot be empty!");
 	}

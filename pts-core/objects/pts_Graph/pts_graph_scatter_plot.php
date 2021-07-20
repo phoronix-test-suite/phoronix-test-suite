@@ -47,8 +47,7 @@ class pts_graph_scatter_plot extends pts_graph_core
 		// Do some common work to this object
 
 		$graph_identifiers_count = count($this->graph_identifiers);
-		$identifier_count = $graph_identifiers_count > 1 ? $graph_identifiers_count : count($this->graph_data[0]);
-		$this->i['identifier_width'] = ($this->i['graph_left_end'] - $this->i['left_start']) / ($identifier_count + 1);
+		$this->i['identifier_width'] = ($this->i['graph_left_end'] - $this->i['left_start']) / ($graph_identifiers_count + 1);
 
 		$longest_string = pts_strings::find_longest_string($this->graph_identifiers);
 		$this->i['identifier_size'] = $this->text_size_bounds($longest_string, $this->i['identifier_size'], $this->i['min_identifier_size'], $this->i['identifier_width'] - 4);
