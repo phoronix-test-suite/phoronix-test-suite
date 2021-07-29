@@ -237,9 +237,8 @@ class pts_test_execution
 				$test_prepend = getenv('TEST_EXEC_PREPEND') != null ? getenv('TEST_EXEC_PREPEND') . ' ': null;
 				pts_client::$display->test_run_instance_header($test_run_request);
 				sleep(2);
-				$test_run_command = 'cd ' . $to_execute . ' && ' . $test_prepend . $execute_binary_prepend . './' . $execute_binary . ' ' . $pts_test_arguments . ' 2>&1';
-
-				pts_test_result_parser::debug_message('Test Run Command: ' . $test_run_command);
+				pts_test_result_parser::debug_message('Test Run Directory: ' . $to_execute);
+				pts_test_result_parser::debug_message('Test Run Command: ' . $test_prepend . $execute_binary_prepend . ' ./' . $execute_binary . ' ' . $pts_test_arguments);
 
 				$host_env = $_SERVER;
 				unset($host_env['argv']);
@@ -280,7 +279,6 @@ class pts_test_execution
 				}
 				else
 				{
-					//$test_result_std_output = pts_client::shell_exec($test_run_command, $test_extra_runtime_variables);
 					$descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
 
 					if($test_prepend != null && pts_client::executable_in_path(trim($test_prepend)))
@@ -648,7 +646,7 @@ class pts_test_execution
 
 			foreach(pts_client::environmental_variables() as $key => $value)
 			{
-				$arguments_description = str_replace('$' . $key, $value, $arguments_description);
+				$arguments_description = $arguments_description != null ? str_replace('$' . $key, $value, $arguments_description) : '';
 
 				if(!in_array($key, array('VIDEO_MEMORY', 'NUM_CPU_CORES', 'NUM_CPU_JOBS')))
 				{

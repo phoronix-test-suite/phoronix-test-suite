@@ -511,27 +511,31 @@ class pts_network
 
 		if(PTS_IS_CLIENT && pts_client::executable_in_path('avahi-browse'))
 		{
-			$avahi_browse = explode(PHP_EOL, shell_exec('avahi-browse -p -r -t _http._tcp 2>&1'));
-			foreach(array_reverse($avahi_browse) as $avahi_line)
+			$avahi_browse = shell_exec('avahi-browse -p -r -t _http._tcp 2>&1');
+			if($avahi_browse != null)
 			{
-				if(strrpos($avahi_line, 'phoromatic-server') !== false)
+				$avahi_browse = explode(PHP_EOL, $avahi_browse);
+				foreach(array_reverse($avahi_browse) as $avahi_line)
 				{
-					$avahi_line = explode(';', $avahi_line);
-
-					if(isset($avahi_line[8]) && ip2long($avahi_line[7]) !== false && is_numeric($avahi_line[8]))
+					if(strrpos($avahi_line, 'phoromatic-server') !== false)
 					{
-						$server_ip = $avahi_line[7];
-						$server_port = $avahi_line[8];
-						//echo $server_ip . ':' . $server_port;
+						$avahi_line = explode(';', $avahi_line);
 
-						if($find_multiple)
+						if(isset($avahi_line[8]) && ip2long($avahi_line[7]) !== false && is_numeric($avahi_line[8]))
 						{
-							$hosts[] = array($server_ip, $server_port);
-						}
-						else
-						{
-							$hosts = array($server_ip, $server_port);
-							break;
+							$server_ip = $avahi_line[7];
+							$server_port = $avahi_line[8];
+							//echo $server_ip . ':' . $server_port;
+
+							if($find_multiple)
+							{
+								$hosts[] = array($server_ip, $server_port);
+							}
+							else
+							{
+								$hosts = array($server_ip, $server_port);
+								break;
+							}
 						}
 					}
 				}

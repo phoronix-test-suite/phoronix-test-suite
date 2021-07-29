@@ -40,13 +40,16 @@ class phodevi_network extends phodevi_device_interface
 		if ($ip = pts_client::executable_in_path('ip'))
 		{
 			$out = shell_exec("$ip route 2>&1");
-			$start = strpos($out, ' dev ');
-			if($start !== false)
+			if(!empty($out))
 			{
-				$start += 5; // length of ' dev '
-				if(($xx = strpos($out, ' ', $start)) !== false)
+				$start = strpos($out, ' dev ');
+				if($start !== false)
 				{
-					$dev = substr($out, $start, $xx - $start);
+					$start += 5; // length of ' dev '
+					if(($xx = strpos($out, ' ', $start)) !== false)
+					{
+						$dev = substr($out, $start, $xx - $start);
+					}
 				}
 			}
 		}

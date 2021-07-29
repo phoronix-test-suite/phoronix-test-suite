@@ -105,6 +105,11 @@ class ubuntu_dependency_handler implements pts_dependency_handler
 			$apt_output = shell_exec('apt-file --regexp search "' . $arg . '$" 2>/dev/null');
 		}
 
+		if($apt_output == null)
+		{
+			return null;
+		}
+
 		foreach(explode(PHP_EOL, $apt_output) as $line)
 		{
 			if(($x = strpos($line, ': ')) == false || strpos($line, 'bash-completion') !== false || strpos($line, 'examples') !== false)
