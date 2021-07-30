@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2019, Phoronix Media
-	Copyright (C) 2008 - 2019, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -48,9 +48,8 @@ class pts_test_file_download
 		$this->architecture = $architecture;
 		$this->is_optional = $is_optional || ($is_optional != null && strtolower($is_optional) == 'true');
 
-		if(phodevi::is_windows() || !extension_loaded('openssl'))
+		if(!extension_loaded('openssl'))
 		{
-			// Windows with PHP stock binaries has problems downloading from HTTPS
 			$this->url = $this->url != null ? str_replace('https://', 'http://', $this->url) : null;
 		}
 
