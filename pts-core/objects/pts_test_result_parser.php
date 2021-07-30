@@ -687,7 +687,7 @@ class pts_test_result_parser
 					do
 					{
 						$try_again = false;
-						$r = explode(' ', pts_strings::trim_spaces(str_replace($space_out_chars, ' ', str_replace('=', ' = ', $line))));
+						$r = $line != null ? explode(' ', pts_strings::trim_spaces(str_replace($space_out_chars, ' ', str_replace('=', ' = ', $line)))) : array();
 						$r_pos = array_search($key_for_result, $r);
 
 						if($e->get_result_before_string() != null)
@@ -738,7 +738,7 @@ class pts_test_result_parser
 						else
 						{
 							// POSSIBLE FALLBACKS TO TRY AGAIN
-							if(!$did_try_colon_fallback && strpos($line, ':') !== false)
+							if(!$did_try_colon_fallback && $line != null && strpos($line, ':') !== false)
 							{
 								$line = str_replace(':', ': ', $line);
 								$did_try_colon_fallback = true;

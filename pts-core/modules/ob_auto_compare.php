@@ -266,8 +266,6 @@ class ob_auto_compare extends pts_module_interface
 					}
 
 					$reference_results_added = 0;
-					$this_percentile = pts_strings::number_suffix_handler($this_result_percentile);
-
 					$rr = array();
 					if(is_array($json_response['openbenchmarking']['result']['ae']['reference_results']))
 					{
@@ -286,7 +284,7 @@ class ob_auto_compare extends pts_module_interface
 							$rr[$component] = $value;
 						}
 					}
-					foreach(array_merge(array('This Result' . ($this_percentile > 0 && $this_percentile < 100 ? ' (' . $this_percentile . ' Percentile)' : null) => ($active_result > 99 ? round($active_result) : $active_result)), $other_data_in_result_file, $rr) as $component => $value)
+					foreach(array_merge(array('This Result' . ($this_result_percentile > 0 && $this_result_percentile < 100 ? ' (' . pts_strings::number_suffix_handler($this_result_percentile) . ' Percentile)' : null) => ($active_result > 99 ? round($active_result) : $active_result)), $other_data_in_result_file, $rr) as $component => $value)
 					{
 						if($value > $max_value)
 						{

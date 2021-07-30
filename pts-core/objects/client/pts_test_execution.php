@@ -124,6 +124,7 @@ class pts_test_execution
 		pts_client::$display->display_interrupt_message($test_run_request->test_profile->get_pre_run_message());
 		$runtime_identifier = time();
 		$execute_binary_prepend = '';
+		$execute_binary_prepend_final = './';
 		if($test_run_request->exec_binary_prepend != null)
 		{
 			$execute_binary_prepend = $test_run_request->exec_binary_prepend;
@@ -237,9 +238,6 @@ class pts_test_execution
 				$test_prepend = getenv('TEST_EXEC_PREPEND') != null ? getenv('TEST_EXEC_PREPEND') . ' ': null;
 				pts_client::$display->test_run_instance_header($test_run_request);
 				sleep(2);
-				$test_run_command = 'cd ' . $to_execute . ' && ' . $test_prepend . $execute_binary_prepend . './' . $execute_binary . ' ' . $pts_test_arguments . ' 2>&1';
-
-				pts_test_result_parser::debug_message('Test Run Command: ' . $test_run_command);
 
 				$host_env = $_SERVER;
 				unset($host_env['argv']);
@@ -253,6 +251,7 @@ class pts_test_execution
 						pts_client::$display->test_run_message('Using cmd.exe batch...');
 						$to_exec = 'C:\Windows\System32\cmd.exe';
 						$execute_binary_prepend = ' /c ';
+						$execute_binary_prepend_final = '';
 						$use_phoroscript = false;
 						$post_test_args = '';
 					}
@@ -268,6 +267,8 @@ class pts_test_execution
 					}
 				}
 
+				pts_test_result_parser::debug_message('Test Run Directory: ' . $to_execute);
+				pts_test_result_parser::debug_message('Test Run Command: ' . $test_prepend . $execute_binary_prepend . $execute_binary_prepend_final . $execute_binary . ' ' . $pts_test_arguments);
 				$is_monitoring = pts_test_result_parser::system_monitor_task_check($test_run_request);
 				$test_run_time_start = microtime(true);
 
@@ -280,7 +281,6 @@ class pts_test_execution
 				}
 				else
 				{
-					//$test_result_std_output = pts_client::shell_exec($test_run_command, $test_extra_runtime_variables);
 					$descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
 
 					if($test_prepend != null && pts_client::executable_in_path(trim($test_prepend)))
@@ -300,7 +300,7 @@ class pts_test_execution
 						}
 					}
 
-					$test_process = proc_open($test_prepend . $to_exec . ' ' . $execute_binary_prepend . './' . $execute_binary . ' ' . $pts_test_arguments . $post_test_args, $descriptorspec, $pipes, $to_execute, array_merge($host_env, pts_client::environmental_variables(), $terv));
+					$test_process = proc_open($test_prepend . $to_exec . ' ' . $execute_binary_prepend . $execute_binary_prepend_final . $execute_binary . ' ' . $pts_test_arguments . $post_test_args, $descriptorspec, $pipes, $to_execute, array_merge($host_env, pts_client::environmental_variables(), $terv));
 
 					if(is_resource($test_process))
 					{
@@ -648,7 +648,7 @@ class pts_test_execution
 
 			foreach(pts_client::environmental_variables() as $key => $value)
 			{
-				$arguments_description = str_replace('$' . $key, $value, $arguments_description);
+				$arguments_description = $arguments_description != null ? str_replace('$' . $key, $value, $arguments_description) : '';
 
 				if(!in_array($key, array('VIDEO_MEMORY', 'NUM_CPU_CORES', 'NUM_CPU_JOBS')))
 				{

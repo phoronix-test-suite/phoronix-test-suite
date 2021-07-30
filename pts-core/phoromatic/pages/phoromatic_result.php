@@ -210,8 +210,14 @@ class phoromatic_result implements pts_webui_interface
 					}
 				}
 
-				$system_name = str_replace('.SYSTEM', phoromatic_system_id_to_name($row['SystemID']), $system_name);
-				$system_name = str_replace('.GROUP', phoromatic_account_id_to_group_name($row['AccountID']), $system_name);
+				if(($replacement = phoromatic_system_id_to_name($row['SystemID'])) != null)
+				{
+					$system_name = str_replace('.SYSTEM', $replacement, $system_name);
+				}
+				if(($replacement = phoromatic_account_id_to_group_name($row['AccountID'])) != null)
+				{
+					$system_name = str_replace('.GROUP', $replacement, $system_name);
+				}
 				$system_variables = explode(';', phoromatic_server::system_id_variables($row['SystemID'], $row['AccountID']));
 				foreach($system_variables as $var)
 				{

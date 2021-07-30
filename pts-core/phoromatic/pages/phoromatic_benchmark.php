@@ -319,16 +319,16 @@ class phoromatic_benchmark implements pts_webui_interface
 				$stmt->bindValue(':state', 1);
 				$stmt->bindValue(':modified_by', $_SESSION['UserName']);
 				$stmt->bindValue(':modified_on', phoromatic_server::current_time());
-				$stmt->bindValue(':public_key', $public_key);
+				$stmt->bindValue(':public_key', isset($public_key) ? $public_key : null);
 				$stmt->bindValue(':run_target_groups', $run_target_groups);
 				$stmt->bindValue(':run_target_systems', $run_target_systems);
 				$stmt->bindValue(':environment_variables', $env_vars);
 				$result = $stmt->execute();
-				phoromatic_add_activity_stream_event('benchmark', $benchmark_id, ($is_new ? 'added' : 'modified'));
+				phoromatic_add_activity_stream_event('benchmark', $ticket_id, ($is_new ? 'added' : 'modified'));
 
 				if($result)
 				{
-					header('Location: ?benchmark/' . $schedule_id);
+					header('Location: ?benchmark/' . $ticket_id);
 				}
 			}
 

@@ -400,7 +400,7 @@ class pts_strings
 			}
 		}
 
-		return trim($new_str);
+		return $new_str != null ? trim($new_str) : '';
 	}
 	public static function remove_redundant($string, $redundant_char)
 	{
@@ -700,7 +700,7 @@ class pts_strings
 			}
 		}
 
-		return implode(($standard_version ? ', ' : null), $formatted_time);
+		return implode(($standard_version ? ', ' : ''), $formatted_time);
 	}
 	public static function number_suffix_handler($n)
 	{

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2018, Phoronix Media
-	Copyright (C) 2018, Michael Larabel
+	Copyright (C) 2018 - 2021, Phoronix Media
+	Copyright (C) 2018 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -78,7 +78,7 @@ class pts_element_node
 	}
 	public function get_flags_array()
 	{
-		return explode(' ', $this->flags);
+		return $this->flags != null ? explode(' ', $this->flags) : array();
 	}
 	public function set_path($path)
 	{

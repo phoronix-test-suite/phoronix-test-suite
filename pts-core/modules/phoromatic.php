@@ -584,8 +584,10 @@ class phoromatic extends pts_module_interface
 
 				$task = isset($json['phoromatic']['task']) ? $json['phoromatic']['task'] : null;
 
-				if ($task != 'idle')
-					pts_client::$pts_logger->log("Received " . $json['phoromatic']['task'] . " command");
+				if($task != 'idle')
+				{
+					pts_client::$pts_logger->log("Received " . $task . " command");
+				}
 
 				switch($task)
 				{
