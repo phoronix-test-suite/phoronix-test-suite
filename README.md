@@ -1,4 +1,4 @@
-# Phoronix Test Suite 10.4.0
+# Phoronix Test Suite 10.6.0
 https://www.phoronix-test-suite.com/
 
 The **Phoronix Test Suite** is the most comprehensive testing and benchmarking
