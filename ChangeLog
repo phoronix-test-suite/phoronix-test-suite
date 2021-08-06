@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 10.6.0 (Git)
+T.B.A.
 
 pts-core: PHP 8.1 deprecation warning fixes
 pts-core: Support launching PHP web server with PHP_CLI_SERVER_WORKERS to allow multiple workers/threads

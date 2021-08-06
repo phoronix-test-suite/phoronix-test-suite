@@ -870,7 +870,7 @@ if(isset($leading_msg) && $leading_msg) { echo '<div id="leading_message">' . $l
 <div id="main_area">
 <?php echo PAGE; ?>
 </div>
-<div id="footer"><hr /><br /><a href="https://www.phoronix-test-suite.com/">Phoronix Test Suite</a> <?php echo PTS_VERSION; ?> - Generated <?php echo date('j F Y H:i:s'); ?> - Developed by Phoronix Media</div>
+<div id="footer"><hr /><br /><a href="https://www.phoronix-test-suite.com/">Phoronix Test Suite</a> <?php echo PTS_VERSION; ?> - Generated <?php echo date('j F Y H:i:s'); ?></div>
 </body>
 <?php }
 if(function_exists('session_start'))

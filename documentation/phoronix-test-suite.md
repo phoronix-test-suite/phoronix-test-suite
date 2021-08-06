@@ -623,16 +623,19 @@ Supported Options:
   - all.hdd
   - hdd.read-speed
   - all.hdd.read-speed
+  - hdd.read-speed.sda
+  - hdd.read-speed.sdb
   - hdd.read-speed.nvme0n1
-  - hdd.read-speed.mmcblk0
   - hdd.temp
   - all.hdd.temp
+  - hdd.temp.sda
+  - hdd.temp.sdb
   - hdd.temp.nvme0n1
-  - hdd.temp.mmcblk0
   - hdd.write-speed
   - all.hdd.write-speed
+  - hdd.write-speed.sda
+  - hdd.write-speed.sdb
   - hdd.write-speed.nvme0n1
-  - hdd.write-speed.mmcblk0
   - all.memory
   - memory.temp
   - memory.usage
@@ -1251,9 +1254,6 @@ This is a collection of test profiles found within the specified OpenBenchmarkin
 
 #### Graphics Subsystem Tests  system/graphics
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the graphics sub-system.
-
-#### Installed Tests  system/installed
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository that are already installed on the system under test.
 
 #### Linux Operating System Tests  system/linux
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the linux Operating System.
