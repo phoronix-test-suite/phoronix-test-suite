@@ -209,7 +209,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		<h1>Phoronix Test Suite</h1>
 		</div>
 		<div id="pts_banner_nav"></div>
-		<div id="pts_template_body"><ol><li><a href="#GettingStarted">Getting Started</a></li><li><a href="#UserOptions">User Options</a></li><li><a href="#ModuleOptions">Module Options</a></li><li><a href="#InstallationInstructions">Installation Instructions</a></li><li><a href="#PhoronixTestSuiteOnWindows">Phoronix Test Suite On Windows</a></li><li><a href="#ExternalDependencies">External Dependencies</a></li><li><a href="#Configuration">Configuration</a></li><li><a href="#GeneralInformation">General Information</a></li><li><a href="#VirtualTestSuites">Virtual Test Suites</a></li><li><a href="#ComponentTesting">Component Testing</a></li><li><a href="#PhoronixTestSuitePhoromatic">Phoronix Test Suite Phoromatic</a></li><li><a href="#OfflineTesting">Offline Testing</a></li><li><a href="#OfflineImprovements+ConfidentialTesting/AvoidingAccidentalResultUploads">Offline Improvements + Confidential Testing / Avoiding Accidental Result Uploads</a></li><li><a href="#DevelopmentCredits">Development Credits</a></li></ol><hr style="height: 50px; border: 0;"><a name="GettingStarted"></a><h1>Getting Started</h1>
+		<div id="pts_template_body"><ol><li><a href="#GettingStarted">Getting Started</a></li><li><a href="#UserOptions">User Options</a></li><li><a href="#ModuleOptions">Module Options</a></li><li><a href="#InstallationInstructions">Installation Instructions</a></li><li><a href="#PhoronixTestSuiteOnWindows">Phoronix Test Suite On Windows</a></li><li><a href="#ExternalDependencies">External Dependencies</a></li><li><a href="#Configuration">Configuration</a></li><li><a href="#MainConfigurationFile(user-config.xmlor/etc/phoronix-test-suite.xml)">Main Configuration File (user-config.xml or /etc/phoronix-test-suite.xml)</a></li><li><a href="#GeneralInformation">General Information</a></li><li><a href="#VirtualTestSuites">Virtual Test Suites</a></li><li><a href="#ComponentTesting">Component Testing</a></li><li><a href="#PhoronixTestSuitePhoromatic">Phoronix Test Suite Phoromatic</a></li><li><a href="#OfflineTesting">Offline Testing</a></li><li><a href="#OfflineImprovements+ConfidentialTesting/AvoidingAccidentalResultUploads">Offline Improvements + Confidential Testing / Avoiding Accidental Result Uploads</a></li><li><a href="#DevelopmentCredits">Development Credits</a></li></ol><hr style="height: 50px; border: 0;"><a name="GettingStarted"></a><h1>Getting Started</h1>
 <h1>Overview</h1>
 <p>The Phoronix Test Suite is the most comprehensive testing and benchmarking platform available for Linux, Solaris, macOS, Windows, and BSD operating systems. The Phoronix Test Suite allows for carrying out tests in a fully automated manner from test installation to execution and reporting. All tests are meant to be easily reproducible, easy-to-use, and support fully automated execution. The Phoronix Test Suite is open-source under the GNU GPLv3 license and is developed by Phoronix Media in cooperation with partners. Version 1.0 of the Phoronix Test Suite was publicly released in 2008.</p>
 <p>The Phoronix Test Suite client itself is a test framework for providing seamless execution of test profiles and test suites. There are more than 400 tests available by default, which are transparently available via <a href="http://openbenchmarking.org/">OpenBenchmarking.org</a> integration. Of these default test profiles there is a range of sub-systems that can be tested and a range of hardware from mobile devices to desktops and worksrtations/servers. New tests can be easily introduced via the Phoronix Test Suite's extensible test architecture, with test profiles consisting of XML files and shell scripts. Test profiles can produce a quantitative result or other qualitative/abstract results like image quality comparisons and pass/fail. Using Phoronix Test Suite modules, other data can also be automatically collected at run-time such as the system power consumption, disk usage, and other software/hardware sensors. Test suites contain references to test profiles to execute as part of a set or can also reference other test suites. Test suites are defined via an XML schema.</p>
@@ -929,6 +929,129 @@ NOTE: Use the "system-sensors" command to see what sensors are available for mon
 <p>To skip the Phoronix Test Suite external dependency checking/installation when installing a test, set this environment variable to <em>1</em>. If wishing to skip only certain external dependencies, set this variable's value to the name of the external dependencies (the generic dependency names used by the Phoronix Test Suite) to not install. Multiple dependencies to skip can be delimited by a comma.</p>
 <p><strong>PTS_EXTRA_SYSTEM_LOGS_DIR</strong></p>
 <p>By default the Phoronix Test Suite collects common system logs (cpuinfo, lscpu, dmesg) during the benchmarking process when saving test results. If wanting to collect additional, arbitrary system log files specific to your operating environment or for other niche system information, the <em>PTS_EXTRA_SYSTEM_LOGS_DIR</em> environment variable can be set as a path to a directory containing such log files. Prior to running the Phoronix Test Suite simply set <em>PTS_EXTRA_SYSTEM_LOGS_DIR</em> to the directory where any text files should be captured from following test completion.</p>
+<hr style="height: 50px; border: 0;"><a name="MainConfigurationFile(user-config.xmlor/etc/phoronix-test-suite.xml)"></a><h1>Main Configuration File (user-config.xml or /etc/phoronix-test-suite.xml)</h1>
+<p>The <em>user-config.xml</em> file (located at <em>~/.phoronix-test-suite/user-config.xml</em> or <em>/etc/phoronix-test-suite.xml</em> when running as root/admin) contains the user configuration options for the Phoronix Test Suite. To edit any option, open the configuration file within your preferred text editor. Alternatively, you can use the <em>user-config-set</em> option with the Phoronix Test Suite to update settings. For example, to set the download cache with the Phoronix Test Suite, execute <em>phoronix-test-suite user-config-set CacheDirectory=~/cache-directory/</em>.</p>
+
+<h1>OpenBenchmarking Options</h1>
+<h3>AnonymousUsageReporting</h3>
+<p>If this option is set to <em>TRUE</em>, anonymous usage information and statistics, like the tests that are run and their length of run, will be reported to <a href="http://www.openbenchmarking.org/">OpenBenchmarking.org</a> for analytical reasons. All submitted information is kept anonymous. For more information on the anonymous usage reporting, read the Phoronix Test Suite documentation.</p>
+<h3>IndexCacheTTL</h3>
+<p>The time to live for OpenBenchmarking.org index caches. This is an integer representing the number of days before an index cache should be automatically refreshed from OpenBenchmarking.org. The default value is <em>3</em> while setting the value to <em>0</em> will disable automatic refreshing of caches (caches can be manually updated at anytime using the respective command).</p>
+<h3>AlwaysUploadSystemLogs</h3>
+<p>If this option is set to <em>TRUE</em>, the system logs (i.e. dmesg, lspci, lsusb, Xorg.0.log) will always be uploaded to OpenBenchmarking.org when uploading your test results. Otherwise the user is prompted whether to attach the system logs with their results.</p>
+<h3>AllowResultUploadsToOpenBenchmarking</h3>
+<p>This option defines whether to allow/support result uploads to OpenBenchmarking.org. If set to <em>FALSE</em>, the user will not be prompted to allow uploading of test results to the public site.</p>
+
+<h1>General Options</h1>
+<h3>DefaultBrowser</h3>
+<p>The Phoronix Test Suite will automatically attempt to launch the system's default web browser when needed. This is done first by checking for x-www-browser and then xdg-open. If neither command is available, the Phoronix Test Suite will fallback to checking for Firefox, Epiphany, Mozilla, or the open command. If you wish to override the default browser that the Phoronix Test Suite selects, set this tag to the command name of the browser you wish to use. Leaving this tag empty will have the Phoronix Test Suite determine the default web browser.</p>
+<h3>UsePhodeviCache</h3>
+<p>If this option is set to <em>TRUE</em>, the Phoronix Test Suite will use the Phodevi smart cache (if available). The Phodevi smart cache will automatically cache relevant system hardware/software attributes that can be safely stored and will be used until the system's software/hardware has changed or the system rebooted. Enabling this option will speed up the detection of installed hardware and software through the Phoronix Test Suite. If this option is set to <em>FALSE</em>, Phodevi will not generate a smart cache. The default value is <em>TRUE</em>.</p>
+<h3>DefaultDisplayMode</h3>
+<p>This option affects how text is displayed on the command-line interface during the testing process. If this option is set to <em>DEFAULT</em>, the text interface will be the traditional Phoronix Test Suite output. If this option is set to <em>CONCISE</em>, the display mode is shorter and more concise. This is the default mode used during batch testing. The default value is <em>DEFAULT</em>.</p>
+<h3>PhoromaticServers</h3>
+<p>This option can be used to specify the IP address(es) and port(s) of any Phoromatic Servers you wish to connect to for obtaining cached data, connecting to Phoromatic as a client test system, etc. The Phoronix Test Suite will attempt zero-conf network discovery but if that fails you can add the <em>IP:port</em> (the Phoromatic Server's HTTP port) to this element for targeted probing by the Phoronix Test Suite. Multiple Phoromatic Servers can be added if delimited by a comma; e.g. <em>IP:port,IP:port, IP:port</em>.</p>
+
+<h1>Modules Options</h1>
+<h3>AutoLoadModules</h3>
+<p>This tag contains a string of the names of the Phoronix Test Suite modules to load by default when running the Phoronix Test Suite. Multiple modules can be listed when delimited by a comma. Modules that load via setting an environment variable can also be specified here (i.e. <em>FORCE_AA=8</em> as an option in this string to load the <em>graphics_override</em> module with the 8x forced anti-aliasing). The default value is <em>toggle_screensaver, update_checker</em>.</p>
+
+<h1>Installation Options</h1>
+<h3>RemoveDownloadFiles</h3>
+<p>If this option is set to <em>TRUE</em>, once a test has been installed the downloaded files will be removed. Enabling this option will conserve disk space and in nearly all circumstances will not result in any problems. However, if a test profile directly depends upon a file that was downloaded (as opposed to something extracted from a downloaded file during the installation process), enabling this option will cause issues. If this option is set to <em>FALSE</em>, the downloaded files will not be removed unless the test is uninstalled. The default value is <em>FALSE</em>.</p>
+<h3>SearchMediaForCache</h3>
+<p>If this option is set to <em>TRUE</em>, when installing a test it will automatically look for a Phoronix Test Suite download cache on removable media that is attached and mounted on the system. On the Linux operating system, the Phoronix Test Suite looks for devices mounted within the <em>/media/</em> or <em>/Volumes/</em> directories. If a download cache is found (a <em>download-cache/</em> folder within the drive's root directory) and a file it is looking for with matching MD5/SHA256 check-sum, the file will be automatically copied. Otherwise the standard download cache is checked. If this option is set to <em>FALSE</em>, removable media devices are not checked. The default value is <em>TRUE</em>.</p>
+<h3>SymLinkFilesFromCache</h3>
+<p>If this option is set to <em>TRUE</em>, during the test installation process when a file is found in a Phoronix Test Suite download cache, instead of copying the file just provide a symbolic link to the file. Enabling this option will conserve disk space and in nearly all circumstances will not result in any issues, permitting the download cache files are always mounted during testing and are not located on removable media. If this option is set to <em>FALSE</em>, the files will be copied from the download cache. The default value is <em>FALSE</em>.</p>
+<h3>PromptForDownloadMirror</h3>
+<p>If this option is set to <em>TRUE</em>, when downloading a test file the user will be prompted to select a mirror when multiple mirrors available. This option is targeted for those in remote regions or where their download speed may be greatly affected depending upon the server. If this option is set to <em>FALSE</em>, the Phoronix Test Suite will randomly pick a mirror. The default value is <em>FALSE</em>.</p>
+<h3>EnvironmentDirectory</h3>
+<p>This option sets the directory where tests will be installed to by the Phoronix Test Suite. The full path to the directory on the local file-system should be specified, though <em>~</em> is a valid character for denoting the user's home directory. The default value is <em>~/.phoronix-test-suite/installed-tests/</em>.</p>
+<h3>CacheDirectory</h3>
+<p>This option sets the directory for the main download cache. The download cache is checked when installing a test while attempting to locate a needed test file. If the file is found in the download cache, it will not be downloaded from there instead of an Internet mirror. When running <em>phoronix-test-suite make-download-cache</em>, files are automatically copied to this directory. The full path to the directory should be specified, though <em>~</em> is a valid character for denoting the user's home directory. Specifying an HTTP or FTP URL is valid. The default value is <em>~/.phoronix-test-suite/download-cache/</em>. Multiple cache directories can be specified as of Phoronix Test Suite 2.2 with each directory being delimited by a colon.</p>
+
+<h1>Testing Options</h1>
+<h3>SleepTimeBetweenTests</h3>
+<p>This option sets the time (in seconds) to sleep between running tests. The default value is <em>8</em>.</p>
+<h3>SaveSystemLogs</h3>
+<p>If this option is set to <em>TRUE</em>, when saving the results from a test it will also save various system details and logs to a sub-directory of the result file's location. Among the logs that will be archived include the X.Org log, dmesg, and lspci outputs. These system details may also be saved if a test suite explicitly requests this information be saved. If this option is set to <em>FALSE</em>, the system details / logs will not be saved by default. The default value is <em>FALSE</em>. When running in batch mode or using a Phoronix Certification and Qualification Suite, the logs will be saved regardless of this user setting.</p>
+<h3>SaveInstallationLogs</h3>
+<p>If this option is set to <em>TRUE</em>, when saving the results from a test it will archive the complete output generated by the test during its earlier installation process. The log(s) are then saved to a sub-directory of the result file's location. If this option is set to <em>FALSE</em>, the full test logs will not be saved. The default value is <em>FALSE</em>. When running in batch mode or using a Phoronix Certification and Qualification Suite, the logs will be saved regardless of this user setting.</p>
+<h3>RemoveTestInstallOnCompletion</h3>
+<p>If this option is set to <em>TRUE</em>, after a test has been completed, if that test profile is no longer present later in the test queue, the test installation will be removed from the disk. If the test is to be run at a later time, it will need to be re-installed. This is useful for embedded environments or Live CD/DVDs where the available memory (RAM) for storage may be limited.</p>
+<h3>SaveTestLogs</h3>
+<p>If this option is set to <em>TRUE</em>, when saving the results from a test it will archive the complete output of each test's run generated by the application under test itself. The default value is <em>FALSE</em>.</p>
+<h3>ResultsDirectory</h3>
+<p>This option sets the directory where test results will be saved by the Phoronix Test Suite. The full path to the directory on the local file-system should be specified, though <em>~</em> is a valid character for denoting the user's home directory. The default value is <em>~/.phoronix-test-suite/test-results/</em>.</p>
+<h3>AlwaysUploadResultsToOpenBenchmarking</h3>
+<p>This option defines whether test results should always be uploaded to OpenBenchmarking.org upon their completion. If this value is set to <em>FALSE</em>, the user will be prompted each time whether the results should be uploaded to OpenBenchmarking.org, unless running in batch mode where the value is pre-defined. The default value is <em>FALSE</em>.</p>
+<h3>AutoSortRunQueue</h3>
+<p>This option defines whether the Phoronix Test Suite should sort the queue of tests to run based upon their title and category of tests. If <em>FALSE</em>, the run queue won't be sorted and they will be run in the order they were added.</p>
+<h3>ShowPostRunStatistics</h3>
+<p>If <em>TRUE</em>, the Phoronix Test Suite will show various test run statistics / comparison data based upon the test results / result file being tested after the testing has finished.</p>
+
+<h1>TestResultValidation Options</h1>
+<h3>DynamicRunCount</h3>
+<p>If this option is set to <em>TRUE</em>, the Phoronix Test Suite will automatically increase the number of times a test is to be run if the standard deviation of the test results exceeds a predefined threshold. This option is set to <em>TRUE</em> by default and is designed to ensure the statistical signifiance of the test results. The run count will increase until the standard deviation falls below the threshold or when the total number of run counts exceeds twice the amount that is set to run by default from the given test profile. Under certain conditions the run count may also increase further.</p>
+<h3>LimitDynamicToTestLength</h3>
+<p>If <em>DynamicRunCount</em> is set to <em>TRUE</em>, this option sets a limit on the maximum length per trial run that a test can execute (in minutes) for the run count to be adjusted. This option is to prevent tests that take a very long amount of time to run from consuming too much time. By default this value is set to <em>20</em> minutes.</p>
+<h3>StandardDeviationThreshold</h3>
+<p>This option defines the overall standard deviation threshold (as a percent) for the Phoronix Test Suite to dynamically increase the run count of a test if this limit is exceeded. The default value is <em>3.50</em>.</p>
+<h3>ExportResultsTo</h3>
+<p>This option can specify a file (either the absolute path or relative if contained within <em>~/.phoronix-test-suite/</em> where a set of test results will be passed as the first argument as a string with each of the test results being delimited by a colon. If the executed script returns an exit status of <em>0</em> the results are considered valid, if the script returns an exit status of <em>1</em> the Phoronix Test Suite will request the test be run again.</p>
+
+<h1>ResultViewer Options</h1>
+<h3>WebPort</h3>
+<p>The default HTTP web port to use for launching the web-based result viewer. If the value is set to <em>RANDOM</em>, a random open web port will be used.</p>
+<h3>LimitAccessToLocalHost</h3>
+<p>If this value is set to <em>TRUE</em> (default), the web-based result viewer is only accessible by the local host. If the value is <em>FALSE</em>, anyone with access to the IP/port can access the result viewer.</p>
+<h3>AccessKey</h3>
+<p>An access key / password can be optionally supplied as a basic precaution particularly for web-accessible result viewers that aren't limited to the local host. Set the string value here of the desired key/password that the user will be prompted to enter when trying to access the result viewer.</p>
+<h3>AllowSavingResultChanges</h3>
+<p>This allows saving result file changes (notes, modifying result files, etc) of result files from the web-based result viewer. Besides needing to be set to <em>TRUE</em>, the result file directory must also be write-enabled.</p>
+<h3>AllowDeletingResults</h3>
+<p>This option is similar to <em>AllowSavingResultChanges</em> but controls the behavior of whether results can be permanently removed. Besides needing to be set to <em>TRUE</em>, the result file directory must also be write-enabled.</p>
+
+<h1>Batch Mode Options</h1>
+<p>The batch mode options are only used when using either the <em>batch-run</em> or <em>batch-benchmark</em> options with the Phoronix Test Suite. This mode is designed to fully automate the operation of the Phoronix Test Suite except for areas where the user would like to be prompted. To configure the batch mode options, it is recommended to run <em>phoronix-test-suite batch-setup</em> instead of modifying these values by hand.</p>
+<h3>SaveResults</h3>
+<p>If this option is set to <em>TRUE</em>, when running in batch mode the test results will be automatically saved.</p>
+<h3>OpenBrowser</h3>
+<p>If this option is set to <em>TRUE</em>, when running in batch mode the web-browser will automatically open when displaying test results. If this option is set to <em>FALSE</em>, the web-browser will not be opened.</p>
+<h3>UploadResults</h3>
+<p>If this option is set to <em>TRUE</em>, when running in batch mode the test results will be automatically uploaded to <a href="http://www.openbenchmarking.org/">OpenBenchmarking.org</a>.</p>
+<h3>PromptForTestIdentifier</h3>
+<p>If this option is set to <em>TRUE</em>, when running in batch mode the user will be prompted to enter a test identifier. If this option is set to <em>FALSE</em>, a test identifier will be automatically generated.</p>
+<h3>PromptForTestDescription</h3>
+<p>If this option is set to <em>TRUE</em>, when running in batch mode the user will be prompted to enter a test description. If this option is set to <em>FALSE</em>, the default test description will be used.</p>
+<h3>PromptSaveName</h3>
+<p>If this option is set to <em>TRUE</em>, when running in batch mode the user will be prompted to enter a test name. If this option is set to <em>FALSE</em>, a test name will be automatically generated.</p>
+
+<h1>Networking Options</h1>
+<h3>NoInternetCommunication</h3>
+<p>If you wish to disable Internet communication within the Phoronix Test Suite by default, set this option to <em>TRUE</em>. The default value is <em>FALSE</em>. Setting this to <em>FALSE</em> will still allow Phoromatic to communicate with network servers such as for intranet-based download caches or a Phoromatic Server. Internet support is generally required for downloading test profiles from OpenBenchmarking.org, acquiring necessary test files from their respective sources, etc.</p>
+<h3>NoNetworkCommunication</h3>
+<p>If you wish to disable network support (including Internet access) entirely within the Phoronix Test Suite, set this option to <em>TRUE</em>. The default value is <em>FALSE</em>.</p>
+<h3>Timeout</h3>
+<p>This is the read timeout (in seconds) for network connections. The default value is <em>20</em>.</p>
+<h3>ProxyAddress</h3>
+<p>If you wish to use a HTTP proxy server to allow the Phoronix Test Suite to communicate with OpenBenchmarking.org and other web services, enter the IP address / server name of the proxy server in this tag. If the proxy address and port tags are left empty but the <em>http_proxy</em> environment variable is set, the Phoronix Test Suite will attempt to use that as the proxy information.</p>
+<h3>ProxyPort</h3>
+<p>If using a proxy server, enter the TCP port in this tag.</p>
+
+<h1>Server Options</h1>
+<h3>RemoteAccessPort</h3>
+<p>If you wish to allow remote access to the built-in web-based interface to the Phoronix Test Suite when running its built-in web server, set the port number for remote access here. Port 80 is the common HTTP port but the Phoronix Test Suite web-interface can be easily set to other port numbers. If you do not wish to allow remote access, use the default value of <em>FALSE</em> or <em>-1</em>. If the value is set to <em>RANDOM</em>, a random port number will be chosen.</p>
+<h3>Password</h3>
+<p>If you wish to require a password when entering the web-based interface to the Phoronix Test Suite -- either locally or remotely -- specify the password here using the password's SHA256 sum as the value.</p>
+<h3>WebSocketPort</h3>
+<p>The default port to use when running a WebSocket server. If no port is assigned or <em>RANDOM</em> is set, a random port will be chosen.</p>
+<h3>AdvertiseServiceZeroConf</h3>
+<p>If this option is set to <em>TRUE</em> when starting a Phoromatic Server instance, the software will attempt to broadcast its service using zeroconf networking (Avahi on Linux assuming <em>avahi-publish</em> is present).</p>
+<h3>AdvertiseServiceOpenBenchmarkRelay</h3>
+<p>If this option is set to <em>TRUE</em> when starting a Phoromatic Server instance, the software will broadcast the local IP/port of the server to a private OpenBenchmarking.org service so that if any other user on the local IP block from the same global IP address is in search of a Phoromatic Server, the IP address will be relayed. This is an alternative or complementary to the zero-conf/Avahi option above to help systems running the Phoronix Test Suite client on a LAN discover a Phoromatic Server for easy setup and/or download cache support for faster test setup/installation.</p>
+<h3>PhoromaticStorage</h3>
+<p>The location for the Phoromatic Server to store test results of connected systems, account information, etc. The default location is <em>~/.phoronix-test-suite/phoromatic/</em>.</p>
 <hr style="height: 50px; border: 0;"><a name="GeneralInformation"></a><h1>General Information</h1>
 <h1>Frequently Asked Questions</h1>
 <p><strong><em>Q:</em> May I use the Phoronix Test Suite when running benchmarks for my own publication or blog? Are there any publishing restrictions?</strong></p>
