@@ -825,6 +825,24 @@ class phodevi_system extends phodevi_device_interface
 			$compilers['clang'] = $compiler_info;
 		}
 
+		// For now at least Intel oneAPI has symlink from clang to icpx so this below code isn't needed in such case
+		if(!pts_client::executable_in_path('clang') && ($icpx = pts_client::executable_in_path('icpx')))
+		{
+			// Intel oneAPI DPC++/C++ Compiler
+			$icpx = shell_exec(escapeshellarg($icpx) . ' --version');
+			$icpx = substr($icpx, 0, strpos($icpx, PHP_EOL));
+			if(stripos($icpx, 'oneAPI') !== false)
+			{
+				$icpx = str_ireplace(array('(R)'), '', $icpx);
+				if(($x = strpos($icpx, ' (')) !== false)
+				{
+					$icpx = substr($icpx, 0, $x);
+				}
+			}
+
+			$compilers['icpx'] = $icpx;
+		}
+
 		if(($llvm_ld = pts_client::executable_in_path('llvm-link')) || ($llvm_ld = pts_client::executable_in_path('llvm-ld')))
 		{
 			// LLVM - Low Level Virtual Machine
@@ -911,10 +929,22 @@ class phodevi_system extends phodevi_device_interface
 			}
 		}
 
-		if(pts_client::executable_in_path('icc'))
+		if(($icc = pts_client::executable_in_path('icc')) || ($icc = pts_client::executable_in_path('icpc')))
 		{
-			// Intel C++ Compiler
-			$compilers['icc'] = 'ICC';
+			// Intel oneAPI DPC++/C++ Compiler
+			$icc = shell_exec(escapeshellarg($icc) . ' --version');
+			$icc = substr($icc, 0, strpos($icc, PHP_EOL));
+			if(stripos($icc, 'icc') !== false)
+			{
+				$icc = str_ireplace(array('(R)', '(ICC)', '(C)'), '', $icc);
+				if(($x = strpos($icpx, ' (')) !== false)
+				{
+					$icpx = substr($icc, 0, $x);
+				}
+			}
+
+			$icc = str_replace('icc', 'ICC', $icc);
+			$compilers['icc'] = $icc;
 		}
 
 		if(phodevi::is_macos() && pts_client::executable_in_path('xcodebuild'))
