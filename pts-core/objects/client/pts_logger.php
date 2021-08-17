@@ -24,6 +24,7 @@
 class pts_logger
 {
 	private $log_file = null;
+	private $log_to_console = FALSE;
 
 	public function __construct($log_file = null, $file_name = null)
 	{
@@ -54,6 +55,8 @@ class pts_logger
 
 		if(is_writable($log_file))
 			$this->log_file = $log_file;
+
+		$log_to_console = pts_config::read_user_config('PhoronixTestSuite/Options/General/PrintToConsole', 'FALSE');
 	}
 	public static function default_log_file_path()
 	{
@@ -96,7 +99,10 @@ class pts_logger
 		}
 
 		$message = pts_user_io::strip_ansi_escape_sequences($message);
-		file_put_contents($this->log_file, ($date_prefix ? '[' . date('Y-m-d\TH:i:sO') . '] ' : null) . "[" . $caller . "(". $file . ":" . $line . ")] " . $message . PHP_EOL, FILE_APPEND);
+
+		$full_message = ($date_prefix ? '[' . date('Y-m-d\TH:i:sO') . '] ' : null) . "[" . $caller . "(". $file . ":" . $line . ")] " . $message . PHP_EOL;
+		print_r($full_message);
+		file_put_contents($this->log_file, $full_message, FILE_APPEND);
 	}
 	public function get_log_file_size()
 	{
