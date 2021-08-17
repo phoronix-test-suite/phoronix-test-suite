@@ -21,6 +21,8 @@
 */
 //error_reporting(E_ALL | E_NOTICE | E_STRICT);
 
+$pts_logger = new pts_logger();
+
 if(!function_exists('sqlite_escape_string'))
 {
 	function sqlite_escape_string($str)
@@ -77,6 +79,8 @@ if(!is_array($Featured))
 {
 	$Featured = array(null, null);
 }*/
+
+$pts_logger->log("Received valid result file for " . ACCOUNT_ID . " for system " . SYSTEM_ID . " with " . result_file->get_test_count() . " tests.");
 
 // DETERMINE UNIQUE UPLOAD ID
 // IP = INET_ATON($_SERVER["REMOTE_ADDR"]);

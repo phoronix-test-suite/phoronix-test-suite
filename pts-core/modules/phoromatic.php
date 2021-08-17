@@ -44,6 +44,8 @@ class phoromatic extends pts_module_interface
 
 	private static $test_run_manager = null;
 
+	private static $poll_delay = 60;
+
 	public static function module_info()
 	{
 		return 'The Phoromatic module contains the client support for interacting with Phoromatic and Phoromatic Tracker services.';
@@ -241,7 +243,7 @@ class phoromatic extends pts_module_interface
 			}
 
 			// Randomize the thread work a little bit to ensure not hitting the systems at the same time
-			sleep(rand(60, 90));
+			sleep(rand(self::$poll_delay, self::$poll_delay*1.5));
 		}
 	}
 	protected static function upload_to_remote_server($to_post, $server_address = null, $server_http_port = null, $account_id = null)
@@ -297,8 +299,8 @@ class phoromatic extends pts_module_interface
 		static $last_msg = null;
 
 		// Avoid an endless flow of "idling" messages, etc
-		if($current_task != $last_msg)
-			pts_client::$pts_logger && pts_client::$pts_logger->log($current_task);
+		//if($current_task != $last_msg)
+		pts_client::$pts_logger && pts_client::$pts_logger->log($current_task);
 		$last_msg = $current_task;
 
 		if(self::$limit_network_communication)
@@ -456,11 +458,11 @@ class phoromatic extends pts_module_interface
 		}
 		pts_client::$pts_logger->log(pts_core::program_title(true) . ' [' . PTS_CORE_VERSION . '] starting Phoromatic client');
 
-		if(phodevi::system_uptime() < 60)
+		if(phodevi::system_uptime() < self::$poll_delay)
 		{
-			echo 'PHOROMATIC: Sleeping for 60 seconds as system freshly started.' . PHP_EOL;
-			pts_client::$pts_logger->log('Sleeping for 60 seconds as system freshly started');
-			sleep(60);
+			echo 'PHOROMATIC: Sleeping for ' . self::$poll_delay . ' seconds as system freshly started.' . PHP_EOL;
+			pts_client::$pts_logger->log('Sleeping for '. self::$poll_delay .' seconds as system freshly started');
+			sleep(self::$poll_delay);
 		}
 
 		$server_setup = self::setup_server_addressing($args);
@@ -540,7 +542,8 @@ class phoromatic extends pts_module_interface
 					}
 					if(isset($json['phoromatic']['response']) && !empty($json['phoromatic']['response']))
 					{
-						echo PHP_EOL . $json['phoromatic']['response'] . PHP_EOL;
+						if($json['phoromatic']['task'] != 'idle') 
+						   echo PHP_EOL . $json['phoromatic']['response'] . PHP_EOL;
 					}
 				}
 
@@ -548,7 +551,7 @@ class phoromatic extends pts_module_interface
 				if(self::$limit_network_communication)
 				{
 					// Sleep to ensure network communication is somewhat random in case all systems started at same time
-					sleep(0, 20);
+					sleep(rand(0, 20));
 				}
 
 				if($just_started)
@@ -594,6 +597,7 @@ class phoromatic extends pts_module_interface
 					case 'install':
 						phoromatic::update_system_status('Installing Tests');
 						$phoromatic_suite = new pts_test_suite($json['phoromatic']['test_suite']);
+						pts_client::$pts_logger->log("Intalling new test: " . $json['phoromatic']['test_suite']);
 						pts_test_installer::standard_install($phoromatic_suite, false, true);
 						break;
 					case 'benchmark':
@@ -700,8 +704,12 @@ class phoromatic extends pts_module_interface
 								// Handle uploading data to server
 								$result_file = new pts_result_file(self::$test_run_manager->get_file_name());
 								$upload_system_logs = pts_strings::string_bool($json['phoromatic']['settings']['UploadSystemLogs']);
-								$server_response = self::upload_test_result($result_file, $upload_system_logs, (isset($json['phoromatic']['schedule_id']) ? $json['phoromatic']['schedule_id'] : null), $phoromatic_save_identifier, $json['phoromatic']['trigger_id'], $elapsed_benchmark_time, $benchmark_ticket_id);
-								//pts_client::$pts_logger->log('DEBUG RESPONSE MESSAGE: ' . $server_response);
+								$server_response = self::upload_test_result($result_file, $upload_system_logs, (isset($json['phoromatic']['schedule_id']) ? $json['phoromatic']['schedule_id'] : null), $phoromatic_save_identifier, $json['phoromatic']['trigger_id'], $elapsed_benchmark_time, $benchmark_ticket_id);								
+
+								$server_response = json_decode($server_response, true);
+								if(isset($server_response['phoromatic']['error']))
+									pts_client::$pts_logger->log('Phoromatic Server Reported Error: ' . $server_response['phoromatic']['error']);
+				
 								if(!pts_strings::string_bool($json['phoromatic']['settings']['ArchiveResultsLocally']))
 								{
 									pts_results::remove_saved_result_file(self::$test_run_manager->get_file_name());
@@ -748,7 +756,7 @@ class phoromatic extends pts_module_interface
 					case 'maintenance':
 						echo PHP_EOL . 'Idling, system maintenance mode set by Phoromatic Server.' . PHP_EOL;
 						phoromatic::update_system_status('Maintenance Mode' . self::check_for_separate_pts_thread_process());
-						sleep(60);
+						sleep(self::$poll_delay);
 						break;
 					case 'idle':
 						if(isset($json['phoromatic']['client_update_script']) && !empty($json['phoromatic']['client_update_script']))
@@ -756,7 +764,7 @@ class phoromatic extends pts_module_interface
 							self::run_client_update_script($json['phoromatic']['client_update_script']);
 						}
 						//echo PHP_EOL . 'Idling, waiting for task.' . PHP_EOL;
-						phoromatic::update_system_status('Idling, Waiting For Task' . self::check_for_separate_pts_thread_process());
+						phoromatic::update_system_status('Idling, will wait for next task' . self::check_for_separate_pts_thread_process());
 						break;
 					case 'exit':
 						echo PHP_EOL . 'Phoromatic received a remote command to exit.' . PHP_EOL;
@@ -768,12 +776,16 @@ class phoromatic extends pts_module_interface
 
 			if(!$do_exit)
 			{
+				$delay = self::$poll_delay;
+
 				if($server_response == false)
-					sleep(rand(10, 30));
+					$delay = rand(10, 30);
 				else if(self::$limit_network_communication)
-					sleep(60, 240);
-				else
-					sleep(60);
+					$delay = rand(self::$poll_delay, self::$poll_delay * 4);
+
+				pts_client::$pts_logger && pts_client::$pts_logger->log('Waiting for '. $delay . ' before next server checkin.');
+				sleep($delay);
+
 			}
 		}
 
@@ -846,7 +858,7 @@ class phoromatic extends pts_module_interface
 				}
 				else
 				{
-					//	trigger_error('The systems log attachment is too large to upload to OpenBenchmarking.org.', E_USER_WARNING);
+					pts_client::$pts_logger && pts_client::$pts_logger->log('The systems log attachment is too large to upload');
 				}
 				unlink($system_logs_zip);
 			}
