@@ -675,7 +675,7 @@ class pts_test_result_parser
 						pts_test_result_parser::debug_message('No Result Parsing Hint, Including Entire Result Output');
 						$line = trim($output);
 					}
-					if($e->get_turn_chars_to_space() != null)
+					if($e->get_turn_chars_to_space() != null && $line != null)
 					{
 						$line = str_replace($e->get_turn_chars_to_space(), ' ', $line);
 					}

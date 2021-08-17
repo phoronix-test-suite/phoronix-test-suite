@@ -301,10 +301,10 @@ function pts_version_codenames()
 		);
 }
 
-pts_define('PTS_VERSION', '10.4.0');
-pts_define('PTS_CORE_VERSION', 10400);
-pts_define('PTS_RELEASE_DATE', '20210516');
-pts_define('PTS_CODENAME', 'Ibestad');
+pts_define('PTS_VERSION', '10.6.0');
+pts_define('PTS_CORE_VERSION', 10600);
+pts_define('PTS_RELEASE_DATE', '20210806');
+pts_define('PTS_CODENAME', 'Tjeldsund');
 
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));
 pts_define('PTS_IS_WEB_CLIENT', (defined('PTS_MODE') && PTS_MODE == 'WEB_CLIENT'));
