@@ -1643,9 +1643,10 @@ class pts_client
 					break;
 				}
 			}
-			echo pts_user_io::display_text_table($t, '   ') . PHP_EOL . PHP_EOL;
+			echo pts_user_io::display_text_table($t, '   ') . PHP_EOL;
 		}
 		*/
+		echo PHP_EOL;
 
 		$similar_tests = array();
 		if(!empty($passed_args))
