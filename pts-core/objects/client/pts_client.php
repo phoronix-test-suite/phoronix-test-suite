@@ -1627,6 +1627,9 @@ class pts_client
 			}
 		}
 
+		// Disable this for now to cutdown on server resources and since not too useful
+		// same info can be gathered from `phoronix-test-suite openbenchmarking-uploads`
+		/*
 		if(count($result_uploads = pts_openbenchmarking::result_uploads_from_this_ip()) > 0)
 		{
 			echo PHP_EOL . pts_client::cli_just_bold('Recent OpenBenchmarking.org Results From This IP:') . PHP_EOL;
@@ -1642,6 +1645,7 @@ class pts_client
 			}
 			echo pts_user_io::display_text_table($t, '   ') . PHP_EOL . PHP_EOL;
 		}
+		*/
 
 		$similar_tests = array();
 		if(!empty($passed_args))
