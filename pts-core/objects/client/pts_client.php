@@ -132,6 +132,14 @@ class pts_client
 		pts_file_io::unlink($lock_file);
 		unset(self::$lock_pointers[$lock_file]);
 	}
+	public static function write_to_lock($lock_file, $contents)
+	{
+		if(isset(self::$lock_pointers[$lock_file]) && is_resource(self::$lock_pointers[$lock_file]))
+		{
+			fwrite(self::$lock_pointers[$lock_file], $contents);
+			fflush(self::$lock_pointers[$lock_file]);
+		}
+	}
 	public static function init()
 	{
 		pts_core::init();
@@ -2099,6 +2107,28 @@ class pts_client
 
 		return $cache[$executable];
 	}
+	public static function test_for_result_viewer_connection($port)
+	{
+		if(is_numeric($port))
+		{
+			$dynamic_urls_to_try = array();
+
+			// Due to the way PHP web server is handled depending upon if remote allowed,
+			// both URLs need to be tried
+			$dynamic_urls_to_try[] = 'http://localhost:' . $port;
+			$dynamic_urls_to_try[] = 'http://127.0.0.1:' . $port;
+
+			foreach($dynamic_urls_to_try as $base_url)
+			{
+				if(pts_network::http_get_contents($base_url . '/index.php?PTS', false, false, false, false, 3) == 'PTS')
+				{
+					return $base_url;
+				}
+			}
+		}
+
+		return false;
+	}
 	public static function display_result_view($result_file, $auto_open = false, $prompt_text = null)
 	{
 		if(defined('PHOROMATIC_PROCESS'))
@@ -2129,21 +2159,19 @@ class pts_client
 				sleep(5);
 			}
 
-			$dynamic_urls_to_try = array();
+			$ports_to_try = array();
 			if(pts_client::$web_result_viewer_active)
 			{
-				$dynamic_urls_to_try[] = 'http://localhost:' . pts_client::$web_result_viewer_active;
-				$dynamic_urls_to_try[] = 'http://127.0.0.1:' . pts_client::$web_result_viewer_active;
+				$ports_to_try[] = pts_client::$web_result_viewer_active;
 			}
 			if(($restored_port = pts_storage_object::read_from_file(PTS_CORE_STORAGE, 'last_web_result_viewer_active_port')) != false && is_numeric($restored_port) && $restored_port > 20)
 			{
-				$dynamic_urls_to_try[] = 'http://localhost:' . $restored_port;
-				$dynamic_urls_to_try[] = 'http://127.0.0.1:' . $restored_port;
+				$ports_to_try[] = $restored_port;
 			}
 
-			foreach($dynamic_urls_to_try as $base_url)
+			foreach($ports_to_try as $try_port)
 			{
-				if(pts_network::http_get_contents($base_url . '/index.php?PTS', false, false, false, false, 2) == 'PTS')
+				if(($base_url = pts_client::test_for_result_viewer_connection($try_port)))
 				{
 					pts_client::$has_used_modern_result_viewer = true;
 					pts_client::$last_result_view_url = $base_url . '/result/' . $result_file->get_identifier();
