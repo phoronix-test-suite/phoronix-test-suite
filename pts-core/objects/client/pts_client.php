@@ -559,11 +559,6 @@ class pts_client
 		{
 			$save_name = basename($save_to, '.xml');
 
-			if($save_name == 'composite' && $render_graphs)
-			{
-				pts_client::generate_result_file_graphs($save_results, $save_to_dir);
-			}
-
 			$bool = file_put_contents(PTS_SAVE_RESULTS_PATH . $save_to, $save_results);
 
 			if($result_identifier != null && pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/SaveSystemLogs', 'TRUE'))
@@ -1194,7 +1189,7 @@ class pts_client
 		{
 			pts_file_io::mkdir($save_to_dir);
 		}
-		copy(PTS_CORE_STATIC_PATH . 'result-viewer.html', $save_to_dir . '/index.html');
+
 		return $save_to_dir;
 	}
 	public static function remove_installed_test(&$test_profile)
@@ -1220,6 +1215,8 @@ class pts_client
 	}
 	public static function generate_result_file_graphs($test_results_identifier, $save_to_dir = false, $extra_attributes = null)
 	{
+		// Since dropping the old result viewer, this function is no longer used except for niche cases (debug render, PDF generation)
+
 		if($save_to_dir)
 		{
 			if(pts_file_io::mkdir($save_to_dir . '/result-graphs') == false)
@@ -1358,12 +1355,6 @@ class pts_client
 				$graph->svg_dom->output($save_to_dir . '/result-graphs/radar.BILDE_EXTENSION');
 			}
 			unset($graph);
-		}
-
-		// Save the result viewer
-		if(count($generated_graphs) > 0 && $save_to_dir)
-		{
-			copy(PTS_CORE_STATIC_PATH . 'result-viewer.html', $save_to_dir . '/index.html');
 		}
 
 		return $generated_graphs;
@@ -2180,17 +2171,14 @@ class pts_client
 				}
 			}
 
-			// Fallback to old result viewer
-			if($result_file->get_file_location() != null)
+			// Failed to start/find the dynamic result viewer...
+			trigger_error('Dynamic result viewer not running or inaccessible', E_USER_WARNING);
+			$prompt_text = !empty($prompt_text) ? $prompt_text : 'Do you want to view the text-based test results?';
+			$txt_results = $auto_open || pts_user_io::prompt_bool_input($prompt_text, true);
+			if($txt_results)
 			{
-				$index_html = dirname($result_file->get_file_location()) . '/index.html';
+				echo pts_result_file_output::result_file_to_text($result_file, pts_client::terminal_width());
 			}
-			else
-			{
-				$index_html = PTS_SAVE_RESULTS_PATH . $result_file->get_identifier() . '/index.html';
-			}
-
-			pts_client::display_web_page($index_html, $prompt_text, true, $auto_open);
 		}
 	}
 	public static function display_web_page($URL, $alt_text = null, $default_open = true, $auto_open = false)
