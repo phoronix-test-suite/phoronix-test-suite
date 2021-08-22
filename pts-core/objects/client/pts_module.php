@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2018, Phoronix Media
-	Copyright (C) 2008 - 2018, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 	pts_module_interface.php: The generic Phoronix Test Suite module object that is extended by the specific modules/plug-ins
 
 	This program is free software; you can redistribute it and/or modify
@@ -49,38 +49,17 @@ class pts_module
 	{
 		return is_file(pts_module::module_local_path() . $name . '.php') || is_file(pts_module::module_path() . $name . '.php');
 	}
-	public static function module_config_save($module_name, $set_options = null)
+	public static function module_config_save($module_name, $set_options)
 	{
 		// Validate the config files, update them (or write them) if needed, and other configuration file tasks
 		pts_file_io::mkdir(pts_module::module_data_path() . $module_name);
-		$settings_to_write = array();
-
-		if(is_file(pts_module::module_data_path() . $module_name . "/module-settings.xml"))
+		$existing_ini = is_file(pts_module::module_data_path() . $module_name . '/module-settings.ini') ? parse_ini_file(pts_module::module_data_path() . $module_name . '/module-settings.ini') : array();
+		$ini_to_write = null;
+		foreach(array_merge($existing_ini, $set_options) as $id => $v)
 		{
-			$module_config_parser = new nye_XmlReader(pts_module::module_data_path() . $module_name . "/module-settings.xml");
-			$option_identifier = $module_config_parser->getXMLArrayValues('PhoronixTestSuite/ModuleSettings/Option/Identifier');
-			$option_value = $module_config_parser->getXMLArrayValues('PhoronixTestSuite/ModuleSettings/Option/Value');
-
-			for($i = 0; $i < count($option_identifier); $i++)
-			{
-				$settings_to_write[$option_identifier[$i]] = $option_value[$i];
-			}
+			$ini_to_write .= $id . '=' . $v . PHP_EOL;
 		}
-
-		foreach($set_options as $identifier => $value)
-		{
-			$settings_to_write[$identifier] = $value;
-		}
-
-		$config = new nye_XmlWriter();
-
-		foreach($settings_to_write as $identifier => $value)
-		{
-			$config->addXmlNode('PhoronixTestSuite/ModuleSettings/Option/Identifier', $identifier);
-			$config->addXmlNode('PhoronixTestSuite/ModuleSettings/Option/Value', $value);
-		}
-
-		$config->saveXMLFile(pts_module::module_data_path() . $module_name . "/module-settings.xml");
+		file_put_contents(pts_module::module_data_path() . $module_name . '/module-settings.ini', $ini_to_write);
 	}
 	public static function is_module_setup()
 	{
@@ -135,19 +114,8 @@ class pts_module
 	public static function read_option($identifier, $default_fallback = false)
 	{
 		$module_name = self::module_name();
-		$value = false;
-
-		$module_config_parser = new nye_XmlReader(pts_module::module_data_path() . $module_name . "/module-settings.xml");
-		$option_identifier = $module_config_parser->getXMLArrayValues('PhoronixTestSuite/ModuleSettings/Option/Identifier');
-		$option_value = $module_config_parser->getXMLArrayValues('PhoronixTestSuite/ModuleSettings/Option/Value');
-
-		for($i = 0; $i < count($option_identifier) && $value == false; $i++)
-		{
-			if($option_identifier[$i] == $identifier)
-			{
-				$value = $option_value[$i];
-			}
-		}
+		$existing_ini = is_file(pts_module::module_data_path() . $module_name . '/module-settings.ini') ? parse_ini_file(pts_module::module_data_path() . $module_name . '/module-settings.ini') : array();
+		$value = isset($existing_ini[$identifier]) ? $existing_ini[$identifier] : null;
 
 		if($default_fallback && empty($value))
 		{
