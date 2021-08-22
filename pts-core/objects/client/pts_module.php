@@ -165,22 +165,6 @@ class pts_module
 
 		return $value;
 	}
-	public static function read_all_options()
-	{
-		$module_name = self::module_name();
-		$options = array();
-
-		$module_config_parser = new nye_XmlReader(pts_module::module_data_path() . $module_name . "/module-settings.xml");
-		$option_identifier = $module_config_parser->getXMLArrayValues('PhoronixTestSuite/ModuleSettings/Option/Identifier');
-		$option_value = $module_config_parser->getXMLArrayValues('PhoronixTestSuite/ModuleSettings/Option/Value');
-
-		for($i = 0; $i < count($option_identifier); $i++)
-		{
-			$options[$option_identifier[$i]] = $option_value[$i];
-		}
-
-		return $options;
-	}
 	public static function set_option($identifier, $value)
 	{
 		pts_module::module_config_save(self::module_name(), array($identifier => $value));
