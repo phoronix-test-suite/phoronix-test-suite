@@ -108,10 +108,9 @@ class cpu_usage extends phodevi_sensor
 	}
 	private function cpu_usage_linux_bsd()
 	{
-		static $last_cpu_hit = -1;
-		static $cpu_stat_first = null;
-		static $cpu_stat_second = null;
-		if(($last_cpu_hit == $this->cpu_to_monitor || $cpu_stat_first == null) && is_file('/proc/stat'))
+		$cpu_stat_first = null;
+		$cpu_stat_second = null;
+		if(is_file('/proc/stat'))
 		{
 			$cpu_stat_first = file_get_contents('/proc/stat');
 			usleep(500000);
@@ -119,7 +118,6 @@ class cpu_usage extends phodevi_sensor
 
 		}
 		$start_load = self::cpu_load_array($cpu_stat_first);
-		//TODO make sleep duration configurable by envvar
 		if($cpu_stat_second == null)
 		{
 			usleep(500000);
