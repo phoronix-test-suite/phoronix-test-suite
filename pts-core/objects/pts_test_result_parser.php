@@ -635,14 +635,14 @@ class pts_test_result_parser
 					{
 						pts_test_result_parser::debug_message('Result Parsing Line Before Hint: ' . $line_before_hint);
 						$line = substr($output, strpos($output, "\n", strrpos($output, $line_before_hint)));
-						$line = substr($line, 0, strpos($line, "\n", 1));
+						$line = substr($line, 0, strpos($line, "\n", (isset($line[2]) ? 1 : 0)));
 						$output = substr($output, 0, strrpos($output, "\n", strrpos($output, $line_before_hint))) . "\n";
 					}
 					else if($line_after_hint != null)
 					{
 						pts_test_result_parser::debug_message('Result Parsing Line After Hint: ' . $line_after_hint);
 						$line = substr($output, 0, strrpos($output, "\n", strrpos($output, $line_after_hint)));
-						$line = substr($line, strrpos($line, "\n", 1) + 1);
+						$line = substr($line, strrpos($line, "\n", (isset($line[2]) ? 1 : 0)) + 1);
 						$output = null;
 					}
 					else if($search_key != null)
