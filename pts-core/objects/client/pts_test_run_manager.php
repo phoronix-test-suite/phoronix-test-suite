@@ -755,17 +755,10 @@ class pts_test_run_manager
 			$test_run_request = $this->get_test_to_run($run_index);
 		}
 
-		if(($run_index != 0 && count(pts_file_io::glob($test_run_request->test_profile->get_install_dir() . 'cache-share-*.pt2so')) == 0))
-		{
-			// Sleep for six seconds between tests by default
-			sleep(6);
-		}
-
 		if($test_run_request == false)
 		{
 			return;
 		}
-
 		if($this->result_file->has_matching_test_and_run_identifier($test_run_request, $this->get_results_identifier()))
 		{
 			// There already is a match for this test in this particular result buffer
@@ -781,6 +774,11 @@ class pts_test_run_manager
 					return true;
 				}
 			}
+		}
+		if(($run_index != 0 && count(pts_file_io::glob($test_run_request->test_profile->get_install_dir() . 'cache-share-*.pt2so')) == 0))
+		{
+			// Sleep for six seconds between tests by default
+			sleep(6);
 		}
 
 		$this->benchmark_log->log('Executing Test: ' . $test_run_request->test_profile->get_identifier());
