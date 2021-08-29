@@ -38,6 +38,8 @@ class phoromatic_create_test implements pts_webui_interface
 			return true;
 		}
 
+		$types = pts_validation::process_xsd_types();
+
 		if(isset($_POST['tp_update']) && isset($_POST['test-definition_xml']))
 		{
 			$tp = new pts_test_profile($_POST['test-definition_xml']);
@@ -108,11 +110,19 @@ class phoromatic_create_test implements pts_webui_interface
 				if($identifier_item && pts_test_profile::is_test_profile($identifier_item))
 				{
 					$tp = new pts_test_profile($identifier_item);
-					$tdw = new pts_test_profile_downloads_writer();
-					$tdw->rebuild_download_file($tp);
+					$tdw = new nye_XmlWriter();
+
+					// TODO adapt former code:
+					/*
 					$tdw->add_download($info['file_name'], $info['md5'], $info['sha256'], $info['file_name'], $info['file_size'], null, null);
-					$tp_path = PTS_TEST_PROFILE_PATH . $tp->get_identifier(false) . '-' . $tp->get_test_profile_version();
-					$tdw->save_xml($tp_path . '/downloads.xml');
+					
+					INTO:
+					
+					$tp's get_downloads() with new pts_test_file_download entries
+					*/
+
+					$ret = pts_validation::xsd_to_rebuilt_xml(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/test-profile-downloads.xsd', $types, $tp, $tdw);
+					$tdw->saveXMLFile(PTS_TEST_PROFILE_PATH . $tp->get_identifier(false) . '-' . $tp->get_test_profile_version() . '/downloads.xml');
 				}
 			}
 		}
