@@ -648,6 +648,11 @@ class pts_test_execution
 
 			foreach(pts_client::environmental_variables() as $key => $value)
 			{
+				if($value === null)
+				{
+					// Fixes PHP 8.1+ warning
+					$value = '';
+				}
 				$arguments_description = $arguments_description != null ? str_replace('$' . $key, $value, $arguments_description) : '';
 
 				if(!in_array($key, array('VIDEO_MEMORY', 'NUM_CPU_CORES', 'NUM_CPU_JOBS')))

@@ -209,7 +209,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		$expected_time = is_numeric($expected_time) && $expected_time > 0 ? pts_strings::format_time($expected_time, 'SECONDS', false, 60) : null;
 		$terminal_width = pts_client::terminal_width();
 
-		$download_size_string = $pts_test_file_download->get_filesize() > 0 ? ' [' . self::bytes_to_download_size($pts_test_file_download->get_filesize()) . 'MB]' : null;
+		$download_size_string = $pts_test_file_download->get_filesize() > 0 ? ' [' . self::bytes_to_download_size($pts_test_file_download->get_filesize()) . 'MB]' : '';
 		$download_string = $this->tab . $this->tab . pts_client::cli_just_bold($process_string) . ': ' . $pts_test_file_download->get_filename();
 
 		if($terminal_width > 10 && strlen($download_string) + strlen($download_size_string) > $terminal_width)

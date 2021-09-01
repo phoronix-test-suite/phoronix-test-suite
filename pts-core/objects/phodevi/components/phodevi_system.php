@@ -382,10 +382,10 @@ class phodevi_system extends phodevi_device_interface
 		else if(phodevi::is_windows())
 		{
 			// TODO could use better detection to verify if C: or the desired disk under test... but most of the time will be NTFS anyways
-			$fs = filter_var(trim(shell_exec('powershell "(Get-WMIObject -Class Win32_Volume | Select DriveLetter,FreeSpace,Capacity,DeviceID,Label,@{Name=\"FileSystemType\";Expression={$_.\"FileSystem\"}})[1].FileSystemType"')),FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+			$fs = filter_var(trim(shell_exec('powershell "(Get-WMIObject -Class Win32_Volume | Select DriveLetter,FreeSpace,Capacity,DeviceID,Label,@{Name=\"FileSystemType\";Expression={$_.\"FileSystem\"}})[1].FileSystemType"')), FILTER_UNSAFE_RAW, FILTER_FLAG_STRIP_HIGH);
 			if(empty($fs) || $fs == 'Unknown' || $fs == 'FAT32')
 			{
-				$fs = filter_var(trim(shell_exec('powershell "(Get-WMIObject -Class Win32_Volume | Select DriveLetter,FreeSpace,Capacity,DeviceID,Label,@{Name=\"FileSystemType\";Expression={$_.\"FileSystem\"}})[0].FileSystemType"')),FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+				$fs = filter_var(trim(shell_exec('powershell "(Get-WMIObject -Class Win32_Volume | Select DriveLetter,FreeSpace,Capacity,DeviceID,Label,@{Name=\"FileSystemType\";Expression={$_.\"FileSystem\"}})[0].FileSystemType"')),FILTER_UNSAFE_RAW, FILTER_FLAG_STRIP_HIGH);
 			}
 
 			// Fallback for Windows 8
