@@ -71,7 +71,7 @@ class pts_graph_passfail extends pts_graph_core
 			$headings_font_size -= 0.5;
 		}
 
-		for($j = 0; $j < $this->test_result->test_result_buffer->get_count(); $j++)
+		foreach(array_keys($this->test_result->test_result_buffer->buffer_items) as $j)
 		{
 			$results = array_reverse(pts_strings::comma_explode($this->test_result->test_result_buffer->buffer_items[$j]->get_result_value()));
 
@@ -111,7 +111,7 @@ class pts_graph_passfail extends pts_graph_core
 		}
 
 		$line_ttf_height = $this->text_string_height('AZ@![]()@|_', $main_font_size);
-		for($i = 0; $i < $this->test_result->test_result_buffer->get_count(); $i++)
+		foreach(array_keys($this->test_result->test_result_buffer->buffer_items) as $i)
 		{
 			//$this->svg_dom->draw_svg_line($this->i['left_start'] + $horizontal_border, $this->i['top_start'] + $vertical_border + ($i * $line_height) + $heading_height, $this->i['graph_left_end'] - $horizontal_border, $this->i['top_start'] + $vertical_border + ($i * $line_height) + $heading_height, self::$c['color']['body_light']);
 
