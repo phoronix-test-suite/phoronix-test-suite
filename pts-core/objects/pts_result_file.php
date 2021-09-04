@@ -423,7 +423,7 @@ class pts_result_file
 		{
 			if($hash_to_check == $result_object->get_comparison_hash())
 			{
-				if(in_array($run_identifier_to_check, $result_object->test_result_buffer->get_identifiers()))
+				if(in_array($run_identifier_to_check, $result_object->test_result_buffer->get_identifiers()) && $result_object->test_result_buffer->get_result_from_identifier($run_identifier_to_check) != '')
 				{
 					$found_match = true;
 				}

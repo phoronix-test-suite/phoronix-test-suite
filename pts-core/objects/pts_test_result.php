@@ -290,6 +290,10 @@ class pts_test_result
 			$divide_value = 0;
 			foreach($keys as $k)
 			{
+				if(!is_numeric($this->test_result_buffer->buffer_items[$k]->get_result_value()))
+				{
+					continue;
+				}
 				if($divide_value == 0)
 				{
 					$divide_value = $this->test_result_buffer->buffer_items[$k]->get_result_value();
@@ -489,7 +493,7 @@ class pts_test_result
 				}
 			}
 
-			if($divide_value != 0)
+			if($divide_value != 0 && is_numeric($divide_value))
 			{
 				foreach($keys as $k)
 				{
@@ -767,7 +771,7 @@ class pts_test_result
 			{
 				$this_value = $this->test_result_buffer->buffer_items[$k]->get_result_value();
 				$this_id = $this->test_result_buffer->buffer_items[$k]->get_result_identifier();
-				if($prev_value != -1 && $prev_id != -1)
+				if($prev_value != -1 && $prev_id != -1 && is_numeric($this_value))
 				{
 					$d = abs(($prev_value / $this_value) - 1);
 					if($d > $threshold_level)

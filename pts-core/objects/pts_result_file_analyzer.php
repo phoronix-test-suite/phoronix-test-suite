@@ -421,6 +421,10 @@ class pts_result_file_analyzer
 				$prev_buffer = null;
 				foreach($geo_mean_result->test_result_buffer->get_buffer_items() as $bi)
 				{
+					if(!is_numeric($bi->get_result_value()))
+					{
+						continue;
+					}
 					if($prev_buffer == null)
 					{
 						$prev_buffer = $bi;
@@ -662,14 +666,23 @@ class pts_result_file_analyzer
 					}
 				}
 			}
-
+			$skip_this = false;
 			foreach($result->test_result_buffer->get_buffer_items() as $buffer_item)
 			{
 				$r = $buffer_item->get_result_value();
 				if(!is_numeric($r) || $r == 0)
 				{
-					continue;
+					$skip_this = true;
+					break;
 				}
+			}
+			if($skip_this)
+			{
+				continue;
+			}
+			foreach($result->test_result_buffer->get_buffer_items() as $buffer_item)
+			{
+				$r = $buffer_item->get_result_value();
 				if($result->test_profile->get_result_proportion() == 'LIB')
 				{
 					// convert to HIB
@@ -801,6 +814,10 @@ class pts_result_file_analyzer
 
 		foreach($results as $test_title => $test_results)
 		{
+			if(count($test_results) != $system_count)
+			{
+				continue;
+			}
 			$test_profile = new pts_test_profile();
 			$test_result = new pts_test_result($test_profile);
 			$test_result->test_profile->set_test_title($test_title);
@@ -856,6 +873,22 @@ class pts_result_file_analyzer
 				// Harmonic mean is relevant for tests of rates, MB/s, FPS, ns/day, etc.
 				continue;
 			}
+			$skip_this_result = false;
+			foreach($result->test_result_buffer->get_buffer_items() as $buffer_item)
+			{
+				$rv = $buffer_item->get_result_value();
+				if(!is_numeric($rv))
+				{
+					$skip_this_result = true;
+					break;
+				}
+			}
+
+			if($skip_this_result)
+			{
+				continue;
+			}
+
 			foreach($result->test_result_buffer->get_buffer_items() as $buffer_item)
 			{
 				$ri = $buffer_item->get_result_identifier();
