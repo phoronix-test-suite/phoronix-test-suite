@@ -127,7 +127,18 @@ class pts_render
 		// NOTICE: $save_as doesn't appear used anymore
 		self::attribute_processing_on_result_object($result_object, $result_file, $extra_attributes);
 
-		if($result_object->test_result_buffer->get_count() == 0)
+		$has_a_result = false;
+		foreach($result_object->test_result_buffer->buffer_items as &$buffer_item)
+		{
+			// Check to make sure at least one result is not null/empty so there is something to render for the graph
+			// i.e. make sure not all of the results failed to run for this result object
+			if($buffer_item->get_result_value() != null)
+			{
+				$has_a_result = true;
+				break;
+			}
+		}
+		if(!$has_a_result)
 		{
 			return false;
 		}
