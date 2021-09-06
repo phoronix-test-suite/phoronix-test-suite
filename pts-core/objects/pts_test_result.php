@@ -447,6 +447,13 @@ class pts_test_result
 
 		foreach($key_sets as $keys)
 		{
+			foreach($keys as $i => $k)
+			{
+				if(!is_numeric($this->test_result_buffer->buffer_items[$k]->get_result_value()))
+				{
+					unset($keys[$i]);
+				}
+			}
 			if($this->test_profile->get_result_proportion() == 'LIB')
 			{
 				// Invert values for LIB
@@ -555,6 +562,11 @@ class pts_test_result
 			$remove_set = true;
 			foreach($keys as $k)
 			{
+				if(!is_numeric($this->test_result_buffer->buffer_items[$k]->get_result_value()))
+				{
+					continue;
+				}
+
 				if($base_value == -1)
 				{
 					$base_value = $this->test_result_buffer->buffer_items[$k]->get_result_value();

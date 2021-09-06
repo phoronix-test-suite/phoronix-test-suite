@@ -3,6 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite 10.6.0 (Git)
 T.B.A.
 
+pts-core: Allow reporting test run errors inline / as part of the result file XML with null/empty results
 pts-core: Remove the old, long deprecated static/JavaScript PTS result viewer that hasn't been used except for rare fallbacks since PTS pre-9.0
 pts-core: PHP 8.1 deprecation warning fixes
 pts-core: Support launching PHP web server with PHP_CLI_SERVER_WORKERS to allow multiple workers/threads

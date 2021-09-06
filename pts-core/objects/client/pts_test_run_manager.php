@@ -62,6 +62,7 @@ class pts_test_run_manager
 	protected $auto_mode = false;
 	public $DEBUG_no_test_execution_just_result_parse = false;
 	public $benchmark_log = null;
+	public $test_run_success_counter = 0;
 
 	public function __construct($batch_mode = false, $auto_mode = false)
 	{
@@ -80,6 +81,7 @@ class pts_test_run_manager
 		// 1/true is normal auto mode, 2 = auto + default benchmark mode
 		$this->auto_mode = $auto_mode;
 		$this->benchmark_log = new pts_logger(null, 'phoronix-test-suite-benchmark.log');
+		$this->test_run_success_counter = 0;
 
 		pts_module_manager::module_process('__run_manager_setup', $this);
 	}
@@ -740,7 +742,7 @@ class pts_test_run_manager
 	{
 		$result = false;
 
-		if($this->do_save_results() && $this->result_file->get_test_count() > 0)
+		if($this->do_save_results())
 		{
 			$this->result_file->get_xml(PTS_SAVE_RESULTS_PATH . $this->get_file_name() . '/composite.xml');
 		}
@@ -809,7 +811,7 @@ class pts_test_run_manager
 
 		return true;
 	}
-	public static function process_json_report_attributes(&$test_run_request)
+	public static function process_json_report_attributes(&$test_run_request, $report_error = null)
 	{
 		// XXX : add to attributes JSON here
 		$json_report_attributes = null;
@@ -836,6 +838,10 @@ class pts_test_run_manager
 		if(!empty($test_run_request->test_run_times))
 		{
 			$json_report_attributes['test-run-times'] = implode(':', $test_run_request->test_run_times);
+		}
+		if(!empty($report_error))
+		{
+			$json_report_attributes['error'] = $report_error;
 		}
 
 		return $json_report_attributes;
@@ -1093,18 +1099,16 @@ class pts_test_run_manager
 		if($this->do_save_results() && !$this->skip_post_execution_options)
 		{
 			// Save the results
-			if($this->result_file->get_test_count() == 0 && $this->is_new_result_file)
-			{
-				pts_file_io::delete(PTS_SAVE_RESULTS_PATH . $this->get_file_name());
-				return false;
-			}
-
 			echo PHP_EOL;
 			pts_module_manager::module_process('__event_results_process', $this);
 			pts_client::save_test_result($this->get_file_name() . '/composite.xml', $this->result_file->get_xml(), true, $this->results_identifier);
 			pts_module_manager::module_process('__event_results_saved', $this);
+			if($this->test_run_success_counter == 0 && $this->is_new_result_file)
+			{
+				return false;
+			}
 		}
-		if($this->result_file->get_test_count() > 3 && pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/ShowPostRunStatistics', 'TRUE'))
+		if($this->test_run_success_counter > 3 && pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/ShowPostRunStatistics', 'TRUE'))
 		{
 			// Show any post run statistics
 			pts_module_manager::module_process('__event_post_run_stats', $this);
