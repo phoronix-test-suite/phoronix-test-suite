@@ -639,27 +639,44 @@ class phoromatic_server
 			return true;
 		}
 
-		// See if the system attempted to run the trigger/schedule combination but reported an error during the process....
-		$stmt = phoromatic_server::$db->prepare('SELECT COUNT(ErrorMessage) AS ErrorCount FROM phoromatic_system_client_errors WHERE AccountID = :account_id AND SystemID = :system_id AND ScheduleID = :schedule_id AND TriggerID = :trigger');
-		$stmt->bindValue(':account_id', $account_id);
-		$stmt->bindValue(':system_id', $system_id);
-		$stmt->bindValue(':schedule_id', $schedule_id);
-		$stmt->bindValue(':trigger', $trigger_id);
-		$result = $stmt->execute();
-
-		if($result != false && ($row = $result->fetchArray()) != false)
+		if(!defined('CLIENT_CORE_VERSION') || CLIENT_CORE_VERSION < 10601)
 		{
-			$error_count = $row['ErrorCount'];
-			$stmt = phoromatic_server::$db->prepare('SELECT COUNT(*) AS TestCount FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = :schedule_id');
-			$stmt->bindValue(':account_id', $account_id);
-			$stmt->bindValue(':schedule_id', $schedule_id);
-			$result = $stmt->execute();
-			$row = $result ? $result->fetchArray() : null;
+			/*
+			Traditionally to avoid a test trigger/schedule getting caught in a possible endless loop if all contained test(s) failed
+			where there would then be no results to upload so at the end of the run would just re-query Phoromatic Server and start over,
+			the below check would compare the error count associated with that system and schedule/trigger exceeded the count of tests to run.
+			The check works "okay" but if rebooting mid-test and then repeating any prior failed tests, etc, could be among the scenarios leading to higher
+			error count and thus abandoning that test trigger even if not all the tests were yet attempted. Plus some test runs could generate multiple errors per test.
 
-			// See if error count was greater than test count, meaning all of the tests might have failed
-			if($error_count >= $row['TestCount'])
+			With PTS 10.6 the pieces are in place to allow run errors to be embedded into the XML result file with null results and work gracefully throughout the system.
+			So even if all the test runs fail / error out, there will still be a valid result file and thus still uploading the result file to the Phoromatic Server.
+
+			Thus this check with newer versions isn't necessary since the result file check will be accurate and always be uploaded if all tests fail,
+			plus being more convenient for showing errors within the result page, etc.
+			*/
+
+			// See if the system attempted to run the trigger/schedule combination but reported an error during the process....
+			$stmt = phoromatic_server::$db->prepare('SELECT COUNT(ErrorMessage) AS ErrorCount FROM phoromatic_system_client_errors WHERE AccountID = :account_id AND SystemID = :system_id AND ScheduleID = :schedule_id AND TriggerID = :trigger');
+			$stmt->bindValue(':account_id', $account_id);
+			$stmt->bindValue(':system_id', $system_id);
+			$stmt->bindValue(':schedule_id', $schedule_id);
+			$stmt->bindValue(':trigger', $trigger_id);
+			$result = $stmt->execute();
+
+			if($result != false && ($row = $result->fetchArray()) != false)
 			{
-				return true;
+				$error_count = $row['ErrorCount'];
+				$stmt = phoromatic_server::$db->prepare('SELECT COUNT(*) AS TestCount FROM phoromatic_schedules_tests WHERE AccountID = :account_id AND ScheduleID = :schedule_id');
+				$stmt->bindValue(':account_id', $account_id);
+				$stmt->bindValue(':schedule_id', $schedule_id);
+				$result = $stmt->execute();
+				$row = $result ? $result->fetchArray() : null;
+
+				// See if error count was greater than test count, meaning all of the tests might have failed
+				if($error_count >= $row['TestCount'])
+				{
+					return true;
+				}
 			}
 		}
 

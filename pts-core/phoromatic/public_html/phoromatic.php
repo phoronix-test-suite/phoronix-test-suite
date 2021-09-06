@@ -87,6 +87,7 @@ if($CLIENT_CORE_VERSION < 5400)
 	echo json_encode($json);
 	exit;
 }
+define('CLIENT_CORE_VERSION', $CLIENT_CORE_VERSION);
 
 // DATABASE SETUP
 phoromatic_server::prepare_database();
