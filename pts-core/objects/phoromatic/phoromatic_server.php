@@ -936,6 +936,11 @@ class phoromatic_server
 
 		while($result && $row = $result->fetchArray())
 		{
+			if(empty($row['RunAt']))
+			{
+				continue;
+			}
+
 			// Make sure this test schedule is supposed to work on given system
 			if(!in_array($system_id, explode(',', $row['RunTargetSystems'])))
 			{
@@ -959,9 +964,14 @@ class phoromatic_server
 					continue;
 			}
 
+			list($hour, $minute) = explode('.', $row['RunAt']);
+			if(!is_numeric($hour) || !is_numeric($minute))
+			{
+				continue;
+			}
+
 			foreach(explode(',', $row['ActiveOn']) as $active_day)
 			{
-				list($hour, $minute) = explode('.', $row['RunAt']);
 				$scheduled_times[] = (($active_day * 1440) + ($hour * 60) + $minute );
 			}
 		}
