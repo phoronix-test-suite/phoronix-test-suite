@@ -612,7 +612,7 @@ class pts_result_file_output
 						$value = round($value);
 					}
 
-					if($value == 0)
+					if($value == 0 || !is_numeric($value))
 					{
 						continue;
 					}

@@ -507,7 +507,11 @@ class pts_test_result_buffer
 	}
 	public function get_min_value($return_identifier = false)
 	{
-		if($return_identifier === 2)
+		if($this->min_bi == null)
+		{
+			return null;
+		}
+		else if($return_identifier === 2)
 		{
 			return $this->min_bi;
 		}
@@ -522,7 +526,11 @@ class pts_test_result_buffer
 	}
 	public function get_max_value($return_identifier = false)
 	{
-		if($return_identifier === 2)
+		if($this->max_bi == null)
+		{
+			return null;
+		}
+		else if($return_identifier === 2)
 		{
 			return $this->max_bi;
 		}
