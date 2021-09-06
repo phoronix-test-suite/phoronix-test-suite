@@ -371,7 +371,7 @@ class phodevi_linux_parser
 			}
 
 			$this_attribute = $line[0];
-			$this_value = trim(count($line) > 1 ? $line[1] : null);
+			$this_value = trim(count($line) > 1 ? $line[1] : '');
 			if(in_array($this_attribute, array('flags', 'bugs', 'power management')))
 			{
 				$this_value = explode(' ', $this_value);

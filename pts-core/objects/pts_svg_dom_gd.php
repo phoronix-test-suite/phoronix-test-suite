@@ -336,9 +336,25 @@ class pts_svg_dom_gd
 				if($a['stroke-width'])
 				{
 					imagesetthickness($gd, $a['stroke-width']);
-					imagefilledpolygon($gd, $points, count($a['points']), self::gd_color_allocate($gd, $a['stroke']));
+					if(PHP_MAJOR_VERSION >= 8)
+					{
+						// PHP 8.1 deprecates the $num_points parameter and issues its warning for usage..
+						// However, the alternative signature without using $num_points was only added in PHP 8.0.0
+						imagefilledpolygon($gd, $points, self::gd_color_allocate($gd, $a['stroke']));
+					}
+					else
+					{
+						imagefilledpolygon($gd, $points, count($a['points']), self::gd_color_allocate($gd, $a['stroke']));
+					}
 				}
-				imagefilledpolygon($gd, $points, count($a['points']), self::gd_color_allocate($gd, $a['fill']));
+				if(PHP_MAJOR_VERSION >= 8)
+				{
+					imagefilledpolygon($gd, $points, self::gd_color_allocate($gd, $a['fill']));
+				}
+				else
+				{
+					imagefilledpolygon($gd, $points, count($a['points']), self::gd_color_allocate($gd, $a['fill']));
+				}
 				break;
 			case 'rect':
 				// Draw a rectangle

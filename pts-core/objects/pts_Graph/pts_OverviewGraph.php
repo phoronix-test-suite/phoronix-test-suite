@@ -143,6 +143,18 @@ class pts_OverviewGraph extends pts_graph_core
 			{
 				$all_values = $result_object->test_result_buffer->get_values();
 
+				foreach($all_values as $ai => $av)
+				{
+					if(!is_numeric($av))
+					{
+						unset($all_values[$ai]);
+					}
+				}
+				if(empty($all_values))
+				{
+					continue;
+				}
+
 				switch($result_object->test_profile->get_result_proportion())
 				{
 					case 'HIB':
