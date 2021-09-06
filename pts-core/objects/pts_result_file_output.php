@@ -325,7 +325,7 @@ class pts_result_file_output
 
 		$result_object->test_result_buffer->adjust_precision();
 		$is_line_graph = false;
-		foreach($result_object->test_result_buffer as &$buffers)
+		foreach($result_object->test_result_buffer as $buffers)
 		{
 			if(empty($buffers))
 				continue;
@@ -334,9 +334,13 @@ class pts_result_file_output
 			$min_value = -1;
 			$largest_min_value = 0;
 			$longest_result = 0;
-			foreach($buffers as &$buffer_item)
+			foreach($buffers as $i => &$buffer_item)
 			{
 				$v = $buffer_item->get_result_value();
+				if(empty($v))
+				{
+					unset($buffers[$i]);
+				}
 				if(($vl = strlen($v)) > $longest_result)
 				{
 					$longest_result = $vl;

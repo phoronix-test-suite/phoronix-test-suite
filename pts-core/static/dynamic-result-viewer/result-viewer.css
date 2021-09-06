@@ -368,6 +368,11 @@ div#main_area .div_table_cell input, div#main_area .div_table_cell select
 {
 	display: none;
 }
+.test_error
+{
+	color: #FF0000;
+	font-size: 12px;
+}
 a div.table_test_box:hover
 {
 	background: #f1f1f1;

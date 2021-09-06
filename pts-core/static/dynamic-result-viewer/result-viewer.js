@@ -120,13 +120,13 @@ function update_annotation_for_result_object(result_file, result_hash)
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.send("result_file_id=" + result_file + "&result_object=" + result_hash + "&annotation=" + annotation_updated);
 }
-function display_test_logs_for_result_object(result_file, result_hash)
+function display_test_logs_for_result_object(result_file, result_hash, select_identifier)
 {
-	window.open(WEB_URL_PATH + "index.php?page=view_test_logs&result_file_id=" + result_file + "&result_object=" + result_hash, "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=100,left=100,width=600,height=400,location=no,menubar=no");
+	window.open(WEB_URL_PATH + "index.php?page=view_test_logs&result_file_id=" + result_file + "&result_object=" + result_hash + "&log_select=" + select_identifier, "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=100,left=100,width=600,height=400,location=no,menubar=no");
 }
-function display_install_logs_for_result_object(result_file, result_hash)
+function display_install_logs_for_result_object(result_file, result_hash, select_identifier)
 {
-	window.open(WEB_URL_PATH + "index.php?page=view_install_logs&result_file_id=" + result_file + "&result_object=" + result_hash, "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=100,left=100,width=600,height=400,location=no,menubar=no");
+	window.open(WEB_URL_PATH + "index.php?page=view_install_logs&result_file_id=" + result_file + "&result_object=" + result_hash + "&log_select=" + select_identifier, "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=100,left=100,width=600,height=400,location=no,menubar=no");
 }
 function display_system_logs_for_result(result_file, system_id)
 {

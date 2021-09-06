@@ -65,6 +65,29 @@ class pts_result_viewer_embed
 	{
 		$this->show_html_table_when_relevant = $show;
 	}
+	protected function result_object_to_error_report(&$result_file, &$result_object, $i)
+	{
+		$html = '';
+		foreach($result_object->test_result_buffer->buffer_items as &$bi)
+		{
+			if($bi->get_result_value() == null && ($bi_error = $bi->get_error()) != null)
+			{
+				$html .= '<p class="test_error"><strong>[ERROR] ' . $bi->get_result_identifier() . ':</strong> ' . strip_tags($bi_error);
+				$test_log_dir = $result_file->get_test_log_dir($result_object);
+				if($test_log_dir && count(pts_file_io::glob($test_log_dir . '/' . $bi->get_result_identifier() . '.log')) > 0)
+				{
+					$html .= ' <a onclick="javascript:display_test_logs_for_result_object(\'' . $this->result_public_id . '\', \'' . $i . '\', \'' . $bi->get_result_identifier() . '\'); return false;">View Test Run Logs</a> ';
+				}
+				if(count(($result_file->get_test_installation_log_dir() ? pts_file_io::glob($result_file->get_test_installation_log_dir() . $bi->get_result_identifier()  . '/' . $result_object->test_profile->get_identifier_simplified() . '.log') : array())) > 0)
+				{
+					$html .= ' <a onclick="javascript:display_install_logs_for_result_object(\'' . $this->result_public_id . '\', \'' . $i . '\', \'' . $bi->get_result_identifier() . '\'); return false;">View Test Installation Logs</a> ';
+				}
+				$html .= '</p>';
+			}
+		}
+
+		return $html;
+	}
 	public function get_html()
 	{
 		$PAGE = null;
@@ -219,13 +242,13 @@ class pts_result_viewer_embed
 			//
 			// RENDER TEST AND ANCHOR
 			//
-			$ro = clone $result_object;
-			$res_desc_shortened = $result_object->get_arguments_description_shortened(false);
-			$res = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
-			if($res == false || in_array($i, $skip_ros))
+			if(in_array($i, $skip_ros))
 			{
 				continue;
 			}
+			$ro = clone $result_object;
+			$res_desc_shortened = $result_object->get_arguments_description_shortened(false);
+			$res = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
 			$PAGE .= '<a id="r-' . $i . '"></a><div style="text-align: center;" id="result-' . $i . '">';
 
 			//
@@ -249,6 +272,12 @@ class pts_result_viewer_embed
 					}  */
 				}
 				$prev_title = $result_object->test_profile->get_title();
+			}
+			if($res == false)
+			{
+				// ERROR REPORT?
+				$PAGE .= $this->result_object_to_error_report($result_file, $result_object, $i);
+				continue;
 			}
 
 			//
@@ -364,6 +393,7 @@ class pts_result_viewer_embed
 			//
 			// DISPLAY LOGS
 			//
+			$PAGE .= $this->result_object_to_error_report($result_file, $result_object, $i);
 			$button_area = null;
 			$test_log_dir = $result_file->get_test_log_dir($result_object);
 			if($test_log_dir && count(pts_file_io::glob($test_log_dir . '*.log')) > 0)
