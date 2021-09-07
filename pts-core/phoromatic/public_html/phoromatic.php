@@ -267,6 +267,7 @@ if($SYSTEM_STATE < 1)
 
 define('AID', ACCOUNT_ID);
 define('SID', SYSTEM_ID);
+pts_logger::add_to_log(SYSTEM_ID . " [".$_SERVER['REMOTE_ADDR']."] request - ".$REQUEST);
 
 if(is_file('../communication-resources/' . $REQUEST . '.php'))
 {
