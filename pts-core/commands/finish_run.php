@@ -51,7 +51,7 @@ class finish_run implements pts_option_interface
 
 			foreach($system_identifiers as $system_identifier)
 			{
-				if(!in_array($system_identifier, $this_result_object_identifiers))
+				if(!in_array($system_identifier, $this_result_object_identifiers) || $result_object->test_result_buffer->get_result_from_identifier($system_identifier) == '')
 				{
 					if(!isset($test_positions[$system_identifier]))
 					{

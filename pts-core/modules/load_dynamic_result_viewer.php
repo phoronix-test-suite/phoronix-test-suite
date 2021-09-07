@@ -31,6 +31,7 @@ class load_dynamic_result_viewer extends pts_module_interface
 	protected static $process = null;
 	protected static $pipes;
 	protected static $random_id;
+	protected static $num_php_service_workers = 4;
 
 	public static function __shutdown()
 	{
@@ -76,25 +77,30 @@ class load_dynamic_result_viewer extends pts_module_interface
 			}
 
 			// Fallback for sometimes the child process not getting killed
-			foreach(pts_file_io::glob('/proc/' . ($ps['pid'] + 1) . '/comm') as $proc_check)
+			// Check next few PIDs to see if still children running
+			for($pid_plus = 1; $pid_plus <= ((self::$num_php_service_workers * 2) + 1); $pid_plus++)
 			{
-				$proc = dirname($proc_check);
-				if(strpos(pts_file_io::file_get_contents($proc . '/comm'), 'php') !== false)
+				foreach(pts_file_io::glob('/proc/' . ($ps['pid'] + $pid_plus) . '/comm') as $proc_check)
 				{
-					if(is_file($proc . '/environ') && strpos(pts_file_io::file_get_contents($proc . '/environ'), 'PTS_VIEWER_ID=' . self::$random_id) !== false)
+					$proc = dirname($proc_check);
+					if(strpos(pts_file_io::file_get_contents($proc . '/comm'), 'php') !== false)
 					{
-						if(pts_client::executable_in_path('kill'))
+						if(is_file($proc . '/environ') && strpos(pts_file_io::file_get_contents($proc . '/environ'), 'PTS_VIEWER_ID=' . self::$random_id) !== false)
 						{
-							shell_exec('kill ' . basename($proc));
-						}
-						if(function_exists('posix_kill'))
-						{
-							posix_kill(basename($proc), 9);
+							if(pts_client::executable_in_path('kill'))
+							{
+								shell_exec('kill -9 ' . basename($proc));
+							}
+							if(function_exists('posix_kill'))
+							{
+								posix_kill(basename($proc), 9);
+							}
 						}
 					}
 				}
 			}
 		}
+		pts_client::release_lock(PTS_USER_PATH . 'result_viewer_lock');
 	}
 	public static function user_commands()
 	{
@@ -104,6 +110,15 @@ class load_dynamic_result_viewer extends pts_module_interface
 	{
 		if(pts_client::create_lock(PTS_USER_PATH . 'result_viewer_lock') == false)
 		{
+			if(is_file(PTS_USER_PATH . 'result_viewer_lock'))
+			{
+				$possible_port = pts_file_io::file_get_contents(PTS_USER_PATH . 'result_viewer_lock');
+				if(is_numeric($possible_port) && pts_client::test_for_result_viewer_connection($possible_port))
+				{
+					pts_client::$web_result_viewer_active = $possible_port;
+					return;
+				}
+			}
 			//trigger_error('The result viewer is already running.', E_USER_ERROR);
 			return false;
 		}
@@ -195,10 +210,11 @@ class load_dynamic_result_viewer extends pts_module_interface
 		'PTS_VIEWER_CONFIG_FILE' => pts_config::get_config_file_location(),
 		'PTS_VIEWER_ID' => self::$random_id,
 		'PTS_CORE_STORAGE' => PTS_CORE_STORAGE,
-		'PHP_CLI_SERVER_WORKERS' => 4,
+		'PHP_CLI_SERVER_WORKERS' => self::$num_php_service_workers,
 		);
 
 		pts_storage_object::set_in_file(PTS_CORE_STORAGE, 'last_web_result_viewer_active_port', $web_port);
+		pts_client::write_to_lock(PTS_USER_PATH . 'result_viewer_lock', $web_port);
 		pts_client::$web_result_viewer_active = $web_port;
 		pts_client::$web_result_viewer_access_key = $ak;
 

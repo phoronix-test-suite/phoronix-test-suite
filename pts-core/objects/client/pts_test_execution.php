@@ -76,6 +76,7 @@ class pts_test_execution
 		$min_length = $test_run_request->test_profile->get_min_length();
 		$max_length = $test_run_request->test_profile->get_max_length();
 		$is_monitoring = false;
+		$error_report = null;
 
 		if($test_run_request->test_profile->get_environment_testing_size() > 1 && ceil(disk_free_space($test_directory) / 1048576) < $test_run_request->test_profile->get_environment_testing_size())
 		{
@@ -360,6 +361,7 @@ class pts_test_execution
 			{
 				// If the test script writes its exit status to ~/test-exit-status, if it's non-zero the test run failed
 				self::test_run_instance_error($test_run_manager, $test_run_request, 'The test quit with a non-zero exit status.');
+				$error_report = 'The test quit with a non-zero exit status.';
 				if($is_expected_last_run && is_file($test_log_file))
 				{
 					$scan_log = pts_file_io::file_get_contents($test_log_file);
@@ -368,6 +370,7 @@ class pts_test_execution
 					if($test_run_error)
 					{
 						self::test_run_instance_error($test_run_manager, $test_run_request, 'E: ' . $test_run_error);
+						$error_report = $test_run_error;
 					}
 				}
 			}
@@ -409,6 +412,7 @@ class pts_test_execution
 							if($test_run_error)
 							{
 								self::test_run_instance_error($test_run_manager, $test_run_request, 'E: ' . $test_run_error);
+								$error_report = $test_run_error;
 							}
 						}
 					}
@@ -424,6 +428,7 @@ class pts_test_execution
 						if($test_run_error)
 						{
 							self::test_run_instance_error($test_run_manager, $test_run_request, 'E: ' . $test_run_error);
+							$error_report = $test_run_error;
 						}
 					}
 				}
@@ -458,6 +463,7 @@ class pts_test_execution
 					if($increase_run_count === -1)
 					{
 						self::test_run_error($test_run_manager, $test_run_request, 'This run will not be saved due to noisy result.');
+						$error_report = 'This run will not be saved due to noisy result.';
 						$abort_testing = true;
 					}
 					else if($increase_run_count == true)
@@ -648,6 +654,11 @@ class pts_test_execution
 
 			foreach(pts_client::environmental_variables() as $key => $value)
 			{
+				if($value === null)
+				{
+					// Fixes PHP 8.1+ warning
+					$value = '';
+				}
 				$arguments_description = $arguments_description != null ? str_replace('$' . $key, $value, $arguments_description) : '';
 
 				if(!in_array($key, array('VIDEO_MEMORY', 'NUM_CPU_CORES', 'NUM_CPU_JOBS')))
@@ -664,6 +675,15 @@ class pts_test_execution
 		// Ending Tasks
 		pts_client::$display->display_interrupt_message($test_run_request->test_profile->get_post_run_message());
 		$test_successful = self::calculate_end_result_post_processing($test_run_manager, $test_run_request); // Process results
+
+		// Ensure entry in result file even if no result... (And report error string if appropriate)
+		if(!$test_successful && $test_run_manager->do_save_results())
+		{
+			$test_run_request->test_result_buffer = new pts_test_result_buffer();
+			$rid = $test_run_manager->get_results_identifier() != null ? $test_run_manager->get_results_identifier() : 'Result';
+			$test_run_request->test_result_buffer->add_test_result($rid, '', '', pts_test_run_manager::process_json_report_attributes($test_run_request, $error_report), '', '');
+			$test_run_manager->result_file->add_result($test_run_request);
+		}
 
 		// End Finalize
 		pts_module_manager::module_process('__post_test_run', $test_run_request);
@@ -859,6 +879,7 @@ class pts_test_execution
 					$test_result->test_result_buffer->add_test_result($rid, $test_result->active->get_result(), $test_result->active->get_values_as_string(), pts_test_run_manager::process_json_report_attributes($test_result), $test_result->active->get_min_result(), $test_result->active->get_max_result());
 					$added_comparison_hash = $test_run_manager->result_file->add_result($test_result);
 					$generated_result_count++;
+					$test_run_manager->test_run_success_counter++;
 
 					// The merged data, get back the merged test_result object
 					$results_comparison = clone $test_run_manager->result_file->get_result($added_comparison_hash);

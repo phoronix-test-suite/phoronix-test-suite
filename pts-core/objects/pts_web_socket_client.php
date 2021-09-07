@@ -181,6 +181,8 @@ class pts_web_socket_client
 	}
 	public function send_json_data_by_user_id($user_id, $msg)
 	{
+		// XXX: dead code, this function likely not used at all...
+		/*
 		foreach($this->users as &$u)
 		{
 			if($u->id == $user_id)
@@ -189,6 +191,7 @@ class pts_web_socket_client
 				break;
 			}
 		}
+		*/
 	}
 	private function connect($socket)
 	{

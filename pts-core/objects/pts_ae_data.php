@@ -644,7 +644,7 @@ class pts_ae_data
 				pts_file_io::mkdir($this->ae_dir . 'component-data/' . $hw_category . '/');
 				$json_file = $this->ae_dir . 'component-data/' . $hw_category . '/' . $c . '.json';
 				$jsond = is_file($json_file) ? json_decode(file_get_contents($json_file), true) : array();
-				$jsond = array_merge($jsond, $data);
+				$jsond = is_array($jsond) && !empty($jsond) ? array_merge($jsond, $data) : $data;
 				file_put_contents($this->ae_dir . 'component-data/' . $hw_category . '/' . $c . '.json', json_encode($jsond));
 			}
 		}

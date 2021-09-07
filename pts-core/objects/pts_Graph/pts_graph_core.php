@@ -197,7 +197,7 @@ abstract class pts_graph_core
 			$this->test_result->test_result_buffer->adjust_precision();
 			foreach($this->test_result->test_result_buffer->buffer_items as $i => &$buffer_item)
 			{
-				if($buffer_item->get_result_value() === null)
+				if($buffer_item->get_result_value() == null)
 				{
 					unset($this->test_result->test_result_buffer->buffer_items[$i]);
 					continue;
@@ -252,7 +252,7 @@ abstract class pts_graph_core
 			$this->test_result->test_result_buffer->adjust_precision();
 			foreach($this->test_result->test_result_buffer->buffer_items as $i => &$buffer_item)
 			{
-				if($buffer_item->get_result_value() === null)
+				if($buffer_item->get_result_value() == null)
 				{
 					unset($this->test_result->test_result_buffer->buffer_items[$i]);
 					continue;

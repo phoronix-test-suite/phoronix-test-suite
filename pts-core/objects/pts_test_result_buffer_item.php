@@ -142,6 +142,11 @@ class pts_test_result_buffer_item
 
 		return $a < $b ? -1 : 1;
 	}
+	public function get_error()
+	{
+		$json_data = $this->get_result_json();
+		return isset($json_data['error']) ? $json_data['error'] : null;
+	}
 }
 
 ?>

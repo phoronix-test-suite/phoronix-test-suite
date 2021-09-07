@@ -20,6 +20,8 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+// TODO XXX: Likely drop this in PTS 11.0... PhoroScript really isn't used anymore for years since just requiring Cygwin on Windows for better reliability and features
+
 class pts_phoroscript_interpreter
 {
 	private $script_file;

@@ -24,7 +24,6 @@ ini_set('memory_limit', '16192M');
 
 class ob_test_profile_analyze implements pts_option_interface
 {
-	const doc_skip = true; // TODO XXX: cleanup this code before formally advertising this...
 	const doc_section = 'OpenBenchmarking.org';
 	const doc_description = 'This option is intended for test profile creators and generates a range of meta-data and other useful information that can be submitted to OpenBenchmarking.org to provide more verbose information for users of your test profiles.';
 

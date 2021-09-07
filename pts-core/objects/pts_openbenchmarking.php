@@ -38,11 +38,6 @@ class pts_openbenchmarking
 			'monitor' => array('monitor', 'identifier')
 			);
 	}
-	public static function valid_user_name()
-	{
-		$invalid_users = array('pts', 'phoronix', 'local', 'official');
-		// TODO: finish function
-	}
 	public static function stats_software_list()
 	{
 		return array(

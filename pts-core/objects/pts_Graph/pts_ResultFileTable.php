@@ -139,6 +139,25 @@ class pts_ResultFileTable extends pts_Table
 				continue;
 			}
 
+			$values_in_buffer = $result_object->test_result_buffer->get_values();
+			$has_numeric = false;
+			foreach($values_in_buffer as $i => $vb)
+			{
+				if(is_numeric($vb))
+				{
+					$has_numeric = true;
+					break;
+				}
+				else
+				{
+					unset($values_in_buffer[$i]);
+				}
+			}
+			if(!$has_numeric)
+			{
+				continue;
+			}
+
 			switch($result_object->test_profile->get_display_format())
 			{
 				case 'BAR_GRAPH':
@@ -164,7 +183,6 @@ class pts_ResultFileTable extends pts_Table
 					$prev_identifier = null;
 					$prev_identifier_0 = null;
 
-					$values_in_buffer = $result_object->test_result_buffer->get_values();
 					sort($values_in_buffer);
 					$min_value_in_buffer = $values_in_buffer[0];
 
@@ -183,6 +201,12 @@ class pts_ResultFileTable extends pts_Table
 					{
 						$identifier = $buffer_item->get_result_identifier();
 						$value = $buffer_item->get_result_value();
+
+						if(!is_numeric($value))
+						{
+							continue;
+						}
+
 						$raw_values = pts_strings::colon_explode($buffer_item->get_result_raw());
 						$percent_std = pts_math::set_precision(pts_math::percent_standard_deviation($raw_values), 2);
 						$std_error = pts_math::set_precision(pts_math::standard_error($raw_values), 2);

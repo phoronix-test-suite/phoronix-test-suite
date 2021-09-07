@@ -46,10 +46,6 @@ class nye_XmlReader
 			$this->dom->loadXML($xml_file);
 		}
 	}
-	public function getFileLocation()
-	{
-		return $this->file_location;
-	}
 	public function getXMLValue($xml_tag, $fallback_value = -1)
 	{
 		$steps = explode('/', $xml_tag);
@@ -67,46 +63,6 @@ class nye_XmlReader
 
 		return $narrow->length == 1 ? $narrow->item(0)->nodeValue : $this->handleXmlZeroTagFallback($xml_tag, ($fallback_value === -1 ? $this->tag_fallback : $fallback_value));
 	}
-	public function getXMLArrayValues($xml_tag, $break_depth = -1)
-	{
-		$steps = explode('/', $xml_tag);
-		$narrow = $this->dom->getElementsByTagName(array_shift($steps));
-		$values = $this->processXMLArraySteps($steps, $narrow, 0, $break_depth);
-
-		return isset($values[0]) ? $values : $this->handleXmlZeroTagArrayFallback($xml_tag, $values, $break_depth);
-	}
-	protected function processXMLArraySteps($steps, $narrow, $steps_offset = 0, $break_depth = -1)
-	{
-		$values = array();
-
-		for($i = $steps_offset, $c = count($steps); $i < $c && $narrow->length > 0; $i++)
-		{
-			$narrow = $narrow->item(0)->getElementsByTagName($steps[$i]);
-
-			if($i == $break_depth)
-			{
-				for($x = 0; $x < $break_depth || $x == 0; $x++)
-				{
-					for($j = 0; $j < $narrow->length; $j++)
-					{
-						$values[] = $this->processXMLArraySteps($steps, $narrow->item($j)->getElementsByTagName($steps[$i + 1]), $i + 2);
-					}
-				}
-				break;
-			}
-			else if($i == ($c - 2))
-			{
-				for($j = 0; $j < $narrow->length; $j++)
-				{
-					$extract = $narrow->item($j)->getElementsByTagName($steps[$i + 1]);
-					$values[] = ($extract->length > 0 ? $extract->item(0)->nodeValue : null);
-				}
-				break;
-			}
-		}
-
-		return $values;
-	}
 	public function times_fallback()
 	{
 		return $this->times_fallback;
@@ -116,12 +72,6 @@ class nye_XmlReader
 		if($fallback_value != null)
 			$this->times_fallback++;
 
-		return $fallback_value;
-	}
-	protected function handleXmlZeroTagArrayFallback($xml_tag, $fallback_value, $break_depth = -1)
-	{
-		if($fallback_value != null)
-			$this->times_fallback++;
 		return $fallback_value;
 	}
 	public function getXML()

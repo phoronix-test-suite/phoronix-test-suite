@@ -23,7 +23,11 @@
 class pts_test_result_buffer
 {
 	public $buffer_items;
+
+	// TODO XXX: ultimately revisit the test_result_buffer handling in the future to see if it's safe these days for map buffer_items keys by identifier
+	// likely some corner cases around renaming, sorting, etc still to be sorted out...
 	protected $buffer_contains;
+	protected $buffer_by_identifier;
 	protected $added_multi_sample_result = false;
 	protected $max_precision = 0;
 	protected $min_bi;
@@ -37,18 +41,26 @@ class pts_test_result_buffer
 
 		if(!empty($buffer_items))
 		{
-			foreach($buffer_items as &$buffer_item)
+			foreach($buffer_items as $i => &$buffer_item)
 			{
 				$this->buffer_contains[$buffer_item->get_result_identifier() . $buffer_item->get_result_value()] = 1;
+				$this->buffer_by_identifier[$buffer_item->get_result_identifier()] = $i;
 				$this->check_buffer_item_for_min_max($buffer_item);
 			}
 		}
 	}
 	public function add_buffer_item($buffer_item)
 	{
+		if(isset($this->buffer_by_identifier[$buffer_item->get_result_identifier()]) && $this->buffer_items[$this->buffer_by_identifier[$buffer_item->get_result_identifier()]]->get_result_value() == '')
+		{
+			// Overwrite the buffer item if there is a match but empty (incomplete) result
+			$this->remove($buffer_item->get_result_identifier());
+		}
+
 		if(!$this->buffer_contained($buffer_item))
 		{
 			$this->buffer_items[] = $buffer_item;
+			$this->buffer_by_identifier[$buffer_item->get_result_identifier()] = (count($this->buffer_items) - 1);
 			$this->buffer_contains[$buffer_item->get_result_identifier() . $buffer_item->get_result_value()] = 1;
 			$this->check_buffer_item_for_min_max($buffer_item);
 		}
@@ -56,6 +68,11 @@ class pts_test_result_buffer
 	public function add_test_result($identifier, $value, $raw_value = null, $json = null, $min_value = null, $max_value = null)
 	{
 		$buffer_item = new pts_test_result_buffer_item($identifier, $value, $raw_value, $json, $min_value, $max_value);
+		if(isset($this->buffer_by_identifier[$buffer_item->get_result_identifier()]) && $this->buffer_items[$this->buffer_by_identifier[$buffer_item->get_result_identifier()]]->get_result_value() == '')
+		{
+			// Overwrite the buffer item if there is a match but empty (incomplete) result
+			$this->remove($buffer_item->get_result_identifier());
+		}
 
 		$this->check_buffer_item_for_min_max($buffer_item);
 		$this->buffer_items[] = $buffer_item;
@@ -71,6 +88,7 @@ class pts_test_result_buffer
 		}
 
 		$this->buffer_contains[$identifier . $value] = 1;
+		$this->buffer_by_identifier[$identifier] = (count($this->buffer_items) - 1);
 	}
 	public function recalculate_buffer_items_min_max()
 	{
@@ -90,6 +108,11 @@ class pts_test_result_buffer
 			$values = !is_array($value) ? explode(',', $value) : $value;
 			$min_value = min($values);
 			$max_value = max($values);
+
+			if(!is_numeric($min_value))
+			{
+				return;
+			}
 		}
 		else
 		{
@@ -246,6 +269,8 @@ class pts_test_result_buffer
 		{
 			if(in_array($buffer_item->get_result_identifier(), $remove))
 			{
+				unset($this->buffer_by_identifier[$this->buffer_items[$i]->get_result_identifier()]);
+				unset($this->buffer_contains[$this->buffer_items[$i]->get_result_identifier() . $this->buffer_items[$i]->get_result_value()]);
 				unset($this->buffer_items[$i]);
 				$removed = true;
 			}
@@ -441,6 +466,11 @@ class pts_test_result_buffer
 	{
 		foreach($this->buffer_items as &$buffer_item)
 		{
+			if(!is_numeric($buffer_item->get_result_value()))
+			{
+				continue;
+			}
+
 			$p = pts_math::set_precision($buffer_item->get_result_value(), $precision);
 			$buffer_item->reset_result_value($p, false);
 		}
@@ -477,7 +507,11 @@ class pts_test_result_buffer
 	}
 	public function get_min_value($return_identifier = false)
 	{
-		if($return_identifier === 2)
+		if($this->min_bi == null)
+		{
+			return null;
+		}
+		else if($return_identifier === 2)
 		{
 			return $this->min_bi;
 		}
@@ -492,7 +526,11 @@ class pts_test_result_buffer
 	}
 	public function get_max_value($return_identifier = false)
 	{
-		if($return_identifier === 2)
+		if($this->max_bi == null)
+		{
+			return null;
+		}
+		else if($return_identifier === 2)
 		{
 			return $this->max_bi;
 		}
@@ -559,6 +597,10 @@ class pts_test_result_buffer
 			$group_values = array();
 			foreach($this->buffer_items as &$buffer_item)
 			{
+				if(!is_numeric($buffer_item->get_result_value()))
+				{
+					continue;
+				}
 				$identifier_r = pts_strings::trim_explode(': ', $buffer_item->get_result_identifier());
 				if(!isset($group_values[$identifier_r[1]]))
 				{
@@ -568,6 +610,10 @@ class pts_test_result_buffer
 			}
 			foreach($this->buffer_items as &$buffer_item)
 			{
+				if(!is_numeric($buffer_item->get_result_value()))
+				{
+					continue;
+				}
 				$identifier_r = pts_strings::trim_explode(': ', $buffer_item->get_result_identifier());
 				$percent = pts_math::set_precision(($buffer_item->get_result_value() / $group_values[$identifier_r[1]] * 100), 3);
 				$buffer_item->reset_result_value($percent);
