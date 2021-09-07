@@ -44,7 +44,7 @@ class phoromatic extends pts_module_interface
 
 	private static $test_run_manager = null;
 
-	private static $poll_delay = 60;
+	private static $poll_delay = 10;
 
 	public static function module_info()
 	{
@@ -833,11 +833,13 @@ class phoromatic extends pts_module_interface
 						$is_valid_log = false;
 						break;
 					}
-					if($finfo && substr(finfo_file($finfo, $log_file), 0, 5) != 'text/')
+			/*		if($finfo && substr(finfo_file($finfo, $log_file), 0, 5) != 'text/')
 					{
+						pts_client::$pts_logger && pts_client::$pts_logger->log("Failed mime prefix ". $log_file);
+
 						$is_valid_log = false;
 						break;
-					}
+					}*/
 				}
 			}
 
