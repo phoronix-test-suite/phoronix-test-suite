@@ -547,6 +547,17 @@ class pts_test_execution
 				}
 			}
 		}
+		pts_logger::add_to_log("Checking for  ".PTS_USER_PATH."abort-once");
+
+		if(is_file(PTS_USER_PATH . 'abort-once'))
+		{
+			pts_logger::add_to_log("Test created ".PTS_USER_PATH."abort-once");
+
+			unlink (PTS_USER_PATH . 'abort-once');
+			pts_client::release_lock($lock_file);
+			return false;
+		}
+
 		if(is_file(PTS_USER_PATH . 'halt-testing') || is_file(PTS_USER_PATH . 'skip-test'))
 		{
 			pts_client::release_lock($lock_file);
