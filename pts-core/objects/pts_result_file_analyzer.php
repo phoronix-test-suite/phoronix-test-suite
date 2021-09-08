@@ -523,9 +523,13 @@ class pts_result_file_analyzer
 				continue;
 			}
 
-			$tests_counted++;
 			$winner = $result->get_result_first();
 			$loser = $result->get_result_last();
+			if($winner == null || $loser == null)
+			{
+				continue;
+			}
+			$tests_counted++;
 
 			if(!isset($wins[$winner]))
 			{
@@ -722,6 +726,7 @@ class pts_result_file_analyzer
 			$test_result->set_used_arguments_description('Result Composite' . ($result_file->get_title() != null ? ' - ' . $result_file->get_title() : null));
 			$test_result->set_used_arguments('Geometric-Mean');
 			$test_result->test_result_buffer = new pts_test_result_buffer();
+
 			foreach($results as $identifier => $values)
 			{
 				if(count($values) < 2)
