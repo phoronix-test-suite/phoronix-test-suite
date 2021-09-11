@@ -186,10 +186,10 @@ class pts_ResultFileTable extends pts_Table
 					sort($values_in_buffer);
 					$min_value_in_buffer = $values_in_buffer[0];
 
-					if($min_value_in_buffer == 0)
+					if(empty($min_value_in_buffer))
 					{
 						// Go through the values until something not 0, otherwise down in the code will be a divide by zero
-						for($i = 1; $i < count($values_in_buffer) && $min_value_in_buffer == 0; $i++)
+						for($i = 1; $i < count($values_in_buffer) && empty($min_value_in_buffer); $i++)
 						{
 							$min_value_in_buffer = $values_in_buffer[$i];
 						}
