@@ -217,6 +217,10 @@ class pts_result_file_analyzer
 					continue;
 				}
 				$result = $iv_map[$identifier];
+				if(!is_numeric($result) || !is_numeric($value))
+				{
+					continue;
+				}
 
 				if($result_object->test_profile->get_result_proportion() == 'HIB')
 				{
