@@ -93,7 +93,7 @@ switch($_GET['type'])
 		$stmt->bindValue(':sub_target', $sub_target);
 		if($stmt->execute())
 		{
-			echo 'Trigger ' . $_GET['trigger'] . ' added!';
+			echo 'Trigger ' . htmlspecialchars($_GET['trigger']) . ' added!';
 		}
 		break;
 

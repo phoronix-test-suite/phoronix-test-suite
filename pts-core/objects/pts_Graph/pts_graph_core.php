@@ -417,7 +417,7 @@ abstract class pts_graph_core
 				$data_max = max($data_max);
 			}
 
-			if(!is_numeric($data_max))
+			if(!is_numeric($data_max) && $data_max != null)
 			{
 				$data_max = str_repeat(9, strlen($data_max));
 			}

@@ -68,11 +68,17 @@ class pts_result_viewer_embed
 	protected function result_object_to_error_report(&$result_file, &$result_object, $i)
 	{
 		$html = '';
+		$shown_args = false;
 		foreach($result_object->test_result_buffer->buffer_items as &$bi)
 		{
 			if($bi->get_result_value() == null && ($bi_error = $bi->get_error()) != null)
 			{
-				$html .= '<p class="test_error"><strong>[ERROR] ' . $bi->get_result_identifier() . ':</strong> ' . strip_tags($bi_error);
+				if(!$shown_args)
+				{
+					$html .= '<p><strong>' . $result_object->get_arguments_description() . '</strong></p>';
+					$shown_args = true;
+				}
+				$html .= '<p class="test_error"><strong>[TEST RUN ERROR] ' . $bi->get_result_identifier() . ':</strong> ' . strip_tags($bi_error) . '<br />';
 				$test_log_dir = $result_file->get_test_log_dir($result_object);
 				if($test_log_dir && count(pts_file_io::glob($test_log_dir . '/' . $bi->get_result_identifier() . '.log')) > 0)
 				{
@@ -80,7 +86,7 @@ class pts_result_viewer_embed
 				}
 				if(count(($result_file->get_test_installation_log_dir() ? pts_file_io::glob($result_file->get_test_installation_log_dir() . $bi->get_result_identifier()  . '/' . $result_object->test_profile->get_identifier_simplified() . '.log') : array())) > 0)
 				{
-					$html .= ' <a onclick="javascript:display_install_logs_for_result_object(\'' . $this->result_public_id . '\', \'' . $i . '\', \'' . $bi->get_result_identifier() . '\'); return false;">View Test Installation Logs</a> ';
+					$html .= ' &nbsp; <a onclick="javascript:display_install_logs_for_result_object(\'' . $this->result_public_id . '\', \'' . $i . '\', \'' . $bi->get_result_identifier() . '\'); return false;">View Test Installation Logs</a> ';
 				}
 				$html .= '</p>';
 			}
@@ -277,6 +283,7 @@ class pts_result_viewer_embed
 			{
 				// ERROR REPORT?
 				$PAGE .= $this->result_object_to_error_report($result_file, $result_object, $i);
+				$PAGE .= '</div>'; // Closing the div with id result-$i
 				continue;
 			}
 
