@@ -14,6 +14,7 @@ phoromatic: Warn when lacking database write access for Phoromatic Server
 phoromatic: Support (opt-in) handling of non-text file log files
 phoromatic: System log viewer improvements
 phodevi: Improve detection of new Intel oneAPI DPC++/C++ Compiler
+phodevi: Make SYSTEM_ID accessible to client
 
 Phoronix Test Suite 10.4.0
 16 May 2021

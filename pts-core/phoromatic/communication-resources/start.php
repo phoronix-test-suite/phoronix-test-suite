@@ -20,6 +20,8 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 $json = array();
+$json['phoromatic']['system_id'] = SYSTEM_ID;
+
 if(SYSTEM_IN_MAINTENANCE_MODE)
 {
 	$json['phoromatic']['task'] = 'maintenance';
