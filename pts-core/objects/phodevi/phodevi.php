@@ -462,6 +462,7 @@ class phodevi extends phodevi_base
 	{
 		static $properties_table = array();
 		$value = false;
+		$start_time = microtime(true);
 
 		if(!isset($properties_table[$device]))
 		{
@@ -521,6 +522,11 @@ class phodevi extends phodevi_base
 			}
 		}
 
+		$end_time = microtime(true);
+		$total_time = intval(($end_time - $start_time)*1000);
+		if($total_time > 500) {
+			pts_logger::add_to_log("Slow Property Read ".$device. ":". $read_property. " took ". $total_time . "ms");
+		}
 		return $value;
 	}
 	public static function read_all_properties()
