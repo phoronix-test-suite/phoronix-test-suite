@@ -387,6 +387,7 @@ class pts_test_execution
 					// i.e. if PTS was auto-launched or started by systemd service, likely should be fine, etc.
 
 					pts_client::$display->test_run_instance_error('Rebooting system, requested by test profile.');
+					pts_module_manager::module_process('__event_reboot', $test_run_request);
 					phodevi::reboot();
 					// Buffer in case reboot isn't immediate
 					sleep(10000);

@@ -1146,6 +1146,18 @@ class phoromatic extends pts_module_interface
 			));
 		//pts_client::$pts_logger && pts_client::$pts_logger->log('TEMP DEBUG MESSAGE: ' . $server_response);
 	}
+	public static function __event_reboot($passed_obj)
+	{
+		$reboot_msg = 'Attemtping system reboot';
+		if($passed_obj != null)
+		{
+			if($passed_obj instanceof pts_test_result)
+			{
+				$reboot_msg = 'Attempting system reboot, requested by ' . $passed_obj->test_profile->get_identifier();
+			}
+		}
+		phoromatic::update_system_status($reboot_msg);
+	}
 }
 
 ?>
