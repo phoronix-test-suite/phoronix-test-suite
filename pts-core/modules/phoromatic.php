@@ -701,18 +701,24 @@ class phoromatic extends pts_module_interface
 								self::$test_run_manager->post_execution_process();
 								$elapsed_benchmark_time = time() - $benchmark_timer;
 
-								// Handle uploading data to server
-								$result_file = new pts_result_file(self::$test_run_manager->get_file_name());
-								$upload_system_logs = pts_strings::string_bool($json['phoromatic']['settings']['UploadSystemLogs']);
-								$server_response = self::upload_test_result($result_file, $upload_system_logs, (isset($json['phoromatic']['schedule_id']) ? $json['phoromatic']['schedule_id'] : null), $phoromatic_save_identifier, $json['phoromatic']['trigger_id'], $elapsed_benchmark_time, $benchmark_ticket_id);								
+								if (!is_file(PTS_USER_PATH . 'abort-run')) {
+									// Handle uploading data to server
+									$result_file = new pts_result_file(self::$test_run_manager->get_file_name());
+									$upload_system_logs = pts_strings::string_bool($json['phoromatic']['settings']['UploadSystemLogs']);
+									$server_response = self::upload_test_result($result_file, $upload_system_logs, (isset($json['phoromatic']['schedule_id']) ? $json['phoromatic']['schedule_id'] : null), $phoromatic_save_identifier, $json['phoromatic']['trigger_id'], $elapsed_benchmark_time, $benchmark_ticket_id);								
 
-								$server_response = json_decode($server_response, true);
-								if(isset($server_response['phoromatic']['error']))
-									pts_client::$pts_logger->log('Phoromatic Server Reported Error: ' . $server_response['phoromatic']['error']);
-				
-								if(!pts_strings::string_bool($json['phoromatic']['settings']['ArchiveResultsLocally']))
-								{
-									pts_results::remove_saved_result_file(self::$test_run_manager->get_file_name());
+									$server_response = json_decode($server_response, true);
+									if(isset($server_response['phoromatic']['error']))
+										pts_client::$pts_logger->log('Phoromatic Server Reported Error: ' . $server_response['phoromatic']['error']);
+					
+									if(!pts_strings::string_bool($json['phoromatic']['settings']['ArchiveResultsLocally']))
+									{
+										pts_results::remove_saved_result_file(self::$test_run_manager->get_file_name());
+									}
+								} else {
+									if(pts_file_io::unlink(PTS_USER_PATH . 'abort-run'))
+									pts_client::$pts_logger && pts_client::$pts_logger->log("Test requested run abort and wait");
+									sleep(10000);
 								}
 							}
 
@@ -833,13 +839,17 @@ class phoromatic extends pts_module_interface
 						$is_valid_log = false;
 						break;
 					}
-			/*		if($finfo && substr(finfo_file($finfo, $log_file), 0, 5) != 'text/')
-					{
-						pts_client::$pts_logger && pts_client::$pts_logger->log("Failed mime prefix ". $log_file);
 
-						$is_valid_log = false;
-						break;
-					}*/
+					// If Phoromatic is configured to allow any log file.
+					if(!pts_client::$skip_log_file_type_checks) {
+						if($finfo && substr(finfo_file($finfo, $log_file), 0, 5) != 'text/')
+						{
+							pts_client::$pts_logger && pts_client::$pts_logger->log("Failed mime prefix ". $log_file);
+
+							$is_valid_log = false;
+							break;
+						}
+					}	
 				}
 			}
 
