@@ -90,6 +90,24 @@ class pts_test_execution
 		$pts_test_arguments = trim($test_run_request->test_profile->get_default_arguments() . ' ' . ($test_run_request->test_profile->get_default_arguments() != null ? str_replace($test_run_request->test_profile->get_default_arguments(), '', $extra_arguments) : $extra_arguments) . ' ' . $test_run_request->test_profile->get_default_post_arguments());
 		$extra_runtime_variables = pts_tests::extra_environmental_variables($test_run_request->test_profile);
 
+		if(is_file($test_directory . 'reboot-needed'))
+		{
+			// Test profile previously wrote to ~/reboot-needed
+			$reboot_needed = pts_file_io::file_get_contents($test_directory . 'reboot-needed');
+
+			if($reboot_needed == PTS_CORE_VERSION . ':' . pts_client::get_time_pts_last_started())
+			{
+				// This test last run and issued the reboot-needed the last time the PTS process was started
+				// i.e. ignore any potentially stale reboot-needed issuance so it will then be restarted as who knows what changed or went on
+
+				// Set $TEST_RECOVERING_FROM_REBOOT to indicate to test script that it is doing so...
+				// Potentially useful for test is relaying that last run-time if it wants to apply any extra logic/comparison of its own...
+				// Test profiles can already have $THIS_RUN_TIME environment variable that should be the same value prior to the reboot (during the first run)
+				$extra_runtime_variables['TEST_RECOVERING_FROM_REBOOT'] = pts_client::get_time_pts_last_started();
+			}
+			unlink($test_directory . 'reboot-needed');
+		}
+
 		// Start
 		$cache_share_pt2so = $test_directory . 'cache-share-' . PTS_INIT_TIME . '.pt2so';
 		$cache_share_present = $allow_cache_share && is_file($cache_share_pt2so);
@@ -343,6 +361,38 @@ class pts_test_execution
 				$exit_status_pass = true;
 			}
 
+			if(is_file($test_directory . 'reboot-needed'))
+			{
+				// Test profile wrote to ~/reboot-needed to indicate need to reboot the system
+				$reboot_needed = pts_file_io::file_get_contents($test_directory . 'reboot-needed');
+
+				$reboot_now = false;
+				switch($reboot_needed)
+				{
+					case 'queued':
+						// reboot at end of running all tests (or until hitting an immediate) to cut down on unnecessary/multiple reboots but prior to saving results
+						// TODO: implement queued reboot in test_run_manager, so for now just reboot immediately
+					case 'immediate':
+					default:
+						// If just touch'ing the file / default, reboot right now
+						$reboot_now = true;
+						break;
+				}
+
+				// Replace the reboot-needed contents with an indicator for on succeeding run that can be used for determining if it's "recovering" from reboot
+				file_put_contents($test_directory . 'reboot-needed', PTS_CORE_VERSION . ':' . TIME_PTS_LAUNCHED);
+				if($reboot_now)
+				{
+					// XXX: could add logic to warn or abort reboot if it looks like PTS won't come back up on reboot automatically...
+					// i.e. if PTS was auto-launched or started by systemd service, likely should be fine, etc.
+
+					pts_client::$display->test_run_instance_error('Rebooting system, requested by test profile.');
+					phodevi::reboot();
+					// Buffer in case reboot isn't immediate
+					sleep(10000);
+					exit;
+				}
+			}
 
 			if(!isset($test_result_std_output[10240]) || pts_client::is_debug_mode() || $full_output)
 			{
