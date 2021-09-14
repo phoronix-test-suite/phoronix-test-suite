@@ -105,11 +105,9 @@ class phoromatic_logs implements pts_webui_interface
 							}
 							else
 							{
-								$main .= '<p>Binary log file detected.</p>';
+								$main .= '<p><a href="?logs/system/' . $PATH[1] . '/' . basename($zip->getNameIndex($i))  . '/' . $i . '/download">Download ' . basename($zip->getNameIndex($i)) . '</a><hr />';
 							}
 
-							// TODO XXX the below download code (primarily for viewing non-text logs) currently has issue due to some HTML pre-formatting...
-							//$main .= '<p><a href="?logs/system/' . $PATH[1] . '/' . (isset($PATH[2]) ? $PATH[2] : '') . '/' . $i . '/download">Download ' . basename($zip->getNameIndex($i)) . '</a><hr />';
 						}
 						$zip->close();
 					}
