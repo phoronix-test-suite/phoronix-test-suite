@@ -8,6 +8,7 @@ pts-core: Remove the old, long deprecated static/JavaScript PTS result viewer th
 pts-core: PHP 8.1 deprecation warning fixes
 pts-core: Support launching PHP web server with PHP_CLI_SERVER_WORKERS to allow multiple workers/threads
 pts-core: Windows batch file handling test execution fix
+pts-core: Allow running merge-results when pointing to specific XML files outside of standard paths
 pts-core: Various minor fixes
 phoromatic: Fix possible case of local test profile download issues from Phoromatic Server
 phoromatic: Warn when lacking database write access for Phoromatic Server
