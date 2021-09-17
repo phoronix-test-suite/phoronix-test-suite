@@ -279,120 +279,115 @@ class pts_result_viewer_embed
 				}
 				$prev_title = $result_object->test_profile->get_title();
 			}
-			if($res == false)
+			if($res != false)
 			{
-				// ERROR REPORT?
-				$PAGE .= $this->result_object_to_error_report($result_file, $result_object, $i);
-				$PAGE .= '</div>'; // Closing the div with id result-$i
-				continue;
-			}
+				//
+				// DISPLAY GRAPH
+				//
 
-			//
-			// DISPLAY GRAPH
-			//
+				// Run variability
+				$res_per_core = false;
+				$res_per_thread = false;
+				$res_per_clock = false;
+				$res_per_ram = false;
+				$res_variability = false;
 
-			// Run variability
-			$res_per_core = false;
-			$res_per_thread = false;
-			$res_per_clock = false;
-			$res_per_ram = false;
-			$res_variability = false;
-
-			if(!in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'BOX_PLOT')) && $result_object->test_result_buffer->detected_multi_sample_result() && $result_object->test_result_buffer->get_count() > 1)
-			{
-				$extra_attributes['graph_render_type'] = 'HORIZONTAL_BOX_PLOT';
-				$ro = clone $result_object;
-				$res_variability = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
-				unset($extra_attributes['graph_render_type']);
-			}
-			if(in_array($result_object->test_profile->get_test_hardware_type(), array('System', 'Processor', 'OS')))
-			{
-				if(!empty($identifier_mapping_to_cores))
+				if(!in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'BOX_PLOT')) && $result_object->test_result_buffer->detected_multi_sample_result() && $result_object->test_result_buffer->get_count() > 1)
 				{
-					$ro = pts_result_file_analyzer::get_result_object_custom($result_file, $result_object, $identifier_mapping_to_cores, 'Performance Per Core', 'Core');
-					if($ro)
+					$extra_attributes['graph_render_type'] = 'HORIZONTAL_BOX_PLOT';
+					$ro = clone $result_object;
+					$res_variability = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
+					unset($extra_attributes['graph_render_type']);
+				}
+				if(in_array($result_object->test_profile->get_test_hardware_type(), array('System', 'Processor', 'OS')))
+				{
+					if(!empty($identifier_mapping_to_cores))
 					{
-						$res_per_core = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
+						$ro = pts_result_file_analyzer::get_result_object_custom($result_file, $result_object, $identifier_mapping_to_cores, 'Performance Per Core', 'Core');
+						if($ro)
+						{
+							$res_per_core = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
+						}
+					}
+					if(!empty($identifier_mapping_to_threads) && $identifier_mapping_to_cores != $identifier_mapping_to_threads)
+					{
+						$ro = pts_result_file_analyzer::get_result_object_custom($result_file, $result_object, $identifier_mapping_to_threads, 'Performance Per Thread', 'Thread');
+						if($ro)
+						{
+							$res_per_thread = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
+						}
+					}
+					if(!empty($identifier_mapping_to_cpu_clock))
+					{
+						$ro = pts_result_file_analyzer::get_result_object_custom($result_file, $result_object, $identifier_mapping_to_cpu_clock, 'Performance Per Clock', 'GHz');
+						if($ro)
+						{
+							$res_per_clock = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
+						}
 					}
 				}
-				if(!empty($identifier_mapping_to_threads) && $identifier_mapping_to_cores != $identifier_mapping_to_threads)
+				if(in_array($result_object->test_profile->get_test_hardware_type(), array('System', 'Processor', 'Memory')))
 				{
-					$ro = pts_result_file_analyzer::get_result_object_custom($result_file, $result_object, $identifier_mapping_to_threads, 'Performance Per Thread', 'Thread');
-					if($ro)
+					if(!empty($identifier_mapping_to_ram_channels))
 					{
-						$res_per_thread = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
+						$ro = pts_result_file_analyzer::get_result_object_custom($result_file, $result_object, $identifier_mapping_to_ram_channels, 'Performance Per Memory Channel', 'Channel');
+						if($ro)
+						{
+							$res_per_ram = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
+						}
 					}
 				}
-				if(!empty($identifier_mapping_to_cpu_clock))
+
+				$tabs = array(
+					'Result' => $res
+					);
+
+				foreach($result_file->get_relation_map($i) as $child_ro)
 				{
-					$ro = pts_result_file_analyzer::get_result_object_custom($result_file, $result_object, $identifier_mapping_to_cpu_clock, 'Performance Per Clock', 'GHz');
-					if($ro)
+					$c_ro = $result_file->get_result($child_ro);
+					if($c_ro)
 					{
-						$res_per_clock = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
+						$desc = str_replace(array(' Monitor', $res_desc_shortened ,'()' ,')', ' - '), '', $c_ro->get_arguments_description_shortened(false));
+						$tabs[($desc == $res_desc_shortened || empty($desc) ? $c_ro->test_profile->get_result_scale() : $desc)] = pts_render::render_graph_inline_embed($c_ro, $result_file, $extra_attributes);
+						$result_file->remove_result_object_by_id($child_ro);
+						$skip_ros[] = $child_ro;
 					}
 				}
-			}
-			if(in_array($result_object->test_profile->get_test_hardware_type(), array('System', 'Processor', 'Memory')))
-			{
-				if(!empty($identifier_mapping_to_ram_channels))
+
+				$tabs['Perf Per Core'] = $res_per_core;
+				$tabs['Perf Per Thread'] = $res_per_thread;
+				$tabs['Perf Per Clock'] = $res_per_clock;
+				$tabs['Perf Per RAM Channel'] = $res_per_ram;
+				$tabs['Result Confidence'] = $res_variability;
+
+				foreach($tabs as $title => &$graph)
 				{
-					$ro = pts_result_file_analyzer::get_result_object_custom($result_file, $result_object, $identifier_mapping_to_ram_channels, 'Performance Per Memory Channel', 'Channel');
-					if($ro)
+					if(empty($graph))
 					{
-						$res_per_ram = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
+						unset($tabs[$title]);
 					}
 				}
-			}
-
-			$tabs = array(
-				'Result' => $res
-				);
-
-			foreach($result_file->get_relation_map($i) as $child_ro)
-			{
-				$c_ro = $result_file->get_result($child_ro);
-				if($c_ro)
+				switch(count($tabs))
 				{
-					$desc = str_replace(array(' Monitor', $res_desc_shortened ,'()' ,')', ' - '), '', $c_ro->get_arguments_description_shortened(false));
-					$tabs[($desc == $res_desc_shortened || empty($desc) ? $c_ro->test_profile->get_result_scale() : $desc)] = pts_render::render_graph_inline_embed($c_ro, $result_file, $extra_attributes);
-					$result_file->remove_result_object_by_id($child_ro);
-					$skip_ros[] = $child_ro;
+					case 0:
+						continue 2;
+					case 1:
+						$PAGE .= $res . '<br />';
+						$PAGE .= $this->graph_export_handler($res);
+						break;
+					default:
+						$PAGE .= '<div class="tabs">';
+						foreach($tabs as $title => &$rendered)
+						{
+							$tab_id = strtolower(str_replace(' ', '_', $title)) . '_' . $i;
+							$PAGE .= '<input type="radio" name="tabs_' . $i . '" id="' . $tab_id . '"' . ($title == 'Result' ? ' checked="checked"' : '') . '>
+							  <label for="' . $tab_id . '">' . $title . '</label>
+							  <div class="tab">
+							    ' . $rendered . $this->graph_export_handler($rendered) . '
+							  </div>';
+						}
+						$PAGE .= '</div>';
 				}
-			}
-
-			$tabs['Perf Per Core'] = $res_per_core;
-			$tabs['Perf Per Thread'] = $res_per_thread;
-			$tabs['Perf Per Clock'] = $res_per_clock;
-			$tabs['Perf Per RAM Channel'] = $res_per_ram;
-			$tabs['Result Confidence'] = $res_variability;
-
-			foreach($tabs as $title => &$graph)
-			{
-				if(empty($graph))
-				{
-					unset($tabs[$title]);
-				}
-			}
-			switch(count($tabs))
-			{
-				case 0:
-					continue 2;
-				case 1:
-					$PAGE .= $res . '<br />';
-					$PAGE .= $this->graph_export_handler($res);
-					break;
-				default:
-					$PAGE .= '<div class="tabs">';
-					foreach($tabs as $title => &$rendered)
-					{
-						$tab_id = strtolower(str_replace(' ', '_', $title)) . '_' . $i;
-						$PAGE .= '<input type="radio" name="tabs_' . $i . '" id="' . $tab_id . '"' . ($title == 'Result' ? ' checked="checked"' : '') . '>
-						  <label for="' . $tab_id . '">' . $title . '</label>
-						  <div class="tab">
-						    ' . $rendered . $this->graph_export_handler($rendered) . '
-						  </div>';
-					}
-					$PAGE .= '</div>';
 			}
 
 			// $PAGE .= $res . '<br />';
