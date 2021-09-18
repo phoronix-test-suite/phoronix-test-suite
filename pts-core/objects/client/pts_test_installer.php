@@ -147,8 +147,11 @@ class pts_test_installer
 			$test_install_request->generate_download_object_list(); // run this again due to any late additions after the above generate_download_file_lists call
 			pts_client::$display->test_install_start($test_install_request->test_profile->get_identifier());
 			$test_install_request->special_environment_vars['INSTALL_FOOTNOTE'] = $test_install_request->test_profile->get_install_dir() . 'install-footnote';
+			pts_triggered_system_events::pre_run_reboot_triggered_check($test_install_request->test_profile, $test_install_request->special_environment_vars);
 			$installed = pts_test_installer::install_test_process($test_install_request, $no_prompts);
 			$compiler_data = pts_test_installer::end_compiler_mask($test_install_request);
+
+			pts_triggered_system_events::post_run_reboot_triggered_check($test_install_request->test_profile);
 
 			if($installed)
 			{
@@ -183,6 +186,7 @@ class pts_test_installer
 		}
 		pts_module_manager::module_process('__post_install_process', $test_install_manager);
 		pts_client::save_download_speed_averages();
+		pts_triggered_system_events::test_requested_queued_reboot_check();
 
 		if(count($failed_installs) > 1)
 		{
