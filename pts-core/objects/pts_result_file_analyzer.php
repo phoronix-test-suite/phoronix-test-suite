@@ -1521,6 +1521,12 @@ class pts_result_file_analyzer
 				unset($json['cpu-scaling-governor']);
 			}
 
+			if(!empty($json['platform-profile']))
+			{
+				$cpu_data[] = 'Platform Profile: ' . $json['platform-profile'];
+				unset($json['platform-profile']);
+			}
+
 			if(!empty($json['cpu-microcode']))
 			{
 				$cpu_data[] = 'CPU Microcode: ' . $json['cpu-microcode'];

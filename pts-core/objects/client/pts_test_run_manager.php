@@ -993,7 +993,7 @@ class pts_test_run_manager
 		}
 		if(true || $show_all || in_array('Processor', $test_hardware_types) || in_array('System', $test_hardware_types))
 		{
-			// XXX probably makes sense always reporting the CPU scaling governor
+			// makes sense always reporting the CPU scaling governor
 			$scaling_governor = phodevi::read_property('cpu', 'scaling-governor');
 			if($scaling_governor)
 			{
@@ -1026,6 +1026,12 @@ class pts_test_run_manager
 			if($cpu_pm)
 			{
 				$notes['cpu-pm'] = $cpu_pm;
+			}
+
+			$platform_profile = phodevi::read_property('system', 'platform-profile');
+			if($platform_profile)
+			{
+				$notes['platform-profile'] = $platform_profile;
 			}
 		}
 		if($show_all || in_array('Graphics', $test_hardware_types))

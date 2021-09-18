@@ -59,6 +59,7 @@ class phodevi_system extends phodevi_device_interface
 			'security-features' => new phodevi_device_property('sw_security_features', phodevi::std_caching),
 			'kernel-extra-details' => new phodevi_device_property('sw_kernel_extra_details', phodevi::std_caching),
 			'battery' => new phodevi_device_property('battery', phodevi::smart_caching),
+			'platform-profile' => new phodevi_device_property('sw_platform_profile', phodevi::std_caching),
 			);
 	}
 	public static function sw_username()
@@ -75,6 +76,20 @@ class phodevi_system extends phodevi_device_interface
 		}
 
 		return $username;
+	}
+	public static function sw_platform_profile()
+	{
+		$platform_profile = '';
+
+		if(phodevi::is_linux())
+		{
+			if(is_file('/sys/firmware/acpi/platform_profile'))
+			{
+				$platform_profile = pts_file_io::file_get_contents('/sys/firmware/acpi/platform_profile');
+			}
+		}
+
+		return $platform_profile;
 	}
 	public static function sw_kernel_extra_details()
 	{
