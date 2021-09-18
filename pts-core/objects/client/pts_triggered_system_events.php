@@ -22,6 +22,8 @@
 
 class pts_triggered_system_events
 {
+	protected static $needs_queued_reboot = false;
+
 	public static function pre_run_reboot_triggered_check(&$test_profile, &$env_var_array = null)
 	{
 		$reboot_needed_file = $test_profile->test_profile->get_install_dir() . 'reboot-needed';
@@ -57,7 +59,8 @@ class pts_triggered_system_events
 			{
 				case 'queued':
 					// reboot at end of running all tests (or until hitting an immediate) to cut down on unnecessary/multiple reboots but prior to saving results
-					// TODO: implement queued reboot in test_run_manager, so for now just reboot immediately
+					self::$needs_queued_reboot = true;
+					break;
 				case 'immediate':
 				default:
 					// If just touch'ing the file / default, reboot right now
@@ -69,15 +72,26 @@ class pts_triggered_system_events
 			file_put_contents($reboot_needed_file, PTS_CORE_VERSION . ':' . TIME_PTS_LAUNCHED);
 			if($reboot_now)
 			{
-				// XXX: could add logic to warn or abort reboot if it looks like PTS won't come back up on reboot automatically...
-				// i.e. if PTS was auto-launched or started by systemd service, likely should be fine, etc.
-
-				pts_client::$display->test_run_instance_error('Rebooting system, requested by test profile.');
-				pts_module_manager::module_process('__event_reboot', $test_profile);
-				phodevi::reboot();
-				exit;
+				self::do_reboot($test_profile);
 			}
-		}	
+		}
+	}
+	public static function test_requested_queued_reboot_check()
+	{
+		if(self::$needs_queued_reboot)
+		{
+			self::do_reboot();
+		}
+	}
+	protected static function do_reboot(&$test_profile = null)
+	{
+		// XXX: could add logic to warn or abort reboot if it looks like PTS won't come back up on reboot automatically...
+		// i.e. if PTS was auto-launched or started by systemd service, likely should be fine, etc.
+
+		pts_client::$display->test_run_instance_error('Rebooting system, requested by test profile.');
+		pts_module_manager::module_process('__event_reboot', $test_profile);
+		phodevi::reboot();
+		exit;
 	}
 }
 
