@@ -769,26 +769,32 @@ class phodevi extends phodevi_base
 	}
 	public static function reboot()
 	{
+		$reboot_cmd = '';
+
 		if(phodevi::is_windows())
 		{
-			shell_exec('shutdown /r');
-			sleep(5);
+			$reboot_cmd = 'shutdown /r';
 		}
 		else if(pts_client::executable_in_path('systemctl'))
 		{
-			shell_exec('systemctl reboot');
-			sleep(5);
+			$reboot_cmd = 'systemctl reboot';
 		}
 		else if(pts_client::executable_in_path('reboot'))
 		{
-			shell_exec('reboot');
-			sleep(5);
+			$reboot_cmd = 'reboot';
 		}
 		else if(pts_client::executable_in_path('shutdown'))
 		{
 			// macOS
-			shell_exec('shutdown -r now');
-			sleep(5);
+			$reboot_cmd = 'shutdown -r now';
+		}
+
+		if($reboot_cmd)
+		{
+			shell_exec($reboot_cmd);
+			// Buffer in case reboot isn't immediate
+			echo PHP_EOL . PHP_EOL . 'Waiting for reboot...' . PHP_EOL;
+			sleep(600);
 		}
 	}
 	public static function shutdown()
