@@ -26,7 +26,7 @@ class pts_triggered_system_events
 
 	public static function pre_run_reboot_triggered_check(&$test_profile, &$env_var_array = null)
 	{
-		$reboot_needed_file = $test_profile->test_profile->get_install_dir() . 'reboot-needed';
+		$reboot_needed_file = $test_profile->get_install_dir() . 'reboot-needed';
 		if(is_file($reboot_needed_file))
 		{
 			// Test profile previously wrote to ~/reboot-needed
@@ -48,7 +48,7 @@ class pts_triggered_system_events
 	}
 	public static function post_run_reboot_triggered_check(&$test_profile)
 	{
-		$reboot_needed_file = $test_profile->test_profile->get_install_dir() . 'reboot-needed';
+		$reboot_needed_file = $test_profile->get_install_dir() . 'reboot-needed';
 		if(is_file($reboot_needed_file))
 		{
 			// Test profile wrote to ~/reboot-needed to indicate need to reboot the system
