@@ -1155,6 +1155,10 @@ class phoromatic extends pts_module_interface
 			{
 				$reboot_msg = 'Attempting system reboot, requested by ' . $passed_obj->test_profile->get_identifier();
 			}
+			else if($passed_obj instanceof pts_test_profile)
+			{
+				$reboot_msg = 'Attempting system reboot, requested by ' . $passed_obj->get_identifier();
+			}
 		}
 		phoromatic::update_system_status($reboot_msg);
 	}
