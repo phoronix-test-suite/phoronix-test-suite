@@ -351,6 +351,7 @@ class phodevi extends phodevi_base
 				'Chipset' => phodevi::read_name('chipset'),
 				'Audio' => phodevi::read_name('audio'),
 				'Network' => phodevi::read_name('network'),
+				'Platform Profile'=> phodevi::read_property('system', 'platform-profile'),
 				),
 			'Memory' => phodevi::read_name('memory'),
 				array(),
