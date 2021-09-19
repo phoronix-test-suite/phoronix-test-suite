@@ -39,8 +39,42 @@ class phodevi_gpu extends phodevi_device_interface
 			'screen-resolution' => new phodevi_device_property('gpu_screen_resolution', phodevi::std_caching),
 			'screen-resolution-string' => new phodevi_device_property('gpu_screen_resolution_string', phodevi::std_caching),
 			'2d-acceleration' => new phodevi_device_property('gpu_2d_acceleration', phodevi::std_caching),
+			'bar1-visible-vram' => new phodevi_device_property('bar1_visible_vram', phodevi::smart_caching),
 			'device-id' => new phodevi_device_property('gpu_pci_device_id', phodevi::smart_caching),
 			);
+	}
+	public static function bar1_visible_vram()
+	{
+		$rebar_size = '';
+		if(phodevi::is_nvidia_graphics())
+		{
+			if(pts_client::executable_in_path('nvidia-smi'))
+			{
+				$nvidia_smi = shell_exec('nvidia-smi -a | grep BAR -A 3');
+
+				if(($x = strpos($nvidia_smi, 'Total ')) !== false)
+				{
+					$nvidia_smi = substr($nvidia_smi, $x);
+					$nvidia_smi = substr($nvidia_smi, strpos($nvidia_smi, ': ') + 2);
+					$nvidia_smi = substr($nvidia_smi, 0, strpos($nvidia_smi, PHP_EOL));
+					$rebar_size = $nvidia_smi;
+				}
+			}
+		}
+		if(phodevi::is_linux() && pts_client::executable_in_path('glxinfo'))
+		{
+			// Could improve detection above to only AMD Radeon graphics...
+			$amd_debug_glxinfo = shell_exec('AMD_DEBUG=info glxinfo | grep vram 2>&1');
+
+			if(($x = strpos($amd_debug_glxinfo, 'vram_vis_size = ')) !== false)
+			{
+				$amd_debug_glxinfo = substr($amd_debug_glxinfo, $x + 16);
+				$amd_debug_glxinfo = substr($amd_debug_glxinfo, 0, strpos($amd_debug_glxinfo, PHP_EOL));
+				$rebar_size = $amd_debug_glxinfo;
+			}
+		}
+
+		return $rebar_size;
 	}
 	public static function gpu_pci_device_id()
 	{

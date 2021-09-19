@@ -17,6 +17,7 @@ phoromatic: System log viewer improvements
 phoromatic: Make SYSTEM_ID accessible to client
 phodevi: Improve detection of new Intel oneAPI DPC++/C++ Compiler
 phodevi: ACPI Platform Profile reporting support
+phodevi: Support reporting NVIDIA BAR1 total memory / Radeon vRAM visible memory (Resizable BAR / ReBAR status)
 
 Phoronix Test Suite 10.4.0
 16 May 2021

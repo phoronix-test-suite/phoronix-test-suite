@@ -1552,7 +1552,7 @@ class pts_result_file_analyzer
 			$system_attributes['Processor'][$identifier] = 'SMT (threads per core): ' . $json['cpu-smt'];
 			unset($json['cpu-smt']);
 		}
-		if(isset($json['graphics-2d-acceleration']) || isset($json['graphics-aa']) || isset($json['graphics-af']))
+		if(isset($json['graphics-2d-acceleration']) || isset($json['graphics-aa']) || isset($json['graphics-af']) || isset($json['bar1-visible-vram']))
 		{
 			$report = array();
 			foreach(array('graphics-2d-acceleration', 'graphics-aa', 'graphics-af') as $check)
@@ -1562,6 +1562,11 @@ class pts_result_file_analyzer
 					$report[] = $json[$check];
 					unset($json[$check]);
 				}
+			}
+			if(isset($json['bar1-visible-vram']))
+			{
+				$report[] = 'BAR1 / Visible vRAM Size: ' . $json['bar1-visible-vram'];
+				unset($json['bar1-visible-vram']);
 			}
 			$system_attributes['Graphics'][$identifier] = implode(' - ' , $report);
 		}

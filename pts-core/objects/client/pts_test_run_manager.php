@@ -1059,6 +1059,12 @@ class pts_test_run_manager
 			{
 				$notes['graphics-oc'] = $oc_offset;
 			}
+
+			$bar1_visible_vram_rebar = phodevi::read_property('gpu', 'bar1-visible-vram');
+			if(!empty($bar1_visible_vram_rebar))
+			{
+				$notes['bar1-visible-vram'] = $bar1_visible_vram_rebar;
+			}
 		}
 
 		if($show_all || phodevi::read_property('system', 'kernel-parameters'))
