@@ -338,6 +338,7 @@ class phodevi extends phodevi_base
 			'Graphics' => phodevi::read_name('gpu'),
 				array(
 				'Frequency' => phodevi::read_property('gpu', 'frequency'),
+				'BAR1 / Visible vRAM' => phodevi::read_property('gpu', 'bar1-visible-vram'),
 				'OpenGL' => phodevi::read_property('system', 'opengl-driver'),
 				'Vulkan' => phodevi::read_property('system', 'vulkan-driver'),
 				'OpenCL' => phodevi::read_property('system', 'opencl-driver'),
