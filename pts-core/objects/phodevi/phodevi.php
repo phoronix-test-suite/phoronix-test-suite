@@ -392,7 +392,7 @@ class phodevi extends phodevi_base
 							if(isset($value[64]) && strpos($value, ' + ') !== false)
 							{
 								$values = explode(' + ', $value);
-								$tabled[] = array(pts_client::cli_just_bold($key) . ':' . str_repeat(' ', (16 - strlen($key))), array_shift($values));
+								$tabled[] = array(pts_client::cli_just_bold($key) . ':' . str_repeat(' ', (20 - strlen($key))), array_shift($values));
 								foreach($values as $value)
 								{
 									$tabled[] = array(pts_client::cli_just_bold(' '), '+ ' . $value);
@@ -400,7 +400,7 @@ class phodevi extends phodevi_base
 							}
 							else
 							{
-								$tabled[] = array(pts_client::cli_just_bold($key) . ':' . str_repeat(' ', (16 - strlen($key))), $value);
+								$tabled[] = array(pts_client::cli_just_bold($key) . ':' . str_repeat(' ', (20 - strlen($key))), $value);
 								//$sys_string .= '      ' . strtoupper($key) . ':' . $value . PHP_EOL;
 							}
 						}
@@ -421,7 +421,7 @@ class phodevi extends phodevi_base
 					if(isset($in[80]) && strpos($in, ' + ') !== false)
 					{
 						$values = explode(' + ', $in);
-						$sys_string .= PHP_EOL . '  ' . pts_client::cli_colored_text(strtoupper($key), 'gray', true) . ': ' . str_repeat(' ', (18 - strlen($key))) . pts_client::cli_colored_text(array_shift($values), 'green', true);
+						$sys_string .= PHP_EOL . '  ' . pts_client::cli_colored_text(strtoupper($key), 'gray', true) . ': ' . str_repeat(' ', (22 - strlen($key))) . pts_client::cli_colored_text(array_shift($values), 'green', true);
 						foreach($values as $value)
 						{
 							$sys_string .= PHP_EOL . str_repeat(' ', 22) . pts_client::cli_colored_text('+ ' . $value, 'green', true);
@@ -430,7 +430,7 @@ class phodevi extends phodevi_base
 					}
 					else
 					{
-						$sys_string .= PHP_EOL . '  ' . pts_client::cli_colored_text(strtoupper($key), 'gray', true) . ': ' . str_repeat(' ', (18 - strlen($key))) . pts_client::cli_colored_text($in, 'green', true) . PHP_EOL;
+						$sys_string .= PHP_EOL . '  ' . pts_client::cli_colored_text(strtoupper($key), 'gray', true) . ': ' . str_repeat(' ', (22 - strlen($key))) . pts_client::cli_colored_text($in, 'green', true) . PHP_EOL;
 					}
 				}
 
