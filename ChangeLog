@@ -16,7 +16,7 @@ phoromatic: Support (opt-in) handling of non-text file log files
 phoromatic: System log viewer improvements
 phoromatic: Make SYSTEM_ID accessible to client
 phodevi: Improve detection of new Intel oneAPI DPC++/C++ Compiler
-phodevi: ACPI Platform Profile reporting support
+phodevi: ACPI Platform Profile reporting support on Linux
 phodevi: Support reporting NVIDIA BAR1 total memory / Radeon vRAM visible memory (Resizable BAR / ReBAR status)
 
 Phoronix Test Suite 10.4.0

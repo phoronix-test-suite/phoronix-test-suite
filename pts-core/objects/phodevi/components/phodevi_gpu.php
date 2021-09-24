@@ -64,7 +64,7 @@ class phodevi_gpu extends phodevi_device_interface
 		if(phodevi::is_linux() && pts_client::executable_in_path('glxinfo'))
 		{
 			// Could improve detection above to only AMD Radeon graphics...
-			$amd_debug_glxinfo = shell_exec('AMD_DEBUG=info glxinfo | grep vram 2>&1');
+			$amd_debug_glxinfo = shell_exec('AMD_DEBUG=info glxinfo 2>&1 | grep vram');
 
 			if(($x = strpos($amd_debug_glxinfo, 'vram_vis_size = ')) !== false)
 			{
