@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2019, Phoronix Media
-	Copyright (C) 2008 - 2019, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -89,6 +89,8 @@ class pts_test_execution
 		$to_execute = $test_run_request->test_profile->get_test_executable_dir();
 		$pts_test_arguments = trim($test_run_request->test_profile->get_default_arguments() . ' ' . ($test_run_request->test_profile->get_default_arguments() != null ? str_replace($test_run_request->test_profile->get_default_arguments(), '', $extra_arguments) : $extra_arguments) . ' ' . $test_run_request->test_profile->get_default_post_arguments());
 		$extra_runtime_variables = pts_tests::extra_environmental_variables($test_run_request->test_profile);
+
+		pts_triggered_system_events::pre_run_reboot_triggered_check($test_run_request->test_profile, $extra_runtime_variables);
 
 		// Start
 		$cache_share_pt2so = $test_directory . 'cache-share-' . PTS_INIT_TIME . '.pt2so';
@@ -343,6 +345,7 @@ class pts_test_execution
 				$exit_status_pass = true;
 			}
 
+			pts_triggered_system_events::post_run_reboot_triggered_check($test_run_request->test_profile);
 
 			if(!isset($test_result_std_output[10240]) || pts_client::is_debug_mode() || $full_output)
 			{

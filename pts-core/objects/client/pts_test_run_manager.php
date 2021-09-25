@@ -711,6 +711,8 @@ class pts_test_run_manager
 			}
 		}
 
+		pts_triggered_system_events::test_requested_queued_reboot_check();
+
 		if($this->post_run_message != null)
 		{
 			pts_client::$display->display_interrupt_message($this->post_run_message);

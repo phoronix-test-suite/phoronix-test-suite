@@ -105,7 +105,7 @@ if(!is_file(VIEWER_PHORONIX_TEST_SUITE_PATH . '/pts-core/pts-core.php'))
 require(VIEWER_PHORONIX_TEST_SUITE_PATH . '/pts-core/pts-core.php');
 pts_define_directories();
 
-set_time_limit(0);
+set_time_limit(60);
 ini_set('memory_limit','2048M');
 
 if(isset($_GET['PTS']))

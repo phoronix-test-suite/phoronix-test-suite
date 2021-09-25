@@ -226,6 +226,12 @@ class pts_module_interface
 		// Passed is an array where the first element is a copy of the test_run_manager, the second elemnt is the test_run_request, and the third element is the error_msg string
 		return;
 	}
+	public static function __event_reboot($obj = null)
+	{
+		// PTS is attempting to reboot the system
+		// Passed is potentially the test run request of the test profile requesting the reboot as set by reboot-needed
+		return;
+	}
 
 	*/
 }
