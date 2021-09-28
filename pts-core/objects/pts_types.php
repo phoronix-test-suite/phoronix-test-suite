@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2020, Phoronix Media
-	Copyright (C) 2010 - 2020, Michael Larabel
+	Copyright (C) 2010 - 2021, Phoronix Media
+	Copyright (C) 2010 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -185,6 +185,16 @@ class pts_types
 		{
 			// Object is a virtual suite
 			$objects[] = new pts_virtual_test_suite($identifier_item);
+		}
+		else if(PTS_IS_CLIENT && isset($identifier_item[4]) && substr($identifier_item, -4) == '.xml' && is_file($identifier_item))
+		{
+			// See if it's pointing to a specific file
+			$test_obj = new pts_result_file($identifier_item);
+			if($test_obj->get_system_count() > 0 && $test_obj->get_test_count() > 0)
+			{
+				// Result file is an individual file on the file-system
+				$objects[] = $test_obj;
+			}
 		}
 		else
 		{

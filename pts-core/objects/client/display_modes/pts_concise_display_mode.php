@@ -453,6 +453,11 @@ class pts_concise_display_mode implements pts_display_mode_interface
 				$minimum_color = 'red';
 				$maximum_color = 'green';
 			}
+			else
+			{
+				$minimum_color = 'cyan';
+				$maximum_color = 'cyan';
+			}
 
 			if(count($values) > 1)
 			{

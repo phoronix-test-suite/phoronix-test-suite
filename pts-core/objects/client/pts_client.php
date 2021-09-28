@@ -37,6 +37,7 @@ class pts_client
 	protected static $full_output = false;
 	protected static $override_pts_env_vars = array();
 	protected static $sent_command = null;
+	protected static $time_pts_last_launch = null;
 	private static $current_command = null;
 	private static $forked_pids = array();
 	private static $download_speed_average_count = -1;
@@ -916,10 +917,11 @@ class pts_client
 
 		// Last Run Processing
 		$last_run = $pso->read_object('last_run_time');
-		pts_define('IS_FIRST_RUN_TODAY', (substr($last_run, 0, 10) != date('Y-m-d')));
-		$pso->add_object('last_run_time', date('Y-m-d H:i:s')); // Time PTS was last run
-		pts_define('TIME_SINCE_LAST_RUN', ceil((time() - strtotime($last_run)) / 60)); // TIME_SINCE_LAST_RUN is in minutes
 		pts_define('TIME_PTS_LAUNCHED', time());
+		pts_define('IS_FIRST_RUN_TODAY', (substr($last_run, 0, 10) != date('Y-m-d', TIME_PTS_LAUNCHED)));
+		$pso->add_object('last_run_time', date('Y-m-d H:i:s', TIME_PTS_LAUNCHED)); // Time PTS was last run
+		self::$time_pts_last_launch = strtotime($last_run);
+		pts_define('TIME_SINCE_LAST_RUN', ceil((TIME_PTS_LAUNCHED - self::$time_pts_last_launch) / 60)); // TIME_SINCE_LAST_RUN is in minutes
 
 		// User Agreement Checking
 		$agreement_cs = $pso->read_object('user_agreement_cs');
@@ -963,6 +965,10 @@ class pts_client
 
 		// Archive to disk
 		$pso->save_to_file(PTS_CORE_STORAGE);
+	}
+	public static function get_time_pts_last_started()
+	{
+		return self::$time_pts_last_launch;
 	}
 	public static function register_phoromatic_server($server_ip, $http_port)
 	{

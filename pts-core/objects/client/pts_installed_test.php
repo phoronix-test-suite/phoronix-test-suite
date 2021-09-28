@@ -156,7 +156,7 @@ class pts_installed_test
 	}
 	public function get_last_run_date()
 	{
-		return !empty($this->get_last_run_date_time()) ? substr($this->get_last_run_date_time(), 0, 10) : '';
+		return !empty($this->last_run_date_time) ? substr($this->last_run_date_time, 0, 10) : '';
 	}
 	public function get_installed_version()
 	{

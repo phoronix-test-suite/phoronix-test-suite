@@ -711,6 +711,8 @@ class pts_test_run_manager
 			}
 		}
 
+		pts_triggered_system_events::test_requested_queued_reboot_check();
+
 		if($this->post_run_message != null)
 		{
 			pts_client::$display->display_interrupt_message($this->post_run_message);
@@ -1000,7 +1002,7 @@ class pts_test_run_manager
 		}
 		if(true || $show_all || in_array('Processor', $test_hardware_types) || in_array('System', $test_hardware_types))
 		{
-			// XXX probably makes sense always reporting the CPU scaling governor
+			// makes sense always reporting the CPU scaling governor
 			$scaling_governor = phodevi::read_property('cpu', 'scaling-governor');
 			if($scaling_governor)
 			{
@@ -1034,6 +1036,12 @@ class pts_test_run_manager
 			{
 				$notes['cpu-pm'] = $cpu_pm;
 			}
+
+			$platform_profile = phodevi::read_property('system', 'platform-profile');
+			if($platform_profile)
+			{
+				$notes['platform-profile'] = $platform_profile;
+			}
 		}
 		if($show_all || in_array('Graphics', $test_hardware_types))
 		{
@@ -1059,6 +1067,12 @@ class pts_test_run_manager
 			if(!empty($oc_offset))
 			{
 				$notes['graphics-oc'] = $oc_offset;
+			}
+
+			$bar1_visible_vram_rebar = phodevi::read_property('gpu', 'bar1-visible-vram');
+			if(!empty($bar1_visible_vram_rebar))
+			{
+				$notes['bar1-visible-vram'] = $bar1_visible_vram_rebar;
 			}
 		}
 

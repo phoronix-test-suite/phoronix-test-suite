@@ -34,6 +34,7 @@ class phoromatic extends pts_module_interface
 	private static $is_running_as_phoromatic_node = false;
 	private static $log_file = null;
 	private static $limit_network_communication = false;
+	private static $system_id = null;
 
 	private static $p_save_identifier = null;
 	private static $p_schedule_id = null;
@@ -544,6 +545,17 @@ class phoromatic extends pts_module_interface
 					{
 						if($json['phoromatic']['task'] != 'idle') 
 						   echo PHP_EOL . $json['phoromatic']['response'] . PHP_EOL;
+					}
+					if(isset($json['phoromatic']['system_id']) && !empty($json['phoromatic']['system_id']))
+					{
+						if(self::$system_id != $json['phoromatic']['system_id'])
+						{
+							// The Phoromatic server/account's system ID for this given system
+							self::$system_id = $json['phoromatic']['system_id'];
+
+							// Save the system ID to text file if it's useful for other purposes...
+							pts_module::set_option('system_id', self::$system_id);
+						}
 					}
 				}
 
@@ -1157,6 +1169,22 @@ class phoromatic extends pts_module_interface
 			'o' => $test_run_request->get_arguments_description()
 			));
 		//pts_client::$pts_logger && pts_client::$pts_logger->log('TEMP DEBUG MESSAGE: ' . $server_response);
+	}
+	public static function __event_reboot($passed_obj)
+	{
+		$reboot_msg = 'Attemtping system reboot';
+		if($passed_obj != null)
+		{
+			if($passed_obj instanceof pts_test_result)
+			{
+				$reboot_msg = 'Attempting system reboot, requested by ' . $passed_obj->test_profile->get_identifier();
+			}
+			else if($passed_obj instanceof pts_test_profile)
+			{
+				$reboot_msg = 'Attempting system reboot, requested by ' . $passed_obj->get_identifier();
+			}
+		}
+		phoromatic::update_system_status($reboot_msg);
 	}
 }
 

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2020, Phoronix Media
-	Copyright (C) 2008 - 2020, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -31,18 +31,8 @@ class merge_results implements pts_option_interface
 		new pts_argument_check('VARIABLE_LENGTH', array('pts_types', 'is_result_file'), null)
 		);
 	}
-	public static function run($r)
+	public static function run($result_files_to_merge)
 	{
-		$result_files_to_merge = array();
-
-		foreach($r as $result_file)
-		{
-			if(pts_types::is_result_file($result_file))
-			{
-				$result_files_to_merge[] = PTS_SAVE_RESULTS_PATH . $result_file . '/composite.xml';
-			}
-		}
-
 		if(count($result_files_to_merge) < 2)
 		{
 			echo PHP_EOL . 'At least two saved result names must be supplied.';

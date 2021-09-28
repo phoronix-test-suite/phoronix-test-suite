@@ -8,12 +8,16 @@ pts-core: Remove the old, long deprecated static/JavaScript PTS result viewer th
 pts-core: PHP 8.1 deprecation warning fixes
 pts-core: Support launching PHP web server with PHP_CLI_SERVER_WORKERS to allow multiple workers/threads
 pts-core: Windows batch file handling test execution fix
+pts-core: Allow running merge-results when pointing to specific XML files outside of standard paths
 pts-core: Various minor fixes
 phoromatic: Fix possible case of local test profile download issues from Phoromatic Server
 phoromatic: Warn when lacking database write access for Phoromatic Server
 phoromatic: Support (opt-in) handling of non-text file log files
 phoromatic: System log viewer improvements
+phoromatic: Make SYSTEM_ID accessible to client
 phodevi: Improve detection of new Intel oneAPI DPC++/C++ Compiler
+phodevi: ACPI Platform Profile reporting support on Linux
+phodevi: Support reporting NVIDIA BAR1 total memory / Radeon vRAM visible memory (Resizable BAR / ReBAR status)
 
 Phoronix Test Suite 10.4.0
 16 May 2021

@@ -338,6 +338,7 @@ class phodevi extends phodevi_base
 			'Graphics' => phodevi::read_name('gpu'),
 				array(
 				'Frequency' => phodevi::read_property('gpu', 'frequency'),
+				'BAR1 / Visible vRAM' => phodevi::read_property('gpu', 'bar1-visible-vram'),
 				'OpenGL' => phodevi::read_property('system', 'opengl-driver'),
 				'Vulkan' => phodevi::read_property('system', 'vulkan-driver'),
 				'OpenCL' => phodevi::read_property('system', 'opencl-driver'),
@@ -351,6 +352,7 @@ class phodevi extends phodevi_base
 				'Chipset' => phodevi::read_name('chipset'),
 				'Audio' => phodevi::read_name('audio'),
 				'Network' => phodevi::read_name('network'),
+				'Platform Profile'=> phodevi::read_property('system', 'platform-profile'),
 				),
 			'Memory' => phodevi::read_name('memory'),
 				array(),
@@ -390,7 +392,7 @@ class phodevi extends phodevi_base
 							if(isset($value[64]) && strpos($value, ' + ') !== false)
 							{
 								$values = explode(' + ', $value);
-								$tabled[] = array(pts_client::cli_just_bold($key) . ':' . str_repeat(' ', (16 - strlen($key))), array_shift($values));
+								$tabled[] = array(pts_client::cli_just_bold($key) . ':' . str_repeat(' ', (20 - strlen($key))), array_shift($values));
 								foreach($values as $value)
 								{
 									$tabled[] = array(pts_client::cli_just_bold(' '), '+ ' . $value);
@@ -398,7 +400,7 @@ class phodevi extends phodevi_base
 							}
 							else
 							{
-								$tabled[] = array(pts_client::cli_just_bold($key) . ':' . str_repeat(' ', (16 - strlen($key))), $value);
+								$tabled[] = array(pts_client::cli_just_bold($key) . ':' . str_repeat(' ', (20 - strlen($key))), $value);
 								//$sys_string .= '      ' . strtoupper($key) . ':' . $value . PHP_EOL;
 							}
 						}
@@ -419,7 +421,7 @@ class phodevi extends phodevi_base
 					if(isset($in[80]) && strpos($in, ' + ') !== false)
 					{
 						$values = explode(' + ', $in);
-						$sys_string .= PHP_EOL . '  ' . pts_client::cli_colored_text(strtoupper($key), 'gray', true) . ': ' . str_repeat(' ', (18 - strlen($key))) . pts_client::cli_colored_text(array_shift($values), 'green', true);
+						$sys_string .= PHP_EOL . '  ' . pts_client::cli_colored_text(strtoupper($key), 'gray', true) . ': ' . str_repeat(' ', (22 - strlen($key))) . pts_client::cli_colored_text(array_shift($values), 'green', true);
 						foreach($values as $value)
 						{
 							$sys_string .= PHP_EOL . str_repeat(' ', 22) . pts_client::cli_colored_text('+ ' . $value, 'green', true);
@@ -428,7 +430,7 @@ class phodevi extends phodevi_base
 					}
 					else
 					{
-						$sys_string .= PHP_EOL . '  ' . pts_client::cli_colored_text(strtoupper($key), 'gray', true) . ': ' . str_repeat(' ', (18 - strlen($key))) . pts_client::cli_colored_text($in, 'green', true) . PHP_EOL;
+						$sys_string .= PHP_EOL . '  ' . pts_client::cli_colored_text(strtoupper($key), 'gray', true) . ': ' . str_repeat(' ', (22 - strlen($key))) . pts_client::cli_colored_text($in, 'green', true) . PHP_EOL;
 					}
 				}
 
@@ -775,15 +777,32 @@ class phodevi extends phodevi_base
 	}
 	public static function reboot()
 	{
-		if(pts_client::executable_in_path('reboot'))
-		{
-			shell_exec('reboot');
-			sleep(5);
-		}
+		$reboot_cmd = '';
+
 		if(phodevi::is_windows())
 		{
-			shell_exec('shutdown /r');
-			sleep(5);
+			$reboot_cmd = 'shutdown /r';
+		}
+		else if(pts_client::executable_in_path('systemctl'))
+		{
+			$reboot_cmd = 'systemctl reboot';
+		}
+		else if(pts_client::executable_in_path('reboot'))
+		{
+			$reboot_cmd = 'reboot';
+		}
+		else if(pts_client::executable_in_path('shutdown'))
+		{
+			// macOS
+			$reboot_cmd = 'shutdown -r now';
+		}
+
+		if($reboot_cmd)
+		{
+			shell_exec($reboot_cmd);
+			// Buffer in case reboot isn't immediate
+			echo PHP_EOL . PHP_EOL . 'Waiting for reboot...' . PHP_EOL;
+			sleep(600);
 		}
 	}
 	public static function shutdown()
