@@ -535,7 +535,7 @@ class pts_result_file_output
 
 		foreach($result_file->get_result_objects() as $ro)
 		{
-			if($ro == false || $ro->test_profile->get_display_format() != 'BAR_GRAPH' || $ro->test_profile->get_identifier() == null)
+			if($ro == false || $ro->test_profile->get_display_format() != 'BAR_GRAPH' || $ro->test_profile->get_identifier() == null || $ro->test_result_buffer->get_max_value() == null)
 			{
 				continue;
 			}
@@ -843,7 +843,7 @@ class pts_result_file_output
 		$last_test_profile = null;
 		foreach($result_file->get_result_objects() as $ro)
 		{
-			if($ro->test_profile->get_display_format() != 'BAR_GRAPH')
+			if($ro->test_profile->get_display_format() != 'BAR_GRAPH' || $ro->test_result_buffer->get_max_value() == null)
 			{
 				continue;
 			}

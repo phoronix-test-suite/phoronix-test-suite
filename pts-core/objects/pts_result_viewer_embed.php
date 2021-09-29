@@ -71,14 +71,19 @@ class pts_result_viewer_embed
 		$shown_args = false;
 		foreach($result_object->test_result_buffer->buffer_items as &$bi)
 		{
-			if($bi->get_result_value() == null && ($bi_error = $bi->get_error()) != null)
+			if($bi->get_result_value() == null)
 			{
 				if(!$shown_args)
 				{
 					$html .= '<p><strong>' . $result_object->get_arguments_description() . '</strong></p>';
 					$shown_args = true;
 				}
-				$html .= '<p class="test_error"><strong>[TEST RUN ERROR] ' . $bi->get_result_identifier() . ':</strong> ' . strip_tags($bi_error) . '<br />';
+				$bi_error = $bi->get_error();
+				if($bi_error == null)
+				{
+					$bi_error = 'Test failed to run.';
+				}
+				$html .= '<p class="test_error"><strong>' . $bi->get_result_identifier() . ':</strong> ' . strip_tags($bi_error) . '<br />';
 				$test_log_dir = $result_file->get_test_log_dir($result_object);
 				if($test_log_dir && count(pts_file_io::glob($test_log_dir . '/' . $bi->get_result_identifier() . '.log')) > 0)
 				{
