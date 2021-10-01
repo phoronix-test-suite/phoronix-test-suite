@@ -695,8 +695,11 @@ class pts_test_execution
 		{
 			$test_run_request->test_profile->test_installation->add_latest_run_time($test_run_request, $time_test_elapsed);
 		}
-		$test_run_request->test_profile->test_installation->save_test_install_metadata();
-		pts_storage_object::add_in_file(PTS_CORE_STORAGE, 'total_testing_time', ($time_test_elapsed / 60));
+		if($test_run_manager->is_multi_test_stress_run() == false)
+		{
+			$test_run_request->test_profile->test_installation->save_test_install_metadata();
+			pts_storage_object::add_in_file(PTS_CORE_STORAGE, 'total_testing_time', ($time_test_elapsed / 60));
+		}
 
 		if($report_elapsed_time && pts_client::do_anonymous_usage_reporting() && $time_test_elapsed >= 10)
 		{

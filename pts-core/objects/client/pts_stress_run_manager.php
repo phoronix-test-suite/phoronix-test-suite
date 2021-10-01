@@ -143,6 +143,16 @@ class pts_stress_run_manager extends pts_test_run_manager
 		$this->disable_dynamic_run_count();
 		$this->multi_test_stress_run = $tests_to_run_concurrently;
 		$possible_tests_to_run = $this->get_tests_to_run();
+
+		// Cache test profiles to avoid unnecessary recreation for reading metadata from it
+		$test_profiles = array();
+		// Cache pid to test identifier mapping to avoid extra reads of the PID file just to get the identifier
+		$pid_files_to_test_identifier = array();
+
+		foreach($possible_tests_to_run as &$rr)
+		{
+			$test_profiles[$rr->test_profile->get_identifier()] = $rr->test_profile;
+		}
 		if(is_numeric($total_loop_time))
 		{
 			$total_loop_time = $total_loop_time * 60;
@@ -163,7 +173,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 		$time_report_counter = time();
 		if($total_loop_time == 'infinite')
 		{
-			$report_counter_frequency = 5 * 60;
+			$report_counter_frequency = 6 * 60;
 		}
 		else if($total_loop_time > (3 * 60 * 60))
 		{
@@ -251,7 +261,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 			if(($time_report_counter + $report_counter_frequency) <= time() && count(pts_file_io::glob($this->thread_collection_dir . '*')) > 0)
 			{
 				// ISSUE STATUS REPORT
-				$this->stress_print_and_log($this->stress_status_report());
+				$this->stress_print_and_log($this->final_stress_report(false, $pid_files_to_test_identifier));
 				$time_report_counter = time();
 			}
 
@@ -260,6 +270,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 
 			while(($waited_pid = pcntl_waitpid(-1, $status, WNOHANG)) > 0)
 			{
+				unset($pid_files_to_test_identifier[$waited_pid]);
 				pts_file_io::unlink($this->thread_collection_dir . $waited_pid);
 			}
 
@@ -271,10 +282,15 @@ class pts_stress_run_manager extends pts_test_run_manager
 				if(!file_exists('/proc/' . $pid))
 				{
 					unlink($pid_file);
+					unset($pid_files_to_test_identifier[$pid]);
 					continue;
 				}
 
-				$test = new pts_test_profile(file_get_contents($pid_file));
+				if(!isset($test_profiles[$pid_files_to_test_identifier[$pid]]))
+				{
+					continue;
+				}
+				$test = $test_profiles[$pid_files_to_test_identifier[$pid]];
 
 				// Count the number of tests per stress subsystems active
 				if(!isset($this->stress_subsystems_active[$test->get_test_hardware_type()]))
@@ -352,6 +368,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 					// parent
 					$test_identifier = $test_to_run->test_profile->get_identifier();
 					file_put_contents($this->thread_collection_dir . $pid, $test_identifier);
+					$pid_files_to_test_identifier[$pid] = $test_identifier;
 
 					if(!isset($this->stress_tests_executed[$test_identifier]))
 					{
@@ -370,6 +387,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 					$continue_test_flag = $this->process_test_run_request($test_to_run);
 					//echo PHP_EOL . pts_client::cli_colored_text('Ended: ', 'red', true) . $test_to_run->test_profile->get_identifier() . ($test_to_run->get_arguments_description() != null ? ' [' . $test_to_run->get_arguments_description()  . ']' : null) . PHP_EOL;
 					pts_file_io::unlink($this->thread_collection_dir . getmypid());
+					unset($pid_files_to_test_identifier[getmypid()]);
 					//echo PHP_EOL;
 					exit(0);
 				}
@@ -398,7 +416,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 				// This halt-testing touch will let tests exit early (i.e. between multiple run steps)
 				file_put_contents(PTS_USER_PATH . 'halt-testing', 'stress-run is done... This text really is not important, just checking for file presence.');
 				// Final report
-				$this->stress_print_and_log($this->final_stress_report());
+				$this->stress_print_and_log($this->final_stress_report(false, $pid_files_to_test_identifier));
 				break;
 			}
 
@@ -490,11 +508,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 		}
 		exit();
 	}
-	protected function stress_status_report()
-	{
-		return $this->final_stress_report(false);
-	}
-	protected function final_stress_report($is_final = true)
+	protected function final_stress_report($is_final = true, $pid_files_to_test_identifier = null)
 	{
 		if(!$is_final)
 		{
@@ -527,7 +541,8 @@ class pts_stress_run_manager extends pts_test_run_manager
 			$table = array();
 			foreach(pts_file_io::glob($this->thread_collection_dir . '*') as $pid_file)
 			{
-				$test = pts_file_io::file_get_contents($pid_file);
+				$pid_file_basename = basename($pid_file);
+				$test = isset($pid_files_to_test_identifier[$pid_file_basename]) ? $pid_files_to_test_identifier[$pid_file_basename] : pts_file_io::file_get_contents($pid_file);
 				$table[] = array($test, '[PID: ' . basename($pid_file) . ']');
 			}
 			$report_buffer .= pts_user_io::display_text_table($table, '   - ', 2) . PHP_EOL;
