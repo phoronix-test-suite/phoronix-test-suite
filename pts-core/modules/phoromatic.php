@@ -817,26 +817,29 @@ class phoromatic extends pts_module_interface
 		if(is_dir($system_log_dir) && $upload_system_logs)
 		{
 			$is_valid_log = true;
-			$finfo = function_exists('finfo_open') ? finfo_open(FILEINFO_MIME_TYPE) : false;
-			foreach(pts_file_io::glob($system_log_dir . '*') as $log_dir)
+			if(pts_client::$skip_log_file_type_checks == false)
 			{
-				if($is_valid_log == false || !is_dir($log_dir))
+				$finfo = function_exists('finfo_open') ? finfo_open(FILEINFO_MIME_TYPE) : false;
+				foreach(pts_file_io::glob($system_log_dir . '*') as $log_dir)
 				{
-					$is_valid_log = false;
-					break;
-				}
-
-				foreach(pts_file_io::glob($log_dir . '/*') as $log_file)
-				{
-					if(!is_file($log_file))
+					if($is_valid_log == false || !is_dir($log_dir))
 					{
 						$is_valid_log = false;
 						break;
 					}
-					if($finfo && substr(finfo_file($finfo, $log_file), 0, 5) != 'text/')
+
+					foreach(pts_file_io::glob($log_dir . '/*') as $log_file)
 					{
-						$is_valid_log = false;
-						break;
+						if(!is_file($log_file))
+						{
+							$is_valid_log = false;
+							break;
+						}
+						if($finfo && substr(finfo_file($finfo, $log_file), 0, 5) != 'text/')
+						{
+							$is_valid_log = false;
+							break;
+						}
 					}
 				}
 			}
