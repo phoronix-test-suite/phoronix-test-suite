@@ -201,6 +201,39 @@ class pts_file_io
 
 		return $is_text_file;
 	}
+	public static function directory_only_contains_text_files($scan_dir, $allow_subdirectories = true)
+	{
+		$is_valid = true;
+
+		foreach(pts_file_io::glob($scan_dir . '/*') as $asset_check)
+		{
+			if(is_dir($asset_check))
+			{
+				if($allow_subdirectories)
+				{
+					$is_valid = pts_file_io::directory_only_contains_text_files($asset_check, $allow_subdirectories);
+					if(!$is_valid)
+					{
+						break;
+					}
+				}
+				else
+				{
+					// Subdirectories not allowed and one was hit...
+					$is_valid = false;
+					break;
+				}
+			}
+			else if(is_file($asset_check) && !pts_file_io::is_text_file($asset_check))
+			{
+				// Not a text file...
+				$is_valid = false;
+				break;
+			}
+		}
+
+		return $is_valid;
+	}
 }
 
 ?>

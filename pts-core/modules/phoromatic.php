@@ -819,29 +819,8 @@ class phoromatic extends pts_module_interface
 			$is_valid_log = true;
 			if(pts_client::$skip_log_file_type_checks == false)
 			{
-				$finfo = function_exists('finfo_open') ? finfo_open(FILEINFO_MIME_TYPE) : false;
-				foreach(pts_file_io::glob($system_log_dir . '*') as $log_dir)
-				{
-					if($is_valid_log == false || !is_dir($log_dir))
-					{
-						$is_valid_log = false;
-						break;
-					}
-
-					foreach(pts_file_io::glob($log_dir . '/*') as $log_file)
-					{
-						if(!is_file($log_file))
-						{
-							$is_valid_log = false;
-							break;
-						}
-						if($finfo && substr(finfo_file($finfo, $log_file), 0, 5) != 'text/')
-						{
-							$is_valid_log = false;
-							break;
-						}
-					}
-				}
+				// For security/malicious purposes, ensure system log directory only contains text files
+				$is_valid_log = pts_file_io::directory_only_contains_text_files($system_log_dir);
 			}
 
 			if($is_valid_log)
@@ -853,15 +832,15 @@ class phoromatic extends pts_module_interface
 				{
 					pts_client::$pts_logger && pts_client::$pts_logger->log('System log ZIP file failed to generate. Missing PHP ZIP support?');
 				}
-				else if(filesize($system_logs_zip) < 2097152)
+				else if(pts_client::$skip_log_file_type_checks == false && filesize($system_logs_zip) > 2097152)
 				{
 					// If it's over 2MB, probably too big
-					$system_logs = base64_encode(file_get_contents($system_logs_zip));
-					$system_logs_hash = sha1($system_logs);
+					pts_client::$pts_logger && pts_client::$pts_logger->log('System log ZIP file too big to upload');
 				}
 				else
 				{
-					//	trigger_error('The systems log attachment is too large to upload to OpenBenchmarking.org.', E_USER_WARNING);
+					$system_logs = base64_encode(file_get_contents($system_logs_zip));
+					$system_logs_hash = sha1($system_logs);
 				}
 				unlink($system_logs_zip);
 			}
