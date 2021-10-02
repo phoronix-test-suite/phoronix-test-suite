@@ -333,7 +333,7 @@ class pts_test_execution
 					}
 				}
 
-				$produced_monitoring_result = $is_monitoring ? pts_test_result_parser::system_monitor_task_post_test($test_run_request, $exit_status_pass) : false;
+				$produced_monitoring_result = $is_monitoring ? pts_test_result_parser::system_monitor_task_post_test($test_run_request, $exit_status_pass && !in_array(($i + 1), $ignore_runs) && !in_array(($i + 1), $ignore_runs_override)) : false;
 			}
 			else
 			{
