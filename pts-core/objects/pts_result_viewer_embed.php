@@ -84,8 +84,8 @@ class pts_result_viewer_embed
 					$bi_error = 'Test failed to run.';
 				}
 				$html .= '<p class="test_error"><strong>' . $bi->get_result_identifier() . ':</strong> ' . strip_tags($bi_error) . '<br />';
-				$test_log_dir = $result_file->get_test_log_dir($result_object);
-				if($test_log_dir && count(pts_file_io::glob($test_log_dir . '/' . $bi->get_result_identifier() . '.log')) > 0)
+
+				if($result_file->get_test_run_log_for_result($result_object, -2))
 				{
 					$html .= ' <a onclick="javascript:display_test_logs_for_result_object(\'' . $this->result_public_id . '\', \'' . $i . '\', \'' . $bi->get_result_identifier() . '\'); return false;">View Test Run Logs</a> ';
 				}
@@ -402,8 +402,8 @@ class pts_result_viewer_embed
 			//
 			$PAGE .= $this->result_object_to_error_report($result_file, $result_object, $i);
 			$button_area = null;
-			$test_log_dir = $result_file->get_test_log_dir($result_object);
-			if($test_log_dir && count(pts_file_io::glob($test_log_dir . '*.log')) > 0)
+
+			if($result_file->get_test_run_log_for_result($result_object, -2))
 			{
 				$button_area .= ' <button onclick="javascript:display_test_logs_for_result_object(\'' . $this->result_public_id . '\', \'' . $i . '\'); return false;">View Test Run Logs</button> ';
 			}

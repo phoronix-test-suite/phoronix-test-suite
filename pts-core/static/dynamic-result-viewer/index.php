@@ -232,26 +232,23 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 
 			if(($result_object = $result_file->get_result_object_by_hash($_REQUEST['result_object'])))
 			{
-				$test_log_dir = $result_file->get_test_log_dir($result_object);
-				if($test_log_dir && count(pts_file_io::glob($test_log_dir . '*.log')) > 0)
+				if(($test_logs = $result_file->get_test_run_log_for_result($result_object, false)))
 				{
 					echo '<div style="text-align: center;"><form action="' . CURRENT_URI . '" method="post"><select name="log_select" id="log_select">';
-					foreach(pts_file_io::glob($test_log_dir . '*.log') as $log_file)
+					foreach($test_logs as $log_file)
 					{
-						$b = basename($log_file, '.log');
-						echo '<option value="' . $b . '"' . ($b == $_REQUEST['log_select'] ? 'selected="selected"' : null) . '>' . $b . '</option>';
+						echo '<option value="' . $log_file . '"' . ($log_file == $_REQUEST['log_select'] ? 'selected="selected"' : null) . '>' . $log_file . '</option>';
 					}
 					echo '</select> &nbsp; <input type="submit" value="Show Log"></form></div><br /><hr />';
-					if(isset($_REQUEST['log_select']) && is_file($test_log_dir . pts_strings::simplify_string_for_file_handling($_REQUEST['log_select']) . '.log'))
+					if(isset($_REQUEST['log_select']) && $_REQUEST['log_select'] != 'undefined')
 					{
-						$show_log = $test_log_dir . pts_strings::simplify_string_for_file_handling($_REQUEST['log_select']) . '.log';
+						$show_log = $_REQUEST['log_select'];
 					}
 					else
 					{
-						$logs = pts_file_io::glob($test_log_dir . '*.log');
-						$show_log = array_shift($logs);
+						$show_log = array_shift($test_logs);
 					}
-					$log_file = htmlentities(file_get_contents($show_log));
+					$log_file = htmlentities($result_file->get_test_run_log_for_result($result_object, $show_log));
 					$log_file = str_replace(PHP_EOL, '<br />', $log_file);
 					echo '<br /><div style="font-family: monospace;">' . $log_file . '</div>';
 				}
@@ -285,7 +282,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 						echo '<option value="' . $log_file . '"' . (isset($_REQUEST['log_select']) && $log_file == $_REQUEST['log_select'] ? 'selected="selected"' : null) . '>' . $log_file . '</option>';
 					}
 					echo '</select> &nbsp; <input type="submit" value="Show Log"></form></div><br /><hr />';
-					if(isset($_REQUEST['log_select']))
+					if(isset($_REQUEST['log_select']) && $_REQUEST['log_select'] != 'undefined')
 					{
 						$show_log = $_REQUEST['log_select'];
 					}

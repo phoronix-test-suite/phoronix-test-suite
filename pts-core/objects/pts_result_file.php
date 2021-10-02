@@ -1200,6 +1200,83 @@ class pts_result_file
 
 		return $read_file !== false ? false : $files;
 	}
+	public function get_test_run_log_for_result(&$result_object, $read_file = false, $cleanse_file = true)
+	{
+		// if $read_file is false, index will be returned. if $read_file is -2, will return whether log files simply exist
+		$files = array();
+		static $logs_exist_for_test; // caching helper
+		$ro_hash = $result_object->get_comparison_hash(true, false);
+
+		if($read_file == -2 && isset($logs_exist_for_test[$ro_hash]))
+		{
+			return $logs_exist_for_test[$ro_hash];
+		}
+
+		if(($test_log_dir = $this->get_test_log_dir($result_object)) && count($d = pts_file_io::glob($test_log_dir . '*.log')) > 0)
+		{
+			$logs_exist_for_test[$ro_hash] = true;
+			if($read_file == -2)
+			{
+				return true;
+			}
+
+			foreach($d as $file)
+			{
+				$basename_file = basename($file);
+				if($read_file !== false && $basename_file == $read_file)
+				{
+					$file = file_get_contents($file);
+					return $cleanse_file ? phodevi_vfs::cleanse_file($file, $basename_file) : $file;
+				}
+				$files[] = $basename_file;
+			}
+		}
+		else if($this->get_result_dir() && is_file($this->get_result_dir() . 'test-logs.zip') && extension_loaded('zip'))
+		{
+			$logs_exist_for_test[$ro_hash] = true;
+			if($read_file == -2)
+			{
+				return true;
+			}
+
+			$zip = new ZipArchive();
+			$res = $zip->open($this->get_result_dir() . 'test-logs.zip');
+
+			if($res === true)
+			{
+				$log_path = 'test-logs/' . $ro_hash . '/';
+				$log_path_l = strlen($log_path);
+				for($i = 0; $i < $zip->numFiles; $i++)
+				{
+					$index = $zip->getNameIndex($i);
+					if(isset($index[$log_path_l]) && substr($index, 0, $log_path_l) == $log_path)
+					{
+						$basename_file = substr($index, $log_path_l);
+						if($basename_file != null)
+						{
+							if($read_file !== false && $basename_file == $read_file)
+							{
+								$c = $zip->getFromName($index);
+								$contents = $cleanse_file ? phodevi_vfs::cleanse_file($c, $basename_file) : $c;
+								$zip->close();
+								return $contents;
+							}
+							$files[] = $basename_file;
+						}
+					}
+				}
+				$zip->close();
+			}
+		}
+
+		$logs_exist_for_test[$ro_hash] = !empty($files);
+		if($read_file == -2)
+		{
+			return false;
+		}
+
+		return $read_file !== false ? false : $files;
+	}
 }
 
 ?>
