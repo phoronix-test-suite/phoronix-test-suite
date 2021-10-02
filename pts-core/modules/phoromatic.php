@@ -560,7 +560,7 @@ class phoromatic extends pts_module_interface
 				if(self::$limit_network_communication)
 				{
 					// Sleep to ensure network communication is somewhat random in case all systems started at same time
-					sleep(0, 20);
+					sleep(rand(0, 20));
 				}
 
 				if($just_started)
@@ -783,7 +783,7 @@ class phoromatic extends pts_module_interface
 				if($server_response == false)
 					sleep(rand(10, 30));
 				else if(self::$limit_network_communication)
-					sleep(60, 240);
+					sleep(rand(60, 240));
 				else
 					sleep(60);
 			}
