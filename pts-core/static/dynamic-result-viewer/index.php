@@ -276,30 +276,28 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 
 			if(($result_object = $result_file->get_result_object_by_hash($_REQUEST['result_object'])))
 			{
-				$install_logs = pts_file_io::glob($result_file->get_test_installation_log_dir() . '*/' . $result_object->test_profile->get_identifier_simplified() . '.log');
+				$install_logs = $result_file->get_install_log_for_test($result_object->test_profile, false);
 				if(count($install_logs) > 0)
 				{
 					echo '<div style="text-align: center;"><form action="' . CURRENT_URI . '" method="post"><select name="log_select" id="log_select">';
 					foreach($install_logs as $log_file)
 					{
-						$b = basename(dirname($log_file));
-						echo '<option value="' . $b . '"' . (isset($_REQUEST['log_select']) && $b == $_REQUEST['log_select'] ? 'selected="selected"' : null) . '>' . $b . '</option>';
+						echo '<option value="' . $log_file . '"' . (isset($_REQUEST['log_select']) && $log_file == $_REQUEST['log_select'] ? 'selected="selected"' : null) . '>' . $log_file . '</option>';
 					}
 					echo '</select> &nbsp; <input type="submit" value="Show Log"></form></div><br /><hr />';
-					if(isset($_REQUEST['log_select']) && is_file($result_file->get_test_installation_log_dir() . pts_strings::simplify_string_for_file_handling($_REQUEST['log_select']) . '/' . $result_object->test_profile->get_identifier_simplified() . '.log'))
+					if(isset($_REQUEST['log_select']))
 					{
-						$show_log = $result_file->get_test_installation_log_dir() . pts_strings::simplify_string_for_file_handling($_REQUEST['log_select']) . '/' . $result_object->test_profile->get_identifier_simplified() . '.log';
+						$show_log = $_REQUEST['log_select'];
 					}
 					else
 					{
 						$show_log = array_shift($install_logs);
 					}
-					$log_file = htmlentities(file_get_contents($show_log));
+					$log_file = htmlentities($result_file->get_install_log_for_test($result_object->test_profile, $show_log, true));
 					$log_file = str_replace(PHP_EOL, '<br />', $log_file);
 					echo '<br /><div style="font-family: monospace;">' . $log_file . '</div>';
 				}
 			}
-
 		}
 		echo '</body></html>';
 		exit;

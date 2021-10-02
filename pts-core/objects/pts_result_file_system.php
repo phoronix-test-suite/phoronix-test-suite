@@ -236,7 +236,7 @@ class pts_result_file_system
 						for($i = 0; $i < $zip->numFiles; $i++)
 						{
 							$index = $zip->getNameIndex($i);
-							if(substr($index, 0, $log_path_l) == $log_path)
+							if(isset($index[$log_path_l]) && substr($index, 0, $log_path_l) == $log_path)
 							{
 								$basename_file = substr($index, $log_path_l);
 

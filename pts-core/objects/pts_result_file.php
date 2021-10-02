@@ -1123,6 +1123,83 @@ class pts_result_file
 
 		return $a < $b ? -1 : 1;
 	}
+	public function get_install_log_for_test(&$test_profile, $read_file = false, $cleanse_file = true)
+	{
+		// if $read_file is false, index will be returned. if $read_file is -2, will return whether log files simply exist
+		$files = array();
+		static $logs_exist_for_test; // caching helper
+		$test_file_name_chunk = $test_profile->get_identifier_simplified() . '.log';
+
+		if($read_file == -2 && isset($logs_exist_for_test[$test_file_name_chunk]))
+		{
+			return $logs_exist_for_test[$test_file_name_chunk];
+		}
+
+		if($this->get_test_installation_log_dir() && count($d = pts_file_io::glob($this->get_test_installation_log_dir() . '*/' . $test_file_name_chunk)) > 0)
+		{
+			$logs_exist_for_test[$test_file_name_chunk] = true;
+			if($read_file == -2)
+			{
+				return true;
+			}
+
+			foreach($d as $file)
+			{
+				$basename_file = basename(dirname($file));
+				if($read_file !== false && $basename_file == $read_file)
+				{
+					$file = file_get_contents($file);
+					return $cleanse_file ? phodevi_vfs::cleanse_file($file, $basename_file) : $file;
+				}
+				$files[] = $basename_file;
+			}
+		}
+		else if($this->get_result_dir() && is_file($this->get_result_dir() . 'installation-logs.zip') && extension_loaded('zip'))
+		{
+			$logs_exist_for_test[$test_file_name_chunk] = true;
+			if($read_file == -2)
+			{
+				return true;
+			}
+
+			$zip = new ZipArchive();
+			$res = $zip->open($this->get_result_dir() . 'installation-logs.zip');
+
+			if($res === true)
+			{
+				$search_for_file_name_length = strlen($test_file_name_chunk);
+				for($i = 0; $i < $zip->numFiles; $i++)
+				{
+					$index = $zip->getNameIndex($i);
+					if(isset($index[$search_for_file_name_length]) && substr($index, (0 - $search_for_file_name_length)) == $test_file_name_chunk)
+					{
+						$basename_file = basename(dirname($index));
+
+						if($basename_file != null)
+						{
+							if($read_file !== false && $basename_file == $read_file)
+							{
+								$c = $zip->getFromName($index);
+								$contents = $cleanse_file ? phodevi_vfs::cleanse_file($c, $basename_file) : $c;
+								$zip->close();
+								return $contents;
+							}
+							$files[] = $basename_file;
+						}
+					}
+				}
+				$zip->close();
+			}
+		}
+
+		$logs_exist_for_test[$test_file_name_chunk] = !empty($files);
+		if($read_file == -2)
+		{
+			return false;
+		}
+
+		return $read_file !== false ? false : $files;
+	}
 }
 
 ?>
