@@ -115,6 +115,8 @@ if(isset($_GET['PTS']))
 	exit;
 }
 
+define('CSS_RESULT_VIEWER_PATH', str_replace('//', '/', WEB_URL_PATH . '/result-viewer.css?' . PTS_CORE_VERSION));
+
 if(!defined('PTS_CORE_STORAGE') && getenv('PTS_CORE_STORAGE') && is_file(getenv('PTS_CORE_STORAGE')))
 {
 	define('PTS_CORE_STORAGE',  getenv('PTS_CORE_STORAGE'));
@@ -151,7 +153,7 @@ if(VIEWER_ACCESS_KEY != null && (!isset($_SESSION['AccessKey']) || $_SESSION['Ac
 <html lang="en">
 <head>
   <title>Phoronix Test Suite - Result Portal</title>
-<link rel="stylesheet" href="<?php echo WEB_URL_PATH; ?>/result-viewer.css?<?php echo PTS_CORE_VERSION; ?>">
+<link rel="stylesheet" href="<?php echo CSS_RESULT_VIEWER_PATH; ?>">
 <script type="text/javascript" src="<?php echo WEB_URL_PATH; ?>/result-viewer.js?<?php echo PTS_CORE_VERSION; ?>"></script>
 <link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 <link rel="icon" type="image/png" href="<?php echo WEB_URL_PATH; ?>favicon.png">
@@ -217,15 +219,8 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		}
 		exit;
 	case 'view_test_logs':
-		echo '<!doctype html>
-		<html lang="en">
-		<head>
-		  <title>Log Viewer</title>
-		<link rel="stylesheet" href="' . WEB_URL_PATH . 'result-viewer.css">
-		<script type="text/javascript" src="' . WEB_URL_PATH . 'result-viewer.js"></script>
-		<link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-		</head>
-		<body>';
+		$result_file = false;
+		$html_viewer = '';
 		if(isset($_REQUEST['result_file_id']) && isset($_REQUEST['result_object']))
 		{
 			$result_file = new pts_result_file($_REQUEST['result_file_id']);
@@ -234,39 +229,18 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			{
 				if(($test_logs = $result_file->get_test_run_log_for_result($result_object, false)))
 				{
-					echo '<div style="text-align: center;"><form action="' . CURRENT_URI . '" method="post"><select name="log_select" id="log_select">';
-					foreach($test_logs as $log_file)
-					{
-						echo '<option value="' . $log_file . '"' . ($log_file == $_REQUEST['log_select'] ? 'selected="selected"' : null) . '>' . $log_file . '</option>';
-					}
-					echo '</select> &nbsp; <input type="submit" value="Show Log"></form></div><br /><hr />';
-					if(isset($_REQUEST['log_select']) && $_REQUEST['log_select'] != 'undefined')
-					{
-						$show_log = $_REQUEST['log_select'];
-					}
-					else
-					{
-						$show_log = array_shift($test_logs);
-					}
-					$log_file = htmlentities($result_file->get_test_run_log_for_result($result_object, $show_log));
-					$log_file = str_replace(PHP_EOL, '<br />', $log_file);
-					echo '<br /><div style="font-family: monospace;">' . $log_file . '</div>';
+					$show_log = isset($_REQUEST['log_select']) && $_REQUEST['log_select'] != 'undefined' ? $_REQUEST['log_select'] : (isset($test_logs[0]) ? $test_logs[0] : '');
+					$log_contents = $result_file->get_test_run_log_for_result($result_object, $show_log, false);
+					pts_result_viewer_embed::display_log_html_or_download($log_contents, $test_logs, $show_log, $html_viewer, trim($result_object->test_profile->get_title() . ' ' . $result_object->get_arguments_description()));
 				}
 			}
 
 		}
-		echo '</body></html>';
+		echo pts_result_viewer_embed::html_template_log_viewer($html_viewer, $result_file);
 		exit;
 	case 'view_install_logs':
-		echo '<!doctype html>
-		<html lang="en">
-		<head>
-		  <title>Log Viewer</title>
-		<link rel="stylesheet" href="' . WEB_URL_PATH . 'result-viewer.css">
-		<script type="text/javascript" src="' . WEB_URL_PATH . 'result-viewer.js"></script>
-		<link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-		</head>
-		<body>';
+		$result_file = false;
+		$html_viewer = '';
 		if(isset($_REQUEST['result_file_id']) && isset($_REQUEST['result_object']))
 		{
 			$result_file = new pts_result_file($_REQUEST['result_file_id']);
@@ -276,27 +250,35 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 				$install_logs = $result_file->get_install_log_for_test($result_object->test_profile, false);
 				if(count($install_logs) > 0)
 				{
-					echo '<div style="text-align: center;"><form action="' . CURRENT_URI . '" method="post"><select name="log_select" id="log_select">';
-					foreach($install_logs as $log_file)
-					{
-						echo '<option value="' . $log_file . '"' . (isset($_REQUEST['log_select']) && $log_file == $_REQUEST['log_select'] ? 'selected="selected"' : null) . '>' . $log_file . '</option>';
-					}
-					echo '</select> &nbsp; <input type="submit" value="Show Log"></form></div><br /><hr />';
-					if(isset($_REQUEST['log_select']) && $_REQUEST['log_select'] != 'undefined')
-					{
-						$show_log = $_REQUEST['log_select'];
-					}
-					else
-					{
-						$show_log = array_shift($install_logs);
-					}
-					$log_file = htmlentities($result_file->get_install_log_for_test($result_object->test_profile, $show_log, true));
-					$log_file = str_replace(PHP_EOL, '<br />', $log_file);
-					echo '<br /><div style="font-family: monospace;">' . $log_file . '</div>';
+					$show_log = isset($_REQUEST['log_select']) && $_REQUEST['log_select'] != 'undefined' ? $_REQUEST['log_select'] : (isset($install_logs[0]) ? $install_logs[0] : '');
+					$log_contents = $result_file->get_install_log_for_test($result_object->test_profile, $show_log, false);
+					pts_result_viewer_embed::display_log_html_or_download($log_contents, $install_logs, $show_log, $html_viewer, $result_object->test_profile->get_title() . ' Installation');
 				}
 			}
 		}
-		echo '</body></html>';
+		echo pts_result_viewer_embed::html_template_log_viewer($html_viewer, $result_file);
+		exit;
+	case 'view_system_logs':
+		$result_file = false;
+		$html_viewer = '';
+		if(isset($_REQUEST['result_file_id']) && isset($_REQUEST['system_id']))
+		{
+			$result_file = new pts_result_file($_REQUEST['result_file_id']);
+
+			foreach($result_file->get_systems() as $system)
+			{
+				if($system->get_identifier() == $_REQUEST['system_id'])
+				{
+					$system_logs = $system->log_files();
+					$show_log = isset($_REQUEST['log_select']) && $_REQUEST['log_select'] != 'undefined' ? $_REQUEST['log_select'] : (isset($system_logs[0]) ? $system_logs[0] : '');
+					$log_contents = $system->log_files($show_log, false);
+					pts_result_viewer_embed::display_log_html_or_download($log_contents, $system_logs, $show_log, $html_viewer, $_REQUEST['system_id']);
+					break;
+				}
+			}
+
+		}
+		echo pts_result_viewer_embed::html_template_log_viewer($html_viewer, $result_file);
 		exit;
 	case 'reorder_result_file':
 		if(VIEWER_CAN_MODIFY_RESULTS && isset($_REQUEST['result_file_id']))
@@ -369,62 +351,6 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		*/
 		
 		}
-		exit;
-	case 'view_system_logs':
-		$system_log_html = '<!doctype html>
-		<html lang="en">
-		<head>
-		  <title>Log Viewer</title>
-		<link rel="stylesheet" href="' . WEB_URL_PATH . 'result-viewer.css">
-		<script type="text/javascript" src="' . WEB_URL_PATH . 'result-viewer.js"></script>
-		<link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-		</head>
-		<body>';
-		if(isset($_REQUEST['result_file_id']) && isset($_REQUEST['system_id']))
-		{
-			$result_file = new pts_result_file($_REQUEST['result_file_id']);
-
-			foreach($result_file->get_systems() as $system)
-			{
-				if($system->get_identifier() == $_REQUEST['system_id'])
-				{
-					$system_logs = $system->log_files();
-					$system_log_html .= '<h2 align="center">' . $_REQUEST['system_id'] . ' Logs</h2>';
-					$system_log_html .= '<div style="text-align: center;"><form action="' . str_replace('&download', '', CURRENT_URI) . '" method="post"><select name="log_select" id="log_select">';
-					foreach($system_logs as $b)
-					{
-						$system_log_html .= '<option value="' . $b . '"' . (isset($_REQUEST['log_select']) && $b == $_REQUEST['log_select'] ? 'selected="selected"' : null) . '>' . $b . '</option>';
-					}
-					$system_log_html .= '</select> &nbsp; <input type="submit" value="Show Log"></form></div><br /><hr />';
-					$show_log = isset($_REQUEST['log_select']) ? $_REQUEST['log_select'] : array_shift($system_logs);
-					$log_contents = $system->log_files($show_log, false);
-					if(pts_strings::is_text_string($log_contents) && !isset($_GET['download']))
-					{
-						$log_contents = phodevi_vfs::cleanse_file($log_contents);
-						$log_file = htmlentities($log_contents);
-						$log_file = str_replace(PHP_EOL, '<br />', $log_file);
-						$system_log_html .= '<br /><div style="font-family: monospace;">' . $log_file . '</div>';
-						$system_log_html .= '<br /><p><a href="' . CURRENT_URI . '&download&log_select=' . $show_log . '">Download Log File</a></p>';
-					}
-					else if(isset($_REQUEST['log_select'])) // to avoid blocking the popup window in first place
-					{
-						if(class_exists('finfo'))
-						{
-							$finfo = new finfo(FILEINFO_MIME);
-							header('Content-type: '. $finfo->buffer($log_contents));
-						}
-						//header('Content-Type: application/octet-stream');
-						header('Content-Length: ' . strlen($log_contents));
-						header('Content-Disposition: attachment; filename="' . str_ireplace(array('/', '\\', '.'), '', $_REQUEST['system_id']) . ' - ' . $show_log . '"');
-						echo $log_contents;
-						exit;
-					}
-					break;
-				}
-			}
-
-		}
-		echo $system_log_html . '</body></html>';
 		exit;
 	case 'test':
 		$o = new pts_test_profile($_GET['test']);
@@ -831,7 +757,7 @@ define('PAGE', $PAGE);
 <html lang="en">
 <head>
   <title><?php echo defined('TITLE') ? TITLE : ''; ?></title>
-<link rel="stylesheet" href="<?php echo WEB_URL_PATH; ?>result-viewer.css?<?php echo PTS_CORE_VERSION; ?>">
+<link rel="stylesheet" href="<?php echo CSS_RESULT_VIEWER_PATH; ?>">
 <link rel="icon" type="image/png" href="<?php echo WEB_URL_PATH; ?>favicon.png">
 <script type="text/javascript" src="<?php echo WEB_URL_PATH; ?>result-viewer.js?<?php echo PTS_CORE_VERSION; ?>"></script>
 <script>

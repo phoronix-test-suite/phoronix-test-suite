@@ -454,6 +454,53 @@ class pts_result_viewer_embed
 
 		return $PAGE;
 	}
+	public static function html_template_log_viewer($html_to_show, &$result_file)
+	{
+		return '<!doctype html>
+		<html lang="en">
+		<head><title>' . ($result_file ? $result_file->get_title() . ' ' : '') . 'Log Viewer</title>
+		' . (defined('CSS_RESULT_VIEWER_PATH') ? '<link rel="stylesheet" href="' . CSS_RESULT_VIEWER_PATH . '">' : '') . '</head>
+		<body>' . (empty($html_to_show) ? '<p>No logs available.</p>' : $html_to_show) . '</body></html>';
+	}
+	public static function display_log_html_or_download(&$log_contents, &$list_of_log_files, $log_selected, &$append_to_html, $title)
+	{
+		$append_to_html .= '<h2 align="center">' . $title . ' Logs</h2>';
+		$append_to_html .= '<div style="text-align: center;"><form action="' . str_replace('&download', '', CURRENT_URI) . '" method="post"><select name="log_select" id="log_select" onchange="this.form.submit()">';
+		foreach($list_of_log_files as $log_file)
+		{
+			$append_to_html .= '<option value="' . $log_file . '"' . (isset($_REQUEST['log_select']) && $log_file == $_REQUEST['log_select'] ? 'selected="selected"' : '') . '>' . $log_file . '</option>';
+		}
+		$append_to_html .= '</select> &nbsp; <input type="submit" value="Show Log"></form></div><br /><hr />';
+		$append_to_html .= '<p style="font-size: 12px; text-align: right"><a href="' . CURRENT_URI . '&download&log_select=' . $log_selected . '">Download Log File</a></p>';
+		if($log_contents == null)
+		{
+			$append_to_html .= '<p>No log file available.</p>';
+		}
+		else if(pts_strings::is_text_string($log_contents) && !isset($_GET['download']))
+		{
+			$log_contents = phodevi_vfs::cleanse_file($log_contents);
+			$log_contents = htmlentities($log_contents);
+			$log_contents = str_replace(PHP_EOL, '<br />', $log_contents);
+			$append_to_html .= '<br /><pre style="font-family: monospace;">' . $log_contents . '</pre>';
+		}
+		else if(isset($_REQUEST['log_select']) && $_REQUEST['log_select'] != 'undefined') // to avoid blocking the popup window in first place if it wasn't explicitly selected
+		{
+			if(class_exists('finfo'))
+			{
+				$finfo = new finfo(FILEINFO_MIME);
+				header('Content-type: '. $finfo->buffer($log_contents));
+			}
+			//header('Content-Type: application/octet-stream');
+			header('Content-Length: ' . strlen($log_contents));
+			header('Content-Disposition: attachment; filename="' . str_ireplace(array('/', '\\', '.'), '', $title) . ' - ' . $log_selected . '"');
+			echo $log_contents;
+			exit;
+		}
+		else
+		{
+			$append_to_html .= '<p>Download log file to view.</p>';
+		}
+	}
 }
 
 ?>

@@ -1159,6 +1159,7 @@ class pts_result_file
 			$logs_exist_for_test[$test_file_name_chunk] = true;
 			if($read_file == -2)
 			{
+				// TODO: could make this more accurate to ensure a precise match, but could become expensive
 				return true;
 			}
 
@@ -1236,6 +1237,7 @@ class pts_result_file
 			$logs_exist_for_test[$ro_hash] = true;
 			if($read_file == -2)
 			{
+				// TODO: could make this more accurate to ensure a precise match, but could become expensive
 				return true;
 			}
 
