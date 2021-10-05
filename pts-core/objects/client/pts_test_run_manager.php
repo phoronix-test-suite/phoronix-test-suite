@@ -788,13 +788,6 @@ class pts_test_run_manager
 		$this->benchmark_log->log('Executing Test: ' . $test_run_request->test_profile->get_identifier());
 		$test_successful = pts_test_execution::run_test($this, $test_run_request);
 
-
-		if(is_file(PTS_USER_PATH . 'abort-run'))
-		{
-			// Abort the current test, and wait for the system to reboot
-			return false;
-		}
-		
 		if(pts_file_io::unlink(PTS_USER_PATH . 'halt-testing'))
 		{
 			// Stop the testing process entirely

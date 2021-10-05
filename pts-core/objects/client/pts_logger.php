@@ -24,7 +24,6 @@
 class pts_logger
 {
 	private $log_file = null;
-	private $log_to_console = FALSE;
 
 	public function __construct($log_file = null, $file_name = null)
 	{
@@ -51,12 +50,10 @@ class pts_logger
 
 		// Flush log
 		if(getenv('PTS_NO_FLUSH_LOGGER') == false || !file_exists($log_file))
-			$fwrite = file_put_contents($log_file, null,FILE_APPEND);
+			$fwrite = file_put_contents($log_file, null);
 
 		if(is_writable($log_file))
 			$this->log_file = $log_file;
-
-		$log_to_console = pts_config::read_user_config('PhoronixTestSuite/Options/General/PrintToConsole', 'FALSE');
 	}
 	public static function default_log_file_path()
 	{
@@ -89,30 +86,17 @@ class pts_logger
 		if($this->log_file == null)
 			return;
 
-	
 		$traces = debug_backtrace();
 
-		if (isset($traces[0])) {
+		if (isset($traces[0]))
+    		{
 		        $caller = $traces[1]['function'];
-				$line = $traces[0]['line'];
-				$file = basename($traces[0]['file']);
-
-
-
-				
-				// if ($caller == "add_to_log") {
-				// 	$caller = $traces[2]['function'];
-				// 	$line = $traces[2]['line'];
-				// 	$file = basename($traces[2]['file']);
-				// }
-				// //print_r($traces);
+		        $line = $traces[0]['line'];
+		        $file = basename($traces[0]['file']);
 		}
 
 		$message = pts_user_io::strip_ansi_escape_sequences($message);
-
-		$full_message = ($date_prefix ? '[' . date('Y-m-d\TH:i:sO') . '] ' : null) . "[" . $caller . "(". $file . ":" . $line . ")] " . $message . PHP_EOL;
-	//	print_r($full_message);
-		file_put_contents($this->log_file, $full_message, FILE_APPEND);
+		file_put_contents($this->log_file, ($date_prefix ? '[' . date('Y-m-d\TH:i:sO') . '] ' : null) . "[" . $caller . "(". $file . ":" . $line . ")] " . $message . PHP_EOL, FILE_APPEND);
 	}
 	public function get_log_file_size()
 	{

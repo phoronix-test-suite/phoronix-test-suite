@@ -1312,11 +1312,6 @@ class phodevi_system extends phodevi_device_interface
 		$desktop_version = null;
 		$desktop_session = pts_client::read_env('DESKTOP_SESSION');
 
-		if(phodevi::is_macos())
-		{
-			return "macOS";
-		}
-
 		if(pts_client::is_process_running('gnome-shell'))
 		{
 			// GNOME 3.0 / GNOME Shell

@@ -136,9 +136,7 @@ class start_phoromatic_server implements pts_option_interface
 		define('PHOROMATIC_SERVER', true);
 		// Just create the logger so now it will flush it out
 		$pts_logger = new pts_logger();
-		if(!getenv('PHOROMATIC_WANTS_APACHE')) 
-			$pts_logger->clear_log();
-			
+		$pts_logger->clear_log();
 		echo pts_core::program_title(true) . ' starting Phoromatic Server' . PHP_EOL;
 		$pts_logger->log(pts_core::program_title(true) . ' starting Phoromatic Server on ' . phodevi::read_property('network', 'ip'));
 
