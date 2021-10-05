@@ -21,6 +21,7 @@
 */
 $json = array();
 $json['phoromatic']['system_id'] = SYSTEM_ID;
+$json['phoromatic']['server_core_version'] = PTS_CORE_VERSION;
 
 if(SYSTEM_IN_MAINTENANCE_MODE)
 {

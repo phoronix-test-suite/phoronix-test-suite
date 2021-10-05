@@ -156,6 +156,7 @@ if($relative_id > 0)
 		$result = $stmt->execute();
 	}
 
+	$json['phoromatic']['upload_id'] = $upload_id;
 	$json['phoromatic']['response'] = 'Result Upload: ' . $upload_id;
 	echo json_encode($json);
 

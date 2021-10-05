@@ -35,6 +35,7 @@ class phoromatic extends pts_module_interface
 	private static $log_file = null;
 	private static $limit_network_communication = false;
 	private static $system_id = null;
+	private static $server_core_version = 0;
 
 	private static $p_save_identifier = null;
 	private static $p_schedule_id = null;
@@ -552,6 +553,14 @@ class phoromatic extends pts_module_interface
 
 							// Save the system ID to text file if it's useful for other purposes...
 							pts_module::set_option('system_id', self::$system_id);
+						}
+					}
+					if(isset($json['phoromatic']['server_core_version']) && !empty($json['phoromatic']['server_core_version']))
+					{
+						if(self::$server_core_version != $json['phoromatic']['server_core_version'])
+						{
+							// The PTS core version of the Phoromatic Server
+							self::$server_core_version = $json['phoromatic']['server_core_version'];
 						}
 					}
 				}
