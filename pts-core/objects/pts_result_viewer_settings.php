@@ -436,6 +436,55 @@ if($result_file->get_test_count() > 1)
 				header('Content-Length: ' . strlen($result_xml));
 				echo $result_xml;
 				exit;
+			case 'view_system_logs':
+				$html_viewer = '';
+				foreach($result_file->get_systems() as $system)
+				{
+					if($system->get_identifier() == $_REQUEST['system_id'])
+					{
+						$system_logs = $system->log_files();
+						$show_log = isset($_REQUEST['log_select']) && $_REQUEST['log_select'] != 'undefined' ? $_REQUEST['log_select'] : (isset($system_logs[0]) ? $system_logs[0] : '');
+						$log_contents = $system->log_files($show_log, false);
+						pts_result_viewer_embed::display_log_html_or_download($log_contents, $system_logs, $show_log, $html_viewer, $_REQUEST['system_id']);
+						break;
+					}
+				}
+				echo pts_result_viewer_embed::html_template_log_viewer($html_viewer, $result_file);
+				exit;
+			case 'view_install_logs':
+				$html_viewer = '';
+				if(isset($_REQUEST['result_object']))
+				{
+					if(($result_object = $result_file->get_result_object_by_hash($_REQUEST['result_object'])))
+					{
+						$install_logs = $result_file->get_install_log_for_test($result_object->test_profile, false);
+						if(count($install_logs) > 0)
+						{
+							$show_log = isset($_REQUEST['log_select']) && $_REQUEST['log_select'] != 'undefined' ? $_REQUEST['log_select'] : (isset($install_logs[0]) ? $install_logs[0] : '');
+							$log_contents = $result_file->get_install_log_for_test($result_object->test_profile, $show_log, false);
+							pts_result_viewer_embed::display_log_html_or_download($log_contents, $install_logs, $show_log, $html_viewer, $result_object->test_profile->get_title() . ' Installation');
+						}
+					}
+				}
+				echo pts_result_viewer_embed::html_template_log_viewer($html_viewer, $result_file);
+				exit;
+			case 'view_test_logs':
+				$html_viewer = '';
+				if(isset($_REQUEST['result_object']))
+				{
+					if(($result_object = $result_file->get_result_object_by_hash($_REQUEST['result_object'])))
+					{
+						if(($test_logs = $result_file->get_test_run_log_for_result($result_object, false)))
+						{
+							$show_log = isset($_REQUEST['log_select']) && $_REQUEST['log_select'] != 'undefined' ? $_REQUEST['log_select'] : (isset($test_logs[0]) ? $test_logs[0] : '');
+							$log_contents = $result_file->get_test_run_log_for_result($result_object, $show_log, false);
+							pts_result_viewer_embed::display_log_html_or_download($log_contents, $test_logs, $show_log, $html_viewer, trim($result_object->test_profile->get_title() . ' ' . $result_object->get_arguments_description()));
+						}
+					}
+
+				}
+				echo pts_result_viewer_embed::html_template_log_viewer($html_viewer, $result_file);
+				exit;
 		}
 		// End result export
 	}

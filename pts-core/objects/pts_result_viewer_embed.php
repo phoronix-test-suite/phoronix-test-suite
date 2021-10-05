@@ -465,18 +465,19 @@ class pts_result_viewer_embed
 	public static function display_log_html_or_download(&$log_contents, &$list_of_log_files, $log_selected, &$append_to_html, $title)
 	{
 		$append_to_html .= '<h2 align="center">' . $title . ' Logs</h2>';
-		$append_to_html .= '<div style="text-align: center;"><form action="' . str_replace('&download', '', CURRENT_URI) . '" method="post"><select name="log_select" id="log_select" onchange="this.form.submit()">';
+		$append_to_html .= '<div style="text-align: center;"><form action="' . str_replace('&log_select=' . $log_selected, '', str_replace('&download', '', $_SERVER['REQUEST_URI'])) . '" method="post"><select name="log_select" id="log_select" onchange="this.form.submit()">';
 		foreach($list_of_log_files as $log_file)
 		{
 			$append_to_html .= '<option value="' . $log_file . '"' . (isset($_REQUEST['log_select']) && $log_file == $_REQUEST['log_select'] ? 'selected="selected"' : '') . '>' . $log_file . '</option>';
 		}
 		$append_to_html .= '</select> &nbsp; <input type="submit" value="Show Log"></form></div><br /><hr />';
-		$append_to_html .= '<p style="font-size: 12px; text-align: right"><a href="' . CURRENT_URI . '&download&log_select=' . $log_selected . '">Download Log File</a></p>';
+		$append_to_html .= '<p style="font-size: 12px; margin: 5px; text-align: right"><form action="' . $_SERVER['REQUEST_URI'] . '" method="post"><input type="hidden" name="download" value="download" /><input type="hidden" name="log_select" value="' . $log_selected . '" /><input type="submit" value="Download Log File" style="float: right;"> </form></p>';
+
 		if($log_contents == null)
 		{
 			$append_to_html .= '<p>No log file available.</p>';
 		}
-		else if(pts_strings::is_text_string($log_contents) && !isset($_GET['download']))
+		else if(pts_strings::is_text_string($log_contents) && !isset($_REQUEST['download']))
 		{
 			$log_contents = phodevi_vfs::cleanse_file($log_contents);
 			$log_contents = htmlentities($log_contents);

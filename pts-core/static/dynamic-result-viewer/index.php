@@ -218,68 +218,6 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			$result_file->save();
 		}
 		exit;
-	case 'view_test_logs':
-		$result_file = false;
-		$html_viewer = '';
-		if(isset($_REQUEST['result_file_id']) && isset($_REQUEST['result_object']))
-		{
-			$result_file = new pts_result_file($_REQUEST['result_file_id']);
-
-			if(($result_object = $result_file->get_result_object_by_hash($_REQUEST['result_object'])))
-			{
-				if(($test_logs = $result_file->get_test_run_log_for_result($result_object, false)))
-				{
-					$show_log = isset($_REQUEST['log_select']) && $_REQUEST['log_select'] != 'undefined' ? $_REQUEST['log_select'] : (isset($test_logs[0]) ? $test_logs[0] : '');
-					$log_contents = $result_file->get_test_run_log_for_result($result_object, $show_log, false);
-					pts_result_viewer_embed::display_log_html_or_download($log_contents, $test_logs, $show_log, $html_viewer, trim($result_object->test_profile->get_title() . ' ' . $result_object->get_arguments_description()));
-				}
-			}
-
-		}
-		echo pts_result_viewer_embed::html_template_log_viewer($html_viewer, $result_file);
-		exit;
-	case 'view_install_logs':
-		$result_file = false;
-		$html_viewer = '';
-		if(isset($_REQUEST['result_file_id']) && isset($_REQUEST['result_object']))
-		{
-			$result_file = new pts_result_file($_REQUEST['result_file_id']);
-
-			if(($result_object = $result_file->get_result_object_by_hash($_REQUEST['result_object'])))
-			{
-				$install_logs = $result_file->get_install_log_for_test($result_object->test_profile, false);
-				if(count($install_logs) > 0)
-				{
-					$show_log = isset($_REQUEST['log_select']) && $_REQUEST['log_select'] != 'undefined' ? $_REQUEST['log_select'] : (isset($install_logs[0]) ? $install_logs[0] : '');
-					$log_contents = $result_file->get_install_log_for_test($result_object->test_profile, $show_log, false);
-					pts_result_viewer_embed::display_log_html_or_download($log_contents, $install_logs, $show_log, $html_viewer, $result_object->test_profile->get_title() . ' Installation');
-				}
-			}
-		}
-		echo pts_result_viewer_embed::html_template_log_viewer($html_viewer, $result_file);
-		exit;
-	case 'view_system_logs':
-		$result_file = false;
-		$html_viewer = '';
-		if(isset($_REQUEST['result_file_id']) && isset($_REQUEST['system_id']))
-		{
-			$result_file = new pts_result_file($_REQUEST['result_file_id']);
-
-			foreach($result_file->get_systems() as $system)
-			{
-				if($system->get_identifier() == $_REQUEST['system_id'])
-				{
-					$system_logs = $system->log_files();
-					$show_log = isset($_REQUEST['log_select']) && $_REQUEST['log_select'] != 'undefined' ? $_REQUEST['log_select'] : (isset($system_logs[0]) ? $system_logs[0] : '');
-					$log_contents = $system->log_files($show_log, false);
-					pts_result_viewer_embed::display_log_html_or_download($log_contents, $system_logs, $show_log, $html_viewer, $_REQUEST['system_id']);
-					break;
-				}
-			}
-
-		}
-		echo pts_result_viewer_embed::html_template_log_viewer($html_viewer, $result_file);
-		exit;
 	case 'reorder_result_file':
 		if(VIEWER_CAN_MODIFY_RESULTS && isset($_REQUEST['result_file_id']))
 		{
@@ -616,7 +554,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		$PAGE .= '</div>';
 		break;
 	case 'result':
-		if(isset($_POST) && !empty($_POST))
+		if(isset($_POST) && !empty($_POST) && !isset($_POST['log_select']))
 		{
 			$result_link = null;
 			foreach(array_keys($_POST) as $key)
@@ -750,7 +688,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 
 }
 
-define('PAGE', $PAGE);
+//define('PAGE', $PAGE);
 
 ?>
 <!doctype html>
@@ -789,7 +727,7 @@ if((!isset($leading_msg) || empty($leading_msg)) && defined('PTS_CORE_STORAGE') 
 
 if(isset($leading_msg) && $leading_msg) { echo '<div id="leading_message">' . $leading_msg . '</div>'; } ?>
 <div id="main_area">
-<?php echo PAGE; ?>
+<?php echo $PAGE; ?>
 </div>
 <div id="footer"><hr /><br /><a href="https://www.phoronix-test-suite.com/">Phoronix Test Suite</a> <?php echo PTS_VERSION; ?> - Generated <?php echo date('j F Y H:i:s'); ?></div>
 </body>
