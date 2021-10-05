@@ -347,6 +347,8 @@ class pts_openbenchmarking
 			$repos = self::linked_repositories();
 		}
 
+		pts_client::$pts_logger && pts_client::$pts_logger->log('Refreshing repository lists: ' . implode(',',$repos));
+
 		foreach($repos as $repo_name)
 		{
 			pts_file_io::mkdir(PTS_OPENBENCHMARKING_SCRATCH_PATH . $repo_name);

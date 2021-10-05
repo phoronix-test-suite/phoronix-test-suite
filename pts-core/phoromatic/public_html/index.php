@@ -81,8 +81,14 @@ $page_class = 'phoromatic_' . PAGE_REQUEST;
 pts_webui::websocket_setup_defines();
 $page_class = pts_webui::load_web_interface($page_class, $PATH, '../pages/');
 
-if(substr($PAGE_REQUEST, 0, 2) == 'r_' || isset($_GET['download']) || isset($_GET['export']))
+if(substr($PAGE_REQUEST, 0, 2) == 'r_' || 
+	isset($_GET['download']) || 
+	isset($_GET['export']) || 
+	($PAGE_REQUEST == 'logs' && count($PATH) == 5 && $PATH[4] == 'download'))
 {
+
+
+	
 	// RESOURCE
 	phoromatic_server::prepare_database();
 	$page_class::render_page_process($PATH);
@@ -93,7 +99,6 @@ if(substr($PAGE_REQUEST, 0, 2) == 'r_' || isset($_GET['download']) || isset($_GE
 	}
 	return;
 }
-
 ?>
 <!DOCTYPE html>
 <html>
