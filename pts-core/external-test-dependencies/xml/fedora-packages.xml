@@ -3,7 +3,7 @@
 	<ExternalDependencies>
 		<Information>
 			<Name>Fedora</Name>
-			<Aliases>Moblin, MeeGo, Amazon, Red Hat Enterprise, Red Hat Enterprise Server, Scientific, ScientificSL, ClearOS, ClearOS Core Server, Oracle Server, OLPC</Aliases>
+			<Aliases>Amazon, Red Hat Enterprise, Red Hat Enterprise Server, Scientific, ScientificSL, ClearOS, ClearOS Core Server, Oracle Server</Aliases>
 			<PackageManager>yum</PackageManager>
 		</Information>
 		<Package>

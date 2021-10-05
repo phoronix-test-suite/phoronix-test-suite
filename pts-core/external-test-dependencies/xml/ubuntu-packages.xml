@@ -3,7 +3,7 @@
 	<ExternalDependencies>
 		<Information>
 			<Name>Ubuntu</Name>
-			<Aliases>Debian, Linux Mint, MEPIS, Nexenta Core, Joli Cloud, gNewSense, Fluxbuntu, Mythbuntu, Goobuntu, GNU KFreeBSD, Linaro</Aliases>
+			<Aliases>Debian, Linux Mint</Aliases>
 			<PackageManager>apt-get</PackageManager>
 		</Information>
 		<Package>
