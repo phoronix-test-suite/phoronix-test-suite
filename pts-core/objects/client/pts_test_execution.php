@@ -519,7 +519,7 @@ class pts_test_execution
 				}
 			}
 
-			if(is_file(PTS_USER_PATH . 'halt-testing') || is_file(PTS_USER_PATH . 'skip-test'))
+			if(is_file(PTS_USER_PATH . 'halt-testing') || is_file(PTS_USER_PATH . 'skip-test') || is_file(PTS_USER_PATH . 'abort-run'))
 			{
 				break;
 			}
@@ -550,7 +550,8 @@ class pts_test_execution
 				}
 			}
 		}
-		if(is_file(PTS_USER_PATH . 'halt-testing') || is_file(PTS_USER_PATH . 'skip-test'))
+
+		if(is_file(PTS_USER_PATH . 'halt-testing') || is_file(PTS_USER_PATH . 'skip-test') || is_file(PTS_USER_PATH . 'abort-run'))
 		{
 			pts_client::release_lock($lock_file);
 			return false;
