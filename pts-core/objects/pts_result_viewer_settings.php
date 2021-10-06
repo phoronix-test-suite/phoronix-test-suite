@@ -440,12 +440,13 @@ if($result_file->get_test_count() > 1)
 				$html_viewer = '';
 				foreach($result_file->get_systems() as $system)
 				{
-					if($system->get_identifier() == $_REQUEST['system_id'])
+					$sid = base64_decode($_REQUEST['system_id']);
+					if($system->get_identifier() == $sid)
 					{
 						$system_logs = $system->log_files();
 						$show_log = isset($_REQUEST['log_select']) && $_REQUEST['log_select'] != 'undefined' ? $_REQUEST['log_select'] : (isset($system_logs[0]) ? $system_logs[0] : '');
 						$log_contents = $system->log_files($show_log, false);
-						pts_result_viewer_embed::display_log_html_or_download($log_contents, $system_logs, $show_log, $html_viewer, $_REQUEST['system_id']);
+						pts_result_viewer_embed::display_log_html_or_download($log_contents, $system_logs, $show_log, $html_viewer, $sid);
 						break;
 					}
 				}
