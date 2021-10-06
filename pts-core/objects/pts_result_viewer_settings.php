@@ -441,7 +441,7 @@ if($result_file->get_test_count() > 1)
 				foreach($result_file->get_systems() as $system)
 				{
 					$sid = base64_decode($_REQUEST['system_id']);
-					if($system->get_identifier() == $sid)
+					if($system->get_original_identifier() == $sid)
 					{
 						$system_logs = $system->log_files();
 						$show_log = isset($_REQUEST['log_select']) && $_REQUEST['log_select'] != 'undefined' ? $_REQUEST['log_select'] : (isset($system_logs[0]) ? $system_logs[0] : '');
