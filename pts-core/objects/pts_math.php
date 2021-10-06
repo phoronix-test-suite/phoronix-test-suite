@@ -227,7 +227,7 @@ class pts_math
 		{
 			return $values[$index];
 		}
-		else
+		else if(is_numeric($values[($index - 1)]) && is_numeric($values[($index + 1)]))
 		{
 			return ($values[($index - 1)] + $values[($index + 1)]) / 2;
 		}
