@@ -618,7 +618,10 @@ class pts_result_file_output
 					}
 
 					$row[$x] = '<span' . $style. '>' . round($value, 2) . '</span>';
-					$nor[$x] = round(($hib ? ($value / $normalize_against) : ($normalize_against / $value)) * 100, 2) . '%';
+					if(is_numeric($value) && is_numeric($normalize_against))
+					{
+						$nor[$x] = round(($hib ? ($value / $normalize_against) : ($normalize_against / $value)) * 100, 2) . '%';
+					}
 					$samples[$x] = $buffer_item->get_sample_count();
 					if($samples[$x] > 1)
 					{
