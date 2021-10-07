@@ -46,7 +46,7 @@ define('PTS_AUTO_LOAD_OBJECTS', true);
 require(PATH_TO_PHORONIX_TEST_SUITE . 'pts-core/pts-core.php');
 pts_define_directories();
 
-set_time_limit(0);
+//set_time_limit(0);
 ini_set('memory_limit','2048M');
 error_reporting(E_ALL);
 

@@ -25,7 +25,7 @@ class pts_core
 {
 	public static function init()
 	{
-		set_time_limit(0);
+		//set_time_limit(0);
 		pts_define_directories(); // Define directories
 
 		pts_define('PTS_INIT_TIME', time());
@@ -88,9 +88,10 @@ class pts_core
 
 		return ($full_string ? 'PhoronixTestSuite/' : null) . $codename;
 	}
-	public static function program_title($show_codename = false)
+	public static function program_title()
 	{
-		return 'Phoronix Test Suite v' . PTS_VERSION . ($show_codename ? ' (' . pts_core::codename() . ')' : null);
+		// First argument was originally $show_codename, but no longer used/honored
+		return 'Phoronix Test Suite v' . PTS_VERSION;
 	}
 }
 function pts_define($name, $value = null)

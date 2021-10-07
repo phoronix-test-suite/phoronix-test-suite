@@ -109,6 +109,10 @@ class phoromatic_testing implements pts_webui_interface
 					}
 					while($row = $result->fetchArray());
 				}
+				else
+				{
+					$main .= '<li class="light" style="text-align: center;">No Tickets Found</li>';	
+				}
 			}
 			$main .= '</ul>
 			</div>';

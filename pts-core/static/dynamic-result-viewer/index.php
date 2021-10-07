@@ -639,7 +639,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 				$total_result_points += $result_file->get_test_count();
 			}
 
-			$PAGE .= '<div class="sub" style="margin: 6px 0 30px">' . count($results) . ' Result Files Containing A Combined ' . $total_result_points . ' Test Results</div>';
+			$PAGE .= '<div class="sub" style="margin: 6px 0 30px">' . ($result_file_count = count($results)) . ' Result Files Containing A Combined ' . $total_result_points . ' Test Results</div>';
 			$PAGE .= '<form name="compare_results" id="compare_results_id" action="' . CURRENT_URI . '" method="post"><input type="submit" value="Compare Results" id="compare_results_submit" />';
 			$i = 0;
 			foreach($results as $id => $result_file)
@@ -649,7 +649,8 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 				$PAGE .= '<div class="sub"><input type="checkbox" name="checkbox_compare_results[]" value="' . $id . '" id="cr_checkbox_' . $i . '" /> <label for="cr_checkbox_' . $i . '"><span onclick="javascript:document.getElementById(\'compare_results_id\').submit(); return false;">Compare Results</span></label> ' . $result_file->get_test_count() . ' Tests &nbsp; &nbsp; ' . $result_file->get_system_count() . ' Systems &nbsp; &nbsp; ' . date('l j F H:i', strtotime($result_file->get_last_modified())) . ' ' . (VIEWER_CAN_DELETE_RESULTS ? ' &nbsp; &nbsp; <span onclick="javascript:delete_result_file(\'' . $id . '\'); return false;">DELETE RESULT FILE</span>' : null) . '</div>';
 				$PAGE .= '<div class="desc">' . $result_file->get_description() . '</div>';
 
-				$geometric_mean = pts_result_file_analyzer::generate_geometric_mean_result($result_file);
+				// Avoid showing geo mean for every result file due to too computationally intensive
+				$geometric_mean = $result_file_count > 40 ? false : pts_result_file_analyzer::generate_geometric_mean_result($result_file);
 				if($geometric_mean)
 				{
 					$geo_display = null;

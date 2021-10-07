@@ -20,6 +20,8 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+define('CSS_RESULT_VIEWER_PATH', '/phoromatic.css?' . PTS_CORE_VERSION);
+
 include('../phoromatic_functions.php');
 phoromatic_init_web_page_setup();
 pts_network::client_startup();
@@ -100,7 +102,7 @@ if(substr($PAGE_REQUEST, 0, 2) == 'r_' || isset($_GET['download']) || isset($_GE
 <head>
 <script src="/phoromatic.js?<?php echo date('Ymd') . PTS_CORE_VERSION; ?>" type="text/javascript"></script>
 <title>Phoronix Test Suite <?php echo PTS_VERSION; ?> - Phoromatic - <?php echo $page_class::page_title(); ?></title>
-<link href="/phoromatic.css?<?php echo date('Ymd') . PTS_CORE_VERSION; ?>" rel="stylesheet" type="text/css" />
+<link href="<?php echo CSS_RESULT_VIEWER_PATH; ?>" rel="stylesheet" type="text/css" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="keywords" content="Phoronix Test Suite, open-source benchmarking, Linux benchmarking, automated testing" />

@@ -1,12 +1,11 @@
 body
 {
-	background: #262626;
 	text-align: left;
 	margin: 0;
 	padding: 0;
 	font-family: 'Raleway', sans-serif;
 	font-size: 100%;
-	color: #eee;
+	color: #000;
 }
 h1, h2, h3, h4, h5, h6
 {
@@ -15,21 +14,18 @@ h1, h2, h3, h4, h5, h6
 a, a:visited, a:hover, a:active
 {
 	text-decoration: none;
-	color: inherit;
+	color: #337ca6;
 }
 div#pts_phoromatic_top_header
 {
-	background: #262626;
-	border: #1F1F1F 1px solid;
+	border: #eee 1px solid;
+	border-width: 0 0 1px 0;
 	overflow: hidden;
 	margin: 0;
 	padding: 4px 10px;
 	width: 100%;
-	box-shadow: 1px 1px 2px #1F1F1F;
-	-moz-box-shadow: 1px 1px 2px #1F1F1F;
-	-webkit-box-shadow: 1px 1px 2px #1F1F1F;
 	display: table;
-	font-size: 1.1em;
+	font-size: 1.3em;
 	font-family: 'Quicksand', sans-serif !important;
 }
 div#pts_phoromatic_top_header_right
@@ -47,7 +43,7 @@ div#pts_phoromatic_top_header_right
 }
 div#pts_phoromatic_top_header_right a
 {
-	color: #fff;
+	color: #337ca6;
 	text-transform: uppercase;
 	font-family: 'Quicksand', sans-serif !important;
 }
@@ -60,16 +56,12 @@ div#pts_phoromatic_top_header input, div#pts_phoromatic_top_header button
 }
 div#pts_phoromatic_bottom_footer
 {
-	background: #262626;
 	font-weight: 300;
 	clear: both;
 	overflow: hidden;
 	font-size: 0.6em;
 	line-height: 150%;
-	color: #FFF;
-	box-shadow: 1px 1px 2px #1F1F1F;
-	-moz-box-shadow: 1px 1px 2px #1F1F1F;
-	-webkit-box-shadow: 1px 1px 2px #1F1F1F;
+	color: #222;
 }
 div#pts_phoromatic_bottom_footer a img
 {
@@ -78,10 +70,6 @@ div#pts_phoromatic_bottom_footer a img
 div#pts_phoromatic_bottom_footer a:hover img
 {
 	opacity: 1.0;
-}
-div#pts_phoromatic_bottom_footer a
-{
-	color: #FFF;
 }
 div#pts_phoromatic_bottom_footer a:hover
 {
@@ -100,7 +88,7 @@ div#pts_phoromatic_top_header ul ul#pts_phoromatic_info li
 }
 div#pts_phoromatic_top_header ul
 {
-	color: #fff;
+	color: #337ca6;
 	list-style: none;
 	margin: 0 4px;
 	padding: 0;
@@ -205,7 +193,7 @@ div#pts_phoromatic_menu_right ul li
 div#pts_phoromatic_menu_right ul li a
 {
 	font-weight: 300;
-	color: #FFF;
+	color: #337ca6;
 }
 div#pts_phoromatic_menu_right ul li a:hover, div#pts_phoromatic_menu_right p a:hover
 {
@@ -234,13 +222,7 @@ div#pts_phoromatic_main_box_inside
 {
 	margin: 0 auto;
 	padding: 10px 20px;
-	background: #f1f1f1;
-	border: #1F1F1F 1px solid;
-	border-radius: 3px;
 	min-height: 500px;
-	box-shadow: 1px 1px 2px #1F1F1F;
-	-moz-box-shadow: 1px 1px 2px #1F1F1F;
-	-webkit-box-shadow: 1px 1px 2px #1F1F1F;
 }
 @media screen and (min-width:1700px){
 	div#pts_phoromatic_top_header li
@@ -451,7 +433,7 @@ div#pts_phoromatic_main_area ol li
 }
 div#pts_phoromatic_main_area p a, div#pts_phoromatic_main_area a, div#pts_phoromatic_main_area h6 a, div#pts_phoromatic_main_area h5 a, div#pts_phoromatic_main_box p a
 {
-	color: #A4B304;
+	color: #0367B4;
 	font-weight: 500;
 }
 div#pts_phoromatic_main_area p a:hover, div#pts_phoromatic_main_area a:hover, div#pts_phoromatic_main_area h6 a:hover, div#pts_phoromatic_main_area h5 a:hover, div#pts_phoromatic_main_box p a:hover
@@ -527,6 +509,11 @@ div.pts_phoromatic_info_box_area ul a li, div.pts_phoromatic_info_box_area ul li
 	margin: 0;
 	font-weight: 500;
 }
+li.light
+{
+	clear: both;
+	width: 100%;
+}
 div#pts_phoromatic_main_area div.pts_phoromatic_info_box_area ul a:hover li, div#pts_phoromatic_main_area  div.pts_phoromatic_info_box_area ul:hover a
 {
 	background: #E0E0E0;
@@ -545,7 +532,7 @@ input[type=submit]
 {
 	font-weight: 500;
 }
-input, select, textarea, checkbox, button
+input, select, textarea, checkbox
 {
 	border: solid #1f1f1f 1px;
 	background-color: #E0E0E0;
@@ -555,22 +542,36 @@ input, select, textarea, checkbox, button
 	transition: all 0.3s;
 	line-height:1.8;
 }
+button, input[type="submit"]
+{
+
+	background: #03b450 !important;
+	color: #FFF !important;
+	padding: 4px;
+	border: 1px solid #000;
+	font-size: 10pt;
+}
 textarea
 {
 	font-weight: 500;
 }
 input:focus, textarea:focus
 {
-	background: #666; color: #FFF;
+	background: #666;
+	color: #FFF;
 	box-shadow: 1px 1px 2px #222;
 	-moz-box-shadow: 1px 1px 2px #222;
 	-webkit-box-shadow: 1px 1px 2px #222;
+}
+div.pts_phoromatic_info_box_area
+{
+	clear: both;
 }
 div.pts_phoromatic_info_box_area ul li table tbody tr.tb_compare_bar
 {
 	margin-top: 3px;
 	padding: 6px 3px 2px;
-	color: #FFF;
+	color: #337ca6;
 	font-weight: bold;
 	display: none;
 }

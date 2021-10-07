@@ -46,6 +46,11 @@ class phoromatic_account_activity implements pts_webui_interface
 		$row = $result->fetchArray();
 		$prev_date = null;
 
+		if(empty($row))
+		{
+			$main .= '<p>No activity found.</p>';
+		}
+
 		do
 		{
 			if($prev_date != substr($row['ActivityTime'], 0, 10))
