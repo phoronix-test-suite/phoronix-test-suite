@@ -821,37 +821,42 @@ class phoromatic extends pts_module_interface
 	{
 		$system_logs = null;
 		$system_logs_hash = null;
-		// TODO: Potentially integrate this code below shared with pts_openbenchmarking_client into a unified function for validating system log files
-		$system_log_dir = $result_file->get_system_log_dir();
-		if(is_dir($system_log_dir) && $upload_system_logs)
+		if(self::$server_core_version < 10602)
 		{
-			$is_valid_log = true;
-			if(pts_client::$skip_log_file_type_checks == false)
-			{
-				// For security/malicious purposes, ensure system log directory only contains text files
-				$is_valid_log = pts_file_io::directory_only_contains_text_files($system_log_dir);
-			}
+			// On newer PTS servers, upload as separate upload afterwards to better handle large log files that otherwise may go beyond max request size, etc
 
-			if($is_valid_log)
+			// TODO: Potentially integrate this code below shared with pts_openbenchmarking_client into a unified function for validating system log files
+			$system_log_dir = $result_file->get_system_log_dir();
+			if(is_dir($system_log_dir) && $upload_system_logs)
 			{
-				$system_logs_zip = pts_client::create_temporary_file('.zip');
-				pts_compression::zip_archive_create($system_logs_zip, $system_log_dir);
+				$is_valid_log = true;
+				if(pts_client::$skip_log_file_type_checks == false)
+				{
+					// For security/malicious purposes, ensure system log directory only contains text files
+					$is_valid_log = pts_file_io::directory_only_contains_text_files($system_log_dir);
+				}
 
-				if(filesize($system_logs_zip) == 0)
+				if($is_valid_log)
 				{
-					pts_client::$pts_logger && pts_client::$pts_logger->log('System log ZIP file failed to generate. Missing PHP ZIP support?');
+					$system_logs_zip = pts_client::create_temporary_file('.zip');
+					pts_compression::zip_archive_create($system_logs_zip, $system_log_dir);
+
+					if(filesize($system_logs_zip) == 0)
+					{
+						pts_client::$pts_logger && pts_client::$pts_logger->log('System log ZIP file failed to generate. Missing PHP ZIP support?');
+					}
+					else if(pts_client::$skip_log_file_type_checks == false && filesize($system_logs_zip) > 2097152)
+					{
+						// If it's over 2MB, probably too big
+						pts_client::$pts_logger && pts_client::$pts_logger->log('System log ZIP file too big to upload');
+					}
+					else
+					{
+						$system_logs = base64_encode(file_get_contents($system_logs_zip));
+						$system_logs_hash = sha1($system_logs);
+					}
+					unlink($system_logs_zip);
 				}
-				else if(pts_client::$skip_log_file_type_checks == false && filesize($system_logs_zip) > 2097152)
-				{
-					// If it's over 2MB, probably too big
-					pts_client::$pts_logger && pts_client::$pts_logger->log('System log ZIP file too big to upload');
-				}
-				else
-				{
-					$system_logs = base64_encode(file_get_contents($system_logs_zip));
-					$system_logs_hash = sha1($system_logs);
-				}
-				unlink($system_logs_zip);
 			}
 		}
 
@@ -896,6 +901,58 @@ class phoromatic extends pts_module_interface
 			$times_tried++;
 		}
 		while($res == false && $times_tried < 4);
+
+		$server_response = json_decode($res, true);
+
+		if(self::$server_core_version >= 10602 && isset($server_response['phoromatic']['upload_id']) && !empty($server_response['phoromatic']['upload_id']))
+		{
+			// On newer PTS servers, upload as separate upload afterwards to better handle large log files that otherwise may go beyond max request size, etc
+
+			$log_types = array();
+
+			if($upload_system_logs)
+			{
+				$log_types['system-logs'] = $result_file->get_system_log_dir();
+			}
+
+			foreach($log_types as $index => $log_dir)
+			{
+				if(is_dir($log_dir))
+				{
+					$is_valid_log = true;
+					if(pts_client::$skip_log_file_type_checks == false)
+					{
+						// For security/malicious purposes, ensure system log directory only contains text files
+						$is_valid_log = pts_file_io::directory_only_contains_text_files($log_dir);
+					}
+
+					if($is_valid_log)
+					{
+						$system_logs_zip = pts_client::create_temporary_file('.zip');
+						pts_compression::zip_archive_create($system_logs_zip, $log_dir);
+
+						if(filesize($system_logs_zip) == 0)
+						{
+							pts_client::$pts_logger && pts_client::$pts_logger->log($index . ' log ZIP file failed to generate. Missing PHP ZIP support?');
+						}
+						else
+						{
+							$system_logs = base64_encode(file_get_contents($system_logs_zip));
+							$system_logs_hash = sha1($system_logs);
+						}
+						unlink($system_logs_zip);
+
+						$res = phoromatic::upload_to_remote_server(array(
+							'r' => 'result_log_upload',
+							'i' => $server_response['phoromatic']['upload_id'],
+							'system_logs_type' => $index,
+							'system_logs_zip' => $system_logs,
+							'system_logs_hash' => $system_logs_hash
+							));
+					}
+				}
+			}
+		}
 
 		return $res;
 	}

@@ -15,6 +15,7 @@ phoromatic: Warn when lacking database write access for Phoromatic Server
 phoromatic: Support (opt-in) handling of non-text file log files
 phoromatic: System log viewer improvements
 phoromatic: Make SYSTEM_ID accessible to client
+phoromatic: Allow uploading of system logs after initial upload of result XML to deal with HTTP size limitations and other factors with large logs
 phodevi: Improve detection of new Intel oneAPI DPC++/C++ Compiler
 phodevi: ACPI Platform Profile reporting support on Linux
 phodevi: Support reporting NVIDIA BAR1 total memory / Radeon vRAM visible memory (Resizable BAR / ReBAR status)
