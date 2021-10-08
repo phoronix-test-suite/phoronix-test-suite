@@ -297,7 +297,6 @@ class pts_result_file_analyzer
 						{
 							$avg_time = round(array_sum($test_run_times) / count($test_run_times));
 							// Cost-perf-per-hour calculation, e.g. cloud costs...
-							// self::$TEST_RUN_TIME_ELAPSED is seconds run.....
 							$cost_to_run_test = round(($value / 60 / 60) * $avg_time, 3);
 
 							if($cost_to_run_test < 0.01)

@@ -341,7 +341,7 @@ function phoromatic_webui_header_logged_in()
 		{
 			$sub_results_menu[] = 'Tracker';
 		}
-		$sub_results_menu[] = '<a href="/rss.php?user=' . $_SESSION['UserID'] . '&amp;v=' . sha1($_SESSION['CreatedOn']) . '">Results Feed <img src="images/rss.svg" /></a>';
+		$sub_results_menu[] = '<a href="/rss.php?user=' . $_SESSION['UserID'] . '&amp;v=' . sha1($_SESSION['CreatedOn']) . '">Results Feed <img src="images/rss.svg" width="16" height="16" /></a>';
 
 		$pages = array('Main' => $sub_main_menu, 'Systems' => $sub_systems_menu, 'Tests' => $sub_tests_menu, '<a href="/?testing">Testing</a>' => $sub_testing_menu, 'Results' => $sub_results_menu, '<form action="/?search" method="post" id="search"><input type="search" name="search" id="seach_input" size="16" /> <input type="submit" name="sa" value="Search" /><div class="search_expander"></div></form>');
 	}
@@ -472,7 +472,7 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 		$right .= '<hr /><p><strong>' . date('H:i T - j F Y') . '</strong><br />' . $group_name . '<a href="?systems">' . $system_count . ' System' . ($system_count == 1 ? '' : 's') . '</a><br /><a href="?schedules">' . $schedule_count . ' Schedule' . ($schedule_count == 1 ? '' : 's') . '</a><br /><a href="?results">' . $result_count . ' Result' . ($result_count == 1 ? '' : 's') . '</a>';
 
 
-$right .= ' <a href="/rss.php?user=' . $_SESSION['UserID'] . '&amp;v=' . sha1($_SESSION['CreatedOn']) . '"><img src="images/rss.svg" /></a>';
+$right .= ' <a href="/rss.php?user=' . $_SESSION['UserID'] . '&amp;v=' . sha1($_SESSION['CreatedOn']) . '"><img src="images/rss.svg" width="16" height="16" /></a>';
 
 		$right .= '<br /><a href="?account_activity">' . $activity_count . ' Activity Events Today</a></p>';
 	}

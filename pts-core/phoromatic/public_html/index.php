@@ -20,7 +20,7 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-define('CSS_RESULT_VIEWER_PATH', '/phoromatic.css?' . PTS_CORE_VERSION);
+define('CSS_RESULT_VIEWER_PATH', '/phoromatic.css?' . date('Ymd'));
 
 include('../phoromatic_functions.php');
 phoromatic_init_web_page_setup();

@@ -692,7 +692,7 @@ class pts_result_file_output
 		}
 		return !empty($changed) ? $changed : false;
 	}
-	public static function result_file_to_system_html(&$result_file)
+	public static function result_file_to_system_html(&$result_file, $footnote_mode = false)
 	{
 		$html = null;
 		$systems = $result_file->get_systems();
@@ -700,10 +700,19 @@ class pts_result_file_output
 		$prev_notes = null;
 		$prev_sw = null;
 		$prev_hw = null;
+		$prev_data = array();
 
 		foreach($systems as $i => $system)
 		{
-			$html .= '<h2>' . $system->get_identifier() . '</h2>';
+			if($footnote_mode)
+			{
+				$html .= '<h4><u>' . $system->get_identifier() . '</u></h4>';
+			}
+			else
+			{
+				$html .= '<h2>' . $system->get_identifier() . '</h2>';
+			}
+			$reporting_changed_text = false;
 			if(isset($systems[($i + 1)]) && $systems[($i + 1)]->get_hardware() == $system->get_hardware() && $systems[($i + 1)]->get_software() == $system->get_software())
 			{
 				//continue;
@@ -713,13 +722,18 @@ class pts_result_file_output
 				$hw = $system->get_hardware();
 				$sw = $system->get_software();
 
-				if($hw != $prev_hw)
+				if($footnote_mode || $hw != $prev_hw)
 				{
-					if(($diff = self::diff_in_system($prev_hw, $hw)) && count($diff) < 4 && $sw == $prev_sw)
+					if($footnote_mode)
+					{
+						$html .= '<p>' . pts_strings::highlight_words_with_colon($hw) . '</p>';
+					}
+					else if(($diff = self::diff_in_system($prev_hw, $hw)) && count($diff) < 4 && $sw == $prev_sw)
 					{
 						foreach($diff as $type => $c)
 						{
 							$html .= '<p>Changed <strong>' . $type . '</strong> to <strong>' . $c . '</strong>.</p>';
+							$reporting_changed_text = true;
 						}
 					}
 					else
@@ -728,14 +742,14 @@ class pts_result_file_output
 					}
 					$prev_hw = $hw;
 				}
-				if($sw != $prev_sw)
+				if($footnote_mode || $sw != $prev_sw)
 				{
 					$html .= '<p>' . pts_strings::highlight_words_with_colon($sw) . '</p>';
-					$prev_sw = $sw;
 				}
+				$prev_sw = $sw;
 			}
 
-			if(isset($systems[($i + 1)]) && $systems[($i + 1)]->get_json() == $system->get_json() && $systems[($i + 1)]->get_notes() == $system->get_notes())
+			if(!$footnote_mode && isset($systems[($i - 1)]) && $systems[($i - 1)]->get_json() == $system->get_json() && $systems[($i - 1)]->get_notes() == $system->get_notes())
 			{
 			
 			}
@@ -745,22 +759,37 @@ class pts_result_file_output
 				pts_result_file_analyzer::system_to_note_array($system, $attributes);
 				if(!empty($attributes))
 				{
-					$notes = '<p class="mini"><em>';
+					$notes = '<p class="mini">' . ($footnote_mode ? '' : '<em>');
 					foreach($attributes as $section => $data)
 					{
 						foreach($data as $c => $val)
 						{
-							$notes .= '<strong>' .$section . ' Notes:</strong> ' . $val . '<br />';
+							if(!$footnote_mode && $reporting_changed_text && isset($prev_data[$section]))
+							{
+								if($prev_data[$section] != $val)
+								{
+									$notes .= '<strong>' . $section . ' Change:</strong> ' . $val . '<br />';
+									$prev_data[$c] = $val;
+								}
+								continue;
+							}
+							$notes .= '<strong>' . $section . ' Notes:</strong> ' . $val . '<br />';
+							$prev_data[$section] = $val;
 						}
 					}
-					$notes .= '</em></p>';
+					$notes .= ($footnote_mode ? '' : '</em>') . '</p>';
 
-					if($notes != $prev_notes)
+					if($footnote_mode || $notes != $prev_notes)
 					{
 						$html .= $notes;
 						$prev_notes = $notes;
 					}
 				}
+			}
+
+			if($footnote_mode)
+			{
+				$html .= '<p>Testing initiated at ' . date('j F Y H:i', strtotime($system->get_timestamp())) . ' by user ' . $system->get_username() . '.</p>';
 			}
 		}
 

@@ -346,6 +346,7 @@ class pts_result_viewer_embed
 				$tabs = array(
 					'Result' => $res
 					);
+				$show_on_print = array();
 
 				foreach($result_file->get_relation_map($i) as $child_ro)
 				{
@@ -353,7 +354,9 @@ class pts_result_viewer_embed
 					if($c_ro)
 					{
 						$desc = str_replace(array(' Monitor', $res_desc_shortened ,'()' ,')', ' - '), '', $c_ro->get_arguments_description_shortened(false));
-						$tabs[($desc == $res_desc_shortened || empty($desc) ? $c_ro->test_profile->get_result_scale() : $desc)] = pts_render::render_graph_inline_embed($c_ro, $result_file, $extra_attributes);
+						$dindex = $desc == $res_desc_shortened || empty($desc) ? $c_ro->test_profile->get_result_scale() : $desc;
+						$tabs[$dindex] = pts_render::render_graph_inline_embed($c_ro, $result_file, $extra_attributes);
+						$show_on_print[] = $dindex;
 						$result_file->remove_result_object_by_id($child_ro);
 						$skip_ros[] = $child_ro;
 					}
@@ -387,7 +390,7 @@ class pts_result_viewer_embed
 							$tab_id = strtolower(str_replace(' ', '_', $title)) . '_' . $i;
 							$PAGE .= '<input type="radio" name="tabs_' . $i . '" id="' . $tab_id . '"' . ($title == 'Result' ? ' checked="checked"' : '') . '>
 							  <label for="' . $tab_id . '">' . $title . '</label>
-							  <div class="tab">
+							  <div class="tab' . (in_array($title, $show_on_print) ? ' print_notes' : '') . '">
 							    ' . $rendered . $this->graph_export_handler($rendered) . '
 							  </div>';
 						}
@@ -450,6 +453,8 @@ class pts_result_viewer_embed
 			$PAGE .= '</div>';
 			unset($result_object);
 		}
+
+		$PAGE .= '<div class="print_notes mini" style="font-size: 10px !important;">' . pts_result_file_output::result_file_to_system_html($result_file, true) . '</div>';
 		$PAGE .= '</div>';
 
 		return $PAGE;

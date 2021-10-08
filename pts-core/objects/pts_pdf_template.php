@@ -83,7 +83,7 @@ class pts_pdf_template extends FPDF
 					$this->CreateBookmark($value, 1);
 					$this->SetFont('Arial', 'B', 16);
 					$this->SetLeftMargin(8.5);
-					$this->SetTextColor(232, 143, 9);
+					$this->SetTextColor(9, 123, 239);
 					$this->Ln();
 					$this->html_text_interpret('h1', $dom_item);
 					$this->Ln();
@@ -92,7 +92,7 @@ class pts_pdf_template extends FPDF
 					$this->CreateBookmark($value, 2);
 					$this->SetLeftMargin(10);
 					$this->SetFont('Arial', 'B', 14);
-					$this->SetTextColor(129, 140, 3);
+					$this->SetTextColor(5, 124, 166);
 					$this->Ln();
 					$this->SetTopMargin(30);
 					$this->html_text_interpret('h2', $dom_item);
@@ -101,7 +101,7 @@ class pts_pdf_template extends FPDF
 				case 'h3':
 					$this->SetLeftMargin(10);
 					$this->SetFont('Arial', 'B', 13);
-					$this->SetTextColor(129, 140, 3);
+					$this->SetTextColor(5, 124, 166);
 					$this->Ln();
 					$this->html_text_interpret('h3', $dom_item);
 					$this->SetLeftMargin(10);
@@ -210,7 +210,7 @@ class pts_pdf_template extends FPDF
 		$this->SetFont('Arial', 'B', 10);
 		$this->Cell(0, 10, $this->pts_sub_title, 0, 0, 'C');
 		$this->Ln(15);
-   		$this->SetDrawColor(0,85,0);
+   		$this->SetDrawColor(5, 124, 166);
 		$this->Line(10, 27, 210-10, 27);
 	}
 	public function Footer()
@@ -220,7 +220,7 @@ class pts_pdf_template extends FPDF
 			return;
 		}
 		$this->SetY(-15);
-   		$this->SetDrawColor(0,85,0);
+   		$this->SetDrawColor(5, 124, 166);
 		$this->Line(10, $this->y, 210-10, $this->y);
 		$this->SetY(-10);
 		$this->SetFont('Arial', 'B', 7);
