@@ -61,6 +61,7 @@ $environmental_variables = array(
 	'composite_xml' => 'COMPOSITE_XML',
 	'composite_xml_gz' => 'COMPOSITE_XML_GZ',
 	'composite_xml_hash' => 'COMPOSITE_XML_HASH',
+	'system_logs_type' => 'SYSTEM_LOGS_TYPE',
 	'system_logs_zip' => 'SYSTEM_LOGS_ZIP',
 	'system_logs_hash' => 'SYSTEM_LOGS_HASH',
 	'msi' => 'PTS_MACHINE_SELF_ID',

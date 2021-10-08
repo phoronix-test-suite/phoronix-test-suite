@@ -9,11 +9,9 @@
 </head>
 <body style="background: #FFF;">
 <div id="pts_phoromatic_top_header">
-	<div id="pts_phoromatic_logo"><a href="index.php"><img src="images/phoromatic_logo.png" /></a></div><ul><li>Automated Linux Benchmark Management &amp; Test Orchestration</li></ul><div style="float: right; padding: 25px 70px 0 0;"></div></div>
+	<div id="pts_phoromatic_logo"><a href="index.php"><img src="images/phoromatic_logo.svg" /></a></div><ul><li>Automated Linux Benchmark Management &amp; Test Orchestration</li></ul><div style="float: right; padding: 25px 70px 0 0;"></div></div>
 <div id="pts_phoromatic_main_box"><h1>Phoromatic</h1>
-<p><img style="float: right;" src="images/phoromatic-graph.jpg" />
-
-
+<p>
 Phoromatic is the remote management system of the <a href="http://www.phoronix-test-suite.com/">Phoronix Test Suite</a>. Phoromatic allows the automatic (hence the name <em>Phoro-matic</em>) scheduling of tests, remote installation of new tests, and the management of multiple test systems all through an intuitive, easy-to-use web interface. Tests can be scheduled to automatically run on a routine basis across multiple test systems. The test results are then available from this centralized, web-based location. Any test available via <a href="http://openbenchmarking.org/">OpenBenchmarking.org</a> can be run via Phoromatic.</p>
 <p>The latest-generation Phoromatic server and client are built into the Phoronix Test Suite 5.4 code-base and newer. Phoromatic was originally introduced with Phoronix Test Suite 2 in 2009 and has advanced a great deal, especially with the modern Phoronix Test Suite 5 code-base. Phoromatic has also matured from being a Phoromatic.com hosted instance with behind-the-firewall licensing option to having a full-featured, built-in server instance integrated as open-source software within the Phoronix Test Suite.</p>
 <p>Phoromatic allows for scheduling benchmarks across systems to occur on either a timed basis (with varying day and time options), on a manual basis, or on an externally triggered basis -- allowing for unlimited possibilities such as hooking in and triggering new tests to take place whenever a new Git commit occurs or other external criteria are met. Like the Phoronix Test Suite, Phoromatic is completely extensible on the client and server ends for meeting the needs of any organization in need of Linux performance/stress management.</p>
@@ -49,9 +47,6 @@ Phoromatic is the remote management system of the <a href="http://www.phoronix-t
 <h1>Support &amp; Contact</h1>
 <p>Commercial support, custom engineering, and other services are available via <a href="http://www.phoronix-test-suite.com/?k=contact">contacting Phoronix Media</a>. Community-based support is available via <a href="https://github.com/phoronix-test-suite">GitHub</a>.</p>
 </div><div id="pts_phoromatic_bottom_footer">
-<div style="float: right; padding: 2px 10px; overflow: hidden;"><a href="http://openbenchmarking.org/" style="margin-right: 20px;"><img src="images/ob-white-logo.png" /></a> <a href="http://www.phoronix-test-suite.com/"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewbox="0 0 76 41" width="76" height="41" preserveAspectRatio="xMinYMin meet">
-  <path d="m74 22v9m-5-16v16m-5-28v28m-23-2h12.5c2.485281 0 4.5-2.014719 4.5-4.5s-2.014719-4.5-4.5-4.5h-8c-2.485281 0-4.5-2.014719-4.5-4.5s2.014719-4.5 4.5-4.5h12.5m-21 5h-11m11 13h-2c-4.970563 0-9-4.029437-9-9v-20m-24 40v-20c0-4.970563 4.0294373-9 9-9 4.970563 0 9 4.029437 9 9s-4.029437 9-9 9h-9" stroke="#c8d905" stroke-width="4" fill="none" />
-</svg></a></div>
 <p style="margin: 6px 15px;">Copyright &copy; 2008 - <?php echo @date('Y'); ?> by <a href="http://www.phoronix-media.com/">Phoronix Media</a>. All rights reserved.<br />
 All trademarks used are properties of their respective owners.<br />The Phoronix Test Suite, Phoromatic, and OpenBenchmarking.org are products of Phoronix Media.</p></div></body>
 </html>

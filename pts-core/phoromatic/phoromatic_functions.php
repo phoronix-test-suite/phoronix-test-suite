@@ -154,7 +154,7 @@ function phoromatic_webui_header($left_items, $right = null)
 {
 	$ret = PHP_EOL . '<div id="pts_phoromatic_top_header">
 	<ul>
-	<li><a href="?"><img style="vertical-align: middle;" class="img_logo_pg" src="images/phoromatic_logo.png" /></a>';
+	<li><a href="?"><img style="vertical-align: middle;" class="img_logo_pg" src="images/phoromatic_logo.svg" /></a>';
 
 	if(isset($_SESSION['AdminLevel']) &&$_SESSION['AdminLevel'] > 0 && isset($_SESSION['AccountID']) && !empty($_SESSION['AccountID']))
 	{
@@ -341,7 +341,7 @@ function phoromatic_webui_header_logged_in()
 		{
 			$sub_results_menu[] = 'Tracker';
 		}
-		$sub_results_menu[] = '<a href="/rss.php?user=' . $_SESSION['UserID'] . '&amp;v=' . sha1($_SESSION['CreatedOn']) . '">Results Feed <img src="images/rss.png" /></a>';
+		$sub_results_menu[] = '<a href="/rss.php?user=' . $_SESSION['UserID'] . '&amp;v=' . sha1($_SESSION['CreatedOn']) . '">Results Feed <img src="images/rss.svg" /></a>';
 
 		$pages = array('Main' => $sub_main_menu, 'Systems' => $sub_systems_menu, 'Tests' => $sub_tests_menu, '<a href="/?testing">Testing</a>' => $sub_testing_menu, 'Results' => $sub_results_menu, '<form action="/?search" method="post" id="search"><input type="search" name="search" id="seach_input" size="16" /> <input type="submit" name="sa" value="Search" /><div class="search_expander"></div></form>');
 	}
@@ -472,7 +472,7 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 		$right .= '<hr /><p><strong>' . date('H:i T - j F Y') . '</strong><br />' . $group_name . '<a href="?systems">' . $system_count . ' System' . ($system_count == 1 ? '' : 's') . '</a><br /><a href="?schedules">' . $schedule_count . ' Schedule' . ($schedule_count == 1 ? '' : 's') . '</a><br /><a href="?results">' . $result_count . ' Result' . ($result_count == 1 ? '' : 's') . '</a>';
 
 
-$right .= ' <a href="/rss.php?user=' . $_SESSION['UserID'] . '&amp;v=' . sha1($_SESSION['CreatedOn']) . '"><img src="images/rss.png" /></a>';
+$right .= ' <a href="/rss.php?user=' . $_SESSION['UserID'] . '&amp;v=' . sha1($_SESSION['CreatedOn']) . '"><img src="images/rss.svg" /></a>';
 
 		$right .= '<br /><a href="?account_activity">' . $activity_count . ' Activity Events Today</a></p>';
 	}
