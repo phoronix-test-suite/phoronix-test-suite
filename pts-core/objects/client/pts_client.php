@@ -668,7 +668,7 @@ class pts_client
 							$cmd_output = null;
 							continue;
 						}
-						if(strpos($cmd_output, 'read kernel buffer failed: Operation not permitted') !== false)
+						if(strpos($cmd_output, 'read kernel buffer failed: Operation not permitted') !== false || strpos($cmd_output, 'Error: unable to open display') !== false)
 						{
 							continue;
 						}

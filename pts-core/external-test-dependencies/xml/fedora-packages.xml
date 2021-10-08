@@ -136,7 +136,7 @@
 		</Package>
 		<Package>
 			<GenericName>perl</GenericName>
-			<PackageName>perl perl-SDL perl-Time-HiRes</PackageName>
+			<PackageName>perl perl-Time-HiRes</PackageName>
 			<FileCheck>/usr/lib64/perl5/vendor_perl/Time/HiRes.pm</FileCheck>
 		</Package>
 		<Package>
@@ -299,7 +299,7 @@
 		</Package>
 		<Package>
 			<GenericName>opencl</GenericName>
-			<PackageName>opencl-headers pocl</PackageName>
+			<PackageName>opencl-headers</PackageName>
 		</Package>
 		<Package>
 			<GenericName>attr</GenericName>
