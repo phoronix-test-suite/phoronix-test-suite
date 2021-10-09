@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://nginx.org/download/nginx-1.21.1.tar.gz</URL>
+      <MD5>7dce9e2136ec32dfd823736e871815b1</MD5>
+      <SHA256>68ba0311342115163a0354cad34f90c05a7e8bf689dc498abf07899eda155560</SHA256>
+      <FileName>nginx-1.21.1.tar.gz</FileName>
+      <FileSize>1064925</FileSize>
+      <PlatformSpecific>Linux, Solaris, BSD, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/http-test-files-1.tar.xz</URL>
+      <MD5>b86f3e8f5bc9d0014818c5122a6f784d</MD5>
+      <SHA256>9d6eace9544c59b910ea403a4693338efc12a6b0915fe227aed86c971b82d3dd</SHA256>
+      <FileName>http-test-files-1.tar.xz</FileName>
+      <FileSize>2346324</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

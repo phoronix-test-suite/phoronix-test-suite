@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://archive.apache.org/dist/httpd/httpd-2.4.48.tar.bz2, http://ftp.bit.nl/apache/httpd-2.4.48.tar.bz2</URL>
+      <MD5>a7088cec171b0d00bf43394ce64d3909</MD5>
+      <SHA256>1bc826e7b2e88108c7e4bf43c026636f77a41d849cfb667aa7b5c0b86dbf966c</SHA256>
+      <FileName>httpd-2.4.48.tar.bz2</FileName>
+      <FileSize>7194385</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/http-test-files-1.tar.xz</URL>
+      <MD5>b86f3e8f5bc9d0014818c5122a6f784d</MD5>
+      <SHA256>9d6eace9544c59b910ea403a4693338efc12a6b0915fe227aed86c971b82d3dd</SHA256>
+      <FileName>http-test-files-1.tar.xz</FileName>
+      <FileSize>2346324</FileSize>
+    </Package>
+    <Package>
+      <URL>https://ftp.osuosl.org/pub/blfs/conglomeration/apr/apr-1.7.0.tar.bz2, http://archive.apache.org/dist/apr/apr-1.7.0.tar.bz2</URL>
+      <MD5>7a14a83d664e87599ea25ff4432e48a7</MD5>
+      <SHA256>e2e148f0b2e99b8e5c6caa09f6d4fb4dd3e83f744aa72a952f94f5a14436f7ea</SHA256>
+      <FileName>apr-1.7.0.tar.bz2</FileName>
+      <FileSize>872238</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.apache.org/dist/apr/apr-util-1.6.1.tar.bz2, http://apache.cs.utah.edu//apr/apr-util-1.6.1.tar.bz2, http://archive.apache.org/dist/apr/apr-util-1.6.1.tar.bz2</URL>
+      <MD5>8ff5dc36fa39a2a3db1df196d3ed6086</MD5>
+      <SHA256>d3e12f7b6ad12687572a3a39475545a072608f4ba03a6ce8a3778f607dd0035b</SHA256>
+      <FileName>apr-util-1.6.1.tar.bz2</FileName>
+      <FileSize>428595</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

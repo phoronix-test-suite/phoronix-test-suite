@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>tps = #_RESULT_# (excluding connections establishing) TPS</OutputTemplate>
+    <LineHint>tps = </LineHint>
+    <ResultScale>TPS</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <ResultPrecision>0</ResultPrecision>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>latency average = #_RESULT_# ms</OutputTemplate>
+    <LineHint>latency average</LineHint>
+    <ResultScale>ms</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+    <AppendToArgumentsDescription>Average Latency</AppendToArgumentsDescription>
+  </ResultsParser>
+</PhoronixTestSuite>

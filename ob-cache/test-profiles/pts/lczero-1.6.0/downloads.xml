@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/LeelaChessZero/lc0/archive/refs/tags/v0.28.0.tar.gz</URL>
+      <MD5>eba27fccaa7e3e162abda751fa77366b</MD5>
+      <SHA256>81f857a4c2e45ac161d499957f9fe5060479242f527dacff548d52cd0c573caa</SHA256>
+      <FileName>lc0-0.28.0.tar.gz</FileName>
+      <FileSize>509810</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/LeelaChessZero/lc0/releases/download/v0.28.0/lc0-v0.28.0-windows-cpu-openblas.zip</URL>
+      <MD5>dfb15991ef3e2883ab80a28c527df67d</MD5>
+      <SHA256>cb3a9907143b119294f5f1530fe494b2e57fc92f2ba0247244cbc37e40e62670</SHA256>
+      <FileName>lc0-v0.28.0-windows-cpu-openblas.zip</FileName>
+      <FileSize>15223243</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://training.lczero.org/get_network?sha=b30e742bcfd905815e0e7dbd4e1bafb41ade748f85d006b8e28758f1a3107ae3</URL>
+      <MD5>48921656d848f28bcfe0285f644ba30c</MD5>
+      <SHA256>492e30de664d927cc155df20f1c18b0874addd18e921d9567c033fec9e6c4bfe</SHA256>
+      <FileName>b30e742bcfd905815e0e7dbd4e1bafb41ade748f85d006b8e28758f1a3107ae3</FileName>
+      <FileSize>6433429</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

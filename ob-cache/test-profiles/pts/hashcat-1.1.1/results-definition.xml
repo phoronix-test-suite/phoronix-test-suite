@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>xyz: #_RESULT_# MH/s (40.98ms) @ Accel:32 Loops:1024 Thr:1024 Vec:8</OutputTemplate>
+    <LineHint> MH/s</LineHint>
+    <MultiplyResultBy>1000000</MultiplyResultBy>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>xyz: #_RESULT_# GH/s (40.98ms) @ Accel:32 Loops:1024 Thr:1024 Vec:8</OutputTemplate>
+    <LineHint> GH/s</LineHint>
+    <MultiplyResultBy>1000000000</MultiplyResultBy>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>xyz: #_RESULT_# kH/s (40.98ms) @ Accel:32 Loops:1024 Thr:1024 Vec:8</OutputTemplate>
+    <LineHint> kH/s</LineHint>
+    <MultiplyResultBy>1000</MultiplyResultBy>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>WRF</Title>
+    <AppVersion>4.2.2</AppVersion>
+    <Description>WRF, the Weather Research and Forecasting Model, is a "next-generation mesoscale numerical weather prediction system designed for both atmospheric research and operational forecasting applications. It features two dynamical cores, a data assimilation system, and a software architecture supporting parallel computation and system extensibility."</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Scientific</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, csh, openmpi-development, fortran-compiler, blas-development, lapack-development, atlas-development, tcl, hdf5, libpng-development</ExternalDependencies>
+    <EnvironmentSize>100000</EnvironmentSize>
+    <ProjectURL>https://www.mmm.ucar.edu/weather-research-and-forecasting-model</ProjectURL>
+    <RepositoryURL>https://github.com/wrf-model/WRF</RepositoryURL>
+    <InternalTags>SMP, MPI</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>m4, hdf5/mpich/hdf5.h, /usr/include/netcdf.inc, libnetcdff.so, nccopy, ncargrun</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Input</DisplayName>
+      <Identifier>input</Identifier>
+      <ArgumentPrefix>-i </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>conus 2.5km</Name>
+          <Value>conus 2.5km</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

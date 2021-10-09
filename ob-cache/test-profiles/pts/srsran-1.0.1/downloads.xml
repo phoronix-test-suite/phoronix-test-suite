@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/srsran/srsRAN/archive/refs/tags/release_21_04.tar.gz</URL>
+      <MD5>b287d781111442e8c5ca9dd6e0650ea8</MD5>
+      <SHA256>5e0ad55fd7177618f61d157ed1d9335fcb6a6ea9feb3fcfdf96f8a8bbda62eb4</SHA256>
+      <FileName>srsRAN-release_21_04.tar.gz</FileName>
+      <FileSize>9868294</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

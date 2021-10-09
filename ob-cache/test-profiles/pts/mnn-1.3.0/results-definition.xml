@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>[ - ] nasnet.mnn                  max =  #_MAX_RESULT_# ms  min =   #_MIN_RESULT_# ms  avg =   #_RESULT_# ms</OutputTemplate>
+    <LineHint>squeezenetv1.1.mnn</LineHint>
+    <ArgumentsDescription>Model: squeezenetv1.1</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>[ - ] mobilenetV3.mnn                  max =  #_MAX_RESULT_# ms  min =   #_MIN_RESULT_# ms  avg =   #_RESULT_# ms</OutputTemplate>
+    <LineHint>mobilenetV3.mnn</LineHint>
+    <ArgumentsDescription>Model: mobilenetV3</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>[ - ] squeezenetv1.1.mnn                  max =  #_MAX_RESULT_# ms  min =   #_MIN_RESULT_# ms  avg =   #_RESULT_# ms</OutputTemplate>
+    <LineHint>squeezenetv1.1.mnn</LineHint>
+    <ArgumentsDescription>Model: squeezenetv1.1</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>[ - ] resnet-v2-50.mnn                  max =  #_MAX_RESULT_# ms  min =   #_MIN_RESULT_# ms  avg =   #_RESULT_# ms</OutputTemplate>
+    <LineHint>resnet-v2-50.mnn</LineHint>
+    <ArgumentsDescription>Model: resnet-v2-50</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>[ - ] SqueezeNetV1.0.mnn                  max =  #_MAX_RESULT_# ms  min =   #_MIN_RESULT_# ms  avg =   #_RESULT_# ms</OutputTemplate>
+    <LineHint>SqueezeNetV1.0.mnn</LineHint>
+    <ArgumentsDescription>Model: SqueezeNetV1.0</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>[ - ] MobileNetV2_224.mnn                  max =  #_MAX_RESULT_# ms  min =   #_MIN_RESULT_# ms  avg =   #_RESULT_# ms</OutputTemplate>
+    <LineHint>MobileNetV2_224.mnn</LineHint>
+    <ArgumentsDescription>Model: MobileNetV2_224</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>[ - ] mobilenet-v1-1.0.mnn                  max =  #_MAX_RESULT_# ms  min =   #_MIN_RESULT_# ms  avg =   #_RESULT_# ms</OutputTemplate>
+    <LineHint>mobilenet-v1-1.0.mnn</LineHint>
+    <ArgumentsDescription>Model: mobilenet-v1-1.0</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>[ - ] inception-v3.mnn                  max =  #_MAX_RESULT_# ms  min =   #_MIN_RESULT_# ms  avg =   #_RESULT_# ms</OutputTemplate>
+    <LineHint>inception-v3.mnn</LineHint>
+    <ArgumentsDescription>Model: inception-v3</ArgumentsDescription>
+  </ResultsParser>
+</PhoronixTestSuite>

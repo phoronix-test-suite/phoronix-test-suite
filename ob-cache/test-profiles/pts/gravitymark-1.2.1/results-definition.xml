@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>M:  2:49.430: FPS: #_RESULT_#</OutputTemplate>
+    <LineHint>FPS:</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/fs_mark-3.3.tar.gz</URL>
+      <MD5>a31ac6f127a46ee45a33e4ce86c65553</MD5>
+      <SHA256>63f014c35d015b0a616fa39d52f5f264a3ab7d31e1b3da64741a27f21965c895</SHA256>
+      <FileName>fs_mark-3.3.tar.gz</FileName>
+      <FileSize>15322</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

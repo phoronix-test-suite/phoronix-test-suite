@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/Tencent/TNN/archive/refs/tags/v0.3.0.tar.gz</URL>
+      <MD5>0ed1742a0ba7d17257efa3e4afb27d64</MD5>
+      <SHA256>852853c7b4622e12065ef5ac07e533ad005f020ec31c28f9435dd0cd6ba6d667</SHA256>
+      <FileName>TNN-0.3.0.tar.gz</FileName>
+      <FileSize>22506770</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

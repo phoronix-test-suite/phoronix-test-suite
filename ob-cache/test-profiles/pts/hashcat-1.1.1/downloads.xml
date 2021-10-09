@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/hashcat/hashcat/releases/download/v6.2.4/hashcat-6.2.4.7z</URL>
+      <MD5>e0077c3178cc4c4c207408f032ab7202</MD5>
+      <SHA256>be6abeca5ab5b06a17850c69e954e7124d91ecdb5844b75e4df548158cbc9514</SHA256>
+      <FileName>hashcat-6.2.4.7z</FileName>
+      <FileSize>7448899</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

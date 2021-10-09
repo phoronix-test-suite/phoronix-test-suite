@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://fr2.rpmfind.net/linux/kernel/v5.x/linux-5.14.tar.xz, https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.14.tar.xz, http://ftp.jaist.ac.jp/pub/Linux/kernel.org/linux/kernel/v5.x/linux-5.14.tar.xz, https://mirror.clarkson.edu/linux/linux/kernel/v5.x/linux-5.14.tar.xz</URL>
+      <MD5>a082ef5748b813abca0649dab8be5f52</MD5>
+      <SHA256>7e068b5e0d26a62b10e5320b25dce57588cbbc6f781c090442138c9c9c3271b2</SHA256>
+      <FileName>linux-5.14.tar.xz</FileName>
+      <FileSize>120669872</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

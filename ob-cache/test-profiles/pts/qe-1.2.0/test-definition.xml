@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Quantum ESPRESSO</Title>
+    <AppVersion>6.8</AppVersion>
+    <Description>Quantum ESPRESSO is an integrated suite of Open-Source computer codes for electronic-structure calculations and materials modeling at the nanoscale. It is based on density-functional theory, plane waves, and pseudopotentials.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Scientific</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>fortran-compiler, blas-development, lapack-development, openmpi-development, fftw3-development, build-utilities</ExternalDependencies>
+    <EnvironmentSize>2555</EnvironmentSize>
+    <ProjectURL>http://www.quantum-espresso.org/</ProjectURL>
+    <RepositoryURL>https://github.com/QEF/q-e/</RepositoryURL>
+    <RequiresCoreVersionMin>10201</RequiresCoreVersionMin>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Input</DisplayName>
+      <Identifier>input</Identifier>
+      <Menu>
+        <Entry>
+          <Name>AUSURF112</Name>
+          <Value>ausurf.in</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Stress-NG</Title>
+    <AppVersion>0.13.02</AppVersion>
+    <Description>Stress-NG is a Linux stress tool developed by Colin King of Canonical.</Description>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.4.0</Version>
+    <SupportedPlatforms>Linux, BSD, MacOSX</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, attr</ExternalDependencies>
+    <EnvironmentSize>5</EnvironmentSize>
+    <ProjectURL>http://kernel.ubuntu.com/~cking/stress-ng/</ProjectURL>
+    <RepositoryURL>https://github.com/ColinIanKing/stress-ng</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-t 30 --metrics-brief</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test</Identifier>
+      <Menu>
+        <Entry>
+          <Name>CPU Stress</Name>
+          <Value>--cpu 0 --cpu-method all</Value>
+        </Entry>
+        <Entry>
+          <Name>Crypto</Name>
+          <Value>--crypt 0</Value>
+        </Entry>
+        <Entry>
+          <Name>Memory Copying</Name>
+          <Value>--memcpy 0</Value>
+        </Entry>
+        <Entry>
+          <Name>Glibc Qsort Data Sorting</Name>
+          <Value>--qsort 0</Value>
+        </Entry>
+        <Entry>
+          <Name>Glibc C String Functions</Name>
+          <Value>--str 0</Value>
+        </Entry>
+        <Entry>
+          <Name>Vector Math</Name>
+          <Value>--vecmath 0</Value>
+        </Entry>
+        <Entry>
+          <Name>Matrix Math</Name>
+          <Value>--matrix 0</Value>
+        </Entry>
+        <Entry>
+          <Name>Forking</Name>
+          <Value>--fork 0</Value>
+        </Entry>
+        <Entry>
+          <Name>System V Message Passing</Name>
+          <Value>--msg 0</Value>
+        </Entry>
+        <Entry>
+          <Name>Semaphores</Name>
+          <Value>--sem 0</Value>
+        </Entry>
+        <Entry>
+          <Name>Socket Activity</Name>
+          <Value>--sock 0</Value>
+        </Entry>
+        <Entry>
+          <Name>Context Switching</Name>
+          <Value>--switch 0</Value>
+        </Entry>
+        <Entry>
+          <Name>Atomic</Name>
+          <Value>--atomic 0</Value>
+        </Entry>
+        <Entry>
+          <Name>CPU Cache</Name>
+          <Value>--cache 0</Value>
+        </Entry>
+        <Entry>
+          <Name>Malloc</Name>
+          <Value>--malloc 0</Value>
+        </Entry>
+        <Entry>
+          <Name>MEMFD</Name>
+          <Value>--memfd 0</Value>
+        </Entry>
+        <Entry>
+          <Name>MMAP</Name>
+          <Value>--mmap 0</Value>
+        </Entry>
+        <Entry>
+          <Name>NUMA</Name>
+          <Value>--numa 0</Value>
+        </Entry>
+        <Entry>
+          <Name>RdRand</Name>
+          <Value>--rdrand 0</Value>
+        </Entry>
+        <Entry>
+          <Name>SENDFILE</Name>
+          <Value>--sendfile 0</Value>
+        </Entry>
+        <Entry>
+          <Name>IO_uring</Name>
+          <Value>--io-uring 0</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

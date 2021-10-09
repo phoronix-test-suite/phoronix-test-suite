@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>YafaRay</Title>
+    <AppVersion>3.5.1</AppVersion>
+    <Description>YafaRay is an open-source physically based montecarlo ray-tracing engine.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Total Time For Sample Scene</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.1</Version>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, cmake, python, zlib-development, libpng-development, libxml2, tiff, swig, opencv, freetype, jpeg-development, openexr</ExternalDependencies>
+    <EnvironmentSize>6.0</EnvironmentSize>
+    <ProjectURL>https://github.com/YafaRay/</ProjectURL>
+    <RepositoryURL>https://github.com/YafaRay/libYafaRay</RepositoryURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

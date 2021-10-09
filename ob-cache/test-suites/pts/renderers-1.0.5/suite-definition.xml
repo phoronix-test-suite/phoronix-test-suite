@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.0m2-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Renderers</Title>
+    <Version>1.0.5</Version>
+    <TestType>Processor</TestType>
+    <Description>Various CPU-based ray-tracing / path-tracing / other renderers.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/raytracing</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/blender</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/tungsten</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/appleseed</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/radiance</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/aobench</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/luxcorerender</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/smallpt</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/ttsiod-renderer</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/v-ray</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/indigobench</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/cinebench</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/natron</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+</PhoronixTestSuite>

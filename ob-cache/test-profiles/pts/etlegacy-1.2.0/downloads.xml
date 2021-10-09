@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>ftp://ftp.fu-berlin.de/pc/games/idgames/idstuff/et/linux/et-linux-2.60.x86.run, ftp://ftp.snt.utwente.nl/pub/games/enemyterritory/linux/et-linux-2.60.x86.run</URL>
+      <MD5>2d2373f29f02e18d365d7f1860eee435</MD5>
+      <SHA256>41cbbc1afb8438bc8fc74a64a171685550888856005111cbf9af5255f659ae36</SHA256>
+      <FileName>et-linux-2.60.x86.run</FileName>
+      <FileSize>270965248</FileSize>
+    </Package>
+    <Package>
+      <URL>https://www.etlegacy.com/download/file/316</URL>
+      <MD5>f1fb03a4fcbf4fd1f133084dbf2fe5b1</MD5>
+      <SHA256>290b4224afd1fdf4507c42513bbcacac6536830b1cee5362bf1b062b944d9dcf</SHA256>
+      <FileName>etlegacy-v2.78.0-x86_64.tar.gz</FileName>
+      <FileSize>59909516</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/etlegacy278-pts1.zip</URL>
+      <MD5>4297f0d8780ad5a1e8de85d766731cc1</MD5>
+      <SHA256>0e339a2b54d9f2c0000ba7b6713eab5822212c4ca5c016fcd40ea9a3d4939946</SHA256>
+      <FileName>etlegacy278-pts1.zip</FileName>
+      <FileSize>1389230</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

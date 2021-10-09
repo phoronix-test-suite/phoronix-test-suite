@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/glmark2-20210830.tar.xz</URL>
+      <MD5>960473eb7264be7c702192ca93375655</MD5>
+      <SHA256>588ab9c93534eb908431d1fcef2c3441b497535d1e3dae8508bf383b9faa9aea</SHA256>
+      <FileName>glmark2-20210830.tar.xz</FileName>
+      <FileSize>8399464</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

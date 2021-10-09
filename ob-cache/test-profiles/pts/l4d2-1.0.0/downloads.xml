@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/l4d2-pts1.zip</URL>
+      <MD5>34b7299d410a82d5861cdf188290fb1e</MD5>
+      <SHA256>b745f31ac11770b32a3ec0fa55f1e0109f94b2d0171395fd6482b15807eb5790</SHA256>
+      <FileName>l4d2-pts1.zip</FileName>
+      <FileSize>1927313</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

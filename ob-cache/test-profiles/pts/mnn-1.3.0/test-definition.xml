@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Mobile Neural Network</Title>
+    <AppVersion>1.2</AppVersion>
+    <Description>MNN is the Mobile Neural Network as a highly efficient, lightweight deep learning framework developed by Alibaba.</Description>
+    <ResultScale>ms</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.3.0</Version>
+    <SupportedPlatforms>Linux, MacOSX</SupportedPlatforms>
+    <SoftwareType>Scientific</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>cmake, build-utilities</ExternalDependencies>
+    <EnvironmentSize>2700</EnvironmentSize>
+    <ProjectURL>https://www.mnn.zone/</ProjectURL>
+    <RepositoryURL>https://github.com/alibaba/MNN/</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

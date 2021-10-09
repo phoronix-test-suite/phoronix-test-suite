@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>RT.ldr_alb_nrm.1920x1080 ... #_RESULT_# msec/image</OutputTemplate>
+    <LineHint>msec/image</LineHint>
+    <DivideResultDivisor>1000</DivideResultDivisor>
+  </ResultsParser>
+</PhoronixTestSuite>

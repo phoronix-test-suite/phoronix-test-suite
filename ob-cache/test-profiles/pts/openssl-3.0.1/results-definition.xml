@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>rsa 4096 bits 0.000632s 0.000010s   #_RESULT_# 101133.8</OutputTemplate>
+    <LineHint>rsa 4096 bits</LineHint>
+    <ResultScale>sign/s</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>rsa 4096 bits 0.000632s 0.000010s   111.1 #_RESULT_#</OutputTemplate>
+    <LineHint>rsa 4096 bits</LineHint>
+    <ResultScale>verify/s</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>sha256          773058.94k  2674506.65k  #_RESULT_# 15092842.84k 20350306.99k 20835702.10k</OutputTemplate>
+    <LineHint>sha256</LineHint>
+    <ResultScale>byte/s</ResultScale>
+  </ResultsParser>
+</PhoronixTestSuite>

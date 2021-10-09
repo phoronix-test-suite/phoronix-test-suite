@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/JayDDee/cpuminer-opt/archive/refs/tags/v3.18.0.tar.gz</URL>
+      <MD5>b66927a6f6a0fcb3871a2c479a24693a</MD5>
+      <SHA256>eee8a30ae8cde4d94bd313427eb059118c958082593dac6b227d7e8c8302d106</SHA256>
+      <FileName>cpuminer-opt-3.18.0.tar.gz</FileName>
+      <FileSize>1869910</FileSize>
+      <PlatformSpecific>Linux, BSD</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/JayDDee/cpuminer-opt/releases/download/v3.18.0/cpuminer-opt-3.18.0-windows.zip</URL>
+      <MD5>a76f148c9ce081a677078e4e444e3880</MD5>
+      <SHA256>376b4bf35d02f976a9ea385fbae1385ef53351ef541c4104c1aecb07f9379eb9</SHA256>
+      <FileName>cpuminer-opt-3.18.0-windows.zip</FileName>
+      <FileSize>20616821</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Running test for 100 PRB, 16800 RE...  Tx@145.0 #_RESULT_# MSE=0.000005</OutputTemplate>
+    <LineHint>Running test</LineHint>
+    <ResultScale>Samples / Second</ResultScale>
+    <TurnCharsToSpace>sps</TurnCharsToSpace>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>           eNb:    75.4      #_RESULT_#</OutputTemplate>
+    <LineHint>eNb</LineHint>
+    <ResultScale>eNb Mb/s</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>           UE:    75.4      #_RESULT_#</OutputTemplate>
+    <LineHint>UE</LineHint>
+    <ResultScale>UE Mb/s</ResultScale>
+  </ResultsParser>
+</PhoronixTestSuite>

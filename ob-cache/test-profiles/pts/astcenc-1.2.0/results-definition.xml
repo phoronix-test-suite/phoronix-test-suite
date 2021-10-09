@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>    Total time:                  #_RESULT_# s</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

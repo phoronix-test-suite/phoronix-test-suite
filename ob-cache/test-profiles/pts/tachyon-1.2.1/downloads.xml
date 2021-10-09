@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/tachyon-0.99b6.tar.gz</URL>
+      <MD5>9e5ed4045c472e01e57480d7c7eee849</MD5>
+      <SHA256>f4dcaf9c76a4f49310f56254390f9611c22e353947a1745a8c623e8bc8119b97</SHA256>
+      <FileName>tachyon-0.99b6.tar.gz</FileName>
+      <FileSize>2981568</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

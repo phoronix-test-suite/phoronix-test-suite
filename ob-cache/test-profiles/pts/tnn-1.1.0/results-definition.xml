@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>TNN Benchmark time cost: min = #_MIN_RESULT_#  ms  |  max = #_MAX_RESULT_#  ms  |  avg = #_RESULT_#  ms </OutputTemplate>
+    <LineHint>time cost:</LineHint>
+    <DeleteOutputBefore>TNN Benchmark</DeleteOutputBefore>
+  </ResultsParser>
+</PhoronixTestSuite>

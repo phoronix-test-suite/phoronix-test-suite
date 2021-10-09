@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/QEF/q-e/releases/download/qe-6.8/qe-6.8-ReleasePack.tgz</URL>
+      <MD5>8dedc16827bb9ff651a75a5789adc800</MD5>
+      <SHA256>fc9b8141705d31db30f6cfe61d4e49867c7c3b04a59533eb7f90301fa8bd50ce</SHA256>
+      <FileName>qe-6.8-ReleasePack.tgz</FileName>
+      <FileSize>81488688</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/AUSURF112-14Oct2019.tar.xz</URL>
+      <MD5>d85a722c6bb5d45c0e476cea87ca6367</MD5>
+      <SHA256>4a31304079d4a049a2a7008f6a55669a33f1738798a20ffe1a9f55b5ff91978f</SHA256>
+      <FileName>AUSURF112-14Oct2019.tar.xz</FileName>
+      <FileSize>79988</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

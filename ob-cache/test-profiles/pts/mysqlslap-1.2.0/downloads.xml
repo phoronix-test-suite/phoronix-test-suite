@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://mirror.sobukus.de/files/src/mariadb/mariadb-10.6.4.tar.gz, http://archive.mariadb.org/mariadb-10.6.4/source/mariadb-10.6.4.tar.gz</URL>
+      <MD5>0eca3038fbcf56d157c248e6a8b0f5f2</MD5>
+      <SHA256>75bf9b147a95d38160d01a73b098d50a1960563b46d16a235971fff64d99643c</SHA256>
+      <FileName>mariadb-10.6.4.tar.gz</FileName>
+      <FileSize>84947143</FileSize>
+    </Package>
+    <Package>
+      <URL>http://launchpadlibrarian.net/24493586/employees_db-full-1.0.6.tar.bz2</URL>
+      <MD5>dc44092ed3cfadfcf19bbab32b0ff887</MD5>
+      <SHA256>9be9b830a185e947758581cb06f529d1e8b675b29cde13a2860b1319b7e1cb7d</SHA256>
+      <FileName>employees_db-full-1.0.6.tar.bz2</FileName>
+      <FileSize>26715056</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/openssl/openssl/archive/refs/tags/openssl-3.0.0.tar.gz</URL>
+      <MD5>ff7cd5834d620e956137e1c943170ec2</MD5>
+      <SHA256>b39653402e398a2b89c3f1779f09fe273fda6b6d7873d2816b954b949a185b83</SHA256>
+      <FileName>openssl-openssl-3.0.0.tar.gz</FileName>
+      <FileSize>15113435</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

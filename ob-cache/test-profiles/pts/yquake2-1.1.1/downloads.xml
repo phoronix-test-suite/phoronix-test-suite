@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/yquake2/yquake2/archive/refs/tags/QUAKE2_8_00.zip</URL>
+      <MD5>fd5c40fbc40378c044e3dab97b7995fb</MD5>
+      <SHA256>80995273553fdb6f93a3285f80da89f51f2809d81a1007304a552368a601367c</SHA256>
+      <FileName>QUAKE2_8_00.zip</FileName>
+      <FileSize>2712886</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/yquake2/ref_vk/archive/refs/tags/v1.0.1.zip</URL>
+      <MD5>6dfbabb80bb6cc3dcdfae5fa85976da5</MD5>
+      <SHA256>eabd451bef3620f49d53a30f396e8abd7d228cf93f44f7f77f0eb71088e518ef</SHA256>
+      <FileName>v1.0.1.zip</FileName>
+      <FileSize>341809</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://master.dl.sourceforge.net/project/dcquake/quake2/demo/q2-314-demo-x86.exe, https://deponie.yamagi.org/quake2/idstuff/q2-314-demo-x86.exe</URL>
+      <MD5>4d1cd4618e80a38db59304132ea0856c</MD5>
+      <SHA256>7ace5a43983f10d6bdc9d9b6e17a1032ba6223118d389bd170df89b945a04a1e</SHA256>
+      <FileName>q2-314-demo-x86.exe</FileName>
+      <FileSize>39015499</FileSize>
+    </Package>
+    <Package>
+      <URL>https://deponie.yamagi.org/quake2/windows/quake2-8.00.zip</URL>
+      <MD5>7187fa607c296edf36442f98722a5487</MD5>
+      <SHA256>86390febd8b50aabd4acf4aaa9852b8c95704a439e1b6355e0db6365b026e8a3</SHA256>
+      <FileName>quake2-8.00.zip</FileName>
+      <FileSize>4397998</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/yquake2/ref_vk/releases/download/v1.0.1/ref_vk-1.0.1.zip</URL>
+      <MD5>cb4a1ba3b10053b1dba2acf07fb6d27a</MD5>
+      <SHA256>1eb1619ff0741cd6648925f58b3d9adc4193ce1aa9630ac1e6e11a8c811d9c25</SHA256>
+      <FileName>ref_vk-1.0.1.zip</FileName>
+      <FileSize>285643</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

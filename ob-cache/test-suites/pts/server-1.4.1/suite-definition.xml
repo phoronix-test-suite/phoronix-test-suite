@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.6.0-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Server</Title>
+    <Version>1.4.1</Version>
+    <TestType>System</TestType>
+    <Description>A collection of common server tests.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/apache</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/nginx</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/blogbench</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/memtier-benchmark</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/ebizzy</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/apache-siege</Test>
+    <Arguments>-c200</Arguments>
+    <Description>Concurrent Users: 200</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/apache-siege</Test>
+    <Arguments>-c250</Arguments>
+    <Description>Concurrent Users: 250</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/mysqlslap</Test>
+    <Arguments>--concurrency=64</Arguments>
+    <Description>Clients: 64</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/mysqlslap</Test>
+    <Arguments>--concurrency=256</Arguments>
+    <Description>Clients: 256</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/pgbench</Test>
+    <Arguments>BUFFER_TEST NORMAL_LOAD READ_WRITE</Arguments>
+    <Description>Scaling: Buffer Test - Test: Normal Load - Mode: Read Write</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/pgbench</Test>
+    <Arguments>BUFFER_TEST NORMAL_LOAD READ_ONLY</Arguments>
+    <Description>Scaling: Buffer Test - Test: Normal Load - Mode: Read Only</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/pgbench</Test>
+    <Arguments>BUFFER_TEST HEAVY_CONTENTION READ_WRITE</Arguments>
+    <Description>Scaling: Buffer Test - Test: Heavy Contention - Mode: Read Write</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/pgbench</Test>
+    <Arguments>BUFFER_TEST HEAVY_CONTENTION READ_ONLY</Arguments>
+    <Description>Scaling: Buffer Test - Test: Heavy Contention - Mode: Read Only</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/mcperf</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/redis</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/keydb</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/cassandra</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/rocksdb</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/hbase</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/php</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/phpbench</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/node-express-loadtest</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/openssl</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/perl-benchmark</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/simdjson</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/node-web-tooling</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/database</Test>
+  </Execute>
+</PhoronixTestSuite>

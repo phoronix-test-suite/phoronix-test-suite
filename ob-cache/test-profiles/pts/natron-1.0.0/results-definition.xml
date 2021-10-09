@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>WriteOIIO3 ==&gt; Frame: 99, Progress: 100.0%, #_RESULT_# Fps, Time Remaining: 0 second</OutputTemplate>
+    <LineHint>Frame: 99</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

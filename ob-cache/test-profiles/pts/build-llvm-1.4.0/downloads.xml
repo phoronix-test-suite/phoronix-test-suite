@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/llvm/llvm-project/releases/download/llvmorg-13.0.0/llvm-13.0.0.src.tar.xz</URL>
+      <MD5>8c24626dce3ee9d87d1079ebf0897db5</MD5>
+      <SHA256>408d11708643ea826f519ff79761fcdfc12d641a2510229eec459e72f8163020</SHA256>
+      <FileName>llvm-13.0.0.src.tar.xz</FileName>
+      <FileSize>45471992</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

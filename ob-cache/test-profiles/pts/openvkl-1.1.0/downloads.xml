@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/openvkl/openvkl/releases/download/v1.0.0/openvkl-1.0.0.x86_64.linux.tar.gz</URL>
+      <MD5>696e1d95985d73eca0b1d8672cb1725c</MD5>
+      <SHA256>d12f7f4a355cc2d5a456361fbd46ba5c07e4e2dc6eca36941d3cec1e00174fd1</SHA256>
+      <FileName>openvkl-1.0.0.x86_64.linux.tar.gz</FileName>
+      <FileSize>37959342</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/openvkl/openvkl/releases/download/v1.0.0/openvkl-1.0.0.x86_64.windows.zip</URL>
+      <MD5>c9b1c5bc36078f99fae51dde11e716f7</MD5>
+      <SHA256>e4bcac8615f167cbba29b9876771afdee5a7bf406623c6cca40ff863fae63b74</SHA256>
+      <FileName>openvkl-1.0.0.x86_64.windows.zip</FileName>
+      <FileSize>20798276</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/openvkl/openvkl/releases/download/v1.0.0/openvkl-1.0.0.x86_64.macos.zip</URL>
+      <MD5>dd1ff99a1732e239567687727ed39043</MD5>
+      <SHA256>e2a41bdc186b78fc35c828221628f50345aefe1c969e27b5625ccccb1da70630</SHA256>
+      <FileName>openvkl-1.0.0.x86_64.macos.zip</FileName>
+      <FileSize>47832434</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

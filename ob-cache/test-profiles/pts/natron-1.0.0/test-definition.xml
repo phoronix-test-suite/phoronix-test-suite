@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Natron</Title>
+    <AppVersion>2.4</AppVersion>
+    <Description>Natron is an open-source, cross-platform compositing software for visual effects (VFX) and motion graphics.</Description>
+    <ResultScale>FPS</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <EnvironmentSize>854</EnvironmentSize>
+    <ProjectURL>https://natrongithub.github.io/</ProjectURL>
+    <RepositoryURL>https://github.com/NatronGitHub/Natron</RepositoryURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Input</DisplayName>
+      <Identifier>input</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Spaceship</Name>
+          <Value>Natron_2.3.12_Spaceship/Natron_project/Spaceship_Natron.ntp</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

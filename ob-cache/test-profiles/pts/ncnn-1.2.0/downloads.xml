@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/Tencent/ncnn/archive/refs/tags/20210525.tar.gz</URL>
+      <MD5>e1f127f24bfedc1dacbbe95e3eb274fb</MD5>
+      <SHA256>a385eb5505f09e59ae486fa89584e5a15d4c45e7463927bbdddf9060d81b9a18</SHA256>
+      <FileName>ncnn-20210525.tar.gz</FileName>
+      <FileSize>11578821</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Total inference requests: #_RESULT_#</OutputTemplate>
+    <DivideResultBy>2</DivideResultBy>
+    <ResultPrecision>0</ResultPrecision>
+  </ResultsParser>
+</PhoronixTestSuite>

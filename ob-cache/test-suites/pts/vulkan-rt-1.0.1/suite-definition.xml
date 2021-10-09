@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.2-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Vulkan Ray-Tracing</Title>
+    <Version>1.0.1</Version>
+    <TestType>Graphics</TestType>
+    <Description>A collection of test profiles that exercise Vulkan ray-tracing (RT) extensions.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/rtiv</Test>
+    <Arguments>--width $VIDEO_WIDTH --height $VIDEO_HEIGHT --scene 1</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Scene: Ray Tracing In One Weekend</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/rtiv</Test>
+    <Arguments>--width $VIDEO_WIDTH --height $VIDEO_HEIGHT --scene 2</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Scene: Planets In One Weekend</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/rtiv</Test>
+    <Arguments>--width $VIDEO_WIDTH --height $VIDEO_HEIGHT --scene 3</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Scene: Lucy In One Weekend</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/rtiv</Test>
+    <Arguments>--width $VIDEO_WIDTH --height $VIDEO_HEIGHT --scene 4</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Scene: Cornell Box</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/rtiv</Test>
+    <Arguments>--width $VIDEO_WIDTH --height $VIDEO_HEIGHT --scene 5</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Scene: Cornell Box + Lucy</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/geexlab-rt</Test>
+    <Arguments>/width=$VIDEO_WIDTH /height=$VIDEO_HEIGHT</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/quake2rtx</Test>
+    <Mode>BATCH</Mode>
+    <OptionSelect>auto-resolution = 1920 x 1080</OptionSelect>
+  </Execute>
+</PhoronixTestSuite>

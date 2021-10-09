@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://ftp.gnu.org/gnu/gdb/gdb-10.2.tar.xz, http://sourceware.org/pub/gdb/releases/gdb-10.2.tar.xz</URL>
+      <MD5>c044b7146903ec51c9d2337a29aee93b</MD5>
+      <SHA256>aaa1223d534c9b700a8bec952d9748ee1977513f178727e1bee520ee000b4f29</SHA256>
+      <FileName>gdb-10.2.tar.xz</FileName>
+      <FileSize>21518900</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

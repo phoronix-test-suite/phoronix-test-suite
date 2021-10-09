@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.4.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://github.com/YafaRay/Core/archive/refs/tags/v3.5.1.tar.gz</URL>
+      <MD5>e3cf069a30a76370ca72d02e41a3ffec</MD5>
+      <SHA256>a8fca4f67836e944f1f07e26effb06d760db243a997b127913b5541612467224</SHA256>
+      <FileName>Core-3.5.1.tar.gz</FileName>
+      <FileSize>1136405</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/yafarayRender-sample-1.tar.xz</URL>
+      <MD5>d688b89b0883ad55ec9a2428a0e5fcb4</MD5>
+      <SHA256>6869e8b88658594325dc743fe1c3b96e58900cf3daf2ecd632e932f2c6b6b93a</SHA256>
+      <FileName>yafarayRender-sample-1.tar.xz</FileName>
+      <FileSize>10744</FileSize>
+    </Package>
+    <Package>
+      <URL>http://github.com/YafaRay/Core/releases/download/v3.5.1/YafaRay.v3.5.1.build.standalone.Windows.MinGW-GCC7.64bit.zip</URL>
+      <MD5>350804dc60613b1a71d52b0021e74d42</MD5>
+      <SHA256>ac47a7d4a49fb7a5840d08570e574b337263e9a0786168a684d69ec7be0fe0c2</SHA256>
+      <FileName>YafaRay.v3.5.1.build.standalone.Windows.MinGW-GCC7.64bit.zip</FileName>
+      <FileSize>29709423</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>
