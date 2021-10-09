@@ -377,5 +377,5 @@ function phoromatic_ajax_append_element(r, d)
 }
 function display_system_logs_for_result(result_file, system_id)
 {
-	window.location.href = "?logs/system/" + result_file + "/" + system_id;
+	window.open(window.location.href + "&export=view_system_logs&result_file_id=" + result_file + "&system_id=" + btoa(system_id), "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=100,left=100,width=800,height=600,location=no,menubar=no");
 }
