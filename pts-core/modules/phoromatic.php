@@ -904,7 +904,7 @@ class phoromatic extends pts_module_interface
 
 		$server_response = json_decode($res, true);
 
-		if(self::$server_core_version >= 10602 && isset($server_response['phoromatic']['upload_id']) && !empty($server_response['phoromatic']['upload_id']))
+		if(isset($server_response['phoromatic']['upload_id']) && !empty($server_response['phoromatic']['upload_id']))
 		{
 			// On newer PTS servers, upload as separate upload afterwards to better handle large log files that otherwise may go beyond max request size, etc
 
@@ -914,6 +914,10 @@ class phoromatic extends pts_module_interface
 			{
 				$log_types['system-logs'] = $result_file->get_system_log_dir();
 			}
+
+			// XXX: finish plumbing installation/test logs into Phoromatic. Namely just add new settings option, and get phoromatic_result using pts_result_viewer_embed
+			//$log_types['installation-logs'] = $result_file->get_test_installation_log_dir();
+			//$log_types['test-logs'] = $result_file->get_test_log_dir();
 
 			foreach($log_types as $index => $log_dir)
 			{
@@ -942,7 +946,7 @@ class phoromatic extends pts_module_interface
 						}
 						unlink($system_logs_zip);
 
-						$res = phoromatic::upload_to_remote_server(array(
+						phoromatic::upload_to_remote_server(array(
 							'r' => 'result_log_upload',
 							'i' => $server_response['phoromatic']['upload_id'],
 							'system_logs_type' => $index,

@@ -244,6 +244,8 @@ class phoromatic_result implements pts_webui_interface
 			$result_file->avoid_duplicate_identifiers();
 			$extra_attributes = array();
 
+			// TOOO XXX: Still hook this into pts_result_viewer_embed....
+
 			if(isset($_GET['upload_to_openbenchmarking']) && pts_openbenchmarking::ob_upload_support_available())
 			{
 				$ob_url = pts_openbenchmarking::upload_test_result($result_file, false);

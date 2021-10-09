@@ -28,14 +28,14 @@ $upload_id = $ID; // i parameter
 $result_directory = phoromatic_server::phoromatic_account_result_path(ACCOUNT_ID, $upload_id);
 if(is_file($result_directory . 'composite.xml'))
 {
-	$system_logs_types = array('system-logs');
+	$system_logs_types = array('system-logs', 'installation-logs', 'test-logs');
 
 
 	// Allow uploading zips assuming the desired type matches, no current zip file exists for given result file
 	// TODO maybe add further check like that the UploadID just stems from the past day or so?
 
 
-	foreach($system_logs_type as $possible_type)
+	foreach($system_logs_types as $possible_type)
 	{
 		if($possible_type == $SYSTEM_LOGS_TYPE)
 		{
