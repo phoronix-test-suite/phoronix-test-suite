@@ -268,7 +268,7 @@ class dump_documentation implements pts_option_interface
 
 
 		// simple README
-		$readme = '# Phoronix Test Suite ' . PTS_VERSION . PHP_EOL . 'https://www.phoronix-test-suite.com/' . PHP_EOL . PHP_EOL;
+		$readme = '# Phoronix Test Suite ' . PTS_VERSION . PHP_EOL . '![Phoronix Test Suite](pts-core/static/images/pts-308x160.png)' . PHP_EOL . PHP_EOL;
 		$readme .= pts_documentation::basic_description() . PHP_EOL . PHP_EOL;
 		$readme .= pts_file_io::file_get_contents(PTS_PATH . 'documentation/stubs/readme-basics.txt') . PHP_EOL . PHP_EOL;
 		$readme = wordwrap($readme, 80, PHP_EOL);

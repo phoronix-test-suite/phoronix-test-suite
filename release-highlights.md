@@ -1,5 +1,13 @@
 # Phoronix Test Suite Release History
 
+Phoronix Test Suite 10.6
+======
+#### Release Date: 10 October 2021 | Codename: Tjeldsund
+* Improvements to the modern result viewer, removal of the deprecated legacy result viewer
+* Support for expressing test run/install errors inline as part of the result file
+* Initial compatibility with PHP 8.1
+* Many Phoromatic fixes & enhancements
+
 Phoronix Test Suite 10.4
 ======
 #### Release Date: 16 May 2021 | Codename: Ibestad

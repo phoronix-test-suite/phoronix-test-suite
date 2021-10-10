@@ -1,11 +1,11 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite 10.6.0 (Git)
-T.B.A.
+Phoronix Test Suite 10.6.1
+10 October 2021
 
 pts-core: Allow reporting test run errors inline / as part of the result file XML with null/empty results
 pts-core: Remove the old, long deprecated static/JavaScript PTS result viewer that hasn't been used except for rare fallbacks since PTS pre-9.0
-pts-core: PHP 8.1 deprecation warning fixes
+pts-core: PHP 8.1 deprecation warning/error fixes
 pts-core: Support launching PHP web server with PHP_CLI_SERVER_WORKERS to allow multiple workers/threads
 pts-core: Windows batch file handling test execution fix
 pts-core: Allow running merge-results when pointing to specific XML files outside of standard paths
@@ -13,9 +13,9 @@ pts-core: Various minor fixes
 phoromatic: Fix possible case of local test profile download issues from Phoromatic Server
 phoromatic: Warn when lacking database write access for Phoromatic Server
 phoromatic: Support (opt-in) handling of non-text file log files
-phoromatic: System log viewer improvements
-phoromatic: Make SYSTEM_ID accessible to client
 phoromatic: Allow uploading of system logs after initial upload of result XML to deal with HTTP size limitations and other factors with large logs
+phoromatic: Use the unified/common log viewer for viewing logs from the Phoromatic web interface
+phoromatic: Tweaking of the Phoromatic CSS style to bring it more uniform with OpenBenchmarking.org / PTS Local Result Viewer / first update in ~6 years...
 phodevi: Improve detection of new Intel oneAPI DPC++/C++ Compiler
 phodevi: ACPI Platform Profile reporting support on Linux
 phodevi: Support reporting NVIDIA BAR1 total memory / Radeon vRAM visible memory (Resizable BAR / ReBAR status)
