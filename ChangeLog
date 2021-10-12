@@ -1,5 +1,9 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+phodevi: Add detection for Arm Cortex-A710 and Neoverse-N2 cores
+
 Phoronix Test Suite 10.6.1
 10 October 2021
 
