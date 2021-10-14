@@ -59,7 +59,7 @@ then
 else
           CFLAGS="$CFLAGS_OVERRIDE"
 fi
-CCVERSION=`cc -dumpversion`
+CCVERSION=`cc -dumpversion | sed "s/\..*//"`
 echo "Compiler Version is $CCVERSION"
 if [ "$CCVERSION" -gt 9 ]; then
     CFLAGS="$CFLAGS -fallow-argument-mismatch"
@@ -88,7 +88,7 @@ WTIME  = wtime.c
 " > NPB3.4.1/NPB3.4-MPI/config/make.def
 
 # Copy over OpenMP make for when using that...
-cp NPB3.4.1/NPB3.4-MPI/config/make.def NPB3.4/NPB3.4-OMP/config/make.def
+cp NPB3.4.1/NPB3.4-MPI/config/make.def NPB3.4.1/NPB3.4-OMP/config/make.def
 
 cd ~/NPB3.4.1/NPB3.4-MPI/
 
