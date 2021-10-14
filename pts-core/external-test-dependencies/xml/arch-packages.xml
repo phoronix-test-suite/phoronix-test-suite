@@ -23,7 +23,7 @@
 		</Package>
 		<Package>
 			<GenericName>vulkan-development</GenericName>
-			<PackageName>vulkan-icd-loader vulkan-tools</PackageName>
+			<PackageName>vulkan-headers vulkan-icd-loader vulkan-tools</PackageName>
 		</Package>
 		<Package>
 			<GenericName>pcre</GenericName>
