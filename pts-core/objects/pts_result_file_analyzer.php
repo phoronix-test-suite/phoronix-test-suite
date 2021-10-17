@@ -299,7 +299,7 @@ class pts_result_file_analyzer
 							// Cost-perf-per-hour calculation, e.g. cloud costs...
 							$cost_to_run_test = round(($value / 60 / 60) * $avg_time, 3);
 
-							if($cost_to_run_test < 0.01)
+							if($cost_to_run_test < 0.001)
 							{
 								continue;
 							}
