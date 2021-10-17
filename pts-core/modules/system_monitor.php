@@ -392,7 +392,7 @@ class system_monitor extends pts_module_interface
 		{
 			// We need to ensure the system power consumption is being tracked to get performance-per-Watt
 			self::$perf_per_sensor[] = array('sys', 'power');
-			echo PHP_EOL . 'To Provide Performance-Per-Watt Outputs.' . PHP_EOL;
+			echo PHP_EOL . 'Provide Performance-Per-Watt Metrics Using: ' . pts_client::cli_just_italic('sys.power')  . PHP_EOL;
 		}
 		if(pts_module::read_variable('PERFORMANCE_PER_SENSOR'))
 		{
@@ -403,7 +403,7 @@ class system_monitor extends pts_module_interface
 				if(count($per_sensor) == 2)
 				{
 					self::$perf_per_sensor[] = $per_sensor;
-					echo PHP_EOL . 'To Provide Performance-Per-Sensor Outputs for ' . $per_sensor[0] . '.' . $per_sensor[1] . '.' . PHP_EOL;
+					echo PHP_EOL . 'Providing Performance-Per-Sensor Metrics Using: ' . pts_client::cli_just_italic($per_sensor[0] . '.' . $per_sensor[1]) . PHP_EOL;
 				}
 			}
 		}
