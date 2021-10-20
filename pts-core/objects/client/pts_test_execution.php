@@ -632,6 +632,14 @@ class pts_test_execution
 
 					if(!empty($file_contents))
 					{
+						if(strpos($file_contents, "\n") !== false)
+						{
+							// If finding a line break, presumably a bad parse...
+							// Seeing this behavior for pts-test-version with
+							// system/blender yielding multi-line version from bad parsing on some distros
+							// using pts_file_io::file_get_contents already trims the string
+							continue;
+						}
 						if($set_function != null)
 						{
 							call_user_func(array($sub_tr->test_profile, $set_function), $file_contents);
