@@ -23,7 +23,7 @@
 class result_file_to_csv implements pts_option_interface
 {
 	const doc_section = 'Result Management';
-	const doc_description = 'This option will read a saved test results file and output the system hardware and software information along with the results to a CSV output. The CSV (Comma Separated Values) output can then be loaded into a spreadsheet for easy viewing.';
+	const doc_description = 'This option will read a saved test results file and output the system hardware and software information along with the results to a CSV output. The CSV (Comma Separated Values) output can then be loaded into a spreadsheet for easy viewing. The outputted file appears in the user home directory or can otherwise be controlled via the OUTPUT_DIR and OUTPUT_FILE environment variables.';
 
 	public static function argument_checks()
 	{
@@ -35,12 +35,7 @@ class result_file_to_csv implements pts_option_interface
 	{
 		$result_file = new pts_result_file($r[0]);
 		$result_output = pts_result_file_output::result_file_to_csv($result_file);
-
-		// To save the result:
-		$file = pts_core::user_home_directory() . $r[0] . '.csv';
-		file_put_contents($file, $result_output);
-
-		echo PHP_EOL . pts_client::cli_just_bold('Saved To: ') . $file . PHP_EOL;
+		pts_client::save_output_handler($result_output, $r[0], 'csv');
 	}
 }
 

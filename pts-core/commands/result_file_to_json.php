@@ -23,7 +23,7 @@
 class result_file_to_json implements pts_option_interface
 {
 	const doc_section = 'Result Management';
-	const doc_description = 'This option will read a saved test results file and output the basic result information to JSON (JavaScript Object Notation).';
+	const doc_description = 'This option will read a saved test results file and output the basic result information to JSON (JavaScript Object Notation). The outputted file appears in the user home directory or can otherwise be controlled via the OUTPUT_DIR and OUTPUT_FILE environment variables.';
 
 	public static function argument_checks()
 	{
@@ -34,7 +34,8 @@ class result_file_to_json implements pts_option_interface
 	public static function run($r)
 	{
 		$result_file = new pts_result_file($r[0]);
-		echo pts_result_file_output::result_file_to_json($result_file);
+		$result_output = pts_result_file_output::result_file_to_json($result_file);
+		pts_client::save_output_handler($result_output, $r[0], 'json');
 	}
 }
 

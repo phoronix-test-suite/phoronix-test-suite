@@ -2565,6 +2565,41 @@ class pts_client
 		pts_storage_object::set_in_file(PTS_CORE_STORAGE, 'download_average_count', self::$download_speed_average_count);
 		pts_storage_object::set_in_file(PTS_CORE_STORAGE, 'download_average_speed', self::$download_speed_average_speed);
 	}
+	public static function save_output_handler($output, $title, $file_extension)
+	{
+		if(($output_file = getenv('OUTPUT_FILE')) == false)
+		{
+			if(($output_dir = getenv('OUTPUT_DIR')) == false || !is_dir($output_dir))
+			{
+				$output_dir = pts_core::user_home_directory();
+			}
+			if(empty($title))
+			{
+				$title = time();
+			}
+
+			$attempts = 1;
+			do
+			{
+				$output_file = $output_dir . (substr($output_dir, -1) != '/' ? '/' : '') . $title . ($attempts == 1 ? '' : '-' . $attempts) . '.' . $file_extension;
+				$attempts++;
+			}
+			while(is_file($output_file));
+		}
+
+		$success = file_put_contents($output_file, $output);
+
+		if($success)
+		{
+			echo PHP_EOL . pts_client::cli_just_bold('Saved Output To: ') . $output_file . PHP_EOL;
+			return $success;
+		}
+		else
+		{
+			echo PHP_EOL . pts_client::cli_colored_text('Result Save Failed: ', 'red') . $output_file . PHP_EOL;
+			return false;
+		}
+	}
 }
 
 // Some extra magic
