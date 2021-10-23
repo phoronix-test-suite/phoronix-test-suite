@@ -24,30 +24,98 @@ class pts_result_file_output
 {
 	public static function result_file_to_json(&$result_file)
 	{
+		// XXX interface should be fairly stable now subject to any additions...
 		$json = array();
 		$json['title'] = $result_file->get_title();
+		$json['last_modified'] = $result_file->get_last_modified();
+		$json['description'] = $result_file->get_description();
+		$json['notes'] = $result_file->get_notes();
+		$json['internal_tags'] = $result_file->get_internal_tags();
+		$json['reference_id'] = $result_file->get_reference_id();
+		$json['preset_environment_variables'] = $result_file->get_preset_environment_variables();
+		$json = array_filter($json);
+
+		$json['systems'] = array();
+		foreach($result_file->get_systems() as $s)
+		{
+			$system = array(
+				'identifier' => $s->get_identifier(),
+				'hardware' => pts_result_file_analyzer::system_component_string_to_array($s->get_hardware()),
+				'software' => pts_result_file_analyzer::system_component_string_to_array($s->get_software()),
+				'user' => $s->get_username(),
+				'timestamp' => $s->get_timestamp(),
+				'client_version' => $s->get_client_version(),
+				'notes' => $s->get_notes(),
+				'data' => $s->get_json(),
+				);
+			$json['systems'][$s->get_identifier()] = array_filter($system);
+		}
 
 		$json['results'] = array();
 		foreach($result_file->get_result_objects() as $result_object)
 		{
 			$r = array(
-				'test' => $result_object->test_profile->get_identifier(),
-				'arguments' => $result_object->get_arguments_description(),
-				'units' => $result_object->test_profile->get_result_scale(),
+				'identifier' => $result_object->test_profile->get_identifier(),
+				'title' => $result_object->test_profile->get_title(),
+				'app_version' => $result_object->test_profile->get_app_version(),
+				'arguments' => $result_object->get_arguments(),
+				'description' => $result_object->get_arguments_description(),
+				'scale' => $result_object->test_profile->get_result_scale(),
+				'proportion' => $result_object->test_profile->get_result_proportion(),
+				'display_format' => $result_object->test_profile->get_display_format(),
+				'annotation' => $result_object->get_annotation(),
+				'parent' => $result_object->get_parent_hash()
 				);
 
 			foreach($result_object->test_result_buffer as &$buffers)
 			{
 				foreach($buffers as &$buffer)
 				{
-					$r['results'][$buffer->get_result_identifier()] = array(
+					$b = array(
 						'value' => $buffer->get_result_value(),
-						'all_results' => $buffer->get_result_raw()
+						'raw_values' => $buffer->get_result_raw_array(),
+						'details' => $buffer->get_result_json(),
 						);
+
+					foreach(array('min-result' => 'min_result', 'max-result' => 'max_result') as $f => $t)
+					{
+						if(isset($b['details'][$f]))
+						{
+							$b[$t] = explode(':', $b['details'][$f]);
+							unset($b['details'][$f]);
+						}
+					}
+					if(is_numeric($b['value']))
+					{
+						$b['value'] = (float)$b['value'];
+					}
+					foreach($b['raw_values'] as &$v)
+					{
+						$v = (float)$v;
+					}
+					if(isset($b['details']['test-run-times']))
+					{
+						$b['test_run_times'] = explode(':', $b['details']['test-run-times']);
+						foreach($b['test_run_times'] as &$v)
+						{
+							$v = (float)$v;
+						}
+						unset($b['details']['test-run-times']);
+					}
+
+					if(!empty($b['details']))
+					{
+						// Move to end of array...
+						$details = $b['details'];
+						unset($b['details']);
+						$b['details'] = $details;
+					}
+
+					$r['results'][$buffer->get_result_identifier()] = array_filter($b);
 				}
 			}
 
-			$json['results'][] = $r;
+			$json['results'][$result_object->get_comparison_hash(true, false)] = array_filter($r);
 		}
 
 		return json_encode($json, JSON_PRETTY_PRINT);

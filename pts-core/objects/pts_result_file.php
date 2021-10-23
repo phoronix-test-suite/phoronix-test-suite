@@ -71,14 +71,14 @@ class pts_result_file
 			$this->internal_tags = self::clean_input($xml->Generated->InternalTags);
 			$this->reference_id = self::clean_input($xml->Generated->ReferenceID);
 			$this->preset_environment_variables = self::clean_input($xml->Generated->PreSetEnvironmentVariables);
-			$this->last_modified = $xml->Generated->LastModified;
+			$this->last_modified = self::clean_input($xml->Generated->LastModified);
 		}
 
 		if(isset($xml->System))
 		{
 			foreach($xml->System as $s)
 			{
-				$this->systems[] = new pts_result_file_system(self::clean_input($s->Identifier->__toString()), self::clean_input($s->Hardware->__toString()), self::clean_input($s->Software->__toString()), json_decode(self::clean_input($s->JSON), true), self::clean_input($s->User->__toString()), self::clean_input($s->Notes->__toString()), self::clean_input($s->TimeStamp->__toString()), self::clean_input($s->ClientVersion->__toString()), $this);
+				$this->systems[] = new pts_result_file_system(self::clean_input($s->Identifier->__toString()), self::clean_input($s->Hardware->__toString()), self::clean_input($s->Software->__toString()), json_decode(self::clean_input($s->JSON), true), self::clean_input($s->User->__toString()), self::clean_input($s->Notes->__toString()), self::clean_input($s->TimeStamp->__toString()), self::clean_input($s->TestClientVersion->__toString()), $this);
 			}
 		}
 
