@@ -46,7 +46,7 @@ class toggle_screensaver extends pts_module_interface
 	}
 	public static function __startup()
 	{
-		if(getenv('PTS_SYSTEMD_INHIBITED') != false)
+		if(getenv('PTS_SCREENSAVER_PM_ALREADY_INHIBITED') != false)
 		{
 			return pts_module::MODULE_UNLOAD;
 		}

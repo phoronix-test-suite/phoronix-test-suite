@@ -314,13 +314,18 @@ export PTS_EXT_LAUNCH_SCRIPT_DIR=`mktemp -d 2>/dev/null || mktemp -d -t ptstmp`
 
 PTS_PREPEND_LAUNCH=""
 
-# check for systemd-inhibit to handle suspending screensaver/idle
-#if which systemd-inhibit >/dev/null 2>&1
+# check for options to inhibit screensaver short of using the toggle_screensaver module's toggling
+if which kde-inhibit >/dev/null 2>&1
+then
+	# https://invent.kde.org/plasma/kde-cli-tools/-/merge_requests/2
+	PTS_PREPEND_LAUNCH='kde-inhibit --power --screenSaver'
+	export PTS_SCREENSAVER_PM_ALREADY_INHIBITED=1 # Setting to 1 will make toggle_screensaver PTS module disable
+#elif which systemd-inhibit >/dev/null 2>&1
 #then
 # Disable by default again due to https://github.com/phoronix-test-suite/phoronix-test-suite/pull/491#issuecomment-762899039
 #	PTS_PREPEND_LAUNCH='systemd-inhibit --what=idle:sleep --who="Phoronix Test Suite" --why="Phoronix Test Suite benchmarking" '
-#	export PTS_SYSTEMD_INHIBITED=1 # Setting to 1 will make toggle_screensaver PTS module disable
-#fi
+#	export PTS_SCREENSAVER_PM_ALREADY_INHIBITED=1 # Setting to 1 will make toggle_screensaver PTS module disable
+fi
 
 # Run The Phoronix Test Suite
 PTS_EXIT_STATUS=8

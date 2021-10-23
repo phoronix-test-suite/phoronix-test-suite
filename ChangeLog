@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Use kde-inhibit when possible for disabling power management / screensaver
 phodevi: Add detection for Arm Cortex-A710 and Neoverse-N2 cores
 
 Phoronix Test Suite 10.6.1
