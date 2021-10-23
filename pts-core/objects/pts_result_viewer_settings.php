@@ -28,6 +28,7 @@ class pts_result_viewer_settings
 		$drop_down_menus = array('Export Benchmark Data' => array(
 						'export=pdf' => 'Result File To PDF',
 						'export=txt' => 'Result File To Text',
+						'export=html' => 'Result File To HTML',
 					//	'export=xml' => 'Result File To XML',
 						'export=xml-suite' => 'Result File To Test Suite (XML)',
 						'export=csv' => 'Result File To CSV/Excel',
@@ -380,6 +381,14 @@ if($result_file->get_test_count() > 1)
 			case 'pdf':
 				header('Content-Type: application/pdf');
 				$pdf_output = pts_result_file_output::result_file_to_pdf($result_file, $result_title . '.pdf', 'D', $extra_attributes);
+				exit;
+			case 'html':
+				$referral_url = '';
+				if(defined('OPENBENCHMARKING_BUILD'))
+				{
+					$referral_url = 'https://openbenchmarking.org' . str_replace('&export=html', '', $_SERVER['REQUEST_URI']);
+				}
+				echo pts_result_file_output::result_file_to_html($result_file, $extra_attributes, $referral_url);
 				exit;
 			case 'csv':
 				$result_csv = pts_result_file_output::result_file_to_csv($result_file, ',', $extra_attributes);

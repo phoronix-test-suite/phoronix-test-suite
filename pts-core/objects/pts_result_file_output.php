@@ -795,6 +795,65 @@ class pts_result_file_output
 
 		return $html;
 	}
+	public static function result_file_to_html(&$result_file, $extra_attributes = null, $referral_url = '')
+	{
+		$html = '<html><head><title>' . $result_file->get_title() . ' - Phoronix Test Suite</title></head><body>';
+		$html .= '<h1>' . $result_file->get_title() . '</h1>';
+		$html .= '<p>' . $result_file->get_description() . '</p>';
+
+		if($referral_url != '')
+		{
+			$html .= '<p>HTML result view exported from: <a href="' . $referral_url . '">' . $referral_url . '</a>.</p>';
+		}
+
+		$table = new pts_ResultFileSystemsTable($result_file);
+		$html .= '<p style="text-align: center; overflow: auto;">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes, true, 'SVG') . '</p>';
+
+		$intent = null;
+		$table = new pts_ResultFileTable($result_file, $intent);
+		$html .= '<p style="text-align: center; overflow: auto;">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes, true, 'SVG') . '</p>';
+
+		// The Results
+		foreach($result_file->get_result_objects() as $result_object)
+		{
+			$res = pts_render::render_graph_inline_embed($result_object, $result_file, $extra_attributes, true, 'SVG');
+
+			if($res == false)
+			{
+				continue;
+			}
+
+			$html .= '<h2>' . $result_object->test_profile->get_title() . '</h2>';
+			$html .= '<h3>' . $result_object->get_arguments_description() . '</h3>';
+			$html .= '<p align="center">';
+			$html .= $res;
+			$html .= '</p>';
+
+			if($result_object->get_annotation() == null)
+			{
+				$html .= '<p align="center">' . $result_object->get_annotation() . '</p>';
+			}
+			foreach($result_object->test_result_buffer->buffer_items as &$bi)
+			{
+				if($bi->get_result_value() == null)
+				{
+					$bi_error = $bi->get_error();
+					if($bi_error == null)
+					{
+						$bi_error = 'Test failed to run.';
+					}
+					$html .= '<p align="center"><strong>' . $bi->get_result_identifier() . ':</strong> ' . strip_tags($bi_error) . '</p>';
+				}
+			}
+			unset($result_object);
+		}
+
+		// Footer
+		$html .= '<hr /><p align="center">' . pts_core::program_title() . '</p>';
+		$html .= '</body></html>';
+
+		return $html;
+	}
 	public static function result_file_to_pdf(&$result_file, $dest, $output_name, $extra_attributes = null)
 	{
 		//ini_set('memory_limit', '1024M');
