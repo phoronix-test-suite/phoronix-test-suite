@@ -164,70 +164,78 @@ class phoromatic_result implements pts_webui_interface
 				self::$schedule_id = $schedule_types[0];
 			}
 
-			foreach($display_rows as $composite_xml => $row)
+			if(count($display_rows) == 1)
 			{
-				//  $row['SystemID'] . ' ' . $row['ScheduleID'] . ' ' . $row['Trigger']
-
-				switch($system_name_format)
-				{
-					case 'ORIGINAL_DATA':
-						$system_name = null;
-						break;
-					case 'SYSTEM_NAME':
-						$system_name = phoromatic_system_id_to_name($row['SystemID']);
-						break;
-					case 'TRIGGER':
-						$system_name = $row['Trigger'];
-						break;
-					case 'TRIGGER_AND_SYSTEM':
-						$system_name = phoromatic_system_id_to_name($row['SystemID']) . ': ' . $row['Trigger'];
-						break;
-					case 'SYSTEM_AND_SCHEDULE':
-						$system_name = phoromatic_schedule_id_to_name($row['ScheduleID']) . ': ' . $row['Trigger'];
-						break;
-					default:
-						$system_name = phoromatic_system_id_to_name($row['SystemID']) . ' - ' . phoromatic_schedule_id_to_name($row['ScheduleID']) . ' - ' . $row['Trigger'];
-				}
-
-				if($system_name == null)
-				{
-					$rf = new pts_result_file($composite_xml);
-					$identifiers = $rf->get_system_identifiers();
-					if(count($identifiers) == 1)
-					{
-						$system_name = $identifiers[0];
-					}
-				}
-
-				if(($replacement = phoromatic_system_id_to_name($row['SystemID'])) != null)
-				{
-					$system_name = str_replace('.SYSTEM', $replacement, $system_name);
-				}
-				if(($replacement = phoromatic_account_id_to_group_name($row['AccountID'])) != null)
-				{
-					$system_name = str_replace('.GROUP', $replacement, $system_name);
-				}
-				$system_variables = explode(';', phoromatic_server::system_id_variables($row['SystemID'], $row['AccountID']));
-				foreach($system_variables as $var)
-				{
-					$var = explode('=', $var);
-					if(count($var) == 2)
-					{
-						$system_name = str_replace('.' . $var[0], $var[1], $system_name);
-					}
-				}
-
-
-				$result_files[] = new pts_result_merge_select($composite_xml, null, $system_name);
+				// Rather than going through the merge logic and all that, when just one result file, present as is
+				$result_file = new pts_result_file(array_pop(array_keys($composite_xml)), true);
 			}
-
-			$result_file = new pts_result_file(null, true);
-			if(!empty($result_files))
+			else
 			{
-				$attributes = array('new_result_file_title' => $result_file_title);
+				foreach($display_rows as $composite_xml => $row)
+				{
+					//  $row['SystemID'] . ' ' . $row['ScheduleID'] . ' ' . $row['Trigger']
+
+					switch($system_name_format)
+					{
+						case 'ORIGINAL_DATA':
+							$system_name = null;
+							break;
+						case 'SYSTEM_NAME':
+							$system_name = phoromatic_system_id_to_name($row['SystemID']);
+							break;
+						case 'TRIGGER':
+							$system_name = $row['Trigger'];
+							break;
+						case 'TRIGGER_AND_SYSTEM':
+							$system_name = phoromatic_system_id_to_name($row['SystemID']) . ': ' . $row['Trigger'];
+							break;
+						case 'SYSTEM_AND_SCHEDULE':
+							$system_name = phoromatic_schedule_id_to_name($row['ScheduleID']) . ': ' . $row['Trigger'];
+							break;
+						default:
+							$system_name = phoromatic_system_id_to_name($row['SystemID']) . ' - ' . phoromatic_schedule_id_to_name($row['ScheduleID']) . ' - ' . $row['Trigger'];
+					}
+
+					if($system_name == null)
+					{
+						$rf = new pts_result_file($composite_xml);
+						$identifiers = $rf->get_system_identifiers();
+						if(count($identifiers) == 1)
+						{
+							$system_name = $identifiers[0];
+						}
+					}
+
+					if(($replacement = phoromatic_system_id_to_name($row['SystemID'])) != null)
+					{
+						$system_name = str_replace('.SYSTEM', $replacement, $system_name);
+					}
+					if(($replacement = phoromatic_account_id_to_group_name($row['AccountID'])) != null)
+					{
+						$system_name = str_replace('.GROUP', $replacement, $system_name);
+					}
+					$system_variables = explode(';', phoromatic_server::system_id_variables($row['SystemID'], $row['AccountID']));
+					foreach($system_variables as $var)
+					{
+						$var = explode('=', $var);
+						if(count($var) == 2)
+						{
+							$system_name = str_replace('.' . $var[0], $var[1], $system_name);
+						}
+					}
+
+
+					$result_files[] = new pts_result_merge_select($composite_xml, null, $system_name);
+				}
+
+				$result_file = new pts_result_file(null, true);
 				if(!empty($result_files))
 				{
-					$result_file->merge($result_files, $attributes);
+					$attributes = array('new_result_file_title' => $result_file_title);
+					if(!empty($result_files))
+					{
+						$result_file->merge($result_files, $attributes);
+					}
 				}
 			}
 

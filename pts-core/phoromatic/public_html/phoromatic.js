@@ -379,3 +379,11 @@ function display_system_logs_for_result(result_file, system_id)
 {
 	window.open(window.location.href + "&export=view_system_logs&result_file_id=" + result_file + "&system_id=" + btoa(system_id), "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=100,left=100,width=800,height=600,location=no,menubar=no");
 }
+function display_test_logs_for_result_object(result_file, result_hash, select_identifier)
+{
+	window.open(window.location.href + "&export=view_test_logs&result_file_id=" + result_file + "&result_object=" + result_hash + "&log_select=" + select_identifier, "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=100,left=100,width=800,height=600,location=no,menubar=no");
+}
+function display_install_logs_for_result_object(result_file, result_hash, select_identifier)
+{
+	window.open(window.location.href + "&export=view_install_logs&result_file_id=" + result_file + "&result_object=" + result_hash + "&log_select=" + select_identifier, "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=100,left=100,width=800,height=600,location=no,menubar=no");
+}
