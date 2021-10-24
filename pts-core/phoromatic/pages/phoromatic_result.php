@@ -224,8 +224,9 @@ class phoromatic_result implements pts_webui_interface
 						}
 					}
 
-
-					$result_files[] = new pts_result_merge_select($composite_xml, null, $system_name);
+					$rf = new pts_result_file($composite_xml);
+					$rf->rename_run(null, $system_name);
+					$result_files[] = $rf;
 				}
 
 				$result_file = new pts_result_file(null, true);

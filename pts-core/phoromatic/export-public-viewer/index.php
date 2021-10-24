@@ -186,7 +186,9 @@ if(defined('PATH_TO_PHOROMATIC_ML_DB') && PATH_TO_PHOROMATIC_ML_DB != null)
 				{
 					// Add to result file
 					$system_name = basename(dirname($composite_xml)) . ': ' . $trigger;
-					array_push($result_files, new pts_result_merge_select($composite_xml, null, $system_name));
+					$rf = new pts_result_file($composite_xml);
+					$rf->rename_run(null, $system_name);
+					$result_files[] = $rf;
 				}
 			}
 
@@ -382,7 +384,9 @@ foreach($triggers as $trigger)
 	{
 		// Add to result file
 		$system_name = basename(dirname($composite_xml)) . ': ' . $trigger;
-		array_push($result_files, new pts_result_merge_select($composite_xml, null, $system_name));
+		$rf = new pts_result_file($composite_xml);
+		$rf->rename_run(null, $system_name);
+		$result_files[] = $rf;
 	}
 }
 

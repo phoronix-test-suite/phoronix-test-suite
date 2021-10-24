@@ -595,7 +595,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 				else
 				{
 					$rf = new pts_result_file($rid);
-					$result_file->merge(array(new pts_result_merge_select($rf)), 0, $rf->get_title(), true, true);
+					$result_file->merge(array($rf), 0, $rf->get_title(), true, true);
 				}
 			}
 		}

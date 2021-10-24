@@ -928,40 +928,18 @@ class pts_result_file
 			return false;
 		}
 
-		foreach($result_merges_to_combine as $i => &$merge_select)
+		foreach($result_merges_to_combine as &$result_file)
 		{
-			if(!($merge_select instanceof $merge_select))
+			if(!($result_file instanceof pts_result_file))
 			{
-				$merge_select = new pts_result_merge_select($merge_select);
-			}
-
-			if(!is_file($merge_select->get_result_file()) && !($merge_select->get_result_file() instanceof pts_result_file))
-			{
-				if(defined('PTS_SAVE_RESULTS_PATH') && is_file(PTS_SAVE_RESULTS_PATH . $merge_select->get_result_file() . '/composite.xml'))
+				if(defined('PTS_SAVE_RESULTS_PATH') && is_file(PTS_SAVE_RESULTS_PATH . $result_file . '/composite.xml'))
 				{
-					$merge_select->set_result_file(PTS_SAVE_RESULTS_PATH . $merge_select->get_result_file() . '/composite.xml');
+					$result_file = new pts_result_file(PTS_SAVE_RESULTS_PATH . $result_file . '/composite.xml', true);
 				}
 				else
 				{
-					unset($result_merges_to_combine[$i]);
+					continue;
 				}
-			}
-		}
-
-		if(empty($result_merges_to_combine))
-		{
-			return false;
-		}
-
-		foreach($result_merges_to_combine as &$merge_select)
-		{
-			if($merge_select->get_result_file() instanceof pts_result_file)
-			{
-				$result_file = $merge_select->get_result_file();
-			}
-			else
-			{
-				$result_file = new pts_result_file($merge_select->get_result_file(), true);
 			}
 
 			if($add_prefix)
@@ -981,10 +959,6 @@ class pts_result_file
 				{
 					$result_file->rename_run('PREFIX', $add_prefix);
 				}
-			}
-			else if($merge_select->get_rename_identifier())
-			{
-				$result_file->rename_run(null, $merge_select->get_rename_identifier());
 			}
 
 			if($this->get_title() == null && $result_file->get_title() != null)

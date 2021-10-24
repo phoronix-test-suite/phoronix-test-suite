@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2018, Phoronix Media
-	Copyright (C) 2008 - 2018, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -145,7 +145,9 @@ if(!empty($result_ids))
 				$system_name = phoromatic_system_id_to_name($row['SystemID'], $row['AccountID']) . ' - ' . phoromatic_schedule_id_to_name($row['ScheduleID']) . ' - ' . $row['Trigger'];
 		}
 
-		array_push($result_files, new pts_result_merge_select($composite_xml, null, $system_name));
+		$rf = new pts_result_file($composite_xml);
+		$rf->rename_run(null, $system_name);
+		$result_files[] = $rf;
 	}
 
 	$attributes = array('new_result_file_title' => $result_file_title);

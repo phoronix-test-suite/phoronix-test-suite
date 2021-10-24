@@ -67,7 +67,9 @@ class debug_render_test implements pts_option_interface
 				{
 					// Add to result file
 					$system_name = basename(dirname($composite_xml)) . ': ' . $trigger;
-					$result_files[] = new pts_result_merge_select($composite_xml, null, $system_name);
+					$rf = new pts_result_file($composite_xml);
+					$rf->rename_run(null, $system_name);
+					$result_files[] = $rf;
 				}
 			}
 			echo 'STARTING MERGE; ';

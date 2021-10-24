@@ -251,7 +251,7 @@ class phoromatic_main implements pts_webui_interface
 						$composite_xml = phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $result_uploads_row['UploadID']) . 'composite.xml';
 						if(is_file($composite_xml))
 						{
-							array_push($result_file, new pts_result_merge_select($composite_xml));
+							array_push($result_file, new pts_result_file($composite_xml));
 						}
 						array_push($pprids, $result_uploads_row['PPRID']);
 					}
