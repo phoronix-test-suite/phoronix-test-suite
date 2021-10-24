@@ -392,6 +392,7 @@ if($result_file->get_test_count() > 1)
 				echo pts_result_file_output::result_file_to_html($result_file, $extra_attributes, $referral_url);
 				exit;
 			case 'json':
+				header('Content-Type: application/json');
 				echo pts_result_file_output::result_file_to_json($result_file);
 				exit;
 			case 'csv':

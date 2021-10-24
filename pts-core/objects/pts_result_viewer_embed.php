@@ -29,6 +29,8 @@ class pts_result_viewer_embed
 	protected $graph_export_handler = false;
 	protected $post_description_message = null;
 	protected $show_html_table_when_relevant = true;
+	protected $show_test_metadata_helper = true;
+	protected $include_page_print_only_helpers = true;
 
 	public function __construct(&$result_file, $public_id = null)
 	{
@@ -64,6 +66,14 @@ class pts_result_viewer_embed
 	public function show_html_result_table($show)
 	{
 		$this->show_html_table_when_relevant = $show;
+	}
+	public function show_test_metadata_helper($show)
+	{
+		$this->show_test_metadata_helper = $show;
+	}
+	public function include_page_print_only_helpers($show)
+	{
+		$this->include_page_print_only_helpers = $show;
 	}
 	protected function result_object_to_error_report(&$result_file, &$result_object, $i)
 	{
@@ -125,7 +135,10 @@ class pts_result_viewer_embed
 		$PAGE .= '<hr /><div style="font-size: 12pt;">' . $html_options . '</div><hr style="clear: both;" />';
 		$PAGE .= pts_result_viewer_settings::process_helper_html($_REQUEST, $result_file, $extra_attributes);
 		$PAGE .= '</div>';
-		$PAGE .= '<div class="print_notes">' . pts_result_file_output::result_file_to_system_html($result_file) . '</div>';
+		if($this->include_page_print_only_helpers)
+		{
+			$PAGE .= '<div class="print_notes">' . pts_result_file_output::result_file_to_system_html($result_file) . '</div>';
+		}
 		$PAGE .= '<div id="result_overview_area">';
 		$intent = -1;
 		if($result_file->get_system_count() == 1 || ($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)))
@@ -265,7 +278,7 @@ class pts_result_viewer_embed
 			//
 			// DISPLAY TEST PORIFLE METADATA HELPER
 			//
-			if($result_object->test_profile->get_title() != $prev_title)
+			if($this->show_test_metadata_helper && $result_object->test_profile->get_title() != $prev_title)
 			{
 				$PAGE .= '<h2>' . $result_object->test_profile->get_title() . '</h2>';
 				if(is_file(PTS_INTERNAL_OB_CACHE . 'test-profiles/' . $result_object->test_profile->get_identifier() . '/test-definition.xml'))
@@ -454,7 +467,10 @@ class pts_result_viewer_embed
 			unset($result_object);
 		}
 
-		$PAGE .= '<div class="print_notes mini" style="font-size: 10px !important;">' . pts_result_file_output::result_file_to_system_html($result_file, true) . '</div>';
+		if($this->include_page_print_only_helpers)
+		{
+			$PAGE .= '<div class="print_notes mini" style="font-size: 10px !important;">' . pts_result_file_output::result_file_to_system_html($result_file, true) . '</div>';
+		}
 		$PAGE .= '</div>';
 
 		return $PAGE;

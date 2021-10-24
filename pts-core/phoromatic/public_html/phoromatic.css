@@ -714,9 +714,9 @@ div.phoromatic_overview_box
 div#phoromatic_result_compare_info_box
 {
 	font-size: 0.6em;
-	color: #FFF;
+	color: #000;
 	text-align: center;
-	border: 1px solid #FFF;
+	border: 1px solid #222;
 	margin: 10px 30px;
 	padding: 4px;
 	display: none;
@@ -724,12 +724,53 @@ div#phoromatic_result_compare_info_box
 div#phoromatic_result_delete_box
 {
 	font-size: 0.6em;
-	color: #FFF;
+	color: #000;
 	text-align: center;
-	border: 1px solid #FFF;
+	border: 1px solid #222;
 	margin: 10px 30px;
 	padding: 4px;
 	display: none;
+}
+.tabs
+{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+.tabs label
+{
+	order: 1;
+	display: block;
+	padding: 5px 10px;
+	margin: 0 1px 2px;
+	cursor: pointer;
+	background: #ef5e09;
+	color: #fff;
+	transition: background ease 0.5s;
+	user-select: none;
+}
+.tabs .tab
+{
+	order: 99;
+	flex-grow: 1;
+	width: 100%;
+	display: none;
+	padding: 1rem;
+	background: #fff;
+}
+.tabs input[type="radio"]
+{
+	display: none;
+}
+.tabs input[type="radio"]:checked + label
+{
+	color: #000;
+	background: #fff;
+}
+.tabs input[type="radio"]:checked + label + .tab
+{
+	display: block;
 }
 div.phoromatic_overview_box h1
 {

@@ -91,17 +91,6 @@ class phoromatic_result implements pts_webui_interface
 				$result = $stmt->execute();
 				$row = $result->fetchArray();
 
-				if(false && empty($row))
-				{
-					// TODO XXX
-					// XXX this code is ultimately dead
-					$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_results WHERE AccountID = :account_id AND UploadID = :upload_id LIMIT 1');
-					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-					$stmt->bindValue(':upload_id', $id);
-					$result = $stmt->execute();
-					$row = $result->fetchArray();
-				}
-
 				if(empty($row))
 					continue;
 
@@ -241,92 +230,12 @@ class phoromatic_result implements pts_webui_interface
 					$result_file->merge($result_files, $attributes);
 				}
 			}
-			$result_file->avoid_duplicate_identifiers();
-			$extra_attributes = array();
 
-			// TOOO XXX: Still hook this into pts_result_viewer_embed....
-
-			if(isset($_GET['upload_to_openbenchmarking']) && pts_openbenchmarking::ob_upload_support_available())
-			{
-				$ob_url = pts_openbenchmarking::upload_test_result($result_file, false);
-				if($ob_url)
-				{
-					header('Location: ' . $ob_url);
-				}
-			}
-
-			$attribute_options = array(
-				'normalize_results' => 'normalize_result_buffer',
-				'sort_by_performance' => 'sort_result_buffer_values',
-				'sort_by_reverse' => 'reverse_result_buffer',
-				'sort_by_name' => 'sort_result_buffer',
-				'condense_comparison' => 'condense_multi_way',
-				'force_line_graph' => 'force_tracking_line_graph',
-				);
-			$url_append = null;
-			foreach($attribute_options as $web_var => $attr_var)
-			{
-				if(isset($_REQUEST[$web_var]))
-				{
-					$extra_attributes[$attr_var] = true;
-					$url_append .= '&' . $web_var . '=1';
-				}
-			}
-
-			if(isset($_POST['transpose_comparison']))
-			{
-				$result_file->invert_multi_way_invert();
-			}
-
-			$intent = null;
-
-			if(count($result_files) > 1)
-			{
-				$main .= '<h1>Phoromatic Comparison</h1>';
-			}
-			else
-			{
-				$main .= '<h1>' . ($result_file->get_title() != null ? $result_file->get_title() : 'Phoromatic Results') . '</h1>';
-				$main .= '<p>' . $result_file->get_description() . '</p>';
-
-				$main .= '<p><strong>Uploaded On:</strong> ' . $upload_times[0] . '</p>';
-			}
-
-			pts_result_viewer_settings::process_request_to_attributes($_REQUEST, $result_file, $extra_attributes);
-			$main .= pts_result_viewer_settings::get_html_sort_bar($result_file, $_REQUEST);
-			$main .= '<hr /><div style="font-size: 12pt;">' . pts_result_viewer_settings::get_html_options_markup($result_file, $_REQUEST, $has_system_logs) . '</div><hr />';
-			$main .= pts_result_viewer_settings::process_helper_html($_REQUEST, $result_file, $extra_attributes);
-
-			$main .= phoromatic_annotate_entry('RESULT', implode(',', $upload_ids), 'TOP');
-
-			if($result_file->get_system_count() == 1 || ($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)))
-			{
-				$table = new pts_ResultFileCompactSystemsTable($result_file, $intent);
-			}
-			else
-			{
-				$table = new pts_ResultFileSystemsTable($result_file);
-			}
-
-			$main .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
-
-			$table = new pts_ResultFileTable($result_file, $intent);
-			$main .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
-
-			$main .= '<div id="pts_results_area">';
-			foreach($result_file->get_result_objects((isset($_POST['show_only_changed_results']) ? 'ONLY_CHANGED_RESULTS' : -1)) as $i => $result_object)
-			{
-				$main .= '<h2><a name="r-' . $i . '"></a><a name="' . $result_object->get_comparison_hash(true, false) . '"></a>' . $result_object->test_profile->get_title() . '</h2>';
-				$main .= phoromatic_annotate_entry('RESULT', implode(',', $upload_ids), $result_object->get_comparison_hash(true, false));
-				$main .= '<p class="result_object">';
-				$main .= pts_render::render_graph_inline_embed($result_object, $result_file, $extra_attributes);
-				$main .= '</p>';
-			}
-			$main .= '</div>';
-		}
-		else
-		{
-			// No result
+			$embed = new pts_result_viewer_embed($result_file);
+			$embed->show_html_result_table(false);
+			$embed->show_test_metadata_helper(false);
+			$embed->include_page_print_only_helpers(false);
+			$main .= $embed->get_html();
 		}
 
 		$right = null;
@@ -445,11 +354,7 @@ class phoromatic_result implements pts_webui_interface
 		}
 
 		$right .= '<hr /><h3>Result Export</h3>';
-		$right .= '<p><a href="/public.php?t=result&ut='  . implode(',', $upload_ids) . $url_append . '">Public Viewer</a></p>';
-		if(pts_openbenchmarking::ob_upload_support_available())
-		{
-			$right .= '<p><a href="?' . $_SERVER['QUERY_STRING'] . '/&upload_to_openbenchmarking">Upload To OpenBenchmarking.org</a></p>';
-		}
+		$right .= '<p><a href="/public.php?t=result&ut='  . implode(',', $upload_ids) . '">Public Viewer</a></p>';
 
 		if($has_system_logs)
 		{
