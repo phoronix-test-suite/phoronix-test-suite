@@ -41,6 +41,8 @@ class pts_result_viewer_settings
 				'sro' => 'By Identifier (ASC)',
 				'sor' => 'By Performance (DESC)',
 				'sor&rro' => 'By Performance (ASC)',
+				'rdt&rro' => 'By Run Date/Time (DESC)',
+				'rdt' => 'By Run Date/Time (ASC)',
 				);
 		}
 		if($result_file->get_test_count() > 1)
@@ -64,6 +66,7 @@ class pts_result_viewer_settings
 				{
 					$uri = str_replace('&' . $rem, '', $uri);
 				}
+				$uri = str_replace('&rro', '', $uri);
 				$analyze_options .= '<li><a href="' . $uri . '&' . $option . '">' . $txt . '</a></li>';
 			}
 			$analyze_options .= '</ul></li>';
@@ -373,6 +376,11 @@ if($result_file->get_test_count() > 1)
 	}
 	public static function process_result_export_pre_render(&$request, &$result_file, &$extra_attributes)
 	{
+		if(self::check_request_for_var($request, 'rdt'))
+		{
+			$result_file->reorder_runs($result_file->get_system_identifiers_by_date());
+		}
+
 		// Result export?
 		$result_title = (isset($_GET['result']) ? $_GET['result'] : 'result');
 		switch(isset($_REQUEST['export']) ? $_REQUEST['export'] : null)
