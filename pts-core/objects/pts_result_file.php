@@ -297,6 +297,16 @@ class pts_result_file
 		}
 		return $ids;
 	}
+	public function get_system_identifiers_by_date()
+	{
+		$by_date = array();
+		foreach($this->get_systems() as $s)
+		{
+			$by_date[$s->get_identifier()] = strtotime($s->get_timestamp());
+		}
+		asort($by_date);
+		return array_keys($by_date);
+	}
 	public function is_system_identifier_in_result_file($identifier)
 	{
 		foreach($this->systems as &$s)
