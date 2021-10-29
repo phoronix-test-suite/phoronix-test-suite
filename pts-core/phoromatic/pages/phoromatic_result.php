@@ -167,7 +167,7 @@ class phoromatic_result implements pts_webui_interface
 			if(count($display_rows) == 1)
 			{
 				// Rather than going through the merge logic and all that, when just one result file, present as is
-				$result_file = new pts_result_file(array_pop(array_keys($composite_xml)), true);
+				$result_file = new pts_result_file(array_pop(array_keys($display_rows)), true);
 			}
 			else
 			{
