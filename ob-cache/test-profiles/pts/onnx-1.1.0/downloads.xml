@@ -26,11 +26,5 @@
       <FileSize>1815286</FileSize>
       <Optional>TRUE</Optional>
     </Package>
-    <Package>
-      <URL>https://github.com/onnx/models/raw/master/text/machine_comprehension/bert-squad/model/bertsquad-10.tar.gz</URL>
-      <FileName>bertsquad-10.tar.gz</FileName>
-      <FileSize>403081800</FileSize>
-      <Optional>TRUE</Optional>
-    </Package>
   </Downloads>
 </PhoronixTestSuite>
