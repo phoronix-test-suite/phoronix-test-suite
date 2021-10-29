@@ -21,7 +21,7 @@
     <EnvironmentSize>3200</EnvironmentSize>
     <ProjectURL>https://www.onnxruntime.ai/</ProjectURL>
     <RepositoryURL>https://github.com/microsoft/onnxruntime</RepositoryURL>
-    <InternalTags>OpenMP, SMP</InternalTags>
+    <InternalTags>SMP</InternalTags>
     <Maintainer>Michael Larabel</Maintainer>
   </TestProfile>
   <TestSettings>
@@ -60,7 +60,7 @@
       <ArgumentPrefix>-e </ArgumentPrefix>
       <Menu>
         <Entry>
-          <Name>OpenMP CPU</Name>
+          <Name>CPU</Name>
           <Value>cpu</Value>
         </Entry>
       </Menu>
