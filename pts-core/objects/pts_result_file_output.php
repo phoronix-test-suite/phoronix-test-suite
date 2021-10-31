@@ -1173,10 +1173,6 @@ class pts_result_file_output
 				$last_result_title = $result_object->test_profile->get_title();
 				$pdf->CreateBookmark($last_result_title, 0);
 			}
-			if($system_count > 2)
-			{
-				$result_object->sort_results_by_performance();
-			}
 			$graph = pts_render::render_graph_process($result_object, $result_file, false, $extra_attributes);
 			self::add_graph_result_object_to_pdf($pdf, $graph);
 			if($result_object->get_annotation() != null)
