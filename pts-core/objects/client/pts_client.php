@@ -2569,6 +2569,9 @@ class pts_client
 	{
 		if(($output_file = getenv('OUTPUT_FILE')) == false)
 		{
+			if(file_exists($title)) {
+				$title = "test-result";
+			}
 			if(($output_dir = getenv('OUTPUT_DIR')) == false || !is_dir($output_dir))
 			{
 				$output_dir = pts_core::user_home_directory();
