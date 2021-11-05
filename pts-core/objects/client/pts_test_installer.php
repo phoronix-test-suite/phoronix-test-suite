@@ -579,6 +579,9 @@ class pts_test_installer
 				// first check to ensure not null sent to executable_in_path from env variable
 				if($possible_compiler && (($compiler_path = is_executable($possible_compiler)) || ($compiler_path = pts_client::executable_in_path($possible_compiler, 'ccache'))))
 				{
+					if(is_executable($possible_compiler)) {
+						$compiler_path = $possible_compiler;
+					}
 					// Replace the array of possible compilers with a string to the detected compiler executable
 					$compilers[$compiler_type] = $compiler_path;
 					$compiler_found = true;
