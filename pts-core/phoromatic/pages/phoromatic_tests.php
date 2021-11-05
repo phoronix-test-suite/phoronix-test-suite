@@ -153,7 +153,7 @@ class phoromatic_tests implements pts_webui_interface
 				$tpid = $tp->get_identifier(false);
 				foreach($test_counts_for_account as $test => $count)
 				{
-					if(strpos($test, $tpid) !== false)
+					if($tpid != null && strpos($test, $tpid) !== false)
 					{
 						$test_count += $count;
 						unset($test_counts_for_account[$test]);
