@@ -1202,7 +1202,7 @@ class pts_result_file_output
 
 		$pdf->WriteText('This file was automatically generated via the Phoronix Test Suite benchmarking software on ' . date('l, j F Y H:i') . '.', 'I');
 		ob_get_clean();
-		$pdf->Output($dest, $output_name);
+		return $pdf->Output($dest, $output_name);
 	}
 	protected static function add_graph_result_object_to_pdf(&$pdf, &$graph)
 	{
