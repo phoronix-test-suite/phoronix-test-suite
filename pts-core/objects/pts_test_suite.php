@@ -48,7 +48,7 @@ class pts_test_suite
 		{
 			return;
 		}
-		else if(!isset($xml_file[384]) && defined('PTS_TEST_SUITE_PATH') && is_file(PTS_TEST_SUITE_PATH . $identifier . '/suite-definition.xml'))
+		else if(!isset($identifier[384]) && defined('PTS_TEST_SUITE_PATH') && is_file(PTS_TEST_SUITE_PATH . $identifier . '/suite-definition.xml'))
 		{
 			$read = PTS_TEST_SUITE_PATH . $identifier . '/suite-definition.xml';
 			$this->identifier = $identifier;
@@ -66,7 +66,7 @@ class pts_test_suite
 			}
 			$this->identifier = $identifier;
 
-			if(!isset($xml_file[512]) && defined('PTS_TEST_SUITE_PATH') && is_file(PTS_TEST_SUITE_PATH . $identifier . '/suite-definition.xml'))
+			if(!isset($identifier[512]) && defined('PTS_TEST_SUITE_PATH') && is_file(PTS_TEST_SUITE_PATH . $identifier . '/suite-definition.xml'))
 			{
 				$read = PTS_TEST_SUITE_PATH . $identifier . '/suite-definition.xml';
 			}

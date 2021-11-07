@@ -24,15 +24,15 @@ class dump_documentation implements pts_option_interface
 {
 	public static function run($r)
 	{
-		$pdf = new pts_pdf_template(pts_core::program_title(false), 'Test Client Documentation');
-		$html_doc = new pts_html_template(pts_core::program_title(false), 'Test Client Documentation');
+		$pdf = new pts_pdf_template(pts_core::program_title(), 'Test Client Documentation');
+		$html_doc = new pts_html_template(pts_core::program_title(), 'Test Client Documentation');
 
 		$pdf->AddPage();
 		$pdf->Image(PTS_CORE_STATIC_PATH . 'images/pts-308x160.png', 69, 85, 73, 38, 'PNG', 'https://www.phoronix-test-suite.com/');
 		$pdf->Ln(120);
 		$pdf->WriteStatement('www.phoronix-test-suite.com', 'C', 'https://www.phoronix-test-suite.com/');
 		$pdf->Ln(15);
-		$pdf->WriteBigHeaderCenter(pts_core::program_title(true));
+		$pdf->WriteBigHeaderCenter(pts_core::program_title());
 		$pdf->WriteHeaderCenter('User Manual');
 		//$pdf->WriteText($result_file->get_description());
 

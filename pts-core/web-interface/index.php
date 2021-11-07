@@ -73,7 +73,7 @@ if($webui_class === false)
 <script src="js/pts-web-interface.js" type="text/javascript"></script>
 <script src="js/pts-web-socket.js" type="text/javascript"></script>
 <script src="js/pts-web-functions.js" type="text/javascript"></script>
-<title><?php $page_title = class_exists($webui_class) ? $webui_class::page_title() : null; echo $page_title != null ? $page_title . ' - Phoronix Test Suite' : pts_core::program_title(true); ?></title>
+<title><?php $page_title = class_exists($webui_class) ? $webui_class::page_title() : null; echo $page_title != null ? $page_title . ' - Phoronix Test Suite' : pts_core::program_title(); ?></title>
 </head>
 <body>
 <script type="text/javascript">
@@ -139,7 +139,7 @@ if($page_ret == -1 && is_file('html/' . $webui_class . '.html'))
 
 ?>
 	</div>
-	<div id="pts_copyright"><?php //$DEBUG_END_TIME = microtime(true); $DEBUG_TIME = $DEBUG_END_TIME - $DEBUG_START_TIME; echo '<strong>Page Rendering Took: ' . $DEBUG_TIME . ' secs.</strong> '; ?>Copyright &#xA9; 2008 - <?php echo date('Y'); ?> by Phoronix Media. All trademarks used are properties of their respective owners. All rights reserved. <strong><?php echo pts_core::program_title(true); ?></strong></div>
+	<div id="pts_copyright"><?php //$DEBUG_END_TIME = microtime(true); $DEBUG_TIME = $DEBUG_END_TIME - $DEBUG_START_TIME; echo '<strong>Page Rendering Took: ' . $DEBUG_TIME . ' secs.</strong> '; ?>Copyright &#xA9; 2008 - <?php echo date('Y'); ?> by Phoronix Media. All trademarks used are properties of their respective owners. All rights reserved. <strong><?php echo pts_core::program_title(); ?></strong></div>
 <script type="text/javascript">
 	pts_web_socket.connect();
 </script>

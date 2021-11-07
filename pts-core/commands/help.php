@@ -27,7 +27,7 @@ class help implements pts_option_interface
 
 	public static function run($r)
 	{
-		echo PHP_EOL . pts_client::cli_colored_text(pts_core::program_title(true), 'green', true) . PHP_EOL . PHP_EOL;
+		echo PHP_EOL . pts_client::cli_colored_text(pts_core::program_title(), 'green', true) . PHP_EOL . PHP_EOL;
 		echo pts_documentation::basic_description() . PHP_EOL . PHP_EOL . 'View the included documentation or visit https://www.phoronix-test-suite.com/ for full details.' . PHP_EOL;
 		$options = pts_documentation::client_commands_array();
 

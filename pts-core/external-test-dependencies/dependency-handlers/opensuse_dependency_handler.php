@@ -69,4 +69,3 @@ class opensuse_dependency_handler implements pts_dependency_handler
 
 
 ?>
-

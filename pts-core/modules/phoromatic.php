@@ -476,7 +476,7 @@ class phoromatic extends pts_module_interface
 		{
 			pts_client::$pts_logger = new pts_logger();
 		}
-		pts_client::$pts_logger->log(pts_core::program_title(true) . ' [' . PTS_CORE_VERSION . '] starting Phoromatic client');
+		pts_client::$pts_logger->log(pts_core::program_title() . ' [' . PTS_CORE_VERSION . '] starting Phoromatic client');
 
 		if(phodevi::system_uptime() < 60)
 		{

@@ -137,8 +137,8 @@ class start_phoromatic_server implements pts_option_interface
 		// Just create the logger so now it will flush it out
 		$pts_logger = new pts_logger();
 		$pts_logger->clear_log();
-		echo pts_core::program_title(true) . ' starting Phoromatic Server' . PHP_EOL;
-		$pts_logger->log(pts_core::program_title(true) . ' starting Phoromatic Server on ' . phodevi::read_property('network', 'ip'));
+		echo pts_core::program_title() . ' starting Phoromatic Server' . PHP_EOL;
+		$pts_logger->log(pts_core::program_title() . ' starting Phoromatic Server on ' . phodevi::read_property('network', 'ip'));
 
 		echo 'Phoronix Test Suite User-Data Directory Path: ' . PTS_USER_PATH . PHP_EOL;
 		echo 'Phoronix Test Suite Configuration File: ' . pts_config::get_config_file_location() . PHP_EOL;

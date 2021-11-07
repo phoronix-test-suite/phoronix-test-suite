@@ -41,7 +41,7 @@ class nye_XmlWriter
 
 		if($this->dom->formatOutput)
 		{
-			$pts_comment = $this->dom->createComment(pts_core::program_title(false));
+			$pts_comment = $this->dom->createComment(pts_core::program_title());
 			$this->dom->appendChild($pts_comment);
 		}
 

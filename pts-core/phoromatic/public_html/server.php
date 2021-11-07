@@ -45,7 +45,7 @@ if(isset($_GET['phoromatic_info']))
 else
 {
 	include('../../pts-core.php');
-	echo pts_core::program_title(true) . ' Phoromatic Server [' . $_SERVER['SERVER_SOFTWARE'] . ']';
+	echo pts_core::program_title() . ' Phoromatic Server [' . $_SERVER['SERVER_SOFTWARE'] . ']';
 }
 
 ?>

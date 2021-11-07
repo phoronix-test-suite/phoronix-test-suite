@@ -2218,8 +2218,8 @@ class pts_client
 				else if(phodevi::is_windows())
 				{
 					$windows_browsers = array(
-						'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe',
 						'C:\Program Files (x86)\Mozilla Firefox\firefox.exe',
+						'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe',
 						//'C:\Program Files\internet explorer\iexplore.exe'
 						);
 
@@ -2263,7 +2263,7 @@ class pts_client
 				}
 				else
 				{
-					$possible_browsers = array('x-www-browser', 'google-chrome', 'chromium', 'firefox', 'mozilla', 'iceweasel', 'konqueror', 'epiphany', 'midori', 'epiphany-browser', 'epiphany', 'falkon', 'qupzilla', 'open', 'xdg-open');
+					$possible_browsers = array('x-www-browser', 'firefox', 'mozilla', 'google-chrome', 'chromium', 'iceweasel', 'konqueror', 'epiphany', 'midori', 'epiphany-browser', 'epiphany', 'falkon', 'qupzilla', 'open', 'xdg-open');
 
 					// First try to see if a browser is already running and use that
 					foreach($possible_browsers as &$b)

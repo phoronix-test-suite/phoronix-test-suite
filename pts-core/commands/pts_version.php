@@ -32,7 +32,7 @@ class pts_version implements pts_option_interface
 	}
 	public static function run($r)
 	{
-		echo PHP_EOL . pts_core::program_title(true) . PHP_EOL;
+		echo PHP_EOL . pts_core::program_title() . PHP_EOL;
 	}
 }
 
