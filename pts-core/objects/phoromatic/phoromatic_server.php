@@ -379,6 +379,11 @@ class phoromatic_server
 				// Change made 6 July 2021
 				self::$db->exec('ALTER TABLE phoromatic_account_settings ADD COLUMN AllowAnyDataForLogFiles INTEGER DEFAULT 0');
 				self::$db->exec('PRAGMA user_version = 41');
+			case 41:
+				// Change made November 2021
+				self::$db->exec('ALTER TABLE phoromatic_account_settings ADD COLUMN UploadInstallLogs INTEGER DEFAULT 0');
+				self::$db->exec('ALTER TABLE phoromatic_account_settings ADD COLUMN UploadRunLogs INTEGER DEFAULT 0');
+				self::$db->exec('PRAGMA user_version = 42');
 		}
 		chmod($db_file, 0600);
 		if(!defined('PHOROMATIC_DB_INIT'))

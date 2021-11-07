@@ -105,7 +105,9 @@ class phoromatic_settings implements pts_webui_interface
 				$account_settings = array(
 					'Global Settings' => array(
 						'ArchiveResultsLocally' => 'Archive test results on local test systems after the results have been uploaded.',
-						'UploadSystemLogs' => 'Upload system logs when uploading test results.',
+						'UploadSystemLogs' => 'Upload system logs from clients when uploading test results.',
+						'UploadInstallLogs' => 'Upload test installation logs from clients when uploading test results.',
+						'UploadRunLogs' => 'Upload test run-time logs from clients when uploading test results.',
 						'RunInstallCommand' => 'For all test schedules, always run the install command for test(s) prior to running them on the system.',
 						'ForceInstallTests' => 'For all test schedules, force the test installation/re-installation of tests each time prior to running the test.',
 						'SystemSensorMonitoring' => 'Enable the system sensor monitoring while tests are taking place.',

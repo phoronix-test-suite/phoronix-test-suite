@@ -23,7 +23,7 @@
 class phoromatic extends pts_module_interface
 {
 	const module_name = 'Phoromatic Client';
-	const module_version = '1.1.0';
+	const module_version = '1.2.0';
 	const module_description = 'The Phoromatic client is used for connecting to a Phoromatic server (Phoromatic.com or a locally run server) to facilitate the automatic running of tests, generally across multiple test nodes in a routine manner. For more details visit http://www.phoromatic.com/. This module is intended to be used with Phoronix Test Suite 5.2+ clients and servers.';
 	const module_author = 'Phoronix Media';
 
@@ -38,7 +38,6 @@ class phoromatic extends pts_module_interface
 	private static $system_id = null;
 	private static $server_core_version = 0;
 
-	private static $p_save_identifier = null;
 	private static $p_schedule_id = null;
 	private static $p_trigger_id = null;
 	private static $benchmark_ticket_id = null;
@@ -646,15 +645,15 @@ class phoromatic extends pts_module_interface
 						$benchmark_timer = time();
 						self::$is_running_as_phoromatic_node = true;
 						$phoromatic_suite = new pts_test_suite($json['phoromatic']['test_suite']);
-						self::$p_save_identifier = $json['phoromatic']['trigger_id'];
-						$phoromatic_results_identifier = self::$p_save_identifier;
+						$phoromatic_results_identifier = $json['phoromatic']['trigger_id'];
 						$phoromatic_save_identifier = $json['phoromatic']['save_identifier'];
 						self::$p_schedule_id = isset($json['phoromatic']['schedule_id']) ? $json['phoromatic']['schedule_id'] : false;
-						self::$p_trigger_id = self::$p_save_identifier;
+						self::$p_trigger_id = $json['phoromatic']['trigger_id'];
 						$benchmark_ticket_id = isset($json['phoromatic']['benchmark_ticket_id']) ? $json['phoromatic']['benchmark_ticket_id'] : null;
 						self::$benchmark_ticket_id = $benchmark_ticket_id;
 						phoromatic::update_system_status('Running Benchmarks For: ' . $phoromatic_save_identifier);
 						pts_client::$skip_log_file_type_checks = isset($json['phoromatic']['settings']['AllowAnyDataForLogFiles']) && pts_strings::string_bool($json['phoromatic']['settings']['AllowAnyDataForLogFiles']);
+						pts_module::set_option('skip_log_file_type_checks', (pts_client::$skip_log_file_type_checks ? 1 : 0));
 
 						if(pts_strings::string_bool($json['phoromatic']['settings']['RunInstallCommand']))
 						{
@@ -742,6 +741,11 @@ class phoromatic extends pts_module_interface
 								// Handle uploading data to server
 								$result_file = new pts_result_file(self::$test_run_manager->get_file_name());
 								$upload_system_logs = pts_strings::string_bool($json['phoromatic']['settings']['UploadSystemLogs']);
+								pts_module::set_option('upload_system_logs', ($upload_system_logs ? 1 : 0));
+								$upload_install_logs = isset($json['phoromatic']['settings']['UploadInstallLogs']) && pts_strings::string_bool($json['phoromatic']['settings']['UploadInstallLogs']);
+								pts_module::set_option('upload_install_logs', ($upload_install_logs ? 1 : 0));
+								$upload_run_logs = isset($json['phoromatic']['settings']['UploadRunLogs']) && pts_strings::string_bool($json['phoromatic']['settings']['UploadRunLogs']);
+								pts_module::set_option('upload_run_logs', ($upload_run_logs ? 1 : 0));
 								$server_response = self::upload_test_result($result_file, $upload_system_logs, (isset($json['phoromatic']['schedule_id']) ? $json['phoromatic']['schedule_id'] : null), $phoromatic_save_identifier, $json['phoromatic']['trigger_id'], $elapsed_benchmark_time, $benchmark_ticket_id);
 								//pts_client::$pts_logger->log('DEBUG RESPONSE MESSAGE: ' . $server_response);
 								if(!pts_strings::string_bool($json['phoromatic']['settings']['ArchiveResultsLocally']))
@@ -848,7 +852,7 @@ class phoromatic extends pts_module_interface
 
 			// TODO: Potentially integrate this code below shared with pts_openbenchmarking_client into a unified function for validating system log files
 			$system_log_dir = $result_file->get_system_log_dir();
-			if(is_dir($system_log_dir) && $upload_system_logs)
+			if(is_dir($system_log_dir) && ($upload_system_logs || pts_module::read_option('upload_system_logs', 0) != 0))
 			{
 				$is_valid_log = true;
 				if(pts_client::$skip_log_file_type_checks == false)
@@ -936,9 +940,14 @@ class phoromatic extends pts_module_interface
 				$log_types['system-logs'] = $result_file->get_system_log_dir();
 			}
 
-			// XXX: finish plumbing installation/test logs into Phoromatic. Namely just add new settings option, and get phoromatic_result using pts_result_viewer_embed
-			//$log_types['installation-logs'] = $result_file->get_test_installation_log_dir();
-			//$log_types['test-logs'] = $result_file->get_test_log_dir();
+			if(pts_module::read_option('upload_install_logs', 0) != 0)
+			{
+				$log_types['installation-logs'] = $result_file->get_test_installation_log_dir();
+			}
+			if(pts_module::read_option('upload_run_logs', 0) != 0)
+			{
+				$log_types['test-logs'] = $result_file->get_test_log_dir();
+			}
 
 			foreach($log_types as $index => $log_dir)
 			{
