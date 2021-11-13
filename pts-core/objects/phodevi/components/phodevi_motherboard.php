@@ -512,6 +512,21 @@ class phodevi_motherboard extends phodevi_device_interface
 				{
 					$info .= (substr($version, 0, 1) == 'v' ? ' ' : ' v') . $version;
 				}
+
+				if(stripos($info, 'Dell ') !== false && (phodevi::is_root() || is_readable('/dev/mem')) && pts_client::executable_in_path('dmidecode'))
+				{
+					$dmi_output = shell_exec('dmidecode -s system-product-name 2>&1');
+					if(stripos($dmi_output, ' ') !== false && stripos($dmi_output, 'invalid') === false && stripos($dmi_output, 'System Product') === false && stripos($dmi_output, 'not ') === false)
+					{
+						$old_info = trim(str_ireplace(array('Dell ', 'Inc.'), '', $info));
+						$info = trim($dmi_output) . (!empty($old_info) && strpos($dmi_output, $old_info) === false ? ' [' . $old_info . ']' : '');
+					}
+
+					if(stripos($info, 'Dell') === false)
+					{
+						$info = 'Dell ' . $info;
+					}
+				}
 			}
 
 			if(empty($info))
@@ -587,6 +602,26 @@ class phodevi_motherboard extends phodevi_device_interface
 			if(empty($info))
 			{
 				$info = phodevi_windows_parser::get_wmi_object('Win32_MotherboardDevice', 'Name');
+			}
+
+			if(stripos($info, 'Dell ') !== false)
+			{
+				$wmi = shell_exec('wmic csproduct get name');
+				if(($x = strpos($wmi, 'Name')) !== false)
+				{
+					$wmi = trim(substr($wmi, $x + 4));
+
+					if(!empty($wmi) && stripos($wmi, 'System Product') === false)
+					{
+						if(stripos($wmi, 'Dell ') === false)
+						{
+							$wmi = 'Dell ' . $wmi;
+						}
+
+						$old_info = trim(str_ireplace(array('Dell ', 'Inc.'), '', $info));
+						$info = $wmi . (!empty($old_info) && strpos($wmi, $old_info) === false ? ' [' . $old_info . ']' : '');
+					}
+				}
 			}
 		}
 
