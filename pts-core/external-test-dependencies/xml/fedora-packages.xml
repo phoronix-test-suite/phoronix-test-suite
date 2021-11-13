@@ -165,7 +165,7 @@
 		</Package>
 		<Package>
 			<GenericName>qt5-development</GenericName>
-			<PackageName>qt5-qtbase-devel qt5-devel</PackageName>
+			<PackageName>qt5-qtbase-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>autoconf</GenericName>
