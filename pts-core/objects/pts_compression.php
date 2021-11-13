@@ -162,7 +162,8 @@ class pts_compression
 
 		$zip = new ZipArchive();
 
-		if($zip->open($zip_file, ZIPARCHIVE::CREATE) !== true)
+		// Avoid "using empty file as ZipArchive is deprecated"
+		if($zip->open($zip_file, (PHP_VERSION_ID > 80000 ? ZIPARCHIVE::OVERWRITE : ZIPARCHIVE::CREATE)) !== true)
 		{
 			$success = false;
 		}

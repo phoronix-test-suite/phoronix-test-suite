@@ -66,7 +66,7 @@ class phodevi_gpu extends phodevi_device_interface
 			// Could improve detection above to only AMD Radeon graphics...
 			$amd_debug_glxinfo = shell_exec('AMD_DEBUG=info glxinfo 2>&1 | grep vram');
 
-			if(($x = strpos($amd_debug_glxinfo, 'vram_vis_size = ')) !== false)
+			if($amd_debug_glxinfo != null && ($x = strpos($amd_debug_glxinfo, 'vram_vis_size = ')) !== false)
 			{
 				$amd_debug_glxinfo = substr($amd_debug_glxinfo, $x + 16);
 				$amd_debug_glxinfo = substr($amd_debug_glxinfo, 0, strpos($amd_debug_glxinfo, PHP_EOL));

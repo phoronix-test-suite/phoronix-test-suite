@@ -404,8 +404,12 @@ class pts_strings
 	}
 	public static function remove_redundant($string, $redundant_char)
 	{
+		if(empty($string))
+		{
+			return '';
+		}
 		$prev_char = null;
-		$new_string = null;
+		$new_string = '';
 
 		for($i = 0, $l = strlen($string); $i < $l; $i++)
 		{
