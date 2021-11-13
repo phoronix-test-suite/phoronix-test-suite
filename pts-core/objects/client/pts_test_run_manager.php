@@ -1714,11 +1714,31 @@ class pts_test_run_manager
 			// so if running a result file, don't change the ordering of the existing results
 
 			// Sort the run order so that all tests that are similar are grouped together, etc
-			usort($this->tests_to_run, array('pts_test_run_manager', 'cmp_result_object_sort'));
-		}
-		if(pts_client::read_env('RUN_TESTS_IN_RANDOM_ORDER'))
-		{
-			shuffle($this->tests_to_run);
+			switch(strtolower(getenv('TEST_EXECUTION_SORT')))
+			{
+				case 'none': // natural order
+					break;
+				case 'random':
+					shuffle($this->tests_to_run);
+					break;
+				case 'dependencies':
+					usort($this->tests_to_run, array('pts_test_run_manager', 'compare_result_objects_by_dependencies'));
+					break;
+				case 'test-estimated-time':
+					usort($this->tests_to_run, array('pts_test_run_manager', 'compare_result_objects_by_estimated_time'));
+					break;
+				case 'test-estimated-time-desc':
+					usort($this->tests_to_run, array('pts_test_run_manager', 'compare_result_objects_by_estimated_time'));
+					$this->tests_to_run = array_reverse($this->tests_to_run);
+					break;
+				case 'test':
+					usort($this->tests_to_run, array('pts_test_run_manager', 'compare_result_objects_by_test_identifier'));
+					break;
+				case 'default':
+				default:
+					usort($this->tests_to_run, array('pts_test_run_manager', 'compare_result_objects_by_subsystem_and_types'));
+					break;
+			}
 		}
 
 		$this->prompt_save_results = $run_contains_a_no_result_type == false || $unique_test_count > 1;
@@ -1840,7 +1860,7 @@ class pts_test_run_manager
 	{
 		return $this->test_subset;
 	}
-	public static function cmp_result_object_sort($a, $b)
+	public static function compare_result_objects_by_subsystem_and_types($a, $b)
 	{
 		$a_comp = $a->test_profile->get_test_hardware_type() . $a->test_profile->get_test_software_type() . $a->test_profile->get_internal_tags_raw() . $a->test_profile->get_result_scale_formatted() . $a->test_profile->get_identifier(true);
 		$b_comp = $b->test_profile->get_test_hardware_type() . $b->test_profile->get_test_software_type() . $b->test_profile->get_internal_tags_raw() . $b->test_profile->get_result_scale_formatted() . $b->test_profile->get_identifier(true);
@@ -1859,6 +1879,23 @@ class pts_test_run_manager
 		}
 
 		return strcmp($a_comp, $b_comp);
+	}
+	public static function compare_result_objects_by_test_identifier($a, $b)
+	{
+		return strcmp($a->test_profile->get_identifier(), $b->test_profile->get_identifier());
+	}
+	public static function compare_result_objects_by_estimated_time($a, $b)
+	{
+		return $a->get_estimated_run_time() < $b->get_estimated_run_time() ? -1 : 1;
+	}
+	public static function compare_result_objects_by_dependencies($a, $b)
+	{
+		$a_exdeps = $a->test_profile->get_external_dependencies();
+		$b_exdeps = $a->test_profile->get_external_dependencies();
+		sort($a_exdeps);
+		sort($b_exdeps);
+
+		return strcmp(implode(' ', $a_exdeps), implode(' ', $b_exdeps));
 	}
 	public static function test_result_system_compatibility_check(&$test_result, $report_errors = false)
 	{
