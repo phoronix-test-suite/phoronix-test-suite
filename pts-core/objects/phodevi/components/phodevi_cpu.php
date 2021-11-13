@@ -1184,6 +1184,7 @@ class phodevi_cpu extends phodevi_device_interface
 				165 => 'Comet Lake',
 				166 => 'Comet Lake',
 				167 => 'Rocket Lake',
+				183 => 'Raptor Lake',
 				),
 			15 => array(
 				1 => 'Clarksfield',
