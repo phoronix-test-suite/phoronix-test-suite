@@ -60,9 +60,14 @@ class hdd_read_speed extends phodevi_sensor
 	{
 		if(phodevi::is_linux())
 		{
-			$blockdev_dir = '/sys/block/';
-			$glob_regex = '{[shvm]d*,nvme*,mmcblk*}';
-			$disk_array = pts_file_io::glob($blockdev_dir . $glob_regex, GLOB_BRACE);
+			if(defined('GLOB_BRACE'))
+			{
+				$disk_array = pts_file_io::glob('/sys/block/{[shvm]d*,nvme*,mmcblk*}', GLOB_BRACE);
+			}
+			else
+			{
+				$disk_array = pts_file_io::glob('/sys/block/nvme*');
+			}
 
 			$supported = array();
 
