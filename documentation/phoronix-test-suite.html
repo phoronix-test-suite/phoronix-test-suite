@@ -860,7 +860,7 @@ NOTE: Use the "system-sensors" command to see what sensors are available for mon
 <p><strong>TEST_RESULTS_DESCRIPTION</strong></p>
 <p>When this variable is set, the value will be used as the test results description when saving the test results.</p>
 <p><strong>PRESET_OPTIONS</strong></p>
-<p>For setting any test option(s) from an environment variable rather than being prompted for the options when running a test. Example: <em>PRESET_OPTIONS="stream.run-type=Add" ./phoronix-test-suite benchmark stream</em>. Multiple options can be passed to this environment variable when delimited by a semicolon.</p>
+<p>For setting any test option(s) from an environment variable rather than being prompted for the options when running a test. The string format for passing the options is <em>&#60test-name&#62.&#60test-option-identifier-from-XML-file&#62=&#60test-option-value&#62</em>. Example: <em>PRESET_OPTIONS=&quot;stream.run-type=Add&quot; ./phoronix-test-suite benchmark stream</em>. Multiple options can be passed to this environment variable when delimited by a semicolon.</p>
 <p><strong>SKIP_TESTS</strong></p>
 <p>If there are any test(s) to exempt from the testing process, specify them in this variable. Multiple tests can be waived by delimiting each test identifier by a comma. A test hardware type (i.e. Graphics) can also be supplied for skipping a range of tests.</p>
 <p><strong>SKIP_TESTS_HAVING_ARGS</strong></p>

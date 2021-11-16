@@ -869,7 +869,7 @@ When this variable is set, the value will be used as the test results descriptio
 
 **PRESET_OPTIONS**
 
-For setting any test option(s) from an environment variable rather than being prompted for the options when running a test. Example: *PRESET_OPTIONS="stream.run-type=Add" ./phoronix-test-suite benchmark stream* . Multiple options can be passed to this environment variable when delimited by a semicolon.
+For setting any test option(s) from an environment variable rather than being prompted for the options when running a test. The string format for passing the options is *&lt;test-name&gt;&lt;test-option-identifier-from-XML-file&gt;=&lt;test-option-value&gt;*. Example: *PRESET_OPTIONS="stream.run-type=Add" ./phoronix-test-suite benchmark stream* . Multiple options can be passed to this environment variable when delimited by a semicolon.
 
 **SKIP_TESTS**
 
