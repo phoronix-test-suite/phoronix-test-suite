@@ -120,7 +120,8 @@ class perf_tips extends pts_module_interface
 			// BELOW ARE CHECKS TO MAKE IF WANTING TO SHOW FOR 'Processor' OR 'System' TESTS
 			$cpu_scaling_governor = phodevi::read_property('cpu', 'scaling-governor');
 
-			if(phodevi::is_linux() && stripos($cpu_scaling_governor, 'performance') === false)
+			// Linux: Check if scaling governor is available and if it is set to performance
+			if(phodevi::is_linux() && $cpu_scaling_governor && stripos($cpu_scaling_governor, 'performance') === false)
 			{
 				$perf_tips[] = new pts_perf_tip_msg('The CPU scaling governor is currently not set to performance. It\'s possible to obtain greater performance if using the performance governor.', 'echo performance | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor', 'https://openbenchmarking.org/result/1706268-TR-CPUGOVERN32');
 			}
