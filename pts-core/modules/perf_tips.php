@@ -122,7 +122,7 @@ class perf_tips extends pts_module_interface
 
 			if(phodevi::is_linux() && stripos($cpu_scaling_governor, 'performance') === false)
 			{
-				$perf_tips[] = new pts_perf_tip_msg('The powersave CPU scaling governor is currently in use. It\'s possible to obtain greater performance if using the performance governor.', 'echo performance | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor', 'https://openbenchmarking.org/result/1706268-TR-CPUGOVERN32');
+				$perf_tips[] = new pts_perf_tip_msg('The CPU scaling governor is currently not set to performance. It\'s possible to obtain greater performance if using the performance governor.', 'echo performance | tee /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor', 'https://openbenchmarking.org/result/1706268-TR-CPUGOVERN32');
 			}
 
 			if(is_file('/sys/devices/system/cpu/cpufreq/boost'))
