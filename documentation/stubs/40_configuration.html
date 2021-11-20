@@ -4,8 +4,9 @@
 </head>
 <body>
 <h1>User Files &amp; Folders</h1>
+<p>These files/folders are the default locations when running as a non-root Phoronix Test Suite user. When running as root, the paths may appear in standard system paths like <em>/etc/phoronix-test-suite.xml</em>.</p>
 <p><strong>~/.phoronix-test-suite/user-config.xml</strong></p>
-<p>This is a per-user configuration file. Among the information stored here is the test options, locations for storing files, and batch mode options. This file is formatted in XML.</p>
+<p>This is a per-user configuration file. Among the information stored here is the test options, locations for storing files, and batch mode options. This file is formatted in XML. When run as root, this path is <em>/etc/phoronix-test-suite.xml</em>.</p>
 <p><strong>~/.phoronix-test-suite/graph-config.json</strong></p>
 <p>This is a per-user configuration file for storing graph attributes. The adjustable options include HTML hex color codes for different areas of the graph, dimensions of the graph, and font sizes. This file is formatted in JSON.</p>
 <p><strong>~/.phoronix-test-suite/download-cache/</strong></p>
@@ -20,9 +21,5 @@
 <p>This is the directory where test profiles are stored.</p>
 <p><strong>~/.phoronix-test-suite/test-suites/</strong></p>
 <p>This is the directory where test suites are stored.</p>
-<h1>Module Environment Variables</h1>
-<p><strong>TEST_TIMEOUT_AFTER</strong></p>
-<p>When this variable is set, the value will can be set to <em>auto</em> or a positive integer. The value indicates the number of minutes until a test run should be aborted, such as for a safeguard against hung/deadlocked processes or other issues. Setting this to a high number as a backup would be recommended for fending off possible hangs / stalls in the testing process if the test does not quit. If the value is <em>auto</em>, it will quit if the time of a test run exceeds 3x the average time it normally takes the particular test to complete its run. In the future, auto might be enabled by default in a future PTS release.</p>
-
 </body>
 </html>

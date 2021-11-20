@@ -282,7 +282,7 @@ This option can be used for validating a Phoronix Test Suite test suite as being
 This option will read a saved test results file and print the statistics about how long the testing took to complete.
 
 #### auto-sort-result-file  [Test Result]
-This option is used if you wish to automatically attempt to sort the results by their result identifier string.
+This option is used if you wish to automatically attempt to sort the results by their result identifier string. Alternatively, if using the environment variable "SORT_BY" other sort modes can be used, such as SORT_BY=date / SORT_BY=date-desc for sorting by the test run-time/date.
 
 #### compare-results-to-baseline  [Test Result] [Test Result]
 This option will allows you to specify a result as a baseline (first parameter) and a second result file (second parameter) that will offer some analysis for showing how the second result compares to the first in matching tests.
@@ -327,13 +327,16 @@ This option is used if you wish to manually change the order in which test resul
 This option will read a saved test results file and output the raw result file run data to a CSV file. This raw (individual) result file output is intended for data analytic purposes where the result-file-to-csv is more end-user-ready.
 
 #### result-file-to-csv  [Test Result]
-This option will read a saved test results file and output the system hardware and software information along with the results to a CSV output. The CSV (Comma Separated Values) output can then be loaded into a spreadsheet for easy viewing.
+This option will read a saved test results file and output the system hardware and software information along with the results to a CSV output. The CSV (Comma Separated Values) output can then be loaded into a spreadsheet for easy viewing. The outputted file appears in the user home directory or can otherwise be controlled via the OUTPUT_DIR and OUTPUT_FILE environment variables.
+
+#### result-file-to-html  [Test Result]
+This option will read a saved test results file and output the system hardware and software information along with the results to pure HTML file. No external files are required for CSS/JavaScript or other assets. The graphs are rendered as inline SVG. This is a pure HTML-only representation of the results for emailing or other easy analysis outside of the Phoronix Test Suite. The outputted file appears in the user home directory or can otherwise be controlled via the OUTPUT_DIR and OUTPUT_FILE environment variables.
 
 #### result-file-to-json  [Test Result]
-This option will read a saved test results file and output the basic result information to JSON (JavaScript Object Notation).
+This option will read a saved test results file and output the basic result information to JSON (JavaScript Object Notation). The outputted file appears in the user home directory or can otherwise be controlled via the OUTPUT_DIR and OUTPUT_FILE environment variables.
 
 #### result-file-to-pdf  [Test Result]
-This option will read a saved test results file and output the system hardware and software information along with the results to a PDF file.
+This option will read a saved test results file and output the system hardware and software information along with the results to a PDF file. The outputted file appears in the user home directory or can otherwise be controlled via the OUTPUT_DIR and OUTPUT_FILE environment variables.
 
 #### result-file-to-text  [Test Result]
 This option will read a saved test results file and output the system hardware and software information to the terminal. The test results are also outputted.
@@ -400,6 +403,9 @@ This option can be used for resetting the Phoronix Test Suite user configuration
 
 #### user-config-set
 This option can be used for setting an XML value in the Phoronix Test Suite user configuration file.
+
+#### variables
+This option will print all of the official environment variables supported by the Phoronix Test Suite for user configuration purposes. These environment variables are also listed as part of the official Phoronix Test Suite documentation while this command will also show the current value of the variables if currently set.
 
 
 ## Result Analysis
@@ -817,9 +823,11 @@ Alpine LinuxAmazonAngstromArch LinuxClear LinuxClearOSClearOS Core ServerDebianD
 # Configuration
 
 ## User Files & Folders
+These files/folders are the default locations when running as a non-root Phoronix Test Suite user. When running as root, the paths may appear in standard system paths like */etc/phoronix-test-suite.xml* .
+
 **~/.phoronix-test-suite/user-config.xml**
 
-This is a per-user configuration file. Among the information stored here is the test options, locations for storing files, and batch mode options. This file is formatted in XML.
+This is a per-user configuration file. Among the information stored here is the test options, locations for storing files, and batch mode options. This file is formatted in XML. When run as root, this path is */etc/phoronix-test-suite.xml* .
 
 **~/.phoronix-test-suite/graph-config.json**
 
@@ -848,148 +856,6 @@ This is the directory where test profiles are stored.
 **~/.phoronix-test-suite/test-suites/**
 
 This is the directory where test suites are stored.
-
-
-## Environment Variables
-**TEST_TIMEOUT_AFTER**
-
-When this variable is set, the value will can be set to *auto* or a positive integer. The value indicates the number of minutes until a test run should be aborted, such as for a safeguard against hung/deadlocked processes or other issues. Setting this to a high number as a backup would be recommended for fending off possible hangs / stalls in the testing process if the test does not quit. If the value is *auto* , it will quit if the time of a test run exceeds 3x the average time it normally takes the particular test to complete its run. In the future, auto might be enabled by default in a future PTS release.
-
-**TEST_RESULTS_NAME**
-
-When this variable is set, the value will be used as the name for automatically saving the test results.
-
-**TEST_RESULTS_IDENTIFIER**
-
-When this variable is set, the value will be used as the test identifier when automatically saving the test results.
-
-**TEST_RESULTS_DESCRIPTION**
-
-When this variable is set, the value will be used as the test results description when saving the test results.
-
-**PRESET_OPTIONS**
-
-For setting any test option(s) from an environment variable rather than being prompted for the options when running a test. Example: *PRESET_OPTIONS="stream.run-type=Add" ./phoronix-test-suite benchmark stream* . Multiple options can be passed to this environment variable when delimited by a semicolon.
-
-**SKIP_TESTS**
-
-If there are any test(s) to exempt from the testing process, specify them in this variable. Multiple tests can be waived by delimiting each test identifier by a comma. A test hardware type (i.e. Graphics) can also be supplied for skipping a range of tests.
-
-**SKIP_TESTS_HAVING_ARGS**
-
-If any of the test(s) have an argument matching any strings contained in this environment variable, the test execution will be skipped. Multiple strings can be set when delimiting by a comma.
-
-**RUN_TESTS_IN_RANDOM_ORDER**
-
-Setting this environment variable will cause the tests to be run in a random order.
-
-**SKIP_TESTING_SUBSYSTEMS**
-
-If you are running a set of benchmarks (namely a result file) but wish to skip some of the tests that don't belong to a certain test type group, you can set the hardware types to test via this environment variable. E.g. setting *SKIP_TESTING_SUBSYSTEMS=Graphics* will skip all test profiles to run that are not of the graphics test group. Multiple types should be delimited by a comma.
-
-**PTS_MODULE_SETUP**
-
-This variable can be used to load Phoronix Test Suite module settings automatically when using the *module-setup* option. An example would be: *PTS_MODULE_SETUP="phoromatic.remote_host=http://www.phoromatic.com/; phoromatic.remote_account=123456; phoromatic.remote_verifier=ABCD" phoronix-test-suite module-setup phoromatic* .
-
-**PTS_MODULES**
-
-If there are any Phoronix Test Suite modules to additionally load, they can be specified here. Multiple modules can be supplied by delimiting them with a comma. The more appropriate way of loading Phoronix Test Suite modules for longer periods of time is by using the *~/.phoronix-test-suite/user-config.xml* configuration.
-
-**NO_PHODEVI_CACHE**
-
-This is a debugging option to disable the Phodevi cache from being loaded of cached software/hardware information. Instead, all software/hardware will be polled from the Phodevi library without caching.
-
-**EXTERNAL_PHODEVI_CACHE**
-
-This option can be used for loading an external Phodevi cache. Such as loading the native hardware/software information from within a Windows Wine client from a native system host.
-
-**PTS_DISPLAY_MODE**
-
-If you wish to load a non-default display mode for a single instance, specify the mode in this variable.
-
-**TOTAL_LOOP_TIME**
-
-When running any test(s), if you would like the test(s) to continue running as a loop until a certain time has been reached, this variable can be used. The value should be the number of minutes to run the testing process before the loop is ended. The testing will finish whenever the currently active test has finished once the time has elapsed. The minimum value allowed is 10 minutes.
-
-**LIMIT_ELAPSED_TEST_TIME**
-
-If you want to ensure that the time for a given Phoronix Test Suite process doesn't elapse past a certain number of minutes, specify the number of minutes for this environment variable. When the amount of time spent testing exceeds that amount, the testing will end prematurely while still saving the tests that were completed in time.
-
-**TOTAL_LOOP_COUNT**
-
-When running any test(s), if you would like the test(s) to continue running for a number of times, this variable can be used. The value should be the number of times to loop the testing process before ending.
-
-**FORCE_TIMES_TO_RUN**
-
-If you wish to override the number of times to run each test -- rather than the Phoronix Test Suite using the number of times specified in each test profile -- this variable can be used.
-
-**FORCE_TIMES_TO_RUN_MULTIPLE**
-
-This option allows specifying a multiple for increasing the number of times a test will run based upon the original TimesToRun value specified in the test definition. This allows for increasing the expected times to run based on a multiple of that default rather than a static value.
-
-**FORCE_MIN_TIMES_TO_RUN**
-
-This is similar to the FORCE_TIMES_TO_RUN option but will only be used if the test profile's run count is less than this defined value.
-
-**FORCE_MIN_TIMES_TO_RUN_CUTOFF**
-
-When used in conjunction with FORCE_MIN_TIMES_TO_RUN, the override value will only be applied to test profiles where its average run-time length (in minutes) is less than the value specified by FORCE_MIN_TIMES_TO_RUN_CUTOFF.
-
-**FORCE_MIN_DURATION_PER_TEST**
-
-This is similar  to FORCE_MIN_TIMES_TO_RUN but allows specifying a time (in minutes) that each test should be run for. Each test will loop at least until that amount of time has elapsed. This can be useful for short-running tests if wanting to ensure each test is run long enough to rule out system noise.
-
-**IGNORE_RUNS**
-
-IGNORE_RUNS can be passed a comma-separated list of runs to skip on each benchmark. For example, IGNORE_RUNS=1 would always drop the first run from being recorded.
-
-**NO_FILE_HASH_CHECKS**
-
-To disable MD5/SHA256 check-sums from being checked when downloading test files, set this variable to 1. This variable used to be known as *NO_MD5_CHECKS* , which is still honored but was changed to *NO_FILE_HASH_CHECKS* to reflect other kind of file hash sum checks.
-
-**NO_HTTPS**
-
-Set this environment variable to 1 if you don't wish to use HTTPS download links for test profiles (or the system/network lacks HTTPS support). When enabled, HTTPS links will then be done over HTTP.
-
-**PTS_DOWNLOAD_CACHE**
-
-While non-standard Phoronix Test Suite download caches can be specified within the *user-config.xml* file, an additional directory to look for potential Phoronix Test Suite download files can be specified by this variable.
-
-**GRAPH_HIGHLIGHT**
-
-If this variable is set with a valid test identifer from a result file whether you are using the *refresh-graphs* command or any other related to the rendering of test results on a bar graph, the specified test identifier's result will be rendered in a different color than the other test results. Multiple identifiers can be specified when delimited by a comma. Additionally, for each key it is possible to provide the actual color value, or an index in the color palette. Example: "will_be_different,group1a=1,group1b=1,blue=#0000ff"
-
-**TEST_EXEC_PREPEND**
-
-Set this variable to any command/environment variable that you may be passed prepended to the test execution string at runtime.
-
-**VIDEO_MEMORY**
-
-If Phodevi fails to detect the system's video memory capacity or is incorrectly detected, the video memory capacity (in MB) can be specified by this variable.
-
-**OVERRIDE_VIDEO_MODES**
-
-If Phodevi fails to detect all of the system's monitor video modes or a separate set of modes would be preferred, the modes can be specified in this variable. Example: *OVERRIDE_VIDEO_MODES=800x600,1024x768,1280x1024 phoronix-test-suite benchmark nexuiz* .
-
-**SKIP_TEST_SUPPORT_CHECKS**
-
-If this environment variable is set, it will not honor the support checks made by individual test profiles. I.e. test profiles that would normally be considered un-supported on a given platform are attempted to install and run regardless.
-
-**SKIP_ALL_TEST_SUPPORT_CHECKS**
-
-If this environment variable is set, all tests will be permitted on the client for execution. SKIP_ALL_TEST_SUPPORT_CHECKS is more liberal than SKIP_TEST_SUPPORT_CHECKS in letting disk tests run on RAM-based file-systems, attempt to run 2D/3D tests on VESA display drivers, and other special cases.
-
-**DEFAULT_VIDEO_MODE**
-
-If Phodevi fails to detect the system's monitor standard / default resolution, the mode can be specified in this variable. Example: *DEFAULT_VIDEO_MODE=1680x1050 phoronix-test-suite benchmark nexuiz* .
-
-**SKIP_EXTERNAL_DEPENDENCIES**
-
-To skip the Phoronix Test Suite external dependency checking/installation when installing a test, set this environment variable to *1* . If wishing to skip only certain external dependencies, set this variable's value to the name of the external dependencies (the generic dependency names used by the Phoronix Test Suite) to not install. Multiple dependencies to skip can be delimited by a comma.
-
-**PTS_EXTRA_SYSTEM_LOGS_DIR**
-
-By default the Phoronix Test Suite collects common system logs (cpuinfo, lscpu, dmesg) during the benchmarking process when saving test results. If wanting to collect additional, arbitrary system log files specific to your operating environment or for other niche system information, the *PTS_EXTRA_SYSTEM_LOGS_DIR* environment variable can be set as a path to a directory containing such log files. Prior to running the Phoronix Test Suite simply set *PTS_EXTRA_SYSTEM_LOGS_DIR* to the directory where any text files should be captured from following test completion.
 
 
 # Main Configuration File
@@ -1166,6 +1032,325 @@ If this option is set to *TRUE* when starting a Phoromatic Server instance, the 
 
 #### PhoromaticStorage
 The location for the Phoromatic Server to store test results of connected systems, account information, etc. The default location is *~/.phoronix-test-suite/phoromatic/* .
+
+
+# Environment Variables
+
+### DONT_BALANCE_TESTS_FOR_SUBSYSTEMS
+*If this value is true, the Phoronix Test Suite stress-run manager will not attempt to distribute the selected test(s) among available hardware subsystems. For stress runs with tests covering multiple subsystems (e.g. CPU, GPU, RAM), the default behavior is try to ensure the tests to run concurrently are as balanced across the tested subsystems as possible.*
+
+The value can be of type: boolean (TRUE / FALSE).
+The variable is relevant for: stress-run mode.
+
+
+### DONT_TRY_TO_ENSURE_TESTS_ARE_UNIQUE
+*When running in the stress-run mode, the default behavior will try to ensure when tests are running concurrently that as many unique tests as possible are being run. Setting this value to try will avoid that check and just attempt to truly randomize the tests being run concurrently without regard for trying to avoid duplicates.*
+
+The value can be of type: boolean (TRUE / FALSE).
+The variable is relevant for: stress-run mode.
+
+
+### FORCE_ABSOLUTE_MIN_TIMES_TO_RUN
+*This option is similar to FORCE_MIN_TIMES_TO_RUN but is *absolute* in ensuring each test will run at least that number of times and not subject to change of any timed cut-offs or other factors.*
+
+The value can be of type: positive integer.
+The variable is relevant for: test execution / benchmarking.
+
+
+### FORCE_MIN_DURATION_PER_TEST
+*This option can be used to specify the minimum number of times to run a given benchmark. Rather than relying on a static times-to-run count, the test will keep looping until the time has exceeded this number (in minutes).*
+
+The value can be of type: positive integer.
+The variable is relevant for: test execution / benchmarking.
+
+
+### FORCE_MIN_TIMES_TO_RUN
+*This option is similar to FORCE_TIMES_TO_RUN but is used for specifying the minimum possible number of times to run. Unlike FORCE_TIMES_TO_RUN, the run count can still exceed this value if the deviation between results or other factors are too high.*
+
+The value can be of type: positive integer.
+The variable is relevant for: test execution / benchmarking.
+
+
+### FORCE_MIN_TIMES_TO_RUN_CUTOFF
+*Used in conjunction with the FORCE_MIN_TIMES_TO_RUN, the FORCE_MIN_TIMES_TO_RUN_CUTOFF can be used for specifyingg the amount of time (in minutes) before foregoing additional runs. This allows cutting off the testing early if this time threshold has been reached.*
+
+The value can be of type: positive integer.
+The variable is relevant for: test execution / benchmarking.
+
+
+### FORCE_TIMES_TO_RUN
+*This option can be used to override the default number of times a given test is run. Rather than being specified by the individual test profile, FORCE_TIMES_TO_RUN allows for specifying the number of times to run each benchmark.*
+
+The value can be of type: positive integer.
+The variable is relevant for: test execution / benchmarking.
+
+
+### FORCE_TIMES_TO_RUN_MULTIPLE
+*This option is similar to FORCE_TIMES_TO_RUN but the value is a multiple for how many times the test profile should be run respective to its default value. If the value is set to 2 and a given test profile by default is set to run 3 times, it would now instead be run a total of 6 times. This can be used for increasing the statistical significance of test results by using a multiple of the default rather than a static number as is the case with FORCE_TIMES_TO_RUN.*
+
+The value can be of type: positive integer.
+The variable is relevant for: test execution / benchmarking.
+
+
+### GRAPH_HIGHLIGHT
+*If automatically generating an HTML or PDF result file from the command-line and wanting to highlight desired result identifier(s), GRAPH_HIGHLIGHT can be set to a comma delimited list of result identifiers to highlight / color differently than the rest.*
+
+The value can be of type: string.
+The variable is relevant for: result output generation.
+
+
+### IGNORE_RUNS
+*This option can be used if wanting the Phoronix Test Suite to automatically toss out a specified result position when running a test profile multiple times. E.g. setting this value to 1 will toss out automatically the first run of each test profile or a value of 3 will toss out the third run of a given test. This overrides the IgnoreRuns option also available to individual test profiles. Multiple values for runs to ignore can be specified by delimiting with a comma.*
+
+The value can be of type: string.
+The variable is relevant for: test execution / benchmarking.
+
+
+### LIMIT_ELAPSED_TEST_TIME
+*This option can be used for limiting the amount of time the benchmarking process runs. The value specified is the number of minutes to allow for benchmarking. After a test finishes if that number of minutes has been exceeded, the testing process will abort early and not run any remaining tests.*
+
+The value can be of type: positive integer.
+The variable is relevant for: test execution / benchmarking.
+
+
+### NO_COLOR
+*This option when enabled will force-disable the CLI/TUI text coloring. By default the Phoronix Test Suite will attempt to use CLI/TUI text colors and bolding of text for supported terminals.*
+
+The value can be of type: boolean (TRUE / FALSE).
+
+
+### NO_COMPILER_MASK
+*By default the Phoronix Test Suite attempts to determine the intended system code compilers (namely C / C++ / Fortran) and to intercept the arguments being passed to them during test installation in order to record the prominent compiler flags being used. If this behavior causes problems for your system, NO_COMPILER_MASK can be enabled for debugging purposes to avoid this compiler intercepting/symlinking behavior.*
+
+The value can be of type: boolean (TRUE / FALSE).
+The variable is relevant for: test installation.
+
+
+### NO_DOWNLOAD_CACHE
+*Enable this option if the Phoronix Test Suite should not attempt to discover and use any local/remote Phoronix Test Suite download cache when installing tests and attempting to find those files locally or on a LAN resource.*
+
+The value can be of type: boolean (TRUE / FALSE).
+The variable is relevant for: test installation.
+
+
+### NO_EXTERNAL_DEPENDENCIES
+*Enabling this option will have the Phoronix Test Suite skip over attempting to detect and install any system/external dependencies needed to run desired test profiles. This should just be used in case of testing/evaluation purposes and may leave some tests unable to successfully build/install.*
+
+The value can be of type: boolean (TRUE / FALSE).
+The variable is relevant for: test installation.
+
+
+### NO_FILE_HASH_CHECKS
+*Enable this option if you want to skip the MD5 / SHA256 file hash checks after downloading files with known MD5/SHA256 hashsums for verification. This is namely useful for select debugging scenarios and other situations where a file may have been trivially changed / re-packaged and wishing to still install a test even though the hash no longer matches until the test profile has been updated.*
+
+The value can be of type: boolean (TRUE / FALSE).
+The variable is relevant for: test installation.
+
+
+### NO_HTTPS
+*Enable this option if wanting the Phoronix Test Suite when downloading resources to attempt to only use HTTP without any HTTPS connections. Note: some downloads may fail for servers that only support HTTPS.*
+
+The value can be of type: boolean (TRUE / FALSE).
+
+
+### NO_PHODEVI_CACHE
+*This option will disable use of the built-in Phodevi (Phoronix Device Interface) cache of system software/hardware details. When enabled, the information is not cached and will be re-computed on each query. This is mainly useful for debugging purposes.*
+
+The value can be of type: boolean (TRUE / FALSE).
+
+
+### OUTPUT_DIR
+*When exporting a result file, this option can be used for specifying the writable directory path where the exported result files should be saved to. The file-name will be automatically generated.*
+
+The value can be of type: string.
+The variable is relevant for: result output generation.
+
+
+### OUTPUT_FILE
+*When exporting a result file, this option can be used for specifying the file name / file path and name of where to save the exported result file to rather than assuming the user home directory.*
+
+The value can be of type: string.
+The variable is relevant for: result output generation.
+
+
+### PRESET_OPTIONS
+*PRESET_OPTIONS can be used for seeding the values of test profile run options from the environment (though the preferred approach for pre-configuring tests in an automated manner would be by constructing your own local test suite).  For setting any test option(s) from an environment variable rather than being prompted for the options when running a test. Example: "PRESET_OPTIONS='stream.run-type=Add' phoronix-test-suite benchmark stream".*
+
+The value can be of type: string.
+The variable is relevant for: test execution / benchmarking.
+
+
+### PRESET_OPTIONS_VALUES
+*This option is similar to PRESET_OPTIONS and uses the same syntax but rather than seeding the selected run option it uses the value verbatim as for what is passed to the test profile run option.*
+
+The value can be of type: string.
+The variable is relevant for: test execution / benchmarking.
+
+
+### PTS_CONCURRENT_TEST_RUNS
+*This option is used in the stress run/benchmarking mode to indicate the number of tests to run concurrently as part of the stress run process.*
+
+The value can be of type: positive integer.
+The variable is relevant for: stress-run mode.
+
+
+### PTS_DISPLAY_MODE
+*If you wish to load a non-default display mode for a single instance, specify the mode in this variable as an alternative to adjusting the user configuration file.*
+
+The value can be of type: enumeration (BASIC, BATCH, CONCISE, SHORT, DEFAULT).
+
+
+### PTS_DOWNLOAD_CACHE
+*PTS_DOWNLOAD_CACHE can be used for setting a path to a directory on the system containing a Phoronix Test Suite download cache if located outside one of the default locations.*
+
+The value can be of type: string.
+The variable is relevant for: test installation.
+
+
+### PTS_EXTRA_SYSTEM_LOGS_DIR
+*By default the Phoronix Test Suite collects common system logs (cpuinfo, lscpu, dmesg) during the benchmarking process when saving test results. If wanting to collect additional, arbitrary system log files specific to your operating environment or for other niche system information, this option can be set as a path to a directory containing such log files. Prior to running the Phoronix Test Suite simply set PTS_EXTRA_SYSTEM_LOGS_DIR to the directory where any files should be captured from following test completion.*
+
+The value can be of type: string.
+The variable is relevant for: test execution / benchmarking.
+
+
+### PTS_IGNORE_MODULES
+*Enabling this option can be used for temporarily disabling Phoronix Test Suite modules from being loaded on a given run. This is primarily for debugging purposes.*
+
+The value can be of type: boolean (TRUE / FALSE).
+The variable is relevant for: modules.
+
+
+### PTS_MODULES
+*This option can be used for specifying a comma-separated list of Phoronix Test Suite modules to load at start-time, complementary to the modules specified in the user configuration file. PTS_MODULES is namely used for development purposes or wanting to temporarily enable a given module.*
+
+The value can be of type: string.
+The variable is relevant for: modules.
+
+
+### PTS_MODULE_SETUP
+*This option can be used for seeding a module's settings when running the phoronix-test-suite module-setup command. An example would be: "PTS_MODULE_SETUP='phoromatic.remote_host=http://www.phoromatic.com/; phoromatic.remote_account=123456; phoromatic.remote_verifier=ABCD' phoronix-test-suite module-setup phoromatic".*
+
+The value can be of type: string.
+The variable is relevant for: modules.
+
+
+### PTS_SILENT_MODE
+*This option when enabled will yield slightly less verbose Phoronix Test Suite terminal output by silencing unnecessary messages / prompts.*
+
+The value can be of type: boolean (TRUE / FALSE).
+
+
+### PTS_TEST_INSTALL_ROOT_PATH
+*This option can be used for overriding where tests are installed to on the system. An absolute writable directory path can be the value if wanting to override the default (or user configuration file specified) test installation directory path.*
+
+The value can be of type: string.
+The variable is relevant for: test installation, test execution / benchmarking, stress-run mode.
+
+
+### SKIP_EXTERNAL_DEPENDENCIES
+*Rather than NO_EXTERNAL_DEPENDENCIES to outright disable the Phoronix Test Suite external dependency handling, SKIP_EXTERNAL_DEPENDENCIES can be used with a value of a comma separated list of specific external dependencies to avoid. This is mostly useful for any external dependencies that may be out of date or fail to install on your platform.*
+
+The value can be of type: string.
+The variable is relevant for: test installation.
+
+
+### SKIP_TESTING_SUBSYSTEMS
+*This option is similar to SKIP_TESTS but allows for specifying hardware subsystems (e.g. Graphics) to skip from installing/running any test profiles beloning to that subsystem type. Multiple subsystems can be specified when delimited by a comma.*
+
+The value can be of type: string.
+The variable is relevant for: test installation, test execution / benchmarking.
+
+
+### SKIP_TESTS
+*SKIP_TESTS will skip the test installation and execution of any test identifiers specified by this option. Multiple test identifiers can be specified, delimited by a comma.*
+
+The value can be of type: string.
+The variable is relevant for: test installation, test execution / benchmarking.
+
+
+### SKIP_TESTS_HAVING_ARGS
+*SKIP_TESTS_HAVING_ARGS will skip the test installation and execution of any tests where the specified test arguments match the given string. E.g. if wanting to skip all Vulkan tests in a result file but run just the OpenGL tests or similar where wanting to limit the tests being run from within a result file. Multiple values can be specified when delimited by a comma.*
+
+The value can be of type: string.
+The variable is relevant for: test installation, test execution / benchmarking.
+
+
+### SKIP_TEST_SUPPORT_CHECKS
+*This debugging/validation option will have the Phoronix Test Suite skip any test support checks for a test profile (architecture compatibility, OS compatibility, etc) and just assume all tests are supported.*
+
+The value can be of type: boolean (TRUE / FALSE).
+The variable is relevant for: test installation, test execution / benchmarking.
+
+
+### SORT_BY
+*This option can be used for specifying the sort order for commands like auto-sort-result-file whether to sort by identifier name, test length, etc.*
+
+**Default Value:** identifier
+
+The value can be of type: enumeration (date, date-asc, date-desc, identifier).
+
+
+### TERMINAL_WIDTH
+*This option is used for overriding the detected default of the terminal width for the CLI/TUI interface.*
+
+The value can be of type: positive integer.
+
+
+### TEST_EXECUTION_SORT
+*This option can be used for controlling the sort order that the test profiles / benchmarks are run in, whether sorted or not and in what manner.*
+
+The value can be of type: enumeration (none, random, dependencies, test-estimated-time, test-estimated-time-desc, test, default).
+The variable is relevant for: test execution / benchmarking.
+
+
+### TEST_EXEC_PREPEND
+*This option can be used if wanting to specify a binary (e.g. sudo, cgroup or other resource limiting binaries or performance counters) to be called as the binary pre-pended prior to running a test profile binary/script. This option is namely used for specialized use-cases.*
+
+The value can be of type: string.
+The variable is relevant for: test execution / benchmarking.
+
+
+### TEST_RESULTS_DESCRIPTION
+*This option can be used for specifying the result file description for saving that string and not be prompted for providing a description during the test execution process.*
+
+The value can be of type: string.
+The variable is relevant for: test execution / benchmarking, stress-run mode.
+
+
+### TEST_RESULTS_IDENTIFIER
+*This option can be used for specifying the result identifier for distinguishing this run within the saved result file.*
+
+The value can be of type: string.
+The variable is relevant for: test execution / benchmarking, stress-run mode.
+
+
+### TEST_RESULTS_NAME
+*This option can be used for specifying the result file name for saving the test/benchmark results automatically to the given name.*
+
+The value can be of type: string.
+The variable is relevant for: test execution / benchmarking, stress-run mode.
+
+
+### TEST_TIMEOUT_AFTER
+*When this variable is set, the value will can be set to "auto" or a positive integer. The value indicates the number of minutes until a test run should be aborted, such as for a safeguard against hung/deadlocked processes or other issues. Setting this to a high number as a backup would be recommended for fending off possible hangs / stalls in the testing process if the test does not quit. If the value is "auto", it will quit if the time of a test run exceeds 3x the average time it normally takes the particular test to complete its run. In the future, auto might be enabled by default in a future PTS release. This functionality is handled by a Phoronix Test Suite module*
+
+The value can be of type: positive integer.
+The variable is relevant for: test execution / benchmarking.
+
+
+### TOTAL_LOOP_COUNT
+*This option is used to specify a multiple if wishing to run each test multiple times rather than just once per saved result file.*
+
+The value can be of type: positive integer.
+The variable is relevant for: test execution / benchmarking.
+
+
+### TOTAL_LOOP_TIME
+*This option is used to specify the amount of time (in minutes) to loop the testing during the Phoronix Test Suite stress run or normal benchmarking process.*
+
+The value can be of type: positive integer.
+The variable is relevant for: stress-run mode, test execution / benchmarking.
 
 
 # General Information
