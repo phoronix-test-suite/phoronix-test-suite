@@ -215,6 +215,17 @@ class dump_documentation implements pts_option_interface
 
 		$dom->saveHTMLFile(PTS_PATH . 'documentation/stubs/55_virtual_suites.html');
 
+		$env_var_html = '<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Environment Variables</title>
+</head>
+<body>
+' . pts_env::get_documentation(false) . '
+</body>
+</html>';
+		file_put_contents(PTS_PATH . 'documentation/stubs/42_env_vars.html', $env_var_html);
+
 		// Load the HTML documentation
 		$md = new pts_md_template();
 		foreach(pts_file_io::glob(PTS_PATH . 'documentation/stubs/*_*.html') as $html_file)

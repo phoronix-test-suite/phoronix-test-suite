@@ -296,6 +296,12 @@ class pts_env
 			'usage' => array('modules'),
 			'value_type' => 'bool',
 			),
+		'TEST_TIMEOUT_AFTER' => array(
+			'description' => 'When this variable is set, the value will can be set to "auto" or a positive integer. The value indicates the number of minutes until a test run should be aborted, such as for a safeguard against hung/deadlocked processes or other issues. Setting this to a high number as a backup would be recommended for fending off possible hangs / stalls in the testing process if the test does not quit. If the value is "auto", it will quit if the time of a test run exceeds 3x the average time it normally takes the particular test to complete its run. In the future, auto might be enabled by default in a future PTS release. This functionality is handled by a Phoronix Test Suite module',
+			'default' => '',
+			'usage' => array('benchmark'),
+			'value_type' => 'positive_integer',
+			),
 		);
 	public static function read($name, &$overrides = null, $fallback_value = false)
 	{
@@ -337,6 +343,101 @@ class pts_env
 		$possible_vars = self::$env_vars;
 		ksort($possible_vars);
 		return $possible_vars;
+	}
+	public static function get_documentation($for_terminal = true)
+	{
+		$docs = '';
+		foreach(pts_env::read_possible_vars() as $var => $data)
+		{
+			if($for_terminal)
+			{
+				$docs .= PHP_EOL . pts_client::cli_just_bold($var);
+				if(pts_env::read($var))
+				{
+					$docs .= ': ' . pts_client::cli_colored_text(pts_env::read($var), 'green', true);
+				}
+				$docs .= PHP_EOL;
+				$docs .= pts_client::cli_just_italic($data['description']) . PHP_EOL;
+			}
+			else
+			{
+				$docs .= PHP_EOL . '<h2>' . $var . '</h2>' . PHP_EOL;
+				$docs .= '<p><em>' . $data['description'] . '</em></p>' . PHP_EOL;
+			}
+
+			if(isset($data['default']) && !empty($data['default']))
+			{
+				if($for_terminal)
+				{
+					$docs .= pts_client::cli_just_bold('Default Value: ') . $data['default'] . PHP_EOL;
+				}
+				else
+				{
+					$docs .= '<p><strong>Default Value:</strong> ' . $data['default'] . '</p>' . PHP_EOL;
+				}
+			}
+			if(!$for_terminal)
+			{
+				$docs .= '<p>';
+			}
+			if(isset($data['value_type']) && !empty($data['value_type']))
+			{
+				$value_type = '';
+				switch($data['value_type'])
+				{
+					case 'bool':
+						$value_type = 'boolean (TRUE / FALSE)';
+						break;
+					case 'string':
+						$value_type = 'string';
+						break;
+					case 'positive_integer':
+						$value_type = 'positive integer';
+						break;
+					case 'enum':
+						$value_type = 'enumeration' . (isset($data['enum']) ? ' (' . implode(', ', $data['enum']) . ')' : '');
+						break;
+				}
+				if(!empty($value_type))
+				{
+					$docs .= 'The value can be of type: ' . $value_type . '.' . PHP_EOL;
+				}
+			}
+			if(isset($data['usage']) && !empty($data['usage']))
+			{
+				$usages = array();
+				foreach($data['usage'] as $u)
+				{
+					switch($u)
+					{
+						case 'install':
+							$usages[] = 'test installation';
+							break;
+						case 'benchmark':
+							$usages[] = 'test execution / benchmarking';
+							break;
+						case 'stress_run':
+							$usages[] = 'stress-run mode';
+							break;
+						case 'result_output':
+							$usages[] = 'result output generation';
+							break;
+						case 'modules':
+							$usages[] = 'modules';
+							break;
+					}
+				}
+				if(!empty($usages))
+				{
+					$docs .= 'The variable is relevant for: ' . implode(', ', $usages) . '.' . PHP_EOL;
+				}
+			}
+			if(!$for_terminal)
+			{
+				$docs .= '</p>';
+			}
+		}
+		return $docs;
 	}
 }
 
