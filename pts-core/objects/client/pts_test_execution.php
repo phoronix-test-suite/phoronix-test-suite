@@ -70,7 +70,7 @@ class pts_test_execution
 		$execute_binary = $test_run_request->test_profile->get_test_executable();
 		$times_to_run = $test_run_request->test_profile->get_times_to_run();
 		$ignore_runs = $test_run_request->test_profile->get_runs_to_ignore();
-		$ignore_runs_override = getenv('IGNORE_RUNS') ? pts_strings::comma_explode(getenv('IGNORE_RUNS')) : array();
+		$ignore_runs_override = ($ir = pts_env::read('IGNORE_RUNS')) ? pts_strings::comma_explode($ir) : array();
 		$test_type = $test_run_request->test_profile->get_test_hardware_type();
 		$allow_cache_share = $test_run_request->test_profile->allow_cache_share() && $test_run_manager->allow_test_cache_share();
 		$min_length = $test_run_request->test_profile->get_min_length();
@@ -131,10 +131,6 @@ class pts_test_execution
 		if($test_run_request->exec_binary_prepend != null)
 		{
 			$execute_binary_prepend = $test_run_request->exec_binary_prepend;
-		}
-		else if(getenv('EXECUTE_BINARY_PREPEND') != false)
-		{
-				$execute_binary_prepend = getenv('EXECUTE_BINARY_PREPEND') . ' ';
 		}
 
 		if(!$cache_share_present && !$test_run_manager->DEBUG_no_test_execution_just_result_parse && $test_run_request->test_profile->is_root_required())
@@ -238,7 +234,7 @@ class pts_test_execution
 					shell_exec('chmod +x ' . $to_execute . '/' . $execute_binary);
 				}
 
-				$test_prepend = getenv('TEST_EXEC_PREPEND') != null ? getenv('TEST_EXEC_PREPEND') . ' ': null;
+				$test_prepend = pts_env::read('TEST_EXEC_PREPEND') != null ? pts_env::read('TEST_EXEC_PREPEND') . ' ': null;
 				pts_client::$display->test_run_instance_header($test_run_request);
 				sleep(2);
 
@@ -275,7 +271,7 @@ class pts_test_execution
 				$is_monitoring = pts_test_result_parser::system_monitor_task_check($test_run_request);
 				$test_run_time_start = microtime(true);
 
-				if($use_phoroscript || pts_client::read_env('USE_PHOROSCRIPT_INTERPRETER') != false)
+				if($use_phoroscript || getenv('USE_PHOROSCRIPT_INTERPRETER') != false)
 				{
 					pts_client::$display->test_run_message('Making use of PhoroScript code path...');
 					$phoroscript = new pts_phoroscript_interpreter($to_execute . '/' . $execute_binary, $test_extra_runtime_variables, $to_execute);

@@ -172,25 +172,25 @@ class pts_test_profile extends pts_test_profile_parser
 			return $times_to_run;
 		}
 
-		if(($force_runs_multiple = pts_client::read_env('FORCE_TIMES_TO_RUN_MULTIPLE')) && is_numeric($force_runs_multiple) && $force_runs_multiple > 1 && $this->get_estimated_run_time() < (60 * 60 * 2))
+		if(($force_runs_multiple = pts_env::read('FORCE_TIMES_TO_RUN_MULTIPLE')) && is_numeric($force_runs_multiple) && $force_runs_multiple > 1 && $this->get_estimated_run_time() < (60 * 60 * 2))
 		{
 			$times_to_run *= $force_runs_multiple;
 		}
 
-		if(($force_runs = pts_client::read_env('FORCE_TIMES_TO_RUN')) && is_numeric($force_runs))
+		if(($force_runs = pts_env::read('FORCE_TIMES_TO_RUN')) && is_numeric($force_runs) && $force_runs > 0)
 		{
 			$times_to_run = $force_runs;
 		}
 
-		if(($force_min_cutoff = pts_client::read_env('FORCE_MIN_TIMES_TO_RUN_CUTOFF')) == false || ($this->get_estimated_run_time() > 0 && ($this->get_estimated_run_time() / 60) < $force_min_cutoff))
+		if(($force_min_cutoff = pts_env::read('FORCE_MIN_TIMES_TO_RUN_CUTOFF')) == false || ($this->get_estimated_run_time() > 0 && ($this->get_estimated_run_time() / 60) < $force_min_cutoff))
 		{
-			if(($force_runs = pts_client::read_env('FORCE_MIN_TIMES_TO_RUN')) && is_numeric($force_runs) && $force_runs > $times_to_run)
+			if(($force_runs = pts_env::read('FORCE_MIN_TIMES_TO_RUN')) && is_numeric($force_runs) && $force_runs > $times_to_run)
 			{
 				$times_to_run = $force_runs;
 			}
 		}
 
-		if(($force_runs = pts_client::read_env('FORCE_ABSOLUTE_MIN_TIMES_TO_RUN')) && is_numeric($force_runs) && $force_runs > $times_to_run)
+		if(($force_runs = pts_env::read('FORCE_ABSOLUTE_MIN_TIMES_TO_RUN')) && is_numeric($force_runs) && $force_runs > $times_to_run)
 		{
 			$times_to_run = $force_runs;
 		}
@@ -252,7 +252,7 @@ class pts_test_profile extends pts_test_profile_parser
 	{
 		$test_supported = true;
 
-		if(PTS_IS_CLIENT && pts_client::read_env('SKIP_TEST_SUPPORT_CHECKS'))
+		if(PTS_IS_CLIENT && pts_env::read('SKIP_TEST_SUPPORT_CHECKS'))
 		{
 			// set SKIP_TEST_SUPPORT_CHECKS=1 environment variable for debugging purposes to run tests on unsupported platforms
 			return true;

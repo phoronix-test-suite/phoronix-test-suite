@@ -48,13 +48,13 @@ class pts_core
 				$userinfo = posix_getpwuid(posix_getuid());
 				$userhome = $userinfo['dir'];
 			}
-			else if(($home = pts_client::read_env('HOME')))
+			else if(($home = getenv('HOME')))
 			{
 				$userhome = $home;
 			}
-			else if(($home = pts_client::read_env('HOMEPATH')))
+			else if(($home = getenv('HOMEPATH')))
 			{
-				$userhome = pts_client::read_env('HOMEDRIVE') . $home;
+				$userhome = getenv('HOMEDRIVE') . $home;
 			}
 			else if(PTS_IS_DAEMONIZED_SERVER_PROCESS)
 			{

@@ -57,7 +57,7 @@ class pts_external_dependencies
 	public static function install_dependencies(&$test_profiles, $no_prompts = false, $skip_tests_with_missing_dependencies = false, $report_progress = false)
 	{
 		// PTS External Dependencies install on distribution
-		if(pts_client::read_env('NO_EXTERNAL_DEPENDENCIES') != false || pts_client::read_env('SKIP_EXTERNAL_DEPENDENCIES') == 1)
+		if(pts_env::read('NO_EXTERNAL_DEPENDENCIES') != false || pts_env::read('SKIP_EXTERNAL_DEPENDENCIES') == 1)
 		{
 			return true;
 		}
@@ -122,9 +122,9 @@ class pts_external_dependencies
 		}
 
 		// Does the user wish to skip any particular dependencies?
-		if(pts_client::read_env('SKIP_EXTERNAL_DEPENDENCIES'))
+		if(($dependencies_to_skip = pts_env::read('SKIP_EXTERNAL_DEPENDENCIES')))
 		{
-			$dependencies_to_skip = explode(',', pts_client::read_env('SKIP_EXTERNAL_DEPENDENCIES'));
+			$dependencies_to_skip = explode(',', $dependencies_to_skip);
 
 			foreach($dependencies_to_skip as $dependency_name)
 			{

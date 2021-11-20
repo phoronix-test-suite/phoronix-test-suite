@@ -66,7 +66,7 @@ class pts_test_run_manager
 
 	public function __construct($batch_mode = false, $auto_mode = false)
 	{
-		$this->do_dynamic_run_count = pts_config::read_bool_config('PhoronixTestSuite/Options/TestResultValidation/DynamicRunCount', 'TRUE') && getenv('FORCE_TIMES_TO_RUN') == false;
+		$this->do_dynamic_run_count = pts_config::read_bool_config('PhoronixTestSuite/Options/TestResultValidation/DynamicRunCount', 'TRUE') && pts_env::read('FORCE_TIMES_TO_RUN') == false;
 		$this->dynamic_run_count_on_length_or_less = 60; //pts_config::read_user_config('PhoronixTestSuite/Options/TestResultValidation/LimitIncreasingRunCountForTestsOverLength', 60);
 		$this->dynamic_run_count_std_deviation_threshold = pts_config::read_user_config('PhoronixTestSuite/Options/TestResultValidation/StandardDeviationThreshold', 3.0);
 		$this->dynamic_run_count_export_script = pts_config::read_user_config('PhoronixTestSuite/Options/TestResultValidation/ExportResultsTo', null);
@@ -136,11 +136,11 @@ class pts_test_run_manager
 			}
 		}
 
-		if($time_test_started && ($min_duration = getenv('FORCE_MIN_DURATION_PER_TEST')) != false)
+		if($time_test_started && ($min_duration = pts_env::read('FORCE_MIN_DURATION_PER_TEST')) != false && is_numeric($min_duration) && is_numeric($min_duration) > 0)
 		{
 			// FORCE_MIN_DURATION_PER_TEST if wanting to force a test to run at least for a given amount of time (minutes)
 			$time_test_elapsed_so_far = microtime(true) - $time_test_started;
-			if(is_numeric($min_duration) && $time_test_elapsed_so_far < ($min_duration * 60))
+			if($time_test_elapsed_so_far < ($min_duration * 60))
 			{
 				return true;
 			}
@@ -405,7 +405,7 @@ class pts_test_run_manager
 		// Prompt to save a file when running a test
 		$save_name = null;
 
-		if(($env = pts_client::read_env('TEST_RESULTS_NAME')))
+		if(($env = pts_env::read('TEST_RESULTS_NAME')))
 		{
 			$save_name = $env;
 			//echo 'Saving Results To: ' . $proposed_name . PHP_EOL;
@@ -509,7 +509,7 @@ class pts_test_run_manager
 			$times_tried = 0;
 			do
 			{
-				if($times_tried == 0 && ($env_identifier = pts_client::read_env('TEST_RESULTS_IDENTIFIER')))
+				if($times_tried == 0 && ($env_identifier = pts_env::read('TEST_RESULTS_IDENTIFIER')))
 				{
 					$results_identifier = isset($env_identifier) ? self::clean_results_identifier($env_identifier) : null;
 					echo 'Test Identifier: ' . $results_identifier . PHP_EOL;
@@ -535,7 +535,7 @@ class pts_test_run_manager
 			}
 			while((!$no_repeated_tests && $identifier_pos != -1) || (isset($current_hardware[$identifier_pos]) && $current_hardware[$identifier_pos] != phodevi::system_hardware(true)) || (isset($current_software[$identifier_pos]) && $current_software[$identifier_pos] != phodevi::system_software(true)));
 		}
-		else if(($env_identifier = pts_client::read_env('TEST_RESULTS_IDENTIFIER')))
+		else if(($env_identifier = pts_env::read('TEST_RESULTS_IDENTIFIER')))
 		{
 			$results_identifier = self::clean_results_identifier($env_identifier);
 		}
@@ -646,8 +646,8 @@ class pts_test_run_manager
 		$tests_to_run_count = $this->get_test_count();
 		pts_client::$display->test_run_process_start($this);
 
-		$total_loop_count = (($t = pts_client::read_env('TOTAL_LOOP_COUNT')) && is_numeric($t) && $t > 0) ? $t : 1;
-		$total_loop_time = (($t = pts_client::read_env('TOTAL_LOOP_TIME')) && is_numeric($t) && $t > 9) ? ($t * 60) : -1;
+		$total_loop_count = (($t = pts_env::read('TOTAL_LOOP_COUNT')) && is_numeric($t) && $t > 0) ? $t : 1;
+		$total_loop_time = (($t = pts_env::read('TOTAL_LOOP_TIME')) && is_numeric($t) && $t > 9) ? ($t * 60) : -1;
 		$loop_end_time = $total_loop_time != -1 ? (time() + $total_loop_time) : false;
 		$this->test_run_count = ($tests_to_run_count * $total_loop_count);
 
@@ -763,12 +763,13 @@ class pts_test_run_manager
 		{
 			return;
 		}
-		if($this->result_file->has_matching_test_and_run_identifier($test_run_request, $this->get_results_identifier()))
+		if($this->result_file->has_matching_test_and_run_identifier($test_run_request, $this->get_results_identifier()) && pts_env::read('TOTAL_LOOP_COUNT') == false && pts_env::read('TOTAL_LOOP_TIME') == false)
 		{
 			// There already is a match for this test in this particular result buffer
+			// except if using one of the loop controls where it may be repeated...
 			return true;
 		}
-		$skip_tests_with_args = ($e = pts_client::read_env('SKIP_TESTS_HAVING_ARGS')) ? pts_strings::comma_explode($e) : false;
+		$skip_tests_with_args = ($e = pts_env::read('SKIP_TESTS_HAVING_ARGS')) ? pts_strings::comma_explode($e) : false;
 		if($skip_tests_with_args)
 		{
 			foreach($skip_tests_with_args as $skip_test_if_arg_matches)
@@ -798,7 +799,7 @@ class pts_test_run_manager
 			// Just skip the current test and do not save the results, but continue testing
 			return 'SKIP';
 		}
-		else if(pts_client::read_env('LIMIT_ELAPSED_TEST_TIME') > 0 && (PTS_INIT_TIME + (pts_client::read_env('LIMIT_ELAPSED_TEST_TIME') * 60)) > time())
+		else if(pts_env::read('LIMIT_ELAPSED_TEST_TIME') > 0 && (PTS_INIT_TIME + (pts_env::read('LIMIT_ELAPSED_TEST_TIME') * 60)) > time())
 		{
 			// Allocated amount of time has expired
 			return false;
@@ -1278,7 +1279,7 @@ class pts_test_run_manager
 	}
 	public function cleanup_tests_to_run(&$to_run_objects)
 	{
-		$skip_tests = ($e = pts_client::read_env('SKIP_TESTS')) ? pts_strings::comma_explode($e) : false;
+		$skip_tests = ($e = pts_env::read('SKIP_TESTS')) ? pts_strings::comma_explode($e) : false;
 		$tests_verified = array();
 		$tests_missing = array();
 
@@ -1495,7 +1496,7 @@ class pts_test_run_manager
 
 		if(($this->prompt_save_results || $this->force_save_results) && count($this->tests_to_run) > 0) // or check for DO_NOT_SAVE_RESULTS == false
 		{
-			if($this->force_save_results || pts_client::read_env('TEST_RESULTS_NAME'))
+			if($this->force_save_results || pts_env::read('TEST_RESULTS_NAME'))
 			{
 				$save_results = true;
 			}
@@ -1534,13 +1535,10 @@ class pts_test_run_manager
 						$this->run_description = 'N/A';
 					}
 
-					if(pts_client::read_env('TEST_RESULTS_DESCRIPTION'))
+					if(($td = pts_env::read('TEST_RESULTS_DESCRIPTION')) !== false)
 					{
-						if(strlen(pts_client::read_env('TEST_RESULTS_DESCRIPTION')) > 1)
-						{
-							$this->run_description = pts_client::read_env('TEST_RESULTS_DESCRIPTION');
-							echo 'Test Description: ' . $this->run_description . PHP_EOL;
-						}
+						$this->run_description = $td;
+						echo 'Test Description: ' . $this->run_description . PHP_EOL;
 					}
 					else if(!$this->auto_mode)
 					{
@@ -1714,7 +1712,7 @@ class pts_test_run_manager
 			// so if running a result file, don't change the ordering of the existing results
 
 			// Sort the run order so that all tests that are similar are grouped together, etc
-			switch(strtolower(getenv('TEST_EXECUTION_SORT')))
+			switch(strtolower(pts_env::read('TEST_EXECUTION_SORT')))
 			{
 				case 'none': // natural order
 					break;
@@ -1805,7 +1803,7 @@ class pts_test_run_manager
 		{
 			$opts = pts_test_run_options::batch_user_options($test_profile);
 		}
-		else if($this->batch_mode && (pts_client::read_env('PRESET_OPTIONS') || pts_client::read_env('PRESET_OPTIONS_VALUES')))
+		else if($this->batch_mode && (pts_env::read('PRESET_OPTIONS') || pts_env::read('PRESET_OPTIONS_VALUES')))
 		{
 			$opts = pts_test_run_options::prompt_user_options($test_profile, null, true);
 		}
@@ -1915,8 +1913,8 @@ class pts_test_run_manager
 	{
 		$valid_test_profile = true;
 		$test_type = $test_profile->get_test_hardware_type();
-		$skip_tests = pts_client::read_env('SKIP_TESTS') ? pts_strings::comma_explode(pts_client::read_env('SKIP_TESTS')) : false;
-		$skip_test_subsystems = pts_client::read_env('SKIP_TESTING_SUBSYSTEMS') ? pts_strings::comma_explode(strtolower(pts_client::read_env('SKIP_TESTING_SUBSYSTEMS'))) : false;
+		$skip_tests = pts_env::read('SKIP_TESTS') ? pts_strings::comma_explode(pts_env::read('SKIP_TESTS')) : false;
+		$skip_test_subsystems = pts_env::read('SKIP_TESTING_SUBSYSTEMS') ? pts_strings::comma_explode(strtolower(pts_env::read('SKIP_TESTING_SUBSYSTEMS'))) : false;
 		$display_driver = phodevi::read_property('system', 'display-driver');
 		$gpu = phodevi::read_name('gpu');
 
@@ -1950,7 +1948,7 @@ class pts_test_run_manager
 			$report_errors && pts_client::$display->test_run_error('Running on a RAM-based live file-system, skipping ' . $test_profile);
 			$valid_test_profile = false;
 		}
-		else if(pts_client::read_env('NO_' . strtoupper($test_type) . '_TESTS') ||($skip_tests && (in_array($test_profile, $skip_tests) || in_array($test_type, $skip_tests) || in_array($test_profile->get_identifier(false), $skip_tests) || in_array($test_profile->get_identifier_base_name(), $skip_tests))))
+		else if(getenv('NO_' . strtoupper($test_type) . '_TESTS') ||($skip_tests && (in_array($test_profile, $skip_tests) || in_array($test_type, $skip_tests) || in_array($test_profile->get_identifier(false), $skip_tests) || in_array($test_profile->get_identifier_base_name(), $skip_tests))))
 		{
 			$report_errors && pts_client::$display->test_run_error('Due to a pre-set environment variable, skipping ' . $test_profile);
 			$valid_test_profile = false;
@@ -1966,7 +1964,7 @@ class pts_test_run_manager
 			$valid_test_profile = false;
 		}
 
-		if($valid_test_profile == false && pts_client::read_env('SKIP_ALL_TEST_SUPPORT_CHECKS'))
+		if($valid_test_profile == false && getenv('SKIP_ALL_TEST_SUPPORT_CHECKS'))
 		{
 			$report_errors && pts_client::$display->test_run_error('SKIP_ALL_TEST_SUPPORT_CHECKS is set for ' . $test_profile);
 			$valid_test_profile = true;

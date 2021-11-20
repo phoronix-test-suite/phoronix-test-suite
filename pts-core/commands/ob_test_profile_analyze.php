@@ -38,10 +38,10 @@ class ob_test_profile_analyze implements pts_option_interface
 			$qualified_identifier = $test_profile->get_identifier();
 
 			// Set some other things...
-			pts_client::pts_set_environment_variable('FORCE_TIMES_TO_RUN', 1);
-			pts_client::pts_set_environment_variable('TEST_RESULTS_NAME', $test_profile->get_title() . ' Testing ' . date('Y-m-d'));
-			pts_client::pts_set_environment_variable('TEST_RESULTS_IDENTIFIER', 'Sample Run');
-			pts_client::pts_set_environment_variable('TEST_RESULTS_DESCRIPTION', 1);
+			pts_env::set('FORCE_TIMES_TO_RUN', 1);
+			pts_env::set('TEST_RESULTS_NAME', $test_profile->get_title() . ' Testing ' . date('Y-m-d'));
+			pts_env::set('TEST_RESULTS_IDENTIFIER', 'Sample Run');
+			pts_env::set('TEST_RESULTS_DESCRIPTION', 1);
 
 			pts_openbenchmarking_client::override_client_setting('AutoUploadResults', false);
 			pts_openbenchmarking_client::override_client_setting('UploadSystemLogsByDefault', true);

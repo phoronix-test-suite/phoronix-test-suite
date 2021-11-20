@@ -40,9 +40,9 @@ class debug_benchmark implements pts_option_interface
 		// Make sure you're debugging the latest test script...
 		pts_test_installer::standard_install($r);
 		// For debugging, usually running just once is sufficient, unless FORCE_TIMES_TO_RUN is preset
-		if(getenv('FORCE_TIMES_TO_RUN') == null)
+		if(pts_env::read('FORCE_TIMES_TO_RUN') == null)
 		{
-			pts_client::pts_set_environment_variable('FORCE_TIMES_TO_RUN', 1);
+			pts_env::set('FORCE_TIMES_TO_RUN', 1);
 		}
 		// Run the test(s) in debug mode
 		pts_client::set_debug_mode(true);

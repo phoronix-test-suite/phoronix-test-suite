@@ -115,7 +115,7 @@ class pts_test_file_download
 		{
 			return false;
 		}
-		else if(pts_client::read_env('NO_FILE_HASH_CHECKS') != false || pts_client::read_env('NO_MD5_CHECKS') != false)
+		else if(pts_env::read('NO_FILE_HASH_CHECKS') != false)
 		{
 			return true;
 		}

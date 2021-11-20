@@ -70,10 +70,10 @@ class pgo extends pts_module_interface
 		pts_client::unset_pts_env_var_override('NUM_CPU_JOBS');
 
 		// run the tests one time each, not saving the results, in order to generate the PGO profiles...
-		putenv('FORCE_TIMES_TO_RUN=1');
+		pts_env::set('FORCE_TIMES_TO_RUN', 1);
 		$run_manager = new pts_test_run_manager(array('SaveResults' => false, 'RunAllTestCombinations' => false), true);
 		$run_manager->standard_run(array($save_name));
-		putenv('FORCE_TIMES_TO_RUN'); // unset
+		pts_env::remove('FORCE_TIMES_TO_RUN');
 
 		// force re-install of tests, in process set PGO using bits -fprofile-dir=/data/pgo -fprofile-use=/data/pgo -fprofile-correction
 		self::$phase = 'USE_PGO';

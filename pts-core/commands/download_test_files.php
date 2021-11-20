@@ -38,7 +38,7 @@ class download_test_files implements pts_option_interface
 		if(count($test_profiles) > 0)
 		{
 			echo PHP_EOL . 'Downloading Test Files For: ' . implode(' ', $test_profiles);
-			pts_test_installer::only_download_test_files($test_profiles, pts_client::read_env('DOWNLOAD_CACHE_LOCATION'));
+			pts_test_installer::only_download_test_files($test_profiles, pts_env::read('PTS_DOWNLOAD_CACHE'));
 		}
 		else
 		{

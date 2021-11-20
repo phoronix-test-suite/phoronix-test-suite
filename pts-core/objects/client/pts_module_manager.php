@@ -134,7 +134,8 @@ class pts_module_manager
 				if(strpos($ev, '=') != false)
 				{
 					list($var, $value) = pts_strings::trim_explode('=', $ev);
-					pts_client::pts_set_environment_variable($var, $value);
+					putenv($var . '=' . $value);
+					pts_env::set($var, $value);
 					pts_module_manager::var_store_add($var, $value);
 				}
 			}
@@ -299,7 +300,7 @@ class pts_module_manager
 
 		foreach($env_vars as $env_var => $modules)
 		{
-			if(($e = pts_client::read_env($env_var)) != false && !empty($e))
+			if(($e = pts_env::read($env_var)) != false && !empty($e))
 			{
 				foreach($modules as $module)
 				{

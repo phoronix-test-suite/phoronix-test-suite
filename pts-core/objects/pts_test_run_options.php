@@ -35,7 +35,7 @@ class pts_test_run_options
 		$user_args = array();
 		$text_args = array();
 
-		if(($cli_presets_env = pts_client::read_env('PRESET_OPTIONS')) != false)
+		if(($cli_presets_env = pts_env::read('PRESET_OPTIONS')) != false)
 		{
 			// To specify test options externally from an environment variable
 			// i.e. PRESET_OPTIONS='stream.run-type=Add' ./phoronix-test-suite benchmark stream
@@ -44,7 +44,7 @@ class pts_test_run_options
 			// Multiple preset options can be delimited with the PRESET_OPTIONS environment variable via a semicolon ;
 			$preset_selections = pts_client::parse_value_string_double_identifier($cli_presets_env);
 		}
-		if(($cli_presets_env_values = pts_client::read_env('PRESET_OPTIONS_VALUES')) != false)
+		if(($cli_presets_env_values = pts_env::read('PRESET_OPTIONS_VALUES')) != false)
 		{
 			// To specify test options externally from an environment variable
 			// i.e. PRESET_OPTIONS_VALUES='stream.run-type=Add' ./phoronix-test-suite benchmark stream

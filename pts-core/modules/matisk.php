@@ -322,7 +322,7 @@ class matisk extends pts_module_interface
 		if($ini['set_context']['reboot_support'] && phodevi::is_linux())
 		{
 			// In case a set-context involves a reboot, auto-recover
-			$xdg_config_home = is_dir('/etc/xdg/autostart') && is_writable('/etc/xdg/autostart') ? '/etc/xdg/autostart' : pts_client::read_env('XDG_CONFIG_HOME');
+			$xdg_config_home = is_dir('/etc/xdg/autostart') && is_writable('/etc/xdg/autostart') ? '/etc/xdg/autostart' : getenv('XDG_CONFIG_HOME');
 
 			if($xdg_config_home == false)
 			{

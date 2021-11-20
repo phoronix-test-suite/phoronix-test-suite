@@ -113,7 +113,7 @@ class system_monitor extends pts_module_interface
 			return pts_module::MODULE_UNLOAD;
 		}
 
-		putenv('FORCE_MIN_DURATION_PER_TEST=1'); // force each test to run at least one minute to ensure sufficient samples
+		pts_env::set('FORCE_MIN_DURATION_PER_TEST', 1); // force each test to run at least one minute to ensure sufficient samples
 	}
 
 	public static function __pre_test_run($test_run_request)

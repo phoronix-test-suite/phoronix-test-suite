@@ -111,7 +111,7 @@ class run_random_tests implements pts_option_interface
 			{
 				$subsystems_to_test = $limit_test_subsystem;
 				$subsystems_to_avoid = array_diff(pts_types::subsystem_targets(), $subsystems_to_test);
-				pts_client::pts_set_environment_variable('SKIP_TESTING_SUBSYSTEMS', implode(',', $subsystems_to_avoid));
+				pts_env::set('SKIP_TESTING_SUBSYSTEMS', implode(',', $subsystems_to_avoid));
 			}
 
 			if($allow_new_tests_to_be_installed)

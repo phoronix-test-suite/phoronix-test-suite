@@ -133,9 +133,9 @@ class interactive implements pts_option_interface
 
 					$tests_to_run = pts_user_io::prompt_text_menu('Select Test(s)', $supported_tests, true, true);
 					$concurrent_runs = pts_user_io::prompt_user_input('Number of tests to run concurrently');
-					putenv('PTS_CONCURRENT_TEST_RUNS=' . trim($concurrent_runs));
+					pts_env::set('PTS_CONCURRENT_TEST_RUNS', trim($concurrent_runs));
 					$minutes_loop_time = pts_user_io::prompt_user_input('Number of minutes to stress run');
-					putenv('TOTAL_LOOP_TIME=' . trim($minutes_loop_time));
+					pts_env::set('TOTAL_LOOP_TIME', trim($minutes_loop_time));
 
 					pts_test_installer::standard_install($tests_to_run);
 					pts_client::execute_command('stress_run', $tests_to_run);
@@ -176,7 +176,7 @@ class interactive implements pts_option_interface
 					break;
 				case 'SET_RUN_COUNT':
 					$run_count = pts_user_io::prompt_user_input('Set the minimum number of times each test should repeat', false);
-					putenv('FORCE_TIMES_TO_RUN=' . trim($run_count));
+					pts_env::set('FORCE_TIMES_TO_RUN', trim($run_count));
 					break;
 				case 'BACKUP_RESULTS_TO_USB':
 					pts_client::$display->generic_heading('Backing Up Test Results');
@@ -231,7 +231,7 @@ class interactive implements pts_option_interface
 				pts_file_io::delete('/media/pts-auto-mount', null, true);
 				pts_file_io::mkdir('/media/pts-auto-mount');
 				echo exec('mount ' . $to_mount . ' /media/pts-auto-mount');
-				putenv('PTS_TEST_INSTALL_ROOT_PATH=/media/pts-auto-mount/');
+				pts_env::set('PTS_TEST_INSTALL_ROOT_PATH', '/media/pts-auto-mount/');
 			}
 			else
 			{
@@ -241,7 +241,7 @@ class interactive implements pts_option_interface
 					@rmdir('/media/pts-auto-mount');
 				}
 
-				putenv('PTS_TEST_INSTALL_ROOT_PATH=');
+				pts_env::remove('PTS_TEST_INSTALL_ROOT_PATH');
 			}
 		}
 	}

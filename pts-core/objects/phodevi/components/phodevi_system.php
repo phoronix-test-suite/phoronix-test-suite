@@ -969,9 +969,9 @@ class phodevi_system extends phodevi_device_interface
 		}
 
 		// Try to make the compiler that's used by default to appear first
-		if(pts_client::read_env('CC') && isset($compilers[basename(pts_strings::first_in_string(pts_client::read_env('CC'), ' '))]))
+		if(getenv('CC') && isset($compilers[basename(pts_strings::first_in_string(getenv('CC'), ' '))]))
 		{
-			$cc_env = basename(pts_strings::first_in_string(pts_client::read_env('CC'), ' '));
+			$cc_env = basename(pts_strings::first_in_string(getenv('CC'), ' '));
 			$default_compiler = $compilers[$cc_env];
 			unset($compilers[$cc_env]);
 			array_unshift($compilers, $default_compiler);
@@ -983,7 +983,7 @@ class phodevi_system extends phodevi_device_interface
 			if(isset($compilers[$cc_link]))
 			{
 				$default_compiler = $compilers[$cc_link];
-				unset($compilers[pts_client::read_env('CC')]);
+				unset($compilers[getenv('CC')]);
 				array_unshift($compilers, $default_compiler);
 			}
 		}
@@ -1310,7 +1310,7 @@ class phodevi_system extends phodevi_device_interface
 		$desktop = null;
 		$desktop_environment = null;
 		$desktop_version = null;
-		$desktop_session = pts_client::read_env('DESKTOP_SESSION');
+		$desktop_session = getenv('DESKTOP_SESSION');
 
 		if(pts_client::is_process_running('gnome-shell'))
 		{
@@ -2107,9 +2107,9 @@ class phodevi_system extends phodevi_device_interface
 		{
 			$wine_version = trim(shell_exec('wine --version 2>&1'));
 		}
-		else if(pts_client::executable_in_path('winecfg.exe') != false && pts_client::read_env('WINE_VERSION'))
+		else if(pts_client::executable_in_path('winecfg.exe') != false && getenv('WINE_VERSION'))
 		{
-			$wine_version = trim(pts_client::read_env('WINE_VERSION'));
+			$wine_version = trim(getenv('WINE_VERSION'));
 
 			if(stripos($wine_version, 'wine') === false)
 			{

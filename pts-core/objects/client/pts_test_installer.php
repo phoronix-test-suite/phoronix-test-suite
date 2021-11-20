@@ -132,7 +132,7 @@ class pts_test_installer
 		// Let the pts_test_install_manager make some estimations, etc...
 		echo PHP_EOL;
 		$test_install_manager->generate_download_file_lists();
-		if(getenv('NO_DOWNLOAD_CACHE') == false)
+		if(pts_env::read('NO_DOWNLOAD_CACHE') == false)
 		{
 			$test_install_manager->check_download_caches_for_files();
 		}
@@ -203,7 +203,7 @@ class pts_test_installer
 			}
 		}
 	}
-	public static function only_download_test_files(&$test_profiles, $to_dir = null, $do_file_checks = true)
+	public static function only_download_test_files(&$test_profiles, $to_dir = false, $do_file_checks = true)
 	{
 		// Setup the install manager and add the tests
 		$test_install_manager = new pts_test_install_manager();
@@ -534,7 +534,7 @@ class pts_test_installer
 	}
 	public static function create_compiler_mask(&$test_install_request)
 	{
-		if(getenv('PTS_NO_COMPILER_MASK'))
+		if(pts_env::read('NO_COMPILER_MASK'))
 		{
 			// XXX: Using the compiler-mask causes a number of tests to fail to properly install due to compiler issues with at least PC-BSD 10.0
 			return false;
@@ -547,13 +547,13 @@ class pts_test_installer
 		if($test_install_request === false || in_array('build-utilities', $external_dependencies))
 		{
 			// Handle C/C++ compilers for this external dependency
-			$compilers['CC'] = array(pts_strings::first_in_string(pts_client::read_env('CC'), ' '), 'gcc', 'clang', 'icc', 'pcc');
-			$compilers['CXX'] = array(pts_strings::first_in_string(pts_client::read_env('CXX'), ' '), 'g++', 'clang++', 'cpp');
+			$compilers['CC'] = array(pts_strings::first_in_string(getenv('CC'), ' '), 'gcc', 'clang', 'icc', 'pcc');
+			$compilers['CXX'] = array(pts_strings::first_in_string(getenv('CXX'), ' '), 'g++', 'clang++', 'cpp');
 		}
 		if($test_install_request === false || in_array('fortran-compiler', $external_dependencies))
 		{
 			// Handle Fortran for this external dependency
-			$compilers['F9X'] = array(pts_strings::first_in_string(pts_client::read_env('F9X'), ' '), pts_strings::first_in_string(pts_client::read_env('F95'), ' '), 'gfortran', 'f90', 'f95', 'fortran', 'gfortran9', 'gfortran8', 'gfortran6', 'gfortran6');
+			$compilers['F9X'] = array(pts_strings::first_in_string(getenv('F9X'), ' '), pts_strings::first_in_string(getenv('F95'), ' '), 'gfortran', 'f90', 'f95', 'fortran', 'gfortran9', 'gfortran8', 'gfortran6', 'gfortran6');
 		}
 		if(!pts_client::executable_in_path('python'))
 		{

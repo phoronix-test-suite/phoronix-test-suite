@@ -20,76 +20,9 @@
 <p>This is the directory where test profiles are stored.</p>
 <p><strong>~/.phoronix-test-suite/test-suites/</strong></p>
 <p>This is the directory where test suites are stored.</p>
-<h1>Environment Variables</h1>
+<h1>Module Environment Variables</h1>
 <p><strong>TEST_TIMEOUT_AFTER</strong></p>
 <p>When this variable is set, the value will can be set to <em>auto</em> or a positive integer. The value indicates the number of minutes until a test run should be aborted, such as for a safeguard against hung/deadlocked processes or other issues. Setting this to a high number as a backup would be recommended for fending off possible hangs / stalls in the testing process if the test does not quit. If the value is <em>auto</em>, it will quit if the time of a test run exceeds 3x the average time it normally takes the particular test to complete its run. In the future, auto might be enabled by default in a future PTS release.</p>
-<p><strong>TEST_RESULTS_NAME</strong></p>
-<p>When this variable is set, the value will be used as the name for automatically saving the test results.</p>
-<p><strong>TEST_RESULTS_IDENTIFIER</strong></p>
-<p>When this variable is set, the value will be used as the test identifier when automatically saving the test results.</p>
-<p><strong>TEST_RESULTS_DESCRIPTION</strong></p>
-<p>When this variable is set, the value will be used as the test results description when saving the test results.</p>
-<p><strong>PRESET_OPTIONS</strong></p>
-<p>For setting any test option(s) from an environment variable rather than being prompted for the options when running a test. Example: <em>PRESET_OPTIONS=&quot;stream.run-type=Add&quot; ./phoronix-test-suite benchmark stream</em>. Multiple options can be passed to this environment variable when delimited by a semicolon.</p>
-<p><strong>SKIP_TESTS</strong></p>
-<p>If there are any test(s) to exempt from the testing process, specify them in this variable. Multiple tests can be waived by delimiting each test identifier by a comma. A test hardware type (i.e. Graphics) can also be supplied for skipping a range of tests.</p>
-<p><strong>SKIP_TESTS_HAVING_ARGS</strong></p>
-<p>If any of the test(s) have an argument matching any strings contained in this environment variable, the test execution will be skipped. Multiple strings can be set when delimiting by a comma.</p>
-<p><strong>RUN_TESTS_IN_RANDOM_ORDER</strong></p>
-<p>Setting this environment variable will cause the tests to be run in a random order.</p>
-<p><strong>SKIP_TESTING_SUBSYSTEMS</strong></p>
-<p>If you are running a set of benchmarks (namely a result file) but wish to skip some of the tests that don't belong to a certain test type group, you can set the hardware types to test via this environment variable. E.g. setting <em>SKIP_TESTING_SUBSYSTEMS=Graphics</em> will skip all test profiles to run that are not of the graphics test group. Multiple types should be delimited by a comma.</p>
-<p><strong>PTS_MODULE_SETUP</strong></p>
-<p>This variable can be used to load Phoronix Test Suite module settings automatically when using the <em>module-setup</em> option. An example would be: <em>PTS_MODULE_SETUP=&quot;phoromatic.remote_host=http://www.phoromatic.com/; phoromatic.remote_account=123456; phoromatic.remote_verifier=ABCD&quot; phoronix-test-suite module-setup phoromatic</em>.</p>
-<p><strong>PTS_MODULES</strong></p>
-<p>If there are any Phoronix Test Suite modules to additionally load, they can be specified here. Multiple modules can be supplied by delimiting them with a comma. The more appropriate way of loading Phoronix Test Suite modules for longer periods of time is by using the <em>~/.phoronix-test-suite/user-config.xml</em> configuration.</p>
-<p><strong>NO_PHODEVI_CACHE</strong></p>
-<p>This is a debugging option to disable the Phodevi cache from being loaded of cached software/hardware information. Instead, all software/hardware will be polled from the Phodevi library without caching.</p>
-<p><strong>EXTERNAL_PHODEVI_CACHE</strong></p>
-<p>This option can be used for loading an external Phodevi cache. Such as loading the native hardware/software information from within a Windows Wine client from a native system host.</p>
-<p><strong>PTS_DISPLAY_MODE</strong></p>
-<p>If you wish to load a non-default display mode for a single instance, specify the mode in this variable.</p>
-<p><strong>TOTAL_LOOP_TIME</strong></p>
-<p>When running any test(s), if you would like the test(s) to continue running as a loop until a certain time has been reached, this variable can be used. The value should be the number of minutes to run the testing process before the loop is ended. The testing will finish whenever the currently active test has finished once the time has elapsed. The minimum value allowed is 10 minutes.</p>
-<p><strong>LIMIT_ELAPSED_TEST_TIME</strong></p>
-<p>If you want to ensure that the time for a given Phoronix Test Suite process doesn't elapse past a certain number of minutes, specify the number of minutes for this environment variable. When the amount of time spent testing exceeds that amount, the testing will end prematurely while still saving the tests that were completed in time.</p>
-<p><strong>TOTAL_LOOP_COUNT</strong></p>
-<p>When running any test(s), if you would like the test(s) to continue running for a number of times, this variable can be used. The value should be the number of times to loop the testing process before ending.</p>
-<p><strong>FORCE_TIMES_TO_RUN</strong></p>
-<p>If you wish to override the number of times to run each test -- rather than the Phoronix Test Suite using the number of times specified in each test profile -- this variable can be used.</p>
-<p><strong>FORCE_TIMES_TO_RUN_MULTIPLE</strong></p>
-<p>This option allows specifying a multiple for increasing the number of times a test will run based upon the original TimesToRun value specified in the test definition. This allows for increasing the expected times to run based on a multiple of that default rather than a static value.</p>
-<p><strong>FORCE_MIN_TIMES_TO_RUN</strong></p>
-<p>This is similar to the FORCE_TIMES_TO_RUN option but will only be used if the test profile's run count is less than this defined value.</p>
-<p><strong>FORCE_MIN_TIMES_TO_RUN_CUTOFF</strong></p>
-<p>When used in conjunction with FORCE_MIN_TIMES_TO_RUN, the override value will only be applied to test profiles where its average run-time length (in minutes) is less than the value specified by FORCE_MIN_TIMES_TO_RUN_CUTOFF.</p>
-<p><strong>FORCE_MIN_DURATION_PER_TEST</strong></p>
-<p>This is similar  to FORCE_MIN_TIMES_TO_RUN but allows specifying a time (in minutes) that each test should be run for. Each test will loop at least until that amount of time has elapsed. This can be useful for short-running tests if wanting to ensure each test is run long enough to rule out system noise.</p>
-<p><strong>IGNORE_RUNS</strong></p>
-<p>IGNORE_RUNS can be passed a comma-separated list of runs to skip on each benchmark. For example, IGNORE_RUNS=1 would always drop the first run from being recorded.</p>
-<p><strong>NO_FILE_HASH_CHECKS</strong></p>
-<p>To disable MD5/SHA256 check-sums from being checked when downloading test files, set this variable to 1. This variable used to be known as <em>NO_MD5_CHECKS</em>, which is still honored but was changed to <em>NO_FILE_HASH_CHECKS</em> to reflect other kind of file hash sum checks.</p>
-<p><strong>NO_HTTPS</strong></p>
-<p>Set this environment variable to 1 if you don't wish to use HTTPS download links for test profiles (or the system/network lacks HTTPS support). When enabled, HTTPS links will then be done over HTTP.</p>
-<p><strong>PTS_DOWNLOAD_CACHE</strong></p>
-<p>While non-standard Phoronix Test Suite download caches can be specified within the <em>user-config.xml</em> file, an additional directory to look for potential Phoronix Test Suite download files can be specified by this variable.</p>
-<p><strong>GRAPH_HIGHLIGHT</strong></p>
-<p>If this variable is set with a valid test identifer from a result file whether you are using the <em>refresh-graphs</em> command or any other related to the rendering of test results on a bar graph, the specified test identifier's result will be rendered in a different color than the other test results. Multiple identifiers can be specified when delimited by a comma. Additionally, for each key it is possible to provide the actual color value, or an index in the color palette. Example: &quot;will_be_different,group1a=1,group1b=1,blue=#0000ff&quot;</p>
-<p><strong>TEST_EXEC_PREPEND</strong></p>
-<p>Set this variable to any command/environment variable that you may be passed prepended to the test execution string at runtime.</p>
-<p><strong>VIDEO_MEMORY</strong></p>
-<p>If Phodevi fails to detect the system's video memory capacity or is incorrectly detected, the video memory capacity (in MB) can be specified by this variable.</p>
-<p><strong>OVERRIDE_VIDEO_MODES</strong></p>
-<p>If Phodevi fails to detect all of the system's monitor video modes or a separate set of modes would be preferred, the modes can be specified in this variable. Example: <em>OVERRIDE_VIDEO_MODES=800x600,1024x768,1280x1024 phoronix-test-suite benchmark nexuiz</em>.</p>
-<p><strong>SKIP_TEST_SUPPORT_CHECKS</strong></p>
-<p>If this environment variable is set, it will not honor the support checks made by individual test profiles. I.e. test profiles that would normally be considered un-supported on a given platform are attempted to install and run regardless.</p>
-<p><strong>SKIP_ALL_TEST_SUPPORT_CHECKS</strong></p>
-<p>If this environment variable is set, all tests will be permitted on the client for execution. SKIP_ALL_TEST_SUPPORT_CHECKS is more liberal than SKIP_TEST_SUPPORT_CHECKS in letting disk tests run on RAM-based file-systems, attempt to run 2D/3D tests on VESA display drivers, and other special cases.</p>
-<p><strong>DEFAULT_VIDEO_MODE</strong></p>
-<p>If Phodevi fails to detect the system's monitor standard / default resolution, the mode can be specified in this variable. Example: <em>DEFAULT_VIDEO_MODE=1680x1050 phoronix-test-suite benchmark nexuiz</em>.</p>
-<p><strong>SKIP_EXTERNAL_DEPENDENCIES</strong></p>
-<p>To skip the Phoronix Test Suite external dependency checking/installation when installing a test, set this environment variable to <em>1</em>. If wishing to skip only certain external dependencies, set this variable's value to the name of the external dependencies (the generic dependency names used by the Phoronix Test Suite) to not install. Multiple dependencies to skip can be delimited by a comma.</p>
-<p><strong>PTS_EXTRA_SYSTEM_LOGS_DIR</strong></p>
-<p>By default the Phoronix Test Suite collects common system logs (cpuinfo, lscpu, dmesg) during the benchmarking process when saving test results. If wanting to collect additional, arbitrary system log files specific to your operating environment or for other niche system information, the <em>PTS_EXTRA_SYSTEM_LOGS_DIR</em> environment variable can be set as a path to a directory containing such log files. Prior to running the Phoronix Test Suite simply set <em>PTS_EXTRA_SYSTEM_LOGS_DIR</em> to the directory where any text files should be captured from following test completion.</p>
+
 </body>
 </html>

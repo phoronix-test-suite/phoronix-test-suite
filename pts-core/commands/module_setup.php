@@ -55,7 +55,7 @@ class module_setup implements pts_option_interface
 		}
 		else
 		{
-			if(($module_presets = pts_client::read_env('PTS_MODULE_SETUP')) != false)
+			if(($module_presets = pts_env::read('PTS_MODULE_SETUP')) != false)
 			{
 				$module_presets = pts_client::parse_value_string_double_identifier($module_presets);
 			}

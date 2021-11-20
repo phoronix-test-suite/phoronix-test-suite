@@ -338,7 +338,7 @@ class pts_tests
 				// if override_test_script_execution_handler returned -1, fallback to using normal script handler
 				if(!isset($this_result) || $this_result == '-1')
 				{
-					if($use_phoroscript || pts_client::read_env('USE_PHOROSCRIPT_INTERPRETER') != false)
+					if($use_phoroscript || getenv('USE_PHOROSCRIPT_INTERPRETER') != false)
 					{
 						echo PHP_EOL . 'Falling back to experimental PhoroScript code path...' . PHP_EOL;
 						$phoroscript = new pts_phoroscript_interpreter($run_file, $extra_vars, $test_directory);

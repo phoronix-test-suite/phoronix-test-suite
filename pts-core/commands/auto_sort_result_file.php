@@ -45,7 +45,7 @@ class auto_sort_result_file implements pts_option_interface
 		$extract_selects = array();
 		echo PHP_EOL . 'Automatically sorting the results...' . PHP_EOL;
 
-		switch(getenv('SORT_BY'))
+		switch(pts_env::read('SORT_BY'))
 		{
 			case 'date':
 			case 'date-asc':

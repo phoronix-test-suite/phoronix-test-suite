@@ -58,7 +58,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 
 		echo PHP_EOL . pts_client::cli_just_bold('STRESS-RUN ENVIRONMENT VARIABLES:') . PHP_EOL;
 
-		if(($j = getenv('PTS_CONCURRENT_TEST_RUNS')) && is_numeric($j) && $j > 1)
+		if(($j = pts_env::read('PTS_CONCURRENT_TEST_RUNS')) && is_numeric($j) && $j > 1)
 		{
 			$tests_to_run_concurrently = $j;
 			echo PHP_EOL . 'PTS_CONCURRENT_TEST_RUNS set; running ' . $tests_to_run_concurrently . ' tests concurrently.' . PHP_EOL . PHP_EOL;
@@ -69,7 +69,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 		}
 
 		// Run the actual tests
-		$total_loop_time = pts_client::read_env('TOTAL_LOOP_TIME');
+		$total_loop_time = pts_env::read('TOTAL_LOOP_TIME');
 		if($total_loop_time == 'infinite')
 		{
 			$total_loop_time = 'infinite';
@@ -85,14 +85,14 @@ class pts_stress_run_manager extends pts_test_run_manager
 			$total_loop_time = false;
 		}
 
-		if(($j = getenv('TEST_RESULTS_NAME')))
+		if(($j = pts_env::read('TEST_RESULTS_NAME')))
 		{
 			$test_run_manager->save_result_file = pts_test_run_manager::clean_save_name($j);
 			$test_run_manager->result_file = new pts_result_file($test_run_manager->save_result_file);
 			$test_run_manager->result_file->set_title($j . ' Stress-Run Monitoring');
 			echo PHP_EOL . pts_client::cli_just_bold('TEST_RESULTS_NAME') . ' set; saving the result sensor data as ' . $test_run_manager->save_result_file . '.' . PHP_EOL . PHP_EOL;
 
-			if(($j = getenv('TEST_RESULTS_IDENTIFIER')))
+			if(($j = pts_env::read('TEST_RESULTS_IDENTIFIER')))
 			{
 				$test_run_manager->save_result_identifier = $j;
 				echo PHP_EOL . pts_client::cli_just_bold('TEST_RESULTS_IDENTIFIER') . ' set; test identifier is ' . $test_run_manager->save_result_identifier . '.' . PHP_EOL . PHP_EOL;
@@ -167,7 +167,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 		$this->sensor_data_archived_identifiers = array();
 		$this->stress_logger = new pts_logger(null, 'phoronix-test-suite-stress-' . date('ymdHi') . '.log');
 		$this->stress_logger->log('Log Initialized');
-		putenv('FORCE_TIMES_TO_RUN=1');
+		pts_env::set('FORCE_TIMES_TO_RUN', 1);
 
 		// Determine how frequently to print reports / status updates
 		$time_report_counter = time();
@@ -316,7 +316,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 				$test_to_run = false;
 				$test_run_index = -1;
 
-				if(getenv('DONT_BALANCE_TESTS_FOR_SUBSYSTEMS') == false)
+				if(pts_env::read('DONT_BALANCE_TESTS_FOR_SUBSYSTEMS') == false)
 				{
 					// Try to pick a test for a hardware subsystem not yet being explicitly utilized
 					foreach($possible_tests_to_run as $i => $test)
@@ -332,7 +332,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 					}
 				}
 
-				if($test_run_index == -1 && getenv('DONT_TRY_TO_ENSURE_TESTS_ARE_UNIQUE') == false)
+				if($test_run_index == -1 && pts_env::read('DONT_TRY_TO_ENSURE_TESTS_ARE_UNIQUE') == false)
 				{
 					// Try to pick a test from a test profile not currently active
 					foreach($possible_tests_to_run as $i => $test)
@@ -432,7 +432,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 		}
 
 		pts_module_manager::module_process('__post_run_process', $this);
-		putenv('FORCE_TIMES_TO_RUN');
+		pts_env::remove('FORCE_TIMES_TO_RUN');
 		pts_file_io::delete($this->thread_collection_dir, null, true);
 
 		foreach($this->get_tests_to_run() as $run_request)

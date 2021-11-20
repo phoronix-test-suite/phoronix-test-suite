@@ -98,7 +98,7 @@ class pts_network
 		{
 			$download = 'http://' . $download;
 		}
-		else if(getenv('NO_HTTPS') != false)
+		else if(PTS_IS_CLIENT && pts_env::read('NO_HTTPS') != false)
 		{
 			// On some platforms like DragonFly 4.2 ran into problem of all HTTPS downloads failing
 			$download = str_replace('https://', 'http://', $download);
