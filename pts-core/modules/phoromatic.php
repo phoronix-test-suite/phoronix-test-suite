@@ -673,6 +673,12 @@ class phoromatic extends pts_module_interface
 
 						// Do the actual running
 						phodevi::clear_cache();
+						$original_env_var_overrides = pts_env::get_overrides();
+
+						if(!empty($env_vars))
+						{
+							pts_env::set_array($env_vars);
+						}
 
 						if($is_stress_run)
 						{
@@ -762,6 +768,13 @@ class phoromatic extends pts_module_interface
 						self::$p_schedule_id = null;
 						self::$is_running_as_phoromatic_node = false;
 						self::$benchmark_ticket_id = null;
+
+						// Restore any environment variables that may have been set within process / overridden
+						if(!empty($original_env_var_overrides))
+						{
+							pts_env::set_array($original_env_var_overrides, true);
+							$original_env_var_overrides = null;
+						}
 						break;
 					case 'reboot':
 						echo PHP_EOL . 'Phoromatic received a remote command to reboot.' . PHP_EOL;

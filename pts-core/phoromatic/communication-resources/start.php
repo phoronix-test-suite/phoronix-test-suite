@@ -135,6 +135,7 @@ function phoromatic_generate_test_suite(&$test_schedule, &$json, $phoromatic_acc
 	$json['phoromatic']['save_identifier'] = $test_schedule['Title'] . ' - ' . $trigger_id;
 	$json['phoromatic']['trigger_id'] = $trigger_id;
 	$json['phoromatic']['schedule_id'] = $test_schedule['ScheduleID'];
+	$json['phoromatic']['environment_variables'] = $test_schedule['EnvironmentVariables'];
 	$json['phoromatic']['test_suite'] = $new_suite->get_xml();
 	$json['phoromatic']['pre_set_sys_env_vars'] = $sys_row['SystemVariables'];
 

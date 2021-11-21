@@ -41,6 +41,7 @@ class phoromatic_sched implements pts_webui_interface
 			return;
 
 		$is_new = true;
+		$env_var_edit = array();
 		if(!empty($PATH[0]) && is_numeric($PATH[0]))
 		{
 			$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_schedules WHERE AccountID = :account_id AND ScheduleID = :schedule_id');
@@ -52,6 +53,10 @@ class phoromatic_sched implements pts_webui_interface
 			if(!empty($e_schedule))
 			{
 				$is_new = false;
+			}
+			if(!empty($e_schedule['EnvironmentVariables']))
+			{
+				$env_var_edit = pts_strings::parse_value_string_vars($e_schedule['EnvironmentVariables']);
 			}
 		}
 
@@ -124,8 +129,16 @@ class phoromatic_sched implements pts_webui_interface
 				$public_key = $e_schedule['PublicKey'];
 			}
 
+			$env_vars = array();
+
+			foreach(pts_env::get_posted_options('phoromatic') as $ei => $ev)
+			{
+				array_push($env_vars, $ei . '=' . $ev);
+			}
+			$env_vars = implode(';', $env_vars);
+
 			// Add schedule
-			$stmt = phoromatic_server::$db->prepare('INSERT OR REPLACE INTO phoromatic_schedules (AccountID, ScheduleID, Title, Description, State, ActiveOn, RunAt, SetContextPreInstall, SetContextPostInstall, SetContextPreRun, SetContextPostRun, LastModifiedBy, LastModifiedOn, PublicKey, RunTargetGroups, RunTargetSystems, RunPriority) VALUES (:account_id, :schedule_id, :title, :description, :state, :active_on, :run_at, :context_pre_install, :context_post_install, :context_pre_run, :context_post_run, :modified_by, :modified_on, :public_key, :run_target_groups, :run_target_systems, :run_priority)');
+			$stmt = phoromatic_server::$db->prepare('INSERT OR REPLACE INTO phoromatic_schedules (AccountID, ScheduleID, Title, Description, State, ActiveOn, RunAt, SetContextPreInstall, SetContextPostInstall, SetContextPreRun, SetContextPostRun, LastModifiedBy, LastModifiedOn, PublicKey, RunTargetGroups, RunTargetSystems, RunPriority, EnvironmentVariables) VALUES (:account_id, :schedule_id, :title, :description, :state, :active_on, :run_at, :context_pre_install, :context_post_install, :context_pre_run, :context_post_run, :modified_by, :modified_on, :public_key, :run_target_groups, :run_target_systems, :run_priority, :environment_variables)');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 			$stmt->bindValue(':schedule_id', $schedule_id);
 			$stmt->bindValue(':title', $title);
@@ -143,6 +156,7 @@ class phoromatic_sched implements pts_webui_interface
 			$stmt->bindValue(':run_target_groups', $run_target_groups);
 			$stmt->bindValue(':run_target_systems', $run_target_systems);
 			$stmt->bindValue(':run_priority', $run_priority);
+			$stmt->bindValue(':environment_variables', $env_vars);
 			$result = $stmt->execute();
 			phoromatic_add_activity_stream_event('schedule', $schedule_id, ($is_new ? 'added' : 'modified'));
 
@@ -261,10 +275,11 @@ class phoromatic_sched implements pts_webui_interface
   <td><h3>One-Time / Manual Testing</h3><em>Carrying out Phoromatic-controlled benchmark on no routine schedule, similar to the trigger-based testing.</em></td>
   <td><h3>If you wish to only run a set of tests once on a given system or to do so seldom with the same set of tests, simply proceed with creating the test schedule without setting any run time / active days. When going to the web page for this test schedule there will be a button to trigger the tests to run on all affected systems.</h3></td>
 </tr>
-</table>
+</table>';
 
-		
-			<p align="right"><input name="submit" value="' . ($is_new ? 'Create' : 'Edit') . ' Schedule" type="submit" onclick="return pts_rmm_validate_schedule();" /></p>
+$main .= (empty($env_var_edit) ? '<p><a id="env_var_options_show" onclick="javascript:document.getElementById(\'env_var_options\').style.display = \'block\'; javascript:document.getElementById(\'env_var_options_show\').style.display = \'none\'; ">Advanced Options</a></p> <div id="env_var_options" style="display: none;">' : '<div id="env_var_options">') . '<p>The advanced options require the Phoromatic clients be on the latest Phoronix Test Suite (10.8 or newer / Git). See the Phoronix Test Suite documentation for more information on these environment variables / advanced options.</p>' . pts_env::get_html_options('phoromatic', $env_var_edit) . '</div>';
+
+$main .= '<p align="right"><input name="submit" value="' . ($is_new ? 'Create' : 'Edit') . ' Schedule" type="submit" onclick="return pts_rmm_validate_schedule();" /></p>
 			</form>';
 			echo phoromatic_webui_main($main);
 			echo phoromatic_webui_footer();

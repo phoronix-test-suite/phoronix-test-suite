@@ -213,7 +213,10 @@ class pts_module_manager
 					if(substr($module_method, 0, 2) == '__' && isset(self::$module_process[$module_method]))
 					{
 						$key_to_unset = array_search($module, self::$module_process[$module_method]);
-						unset(self::$module_process[$module_method][$key_to_unset]);
+						if($key_to_unset !== false)
+						{
+							unset(self::$module_process[$module_method][$key_to_unset]);
+						}
 					}
 				}
 			}

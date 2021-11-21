@@ -384,6 +384,10 @@ class phoromatic_server
 				self::$db->exec('ALTER TABLE phoromatic_account_settings ADD COLUMN UploadInstallLogs INTEGER DEFAULT 0');
 				self::$db->exec('ALTER TABLE phoromatic_account_settings ADD COLUMN UploadRunLogs INTEGER DEFAULT 0');
 				self::$db->exec('PRAGMA user_version = 42');
+			case 42:
+				// Change made November 2021
+				self::$db->exec('ALTER TABLE phoromatic_schedules ADD COLUMN EnvironmentVariables TEXT');
+				self::$db->exec('PRAGMA user_version = 43');
 		}
 		chmod($db_file, 0600);
 		if(!defined('PHOROMATIC_DB_INIT'))

@@ -254,6 +254,17 @@ class phoromatic_schedules implements pts_webui_interface
 					}
 				}
 
+				if(!empty($row['EnvironmentVariables']))
+				{
+					$main .= '<hr /><h1>Environment Variables</h1><ol>';
+
+					foreach(explode(';', $row['EnvironmentVariables']) as $env)
+					{
+						$main .= '<li><strong>' . $env . '</strong></li>';
+					}
+					$main .= '</ol>';
+				}
+
 				if($scripts > 0)
 					$main .= '<hr />';
 

@@ -83,6 +83,7 @@ class pts_env
 			'default' => '',
 			'usage' => array('benchmark'),
 			'value_type' => 'string',
+			'advertise_in_phoromatic' => true,
 			),
 		'TEST_EXECUTION_SORT' => array(
 			'description' => 'This option can be used for controlling the sort order that the test profiles / benchmarks are run in, whether sorted or not and in what manner.',
@@ -90,24 +91,28 @@ class pts_env
 			'usage' => array('benchmark'),
 			'value_type' => 'enum',
 			'enum' => array('none', 'random', 'dependencies', 'test-estimated-time', 'test-estimated-time-desc', 'test', 'default'),
+			'advertise_in_phoromatic' => true,
 			),
 		'TEST_EXEC_PREPEND' => array(
 			'description' => 'This option can be used if wanting to specify a binary (e.g. sudo, cgroup or other resource limiting binaries or performance counters) to be called as the binary pre-pended prior to running a test profile binary/script. This option is namely used for specialized use-cases.',
 			'default' => '',
 			'usage' => array('benchmark'),
 			'value_type' => 'string',
+			'advertise_in_phoromatic' => true,
 			),
 		'FORCE_TIMES_TO_RUN' => array(
 			'description' => 'This option can be used to override the default number of times a given test is run. Rather than being specified by the individual test profile, FORCE_TIMES_TO_RUN allows for specifying the number of times to run each benchmark.',
 			'default' => '',
 			'usage' => array('benchmark'),
 			'value_type' => 'positive_integer',
+			'advertise_in_phoromatic' => true,
 			),
 		'FORCE_MIN_TIMES_TO_RUN' => array(
 			'description' => 'This option is similar to FORCE_TIMES_TO_RUN but is used for specifying the minimum possible number of times to run. Unlike FORCE_TIMES_TO_RUN, the run count can still exceed this value if the deviation between results or other factors are too high.',
 			'default' => '',
 			'usage' => array('benchmark'),
 			'value_type' => 'positive_integer',
+			'advertise_in_phoromatic' => true,
 			),
 		'FORCE_MIN_TIMES_TO_RUN_CUTOFF' => array(
 			'description' => 'Used in conjunction with the FORCE_MIN_TIMES_TO_RUN, the FORCE_MIN_TIMES_TO_RUN_CUTOFF can be used for specifyingg the amount of time (in minutes) before foregoing additional runs. This allows cutting off the testing early if this time threshold has been reached.',
@@ -138,6 +143,7 @@ class pts_env
 			'default' => '',
 			'usage' => array('benchmark'),
 			'value_type' => 'positive_integer',
+			'advertise_in_phoromatic' => true,
 			),
 		'PRESET_OPTIONS' => array(
 			'description' => 'PRESET_OPTIONS can be used for seeding the values of test profile run options from the environment (though the preferred approach for pre-configuring tests in an automated manner would be by constructing your own local test suite).  For setting any test option(s) from an environment variable rather than being prompted for the options when running a test. Example: "PRESET_OPTIONS=\'stream.run-type=Add\' phoronix-test-suite benchmark stream".',
@@ -174,6 +180,7 @@ class pts_env
 			'default' => '',
 			'usage' => array('benchmark'),
 			'value_type' => 'positive_integer',
+			'advertise_in_phoromatic' => true,
 			),
 		'DONT_BALANCE_TESTS_FOR_SUBSYSTEMS' => array(
 			'description' => 'If this value is true, the Phoronix Test Suite stress-run manager will not attempt to distribute the selected test(s) among available hardware subsystems. For stress runs with tests covering multiple subsystems (e.g. CPU, GPU, RAM), the default behavior is try to ensure the tests to run concurrently are as balanced across the tested subsystems as possible.',
@@ -301,6 +308,7 @@ class pts_env
 			'default' => '',
 			'usage' => array('benchmark'),
 			'value_type' => 'positive_integer',
+			//'advertise_in_phoromatic' => true,
 			),
 		);
 	public static function read($name, &$overrides = null, $fallback_value = false)
@@ -338,9 +346,30 @@ class pts_env
 			unset(self::$overrides[$name]);
 		}
 	}
-	public static function read_possible_vars()
+	public static function read_possible_vars($limit = false)
 	{
 		$possible_vars = self::$env_vars;
+		if($limit)
+		{
+			if($limit == 'phoromatic')
+			{
+				$limit = array('advertise_in_phoromatic' => true);
+			}
+			if(is_array($limit))
+			{
+				foreach($possible_vars as $key => $var_check)
+				{
+					foreach($limit as $index => $desired_value)
+					{
+						if(!isset($possible_vars[$key][$index]) || $possible_vars[$key][$index] != $desired_value)
+						{
+							unset($possible_vars[$key]);
+							break;
+						}
+					}
+				}
+			}
+		}
 		ksort($possible_vars);
 		return $possible_vars;
 	}
@@ -438,6 +467,73 @@ class pts_env
 			}
 		}
 		return $docs;
+	}
+	public static function get_html_options($limit = false, $preset_defaults = array())
+	{
+		$html = '';
+		foreach(pts_env::read_possible_vars($limit) as $var => $data)
+		{
+			$html .= PHP_EOL . '<h3>' . $var . '</h3>' . PHP_EOL;
+			$html .= '<p><em>' . $data['description'] . '</em></p>' . PHP_EOL;
+
+			$default_value = isset($data['default']) && !empty($data['default']) ? $data['default'] : '';
+			if(isset($_REQUEST[$var]))
+			{
+				$default_value = strip_tags($_REQUEST[$var]);
+			}
+			else if(isset($preset_defaults[$var]))
+			{
+				$default_value = $preset_defaults[$var];
+			}
+			$html .= '<p>';
+
+			$enum = array();
+			switch((isset($data['value_type']) ? $data['value_type'] : ''))
+			{
+				case 'bool':
+					$enum = array('TRUE', 'FALSE');
+					$default_value = strtoupper($default_value);
+					break;
+				case 'enum':
+					if(isset($data['enum']))
+					{
+						$enum = $data['enum'];
+					}
+					$html .= '<select name="' . $var . '"><option value="0">[Disabled]</option>';
+					foreach($enum as $e)
+					{
+						$html .= '<option value="' . $e . '"' . (strtoupper($default_value) == strtoupper($e) ? ' selected="selected"' : '') . '>' . $e . '</option>';
+					}
+					$html .= '</select>';
+					break;
+				case 'positive_integer':
+					$html .= '<input type="number" min="0" max="9999" step="1" name="' . $var . '" value="' . $default_value . '" />';
+					break;
+				case 'string':
+				default:
+					$html .= '<input name="' . $var . '" value="' . $default_value . '" />';
+					break;
+			}
+			$html .= '</p>';
+		}
+		return $html;
+	}
+	public static function get_posted_options($limit = false)
+	{
+		$posted = array();
+		foreach(pts_env::read_possible_vars($limit) as $var => $data)
+		{
+			if(isset($_REQUEST[$var]))
+			{
+				// TODO add more validation handling checks... then again, PTS client has its own validation of the env vars
+				$v = strip_tags($_REQUEST[$var]);
+				if(!empty($v) && $v !== 0)
+				{
+					$posted[$var] = $v;
+				}
+			}
+		}
+		return $posted;
 	}
 }
 
