@@ -42,7 +42,7 @@ MAINTAINER Phoronix Media <commercial@phoronix-test-suite.com>
 ADD base.tar.xz /
 ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update
-RUN apt install -y unzip php-cli apt-utils mesa-utils php-xml git-core apt-file
+RUN apt install -y unzip php-cli apt-utils mesa-utils php-xml git-core apt-file sudo
 RUN apt-file update
 CMD ["/phoronix-test-suite/phoronix-test-suite", "shell"]
 EOF
