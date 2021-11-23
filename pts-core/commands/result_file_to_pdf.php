@@ -46,6 +46,7 @@ class result_file_to_pdf implements pts_option_interface
 
 		$result_file = new pts_result_file($r[0]);
 		$result_output = pts_result_file_output::result_file_to_pdf($result_file, '', 'S');
+
 		pts_client::save_output_handler($result_output, $r[0], 'pdf');
 	}
 }
