@@ -1109,6 +1109,22 @@ class phodevi_cpu extends phodevi_device_interface
 				47 => 'Zen 3',
 				48 => 'Zen 3',
 				50 => 'Zen 3',
+				64 => 'Zen 3', // Per Linux patches, Yellow Carp is 0x40 to 0x4f reserved
+				65 => 'Zen 3',
+				66 => 'Zen 3',
+				67 => 'Zen 3',
+				68 => 'Zen 3',
+				69 => 'Zen 3',
+				70 => 'Zen 3',
+				71 => 'Zen 3',
+				72 => 'Zen 3',
+				73 => 'Zen 3',
+				74 => 'Zen 3',
+				75 => 'Zen 3',
+				76 => 'Zen 3',
+				77 => 'Zen 3',
+				78 => 'Zen 3',
+				79 => 'Zen 3', // end of Yellow Carp
 				80 => 'Zen 3',
 				),
 			);
