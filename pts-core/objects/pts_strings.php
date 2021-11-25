@@ -830,13 +830,25 @@ class pts_strings
 	{
 		$is_text = false;
 
+                if(function_exists('mb_detect_encoding'))
+                {
+                        $is_text = mb_detect_encoding((string)$str_check, null, true) !== false;
+                }
+                else
+                {
+			// Not necessarily perfect but better than nothing...
+			$is_text = strpos($str_check, "\0") === false;
+                }
+
+		/*
+		// This former code tends to have false positives..
 		if(function_exists('ctype_print'))
 		{
 			$str_check = str_replace("\t", '', $str_check);
 			$str_check = str_replace("\r", '', $str_check);
 			$str_check = str_replace("\n", '', $str_check);
 			$is_text = ctype_print($str_check);
-		}
+		}*/
 
 		return $is_text;
 	}
