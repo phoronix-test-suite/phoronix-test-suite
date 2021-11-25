@@ -58,8 +58,8 @@ class graphics_override extends pts_module_interface
 			return pts_module::MODULE_UNLOAD; // Not using a supported driver, quit the module
 		}
 
-		$force_aa = pts_module::read_variable("FORCE_AA");
-		$force_af = pts_module::read_variable("FORCE_AF");
+		$force_aa = pts_env::read("FORCE_AA");
+		$force_af = pts_env::read("FORCE_AF");
 
 		if($force_aa !== FALSE && in_array($force_aa, self::$supported_aa_levels))
 		{

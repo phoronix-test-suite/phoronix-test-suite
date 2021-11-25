@@ -35,7 +35,7 @@ class pushover_net extends pts_module_interface
 	}
 	public static function __startup()
 	{
-		$user_key = pts_module::read_variable('PUSHOVER_NET_USER');
+		$user_key = pts_env::read('PUSHOVER_NET_USER');
 
 		if($user_key == null)
 		{

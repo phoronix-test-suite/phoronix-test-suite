@@ -674,6 +674,7 @@ class phoromatic extends pts_module_interface
 						// Do the actual running
 						phodevi::clear_cache();
 						$original_env_var_overrides = pts_env::get_overrides();
+						$original_pts_modules = pts_module_manager::attached_modules();
 
 						if(!empty($env_vars))
 						{
@@ -775,6 +776,8 @@ class phoromatic extends pts_module_interface
 							pts_env::set_array($original_env_var_overrides, true);
 							$original_env_var_overrides = null;
 						}
+						// Unload any modules that were loaded just during this benchmarking run (i.e. by a passed environment variable from Phoromatic)
+						pts_module_manager::detach_extra_modules($original_pts_modules);
 						break;
 					case 'reboot':
 						echo PHP_EOL . 'Phoromatic received a remote command to reboot.' . PHP_EOL;
@@ -1219,7 +1222,7 @@ class phoromatic extends pts_module_interface
 	}
 	public static function __event_results_saved($test_run_manager)
 	{
-		/*if(pts_module::read_variable('AUTO_UPLOAD_RESULTS_TO_PHOROMATIC') && pts_module::is_module_setup())
+		/*if(pts_env::read('AUTO_UPLOAD_RESULTS_TO_PHOROMATIC') && pts_module::is_module_setup())
 		{
 			phoromatic::upload_unscheduled_test_results($test_run_manager->get_file_name());
 		}*/

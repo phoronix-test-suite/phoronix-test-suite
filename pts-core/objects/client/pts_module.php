@@ -82,11 +82,6 @@ class pts_module
 
 		return $is_setup;
 	}
-	public static function read_variable($var)
-	{
-		// For now this is just readung from the real env
-		return trim(getenv($var));
-	}
 	public static function valid_run_command($module, $command = null)
 	{
 		if($command == null)

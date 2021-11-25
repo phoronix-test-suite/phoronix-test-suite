@@ -268,7 +268,6 @@ class pts_client
 
 				if(count($module_r) == 2)
 				{
-					// Ideally end up hooking this into pts_module::read_variable() rather than using the real env
 					putenv($module_r[0] . '=' . $module_r[1]);
 					pts_env::set($module_r[0], $module_r[1]);
 				}

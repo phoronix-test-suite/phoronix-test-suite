@@ -1705,8 +1705,8 @@ class pts_test_run_manager
 			}
 		}
 
-		// AlwaysUploadResultsToOpenBenchmarking AutoSortRunQueue
-		if(pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/AutoSortRunQueue', 'TRUE') && $this->force_save_results == false)
+		// AutoSortRunQueue
+		if(pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/AutoSortRunQueue', 'TRUE') && ($this->force_save_results == false || pts_env::read('TEST_EXECUTION_SORT')))
 		{
 			// Not that it matters much, but if $this->force_save_results is set that means likely running from a result file...
 			// so if running a result file, don't change the ordering of the existing results

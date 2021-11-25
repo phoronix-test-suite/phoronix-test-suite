@@ -402,7 +402,7 @@ class pts_test_result
 		}
 
 		$spread = $best / $worst;
-		if($this->test_profile->get_result_proportion() == 'LIB')
+		if($this->test_profile->get_result_proportion() == 'LIB' && $spread != 0)
 		{
 			$spread = 1 / $spread;
 		}

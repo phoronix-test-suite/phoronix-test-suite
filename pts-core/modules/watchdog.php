@@ -29,15 +29,15 @@ class watchdog extends pts_module_interface
 
 	private static $to_monitor = null;
 	private static $monitor_threshold = 0;
+	private static $maximum_wait = 4;
 
 	public static function module_environmental_variables()
 	{
-		return array('WATCHDOG_SENSOR', 'WATCHDOG_SENSOR_THRESHOLD');
+		return array('WATCHDOG_SENSOR', 'WATCHDOG_SENSOR_THRESHOLD', 'WATCHDOG_MAXIMUM_WAIT');
 	}
-
-	public static function __startup()
+	public static function __run_manager_setup(&$test_run_manager)
 	{
-		$sensor_list = pts_strings::comma_explode(pts_module::read_variable('WATCHDOG_SENSOR'));
+		$sensor_list = pts_strings::comma_explode(pts_env::read('WATCHDOG_SENSOR'));
 		$to_monitor = array();
 		// A LOT OF THIS CODE IN THIS FUNCTION PORTED OVER FROM system_monitor MODULE
 		foreach($sensor_list as $sensor)
@@ -85,7 +85,7 @@ class watchdog extends pts_module_interface
 			return pts_module::MODULE_UNLOAD;
 		}
 
-		$watchdog_threshold = getenv('WATCHDOG_SENSOR_THRESHOLD');
+		$watchdog_threshold = pts_env::read('WATCHDOG_SENSOR_THRESHOLD');
 		if(!is_numeric($watchdog_threshold) || $watchdog_threshold < 2)
 		{
 			echo PHP_EOL . 'UNLOADING WATCHDOG AS NO USEFUL DATA SET FOR WATCHDOG_SENSOR_THRESHOLD ENVIRONMENT VARIABLE' . PHP_EOL;
@@ -93,7 +93,7 @@ class watchdog extends pts_module_interface
 		}
 		self::$monitor_threshold = $watchdog_threshold;
 
-		echo PHP_EOL . 'WATCHDOG ACTIVATED - TESTS WILL ABORT IF ANY SENSOR CROSSES: ' . self::$monitor_threshold . PHP_EOL;
+		echo PHP_EOL . pts_client::cli_just_bold('WATCHDOG ACTIVATED - TESTS WILL ABORT/DELAY IF ANY SENSOR CROSSES: ' . self::$monitor_threshold) . PHP_EOL;
 		echo 'WATCHDOG MONITORING: ' . PHP_EOL;
 		$monitors = array();
 		foreach(self::$to_monitor as $sensor)
@@ -101,8 +101,14 @@ class watchdog extends pts_module_interface
 			$monitors[] = array(strtoupper(phodevi::sensor_object_name($sensor)), phodevi::read_sensor($sensor), strtoupper(phodevi::read_sensor_object_unit($sensor)));
 		}
 		echo pts_user_io::display_text_table($monitors, '   ', 1) . PHP_EOL . PHP_EOL;
-	}
 
+		$min_maximum_wait = pts_env::read('WATCHDOG_MAXIMUM_WAIT');
+		if(is_numeric($min_maximum_wait) && $min_maximum_wait >= 1)
+		{
+			self::$maximum_wait = $min_maximum_wait;
+		}
+		echo PHP_EOL . pts_client::cli_just_bold('WATCHDOG WILL SLEEP SYSTEM UP TO ' . pts_strings::plural_handler(self::$maximum_wait, 'MINUTE') . ' IF/WHEN THRESHOLD BREACHED') . PHP_EOL;
+	}
 	public static function __pre_run_process()
 	{
 		self::check_watchdog();
@@ -122,22 +128,21 @@ class watchdog extends pts_module_interface
 			$val = phodevi::read_sensor($sensor);
 			if($val > self::$monitor_threshold)
 			{
-				echo PHP_EOL . PHP_EOL . 'WATCHDOG: ' . strtoupper(phodevi::sensor_object_name($sensor)) . ' EXCEEDED THRESHOLD: ' . $val . ' ' . strtoupper(phodevi::read_sensor_object_unit($sensor)) . PHP_EOL;
+				pts_client::$display->test_run_message(pts_client::cli_colored_text('Watchdog ' . phodevi::sensor_object_name($sensor) . ' Exceeded Threshold: ' . $val . ' ' . phodevi::read_sensor_object_unit($sensor), 'red', true));
 
-				$minutes_to_wait = 3;
-				$freq_to_poll = 5;
-				echo 'SUSPENDING TESTING; WILL WAIT UP TO ' . $minutes_to_wait . ' MINUTES TO SEE IF VALUE LOWERED. ' . PHP_EOL . PHP_EOL;
-				for($i = 0; $i < ($minutes_to_wait * 60); $i += $freq_to_poll)
+				$freq_to_poll = 10;
+				pts_client::$display->test_run_message(pts_client::cli_colored_text('Suspending testing; will wait up to ' . pts_strings::plural_handler(self::$maximum_wait, 'minute') . ' to settle.', 'red', false));
+				for($i = 0; $i < (self::$maximum_wait * 60); $i += $freq_to_poll)
 				{
 					sleep($freq_to_poll);
 					if(phodevi::read_sensor($sensor) < self::$monitor_threshold)
 					{
-						echo PHP_EOL . 'WATCHDOG RESTORING PROCESS: ' . strtoupper(phodevi::sensor_object_name($sensor)) . ': ' . phodevi::read_sensor($sensor) . ' ' . strtoupper(phodevi::read_sensor_object_unit($sensor)) . PHP_EOL;
+						pts_client::$display->test_run_message(pts_client::cli_colored_text('Watchdog Restoring Process: ' . phodevi::sensor_object_name($sensor) . ': ' . phodevi::read_sensor($sensor) . ' ' . phodevi::read_sensor_object_unit($sensor), 'green', true));
 						return true;
 					}
 				}
-				echo 'WATCHDOG: EXITING PROGRAM' . PHP_EOL;
-				exit;
+				pts_client::$display->test_run_message('Watchdog waited ' . pts_strings::plural_handler(self::$maximum_wait, 'minute') . ' but ' . phodevi::sensor_object_name($sensor) . ' at ' . phodevi::read_sensor($sensor) . ' ' . phodevi::read_sensor_object_unit($sensor));
+				//exit;
 			}
 		}
 	}

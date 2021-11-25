@@ -297,7 +297,7 @@ class pts_network
 				break;
 		}
 	}
-	private static function curl_status_callback($curl_resource, $download_size, $downloaded, $upload_size, $uploaded)
+	private static function curl_status_callback($curl_resource, $download_size, $downloaded, $upload_size = 0, $uploaded = 0)
 	{
 		static $last_float = -1;
 		$downloaded_float = $download_size == 0 ? 0 : $downloaded / $download_size;

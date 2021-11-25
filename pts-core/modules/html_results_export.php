@@ -33,8 +33,8 @@ class html_results_export extends pts_module_interface
 	}
 	public static function __event_results_saved($test_run_manager)
 	{
-		$html_file = pts_module::read_variable('EXPORT_RESULTS_HTML_FILE_TO');
-		$emails = pts_strings::comma_explode(pts_module::read_variable('EXPORT_RESULTS_HTML_EMAIL_TO'));
+		$html_file = pts_env::read('EXPORT_RESULTS_HTML_FILE_TO');
+		$emails = pts_strings::comma_explode(pts_env::read('EXPORT_RESULTS_HTML_EMAIL_TO'));
 
 		$html_contents = pts_result_file_output::result_file_to_html($test_run_manager->result_file);
 

@@ -58,6 +58,17 @@ class module_info implements pts_option_interface
 			}
 			echo PHP_EOL;
 		}
+
+		$vars = pts_module_manager::module_call($module, 'module_environmental_variables');
+		if(is_array($vars))
+		{
+			echo 'Module Environment Variables:' . PHP_EOL;
+			foreach($vars as $v)
+			{
+				echo '- ' . $v . PHP_EOL;
+			}
+			echo PHP_EOL;
+		}
 	}
 }
 

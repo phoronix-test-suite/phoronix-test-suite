@@ -50,7 +50,7 @@ class toggle_screensaver extends pts_module_interface
 		{
 			return pts_module::MODULE_UNLOAD;
 		}
-		$halt_screensaver = pts_module::read_variable('HALT_SCREENSAVER');
+		$halt_screensaver = pts_env::read('HALT_SCREENSAVER');
 		if((!empty($halt_screensaver) && !pts_strings::string_bool($halt_screensaver)) || (phodevi::read_property('system', 'display-server') == null && getenv('XDG_CURRENT_DESKTOP') == false))
 		{
 			return pts_module::MODULE_UNLOAD;

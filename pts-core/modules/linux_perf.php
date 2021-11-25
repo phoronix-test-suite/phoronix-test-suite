@@ -24,7 +24,7 @@ class linux_perf extends pts_module_interface
 {
 	const module_name = 'Linux Perf Framework Reporter';
 	const module_version = '1.1.0';
-	const module_description = 'Setting LINUX_PERF=1 will auto-load and enable this Phoronix Test Suite module. The module also depends upon running a modern Linux kernel (supporting perf) and that the perf binary is available via standard system paths.';
+	const module_description = 'Setting LINUX_PERF=1 will auto-load and enable this Phoronix Test Suite module. The module also depends upon running a modern Linux kernel (supporting perf) and that the perf binary is available via standard system paths. Depending upon system permissions you may be limited to using perf as root or adjusting the /proc/sys/kernel/perf_event_paranoid setting.';
 	const module_author = 'Michael Larabel';
 
 	private static $result_identifier;
@@ -43,9 +43,18 @@ class linux_perf extends pts_module_interface
 	public static function __run_manager_setup(&$test_run_manager)
 	{
 		// Verify LINUX_PERF is set, `perf` can be found, and is Linux
-		if(getenv('LINUX_PERF') == 0 || !pts_client::executable_in_path('perf') || !phodevi::is_linux())
+		if(pts_env::read('LINUX_PERF') == 0 || !pts_client::executable_in_path('perf') || !phodevi::is_linux())
 		{
 			return pts_module::MODULE_UNLOAD; // This module doesn't have anything else to do
+		}
+		if(phodevi::is_root() == false && is_file('/proc/sys/kernel/perf_event_paranoid'))
+		{
+			$perf_event_paranoid = pts_file_io::file_get_contents('/proc/sys/kernel/perf_event_paranoid');
+			if(is_numeric($perf_event_paranoid) && $perf_event_paranoid >= 2)
+			{
+				echo PHP_EOL . 'ERROR: /proc/sys/kernel/perf_event_paranoid needs to be adjusted for Linux perf support.' . PHP_EOL;
+				return pts_module::MODULE_UNLOAD;
+			}
 		}
 		echo PHP_EOL . 'Linux PERF Monitoring Enabled.' . PHP_EOL . PHP_EOL;
 

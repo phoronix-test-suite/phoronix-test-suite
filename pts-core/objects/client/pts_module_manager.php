@@ -222,6 +222,20 @@ class pts_module_manager
 			}
 		}
 	}
+	public static function detach_extra_modules($limit_modules_list)
+	{
+		$current_modules = pts_module_manager::attached_modules();
+		if(!empty($current_modules) && $current_modules != $limit_modules_list)
+		{
+			foreach($current_modules as $cm)
+			{
+				if(empty($limit_modules_list) || !in_array($cm, $limit_modules_list))
+				{
+					pts_module_manager::detach_module($cm);
+				}
+			}
+		}
+	}
 	public static function attached_modules($process_name = null, $select_modules = false)
 	{
 		if($process_name == null)

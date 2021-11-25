@@ -83,17 +83,15 @@ class system_monitor extends pts_module_interface
 		$test_run_manager->force_results_save();
 		//$test_run_manager->disable_dynamic_run_count();
 	}
-
 	public static function __pre_run_process(&$test_run_manager)
 	{
 		self::$result_identifier = $test_run_manager->get_results_identifier();
-		self::$individual_monitoring = pts_module::read_variable('MONITOR_INDIVIDUAL') !== '0';
-		self::$per_test_try_monitoring = pts_module::read_variable('MONITOR_PER_RUN') === '1';
+		self::$individual_monitoring = pts_env::read('MONITOR_INDIVIDUAL') !== '0';
+		self::$per_test_try_monitoring = pts_env::read('MONITOR_PER_RUN') === '1';
 		self::$to_monitor = array();
 
 		try
 		{
-			self::check_if_results_saved($test_run_manager);
 			$sensor_parameters = self::prepare_sensor_parameters();
 			self::enable_perf_per_sensor($sensor_parameters);
 			self::process_sensor_list($sensor_parameters);
@@ -115,7 +113,6 @@ class system_monitor extends pts_module_interface
 
 		pts_env::set('FORCE_MIN_DURATION_PER_TEST', 1); // force each test to run at least one minute to ensure sufficient samples
 	}
-
 	public static function __pre_test_run($test_run_request)
 	{
 		self::$individual_test_run_request = clone $test_run_request;
@@ -336,19 +333,10 @@ class system_monitor extends pts_module_interface
 		return $args;
 	}
 
-	// Prevents system monitor from running when results are not saved to a file.
-	private static function check_if_results_saved(&$test_run_manager)
-	{
-		if(!$test_run_manager->do_save_results())
-		{
-			throw new Exception('results not saved to a file');
-		}
-	}
-
 	// Parse environmental variable containing parameters of monitored sensors.
 	private static function prepare_sensor_parameters()
 	{
-		$sensor_list = pts_strings::comma_explode(pts_module::read_variable('MONITOR'));
+		$sensor_list = pts_strings::comma_explode(pts_env::read('MONITOR'));
 
 		$to_monitor = array();
 
@@ -388,16 +376,16 @@ class system_monitor extends pts_module_interface
 	private static function enable_perf_per_sensor(&$sensor_parameters)
 	{
 		self::$perf_per_sensor = array();
-		if(pts_module::read_variable('PERFORMANCE_PER_WATT'))
+		if(pts_env::read('PERFORMANCE_PER_WATT'))
 		{
 			// We need to ensure the system power consumption is being tracked to get performance-per-Watt
 			self::$perf_per_sensor[] = array('sys', 'power');
 			echo PHP_EOL . 'Provide Performance-Per-Watt Metrics Using: ' . pts_client::cli_just_italic('sys.power')  . PHP_EOL;
 		}
-		if(pts_module::read_variable('PERFORMANCE_PER_SENSOR'))
+		if(pts_env::read('PERFORMANCE_PER_SENSOR'))
 		{
 			// We need to ensure the system power consumption is being tracked to get performance-per-(arbitrary sensor)
-			foreach(explode(',', pts_module::read_variable('PERFORMANCE_PER_SENSOR')) as $s)
+			foreach(explode(',', pts_env::read('PERFORMANCE_PER_SENSOR')) as $s)
 			{
 				$per_sensor = explode('.', $s);
 				if(count($per_sensor) == 2)
@@ -539,9 +527,9 @@ class system_monitor extends pts_module_interface
 	}
 	private static function set_monitoring_interval()
 	{
-		if(pts_module::read_variable('MONITOR_INTERVAL') != null)
+		if(pts_env::read('MONITOR_INTERVAL') != null)
 		{
-			$proposed_interval = pts_module::read_variable('MONITOR_INTERVAL');
+			$proposed_interval = pts_env::read('MONITOR_INTERVAL');
 			if(is_numeric($proposed_interval) && $proposed_interval >= 0.5)
 			{
 				self::$sensor_monitoring_frequency = $proposed_interval;

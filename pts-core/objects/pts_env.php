@@ -98,7 +98,6 @@ class pts_env
 			'default' => '',
 			'usage' => array('benchmark'),
 			'value_type' => 'string',
-			'advertise_in_phoromatic' => true,
 			),
 		'FORCE_TIMES_TO_RUN' => array(
 			'description' => 'This option can be used to override the default number of times a given test is run. Rather than being specified by the individual test profile, FORCE_TIMES_TO_RUN allows for specifying the number of times to run each benchmark.',
@@ -304,13 +303,65 @@ class pts_env
 			'value_type' => 'bool',
 			),
 		'TEST_TIMEOUT_AFTER' => array(
-			'description' => 'When this variable is set, the value will can be set to "auto" or a positive integer. The value indicates the number of minutes until a test run should be aborted, such as for a safeguard against hung/deadlocked processes or other issues. Setting this to a high number as a backup would be recommended for fending off possible hangs / stalls in the testing process if the test does not quit. If the value is "auto", it will quit if the time of a test run exceeds 3x the average time it normally takes the particular test to complete its run. In the future, auto might be enabled by default in a future PTS release. This functionality is handled by a Phoronix Test Suite module',
+			'description' => 'When this variable is set, the value will can be set to "auto" or a positive integer. The value indicates the number of minutes until a test run should be aborted, such as for a safeguard against hung/deadlocked processes or other issues. Setting this to a high number as a backup would be recommended for fending off possible hangs / stalls in the testing process if the test does not quit. If the value is "auto", it will quit if the time of a test run exceeds 3x the average time it normally takes the particular test to complete its run. In the future, auto might be enabled by default in a future PTS release. This functionality requires system PHP PCNTL support (i.e. no Windows support).',
 			'default' => '',
 			'usage' => array('benchmark'),
 			'value_type' => 'positive_integer',
-			//'advertise_in_phoromatic' => true,
+			'module' => 'test_timeout',
+			'advertise_in_phoromatic' => true,
+			),
+		'MONITOR' => array(
+			'description' => 'This option can be used for system sensor monitoring during test execution. The Phoronix Test Suite system_monitor module can monitor various exposed sensors and record them as part of the result file and present them as additional graphs / metrics in the result viewer. The exposed sensors varies by platform hardware/software. This functionality also requires PHP PCNTL support and thus is not available for some platforms (i.e. Windows).',
+			'default' => '',
+			'usage' => array('benchmark'),
+			'value_type' => 'enum_multi',
+			'enum' => array('all', 'cpu.peak-freq', 'cpu.temp', 'cpu.power', 'cpu.usage', 'gpu.freq', 'gpu.power', 'gpu.temp', 'hdd.temp', 'memory.usage', 'swap.usage', 'sys.power', 'sys.temp'),
+			'module' => 'system_monitor',
+			'advertise_in_phoromatic' => true,
+			),
+		'LINUX_PERF' => array(
+			'description' => 'This option allows providing additional complementary per-test graphs looking at various Linux perf subsystem metrics such as cache usage, instructions executed, and other metrics. This requires you to have Linux\'s perf user-space utility already installed and performance counter access.',
+			'default' => false,
+			'usage' => array('benchmark'),
+			'value_type' => 'bool',
+			'module' => 'linux_perf',
+			'advertise_in_phoromatic' => true,
+			),
+		'TURBOSTAT_LOG' => array(
+			'description' => 'This option allows attaching "turbostat" outputs to the end of archived benchmark/test log files if interested in the Linux TurboStat information. This assumes you have turbostat available on the Linux system(s) and have permissions (root) for running turbostat.',
+			'default' => false,
+			'usage' => array('benchmark'),
+			'value_type' => 'bool',
+			'module' => 'turbostat',
+			'advertise_in_phoromatic' => true,
+			),
+		'WATCHDOG_SENSOR' => array(
+			'description' => 'This option will enable the watchdog module that checks system sensor values pre/interim/post benchmark execution. If the selected sensor(s) exceed the static threshold level, testing will be paused before continuing to any additional tests so that the system can sleep. Ideally this will allow the system to return to a more suitable state before resuming testing after the sensor value is back below the threshold or after a pre-defined maximum time limit to spend sleeping. This module is mostly focused on pausing testing should system core temperatures become too elevated to allow time for heat dissipation.',
+			'default' => false,
+			'usage' => array('benchmark'),
+			'value_type' => 'enum_multi',
+			'enum' => array('cpu.temp', 'gpu.temp', 'hdd.temp', 'sys.temp'),
+			'module' => 'watchdog',
+			'advertise_in_phoromatic' => true,
+			),
+		'WATCHDOG_SENSOR_THRESHOLD' => array(
+			'description' => 'Used in conjunction with the WATCHDOG_SENSOR option, the WATCHDOG_SENSOR_THRESHOLD specifies the threshold for the sensor reading when the testing should be paused (e.g. the Celsius cut-off temperature).',
+			'default' => false,
+			'usage' => array('benchmark'),
+			'value_type' => 'positive_integer',
+			'module' => 'watchdog',
+			'advertise_in_phoromatic' => true,
+			),
+		'WATCHDOG_MAXIMUM_WAIT' => array(
+			'description' => 'Used in conjunction with the WATCHDOG_SENSOR option, this is the maximum amount of time to potentially wait when the watchdog is triggered for surpassing the threshold value. The value is the maximum number of minutes to wait being above the threshold.',
+			'default' => false,
+			'usage' => array('benchmark'),
+			'value_type' => 'positive_integer',
+			'module' => 'watchdog',
+			'advertise_in_phoromatic' => true,
 			),
 		);
+
 	public static function read($name, &$overrides = null, $fallback_value = false)
 	{
 		if(isset(self::$overrides[$name]))
@@ -322,6 +373,16 @@ class pts_env
 	}
 	public static function set($name, $value)
 	{
+		if(!isset(self::$env_vars[$name]))
+		{
+			// trigger_error($name . ' is not a recognized Phoronix Test Suite environment variable.', E_USER_NOTICE);
+		}
+		if(PTS_IS_CLIENT && isset(self::$env_vars[$name]['module']) && !pts_module_manager::is_module_attached(self::$env_vars[$name]['module']))
+		{
+			// Ensure module is loaded
+			pts_module_manager::attach_module(self::$env_vars[$name]['module']);
+		}
+
 		self::$overrides[$name] = $value;
 	}
 	public static function set_array($to_set, $clear_overrides = false)
@@ -332,7 +393,7 @@ class pts_env
 		}
 		foreach($to_set as $name => $value)
 		{
-			self::$overrides[$name] = $value;
+			self::set($name, $value);
 		}
 	}
 	public static function get_overrides()
@@ -424,7 +485,12 @@ class pts_env
 						$value_type = 'positive integer';
 						break;
 					case 'enum':
+					case 'enum_multi':
 						$value_type = 'enumeration' . (isset($data['enum']) ? ' (' . implode(', ', $data['enum']) . ')' : '');
+					if($data['value_type'] == 'enum_multi')
+					{
+						$value_type .= PHP_EOL . 'Multiple options can be supplied when delimited by a comma.';
+					}
 						break;
 				}
 				if(!empty($value_type))
@@ -461,6 +527,10 @@ class pts_env
 					$docs .= 'The variable is relevant for: ' . implode(', ', $usages) . '.' . PHP_EOL;
 				}
 			}
+			if(isset($data['module']) && !empty($data['module']))
+			{
+				$docs .= 'The variable depends upon functionality provided by the Phoronix Test Suite module: ' . $data['module'] . '.' . PHP_EOL;
+			}
 			if(!$for_terminal)
 			{
 				$docs .= '</p>';
@@ -493,18 +563,30 @@ class pts_env
 				case 'bool':
 					$enum = array('TRUE', 'FALSE');
 					$default_value = strtoupper($default_value);
-					break;
 				case 'enum':
 					if(isset($data['enum']))
 					{
 						$enum = $data['enum'];
 					}
-					$html .= '<select name="' . $var . '"><option value="0">[Disabled]</option>';
+					$html .= '<select name="' . $var . '"><option value="0">[Not Set]</option>';
 					foreach($enum as $e)
 					{
 						$html .= '<option value="' . $e . '"' . (strtoupper($default_value) == strtoupper($e) ? ' selected="selected"' : '') . '>' . $e . '</option>';
 					}
 					$html .= '</select>';
+					break;
+				case 'enum_multi':
+					if(isset($data['enum']))
+					{
+						if(!empty($default_value) && !is_array($default_value))
+						{
+							$default_value = explode($default_value, ',');
+						}
+						foreach($data['enum'] as $e)
+						{
+							$html .= '<input type="checkbox" name="' . $var . '[]" value="' . $e . '" ' . (is_array($default_value) && in_array($e, $default_value) ? 'checked="checked"' : '') . ' /> ' . $e . '<br />';
+						}
+					}
 					break;
 				case 'positive_integer':
 					$html .= '<input type="number" min="0" max="9999" step="1" name="' . $var . '" value="' . $default_value . '" />';
@@ -525,8 +607,19 @@ class pts_env
 		{
 			if(isset($_REQUEST[$var]))
 			{
-				// TODO add more validation handling checks... then again, PTS client has its own validation of the env vars
-				$v = strip_tags($_REQUEST[$var]);
+				if(is_array($_REQUEST[$var]))
+				{
+					foreach($_REQUEST[$var] as &$rqv)
+					{
+						$rqv = strip_tags($rqv);
+					}
+					$v = implode(',', $_REQUEST[$var]);
+				}
+				else
+				{
+					// TODO add more validation handling checks... then again, PTS client has its own validation of the env vars
+					$v = strip_tags($_REQUEST[$var]);
+				}
 				if(!empty($v) && $v !== 0)
 				{
 					$posted[$var] = $v;
