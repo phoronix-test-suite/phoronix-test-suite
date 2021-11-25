@@ -302,8 +302,8 @@ function pts_version_codenames()
 		);
 }
 
-pts_define('PTS_VERSION', '10.6.1');
-pts_define('PTS_CORE_VERSION', 10610);
+pts_define('PTS_VERSION', '10.8.0m1');
+pts_define('PTS_CORE_VERSION', 10700);
 pts_define('PTS_RELEASE_DATE', '20211010');
 pts_define('PTS_CODENAME', 'Tjeldsund');
 

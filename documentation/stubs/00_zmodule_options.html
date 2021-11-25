@@ -23,7 +23,7 @@
 <p>This module allows basic exporting of results to HTML for saving either to a file locally (specified using the EXPORT_RESULTS_HTML_FILE_TO environment variable) or to a mail account (specified using the EXPORT_RESULTS_HTML_EMAIL_TO environment variable). EXPORT_RESULTS_HTML_EMAIL_TO supports multiple email addresses delimited by a comma.</p>
 <p>This module utilizes the following environmental variables: EXPORT_RESULTS_HTML_EMAIL_TO, EXPORT_RESULTS_HTML_FILE_TO.</p>
 <h2>Linux Perf Framework Reporter</h2>
-<p>Setting LINUX_PERF=1 will auto-load and enable this Phoronix Test Suite module. The module also depends upon running a modern Linux kernel (supporting perf) and that the perf binary is available via standard system paths.</p>
+<p>Setting LINUX_PERF=1 will auto-load and enable this Phoronix Test Suite module. The module also depends upon running a modern Linux kernel (supporting perf) and that the perf binary is available via standard system paths. Depending upon system permissions you may be limited to using perf as root or adjusting the /proc/sys/kernel/perf_event_paranoid setting.</p>
 <p>This module utilizes the following environmental variables: LINUX_PERF.</p>
 <h2>Dynamic Result Viewer</h2>
 <p>This module pre-loads the HTTP dynamic result viewer for Phoronix Test Suite data.</p>
@@ -162,8 +162,8 @@ NOTE: Use the "system-sensors" command to see what sensors are available for mon
 <p>This module toggles the system's screensaver while the Phoronix Test Suite is running. At this time, the GNOME and KDE screensavers are supported.</p>
 <p>This module utilizes the following environmental variables: HALT_SCREENSAVER.</p>
 <h2>Linux Turbostat Dumper</h2>
-<p>Setting TURBOSTAT_LOG_DIR=_DIR_ will auto-load and enable this Phoronix Test Suite module. The module will -- if turbostat is installed on the system and the user is root -- allow dumping of the TurboStat data to the specified directly on a per-test basis. This allows easily collecting of turbostat logs for each test being run.</p>
-<p>This module utilizes the following environmental variables: TURBOSTAT_LOG_DIR.</p>
+<p>Setting TURBOSTAT_LOG=_DIR_ will auto-load and enable this Phoronix Test Suite module. The module will -- if turbostat is installed on the system and the user is root -- allow dumping of the TurboStat data to the specified directly on a per-test basis. This allows easily collecting of turbostat logs for each test being run. If the TURBOSTAT_LOG= value does not point to a directory, the TurboStat output will be appended to the test run log files.</p>
+<p>This module utilizes the following environmental variables: TURBOSTAT_LOG.</p>
 <h2>Update Checker</h2>
 <p>This module checks to see if the Phoronix Test Suite -- and its tests and suites -- are up to date plus also handles message of the day information.</p>
 <h2>Utilize Wine On Linux Benchmarking</h2>
@@ -171,6 +171,6 @@ NOTE: Use the "system-sensors" command to see what sensors are available for mon
 <p>This module utilizes the following environmental variables: USE_WINE.</p>
 <h2>System Event Watchdog</h2>
 <p>This module has support for stopping/interrupting tests if various system issues occur, like a temperature sensor exceeds a defined threshold.</p>
-<p>This module utilizes the following environmental variables: WATCHDOG_SENSOR, WATCHDOG_SENSOR_THRESHOLD.</p>
+<p>This module utilizes the following environmental variables: WATCHDOG_SENSOR, WATCHDOG_SENSOR_THRESHOLD, WATCHDOG_MAXIMUM_WAIT.</p>
 </body>
 </html>

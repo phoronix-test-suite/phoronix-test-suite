@@ -473,7 +473,7 @@ This module utilizes the following environmental variables: EXPORT_RESULTS_HTML_
 
 
 ### Linux Perf Framework Reporter
-Setting LINUX_PERF=1 will auto-load and enable this Phoronix Test Suite module. The module also depends upon running a modern Linux kernel (supporting perf) and that the perf binary is available via standard system paths.
+Setting LINUX_PERF=1 will auto-load and enable this Phoronix Test Suite module. The module also depends upon running a modern Linux kernel (supporting perf) and that the perf binary is available via standard system paths. Depending upon system permissions you may be limited to using perf as root or adjusting the /proc/sys/kernel/perf_event_paranoid setting.
 
 This module utilizes the following environmental variables: LINUX_PERF.
 
@@ -674,9 +674,9 @@ This module utilizes the following environmental variables: HALT_SCREENSAVER.
 
 
 ### Linux Turbostat Dumper
-Setting TURBOSTAT_LOG_DIR=_DIR_ will auto-load and enable this Phoronix Test Suite module. The module will -- if turbostat is installed on the system and the user is root -- allow dumping of the TurboStat data to the specified directly on a per-test basis. This allows easily collecting of turbostat logs for each test being run.
+Setting TURBOSTAT_LOG=_DIR_ will auto-load and enable this Phoronix Test Suite module. The module will -- if turbostat is installed on the system and the user is root -- allow dumping of the TurboStat data to the specified directly on a per-test basis. This allows easily collecting of turbostat logs for each test being run. If the TURBOSTAT_LOG= value does not point to a directory, the TurboStat output will be appended to the test run log files.
 
-This module utilizes the following environmental variables: TURBOSTAT_LOG_DIR.
+This module utilizes the following environmental variables: TURBOSTAT_LOG.
 
 
 ### Update Checker
@@ -692,7 +692,7 @@ This module utilizes the following environmental variables: USE_WINE.
 ### System Event Watchdog
 This module has support for stopping/interrupting tests if various system issues occur, like a temperature sensor exceeds a defined threshold.
 
-This module utilizes the following environmental variables: WATCHDOG_SENSOR, WATCHDOG_SENSOR_THRESHOLD.
+This module utilizes the following environmental variables: WATCHDOG_SENSOR, WATCHDOG_SENSOR_THRESHOLD, WATCHDOG_MAXIMUM_WAIT.
 
 
 # Installation Instructions
@@ -1113,6 +1113,23 @@ The value can be of type: positive integer.
 The variable is relevant for: test execution / benchmarking.
 
 
+### LINUX_PERF
+*This option allows providing additional complementary per-test graphs looking at various Linux perf subsystem metrics such as cache usage, instructions executed, and other metrics. This requires you to have Linux's perf user-space utility already installed and performance counter access.*
+
+The value can be of type: boolean (TRUE / FALSE).
+The variable is relevant for: test execution / benchmarking.
+The variable depends upon functionality provided by the Phoronix Test Suite module: linux_perf.
+
+
+### MONITOR
+*This option can be used for system sensor monitoring during test execution. The Phoronix Test Suite system_monitor module can monitor various exposed sensors and record them as part of the result file and present them as additional graphs / metrics in the result viewer. The exposed sensors varies by platform hardware/software. This functionality also requires PHP PCNTL support and thus is not available for some platforms (i.e. Windows).*
+
+The value can be of type: enumeration (all, cpu.peak-freq, cpu.temp, cpu.power, cpu.usage, gpu.freq, gpu.power, gpu.temp, hdd.temp, memory.usage, swap.usage, sys.power, sys.temp)
+Multiple options can be supplied when delimited by a comma..
+The variable is relevant for: test execution / benchmarking.
+The variable depends upon functionality provided by the Phoronix Test Suite module: system_monitor.
+
+
 ### NO_COLOR
 *This option when enabled will force-disable the CLI/TUI text coloring. By default the Phoronix Test Suite will attempt to use CLI/TUI text colors and bolding of text for supported terminals.*
 
@@ -1333,10 +1350,11 @@ The variable is relevant for: test execution / benchmarking, stress-run mode.
 
 
 ### TEST_TIMEOUT_AFTER
-*When this variable is set, the value will can be set to "auto" or a positive integer. The value indicates the number of minutes until a test run should be aborted, such as for a safeguard against hung/deadlocked processes or other issues. Setting this to a high number as a backup would be recommended for fending off possible hangs / stalls in the testing process if the test does not quit. If the value is "auto", it will quit if the time of a test run exceeds 3x the average time it normally takes the particular test to complete its run. In the future, auto might be enabled by default in a future PTS release. This functionality is handled by a Phoronix Test Suite module*
+*When this variable is set, the value will can be set to "auto" or a positive integer. The value indicates the number of minutes until a test run should be aborted, such as for a safeguard against hung/deadlocked processes or other issues. Setting this to a high number as a backup would be recommended for fending off possible hangs / stalls in the testing process if the test does not quit. If the value is "auto", it will quit if the time of a test run exceeds 3x the average time it normally takes the particular test to complete its run. In the future, auto might be enabled by default in a future PTS release. This functionality requires system PHP PCNTL support (i.e. no Windows support).*
 
 The value can be of type: positive integer.
 The variable is relevant for: test execution / benchmarking.
+The variable depends upon functionality provided by the Phoronix Test Suite module: test_timeout.
 
 
 ### TOTAL_LOOP_COUNT
@@ -1351,6 +1369,39 @@ The variable is relevant for: test execution / benchmarking.
 
 The value can be of type: positive integer.
 The variable is relevant for: stress-run mode, test execution / benchmarking.
+
+
+### TURBOSTAT_LOG
+*This option allows attaching "turbostat" outputs to the end of archived benchmark/test log files if interested in the Linux TurboStat information. This assumes you have turbostat available on the Linux system(s) and have permissions (root) for running turbostat.*
+
+The value can be of type: boolean (TRUE / FALSE).
+The variable is relevant for: test execution / benchmarking.
+The variable depends upon functionality provided by the Phoronix Test Suite module: turbostat.
+
+
+### WATCHDOG_MAXIMUM_WAIT
+*Used in conjunction with the WATCHDOG_SENSOR option, this is the maximum amount of time to potentially wait when the watchdog is triggered for surpassing the threshold value. The value is the maximum number of minutes to wait being above the threshold.*
+
+The value can be of type: positive integer.
+The variable is relevant for: test execution / benchmarking.
+The variable depends upon functionality provided by the Phoronix Test Suite module: watchdog.
+
+
+### WATCHDOG_SENSOR
+*This option will enable the watchdog module that checks system sensor values pre/interim/post benchmark execution. If the selected sensor(s) exceed the static threshold level, testing will be paused before continuing to any additional tests so that the system can sleep. Ideally this will allow the system to return to a more suitable state before resuming testing after the sensor value is back below the threshold or after a pre-defined maximum time limit to spend sleeping. This module is mostly focused on pausing testing should system core temperatures become too elevated to allow time for heat dissipation.*
+
+The value can be of type: enumeration (cpu.temp, gpu.temp, hdd.temp, sys.temp)
+Multiple options can be supplied when delimited by a comma..
+The variable is relevant for: test execution / benchmarking.
+The variable depends upon functionality provided by the Phoronix Test Suite module: watchdog.
+
+
+### WATCHDOG_SENSOR_THRESHOLD
+*Used in conjunction with the WATCHDOG_SENSOR option, the WATCHDOG_SENSOR_THRESHOLD specifies the threshold for the sensor reading when the testing should be paused (e.g. the Celsius cut-off temperature).*
+
+The value can be of type: positive integer.
+The variable is relevant for: test execution / benchmarking.
+The variable depends upon functionality provided by the Phoronix Test Suite module: watchdog.
 
 
 # General Information
@@ -1680,6 +1731,39 @@ This is a collection of test profiles found within the specified OpenBenchmarkin
 
 #### Smp Tests  git/smp
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing smp.
+
+#### All Tests In Windows  windows/all
+This is a collection of all supported test profiles found within the specified OpenBenchmarking.org repository.
+
+#### Benchmark Tests  windows/benchmark
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a benchmark software test.
+
+#### Bsd Operating System Tests  windows/bsd
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the bsd Operating System.
+
+#### Everything In Windows  windows/everything
+This is a collection of all test profiles found within the specified OpenBenchmarking.org repository, including unsupported tests, etc.
+
+#### Linux Operating System Tests  windows/linux
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the linux Operating System.
+
+#### Macosx Operating System Tests  windows/macosx
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the macosx Operating System.
+
+#### Processor Subsystem Tests  windows/processor
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the processor sub-system.
+
+#### Solaris Operating System Tests  windows/solaris
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the solaris Operating System.
+
+#### System Subsystem Tests  windows/system
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the system sub-system.
+
+#### Utility Tests  windows/utility
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a utility software test.
+
+#### Windows Operating System Tests  windows/windows
+This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the windows Operating System.
 
 
 # Component Testing

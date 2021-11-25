@@ -60,6 +60,19 @@ The variable is relevant for: test execution / benchmarking.
 <p>The value can be of type: positive integer.
 The variable is relevant for: test execution / benchmarking.
 </p>
+<h2>LINUX_PERF</h2>
+<p><em>This option allows providing additional complementary per-test graphs looking at various Linux perf subsystem metrics such as cache usage, instructions executed, and other metrics. This requires you to have Linux's perf user-space utility already installed and performance counter access.</em></p>
+<p>The value can be of type: boolean (TRUE / FALSE).
+The variable is relevant for: test execution / benchmarking.
+The variable depends upon functionality provided by the Phoronix Test Suite module: linux_perf.
+</p>
+<h2>MONITOR</h2>
+<p><em>This option can be used for system sensor monitoring during test execution. The Phoronix Test Suite system_monitor module can monitor various exposed sensors and record them as part of the result file and present them as additional graphs / metrics in the result viewer. The exposed sensors varies by platform hardware/software. This functionality also requires PHP PCNTL support and thus is not available for some platforms (i.e. Windows).</em></p>
+<p>The value can be of type: enumeration (all, cpu.peak-freq, cpu.temp, cpu.power, cpu.usage, gpu.freq, gpu.power, gpu.temp, hdd.temp, memory.usage, swap.usage, sys.power, sys.temp)
+Multiple options can be supplied when delimited by a comma..
+The variable is relevant for: test execution / benchmarking.
+The variable depends upon functionality provided by the Phoronix Test Suite module: system_monitor.
+</p>
 <h2>NO_COLOR</h2>
 <p><em>This option when enabled will force-disable the CLI/TUI text coloring. By default the Phoronix Test Suite will attempt to use CLI/TUI text colors and bolding of text for supported terminals.</em></p>
 <p>The value can be of type: boolean (TRUE / FALSE).
@@ -215,9 +228,10 @@ The variable is relevant for: test execution / benchmarking, stress-run mode.
 The variable is relevant for: test execution / benchmarking, stress-run mode.
 </p>
 <h2>TEST_TIMEOUT_AFTER</h2>
-<p><em>When this variable is set, the value will can be set to "auto" or a positive integer. The value indicates the number of minutes until a test run should be aborted, such as for a safeguard against hung/deadlocked processes or other issues. Setting this to a high number as a backup would be recommended for fending off possible hangs / stalls in the testing process if the test does not quit. If the value is "auto", it will quit if the time of a test run exceeds 3x the average time it normally takes the particular test to complete its run. In the future, auto might be enabled by default in a future PTS release. This functionality is handled by a Phoronix Test Suite module</em></p>
+<p><em>When this variable is set, the value will can be set to "auto" or a positive integer. The value indicates the number of minutes until a test run should be aborted, such as for a safeguard against hung/deadlocked processes or other issues. Setting this to a high number as a backup would be recommended for fending off possible hangs / stalls in the testing process if the test does not quit. If the value is "auto", it will quit if the time of a test run exceeds 3x the average time it normally takes the particular test to complete its run. In the future, auto might be enabled by default in a future PTS release. This functionality requires system PHP PCNTL support (i.e. no Windows support).</em></p>
 <p>The value can be of type: positive integer.
 The variable is relevant for: test execution / benchmarking.
+The variable depends upon functionality provided by the Phoronix Test Suite module: test_timeout.
 </p>
 <h2>TOTAL_LOOP_COUNT</h2>
 <p><em>This option is used to specify a multiple if wishing to run each test multiple times rather than just once per saved result file.</em></p>
@@ -228,6 +242,31 @@ The variable is relevant for: test execution / benchmarking.
 <p><em>This option is used to specify the amount of time (in minutes) to loop the testing during the Phoronix Test Suite stress run or normal benchmarking process.</em></p>
 <p>The value can be of type: positive integer.
 The variable is relevant for: stress-run mode, test execution / benchmarking.
+</p>
+<h2>TURBOSTAT_LOG</h2>
+<p><em>This option allows attaching "turbostat" outputs to the end of archived benchmark/test log files if interested in the Linux TurboStat information. This assumes you have turbostat available on the Linux system(s) and have permissions (root) for running turbostat.</em></p>
+<p>The value can be of type: boolean (TRUE / FALSE).
+The variable is relevant for: test execution / benchmarking.
+The variable depends upon functionality provided by the Phoronix Test Suite module: turbostat.
+</p>
+<h2>WATCHDOG_MAXIMUM_WAIT</h2>
+<p><em>Used in conjunction with the WATCHDOG_SENSOR option, this is the maximum amount of time to potentially wait when the watchdog is triggered for surpassing the threshold value. The value is the maximum number of minutes to wait being above the threshold.</em></p>
+<p>The value can be of type: positive integer.
+The variable is relevant for: test execution / benchmarking.
+The variable depends upon functionality provided by the Phoronix Test Suite module: watchdog.
+</p>
+<h2>WATCHDOG_SENSOR</h2>
+<p><em>This option will enable the watchdog module that checks system sensor values pre/interim/post benchmark execution. If the selected sensor(s) exceed the static threshold level, testing will be paused before continuing to any additional tests so that the system can sleep. Ideally this will allow the system to return to a more suitable state before resuming testing after the sensor value is back below the threshold or after a pre-defined maximum time limit to spend sleeping. This module is mostly focused on pausing testing should system core temperatures become too elevated to allow time for heat dissipation.</em></p>
+<p>The value can be of type: enumeration (cpu.temp, gpu.temp, hdd.temp, sys.temp)
+Multiple options can be supplied when delimited by a comma..
+The variable is relevant for: test execution / benchmarking.
+The variable depends upon functionality provided by the Phoronix Test Suite module: watchdog.
+</p>
+<h2>WATCHDOG_SENSOR_THRESHOLD</h2>
+<p><em>Used in conjunction with the WATCHDOG_SENSOR option, the WATCHDOG_SENSOR_THRESHOLD specifies the threshold for the sensor reading when the testing should be paused (e.g. the Celsius cut-off temperature).</em></p>
+<p>The value can be of type: positive integer.
+The variable is relevant for: test execution / benchmarking.
+The variable depends upon functionality provided by the Phoronix Test Suite module: watchdog.
 </p>
 </body>
 </html>
