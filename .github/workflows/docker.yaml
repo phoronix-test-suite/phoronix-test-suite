@@ -17,9 +17,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Docker Metadata
-        id: docker_meta
-        uses: docker/metadata-action@v3
+      - name: Docker Metadata (light target)
+        id: metadata_light
+        uses: docker/metadata-action@v3.6.0
+        with:
+          images: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}
+          flavor: |
+            suffix=-light,onlatest=true
+          tags: |
+            type=semver,pattern={{major}}.{{minor}}.{{patch}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=edge
+
+      - name: Docker Metadata (full target)
+        id: metadata
+        uses: docker/metadata-action@v3.6.0
         with:
           images: ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}
           tags: |
@@ -49,16 +62,31 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-buildx-
 
-      - name: Build and push
+      - name: Build and push (light target)
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: Dockerfile
+          target: light
+          platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/riscv64
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.metadata_light.outputs.tags }}
+          labels: ${{ steps.metadata_light.outputs.labels }}
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
+
+      # building the full version could be done in a separate workflow,
+      # but using the same instance allows reusing the light target as a base
+      - name: Build and push (full target)
         uses: docker/build-push-action@v2
         with:
           context: .
           file: Dockerfile
           platforms: linux/amd64,linux/arm64,linux/arm/v7,linux/riscv64
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.docker_meta.outputs.tags }}
-          labels: ${{ steps.docker_meta.outputs.labels }}
-          cache-from: type=local,src=/tmp/.buildx-cache
+          tags: ${{ steps.metadata.outputs.tags }}
+          labels: ${{ steps.metadata.outputs.labels }}
+          cache-from: type=local,src=/tmp/.buildx-cache-new
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
 
         # Temp fix
