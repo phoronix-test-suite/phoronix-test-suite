@@ -12,7 +12,6 @@
 			<UsePhodeviCache>TRUE</UsePhodeviCache>
 			<DefaultDisplayMode>DEFAULT</DefaultDisplayMode>
 			<PhoromaticServers></PhoromaticServers>
-			<FullOutput>FALSE</FullOutput>
 			<ColoredConsole>AUTO</ColoredConsole>
 		</General>
 		<Modules>

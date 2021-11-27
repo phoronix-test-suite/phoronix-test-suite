@@ -38,7 +38,6 @@ class pts_test_execution
 	{
 		$test_identifier = $test_run_request->test_profile->get_identifier();
 		$extra_arguments = $test_run_request->get_arguments();
-		$full_output = pts_config::read_bool_config('PhoronixTestSuite/Options/General/FullOutput', 'FALSE');
 
 		// Do the actual test running process
 		$test_directory = $test_run_request->test_profile->get_install_dir();
@@ -105,7 +104,7 @@ class pts_test_execution
 		{
 			$pre_output = pts_tests::call_test_script($test_run_request->test_profile, 'pre', 'Running Pre-Test Script', $pts_test_arguments, $extra_runtime_variables, true);
 
-			if($pre_output != null && (pts_client::is_debug_mode() || $full_output))
+			if($pre_output != null)
 			{
 				pts_client::$display->test_run_instance_output($pre_output);
 			}
@@ -343,12 +342,12 @@ class pts_test_execution
 
 			pts_triggered_system_events::post_run_reboot_triggered_check($test_run_request->test_profile);
 
-			if(!isset($test_result_std_output[10240]) || pts_client::is_debug_mode() || $full_output)
+			if($test_result_std_output != null && !isset($test_result_std_output[10240]))
 			{
 				pts_client::$display->test_run_instance_output($test_result_std_output);
 			}
 
-			if(is_file($test_log_file) && trim($test_result_std_output) == null && (filesize($test_log_file) < 10240 || pts_client::is_debug_mode() || $full_output))
+			if(is_file($test_log_file) && trim($test_result_std_output) == null)
 			{
 				$test_log_file_contents = file_get_contents($test_log_file);
 				pts_client::$display->test_run_instance_output($test_log_file_contents);
@@ -486,7 +485,7 @@ class pts_test_execution
 				{
 					$interim_output = pts_tests::call_test_script($test_run_request->test_profile, 'interim', 'Running Interim Test Script', $pts_test_arguments, $extra_runtime_variables, true);
 
-					if($interim_output != null && (pts_client::is_debug_mode() || $full_output))
+					if($interim_output != null)
 					{
 						pts_client::$display->test_run_instance_output($interim_output);
 					}
@@ -529,7 +528,7 @@ class pts_test_execution
 		{
 			$post_output = pts_tests::call_test_script($test_run_request->test_profile, 'post', 'Running Post-Test Script', $pts_test_arguments, $extra_runtime_variables, true);
 
-			if($post_output != null && (pts_client::is_debug_mode() || $full_output))
+			if($post_output != null)
 			{
 				pts_client::$display->test_run_instance_output($post_output);
 			}
