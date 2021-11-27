@@ -504,7 +504,8 @@ function SetFont($family = '', $style='', $size=0)
 		$family = $this->FontFamily;
 	else
 		$family = strtolower($family);
-	$style = strtoupper($style);
+	if($style != null)
+		$style = strtoupper($style);
 	if(strpos($style,'U')!==false)
 	{
 		$this->underline = true;
@@ -1279,6 +1280,9 @@ function _loadfont($font)
 
 function _escape($s)
 {
+	if($s == null)
+		return $s;
+
 	// Escape special characters in strings
 	$s = str_replace('\\','\\\\',$s);
 	$s = str_replace('(','\\(',$s);

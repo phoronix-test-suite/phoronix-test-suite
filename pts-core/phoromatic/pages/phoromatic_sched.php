@@ -64,10 +64,10 @@ class phoromatic_sched implements pts_webui_interface
 		{
 			$title = phoromatic_get_posted_var('schedule_title');
 			$description = phoromatic_get_posted_var('schedule_description');
-			$pre_install_context = phoromatic_get_posted_var('pre_install_set_context');
-			$post_install_context = phoromatic_get_posted_var('post_install_set_context');
-			$pre_run_context = phoromatic_get_posted_var('pre_run_set_context');
-			$post_run_context = phoromatic_get_posted_var('post_run_set_context');
+			$pre_install_set_context = phoromatic_get_posted_var('pre_install_set_context');
+			$post_install_set_context = phoromatic_get_posted_var('post_install_set_context');
+			$pre_run_set_context = phoromatic_get_posted_var('pre_run_set_context');
+			$post_run_set_context = phoromatic_get_posted_var('post_run_set_context');
 
 			$system_all = phoromatic_get_posted_var('system_all');
 			$run_target_systems = phoromatic_get_posted_var('run_on_systems', array());

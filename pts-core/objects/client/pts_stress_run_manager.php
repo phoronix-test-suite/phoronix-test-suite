@@ -282,7 +282,10 @@ class pts_stress_run_manager extends pts_test_run_manager
 				if(!file_exists('/proc/' . $pid))
 				{
 					unlink($pid_file);
-					unset($pid_files_to_test_identifier[$pid]);
+					if(isset($pid_files_to_test_identifier[$pid]))
+					{
+						unset($pid_files_to_test_identifier[$pid]);
+					}
 					continue;
 				}
 

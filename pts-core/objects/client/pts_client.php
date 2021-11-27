@@ -924,11 +924,6 @@ class pts_client
 		self::$time_pts_last_launch = strtotime($last_run);
 		pts_define('TIME_SINCE_LAST_RUN', ceil((TIME_PTS_LAUNCHED - self::$time_pts_last_launch) / 60)); // TIME_SINCE_LAST_RUN is in minutes
 
-		// User Agreement Checking
-		$agreement_cs = $pso->read_object('user_agreement_cs');
-
-		$pso->add_object('user_agreement_cs', $agreement_cs); // User agreement check-sum
-
 		// Phodevi Cache Handling
 		$phodevi_cache = $pso->read_object('phodevi_smart_cache');
 
@@ -1035,82 +1030,6 @@ class pts_client
 		}
 
 		return $phoromatic_servers;
-	}
-	public static function user_agreement_check($command)
-	{
-		$pso = pts_storage_object::recover_from_file(PTS_CORE_STORAGE);
-
-		if($pso == false)
-		{
-			return false;
-		}
-
-		$config_md5 = $pso->read_object('user_agreement_cs');
-		$current_md5 = md5_file(PTS_PATH . 'pts-core/user-agreement.txt');
-
-		if(($config_md5 != $current_md5 || pts_config::read_user_config('PhoronixTestSuite/Options/OpenBenchmarking/AnonymousUsageReporting', 'UNKNOWN') == 'UNKNOWN') && !PTS_IS_DAEMONIZED_SERVER_PROCESS && pts_env::read('PTS_SILENT_MODE') != 1 && $config_md5 != 'enterprise-agree')
-		{
-			$prompt_in_method = pts_client::check_command_for_function($command, 'pts_user_agreement_prompt');
-			$user_agreement = file_get_contents(PTS_PATH . 'pts-core/user-agreement.txt');
-
-			if($prompt_in_method)
-			{
-				$user_agreement_return = call_user_func(array($command, 'pts_user_agreement_prompt'), $user_agreement);
-
-				if(is_array($user_agreement_return))
-				{
-					if(count($user_agreement_return) == 3)
-					{
-						list($agree, $usage_reporting) = $user_agreement_return;
-					}
-					else
-					{
-						$agree = array_shift($user_agreement_return);
-						$usage_reporting = -1;
-					}
-				}
-				else
-				{
-					$agree = $user_agreement_return;
-					$usage_reporting = -1;
-				}
-			}
-
-			if($prompt_in_method == false || $usage_reporting == -1)
-			{
-				pts_client::$display->generic_heading('User Agreement');
-				echo wordwrap($user_agreement, (pts_client::terminal_width() - 2));
-				$agree = pts_user_io::prompt_bool_input('Do you agree to these terms and wish to proceed', -1);
-
-				if(!pts_openbenchmarking::ob_upload_support_available())
-				{
-					$usage_reporting = false;
-				}
-				else
-				{
-					$usage_reporting = $agree ? pts_user_io::prompt_bool_input('Enable anonymous usage / statistics reporting', -1) : -1;
-				}
-			}
-
-			if($agree)
-			{
-				echo PHP_EOL;
-				$pso->add_object('user_agreement_cs', $current_md5);
-				$pso->save_to_file(PTS_CORE_STORAGE);
-			}
-			else
-			{
-				pts_client::exit_client('In order to run the Phoronix Test Suite, you must agree to the listed terms.');
-			}
-
-			pts_config::user_config_generate(array(
-				'PhoronixTestSuite/Options/OpenBenchmarking/AnonymousUsageReporting' => pts_config::bool_to_string($usage_reporting)));
-		}
-
-		if(PTS_IS_CLIENT && pts_env::read('PTS_SILENT_MODE') != 1)
-		{
-			pts_external_dependencies::startup_handler();
-		}
 	}
 	public static function swap_variables($user_str, $replace_call)
 	{

@@ -133,8 +133,9 @@ class dump_documentation implements pts_option_interface
 			}
 
             // If there is module_info text defined, add it here.
-			$moduleInfoText = trim(pts_module_manager::module_call($module, 'module_info'));
+		$moduleInfoText = pts_module_manager::module_call($module, 'module_info');
             if ( $moduleInfoText ) {
+            	$moduleInfoText = trim($moduleInfoText);
                 $moduleInfo = $dom->createElement('p', $moduleInfoText);
                 $body->appendChild($moduleInfo);
             }

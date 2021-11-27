@@ -50,86 +50,88 @@ class phoromatic_account_activity implements pts_webui_interface
 		{
 			$main .= '<p>No activity found.</p>';
 		}
-
-		do
+		else
 		{
-			if($prev_date != substr($row['ActivityTime'], 0, 10))
+			do
 			{
-				if($prev_date != null)
-					$main .= '</p><hr />';
-
-				$prev_date = substr($row['ActivityTime'], 0, 10);
-				$new_date = strtotime($row['ActivityTime']);
-
-				if(date('Y-m-d') == $prev_date)
+				if($prev_date != substr($row['ActivityTime'], 0, 10))
 				{
-					$main .= '<h2>Today</h2>';
+					if($prev_date != null)
+						$main .= '</p><hr />';
+
+					$prev_date = substr($row['ActivityTime'], 0, 10);
+					$new_date = strtotime($row['ActivityTime']);
+
+					if(date('Y-m-d') == $prev_date)
+					{
+						$main .= '<h2>Today</h2>';
+					}
+					else if($new_date > (time() - (60 * 60 * 24 * 6)))
+					{
+						$main .= '<h2>' . date('l', $new_date) . '</h2>';
+					}
+					else
+					{
+						$main .= '<h2>' . date('j F Y', $new_date) . '</h2>';
+					}
+					$main .= '<p>';
 				}
-				else if($new_date > (time() - (60 * 60 * 24 * 6)))
+
+				$id_link_format = $row['ActivityEventID'];
+				switch($row['ActivityEvent'])
 				{
-					$main .= '<h2>' . date('l', $new_date) . '</h2>';
+					case 'settings':
+						$event_link_format = '<a href="?settings">settings</a>';
+						break;
+					case 'users':
+						$event_link_format = '<a href="?users">a user</a>';
+						break;
+					case 'schedule':
+						$event_link_format = '<a href="?schedules">schedule</a>';
+
+						$stmt1 = phoromatic_server::$db->prepare('SELECT Title FROM phoromatic_schedules WHERE AccountID = :account_id AND ScheduleID = :schedule_id');
+						$stmt1->bindValue(':account_id', $_SESSION['AccountID']);
+						$stmt1->bindValue(':schedule_id', $row['ActivityEventID']);
+						$result1 = $stmt1->execute();
+						$row1 = $result1->fetchArray();
+						$id_link_format = '<a href="?schedules/' . $row['ActivityEventID'] . '">' . $row1['Title'] . '</a>';
+						break;
+					case 'tests_for_schedule':
+						$event_link_format = 'a test for a schedule';
+
+						$stmt1 = phoromatic_server::$db->prepare('SELECT Title FROM phoromatic_schedules WHERE AccountID = :account_id AND ScheduleID = :schedule_id');
+						$stmt1->bindValue(':account_id', $_SESSION['AccountID']);
+						$stmt1->bindValue(':schedule_id', $row['ActivityEventID']);
+						$result1 = $stmt1->execute();
+						$row1 = $result1->fetchArray();
+						$id_link_format = '<a href="?schedules/' . $row['ActivityEventID'] . '">' . $row1['Title'] . '</a>';
+						break;
+					case 'groups':
+						$event_link_format = '<a href="?systems#group_edit">a group</a>';
+						break;
+					default:
+						$event_link_format = $row['ActivityEvent'];
+						break;
 				}
-				else
+
+				if($row['ActivityCreatorType'] == 'USER')
 				{
-					$main .= '<h2>' . date('j F Y', $new_date) . '</h2>';
+					$main .= '<em>' . date('H:i', strtotime($row['ActivityTime'])) . '</em> &nbsp; <strong>' . $row['ActivityCreator'] . '</strong> <strong> ' . $row['ActivityEventType'] . '</strong> <strong>' . $event_link_format . '</strong>';
+
+					if($id_link_format != null)
+						$main .= ': ' . $id_link_format;
+
+					$main .= '<br />' . PHP_EOL;
+
 				}
-				$main .= '<p>';
+
+				//$main .= '<p>' .  $row['ActivityCreator'] . ' ' . $row['ActivityCreatorType'] . ' ' . $row['ActivityEvent'] . ' ' . $row['ActivityEventID'] . ' ' . $row['ActivityEventType'] . '</p>';
 			}
+			while($row = $result->fetchArray());
 
-			$id_link_format = $row['ActivityEventID'];
-			switch($row['ActivityEvent'])
-			{
-				case 'settings':
-					$event_link_format = '<a href="?settings">settings</a>';
-					break;
-				case 'users':
-					$event_link_format = '<a href="?users">a user</a>';
-					break;
-				case 'schedule':
-					$event_link_format = '<a href="?schedules">schedule</a>';
-
-					$stmt1 = phoromatic_server::$db->prepare('SELECT Title FROM phoromatic_schedules WHERE AccountID = :account_id AND ScheduleID = :schedule_id');
-					$stmt1->bindValue(':account_id', $_SESSION['AccountID']);
-					$stmt1->bindValue(':schedule_id', $row['ActivityEventID']);
-					$result1 = $stmt1->execute();
-					$row1 = $result1->fetchArray();
-					$id_link_format = '<a href="?schedules/' . $row['ActivityEventID'] . '">' . $row1['Title'] . '</a>';
-					break;
-				case 'tests_for_schedule':
-					$event_link_format = 'a test for a schedule';
-
-					$stmt1 = phoromatic_server::$db->prepare('SELECT Title FROM phoromatic_schedules WHERE AccountID = :account_id AND ScheduleID = :schedule_id');
-					$stmt1->bindValue(':account_id', $_SESSION['AccountID']);
-					$stmt1->bindValue(':schedule_id', $row['ActivityEventID']);
-					$result1 = $stmt1->execute();
-					$row1 = $result1->fetchArray();
-					$id_link_format = '<a href="?schedules/' . $row['ActivityEventID'] . '">' . $row1['Title'] . '</a>';
-					break;
-				case 'groups':
-					$event_link_format = '<a href="?systems#group_edit">a group</a>';
-					break;
-				default:
-					$event_link_format = $row['ActivityEvent'];
-					break;
-			}
-
-			if($row['ActivityCreatorType'] == 'USER')
-			{
-				$main .= '<em>' . date('H:i', strtotime($row['ActivityTime'])) . '</em> &nbsp; <strong>' . $row['ActivityCreator'] . '</strong> <strong> ' . $row['ActivityEventType'] . '</strong> <strong>' . $event_link_format . '</strong>';
-
-				if($id_link_format != null)
-					$main .= ': ' . $id_link_format;
-
-				$main .= '<br />' . PHP_EOL;
-
-			}
-
-			//$main .= '<p>' .  $row['ActivityCreator'] . ' ' . $row['ActivityCreatorType'] . ' ' . $row['ActivityEvent'] . ' ' . $row['ActivityEventID'] . ' ' . $row['ActivityEventType'] . '</p>';
+			if($prev_date != null)
+				$main .= '</p>';
 		}
-		while($row = $result->fetchArray());
-
-		if($prev_date != null)
-			$main .= '</p>';
 
 		echo phoromatic_webui_header_logged_in();
 		echo phoromatic_webui_main($main);

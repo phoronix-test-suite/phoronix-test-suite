@@ -143,7 +143,10 @@ for($i = 2; $i < $argc && isset($argv[$i]); $i++)
 
 if(QUICK_START == false)
 {
-	pts_client::user_agreement_check($sent_command);
+	if(PTS_IS_CLIENT && pts_env::read('PTS_SILENT_MODE') != 1)
+	{
+		pts_external_dependencies::startup_handler();
+	}
 
 	// OpenBenchmarking.org
 	pts_openbenchmarking::refresh_repository_lists();

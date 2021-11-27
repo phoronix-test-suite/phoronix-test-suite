@@ -711,7 +711,7 @@ var WEB_URL_PATH = "<?php echo WEB_URL_PATH; ?>";
   <path d="m74 22v9m-5-16v16m-5-28v28m-23-2h12.5c2.485281 0 4.5-2.014719 4.5-4.5s-2.014719-4.5-4.5-4.5h-8c-2.485281 0-4.5-2.014719-4.5-4.5s2.014719-4.5 4.5-4.5h12.5m-21 5h-11m11 13h-2c-4.970563 0-9-4.029437-9-9v-20m-24 40v-20c0-4.970563 4.0294373-9 9-9 4.970563 0 9 4.029437 9 9s-4.029437 9-9 9h-9" stroke="#696969" stroke-width="4" fill="none" />
 </svg></div> <div style="float: left; margin: 5px 0 0 10px;"> <a href="<?php echo WEB_URL_PATH; ?>">Result Viewer</a></div>
 <ul>
-<?php if(PTS_OPENBENCHMARKING_SCRATCH_PATH != null) { ?>
+<?php if(defined('PTS_OPENBENCHMARKING_SCRATCH_PATH') && PTS_OPENBENCHMARKING_SCRATCH_PATH != null) { ?>
 <li><a href="<?php echo WEB_URL_PATH; ?>tests/">Test Profiles</a></li>
 <li><a href="<?php echo WEB_URL_PATH; ?>suites/">Test Suites</a></li>
 <?php } ?>

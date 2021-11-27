@@ -95,7 +95,7 @@ function phoromatic_annotate_entry($type, $id, $secondary_id)
 }
 function phoromatic_init_web_page_setup()
 {
-	if(session_save_path() == null)
+	if(session_save_path() == null || !is_writable(session_save_path()))
 	{
 		// This is needed since on at least EL6 by default there is no session_save_path set
 		if(is_writable('/var/lib/php') && is_dir('/var/lib/php'))
@@ -106,9 +106,13 @@ function phoromatic_init_web_page_setup()
 		{
 			session_save_path('/var/lib/php5');
 		}
-		else
+		else if(is_writable('/tmp'))
 		{
 			session_save_path('/tmp');
+		}
+		else if(is_writable('.'))
+		{
+			session_save_path('.');
 		}
 	}
 
