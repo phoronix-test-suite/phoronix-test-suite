@@ -91,6 +91,10 @@ class cpu_freq extends phodevi_sensor
 		{
 			$frequency = $this->cpu_freq_macosx();
 		}
+		else if(phodevi::is_windows())
+		{
+			return false;
+		}
 
 		return pts_math::set_precision($frequency, 2);
 	}

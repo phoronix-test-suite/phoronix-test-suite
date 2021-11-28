@@ -62,8 +62,9 @@ class sys_power extends phodevi_sensor
 			if(self::windows_wmi_battery_status_discharge() > 0)
 			{
 				self::$windows_battery = true;
+				return true;
 			}
-			return true;
+			return false;
 		}
 		if(($m = getenv('WATTSUP_METER')) != false && is_readable($m))
 		{

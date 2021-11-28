@@ -46,6 +46,10 @@ class cpu_temp extends phodevi_sensor
 		{
 			$temp_c = $this->cpu_temp_linux();
 		}
+		else if(phodevi::is_windows())
+		{
+			$temp_c = $this->cpu_temp_windows();
+		}
 
 		return $temp_c;
 	}
@@ -66,6 +70,20 @@ class cpu_temp extends phodevi_sensor
 			}
 		}
 		return $temp_c;
+	}
+	private static function cpu_temp_windows()
+	{
+		$output = trim(shell_exec('powershell (Get-WmiObject MSAcpi_ThermalZoneTemperature -Namespace "root/wmi").CurrentTemperature'));
+		if(!empty($output) && is_numeric($output) && $output > 0)
+		{
+			// Convert to C
+			$output = ($output - 2732) / 10;
+			if($output > 1)
+			{
+				return $output;
+			}
+		}
+			return -1;
 	}
 	private function cpu_temp_bsd()
 	{
