@@ -48,13 +48,13 @@ class pts_module_manager
 
 		return $modules;
 	}
-	public static function modules_environmental_variables()
+	public static function modules_environment_variables()
 	{
 		$module_env_vars = array();
 		foreach(pts_module_manager::available_modules() as $module)
 		{
 			pts_module_manager::load_module($module);
-			$vars = pts_module_manager::module_call($module, 'module_environmental_variables');
+			$vars = pts_module_manager::module_call($module, 'module_environment_variables');
 
 			if(is_array($vars))
 			{
@@ -119,8 +119,7 @@ class pts_module_manager
 					break;
 				case pts_module::QUIT_PTS_CLIENT:
 					// Stop the Phoronix Test Suite immediately
-					pts_client::exit_client();
-					break;
+					exit(0);
 			}
 		}
 		pts_module_manager::set_current_module(null);
@@ -308,11 +307,11 @@ class pts_module_manager
 	public static function detect_modules_to_load()
 	{
 		// Auto detect modules to load
-		$env_vars = pts_storage_object::read_from_file(PTS_CORE_STORAGE, 'environmental_variables_for_modules');
+		$env_vars = pts_storage_object::read_from_file(PTS_CORE_STORAGE, 'environment_variables_for_modules');
 
 		if($env_vars == false)
 		{
-			$env_vars = pts_module_manager::modules_environmental_variables();
+			$env_vars = pts_module_manager::modules_environment_variables();
 		}
 
 		foreach($env_vars as $env_var => $modules)

@@ -79,7 +79,7 @@ abstract class phodevi_sensor
 	}
 
 	// Return array containing all the device name strings supported by the sensor.
-	// They can be passed in MONITOR environmental variable to create object
+	// They can be passed in MONITOR environment variable to create object
 	// responsible for monitoring specific device. You probably want to
 	// override this function if your sensor supports parametrization.
 	// It should return NULL on platforms where parameters are unsupported.

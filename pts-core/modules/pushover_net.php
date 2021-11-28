@@ -29,7 +29,7 @@ class pushover_net extends pts_module_interface
 	private static $pushover_net_user_key = null;
 	private static $result_identifier = null;
 
-	public static function module_environmental_variables()
+	public static function module_environment_variables()
 	{
 		return array('PUSHOVER_NET_USER');
 	}

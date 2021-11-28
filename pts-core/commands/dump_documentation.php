@@ -125,10 +125,10 @@ class dump_documentation implements pts_option_interface
 				}
 			}
 
-			$vars = pts_module_manager::module_call($module, 'module_environmental_variables');
+			$vars = pts_module_manager::module_call($module, 'module_environment_variables');
 			if(is_array($vars) && count($vars) > 0)
 			{
-				$p = $dom->createElement('p', 'This module utilizes the following environmental variables: ' . implode(', ', $vars) . '.');
+				$p = $dom->createElement('p', 'This module utilizes the following environment variables: ' . implode(', ', $vars) . '.');
 				$body->appendChild($p);
 			}
 

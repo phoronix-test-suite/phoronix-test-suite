@@ -27,7 +27,7 @@ class flush_caches extends pts_module_interface
 	const module_description = 'Loading this module will ensure caches (page cache, swap, etc) automatically get flushed prior to running any test.';
 	const module_author = 'Phoronix Media';
 
-	public static function module_environmental_variables()
+	public static function module_environment_variables()
 	{
 		return array('PTS_FLUSH_CACHES');
 	}

@@ -32,7 +32,7 @@ class linux_perf extends pts_module_interface
 	private static $std_output;
 	private static $tmp_file;
     
-	public static function module_environmental_variables()
+	public static function module_environment_variables()
 	{
 		return array('LINUX_PERF');
 	}

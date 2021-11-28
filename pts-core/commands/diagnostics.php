@@ -42,8 +42,8 @@ class diagnostics implements pts_option_interface
 		{
 			echo pts_client::cli_just_bold($var) . ' = ' . $var_value . PHP_EOL;
 		}
-		echo PHP_EOL . 'Environmental Variables (accessible via test scripts):' . PHP_EOL;
-		foreach(pts_client::environmental_variables() as $var => $var_value)
+		echo PHP_EOL . 'Environment Variables (accessible via test scripts):' . PHP_EOL;
+		foreach(pts_client::environment_variables() as $var => $var_value)
 		{
 			echo pts_client::cli_just_bold($var) . ' = ' . $var_value . PHP_EOL;
 		}

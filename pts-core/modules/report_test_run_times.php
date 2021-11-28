@@ -30,7 +30,7 @@ class report_test_run_times extends pts_module_interface
 	private static $successful_test_run_request = null;
 	private static $result_identifier;
 
-	public static function module_environmental_variables()
+	public static function module_environment_variables()
 	{
 		return array('RUN_TIMES_ARE_A_BENCHMARK', 'INSTALL_TIMES_ARE_A_BENCHMARK', 'INSTALL_SIZES_ARE_A_BENCHMARK');
 	}

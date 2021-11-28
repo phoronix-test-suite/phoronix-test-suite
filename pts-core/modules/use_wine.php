@@ -29,7 +29,7 @@ class use_wine extends pts_module_interface
 
 	protected static $wine_bin = false;
 	protected static $original_os_under_test = null;
-	public static function module_environmental_variables()
+	public static function module_environment_variables()
 	{
 		return array('USE_WINE');
 	}

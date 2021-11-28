@@ -50,7 +50,7 @@ class pts_short_display_mode extends pts_concise_display_mode
 		$after_print = pts_client::cli_colored_text('Test Started', 'green', true);
 		if(($test_description = $test_result->get_arguments_description()) != false)
 		{
-			$after_print .= ' - ' . pts_client::swap_variables($test_description, array('pts_client', 'environmental_variables'));
+			$after_print .= ' - ' . pts_client::swap_variables($test_description, array('pts_client', 'environment_variables'));
 		}
 		echo $after_print .= PHP_EOL;
 

@@ -42,7 +42,7 @@ class pts_module_interface
 	{
 		return $module_options_array;
 	}
-	public static function module_environmental_variables()
+	public static function module_environment_variables()
 	{
 		return array();
 	}

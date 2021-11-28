@@ -30,7 +30,7 @@ error_reporting(E_ALL);
 include('../../pts-core.php');
 pts_core::init();
 
-$environmental_variables = array(
+$environment_variables = array(
 	'aid' => 'ACCOUNT_ID',
 	'sid' => 'SYSTEM_ID',
 	'bid' => 'BENCHMARK_TICKET_ID',
@@ -69,7 +69,7 @@ $environmental_variables = array(
 	'et' => 'ELAPSED_TIME',
 	);
 
-foreach($environmental_variables as $get_var => $to_var)
+foreach($environment_variables as $get_var => $to_var)
 {
 	if(isset($_REQUEST[$get_var]) && !empty($_REQUEST[$get_var]))
 	{

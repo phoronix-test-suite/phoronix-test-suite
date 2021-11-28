@@ -681,7 +681,7 @@ class pts_test_run_manager
 
 					if($still_in_queue == false)
 					{
-						pts_client::remove_installed_test($this->get_test_to_run($this->test_run_pos)->test_profile);
+						pts_tests::remove_installed_test($this->get_test_to_run($this->test_run_pos)->test_profile);
 					}
 				}
 

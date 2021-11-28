@@ -43,7 +43,7 @@ class remove_installed_test implements pts_option_interface
 
 		if(pts_user_io::prompt_bool_input('Are you sure you wish to remove the test ' . $test_profile, false))
 		{
-			pts_client::remove_installed_test($test_profile);
+			pts_tests::remove_installed_test($test_profile);
 			echo PHP_EOL . $test_profile . ' has been removed.' . PHP_EOL;
 		}
 		else

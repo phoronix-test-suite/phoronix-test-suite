@@ -30,7 +30,7 @@ class test_timeout extends pts_module_interface
 	protected static $timeout_after_mins = 'auto';
 	protected static $time_to_allow_for_current_test = 0;
 
-	public static function module_environmental_variables()
+	public static function module_environment_variables()
 	{
 		return array('TEST_TIMEOUT_AFTER');
 	}

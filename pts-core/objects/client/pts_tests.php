@@ -33,6 +33,10 @@ class pts_tests
 	{
 		self::$extra_env_vars = array();
 	}
+	public static function remove_installed_test(&$test_profile)
+	{
+		pts_file_io::delete($test_profile->get_install_dir(), null, true);
+	}
 	public static function installed_tests()
 	{
 		$cleaned_tests = array();
@@ -232,7 +236,7 @@ class pts_tests
 
 		return $reverse_dep_look_for_files;
 	}
-	public static function extra_environmental_variables(&$test_profile)
+	public static function extra_environment_variables(&$test_profile)
 	{
 		$extra_vars = array();
 
@@ -278,7 +282,7 @@ class pts_tests
 	}
 	public static function call_test_script($test_profile, $script_name, $print_string = null, $pass_argument = null, $extra_vars_append = null, $use_ctp = true, $no_prompts = false)
 	{
-		$extra_vars = pts_tests::extra_environmental_variables($test_profile);
+		$extra_vars = pts_tests::extra_environment_variables($test_profile);
 
 		if(isset($extra_vars_append['PATH']))
 		{
@@ -350,7 +354,7 @@ class pts_tests
 						$host_env = $_SERVER;
 						unset($host_env['argv']);
 						$descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
-						$test_process = proc_open($sh . ' "' . $run_file . '" ' . $pass_argument . (phodevi::is_windows() && false ? '' : ' 2>&1'), $descriptorspec, $pipes, $test_directory, array_merge($host_env, pts_client::environmental_variables(), $extra_vars));
+						$test_process = proc_open($sh . ' "' . $run_file . '" ' . $pass_argument . (phodevi::is_windows() && false ? '' : ' 2>&1'), $descriptorspec, $pipes, $test_directory, array_merge($host_env, pts_client::environment_variables(), $extra_vars));
 
 						if(is_resource($test_process))
 						{

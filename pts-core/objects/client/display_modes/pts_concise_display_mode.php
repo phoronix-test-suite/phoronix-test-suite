@@ -332,7 +332,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		if(($test_description = $test_result->get_arguments_description()) != false)
 		{
-			$test_title_string .= ' [' . pts_client::swap_variables($test_description, array('pts_client', 'environmental_variables')) . ']';
+			$test_title_string .= ' [' . pts_client::swap_variables($test_description, array('pts_client', 'environment_variables')) . ']';
 		}
 
 		echo PHP_EOL . pts_client::cli_colored_text($test_title_string, 'cyan', true) . PHP_EOL;

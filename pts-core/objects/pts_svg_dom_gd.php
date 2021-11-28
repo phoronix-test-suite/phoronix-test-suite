@@ -441,6 +441,152 @@ class pts_svg_dom_gd
 
 		return $values;
 	}
+	public static function generate_result_file_graphs($test_results_identifier, $save_to_dir = false, $extra_attributes = null)
+	{
+		// Since dropping the old result viewer, this function is no longer used except for niche cases (debug render, PDF generation)
+
+		if($save_to_dir)
+		{
+			if(pts_file_io::mkdir($save_to_dir . '/result-graphs') == false)
+			{
+				// Don't delete old files now, in case any modules (e.g. FlameGrapher) output something in there ahead of time
+				/*// Directory must exist, so remove any old graph files first
+				foreach(pts_file_io::glob($save_to_dir . '/result-graphs/*') as $old_file)
+				{
+					unlink($old_file);
+				}*/
+			}
+		}
+
+		if($test_results_identifier instanceof pts_result_file)
+		{
+			$result_file = &$test_results_identifier;
+		}
+		else
+		{
+			$result_file = new pts_result_file($test_results_identifier);
+		}
+
+		$result_file->avoid_duplicate_identifiers();
+
+		$generated_graphs = array();
+		$generated_graph_tables = false;
+
+		// Render overview chart
+		if($save_to_dir)
+		{
+			$chart = new pts_ResultFileTable($result_file);
+			$chart->renderChart($save_to_dir . '/result-graphs/overview.BILDE_EXTENSION');
+
+			$intent = -1;
+			if(($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)) || $result_file->get_system_count() == 1)
+			{
+				$chart = new pts_ResultFileCompactSystemsTable($result_file, $intent);
+			}
+			else
+			{
+				$chart = new pts_ResultFileSystemsTable($result_file);
+			}
+			$chart->renderChart($save_to_dir . '/result-graphs/systems.BILDE_EXTENSION');
+			unset($chart);
+
+			if($intent && is_dir($result_file->get_system_log_dir()))
+			{
+				$chart = new pts_DetailedSystemComponentTable($result_file, $result_file->get_system_log_dir(), $intent);
+
+				if($chart)
+				{
+					$chart->renderChart($save_to_dir . '/result-graphs/detailed_component.BILDE_EXTENSION');
+				}
+			}
+		}
+		$result_objects = $result_file->get_result_objects();
+		$test_titles = array();
+		foreach($result_objects as &$result_object)
+		{
+			$test_titles[] = $result_object->test_profile->get_title();
+		}
+
+		$offset = 0;
+		foreach($result_objects as $key => &$result_object)
+		{
+			$save_to = $save_to_dir;
+			$offset++;
+
+			if($save_to_dir && is_dir($save_to_dir))
+			{
+				$save_to .= '/result-graphs/' . $offset . '.BILDE_EXTENSION';
+
+				if(PTS_IS_CLIENT)
+				{
+					if($result_file->is_multi_way_comparison(null, $extra_attributes))
+					{
+						$table_keys = array();
+
+						foreach($test_titles as $this_title_index => $this_title)
+						{
+							if(isset($test_titles[$key]) && $this_title == $test_titles[$key])
+							{
+								$table_keys[] = $this_title_index;
+							}
+						}
+					}
+					else
+					{
+						$table_keys = $key;
+					}
+
+					$chart = new pts_ResultFileTable($result_file, null, $table_keys);
+					$chart->renderChart($save_to_dir . '/result-graphs/' . $offset . '_table.BILDE_EXTENSION');
+					unset($chart);
+					$generated_graph_tables = true;
+				}
+			}
+
+			$graph = pts_render::render_graph($result_object, $result_file, $save_to, $extra_attributes);
+
+			if($graph == false)
+			{
+				continue;
+			}
+
+			$generated_graphs[] = $graph;
+		}
+
+		// Generate mini / overview graphs
+		if($save_to_dir)
+		{
+			$graph = new pts_OverviewGraph($result_file);
+			$rendered = $graph->renderGraph();
+
+			// Check to see if skip_graph was realized during the rendering process
+			if($rendered)
+			{
+				$graph->svg_dom->output($save_to_dir . '/result-graphs/visualize.BILDE_EXTENSION');
+			}
+			unset($graph);
+
+			if($result_file->get_system_count() == 2)
+			{
+				$graph = new pts_graph_run_vs_run($result_file);
+			}
+			else
+			{
+				$graph = new pts_graph_radar_chart($result_file);
+			}
+
+			$rendered = $graph->renderGraph();
+
+			// Check to see if skip_graph was realized during the rendering process
+			if($rendered)
+			{
+				$graph->svg_dom->output($save_to_dir . '/result-graphs/radar.BILDE_EXTENSION');
+			}
+			unset($graph);
+		}
+
+		return $generated_graphs;
+	}
 }
 
 ?>

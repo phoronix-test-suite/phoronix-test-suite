@@ -32,7 +32,7 @@ class timed_screenshot extends pts_module_interface
 	protected static $screenshot_interval = 10;
 	protected static $existing_screenshots = array();
 
-	public static function module_environmental_variables()
+	public static function module_environment_variables()
 	{
 		return array('SCREENSHOT_INTERVAL');
 	}

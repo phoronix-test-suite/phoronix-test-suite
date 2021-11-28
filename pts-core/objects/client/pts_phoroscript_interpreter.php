@@ -25,7 +25,7 @@
 class pts_phoroscript_interpreter
 {
 	private $script_file;
-	private $environmental_variables;
+	private $environment_variables;
 	private $var_current_directory;
 
 	public function __construct($script, $env_vars = null, $set_current_path = null)
@@ -35,7 +35,7 @@ class pts_phoroscript_interpreter
 			$env_vars['HOME'] = $set_current_path;
 		}
 
-		$this->environmental_variables = ($env_vars == null ? pts_client::environmental_variables() : array_merge(pts_client::environmental_variables(), $env_vars));
+		$this->environment_variables = ($env_vars == null ? pts_client::environment_variables() : array_merge(pts_client::environment_variables(), $env_vars));
 		$this->script_file = is_file($script) ? $script : null;
 		$this->var_current_directory = $set_current_path;
 	}
@@ -43,13 +43,13 @@ class pts_phoroscript_interpreter
 	{
 		if($path == "\$LOG_FILE")
 		{
-			return $this->environmental_variables["LOG_FILE"];
+			return $this->environment_variables["LOG_FILE"];
 		}
 		$this->parse_variables_in_string($path, $pass_arguments);
 
 		if(substr($path, 0, 1) == '~')
 		{
-			$path = $this->environmental_variables["HOME"] . substr($path, 2);
+			$path = $this->environment_variables["HOME"] . substr($path, 2);
 		}
 
 		if(strpos($path, '*') !== false)
@@ -129,9 +129,9 @@ class pts_phoroscript_interpreter
 			{
 				$var_value = $pass_arguments;
 			}
-			if(isset($this->environmental_variables[$var]))
+			if(isset($this->environment_variables[$var]))
 			{
-				$var_value = $this->environmental_variables[$var];
+				$var_value = $this->environment_variables[$var];
 			}
 			else if(is_numeric($var) && isset($pass_arguments_r[($var - 1)]))
 			{
@@ -227,7 +227,7 @@ class pts_phoroscript_interpreter
 					}
 					else if($line_r[1] == '~')
 					{
-						$this->var_current_directory = $this->environmental_variables["HOME"];
+						$this->var_current_directory = $this->environment_variables["HOME"];
 					}
 					else if(substr($line_r[1], 0, 1) == '"')
 					{

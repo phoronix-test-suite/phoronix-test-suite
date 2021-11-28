@@ -113,7 +113,7 @@ class pts_websocket_display_mode implements pts_display_mode_interface
 		$j['pts']['msg']['name'] = 'benchmark_state';
 		$j['pts']['msg']['current_state'] = 'install';
 		$j['pts']['msg']['current_test'] = $test_install_request ? base64_encode($test_install_request->test_profile->to_json()) : null;
-		//$j['pts']['msg']['arguments_description'] = pts_client::swap_variables($test_result->get_arguments_description(), array('pts_client', 'environmental_variables'));
+		//$j['pts']['msg']['arguments_description'] = pts_client::swap_variables($test_result->get_arguments_description(), array('pts_client', 'environment_variables'));
 
 		// CURRENT RUN QUEUE
 		//$j['pts']['msg']['test_run_pos'] = $this->trial_run_count_current;
@@ -335,7 +335,7 @@ class pts_websocket_display_mode implements pts_display_mode_interface
 		$j['pts']['msg']['name'] = 'benchmark_state';
 		$j['pts']['msg']['current_state'] = 'benchmark';
 		$j['pts']['msg']['current_test'] = base64_encode($test_result->test_profile->to_json());
-		$j['pts']['msg']['arguments_description'] = pts_client::swap_variables($test_result->get_arguments_description(), array('pts_client', 'environmental_variables'));
+		$j['pts']['msg']['arguments_description'] = pts_client::swap_variables($test_result->get_arguments_description(), array('pts_client', 'environment_variables'));
 
 		// CURRENT RUN QUEUE
 		$j['pts']['msg']['test_run_pos'] = $this->trial_run_count_current;

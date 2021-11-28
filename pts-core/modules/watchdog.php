@@ -31,7 +31,7 @@ class watchdog extends pts_module_interface
 	private static $monitor_threshold = 0;
 	private static $maximum_wait = 4;
 
-	public static function module_environmental_variables()
+	public static function module_environment_variables()
 	{
 		return array('WATCHDOG_SENSOR', 'WATCHDOG_SENSOR_THRESHOLD', 'WATCHDOG_MAXIMUM_WAIT');
 	}

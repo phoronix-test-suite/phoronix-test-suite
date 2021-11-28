@@ -48,9 +48,9 @@ class matisk extends pts_module_interface
 			'upload_to_openbenchmarking' => array(false, 'A boolean value whether to automatically upload the test result to OpenBenchmarking.org'), // Automatic upload to OpenBenchmarking?
 	//		'open_browser' => false, // Automatically launch web browser to show the results?
 			),
-		'environmental_variables' =>
+		'environment_variables' =>
 			array(
-			'EXAMPLE_VAR' => array('EXAMPLE', 'The environmental_variables section allows key = value pairs of environmental variables to be set by default.')
+			'EXAMPLE_VAR' => array('EXAMPLE', 'The environment_variables section allows key = value pairs of environment variables to be set by default.')
 			),
 		'set_context' =>
 			array(
@@ -281,9 +281,9 @@ class matisk extends pts_module_interface
 			*/
 		}
 
-		if(!empty($ini['environmental_variables']) && is_array($ini['environmental_variables']))
+		if(!empty($ini['environment_variables']) && is_array($ini['environment_variables']))
 		{
-			foreach($ini['environmental_variables'] as $key => $value)
+			foreach($ini['environment_variables'] as $key => $value)
 			{
 				putenv(trim($key) . '=' . trim($value));
 			}

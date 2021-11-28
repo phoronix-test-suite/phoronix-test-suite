@@ -27,7 +27,7 @@ class log_exporter extends pts_module_interface
 	const module_description = 'This module allows for easily exporting test run logs and system logs to external locations via specifying the directory paths via the COPY_TEST_RUN_LOGS_TO and COPY_SYSTEM_LOGS_TO environment variables.';
 	const module_author = 'Michael Larabel';
 
-	public static function module_environmental_variables()
+	public static function module_environment_variables()
 	{
 		return array('COPY_TEST_RUN_LOGS_TO', 'COPY_SYSTEM_LOGS_TO');
 	}

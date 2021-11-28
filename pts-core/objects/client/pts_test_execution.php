@@ -87,7 +87,7 @@ class pts_test_execution
 
 		$to_execute = $test_run_request->test_profile->get_test_executable_dir();
 		$pts_test_arguments = trim($test_run_request->test_profile->get_default_arguments() . ' ' . ($test_run_request->test_profile->get_default_arguments() != null ? str_replace($test_run_request->test_profile->get_default_arguments(), '', $extra_arguments) : $extra_arguments) . ' ' . $test_run_request->test_profile->get_default_post_arguments());
-		$extra_runtime_variables = pts_tests::extra_environmental_variables($test_run_request->test_profile);
+		$extra_runtime_variables = pts_tests::extra_environment_variables($test_run_request->test_profile);
 
 		pts_triggered_system_events::pre_run_reboot_triggered_check($test_run_request->test_profile, $extra_runtime_variables);
 
@@ -298,7 +298,7 @@ class pts_test_execution
 						}
 					}
 
-					$test_process = proc_open($test_prepend . $to_exec . ' ' . $execute_binary_prepend . $execute_binary_prepend_final . $execute_binary . ' ' . $pts_test_arguments . $post_test_args, $descriptorspec, $pipes, $to_execute, array_merge($host_env, pts_client::environmental_variables(), $terv));
+					$test_process = proc_open($test_prepend . $to_exec . ' ' . $execute_binary_prepend . $execute_binary_prepend_final . $execute_binary . ' ' . $pts_test_arguments . $post_test_args, $descriptorspec, $pipes, $to_execute, array_merge($host_env, pts_client::environment_variables(), $terv));
 
 					if(is_resource($test_process))
 					{
@@ -658,7 +658,7 @@ class pts_test_execution
 				}
 			}
 
-			foreach(pts_client::environmental_variables() as $key => $value)
+			foreach(pts_client::environment_variables() as $key => $value)
 			{
 				if($value === null)
 				{

@@ -250,8 +250,6 @@ class pts_client
 			}
 		}
 
-		// pts_compatibility ops here
-
 		pts_client::init_display_mode();
 	}
 	public static function module_framework_init()
@@ -333,9 +331,9 @@ class pts_client
 		pts_define('PTS_STARTUP_TASK_PERFORMED', true);
 		register_shutdown_function(array('pts_module_manager', 'module_process'), '__shutdown');
 	}
-	public static function environmental_variables()
+	public static function environment_variables()
 	{
-		// The PTS environmental variables passed during the testing process, etc
+		// The PTS environment variables passed during the testing process, etc
 		static $env_variables = null;
 
 		if($env_variables == null)
@@ -682,7 +680,7 @@ class pts_client
 					}
 				}
 
-				// Dump some common / important environmental variables
+				// Dump some common / important environment variables
 				$environment_variables = array(
 					'PATH' => null,
 					'CFLAGS' => null,
@@ -906,7 +904,7 @@ class pts_client
 				pts_openbenchmarking_client::update_gsid();
 			}
 
-			$pso->add_object('environmental_variables_for_modules', pts_module_manager::modules_environmental_variables());
+			$pso->add_object('environment_variables_for_modules', pts_module_manager::modules_environment_variables());
 			$pso->add_object('command_alias_list', pts_documentation::client_commands_aliases());
 		}
 		$pso->add_object('last_core_version', PTS_CORE_VERSION); // PTS version last run
@@ -1019,6 +1017,7 @@ class pts_client
 					continue;
 				}
 
+				// TODO XXX: add HTTPS check here similar to previous HTTPS code added to Phoromatic client module
 				$server_response = pts_network::http_get_contents('http://' . $possible_server[0] . ':' . $possible_server[1] . '/server.php', false, false, 3);
 				if(stripos($server_response, 'Phoromatic') !== false)
 				{
@@ -1092,172 +1091,10 @@ class pts_client
 
 		return $save_to_dir;
 	}
-	public static function remove_installed_test(&$test_profile)
-	{
-		pts_file_io::delete($test_profile->get_install_dir(), null, true);
-	}
-	public static function exit_client($string = null, $exit_status = 0)
-	{
-		// Exit the Phoronix Test Suite client
-		pts_define('PTS_EXIT', 1);
-
-		if($string != null)
-		{
-			echo PHP_EOL . $string . PHP_EOL;
-		}
-
-		exit($exit_status);
-	}
 	public static function current_user()
 	{
 		// Current system user
 		return ($pts_user = pts_openbenchmarking_client::user_name()) != null ? $pts_user : phodevi::read_property('system', 'username');
-	}
-	public static function generate_result_file_graphs($test_results_identifier, $save_to_dir = false, $extra_attributes = null)
-	{
-		// Since dropping the old result viewer, this function is no longer used except for niche cases (debug render, PDF generation)
-
-		if($save_to_dir)
-		{
-			if(pts_file_io::mkdir($save_to_dir . '/result-graphs') == false)
-			{
-				// Don't delete old files now, in case any modules (e.g. FlameGrapher) output something in there ahead of time
-				/*// Directory must exist, so remove any old graph files first
-				foreach(pts_file_io::glob($save_to_dir . '/result-graphs/*') as $old_file)
-				{
-					unlink($old_file);
-				}*/
-			}
-		}
-
-		if($test_results_identifier instanceof pts_result_file)
-		{
-			$result_file = &$test_results_identifier;
-		}
-		else
-		{
-			$result_file = new pts_result_file($test_results_identifier);
-		}
-
-		$result_file->avoid_duplicate_identifiers();
-
-		$generated_graphs = array();
-		$generated_graph_tables = false;
-
-		// Render overview chart
-		if($save_to_dir)
-		{
-			$chart = new pts_ResultFileTable($result_file);
-			$chart->renderChart($save_to_dir . '/result-graphs/overview.BILDE_EXTENSION');
-
-			$intent = -1;
-			if(($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)) || $result_file->get_system_count() == 1)
-			{
-				$chart = new pts_ResultFileCompactSystemsTable($result_file, $intent);
-			}
-			else
-			{
-				$chart = new pts_ResultFileSystemsTable($result_file);
-			}
-			$chart->renderChart($save_to_dir . '/result-graphs/systems.BILDE_EXTENSION');
-			unset($chart);
-
-			if($intent && is_dir($result_file->get_system_log_dir()))
-			{
-				$chart = new pts_DetailedSystemComponentTable($result_file, $result_file->get_system_log_dir(), $intent);
-
-				if($chart)
-				{
-					$chart->renderChart($save_to_dir . '/result-graphs/detailed_component.BILDE_EXTENSION');
-				}
-			}
-		}
-		$result_objects = $result_file->get_result_objects();
-		$test_titles = array();
-		foreach($result_objects as &$result_object)
-		{
-			$test_titles[] = $result_object->test_profile->get_title();
-		}
-
-		$offset = 0;
-		foreach($result_objects as $key => &$result_object)
-		{
-			$save_to = $save_to_dir;
-			$offset++;
-
-			if($save_to_dir && is_dir($save_to_dir))
-			{
-				$save_to .= '/result-graphs/' . $offset . '.BILDE_EXTENSION';
-
-				if(PTS_IS_CLIENT)
-				{
-					if($result_file->is_multi_way_comparison(null, $extra_attributes))
-					{
-						$table_keys = array();
-
-						foreach($test_titles as $this_title_index => $this_title)
-						{
-							if(isset($test_titles[$key]) && $this_title == $test_titles[$key])
-							{
-								$table_keys[] = $this_title_index;
-							}
-						}
-					}
-					else
-					{
-						$table_keys = $key;
-					}
-
-					$chart = new pts_ResultFileTable($result_file, null, $table_keys);
-					$chart->renderChart($save_to_dir . '/result-graphs/' . $offset . '_table.BILDE_EXTENSION');
-					unset($chart);
-					$generated_graph_tables = true;
-				}
-			}
-
-			$graph = pts_render::render_graph($result_object, $result_file, $save_to, $extra_attributes);
-
-			if($graph == false)
-			{
-				continue;
-			}
-
-			$generated_graphs[] = $graph;
-		}
-
-		// Generate mini / overview graphs
-		if($save_to_dir)
-		{
-			$graph = new pts_OverviewGraph($result_file);
-			$rendered = $graph->renderGraph();
-
-			// Check to see if skip_graph was realized during the rendering process
-			if($rendered)
-			{
-				$graph->svg_dom->output($save_to_dir . '/result-graphs/visualize.BILDE_EXTENSION');
-			}
-			unset($graph);
-
-			if($result_file->get_system_count() == 2)
-			{
-				$graph = new pts_graph_run_vs_run($result_file);
-			}
-			else
-			{
-				$graph = new pts_graph_radar_chart($result_file);
-			}
-
-			$rendered = $graph->renderGraph();
-
-			// Check to see if skip_graph was realized during the rendering process
-			if($rendered)
-			{
-				$graph->svg_dom->output($save_to_dir . '/result-graphs/radar.BILDE_EXTENSION');
-			}
-			unset($graph);
-		}
-
-		return $generated_graphs;
 	}
 
 	public static function process_shutdown_tasks()
@@ -1850,10 +1687,10 @@ class pts_client
 	public static function shell_exec($exec, $extra_vars = null)
 	{
 		// Same as shell_exec() but with the PTS env variables added in
-		// Convert pts_client::environmental_variables() into shell export variable syntax
+		// Convert pts_client::environment_variables() into shell export variable syntax
 
 		$var_string = '';
-		$extra_vars = ($extra_vars == null ? pts_client::environmental_variables() : array_merge(pts_client::environmental_variables(), $extra_vars));
+		$extra_vars = ($extra_vars == null ? pts_client::environment_variables() : array_merge(pts_client::environment_variables(), $extra_vars));
 
 		foreach(array_keys($extra_vars) as $key)
 		{

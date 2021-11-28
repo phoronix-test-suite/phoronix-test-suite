@@ -51,7 +51,7 @@ class system_monitor extends pts_module_interface
 	private static $perf_per_sensor_collection;
 	private static $perf_per_sensor = false;
 
-	public static function module_environmental_variables()
+	public static function module_environment_variables()
 	{
 		return array('MONITOR', 'PERFORMANCE_PER_WATT', 'PERFORMANCE_PER_SENSOR', 'MONITOR_INTERVAL', 'MONITOR_PER_RUN' );
 	}
@@ -333,7 +333,7 @@ class system_monitor extends pts_module_interface
 		return $args;
 	}
 
-	// Parse environmental variable containing parameters of monitored sensors.
+	// Parse environment variable containing parameters of monitored sensors.
 	private static function prepare_sensor_parameters()
 	{
 		$sensor_list = pts_strings::comma_explode(pts_env::read('MONITOR'));
@@ -421,7 +421,7 @@ class system_monitor extends pts_module_interface
 			// instantiate sensor class if:
 			// a) we want to monitor all the available sensors,
 			// b) we want to monitor all the available sensors of the specified type,
-			// c) sensor type and name was passed in an environmental variable
+			// c) sensor type and name was passed in an environment variable
 
 			// ($sensor[0] is the type, $sensor[1] is the name, $sensor[2] is the class name)
 

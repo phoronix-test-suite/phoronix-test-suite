@@ -40,7 +40,7 @@ class toggle_screensaver extends pts_module_interface
 	static $xfce_screensaver_halted = false;
 	static $sleep_display_ac = false;
 
-	public static function module_environmental_variables()
+	public static function module_environment_variables()
 	{
 		return array('HALT_SCREENSAVER');
 	}

@@ -38,7 +38,7 @@ class perf_per_dollar extends pts_module_interface
 	private static $TEST_RUN_TIME_ELAPSED = 0;
 	private static $TOTAL_TEST_RUN_TIME_PROCESS_START = 0;
 
-	public static function module_environmental_variables()
+	public static function module_environment_variables()
 	{
 		return array('COST_PERF_PER_DOLLAR', 'COST_PERF_PER_UNIT', 'COST_PERF_PER_HOUR');
 	}

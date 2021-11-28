@@ -30,7 +30,7 @@ class turbostat extends pts_module_interface
 	private static $turbostat_log_dir;
 	private static $append_to_run_log_files = false;
 
-	public static function module_environmental_variables()
+	public static function module_environment_variables()
 	{
 		return array('TURBOSTAT_LOG');
 	}

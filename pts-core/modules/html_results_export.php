@@ -27,7 +27,7 @@ class html_results_export extends pts_module_interface
 	const module_description = 'This module allows basic exporting of results to HTML for saving either to a file locally (specified using the EXPORT_RESULTS_HTML_FILE_TO environment variable) or to a mail account (specified using the EXPORT_RESULTS_HTML_EMAIL_TO environment variable). EXPORT_RESULTS_HTML_EMAIL_TO supports multiple email addresses delimited by a comma.';
 	const module_author = 'Michael Larabel';
 
-	public static function module_environmental_variables()
+	public static function module_environment_variables()
 	{
 		return array('EXPORT_RESULTS_HTML_EMAIL_TO', 'EXPORT_RESULTS_HTML_FILE_TO');
 	}

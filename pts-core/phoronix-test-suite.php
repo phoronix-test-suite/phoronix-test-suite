@@ -119,7 +119,7 @@ if(QUICK_START == false)
 	}
 
 	register_shutdown_function(array('pts_client', 'process_shutdown_tasks'));
-	//pcntl_signal(SIGTERM, array('pts_client', 'exit_client'));
+	//pcntl_signal(SIGTERM, ...
 
 	if(pts_env::read('PTS_IGNORE_MODULES') == false)
 	{

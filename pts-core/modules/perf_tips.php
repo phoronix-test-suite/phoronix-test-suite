@@ -61,7 +61,7 @@ class perf_tips extends pts_module_interface
 	{
 		return 'This module alerts the user if the system configuration may not be the right one for achieving the best performance with the target benchmark(s). This initial version of the module actually cares only about the BFQ I/O scheduler: it gives a warning if BFQ is being used with an incorrect configuration in a disk benchmark, and suggests the right configuration to use. For the moment it only works for existing, throughput-based tests. It will need to be extended for responsiveness and soft real-time-latency tests.';
 	}
-	public static function module_environmental_variables()
+	public static function module_environment_variables()
 	{
 		return array('SUPPRESS_PERF_TIPS');
 	}
