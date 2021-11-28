@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://fr2.rpmfind.net/linux/kernel/v5.x/linux-5.14.tar.xz, https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.14.tar.xz, http://ftp.jaist.ac.jp/pub/Linux/kernel.org/linux/kernel/v5.x/linux-5.14.tar.xz, https://mirror.clarkson.edu/linux/linux/kernel/v5.x/linux-5.14.tar.xz</URL>
+      <MD5>a082ef5748b813abca0649dab8be5f52</MD5>
+      <SHA256>7e068b5e0d26a62b10e5320b25dce57588cbbc6f781c090442138c9c9c3271b2</SHA256>
+      <FileName>linux-5.14.tar.xz</FileName>
+      <FileSize>120669872</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.rarlab.com/rar/rarlinux-x64-6.0.2.tar.gz</URL>
+      <MD5>df9968e3796fcd25873485016ce2a065</MD5>
+      <SHA256>580beb5060a07f0239d4ca3f45849217438b3cfad37a0502b8312c9c1791f6e4</SHA256>
+      <FileName>rarlinux-x64-6.0.2.tar.gz</FileName>
+      <FileSize>599150</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.rarlab.com/rar/winrar-x64-602.exe</URL>
+      <MD5>363f4147b4ea94d06303c8c93b03ffc8</MD5>
+      <SHA256>d41ed4b4de255bee35f93372d023203c9a43694ef88a759ad61b41dfbd0f345d</SHA256>
+      <FileName>winrar-x64-602.exe</FileName>
+      <FileSize>3348968</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.rarlab.com/rar/rarosx-6.0.2.tar.gz</URL>
+      <MD5>4aa01f00cf623b5edc68b1e09699d8d1</MD5>
+      <SHA256>6da67bd6f617206b36e5fecf274ba3a0652bb166519852e1bc32342a8564b6c8</SHA256>
+      <FileName>rarosx-6.0.2.tar.gz</FileName>
+      <FileSize>591492</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>PyHPC Benchmarks</Title>
+    <AppVersion>3.0</AppVersion>
+    <Description>PyHPC-Benchmarks is a suite of Python high performance computing benchmarks for execution on CPUs and GPUs using various popular Python HPC libraries. The PyHPC CPU-based benchmarks focus on sequential CPU performance.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>3.0.0</Version>
+    <SupportedPlatforms>Linux, BSD, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>python</ExternalDependencies>
+    <InstallRequiresInternet>TRUE</InstallRequiresInternet>
+    <EnvironmentSize>1</EnvironmentSize>
+    <ProjectURL>https://github.com/dionhaefner/pyhpc-benchmarks</ProjectURL>
+    <RepositoryURL>https://github.com/dionhaefner/pyhpc-benchmarks</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>--burnin 20 </Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Device</DisplayName>
+      <Identifier>device</Identifier>
+      <ArgumentPrefix>--device </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>CPU</Name>
+          <Value>cpu</Value>
+        </Entry>
+        <Entry>
+          <Name>GPU</Name>
+          <Value>gpu</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Backend</DisplayName>
+      <Identifier>backend</Identifier>
+      <ArgumentPrefix>-b </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>Aesara</Name>
+          <Value>aesara</Value>
+        </Entry>
+        <Entry>
+          <Name>Numpy</Name>
+          <Value>numpy</Value>
+        </Entry>
+        <Entry>
+          <Name>JAX</Name>
+          <Value>jax</Value>
+        </Entry>
+        <Entry>
+          <Name>Numba</Name>
+          <Value>numba</Value>
+        </Entry>
+        <Entry>
+          <Name>PyTorch</Name>
+          <Value>pytorch</Value>
+        </Entry>
+        <Entry>
+          <Name>TensorFlow</Name>
+          <Value>tensorflow</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Project Size</DisplayName>
+      <Identifier>size</Identifier>
+      <ArgumentPrefix>-s </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>16384</Name>
+          <Value>16384</Value>
+        </Entry>
+        <Entry>
+          <Name>65536</Name>
+          <Value>65536</Value>
+        </Entry>
+        <Entry>
+          <Name>262144</Name>
+          <Value>262144</Value>
+        </Entry>
+        <Entry>
+          <Name>1048576</Name>
+          <Value>1048576</Value>
+        </Entry>
+        <Entry>
+          <Name>4194304</Name>
+          <Value>4194304</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Benchmark</DisplayName>
+      <Identifier>benchmark</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Equation of State</Name>
+          <Value>benchmarks/equation_of_state/</Value>
+        </Entry>
+        <Entry>
+          <Name>Isoneutral Mixing</Name>
+          <Value>benchmarks/isoneutral_mixing/</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

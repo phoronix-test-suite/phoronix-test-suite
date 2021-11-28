@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/Mellanox/sockperf/archive/refs/tags/3.7.tar.gz</URL>
+      <MD5>7eb1f9b23feb838e20a9555ed1e30040</MD5>
+      <SHA256>fe4ee6a163024da08852aa48a2b5a9d00e372d34f0d05c3dac852df3a965eee0</SHA256>
+      <FileName>sockperf-3.7.tar.gz</FileName>
+      <FileSize>178426</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/onnx/models/raw/master/vision/object_detection_segmentation/yolov4/model/yolov4.tar.gz</URL>
+      <FileName>yolov4.tar.gz</FileName>
+      <FileSize>248665735</FileSize>
+      <Optional>TRUE</Optional>
+    </Package>
+    <Package>
+      <URL>https://github.com/onnx/models/raw/master/vision/object_detection_segmentation/fcn/model/fcn-resnet101-11.tar.gz</URL>
+      <FileName>fcn-resnet101-11.tar.gz</FileName>
+      <FileSize>294729465</FileSize>
+      <Optional>TRUE</Optional>
+    </Package>
+    <Package>
+      <URL>https://github.com/onnx/models/raw/master/vision/classification/shufflenet/model/shufflenet-v2-10.tar.gz</URL>
+      <FileName>shufflenet-v2-10.tar.gz</FileName>
+      <FileSize>8721925</FileSize>
+      <Optional>TRUE</Optional>
+    </Package>
+    <Package>
+      <URL>https://github.com/onnx/models/raw/master/vision/super_resolution/sub_pixel_cnn_2016/model/super-resolution-10.tar.gz</URL>
+      <FileName>super-resolution-10.tar.gz</FileName>
+      <FileSize>1815286</FileSize>
+      <Optional>TRUE</Optional>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

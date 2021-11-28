@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Audio Encoding</Title>
+    <Version>1.0.4</Version>
+    <TestType>System</TestType>
+    <Description>This test suite consists of benchmarks that measure the amount of time needed to encode a sample WAV file to various audio formats. Among the formats are MP3, Ogg, and FLAC. This suite is good for testing the system's single-threaded processor performance, memory, and overall system performance.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/encode-mp3</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/encode-ogg</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/encode-flac</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/encode-ape</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/encode-wavpack</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/encode-opus</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/stargate</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+</PhoronixTestSuite>

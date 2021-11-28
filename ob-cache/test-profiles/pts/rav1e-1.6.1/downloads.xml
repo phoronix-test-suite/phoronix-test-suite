@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ultravideo.cs.tut.fi/video/Bosphorus_1920x1080_120fps_420_8bit_YUV_Y4M.7z</URL>
+      <MD5>84ae521c95aa2537e16b34bbf72f2def</MD5>
+      <SHA256>e2f60b904789a60f6d1edc194d8540d401dd882e3ee3605b9b1de8feacc72133</SHA256>
+      <FileName>Bosphorus_1920x1080_120fps_420_8bit_YUV_Y4M.7z</FileName>
+      <FileSize>676792531</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/xiph/rav1e/archive/refs/tags/v0.5.0.tar.gz</URL>
+      <MD5>aeb2bdcab3285dc18ef23c1a79bd0dc4</MD5>
+      <SHA256>ee56c49dbb50a0810257445e434edb99da01c968da0635403f31bd9677886871</SHA256>
+      <FileName>rav1e-0.5.0.tar.gz</FileName>
+      <FileSize>2697707</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/xiph/rav1e/releases/download/v0.5.0/rav1e.exe</URL>
+      <MD5>fba7d5ef6e6f52e77295c1de139cd23e</MD5>
+      <SHA256>31f370cfb21d74c7b2512839ab46184b171f3c921691b70796027bffcc7aa483</SHA256>
+      <FileName>rav1e-05.exe</FileName>
+      <FileSize>3829760</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/xiph/rav1e/releases/download/v0.5.0/rav1e-0.5.0-macos.zip</URL>
+      <MD5>1d772be9dec5aab409511af1e12396c1</MD5>
+      <SHA256>96cb74dcb22bba23744de4af6c0ef6b08570ece872357bc06b5e430eacb6e24d</SHA256>
+      <FileName>rav1e-0.5.0-macos.zip</FileName>
+      <FileSize>1344103</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

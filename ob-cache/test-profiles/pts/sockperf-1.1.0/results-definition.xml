@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>sockperf: Summary: Latency is #_RESULT_# usec</OutputTemplate>
+    <LineHint>Summary: Latency is</LineHint>
+    <ResultScale>usec</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>sockperf: Summary: Message Rate is #_RESULT_# [msg/sec]</OutputTemplate>
+    <LineHint> Summary: Message Rate is</LineHint>
+    <ResultScale>Messages Per Second</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+</PhoronixTestSuite>

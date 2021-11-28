@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v9.4.0m2-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Python</Title>
+    <Version>1.1.2</Version>
+    <TestType>System</TestType>
+    <Description>Python benchmark collection.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/pybench</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/numenta-nab</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/cython-bench</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/numpy</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/mlpack</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/scikit-learn</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/pyperformance</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/pyhpc</Test>
+    <Mode>BATCH</Mode>
+    <OptionSelect>device = CPU</OptionSelect>
+  </Execute>
+</PhoronixTestSuite>

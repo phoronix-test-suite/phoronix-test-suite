@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>NAS Parallel Benchmarks</Title>
+    <AppVersion>3.4</AppVersion>
+    <Description>NPB, NAS Parallel Benchmarks, is a benchmark developed by NASA for high-end computer systems. This test profile currently uses the MPI version of NPB. This test profile offers selecting the different NPB tests/problems and varying problem sizes.</Description>
+    <ResultScale>Total Mop/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.4.5</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, fortran-compiler, openmpi-development</ExternalDependencies>
+    <EnvironmentSize>8</EnvironmentSize>
+    <ProjectURL>http://www.nas.nasa.gov/Resources/Software/npb.html</ProjectURL>
+    <InternalTags>SMP, MPI</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Test / Class</DisplayName>
+      <Identifier>run-test</Identifier>
+      <Menu>
+        <Entry>
+          <Name>BT.C</Name>
+          <Value>bt.C</Value>
+          <Message>Block Tri-diagonal solver</Message>
+        </Entry>
+        <Entry>
+          <Name>EP.C</Name>
+          <Value>ep.C</Value>
+          <Message>Embarrassingly Parallel</Message>
+        </Entry>
+        <Entry>
+          <Name>EP.D</Name>
+          <Value>ep.D</Value>
+          <Message>Embarrassingly Parallel</Message>
+        </Entry>
+        <Entry>
+          <Name>FT.C</Name>
+          <Value>ft.C</Value>
+          <Message>discrete 3D fast Fourier Transform</Message>
+        </Entry>
+        <Entry>
+          <Name>LU.C</Name>
+          <Value>lu.C</Value>
+          <Message>Lower-Upper Gauss-Seidel solver</Message>
+        </Entry>
+        <Entry>
+          <Name>SP.B</Name>
+          <Value>sp.B</Value>
+          <Message>Scalar Penta-diagonal solver</Message>
+        </Entry>
+        <Entry>
+          <Name>SP.C</Name>
+          <Value>sp.C</Value>
+          <Message>Scalar Penta-diagonal solver</Message>
+        </Entry>
+        <Entry>
+          <Name>IS.D</Name>
+          <Value>is.D</Value>
+          <Message>Integer Sort</Message>
+        </Entry>
+        <Entry>
+          <Name>MG.C</Name>
+          <Value>mg.C</Value>
+          <Message>Multi-Grid on a sequence of meshes</Message>
+        </Entry>
+        <Entry>
+          <Name>CG.C</Name>
+          <Value>cg.C</Value>
+          <Message>Conjugate Gradient</Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

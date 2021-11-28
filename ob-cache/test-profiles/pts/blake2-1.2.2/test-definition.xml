@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>BLAKE2</Title>
+    <AppVersion>20170307</AppVersion>
+    <Description>This is a benchmark of BLAKE2 using the blake2s binary. BLAKE2 is a high-performance crypto alternative to MD5 and SHA-2/3.</Description>
+    <ResultScale>Cycles Per Byte</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.2</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD, MacOSX, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, openssl-development</ExternalDependencies>
+    <EnvironmentSize>1.9</EnvironmentSize>
+    <ProjectURL>http://blake2.net/</ProjectURL>
+    <RepositoryURL>https://github.com/BLAKE2/</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

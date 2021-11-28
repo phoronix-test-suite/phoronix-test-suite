@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/pts-sample-photos-2.tar.bz2, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/pts-sample-photos-2.tar.bz2</URL>
+      <MD5>7ff2870cf3fa2299ea5f4e77e5a8535f</MD5>
+      <SHA256>e8597d7d5910a709985bffae490dfa9490483eb7838b351191156f027d9b5272</SHA256>
+      <FileName>pts-sample-photos-2.tar.bz2</FileName>
+      <FileSize>29599729</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/stock-photos-jpeg-2018-1.tar.xz</URL>
+      <MD5>26f41350aaa7a9f3eba3097d1ac21123</MD5>
+      <SHA256>bcd2c8b7ecf9064fbf20ec8075650cbc06c0b4ce8f06db2676fac3258c459c23</SHA256>
+      <FileName>stock-photos-jpeg-2018-1.tar.xz</FileName>
+      <FileSize>35384500</FileSize>
+    </Package>
+    <Package>
+      <URL>https://download.gimp.org/mirror/pub/gimp/v2.10/windows/gimp-2.10.28-setup.exe</URL>
+      <MD5>662c9b26d4e0cb07b4722473ac55b61d</MD5>
+      <SHA256>2c2e081ce541682be1abdd8bc6df13768ad9482d68000b4a7a60c764d6cec74e</SHA256>
+      <FileName>gimp-2.10.28-setup.exe</FileName>
+      <FileSize>249654104</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

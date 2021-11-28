@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/stargateaudio/stargate/archive/refs/tags/release-21.10.9.tar.gz</URL>
+      <MD5>6b4aaccc40bee99fc87b8f61fb2fd76b</MD5>
+      <SHA256>c5c22b03787b192431a830eb9a20cdd5e2295d5b70ec270096e7fc098b1f58ad</SHA256>
+      <FileName>stargate-release-21.10.9.tar.gz</FileName>
+      <FileSize>10930634</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/stargate-benchmark-project-1.zip</URL>
+      <MD5>80810c29b24439bfbfc6e2aa46d27a8e</MD5>
+      <SHA256>ff3719ec0f0a995240ad216df5ad2511091191839980c7bb64baea0a376cfd0f</SHA256>
+      <FileName>stargate-benchmark-project-1.zip</FileName>
+      <FileSize>136140</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

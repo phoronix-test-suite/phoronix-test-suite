@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>MySQL</Title>
+    <Description>This is a benchmark of the system's built-in MySQL/MariaDB server. MySQL must be accessible in order for this test profile to work.</Description>
+    <ResultScale>Transactions Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Broken</Status>
+    <ExternalDependencies>build-utilities, libtool, libaio-development, python</ExternalDependencies>
+    <RequiresRoot>TRUE</RequiresRoot>
+    <EnvironmentSize>30</EnvironmentSize>
+    <ProjectURL>https://github.com/akopytov/sysbench</ProjectURL>
+    <SystemDependencies>mysqld, mysql, sysbench</SystemDependencies>
+  </TestProfile>
+</PhoronixTestSuite>

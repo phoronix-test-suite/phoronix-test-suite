@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>OpenSSL</Title>
+    <AppVersion> </AppVersion>
+    <Description>OpenSSL is an open-source toolkit that implements SSL (Secure Sockets Layer) and TLS (Transport Layer Security) protocols. The system/openssl test profiles relies on benchmarking the system/OS-supplied openssl binary rather than the pts/openssl test profile that uses the locally-built OpenSSL for benchmarking.</Description>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.2</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <Extends>pts/openssl</Extends>
+    <EnvironmentSize>2580</EnvironmentSize>
+    <ProjectURL>http://www.openssl.org/</ProjectURL>
+    <RepositoryURL>https://github.com/openssl/openssl</RepositoryURL>
+    <RequiresCoreVersionMin>6100</RequiresCoreVersionMin>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>openssl</SystemDependencies>
+  </TestProfile>
+</PhoronixTestSuite>

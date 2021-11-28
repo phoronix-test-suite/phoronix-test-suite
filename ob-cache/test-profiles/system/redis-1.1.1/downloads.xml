@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/RedisLabs/memtier_benchmark/archive/refs/tags/1.3.0.tar.gz</URL>
+      <MD5>a507148673821774ba3b207a13f9859d</MD5>
+      <SHA256>eac1ab8714bb9491a63d8f106d11a36204ad8fc9ec6abb85abac152f566066c6</SHA256>
+      <FileName>memtier_benchmark-1.3.0.tar.gz</FileName>
+      <FileSize>82274</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

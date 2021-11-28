@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Stargate Digital Audio Workstation</Title>
+    <AppVersion>21.10.9</AppVersion>
+    <Description>Stargate is an open-source, cross-platform digital audio workstation (DAW) software package with "a unique and carefully curated experience" with scalability from old systems up through modern multi-core systems. Stargate is GPLv3 licensed and makes use of Qt5 (PyQt5) for its user-interface.</Description>
+    <ResultScale>Render Ratio</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, python, fftw3-development, libtool, portaudio-development, python-numpy, qt5-development, vorbis-development</ExternalDependencies>
+    <EnvironmentSize>32</EnvironmentSize>
+    <ProjectURL>https://stargateaudio.github.io/</ProjectURL>
+    <RepositoryURL>https://github.com/stargateaudio/stargate</RepositoryURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>cython3, ffmpeg, genisoimage, xgettext, jq, lame, alsa/asoundef.h, portmidi.h, sbsms.h, sndfile.h, f2py3, rubberband, mksquashfs, oggenc</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Sample Rate</DisplayName>
+      <Identifier>sample-rate</Identifier>
+      <Menu>
+        <Entry>
+          <Name>44100</Name>
+          <Value>44100</Value>
+          <Message>Default</Message>
+        </Entry>
+        <Entry>
+          <Name>480000</Name>
+          <Value>48000</Value>
+        </Entry>
+        <Entry>
+          <Name>96000</Name>
+          <Value>96000</Value>
+          <Message>More CPU Intensive</Message>
+        </Entry>
+        <Entry>
+          <Name>192000</Name>
+          <Value>192000</Value>
+          <Message>Highest Quality, Most CPU Intensive</Message>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Buffer Size</DisplayName>
+      <Identifier>buffer-size</Identifier>
+      <Menu>
+        <Entry>
+          <Name>512</Name>
+          <Value>512</Value>
+        </Entry>
+        <Entry>
+          <Name>1024</Name>
+          <Value>1024</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

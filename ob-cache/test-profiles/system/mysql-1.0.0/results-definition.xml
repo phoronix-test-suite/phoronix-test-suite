@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>transactions:                        12853  (#_RESULT_# per sec.)</OutputTemplate>
+    <LineHint>transactions</LineHint>
+    <ResultScale>Transactions Per Second</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+</PhoronixTestSuite>

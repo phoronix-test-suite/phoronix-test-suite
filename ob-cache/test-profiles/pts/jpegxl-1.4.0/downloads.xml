@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/libjxl/libjxl/archive/refs/tags/v0.6.1.tar.gz</URL>
+      <MD5>5dae0f40ad6180c1b168bbf7edaf8e7d</MD5>
+      <SHA256>ccbd5a729d730152303be399f033b905e608309d5802d77a61a95faa092592c5</SHA256>
+      <FileName>libjxl-0.6.1.tar.gz</FileName>
+      <FileSize>16953185</FileSize>
+      <PlatformSpecific>Linux, MacOSX, BSD</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/sample-photo-6000x4000-1.zip</URL>
+      <MD5>3da40124023e94f63d96c22c07e7e9c2</MD5>
+      <SHA256>cadcd434abcdc82a220e7022c749b6fa5f46bb7a32ec14423ca8aab067b0e989</SHA256>
+      <FileName>sample-photo-6000x4000-1.zip</FileName>
+      <FileSize>7824306</FileSize>
+    </Package>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/png-samples-1.tar.xz</URL>
+      <MD5>3f928e4d08777e6e84c54202a00429de</MD5>
+      <SHA256>9810c8fd3afd35b4755c2a46f14fc66e2b9199c22e46a5946123c9250f2d1ccd</SHA256>
+      <FileName>png-samples-1.tar.xz</FileName>
+      <FileSize>58346628</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/libjxl/libjxl/releases/download/v0.6.1/jxl-x64-windows-static.zip</URL>
+      <MD5>65d599ad8e827c3e3df1e3505676f3d4</MD5>
+      <SHA256>a269c99874f0cd1583a48d4b13786592d2d29937efc7d4a5e4885517506de974</SHA256>
+      <FileName>jxl-x64-windows-static-061.zip</FileName>
+      <FileSize>4755277</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

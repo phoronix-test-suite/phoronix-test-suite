@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>       4,096  pytorch           29     #_RESULT_#     0.000     0.001     0.001     0.001     0.001     0.002     1.000</OutputTemplate>
+    <LineBeforeHint>----------------</LineBeforeHint>
+  </ResultsParser>
+</PhoronixTestSuite>

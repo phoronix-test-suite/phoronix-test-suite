@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/hl2-ep2-pts1-demo.zip</URL>
+      <MD5>8218d73bb8cb7aeb9377e2cde37e6a96</MD5>
+      <SHA256>05e7a22a2a7d87dc889e0568593bb9e20a39592abfdc172c388a361d59e68862</SHA256>
+      <FileName>hl2-ep2-pts1-demo.zip</FileName>
+      <FileSize>3167346</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

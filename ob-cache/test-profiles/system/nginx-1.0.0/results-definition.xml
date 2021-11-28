@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Running 30s test @ http://127.0.0.1:8089/test.html
+  1 threads and 500 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency    13.80ms   59.69ms 898.43ms   97.58%
+    Req/Sec    89.27k     1.25k   91.74k    70.67%
+  2663994 requests in 30.02s, 782.49MB read
+  Non-2xx or 3xx responses: 2663994
+Requests/sec:  #_RESULT_#
+Transfer/sec:     26.07MB</OutputTemplate>
+    <ResultScale>Requests Per Second</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/akopytov/sysbench/archive/1.0.20/sysbench-1.0.20.tar.gz</URL>
+      <MD5>756381c6fc4e16af1e0831b5e6a3dcb3</MD5>
+      <SHA256>e8ee79b1f399b2d167e6a90de52ccc90e52408f7ade1b9b7135727efe181347f</SHA256>
+      <FileName>sysbench-1.0.20.tar.gz</FileName>
+      <FileSize>1509630</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

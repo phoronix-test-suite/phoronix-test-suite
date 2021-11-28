@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Ratio of render rate to real time (higher is better):  #_RESULT_# 1
+</OutputTemplate>
+    <StripFromResult>:</StripFromResult>
+  </ResultsParser>
+</PhoronixTestSuite>
