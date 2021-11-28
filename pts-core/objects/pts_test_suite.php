@@ -509,7 +509,7 @@ class pts_test_suite
 		$b_comp = $b->test_profile->get_title();
 		return strcmp(strtolower($a_comp), strtolower($b_comp));
 	}
-	public function get_xml($to = null, $force_nice_formatting = false, $bind_versions = true)
+	public function get_xml($to = null, $force_nice_formatting = false, $bind_versions = true, $preserve_sub_suites = true)
 	{
 		$xml_writer = new nye_XmlWriter(null, $force_nice_formatting);
 		$xml_writer->addXmlNode('PhoronixTestSuite/SuiteInformation/Title', $this->get_title());
@@ -532,17 +532,21 @@ class pts_test_suite
 				continue;
 			}
 
-			$belongs_to_suite = $test->belongs_to_suite();
-			if($belongs_to_suite && $belongs_to_suite != $this->get_identifier(false))
+			if($preserve_sub_suites)
 			{
-				if(in_array($belongs_to_suite, $skip_suites))
+				// Preserve calling contained test suites within test suites rather than when false, collapse all to test result objects
+				$belongs_to_suite = $test->belongs_to_suite();
+				if($belongs_to_suite && $belongs_to_suite != $this->get_identifier(false))
 				{
+					if(in_array($belongs_to_suite, $skip_suites))
+					{
+						continue;
+					}
+
+					$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Test', $belongs_to_suite);
+					$skip_suites[] = $belongs_to_suite;
 					continue;
 				}
-
-				$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Test', $belongs_to_suite);
-				$skip_suites[] = $belongs_to_suite;
-				continue;
 			}
 
 			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Test', $test->test_profile->get_identifier($bind_versions));

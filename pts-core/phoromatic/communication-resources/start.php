@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2016, Phoronix Media
-	Copyright (C) 2009 - 2016, Michael Larabel
+	Copyright (C) 2009 - 2021, Phoronix Media
+	Copyright (C) 2009 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -119,14 +119,12 @@ function phoromatic_generate_test_suite(&$test_schedule, &$json, $phoromatic_acc
 	$stmt->bindValue(':schedule_id', $test_schedule['ScheduleID']);
 	$result = $stmt->execute();
 
-	$test_count = 0;
 	while($row = $result->fetchArray())
 	{
 		$new_suite->add_to_suite($row['TestProfile'], $row['TestArguments'], $row['TestDescription']);
-		$test_count++;
 	}
 
-	if($test_count == 0)
+	if($new_suite->get_test_count() == 0)
 	{
 		return false;
 	}
@@ -136,7 +134,7 @@ function phoromatic_generate_test_suite(&$test_schedule, &$json, $phoromatic_acc
 	$json['phoromatic']['trigger_id'] = $trigger_id;
 	$json['phoromatic']['schedule_id'] = $test_schedule['ScheduleID'];
 	$json['phoromatic']['environment_variables'] = $test_schedule['EnvironmentVariables'];
-	$json['phoromatic']['test_suite'] = $new_suite->get_xml();
+	$json['phoromatic']['test_suite'] = $new_suite->get_xml(null, false, true, false);
 	$json['phoromatic']['pre_set_sys_env_vars'] = $sys_row['SystemVariables'];
 
 	$contexts = array('SetContextPreInstall' => 'pre_install_set_context', 'SetContextPostInstall' => 'post_install_set_context', 'SetContextPreRun' => 'pre_run_set_context', 'SetContextPostRun' => 'post_run_set_context');
@@ -157,8 +155,13 @@ function phoromatic_generate_test_suite(&$test_schedule, &$json, $phoromatic_acc
 }
 function phoromatic_generate_benchmark_ticket(&$ticket_row, &$json, $phoromatic_account_settings, &$sys_row)
 {
-	$test_suite = phoromatic_server::phoromatic_account_suite_path(ACCOUNT_ID, $ticket_row['SuiteToRun']) . 'suite-definition.xml';
+	$test_suite = phoromatic_server::find_suite_file(ACCOUNT_ID, $ticket_row['SuiteToRun']);
 	if(!is_file($test_suite))
+	{
+		return false;
+	}
+	$test_suite = new pts_test_suite($test_suite);
+	if($test_suite->get_test_count() == 0)
 	{
 		return false;
 	}
@@ -169,7 +172,7 @@ function phoromatic_generate_benchmark_ticket(&$ticket_row, &$json, $phoromatic_
 	$json['phoromatic']['trigger_id'] = $ticket_row['ResultIdentifier'];
 	$json['phoromatic']['benchmark_ticket_id'] = $ticket_row['TicketID'];
 	$json['phoromatic']['result_identifier'] = $ticket_row['ResultIdentifier'];
-	$json['phoromatic']['test_suite'] = file_get_contents($test_suite);
+	$json['phoromatic']['test_suite'] = $test_suite->get_xml(null, false, true, false);
 	$json['phoromatic']['settings'] = $phoromatic_account_settings;
 	$json['phoromatic']['environment_variables'] = $ticket_row['EnvironmentVariables'];
 	$json['phoromatic']['pre_set_sys_env_vars'] = $sys_row['SystemVariables'];

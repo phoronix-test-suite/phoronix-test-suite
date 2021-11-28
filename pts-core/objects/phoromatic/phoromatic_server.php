@@ -133,6 +133,26 @@ class phoromatic_server
 	{
 		return self::phoromatic_account_path($account_id) . 'suites/' . ($suite_id != null ? $suite_id . '/' : null);
 	}
+	public static function find_suite_file($account_id, $suite_name)
+	{
+		$suite_file = false;
+		$xml_path = phoromatic_server::phoromatic_account_suite_path($account_id, $suite_name) . 'suite-definition.xml';
+		if(is_file($xml_path))
+		{
+			// Local account-created suite
+			$suite_file = $xml_path;
+		}
+		else
+		{
+			if(is_file(PTS_TEST_SUITE_PATH . $suite_name . '/suite-definition.xml'))
+			{
+				// is a PTS suite
+				$suite_file = PTS_TEST_SUITE_PATH . $suite_name . '/suite-definition.xml';
+			}
+		}
+
+		return $suite_file;
+	}
 	public static function phoromatic_account_system_path($account_id, $system_id = null)
 	{
 		return self::phoromatic_account_path($account_id) . 'systems/' . ($system_id != null ? $system_id . '/' : null);

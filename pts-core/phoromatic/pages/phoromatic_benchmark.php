@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015, Phoronix Media
-	Copyright (C) 2015, Michael Larabel
+	Copyright (C) 2015 - 2021, Phoronix Media
+	Copyright (C) 2015 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -156,7 +156,7 @@ class phoromatic_benchmark implements pts_webui_interface
 				$main .= '<hr /><h1>Ticket Payload</h1>';
 				$main .= '<p>This ticket runs the <strong>' . $row['SuiteToRun'] . '</strong> test suite:</p>';
 				$main .= '<div style="max-height: 400px; overflow-y: scroll;">';
-				$xml_path = phoromatic_server::phoromatic_account_suite_path($_SESSION['AccountID'], $row['SuiteToRun']) . 'suite-definition.xml';
+				$xml_path = phoromatic_server::find_suite_file($_SESSION['AccountID'], $row['SuiteToRun']);
 				if(is_file($xml_path))
 				{
 					$test_suite = new pts_test_suite($xml_path);
@@ -342,7 +342,14 @@ class phoromatic_benchmark implements pts_webui_interface
 			<h2>' . ($is_new ? 'Create' : 'Edit') . ' A Benchmark</h2>
 			<p>This page allows you to run a test suite -- consisting of a single or multiple test suites -- on a given set/group of systems right away at their next earliest possibility. This benchmark mode is an alternative to the <a href="?schedules">benchmark schedules</a> for reptitive/routine testing.</p>';
 
-			$local_suites = pts_file_io::glob(phoromatic_server::phoromatic_account_suite_path($_SESSION['AccountID']) . '*/suite-definition.xml');
+			$local_suites = array();
+			foreach(pts_file_io::glob(phoromatic_server::phoromatic_account_suite_path($_SESSION['AccountID']) . '*/suite-definition.xml') as $xml_path)
+			{
+					$id = basename(dirname($xml_path));
+					$test_suite = new pts_test_suite($xml_path);
+					$local_suites[$test_suite->get_title() . ' - ' . $id] = $id;
+			}
+			$official_suites = pts_test_suites::suites_on_disk(false, true);
 
 			if(empty($local_suites))
 			{
@@ -360,11 +367,9 @@ class phoromatic_benchmark implements pts_webui_interface
 				<h3>Test Suite To Run:</h3>
 				<p><a href="?build_suite">Build a suite</a> to add/select more tests to run or <a href="?local_suites">view local suites</a> for more information on a particular suite. A test suite is a set of test profiles to run in a pre-defined manner.</p>';
 				$main .= '<p><select name="suite_to_run">';
-				foreach($local_suites as $xml_path)
+				foreach(array_merge($local_suites, $official_suites) as $title => $id)
 				{
-					$id = basename(dirname($xml_path));
-					$test_suite = new pts_test_suite($xml_path);
-					$main .= '<option value="' . $id . '">' . $test_suite->get_title() . ' - ' . $id . '</option>';
+					$main .= '<option value="' . $id . '">' . $title . '</option>';
 				}
 				$main .= '</select></p>';
 				$main .= '<h3>Description:</h3>
