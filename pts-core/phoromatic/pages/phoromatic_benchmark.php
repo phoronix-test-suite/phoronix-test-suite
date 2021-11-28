@@ -366,12 +366,13 @@ class phoromatic_benchmark implements pts_webui_interface
 				<p><input type="text" name="benchmark_identifier" value="' . (!$is_new ? $e_schedule['Identifier'] : null) . '" /></p>
 				<h3>Test Suite To Run:</h3>
 				<p><a href="?build_suite">Build a suite</a> to add/select more tests to run or <a href="?local_suites">view local suites</a> for more information on a particular suite. A test suite is a set of test profiles to run in a pre-defined manner.</p>';
-				$main .= '<p><select name="suite_to_run">';
+				$main .= '<p><select name="suite_to_run" id="suite_to_run_identifier" onchange="phoromatic_show_basic_suite_details(\'\');">';
 				foreach(array_merge($local_suites, $official_suites) as $title => $id)
 				{
 					$main .= '<option value="' . $id . '">' . $title . '</option>';
 				}
 				$main .= '</select></p>';
+				$main .= '<p><div id="suite_details" style="background: #efefef;"></div></p>';
 				$main .= '<h3>Description:</h3>
 				<p>The description is an optional way to add more details about the intent or objective of this test run.</p>
 				<p><textarea name="benchmark_description" id="benchmark_description" cols="50" rows="3">' . (!$is_new ? $e_schedule['Description'] : null) . '</textarea></p>

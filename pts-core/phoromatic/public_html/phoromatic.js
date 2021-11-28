@@ -272,6 +272,12 @@ function phoromatic_schedule_test_details(append_args)
 	var test_target = pts_get_list_item("add_to_schedule_select_test");
 	phoromatic_ajax_update_element("r_add_test_details/&tp=" + test_target + append_args, "test_details");
 }
+function phoromatic_show_basic_suite_details(append_args)
+{
+	document.getElementById("suite_details").innerHTML = "";
+	var suite_target = pts_get_list_item("suite_to_run_identifier");
+	phoromatic_ajax_update_element("r_basic_suite_details/&ts=" + suite_target + append_args, "suite_details");
+}
 function phoromatic_build_suite_test_details()
 {
 	var test_target = pts_get_list_item("add_to_suite_select_test");
