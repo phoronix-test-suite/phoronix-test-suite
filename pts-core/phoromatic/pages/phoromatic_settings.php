@@ -110,7 +110,7 @@ class phoromatic_settings implements pts_webui_interface
 						'UploadRunLogs' => 'Upload test run-time logs from clients when uploading test results.',
 						'RunInstallCommand' => 'For all test schedules, always run the install command for test(s) prior to running them on the system.',
 						'ForceInstallTests' => 'For all test schedules, force the test installation/re-installation of tests each time prior to running the test.',
-						'SystemSensorMonitoring' => 'Enable the system sensor monitoring while tests are taking place.',
+						//'SystemSensorMonitoring' => 'Enable the system sensor monitoring while tests are taking place.',
 						'UploadResultsToOpenBenchmarking' => 'For all test schedules, also upload test results to OpenBenchmarking.org.',
 						'AllowAnyDataForLogFiles' => 'When clients are uploading system log files to the Phoromatic Server, allow any data (non-text data) to be uploaded rather than enforcing text-only log files.',
 						'PowerOffWhenDone' => 'Power off system(s) when scheduled tests are completed for the day.',

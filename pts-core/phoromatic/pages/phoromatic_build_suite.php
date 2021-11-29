@@ -172,7 +172,7 @@ class phoromatic_build_suite implements pts_webui_interface
 				$cache_json = file_get_contents($dc . 'pts-download-cache.json');
 				$cache_json = json_decode($cache_json, true);
 			}
-			foreach(array_merge(pts_tests::local_tests(), pts_openbenchmarking::available_tests(false, true)) as $test)
+			foreach(array_merge(pts_tests::local_tests(), pts_openbenchmarking::available_tests(false, isset($_COOKIE['list_show_all_test_versions']) && $_COOKIE['list_show_all_test_versions'])) as $test)
 			{
 				$cache_checked = false;
 				if(phoromatic_server::read_setting('show_local_tests_only'))
@@ -196,6 +196,14 @@ class phoromatic_build_suite implements pts_webui_interface
 				$main .= '<option value="' . $test . '">' . $test . '</option>';
 			}
 			$main .= '</select>';
+			if(isset($_COOKIE['list_show_all_test_versions']) && $_COOKIE['list_show_all_test_versions'])
+			{
+				$main .= '<p><input type="checkbox" checked="checked" onchange="javascript:document.cookie=\'list_show_all_test_versions=0\'; location.reload();" /> Show all available test profile versions.</p>';
+			}
+			else
+			{
+				$main .= '<p><input type="checkbox" onchange="javascript:document.cookie=\'list_show_all_test_versions=1\'; location.reload();" /> Show all available test profile versions.</p>';
+			}
 			$main .= '<p align="right"><input name="submit" value="' . ($suite->get_title() != null ? 'Edit' : 'Create') .' Suite" type="submit" onclick="return pts_rmm_validate_suite();" /></p>';
 		}
 
