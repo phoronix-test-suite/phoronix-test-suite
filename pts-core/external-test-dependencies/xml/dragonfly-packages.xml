@@ -214,7 +214,7 @@
 		</Package>
 		<Package>
 			<GenericName>python</GenericName>
-			<PackageName>python3 python py37-pip</PackageName>
+			<PackageName>python3 python py38-pip</PackageName>
 		</Package>
 		<Package>
 			<GenericName>yasm</GenericName>

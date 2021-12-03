@@ -190,13 +190,19 @@ elif [ -x /usr/local/sbin/pkg ] || [ -x /usr/sbin/pkg ]
 then
 	# DragonFlyBSD and others
 	echo "The command to likely run for your operating system is: "
-	echo "# pkg install php74 php74-dom php74-zip php74-json php74-simplexml php74-openssl"
+	echo "# pkg install php80 php80-dom php80-zip php80-simplexml php80-openssl"
 	echo " "
 elif [ -x /usr/bin/swupd ]
 then
 	# Clear Linux
 	echo "The command to likely run for your operating system is: "
 	echo "# swupd bundle-add os-testsuite-phoronix"
+	echo " "
+elif [ -x /usr/pkg/bin/pkgin ]
+then
+	# NetBSD
+	echo "The command to likely run for your operating system is: "
+	echo "# pkgin php php-zip"
 	echo " "
 elif [ -x /usr/sbin/pkg_add ]
 then

@@ -2,8 +2,8 @@
 <PhoronixTestSuite>
 	<ExternalDependencies>
 		<Information>
-			<Name>NetBSD</Name>
-			<PackageManager>pkgin</PackageManager>
+			<Name>OpenBSD</Name>
+			<PackageManager>pkg_add</PackageManager>
 		</Information>
 		<Package>
 			<GenericName>32bit-compatibility</GenericName>
@@ -83,7 +83,7 @@
 		</Package>
 		<Package>
 			<GenericName>java</GenericName>
-			<PackageName>openjdk11</PackageName>
+			<PackageName>jdk</PackageName>
 			<FileCheck>/usr/pkg/openjdk/bin/java</FileCheck>
 		</Package>
 		<Package>
@@ -250,7 +250,7 @@
 		</Package>
 		<Package>
 			<GenericName>fftw3-development</GenericName>
-			<PackageName>fftw</PackageName>
+			<PackageName>fftw3</PackageName>
 		</Package>
 		<Package>
 			<GenericName>libevent</GenericName>
