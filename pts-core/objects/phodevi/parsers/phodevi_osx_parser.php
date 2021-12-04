@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2010, Phoronix Media
-	Copyright (C) 2009 - 2010, Michael Larabel
+	Copyright (C) 2009 - 2021, Phoronix Media
+	Copyright (C) 2009 - 2021, Michael Larabel
 	phodevi_osx_parser.php: General parsing functions specific to Mac OS X
 
 	This program is free software; you can redistribute it and/or modify
@@ -29,7 +29,11 @@ class phodevi_osx_parser
 	{
 		if(!$cache || !array_key_exists($command, self::$cached_results))
 		{
-			$info = trim(shell_exec($command));
+			$info = shell_exec($command);
+			if(!empty($info))
+			{
+				$info = trim($info);
+			}
 			self::$cached_results[$command] = explode("\n", $info);
 		}
 

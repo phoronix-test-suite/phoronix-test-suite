@@ -220,7 +220,7 @@ class pts_strings
 	}
 	public static function last_in_string($string, $delimited_by = ' ')
 	{
-		return ($t = strrpos($string, $delimited_by)) ? substr($string, ($t + 1)) : $string;
+		return !empty($string) && ($t = strrpos($string, $delimited_by)) ? substr($string, ($t + 1)) : $string;
 	}
 	public static function array_list_to_string($array, $bold_items = false, $append_to_end = null)
 	{

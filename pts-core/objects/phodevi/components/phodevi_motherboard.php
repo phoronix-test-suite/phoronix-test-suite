@@ -453,7 +453,7 @@ class phodevi_motherboard extends phodevi_device_interface
 			$bios_version = null;
 		}
 
-		return trim(str_replace(array('(', ')'), '', $bios_version));
+		return empty($bios_version) ? '' : trim(str_replace(array('(', ')'), '', $bios_version));
 	}
 	public static function motherboard_string()
 	{

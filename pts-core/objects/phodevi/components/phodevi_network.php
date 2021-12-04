@@ -99,6 +99,11 @@ class phodevi_network extends phodevi_device_interface
 
 					if($local_ip != '127.0.0.1' && $local_ip != null)
 					{
+						if(strpos($local_ip, ' ') === false && ($x = strpos($local_ip, '/')) !== false)
+						{
+							// NetBSD reporting
+							$local_ip = substr($local_ip, 0, $x);
+						}
 						break;
 					}
 					$offset = $ipv4_pos + 1;

@@ -276,6 +276,12 @@ then
 	echo "The command to likely run for your operating system is: "
 	echo "# emerge dev-lang/php"
 	echo " "
+elif [ -x /usr/local/bin/brew ]
+then
+	# macOS Homebrew
+	echo "The command to likely run for your operating system is: "
+	echo "$ brew install php"
+	echo " "
 fi
 
 exit

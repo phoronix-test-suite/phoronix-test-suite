@@ -58,7 +58,7 @@ class phodevi_disk extends phodevi_device_interface
 		{
 			$mount_point = dirname($mount_point);
 		}
-		while(($p = strrpos($mounts, ' ' . $mount_point . ' ')) === false && $mount_point != null && $mount_point != '/');
+		while($mounts != null && ($p = strrpos($mounts, ' ' . $mount_point . ' ')) === false && $mount_point != null && $mount_point != '/');
 
 		if($p)
 		{
