@@ -297,29 +297,44 @@ class phodevi_cpu extends phodevi_device_interface
 		{
 			$scaling_governor = pts_file_io::file_get_contents('/sys/devices/system/cpu/cpu0/cpufreq/scaling_driver') . ' ';
 		}
-
 		if(is_file('/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor'))
 		{
 			$scaling_governor .= pts_file_io::file_get_contents('/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor');
 		}
 
-		if(!empty($scaling_governor) && is_file('/sys/devices/system/cpu/cpufreq/boost'))
+		if(!empty($scaling_governor))
 		{
+			$append_notes = array();
+			if(is_file('/sys/devices/system/cpu/cpufreq/boost'))
+			{
+				$boost = pts_file_io::file_get_contents('/sys/devices/system/cpu/cpufreq/boost');
+				$boosted = null;
 
-			$boost = pts_file_io::file_get_contents('/sys/devices/system/cpu/cpufreq/boost');
-			$boosted = null;
+				if($boost === '0')
+				{
+					$boosted = 'Disabled';
+				}
+				else if($boost === '1')
+				{
+					$boosted = 'Enabled';
+				}
+				if($boosted != null)
+				{
+					$append_notes[] = 'Boost: ' . $boosted;
+				}
+			}
+			if(is_file('/sys/devices/system/cpu/cpu0/cpufreq/energy_performance_preference'))
+			{
+				$epp = pts_file_io::file_get_contents('/sys/devices/system/cpu/cpu0/cpufreq/energy_performance_preference');
 
-			if($boost === '0')
-			{
-				$boosted = 'Disabled';
+				if($epp != null)
+				{
+					$append_notes[] = 'EPP: ' . $epp;
+				}
 			}
-			else if($boost === '1')
+			if(!empty($append_notes))
 			{
-				$boosted = 'Enabled';
-			}
-			if($boosted != null)
-			{
-				$scaling_governor = trim($scaling_governor) . ' (Boost: ' . $boosted . ')';
+				$scaling_governor = trim($scaling_governor) . ' (' . implode(', ', $append_notes) . ')';
 			}
 		}
 
