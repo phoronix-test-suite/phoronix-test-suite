@@ -37,7 +37,8 @@ class phoromatic_r_basic_suite_details implements pts_webui_interface
 	}
 	public static function render_page_process($PATH)
 	{
-		$ts_file = phoromatic_server::find_suite_file($_SESSION['AccountID'], $_GET['ts']);
+		$ts = $_GET['ts'];
+		$ts_file = phoromatic_server::find_suite_file($_SESSION['AccountID'], $ts);
 		$test_suite = new pts_test_suite($ts_file);
 		$name = $test_suite->get_title();
 		$description = $test_suite->get_description();
@@ -49,6 +50,11 @@ class phoromatic_r_basic_suite_details implements pts_webui_interface
 		{
 			echo '<p><strong>' . $tro->test_profile->get_title() . ' [' . $tro->test_profile->get_identifier() . ']</strong><br />';
 			echo $tro->get_arguments_description() . '</p>' . PHP_EOL;
+		}
+		if(stripos($_SERVER['HTTP_REFERER'], '?schedules') !== false)
+		{
+			echo '<input type="hidden" name="suite_add" value="' . $ts . '" />';
+			echo '<br /><br /><p><input name="submit" value="Add" type="submit" onclick="" /></p>';
 		}
 	}
 }

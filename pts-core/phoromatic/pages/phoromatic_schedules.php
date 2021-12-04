@@ -89,6 +89,25 @@ class phoromatic_schedules implements pts_webui_interface
 							phoromatic_add_activity_stream_event('tests_for_schedule', $PATH[0], 'added');
 						}
 					}
+					else if(isset($_POST['suite_add']))
+					{
+						$test_suite = phoromatic_server::find_suite_file($_SESSION['AccountID'], $_POST['suite_add']);
+						if(is_file($test_suite))
+						{
+							$test_suite = new pts_test_suite($test_suite);
+							foreach($test_suite->get_contained_test_result_objects() as $tro)
+							{
+								$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_schedules_tests (AccountID, ScheduleID, TestProfile, TestArguments, TestDescription) VALUES (:account_id, :schedule_id, :test_profile, :test_arguments, :test_description)');
+								$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+								$stmt->bindValue(':schedule_id', $PATH[0]);
+								$stmt->bindValue(':test_profile', $tro->test_profile->get_identifier());
+								$stmt->bindValue(':test_arguments', $tro->get_arguments());
+								$stmt->bindValue(':test_description', $tro->get_arguments_description());
+								$result = $stmt->execute();
+								phoromatic_add_activity_stream_event('tests_for_schedule', $PATH[0], 'added');
+							}
+						}
+					}
 					else if(isset($PATH[1]) && $PATH[1] == 'remove' && !empty($PATH[2]))
 					{
 						// REMOVE TEST
@@ -352,6 +371,26 @@ class phoromatic_schedules implements pts_webui_interface
 						$main .= '<p><input type="checkbox" onchange="javascript:document.cookie=\'list_show_all_test_versions=1\'; location.reload();" /> Show all available test profile versions.</p>';
 					}
 					$main .= '<p><div id="test_details"></div></p>';
+					$main .= '</form>';
+
+					$local_suites = array();
+					foreach(pts_file_io::glob(phoromatic_server::phoromatic_account_suite_path($_SESSION['AccountID']) . '*/suite-definition.xml') as $xml_path)
+					{
+						$id = basename(dirname($xml_path));
+						$test_suite = new pts_test_suite($xml_path);
+						$local_suites[$test_suite->get_title() . ' - ' . $id] = $id;
+					}
+					$official_suites = pts_test_suites::suites_on_disk(false, true);
+
+					$main .= '<hr /><h2>Add A Suite:</h2>';
+					$main .= '<form action="?schedules/' . $PATH[0] . '" name="add_suite" id="add_suite" method="post">';
+					$main .= '<p><select name="suite_to_run" id="suite_to_run_identifier" onchange="phoromatic_show_basic_suite_details(\'\');">';
+					foreach(array_merge($local_suites, $official_suites) as $title => $id)
+					{
+						$main .= '<option value="' . $id . '">' . $title . '</option>';
+					}
+					$main .= '</select></p>';
+					$main .= '<p><div id="suite_details"></div></p>';
 					$main .= '</form>';
 				}
 
