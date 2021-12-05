@@ -37,6 +37,7 @@ class phodevi_disk extends phodevi_device_interface
 	}
 	public static function proc_mount_options($mount_point = null, $mounts = null)
 	{
+		$p = null;
 		$mount_options = false;
 		if(phodevi::is_windows())
 		{

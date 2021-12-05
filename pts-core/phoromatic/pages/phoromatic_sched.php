@@ -273,7 +273,7 @@ class phoromatic_sched implements pts_webui_interface
 </tr>
 <tr>
   <td><h3>One-Time / Manual Testing</h3><em>Carrying out Phoromatic-controlled benchmark on no routine schedule, similar to the trigger-based testing.</em></td>
-  <td><h3>If you wish to only run a set of tests once on a given system or to do so seldom with the same set of tests, simply proceed with creating the test schedule without setting any run time / active days. When going to the web page for this test schedule there will be a button to trigger the tests to run on all affected systems. One-time benchmarking can also be setup via the <a href="http://localhost:8818/?benchmark">Run A Benchmark</a> page.</h3></td>
+  <td><h3>If you wish to only run a set of tests once on a given system or to do so seldom with the same set of tests, simply proceed with creating the test schedule without setting any run time / active days. When going to the web page for this test schedule there will be a button to trigger the tests to run on all affected systems. One-time benchmarking can also be setup via the <a href="?benchmark">Run A Benchmark</a> page.</h3></td>
 </tr>
 </table>';
 

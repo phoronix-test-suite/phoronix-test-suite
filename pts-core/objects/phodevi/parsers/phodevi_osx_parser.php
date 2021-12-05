@@ -33,8 +33,9 @@ class phodevi_osx_parser
 			if(!empty($info))
 			{
 				$info = trim($info);
+				$info = explode("\n", $info);
 			}
-			self::$cached_results[$command] = explode("\n", $info);
+			self::$cached_results[$command] = $info;
 		}
 
 		return self::$cached_results[$command];

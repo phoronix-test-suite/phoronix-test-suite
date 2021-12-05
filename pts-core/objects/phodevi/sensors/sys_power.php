@@ -356,11 +356,15 @@ class sys_power extends phodevi_sensor
 			}
 			else if(pts_client::executable_in_path('ioreg'))
 			{
-				$ioreg = trim(shell_exec("ioreg -l | grep LegacyBatteryInfo | cut -d '{' -f 2 | tr -d \} | tr ',' '=' | awk -F'=' '{print ($2*$10/10^22)}' 2>&1"));
+				$ioreg = shell_exec("ioreg -l | grep LegacyBatteryInfo | cut -d '{' -f 2 | tr -d \} | tr ',' '=' | awk -F'=' '{print ($2*$10/10^22)}' 2>&1");
 
-				if(is_numeric($ioreg) && $ioreg > 0)
+				if(!empty($ioreg))
 				{
-					$rate = $ioreg;
+					$ioreg = trim($ioreg);
+					if(is_numeric($ioreg) && $ioreg > 0)
+					{
+						$rate = $ioreg;
+					}
 				}
 			}
 		}

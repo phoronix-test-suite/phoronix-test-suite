@@ -474,31 +474,33 @@ class pts_test_run_options
 					$option_values = array();
 					$option_names = array();
 
-					$mounts = is_file('/proc/mounts') ? file_get_contents('/proc/mounts') : null;
+					$mounts = is_file('/proc/mounts') ? file_get_contents('/proc/mounts') : '';
 
 					$option_values[] = '';
 					$option_names[] = 'Default Test Directory';
 
-					foreach($partitions_d as $partition_d)
+					if(!empty($mounts))
 					{
-						$mount_point = substr(($a = substr($mounts, strpos($mounts, $partition_d) + strlen($partition_d) + 1)), 0, strpos($a, ' '));
-						if(is_dir($mount_point) && is_writable($mount_point) && !in_array($mount_point, array('/boot', '/boot/efi')) && !in_array($mount_point, $option_values))
+						foreach($partitions_d as $partition_d)
 						{
-							$option_values[] = $mount_point;
-							$option_names[] = $mount_point; // ' [' . $partition_d . ']'
+							$mount_point = substr(($a = substr($mounts, strpos($mounts, $partition_d) + strlen($partition_d) + 1)), 0, strpos($a, ' '));
+							if(is_dir($mount_point) && is_writable($mount_point) && !in_array($mount_point, array('/boot', '/boot/efi')) && !in_array($mount_point, $option_values))
+							{
+								$option_values[] = $mount_point;
+								$option_names[] = $mount_point; // ' [' . $partition_d . ']'
+							}
 						}
-					}
-					
-					// ZFS only
-					$mounts_arr = explode("\n", $mounts);
-					
-					foreach($mounts_arr as $mount)
-					{
-						$mount_arr = explode(' ', $mount);
-						if(isset($mount_arr[2]) && $mount_arr[2] == 'zfs')
+
+						// ZFS only
+						$mounts_arr = explode("\n", $mounts);
+						foreach($mounts_arr as $mount)
 						{
-							$option_values[] = $mount_arr[1];
-							$option_names[] = $mount_arr[1];
+							$mount_arr = explode(' ', $mount);
+							if(isset($mount_arr[2]) && $mount_arr[2] == 'zfs')
+							{
+								$option_values[] = $mount_arr[1];
+								$option_names[] = $mount_arr[1];
+							}
 						}
 					}
 				}
