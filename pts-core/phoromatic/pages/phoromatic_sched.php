@@ -168,7 +168,7 @@ class phoromatic_sched implements pts_webui_interface
 
 		echo phoromatic_webui_header_logged_in();
 		$main = '<h2>' . ($is_new ? 'Create' : 'Edit') . ' A Schedule</h2>
-		<p>A test schedule is used to facilitate automatically running a set of test(s)/suite(s) on either a routine timed basis or whenever triggered by an external script or process, e.g. Git/VCS commit, manually triggered, etc.</p>';
+		<p>A test schedule is used to facilitate automatically running a set of test(s) or suite(s) on either a routine timed basis or whenever triggered by an external script or process, e.g. Git/VCS commit, manually triggered, etc.</p>';
 
 		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="add_test" id="add_test" method="post" enctype="multipart/form-data" onsubmit="return validate_schedule();">
 		<h3>Title:<span style="color:red;">*</span></h3>
@@ -273,7 +273,7 @@ class phoromatic_sched implements pts_webui_interface
 </tr>
 <tr>
   <td><h3>One-Time / Manual Testing</h3><em>Carrying out Phoromatic-controlled benchmark on no routine schedule, similar to the trigger-based testing.</em></td>
-  <td><h3>If you wish to only run a set of tests once on a given system or to do so seldom with the same set of tests, simply proceed with creating the test schedule without setting any run time / active days. When going to the web page for this test schedule there will be a button to trigger the tests to run on all affected systems.</h3></td>
+  <td><h3>If you wish to only run a set of tests once on a given system or to do so seldom with the same set of tests, simply proceed with creating the test schedule without setting any run time / active days. When going to the web page for this test schedule there will be a button to trigger the tests to run on all affected systems. One-time benchmarking can also be setup via the <a href="http://localhost:8818/?benchmark">Run A Benchmark</a> page.</h3></td>
 </tr>
 </table>';
 
