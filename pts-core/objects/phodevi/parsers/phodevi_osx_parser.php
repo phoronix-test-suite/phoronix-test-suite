@@ -48,6 +48,11 @@ class phodevi_osx_parser
 		{
 			$lines = self::run_command_to_lines_cached('system_profiler ' . $data_type . ' 2>&1', $cache);
 
+			if(empty($lines))
+			{
+				return false;
+			}
+
 			for($i = 0; $i < count($lines) && ($value == false || $multiple_objects); $i++)
 			{
 				$line = pts_strings::colon_explode($lines[$i]);
