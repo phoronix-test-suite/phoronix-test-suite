@@ -522,7 +522,7 @@ class phoromatic_server
 	}
 	public static function compute_pprid($account_id, $system_id, $upload_time, $xml_upload_hash)
 	{
-		return base_convert(sha1($account_id . ' ' . $system_id . ' ' . $xml_upload_hash . ' ' . $upload_time), 10, 36);
+		return base_convert(sha1($account_id . ' ' . $system_id . ' ' . $xml_upload_hash . ' ' . $upload_time), 16, 36);
 	}
 	public static function system_id_to_name($system_id, $aid = false)
 	{
