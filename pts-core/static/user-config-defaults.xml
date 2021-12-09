@@ -29,6 +29,7 @@
 			<SaveSystemLogs>TRUE</SaveSystemLogs>
 			<SaveInstallationLogs>TRUE</SaveInstallationLogs>
 			<SaveTestLogs>TRUE</SaveTestLogs>
+			<RemoveTestInstallOnCompletion>FALSE</RemoveTestInstallOnCompletion>
 			<ResultsDirectory>~/.phoronix-test-suite/test-results/</ResultsDirectory>
 			<AlwaysUploadResultsToOpenBenchmarking>FALSE</AlwaysUploadResultsToOpenBenchmarking>
 			<AutoSortRunQueue>TRUE</AutoSortRunQueue>

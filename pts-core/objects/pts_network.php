@@ -104,12 +104,11 @@ class pts_network
 			$download = str_replace('https://', 'http://', $download);
 		}
 
-		if(PTS_IS_CLIENT && strpos(phodevi::read_property('system', 'operating-system'), ' 7') === false && function_exists('curl_init') && stripos(PTS_PHP_VERSION, 'hiphop') === false)
+		if(PTS_IS_CLIENT && strpos(phodevi::read_property('system', 'operating-system'), ' 7') === false && function_exists('curl_init'))
 		{
 			// XXX: RHEL/EL 7.6 PHP packages introduced a segv when using CURL... Until that's resolved, just blacklist " 7"
 			// as unknown when it will be fixed, but at least there is non-CURL codepath supported fine
 			// " 7" is a bit liberal but also hard due to various EL7 downstreams
-			// XXX: Facebook HipHop HHVM currently seems to have problems with PHP CURL
 			$return_state = pts_network::curl_download($download, $to);
 		}
 		else
@@ -157,20 +156,16 @@ class pts_network
 			curl_setopt($cr, CURLOPT_REFERER, 'http://www.phoronix-test-suite.com/');
 		}
 
+		/*
 		if(strpos($download, 'https://openbenchmarking.org/') !== false)
 		{
 			curl_setopt($cr, CURLOPT_SSL_VERIFYHOST, 2);
 			curl_setopt($cr, CURLOPT_CAINFO, PTS_CORE_STATIC_PATH . 'certificates/openbenchmarking-server.pem');
 		}
-		else if(strpos($download, 'https://www.phoromatic.com/') !== false)
-		{
-			curl_setopt($cr, CURLOPT_SSL_VERIFYHOST, 2);
-			curl_setopt($cr, CURLOPT_CAINFO, PTS_CORE_STATIC_PATH . 'certificates/phoromatic-com.pem');
-		}
+		*/
 
 		if(defined('CURLOPT_PROGRESSFUNCTION'))
 		{
-			// CURLOPT_PROGRESSFUNCTION only seems to work with PHP 5.3+, but is not working with HipHop HHVM ~2.0.1
 			curl_setopt($cr, CURLOPT_NOPROGRESS, false);
 			curl_setopt($cr, CURLOPT_PROGRESSFUNCTION, array('pts_network', 'curl_status_callback'));
 		}

@@ -129,12 +129,6 @@ then
 elif which php-cli >/dev/null 2>&1 ;
 then
 	export PHP_BIN="php-cli"
-elif [ -x /usr/bin/hhvm ]
-then
-	export PHP_BIN="/usr/bin/hhvm"
-elif which hhvm >/dev/null 2>&1 ;
-then
-	export PHP_BIN="hhvm"
 else
 	export PHP_BIN=""
 fi
