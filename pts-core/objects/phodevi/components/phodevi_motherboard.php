@@ -513,18 +513,27 @@ class phodevi_motherboard extends phodevi_device_interface
 					$info .= (substr($version, 0, 1) == 'v' ? ' ' : ' v') . $version;
 				}
 
-				if(stripos($info, 'Dell ') !== false && (phodevi::is_root() || is_readable('/dev/mem')) && pts_client::executable_in_path('dmidecode'))
+				if((phodevi::is_root() || is_readable('/dev/mem')) && pts_client::executable_in_path('dmidecode'))
 				{
-					$dmi_output = shell_exec('dmidecode -s system-product-name 2>&1');
-					if(stripos($dmi_output, ' ') !== false && stripos($dmi_output, 'invalid') === false && stripos($dmi_output, 'System Product') === false && stripos($dmi_output, 'not ') === false)
+					// For some vendors, it's better to read system-product-name
+					// Unfortunately other vendors report garbage here, also demidecode only works as root on Linux
+					foreach(array('Dell', 'Apple') as $vend)
 					{
-						$old_info = trim(str_ireplace(array('Dell ', 'Inc.'), '', $info));
-						$info = trim($dmi_output) . (!empty($old_info) && strpos($dmi_output, $old_info) === false ? ' [' . $old_info . ']' : '');
-					}
+						if(stripos($info, $vend . ' ') !== false)
+						{
+							$dmi_output = shell_exec('dmidecode -s system-product-name 2>&1');
+							if($dmi_output != null && stripos($dmi_output, ' ') !== false && stripos($dmi_output, 'invalid') === false && stripos($dmi_output, 'System Product') === false && stripos($dmi_output, 'not ') === false)
+							{
+								$old_info = trim(str_ireplace(array($vend . ' ', 'Inc.'), '', $info));
+								$info = trim($dmi_output) . (!empty($old_info) && strpos($dmi_output, $old_info) === false ? ' [' . $old_info . ']' : '');
+							}
 
-					if(stripos($info, 'Dell') === false)
-					{
-						$info = 'Dell ' . $info;
+							if($info != null && stripos($info, $vend) === false)
+							{
+								$info = $vend . ' ' . $info;
+								break;
+							}
+						}
 					}
 				}
 			}
@@ -603,23 +612,26 @@ class phodevi_motherboard extends phodevi_device_interface
 			{
 				$info = phodevi_windows_parser::get_wmi_object('Win32_MotherboardDevice', 'Name');
 			}
-
-			if(stripos($info, 'Dell ') !== false)
+			foreach(array('Dell', 'Apple') as $vend)
 			{
-				$wmi = shell_exec('wmic csproduct get name');
-				if(($x = strpos($wmi, 'Name')) !== false)
+				if(stripos($info, $vend . ' ') !== false)
 				{
-					$wmi = trim(substr($wmi, $x + 4));
-
-					if(!empty($wmi) && stripos($wmi, 'System Product') === false)
+					$wmi = shell_exec('wmic csproduct get name');
+					if(($x = strpos($wmi, 'Name')) !== false)
 					{
-						if(stripos($wmi, 'Dell ') === false)
-						{
-							$wmi = 'Dell ' . $wmi;
-						}
+						$wmi = trim(substr($wmi, $x + 4));
 
-						$old_info = trim(str_ireplace(array('Dell ', 'Inc.'), '', $info));
-						$info = $wmi . (!empty($old_info) && strpos($wmi, $old_info) === false ? ' [' . $old_info . ']' : '');
+						if(!empty($wmi) && stripos($wmi, 'System Product') === false)
+						{
+							if(stripos($wmi, $vend . ' ') === false)
+							{
+								$wmi = $vend . ' ' . $wmi;
+							}
+
+							$old_info = trim(str_ireplace(array($vend . ' ', 'Inc.'), '', $info));
+							$info = $wmi . (!empty($old_info) && strpos($wmi, $old_info) === false ? ' [' . $old_info . ']' : '');
+							break;
+						}
 					}
 				}
 			}
