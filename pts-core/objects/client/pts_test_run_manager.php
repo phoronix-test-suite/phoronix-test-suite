@@ -63,6 +63,7 @@ class pts_test_run_manager
 	public $DEBUG_no_test_execution_just_result_parse = false;
 	public $benchmark_log = null;
 	public $test_run_success_counter = 0;
+	public $remove_tests_on_completion = false;
 
 	public function __construct($batch_mode = false, $auto_mode = false)
 	{
@@ -82,6 +83,7 @@ class pts_test_run_manager
 		$this->auto_mode = $auto_mode;
 		$this->benchmark_log = new pts_logger(null, 'phoronix-test-suite-benchmark.log');
 		$this->test_run_success_counter = 0;
+		$this->remove_tests_on_completion = pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/RemoveTestInstallOnCompletion', 'FALSE') || pts_env::read('REMOVE_TESTS_ON_COMPLETION');
 
 		pts_module_manager::module_process('__run_manager_setup', $this);
 	}
@@ -665,7 +667,7 @@ class pts_test_run_manager
 					continue;
 				}
 
-				if(pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/RemoveTestInstallOnCompletion', 'FALSE'))
+				if($this->remove_tests_on_completion)
 				{
 					// Remove the installed test if it's no longer needed in this run queue
 					$this_test_profile_identifier = $this->get_test_to_run($this->test_run_pos)->test_profile->get_identifier();

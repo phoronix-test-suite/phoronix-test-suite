@@ -360,6 +360,13 @@ class pts_env
 			'module' => 'watchdog',
 			'advertise_in_phoromatic' => true,
 			),
+		'REMOVE_TESTS_ON_COMPLETION' => array(
+			'description' => 'When this option is set to true, installed test profiles will be automatically removed/uninstalled when they are no longer in the current test execution queue. This is used for saving disk space / resources by automatically removing installed tests after they have been executed. For more persistent behavior is the RemoveTestInstallOnCompletion option within the Phoronix Test Suite user configuration file.',
+			'default' => false,
+			'usage' => array('benchmark'),
+			'value_type' => 'bool',
+			'advertise_in_phoromatic' => true,
+			),
 		);
 
 	public static function read($name, &$overrides = null, $fallback_value = false)
