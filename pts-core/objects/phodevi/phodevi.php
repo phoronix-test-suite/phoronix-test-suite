@@ -47,6 +47,7 @@ class phodevi extends phodevi_base
 
 	// A variable that modules can use to override Phodevi caching support, etc
 	public static $allow_phodevi_caching = true;
+	protected static $sanitize_string = null;
 
 	const no_caching = 1;
 	const std_caching = 2;
@@ -523,6 +524,22 @@ class phodevi extends phodevi_base
 			}
 		}
 
+		if(!empty(self::$sanitize_string) && !empty($value) && is_string($value))
+		{
+			$read_property_lower = strtolower($read_property);
+			$device_lower = strtolower($device);
+			foreach(self::$sanitize_string as $limit_or_index => $sanitize)
+			{
+				if(!is_numeric($limit_or_index) && $limit_or_index != $read_property  && $limit_or_index != $device_lower)
+				{
+					// If index is set as property name, make sure reading the same property now or can skip it...
+					continue;
+				}
+				$value = str_ireplace($sanitize, '', $value);
+			}
+			$value = trim($value);
+		}
+
 		return $value;
 	}
 	public static function read_all_properties()
@@ -581,8 +598,33 @@ class phodevi extends phodevi_base
 	{
 		self::$vfs = new phodevi_vfs();
 	}
+	public static function set_sanitize_string($str)
+	{
+		self::$sanitize_string = array();
+
+		// Multiple strings to remove can be delimited by a comma
+		foreach(explode(',', $str) as $to_sanitize)
+		{
+			if(!empty($to_sanitize))
+			{
+				$to_sanitize = explode('=', $to_sanitize);
+				if(count($to_sanitize) == 2)
+				{
+					// Limiting sanitize string to a particular Phodevi property
+					self::$sanitize_string[strtolower($to_sanitize[0])] = $to_sanitize[1];
+				}
+				else
+				{
+					// Check all Phodevi properties
+					self::$sanitize_string[] = $to_sanitize[0];
+				}
+			}
+		}
+	}
 	public static function initial_setup()
 	{
+		phodevi::set_sanitize_string(pts_env::read('PHODEVI_SANITIZE'));
+
 		// Operating System Detection
 		$supported_operating_systems = pts_types::operating_systems();
 		$uname_s = strtolower(php_uname('s'));

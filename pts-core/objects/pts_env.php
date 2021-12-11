@@ -35,6 +35,14 @@ class pts_env
 			'usage' => array('all'),
 			'value_type' => 'positive_integer',
 			),
+		'PHODEVI_SANITIZE' => array(
+			'description' => 'This option can be used for stripping out part of a string on Phodevi (Phoronix Device Interface) hardware/software properties. Namely around the reported hardware/software information in result files if wanting any values / portions of strings stripped out from that information, such as for confidential hardware strings or other privacy concerns, PHODEVI_SANITIZE can be set. The value will be removed from read Phodevi hardware/software properties if set. Multiple strings to search for can be set by delimiting with a comma. If wanting to limit the sanitization to a particular property, the property value can be specified such as [property]=[value] to sanitisze like a value of "motherboard=ABCVENDOR" or CPU=ENGINEERING-SAMPLE to delete those strings rather than simply the string to remove that will look for matches in any property."',
+			'default' => '',
+			'usage' => array('all'),
+			'value_type' => 'string',
+			'advertise_in_phoromatic' => true,
+			'onchange' => 'phodevi::set_sanitize_string',
+			),
 		'PTS_SILENT_MODE' => array(
 			'description' => 'This option when enabled will yield slightly less verbose Phoronix Test Suite terminal output by silencing unnecessary messages / prompts.',
 			'default' => false,
@@ -388,6 +396,11 @@ class pts_env
 		{
 			// Ensure module is loaded
 			pts_module_manager::attach_module(self::$env_vars[$name]['module']);
+		}
+		if(PTS_IS_CLIENT && isset(self::$env_vars[$name]['onchange']) && !empty(self::$env_vars[$name]['onchange']) && is_callable(self::$env_vars[$name]['onchange']))
+		{
+			// Call the passed function with the value being set
+			call_user_func(self::$env_vars[$name]['onchange'], $value);
 		}
 
 		self::$overrides[$name] = $value;
