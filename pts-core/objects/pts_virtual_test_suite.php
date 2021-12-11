@@ -80,7 +80,7 @@ class pts_virtual_test_suite extends pts_test_suite
 					// Also ignore these tests
 					continue;
 				}
-				if($test_profile->is_test_installed() == false)
+				if($test_profile->test_installation == false || $test_profile->test_installation->is_installed() == false)
 				{
 					// Test is not installed
 					continue;

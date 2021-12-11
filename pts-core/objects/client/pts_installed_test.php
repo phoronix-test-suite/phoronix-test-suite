@@ -68,7 +68,6 @@ class pts_installed_test
 		// Refresh/generate an PTS install file
 
 		// JSON output
-
 		$to_json = array();
 		$to_json['test_installation']['environment']['test_identifier'] = $this->get_associated_test_identifier();
 		$to_json['test_installation']['environment']['test_version'] = $this->get_installed_version();
@@ -233,6 +232,7 @@ class pts_installed_test
 	}
 	public function update_install_data(&$test_profile, $compiler_data, $install_footnote)
 	{
+		$this->installed = true;
 		$this->compiler_data = $compiler_data;
 		$this->install_footnote = $install_footnote;
 		$this->associated_test_identifier = $test_profile->get_identifier();

@@ -46,7 +46,7 @@ class ob_test_profile_analyze implements pts_option_interface
 			pts_openbenchmarking_client::override_client_setting('AutoUploadResults', false);
 			pts_openbenchmarking_client::override_client_setting('UploadSystemLogsByDefault', true);
 			pts_test_installer::standard_install($qualified_identifier, true);
-			if(!$test_profile->is_test_installed())
+			if($test_profile->test_installation == false || !$test_profile->test_installation->is_installed())
 			{
 				// Test has issues even installing, so skip it...
 				continue;
@@ -111,7 +111,7 @@ class ob_test_profile_analyze implements pts_option_interface
 						$march = substr($march, 0, $x);
 					}
 					pts_test_installer::standard_install($qualified_identifier, true);
-					if($test_profile->is_test_installed())
+					if($test_profile->test_installation && $test_profile->test_installation->is_installed())
 					{
 						$iu = array();
 						self::analyze_binary_instruction_usage($test_binary, $iu);

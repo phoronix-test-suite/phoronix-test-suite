@@ -249,7 +249,7 @@ class pts_test_run_manager
 
 		if(!isset($this->hashes_of_tests_to_run[$hash]))
 		{
-			if(!$test_result->test_profile->is_test_installed())
+			if($test_result->test_profile->test_installation == false || $test_result->test_profile->test_installation->is_installed() == false)
 			{
 				// Test is not installed, see if should upgrade to new minor release
 				$tp = pts_openbenchmarking_client::test_profile_newer_minor_version_available($test_result->test_profile);
@@ -1258,7 +1258,7 @@ class pts_test_run_manager
 			{
 				return false;
 			}
-			if($test_profile->is_test_installed() == false)
+			if(!$test_profile->test_installation || $test_profile->test_installation->is_installed() == false)
 			{
 				// If the desired test version is not installed, see if a newer version in that release stream (minor version difference) is installed
 				if($check_for_new_on_fail)

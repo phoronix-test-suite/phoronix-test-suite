@@ -47,7 +47,7 @@ class list_not_installed_tests implements pts_option_interface
 			}
 
 			$test_profile = new pts_test_profile($identifier);
-			if($test_profile->is_test_installed())
+			if($test_profile->test_installation && $test_profile->test_installation->is_installed())
 			{
 				// Only show uninstalled tests
 				continue;
@@ -59,7 +59,7 @@ class list_not_installed_tests implements pts_option_interface
 		foreach(pts_tests::local_tests() as $identifier)
 		{
 			$test_profile = new pts_test_profile($identifier);
-			if($test_profile->is_test_installed())
+			if($test_profile->test_installation && $test_profile->test_installation->is_installed())
 			{
 				// Only show uninstalled tests
 				continue;

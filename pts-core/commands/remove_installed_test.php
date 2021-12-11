@@ -35,7 +35,7 @@ class remove_installed_test implements pts_option_interface
 	{
 		$test_profile = new pts_test_profile($r[0]);
 
-		if($test_profile->is_test_installed() == false)
+		if($test_profile->test_installation == false || $test_profile->test_installation->is_installed() == false)
 		{
 			echo PHP_EOL . 'This test is not installed.' . PHP_EOL;
 			return false;

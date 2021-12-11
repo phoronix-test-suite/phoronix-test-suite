@@ -387,10 +387,6 @@ class pts_test_profile extends pts_test_profile_parser
 
 		return $to_execute;
 	}
-	public function is_test_installed()
-	{
-		return is_file($this->get_install_dir() . 'pts-install.json');
-	}
 	public function get_test_executable()
 	{
 		$exe = parent::get_test_executable();
