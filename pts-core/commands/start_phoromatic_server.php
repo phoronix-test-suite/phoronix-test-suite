@@ -242,7 +242,7 @@ class start_phoromatic_server implements pts_option_interface
 		$pts_logger->log('Starting HTTP process @ http://localhost:' . $web_port);
 
 		// Avahi for zeroconf network discovery support
-		if(pts_config::read_user_config('PhoronixTestSuite/Options/Server/AdvertiseServiceZeroConf', 'TRUE'))
+		if(pts_config::read_bool_config('PhoronixTestSuite/Options/Server/AdvertiseServiceZeroConf', 'TRUE'))
 		{
 			if(is_dir('/etc/avahi/services') && is_writable('/etc/avahi/services'))
 			{
@@ -266,7 +266,7 @@ class start_phoromatic_server implements pts_option_interface
 		}
 
 		// Zeroconf via OpenBenchmarking.org
-		if(pts_config::read_user_config('PhoronixTestSuite/Options/Server/AdvertiseServiceOpenBenchmarkRelay', 'TRUE') && pts_network::internet_support_available())
+		if(pts_config::read_bool_config('PhoronixTestSuite/Options/Server/AdvertiseServiceOpenBenchmarkRelay', 'TRUE') && pts_network::internet_support_available())
 		{
 			pts_openbenchmarking::make_openbenchmarking_request('phoromatic_server_relay', array('local_ip' => phodevi::read_property('network', 'ip'), 'local_port' => $web_port));
 		}

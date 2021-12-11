@@ -676,6 +676,12 @@ class phoromatic extends pts_module_interface
 						$original_env_var_overrides = pts_env::get_overrides();
 						$original_pts_modules = pts_module_manager::attached_modules();
 
+						if(isset($json['phoromatic']['settings']['GlobalEnvironmentVariables']) && !empty($json['phoromatic']['settings']['GlobalEnvironmentVariables']))
+						{
+							// The global environment variables set on the Phoromatic Settings page, rather than individual schedule/benchmark ticket specific env vars
+							pts_env::set_array(pts_strings::parse_value_string_vars($json['phoromatic']['settings']['GlobalEnvironmentVariables']));
+						}
+
 						if(!empty($env_vars))
 						{
 							pts_env::set_array($env_vars);

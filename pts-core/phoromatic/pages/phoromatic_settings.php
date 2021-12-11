@@ -102,6 +102,8 @@ class phoromatic_settings implements pts_webui_interface
 				$result = $stmt->execute();
 				$row = $result->fetchArray();
 
+				$env_vars_show = !empty($row['GlobalEnvironmentVariables']) ? pts_strings::parse_value_string_vars($row['GlobalEnvironmentVariables']) : array();
+
 				$account_settings = array(
 					'Global Settings' => array(
 						'ArchiveResultsLocally' => 'Archive test results on local test systems after the results have been uploaded.',
@@ -160,7 +162,29 @@ class phoromatic_settings implements pts_webui_interface
 					$main .= '</p>';
 				}
 
+				if(isset($_POST['env_var_update']))
+				{
+					$env_vars_show = array();
+					$env_vars = array();
+					foreach(pts_env::get_posted_options('phoromatic') as $ei => $ev)
+					{
+						array_push($env_vars, $ei . '=' . $ev);
+						$env_vars_show[$ei] = $ev;
+					}
+					$env_vars = implode(';', $env_vars);
+					$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_account_settings SET GlobalEnvironmentVariables = :val WHERE AccountID = :account_id');
+					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
+					$stmt->bindValue(':val', $env_vars);
+					$stmt->execute();
+				}
+
 				$main .= '<p><input type="hidden" value="1" name="account_settings_update" /><input type="submit" value="Save Account Settings" /></p>';
+				$main .= '</form>';
+
+				$main .= '<form name="system_form" id="system_form" action="?settings" method="post"><hr />';
+				$main .= '<h2>Global Environment Variable Option Overrides</h2> <p>The below options are for environment variable controls that can be set remotely by the Phoromatic Server for use with Phoromatic clients be on the Phoronix Test Suite 10.8 or newer. See the Phoronix Test Suite documentation for more information on these environment variables. The below options will set the values unconditionally for all test schedules / benchmark tickets. Via the individual test schedules / benchmark tickets the environment variables can be set for that given testing rather than globally.</p>' . pts_env::get_html_options('phoromatic', $env_vars_show);
+
+				$main .= '<p><input type="hidden" value="1" name="env_var_update" /><input type="submit" value="Save Global Override Settings" /></p>';
 				$main .= '</form>';
 			}
 

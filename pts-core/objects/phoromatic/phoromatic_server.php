@@ -408,6 +408,10 @@ class phoromatic_server
 				// Change made November 2021
 				self::$db->exec('ALTER TABLE phoromatic_schedules ADD COLUMN EnvironmentVariables TEXT');
 				self::$db->exec('PRAGMA user_version = 43');
+			case 43:
+				// Change made December 2021
+				self::$db->exec('ALTER TABLE phoromatic_account_settings ADD COLUMN GlobalEnvironmentVariables TEXT');
+				self::$db->exec('PRAGMA user_version = 44');
 		}
 		chmod($db_file, 0600);
 		if(!defined('PHOROMATIC_DB_INIT'))
