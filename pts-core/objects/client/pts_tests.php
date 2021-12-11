@@ -43,7 +43,7 @@ class pts_tests
 		$repo = '*';
 		$install_root_path = pts_client::test_install_root_path();
 		$install_root_path_length = strlen($install_root_path);
-		foreach(pts_file_io::glob($install_root_path . $repo . '/*/pts-install.xml') as $identifier_path)
+		foreach(pts_file_io::glob($install_root_path . $repo . '/*/pts-install.json') as $identifier_path)
 		{
 			$cleaned_tests[] = substr(dirname($identifier_path), $install_root_path_length);
 		}

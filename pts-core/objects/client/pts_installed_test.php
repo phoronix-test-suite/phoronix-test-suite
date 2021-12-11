@@ -62,26 +62,6 @@ class pts_installed_test
 			$this->system_hash = isset($jsonf['test_installation']['environment']['system_hash']) ? $jsonf['test_installation']['environment']['system_hash'] : null;
 			$this->associated_test_identifier = isset($jsonf['test_installation']['environment']['test_identifier']) ? $jsonf['test_installation']['environment']['test_identifier'] : null;
 		}
-		else if(is_file($this->install_path . 'pts-install.xml'))
-		{
-			// Fallback to pre PTS 10.2 XML based data
-			// Around PTS11 this path will likely be dropped....
-			$this->installed = true;
-			$xml_options = LIBXML_COMPACT | LIBXML_PARSEHUGE;
-			$xml = simplexml_load_file($this->install_path . 'pts-install.xml', 'SimpleXMLElement', $xml_options);
-			$this->install_date_time = isset($xml->TestInstallation->History->InstallTime) ? $xml->TestInstallation->History->InstallTime->__toString() : null;
-			$this->last_run_date_time = isset($xml->TestInstallation->History->LastRunTime) ? $xml->TestInstallation->History->LastRunTime->__toString() : null;
-			$this->installed_version = isset($xml->TestInstallation->Environment->Version) ? $xml->TestInstallation->Environment->Version->__toString() : null;
-			$this->average_runtime = isset($xml->TestInstallation->History->AverageRunTime) ? $xml->TestInstallation->History->AverageRunTime->__toString() : null;
-			$this->last_runtime = isset($xml->TestInstallation->History->LatestRunTime) ? $xml->TestInstallation->History->LatestRunTime->__toString() : null;
-			$this->last_install_time = isset($xml->TestInstallation->History->InstallTimeLength) ? $xml->TestInstallation->History->InstallTimeLength->__toString() : null;
-			$this->times_run = isset($xml->TestInstallation->History->TimesRun) ? $xml->TestInstallation->History->TimesRun->__toString() : 0;
-			$this->compiler_data = isset($xml->TestInstallation->Environment->CompilerData) ? json_decode($xml->TestInstallation->Environment->CompilerData->__toString(), true) : null;
-			$this->install_footnote = isset($xml->TestInstallation->Environment->InstallFootnote) ? $xml->TestInstallation->Environment->InstallFootnote->__toString() : null;
-			$this->install_checksum = isset($xml->TestInstallation->Environment->CheckSum) ? $xml->TestInstallation->Environment->CheckSum->__toString() : null;
-			$this->system_hash = isset($xml->TestInstallation->Environment->SystemIdentifier) ? $xml->TestInstallation->Environment->SystemIdentifier->__toString() : null;
-			$this->associated_test_identifier = isset($xml->TestInstallation->Environment->Identifier) ? $xml->TestInstallation->Environment->Identifier->__toString() : null;
-		}
 	}
 	public function save_test_install_metadata()
 	{
@@ -104,27 +84,6 @@ class pts_installed_test
 		$to_json['test_installation']['history']['latest_runtime'] = $this->get_latest_run_time();
 		$to_json['test_installation']['history']['per_run_times'] = $this->get_per_run_times();
 		file_put_contents($this->install_path . 'pts-install.json', json_encode($to_json, JSON_PRETTY_PRINT));
-
-		// The pts-install.xml XML file is traditionally how PTS install metadata was installed...
-		// With PTS 10.2, JSON is preferred for storing the data more easily
-		// But continue generating the install XML for backwards compatibility and for parts of PTS checking for 'pts-install.xml' to determine if test installed, etc.
-		// But PTS 10.2+ will use the data actually stored in the JSON file....
-		// TODO XXX PTS 11.0 or so drop the pts-install.xml and use just pts-install.json
-
-		$xml_writer = new nye_XmlWriter();
-		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/Identifier', $this->get_associated_test_identifier());
-		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/Version', $this->get_installed_version());
-		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/CheckSum', $this->get_installed_checksum());
-		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/CompilerData', json_encode($this->get_compiler_data()));
-		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/InstallFootnote', $this->get_install_footnote());
-		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/Environment/SystemIdentifier', $this->get_system_hash());
-		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/InstallTime', $this->get_install_date_time());
-		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/InstallTimeLength', $this->get_latest_install_time());
-		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/LastRunTime', $this->get_last_run_date_time());
-		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/TimesRun', $this->get_run_count());
-		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/AverageRunTime', $this->get_average_run_time());
-		$xml_writer->addXmlNode('PhoronixTestSuite/TestInstallation/History/LatestRunTime', $this->get_latest_run_time());
-		$xml_writer->saveXMLFile($this->install_path . 'pts-install.xml');
 	}
 	public function is_installed()
 	{

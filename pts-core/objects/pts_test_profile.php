@@ -389,7 +389,7 @@ class pts_test_profile extends pts_test_profile_parser
 	}
 	public function is_test_installed()
 	{
-		return is_file($this->get_install_dir() . 'pts-install.xml');
+		return is_file($this->get_install_dir() . 'pts-install.json');
 	}
 	public function get_test_executable()
 	{

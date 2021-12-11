@@ -1035,10 +1035,10 @@ class pts_openbenchmarking
 
 					if(PTS_IS_CLIENT && pts_client::current_command() == 'pts_test_run_manager')
 					{
-						// Check to see if an older version of the test profile is currently installed to ru nthat since no version specified
+						// Check to see if an older version of the test profile is currently installed to run that since no version specified
 						foreach($available_versions as $i => $v)
 						{
-							if(is_file(pts_client::test_install_root_path() . $repo . '/' . $test . '-' . $v . '/pts-install.xml'))
+							if(is_file(pts_client::test_install_root_path() . $repo . '/' . $test . '-' . $v . '/pts-install.json'))
 							{
 								$version = $v;
 
