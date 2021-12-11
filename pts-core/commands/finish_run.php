@@ -23,8 +23,12 @@
 class finish_run implements pts_option_interface
 {
 	const doc_section = 'Testing';
-	const doc_description = 'This option can be used if a test run had not properly finished running all tests within a saved results file. Using this option when specifying a saved results file where all tests had not completed will attempt to finish testing on the remaining tests where there are missing results.';
+	const doc_description = 'This option can be used if a test run had not properly finished running all tests within a saved results file. Using this option when specifying a saved results file where all tests had not completed will attempt to finish / resume testing on the remaining tests where there are missing results to be completed.';
 
+	public static function command_aliases()
+	{
+		return array('resume_run');
+	}
 	public static function argument_checks()
 	{
 		return array(
