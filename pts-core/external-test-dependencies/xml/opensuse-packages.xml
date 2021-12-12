@@ -159,11 +159,11 @@
 		</Package>
 		<Package>
 			<GenericName>openal-development</GenericName>
-			<PackageName>libopenal-devel libopenal0-soft</PackageName>
+			<PackageName>openal-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>vorbis-development</GenericName>
-			<PackageName>taglib-devel</PackageName>
+			<PackageName>libvorbis-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>jam</GenericName>
