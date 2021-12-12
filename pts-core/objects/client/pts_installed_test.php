@@ -40,6 +40,7 @@ class pts_installed_test
 	private $associated_test_identifier = null;
 	private $per_run_times = null;
 	private $install_errors = false;
+	private $runtime_errors = false;
 
 	public function __construct(&$test_profile)
 	{
@@ -63,6 +64,7 @@ class pts_installed_test
 			$this->system_hash = isset($jsonf['test_installation']['environment']['system_hash']) ? $jsonf['test_installation']['environment']['system_hash'] : null;
 			$this->associated_test_identifier = isset($jsonf['test_installation']['environment']['test_identifier']) ? $jsonf['test_installation']['environment']['test_identifier'] : null;
 			$this->install_errors = isset($jsonf['test_installation']['errors']['install']) ? $jsonf['test_installation']['errors']['install'] : false;
+			$this->runtime_errors = isset($jsonf['test_installation']['errors']['runtime']) ? $jsonf['test_installation']['errors']['runtime'] : false;
 		}
 	}
 	public function save_test_install_metadata()
@@ -89,6 +91,10 @@ class pts_installed_test
 		{
 			$to_json['test_installation']['errors']['install'] = $this->get_install_errors();
 		}
+		if($this->get_runtime_errors() && !empty($this->get_runtime_errors()))
+		{
+			$to_json['test_installation']['errors']['runtime'] = $this->get_runtime_errors();
+		}
 		file_put_contents($this->install_path . 'pts-install.json', json_encode($to_json, JSON_PRETTY_PRINT));
 	}
 	public function is_installed()
@@ -98,6 +104,10 @@ class pts_installed_test
 	public function get_install_errors()
 	{
 		return $this->install_errors;
+	}
+	public function get_runtime_errors()
+	{
+		return $this->runtime_errors;
 	}
 	public function get_install_status()
 	{
@@ -110,6 +120,10 @@ class pts_installed_test
 	public function get_install_log_location()
 	{
 		return $this->install_path . 'install.log';
+	}
+	public function get_install_path()
+	{
+		return $this->install_path;
 	}
 	public function get_associated_test_identifier()
 	{
@@ -199,6 +213,28 @@ class pts_installed_test
 	{
 		$this->last_install_time = ceil($t);
 	}
+	public function test_runtime_error_handler(&$test_result_obj, &$errors)
+	{
+		$ch = $test_result_obj->get_comparison_hash(true, false);
+
+		if(empty($errors))
+		{
+			// Clear any prior errors if set since the same test just successfully ran...
+			if(isset($this->runtime_errors[$ch]))
+			{
+				unset($this->runtime_errors[$ch]);
+			}
+		}
+		else
+		{
+			// Set error in test installation metadata
+			$this->runtime_errors[$ch] = array(
+				'description' => $test_result_obj->get_arguments_description(),
+				'date_time' => date('Y-m-d H:i:s'),
+				'errors' => $errors
+				);
+		}
+	}
 	public function add_latest_run_time(&$test_result_obj, $t)
 	{
 		$this->last_runtime = ceil($t);
@@ -220,11 +256,11 @@ class pts_installed_test
 	}
 	protected function add_to_run_times(&$run_times, $index, $value, $description = null)
 	{
-		if(is_array($run_times) && count($run_times) > 80)
+		if(is_array($run_times) && count($run_times) > 30)
 		{
-			// Only show the last 80 to avoid this file becoming too large...
+			// Only show the last 30 to avoid this file becoming too large...
 			$all = $run_times['all'];
-			$run_times = array_slice($run_times, -80, null, true);
+			$run_times = array_slice($run_times, -30, null, true);
 			$run_times['all'] = $all;
 		}
 

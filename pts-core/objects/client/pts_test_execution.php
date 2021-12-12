@@ -22,6 +22,8 @@
 
 class pts_test_execution
 {
+	protected static $test_run_error_collection;
+
 	protected static function test_run_error(&$test_run_manager, &$test_run_request, $error_msg)
 	{
 		$error_obj = array($test_run_manager, $test_run_request, $error_msg);
@@ -33,9 +35,11 @@ class pts_test_execution
 		$error_obj = array($test_run_manager, $test_run_request, $error_msg);
 		pts_module_manager::module_process('__event_run_error', $error_obj);
 		pts_client::$display->test_run_instance_error($error_msg);
+		self::$test_run_error_collection[] = $error_msg;
 	}
 	public static function run_test(&$test_run_manager, &$test_run_request)
 	{
+		self::$test_run_error_collection = array();
 		$test_identifier = $test_run_request->test_profile->get_identifier();
 		$extra_arguments = $test_run_request->get_arguments();
 
@@ -401,7 +405,7 @@ class pts_test_execution
 					if($test_run_time < 2 && $test_run_request->get_estimated_run_time() > 60 && !$restored_from_cache && !$test_run_manager->DEBUG_no_test_execution_just_result_parse)
 					{
 						// If the test ended in less than two seconds, outputted some int, and normally the test takes much longer, then it's likely some invalid run
-						self::test_run_instance_error($test_run_manager, $test_run_request, 'The test run ended quickly.');
+						pts_client::$display->test_run_instance_error('The test run ended quickly.');
 						if($is_expected_last_run && is_file($test_log_file))
 						{
 							$scan_log = pts_file_io::file_get_contents($test_log_file);
@@ -700,6 +704,7 @@ class pts_test_execution
 		}
 		if($test_run_manager->is_multi_test_stress_run() == false)
 		{
+			$test_run_request->test_profile->test_installation->test_runtime_error_handler($test_run_request, self::$test_run_error_collection);
 			$test_run_request->test_profile->test_installation->save_test_install_metadata();
 			pts_storage_object::add_in_file(PTS_CORE_STORAGE, 'total_testing_time', ($time_test_elapsed / 60));
 		}
