@@ -27,19 +27,18 @@ class list_installed_tests implements pts_option_interface
 
 	public static function run($r)
 	{
-		$installed_tests = pts_tests::installed_tests();
+		$installed_tests = pts_tests::installed_tests(true);
 		pts_client::$display->generic_heading(count($installed_tests) . ' Tests Installed');
 
 		if(count($installed_tests) > 0)
 		{
-			foreach($installed_tests as $identifier)
+			foreach($installed_tests as $test_profile)
 			{
-				$test_profile = new pts_test_profile($identifier);
 				$name = $test_profile->get_title();
 
 				if($name != false)
 				{
-					echo sprintf('%-36ls - %-30ls' . PHP_EOL, $identifier, $name);
+					echo sprintf('%-36ls - %-30ls' . PHP_EOL, $test_profile->get_identifier(), $name);
 				}
 			}
 		}

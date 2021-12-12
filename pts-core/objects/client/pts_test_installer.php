@@ -22,11 +22,20 @@
 
 class pts_test_installer
 {
+	protected static $install_errors = array();
+
 	protected static function test_install_error($test_run_manager, &$test_run_request, $error_msg)
 	{
 		$error_obj = array($test_run_manager, $test_run_request, $error_msg);
 		pts_module_manager::module_process('__event_run_error', $error_obj);
 		pts_client::$display->test_install_error($error_msg);
+
+		if(!isset(self::$install_errors[$test_run_request->test_profile->get_identifier()]))
+		{
+			self::$install_errors[$test_run_request->test_profile->get_identifier()] = array();
+		}
+
+		self::$install_errors[$test_run_request->test_profile->get_identifier()][] = $error_msg;
 	}
 	public static function standard_install($items_to_install, $force_install = false, $no_prompts = false, $skip_tests_with_missing_dependencies = false)
 	{
@@ -153,6 +162,7 @@ class pts_test_installer
 
 			pts_triggered_system_events::post_run_reboot_triggered_check($test_install_request->test_profile);
 
+			$install_footnote = null;
 			if($installed)
 			{
 				if(pts_client::do_anonymous_usage_reporting() && $test_install_request->test_profile->test_installation->get_latest_install_time() > 0)
@@ -161,17 +171,31 @@ class pts_test_installer
 					pts_openbenchmarking_client::upload_usage_data('test_install', array($test_install_request, $test_install_request->test_profile->test_installation->get_latest_install_time()));
 				}
 
-				$install_footnote = null;
 				if(is_file($test_install_request->special_environment_vars['INSTALL_FOOTNOTE']))
 				{
 					$install_footnote = pts_file_io::file_get_contents($test_install_request->special_environment_vars['INSTALL_FOOTNOTE']);
 				}
 
-				$test_install_request->test_profile->test_installation->update_install_data($test_install_request->test_profile, $compiler_data, $install_footnote);
-				$test_install_request->test_profile->test_installation->save_test_install_metadata();
 				$test_profiles[] = $test_install_request->test_profile;
 			}
-			else
+
+			// Write the metadata
+			$install_failed = false;
+			if(!$installed)
+			{
+				// Pass any errors to be preserved in the metadata
+				$install_failed = true;
+
+				if(isset(self::$install_errors[$test_install_request->test_profile->get_identifier()]))
+				{
+					$install_failed = self::$install_errors[$test_install_request->test_profile->get_identifier()];
+				}
+			}
+			$test_install_request->test_profile->test_installation->update_install_data($test_install_request->test_profile, $compiler_data, $install_footnote, $install_failed);
+			$test_install_request->test_profile->test_installation->save_test_install_metadata();
+
+
+			if(!$installed)
 			{
 				$tp = pts_openbenchmarking_client::test_profile_newer_minor_version_available($test_install_request->test_profile);
 				if($tp)

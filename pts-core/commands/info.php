@@ -171,6 +171,17 @@ class info implements pts_option_interface
 					}
 					echo pts_user_io::display_text_table($table) . PHP_EOL;
 				}
+				else if($o->test_installation != false && !$o->test_installation->is_installed() && $o->test_installation->get_install_errors())
+				{
+					$table[] = array(pts_client::cli_just_bold('Test Installed: '), pts_client::cli_colored_text('Attempted But Failed', 'red'));
+					$table[] = array(pts_client::cli_just_bold('Install Log: '), $o->test_installation->get_install_log_location());
+					echo pts_user_io::display_text_table($table) . PHP_EOL;
+					echo pts_client::cli_just_bold('Install Errors: ') . PHP_EOL;
+					foreach($o->test_installation->get_install_errors() as $install_error)
+					{
+						echo pts_client::cli_colored_text('    ' . $install_error, 'red') . PHP_EOL;
+					}
+				}
 				else
 				{
 					echo PHP_EOL . pts_client::cli_just_bold('Test Installed: ') . 'No' . PHP_EOL;

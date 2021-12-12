@@ -35,20 +35,60 @@ class pts_tests
 	}
 	public static function remove_installed_test(&$test_profile)
 	{
-		pts_file_io::delete($test_profile->get_install_dir(), null, true);
+		pts_file_io::delete($test_profile->get_install_dir(), array('pts-install.json'), true);
+
+		if($test_profile->test_installation)
+		{
+			$test_profile->test_installation->set_install_status('REMOVED');
+			$test_profile->test_installation->save_test_install_metadata();
+		}
 	}
-	public static function installed_tests()
+	public static function tests_installations_with_metadata()
 	{
-		$cleaned_tests = array();
+		$tests = array();
 		$repo = '*';
 		$install_root_path = pts_client::test_install_root_path();
 		$install_root_path_length = strlen($install_root_path);
 		foreach(pts_file_io::glob($install_root_path . $repo . '/*/pts-install.json') as $identifier_path)
 		{
-			$cleaned_tests[] = substr(dirname($identifier_path), $install_root_path_length);
+			$test_identifier = substr(dirname($identifier_path), $install_root_path_length);
+			$tests[] = new pts_test_profile($test_identifier);
+		}
+
+		return $tests;
+	}
+	public static function installed_tests($return_objects = false)
+	{
+		$cleaned_tests = array();
+		foreach(pts_tests::tests_installations_with_metadata() as $test_profile)
+		{
+			if($test_profile->test_installation && $test_profile->test_installation->is_installed())
+			{
+				if($return_objects)
+				{
+					$cleaned_tests[] = $test_profile;
+				}
+				else
+				{
+					$cleaned_tests[] = $test_profile->get_identifier();
+				}
+			}
 		}
 
 		return $cleaned_tests;
+	}
+	public static function tests_failed_install()
+	{
+		$failed_tests = array();
+		foreach(pts_tests::tests_installations_with_metadata() as $test_profile)
+		{
+			if($test_profile->test_installation && $test_profile->test_installation->get_install_status() == 'INSTALL_FAILED')
+			{
+				$failed_tests[] = $test_profile;
+			}
+		}
+
+		return $failed_tests;
 	}
 	public static function partially_installed_tests()
 	{

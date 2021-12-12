@@ -27,17 +27,15 @@ class list_test_usage implements pts_option_interface
 
 	public static function run($r)
 	{
-		$installed_tests = pts_tests::installed_tests();
+		$installed_tests = pts_tests::installed_tests(true);
 		pts_client::$display->generic_heading(count($installed_tests) . ' Tests Installed');
 
 		if(count($installed_tests) > 0)
 		{
 			$table = array();
 			$table[] = array('TEST', 'INSTALLED', 'LAST RUN', 'AVG RUNTIME', 'TIMES RUN');
-			foreach($installed_tests as $identifier)
+			foreach($installed_tests as $test_profile)
 			{
-				$test_profile = new pts_test_profile($identifier);
-
 				if($test_profile && $test_profile->test_installation && $test_profile->test_installation->get_installed_version() != null)
 				{
 					$avg_time = $test_profile->test_installation->get_average_run_time();
@@ -46,7 +44,7 @@ class list_test_usage implements pts_option_interface
 					$last_run = $test_profile->test_installation->get_last_run_date();
 					$last_run = $last_run == '0000-00-00' ? 'NEVER' : $last_run;
 
-					$table[] = array($identifier, $test_profile->test_installation->get_install_date() . ' ', $last_run . ' ', $avg_time, $test_profile->test_installation->get_run_count());
+					$table[] = array($test_profile->get_identifier(), $test_profile->test_installation->get_install_date() . ' ', $last_run . ' ', $avg_time, $test_profile->test_installation->get_run_count());
 				}
 			}
 

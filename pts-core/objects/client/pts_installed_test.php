@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2020, Phoronix Media
-	Copyright (C) 2008 - 2020, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@ class pts_installed_test
 {
 	private $footnote_override = null;
 	private $install_path = null;
-	private $installed = false;
+	private $status = null;
 
 	private $install_date_time = null;
 	private $last_run_date_time = null;
@@ -39,6 +39,7 @@ class pts_installed_test
 	private $system_hash = null;
 	private $associated_test_identifier = null;
 	private $per_run_times = null;
+	private $install_errors = false;
 
 	public function __construct(&$test_profile)
 	{
@@ -46,8 +47,8 @@ class pts_installed_test
 
 		if(is_file($this->install_path . 'pts-install.json'))
 		{
-			$this->installed = true;
 			$jsonf = json_decode(file_get_contents($this->install_path . 'pts-install.json'), true);
+			$this->status = isset($jsonf['test_installation']['status']) ? $jsonf['test_installation']['status'] : 'INSTALLED';
 			$this->install_date_time = isset($jsonf['test_installation']['history']['install_date_time']) ? $jsonf['test_installation']['history']['install_date_time'] : null;
 			$this->last_run_date_time = isset($jsonf['test_installation']['history']['last_run_date_time']) ? $jsonf['test_installation']['history']['last_run_date_time'] : null;
 			$this->installed_version = isset($jsonf['test_installation']['environment']['test_version']) ? $jsonf['test_installation']['environment']['test_version'] : null;
@@ -61,6 +62,7 @@ class pts_installed_test
 			$this->install_checksum = isset($jsonf['test_installation']['environment']['install_checksum']) ? $jsonf['test_installation']['environment']['install_checksum'] : null;
 			$this->system_hash = isset($jsonf['test_installation']['environment']['system_hash']) ? $jsonf['test_installation']['environment']['system_hash'] : null;
 			$this->associated_test_identifier = isset($jsonf['test_installation']['environment']['test_identifier']) ? $jsonf['test_installation']['environment']['test_identifier'] : null;
+			$this->install_errors = isset($jsonf['test_installation']['errors']['install']) ? $jsonf['test_installation']['errors']['install'] : false;
 		}
 	}
 	public function save_test_install_metadata()
@@ -69,6 +71,7 @@ class pts_installed_test
 
 		// JSON output
 		$to_json = array();
+		$to_json['test_installation']['status'] = $this->get_install_status();
 		$to_json['test_installation']['environment']['test_identifier'] = $this->get_associated_test_identifier();
 		$to_json['test_installation']['environment']['test_version'] = $this->get_installed_version();
 		$to_json['test_installation']['environment']['install_checksum'] = $this->get_installed_checksum();
@@ -82,11 +85,27 @@ class pts_installed_test
 		$to_json['test_installation']['history']['average_runtime'] = $this->get_average_run_time();
 		$to_json['test_installation']['history']['latest_runtime'] = $this->get_latest_run_time();
 		$to_json['test_installation']['history']['per_run_times'] = $this->get_per_run_times();
+		if($this->get_install_errors())
+		{
+			$to_json['test_installation']['errors']['install'] = $this->get_install_errors();
+		}
 		file_put_contents($this->install_path . 'pts-install.json', json_encode($to_json, JSON_PRETTY_PRINT));
 	}
 	public function is_installed()
 	{
-		return $this->installed;
+		return $this->get_install_status() == 'INSTALLED';
+	}
+	public function get_install_errors()
+	{
+		return $this->install_errors;
+	}
+	public function get_install_status()
+	{
+		return $this->status;
+	}
+	public function set_install_status($status)
+	{
+		$this->status = $status;
 	}
 	public function get_install_log_location()
 	{
@@ -230,9 +249,22 @@ class pts_installed_test
 		}
 		$run_times[$index]['avg'] = ceil(array_sum($run_times[$index]['values']) / count($run_times[$index]['values']));
 	}
-	public function update_install_data(&$test_profile, $compiler_data, $install_footnote)
+	public function update_install_data(&$test_profile, $compiler_data, $install_footnote, $install_failed = false)
 	{
-		$this->installed = true;
+		$this->install_errors = false;
+		if($install_failed == false)
+		{
+			$this->set_install_status('INSTALLED');
+		}
+		else
+		{
+			$this->set_install_status('INSTALL_FAILED');
+			if(is_array($install_failed) && !empty($install_failed))
+			{
+				$this->install_errors = $install_failed;
+			}
+		}
+
 		$this->compiler_data = $compiler_data;
 		$this->install_footnote = $install_footnote;
 		$this->associated_test_identifier = $test_profile->get_identifier();
