@@ -604,6 +604,7 @@ class phoromatic extends pts_module_interface
 						}
 					}
 
+					self::upload_test_install_manifest();
 					$just_started = false;
 				}
 
@@ -1173,6 +1174,33 @@ class phoromatic extends pts_module_interface
 				'o' => $context_log,
 				));
 		}
+	}
+	protected static function upload_test_install_manifest()
+	{
+		$json_to_upload = array();
+		foreach(pts_tests::tests_installations_with_metadata() as $test_profile)
+		{
+			if($test_profile->test_installation)
+			{
+				$json_to_upload[$test_profile->get_identifier()] = $test_profile->test_installation->get_array();
+			}
+		}
+
+		if(!empty($json_to_upload))
+		{
+			$server_response = phoromatic::upload_to_remote_server(array(
+				'r' => 'test_install_manifest',
+				'manifest' => json_encode($json_to_upload)
+				));
+		}
+	}
+	public static function __post_install_process()
+	{
+		self::upload_test_install_manifest();
+	}
+	public static function __post_run_process()
+	{
+		self::upload_test_install_manifest();
 	}
 	public static function __pre_test_install(&$test_install_request)
 	{
