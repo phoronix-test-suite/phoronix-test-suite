@@ -37,7 +37,9 @@ class phoromatic extends pts_module_interface
 	private static $limit_network_communication = false;
 	private static $system_id = null;
 	private static $server_core_version = 0;
+	private static $progressive_result_uploads = false;
 
+	private static $p_save_identifier = null;
 	private static $p_schedule_id = null;
 	private static $p_trigger_id = null;
 	private static $benchmark_ticket_id = null;
@@ -647,13 +649,13 @@ class phoromatic extends pts_module_interface
 						self::$is_running_as_phoromatic_node = true;
 						$phoromatic_suite = new pts_test_suite($json['phoromatic']['test_suite']);
 						$phoromatic_results_identifier = $json['phoromatic']['trigger_id'];
-						$phoromatic_save_identifier = $json['phoromatic']['save_identifier'];
+						self::$p_save_identifier = $json['phoromatic']['save_identifier'];
 						self::$p_schedule_id = isset($json['phoromatic']['schedule_id']) ? $json['phoromatic']['schedule_id'] : false;
 						self::$p_trigger_id = $json['phoromatic']['trigger_id'];
-						$benchmark_ticket_id = isset($json['phoromatic']['benchmark_ticket_id']) ? $json['phoromatic']['benchmark_ticket_id'] : null;
-						self::$benchmark_ticket_id = $benchmark_ticket_id;
-						phoromatic::update_system_status('Running Benchmarks For: ' . $phoromatic_save_identifier);
+						self::$benchmark_ticket_id = isset($json['phoromatic']['benchmark_ticket_id']) ? $json['phoromatic']['benchmark_ticket_id'] : null;
+						phoromatic::update_system_status('Running Benchmarks For: ' . self::$p_save_identifier);
 						pts_client::$skip_log_file_type_checks = isset($json['phoromatic']['settings']['AllowAnyDataForLogFiles']) && pts_strings::string_bool($json['phoromatic']['settings']['AllowAnyDataForLogFiles']);
+						self::$progressive_result_uploads = isset($json['phoromatic']['settings']['ProgressiveResultUploads']) && pts_strings::string_bool($json['phoromatic']['settings']['ProgressiveResultUploads']);
 						pts_module::set_option('skip_log_file_type_checks', (pts_client::$skip_log_file_type_checks ? 1 : 0));
 
 						if(pts_strings::string_bool($json['phoromatic']['settings']['RunInstallCommand']))
@@ -705,7 +707,7 @@ class phoromatic extends pts_module_interface
 								if(self::$test_run_manager->load_tests_to_run($phoromatic_suite))
 								{
 									self::$test_run_manager->action_on_stress_log_set(array('phoromatic', 'upload_stress_log_sane'));
-									self::$in_stress_mode = $phoromatic_save_identifier;
+									self::$in_stress_mode = self::$p_save_identifier;
 									self::$test_run_manager->multi_test_stress_run_execute($env_vars['PTS_CONCURRENT_TEST_RUNS'], $env_vars['TOTAL_LOOP_TIME']);
 									self::$in_stress_mode = false;
 									self::upload_stress_log(self::$test_run_manager->get_stress_log());
@@ -744,11 +746,11 @@ class phoromatic extends pts_module_interface
 								// Save results?
 
 								// Run the actual tests
-								self::$test_run_manager->auto_save_results($phoromatic_save_identifier, $phoromatic_results_identifier, (isset($json['phoromatic']['test_description']) ? $json['phoromatic']['test_description'] : 'A Phoromatic run.'));
+								self::$test_run_manager->auto_save_results(self::$p_save_identifier, $phoromatic_results_identifier, (isset($json['phoromatic']['test_description']) ? $json['phoromatic']['test_description'] : 'A Phoromatic run.'));
 								self::$test_run_manager->pre_execution_process();
 								self::$test_run_manager->call_test_runs();
 
-								phoromatic::update_system_status('Benchmarks Completed For: ' . $phoromatic_save_identifier);
+								phoromatic::update_system_status('Benchmarks Completed For: ' .  self::$p_save_identifier);
 								self::$test_run_manager->post_execution_process();
 								$elapsed_benchmark_time = time() - $benchmark_timer;
 
@@ -760,7 +762,7 @@ class phoromatic extends pts_module_interface
 								pts_module::set_option('upload_install_logs', ($upload_install_logs ? 1 : 0));
 								$upload_run_logs = isset($json['phoromatic']['settings']['UploadRunLogs']) && pts_strings::string_bool($json['phoromatic']['settings']['UploadRunLogs']);
 								pts_module::set_option('upload_run_logs', ($upload_run_logs ? 1 : 0));
-								$server_response = self::upload_test_result($result_file, $upload_system_logs, (isset($json['phoromatic']['schedule_id']) ? $json['phoromatic']['schedule_id'] : null), $phoromatic_save_identifier, $json['phoromatic']['trigger_id'], $elapsed_benchmark_time, $benchmark_ticket_id);
+								$server_response = self::upload_test_result($result_file, $upload_system_logs, self::$p_schedule_id, self::$p_save_identifier, self::$p_trigger_id, $elapsed_benchmark_time, self::$benchmark_ticket_id);
 								//pts_client::$pts_logger->log('DEBUG RESPONSE MESSAGE: ' . $server_response);
 								if(!pts_strings::string_bool($json['phoromatic']['settings']['ArchiveResultsLocally']))
 								{
@@ -865,6 +867,33 @@ class phoromatic extends pts_module_interface
 
 		return $report;
 	}
+	public static function __post_test_run()
+	{
+		// Progressively upload result file at end of each test execution
+		if(self::$progressive_result_uploads)
+		{
+			self::upload_progressive_test_result();
+		}
+	}
+	private static function upload_progressive_test_result()
+	{
+		if(!self::$progressive_result_uploads || !(self::$test_run_manager->result_file instanceof pts_result_file))
+		{
+			return false;
+		}
+
+		$composite_xml = self::$test_run_manager->result_file->get_xml();
+		return phoromatic::upload_to_remote_server(array(
+			'r' => 'result_upload',
+			'sched' => self::$p_schedule_id,
+			'bid' => self::$benchmark_ticket_id,
+			'o' => self::$p_save_identifier,
+			'ts' => self::$p_trigger_id,
+			'composite_xml' => base64_encode($composite_xml),
+			'composite_xml_hash' => sha1($composite_xml),
+			'progressive_upload' => 1
+			));
+	}
 	private static function upload_test_result(&$result_file, $upload_system_logs = true, $schedule_id = 0, $save_identifier = null, $trigger = null, $elapsed_time = 0, $benchmark_ticket_id = null)
 	{
 		$system_logs = null;
@@ -943,7 +972,8 @@ class phoromatic extends pts_module_interface
 				$composite_xml_type => base64_encode($composite_xml),
 				'composite_xml_hash' => $composite_xml_hash,
 				'system_logs_zip' => $system_logs,
-				'system_logs_hash' => $system_logs_hash
+				'system_logs_hash' => $system_logs_hash,
+				'progressive_upload' => (self::$progressive_result_uploads ? 2 : 0)
 				));
 
 			$times_tried++;
