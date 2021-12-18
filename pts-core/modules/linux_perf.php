@@ -79,7 +79,6 @@ class linux_perf extends pts_module_interface
 		self::$successful_test_run = clone $test_run_request;
 
 		// For now the current implementation is just copying the perf output for the last test run, but rather easily could be adapted to take average of all test runs, etc
-		//self::$std_output = $test_run_request->test_result_standard_output;
 		self::$std_output = file_get_contents(self::$tmp_file);
 		pts_file_io::unlink(self::$tmp_file);
 	}

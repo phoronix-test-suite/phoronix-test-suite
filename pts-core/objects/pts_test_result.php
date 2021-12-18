@@ -40,7 +40,6 @@ class pts_test_result
 
 	// Added to make it easy to have PTS modules run a custom binary prior to running a program for the test
 	public $exec_binary_prepend = null;
-	public $test_result_standard_output = null;
 
 	protected $already_normalized = false;
 	public $dynamically_generated = false;

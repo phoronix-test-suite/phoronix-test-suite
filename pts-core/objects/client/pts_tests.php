@@ -117,7 +117,12 @@ class pts_tests
 	{
 		$error = null;
 
-		foreach(array('fatal error', 'error while loading', 'undefined reference', 'cannot find -l', 'error:', 'returned 1 exit status', 'not found', 'child process excited with status', 'error opening archive', 'failed to load', 'fatal', 'illegal argument', 'is required to build', 'or higher is required', ': No such file or directory') as $error_string)
+		if(empty($log_file))
+		{
+			return $error;
+		}
+
+		foreach(array('fatal error', 'error while loading', 'undefined reference', 'cannot find -l', 'error:', 'returned 1 exit status', 'not found', 'child process excited with status', 'error opening archive', 'failed to load', 'fatal', 'illegal argument', 'is required to build', 'or higher is required', ': No such file or directory', 'not enough slots', 'mpirun noticed that process', 'permission denied', 'connection refused') as $error_string)
 		{
 			$lf = $log_file;
 			if(($e = strripos($lf, $error_string)) !== false)
@@ -139,7 +144,7 @@ class pts_tests
 					continue;
 				}
 
-				if(isset($lf[8]) && !isset($lf[144]) && strpos($lf, PHP_EOL) === false)
+				if(isset($lf[8]) && !isset($lf[255]) && strpos($lf, PHP_EOL) === false)
 				{
 					$error = $lf;
 					break;
@@ -162,7 +167,7 @@ class pts_tests
 		{
 			// See if the last line of the log is e.g. 'No OpenCL Environment Found', 'FFFFF Not Found', Etc
 			$last_line = trim(substr($log_file, $s));
-			if(isset($last_line[8]) && !isset($last_line[144]))
+			if(isset($last_line[8]) && !isset($last_line[255]))
 			{
 				$error = $last_line;
 			}
