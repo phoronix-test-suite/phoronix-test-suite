@@ -23,7 +23,7 @@
 class pts_installed_test
 {
 	private $footnote_override = null;
-	private $install_path = null;
+	private $install_path = false;
 	private $status = null;
 
 	private $install_date_time = null;
@@ -42,35 +42,46 @@ class pts_installed_test
 	private $install_errors = false;
 	private $runtime_errors = false;
 
-	public function __construct(&$test_profile)
+	public function __construct(&$input)
 	{
-		$this->install_path = $test_profile->get_install_dir();
-
-		if(is_file($this->install_path . 'pts-install.json'))
+		$jsonf = array();
+		if($input instanceof pts_test_profile)
 		{
-			$jsonf = json_decode(file_get_contents($this->install_path . 'pts-install.json'), true);
-			$this->status = isset($jsonf['test_installation']['status']) ? $jsonf['test_installation']['status'] : 'INSTALLED';
-			$this->install_date_time = isset($jsonf['test_installation']['history']['install_date_time']) ? $jsonf['test_installation']['history']['install_date_time'] : null;
-			$this->last_run_date_time = isset($jsonf['test_installation']['history']['last_run_date_time']) ? $jsonf['test_installation']['history']['last_run_date_time'] : null;
-			$this->installed_version = isset($jsonf['test_installation']['environment']['test_version']) ? $jsonf['test_installation']['environment']['test_version'] : null;
-			$this->average_runtime = isset($jsonf['test_installation']['history']['average_runtime']) ? $jsonf['test_installation']['history']['average_runtime'] : null;
-			$this->last_runtime = isset($jsonf['test_installation']['history']['latest_runtime']) ? $jsonf['test_installation']['history']['latest_runtime'] : null;
-			$this->last_install_time = isset($jsonf['test_installation']['history']['install_time_length']) ? $jsonf['test_installation']['history']['install_time_length'] : null;
-			$this->times_run = isset($jsonf['test_installation']['history']['times_run']) ? $jsonf['test_installation']['history']['times_run'] : 0;
-			$this->per_run_times = isset($jsonf['test_installation']['history']['per_run_times']) ? $jsonf['test_installation']['history']['per_run_times'] : array();
-			$this->compiler_data = isset($jsonf['test_installation']['environment']['compiler_data']) ? $jsonf['test_installation']['environment']['compiler_data'] : null;
-			$this->install_footnote = isset($jsonf['test_installation']['environment']['install_footnote']) ? $jsonf['test_installation']['environment']['install_footnote'] : null;
-			$this->install_checksum = isset($jsonf['test_installation']['environment']['install_checksum']) ? $jsonf['test_installation']['environment']['install_checksum'] : null;
-			$this->system_hash = isset($jsonf['test_installation']['environment']['system_hash']) ? $jsonf['test_installation']['environment']['system_hash'] : null;
-			$this->associated_test_identifier = isset($jsonf['test_installation']['environment']['test_identifier']) ? $jsonf['test_installation']['environment']['test_identifier'] : null;
-			$this->install_errors = isset($jsonf['test_installation']['errors']['install']) ? $jsonf['test_installation']['errors']['install'] : false;
-			$this->runtime_errors = isset($jsonf['test_installation']['errors']['runtime']) ? $jsonf['test_installation']['errors']['runtime'] : false;
+			$this->install_path = $input->get_install_dir();
+			if(is_file($this->install_path . 'pts-install.json'))
+			{
+				$jsonf = json_decode(file_get_contents($this->install_path . 'pts-install.json'), true);
+			}
 		}
-	}
-	public function save_test_install_metadata()
-	{
-		// Refresh/generate an PTS install file
+		else if(is_array($input))
+		{
+			$jsonf = $input;
+		}
 
+		if(empty($jsonf))
+		{
+			return;
+		}
+
+		$this->status = isset($jsonf['test_installation']['status']) ? $jsonf['test_installation']['status'] : 'INSTALLED';
+		$this->install_date_time = isset($jsonf['test_installation']['history']['install_date_time']) ? $jsonf['test_installation']['history']['install_date_time'] : null;
+		$this->last_run_date_time = isset($jsonf['test_installation']['history']['last_run_date_time']) ? $jsonf['test_installation']['history']['last_run_date_time'] : null;
+		$this->installed_version = isset($jsonf['test_installation']['environment']['test_version']) ? $jsonf['test_installation']['environment']['test_version'] : null;
+		$this->average_runtime = isset($jsonf['test_installation']['history']['average_runtime']) ? $jsonf['test_installation']['history']['average_runtime'] : null;
+		$this->last_runtime = isset($jsonf['test_installation']['history']['latest_runtime']) ? $jsonf['test_installation']['history']['latest_runtime'] : null;
+		$this->last_install_time = isset($jsonf['test_installation']['history']['install_time_length']) ? $jsonf['test_installation']['history']['install_time_length'] : null;
+		$this->times_run = isset($jsonf['test_installation']['history']['times_run']) ? $jsonf['test_installation']['history']['times_run'] : 0;
+		$this->per_run_times = isset($jsonf['test_installation']['history']['per_run_times']) ? $jsonf['test_installation']['history']['per_run_times'] : array();
+		$this->compiler_data = isset($jsonf['test_installation']['environment']['compiler_data']) ? $jsonf['test_installation']['environment']['compiler_data'] : null;
+		$this->install_footnote = isset($jsonf['test_installation']['environment']['install_footnote']) ? $jsonf['test_installation']['environment']['install_footnote'] : null;
+		$this->install_checksum = isset($jsonf['test_installation']['environment']['install_checksum']) ? $jsonf['test_installation']['environment']['install_checksum'] : null;
+		$this->system_hash = isset($jsonf['test_installation']['environment']['system_hash']) ? $jsonf['test_installation']['environment']['system_hash'] : null;
+		$this->associated_test_identifier = isset($jsonf['test_installation']['environment']['test_identifier']) ? $jsonf['test_installation']['environment']['test_identifier'] : null;
+		$this->install_errors = isset($jsonf['test_installation']['errors']['install']) ? $jsonf['test_installation']['errors']['install'] : false;
+		$this->runtime_errors = isset($jsonf['test_installation']['errors']['runtime']) ? $jsonf['test_installation']['errors']['runtime'] : false;
+	}
+	public function get_array()
+	{
 		// JSON output
 		$to_json = array();
 		$to_json['test_installation']['status'] = $this->get_install_status();
@@ -95,7 +106,16 @@ class pts_installed_test
 		{
 			$to_json['test_installation']['errors']['runtime'] = $this->get_runtime_errors();
 		}
-		file_put_contents($this->install_path . 'pts-install.json', json_encode($to_json, JSON_PRETTY_PRINT));
+
+		return $to_json;
+	}
+	public function save_test_install_metadata()
+	{
+		// Refresh/generate an PTS install file
+		if($this->install_path)
+		{
+			file_put_contents($this->install_path . 'pts-install.json', json_encode($this->get_array(), JSON_PRETTY_PRINT));
+		}
 	}
 	public function is_installed()
 	{
@@ -197,7 +217,7 @@ class pts_installed_test
 	{
 		$install_size = 0;
 
-		if(pts_client::executable_in_path('du'))
+		if(pts_client::executable_in_path('du') && $this->install_path)
 		{
 			$du = trim(shell_exec('du -sk ' . $this->install_path . ' 2>&1'));
 			$du = substr($du, 0, strpos($du, "\t"));

@@ -397,25 +397,71 @@ class phoromatic_systems implements pts_webui_interface
 
 
 				// Any System Errors?
-				$stmt = phoromatic_server::$db->prepare('SELECT ErrorMessage, UploadTime, SystemID, TestIdentifier FROM phoromatic_system_client_errors WHERE AccountID = :account_id AND SystemID = :system_id ORDER BY UploadTime DESC LIMIT 10');
+				$stmt = phoromatic_server::$db->prepare('SELECT ErrorMessage, UploadTime, SystemID, TestIdentifier FROM phoromatic_system_client_errors WHERE AccountID = :account_id AND SystemID = :system_id AND UploadTime >= date("now", "-14 day") ORDER BY UploadTime DESC LIMIT 300');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 				$stmt->bindValue(':system_id', $PATH[0]);
 				$result = $stmt->execute();
 				$row = $result->fetchArray();
 				if($row != false)
 				{
-					$main .= '<hr /><div class="pts_phoromatic_info_box_area" style="margin: 0 10%;"><ul><li><h1>Recent System Warnings &amp; Errors</h1></li>';
+					$main .= '<hr /><h2>Recent System Warnings &amp; Errors</h2>';
+					$main .= '<div style="overflow: auto; max-height: 500px;">';
+
 					do
 					{
-						$main .= '<a onclick=""><li>' . $row['ErrorMessage'] . '<br /><table><tr><td>' . $row['UploadTime'] . '</td><td>' . $row['TestIdentifier'] . '</td></tr></table></li></a>';
+						$main .= '[' . $row['UploadTime'] . '] <strong>' . $row['TestIdentifier'] . '</strong>: ' .$row['ErrorMessage'] . '<br />';
 					}
 					while($row = $result->fetchArray());
-					$main .= '	</ul></div>';
+					$main .= '</div>';
 					$main .= '<p align="center"><a href="?systems/' . $PATH[0] . '/&clear_system_warnings">Clear System Warnings/Errors</a></p>';
+				}
+
+				$test_install_json = phoromatic_server::phoromatic_account_system_path($_SESSION['AccountID'], $PATH[0]) . 'test-installations.json';
+				if(is_file($test_install_json))
+				{
+					$test_install_json = json_decode(file_get_contents($test_install_json), true);
+					if(!empty($test_install_json))
+					{
+						$main .= '<hr /><h2>Test Profile Installations</h2>';
+						foreach($test_install_json as $test_profile => $ti_data)
+						{
+							$test_installation = new pts_installed_test($ti_data);
+							$status = $test_installation->get_install_status();
+							if($status == 'INSTALLED')
+							{
+								$status = '<span style="color: green;">' . $status . '</span> ' . ($test_installation->get_run_count() > 0 ? '<strong>Times Run:</strong> ' . $test_installation->get_run_count() : '');
+							}
+							else if($status == 'INSTALL_FAILED')
+							{
+								$status = '<span style="color: red; font-weight: bold;">INSTALL FAILED</span>';
+							}
+							$error_output = '';
+							$runtime_errors = $test_installation->get_runtime_errors();
+							$install_errors = $test_installation->get_install_errors();
+							if(!empty($runtime_errors))
+							{
+								foreach($runtime_errors as $e)
+								{
+									$error_output .= '<br />' . trim((empty($e['description']) ? '' : '<em>' . $e['description'] . '</em> - ') . 'Last Attempted: ' . $e['date_time']);
+									foreach($e['errors'] as $error)
+									{
+										$error_output .= '<br /> &nbsp; &nbsp; <span style="color: red; font-weight: bold;">    ' . $error . '</span>';
+									}
+								}
+							}
+							if(!empty($install_errors))
+							{
+								foreach($install_errors as $install_error)
+								{
+									$error_output .= '<br /><span style="color: red; font-weight: bold;">    ' . $install_error . '</span>';
+								}
+							}
+							$main .= '<p><strong>' .  $test_profile . '</strong> ' .  $status . ' (Install Date: ' . $test_installation->get_install_date() . ')' . $error_output . '</p>';
+						}
+					}
 				}
 			}
 		}
-
 
 		if($main == null)
 		{

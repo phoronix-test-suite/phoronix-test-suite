@@ -216,7 +216,7 @@ class pts_strings
 	}
 	public static function first_in_string($string, $delimited_by = ' ')
 	{
-		return ($t = strpos($string, $delimited_by)) ? substr($string, 0, $t) : $string;
+		return ($string != null && ($t = strpos($string, $delimited_by))) ? substr($string, 0, $t) : $string;
 	}
 	public static function last_in_string($string, $delimited_by = ' ')
 	{
