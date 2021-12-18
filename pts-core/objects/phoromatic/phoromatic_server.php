@@ -412,6 +412,11 @@ class phoromatic_server
 				// Change made December 2021
 				self::$db->exec('ALTER TABLE phoromatic_account_settings ADD COLUMN GlobalEnvironmentVariables TEXT');
 				self::$db->exec('PRAGMA user_version = 44');
+			case 44:
+				// Change made December 2021
+				self::$db->exec('ALTER TABLE phoromatic_account_settings ADD COLUMN ProgressiveResultUploads INTEGER DEFAULT 0');
+				self::$db->exec('ALTER TABLE phoromatic_results ADD COLUMN InProgress INTEGER DEFAULT 0');
+				self::$db->exec('PRAGMA user_version = 45');
 		}
 		chmod($db_file, 0600);
 		if(!defined('PHOROMATIC_DB_INIT'))
@@ -644,7 +649,7 @@ class phoromatic_server
 	}
 	public static function check_for_benchmark_ticket_result_match($benchmark_id, $account_id, $system_id, $ticket_issue_time)
 	{
-		$stmt = phoromatic_server::$db->prepare('SELECT UploadID FROM phoromatic_results WHERE AccountID = :account_id AND SystemID = :system_id AND BenchmarkTicketID = :benchmark_id AND UploadTime > :ticket_issue_time');
+		$stmt = phoromatic_server::$db->prepare('SELECT UploadID FROM phoromatic_results WHERE AccountID = :account_id AND SystemID = :system_id AND BenchmarkTicketID = :benchmark_id AND UploadTime > :ticket_issue_time AND InProgress = 0');
 		$stmt->bindValue(':account_id', $account_id);
 		$stmt->bindValue(':system_id', $system_id);
 		$stmt->bindValue(':benchmark_id', $benchmark_id);
@@ -660,7 +665,7 @@ class phoromatic_server
 	}
 	public static function check_for_triggered_result_match($schedule_id, $trigger_id, $account_id, $system_id)
 	{
-		$stmt = phoromatic_server::$db->prepare('SELECT UploadID FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id AND Trigger = :trigger AND SystemID = :system_id');
+		$stmt = phoromatic_server::$db->prepare('SELECT UploadID FROM phoromatic_results WHERE AccountID = :account_id AND ScheduleID = :schedule_id AND Trigger = :trigger AND SystemID = :system_id AND InProgress = 0');
 		$stmt->bindValue(':account_id', $account_id);
 		$stmt->bindValue(':system_id', $system_id);
 		$stmt->bindValue(':schedule_id', $schedule_id);

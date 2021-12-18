@@ -82,6 +82,8 @@ class phoromatic_result implements pts_webui_interface
 			$xml_result_hash = array();
 			$tickets = array();
 
+			$showed_progress_msg = false;
+
 			foreach($upload_ids as $id)
 			{
 				$result_share_opt = phoromatic_server::read_setting('force_result_sharing') ? '1 = 1' : 'AccountID = (SELECT AccountID FROM phoromatic_account_settings WHERE LetOtherGroupsViewResults = "1" AND AccountID = phoromatic_results.AccountID)';
@@ -109,6 +111,12 @@ class phoromatic_result implements pts_webui_interface
 				pts_arrays::unique_push($schedule_types, $row['ScheduleID']);
 				pts_arrays::unique_push($trigger_types, $row['Trigger']);
 				pts_arrays::unique_push($tickets, $row['BenchmarkTicketID']);
+
+				if($row['InProgress'] > 0 && !$showed_progress_msg)
+				{
+					$showed_progress_msg = true;
+					$main .= '<p align="center"><strong style="color: red;">The result file being shown is still undergoing testing, results being shown for completed results.</strong></p>';
+				}
 
 				// Update view counter
 				$stmt_view = phoromatic_server::$db->prepare('UPDATE phoromatic_results SET TimesViewed = (TimesViewed + 1) WHERE AccountID = :account_id AND UploadID = :upload_id');

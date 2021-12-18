@@ -110,6 +110,7 @@ class phoromatic_settings implements pts_webui_interface
 						'UploadSystemLogs' => 'Upload system logs from clients when uploading test results.',
 						'UploadInstallLogs' => 'Upload test installation logs from clients when uploading test results.',
 						'UploadRunLogs' => 'Upload test run-time logs from clients when uploading test results.',
+						'ProgressiveResultUploads' => 'Allow clients to stream results progressively to the Phoromatic Server as tests are finished (the ability to see in-progress result files on the Phoromatic Server rather than waiting until all tests are finished).',
 						'RunInstallCommand' => 'For all test schedules, always run the install command for test(s) prior to running them on the system.',
 						'ForceInstallTests' => 'For all test schedules, force the test installation/re-installation of tests each time prior to running the test.',
 						//'SystemSensorMonitoring' => 'Enable the system sensor monitoring while tests are taking place.',
