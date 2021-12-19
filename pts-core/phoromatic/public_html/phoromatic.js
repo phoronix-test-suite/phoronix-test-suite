@@ -446,7 +446,7 @@ function delete_run_from_result_file(result_file, system_identifier, ppd)
 		};
 		xhttp.open("POST", window.location.href + "&modify=remove-result-run", true);
 		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xhttp.send("&result_run=" + system_identifier);
+		xhttp.send("&result_run=" + encodeURIComponent(system_identifier));
 		setTimeout(function(){window.location.reload(1);}, 2500);
 	}
 	return false;
@@ -484,4 +484,27 @@ function update_annotation_for_result_object(result_file, result_hash)
 function reorder_result_file(result_file)
 {
 	window.open(window.location.href + "&modify=reorder_result_file", "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=100,left=100,width=600,height=400,location=no,menubar=no");
+}
+function rename_run_in_result_file(result_file, system_identifier)
+{
+	var new_system_identifier = prompt("Please enter new result identifier:", system_identifier);
+	if(new_system_identifier == "" || new_system_identifier == null)
+	{
+		alert("Result identifier cannot be empty!");
+	}
+	else if(confirm("Confirm changing '" + system_identifier + "' to '" + new_system_identifier + "'?"))
+	{
+		var xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function() {
+		if(this.readyState == 4 && this.status == 200) {
+
+			}
+		};
+		xhttp.open("POST", window.location.href + "&modify=rename-result-run", true);
+		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhttp.send("result_file_id=" + result_file + "&result_run=" + encodeURIComponent(system_identifier) + "&new_result_run=" + encodeURIComponent(new_system_identifier));
+		setTimeout(function(){window.location.reload(1);}, 1500);
+
+	}
+	return false;
 }

@@ -546,6 +546,15 @@ if($result_file->get_test_count() > 1)
 					}
 				}
 				exit;
+			case 'rename-result-run':
+				if(VIEWER_CAN_MODIFY_RESULTS && isset($_REQUEST['result_run']) && isset($_REQUEST['new_result_run']))
+				{
+					if($result_file->rename_run($_REQUEST['result_run'], $_REQUEST['new_result_run']))
+					{
+						$result_file->save();
+					}
+				}
+				exit;
 			case 'add-annotation-to-result-object':
 				if($can_modify_results && isset($_REQUEST['result_object']) && isset($_REQUEST['annotation']))
 				{

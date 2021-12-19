@@ -710,11 +710,13 @@ class pts_result_file
 	}
 	public function rename_run($from, $to, $rename_logs = true)
 	{
+		$renamed = false;
 		if($from == 'PREFIX')
 		{
 			foreach($this->systems as &$s)
 			{
 				$s->set_identifier($to . ': ' . $s->get_identifier());
+				$renamed = true;
 			}
 		}
 		else if($from == null)
@@ -724,6 +726,7 @@ class pts_result_file
 				foreach($this->systems as &$s)
 				{
 					$s->set_identifier($to);
+					$renamed = true;
 					break;
 				}
 			}
@@ -737,6 +740,7 @@ class pts_result_file
 				{
 					$found = true;
 					$s->set_identifier($to);
+					$renamed = true;
 					break;
 				}
 			}
@@ -758,6 +762,8 @@ class pts_result_file
 		{
 			$result->test_result_buffer->rename($from, $to);
 		}
+
+		return $renamed;
 	}
 	public function reorder_runs($new_order)
 	{

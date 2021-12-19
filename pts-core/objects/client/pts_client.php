@@ -1096,7 +1096,6 @@ class pts_client
 		// Current system user
 		return ($pts_user = pts_openbenchmarking_client::user_name()) != null ? $pts_user : phodevi::read_property('system', 'username');
 	}
-
 	public static function process_shutdown_tasks()
 	{
 		// TODO: possibly do something like posix_getpid() != pts_client::$startup_pid in case shutdown function is called from a child process
