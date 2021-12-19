@@ -177,119 +177,6 @@ if(VIEWER_ACCESS_KEY != null && (!isset($_SESSION['AccessKey']) || $_SESSION['Ac
 $PAGE = null;
 switch(isset($_GET['page']) ? $_GET['page'] : null)
 {
-	case 'update-result-file-meta':
-		if(VIEWER_CAN_MODIFY_RESULTS && isset($_REQUEST['result_file_id']) && isset($_REQUEST['result_title']) && isset($_REQUEST['result_desc']))
-		{
-			$result_file = new pts_result_file($_REQUEST['result_file_id']);
-			$result_file->set_title($_REQUEST['result_title']);
-			$result_file->set_description($_REQUEST['result_desc']);
-			$result_file->save();
-		}
-		exit;
-	case 'remove-result-object':
-		if(VIEWER_CAN_DELETE_RESULTS && isset($_REQUEST['result_file_id']) && isset($_REQUEST['result_object']))
-		{
-			$result_file = new pts_result_file($_REQUEST['result_file_id']);
-			$result_file->remove_result_object_by_id($_REQUEST['result_object']);
-			$result_file->save();
-		}
-		exit;
-	case 'remove-result-run':
-		if(VIEWER_CAN_DELETE_RESULTS && isset($_REQUEST['result_file_id']) && isset($_REQUEST['result_run']))
-		{
-			$result_file = new pts_result_file($_REQUEST['result_file_id']);
-			$result_file->remove_run($_REQUEST['result_run']);
-			$result_file->save();
-		}
-		exit;
-	case 'rename-result-run':
-		if(VIEWER_CAN_MODIFY_RESULTS && isset($_REQUEST['result_file_id']) && isset($_REQUEST['result_run']) && isset($_REQUEST['new_result_run']))
-		{
-			$result_file = new pts_result_file($_REQUEST['result_file_id']);
-			$result_file->rename_run($_REQUEST['result_run'], $_REQUEST['new_result_run']);
-			$result_file->save();
-		}
-		exit;
-	case 'add-annotation-to-result-object':
-		if(VIEWER_CAN_MODIFY_RESULTS && isset($_REQUEST['result_file_id']) && isset($_REQUEST['result_object']) && isset($_REQUEST['annotation']))
-		{
-			$result_file = new pts_result_file($_REQUEST['result_file_id']);
-			$result_file->update_annotation_for_result_object_by_id($_REQUEST['result_object'], $_REQUEST['annotation']);
-			$result_file->save();
-		}
-		exit;
-	case 'reorder_result_file':
-		if(VIEWER_CAN_MODIFY_RESULTS && isset($_REQUEST['result_file_id']))
-		{
-			$result_file = new pts_result_file($_REQUEST['result_file_id']);
-			if(count($result_file_identifiers = $result_file->get_system_identifiers()) > 1)
-			{
-				if(isset($_POST['reorder_post']))
-				{
-					$sort_array = array();
-
-					foreach($result_file_identifiers as $i => $id)
-					{
-						if(isset($_POST[base64_encode($id)]))
-						{
-							$sort_array[$id] = $_POST[base64_encode($id)];
-						}
-					}
-					asort($sort_array);
-					$sort_array = array_keys($sort_array);
-					$result_file->reorder_runs($sort_array);
-					$result_file->save();
-					echo '<p>Result file is now reordered. <script> window.close(); </script></p>';
-				}
-				else if(isset($_GET['auto_sort']))
-				{
-					sort($result_file_identifiers);
-					$result_file->reorder_runs($result_file_identifiers);
-					$result_file->save();
-					echo '<p>Result file is now auto-sorted. <script> window.close(); </script></p>';
-				}
-				else
-				{
-					echo '<p>Reorder the result file as desired by altering the numbering from lowest to highest or <a href="?page=reorder_result_file&result_file_id=' . $_REQUEST['result_file_id'] . '&auto_sort">auto-sort result file</a>.</p>';
-					echo '<form method="post" action="?page=reorder_result_file&result_file_id=' . $_REQUEST['result_file_id'] . '">';
-					foreach($result_file_identifiers as $i => $id)
-					{
-						echo '<input style="width: 80px;" name="' . base64_encode($id) . '" type="number" min="0" value="' . ($i + 1) . '" />' . $id . '<br />';
-					}
-					
-					echo '<input type="hidden" name="reorder_post" value="1" /><input type="submit" value="Reorder Results" /></form>';
-				}
-			}
-			
-		/*
-		echo PHP_EOL . 'Enter The New Order To Display The New Results, From Left To Right.' . PHP_EOL;
-
-		$sorted_identifiers = array();
-		do
-		{
-			$extract_identifier = pts_user_io::prompt_text_menu('Select the test run to be showed next', $result_file_identifiers);
-			$sorted_identifiers[] = $extract_identifier;
-
-			$old_identifiers = $result_file_identifiers;
-			$result_file_identifiers = array();
-
-			foreach($old_identifiers as $identifier)
-			{
-				if($identifier != $extract_identifier)
-				{
-					$result_file_identifiers[] = $identifier;
-				}
-			}
-		}
-		while(count($result_file_identifiers) > 0);
-
-		$result_file->reorder_runs($sorted_identifiers);
-		pts_client::save_test_result($result_file->get_file_location(), $result_file->get_xml());
-		pts_client::display_result_view($result_file, false);
-		*/
-		
-		}
-		exit;
 	case 'test':
 		$o = new pts_test_profile($_GET['test']);
 		$PAGE .= '<h1>' . $o->get_title() . '</h1>';
@@ -554,7 +441,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		$PAGE .= '</div>';
 		break;
 	case 'result':
-		if(isset($_POST) && !empty($_POST) && !isset($_POST['log_select']))
+		if(isset($_POST) && !empty($_POST) && !isset($_POST['log_select']) && !isset($_REQUEST['modify']))
 		{
 			$result_link = null;
 			foreach(array_keys($_POST) as $key)

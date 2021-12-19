@@ -467,7 +467,7 @@ class pts_client
 						break;
 					case 'AUTO':
 					default:
-						$supported = (function_exists('posix_isatty') && posix_isatty(STDOUT)) || (PTS_IS_CLIENT && (getenv('LS_COLORS') || getenv('CLICOLOR'))) || (phodevi::is_windows() && strstr(phodevi::read_property('system', 'operating-system'), 'Windows 8') === false && strstr(phodevi::read_property('system', 'operating-system'), 'Windows 7') === false);
+						$supported = (function_exists('posix_isatty') && defined('STDOUT') && posix_isatty(STDOUT)) || (PTS_IS_CLIENT && (getenv('LS_COLORS') || getenv('CLICOLOR'))) || (phodevi::is_windows() && strstr(phodevi::read_property('system', 'operating-system'), 'Windows 8') === false && strstr(phodevi::read_property('system', 'operating-system'), 'Windows 7') === false);
 						break;
 				}
 			}

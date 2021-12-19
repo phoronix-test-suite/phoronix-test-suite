@@ -133,7 +133,7 @@ class pts_result_viewer_embed
 		$PAGE .= $this->post_description_message;
 		$PAGE .= '<div style="text-align: center;">Jump To <a href="#table">Table</a> - <a href="#results">Results</a></div>';
 		$PAGE .= '<hr /><div style="font-size: 12pt;">' . $html_options . '</div><hr style="clear: both;" />';
-		$PAGE .= pts_result_viewer_settings::process_helper_html($_REQUEST, $result_file, $extra_attributes);
+		$PAGE .= pts_result_viewer_settings::process_helper_html($_REQUEST, $result_file, $extra_attributes, $this->can_modify_results, $this->can_delete_results);
 		$PAGE .= '</div>';
 		if($this->include_page_print_only_helpers)
 		{

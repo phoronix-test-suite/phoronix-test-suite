@@ -376,7 +376,7 @@ if($result_file->get_test_count() > 1)
 
 		return $analyze_options;
 	}
-	public static function process_result_export_pre_render(&$request, &$result_file, &$extra_attributes)
+	public static function process_result_export_pre_render(&$request, &$result_file, &$extra_attributes, $can_modify_results = false, $can_delete_results = false)
 	{
 		if(self::check_request_for_var($request, 'rdt'))
 		{
@@ -385,8 +385,10 @@ if($result_file->get_test_count() > 1)
 
 		// Result export?
 		$result_title = (isset($_GET['result']) ? $_GET['result'] : 'result');
-		switch(isset($_REQUEST['export']) ? $_REQUEST['export'] : null)
+		switch(isset($_REQUEST['export']) ? $_REQUEST['export'] : '')
 		{
+			case '':
+				break;
 			case 'pdf':
 				header('Content-Type: application/pdf');
 				$pdf_output = pts_result_file_output::result_file_to_pdf($result_file, $result_title . '.pdf', 'D', $extra_attributes);
@@ -509,11 +511,100 @@ if($result_file->get_test_count() > 1)
 				echo pts_result_viewer_embed::html_template_log_viewer($html_viewer, $result_file);
 				exit;
 		}
+
 		// End result export
+		if(!isset($_REQUEST['modify']) || ($can_modify_results == false && $can_delete_results == false))
+		{
+			return;
+		}
+
+		switch($_REQUEST['modify'])
+		{
+			case 'update-result-file-meta':
+				if($can_modify_results && isset($_REQUEST['result_title']) && isset($_REQUEST['result_desc']))
+				{
+					$result_file->set_title($_REQUEST['result_title']);
+					$result_file->set_description($_REQUEST['result_desc']);
+					$result_file->save();
+				}
+				exit;
+			case 'remove-result-object':
+				if($can_delete_results && isset($_REQUEST['result_object']))
+				{
+					if($result_file->remove_result_object_by_id($_REQUEST['result_object']))
+					{
+						$result_file->save();
+					}
+				}
+				exit;
+			case 'remove-result-run':
+				if($can_delete_results && isset($_REQUEST['result_run']))
+				{
+					if($result_file->remove_run($_REQUEST['result_run']))
+					{
+						$result_file->save();
+					}
+				}
+				exit;
+			case 'add-annotation-to-result-object':
+				if($can_modify_results && isset($_REQUEST['result_object']) && isset($_REQUEST['annotation']))
+				{
+					if($result_file->update_annotation_for_result_object_by_id($_REQUEST['result_object'], $_REQUEST['annotation']))
+					{
+						$result_file->save();
+					}
+				}
+				exit;
+			case 'reorder_result_file':
+				if($can_modify_results)
+				{
+					if(count($result_file_identifiers = $result_file->get_system_identifiers()) > 1)
+					{
+						if(isset($_POST['reorder_post']))
+						{
+							$sort_array = array();
+
+							foreach($result_file_identifiers as $i => $id)
+							{
+								if(isset($_POST[base64_encode($id)]))
+								{
+									$sort_array[$id] = $_POST[base64_encode($id)];
+								}
+							}
+							asort($sort_array);
+							$sort_array = array_keys($sort_array);
+							$result_file->reorder_runs($sort_array);
+							$result_file->save();
+							echo '<p>Result file is now reordered. <script> window.close(); </script></p>';
+						}
+						else if(isset($_POST['auto_sort']))
+						{
+							sort($result_file_identifiers);
+							$result_file->reorder_runs($result_file_identifiers);
+							$result_file->save();
+							echo '<p>Result file is now auto-sorted. <script> window.close(); </script></p>';
+						}
+						else
+						{
+							echo '<p>Reorder the result file as desired by altering the numbering from lowest to highest.</p>';
+							echo '<form method="post" action="' . $_SERVER['REQUEST_URI'] . '">';
+							foreach($result_file_identifiers as $i => $id)
+							{
+								echo '<input style="width: 80px;" name="' . base64_encode($id) . '" type="number" min="0" value="' . ($i + 1) . '" />' . $id . '<br />';
+							}
+							echo '<input type="hidden" name="reorder_post" value="1" /><input type="submit" value="Reorder Results" /></form>';
+							echo '<form method="post" action="' . $_SERVER['REQUEST_URI'] . '">';
+
+							echo '<input type="hidden" name="auto_sort" value="1" /><input type="submit" value="Auto-Sort Result File" /></form>';
+						}
+					}
+				}
+				exit;
+		}
 	}
-	public static function process_helper_html(&$request, &$result_file, &$extra_attributes)
+	public static function process_helper_html(&$request, &$result_file, &$extra_attributes, $can_modify_results = false, $can_delete_results = false)
 	{
-		self::process_result_export_pre_render($request, $result_file, $extra_attributes);
+		self::process_result_export_pre_render($request, $result_file, $extra_attributes, $can_modify_results, $can_delete_results);
 		$html = null;
 		if(self::check_request_for_var($request, 'spr'))
 		{

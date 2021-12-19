@@ -782,12 +782,14 @@ class pts_result_file
 	}
 	public function remove_run($remove)
 	{
+		$did_remove = false;
 		$remove = pts_arrays::to_array($remove);
 		foreach($this->systems as $i => &$s)
 		{
 			if(in_array($s->get_identifier(), $remove))
 			{
 				unset($this->systems[$i]);
+				$did_remove = true;
 			}
 		}
 
@@ -795,6 +797,7 @@ class pts_result_file
 		{
 			$result->test_result_buffer->remove($remove);
 		}
+		return $did_remove;
 	}
 	public function add_to_result_file(&$result_file, $only_merge_results_already_present = false)
 	{

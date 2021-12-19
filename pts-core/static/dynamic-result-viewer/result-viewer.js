@@ -24,9 +24,9 @@ function save_result_file_meta(id)
 		location.reload();
 		}
 	};
-	xhttp.open("POST", WEB_URL_PATH + "index.php?page=update-result-file-meta", true);
+	xhttp.open("POST", window.location.href + "&modify=update-result-file-meta", true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.send("result_file_id=" + id + "&result_title=" + title + "&result_desc=" + description);
+	xhttp.send("&result_title=" + title + "&result_desc=" + description);
 }
 function delete_result_from_result_file(result_file, result_hash)
 {
@@ -39,9 +39,9 @@ function delete_result_from_result_file(result_file, result_hash)
 
 			}
 		};
-		xhttp.open("POST", WEB_URL_PATH + "index.php?page=remove-result-object", true);
+		xhttp.open("POST", window.location.href + "&modify=remove-result-object", true);
 		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xhttp.send("result_file_id=" + result_file + "&result_object=" + result_hash);
+		xhttp.send("&result_object=" + result_hash);
 	}
 	return false;
 }
@@ -60,9 +60,9 @@ function delete_run_from_result_file(result_file, system_identifier, ppd)
 
 			}
 		};
-		xhttp.open("POST", WEB_URL_PATH + "index.php?page=remove-result-run", true);
+		xhttp.open("POST", window.location.href + "&modify=remove-result-run", true);
 		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xhttp.send("result_file_id=" + result_file + "&result_run=" + system_identifier);
+		xhttp.send("&result_run=" + system_identifier);
 		setTimeout(function(){window.location.reload(1);}, 2500);
 	}
 	return false;
@@ -103,9 +103,9 @@ function add_annotation_for_result_object(result_file, result_hash, form)
 		location.reload();
 		}
 	};
-	xhttp.open("POST", WEB_URL_PATH + "index.php?page=add-annotation-to-result-object", true);
+	xhttp.open("POST", window.location.href + "&modify=add-annotation-to-result-object", true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.send("result_file_id=" + result_file + "&result_object=" + result_hash + "&annotation=" + form.annotation.value);
+	xhttp.send("&result_object=" + result_hash + "&annotation=" + form.annotation.value);
 }
 function update_annotation_for_result_object(result_file, result_hash)
 {
@@ -116,9 +116,9 @@ function update_annotation_for_result_object(result_file, result_hash)
 		location.reload();
 		}
 	};
-	xhttp.open("POST", WEB_URL_PATH + "index.php?page=add-annotation-to-result-object", true);
+	xhttp.open("POST", window.location.href + "&modify=add-annotation-to-result-object", true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.send("result_file_id=" + result_file + "&result_object=" + result_hash + "&annotation=" + annotation_updated);
+	xhttp.send("&result_object=" + result_hash + "&annotation=" + annotation_updated);
 }
 function display_test_logs_for_result_object(result_file, result_hash, select_identifier)
 {
@@ -134,7 +134,7 @@ function display_system_logs_for_result(result_file, system_id)
 }
 function reorder_result_file(result_file)
 {
-	window.open(WEB_URL_PATH + "index.php?page=reorder_result_file&result_file_id=" + result_file, "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=100,left=100,width=600,height=400,location=no,menubar=no");
+	window.open(window.location.href + "&modify=reorder_result_file", "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=100,left=100,width=600,height=400,location=no,menubar=no");
 }
 function invert_hide_all_results_checkboxes()
 {
