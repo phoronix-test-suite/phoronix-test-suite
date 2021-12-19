@@ -368,6 +368,14 @@ class pts_env
 			'module' => 'watchdog',
 			'advertise_in_phoromatic' => true,
 			),
+		'REMOVE_TESTS_OLDER_THAN' => array(
+			'description' => 'This option with the cleanup module can be used for automatically un-installing/removing installed tests if they have not been run in a period of time. The value for REMOVE_TESTS_OLDER_THAN is the number of days the test can be installed without running until this module will clean-up/remove older tests.',
+			'default' => false,
+			'usage' => array('benchmark'),
+			'value_type' => 'positive_integer',
+			'module' => 'cleanup',
+			'advertise_in_phoromatic' => true,
+			),
 		'REMOVE_TESTS_ON_COMPLETION' => array(
 			'description' => 'When this option is set to true, installed test profiles will be automatically removed/uninstalled when they are no longer in the current test execution queue. This is used for saving disk space / resources by automatically removing installed tests after they have been executed. For more persistent behavior is the RemoveTestInstallOnCompletion option within the Phoronix Test Suite user configuration file.',
 			'default' => false,
