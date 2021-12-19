@@ -22,7 +22,7 @@
 
 class list_unsupported_tests implements pts_option_interface
 {
-	const doc_section = 'Information';
+	const doc_section = 'Debugging';
 	const doc_description = 'This option will list all available test profiles that are available from the enabled OpenBenchmarking.org repositories but are NOT SUPPORTED on the given hardware/software platform. This is mainly a debugging option for those looking for test profiles to potentially port to new platforms, etc.';
 
 	public static function run($r)

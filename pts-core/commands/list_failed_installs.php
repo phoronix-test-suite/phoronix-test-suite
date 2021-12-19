@@ -21,7 +21,7 @@
 
 class list_failed_installs implements pts_option_interface
 {
-	const doc_section = 'Information';
+	const doc_section = 'Debugging';
 	const doc_description = 'This option will list all test profiles that were attempted to be installed on the local system but failed to be installed. Where applicable, the possible error(s) from the test installation are also reported to assist in debugging.';
 
 	public static function run($r)

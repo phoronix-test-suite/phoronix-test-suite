@@ -21,7 +21,7 @@
 
 class list_test_errors implements pts_option_interface
 {
-	const doc_section = 'Information';
+	const doc_section = 'Debugging';
 	const doc_description = 'This sub-command is complementary to list-failed-installs. Rather than listing test installation errors, list-test-errors is used for displaying past test run-time errors. This option will list all test profiles that produced an error previously when running the test profile / benchmark. If a test profile later successfully ran the test with any given option(s) without errors, the error is then removed from the archive. This option is intended to be helpful in debugging test profile issues later on for having a persistent collection of run-time errors.';
 
 	public static function run($r)

@@ -2,8 +2,41 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
-pts-core: Use kde-inhibit when possible for disabling power management / screensaver
+pts-core: Remaining PHP 8.1 warnings/fixes addressed
+pts-core: Various macOS 12 warning fixes
+pts-core: Allow using OUTPUT_DIR / OUTPUT_FILE environment variables to control result-file-to* sub-commands
+pts-core: Improved JSON output generation, add option to the result viewer
+pts-core: Add result-file-to-html sub-command and simple inline HTML result output option from result viewer
+pts-core: Allow sorting results by test date/time
+pts-core: Add TEST_EXECUTION_SORT environment variable to allow sorting test run order in more ways
+pts-core: Consolidate/centralize handling of environment variable options to pts_env
+pts-core: Add remove-incomplete-results-from-result-file helper command to remove results with incomplete or missing data
+pts-core: Add REMOVE_TESTS_ON_COMPLETION environment variable as another way to have tests auto-uninstall/remove after running
+pts-core: Improved test installation / test run-time error reporting and detection
+pts-core: Allow recording/archiving install and runtime errors within installation metadata
+pts-core: Add list-failed-installs sub-command for showing tests that failed to install
+pts-core: Add list-test-errors sub-command for showing test run-time errors
 phodevi: Add detection for Arm Cortex-A710 and Neoverse-N2 cores
+phodevi: Add detection for AMD Zen 4 cores
+phodevi: Add detection for Intel Raptor Lake
+phodevi: Allow better detecting model number on Windows/Linux for Dell and Apple laptops
+phodevi: CPU temperature monitoring on Windows
+phodevi: Show "energy_performance_preference" CPU frequency scaling value where relevant
+phodevi: Linux CPUFreq EPP reporting support
+cleanup: Add module that can auto uninstall tests not run in a given amount of time
+phodevi: Add PHODEVI_SANITIZE environment variable for those wanting to strip out certain hardware/software strings from system information
+phoromatic: Allow relevant PTS environment variables to be exposed for setting by Phoromatic Server for benchmarks/schedules as "advanced options" area
+phoromatic: Use the unified result viewer code for presenting result graphs and other result page data
+phoromatic: Make use of shared/common result viewer code to allow adding/editing annotations, editing result file title/description, and deleting individual results from within the result viewer
+phoromatic: Efficiency improvement for when viewing result with just one result file
+phoromatic: Allow Phoromatic client to connect to Phoromatic HTTPS servers
+phoromatic: Allow optionally uploading test install/run logs to the Phoromatic Server
+phoromatic: Alow "Run A Benchmark" area to execute conventional PTS/system test suites
+phoromatic: Allow test schedules page to add suites to a schedule rather than only adding just test profiles
+phoromatic: Add option to settings page to always un-install/remove tests after execution for all Phoromatic testing
+phoromatic: Allow environment variables to also be set on a global basis from the Phoromatic Server Settings page
+phoromatic: Allow test installation metadata to be submitted to Phoromatic Server so from systems area can show currently installed tests and any errors
+phoromatic: Opt-in (settings page) support for streaming in-progress benchmark results to the Phoromatic Server between test runs so results can be viewed from the server as they are completed
 
 Phoronix Test Suite 10.6.1
 10 October 2021

@@ -40,7 +40,7 @@
  */
 class check_tests implements pts_option_interface
 {
-	const doc_section = 'Information';
+	const doc_section = 'Debugging';
 	const doc_description = 'This option will perform a check on one or more test profiles to determine if there have been any vendor changes to the filename, filesize, url location, md5 and sha256 checksums.';
 
 	// Delimiter in the TESTED_FILES

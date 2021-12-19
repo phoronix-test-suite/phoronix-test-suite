@@ -22,7 +22,7 @@
 
 class result_file_to_html implements pts_option_interface
 {
-	const doc_section = 'Result Management';
+	const doc_section = 'Result Export';
 	const doc_description = 'This option will read a saved test results file and output the system hardware and software information along with the results to pure HTML file. No external files are required for CSS/JavaScript or other assets. The graphs are rendered as inline SVG. This is a pure HTML-only representation of the results for emailing or other easy analysis outside of the Phoronix Test Suite. The outputted file appears in the user home directory or can otherwise be controlled via the OUTPUT_DIR and OUTPUT_FILE environment variables.';
 
 	public static function argument_checks()

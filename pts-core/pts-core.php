@@ -302,9 +302,9 @@ function pts_version_codenames()
 		);
 }
 
-pts_define('PTS_VERSION', '10.8.0m1');
-pts_define('PTS_CORE_VERSION', 10700);
-pts_define('PTS_RELEASE_DATE', '20211010');
+pts_define('PTS_VERSION', '10.8.0m2');
+pts_define('PTS_CORE_VERSION', 10710);
+pts_define('PTS_RELEASE_DATE', '20211219');
 pts_define('PTS_CODENAME', 'Tjeldsund');
 
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));

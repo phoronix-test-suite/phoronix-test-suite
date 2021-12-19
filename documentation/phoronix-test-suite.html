@@ -218,9 +218,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <hr style="height: 50px; border: 0;"><a name="UserOptions"></a><h1>User Options</h1>
 <p>The following options are currently supported by the Phoronix Test Suite client. A list of available options can also be found by running <em>phoronix-test-suite help.</em></p><hr>
 <h1>System</h1>
-<h3>diagnostics<em>  </em>
-</h3>
-<p>This option will print information that is useful to developers when debugging problems with the Phoronix Test Suite and/or test profiles and test suites.</p>
 <h3>interactive<em>  </em>
 </h3>
 <p>A simple text-driven interactive interface to the Phoronix Test Suite.</p>
@@ -267,7 +264,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <p>This option will provide estimates for test run-time / length.</p>
 <h3>finish-run<em>  [Test Result]</em>
 </h3>
-<p>This option can be used if a test run had not properly finished running all tests within a saved results file. Using this option when specifying a saved results file where all tests had not completed will attempt to finish testing on the remaining tests where there are missing results.</p>
+<p>This option can be used if a test run had not properly finished running all tests within a saved results file. Using this option when specifying a saved results file where all tests had not completed will attempt to finish / resume testing on the remaining tests where there are missing results to be completed.</p>
 <h3>run<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
 </h3>
 <p>This option will run the selected test(s).</p>
@@ -361,9 +358,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 </h3>
 <p>This option can be used for uploading a test suite to your account on OpenBenchmarking.org. By uploading your test suite to OpenBenchmarking.org, others are then able to browse and access this test suite for easy distribution.</p>
 <h1>Information</h1>
-<h3>check-tests<em>  [Test]</em>
-</h3>
-<p>This option will perform a check on one or more test profiles to determine if there have been any vendor changes to the filename, filesize, url location, md5 and sha256 checksums.</p>
 <h3>info<em>  [Test | Suite | OpenBenchmarking ID | Test Result]</em>
 </h3>
 <p>This option will show details about the supplied test, suite, virtual suite, or result file.</p>
@@ -406,12 +400,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <h3>list-saved-results<em>  </em>
 </h3>
 <p>This option will list all of the saved test results found on the system.</p>
+<h3>list-test-status<em>  </em>
+</h3>
+<p>This sub-command provides a verbose look at all tests installed/uninstalled on the system and whether any errors were encountered at install-time or run-time and other test installation/runtime metrics for complementing other Phoronix Test Suite sub-command outputs.</p>
 <h3>list-test-usage<em>  </em>
 </h3>
 <p>This option will list various details about installed tests and their usage.</p>
-<h3>list-unsupported-tests<em>  </em>
-</h3>
-<p>This option will list all available test profiles that are available from the enabled OpenBenchmarking.org repositories but are NOT SUPPORTED on the given hardware/software platform. This is mainly a debugging option for those looking for test profiles to potentially port to new platforms, etc.</p>
 <h3>search<em>  </em>
 </h3>
 <p>This option provides command-line searching abilities for test profiles / test suites / test results. The search query can be passed as a parameter otherwise the user is prompted to input their search query..</p>
@@ -446,9 +440,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <h3>rebuild-test-suite<em>  [Suite]</em>
 </h3>
 <p>This option will regenerate the local test suite XML file against the OpenBenchmarking.org specification. This can be used to clean up any existing XML syntax / styling issues, etc.</p>
-<h3>result-file-to-suite<em>  [Test Result]</em>
-</h3>
-<p>This option will guide the user through the process of generating their own test suite, which they can then run, that is based upon an existing test results file.</p>
 <h3>validate-result-file<em>  </em>
 </h3>
 <p>This option can be used for validating a Phoronix Test Suite result file as being compliant against the OpenBenchmarking.org specification.</p>
@@ -459,9 +450,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 </h3>
 <p>This option can be used for validating a Phoronix Test Suite test suite as being compliant against the OpenBenchmarking.org specification.</p>
 <h1>Result Management</h1>
-<h3>analyze-run-times<em>  [Test Result]</em>
-</h3>
-<p>This option will read a saved test results file and print the statistics about how long the testing took to complete.</p>
 <h3>auto-sort-result-file<em>  [Test Result]</em>
 </h3>
 <p>This option is used if you wish to automatically attempt to sort the results by their result identifier string. Alternatively, if using the environment variable "SORT_BY" other sort modes can be used, such as SORT_BY=date / SORT_BY=date-desc for sorting by the test run-time/date.</p>
@@ -483,6 +471,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <h3>merge-results<em>  [Test Result]  ...</em>
 </h3>
 <p>This option will manually merge multiple sets of test results generated by the Phoronix Test Suite.</p>
+<h3>remove-incomplete-results-from-result-file<em>  [Test Result]</em>
+</h3>
+<p>This option is used if there are test results (benchmarks) to be dropped from a given result file for having incomplete data, either a test run did not attempt to run that benchmark or failed to properly run. The user must specify a saved results file and the command will then attempt to find any results with incomplete/missing data and prompt the user with confirmation to remove them.</p>
 <h3>remove-result<em>  [Test Result]</em>
 </h3>
 <p>This option will permanently remove the saved file set that is set as the first argument.</p>
@@ -504,30 +495,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <h3>reorder-result-file<em>  [Test Result]</em>
 </h3>
 <p>This option is used if you wish to manually change the order in which test results are shown in the Phoronix Test Suite Results Viewer and the contained graphs. The user must specify a saved results file and then they will be prompted to select the results identifiers one at a time in the order they would like them to be displayed from left to right.</p>
-<h3>result-file-raw-to-csv<em>  [Test Result]</em>
-</h3>
-<p>This option will read a saved test results file and output the raw result file run data to a CSV file. This raw (individual) result file output is intended for data analytic purposes where the result-file-to-csv is more end-user-ready.</p>
-<h3>result-file-to-csv<em>  [Test Result]</em>
-</h3>
-<p>This option will read a saved test results file and output the system hardware and software information along with the results to a CSV output. The CSV (Comma Separated Values) output can then be loaded into a spreadsheet for easy viewing. The outputted file appears in the user home directory or can otherwise be controlled via the OUTPUT_DIR and OUTPUT_FILE environment variables.</p>
-<h3>result-file-to-html<em>  [Test Result]</em>
-</h3>
-<p>This option will read a saved test results file and output the system hardware and software information along with the results to pure HTML file. No external files are required for CSS/JavaScript or other assets. The graphs are rendered as inline SVG. This is a pure HTML-only representation of the results for emailing or other easy analysis outside of the Phoronix Test Suite. The outputted file appears in the user home directory or can otherwise be controlled via the OUTPUT_DIR and OUTPUT_FILE environment variables.</p>
-<h3>result-file-to-json<em>  [Test Result]</em>
-</h3>
-<p>This option will read a saved test results file and output the basic result information to JSON (JavaScript Object Notation). The outputted file appears in the user home directory or can otherwise be controlled via the OUTPUT_DIR and OUTPUT_FILE environment variables.</p>
-<h3>result-file-to-pdf<em>  [Test Result]</em>
-</h3>
-<p>This option will read a saved test results file and output the system hardware and software information along with the results to a PDF file. The outputted file appears in the user home directory or can otherwise be controlled via the OUTPUT_DIR and OUTPUT_FILE environment variables.</p>
-<h3>result-file-to-text<em>  [Test Result]</em>
-</h3>
-<p>This option will read a saved test results file and output the system hardware and software information to the terminal. The test results are also outputted.</p>
 <h3>show-result<em>  [Test Result]</em>
 </h3>
 <p>Open up the test results in the Phoronix Test Suite Result Viewer or on OpenBenchmarking.org.</p>
-<h3>workload-topology<em>  [Test Result]</em>
-</h3>
-<p>This option will read a saved test results file and print the test profiles contained within and their arrangement within different test suites for getting an idea as to the workload topology/make-up / logical groupings of the benchmarks being run.</p>
 <h1>Other</h1>
 <h3>commands<em>  </em>
 </h3>
@@ -547,6 +517,25 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <h3>version<em>  </em>
 </h3>
 <p>This option will display the Phoronix Test Suite client version.</p>
+<h1>Result Analysis</h1>
+<h3>analyze-run-times<em>  [Test Result]</em>
+</h3>
+<p>This option will read a saved test results file and print the statistics about how long the testing took to complete.</p>
+<h3>executive-summary<em>  [Test Result]</em>
+</h3>
+<p>This option will attempt to auto-generate a textual executive summary for a result file to highlight prominent results / averages.</p>
+<h3>result-file-confidence<em>  [Test Result]</em>
+</h3>
+<p>This option will read a saved test results file and display various statistics on the confidence of the results with the standard deviation, three-sigma values, and other metrics while color-coding "passing" results in green.</p>
+<h3>result-file-stats<em>  [Test Result]</em>
+</h3>
+<p>This option is used if you wish to analyze a result file by seeing various statistics on the result data for result files containing at least two sets of data.</p>
+<h3>wins-and-losses<em>  [Test Result]</em>
+</h3>
+<p>This option is used if you wish to analyze a result file to see which runs produced the most wins/losses of those result identifiers in the saved file.</p>
+<h3>workload-topology<em>  [Test Result]</em>
+</h3>
+<p>This option will read a saved test results file and print the test profiles contained within and their arrangement within different test suites for getting an idea as to the workload topology/make-up / logical groupings of the benchmarks being run.</p>
 <h1>Modules</h1>
 <h3>auto-load-module<em>  </em>
 </h3>
@@ -566,6 +555,22 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <h3>unload-module<em>  </em>
 </h3>
 <p>This option can be used for easily removing a module from the AutoLoadModules list in the Phoronix Test Suite user configuration file. That list controls what modules are automatically loaded on start-up of the Phoronix Test Suite.</p>
+<h1>Debugging</h1>
+<h3>check-tests<em>  [Test]</em>
+</h3>
+<p>This option will perform a check on one or more test profiles to determine if there have been any vendor changes to the filename, filesize, url location, md5 and sha256 checksums.</p>
+<h3>diagnostics<em>  </em>
+</h3>
+<p>This option will print information that is useful to developers when debugging problems with the Phoronix Test Suite and/or test profiles and test suites.</p>
+<h3>list-failed-installs<em>  </em>
+</h3>
+<p>This option will list all test profiles that were attempted to be installed on the local system but failed to be installed. Where applicable, the possible error(s) from the test installation are also reported to assist in debugging.</p>
+<h3>list-test-errors<em>  </em>
+</h3>
+<p>This sub-command is complementary to list-failed-installs. Rather than listing test installation errors, list-test-errors is used for displaying past test run-time errors. This option will list all test profiles that produced an error previously when running the test profile / benchmark. If a test profile later successfully ran the test with any given option(s) without errors, the error is then removed from the archive. This option is intended to be helpful in debugging test profile issues later on for having a persistent collection of run-time errors.</p>
+<h3>list-unsupported-tests<em>  </em>
+</h3>
+<p>This option will list all available test profiles that are available from the enabled OpenBenchmarking.org repositories but are NOT SUPPORTED on the given hardware/software platform. This is mainly a debugging option for those looking for test profiles to potentially port to new platforms, etc.</p>
 <h1>User Configuration</h1>
 <h3>enterprise-setup<em>  </em>
 </h3>
@@ -585,19 +590,28 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <h3>variables<em>  </em>
 </h3>
 <p>This option will print all of the official environment variables supported by the Phoronix Test Suite for user configuration purposes. These environment variables are also listed as part of the official Phoronix Test Suite documentation while this command will also show the current value of the variables if currently set.</p>
-<h1>Result Analysis</h1>
-<h3>executive-summary<em>  [Test Result]</em>
+<h1>Result Export</h1>
+<h3>result-file-raw-to-csv<em>  [Test Result]</em>
 </h3>
-<p>This option will attempt to auto-generate a textual executive summary for a result file to highlight prominent results / averages.</p>
-<h3>result-file-confidence<em>  [Test Result]</em>
+<p>This option will read a saved test results file and output the raw result file run data to a CSV file. This raw (individual) result file output is intended for data analytic purposes where the result-file-to-csv is more end-user-ready.</p>
+<h3>result-file-to-csv<em>  [Test Result]</em>
 </h3>
-<p>This option will read a saved test results file and display various statistics on the confidence of the results with the standard deviation, three-sigma values, and other metrics while color-coding "passing" results in green.</p>
-<h3>result-file-stats<em>  [Test Result]</em>
+<p>This option will read a saved test results file and output the system hardware and software information along with the results to a CSV output. The CSV (Comma Separated Values) output can then be loaded into a spreadsheet for easy viewing. The outputted file appears in the user home directory or can otherwise be controlled via the OUTPUT_DIR and OUTPUT_FILE environment variables.</p>
+<h3>result-file-to-html<em>  [Test Result]</em>
 </h3>
-<p>This option is used if you wish to analyze a result file by seeing various statistics on the result data for result files containing at least two sets of data.</p>
-<h3>wins-and-losses<em>  [Test Result]</em>
+<p>This option will read a saved test results file and output the system hardware and software information along with the results to pure HTML file. No external files are required for CSS/JavaScript or other assets. The graphs are rendered as inline SVG. This is a pure HTML-only representation of the results for emailing or other easy analysis outside of the Phoronix Test Suite. The outputted file appears in the user home directory or can otherwise be controlled via the OUTPUT_DIR and OUTPUT_FILE environment variables.</p>
+<h3>result-file-to-json<em>  [Test Result]</em>
 </h3>
-<p>This option is used if you wish to analyze a result file to see which runs produced the most wins/losses of those result identifiers in the saved file.</p>
+<p>This option will read a saved test results file and output the basic result information to JSON (JavaScript Object Notation). The outputted file appears in the user home directory or can otherwise be controlled via the OUTPUT_DIR and OUTPUT_FILE environment variables.</p>
+<h3>result-file-to-pdf<em>  [Test Result]</em>
+</h3>
+<p>This option will read a saved test results file and output the system hardware and software information along with the results to a PDF file. The outputted file appears in the user home directory or can otherwise be controlled via the OUTPUT_DIR and OUTPUT_FILE environment variables.</p>
+<h3>result-file-to-suite<em>  [Test Result]</em>
+</h3>
+<p>This option will guide the user through the process of generating their own test suite, which they can then run, that is based upon an existing test results file.</p>
+<h3>result-file-to-text<em>  [Test Result]</em>
+</h3>
+<p>This option will read a saved test results file and output the system hardware and software information to the terminal. The test results are also outputted.</p>
 <h1>Phoromatic</h1>
 <h3>start-phoromatic-server<em>  </em>
 </h3>
@@ -612,28 +626,29 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <p>This is a module for creating backups of the Phoronix Test Suite / Phoromatic and allows for restoring of created backups. The backup will be in ZIP or TAR format. If only a path is specified, the file-name will be auto-generated with a current time-stamp.</p>
 <p>phoronix-test-suite backup.create</p>
 <p>phoronix-test-suite backup.restore</p>
+<h2>System Maintenance / Cleanup</h2>
+<p>This module can be used for system maintenance cleanup tasks around the Phoronix Test Suite. Currently implemented is support for automatically un-installing tests that have not been run in a period of time. When the module is loaded via the REMOVE_TESTS_OLDER_THAN environment variable, it will be automatically invoked at the end of running any benchmarks. Or this module can be manually invoked with the command: phoronix-test-suite cleanup.tests.</p>
+<p>phoronix-test-suite cleanup.tests</p>
+<p>This module utilizes the following environment variables: REMOVE_TESTS_OLDER_THAN.</p>
 <h2>Dummy Module</h2>
 <p>This is a simple module intended for developers to just demonstrate some of the module functions.</p>
 <p>phoronix-test-suite dummy_module.dummy-command</p>
 <p>This is a simple module intended for developers to just demonstrate some of the module functions.</p>
 <h2>Flush Caches</h2>
 <p>Loading this module will ensure caches (page cache, swap, etc) automatically get flushed prior to running any test.</p>
-<p>This module utilizes the following environmental variables: PTS_FLUSH_CACHES.</p>
-<h2>Graphics Override</h2>
-<p>This module allows you to override some graphics rendering settings for the ATI and NVIDIA drivers while running the Phoronix Test Suite.</p>
-<p>This module utilizes the following environmental variables: FORCE_AA, FORCE_AF.</p>
+<p>This module utilizes the following environment variables: PTS_FLUSH_CACHES.</p>
 <h2>Result Exporter To HTML</h2>
 <p>This module allows basic exporting of results to HTML for saving either to a file locally (specified using the EXPORT_RESULTS_HTML_FILE_TO environment variable) or to a mail account (specified using the EXPORT_RESULTS_HTML_EMAIL_TO environment variable). EXPORT_RESULTS_HTML_EMAIL_TO supports multiple email addresses delimited by a comma.</p>
-<p>This module utilizes the following environmental variables: EXPORT_RESULTS_HTML_EMAIL_TO, EXPORT_RESULTS_HTML_FILE_TO.</p>
+<p>This module utilizes the following environment variables: EXPORT_RESULTS_HTML_EMAIL_TO, EXPORT_RESULTS_HTML_FILE_TO.</p>
 <h2>Linux Perf Framework Reporter</h2>
 <p>Setting LINUX_PERF=1 will auto-load and enable this Phoronix Test Suite module. The module also depends upon running a modern Linux kernel (supporting perf) and that the perf binary is available via standard system paths. Depending upon system permissions you may be limited to using perf as root or adjusting the /proc/sys/kernel/perf_event_paranoid setting.</p>
-<p>This module utilizes the following environmental variables: LINUX_PERF.</p>
+<p>This module utilizes the following environment variables: LINUX_PERF.</p>
 <h2>Dynamic Result Viewer</h2>
 <p>This module pre-loads the HTTP dynamic result viewer for Phoronix Test Suite data.</p>
 <p>phoronix-test-suite load_dynamic_result_viewer.start</p>
 <h2>Log Exporter</h2>
 <p>This module allows for easily exporting test run logs and system logs to external locations via specifying the directory paths via the COPY_TEST_RUN_LOGS_TO and COPY_SYSTEM_LOGS_TO environment variables.</p>
-<p>This module utilizes the following environmental variables: COPY_TEST_RUN_LOGS_TO, COPY_SYSTEM_LOGS_TO.</p>
+<p>This module utilizes the following environment variables: COPY_TEST_RUN_LOGS_TO, COPY_SYSTEM_LOGS_TO.</p>
 <h2>MATISK</h2>
 <p>My Automated Test Infrastructure Setup Kit</p>
 <p>phoronix-test-suite matisk.run</p>
@@ -644,11 +659,11 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <h2>Performance Per Dollar/Cost Calculator</h2>
 <p>Setting the COST_PERF_PER_DOLLAR= environment variable to whatever value of the system cost/component you are running a comparison on will yield extra graphs that calculate the performance-per-dollar based on the test being run. The COST_PERF_PER_DOLLAR environment variable is applied just to the current test run identifier. Set the COST_PERF_PER_UNIT= environment variable if wishing to use a metric besides dollar/cost. The COST_PERF_PER_HOUR value can be used rather than COST_PERF_PER_DOLLAR if wishing to calculate the e.g. cloud time or other compute time based on an hourly basis.</p>
 <p>phoronix-test-suite perf_per_dollar.add</p>
-<p>This module utilizes the following environmental variables: COST_PERF_PER_DOLLAR, COST_PERF_PER_UNIT, COST_PERF_PER_HOUR.</p>
+<p>This module utilizes the following environment variables: COST_PERF_PER_DOLLAR, COST_PERF_PER_UNIT, COST_PERF_PER_HOUR.</p>
 <h2>Performance Tip Prompts</h2>
 <p>This module alerts the user if the system configuration may not be the right one for achieving the best performance with the target benchmark(s). This initial version of the module actually cares only about the BFQ I/O scheduler and powersave governor checks.</p>
 <p>phoronix-test-suite perf_tips.show</p>
-<p>This module utilizes the following environmental variables: SUPPRESS_PERF_TIPS.</p>
+<p>This module utilizes the following environment variables: SUPPRESS_PERF_TIPS.</p>
 <p>This module alerts the user if the system configuration may not be the right one for achieving the best performance with the target benchmark(s). This initial version of the module actually cares only about the BFQ I/O scheduler: it gives a warning if BFQ is being used with an incorrect configuration in a disk benchmark, and suggests the right configuration to use. For the moment it only works for existing, throughput-based tests. It will need to be extended for responsiveness and soft real-time-latency tests.</p>
 <h2>Benchmarking Compiler PGO Impact</h2>
 <p>This module makes it easy to test a compiler PGO (Profile Guided Optimization) performance impact by running a test without PGO optimizations, capturing the PGO profile, rebuilding the tests with the PGO profile generated, and then repeat the benchmarks.</p>
@@ -665,10 +680,10 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <p>The Phoromatic module contains the client support for interacting with Phoromatic and Phoromatic Tracker services.</p>
 <h2>Pushover.net</h2>
 <p>Submit notifications to your iOS/Android mobile devices of test results in real-time as push notifications, etc. Using the Pushover.net API.</p>
-<p>This module utilizes the following environmental variables: PUSHOVER_NET_USER.</p>
+<p>This module utilizes the following environment variables: PUSHOVER_NET_USER.</p>
 <h2>Report Test Time Graphs</h2>
 <p>Setting the RUN_TIMES_ARE_A_BENCHMARK=1 environment variable will automatically create additional graphs for each test run plotting the run-time needed for each test being executed. Setting the INSTALL_TIMES_ARE_A_BENCHMARK=1 environment variable will automatically create additional graphs for each test run plotting the time required for the test installation. Setting the INSTALL_SIZES_ARE_A_BENCHMARK=1 environment variable will automatically create additional graphs for each test run plotting the size of the installed test directory.</p>
-<p>This module utilizes the following environmental variables: RUN_TIMES_ARE_A_BENCHMARK, INSTALL_TIMES_ARE_A_BENCHMARK, INSTALL_SIZES_ARE_A_BENCHMARK.</p>
+<p>This module utilizes the following environment variables: RUN_TIMES_ARE_A_BENCHMARK, INSTALL_TIMES_ARE_A_BENCHMARK, INSTALL_SIZES_ARE_A_BENCHMARK.</p>
 <h2>Result Notifier</h2>
 <p>A notification module.</p>
 <h2>Custom Result Export Methods</h2>
@@ -676,7 +691,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <p>phoronix-test-suite results_custom_export.nf</p>
 <h2>System Monitor</h2>
 <p>This module contains sensor monitoring support.</p>
-<p>This module utilizes the following environmental variables: MONITOR, PERFORMANCE_PER_WATT, PERFORMANCE_PER_SENSOR, MONITOR_INTERVAL, MONITOR_PER_RUN.</p>
+<p>This module utilizes the following environment variables: MONITOR, PERFORMANCE_PER_WATT, PERFORMANCE_PER_SENSOR, MONITOR_INTERVAL, MONITOR_PER_RUN.</p>
 <p>Monitoring these sensors is as easy as running your normal Phoronix Test Suite commands but at the beginning of the command add: MONITOR=&lt;selected sensors&gt;.  For example, this will monitor the CPU temperature and voltage during tests: 
 
     MONITOR=cpu.temp,cpu.voltage phoronix-test-suite benchmark universe
@@ -757,24 +772,24 @@ Supported Options:
 NOTE: Use the "system-sensors" command to see what sensors are available for monitoring on the system.</p>
 <h2>Test Timeout</h2>
 <p>This module allows killing a test if it exceeds a defined threshold, such as if the test is hung, etc. TEST_TIMEOUT_AFTER= environment variable can be used for controlling the behavior. When this variable is set, the value will can be set to "auto" or a positive integer. The value indicates the number of minutes until a test run should be aborted, such as for a safeguard against hung/deadlocked processes or other issues. Setting this to a high number as a backup would be recommended for fending off possible hangs / stalls in the testing process if the test does not quit on its own for whatever reason. If the value is "auto", it will quit if the time of a test run exceeds 3x the average time it normally takes the particular test to complete its run.</p>
-<p>This module utilizes the following environmental variables: TEST_TIMEOUT_AFTER.</p>
+<p>This module utilizes the following environment variables: TEST_TIMEOUT_AFTER.</p>
 <h2>Timed Screenshot</h2>
 <p>This is a module that will take a screenshot of the system at a pre-defined interval. ImageMagick must be installed onto the system prior to using this module.</p>
-<p>This module utilizes the following environmental variables: SCREENSHOT_INTERVAL.</p>
+<p>This module utilizes the following environment variables: SCREENSHOT_INTERVAL.</p>
 <h2>Toggle Screensaver</h2>
 <p>This module toggles the system's screensaver while the Phoronix Test Suite is running. At this time, the GNOME and KDE screensavers are supported.</p>
-<p>This module utilizes the following environmental variables: HALT_SCREENSAVER.</p>
+<p>This module utilizes the following environment variables: HALT_SCREENSAVER.</p>
 <h2>Linux Turbostat Dumper</h2>
 <p>Setting TURBOSTAT_LOG=_DIR_ will auto-load and enable this Phoronix Test Suite module. The module will -- if turbostat is installed on the system and the user is root -- allow dumping of the TurboStat data to the specified directly on a per-test basis. This allows easily collecting of turbostat logs for each test being run. If the TURBOSTAT_LOG= value does not point to a directory, the TurboStat output will be appended to the test run log files.</p>
-<p>This module utilizes the following environmental variables: TURBOSTAT_LOG.</p>
+<p>This module utilizes the following environment variables: TURBOSTAT_LOG.</p>
 <h2>Update Checker</h2>
 <p>This module checks to see if the Phoronix Test Suite -- and its tests and suites -- are up to date plus also handles message of the day information.</p>
 <h2>Utilize Wine On Linux Benchmarking</h2>
 <p>This module when activated via the USE_WINE environment variable on Linux systems will override the test profile OS target to Windows and attempt to run the (Windows) tests under Wine, if installed on the system. USE_WINE can be either set to the name of the desired wine command or the absolute path to the wine binary you wish to use for benchmarking.</p>
-<p>This module utilizes the following environmental variables: USE_WINE.</p>
+<p>This module utilizes the following environment variables: USE_WINE.</p>
 <h2>System Event Watchdog</h2>
 <p>This module has support for stopping/interrupting tests if various system issues occur, like a temperature sensor exceeds a defined threshold.</p>
-<p>This module utilizes the following environmental variables: WATCHDOG_SENSOR, WATCHDOG_SENSOR_THRESHOLD, WATCHDOG_MAXIMUM_WAIT.</p>
+<p>This module utilizes the following environment variables: WATCHDOG_SENSOR, WATCHDOG_SENSOR_THRESHOLD, WATCHDOG_MAXIMUM_WAIT.</p>
 <hr style="height: 50px; border: 0;"><a name="InstallationInstructions"></a><h1>Installation Instructions</h1>
 <h1>Setup Overview</h1>
 <p>The Phoronix Test Suite supports Linux, Apple macOS, Microsoft Windows, Solaris, Hurd, BSD, and other operating system environments. The only Linux distribution-specific code deals with the external dependencies support feature that are set by individual test profiles. If you are not running one of the supported Linux distributions, Solaris, BSD, or macOS, you may need to install a package manually (as instructed by the Phoronix Test Suite) in order for a test to run. An example of an external dependency would be GCC and the OpenGL Utility Toolkit being needed for test profiles that build an OpenGL benchmark from source-code.</p>
@@ -837,7 +852,7 @@ NOTE: Use the "system-sensors" command to see what sensors are available for mon
 <p>Besides <strong>phoronix-test-suite shell</strong> and <strong>phoronix-test-suite help</strong>, there is also <strong>phoronix-test-suite interactive</strong> for helping new users understand Phoronix Test Suite benchmarking. Long story short, it should be as easy as running <strong>phoronix-test-suite benchmark stockfish</strong> or <strong>phoronix-test-suite benchmark crafty</strong> as some examples for carrying out automated, cross-platform benchmarks in a side-by-side and fully-reproducible manner.</p>
 <hr style="height: 50px; border: 0;"><a name="ExternalDependencies"></a><h1>External Dependencies</h1>
 <p>The Phoronix Test Suite has a feature known as "External Dependencies" where the Phoronix Test Suite can attempt to automatically install some of the test-specific dependencies on supported distributions. If running on a distribution where there is currently no External Dependencies profile, the needed package name(s) are listed for manual installation.</p>
-<p>Below are a list of the operating systems that currently have external dependencies support within the Phoronix Test Suite for the automatic installation of needed test files.</p><hr><ul></ul><li>Alpine Linux</li><li>Amazon</li><li>Angstrom</li><li>Arch Linux</li><li>Clear Linux</li><li>ClearOS</li><li>ClearOS Core Server</li><li>Debian</li><li>DragonFlyBSD</li><li>Fedora</li><li>Gentoo</li><li>Linux Embedded Development Environment</li><li>Linux Mint</li><li>Mac OS X</li><li>MacPorts</li><li>Mageia</li><li>Mandriva</li><li>Microsoft Windows</li><li>MidnightBSD</li><li>NetBSD</li><li>OpenIndiana</li><li>OpenMandriva</li><li>OpenMandrivaLinux</li><li>OpenSolaris</li><li>OpenSuSE</li><li>Optware</li><li>Oracle Server</li><li>PCLinuxOS</li><li>Pardus Linux</li><li>Red Hat Enterprise</li><li>Red Hat Enterprise Server</li><li>SUSE</li><li>SUSE Linux</li><li>Scientific</li><li>ScientificSL</li><li>Solus</li><li>Solus Linux</li><li>Termux</li><li>Ubuntu</li><li>Void Linux</li><li>Zenwalk</li><li>macOS Brew</li>
+<p>Below are a list of the operating systems that currently have external dependencies support within the Phoronix Test Suite for the automatic installation of needed test files.</p><hr><ul></ul><li>Alpine Linux</li><li>Amazon</li><li>Angstrom</li><li>Arch Linux</li><li>Clear Linux</li><li>ClearOS</li><li>ClearOS Core Server</li><li>Debian</li><li>DragonFlyBSD</li><li>Fedora</li><li>Gentoo</li><li>Linux Embedded Development Environment</li><li>Linux Mint</li><li>Mac OS X</li><li>MacPorts</li><li>Mageia</li><li>Mandriva</li><li>Microsoft Windows</li><li>MidnightBSD</li><li>NetBSD</li><li>OpenBSD</li><li>OpenIndiana</li><li>OpenMandriva</li><li>OpenMandrivaLinux</li><li>OpenSolaris</li><li>OpenSuSE</li><li>Optware</li><li>Oracle Server</li><li>PCLinuxOS</li><li>Pardus Linux</li><li>Red Hat Enterprise</li><li>Red Hat Enterprise Server</li><li>SUSE</li><li>SUSE Linux</li><li>Scientific</li><li>ScientificSL</li><li>Solus</li><li>Solus Linux</li><li>Termux</li><li>Ubuntu</li><li>Void Linux</li><li>Zenwalk</li><li>macOS Brew</li>
 <hr style="height: 50px; border: 0;"><a name="Configuration"></a><h1>Configuration</h1>
 <h1>User Files &amp; Folders</h1>
 <p>These files/folders are the default locations when running as a non-root Phoronix Test Suite user. When running as root, the paths may appear in standard system paths like <em>/etc/phoronix-test-suite.xml</em>.</p>
@@ -848,7 +863,7 @@ NOTE: Use the "system-sensors" command to see what sensors are available for mon
 <p><strong>~/.phoronix-test-suite/download-cache/</strong></p>
 <p>This directory contains test packages that have been downloaded for test profiles. For more information on the download cache.</p>
 <p><strong>~/.phoronix-test-suite/installed-tests/</strong></p>
-<p>This directory is where tests are installed by default. Each test has its own directory within a sub-directory of <em>installed-tests/</em> based upon its OpenBenchmarking.org repository. In the test's folder is a <em>pts-install.xml</em> file used for managing the installation.</p>
+<p>This directory is where tests are installed by default. Each test has its own directory within a sub-directory of <em>installed-tests/</em> based upon its OpenBenchmarking.org repository. In the test's folder is a <em>pts-install.json</em> file used for managing the installation.</p>
 <p><strong>~/.phoronix-test-suite/test-results/</strong></p>
 <p>This directory is where tests results are saved by default. Each saved file has its own directory. In the saved directory is then a <em>composite.xml</em> file containing the useful results while in the <em>test-X.xml</em> files are back-ups of the results.</p>
 <p><strong>~/.phoronix-test-suite/modules-data/</strong></p>
@@ -1092,6 +1107,10 @@ The variable is relevant for: result output generation.
 <p>The value can be of type: string.
 The variable is relevant for: result output generation.
 </p>
+<h2>PHODEVI_SANITIZE</h2>
+<p><em>This option can be used for stripping out part of a string on Phodevi (Phoronix Device Interface) hardware/software properties. Namely around the reported hardware/software information in result files if wanting any values / portions of strings stripped out from that information, such as for confidential hardware strings or other privacy concerns, PHODEVI_SANITIZE can be set. The value will be removed from read Phodevi hardware/software properties if set. Multiple strings to search for can be set by delimiting with a comma. If wanting to limit the sanitization to a particular property, the property value can be specified such as [property]=[value] to sanitisze like a value of "motherboard=ABCVENDOR" or CPU=ENGINEERING-SAMPLE to delete those strings rather than simply the string to remove that will look for matches in any property."</em></p>
+<p>The value can be of type: string.
+</p>
 <h2>PRESET_OPTIONS</h2>
 <p><em>PRESET_OPTIONS can be used for seeding the values of test profile run options from the environment (though the preferred approach for pre-configuring tests in an automated manner would be by constructing your own local test suite).  For setting any test option(s) from an environment variable rather than being prompted for the options when running a test. Example: "PRESET_OPTIONS='stream.run-type=Add' phoronix-test-suite benchmark stream".</em></p>
 <p>The value can be of type: string.
@@ -1144,6 +1163,17 @@ The variable is relevant for: modules.
 <p><em>This option can be used for overriding where tests are installed to on the system. An absolute writable directory path can be the value if wanting to override the default (or user configuration file specified) test installation directory path.</em></p>
 <p>The value can be of type: string.
 The variable is relevant for: test installation, test execution / benchmarking, stress-run mode.
+</p>
+<h2>REMOVE_TESTS_OLDER_THAN</h2>
+<p><em>This option with the cleanup module can be used for automatically un-installing/removing installed tests if they have not been run in a period of time. The value for REMOVE_TESTS_OLDER_THAN is the number of days the test can be installed without running until this module will clean-up/remove older tests.</em></p>
+<p>The value can be of type: positive integer.
+The variable is relevant for: test execution / benchmarking.
+The variable depends upon functionality provided by the Phoronix Test Suite module: cleanup.
+</p>
+<h2>REMOVE_TESTS_ON_COMPLETION</h2>
+<p><em>When this option is set to true, installed test profiles will be automatically removed/uninstalled when they are no longer in the current test execution queue. This is used for saving disk space / resources by automatically removing installed tests after they have been executed. For more persistent behavior is the RemoveTestInstallOnCompletion option within the Phoronix Test Suite user configuration file.</em></p>
+<p>The value can be of type: boolean (TRUE / FALSE).
+The variable is relevant for: test execution / benchmarking.
 </p>
 <h2>SKIP_EXTERNAL_DEPENDENCIES</h2>
 <p><em>Rather than NO_EXTERNAL_DEPENDENCIES to outright disable the Phoronix Test Suite external dependency handling, SKIP_EXTERNAL_DEPENDENCIES can be used with a value of a comma separated list of specific external dependencies to avoid. This is mostly useful for any external dependencies that may be out of date or fail to install on your platform.</em></p>

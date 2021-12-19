@@ -115,6 +115,10 @@ The variable is relevant for: result output generation.
 <p>The value can be of type: string.
 The variable is relevant for: result output generation.
 </p>
+<h2>PHODEVI_SANITIZE</h2>
+<p><em>This option can be used for stripping out part of a string on Phodevi (Phoronix Device Interface) hardware/software properties. Namely around the reported hardware/software information in result files if wanting any values / portions of strings stripped out from that information, such as for confidential hardware strings or other privacy concerns, PHODEVI_SANITIZE can be set. The value will be removed from read Phodevi hardware/software properties if set. Multiple strings to search for can be set by delimiting with a comma. If wanting to limit the sanitization to a particular property, the property value can be specified such as [property]=[value] to sanitisze like a value of "motherboard=ABCVENDOR" or CPU=ENGINEERING-SAMPLE to delete those strings rather than simply the string to remove that will look for matches in any property."</em></p>
+<p>The value can be of type: string.
+</p>
 <h2>PRESET_OPTIONS</h2>
 <p><em>PRESET_OPTIONS can be used for seeding the values of test profile run options from the environment (though the preferred approach for pre-configuring tests in an automated manner would be by constructing your own local test suite).  For setting any test option(s) from an environment variable rather than being prompted for the options when running a test. Example: "PRESET_OPTIONS='stream.run-type=Add' phoronix-test-suite benchmark stream".</em></p>
 <p>The value can be of type: string.
@@ -167,6 +171,17 @@ The variable is relevant for: modules.
 <p><em>This option can be used for overriding where tests are installed to on the system. An absolute writable directory path can be the value if wanting to override the default (or user configuration file specified) test installation directory path.</em></p>
 <p>The value can be of type: string.
 The variable is relevant for: test installation, test execution / benchmarking, stress-run mode.
+</p>
+<h2>REMOVE_TESTS_OLDER_THAN</h2>
+<p><em>This option with the cleanup module can be used for automatically un-installing/removing installed tests if they have not been run in a period of time. The value for REMOVE_TESTS_OLDER_THAN is the number of days the test can be installed without running until this module will clean-up/remove older tests.</em></p>
+<p>The value can be of type: positive integer.
+The variable is relevant for: test execution / benchmarking.
+The variable depends upon functionality provided by the Phoronix Test Suite module: cleanup.
+</p>
+<h2>REMOVE_TESTS_ON_COMPLETION</h2>
+<p><em>When this option is set to true, installed test profiles will be automatically removed/uninstalled when they are no longer in the current test execution queue. This is used for saving disk space / resources by automatically removing installed tests after they have been executed. For more persistent behavior is the RemoveTestInstallOnCompletion option within the Phoronix Test Suite user configuration file.</em></p>
+<p>The value can be of type: boolean (TRUE / FALSE).
+The variable is relevant for: test execution / benchmarking.
 </p>
 <h2>SKIP_EXTERNAL_DEPENDENCIES</h2>
 <p><em>Rather than NO_EXTERNAL_DEPENDENCIES to outright disable the Phoronix Test Suite external dependency handling, SKIP_EXTERNAL_DEPENDENCIES can be used with a value of a comma separated list of specific external dependencies to avoid. This is mostly useful for any external dependencies that may be out of date or fail to install on your platform.</em></p>

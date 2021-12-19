@@ -22,7 +22,7 @@
 
 class result_file_to_pdf implements pts_option_interface
 {
-	const doc_section = 'Result Management';
+	const doc_section = 'Result Export';
 	const doc_description = 'This option will read a saved test results file and output the system hardware and software information along with the results to a PDF file. The outputted file appears in the user home directory or can otherwise be controlled via the OUTPUT_DIR and OUTPUT_FILE environment variables.';
 
 	public static function argument_checks()
