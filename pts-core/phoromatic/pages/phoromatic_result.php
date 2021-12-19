@@ -249,6 +249,8 @@ class phoromatic_result implements pts_webui_interface
 			}
 
 			$embed = new pts_result_viewer_embed($result_file);
+			$embed->allow_modifying_results(!PHOROMATIC_USER_IS_VIEWER);
+			$embed->allow_deleting_results(!PHOROMATIC_USER_IS_VIEWER);
 			$embed->show_html_result_table(false);
 			$embed->show_test_metadata_helper(false);
 			$embed->include_page_print_only_helpers(false);

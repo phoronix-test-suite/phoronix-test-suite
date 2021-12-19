@@ -126,7 +126,7 @@ class pts_result_viewer_embed
 			$PAGE .= ' <input type="submit" id="save_result_file_meta_button" value="Save" onclick="javascript:save_result_file_meta(\'' . $this->result_public_id . '\'); return false;" style="display: none;">';
 			$PAGE .= ' <input type="submit" id="edit_result_file_meta_button" value="Edit" onclick="javascript:edit_result_file_meta(); return false;">';
 		}
-		if($this->can_delete_results)
+		if($this->can_delete_results && !defined('PHOROMATIC_SERVER'))
 		{
 			$PAGE .= ' <input type="submit" value="Delete Result File" onclick="javascript:delete_result_file(\'' . $this->result_public_id . '\'); return false;">';
 		}
