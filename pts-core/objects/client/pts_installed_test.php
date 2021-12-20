@@ -247,6 +247,11 @@ class pts_installed_test
 		}
 		else
 		{
+			if($this->runtime_errors == false)
+			{
+				$this->runtime_errors = array();
+			}
+
 			// Set error in test installation metadata
 			$this->runtime_errors[$ch] = array(
 				'description' => $test_result_obj->get_arguments_description(),

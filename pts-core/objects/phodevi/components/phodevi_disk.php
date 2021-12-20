@@ -310,8 +310,8 @@ class phodevi_disk extends phodevi_device_interface
  			$size = phodevi_windows_parser::get_wmi_object_multi('Win32_DiskDrive', 'Size');
 			for($i = 0; $i < count($models) && $i < count($size); $i++)
 			{
-				$s = $size[$i] / 1073741824;
-				$models[$i] = round($s) . 'GB ' . str_replace(array(' Device'), '', $models[$i]);
+				$s = is_numeric($size[$i]) ? round($size[$i] / 1073741824) . 'GB' : '';
+				$models[$i] = trim($s . ' ' . str_replace(array(' Device'), '', $models[$i]));
 			}
 			$disks = $models;
 		}

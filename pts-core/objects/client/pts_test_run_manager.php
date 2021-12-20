@@ -44,7 +44,6 @@ class pts_test_run_manager
 	protected $pre_run_message = null;
 	protected $allow_sharing_of_results = true;
 	protected $auto_upload_to_openbenchmarking = false;
-	protected $is_pcqs = false;
 	protected $openbenchmarking_results_data = false;
 
 	protected $do_dynamic_run_count = false;
@@ -90,10 +89,6 @@ class pts_test_run_manager
 	public function is_interactive_mode()
 	{
 		return $this->auto_mode == false && $this->batch_mode == false;
-	}
-	public function is_pcqs()
-	{
-		return $this->is_pcqs;
 	}
 	public function do_dynamic_run_count()
 	{
@@ -1218,10 +1213,6 @@ class pts_test_run_manager
 	{
 		return isset($this->openbenchmarking_results_data['url']) ? $this->openbenchmarking_results_data['url'] : false;
 	}
-	public function get_result_upload_data()
-	{
-		return $this->openbenchmarking_results_data;
-	}
 	public function set_batch_mode($custom_preset = false)
 	{
 		$this->batch_mode = array(
@@ -1646,12 +1637,6 @@ class pts_test_run_manager
 			{
 				$this->pre_run_message = $run_object->get_pre_run_message();
 				$this->post_run_message = $run_object->get_post_run_message();
-
-				if($run_object->get_run_mode() == 'PCQS')
-				{
-					$this->is_pcqs = true;
-				}
-
 				$tests_contained = $run_object->get_contained_test_result_objects();
 
 				if($this->prompt_to_test_subset() && !$this->auto_mode && !$this->batch_mode)

@@ -560,7 +560,6 @@ class pts_test_installer
 	{
 		if(pts_env::read('NO_COMPILER_MASK'))
 		{
-			// XXX: Using the compiler-mask causes a number of tests to fail to properly install due to compiler issues with at least PC-BSD 10.0
 			return false;
 		}
 
