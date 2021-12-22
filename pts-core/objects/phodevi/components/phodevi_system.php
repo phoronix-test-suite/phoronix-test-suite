@@ -1023,20 +1023,29 @@ class phodevi_system extends phodevi_device_interface
 			// CurrentBuild and CurrentVersion are available since at least NT 4.0
 			// CurrentVersion is frozen at 6.3 (same as Windows 8.1) in Windows 10 & 11
 			$current_build = trim(shell_exec('powershell "If (Get-ItemProperty -ErrorAction SilentlyContinue -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentBuild) { (Get-ItemProperty -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentBuild).CurrentBuild } Else { $null }"'));
+
+			// Windows 10 and later add CurrentMajorVersionNumber, CurrentMinorVersionNumber and UBR
+			$current_major_version_number = trim(shell_exec('powershell "If (Get-ItemProperty -ErrorAction SilentlyContinue -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentMajorVersionNumber) { (Get-ItemProperty -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentMajorVersionNumber).CurrentMajorVersionNumber } Else { $null }"'));
+
+			// Try using Windows 10+ values
+			if (is_numeric($current_major_version_number)) {
+				$current_minor_version_number = trim(shell_exec('powershell "If (Get-ItemProperty -ErrorAction SilentlyContinue -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentMinorVersionNumber) { (Get-ItemProperty -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentMinorVersionNumber).CurrentMinorVersionNumber } Else { $null }"'));
+				$update_build_revision = trim(shell_exec('powershell "If (Get-ItemProperty -ErrorAction SilentlyContinue -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' UBR) { (Get-ItemProperty -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' UBR).UBR } Else { $null }"'));
+
+				if(is_numeric($current_minor_version_number) && is_numeric($current_build) && is_numeric($update_build_revision)) {
+					return $current_major_version_number . '.' . $current_minor_version_number . '.' . $current_build . '.' . $update_build_revision;
+				}
+			}
+
+			// Fall back to Windows 8.1 and earlier values
 			$current_version = trim(shell_exec('powershell "If (Get-ItemProperty -ErrorAction SilentlyContinue -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentVersion) { (Get-ItemProperty -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentVersion).CurrentVersion } Else { $null }"'));
 
-			// Windows 10 & 11 add CurrentMajorVersionNumber, CurrentMinorVersionNumber and UBR
-			$current_major_version_number = trim(shell_exec('powershell "If (Get-ItemProperty -ErrorAction SilentlyContinue -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentMajorVersionNumber) { (Get-ItemProperty -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentMajorVersionNumber).CurrentMajorVersionNumber } Else { $null }"'));
-			$current_minor_version_number = trim(shell_exec('powershell "If (Get-ItemProperty -ErrorAction SilentlyContinue -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentMinorVersionNumber) { (Get-ItemProperty -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentMinorVersionNumber).CurrentMinorVersionNumber } Else { $null }"'));
-			$update_build_revision = trim(shell_exec('powershell "If (Get-ItemProperty -ErrorAction SilentlyContinue -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' UBR) { (Get-ItemProperty -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' UBR).UBR } Else { $null }"'));
-
-			if (!empty($current_major_version_number)) {
-				// Windows 10 and later
-				return $current_major_version_number . '.' . $current_minor_version_number . '.' . $current_build . '.' . $update_build_revision;
-			} else {
-				// Windows 8.1 and earlier
+			if(is_numeric($current_version) && is_numeric($current_build)) {
 				return $current_version . '.' . $current_build;
 			}
+
+			// Fall back to PHP implementation
+			return php_uname('r');
 		} else {
 			return php_uname('r');
 		}
