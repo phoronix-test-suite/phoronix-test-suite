@@ -652,7 +652,7 @@ class phodevi_system extends phodevi_device_interface
 		}
 		else if(phodevi::is_windows())
 		{
-			$mds_tool = getenv('USERPROFILE') . '\Downloads\mdstool-cli.exe';
+			$mds_tool = microsoft_dependency_handler::file_download_location() . 'mdstool-cli.exe';
 			if(is_file($mds_tool))
 			{
 				$mds_output = preg_replace('#\\x1b[[][^A-Za-z]*[A-Za-z]#', '', shell_exec($mds_tool));
