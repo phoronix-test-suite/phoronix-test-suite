@@ -668,8 +668,8 @@ class phodevi_system extends phodevi_device_interface
 
 			// Windows 10+ security features: VBS, HVCI
 			// https://docs.microsoft.com/en-us/windows/security/threat-protection/device-guard/enable-virtualization-based-protection-of-code-integrity#virtualizationbasedsecuritystatus
-			$vbsStatus = trim(shell_exec('powershell "(Get-CimInstance -ErrorAction SilentlyContinue –ClassName Win32_DeviceGuard –Namespace root\Microsoft\Windows\DeviceGuard).VirtualizationBasedSecurityStatus"'));
-			switch($vbsStatus) {
+			$vbs_status = trim(shell_exec('powershell "(Get-CimInstance -ErrorAction SilentlyContinue –ClassName Win32_DeviceGuard –Namespace root\Microsoft\Windows\DeviceGuard).VirtualizationBasedSecurityStatus"'));
+			switch($vbs_status) {
 				case '0':
 					$security[] = 'VBS: Disabled';
 					break;
@@ -682,15 +682,15 @@ class phodevi_system extends phodevi_device_interface
 			}
 
 			// https://docs.microsoft.com/en-us/windows/security/threat-protection/device-guard/enable-virtualization-based-protection-of-code-integrity#securityservicesconfigured
-			$securityServicesRunning = preg_split('/\r\n|\n|\r/', trim(shell_exec('powershell "(Get-CimInstance -ErrorAction SilentlyContinue –ClassName Win32_DeviceGuard –Namespace root\Microsoft\Windows\DeviceGuard).SecurityServicesRunning"')));
-			if(in_array('2', $securityServicesRunning)) {
+			$security_services_running = preg_split('/\r\n|\n|\r/', trim(shell_exec('powershell "(Get-CimInstance -ErrorAction SilentlyContinue –ClassName Win32_DeviceGuard –Namespace root\Microsoft\Windows\DeviceGuard).SecurityServicesRunning"')));
+			if(in_array('2', $security_services_running)) {
 				$security[] = 'HVCI: Running';
 
 				// Mode Based Execution Control (MBEC) is relevant to HVCI performance and is available in Intel Kaby Lake and newer and AMD Zen 2 and newer
 				// https://docs.microsoft.com/en-us/windows/security/threat-protection/device-guard/enable-virtualization-based-protection-of-code-integrity#hvci-features
 				// https://docs.microsoft.com/en-us/windows/security/threat-protection/device-guard/enable-virtualization-based-protection-of-code-integrity#availablesecurityproperties
-				$availableSecurityProperties = preg_split('/\r\n|\n|\r/', trim(shell_exec('powershell "(Get-CimInstance -ErrorAction SilentlyContinue –ClassName Win32_DeviceGuard –Namespace root\Microsoft\Windows\DeviceGuard).AvailableSecurityProperties"')));
-				if(in_array('7', $availableSecurityProperties)) {
+				$available_security_properties = preg_split('/\r\n|\n|\r/', trim(shell_exec('powershell "(Get-CimInstance -ErrorAction SilentlyContinue –ClassName Win32_DeviceGuard –Namespace root\Microsoft\Windows\DeviceGuard).AvailableSecurityProperties"')));
+				if(in_array('7', $available_security_properties)) {
 					$security[] = 'MBEC: Available';
 				} else {
 					$security[] = 'MBEC: Unavailable';
