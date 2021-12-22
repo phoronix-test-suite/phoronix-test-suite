@@ -411,7 +411,7 @@ class phodevi_system extends phodevi_device_interface
 					$fs = 'NTFS';
 				}
 			}
-		}	
+		}
 
 		if(empty($fs))
 		{
