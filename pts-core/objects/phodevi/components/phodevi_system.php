@@ -1053,20 +1053,20 @@ class phodevi_system extends phodevi_device_interface
 		{
 			// CurrentBuild and CurrentVersion are available since at least NT 4.0
 			// CurrentVersion is frozen at 6.3 (same as Windows 8.1) in Windows 10 & 11
-			$currentBuild = trim(shell_exec('powershell "If (Get-ItemProperty -ErrorAction SilentlyContinue -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentBuild) { (Get-ItemProperty -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentBuild).CurrentBuild } Else { $null }"'));
-			$currentVersion = trim(shell_exec('powershell "If (Get-ItemProperty -ErrorAction SilentlyContinue -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentVersion) { (Get-ItemProperty -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentVersion).CurrentVersion } Else { $null }"'));
+			$current_build = trim(shell_exec('powershell "If (Get-ItemProperty -ErrorAction SilentlyContinue -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentBuild) { (Get-ItemProperty -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentBuild).CurrentBuild } Else { $null }"'));
+			$current_version = trim(shell_exec('powershell "If (Get-ItemProperty -ErrorAction SilentlyContinue -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentVersion) { (Get-ItemProperty -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentVersion).CurrentVersion } Else { $null }"'));
 
 			// Windows 10 & 11 add CurrentMajorVersionNumber, CurrentMinorVersionNumber and UBR
-			$currentMajorVersionNumber = trim(shell_exec('powershell "If (Get-ItemProperty -ErrorAction SilentlyContinue -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentMajorVersionNumber) { (Get-ItemProperty -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentMajorVersionNumber).CurrentMajorVersionNumber } Else { $null }"'));
-			$currentMinorVersionNumber = trim(shell_exec('powershell "If (Get-ItemProperty -ErrorAction SilentlyContinue -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentMinorVersionNumber) { (Get-ItemProperty -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentMinorVersionNumber).CurrentMinorVersionNumber } Else { $null }"'));
-			$updateBuildRevision = trim(shell_exec('powershell "If (Get-ItemProperty -ErrorAction SilentlyContinue -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' UBR) { (Get-ItemProperty -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' UBR).UBR } Else { $null }"'));
+			$current_major_version_number = trim(shell_exec('powershell "If (Get-ItemProperty -ErrorAction SilentlyContinue -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentMajorVersionNumber) { (Get-ItemProperty -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentMajorVersionNumber).CurrentMajorVersionNumber } Else { $null }"'));
+			$current_minor_version_number = trim(shell_exec('powershell "If (Get-ItemProperty -ErrorAction SilentlyContinue -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentMinorVersionNumber) { (Get-ItemProperty -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentMinorVersionNumber).CurrentMinorVersionNumber } Else { $null }"'));
+			$update_build_revision = trim(shell_exec('powershell "If (Get-ItemProperty -ErrorAction SilentlyContinue -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' UBR) { (Get-ItemProperty -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' UBR).UBR } Else { $null }"'));
 
-			if (!empty($currentMajorVersionNumber)) {
+			if (!empty($current_major_version_number)) {
 				// Windows 10 and later
-				return $currentMajorVersionNumber . '.' . $currentMinorVersionNumber . '.' . $currentBuild . '.' . $updateBuildRevision;
+				return $current_major_version_number . '.' . $current_minor_version_number . '.' . $current_build . '.' . $update_build_revision;
 			} else {
 				// Windows 8.1 and earlier
-				return $currentVersion . '.' . $currentBuild;
+				return $current_version . '.' . $current_build;
 			}
 		} else {
 			return php_uname('r');
