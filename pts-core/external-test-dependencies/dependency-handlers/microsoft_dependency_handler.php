@@ -84,7 +84,7 @@ class microsoft_dependency_handler implements pts_dependency_handler
 		$download_directory = trim(shell_exec('powershell "(New-Object -ComObject Shell.Application).NameSpace(\'shell:Downloads\').Self.Path"'));
 		
 		// Fall back to user profile directory
-		if(empty($download_directory)) {
+		if(empty($download_directory) || !is_dir($download_directory)) {
 			return getenv('USERPROFILE') . '\Downloads\\';
 		}
 
