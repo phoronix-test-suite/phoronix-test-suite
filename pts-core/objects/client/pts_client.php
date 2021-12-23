@@ -659,7 +659,8 @@ class pts_client
 
 					if(($command_bin = pts_client::executable_in_path($command[0])))
 					{
-						$cmd_output = shell_exec('cd "' . dirname($command_bin) . '" && ./' . $command_string . ' 2>&1');
+						$command_string = ($x = strpos($command_string, ' ')) !== false ? substr($command_string, $x + 1) : ' ';
+						$cmd_output = shell_exec('cd "' . dirname($command_bin) . '" && ./' . basename($command_bin) . ' ' . $command_string . ' 2>&1');
 
 						if(strlen($cmd_output) > 900000)
 						{
