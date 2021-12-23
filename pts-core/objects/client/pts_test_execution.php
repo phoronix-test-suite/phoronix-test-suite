@@ -676,6 +676,20 @@ class pts_test_execution
 			}
 			$sub_tr->set_used_arguments_description($arguments_description);
 			$sub_tr->set_used_arguments($extra_arguments);
+
+			$this_backup_test_log_dir = $test_run_manager->result_file->get_test_log_dir($sub_tr);
+			if($backup_test_log_file && !empty($backup_test_log_dir) && $backup_test_log_dir != $this_backup_test_log_dir && count($toxfer = pts_file_io::glob($backup_test_log_dir . '/*')) > 0)
+			{
+				// If test generated dynamic arguments and such, the backup log file may be different
+				// or in cases where one run generates multiple results...
+				pts_file_io::mkdir($this_backup_test_log_dir);
+				// TODO: come up with way in log viewer to de-duplicate/symlink rather than copy...
+				// there is also the possibility of the original backup_test_log_dir hash not being used so could be removed
+				foreach($toxfer as $bf)
+				{
+					copy($bf, $this_backup_test_log_dir . basename($bf));
+				}
+			}
 		}
 
 		// Result Calculation

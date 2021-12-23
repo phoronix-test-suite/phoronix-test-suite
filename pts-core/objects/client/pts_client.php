@@ -660,15 +660,22 @@ class pts_client
 					if(($command_bin = pts_client::executable_in_path($command[0])))
 					{
 						$command_string = ($x = strpos($command_string, ' ')) !== false ? substr($command_string, $x + 1) : ' ';
-						$cmd_output = shell_exec('cd "' . dirname($command_bin) . '" && ./' . basename($command_bin) . ' ' . $command_string . ' 2>&1');
+						if(phodevi::is_windows())
+						{
+							$cmd_output = shell_exec('cd "' . dirname($command_bin) . '" && ' . basename($command_bin) . ' ' . $command_string . ' 2>&1');
+						}
+						else
+						{
+							$cmd_output = shell_exec('cd "' . dirname($command_bin) . '" && ./' . basename($command_bin) . ' ' . $command_string . ' 2>&1');
+						}
 
-						if(strlen($cmd_output) > 900000)
+						if(empty($cmd_output) || strlen($cmd_output) > 900000)
 						{
 							// Don't preserve really large logs, likely filled with lots of junk
 							$cmd_output = null;
 							continue;
 						}
-						if(strpos($cmd_output, 'read kernel buffer failed: Operation not permitted') !== false || strpos($cmd_output, 'Error: unable to open display') !== false)
+						if(strpos($cmd_output, 'read kernel buffer failed: Operation not permitted') !== false || strpos($cmd_output, 'Error: unable to open display') !== false || strpos($cmd_output, 'not recognized as an internal or external command') !== false)
 						{
 							continue;
 						}
