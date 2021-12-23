@@ -310,7 +310,7 @@ $t .= '
 
 	if($has_system_logs)
 	{
-		$t .= '<div class="div_table_cell">' . ($sys->has_log_files() ? '<button type="button" onclick="javascript:display_system_logs_for_result(\'' . $public_id . '\', \'' . $sys->get_original_identifier() . '\'); return false;">View System Logs</button>' : ' ') . '</div>';
+		$t .= '<div class="div_table_cell">' . ($system_count == 1 || $sys->has_log_files() ? '<button type="button" onclick="javascript:display_system_logs_for_result(\'' . $public_id . '\', \'' . $sys->get_original_identifier() . '\'); return false;">View System Logs</button>' : ' ') . '</div>';
 	}
 	$stime = strtotime($sys->get_timestamp());
 	$t .= '<div class="div_table_cell"><input type="number" min="0" step="0.001" name="ppd_' . $ppdx . '" value="' . ($ppd && $ppd !== true ? strip_tags($ppd) : '0') . '" /></div>
@@ -465,12 +465,14 @@ if($result_file->get_test_count() > 1)
 				foreach($result_file->get_systems() as $system)
 				{
 					$sid = base64_decode($_REQUEST['system_id']);
-					if($system->get_original_identifier() == $sid)
+
+					if($system->get_original_identifier() == $sid || $system->get_identifier() == $sid)
 					{
 						$system_logs = $system->log_files();
-						$show_log = isset($_REQUEST['log_select']) && $_REQUEST['log_select'] != 'undefined' ? $_REQUEST['log_select'] : (isset($system_logs[0]) ? $system_logs[0] : '');
+						$identifiers_with_logs = empty($system_logs) ? $result_file->identifiers_with_system_logs() : array();
+						$show_log = isset($_REQUEST['log_select']) && $_REQUEST['log_select'] != 'undefined' && $_REQUEST['log_select'] != null ? $_REQUEST['log_select'] : (isset($system_logs[0]) ? $system_logs[0] : '');
 						$log_contents = $system->log_files($show_log, false);
-						pts_result_viewer_embed::display_log_html_or_download($log_contents, $system_logs, $show_log, $html_viewer, $sid);
+						pts_result_viewer_embed::display_log_html_or_download($log_contents, $system_logs, $show_log, $html_viewer, $sid, $identifiers_with_logs);
 						break;
 					}
 				}

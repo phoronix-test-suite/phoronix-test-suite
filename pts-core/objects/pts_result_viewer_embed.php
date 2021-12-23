@@ -483,10 +483,15 @@ class pts_result_viewer_embed
 		' . (defined('CSS_RESULT_VIEWER_PATH') ? '<link rel="stylesheet" href="' . CSS_RESULT_VIEWER_PATH . '">' : '') . '</head>
 		<body>' . (empty($html_to_show) ? '<p>No logs available.</p>' : $html_to_show) . '</body></html>';
 	}
-	public static function display_log_html_or_download(&$log_contents, &$list_of_log_files, $log_selected, &$append_to_html, $title)
+	public static function display_log_html_or_download(&$log_contents, &$list_of_log_files, $log_selected, &$append_to_html, $title, $identifiers_with_logs = false)
 	{
 		$append_to_html .= '<h2 align="center">' . $title . ' Logs</h2>';
-		$append_to_html .= '<div style="text-align: center;"><form action="' . str_replace('&log_select=' . $log_selected, '', str_replace('&download', '', $_SERVER['REQUEST_URI'])) . '" method="post"><select name="log_select" id="log_select" onchange="this.form.submit()">';
+		if(empty($list_of_log_files) && $identifiers_with_logs && !empty($identifiers_with_logs))
+		{
+			$append_to_html = '[DEBUG] No log files were found for this system identifier (' . $title . '), but logs were found for: ' . implode(', ', $identifiers_with_logs);
+		}
+		$append_to_html .= '<div style="text-align: center;"><form action="' . str_replace('&log_select=' . $log_selected, '', str_replace('&download', '', $_SERVER['REQUEST_URI'])) . '" method="post">';
+		$append_to_html .= '<input type="hidden" name="modify" value="0" /><select name="log_select" id="log_select" onchange="this.form.submit()">';
 		foreach($list_of_log_files as $log_file)
 		{
 			$append_to_html .= '<option value="' . $log_file . '"' . (isset($_REQUEST['log_select']) && $log_file == $_REQUEST['log_select'] ? 'selected="selected"' : '') . '>' . $log_file . '</option>';

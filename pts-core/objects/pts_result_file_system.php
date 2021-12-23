@@ -255,7 +255,6 @@ class pts_result_file_system
 									}
 									$files[] = $basename_file;
 								}
-
 							}
 						}
 

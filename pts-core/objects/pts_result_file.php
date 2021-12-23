@@ -321,15 +321,61 @@ class pts_result_file
 	}
 	public function system_logs_available()
 	{
-		foreach($this->systems as &$s)
+		$has_system_logs = false;
+		$system_log_dir_or_zip = is_dir($this->get_system_log_dir(null, true)) || is_file($this->get_result_dir() . 'system-logs.zip');
+
+		if($system_log_dir_or_zip)
 		{
-			if($s->has_log_files())
+			if($this->get_system_count() == 1)
 			{
-				return true;
+				// If just one system in result file and there is a log, safe to assume it's for the associated run...
+				$has_system_logs = true;
+			}
+			else
+			{
+				foreach($this->systems as &$s)
+				{
+					if($s->has_log_files())
+					{
+						$has_system_logs = true;
+						break;
+					}
+				}
 			}
 		}
 
-		return false;
+		return $has_system_logs;
+	}
+	public function identifiers_with_system_logs()
+	{
+		$identifiers = array();
+		$system_log_dir = $this->get_system_log_dir(null, true);
+		if($system_log_dir && is_dir($system_log_dir))
+		{
+			foreach(pts_file_io::glob($system_log_dir . '/*') as $identifier_dir)
+			{
+				$identifiers[] = basename($identifier_dir);
+			}
+		}
+		else if($this->get_result_dir() && is_file($this->get_result_dir() . 'system-logs.zip'))
+		{
+			$zip = new ZipArchive();
+			$res = $zip->open($this->get_result_dir() . 'system-logs.zip');
+
+			if($res === true)
+			{
+				for($i = 0; $i < $zip->numFiles; $i++)
+				{
+					$index = explode('/', $zip->getNameIndex($i));
+					if(!empty($index[1]) && !in_array($index[1], $identifiers))
+					{
+						$identifiers[] = $index[1];
+					}
+				}
+				$zip->close();
+			}
+		}
+		return $identifiers;
 	}
 	public function get_system_count()
 	{
