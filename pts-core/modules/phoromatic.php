@@ -1291,6 +1291,19 @@ class phoromatic extends pts_module_interface
 			phoromatic::upload_unscheduled_test_results($test_run_manager->get_file_name());
 		}*/
 	}
+	public static function __event_pre_run_error($error_obj)
+	{
+		list($test_profile, $error_msg) = $error_obj;
+
+		$server_response = phoromatic::upload_to_remote_server(array(
+			'r' => 'error_report',
+			'sched' => self::$p_schedule_id,
+			'ts' => self::$p_trigger_id,
+			'err' => $error_msg,
+			'ti' => $test_profile->get_identifier(),
+			'o' => ''
+			));
+	}
 	public static function __event_run_error($error_obj)
 	{
 		list($test_run_manager, $test_run_request, $error_msg) = $error_obj;

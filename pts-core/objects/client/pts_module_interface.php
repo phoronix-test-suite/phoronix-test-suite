@@ -221,6 +221,11 @@ class pts_module_interface
 		// TODO use __event_user_error
 		return;
 	}
+	public static function __event_pre_run_error($obj = null)
+	{
+		// Passed is an array with the test profile and error message. The pre-run errors are warnings/errors prior to actual test execution phase
+		return;
+	}
 	public static function __event_run_error($obj = null)
 	{
 		// Passed is an array where the first element is a copy of the test_run_manager, the second elemnt is the test_run_request, and the third element is the error_msg string

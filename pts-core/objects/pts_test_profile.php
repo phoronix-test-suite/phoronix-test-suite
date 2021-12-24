@@ -248,7 +248,7 @@ class pts_test_profile extends pts_test_profile_parser
 
 		return ceil($est_install_time);
 	}
-	public function is_supported($report_warnings = true)
+	public function is_supported($print_warnings = true, &$error = null)
 	{
 		$test_supported = true;
 
@@ -259,35 +259,40 @@ class pts_test_profile extends pts_test_profile_parser
 		}
 		else if($this->is_test_architecture_supported() == false)
 		{
-			PTS_IS_CLIENT && $report_warnings && pts_client::$display->test_run_error($this->get_identifier() . ' is not supported on this architecture: ' . phodevi::read_property('system', 'kernel-architecture'));
+			$error = $this->get_identifier() . ' is not supported on this architecture: ' . phodevi::read_property('system', 'kernel-architecture');
 			$test_supported = false;
 		}
 		else if($this->is_test_platform_supported() == false)
 		{
-			PTS_IS_CLIENT && $report_warnings && pts_client::$display->test_run_error($this->get_identifier() . ' is not supported by this operating system: ' . phodevi::os_under_test());
+			$error = $this->get_identifier() . ' is not supported by this operating system: ' . phodevi::os_under_test();
 			$test_supported = false;
 		}
 		else if($this->is_core_version_supported() == false)
 		{
-			PTS_IS_CLIENT && $report_warnings && pts_client::$display->test_run_error($this->get_identifier() . ' is not supported by this version of the Phoronix Test Suite: ' . PTS_VERSION);
+			$error = $this->get_identifier() . ' is not supported by this version of the Phoronix Test Suite: ' . PTS_VERSION;
 			$test_supported = false;
 		}
 		else if(PTS_IS_CLIENT && ($custom_support_check = $this->custom_test_support_check()) !== true)
 		{
 			// A custom-self-generated error occurred, see code comments in custom_test_support_check()
-			PTS_IS_CLIENT && $report_warnings && is_callable(array(pts_client::$display, 'test_run_error')) && pts_client::$display->test_run_error($this->get_identifier() . ': ' . $custom_support_check);
+			$error = $this->get_identifier() . ': ' . $custom_support_check;
 			$test_supported = false;
 		}
 		else if(PTS_IS_CLIENT)
 		{
 			foreach($this->extended_test_profiles() as $extension)
 			{
-				if($extension->is_supported($report_warnings) == false)
+				if($extension->is_supported($print_warnings, $error) == false)
 				{
 					$test_supported = false;
 					break;
 				}
 			}
+		}
+
+		if($print_warnings && !empty($error) && PTS_IS_CLIENT)
+		{
+			pts_client::$display->test_run_error($error);
 		}
 
 		return $test_supported;

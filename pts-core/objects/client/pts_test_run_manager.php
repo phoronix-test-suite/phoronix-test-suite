@@ -1889,7 +1889,7 @@ class pts_test_run_manager
 		{
 			if($report_errors)
 			{
-				pts_client::$display->test_run_error('[' . $test_result->test_profile->get_identifier() . ' ' . $test_result->get_arguments_description() . '] ' . $error);
+				self::test_pre_run_error($test_result->test_profile, '[' . $test_result->test_profile->get_identifier() . ' ' . $test_result->get_arguments_description() . '] ' . $error);
 			}
 			return false;
 		}
@@ -1904,57 +1904,63 @@ class pts_test_run_manager
 		$skip_test_subsystems = pts_env::read('SKIP_TESTING_SUBSYSTEMS') ? pts_strings::comma_explode(strtolower(pts_env::read('SKIP_TESTING_SUBSYSTEMS'))) : false;
 		$display_driver = phodevi::read_property('system', 'display-driver');
 		$gpu = phodevi::read_name('gpu');
+		$test_error = null;
 
-		if($test_profile->is_supported($report_errors) == false)
+		if($test_profile->is_supported(false, $test_error) == false)
 		{
 			$valid_test_profile = false;
 		}
 		else if($test_profile->is_display_required() && !phodevi::is_display_server_active())
 		{
-			$report_errors && pts_client::$display->test_run_error('No display server was found, skipping ' . $test_profile);
+			$test_error = 'No display server was found, skipping ' . $test_profile;
 			$valid_test_profile = false;
 		}
 		else if($test_profile->is_network_required() && !pts_network::network_support_available())
 		{
-			$report_errors && pts_client::$display->test_run_error('No network connection was found or is disabled, skipping ' . $test_profile);
+			$test_error = 'No network connection was found or is disabled, skipping ' . $test_profile;
 			$valid_test_profile = false;
 		}
 		else if($test_profile->is_internet_required() && !pts_network::internet_support_available())
 		{
-			$report_errors && pts_client::$display->test_run_error('No Internet connection was found or is disabled, skipping ' . $test_profile);
+			$test_error = 'No Internet connection was found or is disabled, skipping ' . $test_profile;
 			$valid_test_profile = false;
 		}
 		else if($test_type == 'Graphics' && in_array($display_driver, array('vesa', 'nv', 'cirrus')) && stripos($gpu, 'LLVM') === false)
 		{
 			// These display drivers end up being in known configurations without 3D hardware support so unless an LLVM-based string is reported as the GPU, don't advertise 3D tests
-			$report_errors && pts_client::$display->test_run_error('3D acceleration support not available, skipping ' . $test_profile);
+			$test_error = '3D acceleration support not available, skipping ' . $test_profile;
 			$valid_test_profile = false;
 		}
 		else if($test_type == 'Disk' && stripos(phodevi::read_property('system', 'filesystem'), 'SquashFS') !== false)
 		{
-			$report_errors && pts_client::$display->test_run_error('Running on a RAM-based live file-system, skipping ' . $test_profile);
+			$test_error = 'Running on a RAM-based live file-system, skipping ' . $test_profile;
 			$valid_test_profile = false;
 		}
 		else if(($test_type != null && getenv('NO_' . strtoupper($test_type) . '_TESTS')) ||($skip_tests && (in_array($test_profile, $skip_tests) || in_array($test_type, $skip_tests) || in_array($test_profile->get_identifier(false), $skip_tests) || in_array($test_profile->get_identifier_base_name(), $skip_tests))))
 		{
-			$report_errors && pts_client::$display->test_run_error('Due to a pre-set environment variable, skipping ' . $test_profile);
+			$test_error = 'Due to a pre-set environment variable, skipping ' . $test_profile;
 			$valid_test_profile = false;
 		}
 		else if($skip_test_subsystems && in_array(strtolower($test_profile->get_test_hardware_type()), $skip_test_subsystems))
 		{
-			$report_errors && pts_client::$display->test_run_error('Due to a pre-set environment variable, skipping ' . $test_profile);
+			$test_error = 'Due to a pre-set environment variable, skipping ' . $test_profile;
 			$valid_test_profile = false;
 		}
 		else if($test_profile->is_root_required() && $is_batch_mode && phodevi::is_root() == false)
 		{
-			$report_errors && pts_client::$display->test_run_error('Running in batch mode as a user but this test requires root access, skipping ' . $test_profile);
+			$test_error = 'Running in batch mode as a user but this test requires root access, skipping ' . $test_profile;
 			$valid_test_profile = false;
 		}
 
 		if($valid_test_profile == false && getenv('SKIP_ALL_TEST_SUPPORT_CHECKS'))
 		{
-			$report_errors && pts_client::$display->test_run_error('SKIP_ALL_TEST_SUPPORT_CHECKS is set for ' . $test_profile);
+			$test_error = 'SKIP_ALL_TEST_SUPPORT_CHECKS is set for ' . $test_profile;
 			$valid_test_profile = true;
+		}
+
+		if($report_errors && !empty($test_error))
+		{
+			self::test_pre_run_error($test_profile, $test_error);
 		}
 
 		return $valid_test_profile;
@@ -1973,7 +1979,7 @@ class pts_test_run_manager
 			}
 			else if($test_profile->get_test_executable_dir() == null)
 			{
-				pts_client::$display->test_run_error('The test executable for ' . pts_client::cli_just_bold($test_profile) . ' could not be located. Looking for ' . pts_client::cli_just_bold($test_profile->get_test_executable()) . ' in ' . pts_client::cli_just_italic($test_profile->get_install_dir()));
+				self::test_pre_run_error($test_profile, 'The test executable for ' . pts_client::cli_just_bold($test_profile) . ' could not be located. Looking for ' . pts_client::cli_just_bold($test_profile->get_test_executable()) . ' in ' . pts_client::cli_just_italic($test_profile->get_install_dir()));
 				$valid_test_profile = false;
 			}
 
@@ -1986,6 +1992,12 @@ class pts_test_run_manager
 		}
 
 		return $test_checks[$test_profile->get_identifier()];
+	}
+	protected static function test_pre_run_error(&$test_profile, $error_msg)
+	{
+		pts_client::$display->test_run_error($error_msg);
+		$error_obj = array($test_profile, $error_msg);
+		pts_module_manager::module_process('__event_pre_run_error', $error_obj);
 	}
 	public function standard_run($to_run)
 	{
