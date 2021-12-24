@@ -89,7 +89,7 @@ class pts_test_execution
 		}
 
 		$to_execute = $test_run_request->test_profile->get_test_executable_dir();
-		$pts_test_arguments = trim($test_run_request->test_profile->get_default_arguments() . ' ' . ($test_run_request->test_profile->get_default_arguments() != null ? str_replace($test_run_request->test_profile->get_default_arguments(), '', $extra_arguments) : $extra_arguments) . ' ' . $test_run_request->test_profile->get_default_post_arguments());
+		$pts_test_arguments = trim($test_run_request->test_profile->get_default_arguments() . ' ' . ($test_run_request->test_profile->get_default_arguments() != null && !empty($extra_arguments) ? str_replace($test_run_request->test_profile->get_default_arguments(), '', $extra_arguments) : $extra_arguments) . ' ' . $test_run_request->test_profile->get_default_post_arguments());
 		$extra_runtime_variables = pts_tests::extra_environment_variables($test_run_request->test_profile);
 
 		pts_triggered_system_events::pre_run_reboot_triggered_check($test_run_request->test_profile, $extra_runtime_variables);
@@ -669,7 +669,7 @@ class pts_test_execution
 				}
 				$arguments_description = $arguments_description != null ? str_replace('$' . $key, $value, $arguments_description) : '';
 
-				if(!in_array($key, array('VIDEO_MEMORY', 'NUM_CPU_CORES', 'NUM_CPU_JOBS')))
+				if(!empty($extra_arguments) && !in_array($key, array('VIDEO_MEMORY', 'NUM_CPU_CORES', 'NUM_CPU_JOBS')))
 				{
 					$extra_arguments = str_replace('$' . $key, $value, $extra_arguments);
 				}
