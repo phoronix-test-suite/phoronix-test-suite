@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Median compression time for 100 runs: 134.648 ms #_RESULT_# Mpx/s)</OutputTemplate>
+    <LineHint>Mpx/s</LineHint>
+    <StripFromResult>(</StripFromResult>
+  </ResultsParser>
+</PhoronixTestSuite>

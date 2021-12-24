@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://apache.mirrors.hoobly.com/couchdb/source/3.2.1/apache-couchdb-3.2.1.tar.gz, http://mirrors.ibiblio.org/apache/couchdb/source/3.2.1/apache-couchdb-3.2.1.tar.gz, https://apache.osuosl.org/couchdb/source/3.2.1/apache-couchdb-3.2.1.tar.gz</URL>
+      <MD5>9748c159dd27cc26ba36985f4b26333a</MD5>
+      <SHA256>11de2d1c3a5b317017a7459ec3f76230d5c43aba427a1e71ca3437845874acf8</SHA256>
+      <FileName>apache-couchdb-3.2.1.tar.gz</FileName>
+      <FileSize>16514227</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/apache-couchdb-benchbulk-1.tar.xz</URL>
+      <MD5>192b63227d48c76b10f7ba7eb024e8c1</MD5>
+      <SHA256>a9bb7d67dd668cd7cb336f59a5079e239fe028bc23ae270047e69b0f345d004a</SHA256>
+      <FileName>apache-couchdb-benchbulk-1.tar.xz</FileName>
+      <FileSize>1172</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

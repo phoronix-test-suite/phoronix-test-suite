@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/png-samples-1.tar.xz</URL>
+      <MD5>3f928e4d08777e6e84c54202a00429de</MD5>
+      <SHA256>9810c8fd3afd35b4755c2a46f14fc66e2b9199c22e46a5946123c9250f2d1ccd</SHA256>
+      <FileName>png-samples-1.tar.xz</FileName>
+      <FileSize>58346628</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/BinomialLLC/basis_universal/archive/v1.13.tar.gz</URL>
+      <MD5>d00905c22b214882ce32972a713f7745</MD5>
+      <SHA256>f2aa3b8c46474a29c491284665ee9600937edb88dc3a4da474a2bc6c7148260c</SHA256>
+      <FileName>basis_universal-1.13.tar.gz</FileName>
+      <FileSize>10489598</FileSize>
+      <PlatformSpecific>Linux, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/BinomialLLC/basis_universal/releases/download/v1.13/basisu_v113_windows_linux_bins.zip</URL>
+      <MD5>7880a2d898cfae2e55044c2d8af67499</MD5>
+      <SHA256>acf04d2ec5efb6e5d8705340a369e17ea0bdef5d05bf88ff86534e72e99d17ce</SHA256>
+      <FileName>basisu_v113_windows_linux_bins.zip</FileName>
+      <FileSize>1469752</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

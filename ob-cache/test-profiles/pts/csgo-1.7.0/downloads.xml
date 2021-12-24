@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/csgo-demo-10.zip</URL>
+      <MD5>1f5678eb1a70ade908dda5ebe26320b6</MD5>
+      <SHA256>054857c7fb4a81518db9d1e0baa12928dc3dbde493f73346063dfb003b5eb306</SHA256>
+      <FileName>csgo-demo-10.zip</FileName>
+      <FileSize>2654688</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

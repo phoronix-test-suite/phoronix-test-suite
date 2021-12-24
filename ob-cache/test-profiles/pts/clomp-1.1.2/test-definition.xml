@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>CLOMP</Title>
+    <AppVersion>1.2</AppVersion>
+    <Description>CLOMP is the C version of the Livermore OpenMP benchmark developed to measure OpenMP overheads and other performance impacts due to threading in order to influence future system designs.  This particular test profile configuration is currently set to look at the OpenMP static schedule speed-up across all available CPU cores using the recommended test configuration.</Description>
+    <ResultScale>Speedup</ResultScale>
+    <Proportion>HIB</Proportion>
+    <SubTitle>Static OMP Speedup</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.2</Version>
+    <SupportedPlatforms>Linux, MacOSX</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>1</EnvironmentSize>
+    <ProjectURL>http://asc.llnl.gov/sequoia/benchmarks/</ProjectURL>
+    <RepositoryURL>https://gitlab.com/arm-hpc/benchmarks/coral-2/clomp/</RepositoryURL>
+    <InternalTags>SMP</InternalTags>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-1 -1 1024 512 512 1 1000</Arguments>
+    </Default>
+  </TestSettings>
+</PhoronixTestSuite>

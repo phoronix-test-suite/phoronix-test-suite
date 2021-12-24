@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.0m1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>KTX-Software toktx</Title>
+    <AppVersion>4.0</AppVersion>
+    <Description>This is a benchmark of The Khronos Group's KTX-Software library and tools. KTX-Software provides "toktx" for converting/creating in the KTX container format for image textures. This benchmark times how long it takes to convert to KTX 2.0 format with various settings using a reference PNG sample input.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <EnvironmentSize>50</EnvironmentSize>
+    <ProjectURL>https://github.com/KhronosGroup/KTX-Software</ProjectURL>
+    <RepositoryURL>https://github.com/KhronosGroup/KTX-Software</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Settings</DisplayName>
+      <Identifier>settings</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Zstd Compression 9</Name>
+          <Value>--zcmp 9</Value>
+        </Entry>
+        <Entry>
+          <Name>Zstd Compression 19</Name>
+          <Value>--zcmp 19</Value>
+        </Entry>
+        <Entry>
+          <Name>UASTC 3</Name>
+          <Value>--uastc 3</Value>
+        </Entry>
+        <Entry>
+          <Name>UASTC 3  + Zstd Compression 19</Name>
+          <Value>--uastc 3 --zcmp 19</Value>
+        </Entry>
+        <Entry>
+          <Name>UASTC 4  + Zstd Compression 19</Name>
+          <Value>--uastc 4 --zcmp 19</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

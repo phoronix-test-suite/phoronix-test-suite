@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.0m1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>   Static OMP  Speedup: #_RESULT_#</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

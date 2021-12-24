@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://download.blender.org/release/Blender3.0/blender-3.0.0-linux-x64.tar.xz, http://mirror.clarkson.edu/blender/release/Blender3.0/blender-3.0.0-linux-x64.tar.xz, http://ftp.vim.org/graphics/blender/release/Blender3.0/blender-3.0.0-linux-x64.tar.xz</URL>
+      <MD5>76f5dd81ce25de026dc4b08f17169eee</MD5>
+      <SHA256>19b09dfcf5d3f3a068827454f0a704a9aa9c826350f73016121afef5f4d287ce</SHA256>
+      <FileName>blender-3.0.0-linux-x64.tar.xz</FileName>
+      <FileSize>185915252</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://download.blender.org/release/Blender3.0/blender-3.0.0-windows-x64.zip, http://mirror.clarkson.edu/blender/release/Blender3.0/blender-3.0.0-windows-x64.zip, http://ftp.vim.org/graphics/blender/release/Blender3.0/blender-3.0.0-windows-x64.zip</URL>
+      <MD5>f2c203345e4991300ddc277c921bbf3e</MD5>
+      <SHA256>1d94673d8b8314e75580db6cb3bdaaf3dddf9bdeb70961f04ecb0006b9cc76b3</SHA256>
+      <FileName>blender-3.0.0-windows-x64.zip</FileName>
+      <FileSize>245011699</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://download.blender.org/release/Blender3.0/blender-3.0.0-macos-x64.dmg, http://mirror.clarkson.edu/blender/release/Blender3.0/blender-3.0.0-macos-x64.dmg, http://ftp.vim.org/graphics/blender/release/Blender3.0/blender-3.0.0-macos-x64.dmg</URL>
+      <MD5>75aa566746eb997e6a8b9d580c643fce</MD5>
+      <SHA256>ab34d1d1d9aa728e844b78c4673483adc34c4fe0ea61d45e57a386b8a7a5cfc6</SHA256>
+      <FileName>blender-3.0.0-macos-x64.dmg</FileName>
+      <FileSize>217539461</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://download.blender.org/demo/test/cycles_benchmark_20160228.zip, http://ftp.vim.org/ftp/pub/ftp/graphics/blender/demo/test/cycles_benchmark_20160228.zip, http://ftp.nl.freebsd.org/ftp/graphics/blender/demo/test/cycles_benchmark_20160228.zip</URL>
+      <MD5>61dabc9cc92dec9549f73f7453d9a875</MD5>
+      <SHA256>026e7499a7bd9e0d41fe4d43e611a145a62d8d5df4fe347a6a08c6f0e98cf0c6</SHA256>
+      <FileName>cycles_benchmark_20160228.zip</FileName>
+      <FileSize>530883683</FileSize>
+    </Package>
+    <Package>
+      <URL>https://svn.blender.org/svnroot/bf-blender/tags/blender-2.92-release/lib/benchmarks/cycles/barbershop_interior/barbershop_interior_cpu.blend</URL>
+      <MD5>2b1cb4c2f4f1813ab7a8d95dceabf48d</MD5>
+      <SHA256>95972b56180462cac47ec82f3a755bd9111ec18ca37a6196a319c013db994130</SHA256>
+      <FileName>barbershop_interior_cpu.blend</FileName>
+      <FileSize>287574804</FileSize>
+      <Optional>TRUE</Optional>
+    </Package>
+    <Package>
+      <URL>https://svn.blender.org/svnroot/bf-blender/tags/blender-2.92-release/lib/benchmarks/cycles/barbershop_interior/barbershop_interior_gpu.blend</URL>
+      <MD5>10e5a559064df9f1da9dd43bef3f4523</MD5>
+      <SHA256>4a79ec95e7d96602ab16d475370f6b765a713a546edfa420dd53a4c25e464417</SHA256>
+      <FileName>barbershop_interior_gpu.blend</FileName>
+      <FileSize>287594564</FileSize>
+      <Optional>TRUE</Optional>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

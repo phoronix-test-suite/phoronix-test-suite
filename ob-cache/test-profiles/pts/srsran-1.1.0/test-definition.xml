@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.0m2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>srsRAN</Title>
+    <AppVersion>21.10</AppVersion>
+    <Description>srsRAN is an open-source LTE/5G software radio suite created by Software Radio Systems (SRS). The srsRAN radio suite was formerly known as srsLTE and can be used for building your own software-defined radio (SDR) 4G/5G mobile network.</Description>
+    <ResultScale>Mb/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, fftw3-development, cmake, boost-development, libconfigpp</ExternalDependencies>
+    <EnvironmentSize>294</EnvironmentSize>
+    <ProjectURL>https://www.srsran.com/</ProjectURL>
+    <RepositoryURL>https://github.com/srsran/srsRAN/</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>libbladeRF.h, mbedtls/aes.h, libmbedtls.so, libboost_program_options.so, /usr/include/libconfig.h++, libconfig++.so, netinet/sctp.h, libsctp.so</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test</Identifier>
+      <Menu>
+        <Entry>
+          <Name>4G PHY_DL_Test 100 PRB SISO 64-QAM</Name>
+          <Value>lib/test/phy/phy_dl_test -p 100 -s 20000 -m 28 -t 1</Value>
+        </Entry>
+        <Entry>
+          <Name>4G PHY_DL_Test 100 PRB SISO 256-QAM</Name>
+          <Value>lib/test/phy/phy_dl_test -p 100 -s 20000 -m 27 -t 1 -q</Value>
+        </Entry>
+        <Entry>
+          <Name>4G PHY_DL_Test 100 PRB MIMO 64-QAM</Name>
+          <Value>lib/test/phy/phy_dl_test -p 100 -s 20000 -m 28 -t 4</Value>
+        </Entry>
+        <Entry>
+          <Name>4G PHY_DL_Test 100 PRB MIMO 256-QAM</Name>
+          <Value>lib/test/phy/phy_dl_test -p 100 -s 20000 -m 27 -t 4 -q</Value>
+        </Entry>
+        <Entry>
+          <Name>5G PHY_DL_NR Test 52 PRB SISO 64-QAM</Name>
+          <Value>lib/test/phy/phy_dl_nr_test -P 52 -p 52 -m 28 -n 20000</Value>
+        </Entry>
+        <Entry>
+          <Name>OFDM_Test</Name>
+          <Value>lib/src/phy/dft/test/ofdm_test -N 2048 -n 100 -r 500000</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

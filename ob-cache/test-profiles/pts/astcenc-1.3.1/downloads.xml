@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.0m1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/png-samples-1.tar.xz</URL>
+      <MD5>3f928e4d08777e6e84c54202a00429de</MD5>
+      <SHA256>9810c8fd3afd35b4755c2a46f14fc66e2b9199c22e46a5946123c9250f2d1ccd</SHA256>
+      <FileName>png-samples-1.tar.xz</FileName>
+      <FileSize>58346628</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/ARM-software/astc-encoder/archive/refs/tags/3.2.tar.gz</URL>
+      <MD5>816b4f86b38debf47ad8d9396241c43b</MD5>
+      <SHA256>ed24d600b3b18178df3c6375e2ba8f256ccfc1f20e57863f2f21a1c9e39f820e</SHA256>
+      <FileName>astc-encoder-3.2.tar.gz</FileName>
+      <FileSize>34226743</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/ARM-software/astc-encoder/releases/download/3.2/astcenc-3.2-macosx64.zip</URL>
+      <MD5>f772f2eb7fd5c6aa7865973e010a2f17</MD5>
+      <SHA256>0a76024c92e6205cad661481551051a84673e5dda1d0d83c6d0541d964b06a95</SHA256>
+      <FileName>astcenc-3.2-macosx64.zip</FileName>
+      <FileSize>797643</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/ARM-software/astc-encoder/releases/download/3.2/astcenc-3.2-windowsx64.zip</URL>
+      <MD5>92ea93b04b7c0220b8f7437e7ff7f984</MD5>
+      <SHA256>1e6b526841f5f721a6c154df18ed5e0493e34539b3149fe1ad46f54e08d6bdf7</SHA256>
+      <FileName>astcenc-3.2-windowsx64.zip</FileName>
+      <FileSize>1243711</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>
