@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2019, Phoronix Media
-	Copyright (C) 2008 - 2019, Michael Larabel
+	Copyright (C) 2008 - 2021, Phoronix Media
+	Copyright (C) 2008 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 	You should have received a copy of the GNU General Public License
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-
 
 class phoromatic_result implements pts_webui_interface
 {
@@ -72,16 +71,12 @@ class phoromatic_result implements pts_webui_interface
 			$upload_ids = array_unique($upload_ids);
 
 			$result_files = array();
-
 			$display_rows = array();
 			$system_types = array();
 			$schedule_types = array();
 			$trigger_types = array();
-			$upload_times = array();
 			$benchmark_tickets = array();
-			$xml_result_hash = array();
 			$tickets = array();
-
 			$showed_progress_msg = false;
 
 			foreach($upload_ids as $id)
@@ -105,8 +100,6 @@ class phoromatic_result implements pts_webui_interface
 				$has_system_logs = is_file(phoromatic_server::phoromatic_account_result_path($_SESSION['AccountID'], $row['UploadID']) . 'system-logs.zip') ? $row['UploadID'] : false;
 				$display_rows[$composite_xml] = $row;
 				pts_arrays::unique_push($benchmark_tickets, $row['BenchmarkTicketID']);
-				pts_arrays::unique_push($upload_times, $row['UploadTime']);
-				pts_arrays::unique_push($xml_result_hash, $row['XmlUploadHash']);
 				pts_arrays::unique_push($system_types, $row['SystemID']);
 				pts_arrays::unique_push($schedule_types, $row['ScheduleID']);
 				pts_arrays::unique_push($trigger_types, $row['Trigger']);
@@ -181,8 +174,6 @@ class phoromatic_result implements pts_webui_interface
 			{
 				foreach($display_rows as $composite_xml => $row)
 				{
-					//  $row['SystemID'] . ' ' . $row['ScheduleID'] . ' ' . $row['Trigger']
-
 					switch($system_name_format)
 					{
 						case 'ORIGINAL_DATA':

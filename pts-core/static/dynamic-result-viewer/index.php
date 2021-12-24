@@ -134,7 +134,6 @@ else
 	define('VIEWER_CAN_DELETE_RESULTS', false);
 }
 
-
 // Authenticate user and set session variables
 if(isset($_POST['access_key']))
 {
@@ -159,7 +158,6 @@ if(VIEWER_ACCESS_KEY != null && (!isset($_SESSION['AccessKey']) || $_SESSION['Ac
 <link rel="icon" type="image/png" href="<?php echo WEB_URL_PATH; ?>favicon.png">
 </head>
 <body>
-
 <div id="login_box">
 <div id="login_box_left">
 <h1>Phoronix Test Suite</h1>
@@ -179,65 +177,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 {
 	case 'test':
 		$o = new pts_test_profile($_GET['test']);
-		$PAGE .= '<h1>' . $o->get_title() . '</h1>';
-
-		if($o->get_license() == 'Retail' || $o->get_license() == 'Restricted')
-		{
-			$PAGE .= '<p><em>NOTE: This test profile is marked \'' . $o->get_license() . '\' and may have issues running without third-party/commercial dependencies.</em></p>';
-		}
-		if($o->get_status() != 'Verified' && $o->get_status() != null)
-		{
-			$PAGE .= '<p><em>NOTE: This test profile is marked \'' . $o->get_status() . '\' and may have known issues with test installation or execution.</em></p>';
-		}
-
-		$table = array();
-		$table[] = array('Run Identifier: ', $o->get_identifier());
-		$table[] = array('Profile Version: ', $o->get_test_profile_version());
-		$table[] = array('Maintainer: ', $o->get_maintainer());
-		$table[] = array('Test Type: ', $o->get_test_hardware_type());
-		$table[] = array('Software Type: ', $o->get_test_software_type());
-		$table[] = array('License Type: ', $o->get_license());
-		$table[] = array('Test Status: ', $o->get_status());
-		$table[] = array('Supported Platforms: ', implode(', ', $o->get_supported_platforms()));
-		$table[] = array('Project Web-Site: ', '<a target="_blank" href="' . $o->get_project_url() . '">' . $o->get_project_url() . '</a>');
-
-		$download_size = $o->get_download_size();
-		if(!empty($download_size))
-		{
-			$table[] = array('Download Size: ', $download_size . ' MB');
-		}
-
-		$environment_size = $o->get_environment_size();
-		if(!empty($environment_size))
-		{
-			$table[] = array('Environment Size: ', $environment_size . ' MB');
-		}
-
-		$cols = array(array(), array());
-		foreach($table as &$row)
-		{
-			$row[0] = '<strong>' . $row[0] . '</strong>';
-			$cols[0][] = $row[0];
-			$cols[1][] = $row[1];
-		}
-		$PAGE .= '<br /><div style="float: left;">' . implode('<br />', $cols[0]) . '</div>';
-		$PAGE .= '<div style="float: left; padding-left: 15px;">' . implode('<br />', $cols[1]) . '</div>' . '<br style="clear: both;" />';
-		$PAGE .= '<p>'. $o->get_description() . '</p>';
-
-		foreach(array('Pre-Install Message' => $o->get_pre_install_message(), 'Post-Install Message' => $o->get_post_install_message(), 'Pre-Run Message' => $o->get_pre_run_message(), 'Post-Run Message' => $o->get_post_run_message()) as $msg_type => $msg)
-		{
-			if($msg != null)
-			{
-				$PAGE .= '<p><em>' . $msg_type . ': ' . $msg . '</em></p>';
-			}
-		}
-
-		$dependencies = $o->get_external_dependencies();
-		if(!empty($dependencies) && !empty($dependencies[0]))
-		{
-			$PAGE .= PHP_EOL . '<strong>Software Dependencies:</strong>' . '<br />';
-			$PAGE .= implode('<br />', $dependencies);
-		}
+		$PAGE = pts_web_embed::test_profile_overview($o);
 
 		$o_identifier = $o->get_identifier(false);
 		$table = array();
@@ -266,179 +206,13 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		break;
 	case 'suite':
 		$o = new pts_test_suite($_GET['suite']);
-		$PAGE .= '<h1>' . $o->get_title() . '</h1>';
-
-		$table = array();
-		$table[] = array('Run Identifier: ', $o->get_identifier());
-		$table[] = array('Profile Version: ', $o->get_version());
-		$table[] = array('Maintainer: ', $o->get_maintainer());
-		$table[] = array('Test Type: ', $o->get_suite_type());
-
-		$cols = array(array(), array());
-		foreach($table as &$row)
-		{
-			$row[0] = '<strong>' . $row[0] . '</strong>';
-			$cols[0][] = $row[0];
-			$cols[1][] = $row[1];
-		}
-		$PAGE .= '<br /><div style="float: left;">' . implode('<br />', $cols[0]) . '</div>';
-		$PAGE .= '<div style="float: left; padding-left: 15px;">' . implode('<br />', $cols[1]) . '</div>' . '<br style="clear: both;" />';
-		$PAGE .= '<p>'. $o->get_description() . '</p>';
-		foreach($o->get_contained_test_result_objects() as $ro)
-		{
-			$PAGE .= '<h2><a href="' . WEB_URL_PATH . 'test/' . base64_encode($ro->test_profile->get_identifier()) . '">' . $ro->test_profile->get_title() . '</a></h2>';
-			$PAGE .= '<p>' . $ro->get_arguments_description() . '</p>';
-		}
+		$PAGE = pts_web_embed::test_suite_overview($o);
 		break;
 	case 'tests':
-		$tests = pts_openbenchmarking::available_tests(false, false, true);
-		$tests_to_show = array();
-		foreach($tests as $identifier)
-		{
-			$test_profile = new pts_test_profile($identifier);
-
-			if($test_profile->get_title() == null)
-			{
-				// Don't show unsupported tests
-				continue;
-			}
-
-			$tests_to_show[] = $test_profile;
-		}
-		if(empty($tests_to_show))
-		{
-			$PAGE .= '<p>No cached test profiles found.</p>';
-		}
-		else
-		{
-			$PAGE .= '<p>The ' . count($tests_to_show) . ' test profiles below are cached on the local system and in a current state. For a complete listing of available tests visit <a href="https://openbenchmarking.org/">OpenBenchmarking.org</a>.</p>';
-		}
-
-		$PAGE .= '<div class="pts_test_boxes">';
-		$tests_to_show = array_unique($tests_to_show);
-		function tests_cmp_result_object_sort($a, $b)
-		{
-			$a_comp = $a->get_test_hardware_type() . $a->get_title();
-			$b_comp = $b->get_test_hardware_type() . $b->get_title();
-
-			return strcmp($a_comp, $b_comp);
-		}
-		usort($tests_to_show, 'tests_cmp_result_object_sort');
-		$category = null;
-		$tests_in_category = 0;
-		foreach($tests_to_show as &$test_profile)
-		{
-			if($category != $test_profile->get_test_hardware_type())
-			{
-				$category = $test_profile->get_test_hardware_type();
-				if($category == null) continue;
-				if($tests_in_category > 0)
-				{
-					$PAGE .= '<br style="clear: both;" /><em>' . $tests_in_category . ' Tests</em>';
-				}
-				$tests_in_category = 0;
-				$PAGE .= '</div><a name="' . $category . '"></a>' . PHP_EOL . '<h2>' . $category . '</h2>' . PHP_EOL . '<div class="pts_test_boxes">';
-				$popularity_index = pts_openbenchmarking_client::popular_tests(-1, pts_openbenchmarking_client::read_repository_test_profile_attribute($test_profile, 'test_type'));
-			}
-			if($category == null) continue;
-			$tests_in_category++;
-
-			$last_updated = pts_openbenchmarking_client::read_repository_test_profile_attribute($test_profile, 'last_updated');
-			$versions = pts_openbenchmarking_client::read_repository_test_profile_attribute($test_profile, 'versions');
-			$popularity = isset($popularity_index) && is_array($popularity_index) ? array_search($test_profile->get_identifier(false), $popularity_index) : false;
-			$secondary_message = null;
-
-			if($last_updated > (time() - (60 * 60 * 24 * 30)))
-			{
-				$secondary_message = count($versions) == 1 ? '- <em>Newly Added</em>' : '- <em>Recently Updated</em>';
-			}
-			else if($popularity === 0)
-			{
-				$secondary_message = '- <em>Most Popular</em>';
-			}
-			else if($popularity < 6)
-			{
-				$secondary_message = '- <em>Very Popular</em>';
-			}
-
-			$PAGE .= '<a href="' . WEB_URL_PATH . 'test/' . base64_encode($test_profile->get_identifier()) . '"><div class="table_test_box"><strong>' . $test_profile->get_title(). '</strong><br /><span>~' . pts_strings::plural_handler(max(1, round(pts_openbenchmarking_client::read_repository_test_profile_attribute($test_profile, 'average_run_time') / 60)),
-'min') . ' run-time ' . $secondary_message . '</span></div></a>';
-		}
-		if($tests_in_category > 0)
-		{
-			$PAGE .= '<br style="clear: both;" /><em>' . $tests_in_category . ' Tests</em>';
-		}
-		$PAGE .= '</div>';
+		$PAGE .= pts_web_embed::tests_list();
 		break;
 	case 'suites':
-		$suites = pts_test_suites::all_suites_cached();
-		$suites_to_show = array();
-		foreach($suites as $identifier)
-		{
-			$test_suite = new pts_test_suite($identifier);
-
-			if($test_suite->get_title() == null)
-			{
-				// Don't show unsupported suites
-				continue;
-			}
-
-			$suites_to_show[] = $test_suite;
-		}
-		if(empty($suites_to_show))
-		{
-			$PAGE .= '<p>No cached test suites found.</p>';
-		}
-		else
-		{
-			$PAGE .= '<p>The ' . count($suites_to_show) . ' test suites below are cached on the local system and in a current state. For a complete listing of available test suites visit <a href="https://openbenchmarking.org/">OpenBenchmarking.org</a>.</p>';
-		}
-
-		$PAGE .= '<div class="pts_test_boxes">';
-		$suites_to_show = array_unique($suites_to_show);
-		function suites_cmp_result_object_sort($a, $b)
-		{
-			$a_comp = $a->get_suite_type() . $a->get_title();
-			$b_comp = $b->get_suite_type() . $b->get_title();
-
-			return strcmp($a_comp, $b_comp);
-		}
-		usort($suites_to_show, 'suites_cmp_result_object_sort');
-		$category = null;
-		$suites_in_category = 0;
-		foreach($suites_to_show as &$test_suite)
-		{
-			if($category != $test_suite->get_suite_type())
-			{
-				$category = $test_suite->get_suite_type();
-				if($category == null) continue;
-				if($suites_in_category > 0)
-				{
-					$PAGE .= '<br style="clear: both;" /><em>' . $suites_in_category . ' Suites</em>';
-				}
-				$suites_in_category = 0;
-				$PAGE .= '</div><a name="' . $category . '"></a>' . PHP_EOL . '<h2>' . $category . '</h2>' . PHP_EOL . '<div class="pts_test_boxes">';
-			}
-			if($category == null) continue;
-			$suites_in_category++;
-
-			$last_updated = pts_openbenchmarking_client::read_repository_test_suite_attribute($test_suite->get_identifier(), 'last_updated');
-			$versions = pts_openbenchmarking_client::read_repository_test_suite_attribute($test_suite->get_identifier(), 'versions');
-			$secondary_message = null;
-
-			if($last_updated > (time() - (60 * 60 * 24 * 45)))
-			{
-				// Mark it as newly updated if uploaded in past 3 weeks
-				$secondary_message = count($versions) == 1 ? '- <em>Newly Added</em>' : '- <em>Recently Updated</em>';
-			}
-
-			$PAGE .= '<a href="' . WEB_URL_PATH . 'suite/' . base64_encode($test_suite->get_identifier()) . '"><div class="table_test_box"><strong>' . $test_suite->get_title(). '</strong><br /><span>' . $test_suite->get_test_count() . ' Tests (' . $test_suite->get_unique_test_count() . ' Unique Profiles) ' . $secondary_message . '</span></div></a>';
-		}
-		if($suites_in_category > 0)
-		{
-			$PAGE .= '<br style="clear: both;" /><em>' . $suites_in_category . ' Tests</em>';
-		}
-		$PAGE .= '</div>';
+		$PAGE .= pts_web_embed::test_suites_list();
 		break;
 	case 'result':
 		if(isset($_POST) && !empty($_POST) && !isset($_POST['log_select']) && !isset($_REQUEST['modify']))
@@ -573,10 +347,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 			$PAGE .= '</form>';
 		}
 		break;
-
 }
-
-//define('PAGE', $PAGE);
 
 ?>
 <!doctype html>
@@ -605,14 +376,11 @@ var WEB_URL_PATH = "<?php echo WEB_URL_PATH; ?>";
 <li><a href="<?php echo WEB_URL_PATH; ?>">Results</a></li>
 </ul>
 </div>
-
 <?php
-
 if((!isset($leading_msg) || empty($leading_msg)) && defined('PTS_CORE_STORAGE') && ($motd = pts_storage_object::read_from_file(PTS_CORE_STORAGE, 'MOTD_HTML')) != null)
 {
 	$leading_msg = '<em>' . $motd . '</em>';
 }
-
 if(isset($leading_msg) && $leading_msg) { echo '<div id="leading_message">' . $leading_msg . '</div>'; } ?>
 <div id="main_area">
 <?php echo $PAGE; ?>

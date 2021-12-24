@@ -39,10 +39,6 @@ class phoromatic_build_suite implements pts_webui_interface
 	{
 		if(isset($_POST['suite_title']))
 		{
-		//	echo '<pre>';
-		//	var_dump($_POST);
-		//	echo '</pre>';
-
 			if(strlen($_POST['suite_title']) < 3)
 			{
 				echo '<h2>Suite title must be at least three characters.</h2>';
@@ -196,14 +192,7 @@ class phoromatic_build_suite implements pts_webui_interface
 				$main .= '<option value="' . $test . '">' . $test . '</option>';
 			}
 			$main .= '</select>';
-			if(isset($_COOKIE['list_show_all_test_versions']) && $_COOKIE['list_show_all_test_versions'])
-			{
-				$main .= '<p><input type="checkbox" checked="checked" onchange="javascript:document.cookie=\'list_show_all_test_versions=0\'; location.reload();" /> Show all available test profile versions.</p>';
-			}
-			else
-			{
-				$main .= '<p><input type="checkbox" onchange="javascript:document.cookie=\'list_show_all_test_versions=1\'; location.reload();" /> Show all available test profile versions.</p>';
-			}
+			$main .= pts_web_embed::cookie_checkbox_option_helper('list_show_all_test_versions', 'Show all available test profile versions.');
 			$main .= '<p align="right"><input name="submit" value="' . ($suite->get_title() != null ? 'Edit' : 'Create') .' Suite" type="submit" onclick="return pts_rmm_validate_suite();" /></p>';
 		}
 

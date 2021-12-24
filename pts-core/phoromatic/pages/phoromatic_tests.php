@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015 - 2018, Phoronix Media
-	Copyright (C) 2015 - 2018, Michael Larabel
+	Copyright (C) 2015 - 2021, Phoronix Media
+	Copyright (C) 2015 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -44,9 +44,7 @@ class phoromatic_tests implements pts_webui_interface
 		{
 			$tp = new pts_test_profile($identifier_item);
 			$tp_identifier = $tp->get_identifier(false);
-			$main .= '<h1>' . $tp->get_title() . '</h1><p>' . $tp->get_description() . '</p>';
-			$main .= '<p><strong>' . $tp->get_test_hardware_type() . ' - ' . phoromatic_server::test_result_count_for_test_profile($_SESSION['AccountID'], $tp_identifier) . ' Results On This Account - ' . $tp->get_test_software_type() . ' - Maintained By: ' . $tp->get_maintainer() . ' - Supported Platforms: ' . implode(', ', $tp->get_supported_platforms()) . '</strong></p>';
-			$main .= '<p><a href="http://openbenchmarking.org/test/' . $tp_identifier . '">Find out more about this test profile on OpenBenchmarking.org</a>.</p>';
+			$main .= pts_web_embed::test_profile_overview($tp);
 			$main .= '<h2>Recent Results With This Test</h2>';
 			$stmt = phoromatic_server::$db->prepare('SELECT Title, PPRID FROM phoromatic_results WHERE AccountID = :account_id AND UploadID IN (SELECT DISTINCT UploadID FROM phoromatic_results_results WHERE AccountID = :account_id AND TestProfile LIKE :tp) ORDER BY UploadTime DESC LIMIT 30');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
@@ -93,7 +91,6 @@ class phoromatic_tests implements pts_webui_interface
 					}
 				}
 
-
 				$table = null;
 				$extra_attributes = array('multi_way_comparison_invert_default' => false);
 				$f = false;
@@ -125,7 +122,8 @@ class phoromatic_tests implements pts_webui_interface
 				$cache_json = file_get_contents($dc . 'pts-download-cache.json');
 				$cache_json = json_decode($cache_json, true);
 			}
-			$test_counts_for_account = phoromatic_server::test_result_count_for_test_profiles($_SESSION['AccountID']);
+
+			$tests_to_show = array();
 			foreach(array_merge(pts_tests::local_tests(), pts_openbenchmarking::available_tests(false)) as $test)
 			{
 				$cache_checked = false;
@@ -149,30 +147,9 @@ class phoromatic_tests implements pts_webui_interface
 				if($tp->get_title() == null)
 					continue;
 
-				$test_count = 0;
-				$tpid = $tp->get_identifier(false);
-				foreach($test_counts_for_account as $test => $count)
-				{
-					if($tpid != null && strpos($test, $tpid) !== false)
-					{
-						$test_count += $count;
-						unset($test_counts_for_account[$test]);
-					}
-				}
-
-				if(!PHOROMATIC_USER_IS_VIEWER)
-				{
-					$test_edit = (strpos($tp->get_identifier(), 'local/') !== false ? '<a href="/?create_test/' . $tp->get_identifier() . '">Edit Test</a> - <a href="/?create_test/' . $tp->get_identifier() . '&delete" onclick="return confirm(\'Are you sure you want to delete this test?\');">Delete Test</a>' : '' );
-				}
-				else
-				{
-					$test_edit = null;
-				}
-
-				$main .= '<h1 style="margin-bottom: 0;"><a href="/?tests/' . $tp->get_identifier() . '">' . $tp->get_title() . '</a></h1>';
-				$main .= '<p><strong>' . $tp->get_identifier() . '</strong> <em>-</em> ' . $tp->get_description() . '<br />';
-				$main .= '<strong>' . $tp->get_test_hardware_type() . '</strong> ' . ($test_count > 0 ? '<em>-</em> ' . $test_count . ' Results On This Account' : '') . $test_edit . ' </p>';
+				$tests_to_show[] = $tp;
 			}
+			$main .= pts_web_embed::tests_list($tests_to_show);
 		}
 
 		echo phoromatic_webui_header_logged_in();

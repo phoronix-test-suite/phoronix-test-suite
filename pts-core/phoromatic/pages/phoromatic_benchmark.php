@@ -455,15 +455,6 @@ class phoromatic_benchmark implements pts_webui_interface
 					$main .= '<option value="' . $i . '">' . pts_strings::format_time($i, 'MINUTES') . '</option>';
 				}
 				$main .= '</select></p>';
-
-		/*		$main .= '<h4>System Monitoring</h4>
-				<p>The Phoronix Test Suite system monitor module allows for select hardware/software sensors to be logged in real-time while running the selected test suite. The supported sensors are then shown within the result file upon the test\'s completion.</p>';
-
-				foreach(phodevi::available_sensors() as $sensor)
-				{
-					$main .= '<input type="checkbox" name="MONITOR" value="' . phodevi::sensor_identifier($sensor) . '" /> ' . phodevi::sensor_name($sensor) . ' &nbsp; ';
-				}
-*/
 				$main .= '<p><a id="env_var_options_show" onclick="javascript:document.getElementById(\'env_var_options\').style.display = \'block\'; javascript:document.getElementById(\'env_var_options_show\').style.display = \'none\'; ">Advanced Options</a></p> <div id="env_var_options" style="display: none;"><p>The advanced options require the Phoromatic clients be on the latest Phoronix Test Suite (10.8 or newer / Git). See the Phoronix Test Suite documentation for more information on these environment variables / advanced options.</p>' . pts_env::get_html_options('phoromatic') . '</div>';
 
 				$main .= '<hr /><p align="left"><input name="submit" value="' . ($is_new ? 'Run' : 'Edit') . ' Benchmark" type="submit" onclick="return pts_rmm_validate_schedule();" /></p>

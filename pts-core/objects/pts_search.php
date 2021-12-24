@@ -52,7 +52,7 @@ class pts_search
 		{
 			$test_profile = new pts_test_profile($identifier);
 
-			if($test_profile->get_title() != null && (stripos($test_profile->get_title(), $search_query) !== false || stripos($test_profile->get_identifier(), $search_query) !== false || stripos($test_profile->get_description(), $search_query) !== false || in_array($search_query, $test_profile->get_internal_tags()) !== false))
+			if($test_profile->get_title() != null && pts_search::check_test_profile_match($test_profile, $search_query))
 			{
 				$matches[] = $test_profile;
 			}
@@ -60,18 +60,26 @@ class pts_search
 
 		return $matches;
 	}
+	public static function check_test_profile_match(&$test_profile, $search_query)
+	{
+		return stripos($test_profile->get_title(), $search_query) !== false || stripos($test_profile->get_identifier(), $search_query) !== false || stripos($test_profile->get_description(), $search_query) !== false || in_array($search_query, $test_profile->get_internal_tags()) !== false;
+	}
 	public static function search_test_suites($search_query)
 	{
 		$matches = array();
 		foreach(array_merge(pts_openbenchmarking::available_suites(false), pts_test_suites::local_suites()) as $identifier)
 		{
 			$test_suite = new pts_test_suite($identifier);
-			if($test_suite->get_title() != null && (stripos($test_suite->get_title(), $search_query) !== false || stripos($test_suite->get_identifier(), $search_query) !== false || stripos($test_suite->get_description(), $search_query) !== false))
+			if($test_suite->get_title() != null && pts_search::check_test_suite_match($test_suite, $search_query))
 			{
 				$matches[] = $test_suite;
 			}
 		}
 		return $matches;
+	}
+	public static function check_test_suite_match(&$test_suite, $search_query)
+	{
+		return stripos($test_suite->get_title(), $search_query) !== false || stripos($test_suite->get_identifier(), $search_query) !== false || stripos($test_suite->get_description(), $search_query) !== false || stripos(implode(' ', $test_suite->get_contained_test_identifiers(false)), $search_query) !== false;
 	}
 	public static function search_test_results($search_query)
 	{

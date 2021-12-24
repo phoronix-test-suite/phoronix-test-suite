@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014 - 2018, Phoronix Media
-	Copyright (C) 2014 - 2018, Michael Larabel
+	Copyright (C) 2014 - 2021, Phoronix Media
+	Copyright (C) 2014 - 2021, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -43,6 +43,10 @@ class phoromatic_r_add_test_details implements pts_webui_interface
 
 		echo '<h2>' . $name . ' [' . $test_profile->get_identifier() . '] </h2>';
 		echo '<p><em>' . $description . '</em></p>';
+		if(!empty($supported_os = $test_profile->get_supported_platforms()))
+		{
+			echo '<p>This test is supported on <strong>' . implode(', ', $supported_os) . '</strong>.</p>';
+		}
 		echo '<p>More information on this test can be found via <a href="?tests/' . $test_profile->get_identifier() . '">the test profile page</a> or <a target="_blank" href="http://openbenchmarking.org/test/' . $test_profile->get_identifier() . '">OpenBenchmarking.org</a>.</p>';
 
 		$test_options = $test_profile->get_test_option_objects();

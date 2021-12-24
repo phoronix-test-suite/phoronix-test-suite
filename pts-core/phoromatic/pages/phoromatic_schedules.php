@@ -362,14 +362,7 @@ class phoromatic_schedules implements pts_webui_interface
 						$main .= '<option value="' . $test . '">' . $test . '</option>';
 					}
 					$main .= '</select>';
-					if(isset($_COOKIE['list_show_all_test_versions']) && $_COOKIE['list_show_all_test_versions'])
-					{
-						$main .= '<p><input type="checkbox" checked="checked" onchange="javascript:document.cookie=\'list_show_all_test_versions=0\'; location.reload();" /> Show all available test profile versions.</p>';
-					}
-					else
-					{
-						$main .= '<p><input type="checkbox" onchange="javascript:document.cookie=\'list_show_all_test_versions=1\'; location.reload();" /> Show all available test profile versions.</p>';
-					}
+					$main .= pts_web_embed::cookie_checkbox_option_helper('list_show_all_test_versions', 'Show all available test profile versions.');
 					$main .= '<p><div id="test_details"></div></p>';
 					$main .= '</form>';
 

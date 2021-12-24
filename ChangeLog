@@ -37,6 +37,7 @@ phoromatic: Add option to settings page to always un-install/remove tests after 
 phoromatic: Allow environment variables to also be set on a global basis from the Phoromatic Server Settings page
 phoromatic: Allow test installation metadata to be submitted to Phoromatic Server so from systems area can show currently installed tests and any errors
 phoromatic: Opt-in (settings page) support for streaming in-progress benchmark results to the Phoromatic Server between test runs so results can be viewed from the server as they are completed
+phoromatic: Unifying more result viewer and Phoromatic common display code
 
 Phoronix Test Suite 10.6.1
 10 October 2021
