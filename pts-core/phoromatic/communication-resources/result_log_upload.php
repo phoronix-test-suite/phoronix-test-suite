@@ -45,7 +45,7 @@ if(is_file($result_directory . 'composite.xml'))
 			}
 			else if($SYSTEM_LOGS_ZIP != null && $SYSTEM_LOGS_HASH != null)
 			{
-				if(sha1($SYSTEM_LOGS_ZIP) == $SYSTEM_LOGS_HASH)
+				if(sha1($SYSTEM_LOGS_ZIP) == $SYSTEM_LOGS_HASH && !empty($_POST['system_logs_zip']))
 				{
 					$system_logs_zip = $result_directory . $possible_type . '.zip';
 					file_put_contents($system_logs_zip, base64_decode($_POST['system_logs_zip']));

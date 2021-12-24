@@ -739,7 +739,7 @@ class pts_test_run_options
 	}
 	public static function validate_test_arguments_compatibility($test_args, &$test_profile, &$error = null)
 	{
-		if(PTS_IS_CLIENT == false)
+		if(PTS_IS_CLIENT == false || empty($test_args))
 		{
 			return true;
 		}
