@@ -22,6 +22,8 @@
 
 class dump_documentation implements pts_option_interface
 {
+	const doc_section = 'Asset Creation';
+	const doc_description = 'This option is used for re-generating the Phoronix Test Suite documentation.';
 	public static function run($r)
 	{
 		$pdf = new pts_pdf_template(pts_core::program_title(), 'Test Client Documentation');
@@ -71,9 +73,12 @@ class dump_documentation implements pts_option_interface
 			foreach($contents as &$option)
 			{
 				$sub_header = $dom->createElement('h3', $option[0]);
-				$em = $dom->CreateElement('em', '  ' . implode(' ', $option[1]));
-				$sub_header->appendChild($em);
+				if(!empty($option[1]))
+				{
+					$em = $dom->CreateElement('em', '  ' . implode(' ', $option[1]));
+					$sub_header->appendChild($em);
 
+				}
 				$body->appendChild($sub_header);
 
 				$p = $dom->createElement('p', $option[2]);
@@ -120,7 +125,9 @@ class dump_documentation implements pts_option_interface
 
 				foreach($all_options as $key => $option)
 				{
-					$p = $dom->createElement('p', 'phoronix-test-suite ' . $module . '.' . str_replace('_', '-', $key));
+					$p = $dom->createElement('p');
+					$strong = $dom->createElement('strong', 'phoronix-test-suite ' . $module . '.' . str_replace('_', '-', $key));
+					$p->appendChild($strong);
 					$body->appendChild($p);
 				}
 			}

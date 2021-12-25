@@ -1,4 +1,4 @@
-.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "10.8.0m2"
+.TH phoronix-test-suite 1  "www.phoronix-test-suite.com" "10.8.0"
 .SH NAME
 phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source platform for performing testing and performance evaluation.
 .SH SYNOPSIS
@@ -109,6 +109,12 @@ This option and its arguments pre-set the Phoronix Test Suite batch run mode wit
 .SH OPENBENCHMARKING.ORG
 .B clone-result [OpenBenchmarking ID]  ...
 This option will download a local copy of a file that was saved to OpenBenchmarking.org, as long as a valid public ID is supplied.
+.TP
+.B dump-suites-to-git
+This option will create a Git repository of OpenBenchmarking.org test suites.
+.TP
+.B dump-tests-to-git
+This option will create a Git repository of OpenBenchmarking.org test profiles.
 .TP
 .B enable-repo
 This option is used if wanting to add a new OpenBenchmarking.org account/repository to your system for enabling third-party/unofficial test profiles and test suites.
@@ -225,6 +231,9 @@ This option will check all download links within the specified test profile(s) t
 .TP
 .B download-test-files [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This will download the selected test file(s) to the Phoronix Test Suite download cache but will not install the tests.
+.TP
+.B dump-documentation
+This option is used for re-generating the Phoronix Test Suite documentation.
 .TP
 .B inspect-test-profile [Test]
 This option can be used for inspecting a Phoronix Test Suite test profile with providing inside details on test profiles for debugging / evaluation / learning purposes.
@@ -353,6 +362,21 @@ This option will perform a check on one or more test profiles to determine if th
 .TP
 .B diagnostics
 This option will print information that is useful to developers when debugging problems with the Phoronix Test Suite and/or test profiles and test suites.
+.TP
+.B dump-file-info
+This option will dump the MD5 / SHA256 hashes and file size for a given file.
+.TP
+.B dump-openbenchmarking-indexes
+This option is used for dumping the parsed output of OpenBenchmarking.org index files (metadata).
+.TP
+.B dump-phodevi-smart-cache
+This option is used for displaying the contents of the Phodevi smart cache on the system.
+.TP
+.B dump-possible-options
+This option will print all possible phoronix-test-suite sub-commands.
+.TP
+.B dump-unhandled-dependencies
+This option will list missing entries in the external dependencies XML file for the operating system under test. This option is used if wanting to help find missing dependency XML data to fill in for contributing to upstream Phoronix Test Suite.
 .TP
 .B list-failed-installs
 This option will list all test profiles that were attempted to be installed on the local system but failed to be installed. Where applicable, the possible error(s) from the test installation are also reported to assist in debugging.

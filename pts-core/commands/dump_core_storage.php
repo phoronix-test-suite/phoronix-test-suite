@@ -22,6 +22,7 @@
 
 class dump_core_storage implements pts_option_interface
 {
+	const doc_skip = true;
 	public static function run($r)
 	{
 		pts_client::$display->generic_heading('Core Storage');

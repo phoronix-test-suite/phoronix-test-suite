@@ -7,15 +7,15 @@
 <p>The following list is the modules included with the Phoronix Test Suite that are intended to extend the functionality of pts-core. Some of these options have commands that can be run directly in a similiar manner to the other Phoronix Test Suite user commands. Some modules are just meant to be loaded directly by adding the module name to the AutoLoadModules tag in ~/.phoronix-test-suite/user-config.xml or via the PTS_MODULES environment variable. A list of available modules is also available by running <em>phoronix-test-suite list-modules.</em><hr></p>
 <h2>Backup Creation + Restore</h2>
 <p>This is a module for creating backups of the Phoronix Test Suite / Phoromatic and allows for restoring of created backups. The backup will be in ZIP or TAR format. If only a path is specified, the file-name will be auto-generated with a current time-stamp.</p>
-<p>phoronix-test-suite backup.create</p>
-<p>phoronix-test-suite backup.restore</p>
+<p><strong>phoronix-test-suite backup.create</strong></p>
+<p><strong>phoronix-test-suite backup.restore</strong></p>
 <h2>System Maintenance / Cleanup</h2>
 <p>This module can be used for system maintenance cleanup tasks around the Phoronix Test Suite. Currently implemented is support for automatically un-installing tests that have not been run in a period of time. When the module is loaded via the REMOVE_TESTS_OLDER_THAN environment variable, it will be automatically invoked at the end of running any benchmarks. Or this module can be manually invoked with the command: phoronix-test-suite cleanup.tests.</p>
-<p>phoronix-test-suite cleanup.tests</p>
+<p><strong>phoronix-test-suite cleanup.tests</strong></p>
 <p>This module utilizes the following environment variables: REMOVE_TESTS_OLDER_THAN.</p>
 <h2>Dummy Module</h2>
 <p>This is a simple module intended for developers to just demonstrate some of the module functions.</p>
-<p>phoronix-test-suite dummy_module.dummy-command</p>
+<p><strong>phoronix-test-suite dummy_module.dummy-command</strong></p>
 <p>This is a simple module intended for developers to just demonstrate some of the module functions.</p>
 <h2>Flush Caches</h2>
 <p>Loading this module will ensure caches (page cache, swap, etc) automatically get flushed prior to running any test.</p>
@@ -28,38 +28,38 @@
 <p>This module utilizes the following environment variables: LINUX_PERF.</p>
 <h2>Dynamic Result Viewer</h2>
 <p>This module pre-loads the HTTP dynamic result viewer for Phoronix Test Suite data.</p>
-<p>phoronix-test-suite load_dynamic_result_viewer.start</p>
+<p><strong>phoronix-test-suite load_dynamic_result_viewer.start</strong></p>
 <h2>Log Exporter</h2>
 <p>This module allows for easily exporting test run logs and system logs to external locations via specifying the directory paths via the COPY_TEST_RUN_LOGS_TO and COPY_SYSTEM_LOGS_TO environment variables.</p>
 <p>This module utilizes the following environment variables: COPY_TEST_RUN_LOGS_TO, COPY_SYSTEM_LOGS_TO.</p>
 <h2>MATISK</h2>
 <p>My Automated Test Infrastructure Setup Kit</p>
-<p>phoronix-test-suite matisk.run</p>
-<p>phoronix-test-suite matisk.template</p>
+<p><strong>phoronix-test-suite matisk.run</strong></p>
+<p><strong>phoronix-test-suite matisk.template</strong></p>
 <h2>OpenBenchmarking.org Auto Comparison</h2>
 <p>This module prints comparable OpenBenchmarking.org results in the command-line for reference purposes as tests are being run. OpenBenchmarking.org is automatically queried for results to show based on the test comparison hash and the system type (mobile, desktop, server, cloud, workstation, etc). No other system information or result data is transmitted.</p>
-<p>phoronix-test-suite ob_auto_compare.debug</p>
+<p><strong>phoronix-test-suite ob_auto_compare.debug</strong></p>
 <h2>Performance Per Dollar/Cost Calculator</h2>
 <p>Setting the COST_PERF_PER_DOLLAR= environment variable to whatever value of the system cost/component you are running a comparison on will yield extra graphs that calculate the performance-per-dollar based on the test being run. The COST_PERF_PER_DOLLAR environment variable is applied just to the current test run identifier. Set the COST_PERF_PER_UNIT= environment variable if wishing to use a metric besides dollar/cost. The COST_PERF_PER_HOUR value can be used rather than COST_PERF_PER_DOLLAR if wishing to calculate the e.g. cloud time or other compute time based on an hourly basis.</p>
-<p>phoronix-test-suite perf_per_dollar.add</p>
+<p><strong>phoronix-test-suite perf_per_dollar.add</strong></p>
 <p>This module utilizes the following environment variables: COST_PERF_PER_DOLLAR, COST_PERF_PER_UNIT, COST_PERF_PER_HOUR.</p>
 <h2>Performance Tip Prompts</h2>
 <p>This module alerts the user if the system configuration may not be the right one for achieving the best performance with the target benchmark(s). This initial version of the module actually cares only about the BFQ I/O scheduler and powersave governor checks.</p>
-<p>phoronix-test-suite perf_tips.show</p>
+<p><strong>phoronix-test-suite perf_tips.show</strong></p>
 <p>This module utilizes the following environment variables: SUPPRESS_PERF_TIPS.</p>
 <p>This module alerts the user if the system configuration may not be the right one for achieving the best performance with the target benchmark(s). This initial version of the module actually cares only about the BFQ I/O scheduler: it gives a warning if BFQ is being used with an incorrect configuration in a disk benchmark, and suggests the right configuration to use. For the moment it only works for existing, throughput-based tests. It will need to be extended for responsiveness and soft real-time-latency tests.</p>
 <h2>Benchmarking Compiler PGO Impact</h2>
 <p>This module makes it easy to test a compiler PGO (Profile Guided Optimization) performance impact by running a test without PGO optimizations, capturing the PGO profile, rebuilding the tests with the PGO profile generated, and then repeat the benchmarks.</p>
-<p>phoronix-test-suite pgo.benchmark</p>
+<p><strong>phoronix-test-suite pgo.benchmark</strong></p>
 <h2>Phoromatic Client</h2>
 <p>The Phoromatic client is used for connecting to a Phoromatic server (Phoromatic.com or a locally run server) to facilitate the automatic running of tests, generally across multiple test nodes in a routine manner. For more details visit http://www.phoromatic.com/. This module is intended to be used with Phoronix Test Suite 5.2+ clients and servers.</p>
-<p>phoronix-test-suite phoromatic.connect</p>
-<p>phoronix-test-suite phoromatic.explore</p>
-<p>phoronix-test-suite phoromatic.upload-result</p>
-<p>phoronix-test-suite phoromatic.set-root-admin-password</p>
-<p>phoronix-test-suite phoromatic.list-results</p>
-<p>phoronix-test-suite phoromatic.clone</p>
-<p>phoronix-test-suite phoromatic.export-results-for-account-schedules</p>
+<p><strong>phoronix-test-suite phoromatic.connect</strong></p>
+<p><strong>phoronix-test-suite phoromatic.explore</strong></p>
+<p><strong>phoronix-test-suite phoromatic.upload-result</strong></p>
+<p><strong>phoronix-test-suite phoromatic.set-root-admin-password</strong></p>
+<p><strong>phoronix-test-suite phoromatic.list-results</strong></p>
+<p><strong>phoronix-test-suite phoromatic.clone</strong></p>
+<p><strong>phoronix-test-suite phoromatic.export-results-for-account-schedules</strong></p>
 <p>The Phoromatic module contains the client support for interacting with Phoromatic and Phoromatic Tracker services.</p>
 <h2>Pushover.net</h2>
 <p>Submit notifications to your iOS/Android mobile devices of test results in real-time as push notifications, etc. Using the Pushover.net API.</p>
@@ -71,7 +71,7 @@
 <p>A notification module.</p>
 <h2>Custom Result Export Methods</h2>
 <p>A simple example module about interfacing with Phoronix Test Suite core for dumping result files in a custom format.</p>
-<p>phoronix-test-suite results_custom_export.nf</p>
+<p><strong>phoronix-test-suite results_custom_export.nf</strong></p>
 <h2>System Monitor</h2>
 <p>This module contains sensor monitoring support.</p>
 <p>This module utilizes the following environment variables: MONITOR, PERFORMANCE_PER_WATT, PERFORMANCE_PER_SENSOR, MONITOR_INTERVAL, MONITOR_PER_RUN.</p>

@@ -23,6 +23,7 @@ ini_set('memory_limit', '16G');
 
 class dump_ob_to_ae_db implements pts_option_interface
 {
+	const doc_skip = true;
 	public static function run($r)
 	{
 		$dir_to_recursively_scan = $r[0];

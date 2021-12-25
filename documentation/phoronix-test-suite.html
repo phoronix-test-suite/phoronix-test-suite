@@ -206,7 +206,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		<div id="pts_template_body"><ol><li><a href="#GettingStarted">Getting Started</a></li><li><a href="#UserOptions">User Options</a></li><li><a href="#ModuleOptions">Module Options</a></li><li><a href="#InstallationInstructions">Installation Instructions</a></li><li><a href="#PhoronixTestSuiteOnWindows">Phoronix Test Suite On Windows</a></li><li><a href="#ExternalDependencies">External Dependencies</a></li><li><a href="#Configuration">Configuration</a></li><li><a href="#MainConfigurationFile">Main Configuration File</a></li><li><a href="#EnvironmentVariables">Environment Variables</a></li><li><a href="#GeneralInformation">General Information</a></li><li><a href="#VirtualTestSuites">Virtual Test Suites</a></li><li><a href="#ComponentTesting">Component Testing</a></li><li><a href="#PhoronixTestSuitePhoromatic">Phoronix Test Suite Phoromatic</a></li><li><a href="#OfflineTesting">Offline Testing</a></li><li><a href="#ConfidentialTesting/AvoidingAccidentalResultUploads">Confidential Testing / Avoiding Accidental Result Uploads</a></li><li><a href="#DevelopmentCredits">Development Credits</a></li></ol><hr style="height: 50px; border: 0;"><a name="GettingStarted"></a><h1>Getting Started</h1>
 <h1>Overview</h1>
 <p>The Phoronix Test Suite is the most comprehensive testing and benchmarking platform available for Linux, Solaris, macOS, Windows, and BSD operating systems. The Phoronix Test Suite allows for carrying out tests in a fully automated manner from test installation to execution and reporting. All tests are meant to be easily reproducible, easy-to-use, and support fully automated execution. The Phoronix Test Suite is open-source under the GNU GPLv3 license and is developed by Phoronix Media in cooperation with partners. Version 1.0 of the Phoronix Test Suite was publicly released in 2008.</p>
-<p>The Phoronix Test Suite client itself is a test framework for providing seamless execution of test profiles and test suites. There are more than 600 tests available by default, which are transparently available via <a href="https://openbenchmarking.org/">OpenBenchmarking.org</a> integration. Of these default test profiles there is a range of sub-systems that can be tested and a range of hardware from mobile devices to desktops and worksrtations/servers. New tests can be easily introduced via the Phoronix Test Suite's extensible test architecture, with test profiles consisting of XML files and shell scripts. Test profiles can produce a quantitative result or other qualitative/abstract results like image quality comparisons and pass/fail. Using Phoronix Test Suite modules, other data can also be automatically collected at run-time such as the system power consumption, disk usage, and other software/hardware sensors. Test suites contain references to test profiles to execute as part of a set or can also reference other test suites. Test suites are defined via an XML schema.</p>
+<p>The Phoronix Test Suite client itself is an automated test framework for providing seamless execution of test profiles and test suites. There are more than 650 tests available by default, which are transparently available via <a href="https://openbenchmarking.org/">OpenBenchmarking.org</a> integration. Of these default test profiles there is a range of sub-systems that can be tested and a range of hardware from mobile devices to desktops and worksrtations/servers. New tests can be easily introduced via the Phoronix Test Suite's extensible test architecture, with test profiles consisting of XML files and shell scripts. Test profiles can produce a quantitative result or other qualitative/abstract results like image quality comparisons and pass/fail. Using Phoronix Test Suite modules, other data can also be automatically collected at run-time such as the system power consumption, disk usage, and other software/hardware sensors. Test suites contain references to test profiles to execute as part of a set or can also reference other test suites. Test suites are defined via an XML schema.</p>
 <p>Running the Phoronix Test Suite for the first time can be as simple as issuing a command such as <em>phoronix-test-suite benchmark c-ray</em>, which would proceed to install a simple CPU test, execute the test, and report the results. Along with the results, the system's hardware/software information is collected in a detailed manner, relevant system logs, and other important system attributes such as compiler flags and system state. Users can optionally upload their results to OpenBenchmarking.org for sharing results with others, comparing results against other systems, and to carry out further analysis.</p>
 <h1>OpenBenchmarking.org</h1>
 <p>OpenBenchmarking.org is an open, collaborative testing platform that makes the Phoronix Test Suite an even more extensible platform for conducting automated tests with complete integration into Phoronix Test Suite test client. OpenBenchmarking.org serves as a repository for storing test profiles, test suites, and result data. Test profiles and suites are stored in the OpenBenchmarking.org cloud to allow for new/updated tests to be seamlessly obtained via the Phoronix Test Suite without needing to manually update the Phoronix Test Suite client. OpenBenchmarking.org also makes it easy to facilitate side-by-side comparisons with any other results stored in the OpenBenchmarking.org cloud. Any Phoronix Test Suite user is permitted to upload their test results, test profiles, and suites to OpenBenchmarking.org.</p>
@@ -215,26 +215,21 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <h1>Phoromatic</h1>
 <p>Phoromatic is a remote management system for the Phoronix Test Suite that allows the automatic scheduling of tests, remote installation of new tests, and the management of multiple test systems all through an intuitive, easy-to-use web interface. Tests can be scheduled to automatically run on a routine basis across multiple test systems. Phoromatic can also interface with revision control systems to offer support for issuing new tests on a context-basis, such as whenever a Git commit has been pushed or new daily image available. The test results are then available from this central, secure location.</p>
 <p>Phoromatic is an add-on to the Phoronix Test Suite that's primarily intended for enterprise users when facilitating tests across a wide-spectrum of hardware within a test lab or when needing to carry out tests on a routine basis.</p>
+<p>A Phoromatic server can be started using <em>phoronix-test-suite start-phoromatic-server</em> (or the included systemd phoromatic-server service file). Clients can connect to the server using the <em>phoronix-test-suite phoromatic.connect</em> command as well as a phoromatic-client systemd service. See the Phoromatic section of the documentation for more information on setting up Phoromatic.</p>
 <hr style="height: 50px; border: 0;"><a name="UserOptions"></a><h1>User Options</h1>
 <p>The following options are currently supported by the Phoronix Test Suite client. A list of available options can also be found by running <em>phoronix-test-suite help.</em></p><hr>
 <h1>System</h1>
-<h3>interactive<em>  </em>
-</h3>
+<h3>interactive</h3>
 <p>A simple text-driven interactive interface to the Phoronix Test Suite.</p>
-<h3>php-conf<em>  </em>
-</h3>
+<h3>php-conf</h3>
 <p>This option will print information that is useful to developers when debugging problems with the Phoronix Test Suite and/or test profiles and test suites.</p>
-<h3>shell<em>  </em>
-</h3>
+<h3>shell</h3>
 <p>A simple text-driven shell interface / helper to the Phoronix Test Suite. Ideal for those that may be new to the Phoronix Test Suite</p>
-<h3>system-info<em>  </em>
-</h3>
+<h3>system-info</h3>
 <p>Display the installed system hardware and software information as detected by the Phoronix Test Suite Phodevi Library.</p>
-<h3>system-properties<em>  </em>
-</h3>
+<h3>system-properties</h3>
 <p>Display various hardware/software system properties detected by the Phoronix Device Interface (Phodevi) library.</p>
-<h3>system-sensors<em>  </em>
-</h3>
+<h3>system-sensors</h3>
 <p>Display the installed system hardware and software sensors in real-time as detected by the Phoronix Test Suite Phodevi Library.</p>
 <h1>Test Installation</h1>
 <h3>force-install<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
@@ -246,8 +241,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <h3>install-dependencies<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
 </h3>
 <p>This option will install the external dependencies needed by the selected test(s) using the distribution's package management system. For example, some tests depend upon GCC for compiling code. If GCC is not detected on the system, the Phoronix Test Suite will attempt to install GCC using the distribution's package management system. If you are running this command as a local user, you may be prompted for the root password while the process is running. For unsupported distributions, the dependency names will be displayed along with common names for the package. The install-dependencies option needs to be supplied with the test name or suite as an argument. When using the install option, the external dependencies are automatically checked.</p>
-<h3>make-download-cache<em>  </em>
-</h3>
+<h3>make-download-cache</h3>
 <p>This option will create a download cache for use by the Phoronix Test Suite. The download cache is created of test files already downloaded to the local system. If passing any test/suite names to make-download-cache, the needed files for those test profiles will first be automatically downloaded before creating the cache.</p>
 <h3>remove-installed-test<em>  [Test]</em>
 </h3>
@@ -268,8 +262,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <h3>run<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
 </h3>
 <p>This option will run the selected test(s).</p>
-<h3>run-random-tests<em>  </em>
-</h3>
+<h3>run-random-tests</h3>
 <p>This option will query OpenBenchmarking.org to run random benchmarks and result comparisons on the system. This test can be used for simply supplying interesting results from your system onto OpenBenchmarking.org, stressing your system with random workloads, seeding new OpenBenchmarking.org results, etc. Basic options are provided at start-up for tuning the randomness of the testing when running this command.</p>
 <h3>run-subset<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
 </h3>
@@ -299,8 +292,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <h3>batch-run<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
 </h3>
 <p>This option and its arguments are equivalent to the run option, but the process will be run in the Phoronix Test Suite batch mode.</p>
-<h3>batch-setup<em>  </em>
-</h3>
+<h3>batch-setup</h3>
 <p>This option is used to configure the batch mode options for the Phoronix Test Suite, which is subsequently written to the user configuration file. Among the options are whether to automatically upload the test results to OpenBenchmarking.org and prompting for the saved file name.</p>
 <h3>default-benchmark<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
 </h3>
@@ -318,41 +310,34 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <h3>clone-result<em>  [OpenBenchmarking ID]  ...</em>
 </h3>
 <p>This option will download a local copy of a file that was saved to OpenBenchmarking.org, as long as a valid public ID is supplied.</p>
-<h3>enable-repo<em>  </em>
-</h3>
+<h3>dump-suites-to-git</h3>
+<p>This option will create a Git repository of OpenBenchmarking.org test suites.</p>
+<h3>dump-tests-to-git</h3>
+<p>This option will create a Git repository of OpenBenchmarking.org test profiles.</p>
+<h3>enable-repo</h3>
 <p>This option is used if wanting to add a new OpenBenchmarking.org account/repository to your system for enabling third-party/unofficial test profiles and test suites.</p>
-<h3>list-recommended-tests<em>  </em>
-</h3>
+<h3>list-recommended-tests</h3>
 <p>This option will list recommended test profiles for benchmarking sorted by hardware sub-system. The recommended tests are determined via querying OpenBenchmarking.org and determining the most popular tests for a given environment based upon the number of times a test profile has been downloaded, the number of test results available on OpenBenchmarking.org for a given test profile, the age of the test profile, and other weighted factors.</p>
-<h3>make-openbenchmarking-cache<em>  </em>
-</h3>
+<h3>make-openbenchmarking-cache</h3>
 <p>This option will attempt to cache the test profile/suite meta-data from OpenBenchmarking.org for all linked repositories. This is useful if you're going to be running the Phoronix Test Suite / Phoromatic behind a firewall or without any Internet connection. Those with unrestricted Internet access or not utilizing a large local deployment of the Phoronix Test Suite / Phoromatic shouldn't need to run this command.</p>
-<h3>ob-test-profile-analyze<em>  </em>
-</h3>
+<h3>ob-test-profile-analyze</h3>
 <p>This option is intended for test profile creators and generates a range of meta-data and other useful information that can be submitted to OpenBenchmarking.org to provide more verbose information for users of your test profiles.</p>
-<h3>openbenchmarking-changes<em>  </em>
-</h3>
+<h3>openbenchmarking-changes</h3>
 <p>This option will list recent changes to test profiles of enabled OpenBenchmarking.org repositories.</p>
-<h3>openbenchmarking-login<em>  </em>
-</h3>
+<h3>openbenchmarking-login</h3>
 <p>This option is used for controlling your Phoronix Test Suite client options for OpenBechmarking.org and syncing the client to your account.</p>
-<h3>openbenchmarking-refresh<em>  </em>
-</h3>
+<h3>openbenchmarking-refresh</h3>
 <p>This option is used for refreshing the stored OpenBenchmarking.org repostory information and other data. The Phoronix Test Suite will automatically refresh this data every three days or when other thresholds are exceeded, but this command can be used to manually refresh/updates the data.</p>
-<h3>openbenchmarking-repositories<em>  </em>
-</h3>
+<h3>openbenchmarking-repositories</h3>
 <p>This option will list the OpenBenchmarking.org repositories currently linked to this Phoronix Test Suite client instance.</p>
-<h3>openbenchmarking-uploads<em>  </em>
-</h3>
+<h3>openbenchmarking-uploads</h3>
 <p>This option will list any recent test result uploads from the system's IP address to OpenBenchmarking.org.</p>
-<h3>recently-added-tests<em>  </em>
-</h3>
+<h3>recently-added-tests</h3>
 <p>This option will list the most recently added (newest) test profiles.</p>
 <h3>upload-result<em>  [Test Result]</em>
 </h3>
 <p>This option is used for uploading a test result to OpenBenchmarking.org.</p>
-<h3>upload-test-profile<em>  </em>
-</h3>
+<h3>upload-test-profile</h3>
 <p>This option can be used for uploading a test profile to your account on OpenBenchmarking.org. By uploading your test profile to OpenBenchmarking.org, others are then able to browse and access this test suite for easy distribution in a seamless manner by other Phoronix Test Suite clients.</p>
 <h3>upload-test-suite<em>  [Suite]</em>
 </h3>
@@ -364,60 +349,42 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <h3>intersect<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
 </h3>
 <p>This option will print the test profiles present in all passed result files / test suites. Two or more results/suites must be passed and printed will be all of the common test profiles.</p>
-<h3>list-all-tests<em>  </em>
-</h3>
+<h3>list-all-tests</h3>
 <p>This option will list all test profiles that are available from the enabled OpenBenchmarking.org repositories. Unlike the other test listing options, list-all-tests will show deprecated tests, potentially broken tests, or other tests not recommended for all environments. The only check in place is ensuring the test profiles are at least compatible with the operating system in use.</p>
-<h3>list-available-suites<em>  </em>
-</h3>
+<h3>list-available-suites</h3>
 <p>This option will list all test suites that are available from the enabled OpenBenchmarking.org repositories.</p>
-<h3>list-available-tests<em>  </em>
-</h3>
+<h3>list-available-tests</h3>
 <p>This option will list all test profiles that are available from the enabled OpenBenchmarking.org repositories where supported on the system and are of a verified state. If the system has no Internet access, it will only list the test profiles where the necesary test assets are available locally on the system or on an available network cache (the same behavior as using the list-cached-tests sub-command), unless using the list-all-tests option to override this behavior.</p>
-<h3>list-available-virtual-suites<em>  </em>
-</h3>
+<h3>list-available-virtual-suites</h3>
 <p>This option will list all available virtual test suites that can be dynamically created based upon the available tests from enabled OpenBenchmarking.org repositories.</p>
-<h3>list-cached-tests<em>  </em>
-</h3>
+<h3>list-cached-tests</h3>
 <p>This option will list all test profiles where any needed test profiles are already cached or available from the local system under test. This is primarily useful if testing offline/behind-the-firewall and other use-cases where wanting to rely only upon local data.</p>
-<h3>list-installed-dependencies<em>  </em>
-</h3>
+<h3>list-installed-dependencies</h3>
 <p>This option will list all of the packages / external test dependencies that are already installed on the system that the Phoronix Test Suite may potentially depend upon by test profiles.</p>
-<h3>list-installed-suites<em>  </em>
-</h3>
+<h3>list-installed-suites</h3>
 <p>This option will list all suites that are currently installed on the system.</p>
-<h3>list-installed-tests<em>  </em>
-</h3>
+<h3>list-installed-tests</h3>
 <p>This option will list all test profiles that are currently installed on the system.</p>
-<h3>list-missing-dependencies<em>  </em>
-</h3>
+<h3>list-missing-dependencies</h3>
 <p>This option will list all of the packages / external test dependencies that are missing from the system that the Phoronix Test Suite may potentially need by select test profiles.</p>
-<h3>list-not-installed-tests<em>  </em>
-</h3>
+<h3>list-not-installed-tests</h3>
 <p>This option will list all test profiles that are supported and available but presently NOT installed on the system.</p>
-<h3>list-possible-dependencies<em>  </em>
-</h3>
+<h3>list-possible-dependencies</h3>
 <p>This option will list all of the packages / external test dependencies that are are potentially used by the Phoronix Test Suite.</p>
-<h3>list-saved-results<em>  </em>
-</h3>
+<h3>list-saved-results</h3>
 <p>This option will list all of the saved test results found on the system.</p>
-<h3>list-test-status<em>  </em>
-</h3>
+<h3>list-test-status</h3>
 <p>This sub-command provides a verbose look at all tests installed/uninstalled on the system and whether any errors were encountered at install-time or run-time and other test installation/runtime metrics for complementing other Phoronix Test Suite sub-command outputs.</p>
-<h3>list-test-usage<em>  </em>
-</h3>
+<h3>list-test-usage</h3>
 <p>This option will list various details about installed tests and their usage.</p>
-<h3>search<em>  </em>
-</h3>
+<h3>search</h3>
 <p>This option provides command-line searching abilities for test profiles / test suites / test results. The search query can be passed as a parameter otherwise the user is prompted to input their search query..</p>
-<h3>test-to-suite-map<em>  </em>
-</h3>
+<h3>test-to-suite-map</h3>
 <p>This option will list all test profiles and any test suites each test belongs to.</p>
 <h1>Asset Creation</h1>
-<h3>build-suite<em>  </em>
-</h3>
+<h3>build-suite</h3>
 <p>This option will guide the user through the process of generating their own test suite, which they can then run. Optionally, passed as arguments can be the test(s) or suite(s) to add to the suite to be created, instead of being prompted through the process.</p>
-<h3>create-test-profile<em>  </em>
-</h3>
+<h3>create-test-profile</h3>
 <p>This option can be used for creating a Phoronix Test Suite test profile by answering questions about the test for constructing the test profile XML meta-data and handling other boiler-plate basics for getting started in developing new tests.</p>
 <h3>debug-benchmark<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
 </h3>
@@ -434,14 +401,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <h3>download-test-files<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
 </h3>
 <p>This will download the selected test file(s) to the Phoronix Test Suite download cache but will not install the tests.</p>
+<h3>dump-documentation</h3>
+<p>This option is used for re-generating the Phoronix Test Suite documentation.</p>
 <h3>inspect-test-profile<em>  [Test]</em>
 </h3>
 <p>This option can be used for inspecting a Phoronix Test Suite test profile with providing inside details on test profiles for debugging / evaluation / learning purposes.</p>
 <h3>rebuild-test-suite<em>  [Suite]</em>
 </h3>
 <p>This option will regenerate the local test suite XML file against the OpenBenchmarking.org specification. This can be used to clean up any existing XML syntax / styling issues, etc.</p>
-<h3>validate-result-file<em>  </em>
-</h3>
+<h3>validate-result-file</h3>
 <p>This option can be used for validating a Phoronix Test Suite result file as being compliant against the OpenBenchmarking.org specification.</p>
 <h3>validate-test-profile<em>  [Test]</em>
 </h3>
@@ -499,23 +467,17 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 </h3>
 <p>Open up the test results in the Phoronix Test Suite Result Viewer or on OpenBenchmarking.org.</p>
 <h1>Other</h1>
-<h3>commands<em>  </em>
-</h3>
+<h3>commands</h3>
 <p>This option will display a short list of possible Phoronix Test Suite commands.</p>
-<h3>debug-dependency-handler<em>  </em>
-</h3>
+<h3>debug-dependency-handler</h3>
 <p>This option is used for testing the distribution-specific dependency handler for external dependencies.</p>
-<h3>debug-render-test<em>  </em>
-</h3>
+<h3>debug-render-test</h3>
 <p>This option is used during the development of the Phoronix Test Suite software for testing of the result and graph rendering code-paths This option will download a large number of reference test results from LinuxBenchmarking.com.</p>
-<h3>debug-self-test<em>  </em>
-</h3>
+<h3>debug-self-test</h3>
 <p>This option is used during the development of the Phoronix Test Suite software for testing of internal interfaces, commands, and other common code-paths. The produced numbers should only be comparable for the same version of the Phoronix Test Suite, on the same hardware/software system, conducted on the same day of testing. This isn't intended as any scientific benchmark but simply to stress common PHP code-paths and looking for hot areas to optimize, etc.</p>
-<h3>help<em>  </em>
-</h3>
+<h3>help</h3>
 <p>This option will display a list of available Phoronix Test Suite commands and possible parameter types.</p>
-<h3>version<em>  </em>
-</h3>
+<h3>version</h3>
 <p>This option will display the Phoronix Test Suite client version.</p>
 <h1>Result Analysis</h1>
 <h3>analyze-run-times<em>  [Test Result]</em>
@@ -537,11 +499,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 </h3>
 <p>This option will read a saved test results file and print the test profiles contained within and their arrangement within different test suites for getting an idea as to the workload topology/make-up / logical groupings of the benchmarks being run.</p>
 <h1>Modules</h1>
-<h3>auto-load-module<em>  </em>
-</h3>
+<h3>auto-load-module</h3>
 <p>This option can be used for easily adding a module to the AutoLoadModules list in the Phoronix Test Suite user configuration file. That list controls what PTS modules are automatically loaded on start-up of the Phoronix Test Suite.</p>
-<h3>list-modules<em>  </em>
-</h3>
+<h3>list-modules</h3>
 <p>This option will list all of the available Phoronix Test Suite modules on this system.</p>
 <h3>module-info<em>  [Phoronix Test Suite Module]</em>
 </h3>
@@ -552,43 +512,42 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <h3>test-module<em>  [Phoronix Test Suite Module]</em>
 </h3>
 <p>This option can be used for debugging a Phoronix Test Suite module.</p>
-<h3>unload-module<em>  </em>
-</h3>
+<h3>unload-module</h3>
 <p>This option can be used for easily removing a module from the AutoLoadModules list in the Phoronix Test Suite user configuration file. That list controls what modules are automatically loaded on start-up of the Phoronix Test Suite.</p>
 <h1>Debugging</h1>
 <h3>check-tests<em>  [Test]</em>
 </h3>
 <p>This option will perform a check on one or more test profiles to determine if there have been any vendor changes to the filename, filesize, url location, md5 and sha256 checksums.</p>
-<h3>diagnostics<em>  </em>
-</h3>
+<h3>diagnostics</h3>
 <p>This option will print information that is useful to developers when debugging problems with the Phoronix Test Suite and/or test profiles and test suites.</p>
-<h3>list-failed-installs<em>  </em>
-</h3>
+<h3>dump-file-info</h3>
+<p>This option will dump the MD5 / SHA256 hashes and file size for a given file.</p>
+<h3>dump-openbenchmarking-indexes</h3>
+<p>This option is used for dumping the parsed output of OpenBenchmarking.org index files (metadata).</p>
+<h3>dump-phodevi-smart-cache</h3>
+<p>This option is used for displaying the contents of the Phodevi smart cache on the system.</p>
+<h3>dump-possible-options</h3>
+<p>This option will print all possible phoronix-test-suite sub-commands.</p>
+<h3>dump-unhandled-dependencies</h3>
+<p>This option will list missing entries in the external dependencies XML file for the operating system under test. This option is used if wanting to help find missing dependency XML data to fill in for contributing to upstream Phoronix Test Suite.</p>
+<h3>list-failed-installs</h3>
 <p>This option will list all test profiles that were attempted to be installed on the local system but failed to be installed. Where applicable, the possible error(s) from the test installation are also reported to assist in debugging.</p>
-<h3>list-test-errors<em>  </em>
-</h3>
+<h3>list-test-errors</h3>
 <p>This sub-command is complementary to list-failed-installs. Rather than listing test installation errors, list-test-errors is used for displaying past test run-time errors. This option will list all test profiles that produced an error previously when running the test profile / benchmark. If a test profile later successfully ran the test with any given option(s) without errors, the error is then removed from the archive. This option is intended to be helpful in debugging test profile issues later on for having a persistent collection of run-time errors.</p>
-<h3>list-unsupported-tests<em>  </em>
-</h3>
+<h3>list-unsupported-tests</h3>
 <p>This option will list all available test profiles that are available from the enabled OpenBenchmarking.org repositories but are NOT SUPPORTED on the given hardware/software platform. This is mainly a debugging option for those looking for test profiles to potentially port to new platforms, etc.</p>
 <h1>User Configuration</h1>
-<h3>enterprise-setup<em>  </em>
-</h3>
+<h3>enterprise-setup</h3>
 <p>This option can be run by enterprise users immediately after package installation or as part of an in-house setup script. Running this command will ensure the phoronix-test-suite program is never interrupted on new runs to accept user agreement changes and defaults the anonymous usage reporting to being disabled and other conservative defaults.</p>
-<h3>network-info<em>  </em>
-</h3>
+<h3>network-info</h3>
 <p>This option will print information detected by the Phoronix Test Suite around the system's network configuration.</p>
-<h3>network-setup<em>  </em>
-</h3>
+<h3>network-setup</h3>
 <p>This option allows the user to configure how the Phoronix Test Suite connects to OpenBenchmarking.org and other web-services. Connecting through an HTTP proxy can be configured through this option.</p>
-<h3>user-config-reset<em>  </em>
-</h3>
+<h3>user-config-reset</h3>
 <p>This option can be used for resetting the Phoronix Test Suite user configuration file to its default state.</p>
-<h3>user-config-set<em>  </em>
-</h3>
+<h3>user-config-set</h3>
 <p>This option can be used for setting an XML value in the Phoronix Test Suite user configuration file.</p>
-<h3>variables<em>  </em>
-</h3>
+<h3>variables</h3>
 <p>This option will print all of the official environment variables supported by the Phoronix Test Suite for user configuration purposes. These environment variables are also listed as part of the official Phoronix Test Suite documentation while this command will also show the current value of the variables if currently set.</p>
 <h1>Result Export</h1>
 <h3>result-file-raw-to-csv<em>  [Test Result]</em>
@@ -613,26 +572,24 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 </h3>
 <p>This option will read a saved test results file and output the system hardware and software information to the terminal. The test results are also outputted.</p>
 <h1>Phoromatic</h1>
-<h3>start-phoromatic-server<em>  </em>
-</h3>
+<h3>start-phoromatic-server</h3>
 <p>Start the Phoromatic web server for controlling local Phoronix Test Suite client systems to facilitate automated and repeated test orchestration and other automated features targeted at the enterprise.</p>
 <h1>Result Viewer</h1>
-<h3>start-result-viewer<em>  </em>
-</h3>
+<h3>start-result-viewer</h3>
 <p>Start the web-based result viewer.</p>
 <hr style="height: 50px; border: 0;"><a name="ModuleOptions"></a><h1>Module Options</h1>
 <p>The following list is the modules included with the Phoronix Test Suite that are intended to extend the functionality of pts-core. Some of these options have commands that can be run directly in a similiar manner to the other Phoronix Test Suite user commands. Some modules are just meant to be loaded directly by adding the module name to the AutoLoadModules tag in ~/.phoronix-test-suite/user-config.xml or via the PTS_MODULES environment variable. A list of available modules is also available by running <em>phoronix-test-suite list-modules.</em></p><hr>
 <h2>Backup Creation + Restore</h2>
 <p>This is a module for creating backups of the Phoronix Test Suite / Phoromatic and allows for restoring of created backups. The backup will be in ZIP or TAR format. If only a path is specified, the file-name will be auto-generated with a current time-stamp.</p>
-<p>phoronix-test-suite backup.create</p>
-<p>phoronix-test-suite backup.restore</p>
+<p><strong>phoronix-test-suite backup.create</strong></p>
+<p><strong>phoronix-test-suite backup.restore</strong></p>
 <h2>System Maintenance / Cleanup</h2>
 <p>This module can be used for system maintenance cleanup tasks around the Phoronix Test Suite. Currently implemented is support for automatically un-installing tests that have not been run in a period of time. When the module is loaded via the REMOVE_TESTS_OLDER_THAN environment variable, it will be automatically invoked at the end of running any benchmarks. Or this module can be manually invoked with the command: phoronix-test-suite cleanup.tests.</p>
-<p>phoronix-test-suite cleanup.tests</p>
+<p><strong>phoronix-test-suite cleanup.tests</strong></p>
 <p>This module utilizes the following environment variables: REMOVE_TESTS_OLDER_THAN.</p>
 <h2>Dummy Module</h2>
 <p>This is a simple module intended for developers to just demonstrate some of the module functions.</p>
-<p>phoronix-test-suite dummy_module.dummy-command</p>
+<p><strong>phoronix-test-suite dummy_module.dummy-command</strong></p>
 <p>This is a simple module intended for developers to just demonstrate some of the module functions.</p>
 <h2>Flush Caches</h2>
 <p>Loading this module will ensure caches (page cache, swap, etc) automatically get flushed prior to running any test.</p>
@@ -645,38 +602,38 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <p>This module utilizes the following environment variables: LINUX_PERF.</p>
 <h2>Dynamic Result Viewer</h2>
 <p>This module pre-loads the HTTP dynamic result viewer for Phoronix Test Suite data.</p>
-<p>phoronix-test-suite load_dynamic_result_viewer.start</p>
+<p><strong>phoronix-test-suite load_dynamic_result_viewer.start</strong></p>
 <h2>Log Exporter</h2>
 <p>This module allows for easily exporting test run logs and system logs to external locations via specifying the directory paths via the COPY_TEST_RUN_LOGS_TO and COPY_SYSTEM_LOGS_TO environment variables.</p>
 <p>This module utilizes the following environment variables: COPY_TEST_RUN_LOGS_TO, COPY_SYSTEM_LOGS_TO.</p>
 <h2>MATISK</h2>
 <p>My Automated Test Infrastructure Setup Kit</p>
-<p>phoronix-test-suite matisk.run</p>
-<p>phoronix-test-suite matisk.template</p>
+<p><strong>phoronix-test-suite matisk.run</strong></p>
+<p><strong>phoronix-test-suite matisk.template</strong></p>
 <h2>OpenBenchmarking.org Auto Comparison</h2>
 <p>This module prints comparable OpenBenchmarking.org results in the command-line for reference purposes as tests are being run. OpenBenchmarking.org is automatically queried for results to show based on the test comparison hash and the system type (mobile, desktop, server, cloud, workstation, etc). No other system information or result data is transmitted.</p>
-<p>phoronix-test-suite ob_auto_compare.debug</p>
+<p><strong>phoronix-test-suite ob_auto_compare.debug</strong></p>
 <h2>Performance Per Dollar/Cost Calculator</h2>
 <p>Setting the COST_PERF_PER_DOLLAR= environment variable to whatever value of the system cost/component you are running a comparison on will yield extra graphs that calculate the performance-per-dollar based on the test being run. The COST_PERF_PER_DOLLAR environment variable is applied just to the current test run identifier. Set the COST_PERF_PER_UNIT= environment variable if wishing to use a metric besides dollar/cost. The COST_PERF_PER_HOUR value can be used rather than COST_PERF_PER_DOLLAR if wishing to calculate the e.g. cloud time or other compute time based on an hourly basis.</p>
-<p>phoronix-test-suite perf_per_dollar.add</p>
+<p><strong>phoronix-test-suite perf_per_dollar.add</strong></p>
 <p>This module utilizes the following environment variables: COST_PERF_PER_DOLLAR, COST_PERF_PER_UNIT, COST_PERF_PER_HOUR.</p>
 <h2>Performance Tip Prompts</h2>
 <p>This module alerts the user if the system configuration may not be the right one for achieving the best performance with the target benchmark(s). This initial version of the module actually cares only about the BFQ I/O scheduler and powersave governor checks.</p>
-<p>phoronix-test-suite perf_tips.show</p>
+<p><strong>phoronix-test-suite perf_tips.show</strong></p>
 <p>This module utilizes the following environment variables: SUPPRESS_PERF_TIPS.</p>
 <p>This module alerts the user if the system configuration may not be the right one for achieving the best performance with the target benchmark(s). This initial version of the module actually cares only about the BFQ I/O scheduler: it gives a warning if BFQ is being used with an incorrect configuration in a disk benchmark, and suggests the right configuration to use. For the moment it only works for existing, throughput-based tests. It will need to be extended for responsiveness and soft real-time-latency tests.</p>
 <h2>Benchmarking Compiler PGO Impact</h2>
 <p>This module makes it easy to test a compiler PGO (Profile Guided Optimization) performance impact by running a test without PGO optimizations, capturing the PGO profile, rebuilding the tests with the PGO profile generated, and then repeat the benchmarks.</p>
-<p>phoronix-test-suite pgo.benchmark</p>
+<p><strong>phoronix-test-suite pgo.benchmark</strong></p>
 <h2>Phoromatic Client</h2>
 <p>The Phoromatic client is used for connecting to a Phoromatic server (Phoromatic.com or a locally run server) to facilitate the automatic running of tests, generally across multiple test nodes in a routine manner. For more details visit http://www.phoromatic.com/. This module is intended to be used with Phoronix Test Suite 5.2+ clients and servers.</p>
-<p>phoronix-test-suite phoromatic.connect</p>
-<p>phoronix-test-suite phoromatic.explore</p>
-<p>phoronix-test-suite phoromatic.upload-result</p>
-<p>phoronix-test-suite phoromatic.set-root-admin-password</p>
-<p>phoronix-test-suite phoromatic.list-results</p>
-<p>phoronix-test-suite phoromatic.clone</p>
-<p>phoronix-test-suite phoromatic.export-results-for-account-schedules</p>
+<p><strong>phoronix-test-suite phoromatic.connect</strong></p>
+<p><strong>phoronix-test-suite phoromatic.explore</strong></p>
+<p><strong>phoronix-test-suite phoromatic.upload-result</strong></p>
+<p><strong>phoronix-test-suite phoromatic.set-root-admin-password</strong></p>
+<p><strong>phoronix-test-suite phoromatic.list-results</strong></p>
+<p><strong>phoronix-test-suite phoromatic.clone</strong></p>
+<p><strong>phoronix-test-suite phoromatic.export-results-for-account-schedules</strong></p>
 <p>The Phoromatic module contains the client support for interacting with Phoromatic and Phoromatic Tracker services.</p>
 <h2>Pushover.net</h2>
 <p>Submit notifications to your iOS/Android mobile devices of test results in real-time as push notifications, etc. Using the Pushover.net API.</p>
@@ -688,7 +645,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <p>A notification module.</p>
 <h2>Custom Result Export Methods</h2>
 <p>A simple example module about interfacing with Phoronix Test Suite core for dumping result files in a custom format.</p>
-<p>phoronix-test-suite results_custom_export.nf</p>
+<p><strong>phoronix-test-suite results_custom_export.nf</strong></p>
 <h2>System Monitor</h2>
 <p>This module contains sensor monitoring support.</p>
 <p>This module utilizes the following environment variables: MONITOR, PERFORMANCE_PER_WATT, PERFORMANCE_PER_SENSOR, MONITOR_INTERVAL, MONITOR_PER_RUN.</p>
@@ -799,6 +756,7 @@ NOTE: Use the "system-sensors" command to see what sensors are available for mon
 <p>The only required dependency for the Phoronix Test Suite is PHP 5.3 or newer. On Linux distributions, the needed package is commonly called <em>php5-cli</em> or <em>php-cli</em> or <em>php7</em> or <em>php</em>. It is important to note that only PHP for the command-line is needed and not a web server (Apache) or other packages commonly associated with PHP and its usage by web-sites. The PHP5 version required is PHP 5.3+ and can also be found at <a href="http://www.php.net/">www.php.net</a>. PHP 7 and PHP 8 are also fully supported by the Phoronix Test Suite.</p>
 
 <p>The <em>phoronix-test-suite.bat</em> Windows launcher for the Phoronix Test Suite will automatically download and setup PHP on the local system if PHP is not present already.</p>
+<p>The Phoronix Test Suite does not need to be installed system-wide but can simply be run from the extracted phoronix-test-suite folder as the local user.</p>
 <p>As part of the PHP requirement, the following PHP extensions are required and/or highly recommended in order to take advantage of the Phoronix Test Suite capabilities:</p>
 <ul>
 <li><strong>PHP DOM</strong> is needed for XML operations and must be installed for the Phoronix Test Suite to function.</li>
@@ -830,19 +788,19 @@ NOTE: Use the "system-sensors" command to see what sensors are available for mon
 <h2>BSD Installation</h2>
 <p>The Phoronix Test Suite also supports *BSD operating systems. However, like the Solaris support, not all test profiles are compatible with BSD operating systems, but should run well on the likes of FreeBSD and DragonFlyBSD.</p>
 <h2>MacOS Installation</h2>
-<p>The Phoronix Test Suite is fully supported on Apple's macOS operating system. PHP ships with macOS by default so it's simply a matter of downloading the Phoronix Test Suite package, extracting it, and running the executable. For tests that rely upon a compiler, Apple's XCode with GCC and LLVM can be utilized.</p>
+<p>The Phoronix Test Suite is fully supported on Apple's macOS operating system. PHP ships with macOS by default on macOS 12 and older so it's simply a matter of downloading the Phoronix Test Suite package, extracting it, and running the executable. For tests that rely upon a compiler, Apple's XCode with GCC and LLVM can be utilized. On newer versions of macOS not shipping with PHP by default, <a href="https://brew.sh/">Homebrew</a> can be used for installing PHP or building PHP from source. The Phoronix Test Suite also supports making use of Homebrew for acquiring necessary Phoronix Test Suite dependencies on macOS.</p>
 <hr style="height: 50px; border: 0;"><a name="PhoronixTestSuiteOnWindows"></a><h1>Phoronix Test Suite On Windows</h1>
 
 <h2>Introduction</h2>
-<p>Phoronix Test Suite 8.0 introduced rewritten Windows support that is at a near feature parity to the program's long-standing support for Linux, macOS, BSD and Solaris operating systems.</p>
-<p>The Phoronix Test Suite Windows support currently targets <strong>Windows 10 x64</strong>, <strong>Windows 11 x64</strong> and <strong>Windows Server 2016 x64</strong>. Earlier versions of Windows, namely Windows Server 2012 and Windows 8, may work to some extent but some hardware/software reporting features and other capabilities may be missing or report warning messages. The Phoronix Test Suite Windows support is also exclusively focused on x86 64-bit support: the Phoronix Test Suite itself will run on x86 32-bit but many of the program dependencies are configured for making use of 64-bit binaries.</p>
+<p>Phoronix Test Suite 8.0 introduced rewritten Windows support that is at near feature parity to the program's long-standing support for Linux, macOS, and BSD operating systems.</p>
+<p>The Phoronix Test Suite Windows support currently targets <strong>Windows 10 x64</strong>, <strong>Windows 11 x64</strong> and <strong>Windows Server 2016 x64</strong> and later. Earlier versions of Windows, namely Windows Server 2012 and Windows 8, may work to some extent but some hardware/software reporting features and other capabilities may be missing or report warning messages. The Phoronix Test Suite Windows support is also exclusively focused on x86 64-bit support: the Phoronix Test Suite itself will run on x86 32-bit but many of the program dependencies are configured for making use of 64-bit binaries.</p>
 <h2>Windows Setup / Dependencies</h2>
 <p>As with Phoronix Test Suite on Linux and other operating systems, the principal dependency is on PHP. Running the <em>phoronix-test-suite.bat</em> file launcher for the Phoronix Test Suite on Windows will attempt to download and setup PHP on the system under <em>C:\PHP</em> as the default location should PHP support not be found within your system's <em>Program Files</em> directories. The PHP Windows build does depend upon Microsoft Visual C++ redistributable libraries, which the Windows launcher will also attempt to download and install if needed.</p>
 <p>The Phoronix Test Suite on Windows does depend upon <a href="https://www.cygwin.com/">Cygwin</a> for its Bash interpreter and other basic utilities to ease the process of porting test profiles to Windows with being able to use many of the same test installation scripts on Windows/Linux/macOS/BSD/Solaris then largely unmodified. Most of the Windows tests depend upon their respective native Windows applications/binaries while this Cygwin support is a convenience for handling these Bash setup scripts and also some test profiles that depend upon a GNU toolchain. The Phoronix Test Suite will attempt to download and setup Cygwin on the system if Cygwin isn't found in its default location of <em>C:\cygwin64</em>.</p>
 <p>Various test profiles may depend upon other "external dependencies" like Python, PERL, Steam, and Java, as examples. The Phoronix Test Suite as with its support for other operating systems and Linux distributions will attempt to install these needed dependencies on a per-test basis when needed if existing support is not detected on the system.</p>
 <h2>Running The Phoronix Test Suite On Windows</h2>
 <p>The Phoronix Test Suite can run from its local directory and does not need to be "installed" to a system path or any other "setup" process prior to execution. On a clean install of Windows or Windows Server, deploying the Phoronix Test Suite is designed to be as easy and straight-forward as possible:</p>
-<p>1. Download the Phoronix Test Suite 8.0+ or <a href="https://github.com/phoronix-test-suite/phoronix-test-suite">Phoronix-Test-Suite from GitHub</a> (<a href="https://github.com/phoronix-test-suite/phoronix-test-suite/archive/master.zip">zip file</a>).</p>
+<p>1. Download the Phoronix Test Suite from <a href="https://github.com/phoronix-test-suite/phoronix-test-suite">Phoronix-Test-Suite on GitHub</a> (<a href="https://github.com/phoronix-test-suite/phoronix-test-suite/archive/master.zip">zip file</a>).</p>
 <p>2. From the Command Prompt or PowerShell, enter the <em>phoronix-test-suite</em> directory whether it be from Git or a zipped download.</p>
 <p>3. Run the <em>phoronix-test-suite.bat</em> file that should proceed to run the Phoronix Test Suite just as you would on any other operating system. If needed the Phoronix Test Suite will try to initially download and setup PHP if needed followed by the attempted automatic Cygwin setup, etc.</p>
 <p>4. Any of the Phoronix Test Suite commands from other operating systems should work on Windows. If you are new to the Phoronix Test Suite, you may enjoy a bit more guided experience by running the <strong>phoronix-test-suite shell</strong> command.</p>
@@ -1278,14 +1236,14 @@ The variable depends upon functionality provided by the Phoronix Test Suite modu
 <hr style="height: 50px; border: 0;"><a name="GeneralInformation"></a><h1>General Information</h1>
 <h1>Frequently Asked Questions</h1>
 <p><strong><em>Q:</em> May I use the Phoronix Test Suite when running benchmarks for my own publication or blog? Are there any publishing restrictions?</strong></p>
-<p><strong>A:</strong> Anyone is more than welcome to use the Phoronix Test Suite for their own publication or purpose. While the Phoronix Test Suite came out of our internal test tools for carrying out Linux hardware reviews at <a href="http://www.phoronix.com/">Phoronix.com</a>, we invite other hardware review web-sites, technology journals, and independent publications to use our software too. While not required, we would just kindly ask that you mention in your review/article that the <em>Phoronix Test Suite</em> was used for carrying out your testing, and ideally to link to <a href="http://www.phoronix-test-suite.com/">www.phoronix-test-suite.com</a> so that your readers will know where to obtain the software if they are interested in running the tests. You are also more than welcome to upload your results to <a href="http://www.openbenchmarking.org/">OpenBenchmarking.org</a> so that others may compare their results against yours in an easy manner.</p>
+<p><strong>A:</strong> Anyone is more than welcome to use the Phoronix Test Suite for their own publication or purpose. While the Phoronix Test Suite came out of our internal test tools for carrying out Linux hardware reviews at <a href="https://www.phoronix.com/">Phoronix.com</a>, we invite other hardware review web-sites, technology journals, and independent publications to use our software too. While not required, we would just kindly ask that you mention in your review/article that the <em>Phoronix Test Suite</em> was used for carrying out your testing, and ideally to link to <a href="http://www.phoronix-test-suite.com/">www.phoronix-test-suite.com</a> so that your readers will know where to obtain the software if they are interested in running the tests. You are also more than welcome to upload your results to <a href="http://www.openbenchmarking.org/">OpenBenchmarking.org</a> so that others may compare their results against yours in an easy manner.</p>
 <p>We also try to make the Phoronix Test Suite easy-to-use by independent publications. For example, if you would like to watermark your web-site's URL into the graphs containing your test results, that can be easily modified in <em>~/.phoronix-test-suite/graph-config.json</em>. The colors and other graph settings are also stored in this XML file. If you are a publication and run into any issues with the Phoronix Test Suite or have a feature request, please let us know.</p>
 <p><strong><em>Q:</em> Why does the Phoronix Test Suite not use my distribution's package management system for acquiring all needed packages?</strong></p>
 <p><strong>A:</strong> The tests themselves are generally downloaded from source and built locally on the machine, rather than fetching any distribution-specific packages. This is done to ensure more comparable results across operating systems / releases, etc. The distribution packager could be applying a number of unknown patches to the software, building the software with unique build options, or making other changes to the software that could skew the results.</p>
 <p><strong><em>Q:</em> Besides being a developer, documentation writer, or having any other unique technical abilities, how else can I contribute to the Phoronix Test Suite?</strong></p>
 <p><strong>A:</strong> Independent code contributions are very welcome as well as creating your own test profiles and suites. We also appreciate any feedback, comments, or other ideas either by emailing us, posting on GitHub, or sending a message to the mailing list.</p>
 <p><strong><em>Q:</em> Do you offer technical support for the Phoronix Test Suite</strong></p>
-<p><strong>A:</strong> Paid, professional support is available and is done via <a href="http://commercial.phoronix-test-suite.com/">our commercial services</a>. We also offer Phoromatic licenses for use within a corporate intranet and other custom services. Free, community support is offered via our <a href="http://phoronix-test-suite.com/mailman/listinfo/trondheim-pts_phoronix-test-suite.com">mailing list</a>, IRC channel (<em>#phoronix</em> on <em>FreeNode.net</em>, and <a href="https://github.com/phoronix-test-suite">GitHub</a>.</p>
+<p><strong>A:</strong> Paid, professional support is available and is done via <a href="http://commercial.phoronix-test-suite.com/">our commercial services</a>. Free, community support is offered via <a href="https://github.com/phoronix-test-suite">GitHub</a>.</p>
 <p><strong><em>Q:</em> May I put the Phoronix Test Suite logo on my company's web-site or on my product packaging?</strong></p>
 <p><strong>A:</strong> <a href="http://www.phoronix-test-suite.com/?k=contact">Contact us</a> for licensing information and details regarding the Phoronix Certification &amp; Qualification Suite.</p>
 <p><strong><em>Q:</em> How often is the Phoronix Test Suite updated?</strong></p>
@@ -1599,7 +1557,6 @@ In the event that a test profile fails to install or run, the following general 
 <p>The Phoronix Test Suite utilizes a compiler masking method for logging compiler options and other settings with each test profile installation. Prior to installing an open-source test, the Phoronix Test Suite determines the intended compiler to be used based upon the pre-set environment variables or the pre-set compiler(s) within the <em>PATH</em> environment variable. The Phoronix Test Suite then masks the compiler to ensure that any options/flags submitted to the compiler are first passed through pts-core so that they can be logged for later use, then is linked to the original, intended compiler. Additionally, other compiler binary names of the same type are blacklisted to prevent their un-intended use (i.e. if a test profile has hard-coded <em>gcc</em> in its build script, but <em>clang</em> is set as the compiler via <em>CC</em>, a sym-link will automatically be created from <em>gcc</em> to the masked <em>clang</em> for the duration of its test installation).</p>
 <p>The logged compiler data is then used by the Phoronix Test Suite following the test execution process for automated result analysis. If there is a detected change in compiler settings, the differences are automatically reported to the test result graphs. Additionally, key compiler information (e.g. the compiler optimization level and key libraries that were linked at compile-time) is reported as a footnote on result graphs. The Phoronix Test Suite handles all of this in a fully automated manner; test profiles require no changes to take advantage of these compiler-reporting capabilities.</p>
 <p>Separately, the Phoronix Test Suite attempts to automatically log the system compiler's build configuration (i.e. GCC's <em>gcc -v</em> "Configured with") output. If the Phoronix Test Suite detects there is a compiler build configuration change between test runs in a result file, it will report each compiler's build configuration to the system information table within the results viewer. Reported to the table is a reduced view of the build configuration options, with less relevant items being stripped away from this view to reduce verbosity. Upon clicking the text, the raw compiler information output can be viewed in full.</p>
-
 <h1>Disk / File-System Testing</h1>
 <p>By default tests are installed to <em>~/.phoronix-test-suite/installed-tests/</em>. However, the location can be updated from <em>~/.phoronix-test-suite/user-config.xml</em> or dynamically via the <em>PTS_TEST_INSTALL_ROOT_PATH</em> environment variable.</p>
 <p>When any disk tests are executed, the Phoronix Test Suite will attempt to log the mount options and scheduler of the disk/partition being used for testing. This information is subsequently displayed within the system information table. If the scheduler / mount options are maintained the same throughout all test runs, only a single line is displayed otherwise the options for each test run will be automatically displayed. The file-system in use is always captured and shown in the system information table.</p>
@@ -1630,7 +1587,7 @@ In the event that a test profile fails to install or run, the following general 
 <p>On the "client side", any up-to-date version of the Phoronix Test Suite can automatically communicate with the Phoromatic Server. If Avahi support is available (commonly in Linux distribution repositories as <u>avahi-tools</u>), there should be zero-conf discovery if the Phoromatic Server and client systems are on the same LAN. If a Phoronix Test Suite client discovers a Phoromatic Server, it will attempt to use it automatically as a local download cache. In the event of no Internet connection, it will also attempt to obtain the needed OpenBenchmarking.org test/suite meta-data from the Phoromatic Server based upon its archived meta-data. This allows the Phoronix Test Suite / Phoromatic deployment on the LAN to be self-sustaining without an Internet connection as long as the systems have all installed test dependencies.</p>
 <p>Further configuration of the setup parameters for the Phoromatic Server and Phoronix Test Suite clients can be tuned via the <em>~/.phoronix-test-suite/user-config.xml</em> file. All control and configuration of the Phoromatic Server is done via the web-based interface when the Phoromatic Server is active.</p>
 <p>The Phoromatic Server utilizes PHP's built-in web-server capabilities and there's also a Phoronix Test Suite built-in WebSocket server that's also initiated for back-end processing. At this time there are no ports set by default for these services but must be defined within the user configuration file. With the Avahi zero-conf network discovery and other automated detection in place, there's little restrictions over the port selection.</p>
-<p>Systemd and Upstart service files are shipped with the Phoronix Test Suite for those that wish to have the services automatically run as daemons. The only new requirements over the basic Phoronix Test Suite system requirements is having PHP-SQLite support installed and the newer version of PHP is recommended for offering the best support.</p>
+<p>Systemd service files are shipped with the Phoronix Test Suite for those that wish to have the services automatically run as daemons. The only new requirements over the basic Phoronix Test Suite system requirements is having PHP-SQLite support installed and the newer version of PHP is recommended for offering the best support.</p>
 <h2>Example Deployments</h2>
 <h3>Use Case A: Unrestricted Internet Access, Local Result Storage</h3>
 <p>Systems on your network with unrestricted Internet access is the easiest and simplest deployment for the Phoronix Test Suite and Phoromatic. After installing the Phoronix Test Suite on the system you wish to designate the Phoromatic Server and have configured the <em>user-config.xml</em> file, simply run:</p>
@@ -1670,8 +1627,8 @@ SUPPORTED OPENBENCHMARKING.ORG REPOSITORIES:<br>
 <p>If you have an Internet connection but want to ensure your Phoronix Test Suite client doesn't attempt to use it for any matter, via the <em>~/.phoronix-test-suite/user-config.xml</em> you can set <em>NoInternetCommunication</em> to <em>TRUE</em>. There's also a NoNetworkCommunication tag, but setting that to TRUE will disable any form of network communication -- including communication with the Phoromatic Server.</p>
 <h3>Ports / Services</h3>
 <p>The Phoromatic Server process currently relies upon a PHP built-in web server process and a PTS-hosted WebSocket server. The web server process handles the web UI and much of the responsibilities of the Phoromatic Server. Over time the PTS WebSocket server will be increasingly utilized for bi-directional, real-time communication between the server and clients -- including for features like viewing real-time hardware sensors of client systems from the server UI.</p>
-<h3>Systemd / Upstart</h3>
-<p>Packaged with the Phoronix Test Suite are basic <em>phoromatic-client</em> and <em>phoromatic-server</em> configurations for both Upstart and systemd init systems. The <em>phoromatic-server</em> configuration will launch the Phoronix Test Suite's Phoromatic Server and the <em>phoromatic-client</em> service will attempt to connect to a <u>pre-configured</u> Phoromatic Server. The systemd service files will automatically be installed via the Phoronix Test Suite <em>install-sh</em> process while the Upstart jobs can be copied from <em>deploy/phoromatic-upstart/*</em> to <em>/etc/init</em>.</p>
+<h3>Systemd</h3>
+<p>Packaged with the Phoronix Test Suite are basic <em>phoromatic-client</em> and <em>phoromatic-server</em> configurations for systemd. The <em>phoromatic-server</em> configuration will launch the Phoronix Test Suite's Phoromatic Server and the <em>phoromatic-client</em> service will attempt to connect to a <u>pre-configured</u> Phoromatic Server. The systemd service files will automatically be installed via the Phoronix Test Suite <em>install-sh</em> process.</p>
 <h3>Cache Verification</h3>
 <p>To confirm the files accessible to Phoronix Test Suite client systems, from the Phoromatic Server web user-interface go to the <em>settings</em> page followed by the <em>cache settings</em> link to view information about the download and OpenBenchmarking.org caches. From the client systems, running <strong>phoronix-test-suite phoromatic.explore</strong> will also supply cache statistics.</p>
 <h3>Log Files</h3>

@@ -1,5 +1,21 @@
 # Phoronix Test Suite Release History
 
+Phoronix Test Suite 10.8
+======
+#### Release Date: 25 December 2021
+* Consolidated and unified handling of environment variables, exposing as well environment variables to Phoromatic
+* Improved test installation and test run-time error detection and reporting
+* Support improvements for macOS 12
+* Support improvements for PHP 8.1
+* Improved JSON result output generation
+* Phoromatic now uses the unified/shared result viewer code for an improved experience, along with other code sharing improvements
+* Phoromatic client support for connecting to HTTPS-only Phoromatic servers
+* Phoromatic now allows optionally uploading test run-time and installation logs
+* Phoromatic systems pages can now display test profile installation status overview
+* Phoromatic now supports streaming/incremental result uploads for viewing tentative results as benchmarks are finished
+* New sub-commands: remove-incomplete-results-from-result-file, result-file-to-html, list-failed-installs, variables, list-test-errors
+* New modules: cleanup
+
 Phoronix Test Suite 10.6
 ======
 #### Release Date: 10 October 2021 | Codename: Tjeldsund

@@ -22,7 +22,7 @@
 
 class dump_unhandled_dependencies implements pts_option_interface
 {
-	const doc_section = 'Asset Creation';
+	const doc_section = 'Debugging';
 	const doc_description = 'This option will list missing entries in the external dependencies XML file for the operating system under test. This option is used if wanting to help find missing dependency XML data to fill in for contributing to upstream Phoronix Test Suite.';
 
 	public static function run($r)

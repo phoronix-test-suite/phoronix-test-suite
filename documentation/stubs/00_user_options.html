@@ -6,23 +6,17 @@
 <body>
 <p>The following options are currently supported by the Phoronix Test Suite client. A list of available options can also be found by running <em>phoronix-test-suite help.</em><hr></p>
 <h1>System</h1>
-<h3>interactive<em>  </em>
-</h3>
+<h3>interactive</h3>
 <p>A simple text-driven interactive interface to the Phoronix Test Suite.</p>
-<h3>php-conf<em>  </em>
-</h3>
+<h3>php-conf</h3>
 <p>This option will print information that is useful to developers when debugging problems with the Phoronix Test Suite and/or test profiles and test suites.</p>
-<h3>shell<em>  </em>
-</h3>
+<h3>shell</h3>
 <p>A simple text-driven shell interface / helper to the Phoronix Test Suite. Ideal for those that may be new to the Phoronix Test Suite</p>
-<h3>system-info<em>  </em>
-</h3>
+<h3>system-info</h3>
 <p>Display the installed system hardware and software information as detected by the Phoronix Test Suite Phodevi Library.</p>
-<h3>system-properties<em>  </em>
-</h3>
+<h3>system-properties</h3>
 <p>Display various hardware/software system properties detected by the Phoronix Device Interface (Phodevi) library.</p>
-<h3>system-sensors<em>  </em>
-</h3>
+<h3>system-sensors</h3>
 <p>Display the installed system hardware and software sensors in real-time as detected by the Phoronix Test Suite Phodevi Library.</p>
 <h1>Test Installation</h1>
 <h3>force-install<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
@@ -34,8 +28,7 @@
 <h3>install-dependencies<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
 </h3>
 <p>This option will install the external dependencies needed by the selected test(s) using the distribution's package management system. For example, some tests depend upon GCC for compiling code. If GCC is not detected on the system, the Phoronix Test Suite will attempt to install GCC using the distribution's package management system. If you are running this command as a local user, you may be prompted for the root password while the process is running. For unsupported distributions, the dependency names will be displayed along with common names for the package. The install-dependencies option needs to be supplied with the test name or suite as an argument. When using the install option, the external dependencies are automatically checked.</p>
-<h3>make-download-cache<em>  </em>
-</h3>
+<h3>make-download-cache</h3>
 <p>This option will create a download cache for use by the Phoronix Test Suite. The download cache is created of test files already downloaded to the local system. If passing any test/suite names to make-download-cache, the needed files for those test profiles will first be automatically downloaded before creating the cache.</p>
 <h3>remove-installed-test<em>  [Test]</em>
 </h3>
@@ -56,8 +49,7 @@
 <h3>run<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
 </h3>
 <p>This option will run the selected test(s).</p>
-<h3>run-random-tests<em>  </em>
-</h3>
+<h3>run-random-tests</h3>
 <p>This option will query OpenBenchmarking.org to run random benchmarks and result comparisons on the system. This test can be used for simply supplying interesting results from your system onto OpenBenchmarking.org, stressing your system with random workloads, seeding new OpenBenchmarking.org results, etc. Basic options are provided at start-up for tuning the randomness of the testing when running this command.</p>
 <h3>run-subset<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
 </h3>
@@ -87,8 +79,7 @@
 <h3>batch-run<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
 </h3>
 <p>This option and its arguments are equivalent to the run option, but the process will be run in the Phoronix Test Suite batch mode.</p>
-<h3>batch-setup<em>  </em>
-</h3>
+<h3>batch-setup</h3>
 <p>This option is used to configure the batch mode options for the Phoronix Test Suite, which is subsequently written to the user configuration file. Among the options are whether to automatically upload the test results to OpenBenchmarking.org and prompting for the saved file name.</p>
 <h3>default-benchmark<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
 </h3>
@@ -106,41 +97,34 @@
 <h3>clone-result<em>  [OpenBenchmarking ID]  ...</em>
 </h3>
 <p>This option will download a local copy of a file that was saved to OpenBenchmarking.org, as long as a valid public ID is supplied.</p>
-<h3>enable-repo<em>  </em>
-</h3>
+<h3>dump-suites-to-git</h3>
+<p>This option will create a Git repository of OpenBenchmarking.org test suites.</p>
+<h3>dump-tests-to-git</h3>
+<p>This option will create a Git repository of OpenBenchmarking.org test profiles.</p>
+<h3>enable-repo</h3>
 <p>This option is used if wanting to add a new OpenBenchmarking.org account/repository to your system for enabling third-party/unofficial test profiles and test suites.</p>
-<h3>list-recommended-tests<em>  </em>
-</h3>
+<h3>list-recommended-tests</h3>
 <p>This option will list recommended test profiles for benchmarking sorted by hardware sub-system. The recommended tests are determined via querying OpenBenchmarking.org and determining the most popular tests for a given environment based upon the number of times a test profile has been downloaded, the number of test results available on OpenBenchmarking.org for a given test profile, the age of the test profile, and other weighted factors.</p>
-<h3>make-openbenchmarking-cache<em>  </em>
-</h3>
+<h3>make-openbenchmarking-cache</h3>
 <p>This option will attempt to cache the test profile/suite meta-data from OpenBenchmarking.org for all linked repositories. This is useful if you're going to be running the Phoronix Test Suite / Phoromatic behind a firewall or without any Internet connection. Those with unrestricted Internet access or not utilizing a large local deployment of the Phoronix Test Suite / Phoromatic shouldn't need to run this command.</p>
-<h3>ob-test-profile-analyze<em>  </em>
-</h3>
+<h3>ob-test-profile-analyze</h3>
 <p>This option is intended for test profile creators and generates a range of meta-data and other useful information that can be submitted to OpenBenchmarking.org to provide more verbose information for users of your test profiles.</p>
-<h3>openbenchmarking-changes<em>  </em>
-</h3>
+<h3>openbenchmarking-changes</h3>
 <p>This option will list recent changes to test profiles of enabled OpenBenchmarking.org repositories.</p>
-<h3>openbenchmarking-login<em>  </em>
-</h3>
+<h3>openbenchmarking-login</h3>
 <p>This option is used for controlling your Phoronix Test Suite client options for OpenBechmarking.org and syncing the client to your account.</p>
-<h3>openbenchmarking-refresh<em>  </em>
-</h3>
+<h3>openbenchmarking-refresh</h3>
 <p>This option is used for refreshing the stored OpenBenchmarking.org repostory information and other data. The Phoronix Test Suite will automatically refresh this data every three days or when other thresholds are exceeded, but this command can be used to manually refresh/updates the data.</p>
-<h3>openbenchmarking-repositories<em>  </em>
-</h3>
+<h3>openbenchmarking-repositories</h3>
 <p>This option will list the OpenBenchmarking.org repositories currently linked to this Phoronix Test Suite client instance.</p>
-<h3>openbenchmarking-uploads<em>  </em>
-</h3>
+<h3>openbenchmarking-uploads</h3>
 <p>This option will list any recent test result uploads from the system's IP address to OpenBenchmarking.org.</p>
-<h3>recently-added-tests<em>  </em>
-</h3>
+<h3>recently-added-tests</h3>
 <p>This option will list the most recently added (newest) test profiles.</p>
 <h3>upload-result<em>  [Test Result]</em>
 </h3>
 <p>This option is used for uploading a test result to OpenBenchmarking.org.</p>
-<h3>upload-test-profile<em>  </em>
-</h3>
+<h3>upload-test-profile</h3>
 <p>This option can be used for uploading a test profile to your account on OpenBenchmarking.org. By uploading your test profile to OpenBenchmarking.org, others are then able to browse and access this test suite for easy distribution in a seamless manner by other Phoronix Test Suite clients.</p>
 <h3>upload-test-suite<em>  [Suite]</em>
 </h3>
@@ -152,60 +136,42 @@
 <h3>intersect<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
 </h3>
 <p>This option will print the test profiles present in all passed result files / test suites. Two or more results/suites must be passed and printed will be all of the common test profiles.</p>
-<h3>list-all-tests<em>  </em>
-</h3>
+<h3>list-all-tests</h3>
 <p>This option will list all test profiles that are available from the enabled OpenBenchmarking.org repositories. Unlike the other test listing options, list-all-tests will show deprecated tests, potentially broken tests, or other tests not recommended for all environments. The only check in place is ensuring the test profiles are at least compatible with the operating system in use.</p>
-<h3>list-available-suites<em>  </em>
-</h3>
+<h3>list-available-suites</h3>
 <p>This option will list all test suites that are available from the enabled OpenBenchmarking.org repositories.</p>
-<h3>list-available-tests<em>  </em>
-</h3>
+<h3>list-available-tests</h3>
 <p>This option will list all test profiles that are available from the enabled OpenBenchmarking.org repositories where supported on the system and are of a verified state. If the system has no Internet access, it will only list the test profiles where the necesary test assets are available locally on the system or on an available network cache (the same behavior as using the list-cached-tests sub-command), unless using the list-all-tests option to override this behavior.</p>
-<h3>list-available-virtual-suites<em>  </em>
-</h3>
+<h3>list-available-virtual-suites</h3>
 <p>This option will list all available virtual test suites that can be dynamically created based upon the available tests from enabled OpenBenchmarking.org repositories.</p>
-<h3>list-cached-tests<em>  </em>
-</h3>
+<h3>list-cached-tests</h3>
 <p>This option will list all test profiles where any needed test profiles are already cached or available from the local system under test. This is primarily useful if testing offline/behind-the-firewall and other use-cases where wanting to rely only upon local data.</p>
-<h3>list-installed-dependencies<em>  </em>
-</h3>
+<h3>list-installed-dependencies</h3>
 <p>This option will list all of the packages / external test dependencies that are already installed on the system that the Phoronix Test Suite may potentially depend upon by test profiles.</p>
-<h3>list-installed-suites<em>  </em>
-</h3>
+<h3>list-installed-suites</h3>
 <p>This option will list all suites that are currently installed on the system.</p>
-<h3>list-installed-tests<em>  </em>
-</h3>
+<h3>list-installed-tests</h3>
 <p>This option will list all test profiles that are currently installed on the system.</p>
-<h3>list-missing-dependencies<em>  </em>
-</h3>
+<h3>list-missing-dependencies</h3>
 <p>This option will list all of the packages / external test dependencies that are missing from the system that the Phoronix Test Suite may potentially need by select test profiles.</p>
-<h3>list-not-installed-tests<em>  </em>
-</h3>
+<h3>list-not-installed-tests</h3>
 <p>This option will list all test profiles that are supported and available but presently NOT installed on the system.</p>
-<h3>list-possible-dependencies<em>  </em>
-</h3>
+<h3>list-possible-dependencies</h3>
 <p>This option will list all of the packages / external test dependencies that are are potentially used by the Phoronix Test Suite.</p>
-<h3>list-saved-results<em>  </em>
-</h3>
+<h3>list-saved-results</h3>
 <p>This option will list all of the saved test results found on the system.</p>
-<h3>list-test-status<em>  </em>
-</h3>
+<h3>list-test-status</h3>
 <p>This sub-command provides a verbose look at all tests installed/uninstalled on the system and whether any errors were encountered at install-time or run-time and other test installation/runtime metrics for complementing other Phoronix Test Suite sub-command outputs.</p>
-<h3>list-test-usage<em>  </em>
-</h3>
+<h3>list-test-usage</h3>
 <p>This option will list various details about installed tests and their usage.</p>
-<h3>search<em>  </em>
-</h3>
+<h3>search</h3>
 <p>This option provides command-line searching abilities for test profiles / test suites / test results. The search query can be passed as a parameter otherwise the user is prompted to input their search query..</p>
-<h3>test-to-suite-map<em>  </em>
-</h3>
+<h3>test-to-suite-map</h3>
 <p>This option will list all test profiles and any test suites each test belongs to.</p>
 <h1>Asset Creation</h1>
-<h3>build-suite<em>  </em>
-</h3>
+<h3>build-suite</h3>
 <p>This option will guide the user through the process of generating their own test suite, which they can then run. Optionally, passed as arguments can be the test(s) or suite(s) to add to the suite to be created, instead of being prompted through the process.</p>
-<h3>create-test-profile<em>  </em>
-</h3>
+<h3>create-test-profile</h3>
 <p>This option can be used for creating a Phoronix Test Suite test profile by answering questions about the test for constructing the test profile XML meta-data and handling other boiler-plate basics for getting started in developing new tests.</p>
 <h3>debug-benchmark<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
 </h3>
@@ -222,14 +188,15 @@
 <h3>download-test-files<em>  [Test | Suite | OpenBenchmarking ID | Test Result]  ...</em>
 </h3>
 <p>This will download the selected test file(s) to the Phoronix Test Suite download cache but will not install the tests.</p>
+<h3>dump-documentation</h3>
+<p>This option is used for re-generating the Phoronix Test Suite documentation.</p>
 <h3>inspect-test-profile<em>  [Test]</em>
 </h3>
 <p>This option can be used for inspecting a Phoronix Test Suite test profile with providing inside details on test profiles for debugging / evaluation / learning purposes.</p>
 <h3>rebuild-test-suite<em>  [Suite]</em>
 </h3>
 <p>This option will regenerate the local test suite XML file against the OpenBenchmarking.org specification. This can be used to clean up any existing XML syntax / styling issues, etc.</p>
-<h3>validate-result-file<em>  </em>
-</h3>
+<h3>validate-result-file</h3>
 <p>This option can be used for validating a Phoronix Test Suite result file as being compliant against the OpenBenchmarking.org specification.</p>
 <h3>validate-test-profile<em>  [Test]</em>
 </h3>
@@ -287,23 +254,17 @@
 </h3>
 <p>Open up the test results in the Phoronix Test Suite Result Viewer or on OpenBenchmarking.org.</p>
 <h1>Other</h1>
-<h3>commands<em>  </em>
-</h3>
+<h3>commands</h3>
 <p>This option will display a short list of possible Phoronix Test Suite commands.</p>
-<h3>debug-dependency-handler<em>  </em>
-</h3>
+<h3>debug-dependency-handler</h3>
 <p>This option is used for testing the distribution-specific dependency handler for external dependencies.</p>
-<h3>debug-render-test<em>  </em>
-</h3>
+<h3>debug-render-test</h3>
 <p>This option is used during the development of the Phoronix Test Suite software for testing of the result and graph rendering code-paths This option will download a large number of reference test results from LinuxBenchmarking.com.</p>
-<h3>debug-self-test<em>  </em>
-</h3>
+<h3>debug-self-test</h3>
 <p>This option is used during the development of the Phoronix Test Suite software for testing of internal interfaces, commands, and other common code-paths. The produced numbers should only be comparable for the same version of the Phoronix Test Suite, on the same hardware/software system, conducted on the same day of testing. This isn't intended as any scientific benchmark but simply to stress common PHP code-paths and looking for hot areas to optimize, etc.</p>
-<h3>help<em>  </em>
-</h3>
+<h3>help</h3>
 <p>This option will display a list of available Phoronix Test Suite commands and possible parameter types.</p>
-<h3>version<em>  </em>
-</h3>
+<h3>version</h3>
 <p>This option will display the Phoronix Test Suite client version.</p>
 <h1>Result Analysis</h1>
 <h3>analyze-run-times<em>  [Test Result]</em>
@@ -325,11 +286,9 @@
 </h3>
 <p>This option will read a saved test results file and print the test profiles contained within and their arrangement within different test suites for getting an idea as to the workload topology/make-up / logical groupings of the benchmarks being run.</p>
 <h1>Modules</h1>
-<h3>auto-load-module<em>  </em>
-</h3>
+<h3>auto-load-module</h3>
 <p>This option can be used for easily adding a module to the AutoLoadModules list in the Phoronix Test Suite user configuration file. That list controls what PTS modules are automatically loaded on start-up of the Phoronix Test Suite.</p>
-<h3>list-modules<em>  </em>
-</h3>
+<h3>list-modules</h3>
 <p>This option will list all of the available Phoronix Test Suite modules on this system.</p>
 <h3>module-info<em>  [Phoronix Test Suite Module]</em>
 </h3>
@@ -340,43 +299,42 @@
 <h3>test-module<em>  [Phoronix Test Suite Module]</em>
 </h3>
 <p>This option can be used for debugging a Phoronix Test Suite module.</p>
-<h3>unload-module<em>  </em>
-</h3>
+<h3>unload-module</h3>
 <p>This option can be used for easily removing a module from the AutoLoadModules list in the Phoronix Test Suite user configuration file. That list controls what modules are automatically loaded on start-up of the Phoronix Test Suite.</p>
 <h1>Debugging</h1>
 <h3>check-tests<em>  [Test]</em>
 </h3>
 <p>This option will perform a check on one or more test profiles to determine if there have been any vendor changes to the filename, filesize, url location, md5 and sha256 checksums.</p>
-<h3>diagnostics<em>  </em>
-</h3>
+<h3>diagnostics</h3>
 <p>This option will print information that is useful to developers when debugging problems with the Phoronix Test Suite and/or test profiles and test suites.</p>
-<h3>list-failed-installs<em>  </em>
-</h3>
+<h3>dump-file-info</h3>
+<p>This option will dump the MD5 / SHA256 hashes and file size for a given file.</p>
+<h3>dump-openbenchmarking-indexes</h3>
+<p>This option is used for dumping the parsed output of OpenBenchmarking.org index files (metadata).</p>
+<h3>dump-phodevi-smart-cache</h3>
+<p>This option is used for displaying the contents of the Phodevi smart cache on the system.</p>
+<h3>dump-possible-options</h3>
+<p>This option will print all possible phoronix-test-suite sub-commands.</p>
+<h3>dump-unhandled-dependencies</h3>
+<p>This option will list missing entries in the external dependencies XML file for the operating system under test. This option is used if wanting to help find missing dependency XML data to fill in for contributing to upstream Phoronix Test Suite.</p>
+<h3>list-failed-installs</h3>
 <p>This option will list all test profiles that were attempted to be installed on the local system but failed to be installed. Where applicable, the possible error(s) from the test installation are also reported to assist in debugging.</p>
-<h3>list-test-errors<em>  </em>
-</h3>
+<h3>list-test-errors</h3>
 <p>This sub-command is complementary to list-failed-installs. Rather than listing test installation errors, list-test-errors is used for displaying past test run-time errors. This option will list all test profiles that produced an error previously when running the test profile / benchmark. If a test profile later successfully ran the test with any given option(s) without errors, the error is then removed from the archive. This option is intended to be helpful in debugging test profile issues later on for having a persistent collection of run-time errors.</p>
-<h3>list-unsupported-tests<em>  </em>
-</h3>
+<h3>list-unsupported-tests</h3>
 <p>This option will list all available test profiles that are available from the enabled OpenBenchmarking.org repositories but are NOT SUPPORTED on the given hardware/software platform. This is mainly a debugging option for those looking for test profiles to potentially port to new platforms, etc.</p>
 <h1>User Configuration</h1>
-<h3>enterprise-setup<em>  </em>
-</h3>
+<h3>enterprise-setup</h3>
 <p>This option can be run by enterprise users immediately after package installation or as part of an in-house setup script. Running this command will ensure the phoronix-test-suite program is never interrupted on new runs to accept user agreement changes and defaults the anonymous usage reporting to being disabled and other conservative defaults.</p>
-<h3>network-info<em>  </em>
-</h3>
+<h3>network-info</h3>
 <p>This option will print information detected by the Phoronix Test Suite around the system's network configuration.</p>
-<h3>network-setup<em>  </em>
-</h3>
+<h3>network-setup</h3>
 <p>This option allows the user to configure how the Phoronix Test Suite connects to OpenBenchmarking.org and other web-services. Connecting through an HTTP proxy can be configured through this option.</p>
-<h3>user-config-reset<em>  </em>
-</h3>
+<h3>user-config-reset</h3>
 <p>This option can be used for resetting the Phoronix Test Suite user configuration file to its default state.</p>
-<h3>user-config-set<em>  </em>
-</h3>
+<h3>user-config-set</h3>
 <p>This option can be used for setting an XML value in the Phoronix Test Suite user configuration file.</p>
-<h3>variables<em>  </em>
-</h3>
+<h3>variables</h3>
 <p>This option will print all of the official environment variables supported by the Phoronix Test Suite for user configuration purposes. These environment variables are also listed as part of the official Phoronix Test Suite documentation while this command will also show the current value of the variables if currently set.</p>
 <h1>Result Export</h1>
 <h3>result-file-raw-to-csv<em>  [Test Result]</em>
@@ -401,12 +359,10 @@
 </h3>
 <p>This option will read a saved test results file and output the system hardware and software information to the terminal. The test results are also outputted.</p>
 <h1>Phoromatic</h1>
-<h3>start-phoromatic-server<em>  </em>
-</h3>
+<h3>start-phoromatic-server</h3>
 <p>Start the Phoromatic web server for controlling local Phoronix Test Suite client systems to facilitate automated and repeated test orchestration and other automated features targeted at the enterprise.</p>
 <h1>Result Viewer</h1>
-<h3>start-result-viewer<em>  </em>
-</h3>
+<h3>start-result-viewer</h3>
 <p>Start the web-based result viewer.</p>
 </body>
 </html>

@@ -11,6 +11,7 @@
 <p>The only required dependency for the Phoronix Test Suite is PHP 5.3 or newer. On Linux distributions, the needed package is commonly called <em>php5-cli</em> or <em>php-cli</em> or <em>php7</em> or <em>php</em>. It is important to note that only PHP for the command-line is needed and not a web server (Apache) or other packages commonly associated with PHP and its usage by web-sites. The PHP5 version required is PHP 5.3+ and can also be found at <a href="http://www.php.net/">www.php.net</a>. PHP 7 and PHP 8 are also fully supported by the Phoronix Test Suite.</p>
 
 <p>The <em>phoronix-test-suite.bat</em> Windows launcher for the Phoronix Test Suite will automatically download and setup PHP on the local system if PHP is not present already.</p>
+<p>The Phoronix Test Suite does not need to be installed system-wide but can simply be run from the extracted phoronix-test-suite folder as the local user.</p>
 <p>As part of the PHP requirement, the following PHP extensions are required and/or highly recommended in order to take advantage of the Phoronix Test Suite capabilities:</p>
 <ul>
 <li><strong>PHP DOM</strong> is needed for XML operations and must be installed for the Phoronix Test Suite to function.</li>
@@ -42,6 +43,6 @@
 <h2>BSD Installation</h2>
 <p>The Phoronix Test Suite also supports *BSD operating systems. However, like the Solaris support, not all test profiles are compatible with BSD operating systems, but should run well on the likes of FreeBSD and DragonFlyBSD.</p>
 <h2>MacOS Installation</h2>
-<p>The Phoronix Test Suite is fully supported on Apple's macOS operating system. PHP ships with macOS by default so it's simply a matter of downloading the Phoronix Test Suite package, extracting it, and running the executable. For tests that rely upon a compiler, Apple's XCode with GCC and LLVM can be utilized.</p>
+<p>The Phoronix Test Suite is fully supported on Apple's macOS operating system. PHP ships with macOS by default on macOS 12 and older so it's simply a matter of downloading the Phoronix Test Suite package, extracting it, and running the executable. For tests that rely upon a compiler, Apple's XCode with GCC and LLVM can be utilized. On newer versions of macOS not shipping with PHP by default, <a href="https://brew.sh/">Homebrew</a> can be used for installing PHP or building PHP from source. The Phoronix Test Suite also supports making use of Homebrew for acquiring necessary Phoronix Test Suite dependencies on macOS.</p>
 </body>
 </html>

@@ -22,6 +22,8 @@
 
 class dump_phodevi_smart_cache implements pts_option_interface
 {
+	const doc_section = 'Debugging';
+	const doc_description = 'This option is used for displaying the contents of the Phodevi smart cache on the system.';
 	public static function run($r)
 	{
 		$pso = pts_storage_object::recover_from_file(PTS_CORE_STORAGE);

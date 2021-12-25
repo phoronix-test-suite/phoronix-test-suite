@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 10.8.0
+25 December 2021
 
 pts-core: Remaining PHP 8.1 warnings/fixes addressed
 pts-core: Various macOS 12 warning fixes
@@ -24,8 +25,8 @@ phodevi: CPU temperature monitoring on Windows
 phodevi: Show "energy_performance_preference" CPU frequency scaling value where relevant
 phodevi: Linux CPUFreq EPP reporting support
 phodevi: Report Windows 10+ security features
-cleanup: Add module that can auto uninstall tests not run in a given amount of time
 phodevi: Add PHODEVI_SANITIZE environment variable for those wanting to strip out certain hardware/software strings from system information
+cleanup: Add module that can auto uninstall tests not run in a given amount of time
 phoromatic: Allow relevant PTS environment variables to be exposed for setting by Phoromatic Server for benchmarks/schedules as "advanced options" area
 phoromatic: Use the unified result viewer code for presenting result graphs and other result page data
 phoromatic: Make use of shared/common result viewer code to allow adding/editing annotations, editing result file title/description, and deleting individual results from within the result viewer

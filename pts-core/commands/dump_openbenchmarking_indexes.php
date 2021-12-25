@@ -22,6 +22,8 @@
 
 class dump_openbenchmarking_indexes implements pts_option_interface
 {
+	const doc_section = 'Debugging';
+	const doc_description = 'This option is used for dumping the parsed output of OpenBenchmarking.org index files (metadata).';
 	public static function run($r)
 	{
 		echo PHP_EOL . 'OpenBenchmarking.org Repositories:' . PHP_EOL . PHP_EOL;
