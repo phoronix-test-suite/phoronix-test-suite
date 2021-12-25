@@ -355,7 +355,6 @@ class pts_client
 
 			$env_variables = array(
 			'PTS_VERSION' => PTS_VERSION,
-			'PTS_CODENAME' => PTS_CODENAME,
 			'PTS_DIR' => PTS_PATH,
 			'PTS_LAUNCHER' => getenv('PTS_LAUNCHER'),
 			'PHP_BIN' => PHP_BIN,
@@ -636,12 +635,16 @@ class pts_client
 					'glxinfo',
 					'clinfo',
 					'vulkaninfo',
-					'uname -a',
 					// 'udisks --dump',
 					//'upower --dump',
 					'dmidecode',
 					);
 
+				if(!phodevi::is_windows())
+				{
+					// uname is provided by Cygwin but executing it messes up terminal color/bold formatting afterwards (unescaped chars?)
+					$system_log_commands[] = 'uname -a';
+				}
 				if(phodevi::is_linux() && phodevi::read_property('system', 'filesystem') == 'ext4' && phodevi::is_root())
 				{
 					$system_log_commands[] = 'dumpe2fs -h ' . phodevi::read_property('disk', 'device-providing-storage');

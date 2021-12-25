@@ -55,7 +55,7 @@ class pts_documentation
 			$option_php = basename($option_php_file, '.php');
 			$name = str_replace('_', '-', $option_php);
 
-			if(!in_array(pts_strings::first_in_string($name, '-'), array('dump', 'task')))
+			if(true)
 			{
 				include_once($option_php_file);
 
