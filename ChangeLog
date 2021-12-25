@@ -17,6 +17,9 @@ pts-core: Improved test installation / test run-time error reporting and detecti
 pts-core: Allow recording/archiving install and runtime errors within installation metadata
 pts-core: Add list-failed-installs sub-command for showing tests that failed to install
 pts-core: Add list-test-errors sub-command for showing test run-time errors
+pts-core: Add variables sub-command for showing environment variable descriptions and what is set
+pts-core: Dynamic detection of Windows download folder location
+pts-core: Improved Zip handling on Windows
 phodevi: Add detection for Arm Cortex-A710 and Neoverse-N2 cores
 phodevi: Add detection for AMD Zen 4 cores
 phodevi: Add detection for Intel Raptor Lake
