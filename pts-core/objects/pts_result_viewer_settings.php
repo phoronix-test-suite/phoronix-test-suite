@@ -513,8 +513,10 @@ if($result_file->get_test_count() > 1)
 				echo pts_result_viewer_embed::html_template_log_viewer($html_viewer, $result_file);
 				exit;
 		}
+	}
+	public static function process_result_modify_pre_render(&$result_file, $can_modify_results = false, $can_delete_results = false)
+	{
 
-		// End result export
 		if(!isset($_REQUEST['modify']) || ($can_modify_results == false && $can_delete_results == false))
 		{
 			return;

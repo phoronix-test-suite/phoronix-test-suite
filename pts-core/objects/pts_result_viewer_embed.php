@@ -113,6 +113,7 @@ class pts_result_viewer_embed
 	{
 		$PAGE = null;
 		$result_file = &$this->result_file;
+		pts_result_viewer_settings::process_result_modify_pre_render($result_file, $this->can_modify_results, $this->can_delete_results);
 		$result_file->avoid_duplicate_identifiers();
 		$extra_attributes = null;
 		$html_options = pts_result_viewer_settings::get_html_options_markup($result_file, $_REQUEST, $this->result_public_id, $this->can_delete_results);
