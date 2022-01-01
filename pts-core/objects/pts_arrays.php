@@ -50,10 +50,6 @@ class pts_arrays
 	{
 		return str_replace(array(',"', '{', '}'), array(",\n\t\"", " {\n\t", "\n}"), json_encode($json));
 	}
-	public static function json_decode($str)
-	{
-		return json_decode($str, true);
-	}
 	public static function duplicates_in_array($array)
 	{
 		$duplicates = array();

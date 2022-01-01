@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2021, Phoronix Media
-	Copyright (C) 2008 - 2021, Michael Larabel
+	Copyright (C) 2008 - 2022, Phoronix Media
+	Copyright (C) 2008 - 2022, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -352,11 +352,9 @@ class pts_tests
 			$test_profiles = array_merge($test_profiles, $test_profile->extended_test_profiles());
 		}
 
-		$use_phoroscript = phodevi::is_windows();
 		if(phodevi::is_windows() && is_executable('C:\cygwin64\bin\bash.exe'))
 		{
 			$sh = 'C:\cygwin64\bin\bash.exe';
-			$use_phoroscript = false;
 			$extra_vars['PATH'] = $extra_vars['PATH'] . ';C:\cygwin64\bin';
 		}
 		else if(pts_client::executable_in_path('bash'))
@@ -387,14 +385,7 @@ class pts_tests
 				// if override_test_script_execution_handler returned -1, fallback to using normal script handler
 				if(!isset($this_result) || $this_result == '-1')
 				{
-					if($use_phoroscript || getenv('USE_PHOROSCRIPT_INTERPRETER') != false)
-					{
-						echo PHP_EOL . 'Falling back to experimental PhoroScript code path...' . PHP_EOL;
-						$phoroscript = new pts_phoroscript_interpreter($run_file, $extra_vars, $test_directory);
-						$phoroscript->execute_script($pass_argument);
-						$this_result = null;
-					}
-					else if(phodevi::is_windows())
+					if(phodevi::is_windows())
 					{
 						$host_env = $_SERVER;
 						unset($host_env['argv']);

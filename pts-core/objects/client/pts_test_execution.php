@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2021, Phoronix Media
-	Copyright (C) 2008 - 2021, Michael Larabel
+	Copyright (C) 2008 - 2022, Phoronix Media
+	Copyright (C) 2008 - 2022, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -242,7 +242,6 @@ class pts_test_execution
 
 				$host_env = $_SERVER;
 				unset($host_env['argv']);
-				$use_phoroscript = phodevi::is_windows();
 				$to_exec = 'exec';
 				$post_test_args = ' 2>&1';
 				if(phodevi::is_windows())
@@ -253,13 +252,11 @@ class pts_test_execution
 						$to_exec = 'C:\Windows\System32\cmd.exe';
 						$execute_binary_prepend = ' /c ';
 						$execute_binary_prepend_final = '';
-						$use_phoroscript = false;
 						$post_test_args = '';
 					}
-					else if(is_executable('C:\cygwin64\bin\bash.exe') && pts_file_io::file_get_contents_first_line($to_execute . '/' . $execute_binary) != '#PHOROSCRIPT')
+					else if(is_executable('C:\cygwin64\bin\bash.exe'))
 					{
 						$to_exec = 'C:\cygwin64\bin\bash.exe';
-						$use_phoroscript = false;
 						$test_extra_runtime_variables['PATH'] = (isset($test_extra_runtime_variables['PATH']) ? $test_extra_runtime_variables['PATH'] : null) . ';C:\cygwin64\bin';
 					}
 					else
@@ -273,45 +270,35 @@ class pts_test_execution
 				$is_monitoring = pts_test_result_parser::system_monitor_task_check($test_run_request);
 				$test_run_time_start = microtime(true);
 
-				if($use_phoroscript || getenv('USE_PHOROSCRIPT_INTERPRETER') != false)
+				$descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
+
+				if($test_prepend != null && pts_client::executable_in_path(trim($test_prepend)))
 				{
-					pts_client::$display->test_run_message('Making use of PhoroScript code path...');
-					$phoroscript = new pts_phoroscript_interpreter($to_execute . '/' . $execute_binary, $test_extra_runtime_variables, $to_execute);
-					$phoroscript->execute_script($pts_test_arguments);
-					$test_result_std_output = null;
+					$to_exec = '';
 				}
-				else
+
+				$terv = $test_extra_runtime_variables;
+				if(phodevi::is_windows())
 				{
-					$descriptorspec = array(0 => array('pipe', 'r'), 1 => array('pipe', 'w'), 2 => array('pipe', 'w'));
-
-					if($test_prepend != null && pts_client::executable_in_path(trim($test_prepend)))
+					foreach($terv as $terv_i => &$value)
 					{
-						$to_exec = '';
-					}
-
-					$terv = $test_extra_runtime_variables;
-					if(phodevi::is_windows())
-					{
-						foreach($terv as $terv_i => &$value)
+						if((is_dir($value) || is_file($value) || $terv_i == 'LOG_FILE') && strpos($value, ' ') !== false)
 						{
-							if((is_dir($value) || is_file($value) || $terv_i == 'LOG_FILE') && strpos($value, ' ') !== false)
-							{
-								$value = '"' . $value . '"';
-							}
+							$value = '"' . $value . '"';
 						}
 					}
+				}
 
-					$test_process = proc_open($test_prepend . $to_exec . ' ' . $execute_binary_prepend . $execute_binary_prepend_final . $execute_binary . ' ' . $pts_test_arguments . $post_test_args, $descriptorspec, $pipes, $to_execute, array_merge($host_env, pts_client::environment_variables(), $terv));
+				$test_process = proc_open($test_prepend . $to_exec . ' ' . $execute_binary_prepend . $execute_binary_prepend_final . $execute_binary . ' ' . $pts_test_arguments . $post_test_args, $descriptorspec, $pipes, $to_execute, array_merge($host_env, pts_client::environment_variables(), $terv));
 
-					if(is_resource($test_process))
-					{
-						//echo proc_get_status($test_process)['pid'];
-						pts_module_manager::module_process('__test_running', $test_process);
-						$test_result_std_output = stream_get_contents($pipes[1]);
-						fclose($pipes[1]);
-						fclose($pipes[2]);
-						$return_value = proc_close($test_process);
-					}
+				if(is_resource($test_process))
+				{
+					//echo proc_get_status($test_process)['pid'];
+					pts_module_manager::module_process('__test_running', $test_process);
+					$test_result_std_output = stream_get_contents($pipes[1]);
+					fclose($pipes[1]);
+					fclose($pipes[2]);
+					$return_value = proc_close($test_process);
 				}
 
 				$test_run_time = microtime(true) - $test_run_time_start;
