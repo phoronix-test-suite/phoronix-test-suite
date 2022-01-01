@@ -78,6 +78,11 @@ class fedora_dependency_handler implements pts_dependency_handler
 	{
 		$dnf_output = shell_exec('dnf --quiet provides ' . $arg . ' 2>/dev/null');
 
+		if(empty($dnf_output))
+		{
+			return null;
+		}
+
 		foreach(explode(PHP_EOL, $dnf_output) as $line)
 		{
 			if(($x = strpos($line, ' : ')) == false)

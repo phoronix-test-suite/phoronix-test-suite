@@ -249,6 +249,10 @@ class phodevi_memory extends phodevi_device_interface
 					{
 						$ram_in_gb++;
 					}
+					if($ram_in_gb > 100 && $ram_in_gb % 16 !== 0)
+					{
+						$ram_in_gb += $ram_in_gb % 16;
+					}
 					if($ram_in_gb >= 6)
 					{
 						$mem_string = $ram_in_gb . 'GB';
