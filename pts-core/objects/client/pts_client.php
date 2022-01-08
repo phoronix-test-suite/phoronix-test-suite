@@ -1675,7 +1675,7 @@ class pts_client
 
 		if($file_extension)
 		{
-			$extended_file = pts_client::temporary_directory() . '/' . basename($temp_file) . $file_extension;
+			$extended_file = pts_client::temporary_directory() . DIRECTORY_SEPARATOR . basename($temp_file) . $file_extension;
 
 			if(rename($temp_file, $extended_file))
 			{

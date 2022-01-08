@@ -1125,8 +1125,8 @@ class phoromatic extends pts_module_interface
 	{
 		static $last_update_script_check_time = 0;
 
-		// Don't keep checking it so check no more than every 20 minutes
-		if($last_update_script_check_time < (time() - 1200) && !empty($update_script))
+		// Don't keep checking it so check no more than every 30 minutes
+		if($last_update_script_check_time < (time() - (60 * 30)) && !empty($update_script))
 		{
 			$last_update_script_check_time = time();
 			$update_file = pts_client::create_temporary_file();
@@ -1134,7 +1134,31 @@ class phoromatic extends pts_module_interface
 			file_put_contents($update_file, $update_script);
 			phoromatic::update_system_status('Running Phoronix Test Suite Update Script');
 			$env_vars = array();
-			pts_client::shell_exec('bash ' . $update_file . ' 2>&1', $env_vars);
+
+			$append_cmd = '';
+			if(phodevi::is_windows() && is_executable('C:\cygwin64\bin\bash.exe') && strpos($update_script, '#!/bin') !== false)
+			{
+				$cmd = 'C:\cygwin64\bin\bash.exe';
+			}
+			else if(phodevi::is_windows() && is_executable('C:\Windows\System32\cmd.exe'))
+			{
+				$cmd = 'C:\Windows\System32\cmd.exe /c';
+			}
+			else if(pts_client::executable_in_path('bash'))
+			{
+				$cmd = 'bash';
+				$append_cmd = ' 2>&1';
+			}
+			else
+			{
+				$cmd = 'sh';
+				$append_cmd = ' 2>&1';
+			}
+
+			pts_client::$pts_logger && pts_client::$pts_logger->log('Running Update Script: ' . $cmd . ' ' . $update_file . $append_cmd);
+			$update_output = pts_client::shell_exec($cmd . ' ' . $update_file . $append_cmd, $env_vars);
+			pts_client::$pts_logger && pts_client::$pts_logger->log('Update Script Output: ' . $update_output);
+			unlink($update_file);
 		}
 	}
 	private static function set_user_context($context_script, $trigger, $schedule_id, $process)

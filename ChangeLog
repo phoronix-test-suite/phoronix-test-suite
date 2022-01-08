@@ -6,6 +6,7 @@ pts-core: Allow PTS_DISPLAY_MODE to override other display mode preferences (e.g
 phoromatic: Allow binary log file uploads by default when Phoromatic Server is 10.8+
 phoromatic: Input sanitization updates for Phoromatic Server
 phoromatic: Move "Create A Test Profile" page behind an opt-in rootadmin Phoromatic Server option
+phoromatic: Log update script output
 
 Phoronix Test Suite 10.8.0
 25 December 2021
