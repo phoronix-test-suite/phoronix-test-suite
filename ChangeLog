@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+phoromatic: Allow binary log file uploads by default when Phoromatic Server is 10.8+
 phoromatic: Input sanitization updates for Phoromatic Server
 phoromatic: Move "Create A Test Profile" page behind an opt-in rootadmin Phoromatic Server option
 

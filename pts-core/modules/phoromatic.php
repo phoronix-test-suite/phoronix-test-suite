@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2020, Phoronix Media
-	Copyright (C) 2009 - 2020, Michael Larabel
+	Copyright (C) 2009 - 2022, Phoronix Media
+	Copyright (C) 2009 - 2022, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -654,7 +654,8 @@ class phoromatic extends pts_module_interface
 						self::$p_trigger_id = $json['phoromatic']['trigger_id'];
 						self::$benchmark_ticket_id = isset($json['phoromatic']['benchmark_ticket_id']) ? $json['phoromatic']['benchmark_ticket_id'] : null;
 						phoromatic::update_system_status('Running Benchmarks For: ' . self::$p_save_identifier);
-						pts_client::$skip_log_file_type_checks = isset($json['phoromatic']['settings']['AllowAnyDataForLogFiles']) && pts_strings::string_bool($json['phoromatic']['settings']['AllowAnyDataForLogFiles']);
+						// PTS 10.8 result viewer should deal fine with binary logs so can just upload by default there...
+						pts_client::$skip_log_file_type_checks = self::$server_core_version >= 10800 || (isset($json['phoromatic']['settings']['AllowAnyDataForLogFiles']) && pts_strings::string_bool($json['phoromatic']['settings']['AllowAnyDataForLogFiles']));
 						self::$progressive_result_uploads = isset($json['phoromatic']['settings']['ProgressiveResultUploads']) && pts_strings::string_bool($json['phoromatic']['settings']['ProgressiveResultUploads']);
 						pts_module::set_option('skip_log_file_type_checks', (pts_client::$skip_log_file_type_checks ? 1 : 0));
 
