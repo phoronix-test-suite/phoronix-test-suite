@@ -143,6 +143,10 @@ class phoromatic_create_test implements pts_webui_interface
 	}
 	public static function render_page_process($PATH)
 	{
+		if(phoromatic_server::read_setting('allow_test_profile_creation') != 1)
+		{
+			exit;
+		}
 		$main = null;
 		if(PHOROMATIC_USER_IS_VIEWER)
 		{

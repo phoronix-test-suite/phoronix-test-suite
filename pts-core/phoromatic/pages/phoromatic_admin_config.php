@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014 - 2018, Phoronix Media
-	Copyright (C) 2014 - 2018, Michael Larabel
+	Copyright (C) 2014 - 2022, Phoronix Media
+	Copyright (C) 2014 - 2022, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -200,6 +200,10 @@ class phoromatic_admin_config implements pts_webui_interface
 		{
 			phoromatic_server::save_setting('show_local_tests_only', $_POST['show_local_tests_only']);
 		}
+		if(isset($_POST['allow_test_profile_creation']))
+		{
+			phoromatic_server::save_setting('allow_test_profile_creation', $_POST['allow_test_profile_creation']);
+		}
 		if(isset($_POST['new_admin_support_email']))
 		{
 			phoromatic_server::save_setting('admin_support_email', $_POST['new_admin_support_email']);
@@ -316,6 +320,13 @@ class phoromatic_admin_config implements pts_webui_interface
 		$main .= '<p>Enabling this option will only advertise test profiles on the Phoromatic Server web interface if the needed files for that test are present within the Phoromatic Server\'s PTS download cache. This feature is particularly useful for environments where the client test system lacks direct Internet access.</p>';
 		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="show_local_tests_only" method="post">';
 		$main .= '<p><strong>Only Advertise Cached Tests:</strong> <select name="show_local_tests_only"><option value="0">False</option><option value="1" ' . (phoromatic_server::read_setting('show_local_tests_only') ? 'selected="selected"' : null) . '>True</option></select></p>';
+		$main .= '<p><input name="submit" value="Update" type="submit" /></p>';
+		$main .= '</form>';
+
+		$main .= '<hr /><h1>Allow Test Profiles To Be Created From Phoromatic Server</h1>';
+		$main .= '<p>Enabling this option will allow a basic test profile creation wizard page to appear within the Phoromatic Server. This can be used for creating new test profiles but caution should be taken to ensure only trusted users have access to the Phoromatic Server on a private intranet to avoid any rogue tests being created, etc.</p>';
+		$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="allow_test_profile_creation" method="post">';
+		$main .= '<p><strong>Allow Test Profile Creation:</strong> <select name="allow_test_profile_creation"><option value="0">False</option><option value="1" ' . (phoromatic_server::read_setting('allow_test_profile_creation') ? 'selected="selected"' : null) . '>True</option></select></p>';
 		$main .= '<p><input name="submit" value="Update" type="submit" /></p>';
 		$main .= '</form>';
 

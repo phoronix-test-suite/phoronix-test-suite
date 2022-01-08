@@ -368,7 +368,10 @@ function phoromatic_webui_header_logged_in()
 
 		if(!PHOROMATIC_USER_IS_VIEWER)
 		{
-			array_push($sub_tests_menu, '<a href="?create_test">Create New Test Profile</a>');
+			if(phoromatic_server::read_setting('allow_test_profile_creation') == 1)
+			{
+				array_push($sub_tests_menu, '<a href="?create_test">Create New Test Profile</a>');
+			}
 			array_push($sub_tests_menu, '<a href="?build_suite">Build Test Suite</a>');
 			array_push($sub_testing_menu, '<a href="?sched">Create A Schedule</a>', '<a href="?benchmark">Run A Benchmark</a>');
 		}

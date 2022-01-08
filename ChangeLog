@@ -2,7 +2,8 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
-phodevi: Input sanitization updates for Phoromatic Server
+phoromatic: Input sanitization updates for Phoromatic Server
+phoromatic: Move "Create A Test Profile" page behind an opt-in rootadmin Phoromatic Server option
 
 Phoronix Test Suite 10.8.0
 25 December 2021
