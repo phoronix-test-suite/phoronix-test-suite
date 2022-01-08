@@ -108,7 +108,7 @@ class phodevi_disk extends phodevi_device_interface
 		}
 		else if(phodevi::is_windows())
 		{
-			$wmi = shell_exec('powershell "Get-WmiObject -Class Win32_Volume | Select-Object DriveLetter, BlockSize"');
+			$wmi = shell_exec('powershell -NoProfile "Get-WmiObject -Class Win32_Volume | Select-Object DriveLetter, BlockSize"');
 			if(($x = strpos($wmi, 'C:')) !== false)
 			{
 				$wmi = substr($wmi, ($x + 3));

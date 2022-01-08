@@ -198,7 +198,7 @@ class sys_power extends phodevi_sensor
 	}
 	private static function windows_wmi_battery_status_discharge()
 	{
-		$output = trim(shell_exec('powershell (Get-WmiObject -Namespace "root\wmi" BatteryStatus).DischargeRate'));
+		$output = trim(shell_exec('powershell -NoProfile (Get-WmiObject -Namespace "root\wmi" BatteryStatus).DischargeRate'));
 		if(!empty($output) && is_numeric($output) && $output > 0)
 		{
 			return $output;

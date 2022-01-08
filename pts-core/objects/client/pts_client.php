@@ -1550,7 +1550,7 @@ class pts_client
 			if(phodevi::is_windows())
 			{
 				// Powershell defaults to 120
-				$terminal_width = trim(shell_exec('powershell "(get-host).UI.RawUI.MaxWindowSize.width"'));
+				$terminal_width = trim(shell_exec('powershell -NoProfile "(get-host).UI.RawUI.MaxWindowSize.width"'));
 			}
 			else if(($tw = pts_env::read('TERMINAL_WIDTH')) != false && is_numeric($tw) >= 20)
 			{
@@ -1596,7 +1596,7 @@ class pts_client
 
 			if(phodevi::is_windows())
 			{
-				$terminal_height = trim(shell_exec('powershell "(get-host).UI.RawUI.MaxWindowSize.height"'));
+				$terminal_height = trim(shell_exec('powershell -NoProfile "(get-host).UI.RawUI.MaxWindowSize.height"'));
 			}
 			else if(pts_client::executable_in_path('stty'))
 			{

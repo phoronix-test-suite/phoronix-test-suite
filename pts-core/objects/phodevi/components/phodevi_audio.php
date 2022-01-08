@@ -52,7 +52,7 @@ class phodevi_audio extends phodevi_device_interface
 		else if(phodevi::is_windows())
 		{
 			$win_sound = array();
-			$win32_sounddevice = shell_exec('powershell "(Get-WMIObject -Class win32_sounddevice | Select Name)"');
+			$win32_sounddevice = shell_exec('powershell -NoProfile "(Get-WMIObject -Class win32_sounddevice | Select Name)"');
 			if(($x = strpos($win32_sounddevice, '----')) !== false)
 			{
 				$win32_sounddevice = trim(substr($win32_sounddevice, $x + 4));

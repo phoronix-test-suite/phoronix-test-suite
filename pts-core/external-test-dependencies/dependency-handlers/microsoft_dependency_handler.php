@@ -81,7 +81,7 @@ class microsoft_dependency_handler implements pts_dependency_handler
 	public static function file_download_location()
 	{
 		// TODO determine what logic may need to be applied or if to punt it as an option, etc
-		$download_directory = trim(shell_exec('powershell "(New-Object -ComObject Shell.Application).NameSpace(\'shell:Downloads\').Self.Path"'));
+		$download_directory = trim(shell_exec('powershell -NoProfile "(New-Object -ComObject Shell.Application).NameSpace(\'shell:Downloads\').Self.Path"'));
 		
 		// Fall back to user profile directory
 		if(empty($download_directory) || !is_dir($download_directory)) {

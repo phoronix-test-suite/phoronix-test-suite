@@ -4,8 +4,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2021, Phoronix Media
-	Copyright (C) 2008 - 2021, Michael Larabel
+	Copyright (C) 2008 - 2022, Phoronix Media
+	Copyright (C) 2008 - 2022, Michael Larabel
 	phodevi_system.php: The PTS Device Interface object for the system software
 
 	This program is free software; you can redistribute it and/or modify
@@ -397,10 +397,10 @@ class phodevi_system extends phodevi_device_interface
 		else if(phodevi::is_windows())
 		{
 			// TODO could use better detection to verify if C: or the desired disk under test... but most of the time will be NTFS anyways
-			$fs = filter_var(trim(shell_exec('powershell "(Get-WMIObject -Class Win32_Volume | Select DriveLetter,FreeSpace,Capacity,DeviceID,Label,@{Name=\"FileSystemType\";Expression={$_.\"FileSystem\"}})[1].FileSystemType"')), FILTER_UNSAFE_RAW, FILTER_FLAG_STRIP_HIGH);
+			$fs = filter_var(trim(shell_exec('powershell -NoProfile "(Get-WMIObject -Class Win32_Volume | Select DriveLetter,FreeSpace,Capacity,DeviceID,Label,@{Name=\"FileSystemType\";Expression={$_.\"FileSystem\"}})[1].FileSystemType"')), FILTER_UNSAFE_RAW, FILTER_FLAG_STRIP_HIGH);
 			if(empty($fs) || $fs == 'Unknown' || $fs == 'FAT32')
 			{
-				$fs = filter_var(trim(shell_exec('powershell "(Get-WMIObject -Class Win32_Volume | Select DriveLetter,FreeSpace,Capacity,DeviceID,Label,@{Name=\"FileSystemType\";Expression={$_.\"FileSystem\"}})[0].FileSystemType"')),FILTER_UNSAFE_RAW, FILTER_FLAG_STRIP_HIGH);
+				$fs = filter_var(trim(shell_exec('powershell -NoProfile "(Get-WMIObject -Class Win32_Volume | Select DriveLetter,FreeSpace,Capacity,DeviceID,Label,@{Name=\"FileSystemType\";Expression={$_.\"FileSystem\"}})[0].FileSystemType"')),FILTER_UNSAFE_RAW, FILTER_FLAG_STRIP_HIGH);
 			}
 
 			// Fallback for Windows 8
@@ -668,7 +668,7 @@ class phodevi_system extends phodevi_device_interface
 
 			// Windows 10+ security features: VBS, HVCI
 			// https://docs.microsoft.com/en-us/windows/security/threat-protection/device-guard/enable-virtualization-based-protection-of-code-integrity#virtualizationbasedsecuritystatus
-			$vbs_status = trim(shell_exec('powershell "(Get-CimInstance -ErrorAction SilentlyContinue –ClassName Win32_DeviceGuard –Namespace root\Microsoft\Windows\DeviceGuard).VirtualizationBasedSecurityStatus"'));
+			$vbs_status = trim(shell_exec('powershell -NoProfile "(Get-CimInstance -ErrorAction SilentlyContinue –ClassName Win32_DeviceGuard –Namespace root\Microsoft\Windows\DeviceGuard).VirtualizationBasedSecurityStatus"'));
 			switch($vbs_status) {
 				case '0':
 					$security[] = 'VBS: Disabled';
@@ -682,14 +682,14 @@ class phodevi_system extends phodevi_device_interface
 			}
 
 			// https://docs.microsoft.com/en-us/windows/security/threat-protection/device-guard/enable-virtualization-based-protection-of-code-integrity#securityservicesconfigured
-			$security_services_running = preg_split('/\r\n|\n|\r/', trim(shell_exec('powershell "(Get-CimInstance -ErrorAction SilentlyContinue –ClassName Win32_DeviceGuard –Namespace root\Microsoft\Windows\DeviceGuard).SecurityServicesRunning"')));
+			$security_services_running = preg_split('/\r\n|\n|\r/', trim(shell_exec('powershell -NoProfile "(Get-CimInstance -ErrorAction SilentlyContinue –ClassName Win32_DeviceGuard –Namespace root\Microsoft\Windows\DeviceGuard).SecurityServicesRunning"')));
 			if(in_array('2', $security_services_running)) {
 				$security[] = 'HVCI: Running';
 
 				// Mode Based Execution Control (MBEC) is relevant to HVCI performance and is available in Intel Kaby Lake and newer and AMD Zen 2 and newer
 				// https://docs.microsoft.com/en-us/windows/security/threat-protection/device-guard/enable-virtualization-based-protection-of-code-integrity#hvci-features
 				// https://docs.microsoft.com/en-us/windows/security/threat-protection/device-guard/enable-virtualization-based-protection-of-code-integrity#availablesecurityproperties
-				$available_security_properties = preg_split('/\r\n|\n|\r/', trim(shell_exec('powershell "(Get-CimInstance -ErrorAction SilentlyContinue –ClassName Win32_DeviceGuard –Namespace root\Microsoft\Windows\DeviceGuard).AvailableSecurityProperties"')));
+				$available_security_properties = preg_split('/\r\n|\n|\r/', trim(shell_exec('powershell -NoProfile "(Get-CimInstance -ErrorAction SilentlyContinue –ClassName Win32_DeviceGuard –Namespace root\Microsoft\Windows\DeviceGuard).AvailableSecurityProperties"')));
 				if(in_array('7', $available_security_properties)) {
 					$security[] = 'MBEC: Available';
 				} else {
@@ -1053,15 +1053,15 @@ class phodevi_system extends phodevi_device_interface
 		{
 			// CurrentBuild and CurrentVersion are available since at least NT 4.0
 			// CurrentVersion is frozen at 6.3 (same as Windows 8.1) in Windows 10 & 11
-			$current_build = trim(shell_exec('powershell "If (Get-ItemProperty -ErrorAction SilentlyContinue -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentBuild) { (Get-ItemProperty -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentBuild).CurrentBuild } Else { $null }"'));
+			$current_build = trim(shell_exec('powershell -NoProfile "If (Get-ItemProperty -ErrorAction SilentlyContinue -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentBuild) { (Get-ItemProperty -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentBuild).CurrentBuild } Else { $null }"'));
 
 			// Windows 10 and later add CurrentMajorVersionNumber, CurrentMinorVersionNumber and UBR
-			$current_major_version_number = trim(shell_exec('powershell "If (Get-ItemProperty -ErrorAction SilentlyContinue -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentMajorVersionNumber) { (Get-ItemProperty -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentMajorVersionNumber).CurrentMajorVersionNumber } Else { $null }"'));
+			$current_major_version_number = trim(shell_exec('powershell -NoProfile "If (Get-ItemProperty -ErrorAction SilentlyContinue -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentMajorVersionNumber) { (Get-ItemProperty -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentMajorVersionNumber).CurrentMajorVersionNumber } Else { $null }"'));
 
 			// Try using Windows 10+ values
 			if (is_numeric($current_major_version_number)) {
-				$current_minor_version_number = trim(shell_exec('powershell "If (Get-ItemProperty -ErrorAction SilentlyContinue -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentMinorVersionNumber) { (Get-ItemProperty -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentMinorVersionNumber).CurrentMinorVersionNumber } Else { $null }"'));
-				$update_build_revision = trim(shell_exec('powershell "If (Get-ItemProperty -ErrorAction SilentlyContinue -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' UBR) { (Get-ItemProperty -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' UBR).UBR } Else { $null }"'));
+				$current_minor_version_number = trim(shell_exec('powershell -NoProfile "If (Get-ItemProperty -ErrorAction SilentlyContinue -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentMinorVersionNumber) { (Get-ItemProperty -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentMinorVersionNumber).CurrentMinorVersionNumber } Else { $null }"'));
+				$update_build_revision = trim(shell_exec('powershell -NoProfile "If (Get-ItemProperty -ErrorAction SilentlyContinue -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' UBR) { (Get-ItemProperty -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' UBR).UBR } Else { $null }"'));
 
 				if(is_numeric($current_minor_version_number) && is_numeric($current_build) && is_numeric($update_build_revision)) {
 					return $current_major_version_number . '.' . $current_minor_version_number . '.' . $current_build . '.' . $update_build_revision;
@@ -1069,7 +1069,7 @@ class phodevi_system extends phodevi_device_interface
 			}
 
 			// Fall back to Windows 8.1 and earlier values
-			$current_version = trim(shell_exec('powershell "If (Get-ItemProperty -ErrorAction SilentlyContinue -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentVersion) { (Get-ItemProperty -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentVersion).CurrentVersion } Else { $null }"'));
+			$current_version = trim(shell_exec('powershell -NoProfile "If (Get-ItemProperty -ErrorAction SilentlyContinue -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentVersion) { (Get-ItemProperty -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' CurrentVersion).CurrentVersion } Else { $null }"'));
 
 			if(is_numeric($current_version) && is_numeric($current_build)) {
 				return $current_version . '.' . $current_build;

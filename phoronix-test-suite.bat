@@ -36,12 +36,12 @@ If defined PHP_BIN goto SkipBinSearch
 If not exist C:\PHP\php.exe (
 echo Attempting to download and setup Windows PHP release.
 If not exist php.zip (
-powershell -command "& { $ProgressPreference = 'SilentlyContinue'; iwr http://phoronix-test-suite.com/benchmark-files/php-7.4.2-Win32-vc15-x64.zip -OutFile php.zip; $ProgressPreference = 'Continue' }"
+powershell -NoProfile -command "& { $ProgressPreference = 'SilentlyContinue'; iwr http://phoronix-test-suite.com/benchmark-files/php-7.4.2-Win32-vc15-x64.zip -OutFile php.zip; $ProgressPreference = 'Continue' }"
 )
-powershell -command "& { Expand-Archive php.zip -DestinationPath C:\PHP }"
+powershell -NoProfile -command "& { Expand-Archive php.zip -DestinationPath C:\PHP }"
 If not exist VC_redist.x64.exe (
 echo Attempting to download and run Visual C++ Redistributable for Visual Studio 2019 support.
-powershell -command "& { $ProgressPreference = 'SilentlyContinue'; iwr https://aka.ms/vs/16/release/VC_redist.x64.exe -OutFile VC_redist.x64.exe; $ProgressPreference = 'Continue' }"
+powershell -NoProfile -command "& { $ProgressPreference = 'SilentlyContinue'; iwr https://aka.ms/vs/16/release/VC_redist.x64.exe -OutFile VC_redist.x64.exe; $ProgressPreference = 'Continue' }"
 VC_redist.x64.exe /install /quiet
 )
   )

@@ -55,7 +55,7 @@ class phodevi_motherboard extends phodevi_device_interface
 		}
 		else if(phodevi::is_windows())
 		{
-			$confirm = shell_exec('powershell "Confirm-SecureBootUEFI"');
+			$confirm = shell_exec('powershell -NoProfile "Confirm-SecureBootUEFI"');
 			if(strpos($confirm, 'True') !== false)
 			{
 				$status = 'Enabled';

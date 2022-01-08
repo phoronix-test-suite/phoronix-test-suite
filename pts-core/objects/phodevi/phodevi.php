@@ -749,7 +749,7 @@ class phodevi extends phodevi_base
 
 		if(phodevi::is_windows())
 		{
-			$uptime = trim(shell_exec('powershell "((get-date) - (gcim Win32_OperatingSystem).LastBootUpTime).TotalSeconds"'));
+			$uptime = trim(shell_exec('powershell -NoProfile "((get-date) - (gcim Win32_OperatingSystem).LastBootUpTime).TotalSeconds"'));
 			$uptime = is_numeric($uptime) && $uptime > 1 ? round($uptime) : 1;
 		}
 		else if(is_file('/proc/uptime'))

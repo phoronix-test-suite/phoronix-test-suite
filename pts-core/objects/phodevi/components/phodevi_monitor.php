@@ -54,7 +54,7 @@ class phodevi_monitor extends phodevi_device_interface
 		}
 		else if(phodevi::is_windows())
 		{
-			$windows_monitor = trim(shell_exec('powershell "$((Get-WmiObject WmiMonitorID -Namespace root\wmi) | %{ $Name = $($_.UserFriendlyName -notmatch 0 | ForEach{[char]$_}) -join \"\"; Write-Output $Name }) -join \";\""'));
+			$windows_monitor = trim(shell_exec('powershell -NoProfile "$((Get-WmiObject WmiMonitorID -Namespace root\wmi) | %{ $Name = $($_.UserFriendlyName -notmatch 0 | ForEach{[char]$_}) -join \"\"; Write-Output $Name }) -join \";\""'));
 			if(strpos($windows_monitor, ':') === false)
 			{
 				$monitor[] = $windows_monitor;

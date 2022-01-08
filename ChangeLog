@@ -7,6 +7,7 @@ phoromatic: Allow binary log file uploads by default when Phoromatic Server is 1
 phoromatic: Input sanitization updates for Phoromatic Server
 phoromatic: Move "Create A Test Profile" page behind an opt-in rootadmin Phoromatic Server option
 phoromatic: Log update script output
+phodevi: Use "-NoProfile" with powershell for possible performance benefits
 
 Phoronix Test Suite 10.8.0
 25 December 2021

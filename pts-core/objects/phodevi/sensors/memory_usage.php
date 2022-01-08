@@ -44,7 +44,7 @@ class memory_usage extends phodevi_sensor
 		}
 		else if(phodevi::is_windows())
 		{
-			$ps = trim(shell_exec('powershell "((Get-WmiObject Win32_OperatingSystem).TotalVisibleMemorySize - (Get-WmiObject Win32_OperatingSystem).FreePhysicalMemory)"'));
+			$ps = trim(shell_exec('powershell -NoProfile "((Get-WmiObject Win32_OperatingSystem).TotalVisibleMemorySize - (Get-WmiObject Win32_OperatingSystem).FreePhysicalMemory)"'));
 			return round($ps / 1024);
 		}
 	}
