@@ -83,6 +83,16 @@ class phoromatic_account_activity implements pts_webui_interface
 					case 'users':
 						$event_link_format = '<a href="?users">a user</a>';
 						break;
+					case 'benchmark':
+						$event_link_format = '<a href="?benchmark">benchmark</a>';
+
+						$stmt1 = phoromatic_server::$db->prepare('SELECT Title FROM phoromatic_benchmark_tickets WHERE AccountID = :account_id AND TicketID = :ticket_id');
+						$stmt1->bindValue(':account_id', $_SESSION['AccountID']);
+						$stmt1->bindValue(':ticket_id', $row['ActivityEventID']);
+						$result1 = $stmt1->execute();
+						$row1 = $result1->fetchArray();
+						$id_link_format = '<a href="?benchmark/' . $row['ActivityEventID'] . '">' . $row1['Title'] . '</a>';
+						break;
 					case 'schedule':
 						$event_link_format = '<a href="?schedules">schedule</a>';
 
@@ -105,6 +115,10 @@ class phoromatic_account_activity implements pts_webui_interface
 						break;
 					case 'groups':
 						$event_link_format = '<a href="?systems#group_edit">a group</a>';
+						break;
+					case 'suite':
+						$event_link_format = '<a href="build_suite">test suite</a>';
+						$id_link_format = '<a href="?local_suites#' . $row['ActivityEventID'] . '">' . $row['ActivityEventID'] . '</a>';
 						break;
 					default:
 						$event_link_format = $row['ActivityEvent'];

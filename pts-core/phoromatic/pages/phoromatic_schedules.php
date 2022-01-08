@@ -417,7 +417,7 @@ class phoromatic_schedules implements pts_webui_interface
 
 					do
 					{
-						$main .= '<a onclick=""><li>' . $test_result_row['Trigger'] . '<br /><table><tr><td>' . phoromatic_user_friendly_timedate($test_result_row['TriggeredOn']) . '</td><td><a href="?schedules/' . $PATH[0] . '/delete-trigger/' . base64_encode($test_result_row['Trigger']) . '">Remove Trigger</a></td></tr></table></li></a>';
+						$main .= '<a onclick=""><li>' . $test_result_row['Trigger'] . '<br /><table><tr><td>' . phoromatic_server::user_friendly_timedate($test_result_row['TriggeredOn']) . '</td><td><a href="?schedules/' . $PATH[0] . '/delete-trigger/' . base64_encode($test_result_row['Trigger']) . '">Remove Trigger</a></td></tr></table></li></a>';
 
 					}
 					while($test_result_row = $test_result_result->fetchArray());
@@ -443,7 +443,7 @@ class phoromatic_schedules implements pts_webui_interface
 						{
 							continue;
 						}
-						$main .= '<a href="?result/' . $test_result_row['PPRID'] . '"><li>' . $test_result_row['Title'] . '<br /><table><tr><td>' . phoromatic_server::system_id_to_name($test_result_row['SystemID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td></tr></table></li></a>';
+						$main .= '<a href="?result/' . $test_result_row['PPRID'] . '"><li>' . $test_result_row['Title'] . '<br /><table><tr><td>' . phoromatic_server::system_id_to_name($test_result_row['SystemID']) . '</td><td>' . phoromatic_server::user_friendly_timedate($test_result_row['UploadTime']) .  '</td></tr></table></li></a>';
 						$results++;
 
 					}

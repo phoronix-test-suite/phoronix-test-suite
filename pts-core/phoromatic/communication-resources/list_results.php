@@ -38,6 +38,4 @@ while($row = $result->fetchArray())
 $json['phoromatic']['results'] = $results;
 $json['phoromatic']['response'] = 'results';
 echo json_encode($json);
-return;
-
 ?>

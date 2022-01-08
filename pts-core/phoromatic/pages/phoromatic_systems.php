@@ -178,7 +178,7 @@ class phoromatic_systems implements pts_webui_interface
 				{
 					$status_extra = ' - <a href="/?benchmark/' . $row['CurrentProcessTicket'] . '">' . phoromatic_server::ticket_id_to_name($row['CurrentProcessTicket']) . '</a>';
 				}
-				$info_table = array('Status:' => $row['CurrentTask'] . $status_extra, 'Last Communication:' => phoromatic_user_friendly_timedate($row['LastCommunication']), 'Estimated Time Left For Task: ' => phoromatic_compute_estimated_time_remaining_string($row['EstimatedTimeForTask'], $row['LastCommunication']), 'State:' => $state, 'Phoronix Test Suite Client:' => $row['ClientVersion'], 'Initial Creation:' => phoromatic_user_friendly_timedate($row['CreatedOn']), 'System ID:' => $row['SystemID'], 'Last IP:' => $row['LastIP'], 'MAC Address:' => $row['NetworkMAC'], 'Wake-On-LAN Information:' => (empty($row['NetworkWakeOnLAN']) ? 'N/A' : $row['NetworkWakeOnLAN']), 'Power-Off Sequence Permitted: ' => ($row['BlockPowerOffs'] == 1 ? 'Blocked' : 'Permitted'));
+				$info_table = array('Status:' => $row['CurrentTask'] . $status_extra, 'Last Communication:' => phoromatic_server::user_friendly_timedate($row['LastCommunication']), 'Estimated Time Left For Task: ' => phoromatic_server::estimated_time_remaining_string($row['EstimatedTimeForTask'], $row['LastCommunication']), 'State:' => $state, 'Phoronix Test Suite Client:' => $row['ClientVersion'], 'Initial Creation:' => phoromatic_server::user_friendly_timedate($row['CreatedOn']), 'System ID:' => $row['SystemID'], 'Last IP:' => $row['LastIP'], 'MAC Address:' => $row['NetworkMAC'], 'Wake-On-LAN Information:' => (empty($row['NetworkWakeOnLAN']) ? 'N/A' : $row['NetworkWakeOnLAN']), 'Power-Off Sequence Permitted: ' => ($row['BlockPowerOffs'] == 1 ? 'Blocked' : 'Permitted'));
 				$main .= '<h2>System State</h2>' . pts_webui::r2d_array_to_table($info_table, 'auto');
 
 				if(!PHOROMATIC_USER_IS_VIEWER)
@@ -331,7 +331,7 @@ class phoromatic_systems implements pts_webui_interface
 				if(is_file($log_file))
 				{
 					$main .= '<hr /><h2>Phoronix Test Suite Client Log</h2>';
-					$main .= '<p><textarea style="width: 60%; height: 200px;">' . file_get_contents($log_file)  . '</textarea></p>';
+					$main .= '<p><textarea style="width: 100%; height: 300px;">' . file_get_contents($log_file)  . '</textarea></p>';
 					$main .= '<p><em><strong>Last Updated:</strong>' . date ('d F H:i', filemtime($log_file)) . '</em></p>';
 				}
 
@@ -384,7 +384,7 @@ class phoromatic_systems implements pts_webui_interface
 							break;
 						}
 
-						$main .= '<a href="?result/' . $test_result_row['PPRID'] . '"><li>' . $test_result_row['Title'] . '<br /><table><tr><td>' . phoromatic_server::system_id_to_name($test_result_row['SystemID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td></tr></table></li></a>';
+						$main .= '<a href="?result/' . $test_result_row['PPRID'] . '"><li>' . $test_result_row['Title'] . '<br /><table><tr><td>' . phoromatic_server::system_id_to_name($test_result_row['SystemID']) . '</td><td>' . phoromatic_server::user_friendly_timedate($test_result_row['UploadTime']) .  '</td></tr></table></li></a>';
 						$results++;
 
 					}
@@ -597,7 +597,7 @@ class phoromatic_systems implements pts_webui_interface
 					{
 						do
 						{
-							$acti = phoromatic_compute_estimated_time_remaining_string($row['EstimatedTimeForTask'], $row['LastCommunication']) . ($row['TaskPercentComplete'] > 0 ? ' [' . $row['TaskPercentComplete'] . '% Complete]' : null);
+							$acti = phoromatic_server::estimated_time_remaining_string($row['EstimatedTimeForTask'], $row['LastCommunication']) . ($row['TaskPercentComplete'] > 0 ? ' [' . $row['TaskPercentComplete'] . '% Complete]' : null);
 							if(empty($acti))
 							{
 								$next_job_in = phoromatic_server::time_to_next_scheduled_job($_SESSION['AccountID'], $row['SystemID']);

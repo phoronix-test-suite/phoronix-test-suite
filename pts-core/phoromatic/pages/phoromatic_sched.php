@@ -102,8 +102,6 @@ class phoromatic_sched implements pts_webui_interface
 				}
 			}
 
-			// TODO XXX: Validation of input
-
 			// Need a unique schedule ID
 			if($is_new)
 			{

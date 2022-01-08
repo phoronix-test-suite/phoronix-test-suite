@@ -30,10 +30,8 @@ if(is_file($result_directory . 'composite.xml'))
 {
 	$system_logs_types = array('system-logs', 'installation-logs', 'test-logs');
 
-
 	// Allow uploading zips assuming the desired type matches, no current zip file exists for given result file
 	// TODO maybe add further check like that the UploadID just stems from the past day or so?
-
 
 	foreach($system_logs_types as $possible_type)
 	{
@@ -60,7 +58,6 @@ if(is_file($result_directory . 'composite.xml'))
 					$json['phoromatic']['error'] = 'Log Upload Failed Due To Hash';
 				}
 			}
-			
 			break;
 		}
 	}

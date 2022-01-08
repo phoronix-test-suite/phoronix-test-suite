@@ -143,7 +143,7 @@ class phoromatic_result implements pts_webui_interface
 			else if(count($schedule_types) == 1 && count($system_types) == 1)
 			{
 				$system_name_format = 'TRIGGER';
-				$result_file_title = phoromatic_schedule_id_to_name($schedule_types[0]);
+				$result_file_title = phoromatic_server::schedule_id_to_name($schedule_types[0]);
 			}
 			else if(count($schedule_types) == 1)
 			{
@@ -189,10 +189,10 @@ class phoromatic_result implements pts_webui_interface
 							$system_name = phoromatic_server::system_id_to_name($row['SystemID']) . ': ' . $row['Trigger'];
 							break;
 						case 'SYSTEM_AND_SCHEDULE':
-							$system_name = phoromatic_schedule_id_to_name($row['ScheduleID']) . ': ' . $row['Trigger'];
+							$system_name = phoromatic_server::schedule_id_to_name($row['ScheduleID']) . ': ' . $row['Trigger'];
 							break;
 						default:
-							$system_name = phoromatic_server::system_id_to_name($row['SystemID']) . ' - ' . phoromatic_schedule_id_to_name($row['ScheduleID']) . ' - ' . $row['Trigger'];
+							$system_name = phoromatic_server::system_id_to_name($row['SystemID']) . ' - ' . phoromatic_server::schedule_id_to_name($row['ScheduleID']) . ' - ' . $row['Trigger'];
 					}
 
 					if($system_name == null)

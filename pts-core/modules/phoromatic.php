@@ -1165,7 +1165,10 @@ class phoromatic extends pts_module_interface
 
 			pts_client::$pts_logger && pts_client::$pts_logger->log('Running Update Script: ' . $cmd . ' ' . $update_file . $append_cmd);
 			$update_output = pts_client::shell_exec($cmd . ' ' . $update_file . $append_cmd, $env_vars);
-			pts_client::$pts_logger && pts_client::$pts_logger->log('Update Script Output: ' . $update_output);
+			if(trim($update_output) != '')
+			{
+				pts_client::$pts_logger && pts_client::$pts_logger->log('Update Script Output: ' . trim($update_output));
+			}
 			unlink($update_file);
 			phoromatic::update_system_status('Phoromatic Update Script Completed');
 			self::tick_thread(true);

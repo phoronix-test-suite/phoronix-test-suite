@@ -78,7 +78,6 @@ foreach($J['phoromatic']['stats']['sensors'] as $name => $sensor)
 		}
 		$sensors[$name]['last-updated'] = time();
 }
-
 file_put_contents($system_path . 'sensors-pool.json', json_encode($sensors));
 
 $stmt = phoromatic_server::$db->prepare('SELECT TickThreadEvent FROM phoromatic_systems WHERE AccountID = :account_id AND SystemID = :system_id');

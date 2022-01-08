@@ -125,6 +125,7 @@ class phoromatic_build_suite implements pts_webui_interface
 
 			$new_suite->save_xml(null, $save_to);
 			echo '<h2>Saved As ' . $suite_id . '</h2>';
+			phoromatic_add_activity_stream_event('suite', $suite_id, 'added');
 		}
 		echo phoromatic_webui_header_logged_in();
 		$main = '<h1>Local Suites</h1><p>Find already created local test suites by your account/group via the <a href="/?local_suites">local suites</a> page.</p>';

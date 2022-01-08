@@ -244,7 +244,7 @@ if(strtotime($result['LastCommunication']) < (time() - 300))
 	$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET LastIP = :access_ip, LocalIP = :local_ip, LastCommunication = :current_time, Hardware = :client_hardware, Software = :client_software, SystemProperties = :phodevi_properties, ClientVersion = :client_version, MachineSelfID = :machine_self_id, NetworkMAC = :network_mac, NetworkWakeOnLAN = :network_wol, CoreVersion = :core_version WHERE AccountID = :account_id AND SystemID = :system_id');
 	$stmt->bindValue(':account_id', $ACCOUNT_ID);
 	$stmt->bindValue(':system_id', SYSTEM_ID);
-	$stmt->bindValue(':client_hardware', pts_strings::simple($CLIENT_HARDWARE));
+	$stmt->bindValue(':client_hardware', $CLIENT_HARDWARE);
 	$stmt->bindValue(':client_software', $CLIENT_SOFTWARE);
 	$stmt->bindValue(':phodevi_properties', $PHODEVI_PROPERTIES);
 	$stmt->bindValue(':client_version', $CLIENT_VERSION);

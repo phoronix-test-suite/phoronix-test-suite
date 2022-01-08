@@ -51,75 +51,6 @@ function phoromatic_quit_if_invalid_input_found($input_keys = null)
 		}
 	}
 }
-function phoromatic_annotate_entry($type, $id, $secondary_id)
-{
-	$annotate_hash = sha1($id . $secondary_id);
-
-	if(isset($_GET['da_' . $annotate_hash]))
-	{
-		$user_name = isset($_SESSION['UserName']) ? $_SESSION['UserName'] : null;
-		$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_annotations WHERE Type = :type AND ID = :id AND SecondaryID = :secondary_id AND AnnotatedBy = :user_name AND AccountID = :account_id AND AnnotatedTime = :annotated_time');
-		$stmt->bindValue(':account_id', (isset($_SESSION['AccountID']) ? $_SESSION['AccountID'] : null));
-		$stmt->bindValue(':type', $type);
-		$stmt->bindValue(':id', $id);
-		$stmt->bindValue(':secondary_id', $secondary_id);
-		$stmt->bindValue(':user_name', $user_name);
-		$stmt->bindValue(':annotated_time', $_GET['da_' . $annotate_hash]);
-		$result = $stmt->execute();
-	}
-	if(isset($_POST['add_annotation_' . $annotate_hash]) && !empty($_POST['add_annotation_' . $annotate_hash]))
-	{
-		$annotation = $_POST['add_annotation_' . $annotate_hash];
-		$user_name = isset($_SESSION['UserName']) ? $_SESSION['UserName'] : null;
-		$annotation = str_replace("\n", '<br />', $annotation);
-
-		$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_annotations (AccountID, Type, ID, SecondaryID, AnnotatedTime, AnnotatedBy, Annotation) VALUES (:account_id, :type, :id, :secondary_id, :annotated_time, :user_name, :annotation)');
-		$stmt->bindValue(':account_id', (isset($_SESSION['AccountID']) ? $_SESSION['AccountID'] : null));
-		$stmt->bindValue(':type', $type);
-		$stmt->bindValue(':id', $id);
-		$stmt->bindValue(':secondary_id', $secondary_id);
-		$stmt->bindValue(':annotated_time', phoromatic_server::current_time());
-		$stmt->bindValue(':user_name', $user_name);
-		$stmt->bindValue(':annotation', $annotation);
-		$result = $stmt->execute();
-	}
-
-	// XXX:  AccountID = :account_id AND
-	$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_annotations WHERE Type = :type AND ID = :id AND SecondaryID = :secondary_id ORDER BY AnnotatedTime ASC');
-	$stmt->bindValue(':account_id', (isset($_SESSION['AccountID']) ? $_SESSION['AccountID'] : null));
-	$stmt->bindValue(':type', $type);
-	$stmt->bindValue(':id', $id);
-	$stmt->bindValue(':secondary_id', $secondary_id);
-	$result = $stmt->execute();
-	$row = $result->fetchArray();
-	$output = null;
-
-	if($row)
-	{
-		do
-		{
-			$annotation = $row['Annotation'];
-			$annotation = str_replace("\n", 'XXXX', $annotation);
-			$annotation = str_replace("\t", ' &nbsp; &nbsp; &nbsp;', $annotation);
-			$annotation = str_replace('  ', '&nbsp;', $annotation);
-
-			$output .= '<p>' . $annotation . '<br /><em>Annotation By <strong>' . ($row['AnnotatedBy'] != null ? $row['AnnotatedBy'] : 'Unknown') . '</strong> at <strong>' . phoromatic_user_friendly_timedate($row['AnnotatedTime']) . '</strong>.</em>';
-
-			if(isset($_SESSION['UserName']) && !empty($_SESSION['UserName']) && $_SESSION['UserName'] == $row['AnnotatedBy'])
-			{
-				$output .= ' <a href="' . $_SERVER['REQUEST_URI'] . '/&da_' . $annotate_hash . '=' . $row['AnnotatedTime'] . '">Delete Annotation</a>';
-			}
-
-			$output .= '</p>';
-		}
-		while($row = $result->fetchArray());
-	}
-
-	$output .= '<p id="annotation_link_' . $annotate_hash . '"><a onclick="javascript:toggle_annotate_area(\'' . $annotate_hash . '\');" style="font-size: 80%;">Add Annotation</a></p>';
-	$output .= '<form method="post" action="' . $_SERVER['REQUEST_URI'] . '"><p style="display: none;" id="annotation_area_' . $annotate_hash . '"><textarea name="add_annotation_' . $annotate_hash . '" cols="50" rows="4"></textarea><br /><input name="submit" value="Add Annotation" type="submit" /</p></form>';
-
-	return $output;
-}
 function phoromatic_init_web_page_setup()
 {
 	if(session_save_path() == null || !is_writable(session_save_path()))
@@ -157,30 +88,6 @@ function phoromatic_init_web_page_setup()
 	include('../../pts-core.php');
 	pts_core::init();
 }
-function phoromatic_user_friendly_timedate($time)
-{
-	return phoromatic_server::user_friendly_timedate($time);
-}
-function phoromatic_compute_estimated_time_remaining_string($estimated_minutes, $last_comm, $append = 'Remaining')
-{
-	$remaining = phoromatic_compute_estimated_time_remaining($estimated_minutes, $last_comm);
-	return $remaining > 0 ? '~' . pts_strings::plural_handler($remaining, 'Minute') . ' ' . $append : null;
-}
-function phoromatic_compute_estimated_time_remaining($estimated_minutes, $last_comm)
-{
-	if($estimated_minutes > 0)
-	{
-		$estimated_completion = strtotime($last_comm) + ($estimated_minutes * 60);
-
-		if(time() < $estimated_completion)
-		{
-			return ceil(($estimated_completion - time()) / 60);
-		}
-
-	}
-
-	return 0;
-}
 function phoromatic_webui_header($left_items, $right = null)
 {
 	$ret = PHP_EOL . '<div id="pts_phoromatic_top_header">
@@ -199,7 +106,6 @@ function phoromatic_webui_header($left_items, $right = null)
 		$ret .= '</ul>';
 	}
 	$ret .= '</li>';
-
 
 	//$ret .= '<ul>';
 	foreach($left_items as $i => $item)
@@ -300,7 +206,7 @@ function phoromatic_webui_footer()
   <path d="m74 22v9m-5-16v16m-5-28v28m-23-2h12.5c2.485281 0 4.5-2.014719 4.5-4.5s-2.014719-4.5-4.5-4.5h-8c-2.485281 0-4.5-2.014719-4.5-4.5s2.014719-4.5 4.5-4.5h12.5m-21 5h-11m11 13h-2c-4.970563 0-9-4.029437-9-9v-20m-24 40v-20c0-4.970563 4.0294373-9 9-9 4.970563 0 9 4.029437 9 9s-4.029437 9-9 9h-9" stroke="#696969" stroke-width="4" fill="none" />
 </svg> &nbsp;</div>
 <p style="margin: 6px 15px;"><strong>' . date('H:i T - j F Y') . '</strong>' . (PTS_IS_DEV_BUILD ? ' &nbsp; [' . round(microtime(true) - PAGE_LOAD_START_TIME, 2) . 's Page Load Time]' : null) . '<br />Copyright &copy; 2008 - ' . date('Y') . ' by <a href="http://www.phoronix-media.com/">Phoronix Media</a>. All rights reserved.<br />
-All trademarks used are properties of their respective owners.<br />' . pts_core::program_title() . ' - Core Version ' . PTS_CORE_VERSION . ' - PHP ' . PHP_VERSION . '</p></div> <script type="text/javascript"> phoromatic_checkbox_toggle_result_comparison(\'\'); </script>';
+All trademarks used are properties of their respective owners.<br />' . pts_core::program_title() . ' (PHP ' . PHP_VERSION . ')</p></div> <script type="text/javascript"> phoromatic_checkbox_toggle_result_comparison(\'\'); </script>';
 }
 function phoromatic_add_activity_stream_event($activity_event, $activity_event_id, $activity_event_type)
 {
@@ -485,7 +391,6 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 					while($row = $result->fetchArray());
 					$right .= '</ul>';
 				}
-
 		}
 
 		$system_count = phoromatic_account_system_count();
@@ -509,10 +414,7 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 		}
 
 		$right .= '<hr /><p><strong>' . date('H:i T - j F Y') . '</strong><br />' . $group_name . '<a href="?systems">' . $system_count . ' System' . ($system_count == 1 ? '' : 's') . '</a><br /><a href="?schedules">' . $schedule_count . ' Schedule' . ($schedule_count == 1 ? '' : 's') . '</a><br /><a href="?results">' . $result_count . ' Result' . ($result_count == 1 ? '' : 's') . '</a>';
-
-
-$right .= ' <a href="/rss.php?user=' . $_SESSION['UserID'] . '&amp;v=' . sha1($_SESSION['CreatedOn']) . '"><img src="images/rss.svg" width="16" height="16" /></a>';
-
+		$right .= ' <a href="/rss.php?user=' . $_SESSION['UserID'] . '&amp;v=' . sha1($_SESSION['CreatedOn']) . '"><img src="images/rss.svg" width="16" height="16" /></a>';
 		$right .= '<br /><a href="?account_activity">' . $activity_count . ' Activity Events Today</a></p>';
 	}
 
@@ -530,7 +432,6 @@ function phoromatic_account_schedule_count()
 		$row = $result->fetchArray();
 		$schedule_count = $row['ScheduleCount'];
 	}
-
 	return $schedule_count;
 }
 function phoromatic_account_system_count()
@@ -621,22 +522,6 @@ function phoromatic_oldest_result_for_schedule($schedule_id)
 	}
 
 	return $old_time[$schedule_id];
-}
-function phoromatic_schedule_id_to_name($schedule_id)
-{
-	static $schedule_names;
-
-	if(!isset($schedule_names[$schedule_id]))
-	{
-		$stmt = phoromatic_server::$db->prepare('SELECT Title FROM phoromatic_schedules WHERE AccountID = :account_id AND ScheduleID = :schedule_id');
-		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-		$stmt->bindValue(':schedule_id', $schedule_id);
-		$result = $stmt->execute();
-		$row = $result->fetchArray();
-		$schedule_names[$schedule_id] = $row['Title'];
-	}
-
-	return $schedule_names[$schedule_id];
 }
 function create_new_phoromatic_account($register_username, $register_password, $register_password_confirm, $register_email, $seed_accountid = null)
 {

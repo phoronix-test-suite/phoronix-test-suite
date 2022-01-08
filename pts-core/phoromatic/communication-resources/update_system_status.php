@@ -37,11 +37,10 @@ if(empty($PERCENT_COMPLETE) || !is_numeric($PERCENT_COMPLETE))
 	$PERCENT_COMPLETE = 0;
 }
 
-
 $stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET CurrentTask = :current_task, EstimatedTimeForTask = :time_for_task, TaskPercentComplete = :percent_complete, TaskPercentComplete = :percent_complete, CurrentProcessSchedule = :schedule_id, CurrentProcessTicket = :ticket_id, TimeToNextCommunication = :time_to_next_comm WHERE AccountID = :account_id AND SystemID = :system_id');
 $stmt->bindValue(':account_id', $ACCOUNT_ID);
 $stmt->bindValue(':system_id', SYSTEM_ID);
-$stmt->bindValue(':current_task', $ACTIVITY);
+$stmt->bindValue(':current_task', pts_strings::sanitize($ACTIVITY));
 $stmt->bindValue(':time_for_task', $ESTIMATED_TIME);
 $stmt->bindValue(':percent_complete', $PERCENT_COMPLETE);
 $stmt->bindValue(':schedule_id', $SCHEDULE_ID);

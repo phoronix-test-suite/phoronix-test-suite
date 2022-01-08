@@ -21,15 +21,6 @@
 */
 //error_reporting(E_ALL | E_NOTICE | E_STRICT);
 
-if(!function_exists('sqlite_escape_string'))
-{
-	function sqlite_escape_string($str)
-	{
-		// TODO XXX SQLite3::escapeString
-		return $str;
-	}
-}
-
 $json = array();
 
 if(empty($BENCHMARK_TICKET_ID))
@@ -45,7 +36,7 @@ pts_file_io::mkdir($log_directory);
 
 if($LOGS != null)
 {
-	file_put_contents($log_directory . SYSTEM_ID . '.log', $LOGS);
+	file_put_contents($log_directory . SYSTEM_ID . '.log', pts_strings::sanitize($LOGS));
 	$json['phoromatic']['response'] = 'Log Updated';
 	echo json_encode($json);
 	return true;

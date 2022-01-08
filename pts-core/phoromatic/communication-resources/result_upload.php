@@ -21,15 +21,6 @@
 */
 //error_reporting(E_ALL | E_NOTICE | E_STRICT);
 
-if(!function_exists('sqlite_escape_string'))
-{
-	function sqlite_escape_string($str)
-	{
-		// TODO XXX SQLite3::escapeString
-		return $str;
-	}
-}
-
 $json = array();
 
 if($COMPOSITE_XML != null)
@@ -132,8 +123,8 @@ $stmt->bindValue(':schedule_id', $SCHEDULE_ID);
 $stmt->bindValue(':benchmark_ticket_id', $BENCHMARK_TICKET_ID);
 $stmt->bindValue(':trigger', $TRIGGER_STRING);
 $stmt->bindValue(':upload_time', $upload_time);
-$stmt->bindValue(':title', sqlite_escape_string($result_file->get_title()));
-$stmt->bindValue(':description', sqlite_escape_string($result_file->get_description()));
+$stmt->bindValue(':title', pts_strings::sanitize($result_file->get_title()));
+$stmt->bindValue(':description', pts_strings::sanitize($result_file->get_description()));
 $stmt->bindValue(':system_count', $result_file->get_system_count());
 $stmt->bindValue(':result_count', $result_file->get_test_count());
 $stmt->bindValue(':display_status', 1);
@@ -187,9 +178,9 @@ if($relative_id > 0)
 		$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_results_systems (AccountID, UploadID, SystemIdentifier, Hardware, Software) VALUES (:account_id, :upload_id, :system_identifier, :hardware, :software)');
 		$stmt->bindValue(':account_id', ACCOUNT_ID);
 		$stmt->bindValue(':upload_id', $upload_id);
-		$stmt->bindValue(':system_identifier', sqlite_escape_string($s->get_identifier()));
-		$stmt->bindValue(':hardware', sqlite_escape_string($s->get_hardware()));
-		$stmt->bindValue(':software', sqlite_escape_string($s->get_software()));
+		$stmt->bindValue(':system_identifier', pts_strings::sanitize($s->get_identifier()));
+		$stmt->bindValue(':hardware', pts_strings::sanitize($s->get_hardware()));
+		$stmt->bindValue(':software', pts_strings::sanitize($s->get_software()));
 		$result = $stmt->execute();
 	}
 
@@ -205,7 +196,7 @@ if($relative_id > 0)
 		$result = $stmt->execute();
 		while($row = $result->fetchArray())
 		{
-			phoromatic_server::send_email($row['Email'], 'Phoromatic Result Upload', phoromatic_server::account_id_to_group_admin_email(ACCOUNT_ID), '<p><strong>' . $row['UserName'] . ':</strong></p><p>A new result file has been uploaded to Phoromatic.</p><p>Upload ID: ' . $upload_id . '<br />Upload Time: ' . phoromatic_server::current_time() . '<br />Title: ' . sqlite_escape_string($result_file->get_title()) . '<br />System: ' . SYSTEM_NAME . '</p>');
+			phoromatic_server::send_email($row['Email'], 'Phoromatic Result Upload', phoromatic_server::account_id_to_group_admin_email(ACCOUNT_ID), '<p><strong>' . $row['UserName'] . ':</strong></p><p>A new result file has been uploaded to Phoromatic.</p><p>Upload ID: ' . $upload_id . '<br />Upload Time: ' . phoromatic_server::current_time() . '<br />Title: ' . pts_strings::sanitize($result_file->get_title()) . '<br />System: ' . SYSTEM_NAME . '</p>');
 		}
 	}
 

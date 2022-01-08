@@ -21,15 +21,6 @@
 */
 //error_reporting(E_ALL | E_NOTICE | E_STRICT);
 
-if(!function_exists('sqlite_escape_string'))
-{
-	function sqlite_escape_string($str)
-	{
-		// TODO XXX SQLite3::escapeString
-		return $str;
-	}
-}
-
 $stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_system_context_logs (AccountID, SystemID, UploadTime, ScheduleID, TriggerID, UserContextStep, UserContextLog) VALUES (:account_id, :system_id, :upload_time, :schedule_id, :trigger_id, :user_context_step, :user_context_log)');
 $stmt->bindValue(':account_id', ACCOUNT_ID);
 $stmt->bindValue(':system_id', SYSTEM_ID);
@@ -37,7 +28,7 @@ $stmt->bindValue(':upload_time', phoromatic_server::current_time());
 $stmt->bindValue(':schedule_id', $SCHEDULE_ID);
 $stmt->bindValue(':trigger_id', $TRIGGER_STRING);
 $stmt->bindValue(':user_context_step', $ID);
-$stmt->bindValue(':user_context_log', $OTHER);
+$stmt->bindValue(':user_context_log', pts_strings::sanitize($OTHER));
 $result = $stmt->execute();
 
 ?>

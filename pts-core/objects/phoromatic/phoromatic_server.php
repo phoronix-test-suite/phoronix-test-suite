@@ -1034,8 +1034,10 @@ class phoromatic_server
 		{
 			$estimated_completion = strtotime($last_comm) + ($estimated_minutes * 60);
 
-			// Positive if ahead, negative number if the task elapsed
-			return ceil(($estimated_completion - time()) / 60);
+			if(time() < $estimated_completion)
+			{
+				return ceil(($estimated_completion - time()) / 60);
+			}
 		}
 
 		return 0;
@@ -1230,6 +1232,11 @@ class phoromatic_server
 	{
 		$last_comm = strtotime($last_communication);
 		return ((phoromatic_server::system_has_outstanding_jobs($account_id, $system_id, -600) && (($last_comm < (time() - 5400) && stripos($current_task, 'Running') === false) || $last_comm < (time() - 7200) || ($last_comm < (time() - 600) && stripos($current_task, 'Shutdown') !== false))) || ($last_comm < (time() -7200) && (stripos($current_task, 'running') !== false ||  stripos($current_task, 'setting') !== false))) || $current_task == 'Unknown';
+	}
+	public static function estimated_time_remaining_string($estimated_minutes, $last_comm, $append = 'Remaining')
+	{
+		$remaining = phoromatic_server::estimated_time_remaining_diff($estimated_minutes, $last_comm);
+		return $remaining > 0 ? '~' . pts_strings::plural_handler($remaining, 'Minute') . ' ' . $append : null;
 	}
 }
 

@@ -131,8 +131,8 @@ class phoromatic_main implements pts_webui_interface
 				$main .= '   <a href="/?benchmark/' . $row['CurrentProcessTicket'] . '/&view_log=' . $row['SystemID'] . '">' . phoromatic_server::ticket_id_to_name($row['CurrentProcessTicket']) . '</a><br />';
 			}
 
-			$time_remaining = phoromatic_compute_estimated_time_remaining($row['EstimatedTimeForTask'], $row['LastCommunication']);
-			if($time_remaining)
+			$time_remaining = phoromatic_server::estimated_time_remaining_diff($row['EstimatedTimeForTask'], $row['LastCommunication']);
+			if($time_remaining > 0)
 			{
 				$main .= '<em>~ ' . pts_strings::plural_handler($time_remaining, 'Minute') . ' Remaining</em>';
 			}

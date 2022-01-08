@@ -100,7 +100,7 @@ if(!empty($result_ids))
 	else if(count($schedule_types) == 1 && count($system_types) == 1)
 	{
 		$system_name_format = 'TRIGGER';
-		$result_file_title = phoromatic_schedule_id_to_name($schedule_types[0]);
+		$result_file_title = phoromatic_server::schedule_id_to_name($schedule_types[0]);
 	}
 	else if(count($schedule_types) == 1)
 	{
@@ -139,10 +139,10 @@ if(!empty($result_ids))
 				$system_name = phoromatic_server::system_id_to_name($row['SystemID'], $row['AccountID']) . ': ' . $row['Trigger'];
 				break;
 			case 'SYSTEM_AND_SCHEDULE':
-				$system_name = phoromatic_schedule_id_to_name($row['ScheduleID']) . ': ' . $row['Trigger'];
+				$system_name = phoromatic_server::schedule_id_to_name($row['ScheduleID']) . ': ' . $row['Trigger'];
 				break;
 			default:
-				$system_name = phoromatic_server::system_id_to_name($row['SystemID'], $row['AccountID']) . ' - ' . phoromatic_schedule_id_to_name($row['ScheduleID']) . ' - ' . $row['Trigger'];
+				$system_name = phoromatic_server::system_id_to_name($row['SystemID'], $row['AccountID']) . ' - ' . phoromatic_server::schedule_id_to_name($row['ScheduleID']) . ' - ' . $row['Trigger'];
 		}
 
 		$rf = new pts_result_file($composite_xml);
@@ -243,7 +243,7 @@ else
 			break;
 		}
 
-		$main .= '<a onclick=""><li id="result_select_' . $test_result_row['PPRID'] . '"><input type="checkbox" id="result_compare_checkbox_' . $test_result_row['PPRID'] . '" onclick="javascript:phoromatic_checkbox_toggle_result_comparison(\'' . $test_result_row['PPRID'] . '\');" onchange="return false;"></input> <span onclick="javascript:phoromatic_window_redirect(\'public.php?ut=' . $test_result_row['PPRID'] . '\');">' . $test_result_row['Title'] . '</span><br /><table><tr><td>' . phoromatic_server::system_id_to_name($test_result_row['SystemID'], $test_result_row['AccountID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td><td>' . $test_result_row['TimesViewed'] . ' Times Viewed</td></table></li></a>';
+		$main .= '<a onclick=""><li id="result_select_' . $test_result_row['PPRID'] . '"><input type="checkbox" id="result_compare_checkbox_' . $test_result_row['PPRID'] . '" onclick="javascript:phoromatic_checkbox_toggle_result_comparison(\'' . $test_result_row['PPRID'] . '\');" onchange="return false;"></input> <span onclick="javascript:phoromatic_window_redirect(\'public.php?ut=' . $test_result_row['PPRID'] . '\');">' . $test_result_row['Title'] . '</span><br /><table><tr><td>' . phoromatic_server::system_id_to_name($test_result_row['SystemID'], $test_result_row['AccountID']) . '</td><td>' . phoromatic_server::user_friendly_timedate($test_result_row['UploadTime']) .  '</td><td>' . $test_result_row['TimesViewed'] . ' Times Viewed</td></table></li></a>';
 		$results++;
 	}
 	if($results == 0)
