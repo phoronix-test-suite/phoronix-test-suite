@@ -20,7 +20,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 class phoromatic_local_suites implements pts_webui_interface
 {
 	public static function page_title()
@@ -60,9 +59,9 @@ class phoromatic_local_suites implements pts_webui_interface
 			$id = basename(dirname($xml_path));
 			$test_suite = new pts_test_suite($xml_path);
 
-			$main .= '<a name="' . $id . '"></a><h1>' . $test_suite->get_title() . ' [' . $id . ']</h1>';
-			$main .= '<p><strong>' . $test_suite->get_maintainer() . '</strong></p>';
-			$main .= '<p><em>' . $test_suite->get_description() . '</em></p>';
+			$main .= '<a name="' . $id . '"></a><h1>' . pts_strings::sanitize($test_suite->get_title()) . ' [' . $id . ']</h1>';
+			$main .= '<p><strong>' . pts_strings::sanitize($test_suite->get_maintainer()) . '</strong></p>';
+			$main .= '<p><em>' . pts_strings::sanitize($test_suite->get_description()) . '</em></p>';
 			if(!PHOROMATIC_USER_IS_VIEWER)
 			{
 				$main .= '<p><a href="?build_suite/' . $id . '">Edit Suite</a> - <a href="?local_suites/delete/' . $id . '">Delete Suite</a></p>';

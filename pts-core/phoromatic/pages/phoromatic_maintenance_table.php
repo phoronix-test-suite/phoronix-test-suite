@@ -20,7 +20,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 class phoromatic_maintenance_table implements pts_webui_interface
 {
 	public static function page_title()
@@ -89,10 +88,7 @@ class phoromatic_maintenance_table implements pts_webui_interface
 
 				$main .= '<td>' . $c . '</td>';
 			}
-
 			$main .= '</tr>';
-
-
 		}
 		$main .= '</table></div>';
 

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015 - 2018, Phoronix Media
-	Copyright (C) 2015 - 2018, Michael Larabel
+	Copyright (C) 2015 - 2022, Phoronix Media
+	Copyright (C) 2015 - 2022, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 	You should have received a copy of the GNU General Public License
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-
 
 class phoromatic_build_suite implements pts_webui_interface
 {
@@ -39,6 +38,7 @@ class phoromatic_build_suite implements pts_webui_interface
 	{
 		if(isset($_POST['suite_title']))
 		{
+			phoromatic_quit_if_invalid_input_found(array('suite_title', 'test_add', 'suite_version', 'suite_description'));
 			if(strlen($_POST['suite_title']) < 3)
 			{
 				echo '<h2>Suite title must be at least three characters.</h2>';
@@ -58,6 +58,7 @@ class phoromatic_build_suite implements pts_webui_interface
 				{
 					if(strpos($i, $test_prefix) !== false && substr($i, -9) != '_selected')
 					{
+						phoromatic_quit_if_invalid_input_found(array($i, $i . '_selected'));
 						if(strpos($v, '||') !== false)
 						{
 							$opts = explode('||', $v);
@@ -128,7 +129,6 @@ class phoromatic_build_suite implements pts_webui_interface
 		echo phoromatic_webui_header_logged_in();
 		$main = '<h1>Local Suites</h1><p>Find already created local test suites by your account/group via the <a href="/?local_suites">local suites</a> page.</p>';
 
-
 		if(!PHOROMATIC_USER_IS_VIEWER)
 		{
 			$suite = null;
@@ -195,7 +195,6 @@ class phoromatic_build_suite implements pts_webui_interface
 			$main .= pts_web_embed::cookie_checkbox_option_helper('list_show_all_test_versions', 'Show all available test profile versions.');
 			$main .= '<p align="right"><input name="submit" value="' . ($suite->get_title() != null ? 'Edit' : 'Create') .' Suite" type="submit" onclick="return pts_rmm_validate_suite();" /></p>';
 		}
-
 		echo '<div id="pts_phoromatic_main_area">' . $main . '</div>';
 		echo phoromatic_webui_footer();
 	}

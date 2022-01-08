@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014 - 2018, Phoronix Media
-	Copyright (C) 2014 - 2018, Michael Larabel
+	Copyright (C) 2014 - 2022, Phoronix Media
+	Copyright (C) 2014 - 2022, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 	You should have received a copy of the GNU General Public License
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-
 
 class phoromatic_search implements pts_webui_interface
 {
@@ -178,8 +177,7 @@ class phoromatic_search implements pts_webui_interface
 	}
 	public static function render_page_process($PATH)
 	{
-		$search_query = $_REQUEST['search'];
-
+		$search_query = pts_strings::sanitize($_REQUEST['search']);
 		$main = null;
 
 		if(strlen($search_query) < 4)

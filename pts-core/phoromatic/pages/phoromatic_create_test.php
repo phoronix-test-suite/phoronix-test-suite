@@ -20,7 +20,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 class phoromatic_create_test implements pts_webui_interface
 {
 	public static function page_title()
@@ -89,7 +88,6 @@ class phoromatic_create_test implements pts_webui_interface
 				pts_validation::generate_test_profile_file_templates($tp_identifier, $tp_path);
 				header('Location: /?create_test/' . $tp_identifier . '-' . $tp->get_test_profile_version());
 			}
-
 		}
 		if(isset($_POST['dc_select_item']))
 		{
@@ -141,7 +139,6 @@ class phoromatic_create_test implements pts_webui_interface
 			}
 		}
 
-
 		return true;
 	}
 	public static function render_page_process($PATH)
@@ -153,7 +150,6 @@ class phoromatic_create_test implements pts_webui_interface
 		}
 
 		$identifier_item = isset($PATH[1]) ? $PATH[0] . '/' . $PATH[1] : false;
-
 		if($identifier_item && pts_test_profile::is_test_profile($identifier_item))
 		{
 			$tp = new pts_test_profile($identifier_item);
@@ -175,7 +171,6 @@ class phoromatic_create_test implements pts_webui_interface
 			}
 
 			$main .= '<form action="?create_test/' . $tp->get_identifier() . '" name="create_test" id="create_test" method="post" enctype="multipart/form-data"><input type="hidden" name="tp_update" value="' . $tp->get_identifier() . '" />';
-
 			foreach(pts_file_io::glob($tp->get_resource_dir() . '/*') as $file)
 			{
 				$file_name = basename($file);

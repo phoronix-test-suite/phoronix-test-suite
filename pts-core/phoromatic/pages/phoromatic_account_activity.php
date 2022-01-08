@@ -20,7 +20,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 class phoromatic_account_activity implements pts_webui_interface
 {
 	public static function page_title()
@@ -37,9 +36,7 @@ class phoromatic_account_activity implements pts_webui_interface
 	}
 	public static function render_page_process($PATH)
 	{
-
 		$main = '<h1>Recent Account Activity</h1>';
-
 		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_activity_stream WHERE AccountID = :account_id ORDER BY ActivityTime DESC');
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 		$result = $stmt->execute();
@@ -122,7 +119,6 @@ class phoromatic_account_activity implements pts_webui_interface
 						$main .= ': ' . $id_link_format;
 
 					$main .= '<br />' . PHP_EOL;
-
 				}
 
 				//$main .= '<p>' .  $row['ActivityCreator'] . ' ' . $row['ActivityCreatorType'] . ' ' . $row['ActivityEvent'] . ' ' . $row['ActivityEventID'] . ' ' . $row['ActivityEventType'] . '</p>';

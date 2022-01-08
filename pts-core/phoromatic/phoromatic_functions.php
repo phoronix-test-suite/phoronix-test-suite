@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2013 - 2020, Phoronix Media
-	Copyright (C) 2013 - 2020, Michael Larabel
+	Copyright (C) 2013 - 2022, Phoronix Media
+	Copyright (C) 2013 - 2022, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -23,6 +23,34 @@
 define('PHOROMATIC_SERVER_WEB_INTERFACE', true);
 define('PAGE_LOAD_START_TIME', microtime(true));
 
+function phoromatic_quit_if_invalid_input_found($input_keys = null)
+{
+	if(empty($input_keys))
+	{
+		// Check them all if not being selective about what keys to check
+		$input_keys = array_keys($_REQUEST);
+	}
+	// backup as to sanitization and stripping elsewhere, safeguard namely check for things like < for fields that shouldn't have it
+	// plus a few simple backups as safeguards for words that really have no legit relevance within Phoromatic...
+
+	foreach(array('<', 'document.write', '../', 'onerror', 'onload', 'alert(') as $invalid_string)
+	{
+		foreach($input_keys as $key)
+		{
+			if(isset($_REQUEST[$key]) && !empty($_REQUEST[$key]))
+			{
+				foreach(pts_arrays::to_array($_REQUEST[$key]) as $val_to_check)
+				{
+					if(stripos($val_to_check, $invalid_string) !== false)
+					{
+						echo '<strong>Exited due to invalid input ( ' . $invalid_string . ') attempted:</strong> ' . htmlspecialchars($val_to_check);
+						exit;
+					}
+				}
+			}
+		}
+	}
+}
 function phoromatic_annotate_entry($type, $id, $secondary_id)
 {
 	$annotate_hash = sha1($id . $secondary_id);
@@ -64,7 +92,6 @@ function phoromatic_annotate_entry($type, $id, $secondary_id)
 	$stmt->bindValue(':secondary_id', $secondary_id);
 	$result = $stmt->execute();
 	$row = $result->fetchArray();
-
 	$output = null;
 
 	if($row)
@@ -164,7 +191,7 @@ function phoromatic_webui_header($left_items, $right = null)
 	{
 		$ret .= '<ul id="pts_phoromatic_info">';
 		$ret .= '<li><a class="ph_date" href="#">' . date('H:i T - j F') . '</a></li>';
-		$group_name = phoromatic_account_id_to_group_name($_SESSION['AccountID']);
+		$group_name = phoromatic_server::account_id_to_group_name($_SESSION['AccountID']);
 		if($group_name != null)
 		{
 			$ret .= '<li><a href="#">' . $group_name . '</a></li>';
@@ -211,6 +238,11 @@ function phoromatic_webui_header($left_items, $right = null)
 }
 function phoromatic_get_posted_var($name, $default_value = null)
 {
+	if(isset($_POST[$name]))
+	{
+		phoromatic_quit_if_invalid_input_found(array($name));
+	}
+
 	return isset($_POST[$name]) ? $_POST[$name] : null;
 }
 function phoromatic_webui_main($main, $right = null)
@@ -467,7 +499,7 @@ function phoromatic_webui_right_panel_logged_in($add = null)
 		$row = $result->fetchArray();
 		$activity_count = $row['ActivityCount'];
 
-		$group_name = phoromatic_account_id_to_group_name($_SESSION['AccountID']);
+		$group_name = phoromatic_server::account_id_to_group_name($_SESSION['AccountID']);
 		if($group_name != null)
 		{
 			$group_name = '<strong>' . $group_name . '</strong><br />';
@@ -539,10 +571,8 @@ function phoromatic_web_socket_server_addr()
 function phoromatic_error_page($title, $description)
 {
 	echo phoromatic_webui_header(array(''), '');
-
 	$box = '<h1>' . $title . '</h1>
-		<h2>' . $description . '</h2>
-		<p>To fix this error, try <a onclick="javascript:window.history.back();">returning to the previous page</a>. Still having problems? Consider <a href="https://github.com/phoronix-test-suite/phoronix-test-suite/issues?state=open">opening a GitHub issue report</a>; commercial support customers should contact Phoronix Media.</p><hr /><hr />';
+		<h2>' . $description . '</h2>';
 	echo phoromatic_webui_box($box);
 	echo phoromatic_webui_footer();
 }
@@ -572,10 +602,6 @@ function phoromatic_systems_needing_attention()
 	}
 
 	return $main;
-}
-function phoromatic_system_id_to_name($system_id, $aid = false)
-{
-	return phoromatic_server::system_id_to_name($system_id, $aid);
 }
 function phoromatic_oldest_result_for_schedule($schedule_id)
 {
@@ -608,11 +634,6 @@ function phoromatic_schedule_id_to_name($schedule_id)
 	}
 
 	return $schedule_names[$schedule_id];
-}
-function phoromatic_account_id_to_group_name($account_id)
-{
-	// XXX deprecated
-	return phoromatic_server::account_id_to_group_name($account_id);
 }
 function create_new_phoromatic_account($register_username, $register_password, $register_password_confirm, $register_email, $seed_accountid = null)
 {

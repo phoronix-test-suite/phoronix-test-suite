@@ -20,7 +20,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 class phoromatic_dashboard implements pts_webui_interface
 {
 	public static function page_title()
@@ -38,7 +37,6 @@ class phoromatic_dashboard implements pts_webui_interface
 	public static function render_page_process($PATH)
 	{
 		echo phoromatic_webui_header_logged_in();
-
 		$stmt = phoromatic_server::$db->prepare('SELECT * FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY LastCommunication DESC');
 		$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 		$result = $stmt->execute();

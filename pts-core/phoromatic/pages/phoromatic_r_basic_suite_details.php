@@ -20,7 +20,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 class phoromatic_r_basic_suite_details implements pts_webui_interface
 {
 	public static function page_title()

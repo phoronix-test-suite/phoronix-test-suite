@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2021, Phoronix Media
-	Copyright (C) 2008 - 2021, Michael Larabel
+	Copyright (C) 2008 - 2022, Phoronix Media
+	Copyright (C) 2008 - 2022, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -42,11 +42,12 @@ class phoromatic_systems implements pts_webui_interface
 
 		if(!PHOROMATIC_USER_IS_VIEWER && !empty($PATH[0]) && isset($_POST['system_title']) && !empty($_POST['system_title']) && isset($_POST['system_description']) && isset($_POST['system_state']))
 		{
+			phoromatic_quit_if_invalid_input_found(array('system_title', 'system_description', 'system_state'));
 			$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET Title = :title, Description = :description, State = :state, CurrentTask = \'Awaiting Task\', BlockPowerOffs = :block_power_offs WHERE AccountID = :account_id AND SystemID = :system_id');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 			$stmt->bindValue(':system_id', $PATH[0]);
-			$stmt->bindValue(':title', $_POST['system_title']);
-			$stmt->bindValue(':description', $_POST['system_description']);
+			$stmt->bindValue(':title', pts_strings::simple($_POST['system_title']));
+			$stmt->bindValue(':description', pts_strings::sanitize($_POST['system_description']));
 			$stmt->bindValue(':state', $_POST['system_state']);
 			$stmt->bindValue(':block_power_offs', $_POST['block_power_offs']);
 			$stmt->execute();
@@ -383,7 +384,7 @@ class phoromatic_systems implements pts_webui_interface
 							break;
 						}
 
-						$main .= '<a href="?result/' . $test_result_row['PPRID'] . '"><li>' . $test_result_row['Title'] . '<br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td></tr></table></li></a>';
+						$main .= '<a href="?result/' . $test_result_row['PPRID'] . '"><li>' . $test_result_row['Title'] . '<br /><table><tr><td>' . phoromatic_server::system_id_to_name($test_result_row['SystemID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td></tr></table></li></a>';
 						$results++;
 
 					}
@@ -471,6 +472,8 @@ class phoromatic_systems implements pts_webui_interface
 
 				if($group)
 				{
+					phoromatic_quit_if_invalid_input_found(array('new_group'));
+					$group = pts_strings::simple($group);
 					$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_groups (AccountID, GroupName) VALUES (:account_id, :group_name)');
 					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 					$stmt->bindValue(':group_name', $group);
@@ -529,18 +532,19 @@ class phoromatic_systems implements pts_webui_interface
 			}
 			else if(!PHOROMATIC_USER_IS_VIEWER && isset($_POST['remove_group']))
 			{
+				$remove_group = pts_strings::sanitize($_POST['remove_group']);
 				$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_groups WHERE AccountID = :account_id AND GroupName = :group_name');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-				$stmt->bindValue(':group_name', $_POST['remove_group']);
+				$stmt->bindValue(':group_name', $remove_group);
 				$stmt->execute();
 				phoromatic_add_activity_stream_event('groups', $group, 'removed');
 
-				$stmt = phoromatic_server::$db->prepare('SELECT SystemID, Groups FROM phoromatic_systems WHERE AccountID = :account_id AND Groups LIKE \'%#' . $_POST['remove_group'] . '#%\'');
+				$stmt = phoromatic_server::$db->prepare('SELECT SystemID, Groups FROM phoromatic_systems WHERE AccountID = :account_id AND Groups LIKE \'%#' . $remove_group . '#%\'');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 				$result = $stmt->execute();
 				while($row = $result->fetchArray())
 				{
-					$revised_groups = str_replace('#' . $_POST['remove_group'] . '#', '', $row['Groups']);
+					$revised_groups = str_replace('#' . $remove_group . '#', '', $row['Groups']);
 
 					$stmt1 = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET Groups = :new_groups WHERE AccountID = :account_id AND SystemID = :system_id');
 					$stmt1->bindValue(':account_id', $_SESSION['AccountID']);
@@ -555,7 +559,7 @@ class phoromatic_systems implements pts_webui_interface
 				$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET State = :state WHERE AccountID = :account_id AND (julianday() - julianday(LastCommunication)) > :inactive_days_before_removal');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 				$stmt->bindValue(':state', -1);
-				$stmt->bindValue(':inactive_days_before_removal', $_POST['remove_inactive_systems']);
+				$stmt->bindValue(':inactive_days_before_removal', pts_strings::sanitize($_POST['remove_inactive_systems']));
 				$stmt->execute();
 			}
 
@@ -571,8 +575,8 @@ class phoromatic_systems implements pts_webui_interface
 				<p><button onclick="javascript:window.location.replace(\'?system_claim\');">Add Via SSH Or IP/MAC Claim</button></p>';
 
 			}
-			$main .= '<hr />
 
+			$main .= '<hr />
 			<h2>Systems</h2>
 			<div class="pts_phoromatic_info_box_area">
 
@@ -638,7 +642,6 @@ class phoromatic_systems implements pts_webui_interface
 				while($row = $result->fetchArray());
 				$main .= '</ul>';
 			}
-
 
 			$main .= '</div>';
 
@@ -730,9 +733,7 @@ class phoromatic_systems implements pts_webui_interface
 					}
 
 					$main .= '</table><p><input name="submit" value="Update Groups" type="submit" /></p></form></div>';
-
 					$main .= '<hr /><h2>Remove A Group</h2><p>Removing a group is a permanent action that cannot be undone.</p>';
-
 					$main .= '<p><form action="' . $_SERVER['REQUEST_URI'] . '" name="remove_group" method="post"><select name="remove_group" id="remove_group">';
 
 					foreach($all_groups as $group)
@@ -740,9 +741,7 @@ class phoromatic_systems implements pts_webui_interface
 						$main .= '<option value="' . $group . '">' . $group . '</option>';
 					}
 					$main .= '</select> <input name="submit" value="Remove Group" type="submit" /></form></p>';
-
 					$main .= '<hr /><h2>Retire Inactive Systems</h2><p>This option will soft-delete systems that have not communicated with this Phoromatic Server in more than one week (7 days).</p>';
-
 					$main .= '<p><form action="' . $_SERVER['REQUEST_URI'] . '" name="remove_inactive" method="post"><input type="hidden" name="remove_inactive_systems" value="7" /><input name="submit" value="Remove Inactive Systems" type="submit" /></form></p>';
 				}
 			}

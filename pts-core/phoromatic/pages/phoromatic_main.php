@@ -20,7 +20,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 class phoromatic_main implements pts_webui_interface
 {
 	public static function page_title()
@@ -156,13 +155,11 @@ class phoromatic_main implements pts_webui_interface
 		foreach($schedules_today as &$row)
 		{
 			$systems_for_schedule = phoromatic_server::systems_associated_with_schedule($_SESSION['AccountID'], $row['ScheduleID']);
-
 			$extra_css = null;
 			if(empty($systems_for_schedule))
 			{
 				$extra_css = ' opacity: 0.4;';
 			}
-
 			list($h, $m) = explode('.', $row['RunAt']);
 
 			$main .= '<div style="' . $extra_css . '" class="phoromatic_overview_box">';
@@ -215,7 +212,6 @@ class phoromatic_main implements pts_webui_interface
 			$main .= '</div>';
 		}
 		$main .= '</div>';
-
 		$main .= '</div>';
 
 		echo '<div id="pts_phoromatic_main_area">' . $main . '</div>';

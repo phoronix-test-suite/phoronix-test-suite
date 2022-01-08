@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014 - 2021, Phoronix Media
-	Copyright (C) 2014 - 2021, Michael Larabel
+	Copyright (C) 2014 - 2022, Phoronix Media
+	Copyright (C) 2014 - 2022, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 	You should have received a copy of the GNU General Public License
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-
 
 class phoromatic_r_add_test_build_suite_details implements pts_webui_interface
 {
@@ -37,6 +36,7 @@ class phoromatic_r_add_test_build_suite_details implements pts_webui_interface
 	}
 	public static function render_page_process($PATH)
 	{
+		phoromatic_quit_if_invalid_input_found(array('tp'));
 		$test_profile = new pts_test_profile($_GET['tp']);
 		$name = $test_profile->get_title();
 		$description = $test_profile->get_description();

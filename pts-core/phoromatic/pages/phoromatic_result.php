@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2021, Phoronix Media
-	Copyright (C) 2008 - 2021, Michael Larabel
+	Copyright (C) 2008 - 2022, Phoronix Media
+	Copyright (C) 2008 - 2022, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -121,7 +121,7 @@ class phoromatic_result implements pts_webui_interface
 			$result_file_title = null;
 			if(count($system_types) == 1)
 			{
-				$result_file_title = phoromatic_system_id_to_name($system_types[0]) . ' Tests';
+				$result_file_title = phoromatic_server::system_id_to_name($system_types[0]) . ' Tests';
 			}
 
 			if(!empty($tickets) && $tickets[0] != null)
@@ -180,19 +180,19 @@ class phoromatic_result implements pts_webui_interface
 							$system_name = null;
 							break;
 						case 'SYSTEM_NAME':
-							$system_name = phoromatic_system_id_to_name($row['SystemID']);
+							$system_name = phoromatic_server::system_id_to_name($row['SystemID']);
 							break;
 						case 'TRIGGER':
 							$system_name = $row['Trigger'];
 							break;
 						case 'TRIGGER_AND_SYSTEM':
-							$system_name = phoromatic_system_id_to_name($row['SystemID']) . ': ' . $row['Trigger'];
+							$system_name = phoromatic_server::system_id_to_name($row['SystemID']) . ': ' . $row['Trigger'];
 							break;
 						case 'SYSTEM_AND_SCHEDULE':
 							$system_name = phoromatic_schedule_id_to_name($row['ScheduleID']) . ': ' . $row['Trigger'];
 							break;
 						default:
-							$system_name = phoromatic_system_id_to_name($row['SystemID']) . ' - ' . phoromatic_schedule_id_to_name($row['ScheduleID']) . ' - ' . $row['Trigger'];
+							$system_name = phoromatic_server::system_id_to_name($row['SystemID']) . ' - ' . phoromatic_schedule_id_to_name($row['ScheduleID']) . ' - ' . $row['Trigger'];
 					}
 
 					if($system_name == null)
@@ -205,11 +205,11 @@ class phoromatic_result implements pts_webui_interface
 						}
 					}
 
-					if(($replacement = phoromatic_system_id_to_name($row['SystemID'])) != null)
+					if(($replacement = phoromatic_server::system_id_to_name($row['SystemID'])) != null)
 					{
 						$system_name = str_replace('.SYSTEM', $replacement, $system_name);
 					}
-					if(($replacement = phoromatic_account_id_to_group_name($row['AccountID'])) != null)
+					if(($replacement = phoromatic_server::account_id_to_group_name($row['AccountID'])) != null)
 					{
 						$system_name = str_replace('.GROUP', $replacement, $system_name);
 					}
@@ -328,7 +328,7 @@ class phoromatic_result implements pts_webui_interface
 
 				foreach($compare_results as &$row)
 				{
-					$right .= '<p><input type="checkbox" value="' . $row['PPRID'] . '" name="compare_results" /> ' . $row['Title'] . '<br /><em>' . phoromatic_system_id_to_name($row['SystemID'], $row['AccountID']) . '</em></p>';
+					$right .= '<p><input type="checkbox" value="' . $row['PPRID'] . '" name="compare_results" /> ' . $row['Title'] . '<br /><em>' . phoromatic_server::system_id_to_name($row['SystemID'], $row['AccountID']) . '</em></p>';
 				}
 
 				$right .= '<p><input type="submit" value="Compare Results" id="compare_results_submit" onclick="javascript:phoromatic_do_custom_compare_results(this); return false;" /></p></form>';

@@ -650,7 +650,7 @@ class pts_env
 				}
 				if(!empty($v) && $v !== 0)
 				{
-					$posted[$var] = $v;
+					$posted[$var] = pts_strings::sanitize($v);
 				}
 			}
 		}

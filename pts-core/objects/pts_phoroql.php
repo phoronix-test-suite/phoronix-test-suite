@@ -22,7 +22,7 @@
 
 class pts_phoroql
 {
-	public static function evaluate_search_tree($tree, $join = 'AND', $callback)
+	public static function evaluate_search_tree($tree, $join = 'AND', $callback = '')
 	{
 		$matches = false;
 

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2022, Phoronix Media
+	Copyright (C) 2008 - 2022, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 	You should have received a copy of the GNU General Public License
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-
 
 class phoromatic_system_claim implements pts_webui_interface
 {
@@ -43,36 +42,36 @@ class phoromatic_system_claim implements pts_webui_interface
 		if(!PHOROMATIC_USER_IS_VIEWER)
 		{
 
-if(function_exists('ssh2_connect') && isset($_POST['ip']) && isset($_POST['port']) && isset($_POST['password']) && isset($_POST['username']))
-{
-	$connection = ssh2_connect($_POST['ip'], $_POST['port']);
+			if(function_exists('ssh2_connect') && isset($_POST['ip']) && isset($_POST['port']) && isset($_POST['password']) && isset($_POST['username']))
+			{
+				$connection = ssh2_connect($_POST['ip'], $_POST['port']);
 
-	if(ssh2_auth_password($connection, $_POST['username'], $_POST['password']))
-	{
-		$tmp_local_file = tempnam('/tmp', 'pts-ssh');
-		$tmp_remote_file = 'pts-ssh-' . rand(9999, 99999);
+				if(ssh2_auth_password($connection, $_POST['username'], $_POST['password']))
+				{
+					$tmp_local_file = tempnam('/tmp', 'pts-ssh');
+					$tmp_remote_file = 'pts-ssh-' . rand(9999, 99999);
 
-		file_put_contents($tmp_local_file, '#!/bin/sh
-if [ -w /var/lib/phoronix-test-suite/ ]
-then
-	PHORO_FILE_PATH=/var/lib/phoronix-test-suite/
-elif [ -w $HOME/.phoronix-test-suite/ ]
-then
-	PHORO_FILE_PATH=$HOME/.phoronix-test-suite/
-fi
+					file_put_contents($tmp_local_file, '#!/bin/sh
+			if [ -w /var/lib/phoronix-test-suite/ ]
+			then
+				PHORO_FILE_PATH=/var/lib/phoronix-test-suite/
+			elif [ -w $HOME/.phoronix-test-suite/ ]
+			then
+				PHORO_FILE_PATH=$HOME/.phoronix-test-suite/
+			fi
 
-echo "' . phoromatic_web_socket_server_ip() . '" >> $PHORO_FILE_PATH/phoromatic-servers
-mkdir -p $PHORO_FILE_PATH/modules-data/phoromatic
-echo "' . phoromatic_web_socket_server_addr() . '" > $PHORO_FILE_PATH/modules-data/phoromatic/last-phoromatic-server
-');
+			echo "' . phoromatic_web_socket_server_ip() . '" >> $PHORO_FILE_PATH/phoromatic-servers
+			mkdir -p $PHORO_FILE_PATH/modules-data/phoromatic
+			echo "' . phoromatic_web_socket_server_addr() . '" > $PHORO_FILE_PATH/modules-data/phoromatic/last-phoromatic-server
+			');
 
-		ssh2_scp_send($connection, $tmp_local_file, $tmp_remote_file);
-		unlink($tmp_local_file);
-		ssh2_exec($connection, 'chmod +x ' . $tmp_remote_file);
-		ssh2_exec($connection, './' . $tmp_remote_file);
-		ssh2_exec($connection, 'rm' . $tmp_remote_file);
-	}
-}
+					ssh2_scp_send($connection, $tmp_local_file, $tmp_remote_file);
+					unlink($tmp_local_file);
+					ssh2_exec($connection, 'chmod +x ' . $tmp_remote_file);
+					ssh2_exec($connection, './' . $tmp_remote_file);
+					ssh2_exec($connection, 'rm' . $tmp_remote_file);
+				}
+			}
 			if((isset($_POST['ip_claim']) && !empty($_POST['ip_claim'])) && isset($_POST['ping']))
 			{
 				$ip_ping = ip2long($_POST['ip_claim']) !== false ? $_POST['ip_claim'] : null;
@@ -88,8 +87,8 @@ echo "' . phoromatic_web_socket_server_addr() . '" > $PHORO_FILE_PATH/modules-da
 			{
 				$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_system_association_claims (AccountID, IPAddress, NetworkMAC, CreationTime) VALUES (:account_id, :ip_address, :mac_address, :creation_time)');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-				$stmt->bindValue(':ip_address', $_POST['ip_claim']);
-				$stmt->bindValue(':mac_address', $_POST['mac_claim']);
+				$stmt->bindValue(':ip_address', pts_strings::simple($_POST['ip_claim']));
+				$stmt->bindValue(':mac_address', pts_strings::simple($_POST['mac_claim']));
 				$stmt->bindValue(':creation_time', phoromatic_server::current_time());
 				$result = $stmt->execute();
 			}
@@ -98,8 +97,8 @@ echo "' . phoromatic_web_socket_server_addr() . '" > $PHORO_FILE_PATH/modules-da
 				list($ipc, $macc) = explode(',', $_POST['remove_claim']);
 				$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_system_association_claims WHERE AccountID = :account_id AND NetworkMAC = :mac_address AND IPAddress = :ip_address');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
-				$stmt->bindValue(':ip_address', $ipc);
-				$stmt->bindValue(':mac_address', $macc);
+				$stmt->bindValue(':ip_address', pts_strings::simple($ipc));
+				$stmt->bindValue(':mac_address', pts_strings::simple($macc));
 				$stmt->bindValue(':creation_time', phoromatic_server::current_time());
 				$result = $stmt->execute();
 			}

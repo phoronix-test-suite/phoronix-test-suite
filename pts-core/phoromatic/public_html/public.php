@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2021, Phoronix Media
-	Copyright (C) 2008 - 2021, Michael Larabel
+	Copyright (C) 2008 - 2022, Phoronix Media
+	Copyright (C) 2008 - 2022, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -130,19 +130,19 @@ if(!empty($result_ids))
 				$system_name = null;
 				break;
 			case 'SYSTEM_NAME':
-				$system_name = phoromatic_system_id_to_name($row['SystemID'], $row['AccountID']);
+				$system_name = phoromatic_server::system_id_to_name($row['SystemID'], $row['AccountID']);
 				break;
 			case 'TRIGGER':
 				$system_name = $row['Trigger'];
 				break;
 			case 'TRIGGER_AND_SYSTEM':
-				$system_name = phoromatic_system_id_to_name($row['SystemID'], $row['AccountID']) . ': ' . $row['Trigger'];
+				$system_name = phoromatic_server::system_id_to_name($row['SystemID'], $row['AccountID']) . ': ' . $row['Trigger'];
 				break;
 			case 'SYSTEM_AND_SCHEDULE':
 				$system_name = phoromatic_schedule_id_to_name($row['ScheduleID']) . ': ' . $row['Trigger'];
 				break;
 			default:
-				$system_name = phoromatic_system_id_to_name($row['SystemID'], $row['AccountID']) . ' - ' . phoromatic_schedule_id_to_name($row['ScheduleID']) . ' - ' . $row['Trigger'];
+				$system_name = phoromatic_server::system_id_to_name($row['SystemID'], $row['AccountID']) . ' - ' . phoromatic_schedule_id_to_name($row['ScheduleID']) . ' - ' . $row['Trigger'];
 		}
 
 		$rf = new pts_result_file($composite_xml);
@@ -155,53 +155,11 @@ if(!empty($result_ids))
 	$result_file->merge($result_files, $attributes);
 	$extra_attributes = array();
 
-	$attribute_options = array(
-		'normalize_results' => 'normalize_result_buffer',
-		'sort_by_performance' => 'sort_result_buffer_values',
-		'sort_by_reverse' => 'reverse_result_buffer',
-		'sort_by_name' => 'sort_result_buffer',
-		'condense_comparison' => 'condense_multi_way',
-		);
-	foreach($attribute_options as $web_var => $attr_var)
-	{
-		if(isset($_REQUEST[$web_var]))
-		{
-			$extra_attributes[$attr_var] = true;
-		}
-	}
-
-	if(isset($_POST['transpose_comparison']))
-	{
-		$result_file->invert_multi_way_invert();
-	}
-	$intent = null;
-	$main .= '<h1>' . $result_file->get_title() . '</h1>';
-	$main .= '<p>' . $result_file->get_description() . '</p>';
-	$main .= phoromatic_annotate_entry('RESULT', implode(',', $result_ids), 'TOP');
-
-	if($result_file->get_system_count() == 1 || ($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)))
-	{
-		$table = new pts_ResultFileCompactSystemsTable($result_file, $intent);
-	}
-	else
-	{
-		$table = new pts_ResultFileSystemsTable($result_file);
-	}
-
-	$main .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
-
-	$table = new pts_ResultFileTable($result_file, $intent);
-	$main .= '<p style="text-align: center; overflow: auto;" class="result_object">' . pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes) . '</p>';
-	$main .= '<div id="pts_results_area">';
-	foreach($result_file->get_result_objects((isset($_POST['show_only_changed_results']) ? 'ONLY_CHANGED_RESULTS' : -1)) as $i => $result_object)
-	{
-		$main .= '<h2><a name="r-' . $i . '"></a><a name="' . $result_object->get_comparison_hash(true, false) . '"></a>' . $result_object->test_profile->get_title() . '</h2>';
-		$main .= phoromatic_annotate_entry('RESULT', implode(',', $result_ids), $result_object->get_comparison_hash(true, false));
-		$main .= '<p style="text-align: center; overflow: auto;">';
-		$main .= pts_render::render_graph_inline_embed($result_object, $result_file, $extra_attributes);
-		$main .= '</p>';
-	}
-	$main .= '</div>';
+	$embed = new pts_result_viewer_embed($result_file);
+	$embed->show_html_result_table(false);
+	$embed->show_test_metadata_helper(false);
+	$embed->include_page_print_only_helpers(false);
+	$main .= $embed->get_html();
 }
 else
 {
@@ -285,7 +243,7 @@ else
 			break;
 		}
 
-		$main .= '<a onclick=""><li id="result_select_' . $test_result_row['PPRID'] . '"><input type="checkbox" id="result_compare_checkbox_' . $test_result_row['PPRID'] . '" onclick="javascript:phoromatic_checkbox_toggle_result_comparison(\'' . $test_result_row['PPRID'] . '\');" onchange="return false;"></input> <span onclick="javascript:phoromatic_window_redirect(\'public.php?ut=' . $test_result_row['PPRID'] . '\');">' . $test_result_row['Title'] . '</span><br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID'], $test_result_row['AccountID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td><td>' . $test_result_row['TimesViewed'] . ' Times Viewed</td></table></li></a>';
+		$main .= '<a onclick=""><li id="result_select_' . $test_result_row['PPRID'] . '"><input type="checkbox" id="result_compare_checkbox_' . $test_result_row['PPRID'] . '" onclick="javascript:phoromatic_checkbox_toggle_result_comparison(\'' . $test_result_row['PPRID'] . '\');" onchange="return false;"></input> <span onclick="javascript:phoromatic_window_redirect(\'public.php?ut=' . $test_result_row['PPRID'] . '\');">' . $test_result_row['Title'] . '</span><br /><table><tr><td>' . phoromatic_server::system_id_to_name($test_result_row['SystemID'], $test_result_row['AccountID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td><td>' . $test_result_row['TimesViewed'] . ' Times Viewed</td></table></li></a>';
 		$results++;
 	}
 	if($results == 0)

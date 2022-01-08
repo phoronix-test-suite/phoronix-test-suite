@@ -20,7 +20,6 @@
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 class phoromatic_admin_data implements pts_webui_interface
 {
 	public static function page_title()
@@ -144,7 +143,7 @@ class phoromatic_admin_data implements pts_webui_interface
 		$results = 0;
 		while($test_result_row = $test_result_result->fetchArray())
 		{
-			$main .= '<a onclick=""><li id="result_select_' . $test_result_row['PPRID'] . '"><input type="checkbox" id="result_compare_checkbox_' . $test_result_row['PPRID'] . '" onclick="javascript:phoromatic_checkbox_toggle_result_comparison(\'' . $test_result_row['PPRID'] . '\');" onchange="return false;"></input> <span onclick="javascript:phoromatic_window_redirect(\'public.php?ut=' . $test_result_row['PPRID'] . '\');">' . $test_result_row['Title'] . '</span><br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID'], $test_result_row['AccountID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td><td>' . $test_result_row['TimesViewed'] . ' Times Viewed</td></table></li></a>';
+			$main .= '<a onclick=""><li id="result_select_' . $test_result_row['PPRID'] . '"><input type="checkbox" id="result_compare_checkbox_' . $test_result_row['PPRID'] . '" onclick="javascript:phoromatic_checkbox_toggle_result_comparison(\'' . $test_result_row['PPRID'] . '\');" onchange="return false;"></input> <span onclick="javascript:phoromatic_window_redirect(\'public.php?ut=' . $test_result_row['PPRID'] . '\');">' . $test_result_row['Title'] . '</span><br /><table><tr><td>' . phoromatic_server::system_id_to_name($test_result_row['SystemID'], $test_result_row['AccountID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td><td>' . $test_result_row['TimesViewed'] . ' Times Viewed</td></table></li></a>';
 			$results++;
 
 		}
@@ -154,7 +153,6 @@ class phoromatic_admin_data implements pts_webui_interface
 		}
 		$main .= '</ul></div>';
 		$main .= '</div>';
-
 		$main .= '<hr /><h1>Schedules</h1>';
 		$main .= '<h2>Active Test Schedules</h2>';
 		$main .= '<div class="pts_phoromatic_info_box_area">
@@ -173,12 +171,11 @@ class phoromatic_admin_data implements pts_webui_interface
 						do
 						{
 
-							$main .= '<a onclick=""><li>' . $row['Title'] . '<br /><table><tr><td>' . phoromatic_account_id_to_group_name($row['AccountID']) . '</td><td>' . pts_strings::plural_handler(count(phoromatic_server::systems_associated_with_schedule($row['AccountID'], $row['ScheduleID'])), 'System') . '</td><td><strong>' . phoromatic_schedule_activeon_string($row['ActiveOn'], $row['RunAt']) . '</strong></td><td><a onclick="return confirm(\'Permanently remove this schedule?\');" href="/?admin_data/delete/schedule/' . $row['AccountID'] . '/' . $row['ScheduleID'] . '">Permanently Remove</a></td></tr></table></li></a>';
+							$main .= '<a onclick=""><li>' . $row['Title'] . '<br /><table><tr><td>' . phoromatic_server::account_id_to_group_name($row['AccountID']) . '</td><td>' . pts_strings::plural_handler(count(phoromatic_server::systems_associated_with_schedule($row['AccountID'], $row['ScheduleID'])), 'System') . '</td><td><strong>' . phoromatic_schedule_activeon_string($row['ActiveOn'], $row['RunAt']) . '</strong></td><td><a onclick="return confirm(\'Permanently remove this schedule?\');" href="/?admin_data/delete/schedule/' . $row['AccountID'] . '/' . $row['ScheduleID'] . '">Permanently Remove</a></td></tr></table></li></a>';
 						}
 						while($row = $result->fetchArray());
 					}
 		$main .= '</ul></div>';
-
 		$main .= '<hr /><h2>Inactive Test Schedules</h2>';
 		$main .= '<div class="pts_phoromatic_info_box_area">
 				<ul>
@@ -196,7 +193,7 @@ class phoromatic_admin_data implements pts_webui_interface
 						do
 						{
 
-							$main .= '<a onclick=""><li>' . $row['Title'] . '<br /><table><tr><td>' . phoromatic_account_id_to_group_name($row['AccountID']) . '</td><td>' . pts_strings::plural_handler(count(phoromatic_server::systems_associated_with_schedule($row['AccountID'], $row['ScheduleID'])), 'System') . '</td><td><strong>' . phoromatic_schedule_activeon_string($row['ActiveOn'], $row['RunAt']) . '</strong></td><td><a onclick="return confirm(\'Permanently remove this schedule?\');" href="/?admin_data/delete/schedule/' . $row['AccountID'] . '/' . $row['ScheduleID'] . '">Permanently Remove</a></td></tr></table></li></a>';
+							$main .= '<a onclick=""><li>' . $row['Title'] . '<br /><table><tr><td>' . phoromatic_server::account_id_to_group_name($row['AccountID']) . '</td><td>' . pts_strings::plural_handler(count(phoromatic_server::systems_associated_with_schedule($row['AccountID'], $row['ScheduleID'])), 'System') . '</td><td><strong>' . phoromatic_schedule_activeon_string($row['ActiveOn'], $row['RunAt']) . '</strong></td><td><a onclick="return confirm(\'Permanently remove this schedule?\');" href="/?admin_data/delete/schedule/' . $row['AccountID'] . '/' . $row['ScheduleID'] . '">Permanently Remove</a></td></tr></table></li></a>';
 						}
 						while($row = $result->fetchArray());
 					}
@@ -219,7 +216,7 @@ class phoromatic_admin_data implements pts_webui_interface
 						do
 						{
 
-							$main .= '<a onclick=""><li>' . $row['Trigger'] . '<br /><table><tr><td>' . $row['TriggeredOn'] . '</td><td>' . phoromatic_account_id_to_group_name($row['AccountID']) . '</td><td><a onclick="return confirm(\'Permanently remove this trigger?\');" href="/?admin_data/delete/trigger/' . $row['AccountID'] . '/' . $row['ScheduleID'] . '/' . $row['Trigger'] . '">Permanently Remove</a></td></tr></table></li></a>';
+							$main .= '<a onclick=""><li>' . $row['Trigger'] . '<br /><table><tr><td>' . $row['TriggeredOn'] . '</td><td>' . phoromatic_server::account_id_to_group_name($row['AccountID']) . '</td><td><a onclick="return confirm(\'Permanently remove this trigger?\');" href="/?admin_data/delete/trigger/' . $row['AccountID'] . '/' . $row['ScheduleID'] . '/' . $row['Trigger'] . '">Permanently Remove</a></td></tr></table></li></a>';
 						}
 						while($row = $result->fetchArray());
 					}
@@ -245,7 +242,7 @@ class phoromatic_admin_data implements pts_webui_interface
 					{
 						do
 						{
-							$main .= '<a onclick=""><li>' . $row['Title'] . '<br /><table><tr><td>' . phoromatic_account_id_to_group_name($row['AccountID']) . '</td><td>' . $row['LocalIP'] . '</td><td><strong>' . $row['CurrentTask'] . '</strong></td><td><strong>Last Communication:</strong> ' . date('j F Y H:i', strtotime($row['LastCommunication'])) . '</td><td><a onclick="return confirm(\'Permanently remove this system?\');" href="/?admin_data/delete/system/' . $row['AccountID'] . '/' . $row['SystemID'] . '">Permanently Remove</a></td></tr></table></li></a>';
+							$main .= '<a onclick=""><li>' . $row['Title'] . '<br /><table><tr><td>' . phoromatic_server::account_id_to_group_name($row['AccountID']) . '</td><td>' . $row['LocalIP'] . '</td><td><strong>' . $row['CurrentTask'] . '</strong></td><td><strong>Last Communication:</strong> ' . date('j F Y H:i', strtotime($row['LastCommunication'])) . '</td><td><a onclick="return confirm(\'Permanently remove this system?\');" href="/?admin_data/delete/system/' . $row['AccountID'] . '/' . $row['SystemID'] . '">Permanently Remove</a></td></tr></table></li></a>';
 							$active_system_count++;
 						}
 						while($row = $result->fetchArray());
@@ -255,7 +252,6 @@ class phoromatic_admin_data implements pts_webui_interface
 			$main .= '</ul></div>';
 			$main .= '<h2>Inactive Systems</h2>
 			<div class="pts_phoromatic_info_box_area">
-
 					<ul>
 						<li><h1>Inactive Systems</h1></li>';
 
@@ -272,7 +268,7 @@ class phoromatic_admin_data implements pts_webui_interface
 					{
 						do
 						{
-							$main .= '<a onclick=""><li>' . $row['Title'] . '<br /><table><tr><td>' . phoromatic_account_id_to_group_name($row['AccountID']) . '</td><td>' . $row['LocalIP'] . '</td><td><strong>' . $row['CurrentTask'] . '</strong></td><td><strong>Last Communication:</strong> ' . date('j F Y H:i', strtotime($row['LastCommunication'])) . '</td><td><a onclick="return confirm(\'Permanently remove this system?\');" href="/?admin_data/delete/system/' . $row['AccountID'] . '/' . $row['SystemID'] . '">Permanently Remove</a></td></tr></table></li></a>';
+							$main .= '<a onclick=""><li>' . $row['Title'] . '<br /><table><tr><td>' . phoromatic_server::account_id_to_group_name($row['AccountID']) . '</td><td>' . $row['LocalIP'] . '</td><td><strong>' . $row['CurrentTask'] . '</strong></td><td><strong>Last Communication:</strong> ' . date('j F Y H:i', strtotime($row['LastCommunication'])) . '</td><td><a onclick="return confirm(\'Permanently remove this system?\');" href="/?admin_data/delete/system/' . $row['AccountID'] . '/' . $row['SystemID'] . '">Permanently Remove</a></td></tr></table></li></a>';
 							$active_system_count++;
 						}
 						while($row = $result->fetchArray());

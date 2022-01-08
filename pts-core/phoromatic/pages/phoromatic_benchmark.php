@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2015 - 2021, Phoronix Media
-	Copyright (C) 2015 - 2021, Michael Larabel
+	Copyright (C) 2015 - 2022, Phoronix Media
+	Copyright (C) 2015 - 2022, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 	You should have received a copy of the GNU General Public License
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-
 
 class phoromatic_benchmark implements pts_webui_interface
 {
@@ -141,7 +140,6 @@ class phoromatic_benchmark implements pts_webui_interface
 				}
 
 				$main .= '</ol>';
-
 				if(!empty($row['EnvironmentVariables']))
 				{
 					$main .= '<hr /><h1>Environment</h1><ol>';
@@ -152,7 +150,6 @@ class phoromatic_benchmark implements pts_webui_interface
 					}
 					$main .= '</ol>';
 				}
-
 				$main .= '<hr /><h1>Ticket Payload</h1>';
 				$main .= '<p>This ticket runs the <strong>' . $row['SuiteToRun'] . '</strong> test suite:</p>';
 				$main .= '<div style="max-height: 400px; overflow-y: scroll;">';
@@ -236,7 +233,7 @@ class phoromatic_benchmark implements pts_webui_interface
 					$results = 0;
 					while($test_result_row = $test_result_result->fetchArray())
 					{
-						$main .= '<a onclick=""><li id="result_select_' . $test_result_row['PPRID'] . '"><input type="checkbox" id="result_compare_checkbox_' . $test_result_row['PPRID'] . '" onclick="javascript:phoromatic_checkbox_toggle_result_comparison(\'' . $test_result_row['PPRID'] . '\');" onchange="return false;"></input> <span onclick="javascript:phoromatic_window_redirect(\'?result/' . $test_result_row['PPRID'] . '\');">' . $test_result_row['Title'] . '</span><br /><table><tr><td>' . phoromatic_system_id_to_name($test_result_row['SystemID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td><td>' . $test_result_row['TimesViewed'] . ' Times Viewed</td></table></li></a>';
+						$main .= '<a onclick=""><li id="result_select_' . $test_result_row['PPRID'] . '"><input type="checkbox" id="result_compare_checkbox_' . $test_result_row['PPRID'] . '" onclick="javascript:phoromatic_checkbox_toggle_result_comparison(\'' . $test_result_row['PPRID'] . '\');" onchange="return false;"></input> <span onclick="javascript:phoromatic_window_redirect(\'?result/' . $test_result_row['PPRID'] . '\');">' . $test_result_row['Title'] . '</span><br /><table><tr><td>' . phoromatic_server::system_id_to_name($test_result_row['SystemID']) . '</td><td>' . phoromatic_user_friendly_timedate($test_result_row['UploadTime']) .  '</td><td>' . $test_result_row['TimesViewed'] . ' Times Viewed</td></table></li></a>';
 						$results++;
 
 					}
@@ -338,10 +335,8 @@ class phoromatic_benchmark implements pts_webui_interface
 				}
 			}
 
-			$main = '
-			<h2>' . ($is_new ? 'Create' : 'Edit') . ' A Benchmark</h2>
+			$main = '<h2>' . ($is_new ? 'Create' : 'Edit') . ' A Benchmark</h2>
 			<p>This page allows you to run a test suite -- consisting of a single or multiple test suites -- on a given set/group of systems right away at their next earliest possibility. This benchmark mode is an alternative to the <a href="?schedules">benchmark schedules</a> for reptitive/routine testing.</p>';
-
 			$local_suites = array();
 			foreach(pts_file_io::glob(phoromatic_server::phoromatic_account_suite_path($_SESSION['AccountID']) . '*/suite-definition.xml') as $xml_path)
 			{
@@ -383,7 +378,6 @@ class phoromatic_benchmark implements pts_webui_interface
 				$stmt = phoromatic_server::$db->prepare('SELECT Title, SystemID FROM phoromatic_systems WHERE AccountID = :account_id AND State >= 0 ORDER BY Title ASC');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 				$result = $stmt->execute();
-
 
 				if(!$is_new)
 				{

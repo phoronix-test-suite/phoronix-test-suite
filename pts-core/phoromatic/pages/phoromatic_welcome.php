@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2015, Phoronix Media
-	Copyright (C) 2008 - 2015, Michael Larabel
+	Copyright (C) 2008 - 2022, Phoronix Media
+	Copyright (C) 2008 - 2022, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 	You should have received a copy of the GNU General Public License
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-
 
 class phoromatic_welcome implements pts_webui_interface
 {
@@ -42,6 +41,7 @@ class phoromatic_welcome implements pts_webui_interface
 
 		if($account_creation_enabled && isset($_POST['register_username']) && isset($_POST['register_password']) && isset($_POST['register_password_confirm']) && isset($_POST['register_email']))
 		{
+			phoromatic_quit_if_invalid_input_found(array('register_username', 'register_email'));
 			$new_account = create_new_phoromatic_account($_POST['register_username'], $_POST['register_password'], $_POST['register_password_confirm'], $_POST['register_email'], (isset($_POST['seed_accountid']) ? $_POST['seed_accountid'] : null));
 
 			if($new_account)
@@ -60,6 +60,7 @@ class phoromatic_welcome implements pts_webui_interface
 		}
 		else if(isset($_POST['username']) && isset($_POST['password']) && strtolower($_POST['username']) == 'rootadmin')
 		{
+			phoromatic_quit_if_invalid_input_found(array('username'));
 			$admin_pw = phoromatic_server::read_setting('root_admin_pw');
 			if(empty($admin_pw))
 			{
@@ -94,6 +95,7 @@ class phoromatic_welcome implements pts_webui_interface
 		}
 		else if(isset($_POST['username']) && isset($_POST['password']))
 		{
+			phoromatic_quit_if_invalid_input_found(array('username'));
 			$matching_user = phoromatic_server::$db->querySingle('SELECT UserName, Password, AccountID, UserID, AdminLevel, CreatedOn FROM phoromatic_users WHERE UserName = \'' . SQLite3::escapeString($_POST['username']) . '\'', true);
 			if(!empty($matching_user))
 			{
@@ -223,8 +225,7 @@ class phoromatic_welcome implements pts_webui_interface
 			else
 			{
 
-				$box .= '
-							<p id="register_link"><a onclick="javascript:document.getElementById(\'register\').style.display = \'block\'; document.getElementById(\'register_link\').style.display = \'none\';">Create A New Account</a></p>
+				$box .= '<p id="register_link"><a onclick="javascript:document.getElementById(\'register\').style.display = \'block\'; document.getElementById(\'register_link\').style.display = \'none\';">Create A New Account</a></p>
 			<div style="display: none;" id="register">
 
 
@@ -252,11 +253,9 @@ class phoromatic_welcome implements pts_webui_interface
 						<li class="label_input_wrapper">
 							<input type="submit" value="Create Account" />
 						</li>
-
 					</ul>
 
 					</form></div>';
-
 			}
 			$box .= '<hr />
 			<h1>View Public Results</h1>

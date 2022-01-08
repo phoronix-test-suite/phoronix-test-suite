@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2018 - 2020, Phoronix Media
-	Copyright (C) 2018 - 2020, Michael Larabel
+	Copyright (C) 2018 - 2022, Phoronix Media
+	Copyright (C) 2018 - 2022, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -119,8 +119,8 @@ class pts_result_viewer_embed
 		$html_options = self::get_html_options_markup($result_file, $_REQUEST, $this->result_public_id, $this->can_delete_results);
 		self::process_request_to_attributes($_REQUEST, $result_file, $extra_attributes);
 		$PAGE .= self::get_html_sort_bar($result_file, $_REQUEST);
-		$PAGE .= '<h1 id="result_file_title" placeholder="Title">' . $result_file->get_title() . '</h1>';
-		$PAGE .= '<p id="result_file_desc" placeholder="Description">' . str_replace(PHP_EOL, '<br />', $result_file->get_description()) . '</p>';
+		$PAGE .= '<h1 id="result_file_title" placeholder="Title">' . pts_strings::sanitize($result_file->get_title()) . '</h1>';
+		$PAGE .= '<p id="result_file_desc" placeholder="Description">' . str_replace(PHP_EOL, '<br />', pts_strings::sanitize($result_file->get_description())) . '</p>';
 		$PAGE .= '<div id="result-settings">';
 		if($this->can_modify_results)
 		{
@@ -412,8 +412,6 @@ class pts_result_viewer_embed
 				}
 			}
 
-			// $PAGE .= $res . '<br />';
-
 			//
 			// DISPLAY LOGS
 			//
@@ -429,7 +427,6 @@ class pts_result_viewer_embed
 			{
 				$button_area .= ' <button onclick="javascript:display_install_logs_for_result_object(\'' . $this->result_public_id . '\', \'' . $i . '\'); return false;">View Test Installation Logs</button> ';
 			}
-
 
 			//
 			// EDITING / DELETE OPTIONS
@@ -452,12 +449,12 @@ class pts_result_viewer_embed
 				}
 				else
 				{
-					$PAGE .= '<div id="update_annotation_' . $i . '" contentEditable="true">' . $result_object->get_annotation() . '</div> <input type="submit" value="Update Annotation" onclick="javascript:update_annotation_for_result_object(\'' . $this->result_public_id . '\', \'' . $i . '\'); return false;">';
+					$PAGE .= '<div id="update_annotation_' . $i . '" contentEditable="true">' . pts_strings::sanitize($result_object->get_annotation()) . '</div> <input type="submit" value="Update Annotation" onclick="javascript:update_annotation_for_result_object(\'' . $this->result_public_id . '\', \'' . $i . '\'); return false;">';
 				}
 			}
 			else
 			{
-				$PAGE .= '<p class="mini">' . $result_object->get_annotation() . '</p>';
+				$PAGE .= '<p class="mini">' . pts_strings::sanitize($result_object->get_annotation()) . '</p>';
 			}
 			if($button_area != null)
 			{
@@ -1023,7 +1020,6 @@ class pts_result_viewer_embed
 	}
 	public static function process_result_modify_pre_render(&$result_file, $can_modify_results = false, $can_delete_results = false)
 	{
-
 		if(!isset($_REQUEST['modify']) || ($can_modify_results == false && $can_delete_results == false))
 		{
 			return;
