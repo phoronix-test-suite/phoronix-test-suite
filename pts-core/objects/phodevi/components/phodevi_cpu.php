@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2021, Phoronix Media
-	Copyright (C) 2008 - 2021, Michael Larabel
+	Copyright (C) 2008 - 2022, Phoronix Media
+	Copyright (C) 2008 - 2022, Michael Larabel
 	phodevi_cpu.php: The PTS Device Interface object for the CPU / processor
 
 	This program is free software; you can redistribute it and/or modify
@@ -1247,7 +1247,9 @@ class phodevi_cpu extends phodevi_device_interface
 				165 => 'Comet Lake',
 				166 => 'Comet Lake',
 				167 => 'Rocket Lake',
+				168 => 'Rocket Lake',
 				183 => 'Raptor Lake',
+				183 => 'Alder Lake',
 				),
 			15 => array(
 				1 => 'Clarksfield',

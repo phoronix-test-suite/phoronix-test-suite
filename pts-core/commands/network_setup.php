@@ -39,7 +39,7 @@ class network_setup implements pts_option_interface
 		$proxy_user = pts_user_io::prompt_user_input('Enter user-name for proxy (leave blank if irrelevant)', true);
 		if(!empty($proxy_user))
 		{
-			$proxy_password = pts_strings::str_to_hex(pts_user_io::prompt_user_input('Enter password for proxy', true, true));
+			$proxy_password = self::str_to_hex(pts_user_io::prompt_user_input('Enter password for proxy', true, true));
 		}
 		else
 		{
@@ -62,6 +62,17 @@ class network_setup implements pts_option_interface
 		{
 			echo PHP_EOL . 'Proxy Setup Failed.' . PHP_EOL;
 		}
+	}
+	public static function str_to_hex($string)
+	{
+		$hex = '';
+		for($i = 0; $i < strlen($string); $i++)
+		{
+			$ord = ord($string[$i]);
+			$hexCode = dechex($ord);
+			$hex .= substr('0' . $hexCode, -2);
+		}
+		return strtoupper($hex);
 	}
 }
 

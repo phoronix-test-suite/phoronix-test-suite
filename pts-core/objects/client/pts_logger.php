@@ -86,9 +86,8 @@ class pts_logger
 		if($this->log_file == null)
 			return;
 
-		$traces = debug_backtrace();
-
-		if (isset($traces[0]))
+		$traces = pts_client::is_debug_mode() ? debug_backtrace() : false;
+		if($traces && isset($traces[0]))
     		{
 		        $caller = $traces[1]['function'];
 		        $line = $traces[0]['line'];
@@ -96,7 +95,7 @@ class pts_logger
 		}
 
 		$message = pts_user_io::strip_ansi_escape_sequences($message);
-		file_put_contents($this->log_file, ($date_prefix ? '[' . date('Y-m-d\TH:i:sO') . '] ' : null) . "[" . $caller . "(". $file . ":" . $line . ")] " . $message . PHP_EOL, FILE_APPEND);
+		file_put_contents($this->log_file, ($date_prefix ? '[' . date('Y-m-d\TH:i:sO') . '] ' : '') . ($traces ? '[' . $caller . '('. $file . ':' . $line . ')] ' : '') . $message . PHP_EOL, FILE_APPEND);
 	}
 	public function get_log_file_size()
 	{

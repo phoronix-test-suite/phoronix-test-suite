@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2021, Phoronix Media
-	Copyright (C) 2008 - 2021, Michael Larabel
+	Copyright (C) 2008 - 2022, Phoronix Media
+	Copyright (C) 2008 - 2022, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -183,7 +183,7 @@ class pts_result_file
 	}
 	public function get_test_log_dir(&$result_object = null)
 	{
-		$log_dir = dirname($this->get_file_location());
+		$log_dir = !empty($this->get_file_location()) ? dirname($this->get_file_location()) : '';
 		if(empty($log_dir) || !is_dir($log_dir))
 		{
 			return false;

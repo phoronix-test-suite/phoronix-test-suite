@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2021, Phoronix Media
-	Copyright (C) 2010 - 2021, Michael Larabel
+	Copyright (C) 2010 - 2022, Phoronix Media
+	Copyright (C) 2010 - 2022, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -36,30 +36,6 @@ class pts_strings
 	const CHAR_SEMICOLON = 4096;
 	const CHAR_EQUAL = 8192;
 
-	public static function str_to_hex($string)
-	{
-		$hex = '';
-		for($i = 0; $i < strlen($string); $i++)
-		{
-			$ord = ord($string[$i]);
-			$hexCode = dechex($ord);
-			$hex .= substr('0' . $hexCode, -2);
-		}
-		return strToUpper($hex);
-	}
-	public static function hex_to_str($hex)
-	{
-		$string='';
-		for($i = 0; $i < strlen($hex) - 1; $i += 2)
-		{
-			$string .= chr(hexdec($hex[$i] . $hex[($i + 1)]));
-		}
-		return $string;
-	}
-	public static function has_alpha($string)
-	{
-		return pts_strings::string_contains($string, pts_strings::CHAR_LETTER);
-	}
 	public static function is_url($string)
 	{
 		$components = parse_url($string);
@@ -526,27 +502,6 @@ class pts_strings
 
 		return $contents;
 	}
-	public static function pts_version_to_codename($version)
-	{
-		$version = substr($version, 0, 3);
-		$codenames = pts_version_codenames();
-
-		return isset($codenames[$version]) ? $codenames[$version] : null;
-	}
-	public static function parse_week_string($week_string, $delimiter = ' ')
-	{
-		$return_array = array();
-
-		foreach(array('S', 'M', 'T', 'W', 'TH', 'F', 'S') as $day_int => $day_char)
-		{
-			if($week_string[$day_int] == 1)
-			{
-				$return_array[] = $day_char;
-			}
-		}
-
-		return implode($delimiter, $return_array);
-	}
 	public static function remove_from_string($string, $attributes)
 	{
 		$string_r = str_split($string);
@@ -761,14 +716,6 @@ class pts_strings
 
 		return $days_ago;
 	}
-	public static function time_stamp_to_string($time_stamp, $string_type)
-	{
-		$stamp_half = explode(' ', trim($time_stamp));
-		$date = explode('-', $stamp_half[0]);
-		$time = explode(':', (isset($stamp_half[1]) ? $stamp_half[1] : '00:00:00'));
-
-		return date($string_type, mktime($time[0], $time[1], $time[2], $date[1], $date[2], $date[0]));
-	}
 	public static function system_category_to_openbenchmark_category($category)
 	{
 		$categories = array('Graphics' => 'GPU', 'Processor' => 'CPU', 'System' => 'CPU', 'File-System' => 'File System');
@@ -851,6 +798,14 @@ class pts_strings
 		}*/
 
 		return $is_text;
+	}
+	public static function sanitize($input)
+	{
+		return htmlspecialchars($input, ENT_NOQUOTES, 'UTF-8');
+	}
+	public static function simple($input)
+	{
+		return empty($str) ? '' : pts_strings::keep_in_string($input, pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_DECIMAL | pts_strings::CHAR_SPACE | pts_strings::CHAR_UNDERSCORE | pts_strings::CHAR_COMMA | pts_strings::CHAR_AT | pts_strings::CHAR_COLON);
 	}
 }
 

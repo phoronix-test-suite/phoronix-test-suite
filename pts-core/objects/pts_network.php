@@ -252,7 +252,7 @@ class pts_network
 
 		if($proxy_user != false && !empty($proxy_user))
 		{
-			$password = pts_strings::hex_to_str($proxy_password);
+			$password = self::hex_to_str($proxy_password);
 			$parameters['http']['header'] = 'Proxy-Authorization: Basic ' . base64_encode($proxy_user . ':' . $password);
 		}
 		else
@@ -263,6 +263,15 @@ class pts_network
 		$stream_context = stream_context_create($parameters);
 
 		return $stream_context;
+	}
+	public static function hex_to_str($hex)
+	{
+		$string='';
+		for($i = 0; $i < strlen($hex) - 1; $i += 2)
+		{
+			$string .= chr(hexdec($hex[$i] . $hex[($i + 1)]));
+		}
+		return $string;
 	}
 
 	//
