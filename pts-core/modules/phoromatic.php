@@ -216,7 +216,7 @@ class phoromatic extends pts_module_interface
 			echo PHP_EOL . 'No Phoromatic Servers detected.' . PHP_EOL . PHP_EOL;
 		}
 	}
-	protected static function tick_thread()
+	protected static function tick_thread($force_manual_poll = false)
 	{
 		static $last_phoromatic_log = 0;
 
@@ -243,6 +243,11 @@ class phoromatic extends pts_module_interface
 					'r' => 'tick',
 					'j' => json_encode($j),
 					));
+
+			if($force_manual_poll)
+			{
+				return;
+			}
 
 			$server_response = json_decode($server_response, true);
 			if($server_response && isset($server_response['phoromatic']['tick_thread']))
@@ -792,6 +797,7 @@ class phoromatic extends pts_module_interface
 					case 'reboot':
 						echo PHP_EOL . 'Phoromatic received a remote command to reboot.' . PHP_EOL;
 						phoromatic::update_system_status('Attempting System Reboot');
+						self::tick_thread(true);
 						phodevi::reboot();
 						break;
 					case 'shutdown-if-supports-wake':
@@ -815,6 +821,7 @@ class phoromatic extends pts_module_interface
 
 						echo PHP_EOL . 'Phoromatic received a remote command to shutdown.' . PHP_EOL;
 						phoromatic::update_system_status('Attempting System Shutdown');
+						self::tick_thread(true);
 						phodevi::shutdown();
 						break;
 					case 'maintenance':
@@ -833,6 +840,7 @@ class phoromatic extends pts_module_interface
 					case 'exit':
 						echo PHP_EOL . 'Phoromatic received a remote command to exit.' . PHP_EOL;
 						phoromatic::update_system_status('Exiting Phoromatic');
+						self::tick_thread(true);
 						$do_exit = true;
 						break;
 				}
@@ -1132,7 +1140,7 @@ class phoromatic extends pts_module_interface
 			$update_file = pts_client::create_temporary_file();
 			$update_script = str_replace("\r", PHP_EOL, $update_script);
 			file_put_contents($update_file, $update_script);
-			phoromatic::update_system_status('Running Phoronix Test Suite Update Script');
+			phoromatic::update_system_status('Running Phoromatic Update Script');
 			$env_vars = array();
 
 			$append_cmd = '';
@@ -1159,6 +1167,8 @@ class phoromatic extends pts_module_interface
 			$update_output = pts_client::shell_exec($cmd . ' ' . $update_file . $append_cmd, $env_vars);
 			pts_client::$pts_logger && pts_client::$pts_logger->log('Update Script Output: ' . $update_output);
 			unlink($update_file);
+			phoromatic::update_system_status('Phoromatic Update Script Completed');
+			self::tick_thread(true);
 		}
 	}
 	private static function set_user_context($context_script, $trigger, $schedule_id, $process)
