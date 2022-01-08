@@ -746,7 +746,7 @@ class pts_client
 
 		return $bool;
 	}
-	public static function init_display_mode($override_display_mode = false)
+	public static function init_display_mode($prefer_display_mode = false)
 	{
 		if(PTS_IS_WEB_CLIENT && !defined('PHOROMATIC_SERVER'))
 		{
@@ -754,9 +754,24 @@ class pts_client
 			return;
 		}
 
-		$env_mode = pts_client::is_debug_mode() ? 'BASIC' : $override_display_mode;
+		if(pts_env::read('PTS_DISPLAY_MODE') != false)
+		{
+			$env_mode = pts_env::read('PTS_DISPLAY_MODE');
+		}
+		else if(pts_client::is_debug_mode())
+		{
+			$env_mode = 'BASIC';
+		}
+		else if(!empty($prefer_display_mode))
+		{
+			$env_mode = $prefer_display_mode;
+		}
+		else
+		{
+			$env_mode = pts_config::read_user_config('PhoronixTestSuite/Options/General/DefaultDisplayMode', 'DEFAULT');
+		}
 
-		switch(strtoupper(($env_mode != false || ($env_mode = pts_env::read('PTS_DISPLAY_MODE')) != false ? $env_mode : pts_config::read_user_config('PhoronixTestSuite/Options/General/DefaultDisplayMode', 'DEFAULT'))))
+		switch(strtoupper($env_mode))
 		{
 			case 'BASIC':
 				self::$display = new pts_basic_display_mode();
