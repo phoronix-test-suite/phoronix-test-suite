@@ -1869,7 +1869,12 @@ class phodevi_system extends phodevi_device_interface
 			{
 				$llvm = substr($renderer, $s);
 				$llvm = substr($llvm, 0, strpos($llvm, ')'));
-				$info .= ' (' . $llvm . ')';
+				if(!empty($llvm) && phodevi::read_property('system', 'kernel'))
+				{
+					// Mesa Oibaf PPA for example includes kernel version but not important since PTS already reports kernel
+					$llvm = str_replace(array(',', phodevi::read_property('system', 'kernel')), '', $llvm);
+				}
+				$info .= ' (' . trim($llvm) . ')';
 			}
 		}
 
