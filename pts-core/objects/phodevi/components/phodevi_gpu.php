@@ -1241,7 +1241,7 @@ class phodevi_gpu extends phodevi_device_interface
 				$info = substr($info, 0, $x);
 			}
 
-			if(phodevi::is_windows() == false && strpos($info, 'Intel ') === false)
+			if(phodevi::is_windows() == false && strpos($info, 'Intel ') === false && !pts_strings::string_contains($info, pts_strings::CHAR_NUMERIC))
 			{
 				$info_pci = phodevi_linux_parser::read_pci('VGA compatible controller', false);
 
