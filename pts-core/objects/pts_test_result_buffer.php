@@ -451,24 +451,6 @@ class pts_test_result_buffer
 
 		return $identifier;
 	}
-	public function result_identifier_differences_only_numeric()
-	{
-		if(!isset($this->buffer_items[0]))
-		{
-			return false;
-		}
-
-		$first_result = trim(str_ireplace(array('SVN', 'Git', 'Dev'), '', pts_strings::remove_from_string($this->buffer_items[0]->get_result_identifier(), pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL | pts_strings::CHAR_DASH)));
-		for($i = 1;  $i < count($this->buffer_items); $i++)
-		{
-			$result = trim(str_ireplace(array('SVN', 'Git', 'Dev'), '', pts_strings::remove_from_string($this->buffer_items[$i]->get_result_identifier(), pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL | pts_strings::CHAR_DASH)));
-			if($result != $first_result)
-			{
-				return false;
-			}
-		}
-		return true;
-	}
 	public function get_max_precision()
 	{
 		return $this->max_precision;

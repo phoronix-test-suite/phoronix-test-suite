@@ -24,7 +24,6 @@ class pts_result_file
 {
 	protected $save_identifier = null;
 	protected $result_objects = null;
-	protected $extra_attributes = null;
 	protected $is_multi_way_inverted = false;
 	protected $file_location = false;
 
@@ -42,7 +41,6 @@ class pts_result_file
 	public function __construct($result_file = null, $read_only_result_objects = false, $parse_only_qualified_result_objects = false)
 	{
 		$this->save_identifier = $result_file;
-		$this->extra_attributes = array();
 		$this->systems = array();
 		$this->result_objects = array();
 		$this->ro_relation_map = array();
@@ -236,21 +234,9 @@ class pts_result_file
 		}
 		*/
 	}
-	public function default_result_folder_path()
-	{
-		return PTS_SAVE_RESULTS_PATH . $this->save_identifier . '/';
-	}
 	public function get_identifier()
 	{
 		return $this->save_identifier;
-	}
-	public function read_extra_attribute($key)
-	{
-		return isset($this->extra_attributes[$key]) ? $this->extra_attributes[$key] : false;
-	}
-	public function set_extra_attribute($key, $value)
-	{
-		$this->extra_attributes[$key] = $value;
 	}
 	public function add_system($system)
 	{
@@ -258,10 +244,6 @@ class pts_result_file
 		{
 			$this->systems[] = $system;
 		}
-	}
-	public function add_system_direct($identifier, $hw = null, $sw = null, $json = null, $user = null, $notes = null, $timestamp = null, $version = null)
-	{
-		$this->systems[] = new pts_result_file_system($identifier, $hw, $sw, $json, $user, $notes, $timestamp, $version, $this);
 	}
 	public function get_systems()
 	{
@@ -585,10 +567,6 @@ class pts_result_file
 		}
 
 		return $is_multi_way;
-	}
-	public function invert_multi_way_invert()
-	{
-		$this->is_multi_way_inverted = !$this->is_multi_way_inverted;
 	}
 	public function is_multi_way_inverted()
 	{

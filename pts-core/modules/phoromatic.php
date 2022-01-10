@@ -353,12 +353,6 @@ class phoromatic extends pts_module_interface
 				'o' => $estimate_to_next_comm
 				));
 	}
-	public static function startup_ping_check($server_ip, $http_port)
-	{
-		$server_response = phoromatic::upload_to_remote_server(array(
-				'r' => 'ping',
-				), $server_ip, $http_port);
-	}
 	protected static function set_server_info($address, $port, $account_id)
 	{
 		self::$server_address = $address;

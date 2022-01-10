@@ -183,32 +183,6 @@ class pts_module
 
 		return is_file($file) && unlink($file);
 	}
-	public static function copy_file($from_file, $to_file)
-	{
-		// Copy a file for a module
-		$save_base_dir = self::save_dir();
-
-		pts_file_io::mkdir($save_base_dir);
-
-		if(($extra_dir = dirname($to_file)) != "." && !is_dir($save_base_dir . $extra_dir))
-		{
-			mkdir($save_base_dir . $extra_dir);
-		}
-
-		if(is_file($from_file) && (!is_file($save_base_dir . $to_file) || md5_file($from_file) != md5_file($save_base_dir . $to_file)))
-		{
-			if(copy($from_file, $save_base_dir . $to_file))
-			{
-				return $save_base_dir . $to_file;
-			}
-		}
-
-		return false;
-	}
-	public static function pts_fork_function($function, $parameters = null)
-	{
-		self::pts_timed_function($function, -1, $parameters);
-	}
 	public static function pts_timed_function($function, $time, $parameters = null)
 	{
 		if(($time < 0.5 && $time != -1) || $time > 300)

@@ -430,6 +430,7 @@ class phoromatic_schedules implements pts_webui_interface
 				$stmt->bindValue(':schedule_id', $PATH[0]);
 				$test_result_result = $stmt->execute();
 				$test_result_row = $test_result_result->fetchArray();
+				$oldest_upload_time = 0;
 
 				if($test_result_row)
 				{
@@ -457,7 +458,7 @@ class phoromatic_schedules implements pts_webui_interface
 				{
 					$main .= '<p>Jump to the latest results from the past: ';
 					$main .= '<select name="view_results_from_past" id="view_results_from_past" onchange="phoromatic_jump_to_results_from(\'' . $PATH[0] . '\', \'view_results_from_past\');">';
-					$oldest_upload_time = strtotime($oldest_upload_time);
+					$oldest_upload_time = !empty($oldest_upload_time) ? strtotime($oldest_upload_time) : 0;
 					$opts = array(
 						'Week' => 7,
 						'Three Weeks' => 21,

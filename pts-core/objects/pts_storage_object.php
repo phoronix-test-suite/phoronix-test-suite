@@ -81,22 +81,6 @@ class pts_storage_object
 	{
 		return $this->creation_time;
 	}
-	public static function force_recover_from_file($read_from_file)
-	{
-		$restore_obj = false;
-
-		if(is_file($read_from_file))
-		{
-			$restore = unserialize(base64_decode(file_get_contents($read_from_file)));
-
-			if($restore instanceof pts_storage_object)
-			{
-				$restore_obj = $restore;
-			}
-		}
-
-		return $restore_obj;
-	}
 	public static function recover_from_file($read_from_file)
 	{
 		$restore_obj = false;

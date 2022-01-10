@@ -43,6 +43,10 @@ class pts_network
 	{
 		return self::$disable_network_support == false;
 	}
+	public static function user_agent()
+	{
+		return 'PhoronixTestSuite/' . ucwords(strtolower(PTS_CODENAME));
+	}
 	public static function http_get_contents($url, $override_proxy = false, $override_proxy_port = false, $override_proxy_user = false, $override_proxy_pw = false, $http_timeout = -1)
 	{
 		if(!pts_network::network_support_available())
@@ -141,7 +145,7 @@ class pts_network
 		curl_setopt($cr, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($cr, CURLOPT_CONNECTTIMEOUT, self::$network_timeout);
 		curl_setopt($cr, CURLOPT_BUFFERSIZE, 64000);
-		curl_setopt($cr, CURLOPT_USERAGENT, pts_core::codename(true));
+		curl_setopt($cr, CURLOPT_USERAGENT, pts_network::user_agent());
 		curl_setopt($cr, CURLOPT_CAPATH, PTS_CORE_STATIC_PATH . 'certificates/');
 		curl_setopt($cr, CURLOPT_SSL_VERIFYPEER, false);
 
@@ -248,7 +252,7 @@ class pts_network
 			$parameters['http']['timeout'] = self::$network_timeout;
 		}
 
-		$parameters['http']['user_agent'] = pts_core::codename(true);
+		$parameters['http']['user_agent'] = pts_network::user_agent();
 
 		if($proxy_user != false && !empty($proxy_user))
 		{

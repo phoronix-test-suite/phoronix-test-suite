@@ -34,7 +34,7 @@ if(!empty($matching_user))
 	}
 }
 
-if(!isset($account_id) || empty($account_id))
+if(!isset($account_id) || empty($account_id) || !isset($user_name))
 	exit;
 
 header('Content-Type: text/xml; charset=utf-8');

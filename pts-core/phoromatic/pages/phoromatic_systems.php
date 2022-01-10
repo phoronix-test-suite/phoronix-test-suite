@@ -166,6 +166,9 @@ class phoromatic_systems implements pts_webui_interface
 					case 1:
 						$state = 'Active';
 						break;
+					default:
+						$state = 'Unknown';
+						break;
 				}
 
 				$main .= '<hr />';
@@ -212,6 +215,7 @@ class phoromatic_systems implements pts_webui_interface
 
 				$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="update_system_variables" method="post">';
 				$main .= '<table width="80%"><tr><th>Variable Name</th><th>Value</th></tr>';
+				$i = 0;
 				foreach($system_variables as $i => $v_string)
 				{
 					$var = explode('=', $v_string);

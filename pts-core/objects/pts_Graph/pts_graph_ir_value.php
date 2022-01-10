@@ -46,10 +46,6 @@ class pts_graph_ir_value
 	{
 		return $this->value_string;
 	}
-	public function set_value_string($value)
-	{
-		$this->value_string = $value;
-	}
 }
 
 ?>

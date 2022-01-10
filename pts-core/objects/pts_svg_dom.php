@@ -50,11 +50,6 @@ class pts_svg_dom
 
 		$this->dom->appendChild($this->svg);
 	}
-	public function render_image($save_as = null, &$format = null)
-	{
-		// XXX: Alias for output. With PTS 3.8 this is just here for API compatibility with OpenBenchmarking.org.
-		$this->output($save_as, $format);
-	}
 	public function output($save_as = null, $output_format = 'SVG')
 	{
 		if(isset($_SERVER['HTTP_USER_AGENT']) || isset($_REQUEST['force_format']))
@@ -116,13 +111,6 @@ class pts_svg_dom
 	public function save_xml()
 	{
 		return $this->dom->saveXML();
-	}
-	public static function sanitize_hex($hex)
-	{
-		return $hex; // don't shorten it right now until the gd code can handle shortened hex codes
-		$hex = preg_replace('/(?<=^#)([a-f0-9])\\1([a-f0-9])\\2([a-f0-9])\\3\z/i', '\1\2\3', $hex);
-
-		return strtolower($hex);
 	}
 	public function draw_svg_line($start_x, $start_y, $end_x, $end_y, $color, $line_width = 1, $extra_elements = null)
 	{
@@ -343,101 +331,6 @@ class pts_svg_dom
 			$el->setAttribute($name, $value);
 		}
 	}
-	public function draw_rectangle_gradient($x1, $y1, $width, $height, $color, $next_color)
-	{
-		static $gradient_count = 1;
-
-		$gradient = $this->dom->createElement('linearGradient');
-		$gradient->setAttribute('id', 'g_' . $gradient_count);
-		$gradient->setAttribute('x1', '0%');
-		$gradient->setAttribute('y1', '0%');
-		$gradient->setAttribute('x2', '100%');
-		$gradient->setAttribute('y2', '0%');
-
-		$stop = $this->dom->createElement('stop');
-		$stop->setAttribute('offset', '0%');
-		$stop->setAttribute('style', 'stop-color: ' . $color .'; stop-opacity: 1;');
-		$gradient->appendChild($stop);
-
-		$stop = $this->dom->createElement('stop');
-		$stop->setAttribute('offset', '100%');
-		$stop->setAttribute('style', 'stop-color: ' . $next_color .'; stop-opacity: 1;');
-		$gradient->appendChild($stop);
-
-		$defs = $this->dom->createElement('defs');
-		$defs->appendChild($gradient);
-		$this->svg->appendChild($defs);
-
-		$rect = $this->dom->createElement('rect');
-		$rect->setAttribute('x', $x1);
-		$rect->setAttribute('y', $y1);
-		$rect->setAttribute('width', $width);
-		$rect->setAttribute('height', $height);
-		//$rect->setAttribute('fill', $background_color);
-		$rect->setAttribute('style', 'fill:url(#g_' .  $gradient_count . ')');
-		$gradient_count++;
-
-		$this->svg->appendChild($rect);
-	}
-	public static function html_embed_code($file_name, $file_type = 'SVG', $attributes = null, $is_xsl = false)
-	{
-		$attributes = pts_arrays::to_array($attributes);
-		$file_name = str_replace('BILDE_EXTENSION', strtolower($file_type), $file_name);
-
-		switch($file_type)
-		{
-			case 'SVG':
-				$attributes['data'] = $file_name;
-
-				if($is_xsl)
-				{
-					$html = '<object type="image/svg+xml">';
-
-					foreach($attributes as $option => $value)
-					{
-						$html .= '<xsl:attribute name="' . $option . '">' . $value . '</xsl:attribute>';
-					}
-					$html .= '</object>';
-				}
-				else
-				{
-					$html = '<object type="image/svg+xml"';
-
-					foreach($attributes as $option => $value)
-					{
-						$html .= $option . '="' . $value . '" ';
-					}
-					$html .= '/>';
-				}
-				break;
-			default:
-				$attributes['src'] = $file_name;
-
-				if($is_xsl)
-				{
-					$html = '<img>';
-
-					foreach($attributes as $option => $value)
-					{
-						$html .= '<xsl:attribute name="' . $option . '">' . $value . '</xsl:attribute>';
-					}
-					$html .= '</img>';
-				}
-				else
-				{
-					$html = '<img ';
-
-					foreach($attributes as $option => $value)
-					{
-						$html .= $option . '="' . $value . '" ';
-					}
-					$html .= '/>';
-				}
-				break;
-		}
-
-		return $html;
-	}
 	public static function estimate_text_dimensions($text_string, $font_size)
 	{
 		if($text_string == null)
@@ -449,10 +342,6 @@ class pts_svg_dom
 
 		// Width x Height
 		return array($box_width, $box_height);
-	}
-	public static function embed_png_image($png_img_file)
-	{
-		return 'data:image/png;base64,' . base64_encode(file_get_contents($png_img_file));
 	}
 }
 

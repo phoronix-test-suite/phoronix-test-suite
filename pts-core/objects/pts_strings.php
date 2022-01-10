@@ -198,26 +198,6 @@ class pts_strings
 	{
 		return !empty($string) && ($t = strrpos($string, $delimited_by)) ? substr($string, ($t + 1)) : $string;
 	}
-	public static function array_list_to_string($array, $bold_items = false, $append_to_end = null)
-	{
-		$count = count($array);
-
-		if($bold_items)
-		{
-			foreach($array as &$item)
-			{
-				$item = '<strong>' . $item . '</strong>';
-			}
-		}
-
-		if($count > 1)
-		{
-			$temp = array_pop($array);
-			$array[] = 'and ' . $temp;
-		}
-
-		return implode(($count > 2 ? ', ' : ' ') . ' ', $array) . ($append_to_end != null ? ' ' .  $append_to_end . ($count > 1 ? 's' : null) : null);
-	}
 	public static function has_in_string($string, $r)
 	{
 		$has_in_string = false;

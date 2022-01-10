@@ -43,7 +43,7 @@ class pts_pdf_template extends FPDF
 
 		$this->SetTitle($Title);
 		$this->SetAuthor('Phoronix Test Suite');
-		$this->SetCreator(pts_core::codename(true));
+		$this->SetCreator(pts_core::program_title());
 		$this->SetCompression(false);
 	}
 	public function html_to_pdf($html)

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2021, Phoronix Media
-	Copyright (C) 2008 - 2021, Michael Larabel
+	Copyright (C) 2008 - 2022, Phoronix Media
+	Copyright (C) 2008 - 2022, Michael Larabel
 	pts-core.php: To boot-strap the Phoronix Test Suite start-up
 
 	This program is free software; you can redistribute it and/or modify
@@ -81,12 +81,6 @@ class pts_core
 		}
 
 		return $userhome;
-	}
-	public static function codename($full_string = false)
-	{
-		$codename = ucwords(strtolower(PTS_CODENAME));
-
-		return ($full_string ? 'PhoronixTestSuite/' : null) . $codename;
 	}
 	public static function program_title()
 	{
@@ -231,74 +225,6 @@ function pts_needed_extensions()
 		array(0, function_exists('curl_init'), 'CURL', 'CURL is recommended for an enhanced download experience.'),
 		array(0, function_exists('socket_create_listen'), 'Sockets', 'Sockets is needed when running the Phoromatic Server.'),
 		array(0, function_exists('readline'), 'Readline', 'Readline support is useful for tab-based auto-completion support.'),
-		);
-}
-function pts_version_codenames()
-{
-	// Lots of inspiration for codenames often from Norwegian municipalities
-	// https://en.wikipedia.org/wiki/List_of_municipalities_of_Norway
-	return array(
-		// Sør-Trøndelag - Norway
-		'1.0' => 'Trondheim',
-		'1.2' => 'Malvik',
-		'1.4' => 'Orkdal',
-		'1.6' => 'Tydal',
-		'1.8' => 'Selbu',
-		// Troms - Norway
-		'2.0' => 'Sandtorg',
-		'2.2' => 'Bardu',
-		'2.4' => 'Lenvik',
-		'2.6' => 'Lyngen',
-		'2.8' => 'Torsken',
-		// Aust-Agder - Norway
-		'2.9' => 'Iveland', // early PTS3 development work
-		'3.0' => 'Iveland',
-		'3.2' => 'Grimstad',
-		'3.4' => 'Lillesand',
-		'3.6' => 'Arendal',
-		'3.8' => 'Bygland',
-		// Rogaland - Norway
-		'4.0' => 'Suldal',
-		'4.2' => 'Randaberg',
-		'4.4' => 'Forsand',
-		'4.6' => 'Utsira',
-		'4.8' => 'Sokndal',
-		// Tulskaya oblast / Tula Oblast region - Russia
-		'5.0' => 'Plavsk',
-		'5.2' => 'Khanino',
-		'5.4' => 'Lipki',
-		'5.6' => 'Dedilovo',
-		'5.8' => 'Belev',
-		// Finnmark - Norway
-		'6.0' => 'Hammerfest',
-		'6.2' => 'Gamvik',
-		'6.4' => 'Hasvik',
-		'6.6' => 'Loppa',
-		'6.8' => 'Tana',
-		// Hedmark - Norway
-		'7.0' => 'Ringsaker',
-		'7.2' => 'Trysil',
-		'7.4' => 'Tynset',
-		'7.6' => 'Alvdal',
-		'7.8' => 'Folldal',
-		// Østfold - Norway
-		'8.0' => 'Aremark',
-		'8.2' => 'Rakkestad',
-		'8.4' => 'Skiptvet',
-		'8.6' => 'Spydeberg',
-		'8.8' => 'Hvaler',
-		// Akershus - Norway
-		'9.0' => 'Asker',
-		'9.2' => 'Hurdal',
-		'9.4' => 'Vestby',
-		'9.6' => 'Nittedal',
-		'9.8' => 'Nesodden',
-		//  Senja Municipality in Troms og Finnmark - Norway
-		'10.0' => 'Finnsnes',
-		'10.2' => 'Harstad',
-		'10.4' => 'Ibestad',
-		'10.6' => 'Tjeldsund',
-		'10.8' => 'Nesseby',
 		);
 }
 
