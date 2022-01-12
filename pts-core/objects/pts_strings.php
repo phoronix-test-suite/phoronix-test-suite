@@ -785,7 +785,7 @@ class pts_strings
 	}
 	public static function simple($input)
 	{
-		return empty($str) ? '' : pts_strings::keep_in_string($input, pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_DECIMAL | pts_strings::CHAR_SPACE | pts_strings::CHAR_UNDERSCORE | pts_strings::CHAR_COMMA | pts_strings::CHAR_AT | pts_strings::CHAR_COLON);
+		return empty($input) ? '' : pts_strings::keep_in_string($input, pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH | pts_strings::CHAR_DECIMAL | pts_strings::CHAR_SPACE | pts_strings::CHAR_UNDERSCORE | pts_strings::CHAR_COMMA | pts_strings::CHAR_AT | pts_strings::CHAR_COLON);
 	}
 }
 

@@ -523,6 +523,18 @@ function phoromatic_oldest_result_for_schedule($schedule_id)
 
 	return $old_time[$schedule_id];
 }
+function write_token_in_form()
+{
+	return '<input type="hidden" name="token_submit" value="' . $_SESSION['Token'] . '" />';
+}
+function append_token_to_url()
+{
+	return '/&token_submit=' . $_SESSION['Token'];
+}
+function verify_submission_token()
+{
+	return isset($_REQUEST['token_submit']) && $_REQUEST['token_submit'] == $_SESSION['Token'];
+}
 function create_new_phoromatic_account($register_username, $register_password, $register_password_confirm, $register_email, $seed_accountid = null)
 {
 	// REGISTER NEW USER

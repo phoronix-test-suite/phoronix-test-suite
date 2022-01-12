@@ -39,7 +39,7 @@ class phoromatic_local_suites implements pts_webui_interface
 		$suite_dir = phoromatic_server::phoromatic_account_suite_path($_SESSION['AccountID']);
 		$main = '<h1>Local Suites</h1><p>These are test suites created by you or another account within your group. Suites are an easy collection of test profiles. New suits can be trivially made via the <a href="/?build_suite">build suite</a> page.</p>';
 
-		if(!PHOROMATIC_USER_IS_VIEWER && isset($PATH[0]) && $PATH[0] == 'delete')
+		if(!PHOROMATIC_USER_IS_VIEWER && isset($PATH[0]) && $PATH[0] == 'delete' && verify_submission_token())
 		{
 			foreach(explode(',', $PATH[1]) as $id)
 			{
@@ -64,7 +64,7 @@ class phoromatic_local_suites implements pts_webui_interface
 			$main .= '<p><em>' . pts_strings::sanitize($test_suite->get_description()) . '</em></p>';
 			if(!PHOROMATIC_USER_IS_VIEWER)
 			{
-				$main .= '<p><a href="?build_suite/' . $id . '">Edit Suite</a> - <a href="?local_suites/delete/' . $id . '">Delete Suite</a></p>';
+				$main .= '<p><a href="?build_suite/' . $id . '">Edit Suite</a> - <a href="?local_suites/delete/' . $id . append_token_to_url() . '">Delete Suite</a></p>';
 			}
 			$main .= '<div style="max-height: 400px; width: 80%; overflow-y: scroll;">';
 			$test_suite->sort_contained_tests();

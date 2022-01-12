@@ -85,15 +85,16 @@ switch($_GET['type'])
 			}
 		}
 
+		$trigger = pts_strings::sanitize($_GET['trigger']);
 		$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_schedules_triggers (AccountID, ScheduleID, Trigger, TriggeredOn, SubTarget) VALUES (:account_id, :schedule_id, :trigger, :triggered_on, :sub_target)');
 		$stmt->bindValue(':account_id',	$user_row['AccountID']);
 		$stmt->bindValue(':schedule_id', $schedule_row['ScheduleID']);
-		$stmt->bindValue(':trigger', $_GET['trigger']);
+		$stmt->bindValue(':trigger', $trigger);
 		$stmt->bindValue(':triggered_on', phoromatic_server::current_time());
 		$stmt->bindValue(':sub_target', $sub_target);
 		if($stmt->execute())
 		{
-			echo 'Trigger ' . htmlspecialchars($_GET['trigger']) . ' added!';
+			echo 'Trigger ' . $trigger . ' added!';
 		}
 		break;
 

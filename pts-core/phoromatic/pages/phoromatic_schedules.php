@@ -123,7 +123,7 @@ class phoromatic_schedules implements pts_webui_interface
 					else if(isset($PATH[1]) && $PATH[1] == 'delete-trigger' && !empty($PATH[2]))
 					{
 						// REMOVE TRIGGER
-						$trigger = base64_decode($PATH[2]);
+						$trigger = pts_strings::sanitize(base64_decode($PATH[2]));
 						$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_schedules_triggers WHERE AccountID = :account_id AND Trigger = :trigger AND ScheduleID = :schedule_id');
 						$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 						$stmt->bindValue(':schedule_id', $PATH[0]);
@@ -132,7 +132,7 @@ class phoromatic_schedules implements pts_webui_interface
 						if($result)
 							$main .= '<h2 style="color: red;">Trigger Removed: ' . $trigger . '</h2>';
 					}
-					else if(isset($PATH[1]) && in_array($PATH[1], array('activate', 'deactivate')))
+					else if(isset($PATH[1]) && in_array($PATH[1], array('activate', 'deactivate')) && verify_submission_token())
 					{
 						switch($PATH[1])
 						{
@@ -201,11 +201,11 @@ class phoromatic_schedules implements pts_webui_interface
 
 					if($row['State'] == 1)
 					{
-						$main .= '<a href="?schedules/' . $PATH[0] . '/deactivate">Deactivate Schedule</a>';
+						$main .= '<a href="?schedules/' . $PATH[0] . '/deactivate' . append_token_to_url()  . '">Deactivate Schedule</a>';
 					}
 					else
 					{
-						$main .= '<a href="?schedules/' . $PATH[0] . '/activate">Activate Schedule</a>';
+						$main .= '<a href="?schedules/' . $PATH[0] . '/activate' . append_token_to_url()  . '">Activate Schedule</a>';
 					}
 
 					$main .= '</p>';
