@@ -1468,10 +1468,11 @@ class pts_client
 		{
 			echo pts_client::cli_just_bold('Possible Suggestions:') . PHP_EOL;
 			//$similar_tests = array_unique($similar_tests);
-			if(isset($similar_tests[12]))
+			if(isset($similar_tests[10]))
 			{
 				// lots of tests... trim it down
-				$similar_tests = array_rand($similar_tests, 12);
+				shuffle($similar_tests);
+				$similar_tests = array_slice($similar_tests, 0, 10);
 			}
 			echo pts_user_io::display_text_table($similar_tests, '- ') . PHP_EOL . PHP_EOL;
 		}
