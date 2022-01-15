@@ -1042,14 +1042,17 @@ class pts_client
 					continue;
 				}
 
-				// TODO XXX: add HTTPS check here similar to previous HTTPS code added to Phoromatic client module
-				$server_response = pts_network::http_get_contents('http://' . $possible_server[0] . ':' . $possible_server[1] . '/server.php', false, false, 3);
-				if(stripos($server_response, 'Phoromatic') !== false)
+				// First see if server is HTTPS accessible
+				foreach(array('https', 'http') as $protocol)
 				{
-					trigger_error('Phoromatic Server Auto-Detected At: ' . $possible_server[0] . ':' . $possible_server[1], E_USER_NOTICE);
-					$phoromatic_servers[$possible_server[0]] = array('ip' => $possible_server[0], 'http_port' => $possible_server[1]);
+					$server_response = pts_network::http_get_contents($protocol . '://' . $possible_server[0] . ':' . $possible_server[1] . '/server.php', false, false, false, false, 4);
+					if(stripos($server_response, 'Phoromatic') !== false)
+					{
+						trigger_error('Phoromatic / Caching Server Detected At: ' . $possible_server[0] . ':' . $possible_server[1], E_USER_NOTICE);
+						$phoromatic_servers[$possible_server[0]] = array('ip' => $possible_server[0], 'http_port' => $possible_server[1], 'protocol' => $protocol);
+						break;
+					}
 				}
-
 			}
 		}
 

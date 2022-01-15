@@ -131,13 +131,12 @@ class phoromatic extends pts_module_interface
 	public static function explore_network()
 	{
 		pts_client::$display->generic_heading('Phoromatic Servers');
-
 		$archived_servers = pts_client::available_phoromatic_servers();
 
 		$server_count = 0;
 		foreach($archived_servers as $archived_server)
 		{
-			$supports_https = self::phoromatic_server_supports_https($archived_server['ip'], $archived_server['http_port']);
+			$supports_https = $archived_server['protocol'] == 'https'; // Previous code: self::phoromatic_server_supports_https($archived_server['ip'], $archived_server['http_port']);
 			$response = pts_network::http_get_contents(($supports_https ? 'https://' : 'http://') . $archived_server['ip'] . ':' . $archived_server['http_port'] . '/server.php?phoromatic_info');
 
 			if(!empty($response))

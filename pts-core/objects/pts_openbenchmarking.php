@@ -709,7 +709,7 @@ class pts_openbenchmarking
 
 		foreach($archived_servers as $archived_server)
 		{
-			$cache = pts_network::http_get_contents('http://' . $archived_server['ip'] . ':' . $archived_server['http_port'] . '/openbenchmarking-cache.php?' . $type_request . '&repo=' . $repo . '&test=' . $test);
+			$cache = pts_network::http_get_contents($archived_server['protocol'] . '://' . $archived_server['ip'] . ':' . $archived_server['http_port'] . '/openbenchmarking-cache.php?' . $type_request . '&repo=' . $repo . '&test=' . $test);
 
 			if(!empty($cache))
 			{

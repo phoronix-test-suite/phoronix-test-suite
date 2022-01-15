@@ -236,14 +236,14 @@ class pts_test_install_manager
 
 			foreach($archived_servers as $archived_server)
 			{
-				$repo = pts_network::http_get_contents('http://' . $archived_server['ip'] . ':' . $archived_server['http_port'] . '/download-cache.php?repo');
+				$repo = pts_network::http_get_contents($archived_server['protocol'] . '://' . $archived_server['ip'] . ':' . $archived_server['http_port'] . '/download-cache.php?repo');
 
 				if(!empty($repo))
 				{
 					$repo = json_decode($repo, true);
 					if($repo && isset($repo['phoronix-test-suite']['download-cache']))
 					{
-						$caches[$archived_server['ip'] . ':' . $archived_server['http_port']] = $repo['phoronix-test-suite']['download-cache'];
+						$caches[$archived_server['protocol'] . '://' . $archived_server['ip'] . ':' . $archived_server['http_port']] = $repo['phoronix-test-suite']['download-cache'];
 					}
 				}
 			}
