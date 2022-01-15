@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2021, Phoronix Media
-	Copyright (C) 2008 - 2021, Michael Larabel
+	Copyright (C) 2008 - 2022, Phoronix Media
+	Copyright (C) 2008 - 2022, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -61,6 +61,48 @@ class pts_test_profile extends pts_test_profile_parser
 	public function get_resource_dir()
 	{
 		return PTS_TEST_PROFILE_PATH . $this->identifier . '/';
+	}
+	public function get_changelog()
+	{
+		$change_log = array();
+		if(is_file($this->get_resource_dir() . 'changelog.json'))
+		{
+			// Archived locally
+			$json_file = pts_file_io::file_get_contents($this->get_resource_dir() . 'changelog.json');
+			$change_log = json_decode($json_file, true);
+		}
+		else if(PTS_IS_CLIENT && stripos($this->get_identifier(), 'local/') === false)
+		{
+			// Query from OB
+			$changelog_query = pts_openbenchmarking_client::fetch_repository_test_profile_changelog($this->get_identifier(false));
+
+			if(is_array($changelog_query) && isset($changelog_query['tests'][$this->get_identifier_base_name()]['changes']))
+			{
+				$change_log = $changelog_query['tests'][$this->get_identifier_base_name()]['changes'];
+			}
+		}
+
+		return $change_log;
+	}
+	public function get_generated_data($ch = false)
+	{
+		static $overview = false;
+		if($overview === false)
+		{
+			// Cache the parsed JSON if available
+			$overview = array();
+			if(is_file($this->get_resource_dir() . 'generated.json'))
+			{
+				$overview = json_decode(pts_file_io::file_get_contents($this->get_resource_dir() . 'generated.json'), true);
+			}
+		}
+
+		if($ch != false)
+		{
+			return isset($overview['overview'][$ch]) ? $overview['overview'][$ch] : false;
+		}
+
+		return $overview;
 	}
 	public function get_override_values($as_string = false)
 	{

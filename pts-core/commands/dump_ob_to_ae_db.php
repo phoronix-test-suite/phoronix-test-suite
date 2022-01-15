@@ -256,7 +256,9 @@ class dump_ob_to_ae_db implements pts_option_interface
 						{
 							continue;
 						}
-						$time_consumed = $buffer_item->get_run_time_total();
+
+						// Don't report run-time if forced lower than expected...
+						$time_consumed = count($buffer_item->get_run_times()) < $ro->test_profile->get_default_times_to_run() ? 0 : $buffer_item->get_run_time_total();
 						$stddev = 0;
 						if(($raws = $buffer_item->get_result_raw_array()) && count($raws) > 1)
 						{

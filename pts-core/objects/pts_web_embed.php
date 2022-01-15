@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2018 - 2021, Phoronix Media
-	Copyright (C) 2018 - 2021, Michael Larabel
+	Copyright (C) 2018 - 2022, Phoronix Media
+	Copyright (C) 2018 - 2022, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -388,7 +388,85 @@ class pts_web_embed
 		{
 			$html .= PHP_EOL . '<br /><strong>OpenBenchmarking.org Test Profile Page: </strong>' . '<a href="https://openbenchmarking.org/test/' . $test_profile->get_identifier() . '">https://openbenchmarking.org/test/' . $test_profile->get_identifier() . '</a><br />';
 		}
-		
+
+		$overview_data = $test_profile->get_generated_data();
+		if(!empty($overview_data) && isset($overview_data['overview']) && !empty($overview_data['overview']))
+		{
+			$html .= '<hr /><h2>OpenBenchmarking.org Overview Metrics</h2><p>';
+			foreach($overview_data['overview'] as $comparison_Hash => $d)
+			{
+				if(empty($d['description']) || $d['samples'] < 5)
+				{
+					continue;
+				}
+				$html .= '<h3>' . $d['description'] . '</h3>' . PHP_EOL;
+				$html .= '<strong>Average Deviation Between Runs:</strong> <em>'  . $d['stddev_avg'] . '%</em> ';
+				$html .= '<strong>Sample Analysis Count:</strong> <em>'  . $d['samples'] . '</em></p>' . PHP_EOL;
+
+				$box_buffer = new pts_test_result_buffer();
+				$box_buffer->add_test_result('Overview', implode(',', $d['percentiles']));
+				$tph = new pts_test_profile();
+				$tph->set_test_title($d['description']);
+				$tph->set_result_scale($d['unit']);
+				$tph->set_result_proportion($d['hib'] ? 'HIB' : 'LIB');
+				$box_result = new pts_test_result($tph);
+				$box_result->set_test_result_buffer($box_buffer);
+				$dd = new pts_graph_box_plot($box_result);
+				$dd->data_is_percentiles();
+				$html .= '<div class="results_area">' . pts_render::render_graph_inline_embed($dd) . '</div>';
+
+				$html .= '<p><strong>[Run-Time Requirements] Average Run-Time:</strong> <em>'  . pts_strings::format_time($d['run_time_avg'], 'SECONDS', true, 60) . '</em> ';
+
+				$box_buffer = new pts_test_result_buffer();
+				$box_buffer->add_test_result('Overview', implode(',', $d['run_time_percentiles']));
+				$tph = new pts_test_profile();
+				$tph->set_test_title($d['description'] . ' Run-Time Requirements');
+				$tph->set_result_scale('Seconds');
+				$tph->set_result_proportion('LIB');
+				$box_result = new pts_test_result($tph);
+				$box_result->set_test_result_buffer($box_buffer);
+				$dd = new pts_graph_box_plot($box_result);
+				$dd->data_is_percentiles();
+				$html .= '<div class="results_area">' . pts_render::render_graph_inline_embed($dd) . '</div>';
+			}
+			if(isset($overview_data['capabilities']) && !empty($overview_data['capabilities']))
+			{
+				$html .= '<hr /><h2>OpenBenchmarking.org Workload Analysis</h2><p>';
+				if(isset($overview_data['capabilities']['shared_libraries']) && !empty($overview_data['capabilities']['shared_libraries']))
+				{
+					$html .= '<strong>Shared Libraries Used By This Test:</strong> ' . implode(', ', $overview_data['capabilities']['shared_libraries']) . '<br />';
+				}
+				if(isset($overview_data['capabilities']['default_instructions']) && !empty($overview_data['capabilities']['default_instructions']))
+				{
+					$html .= '<strong>Notable Instructions Used By Test On Capable CPUs:</strong> ' . implode(', ', $overview_data['capabilities']['default_instructions']) . '<br />';
+					if(isset($overview_data['capabilities']['max_instructions']) && !empty($overview_data['capabilities']['max_instructions']) && $overview_data['capabilities']['default_instructions'] != $overview_data['capabilities']['max_instructions'])
+					{
+						$html .= '<strong>Instructions Possible On Capable CPUs With Extra Compiler Flags:</strong> ' . implode(', ', $overview_data['capabilities']['max_instructions']) . '<br />';
+					}
+				}
+				if(isset($overview_data['capabilities']['honors_cflags']) && $overview_data['capabilities']['honors_cflags'] == 1)
+				{
+					$html .= '<strong>Honors CFLAGS/CXXFLAGS:</strong> ' . 'Yes' . '<br />';
+				}
+				if(isset($overview_data['capabilities']['scales_cpu_cores']) && $overview_data['capabilities']['scales_cpu_cores'] !== null)
+				{
+					$html .= '<strong>Test Multi-Threaded / CPU Core Scaling:</strong> ' . ($overview_data['capabilities']['scales_cpu_cores'] ? 'Yes' : 'No') . '<br />';
+				}
+				$html .= '</p>';
+			}
+		}
+
+		$change_log = $test_profile->get_changelog();
+		if(!empty($change_log))
+		{
+			$html .= '<hr /><h2>Test Profile Change History</h2><p>';
+			foreach($change_log as $version => $data)
+			{
+				$html .= '<strong>v' . $version . '</strong> - <em>' . date('j F Y', $data['last_updated']) . '</em> - '  . $data['commit_description'] . '<br />' . PHP_EOL;
+			}
+			$html .= '</p>';
+		}
+
 		$html .= '<hr />';
 		
 		return $html;

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2021, Phoronix Media
-	Copyright (C) 2010 - 2021, Michael Larabel
+	Copyright (C) 2010 - 2022, Phoronix Media
+	Copyright (C) 2010 - 2022, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -1221,6 +1221,268 @@ class pts_result_file_output
 		//$pdf->Ln(1);
 		$pdf->Image($tmp_file);
 		unlink($tmp_file);
+	}
+	public static function text_box_plut_from_ae(&$ae_data, $active_result = -1, $results_to_show = array(), &$result_object = false, $percentiles = null, $sample_count = -1)
+	{
+		if($percentiles == null)
+		{
+			$percentiles = isset($ae_data['percentiles']) ? $ae_data['percentiles'] : array();
+		}
+		if(empty($percentiles))
+		{
+			return false;
+		}
+		if($sample_count == -1)
+		{
+			$sample_count = $ae_data['samples'];
+		}
+
+		$terminal_width = pts_client::terminal_width();
+		$box_plot = str_repeat(' ', $terminal_width - 4);
+		$box_plot_size = strlen($box_plot);
+		$box_plot = str_split($box_plot);
+		$max_value = max(max($percentiles), $active_result);
+		if($ae_data['hib'] == 1)
+		{
+			$max_value = $max_value * 1.02;
+		}
+		$results_at_pos = array(0, 1, ($box_plot_size - 1));
+
+		// BOX PLOT
+		$whisker_bottom = $percentiles[2];
+		$whisker_top = $percentiles[98];
+		$whisker_start_char = round($whisker_bottom / $max_value * $box_plot_size);
+		$whisker_end_char = round($whisker_top / $max_value * $box_plot_size);
+
+		for($i = $whisker_start_char; $i <= $whisker_end_char && $i < ($box_plot_size - 1); $i++)
+		{
+			$box_plot[$i] = '-';
+		}
+
+		$box_left = floor(($percentiles[25] / $max_value) * $box_plot_size);
+		$box_middle = round(($percentiles[50] / $max_value) * $box_plot_size);
+		$box_right = ceil(($percentiles[75] / $max_value) * $box_plot_size);
+		for($i = $box_left; $i <= $box_right; $i++)
+		{
+			$box_plot[$i] = '#';
+		}
+		$box_plot[$whisker_start_char] = '|';
+		$box_plot[min($whisker_end_char, ($box_plot_size - 1))] = '|';
+		$box_plot[$box_middle] = '!';
+
+		// END OF BOX PLOT
+		if($ae_data['hib'] == 0)
+		{
+			$box_plot = array_reverse($box_plot);
+		}
+		$box_plot[0] = '[';
+		$box_plot[($box_plot_size - 1)] = ']';
+
+		if($active_result < $max_value)
+		{
+			$box_plot_complement = array();
+			for($i = 0; $i < 6; $i++)
+			{
+				$box_plot_complement[$i] = str_repeat(' ', $terminal_width - 4);
+				$box_plot_complement[$i] = str_split($box_plot_complement[$i]);
+			}
+
+			$reference_results_added = 0;
+			if(isset($ae_data['reference_results']) && is_array($ae_data['reference_results']))
+			{
+				$st = phodevi_base::determine_system_type(phodevi::system_hardware(), phodevi::system_software());
+				foreach($ae_data['reference_results'] as $component => $value)
+				{
+					$this_type = phodevi_base::determine_system_type($component, $component);
+					if($this_type == $st)
+					{
+						$results_to_show[$component] = $value;
+						unset($ae_data['reference_results'][$component]);
+					}
+				}
+				foreach($ae_data['reference_results'] as $component => $value)
+				{
+					$results_to_show[$component] = $value;
+				}
+			}
+			else if(empty($results_to_show))
+			{
+				// Show some common percentile marks for some perspective
+				foreach(array(10, 25, 60, 75, 90) as $p_to_show)
+				{
+					$value = $percentiles[($ae_data['hib'] ? $p_to_show : 100 - $p_to_show)];
+					if($value > 60)
+					{
+						$value = round($percentiles[($ae_data['hib'] ? $p_to_show : 100 - $p_to_show)]);
+					}
+					$results_to_show[pts_strings::number_suffix_handler($p_to_show) . ' Percentile'] = $value;
+				}
+			}
+
+			if($active_result > 0)
+			{
+				$this_result_percentile = -1;
+				foreach($percentiles as $percentile => $v)
+				{
+					if($ae_data['hib'] == 0)
+					{
+						if($v > $active_result)
+						{
+							$this_result_percentile = 100 - $percentile ;
+							break;
+						}
+					}
+					else if($v > $active_result)
+					{
+						$this_result_percentile = $percentile - 1;
+						break;
+					}
+				}
+				$results_to_show = array_merge(array('This Result' . ($this_result_percentile > 0 && $this_result_percentile < 100 ? ' (' . pts_strings::number_suffix_handler($this_result_percentile) . ' Percentile)' : '') => ($active_result > 99 ? round($active_result) : $active_result)), $results_to_show);
+			}
+			foreach($results_to_show as $component => $value)
+			{
+				if($value > $max_value)
+				{
+					continue;
+				}
+				$this_result_pos = round($value / $max_value * $box_plot_size);
+				if(in_array($this_result_pos, $results_at_pos) || (strpos($component, 'This Result') === false && !in_array((isset($box_plot[$this_result_pos]) ? $box_plot[$this_result_pos] : null), array(' ', '-', '#'))))
+				{
+					continue;
+				}
+
+				$skip_result = false;
+				foreach(array(' Sample', 'Confidential') as $avoid_strings)
+				{
+					// Extra protection
+					if(stripos($component, $avoid_strings) !== false)
+					{
+						$skip_result = true;
+						break;
+					}
+				}
+				if($skip_result)
+				{
+					continue;
+				}
+
+				// Blocks other entries from overwriting or being immediately adjacent to one another
+				$results_at_pos[] = $this_result_pos;
+				$results_at_pos[] = $this_result_pos - 1;
+				$results_at_pos[] = $this_result_pos + 1;
+
+				if($terminal_width <= 80)
+				{
+					// Try to shorten up some components/identifiers if terminal narrow to fit in more data
+					$component = str_replace(array('AMD ', 'Intel ', 'NVIDIA ', 'Radeon ', 'GeForce ', '  '), ' ', str_replace(' x ', ' x  ', $component));
+					$component = str_replace('Ryzen Threadripper', 'Threadripper', $component);
+					$component = trim($component);
+				}
+
+				foreach(array('-Core', ' with ') as $cutoff)
+				{
+					// On AMD product strings, trip the XX-Core from string to save space...
+					// Similarly some "APU with Radeon" text also chop off
+					if(($cc = strpos($component, $cutoff)) !== false)
+					{
+						$component = substr($component, 0, $cc);
+						$component = substr($component, 0, strrpos($component, ' '));
+					}
+				}
+
+				if(empty($component))
+				{
+					continue;
+				}
+
+				if($ae_data['hib'] == 0)
+				{
+					$this_result_pos = $box_plot_size - $this_result_pos;
+				}
+
+				$string_to_show_length = strlen('^ ' . $component . ': ' . $value);
+				if($this_result_pos - $string_to_show_length - 3 > 4)
+				{
+					// print to left
+					$string_to_print = $component . ': ' . $value . ' ^';
+					$write_pos = ($this_result_pos - strlen($string_to_print) + 1);
+				}
+				else if($this_result_pos + $string_to_show_length < ($terminal_width - 3))
+				{
+					// print to right of line
+					$string_to_print = '^ ' . $component . ': ' . $value;
+					$write_pos = $this_result_pos;
+				}
+				else
+				{
+					continue;
+				}
+
+				// validate no overwrites
+				$complement_line = ($reference_results_added % 5);
+				if($complement_line == 0 && strpos($component, 'This Result') === false)
+				{
+					$complement_line = 1;
+				}
+				$no_overwrites = true;
+				for($i = $write_pos; $i < ($write_pos + $string_to_show_length) + 1 && isset($box_plot_complement[$complement_line][$i]); $i++)
+				{
+					if($box_plot_complement[$complement_line][$i] != ' ')
+					{
+						$no_overwrites = false;
+						break;
+					}
+				}
+				if($no_overwrites == false)
+				{
+					continue;
+				}
+				// end
+
+				$brand_color = null;
+				if(strpos($component, 'This Result') !== false)
+				{
+					$brand_color = 'cyan';
+					$string_to_print = pts_client::cli_colored_text($string_to_print, 'cyan', true);
+					$box_plot[$this_result_pos] = pts_client::cli_colored_text('X', 'cyan', true);
+				}
+				else if($result_object && in_array($component, $result_object->test_result_buffer->get_identifiers()))
+				{
+					$string_to_print = pts_client::cli_colored_text($string_to_print, 'white', true);
+				}
+				else if(($brand_color = pts_render::identifier_to_brand_color($component, null)) != null)
+				{
+					$brand_color = pts_client::hex_color_to_string($brand_color);
+					$string_to_print = pts_client::cli_colored_text($string_to_print, $brand_color, false);
+				}
+				for($i = $write_pos; $i < ($write_pos + $string_to_show_length) && $i < count($box_plot_complement[$complement_line]); $i++)
+				{
+					$box_plot_complement[$complement_line][$i] = '';
+				}
+				$box_plot_complement[$complement_line][$write_pos] = $string_to_print;
+				$box_plot[$this_result_pos] = pts_client::cli_colored_text('*', $brand_color, false);
+				$reference_results_added++;
+			}
+
+			$last_appeared_text = '';
+			if(isset($ae_data['last_appeared']) && $ae_data['last_appeared'] > 0 && $ae_data['last_appeared'] < (time() - (86400 * 30)))
+			{
+				$last_appeared_text = ' to ' . pts_client::cli_just_bold(date(($ae_data['last_appeared'] > (time() - (86400 * 270)) ? 'j F' : 'j F Y'), $ae_data['last_appeared']));
+			}
+
+			echo PHP_EOL;
+			echo '    Comparison of ' . pts_client::cli_just_bold(number_format($sample_count)) . ' OpenBenchmarking.org samples' . ($ae_data['first_appeared'] < 1298678400 ? '' : ' since ' . pts_client::cli_just_bold(date(($ae_data['first_appeared'] > (time() - (86400 * 270)) ? 'j F' : 'j F Y'), $ae_data['first_appeared'])) . $last_appeared_text) . '; median result: ' . pts_client::cli_just_bold(round($percentiles[50], ($percentiles[50] < 100 ? 2 : 0)) . (isset($ae_data['unit']) && !empty($ae_data['unit']) ? ' ' . $ae_data['unit'] : '')) . '. Box plot of samples:' . PHP_EOL;
+			echo '    ' . implode('', $box_plot) . PHP_EOL;
+			foreach($box_plot_complement as $line_r)
+			{
+				$line = rtrim(implode('', $line_r));
+				if(!empty($line))
+				{
+					echo '    ' . $line . PHP_EOL;
+				}
+			}
+		}
 	}
 }
 

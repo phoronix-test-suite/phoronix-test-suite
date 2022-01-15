@@ -359,6 +359,11 @@ abstract class pts_graph_core
 	}
 	public function addSubTitle($sub_title)
 	{
+		if(empty($sub_title))
+		{
+			return;
+		}
+
 		$sub_titles = array_map('trim', explode('|', $sub_title));
 
 		foreach($sub_titles as $sub_title)

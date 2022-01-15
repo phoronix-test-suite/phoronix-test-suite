@@ -216,6 +216,7 @@ class pts_ae_data
 		$stmt = $this->db->prepare('SELECT * FROM composite');
 		$result = $stmt ? $stmt->execute() : false;
 		$json_index_master = array();
+		$json_per_version_summary = array();
 		$hardware_data['Processor'] = array();
 		$hardware_heavy = array();
 
@@ -406,7 +407,19 @@ class pts_ae_data
 			// TIMING DATA Assembly
 			$td = array();
 			$timing_data = pts_math::remove_outliers($timing_data, 3);
-			$average_time = array_sum($timing_data) / count($timing_data);
+			$average_time = round(array_sum($timing_data) / count($timing_data));
+
+			$timing_percentiles = array();
+			for($i = 0; $i < 100; $i++)
+			{
+				$timing_percentiles[$i] = pts_math::find_percentile($timing_data, ($i * 0.01));
+
+				if($timing_percentiles[$i] > 10)
+				{
+					$timing_percentiles[$i] = round($timing_percentiles[$i]);
+				}
+			}
+
 			if($average_time > 600)
 			{
 				$round_to_nearest = 60;
@@ -472,6 +485,12 @@ class pts_ae_data
 			$json['reference_results_counts'] = $csc;
 			$json['reference_results_std_dev'] = $csstd;
 
+			if($json['first_appeared'] < 1298678400)
+			{
+				// OpenBenchmarking launch date so anything below that would be incorrect timing
+				$json['first_appeared'] = strtotime('2011-02-26');
+			}
+
 			// FAMILY PERFORMANCE
 			foreach($family_perf as $brand => &$data)
 			{
@@ -522,6 +541,26 @@ class pts_ae_data
 					'unit' => $json['unit'],
 					'samples' => $json['samples'],
 					'product_samples' => count($comparison_components),
+					);
+				if(!isset($json_per_version_summary[$test_dir][$json['test_version']] ))
+				{
+					$json_per_version_summary[$test_dir][$json['test_version']] = array();
+				}
+				$json_per_version_summary[$test_dir][$json['test_version']][$json['comparison_hash']] = array(
+					//'comparison_hash' => $json['comparison_hash'],
+					'description' => $json['description'],
+					'test_version' => $json['test_version'],
+					'app_version' => $json['app_version'],
+					'unit' => $json['unit'],
+					'samples' => $json['samples'],
+					'timing_samples' => count($timing_data),
+					'hib' => $json['hib'],
+					'first_appeared' => $json['first_appeared'],
+					'last_appeared' => $json['last_appeared'],
+					'run_time_avg' => $json['run_time_avg'],
+					'stddev_avg' => $json['stddev_avg'],
+					'percentiles' => $json['percentiles'],
+					'run_time_percentiles' => $timing_percentiles,
 					);
 			}
 			// EO JSON
@@ -602,6 +641,22 @@ class pts_ae_data
 				file_put_contents($this->ae_dir . 'comparison-hashes/' . $test_profile_dir . '/index.json', $test_index);
 			}
 		}
+		if(!empty($json_per_version_summary))
+		{
+			foreach($json_per_version_summary as $test_profile_dir => $vd)
+			{
+				foreach($vd as $test_version => $test_index)
+				{
+					uasort($test_index, array('pts_ae_data', 'sort_by_sample_size'));
+					if(count($test_index) > 24)
+					{
+						$test_index = array_slice($test_index, 0, 24);
+					}
+					$test_index = json_encode($test_index);
+					file_put_contents($this->ae_dir . 'comparison-hashes/' . $test_profile_dir . '/overview-' . $test_version . '.json', $test_index);
+				}
+			}
+		}
 		foreach($hardware_data as $hw_category => $category_data)
 		{
 			pts_file_io::mkdir($this->ae_dir . 'component-data/' . $hw_category);
@@ -630,6 +685,15 @@ class pts_ae_data
 				file_put_contents($this->ae_dir . 'component-heavy/' . $hw_category . '/' . $c . '.json', $de);
 			}
 		}
+	}
+	public static function sort_by_sample_size($a, $b)
+	{
+		if($a['samples'] == $b['samples'])
+		{
+			return 0;
+		}
+
+		return $a['samples'] > $b['samples'] ? -1 : 1;
 	}
 	public function append_to_component_data(&$system_logs)
 	{
@@ -705,7 +769,10 @@ class pts_ae_data
 				$last_appeared = $dt;
 			}
 			$results[] = $row['Result'];
-			$timing_data[] = $row['TimeConsumed'];
+			if($row['TimeConsumed'] > 0)
+			{
+				$timing_data[] = $row['TimeConsumed'];
+			}
 			$stddev_data[] = $row['StdDev'];
 			if(!empty($row['SystemLayer']) || strlen($row['Component']) < 3)
 			{

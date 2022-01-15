@@ -122,7 +122,6 @@ class pts_validation
 	}
 	public static function validate_test_profile(&$test_profile)
 	{
-
 		if($test_profile->get_file_location() == null)
 		{
 			echo PHP_EOL . 'ERROR: The file location of the XML test profile source could not be determined.' . PHP_EOL;
@@ -248,6 +247,15 @@ class pts_validation
 			{
 				echo PHP_EOL . 'Test Results Parser XML Is Valid.' . PHP_EOL;
 			}
+		}
+
+		if(is_file($test_profile->get_resource_dir() . 'changelog.json'))
+		{
+			pts_file_io::unlink($test_profile->get_resource_dir() . 'changelog.json');
+		}
+		if(is_file($test_profile->get_resource_dir() . 'generated.json'))
+		{
+			pts_file_io::unlink($test_profile->get_resource_dir() . 'generated.json');
 		}
 
 		// Make sure no extra files are in there

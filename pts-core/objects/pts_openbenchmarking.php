@@ -577,7 +577,11 @@ class pts_openbenchmarking
 		{
 			return true;
 		}
+
 		$file = PTS_OPENBENCHMARKING_SCRATCH_PATH . $qualified_identifier . '.zip';
+		$json_changelog = '';
+		$json_overview = '';
+
 		if(!is_file($file))
 		{
 			$cache_locations = array('/var/cache/phoronix-test-suite/openbenchmarking.org/');
@@ -611,6 +615,15 @@ class pts_openbenchmarking
 					{
 						// save it
 						file_put_contents($file, $test_profile);
+
+						if(isset($acquire_test_json['openbenchmarking']['test']['changes']))
+						{
+							$json_changelog = $acquire_test_json['openbenchmarking']['test']['changes'];
+						}
+						if(isset($acquire_test_json['openbenchmarking']['test']['generated']))
+						{
+							$json_overview = $acquire_test_json['openbenchmarking']['test']['generated'];
+						}
 					}
 				}
 			}
@@ -647,6 +660,14 @@ class pts_openbenchmarking
 
 			if(is_file(PTS_TEST_PROFILE_PATH . $qualified_identifier . '/test-definition.xml'))
 			{
+				if(!empty($json_changelog))
+				{
+					file_put_contents(PTS_TEST_PROFILE_PATH . $qualified_identifier . '/changelog.json', json_encode($json_changelog));
+				}
+				if(!empty($json_overview))
+				{
+					file_put_contents(PTS_TEST_PROFILE_PATH . $qualified_identifier . '/generated.json', json_encode($json_overview));
+				}
 				return true;
 			}
 			else

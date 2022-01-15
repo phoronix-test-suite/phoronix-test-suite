@@ -22,6 +22,11 @@
 
 class pts_graph_box_plot extends pts_graph_horizontal_bars
 {
+	protected $is_already_percentile = false;
+	public function data_is_percentiles()
+	{
+		$this->is_already_percentile = true;
+	}
 	protected function render_graph_bars()
 	{
 		$bar_count = count($this->results);
@@ -46,37 +51,40 @@ class pts_graph_box_plot extends pts_graph_horizontal_bars
 				$values = $buffer_item->get_result_value();
 				$values = explode(',', $values);
 
-				if(empty($values) || count($values) < 2)
+				if($this->is_already_percentile == false)
 				{
-					$values = $buffer_item->get_result_raw();
-					$values = explode(':', $values);
-				}
-
-				if(empty($values) || count($values) < 2)
-				{
-					continue;
-				}
-
-				if(isset($values[10]))
-				{
-					// Ignore any zeros at the start
-					if($values[0] == 0 && $values[5] != 0)
+					if(empty($values) || count($values) < 2)
 					{
-						$j = 0;
-						while($values[$j] == 0)
-						{
-							unset($values[$j]);
-							$j++;
-						}
+						$values = $buffer_item->get_result_raw();
+						$values = explode(':', $values);
 					}
-					// Ignore any zeros at the end
-					if($values[(count($values) - 1)] == 0 && $values[(count($values) - 5)] != 0)
+
+					if(empty($values) || count($values) < 2)
 					{
-						$j = count($values) - 1;
-						while($values[$j] == 0)
+						continue;
+					}
+
+					if(isset($values[10]))
+					{
+						// Ignore any zeros at the start
+						if($values[0] == 0 && $values[5] != 0)
 						{
-							unset($values[$j]);
-							$j--;
+							$j = 0;
+							while($values[$j] == 0)
+							{
+								unset($values[$j]);
+								$j++;
+							}
+						}
+						// Ignore any zeros at the end
+						if($values[(count($values) - 1)] == 0 && $values[(count($values) - 5)] != 0)
+						{
+							$j = count($values) - 1;
+							while($values[$j] == 0)
+							{
+								unset($values[$j]);
+								$j--;
+							}
 						}
 					}
 				}
@@ -87,18 +95,37 @@ class pts_graph_box_plot extends pts_graph_horizontal_bars
 				$px_bound_bottom = $px_bound_top + $bar_height;
 				$middle_of_bar = $px_bound_top + ($bar_height / 2);
 
-				// sort values now as optimization rather than in find_percentile
-				sort($values, SORT_NUMERIC);
+				$avg_text = 'Avg';
+				if($this->is_already_percentile)
+				{
+					$avg_text = 'Median';
+					$avg_value = $values[50];
+					$whisker_bottom = $values[2];
+					$whisker_top = $values[98];
+					$median =  $values[50];
+					$p_25 =  $values[25];
+					$p_75 =  $values[75];
 
-				$avg_value = round(pts_math::arithmetic_mean($values), 2);
-				$whisker_bottom = pts_math::find_percentile($values, 0.02, true);
-				$whisker_top = pts_math::find_percentile($values, 0.98, true);
-				$median = pts_math::find_percentile($values, 0.5, true);
+					$unique_values = array();
+					$min_value = round(min($values), 2);
+					$max_value = round(max($values), 2);
+				}
+				else
+				{
+					// sort values now as optimization rather than in find_percentile
+					sort($values, SORT_NUMERIC);
 
-				$unique_values = array_unique($values);
-				$min_value = round(min($unique_values), 2);
-				$max_value = round(max($unique_values), 2);
+					$avg_value = round(pts_math::arithmetic_mean($values), 2);
+					$whisker_bottom = pts_math::find_percentile($values, 0.02, true);
+					$whisker_top = pts_math::find_percentile($values, 0.98, true);
+					$median = pts_math::find_percentile($values, 0.5, true);
+					$p_25 = pts_math::find_percentile($values, 0.25, true);
+					$p_75 = pts_math::find_percentile($values, 0.75, true);
 
+					$unique_values = array_unique($values);
+					$min_value = round(min($unique_values), 2);
+					$max_value = round(max($unique_values), 2);
+				}
 				$value_end_left = $this->i['left_start'] + max(1, round(($whisker_bottom / $this->i['graph_max_value']) * $work_area_width));
 				$value_end_right = $this->i['left_start'] + round(($whisker_top / $this->i['graph_max_value']) * $work_area_width);
 				// if identifier is 0, not a multi-way comparison or anything special
@@ -118,14 +145,14 @@ class pts_graph_box_plot extends pts_graph_horizontal_bars
 				$this->svg_dom->add_element('line', array('x1' => $value_end_left, 'y1' => $px_bound_top, 'x2' => $value_end_left, 'y2' => $px_bound_bottom), $g_lines);
 				$this->svg_dom->add_element('line', array('x1' => $value_end_right, 'y1' => $px_bound_top, 'x2' => $value_end_right, 'y2' => $px_bound_bottom), $g_lines);
 
-				$box_left = $this->i['left_start'] + round((pts_math::find_percentile($values, 0.25, true) / $this->i['graph_max_value']) * $work_area_width);
+				$box_left = $this->i['left_start'] + round(($p_25 / $this->i['graph_max_value']) * $work_area_width);
 				$box_middle = $this->i['left_start'] + round(($median / $this->i['graph_max_value']) * $work_area_width);
-				$box_right = $this->i['left_start'] + round((pts_math::find_percentile($values, 0.75, true) / $this->i['graph_max_value']) * $work_area_width);
+				$box_right = $this->i['left_start'] + round(($p_75 / $this->i['graph_max_value']) * $work_area_width);
 
 				$this->svg_dom->add_element('rect', array('x' => $box_left, 'y' => $px_bound_top, 'width' => ($box_right - $box_left), 'height' => $bar_height, 'fill' => $box_color), $g_bars);
 				$this->svg_dom->add_element('line', array('x1' => $box_middle, 'y1' => $px_bound_top, 'x2' => $box_middle, 'y2' => $px_bound_bottom), $g_overtop);
 
-				$this->svg_dom->add_text_element('Min: ' . $min_value . ' / Avg: ' . $avg_value . ' / Max: ' . $max_value, array('x' => ($this->i['left_start'] - 5), 'y' => ceil($px_bound_top + ($bar_height * 0.8) + 6)), $g_text);
+				$this->svg_dom->add_text_element('Min: ' . $min_value . ' / ' . $avg_text . ': ' . $avg_value . ' / Max: ' . $max_value, array('x' => ($this->i['left_start'] - 5), 'y' => ceil($px_bound_top + ($bar_height * 0.8) + 6)), $g_text);
 
 				foreach($unique_values as &$val)
 				{
@@ -156,8 +183,8 @@ class pts_graph_box_plot extends pts_graph_horizontal_bars
 			{
 				$val = max(explode(',', $val));
 			}
-			$raw = explode(':', $buffer_item->get_result_raw());
-			if(empty($raw) || count($raw) < 2)
+			$raw = $buffer_item->get_result_raw() ? explode(':', $buffer_item->get_result_raw()) : '';
+			if((empty($raw) || count($raw) < 2) && $buffer_item->get_result_raw())
 			{
 				$raw = explode(',', $buffer_item->get_result_raw());
 			}

@@ -195,18 +195,63 @@ class info implements pts_option_interface
 				}
 				echo PHP_EOL;
 
+				$overview_data = $o->get_generated_data();
+				if(!empty($overview_data) && isset($overview_data['overview']) && !empty($overview_data['overview']))
+				{
+					echo pts_client::cli_just_bold('OpenBenchmarking.org Overview Metrics:') . PHP_EOL . PHP_EOL;
+					foreach($overview_data['overview'] as $comparison_Hash => $d)
+					{
+						if(empty($d['description']))
+						{
+							continue;
+						}
+						echo pts_client::cli_colored_text($d['description'], 'green', true) . PHP_EOL;
+						echo pts_client::cli_just_bold('[Performance Overview] Average Deviation Between Runs: ')  . pts_client::cli_just_italic($d['stddev_avg'] . '%') . ' ';
+						echo pts_client::cli_just_bold('Sample Analysis Count: ')  . pts_client::cli_just_italic($d['samples']) . ' ';
+						pts_result_file_output::text_box_plut_from_ae($d);
+						echo pts_client::cli_just_bold('[Run-Time Requirements] Average Run-Time: ')  . pts_client::cli_just_italic(pts_strings::format_time($d['run_time_avg'], 'SECONDS', true, 60)) . ' ';
+						$result_object = false;
+						$d['unit'] = 'Seconds';
+						pts_result_file_output::text_box_plut_from_ae($d, -1, array(), $result_object,  $d['run_time_percentiles'], $d['timing_samples']);
+						echo PHP_EOL;
+					}
 
+					if(isset($overview_data['capabilities']) && !empty($overview_data['capabilities']))
+					{
+						echo pts_client::cli_just_bold('OpenBenchmarking.org Workload Analysis:') . PHP_EOL . PHP_EOL;
+						if(isset($overview_data['capabilities']['shared_libraries']) && !empty($overview_data['capabilities']['shared_libraries']))
+						{
+							echo pts_client::cli_just_bold('Shared Libraries Used By This Test: ') . implode(', ', $overview_data['capabilities']['shared_libraries']) . PHP_EOL;
+						}
+						if(isset($overview_data['capabilities']['default_instructions']) && !empty($overview_data['capabilities']['default_instructions']))
+						{
+							echo pts_client::cli_just_bold('Notable Instructions Used By Test On Capable CPUs: ') . implode(', ', $overview_data['capabilities']['default_instructions']) . PHP_EOL;
+							if(isset($overview_data['capabilities']['max_instructions']) && !empty($overview_data['capabilities']['max_instructions']) && $overview_data['capabilities']['default_instructions'] != $overview_data['capabilities']['max_instructions'])
+							{
+								echo pts_client::cli_just_bold('Instructions Possible On Capable CPUs With Extra Compiler Flags: ') . implode(', ', $overview_data['capabilities']['max_instructions']) . PHP_EOL;
+							}
+						}
+						if(isset($overview_data['capabilities']['honors_cflags']) && $overview_data['capabilities']['honors_cflags'] == 1)
+						{
+							echo pts_client::cli_just_bold('Honors CFLAGS/CXXFLAGS: ') . 'Yes' . PHP_EOL;
+						}
+						if(isset($overview_data['capabilities']['scales_cpu_cores']) && $overview_data['capabilities']['scales_cpu_cores'] !== null)
+						{
+							echo pts_client::cli_just_bold('Test Multi-Threaded / CPU Core Scaling: ') . ($overview_data['capabilities']['scales_cpu_cores'] ? 'Yes' : 'No') . PHP_EOL;
+						}
+
+						echo PHP_EOL;
+					}
+				}
 
 				// OpenBenchmarking.org Change-Log
-				if(stripos($o->get_identifier(), 'local/') === false && !defined('PHOROMATIC_PROCESS'))
+				if(!defined('PHOROMATIC_PROCESS'))
 				{
+					$change_log = $o->get_changelog();
 
-					$change_log = pts_openbenchmarking_client::fetch_repository_test_profile_changelog($o->get_identifier(false));
-
-					if(is_array($change_log) && isset($change_log['tests'][$o->get_identifier_base_name()]['changes']))
+					if(!empty($change_log))
 					{
-						echo pts_client::cli_just_bold('OpenBenchmarking.org Change History') . PHP_EOL;
-						$change_log = $change_log['tests'][$o->get_identifier_base_name()]['changes'];
+						echo pts_client::cli_just_bold('Test Profile Change History:') . PHP_EOL;
 						foreach($change_log as $version => $data)
 						{
 							echo pts_client::cli_colored_text('v' . $version . ' - ' . date('j F Y', $data['last_updated']), 'green', true) . PHP_EOL;
