@@ -37,6 +37,7 @@ class phoromatic_r_add_test_details implements pts_webui_interface
 	}
 	public static function render_page_process($PATH)
 	{
+		phoromatic_quit_if_invalid_input_found(array('tp'));
 		$test_profile = new pts_test_profile($_GET['tp']);
 		$name = $test_profile->get_title();
 		$description = $test_profile->get_description();

@@ -52,7 +52,7 @@ class phoromatic_systems implements pts_webui_interface
 			$stmt->bindValue(':block_power_offs', $_POST['block_power_offs']);
 			$stmt->execute();
 		}
-		if(!PHOROMATIC_USER_IS_VIEWER && !empty($PATH[0]) && isset($_POST['maintenance_mode']))
+		if(!PHOROMATIC_USER_IS_VIEWER && !empty($PATH[0]) && isset($_POST['maintenance_mode']) && verify_submission_token())
 		{
 			$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET MaintenanceMode = :maintenance_mode WHERE AccountID = :account_id AND SystemID = :system_id');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
@@ -67,7 +67,7 @@ class phoromatic_systems implements pts_webui_interface
 			$stmt->bindValue(':system_id', $PATH[0]);
 			$stmt->execute();
 		}
-		if(!PHOROMATIC_USER_IS_VIEWER && !empty($PATH[0]) && isset($_POST['tick_thread_reboot']))
+		if(!PHOROMATIC_USER_IS_VIEWER && !empty($PATH[0]) && isset($_POST['tick_thread_reboot']) && verify_submission_token())
 		{
 			$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET TickThreadEvent = :event WHERE AccountID = :account_id AND SystemID = :system_id');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
@@ -75,7 +75,7 @@ class phoromatic_systems implements pts_webui_interface
 			$stmt->bindValue(':event', time() . ':reboot');
 			$stmt->execute();
 		}
-		if(!PHOROMATIC_USER_IS_VIEWER && !empty($PATH[0]) && isset($_POST['tick_thread_halt']))
+		if(!PHOROMATIC_USER_IS_VIEWER && !empty($PATH[0]) && isset($_POST['tick_thread_halt']) && verify_submission_token())
 		{
 			$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET TickThreadEvent = :event WHERE AccountID = :account_id AND SystemID = :system_id');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
@@ -92,6 +92,7 @@ class phoromatic_systems implements pts_webui_interface
 		}
 		if(!PHOROMATIC_USER_IS_VIEWER && !empty($PATH[0]) && isset($_POST['system_var_names'])&& isset($_POST['system_var_values']))
 		{
+			phoromatic_quit_if_invalid_input_found(array('system_var_names', 'system_var_values'));
 			$vars = array();
 			foreach($_POST['system_var_names'] as $i => $name)
 			{
@@ -199,13 +200,13 @@ class phoromatic_systems implements pts_webui_interface
 						$mm_onclick = 'return confirm(\'Enter maintenance mode now?\');';
 					}
 
-					$main .= '<p><form action="' . $_SERVER['REQUEST_URI'] . '" name="update_groups" method="post"><input type="hidden" name="maintenance_mode" value="' . $mm_val . '" /><input type="submit" value="' . $mm_str . '" onclick="' . $mm_onclick . '" style="float: left; margin: 0 20px 5px 0;" /></form> Putting the system into maintenance mode will power up the system (if supported and applicable) and cause the Phoronix Test Suite Phoromatic client to idle and block all testing until the mode has been disabled. If a test is already running on the system, the maintenance mode will not be entered until after the testing has completed. The maintenance mode can be used if wishing to update the system software or carry out other tasks without interfering with the Phoromatic client process. Once disabled, the Phoronix Test Suite will continue to function as normal.</p>';
+					$main .= '<p><form action="' . $_SERVER['REQUEST_URI'] . '" name="update_groups" method="post">' . write_token_in_form() . '<input type="hidden" name="maintenance_mode" value="' . $mm_val . '" /><input type="submit" value="' . $mm_str . '" onclick="' . $mm_onclick . '" style="float: left; margin: 0 20px 5px 0;" /></form> Putting the system into maintenance mode will power up the system (if supported and applicable) and cause the Phoronix Test Suite Phoromatic client to idle and block all testing until the mode has been disabled. If a test is already running on the system, the maintenance mode will not be entered until after the testing has completed. The maintenance mode can be used if wishing to update the system software or carry out other tasks without interfering with the Phoromatic client process. Once disabled, the Phoronix Test Suite will continue to function as normal.</p>';
 
 					if($row['CoreVersion'] >= 5730)
 					{
-						$main .= '<p><form action="' . $_SERVER['REQUEST_URI'] . '" name="update_groups" method="post"><input type="hidden" name="tick_thread_reboot" value="1" /><input type="submit" value="Reboot System" style="float: left; margin: 0 20px 5px 0;" /></form> If the system is currently powered up and connected to the Phoromatic Server, this will send a message to the system to issue a reboot -- in case the system is hung on a test or you wish to otherwise manually reboot the server.</p>';
+						$main .= '<p><form action="' . $_SERVER['REQUEST_URI'] . '" name="update_groups" method="post">' . write_token_in_form() . '<input type="hidden" name="tick_thread_reboot" value="1" /><input type="submit" value="Reboot System" style="float: left; margin: 0 20px 5px 0;" /></form> If the system is currently powered up and connected to the Phoromatic Server, this will send a message to the system to issue a reboot -- in case the system is hung on a test or you wish to otherwise manually reboot the server.</p>';
 
-						$main .= '<p><form action="' . $_SERVER['REQUEST_URI'] . '" name="update_groups" method="post"><input type="hidden" name="tick_thread_halt" value="1" /><input type="submit" value="Halt Testing" style="float: left; margin: 0 20px 5px 0;" /></form> If the system is currently powered up and running a test/benchmark via the Phoromatic Server, this will tell the system to halt the testing prematurely as soon as the currently-active test has finished. The results successfully ran will then be uploaded to the Phoromatic Server.</p>';
+						$main .= '<p><form action="' . $_SERVER['REQUEST_URI'] . '" name="update_groups" method="post">' . write_token_in_form() . '<input type="hidden" name="tick_thread_halt" value="1" /><input type="submit" value="Halt Testing" style="float: left; margin: 0 20px 5px 0;" /></form> If the system is currently powered up and running a test/benchmark via the Phoromatic Server, this will tell the system to halt the testing prematurely as soon as the currently-active test has finished. The results successfully ran will then be uploaded to the Phoromatic Server.</p>';
 					}
 				}
 

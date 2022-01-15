@@ -527,9 +527,9 @@ function write_token_in_form()
 {
 	return '<input type="hidden" name="token_submit" value="' . $_SESSION['Token'] . '" />';
 }
-function append_token_to_url()
+function append_token_to_url($prefix = '/')
 {
-	return '/&token_submit=' . $_SESSION['Token'];
+	return $prefix . '&token_submit=' . $_SESSION['Token'];
 }
 function verify_submission_token()
 {

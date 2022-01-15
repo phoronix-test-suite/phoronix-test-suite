@@ -57,7 +57,7 @@ class phoromatic_schedules implements pts_webui_interface
 				if(!PHOROMATIC_USER_IS_VIEWER)
 				{
 
-					if(isset($_POST['add_to_schedule_select_test']))
+					if(isset($_POST['add_to_schedule_select_test']) && verify_submission_token())
 					{
 						phoromatic_quit_if_invalid_input_found(array('add_to_schedule_select_test'));
 						$name = $_POST['add_to_schedule_select_test'];
@@ -89,7 +89,7 @@ class phoromatic_schedules implements pts_webui_interface
 							phoromatic_add_activity_stream_event('tests_for_schedule', $PATH[0], 'added');
 						}
 					}
-					else if(isset($_POST['suite_add']))
+					else if(isset($_POST['suite_add']) && verify_submission_token())
 					{
 						$test_suite = phoromatic_server::find_suite_file($_SESSION['AccountID'], $_POST['suite_add']);
 						if(is_file($test_suite))
@@ -154,7 +154,7 @@ class phoromatic_schedules implements pts_webui_interface
 						$row['State'] = $new_state;
 						phoromatic_add_activity_stream_event('schedule', $PATH[0], $PATH[1]);
 					}
-					else if(isset($_POST['do_manual_test_run']))
+					else if(isset($_POST['do_manual_test_run']) && verify_submission_token())
 					{
 						$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_schedules_triggers (AccountID, ScheduleID, Trigger, TriggeredOn) VALUES (:account_id, :schedule_id, :trigger, :triggered_on)');
 						$stmt->bindValue(':account_id',	$_SESSION['AccountID']);
@@ -164,7 +164,7 @@ class phoromatic_schedules implements pts_webui_interface
 						$stmt->execute();
 						$main .= '<h2 style="color: red;">Manual Test Run Triggered</h2>';
 					}
-					else if(isset($_POST['skip_current_ticket']))
+					else if(isset($_POST['skip_current_ticket']) && verify_submission_token())
 					{
 						$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_schedules_trigger_skips (AccountID, ScheduleID, Trigger) VALUES (:account_id, :schedule_id, :trigger)');
 						$stmt->bindValue(':account_id',	$_SESSION['AccountID']);
@@ -251,10 +251,10 @@ class phoromatic_schedules implements pts_webui_interface
 					$main .= '<p>This test schedule can be manually triggered to run at any time by calling <strong>' . $trigger_url . '</strong> where <em>XXX</em> is the trigger value to be used (if relevant, such as a time-stamp, Git/SVN commit number or hash, etc). There\'s also the option of sub-targeting system(s) part of this schedule. One option is appending <em>&sub_target_this_ip</em> if this URL is being called from one of the client test systems to only sub-target the triggered testing on that client, among other options.</p>';
 					$main .= '<p>If you wish to run this test schedule now, click the following button and the schedule will be run on all intended systems at their next earliest possible convenience.</p>';
 					$main .= '<p><form action="?schedules/' . $PATH[0] . '" name="manual_run" method="post">';
-					$main .= '<input type="hidden" name="do_manual_test_run" value="1" /><input type="submit" value="Run Test Schedule Now" onclick="return confirm(\'Run this test schedule now?\');" />';
+					$main .= write_token_in_form() . '<input type="hidden" name="do_manual_test_run" value="1" /><input type="submit" value="Run Test Schedule Now" onclick="return confirm(\'Run this test schedule now?\');" />';
 					$main .= '</form></p>';
 					$main .= '<p><form action="?schedules/' . $PATH[0] . '" name="skip_run" method="post">';
-					$main .= '<input type="hidden" name="skip_current_ticket" value="1" /><input type="submit" value="Skip Current Test Ticket" onclick="return confirm(\'Skip any currently active test ticket on all systems?\');" />';
+					$main .= write_token_in_form() . '<input type="hidden" name="skip_current_ticket" value="1" /><input type="submit" value="Skip Current Test Ticket" onclick="return confirm(\'Skip any currently active test ticket on all systems?\');" />';
 					$main .= '</form></p>';
 				}
 
@@ -329,7 +329,7 @@ class phoromatic_schedules implements pts_webui_interface
 				{
 					$main .= '<hr /><h2>Add A Test</h2>';
 					$main .= '<form action="?schedules/' . $PATH[0] . '" name="add_test" id="add_test" method="post">';
-					$main .= '<select name="add_to_schedule_select_test" id="add_to_schedule_select_test" onchange="phoromatic_schedule_test_details(\'\');">';
+					$main .= write_token_in_form() . '<select name="add_to_schedule_select_test" id="add_to_schedule_select_test" onchange="phoromatic_schedule_test_details(\'\');">';
 					$dc = pts_client::download_cache_path();
 					$dc_exists = is_file($dc . 'pts-download-cache.json');
 					if($dc_exists)
@@ -376,7 +376,7 @@ class phoromatic_schedules implements pts_webui_interface
 
 					$main .= '<hr /><h2>Add A Suite:</h2>';
 					$main .= '<form action="?schedules/' . $PATH[0] . '" name="add_suite" id="add_suite" method="post">';
-					$main .= '<p><select name="suite_to_run" id="suite_to_run_identifier" onchange="phoromatic_show_basic_suite_details(\'\');">';
+					$main .= write_token_in_form() . '<p><select name="suite_to_run" id="suite_to_run_identifier" onchange="phoromatic_show_basic_suite_details(\'\');">';
 					foreach(array_merge($local_suites, $official_suites) as $title => $id)
 					{
 						$main .= '<option value="' . $id . '">' . $title . '</option>';

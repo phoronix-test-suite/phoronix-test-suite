@@ -79,7 +79,7 @@ class phoromatic_benchmark implements pts_webui_interface
 
 			if(!empty($row))
 			{
-				if(isset($_GET['remove']))
+				if(isset($_GET['remove']) && verify_submission_token())
 				{
 					$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_benchmark_tickets WHERE AccountID = :account_id AND TicketID = :ticket_id');
 					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
@@ -87,7 +87,7 @@ class phoromatic_benchmark implements pts_webui_interface
 					$result = $stmt->execute();
 					header('Location: /?benchmark');
 				}
-				else if(isset($_GET['repeat']))
+				else if(isset($_GET['repeat']) && verify_submission_token())
 				{
 					$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_benchmark_tickets SET TicketIssueTime = :new_ticket_time, State = 1 WHERE AccountID = :account_id AND TicketID = :ticket_id');
 					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
@@ -95,7 +95,7 @@ class phoromatic_benchmark implements pts_webui_interface
 					$stmt->bindValue(':new_ticket_time', time());
 					$result = $stmt->execute();
 				}
-				else if(isset($_GET['disable']))
+				else if(isset($_GET['disable']) && verify_submission_token())
 				{
 					$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_benchmark_tickets SET State = 0 WHERE AccountID = :account_id AND TicketID = :ticket_id');
 					$stmt->bindValue(':account_id', $_SESSION['AccountID']);
@@ -107,7 +107,7 @@ class phoromatic_benchmark implements pts_webui_interface
 				$main .= '<h1>' . $row['Title'] . '</h1>';
 				$main .= '<h3>' . $row['Description'] . '</h3>';
 				$main .= '<p>This benchmark ticket was created on <strong>' . date('j F Y \a\t H:i', strtotime($row['LastModifiedOn'])) . '</strong> by <strong>' . $row['LastModifiedBy'] . '. The ticket was last issued for testing at ' . date('j F Y \a\t H:i', $row['TicketIssueTime']) . '</strong>.';
-				$main .= '<p> <a href="/?benchmark/' . $PATH[0] . '/&repeat">Repeat Ticket</a> &nbsp; &nbsp; &nbsp; <a href="/?benchmark/' . $PATH[0] . '/&remove">Remove Ticket</a>' . (!isset($_GET['disable']) && $row['State'] > 0 ? ' &nbsp; &nbsp; &nbsp; <a href="/?benchmark/' . $PATH[0] . '/&disable">End Ticket</a>' : null) . '</p>';
+				$main .= '<p> <a href="/?benchmark/' . $PATH[0] . '/&repeat' . append_token_to_url('') . '">Repeat Ticket</a> &nbsp; &nbsp; &nbsp; <a href="/?benchmark/' . $PATH[0] . '/&remove' . append_token_to_url('') . '">Remove Ticket</a>' . (!isset($_GET['disable']) && $row['State'] > 0 ? ' &nbsp; &nbsp; &nbsp; <a href="/?benchmark/' . $PATH[0] . '/&disable' . append_token_to_url('') . '">End Ticket</a>' : null) . '</p>';
 
 				if(!empty($row['RunTargetSystems']))
 				{

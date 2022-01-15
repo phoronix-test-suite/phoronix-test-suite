@@ -36,6 +36,7 @@ class phoromatic_r_basic_suite_details implements pts_webui_interface
 	}
 	public static function render_page_process($PATH)
 	{
+		phoromatic_quit_if_invalid_input_found(array('ts'));
 		$ts = $_GET['ts'];
 		$ts_file = phoromatic_server::find_suite_file($_SESSION['AccountID'], $ts);
 		$test_suite = new pts_test_suite($ts_file);

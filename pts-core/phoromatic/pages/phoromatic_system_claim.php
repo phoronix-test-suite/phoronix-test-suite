@@ -42,7 +42,7 @@ class phoromatic_system_claim implements pts_webui_interface
 		if(!PHOROMATIC_USER_IS_VIEWER)
 		{
 
-			if(function_exists('ssh2_connect') && isset($_POST['ip']) && isset($_POST['port']) && isset($_POST['password']) && isset($_POST['username']))
+			if(function_exists('ssh2_connect') && isset($_POST['ip']) && isset($_POST['port']) && isset($_POST['password']) && isset($_POST['username']) && verify_submission_token())
 			{
 				$connection = ssh2_connect($_POST['ip'], $_POST['port']);
 
@@ -72,7 +72,7 @@ class phoromatic_system_claim implements pts_webui_interface
 					ssh2_exec($connection, 'rm' . $tmp_remote_file);
 				}
 			}
-			if((isset($_POST['ip_claim']) && !empty($_POST['ip_claim'])) && isset($_POST['ping']))
+			if((isset($_POST['ip_claim']) && !empty($_POST['ip_claim'])) && isset($_POST['ping']) && verify_submission_token())
 			{
 				$ip_ping = ip2long($_POST['ip_claim']) !== false ? $_POST['ip_claim'] : null;
 				if($ip_ping)
@@ -83,7 +83,7 @@ class phoromatic_system_claim implements pts_webui_interface
 					echo '</pre>';
 				}
 			}
-			else if((isset($_POST['ip_claim']) && !empty($_POST['ip_claim'])) || (isset($_POST['mac_claim']) && !empty($_POST['mac_claim'])))
+			else if(((isset($_POST['ip_claim']) && !empty($_POST['ip_claim'])) || (isset($_POST['mac_claim']) && !empty($_POST['mac_claim']))) && verify_submission_token())
 			{
 				$stmt = phoromatic_server::$db->prepare('INSERT INTO phoromatic_system_association_claims (AccountID, IPAddress, NetworkMAC, CreationTime) VALUES (:account_id, :ip_address, :mac_address, :creation_time)');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
@@ -92,7 +92,7 @@ class phoromatic_system_claim implements pts_webui_interface
 				$stmt->bindValue(':creation_time', phoromatic_server::current_time());
 				$result = $stmt->execute();
 			}
-			if(isset($_POST['remove_claim']) && !empty($_POST['remove_claim']))
+			if(isset($_POST['remove_claim']) && !empty($_POST['remove_claim']) && verify_submission_token())
 			{
 				list($ipc, $macc) = explode(',', $_POST['remove_claim']);
 				$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_system_association_claims WHERE AccountID = :account_id AND NetworkMAC = :mac_address AND IPAddress = :ip_address');
@@ -109,7 +109,7 @@ class phoromatic_system_claim implements pts_webui_interface
 			if(function_exists('ssh2_connect'))
 			{
 				$main .= '<h3>Phoromatic Client SSH Information:</h3>';
-				$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="ssh_connect" method="post">
+				$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="ssh_connect" method="post">' . write_token_in_form() . '
 				<p><strong>IP Address:</strong> <input type="text" name="ip" /></p>
 				<p><strong>SSH Port:</strong> <input type="text" name="port" value="22" /></p>
 				<p><strong>Username:</strong> <input type="text" name="username" /></p>
@@ -124,7 +124,7 @@ class phoromatic_system_claim implements pts_webui_interface
 			$main .= '<hr />';
 			$main .= '<h2>Add Phoromatic Server Info Via IP/MAC</h2>
 			<p>If deploying a Phoromatic Server within an organization, you can attempt for automatic configuration of Phoromatic clients if you know the system\'s IP or MAC addresses. When specifying either of these fields, if a Phoromatic client attempts to connect to this Phoromatic system without being associated to an account, it will be claimed by this account as long as no other Phoromatic accounts are attempting to claim the IP/MAC. This method can be particularly useful if running the Phoromatic client as a systemd/Upstart service where it will continually poll every 90 seconds auto-detected Phoromatic Servers on the LAN via zero-conf networking. For this feature to work, the zero-conf networking (Avahi) support must be enabled and working.</p>';
-			$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="auto_associate" method="post">
+			$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" name="auto_associate" method="post">' . write_token_in_form() . '
 			<p><strong>IP Address Claim:</strong> <input type="text" name="ip_claim" /></p>
 			<p><strong>MAC Address Claim:</strong> <input type="text" name="mac_claim" /></p>
 			<p><input name="ping" value="Ping Test" type="submit" /> &nbsp; <input name="submit" value="Submit Claim" type="submit" /></p>
@@ -147,7 +147,7 @@ class phoromatic_system_claim implements pts_webui_interface
 			if(!empty($claims))
 			{
 				$main .= '<hr /><h2>Remove Claim</h2><p>Removing a claimed IP / MAC address.</p>';
-				$main .= '<p><form action="' . $_SERVER['REQUEST_URI'] . '" name="remove_claim" method="post"><select name="remove_claim" id="remove_claim">';
+				$main .= '<p><form action="' . $_SERVER['REQUEST_URI'] . '" name="remove_claim" method="post"><select name="remove_claim" id="remove_claim">' . write_token_in_form();
 
 				foreach($claims as $claim)
 				{
