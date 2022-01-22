@@ -28,7 +28,11 @@ then
 fi
 
 # Full path to root directory of the actual Phoronix Test Suite code
-if [ -d /Applications ]
+if [ -d /Applications ] && [ -d /usr/share/phoronix-test-suite/ ]
+then
+	# macOS has problems with the readlink code
+	export PTS_DIR="/usr/share/phoronix-test-suite/"
+elif [ -d /Applications ]
 then
 	# macOS has problems with the readlink code
 	export PTS_DIR=`pwd`
