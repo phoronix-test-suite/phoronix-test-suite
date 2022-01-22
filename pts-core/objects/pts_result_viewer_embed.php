@@ -216,45 +216,60 @@ class pts_result_viewer_embed
 
 		if($result_file->get_system_count() > 1 && !$result_file->is_multi_way_comparison())
 		{
-			foreach($result_file->get_systems() as $system)
+			$sppt = self::check_request_for_var($_REQUEST, 'sppt');
+			$sppc = self::check_request_for_var($_REQUEST, 'sppc');
+			$sppm = self::check_request_for_var($_REQUEST, 'sppm');
+			if($sppt || $sppc || $sppm)
 			{
-				$t = $system->get_cpu_core_count();
-				if($t > 0)
+				foreach($result_file->get_systems() as $system)
 				{
-					$identifier_mapping_to_cores[$system->get_identifier()] = $t;
+					if($sppt)
+					{
+						$t = $system->get_cpu_core_count();
+						if($t > 0)
+						{
+							$identifier_mapping_to_cores[$system->get_identifier()] = $t;
+						}
+						$t = $system->get_cpu_thread_count();
+						if($t > 0)
+						{
+							$identifier_mapping_to_threads[$system->get_identifier()] = $t;
+						}
+					}
+					if($sppc)
+					{
+						$t = $system->get_cpu_clock();
+						if($t > 0)
+						{
+							$identifier_mapping_to_cpu_clock[$system->get_identifier()] = $t;
+						}
+					}
+					if($sppm)
+					{
+						$t = $system->get_memory_channels();
+						if($t > 0)
+						{
+							$identifier_mapping_to_ram_channels[$system->get_identifier()] = $t;
+						}
+					}
 				}
-				$t = $system->get_cpu_thread_count();
-				if($t > 0)
-				{
-					$identifier_mapping_to_threads[$system->get_identifier()] = $t;
-				}
-				$t = $system->get_cpu_clock();
-				if($t > 0)
-				{
-					$identifier_mapping_to_cpu_clock[$system->get_identifier()] = $t;
-				}
-				$t = $system->get_memory_channels();
-				if($t > 0)
-				{
-					$identifier_mapping_to_ram_channels[$system->get_identifier()] = $t;
-				}
-			}
 
-			if(count(array_unique($identifier_mapping_to_cores)) < 2)
-			{
-				$identifier_mapping_to_cores = array();
-			}
-			if(count(array_unique($identifier_mapping_to_threads)) < 2)
-			{
-				$identifier_mapping_to_threads = array();
-			}
-			if(count(array_unique($identifier_mapping_to_cpu_clock)) < 2)
-			{
-				$identifier_mapping_to_cpu_clock = array();
-			}
-			if(count(array_unique($identifier_mapping_to_ram_channels)) < 2)
-			{
-				$identifier_mapping_to_ram_channels = array();
+				if(count(array_unique($identifier_mapping_to_cores)) < 2)
+				{
+					$identifier_mapping_to_cores = array();
+				}
+				if(count(array_unique($identifier_mapping_to_threads)) < 2)
+				{
+					$identifier_mapping_to_threads = array();
+				}
+				if(count(array_unique($identifier_mapping_to_cpu_clock)) < 2)
+				{
+					$identifier_mapping_to_cpu_clock = array();
+				}
+				if(count(array_unique($identifier_mapping_to_ram_channels)) < 2)
+				{
+					$identifier_mapping_to_ram_channels = array();
+				}
 			}
 		}
 
@@ -345,15 +360,12 @@ class pts_result_viewer_embed
 						}
 					}
 				}
-				if(in_array($result_object->test_profile->get_test_hardware_type(), array('System', 'Processor', 'Memory')))
+				if(!empty($identifier_mapping_to_ram_channels) && in_array($result_object->test_profile->get_test_hardware_type(), array('System', 'Processor', 'Memory')))
 				{
-					if(!empty($identifier_mapping_to_ram_channels))
+					$ro = pts_result_file_analyzer::get_result_object_custom($result_file, $result_object, $identifier_mapping_to_ram_channels, 'Performance Per Memory Channel', 'Channel');
+					if($ro)
 					{
-						$ro = pts_result_file_analyzer::get_result_object_custom($result_file, $result_object, $identifier_mapping_to_ram_channels, 'Performance Per Memory Channel', 'Channel');
-						if($ro)
-						{
-							$res_per_ram = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
-						}
+						$res_per_ram = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
 					}
 				}
 
@@ -661,6 +673,7 @@ class pts_result_viewer_embed
 			'Statistics' => array(),
 			'Sorting' => array(),
 			'Graph Settings' => array(),
+			'Additional Graphs' => array(),
 			'Multi-Way Comparison' => array(),
 			);
 
@@ -684,6 +697,51 @@ class pts_result_viewer_embed
 			if($has_identifier_with_color_brand)
 			{
 				$analyze_checkboxes['Graph Settings'][] = array('ncb', 'Disable Color Branding');
+			}
+
+			// Additional Graphs
+			if(!$result_file->is_multi_way_comparison())
+			{
+				$identifier_mapping_to_cores = array();
+				$identifier_mapping_to_threads = array();
+				$identifier_mapping_to_cpu_clock = array();
+				$identifier_mapping_to_ram_channels = array();
+				foreach($result_file->get_systems() as $system)
+				{
+					$t = $system->get_cpu_core_count();
+					if($t > 0)
+					{
+						$identifier_mapping_to_cores[$system->get_identifier()] = $t;
+					}
+					$t = $system->get_cpu_thread_count();
+					if($t > 0)
+					{
+						$identifier_mapping_to_threads[$system->get_identifier()] = $t;
+					}
+					$t = $system->get_cpu_clock();
+					if($t > 0)
+					{
+						$identifier_mapping_to_cpu_clock[$system->get_identifier()] = $t;
+					}
+					$t = $system->get_memory_channels();
+					if($t > 0)
+					{
+						$identifier_mapping_to_ram_channels[$system->get_identifier()] = $t;
+					}
+				}
+
+				if(count(array_unique($identifier_mapping_to_cores)) > 1 || count(array_unique($identifier_mapping_to_threads)) > 1)
+				{
+					$analyze_checkboxes['Additional Graphs'][] = array('sppt', 'Show Perf Per Core/Thread Calculation Graphs Where Applicable');
+				}
+				if(count(array_unique($identifier_mapping_to_cpu_clock)) > 1)
+				{
+					$analyze_checkboxes['Additional Graphs'][] = array('sppc', 'Show Perf Per Clock Calculation Graphs Where Applicable');
+				}
+				if(count(array_unique($identifier_mapping_to_ram_channels)) > 1)
+				{
+					$analyze_checkboxes['Additional Graphs'][] = array('sppm', 'Show Perf Per RAM Channel Calculation Graphs Where Applicable');
+				}
 			}
 		}
 		if(count($suites_in_result_file) > 1)

@@ -8,6 +8,7 @@ pts-core: Optional Download Cache Server interface support for HTTPS
 pts-core: Support for archiving test profile change-logs locally rather than having to always querying OpenBenchmarking.org server
 pts-core: Allow caching of some OpenBenchmarking.org overview metrics locally
 pts-core: Allow displaying more overview metrics from OpenBenchmarking.org in the web view and info sub-command
+pts-core: Make rendering of Perf Per Core/Thread/Clock/RAM opt-in from the result viewer
 phoromatic: Allow binary log file uploads by default when Phoromatic Server is 10.8+
 phoromatic: Input sanitization updates for Phoromatic Server and other security improvements
 phoromatic: Move "Create A Test Profile" page behind an opt-in rootadmin Phoromatic Server option
