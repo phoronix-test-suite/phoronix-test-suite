@@ -22,6 +22,8 @@
 
 class pts_external_dependencies
 {
+	protected static $logger = null;
+
 	public static function packages_that_provide($file)
 	{
 		$pkg_vendor = self::vendor_identifier('package-list');
@@ -62,6 +64,8 @@ class pts_external_dependencies
 			return true;
 		}
 
+		self::$logger = new pts_logger(null, 'phoronix-test-suite-dependencies.log', false);
+
 		// Find all the tests that need to be checked
 		$tests_to_check = array();
 		foreach($test_profiles as $test_profile)
@@ -71,6 +75,7 @@ class pts_external_dependencies
 				$tests_to_check[] = $test_profile;
 			}
 		}
+		self::$logger->log('Evaluating dependencies needed for: ' . implode(' ', $tests_to_check));
 
 		// Find all of the POSSIBLE test dependencies
 		$required_external_dependencies = array();
@@ -181,6 +186,7 @@ class pts_external_dependencies
 		// Do the actual dependency install process
 		if(count($dependencies_to_install) > 0)
 		{
+			self::$logger->log('External dependencies requested for install: ' . implode(' ', $dependencies_to_install));
 			self::install_packages_on_system($dependencies_to_install);
 		}
 
@@ -437,6 +443,7 @@ class pts_external_dependencies
 					{
 						$needed_os_packages[] = $pkg;
 					}
+					self::$logger->log('System dependency solver for "' . $file . '" found: ' . implode(' ', $processed_pkgs));
 				}
 			}
 			$i++;

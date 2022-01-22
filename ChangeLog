@@ -2,6 +2,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 
 Phoronix Test Suite (Git)
 
+pts-core: Log external dependencies attempted to be installed to phoronix-test-suite-dependencies.log
 pts-core: Allow PTS_DISPLAY_MODE to override other display mode preferences (e.g. short mode requested inline)
 pts-core: Optional Download Cache Server interface support for HTTPS
 pts-core: Support for archiving test profile change-logs locally rather than having to always querying OpenBenchmarking.org server

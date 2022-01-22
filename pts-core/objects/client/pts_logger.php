@@ -25,7 +25,7 @@ class pts_logger
 {
 	private $log_file = null;
 
-	public function __construct($log_file = null, $file_name = null)
+	public function __construct($log_file = null, $file_name = null, $flush_log_if_present = true)
 	{
 		if($log_file == null)
 		{
@@ -48,9 +48,14 @@ class pts_logger
 	//	if(file_exists($log_file))
 	//		unlink($log_file);
 
-		// Flush log
-		if(getenv('PTS_NO_FLUSH_LOGGER') == false || !file_exists($log_file))
-			$fwrite = file_put_contents($log_file, null);
+		if($flush_log_if_present || !file_exists($log_file))
+		{
+			// Flush log
+			if(getenv('PTS_NO_FLUSH_LOGGER') == false || !file_exists($log_file))
+			{
+				file_put_contents($log_file, '');
+			}
+		}
 
 		if(is_writable($log_file))
 			$this->log_file = $log_file;
