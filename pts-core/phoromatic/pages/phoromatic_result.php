@@ -169,6 +169,36 @@ class phoromatic_result implements pts_webui_interface
 			{
 				// Rather than going through the merge logic and all that, when just one result file, present as is
 				$result_file = new pts_result_file(array_pop(array_keys($display_rows)), true);
+				$identifiers = $result_file->get_system_identifiers();
+				if(count($identifiers) == 1)
+				{
+					$system_name = $identifiers[0];
+
+					if(strpos($system_name, '.') !== false)
+					{
+						$osn = $system_name;
+						if(($replacement = phoromatic_server::system_id_to_name($row['SystemID'])) != null)
+						{
+							$system_name = str_replace('.SYSTEM', $replacement, $system_name);
+						}
+						if(($replacement = phoromatic_server::account_id_to_group_name($row['AccountID'])) != null)
+						{
+							$system_name = str_replace('.GROUP', $replacement, $system_name);
+						}
+						foreach(explode(';', phoromatic_server::system_id_variables($row['SystemID'], $row['AccountID'])) as $var)
+						{
+							$var = explode('=', $var);
+							if(count($var) == 2)
+							{
+								$system_name = str_replace('.' . $var[0], $var[1], $system_name);
+							}
+						}
+						if($osn != $system_name)
+						{
+							$result_file->rename_run(null, $system_name);
+						}
+					}
+				}
 			}
 			else
 			{
@@ -213,8 +243,7 @@ class phoromatic_result implements pts_webui_interface
 					{
 						$system_name = str_replace('.GROUP', $replacement, $system_name);
 					}
-					$system_variables = explode(';', phoromatic_server::system_id_variables($row['SystemID'], $row['AccountID']));
-					foreach($system_variables as $var)
+					foreach(explode(';', phoromatic_server::system_id_variables($row['SystemID'], $row['AccountID'])) as $var)
 					{
 						$var = explode('=', $var);
 						if(count($var) == 2)
