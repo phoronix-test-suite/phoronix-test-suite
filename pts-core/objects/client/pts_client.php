@@ -2226,6 +2226,7 @@ class pts_client
 						'file_get_contents',
 						'failed to connect',
 						'unable to connect',
+						'SSL operation',
 						'directory not empty',
 						'_lock', // likely multi-process issue, etc for unlinking lock
 						);
