@@ -1242,7 +1242,8 @@ class pts_result_file_output
 		$box_plot_size = strlen($box_plot);
 		$box_plot = str_split($box_plot);
 		$max_value = max(max($percentiles), $active_result);
-		if($ae_data['hib'] == 1)
+		$hib = $ae_data['hib'] == 1 && strtolower($ae_data['unit']) != 'seconds';
+		if($hib)
 		{
 			$max_value = $max_value * 1.02;
 		}
@@ -1271,7 +1272,7 @@ class pts_result_file_output
 		$box_plot[$box_middle] = '!';
 
 		// END OF BOX PLOT
-		if($ae_data['hib'] == 0)
+		if(!$hib)
 		{
 			$box_plot = array_reverse($box_plot);
 		}
@@ -1310,10 +1311,10 @@ class pts_result_file_output
 				// Show some common percentile marks for some perspective
 				foreach(array(10, 25, 60, 75, 90) as $p_to_show)
 				{
-					$value = $percentiles[($ae_data['hib'] ? $p_to_show : 100 - $p_to_show)];
+					$value = $percentiles[($hib ? $p_to_show : 100 - $p_to_show)];
 					if($value > 60)
 					{
-						$value = round($percentiles[($ae_data['hib'] ? $p_to_show : 100 - $p_to_show)]);
+						$value = round($percentiles[($hib ? $p_to_show : 100 - $p_to_show)]);
 					}
 					$results_to_show[pts_strings::number_suffix_handler($p_to_show) . ' Percentile'] = $value;
 				}
@@ -1324,7 +1325,7 @@ class pts_result_file_output
 				$this_result_percentile = -1;
 				foreach($percentiles as $percentile => $v)
 				{
-					if($ae_data['hib'] == 0)
+					if(!$hib)
 					{
 						if($v > $active_result)
 						{
@@ -1396,7 +1397,7 @@ class pts_result_file_output
 					continue;
 				}
 
-				if($ae_data['hib'] == 0)
+				if(!$hib)
 				{
 					$this_result_pos = $box_plot_size - $this_result_pos;
 				}
