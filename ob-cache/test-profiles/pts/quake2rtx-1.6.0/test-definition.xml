@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Quake II RTX</Title>
+    <AppVersion>1.6</AppVersion>
+    <Description>Quake II RTX on Steam. The test profile assumes you have a Steam account, and have Steam installed for the system. This automates the process of executing the game and using its built-in benchmark mode.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <Executable>q2rtx.sh</Executable>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.6.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Game</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <RequiresDisplay>TRUE</RequiresDisplay>
+    <ProjectURL>https://store.steampowered.com/app/1089130/</ProjectURL>
+    <RepositoryURL>https://github.com/NVIDIA/Q2RTX/</RepositoryURL>
+    <Maintainer>Gary Dunn</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>$VIDEO_WIDTH $VIDEO_HEIGHT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Global Illumination</DisplayName>
+      <Identifier>global-illumination</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Off</Name>
+          <Value>0</Value>
+        </Entry>
+        <Entry>
+          <Name>Low</Name>
+          <Value>0.5</Value>
+        </Entry>
+        <Entry>
+          <Name>Medium</Name>
+          <Value>1</Value>
+        </Entry>
+        <Entry>
+          <Name>High</Name>
+          <Value>2</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Denoiser</DisplayName>
+      <Identifier>flt_enable</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Off</Name>
+          <Value>0</Value>
+        </Entry>
+        <Entry>
+          <Name>On</Name>
+          <Value>1</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Ray Tracing API</DisplayName>
+      <Identifier>ray_tracing_api</Identifier>
+      <Menu>
+        <Entry>
+          <Name>VK_NV_ray_tracing</Name>
+          <Value>nv</Value>
+        </Entry>
+        <Entry>
+          <Name>VK_KHR_ray_tracing_pipeline</Name>
+          <Value>pipeline</Value>
+        </Entry>
+        <Entry>
+          <Name>VK_KHR_ray_query</Name>
+          <Value>query</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

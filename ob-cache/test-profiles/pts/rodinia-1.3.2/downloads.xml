@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/rodinia_3.1.tar.bz2</URL>
+      <MD5>047d983e62107972f217921aa0027b05</MD5>
+      <SHA256>faebac7c11ed8f8fcf6bf2d7e85c3086fc2d11f72204d6dfc28dc5b2e8f2acfd</SHA256>
+      <FileName>rodinia_3.1.tar.bz2</FileName>
+      <FileSize>360636246</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

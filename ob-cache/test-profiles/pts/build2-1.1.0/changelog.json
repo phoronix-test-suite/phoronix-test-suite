@@ -1,0 +1,1 @@
+{"1.1.0":{"last_updated":"1608132590","commit_description":"Update against build2 0.13 for Apple Silicon support, fixes for Ubuntu 20.10 building as well from upstream."},"1.0.1":{"last_updated":"1589749815","commit_description":"Fix the SupportedPlatforms bit for macOS."},"1.0.0":{"last_updated":"1574432899","commit_description":"Initial commit of build2 toolchain benchmark."}}

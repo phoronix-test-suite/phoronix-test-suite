@@ -1,0 +1,1 @@
+{"1.2.1":{"last_updated":"1519761249","commit_description":"Upstream lightsmark hasn't been updated in a decade, time to deprecate it as becoming useless on modern GPUs."},"1.2.0":{"last_updated":"1291665265","commit_description":"Initial import into OpenBenchmarking.org"}}

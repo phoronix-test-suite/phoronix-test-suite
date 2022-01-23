@@ -1,0 +1,1 @@
+{"1.1.0":{"last_updated":"1612278107","commit_description":"Fix unbounded OpenMP handling."},"1.0.1":{"last_updated":"1571532156","commit_description":"Add --allow-run-as-root"},"1.0.0":{"last_updated":"1567175930","commit_description":"Initial commit of Pennant benchmark."}}

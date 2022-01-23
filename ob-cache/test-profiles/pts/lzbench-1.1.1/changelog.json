@@ -1,0 +1,1 @@
+{"1.1.1":{"last_updated":"1611243136","commit_description":"Update against point release for build fix."},"1.1.0":{"last_updated":"1582928744","commit_description":"Update against upstream lzbench 1.8, add Windows support."},"1.0.0":{"last_updated":"1502218707","commit_description":"Initial commit of an lzbench test profile, an in-memory compressor comparison benchmark."}}

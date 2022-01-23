@@ -1,0 +1,1 @@
+{"1.0.1":{"last_updated":"1630447906","commit_description":"Fix for building on AArch64 by using different configure option as option 34 on Altra server leading to infinite loop due to 34 not being valid prompt."},"1.0.0":{"last_updated":"1619554737","commit_description":"Initial commit of WRF."}}

@@ -1,0 +1,1 @@
+{"1.1.1":{"last_updated":"1611234557","commit_description":"Drop Monte Carlo OpenMP as numbers seem to be too flakey."},"1.1.0":{"last_updated":"1611160993","commit_description":"Update test profile, include CPU OpenMP tests too."},"1.0.0":{"last_updated":"1465250993","commit_description":"Initial commit of FinanceBench as some more OpenCL coverage"}}

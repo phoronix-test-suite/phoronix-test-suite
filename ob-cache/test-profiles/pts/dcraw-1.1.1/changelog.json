@@ -1,0 +1,1 @@
+{"1.1.1":{"last_updated":"1600791620","commit_description":"Deprecate test profile since the program is no longer maintained upstream. Libraw and others took over."},"1.1.0":{"last_updated":"1331577596","commit_description":"Ensure CFLAGS are honored by dcraw compilation."},"1.0.0":{"last_updated":"1291664317","commit_description":"Initial import into OpenBenchmarking.org"}}

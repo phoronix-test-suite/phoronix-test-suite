@@ -1,0 +1,1 @@
+{"1.0.2":{"last_updated":"1444401817","commit_description":"Fix exit check, ensure bash is used for the script"},"1.0.1":{"last_updated":"1444401189","commit_description":"Add RequiresRoot, try to better catch errors."},"1.0.0":{"last_updated":"1444069062","commit_description":"Initial commit of test profile."}}

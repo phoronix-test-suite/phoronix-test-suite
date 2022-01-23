@@ -1,0 +1,1 @@
+{"1.1.1":{"last_updated":"1639355046","commit_description":"Fix for filename collision on Windows."},"1.1.0":{"last_updated":"1634131278","commit_description":"Update against upstream kvazaar 2.1, has some performance optimizations."},"1.0.0":{"last_updated":"1602887603","commit_description":"Initial commit of Kvazaar H.265 video encoder benchmark."}}

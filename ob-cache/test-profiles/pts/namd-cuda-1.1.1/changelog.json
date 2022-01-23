@@ -1,0 +1,1 @@
+{"1.1.1":{"last_updated":"1600449757","commit_description":"TestType should be Graphics not Processor, typo when spinning off from namd test profile."},"1.1.0":{"last_updated":"1598558021","commit_description":"Update against upstream NAMD 2.14."},"1.0.0":{"last_updated":"1545488914","commit_description":"Initial commit of CUDA version of NAMD benchmark."}}

@@ -1,0 +1,1 @@
+{"1.1.0":{"last_updated":"1589404031","commit_description":"Repeat pre.sh process in interim.sh to avoid screen resolution handling oddities."},"1.0.1":{"last_updated":"1573559462","commit_description":"Ignore the first run result."},"1.0.0":{"last_updated":"1573350447","commit_description":"Initial commit"}}

@@ -1,0 +1,1 @@
+{"overview":[],"capabilities":{"shared_libraries":["libOpenCL.so.1","libm.so.6","libc.so.6"],"default_instructions":["MMX","SSE","SSE2"],"max_instructions":["MMX","SSE","SSE2"],"honors_cflags":"0","scales_cpu_cores":null}}

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.0-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Encoded mesh saved to out.drc #_RESULT_# ms to encode).</OutputTemplate>
+    <LineHint>Encoded mesh saved to out.drc</LineHint>
+    <StripFromResult>(</StripFromResult>
+  </ResultsParser>
+</PhoronixTestSuite>

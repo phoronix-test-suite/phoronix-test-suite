@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>SVT-AV1</Title>
+    <AppVersion>0.9</AppVersion>
+    <Description>This is a benchmark of the SVT-AV1 open-source video encoder/decoder. SVT-AV1 was originally developed by Intel as part of their Open Visual Cloud / Scalable Video Technology (SVT). Development of SVT-AV1 has since moved to the Alliance for Open Media as part of upstream AV1 development. SVT-AV1 is a CPU-based multi-threaded video encoder for the AV1 video format with a sample YUV video file.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>2.4.0</Version>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, p7zip, yasm, cmake</ExternalDependencies>
+    <EnvironmentSize>2900</EnvironmentSize>
+    <ProjectURL>https://gitlab.com/AOMediaCodec/SVT-AV1/</ProjectURL>
+    <RepositoryURL>https://gitlab.com/AOMediaCodec/SVT-AV1</RepositoryURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Encoder Mode</DisplayName>
+      <Identifier>enc-mode</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Preset 12</Name>
+          <Value>--preset 12</Value>
+          <Message>Fastest</Message>
+        </Entry>
+        <Entry>
+          <Name>Preset 10</Name>
+          <Value>--preset 10</Value>
+        </Entry>
+        <Entry>
+          <Name>Preset 8</Name>
+          <Value>--preset 8</Value>
+        </Entry>
+        <Entry>
+          <Name>Preset 4</Name>
+          <Value>--preset 4 -n 160</Value>
+          <Message>Mid-Speed</Message>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Input</DisplayName>
+      <Identifier>input</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Bosphorus 1080p</Name>
+          <Value>-i Bosphorus_1920x1080_120fps_420_8bit_YUV.yuv -w 1920 -h 1080</Value>
+        </Entry>
+        <Entry>
+          <Name>Bosphorus 4K</Name>
+          <Value>-i Bosphorus_3840x2160.y4m -w 3840 -h 2160</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

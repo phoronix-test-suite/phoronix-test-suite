@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>GPAW</Title>
+    <AppVersion>22.1</AppVersion>
+    <Description>GPAW is a density-functional theory (DFT) Python code based on the projector-augmented wave (PAW) method and the atomic simulation environment (ASE).</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Scientific</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>openmpi-development, fftw3-development, cmake, build-utilities, python-numpy, python, python-scipy, blas-development</ExternalDependencies>
+    <EnvironmentSize>500</EnvironmentSize>
+    <ProjectURL>https://wiki.fysik.dtu.dk/gpaw/index.html</ProjectURL>
+    <RepositoryURL>https://gitlab.com/gpaw/gpaw</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>xc.h</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Input</DisplayName>
+      <Identifier>run-input</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Carbon Nanotube</Name>
+          <Value>carbon-nanotube</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

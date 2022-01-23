@@ -1,0 +1,1 @@
+{"1.1.0":{"last_updated":"1548954066","commit_description":"Update against LuaJIT 2.1 snapshot to offer ARMv64 support and other improvements."},"1.0.1":{"last_updated":"1523149112","commit_description":"Use gmake on BSD to build, works fine then on FreeBSD."},"1.0.0":{"last_updated":"1521502827","commit_description":"Initial commit of LuaJIT benchmarking."}}

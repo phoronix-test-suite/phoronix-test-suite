@@ -1,0 +1,1 @@
+{"1.0.1":{"last_updated":"1454505079","commit_description":"add global memory bandwidth test, set LIB to kernel latency result, do not check exit status as sometimes it can report odd value."},"1.0.0":{"last_updated":"1454432970","commit_description":"Initial commit of clpeak test profile for OpenCL peaks"}}

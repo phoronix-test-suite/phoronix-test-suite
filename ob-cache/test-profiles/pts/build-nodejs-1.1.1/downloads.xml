@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://nodejs.org/download/release/v17.3.0/node-v17.3.0.tar.xz</URL>
+      <MD5>45d4ad91a7b1e9b6be4a1abb3a62810c</MD5>
+      <SHA256>e4e4c4e64854698f2590144a177bcc7e7c0befb52020288fdae5c0da0d015d03</SHA256>
+      <FileName>node-v17.3.0.tar.xz</FileName>
+      <FileSize>35456476</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

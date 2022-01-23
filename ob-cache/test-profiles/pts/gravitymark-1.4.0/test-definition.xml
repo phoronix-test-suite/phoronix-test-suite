@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>GravityMark</Title>
+    <AppVersion>1.44</AppVersion>
+    <Description>GravityMark is a cross-API, cross-platform GPU accelerated benchmark developed by Tellusim. GravityMark aims to exploit the performance of modern GPUs and render hundreds of thousands of objects in real-time all using GPU acceleration. GravityMark supports a variety of graphics rendering APIs and optionally supports accelerated ray-tracing.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.4.0</Version>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Non-Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <RequiresDisplay>TRUE</RequiresDisplay>
+    <EnvironmentSize>198</EnvironmentSize>
+    <ProjectURL>https://gravitymark.tellusim.com/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>-width $VIDEO_WIDTH -height $VIDEO_HEIGHT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Renderer</DisplayName>
+      <Identifier>renderer</Identifier>
+      <Menu>
+        <Entry>
+          <Name>OpenGL</Name>
+          <Value>-opengl</Value>
+        </Entry>
+        <Entry>
+          <Name>OpenGL ES</Name>
+          <Value>-opengles</Value>
+        </Entry>
+        <Entry>
+          <Name>Vulkan</Name>
+          <Value>-vulkan</Value>
+        </Entry>
+        <Entry>
+          <Name>Vulkan Ray-Tracing</Name>
+          <Value>-vulkan -raytracing 1</Value>
+        </Entry>
+        <Entry>
+          <Name>Windows Direct3D 12</Name>
+          <Value>-direct3d12</Value>
+        </Entry>
+        <Entry>
+          <Name>Windows Direct3D 12 Ray-Tracing</Name>
+          <Value>-direct3d12 -raytracing 1</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

@@ -1,0 +1,1 @@
+{"1.2.0":{"last_updated":"1502893795","commit_description":"Update against fftw 3.3.6, add AVX2\/AVX512 enables"},"1.1.0":{"last_updated":"1422120524","commit_description":"Switch to using Mflops as a scale."},"1.0.0":{"last_updated":"1421944511","commit_description":"Initial commit of fftw."}}

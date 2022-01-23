@@ -1,0 +1,1 @@
+{"1.0.2":{"last_updated":"1554458180","commit_description":"Restore --reportable after previous Windows addition was acting up."},"1.0.1":{"last_updated":"1554428247","commit_description":"Add Windows support."},"1.0.0":{"last_updated":"1554137304","commit_description":"Add SPEC CPU 2017 test profile (note requires having license from SPEC in order to run)."}}

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/NVIDIA/Q2RTX/releases/download/v1.6.0/q2rtx-1.6.0-linux.tar.gz</URL>
+      <MD5>fa9f8df8200f49e529d645bb7a8713ad</MD5>
+      <SHA256>d2c8218b8d0e232a23f05b4b4a83097d28d53291584ef850bb79de8b888aa3b4</SHA256>
+      <FileName>q2rtx-1.6.0-linux.tar.gz</FileName>
+      <FileSize>1039512607</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

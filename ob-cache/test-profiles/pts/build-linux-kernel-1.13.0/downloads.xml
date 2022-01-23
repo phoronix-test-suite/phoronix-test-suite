@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://fr2.rpmfind.net/linux/kernel/v5.x/linux-5.16.tar.xz, https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.16.tar.xz, http://ftp.jaist.ac.jp/pub/Linux/kernel.org/linux/kernel/v5.x/linux-5.16.tar.xz, https://mirror.clarkson.edu/linux/linux/kernel/v5.x/linux-5.16.tar.xz, https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.16.tar.xz</URL>
+      <MD5>e6680ce7c989a3efe58b51e3f3f0bf93</MD5>
+      <SHA256>027d7e8988bb69ac12ee92406c3be1fe13f990b1ca2249e226225cd1573308bb</SHA256>
+      <FileName>linux-5.16.tar.xz</FileName>
+      <FileSize>123114100</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

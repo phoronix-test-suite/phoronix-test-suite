@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://jedi.ks.uiuc.edu/~johns/raytracer/files/0.99.2/tachyon-0.99.2.tar.gz, http://www.phoronix-test-suite.com/benchmark-files/tachyon-0.99.2.tar.gz</URL>
+      <MD5>929049412c7f63364e51626c47ac8bda</MD5>
+      <SHA256>d40a5752fe78b84c5ca913bf55e5707c310526f9eebd8269d1583359d8415798</SHA256>
+      <FileName>tachyon-0.99.2.tar.gz</FileName>
+      <FileSize>919050</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://ddnet.tw/downloads/DDNet-15.8.1.tar.xz</URL>
+      <MD5>df69fbee8a7c7d07fd50da45707a96da</MD5>
+      <SHA256>bc354c2db9b0dee094ac3ce1ca95e5399d8282c91cfb878ebd3060345aa0c76d</SHA256>
+      <FileName>DDNet-15.8.1.tar.xz</FileName>
+      <FileSize>27094336</FileSize>
+    </Package>
+    <Package>
+      <URL>https://ddnet.tw/downloads/ddnet-libs-master-20220118.zip</URL>
+      <MD5>609898b3a4f7b680f638642147272945</MD5>
+      <SHA256>96e4397eefbb883bb8f9fb911ad9f2e37d1f5c0b59639c5c7494bfb69971307f</SHA256>
+      <FileName>ddnet-libs-master-20220118.zip</FileName>
+      <FileSize>61569269</FileSize>
+    </Package>
+    <Package>
+      <URL>https://ddnet.tw/downloads/Multeasymap_bench.demo</URL>
+      <MD5>f2a376a1169e182b1bcc81537ab05e23</MD5>
+      <SHA256>6fe3a6020542b12be774408722bbe831c2702b11903c3375ef00e4a4a5e55b5d</SHA256>
+      <FileName>Multeasymap_bench.demo</FileName>
+      <FileSize>2320514</FileSize>
+    </Package>
+    <Package>
+      <URL>https://ddnet.tw/downloads/RaiNyMore2_bench.demo</URL>
+      <MD5>f8a15c8b53f59a1c84a0b89682d7de6e</MD5>
+      <SHA256>3c759ac6ec8dd9c8ed093549277068cd58a2a0f315d2f4d94eb902fe8ff2c59d</SHA256>
+      <FileName>RaiNyMore2_bench.demo</FileName>
+      <FileSize>1837946</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

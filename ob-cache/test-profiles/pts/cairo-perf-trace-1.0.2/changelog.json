@@ -1,0 +1,1 @@
+{"1.0.2":{"last_updated":"1601215425","commit_description":"Deprecate test profile."},"1.0.1":{"last_updated":"1327889170","commit_description":"Require libpng-development external dependency, no need to build Cairo with SVG."},"1.0.0":{"last_updated":"1327883098","commit_description":"Initial import of cairo-perf-trace test profile."}}

@@ -1,0 +1,1 @@
+{"1.0.1":{"last_updated":"1629760155","commit_description":"Set \"-Wno-error\" flag to avoid compile issue with GCC 11."},"1.0.0":{"last_updated":"1610744279","commit_description":"Add Google SynthMark with initial VoiceMark test profile."}}

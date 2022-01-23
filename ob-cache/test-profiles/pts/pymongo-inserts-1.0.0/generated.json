@@ -1,0 +1,1 @@
+{"overview":[],"capabilities":{"shared_libraries":["libm.so.6","libexpat.so.1","libz.so.1","libc.so.6"],"default_instructions":["MMX","SSE","SSE2"],"max_instructions":["MMX","SSE","SSE2"],"honors_cflags":"0","scales_cpu_cores":null}}

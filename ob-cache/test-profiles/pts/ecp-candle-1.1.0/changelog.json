@@ -1,0 +1,1 @@
+{"1.1.0":{"last_updated":"1627931595","commit_description":"Update against ECP-CANDLE Benchmarks v0.4 upstream."},"1.0.1":{"last_updated":"1598206846","commit_description":"Drop P2B1 option as it seems borked for some systems."},"1.0.0":{"last_updated":"1597270502","commit_description":"Initial commit of CANDLE cancer deep learning benchmark."}}

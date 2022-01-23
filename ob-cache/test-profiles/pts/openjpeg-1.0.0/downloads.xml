@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.0-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/uclouvain/openjpeg/archive/refs/tags/v2.4.0.tar.gz</URL>
+      <MD5>4d388298335947367e91f1d100468af1</MD5>
+      <SHA256>8702ba68b442657f11aaeb2b338443ca8d5fb95b0d845757968a7be31ef7f16d</SHA256>
+      <FileName>openjpeg-2.4.0.tar.gz</FileName>
+      <FileSize>2233229</FileSize>
+      <PlatformSpecific>Linux, BSD, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://mars.nasa.gov/system/downloadable_items/44642_PIA23623_M34.tif</URL>
+      <MD5>62fc642d5bf793bb791dec42fb2bb3c9</MD5>
+      <SHA256>28001696cc08237aa07a9f8c9c561b221a3ad9ea099b0deb53e4b8e58bb8c903</SHA256>
+      <FileName>PIA23623_M34.tif</FileName>
+      <FileSize>751758532</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/uclouvain/openjpeg/releases/download/v2.4.0/openjpeg-v2.4.0-windows-x64.zip</URL>
+      <MD5>3ca957f527bcdb86f63751aebda75a65</MD5>
+      <SHA256>927f4913a84bd9be20976388ee9eba96325a4218f63e904f2ed0f46eb57f73af</SHA256>
+      <FileName>openjpeg-v2.4.0-windows-x64.zip</FileName>
+      <FileSize>1259281</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/uclouvain/openjpeg/releases/download/v2.4.0/openjpeg-v2.4.0-osx-x86_64.zip</URL>
+      <MD5>71a5b067ee61ca89f432a0eac2276cd8</MD5>
+      <SHA256>d685aa4a9d7e00167ba51f4ff73aff7e29a6b8aa80fd5c46b05596abbf6ea623</SHA256>
+      <FileName>openjpeg-v2.4.0-osx-x86_64.zip</FileName>
+      <FileSize>1703408</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

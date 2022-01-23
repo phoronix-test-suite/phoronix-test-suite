@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>OpenJPEG</Title>
+    <AppVersion>2.4</AppVersion>
+    <Description>OpenJPEG is an open-source JPEG 2000 codec written in the C programming language. The default input for this test profile is the NASA/JPL-Caltech/MSSS Curiosity panorama 717MB TIFF image file converting to JPEG2000 format.</Description>
+    <ResultScale>ms</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux, MacOSX, BSD, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, jpeg-development, cmake, libpng-development, zlib-development, tiff</ExternalDependencies>
+    <EnvironmentSize>1000</EnvironmentSize>
+    <ProjectURL>https://www.openjpeg.org/</ProjectURL>
+    <RepositoryURL>https://github.com/uclouvain/openjpeg</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Encode</DisplayName>
+      <Identifier>encode</Identifier>
+      <Menu>
+        <Entry>
+          <Name>NASA Curiosity Panorama M34</Name>
+          <Value>-i PIA23623_M34.tif -o out.jp2 -t 1024,1024</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

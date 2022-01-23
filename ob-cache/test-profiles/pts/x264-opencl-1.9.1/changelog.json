@@ -1,0 +1,1 @@
+{"1.9.1":{"last_updated":"1613411251","commit_description":"Mark as deprecated."},"1.9.0":{"last_updated":"1409498149","commit_description":"Initial commit of OpenCL-specific version of x264 encoder. Complementary to x264 test profile and thus start it at x264-opencl-1.9.0 versioning to avoid confusion."}}

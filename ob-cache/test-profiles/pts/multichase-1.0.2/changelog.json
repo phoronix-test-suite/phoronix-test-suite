@@ -1,0 +1,1 @@
+{"1.0.2":{"last_updated":"1523150136","commit_description":"Multichase appears to only work on Linux."},"1.0.1":{"last_updated":"1483546668","commit_description":"Fix for multichase on GCC6"},"1.0.0":{"last_updated":"1455208108","commit_description":"Initial commit of Google multichase pointer chasing benchmark."}}

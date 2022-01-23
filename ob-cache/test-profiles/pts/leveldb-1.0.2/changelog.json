@@ -1,0 +1,1 @@
+{"1.0.2":{"last_updated":"1605557246","commit_description":"Makes more sense having TestType be Disk rather than System..."},"1.0.1":{"last_updated":"1605287455","commit_description":"The build works fine on macOS."},"1.0.0":{"last_updated":"1583452048","commit_description":"Initial commit of Google LevelDB benchmark."}}

@@ -1,0 +1,1 @@
+{"2.1.0":{"last_updated":"1611525505","commit_description":"Update against ASKAP 1.0 upstream."},"2.0.1":{"last_updated":"1571532221","commit_description":"Add --allow-run-as-root"},"2.0.0":{"last_updated":"1571441889","commit_description":"Add MPI, OpenMP, OpenCL tests and other improvements."},"1.0.0":{"last_updated":"1447178325","commit_description":"Add ASKAP CUDA test."}}
