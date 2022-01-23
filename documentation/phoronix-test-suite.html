@@ -674,6 +674,14 @@ Supported Options:
   - cpu.freq.cpu5
   - cpu.freq.cpu6
   - cpu.freq.cpu7
+  - cpu.freq.cpu8
+  - cpu.freq.cpu9
+  - cpu.freq.cpu10
+  - cpu.freq.cpu11
+  - cpu.freq.cpu12
+  - cpu.freq.cpu13
+  - cpu.freq.cpu14
+  - cpu.freq.cpu15
   - cpu.peak-freq
   - cpu.power
   - cpu.temp
@@ -687,6 +695,14 @@ Supported Options:
   - cpu.usage.cpu5
   - cpu.usage.cpu6
   - cpu.usage.cpu7
+  - cpu.usage.cpu8
+  - cpu.usage.cpu9
+  - cpu.usage.cpu10
+  - cpu.usage.cpu11
+  - cpu.usage.cpu12
+  - cpu.usage.cpu13
+  - cpu.usage.cpu14
+  - cpu.usage.cpu15
   - cpu.usage.summary
   - cpu.voltage
   - all.gpu
@@ -1518,39 +1534,6 @@ In the event that a test profile fails to install or run, the following general 
 <h3>Smp Tests<em>  git/smp</em>
 </h3>
 <p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing smp.</p>
-<h3>All Tests In Windows<em>  windows/all</em>
-</h3>
-<p>This is a collection of all supported test profiles found within the specified OpenBenchmarking.org repository.</p>
-<h3>Benchmark Tests<em>  windows/benchmark</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a benchmark software test.</p>
-<h3>Bsd Operating System Tests<em>  windows/bsd</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the bsd Operating System.</p>
-<h3>Everything In Windows<em>  windows/everything</em>
-</h3>
-<p>This is a collection of all test profiles found within the specified OpenBenchmarking.org repository, including unsupported tests, etc.</p>
-<h3>Linux Operating System Tests<em>  windows/linux</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the linux Operating System.</p>
-<h3>Macosx Operating System Tests<em>  windows/macosx</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the macosx Operating System.</p>
-<h3>Processor Subsystem Tests<em>  windows/processor</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the processor sub-system.</p>
-<h3>Solaris Operating System Tests<em>  windows/solaris</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the solaris Operating System.</p>
-<h3>System Subsystem Tests<em>  windows/system</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the system sub-system.</p>
-<h3>Utility Tests<em>  windows/utility</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a utility software test.</p>
-<h3>Windows Operating System Tests<em>  windows/windows</em>
-</h3>
-<p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the windows Operating System.</p>
 <hr style="height: 50px; border: 0;"><a name="ComponentTesting"></a><h1>Component Testing</h1>
 <h1>Compiler Testing &amp; Masking</h1>
 <p>A majority of the test profiles provided by OpenBenchmarking.org to the Phoronix Test Suite are source-based tests. Relying upon the upstream source-code for each program under test allows for the tests to be easily brought to new platforms and architectures, avoids any out-of-tree / non-default packaging differences by different distributions and operating systems, and to allow the Phoronix Test Suite user to easily test new compilers and/or compiler options. For the source-based tests, the Phoronix Test Suite relies upon a compiler (e.g. GCC, LLVM/Clang, Sun Studio, Open64, et al) being present on the system under test. The Phoronix Test Suite does respect <em>CC/CXX</em> environment variables and test profiles are expected to honor <em>CFLAGS/CXXFLAGS</em> and other compiler settings.</p>
@@ -1664,7 +1647,7 @@ SUPPORTED OPENBENCHMARKING.ORG REPOSITORIES:<br>
 <p>If distributing a customized/local copy of the Phoronix Test Suite, the default behavior of the configuration file (in addition to deleting the pts_openbenchmarking_upload file) can be done via the user configuration defaults defined within <em>pts-core/static/user-config-defaults.xml</em>.</p>
 <hr style="height: 50px; border: 0;"><a name="DevelopmentCredits"></a><h1>Development Credits</h1>
 <p>The Phoronix Test Suite is based upon the extensive testing and internal tools developed by <a href="http://www.phoronix.com/">Phoronix.com</a> since 2004 along with support from leading tier-one computer hardware and software vendors. The principal architects of the Phoronix Test Suite are <a href="http://www.michaellarabel.com/">Michael Larabel</a> and Matthew Tippett. The phoronix-test-suite, pts_Graph, Phoromatic, Phodevi, and nye_Xml are some of the related open-source projects provided by <a href="http://www.phoronix-media.com/">Phoronix Media</a>.</p>
-<p style="padding-top: 30px; text-align: center;">Copyright &copy; 2008 - 2021 by Phoronix Media.</p></div>
+<p style="padding-top: 30px; text-align: center;">Copyright &copy; 2008 - 2022 by Phoronix Media.</p></div>
 		<div id="pts_footer">
 			<div id="pts_footer_logo"><a href="http://www.phoronix-test-suite.com/"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewbox="0 0 76 41" width="76" height="41" preserveaspectratio="xMinYMin meet">
   <path d="m74 22v9m-5-16v16m-5-28v28m-23-2h12.5c2.485281 0 4.5-2.014719 4.5-4.5s-2.014719-4.5-4.5-4.5h-8c-2.485281 0-4.5-2.014719-4.5-4.5s2.014719-4.5 4.5-4.5h12.5m-21 5h-11m11 13h-2c-4.970563 0-9-4.029437-9-9v-20m-24 40v-20c0-4.970563 4.0294373-9 9-9 4.970563 0 9 4.029437 9 9s-4.029437 9-9 9h-9" stroke="#222" stroke-width="4" fill="none"></path>

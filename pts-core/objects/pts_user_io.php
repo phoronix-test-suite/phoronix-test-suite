@@ -117,7 +117,7 @@ class pts_user_io
 			{
 				if(!isset($column_widths[$c]) || isset($table[$r][$c][$column_widths[$c]]))
 				{
-					$column_widths[$c] = strlen($table[$r][$c]);
+					$column_widths[$c] = $table[$r][$c] == null ? 0 : strlen($table[$r][$c]);
 				}
 			}
 		}

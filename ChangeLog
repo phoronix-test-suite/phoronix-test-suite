@@ -1,18 +1,20 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 10.8.1
+23 January 2022
 
 pts-core: Log external dependencies attempted to be installed to phoronix-test-suite-dependencies.log
 pts-core: Allow PTS_DISPLAY_MODE to override other display mode preferences (e.g. short mode requested inline)
 pts-core: Optional Download Cache Server interface support for HTTPS
-pts-core: Support for archiving test profile change-logs locally rather than having to always querying OpenBenchmarking.org server
-pts-core: Allow caching of some OpenBenchmarking.org overview metrics locally
-pts-core: Allow displaying more overview metrics from OpenBenchmarking.org in the web view and info sub-command
+pts-core: Support for archiving test profile change-logs locally rather than having to always query OpenBenchmarking.org server
+pts-core: Allow caching of some OpenBenchmarking.org overview metrics locally for reducing repetitive OpenBenchmarking.org load/queries
+pts-core: Allow displaying more overview metrics from OpenBenchmarking.org in the web view and info sub-command now that it's cached
 pts-core: Make rendering of Perf Per Core/Thread/Clock/RAM opt-in from the result viewer
 phoromatic: Allow binary log file uploads by default when Phoromatic Server is 10.8+
 phoromatic: Input sanitization updates for Phoromatic Server and other security improvements
 phoromatic: Move "Create A Test Profile" page behind an opt-in rootadmin Phoromatic Server option
 phoromatic: Log update script output
+phodevi: GPU vRAM usage reporting for modern AMDGPU DRM versions
 phodevi: Use "-NoProfile" with powershell for possible performance benefits
 phodevi: Avoid including kernel version in Mesa/OpenGL string
 phodevi: Arm Neoverse-V1 / Cortex-X2 identification

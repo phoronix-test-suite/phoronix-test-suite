@@ -644,6 +644,14 @@ Supported Options:
   - cpu.freq.cpu5
   - cpu.freq.cpu6
   - cpu.freq.cpu7
+  - cpu.freq.cpu8
+  - cpu.freq.cpu9
+  - cpu.freq.cpu10
+  - cpu.freq.cpu11
+  - cpu.freq.cpu12
+  - cpu.freq.cpu13
+  - cpu.freq.cpu14
+  - cpu.freq.cpu15
   - cpu.peak-freq
   - cpu.power
   - cpu.temp
@@ -657,6 +665,14 @@ Supported Options:
   - cpu.usage.cpu5
   - cpu.usage.cpu6
   - cpu.usage.cpu7
+  - cpu.usage.cpu8
+  - cpu.usage.cpu9
+  - cpu.usage.cpu10
+  - cpu.usage.cpu11
+  - cpu.usage.cpu12
+  - cpu.usage.cpu13
+  - cpu.usage.cpu14
+  - cpu.usage.cpu15
   - cpu.usage.summary
   - cpu.voltage
   - all.gpu
@@ -1798,39 +1814,6 @@ This is a collection of test profiles found within the specified OpenBenchmarkin
 
 #### Smp Tests  git/smp
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing smp.
-
-#### All Tests In Windows  windows/all
-This is a collection of all supported test profiles found within the specified OpenBenchmarking.org repository.
-
-#### Benchmark Tests  windows/benchmark
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a benchmark software test.
-
-#### Bsd Operating System Tests  windows/bsd
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the bsd Operating System.
-
-#### Everything In Windows  windows/everything
-This is a collection of all test profiles found within the specified OpenBenchmarking.org repository, including unsupported tests, etc.
-
-#### Linux Operating System Tests  windows/linux
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the linux Operating System.
-
-#### Macosx Operating System Tests  windows/macosx
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the macosx Operating System.
-
-#### Processor Subsystem Tests  windows/processor
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the processor sub-system.
-
-#### Solaris Operating System Tests  windows/solaris
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the solaris Operating System.
-
-#### System Subsystem Tests  windows/system
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the system sub-system.
-
-#### Utility Tests  windows/utility
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a utility software test.
-
-#### Windows Operating System Tests  windows/windows
-This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the windows Operating System.
 
 
 # Component Testing
