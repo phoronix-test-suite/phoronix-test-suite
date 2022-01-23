@@ -466,8 +466,8 @@ function AddFont($family, $style='', $file='')
 	// Add a TrueType, OpenType or Type1 font
 	$family = strtolower($family);
 	if($file=='')
-		$file = str_replace(' ','',$family).strtolower($style).'.php';
-	$style = strtoupper($style);
+		$file = str_replace(' ','',$family) . (!empty($style) ? strtolower($style) : '') . '.php';
+	$style = !empty($style) ? strtoupper($style) : '';
 	if($style=='IB')
 		$style = 'BI';
 	$fontkey = $family.$style;
@@ -506,7 +506,7 @@ function SetFont($family = '', $style='', $size=0)
 		$family = strtolower($family);
 	if($style != null)
 		$style = strtoupper($style);
-	if(strpos($style,'U')!==false)
+	if(!empty($style) && strpos($style,'U')!==false)
 	{
 		$this->underline = true;
 		$style = str_replace('U','',$style);
