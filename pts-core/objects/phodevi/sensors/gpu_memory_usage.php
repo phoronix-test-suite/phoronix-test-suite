@@ -45,7 +45,16 @@ class gpu_memory_usage extends phodevi_sensor
 				}
 			}
 		}
-		else if(is_file('/sys/class/drm/card0/device/mem_busy_percent'))
+		else if(phodevi::is_linux() && is_file('/sys/class/drm/card0/device/mem_info_vram_used'))
+		{
+			// AMDGPU Linux driver at least supports this interface
+			$mem_info_vram_used = pts_file_io::file_get_contents('/sys/class/drm/card0/device/mem_info_vram_used');
+			if(is_numeric($mem_info_vram_used) && $mem_info_vram_used > 1000000)
+			{
+				$mem_usage = floor($mem_info_vram_used / 1000000);
+			}
+		}
+		else if(phodevi::is_linux() && is_file('/sys/class/drm/card0/device/mem_busy_percent'))
 		{
 			$mem_usage = pts_file_io::file_get_contents('/sys/class/drm/card0/device/mem_busy_percent');
 		}
