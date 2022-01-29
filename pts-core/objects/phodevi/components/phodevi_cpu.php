@@ -910,7 +910,7 @@ class phodevi_cpu extends phodevi_device_interface
 			'aes' => 'AES', // AES
 			'vaes' => 'VAES', // AES
 			'svm' => 'AMD SVM', // AMD SVM (Virtualization)
-			'vmx' => 'Intel VT-d', // Intel Virtualization
+			'vmx' => 'Intel VT-x', // Intel Virtualization
 			'fma' => 'FMA', // FMA Instruction Set
 			'fma3' => 'FMA3', // FMA3 Instruction Set
 			'fma4' => 'FMA4', // FMA4 Instruction Set
