@@ -102,7 +102,7 @@ class pts_installed_test
 		{
 			$to_json['test_installation']['errors']['install'] = $this->get_install_errors();
 		}
-		if($this->get_runtime_errors() && !empty($this->get_runtime_errors()))
+		if($this->get_runtime_errors() && !empty($this->runtime_errors))
 		{
 			$to_json['test_installation']['errors']['runtime'] = $this->get_runtime_errors();
 		}
