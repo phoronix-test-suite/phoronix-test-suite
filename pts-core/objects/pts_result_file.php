@@ -181,7 +181,7 @@ class pts_result_file
 	}
 	public function get_test_log_dir(&$result_object = null)
 	{
-		$log_dir = !empty($this->get_file_location()) ? dirname($this->get_file_location()) : '';
+		$log_dir = $this->get_file_location() != null ? dirname($this->get_file_location()) : '';
 		if(empty($log_dir) || !is_dir($log_dir))
 		{
 			return false;
