@@ -1,5 +1,10 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+pts-core: Workaround/fix PHP 5.4 usage with RHEL7-based distributions
+pts-core: Convert compiler / multicore / single-threaded test suites into virtual test suites since their properties can be auto-determined based on OB metadata to avoid manually maintaining them
+
 Phoronix Test Suite 10.8.1
 23 January 2022
 

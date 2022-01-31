@@ -127,7 +127,79 @@ class pts_virtual_test_suite extends pts_test_suite
 				$this->add_to_suite($test_profile);
 			}
 		}
-		if(self::is_selector_os($this->virtual))
+		else if($this->virtual == 'compiler')
+		{
+			$this->set_title('C/C++ Compiler Benchmark Workloads In ' . $this->repo);
+			$this->set_description('This is a collection of test profiles often useful for C/C++ compiler benchmarks and where the test profiles will respect CFLAGS/CXXFLAGS environment variables.');
+			foreach($repo_index['tests'] as $test_identifier => &$test)
+			{
+				if(strtolower($test['test_type']) == 'graphics' || $test['status'] != 'Verified')
+				{
+					continue;
+				}
+				$test_version = array_shift($test['versions']);
+				$test_profile = new pts_test_profile($this->repo . '/' . $test_identifier . '-' . $test_version);
+				if($test_profile->get_display_format() != 'BAR_GRAPH' || !in_array($test_profile->get_license(), array('Free', 'Non-Free')) || !$test_profile->is_supported(false))
+				{
+					continue;
+				}
+
+				$overview_data = $test_profile->get_generated_data(false);
+				if(isset($overview_data['capabilities']['honors_cflags']) && $overview_data['capabilities']['honors_cflags'] == 1)
+				{
+					$this->add_to_suite($test_profile);
+				}
+			}
+		}
+		else if($this->virtual == 'multicore')
+		{
+			$this->set_title('Multi-Core/Multi-Threaded Workloads In ' . $this->repo);
+			$this->set_description('This is a collection of test profiles that have been detected to be CPU multi-threaded capable.');
+			foreach($repo_index['tests'] as $test_identifier => &$test)
+			{
+				if(strtolower($test['test_type']) == 'graphics' || $test['status'] != 'Verified')
+				{
+					continue;
+				}
+				$test_version = array_shift($test['versions']);
+				$test_profile = new pts_test_profile($this->repo . '/' . $test_identifier . '-' . $test_version);
+				if($test_profile->get_display_format() != 'BAR_GRAPH' || !in_array($test_profile->get_license(), array('Free', 'Non-Free')) || !$test_profile->is_supported(false))
+				{
+					continue;
+				}
+
+				$overview_data = $test_profile->get_generated_data(false);
+				if(isset($overview_data['capabilities']['scales_cpu_cores']) && $overview_data['capabilities']['scales_cpu_cores'] !== null && $overview_data['capabilities']['scales_cpu_cores'])
+				{
+					$this->add_to_suite($test_profile);
+				}
+			}
+		}
+		else if($this->virtual == 'single-threaded')
+		{
+			$this->set_title('Single-Threaded Workloads In ' . $this->repo);
+			$this->set_description('This is a collection of test profiles that have been detected to be single-threaded or only very poorly CPU threaded.');
+			foreach($repo_index['tests'] as $test_identifier => &$test)
+			{
+				if(strtolower($test['test_type']) == 'graphics' || $test['status'] != 'Verified')
+				{
+					continue;
+				}
+				$test_version = array_shift($test['versions']);
+				$test_profile = new pts_test_profile($this->repo . '/' . $test_identifier . '-' . $test_version);
+				if($test_profile->get_display_format() != 'BAR_GRAPH' || !in_array($test_profile->get_license(), array('Free', 'Non-Free')) || !$test_profile->is_supported(false))
+				{
+					continue;
+				}
+
+				$overview_data = $test_profile->get_generated_data(false);
+				if(isset($overview_data['capabilities']['scales_cpu_cores']) && $overview_data['capabilities']['scales_cpu_cores'] !== null && !$overview_data['capabilities']['scales_cpu_cores'])
+				{
+					$this->add_to_suite($test_profile);
+				}
+			}
+		}
+		else if(self::is_selector_os($this->virtual))
 		{
 			$this->set_title($this->virtual . ' Operating System Tests');
 			$this->set_description('This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the ' . $this->virtual . ' Operating System.');
@@ -284,7 +356,7 @@ class pts_virtual_test_suite extends pts_test_suite
 		$virtual_suites = array();
 
 		$possible_identifiers = array_merge(
-			array('all', 'installed', 'everything'),
+			array('all', 'installed', 'everything', 'compiler', 'multicore', 'single-threaded'),
 			array_map('strtolower', self::available_operating_systems()),
 			array_map('strtolower', pts_types::subsystem_targets()),
 			array_map('strtolower', pts_types::test_profile_software_types()),

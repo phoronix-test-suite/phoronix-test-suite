@@ -23,6 +23,7 @@
 class pts_test_profile extends pts_test_profile_parser
 {
 	public $test_installation = false;
+	protected $overview = false;
 	protected static $test_installation_cache;
 
 	public function __construct($identifier = null, $override_values = null, $normal_init = true)
@@ -86,23 +87,22 @@ class pts_test_profile extends pts_test_profile_parser
 	}
 	public function get_generated_data($ch = false)
 	{
-		static $overview = false;
-		if($overview === false)
+		if($this->overview === false)
 		{
 			// Cache the parsed JSON if available
-			$overview = array();
+			$this->overview = array();
 			if(is_file($this->get_resource_dir() . 'generated.json'))
 			{
-				$overview = json_decode(pts_file_io::file_get_contents($this->get_resource_dir() . 'generated.json'), true);
+				$this->overview = json_decode(pts_file_io::file_get_contents($this->get_resource_dir() . 'generated.json'), true);
 			}
 		}
 
 		if($ch != false)
 		{
-			return isset($overview['overview'][$ch]) ? $overview['overview'][$ch] : false;
+			return isset($this->overview['overview'][$ch]) ? $this->overview['overview'][$ch] : false;
 		}
 
-		return $overview;
+		return $this->overview;
 	}
 	public function get_override_values($as_string = false)
 	{

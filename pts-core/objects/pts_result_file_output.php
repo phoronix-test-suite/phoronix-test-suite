@@ -1242,7 +1242,7 @@ class pts_result_file_output
 		$box_plot_size = strlen($box_plot);
 		$box_plot = str_split($box_plot);
 		$max_value = max(max($percentiles), $active_result);
-		$hib = $ae_data['hib'] == 1 && strtolower($ae_data['unit']) != 'seconds';
+		$hib = $ae_data['hib'] == 1 && (!isset($ae_data['unit']) || strtolower($ae_data['unit']) != 'seconds');
 		if($hib)
 		{
 			$max_value = $max_value * 1.02;
