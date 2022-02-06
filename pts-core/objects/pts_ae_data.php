@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2021, Phoronix Media
-	Copyright (C) 2010 - 2021, Michael Larabel
+	Copyright (C) 2010 - 2022, Phoronix Media
+	Copyright (C) 2010 - 2022, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -80,6 +80,9 @@ class pts_ae_data
 				$this->db->exec('PRAGMA journal_mode = WAL');
 				$this->db->exec('PRAGMA synchronous = OFF');
 				$this->db->exec('PRAGMA user_version = 4');
+			case 4:
+				$this->db->exec('ALTER TABLE analytics_results ADD COLUMN Arch TEXT');
+				$this->db->exec('PRAGMA user_version = 5');
 		}
 
 		$this->cpu_index = json_decode(file_get_contents('http://openbenchmarking.org/extern/cpu-trans-index.php'), true);
@@ -98,9 +101,9 @@ class pts_ae_data
 		$stmt->bindValue(':ru', $result_object->test_profile->get_result_scale());
 		$result = $stmt->execute();
 	}
-	public function insert_result_into_analytic_results($comparison_hash, $result_reference, $component, $category, $related_component, $related_category, $result, $datetime, $system_type, $system_layer, $time_consumed, $std_dev)
+	public function insert_result_into_analytic_results($comparison_hash, $result_reference, $component, $category, $related_component, $related_category, $result, $datetime, $system_type, $system_layer, $time_consumed, $std_dev, $arch)
 	{
-		$stmt = $this->db->prepare('INSERT OR IGNORE INTO analytics_results (ComparisonHash, ResultReference, Component, RelatedComponent, Result, DateTime, SystemType, SystemLayer, TimeConsumed, StdDev) VALUES (:ch, :rr, :c, :rc, :r, :dt, :st, :sl, :tc, :std)');
+		$stmt = $this->db->prepare('INSERT OR IGNORE INTO analytics_results (ComparisonHash, ResultReference, Component, RelatedComponent, Result, DateTime, SystemType, SystemLayer, TimeConsumed, StdDev, Arch) VALUES (:ch, :rr, :c, :rc, :r, :dt, :st, :sl, :tc, :std, :arch)');
 		$stmt->bindValue(':ch', $comparison_hash);
 		$stmt->bindValue(':rr', $result_reference);
 		$stmt->bindValue(':c', $this->component_to_component_id($component, $category));
@@ -111,6 +114,7 @@ class pts_ae_data
 		$stmt->bindValue(':sl', $system_layer);
 		$stmt->bindValue(':tc', $time_consumed);
 		$stmt->bindValue(':std', $std_dev);
+		$stmt->bindValue(':arch', $arch);
 		$result = $stmt->execute();
 	}
 	public function component_to_component_id($component, $category)
@@ -231,7 +235,8 @@ class pts_ae_data
 			$timing_data = array();
 			$stddev_data = array();
 			$family_perf = array();
-			$results = $this->get_results_array_by_comparison_hash($comparison_hash, $first_appeared, $last_appeared, $component_results, $component_dates, $system_types, $timing_data, $stddev_data);
+			$tested_archs = array();
+			$results = $this->get_results_array_by_comparison_hash($comparison_hash, $first_appeared, $last_appeared, $component_results, $component_dates, $system_types, $timing_data, $stddev_data, $tested_archs);
 
 			if(count($results) < 10)
 			{
@@ -460,6 +465,24 @@ class pts_ae_data
 				$std[$pdev]++;
 			}
 
+			// Tested on CPU archs
+			$tested_on_archs = array();
+			foreach(array_unique($tested_archs) as $tarch)
+			{
+				$targ = '';
+				if(strpos($tarch, '=') !== false)
+				{
+					list($tarch, $targ) = explode('=', $tarch);
+				}
+				if(!isset($tested_on_archs[$tarch]))
+				{
+					$tested_on_archs[$tarch] = array();
+				}
+				if(!empty($targ) && !in_array($targ, $tested_on_archs[$tarch]))
+				{
+					$tested_on_archs[$tarch][] = $targ;
+				}
+			}
 
 			// JSON FILE
 			$json = array();
@@ -479,6 +502,7 @@ class pts_ae_data
 			$json['stddev_data'] = $std;
 			$json['first_appeared'] = $first_appeared;
 			$json['last_appeared'] = $last_appeared;
+			$json['tested_archs'] = $tested_on_archs;
 			$json['percentiles'] = $percentiles;
 			$json['components'] = $component_data;
 			$json['reference_results'] = $comparison_components;
@@ -561,6 +585,7 @@ class pts_ae_data
 					'stddev_avg' => $json['stddev_avg'],
 					'percentiles' => $json['percentiles'],
 					'run_time_percentiles' => $timing_percentiles,
+					'tested_archs' => array_keys($tested_on_archs),
 					);
 			}
 			// EO JSON
@@ -745,9 +770,9 @@ class pts_ae_data
 	{
 		return count($b) - count($a);
 	}
-	public function get_results_array_by_comparison_hash($ch, &$first_appeared, &$last_appeared, &$component_results, &$component_dates, &$system_types, &$timing_data, &$stddev_data)
+	public function get_results_array_by_comparison_hash($ch, &$first_appeared, &$last_appeared, &$component_results, &$component_dates, &$system_types, &$timing_data, &$stddev_data, &$arch)
 	{
-		$stmt = $this->db->prepare('SELECT Result, DateTime, Component, RelatedComponent, SystemType, SystemLayer, TimeConsumed, StdDev FROM analytics_results WHERE ComparisonHash = :ch');
+		$stmt = $this->db->prepare('SELECT Result, DateTime, Component, RelatedComponent, SystemType, SystemLayer, TimeConsumed, StdDev, Arch FROM analytics_results WHERE ComparisonHash = :ch');
 		$stmt->bindValue(':ch', $ch);
 		$result = $stmt ? $stmt->execute() : false;
 		$results = array();
@@ -774,6 +799,10 @@ class pts_ae_data
 				$timing_data[] = $row['TimeConsumed'];
 			}
 			$stddev_data[] = $row['StdDev'];
+			if(!empty($row['Arch']))
+			{
+				$arch[] = $row['Arch'];
+			}
 			if(!empty($row['SystemLayer']) || strlen($row['Component']) < 3)
 			{
 				continue;

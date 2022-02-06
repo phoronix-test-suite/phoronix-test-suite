@@ -199,6 +199,7 @@ class info implements pts_option_interface
 				if(!empty($overview_data) && isset($overview_data['overview']) && !empty($overview_data['overview']))
 				{
 					echo pts_client::cli_just_bold('OpenBenchmarking.org Overview Metrics:') . PHP_EOL . PHP_EOL;
+					$tested_archs = array();
 					foreach($overview_data['overview'] as $comparison_Hash => $d)
 					{
 						if(empty($d['description']))
@@ -214,6 +215,13 @@ class info implements pts_option_interface
 						$d['unit'] = 'Seconds';
 						pts_result_file_output::text_box_plut_from_ae($d, -1, array(), $result_object,  $d['run_time_percentiles'], $d['timing_samples']);
 						echo PHP_EOL;
+						if(isset($d['tested_archs']) && !empty($d['tested_archs']))
+						{
+							foreach($d['tested_archs'] as $ta)
+							{
+								pts_arrays::unique_push($tested_archs, $ta);
+							}
+						}
 					}
 
 					if(isset($overview_data['capabilities']) && !empty($overview_data['capabilities']))
@@ -238,6 +246,11 @@ class info implements pts_option_interface
 						if(isset($overview_data['capabilities']['scales_cpu_cores']) && $overview_data['capabilities']['scales_cpu_cores'] !== null)
 						{
 							echo pts_client::cli_just_bold('Test Multi-Threaded / CPU Core Scaling: ') . ($overview_data['capabilities']['scales_cpu_cores'] ? 'Yes' : 'No') . PHP_EOL;
+						}
+						if(!empty($tested_archs))
+						{
+							sort($tested_archs);
+							echo pts_client::cli_just_bold('Tested CPU Architectures: ') . implode(', ', $tested_archs) . PHP_EOL;
 						}
 
 						echo PHP_EOL;

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2019 - 2020, Phoronix Media
-	Copyright (C) 2019 - 2020, Michael Larabel
+	Copyright (C) 2019 - 2022, Phoronix Media
+	Copyright (C) 2019 - 2022, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -52,9 +52,11 @@ class dump_ob_to_ae_db implements pts_option_interface
 			$system_data = array();
 			$timestamps = array();
 			$system_types = array();
+			$orig = array();
 			foreach($systems as $system)
 			{
-				$system_data[$system->get_identifier()] = array_map(array('pts_strings', 'trim_search_query_leave_hdd_size'), array_merge(pts_result_file_analyzer::system_component_string_to_array($system->get_hardware()), pts_result_file_analyzer::system_component_string_to_array($system->get_software())));
+				$orig[$system->get_identifier()] = array_merge(pts_result_file_analyzer::system_component_string_to_array($system->get_hardware()), pts_result_file_analyzer::system_component_string_to_array($system->get_software()));
+				$system_data[$system->get_identifier()] = array_map(array('pts_strings', 'trim_search_query_leave_hdd_size'), $orig[$system->get_identifier()]);
 				$timestamps[$system->get_identifier()] = strtotime($system->get_timestamp());
 				$system_types[$system->get_identifier()] = phodevi_base::determine_system_type($system->get_hardware(), $system->get_software());
 
@@ -268,9 +270,26 @@ class dump_ob_to_ae_db implements pts_option_interface
 								$stddev = round($stddev_calc, 2);
 							}
 						}
+						$arch = '';
+						if(isset($orig[$system_identifier]['Kernel']) && !empty($orig[$system_identifier]['Kernel']))
+						{
+							$kernel = $orig[$system_identifier]['Kernel'];
+							if(($x = strrpos($kernel, '(')) !== false)
+							{
+								$kernel = substr($kernel, $x + 1);
+								if(($x = strpos($kernel, ')')) !== false)
+								{
+									$arch = substr($kernel, 0, $x);
+									if(strpos($arch, '86') === false && stripos($arch, 'amd64') === false && isset($system_data[$system_identifier]['Processor']) && !empty($system_data[$system_identifier]['Processor']) && strpos($system_data[$system_identifier]['Processor'], 'Unknown') === false)
+									{
+										$arch .= '=' . pts_strings::trim_search_query($system_data[$system_identifier]['Processor']);
+									}
+								}
+							}
+						}
 						$component_value = $system_data[$system_identifier][$component];
 						$related_component_value = isset($system_data[$system_identifier][$related_component]) ? $system_data[$system_identifier][$related_component] : null;
-						$ae->insert_result_into_analytic_results($comparison_hash, $result_reference, $component_value, $component, $related_component_value, $related_component, $result, $timestamps[$system_identifier], $system_types[$system_identifier], $system_layer, $time_consumed, $stddev);
+						$ae->insert_result_into_analytic_results($comparison_hash, $result_reference, $component_value, $component, $related_component_value, $related_component, $result, $timestamps[$system_identifier], $system_types[$system_identifier], $system_layer, $time_consumed, $stddev, $arch);
 						$inserts++;
 					}
 

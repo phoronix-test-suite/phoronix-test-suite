@@ -393,6 +393,7 @@ class pts_web_embed
 		if(!empty($overview_data) && isset($overview_data['overview']) && !empty($overview_data['overview']))
 		{
 			$html .= '<hr /><h2>OpenBenchmarking.org Overview Metrics</h2><p>';
+			$tested_archs = array();
 			foreach($overview_data['overview'] as $comparison_Hash => $d)
 			{
 				if(empty($d['description']) || $d['samples'] < 5)
@@ -428,6 +429,13 @@ class pts_web_embed
 				$dd = new pts_graph_box_plot($box_result);
 				$dd->data_is_percentiles();
 				$html .= '<div class="results_area">' . pts_render::render_graph_inline_embed($dd) . '</div>';
+				if(isset($d['tested_archs']) && !empty($d['tested_archs']))
+				{
+					foreach($d['tested_archs'] as $ta)
+					{
+						pts_arrays::unique_push($tested_archs, $ta);
+					}
+				}
 			}
 			if(isset($overview_data['capabilities']) && !empty($overview_data['capabilities']))
 			{
@@ -451,6 +459,11 @@ class pts_web_embed
 				if(isset($overview_data['capabilities']['scales_cpu_cores']) && $overview_data['capabilities']['scales_cpu_cores'] !== null)
 				{
 					$html .= '<strong>Test Multi-Threaded / CPU Core Scaling:</strong> ' . ($overview_data['capabilities']['scales_cpu_cores'] ? 'Yes' : 'No') . '<br />';
+				}
+				if(!empty($tested_archs))
+				{
+					sort($tested_archs);
+					$html .= '<strong>Tested CPU Architectures:</strong> ' . implode(', ', $tested_archs) . '<br />';
 				}
 				$html .= '</p>';
 			}
