@@ -23,7 +23,7 @@
 class openbenchmarking_refresh implements pts_option_interface
 {
 	const doc_section = 'OpenBenchmarking.org';
-	const doc_description = 'This option is used for refreshing the stored OpenBenchmarking.org repostory information and other data. The Phoronix Test Suite will automatically refresh this data every three days or when other thresholds are exceeded, but this command can be used to manually refresh/updates the data.';
+	const doc_description = 'This option is used for refreshing the stored OpenBenchmarking.org repository information and other data. The Phoronix Test Suite will automatically refresh this data every three days or when other thresholds are exceeded, but this command can be used to manually refresh/updates the data.';
 
 	public static function run($r)
 	{

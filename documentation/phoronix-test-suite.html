@@ -206,7 +206,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 		<div id="pts_template_body"><ol><li><a href="#GettingStarted">Getting Started</a></li><li><a href="#UserOptions">User Options</a></li><li><a href="#ModuleOptions">Module Options</a></li><li><a href="#InstallationInstructions">Installation Instructions</a></li><li><a href="#PhoronixTestSuiteOnWindows">Phoronix Test Suite On Windows</a></li><li><a href="#ExternalDependencies">External Dependencies</a></li><li><a href="#Configuration">Configuration</a></li><li><a href="#MainConfigurationFile">Main Configuration File</a></li><li><a href="#EnvironmentVariables">Environment Variables</a></li><li><a href="#GeneralInformation">General Information</a></li><li><a href="#VirtualTestSuites">Virtual Test Suites</a></li><li><a href="#ComponentTesting">Component Testing</a></li><li><a href="#PhoronixTestSuitePhoromatic">Phoronix Test Suite Phoromatic</a></li><li><a href="#OfflineTesting">Offline Testing</a></li><li><a href="#ConfidentialTesting/AvoidingAccidentalResultUploads">Confidential Testing / Avoiding Accidental Result Uploads</a></li><li><a href="#DevelopmentCredits">Development Credits</a></li></ol><hr style="height: 50px; border: 0;"><a name="GettingStarted"></a><h1>Getting Started</h1>
 <h1>Overview</h1>
 <p>The Phoronix Test Suite is the most comprehensive testing and benchmarking platform available for Linux, Solaris, macOS, Windows, and BSD operating systems. The Phoronix Test Suite allows for carrying out tests in a fully automated manner from test installation to execution and reporting. All tests are meant to be easily reproducible, easy-to-use, and support fully automated execution. The Phoronix Test Suite is open-source under the GNU GPLv3 license and is developed by Phoronix Media in cooperation with partners. Version 1.0 of the Phoronix Test Suite was publicly released in 2008.</p>
-<p>The Phoronix Test Suite client itself is an automated test framework for providing seamless execution of test profiles and test suites. There are more than 650 tests available by default, which are transparently available via <a href="https://openbenchmarking.org/">OpenBenchmarking.org</a> integration. Of these default test profiles there is a range of sub-systems that can be tested and a range of hardware from mobile devices to desktops and worksrtations/servers. New tests can be easily introduced via the Phoronix Test Suite's extensible test architecture, with test profiles consisting of XML files and shell scripts. Test profiles can produce a quantitative result or other qualitative/abstract results like image quality comparisons and pass/fail. Using Phoronix Test Suite modules, other data can also be automatically collected at run-time such as the system power consumption, disk usage, and other software/hardware sensors. Test suites contain references to test profiles to execute as part of a set or can also reference other test suites. Test suites are defined via an XML schema.</p>
+<p>The Phoronix Test Suite client itself is an automated test framework for providing seamless execution of test profiles and test suites. There are more than 650 tests available by default, which are transparently available via <a href="https://openbenchmarking.org/">OpenBenchmarking.org</a> integration. Of these default test profiles there is a range of sub-systems that can be tested and a range of hardware from mobile devices to desktops and workstations/servers. New tests can be easily introduced via the Phoronix Test Suite's extensible test architecture, with test profiles consisting of XML files and shell scripts. Test profiles can produce a quantitative result or other qualitative/abstract results like image quality comparisons and pass/fail. Using Phoronix Test Suite modules, other data can also be automatically collected at run-time such as the system power consumption, disk usage, and other software/hardware sensors. Test suites contain references to test profiles to execute as part of a set or can also reference other test suites. Test suites are defined via an XML schema.</p>
 <p>Running the Phoronix Test Suite for the first time can be as simple as issuing a command such as <em>phoronix-test-suite benchmark c-ray</em>, which would proceed to install a simple CPU test, execute the test, and report the results. Along with the results, the system's hardware/software information is collected in a detailed manner, relevant system logs, and other important system attributes such as compiler flags and system state. Users can optionally upload their results to OpenBenchmarking.org for sharing results with others, comparing results against other systems, and to carry out further analysis.</p>
 <h1>OpenBenchmarking.org</h1>
 <p>OpenBenchmarking.org is an open, collaborative testing platform that makes the Phoronix Test Suite an even more extensible platform for conducting automated tests with complete integration into Phoronix Test Suite test client. OpenBenchmarking.org serves as a repository for storing test profiles, test suites, and result data. Test profiles and suites are stored in the OpenBenchmarking.org cloud to allow for new/updated tests to be seamlessly obtained via the Phoronix Test Suite without needing to manually update the Phoronix Test Suite client. OpenBenchmarking.org also makes it easy to facilitate side-by-side comparisons with any other results stored in the OpenBenchmarking.org cloud. Any Phoronix Test Suite user is permitted to upload their test results, test profiles, and suites to OpenBenchmarking.org.</p>
@@ -327,7 +327,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <h3>openbenchmarking-login</h3>
 <p>This option is used for controlling your Phoronix Test Suite client options for OpenBechmarking.org and syncing the client to your account.</p>
 <h3>openbenchmarking-refresh</h3>
-<p>This option is used for refreshing the stored OpenBenchmarking.org repostory information and other data. The Phoronix Test Suite will automatically refresh this data every three days or when other thresholds are exceeded, but this command can be used to manually refresh/updates the data.</p>
+<p>This option is used for refreshing the stored OpenBenchmarking.org repository information and other data. The Phoronix Test Suite will automatically refresh this data every three days or when other thresholds are exceeded, but this command can be used to manually refresh/updates the data.</p>
 <h3>openbenchmarking-repositories</h3>
 <p>This option will list the OpenBenchmarking.org repositories currently linked to this Phoronix Test Suite client instance.</p>
 <h3>openbenchmarking-uploads</h3>
@@ -354,7 +354,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <h3>list-available-suites</h3>
 <p>This option will list all test suites that are available from the enabled OpenBenchmarking.org repositories.</p>
 <h3>list-available-tests</h3>
-<p>This option will list all test profiles that are available from the enabled OpenBenchmarking.org repositories where supported on the system and are of a verified state. If the system has no Internet access, it will only list the test profiles where the necesary test assets are available locally on the system or on an available network cache (the same behavior as using the list-cached-tests sub-command), unless using the list-all-tests option to override this behavior.</p>
+<p>This option will list all test profiles that are available from the enabled OpenBenchmarking.org repositories where supported on the system and are of a verified state. If the system has no Internet access, it will only list the test profiles where the necessary test assets are available locally on the system or on an available network cache (the same behavior as using the list-cached-tests sub-command), unless using the list-all-tests option to override this behavior.</p>
 <h3>list-available-virtual-suites</h3>
 <p>This option will list all available virtual test suites that can be dynamically created based upon the available tests from enabled OpenBenchmarking.org repositories.</p>
 <h3>list-cached-tests</h3>
@@ -578,7 +578,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 <h3>start-result-viewer</h3>
 <p>Start the web-based result viewer.</p>
 <hr style="height: 50px; border: 0;"><a name="ModuleOptions"></a><h1>Module Options</h1>
-<p>The following list is the modules included with the Phoronix Test Suite that are intended to extend the functionality of pts-core. Some of these options have commands that can be run directly in a similiar manner to the other Phoronix Test Suite user commands. Some modules are just meant to be loaded directly by adding the module name to the AutoLoadModules tag in ~/.phoronix-test-suite/user-config.xml or via the PTS_MODULES environment variable. A list of available modules is also available by running <em>phoronix-test-suite list-modules.</em></p><hr>
+<p>The following list is the modules included with the Phoronix Test Suite that are intended to extend the functionality of pts-core. Some of these options have commands that can be run directly in a similar manner to the other Phoronix Test Suite user commands. Some modules are just meant to be loaded directly by adding the module name to the AutoLoadModules tag in ~/.phoronix-test-suite/user-config.xml or via the PTS_MODULES environment variable. A list of available modules is also available by running <em>phoronix-test-suite list-modules.</em></p><hr>
 <h2>Backup Creation + Restore</h2>
 <p>This is a module for creating backups of the Phoronix Test Suite / Phoromatic and allows for restoring of created backups. The backup will be in ZIP or TAR format. If only a path is specified, the file-name will be auto-generated with a current time-stamp.</p>
 <p><strong>phoronix-test-suite backup.create</strong></p>
@@ -716,18 +716,15 @@ Supported Options:
   - all.hdd
   - hdd.read-speed
   - all.hdd.read-speed
-  - hdd.read-speed.sda
-  - hdd.read-speed.sdb
+  - hdd.read-speed.md127
   - hdd.read-speed.nvme0n1
   - hdd.temp
   - all.hdd.temp
-  - hdd.temp.sda
-  - hdd.temp.sdb
+  - hdd.temp.md127
   - hdd.temp.nvme0n1
   - hdd.write-speed
   - all.hdd.write-speed
-  - hdd.write-speed.sda
-  - hdd.write-speed.sdb
+  - hdd.write-speed.md127
   - hdd.write-speed.nvme0n1
   - all.memory
   - memory.temp
@@ -1315,6 +1312,9 @@ In the event that a test profile fails to install or run, the following general 
 <h3>Bsd Operating System Tests<em>  pts/bsd</em>
 </h3>
 <p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the bsd Operating System.</p>
+<h3>C/C++ Compiler Benchmark Workloads In Pts<em>  pts/compiler</em>
+</h3>
+<p>This is a collection of test profiles often useful for C/C++ compiler benchmarks and where the test profiles will respect CFLAGS/CXXFLAGS environment variables.</p>
 <h3>Disk Subsystem Tests<em>  pts/disk</em>
 </h3>
 <p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the disk sub-system.</p>
@@ -1351,6 +1351,9 @@ In the event that a test profile fails to install or run, the following general 
 <h3>Memory Subsystem Tests<em>  pts/memory</em>
 </h3>
 <p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the memory sub-system.</p>
+<h3>Multi-Core/Multi-Threaded Workloads In Pts<em>  pts/multicore</em>
+</h3>
+<p>This is a collection of test profiles that have been detected to be CPU multi-threaded capable.</p>
 <h3>Network Subsystem Tests<em>  pts/network</em>
 </h3>
 <p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the network sub-system.</p>
@@ -1384,6 +1387,9 @@ In the event that a test profile fails to install or run, the following general 
 <h3>Simulator Tests<em>  pts/simulator</em>
 </h3>
 <p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a simulator software test.</p>
+<h3>Single-Threaded Workloads In Pts<em>  pts/single-threaded</em>
+</h3>
+<p>This is a collection of test profiles that have been detected to be single-threaded or only very poorly CPU threaded.</p>
 <h3>Solaris Operating System Tests<em>  pts/solaris</em>
 </h3>
 <p>This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the solaris Operating System.</p>

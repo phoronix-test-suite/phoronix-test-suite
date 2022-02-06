@@ -100,7 +100,7 @@ class dump_documentation implements pts_option_interface
 		$body = $dom->createElement('body');
 		$html->appendChild($body);
 
-		$p = $dom->createElement('p', 'The following list is the modules included with the Phoronix Test Suite that are intended to extend the functionality of pts-core. Some of these options have commands that can be run directly in a similiar manner to the other Phoronix Test Suite user commands. Some modules are just meant to be loaded directly by adding the module name to the AutoLoadModules tag in ~/.phoronix-test-suite/user-config.xml or via the PTS_MODULES environment variable. A list of available modules is also available by running ');
+		$p = $dom->createElement('p', 'The following list is the modules included with the Phoronix Test Suite that are intended to extend the functionality of pts-core. Some of these options have commands that can be run directly in a similar manner to the other Phoronix Test Suite user commands. Some modules are just meant to be loaded directly by adding the module name to the AutoLoadModules tag in ~/.phoronix-test-suite/user-config.xml or via the PTS_MODULES environment variable. A list of available modules is also available by running ');
 		$em = $dom->createElement('em', 'phoronix-test-suite list-modules.');
 		$p->appendChild($em);
 		$phr = $dom->createElement('hr');
