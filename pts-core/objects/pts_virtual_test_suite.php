@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2021, Phoronix Media
-	Copyright (C) 2008 - 2021, Michael Larabel
+	Copyright (C) 2008 - 2022, Phoronix Media
+	Copyright (C) 2008 - 2022, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -199,6 +199,63 @@ class pts_virtual_test_suite extends pts_test_suite
 				}
 			}
 		}
+		else if($this->virtual == 'riscv' || $this->virtual == 'aarch64')
+		{
+			switch($this->virtual)
+			{
+				case 'riscv':
+					$arch_friendly = 'RISC-V';
+					$arch_strings = array('riscv64', 'riscv32');
+					break;
+				case 'aarch64':
+					$arch_friendly = '64-bit Arm / AArch64';
+					$arch_strings = array('aarch64'); // Add 'arm64' for macOS coverage but that includes then Rosetta software...
+					break;
+			}
+			$this->set_title($arch_friendly . ' Tests In ' . $this->repo);
+			$this->set_description('This is a collection of test profiles where there have been successful benchmark results submitted to OpenBenchmarking.org from ' . $arch_friendly . ' CPU architecture hardware, i.e. these tests are proven to be ' . $arch_friendly . ' compatible though not necessarily all compatible test profiles for the given architecture - just those with submitted public results previously on OpenBenchmarking.org.');
+			foreach($repo_index['tests'] as $test_identifier => &$test)
+			{
+				if(strtolower($test['test_type']) == 'graphics' || $test['status'] != 'Verified')
+				{
+					continue;
+				}
+				$test_version = array_shift($test['versions']);
+				$test_profile = new pts_test_profile($this->repo . '/' . $test_identifier . '-' . $test_version);
+				if($test_profile->get_display_format() != 'BAR_GRAPH' || !in_array($test_profile->get_license(), array('Free', 'Non-Free')) || !$test_profile->is_supported(false))
+				{
+					continue;
+				}
+
+				$overview_data = $test_profile->get_generated_data(false);
+				if(isset($overview_data['overview']))
+				{
+					$add_to_suite = false;
+					foreach($overview_data['overview'] as $d)
+					{
+						if(isset($d['tested_archs']) && !empty($d['tested_archs']))
+						{
+							foreach($arch_strings as $arch_check)
+							{
+								if(in_array($arch_check, $d['tested_archs']))
+								{
+									$add_to_suite = true;
+									break;
+								}
+							}
+							if($add_to_suite)
+							{
+								break;
+							}
+						}
+					}
+					if($add_to_suite)
+					{
+						$this->add_to_suite($test_profile);
+					}
+				}
+			}
+		}
 		else if(self::is_selector_os($this->virtual))
 		{
 			$this->set_title($this->virtual . ' Operating System Tests');
@@ -356,7 +413,7 @@ class pts_virtual_test_suite extends pts_test_suite
 		$virtual_suites = array();
 
 		$possible_identifiers = array_merge(
-			array('all', 'installed', 'everything', 'compiler', 'multicore', 'single-threaded'),
+			array('all', 'installed', 'everything', 'compiler', 'multicore', 'single-threaded', 'riscv', 'aarch64'),
 			array_map('strtolower', self::available_operating_systems()),
 			array_map('strtolower', pts_types::subsystem_targets()),
 			array_map('strtolower', pts_types::test_profile_software_types()),
