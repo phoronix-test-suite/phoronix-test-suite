@@ -465,11 +465,11 @@
 			<FileCheck>attr/xattr.h OR sys/xattr.h</FileCheck>
 		</Package>
 		<Package>
-                        <GenericName>httpd</GenericName>
-                        <Title>httpd</Title>
-                        <PossibleNames>httpd, apache2</PossibleNames>
-                        <FileCheck>/usr/sbin/apachectl</FileCheck>
-                </Package>
+            <GenericName>httpd</GenericName>
+            <Title>httpd</Title>
+            <PossibleNames>httpd, apache2</PossibleNames>
+            <FileCheck>/usr/sbin/apachectl</FileCheck>
+        </Package>
 		<Package>
 			<GenericName>golang</GenericName>
 			<Title>Go Language</Title>
@@ -498,11 +498,11 @@
 			<VirtualSuite>TRUE</VirtualSuite>
 		</Package>
 		<Package>
-                        <GenericName>perl-digest-md5</GenericName>
-                        <Title>Perl Interface to the MD5 Algorithm</Title>
-                        <PossibleNames>perl-Digest-MD5, perl-Digest-Perl-MD5, libdigest-md5</PossibleNames>
-                        <FileCheck>Digest/MD5.pm OR /usr/share/doc/perl-Digest-MD5 OR /usr/share/perl5/Digest/</FileCheck>
-                </Package>
+            <GenericName>perl-digest-md5</GenericName>
+            <Title>Perl Interface to the MD5 Algorithm</Title>
+            <PossibleNames>perl-Digest-MD5, perl-Digest-Perl-MD5, libdigest-md5</PossibleNames>
+            <FileCheck>Digest/MD5.pm OR /usr/share/doc/perl-Digest-MD5 OR /usr/share/perl5/Digest/</FileCheck>
+        </Package>
 		<Package>
 			<GenericName>python-scipy</GenericName>
 			<Title>Python Scipy</Title>
