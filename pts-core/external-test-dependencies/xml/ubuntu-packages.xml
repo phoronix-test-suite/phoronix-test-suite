@@ -350,8 +350,8 @@
 			<PackageName>libopencv-dev</PackageName>
 		</Package>
 		<Package>
-                        <GenericName>perl-digest-md5</GenericName>
-                        <PackageName>libdigest-md5-file-perl libdigest-perl-md5-perl</PackageName>
+            <GenericName>perl-digest-md5</GenericName>
+            <PackageName>libdigest-md5-file-perl libdigest-perl-md5-perl</PackageName>
                 </Package>
 		<Package>
 			<GenericName>python-scipy</GenericName>

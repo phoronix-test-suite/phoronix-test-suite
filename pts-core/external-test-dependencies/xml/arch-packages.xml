@@ -284,11 +284,11 @@
 		</Package>
                 <Package>
 			<GenericName>golang</GenericName>
-			<PackageName>go</PackageName>
+			<PackageName>go OR gcc-go</PackageName>
 		</Package>
 		<Package>
 			<GenericName>python-scipy</GenericName>
-			<PackageName>python3-scipy</PackageName>
+			<PackageName>python-scipy</PackageName>
 		</Package>
 		<Package>
 			<GenericName>python-sklearn</GenericName>
@@ -401,6 +401,14 @@
 		<Package>
 			<GenericName>libconfigpp</GenericName>
 			<PackageName>libconfig</PackageName>
+		</Package>
+		<Package>
+			<GenericName>gimp</GenericName>
+			<PackageName>gimp</PackageName>
+		</Package>
+		<Package>
+			<GenericName>darktable</GenericName>
+			<PackageName>darktable</PackageName>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
