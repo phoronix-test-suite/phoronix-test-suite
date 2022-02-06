@@ -742,6 +742,9 @@ class phodevi_cpu extends phodevi_device_interface
 						case '0xd44':
 							$new_info .= ' Cortex-X1';
 							break;
+						case '0xd4c':
+							$new_info .= ' Cortex-X1C';
+							break;
 						case '0xd47':
 							$new_info .= ' Cortex-A710';
 							break;
