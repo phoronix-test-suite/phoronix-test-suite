@@ -42,9 +42,8 @@ class list_installed_suites implements pts_option_interface
 
 		if(count($installed_suites) > 0)
 		{
-			foreach($installed_suites as $identifier)
+			foreach($installed_suites as $test_suite)
 			{
-				$test_suite = new pts_test_suite($identifier);
 				echo '- ' . $test_suite->get_title() . PHP_EOL;
 			}
 			echo PHP_EOL;
