@@ -39,13 +39,19 @@ class phoromatic_build_suite implements pts_webui_interface
 		if(isset($_POST['suite_title']))
 		{
 			phoromatic_quit_if_invalid_input_found(array('suite_title', 'test_add', 'suite_version', 'suite_description'));
-			if(strlen($_POST['suite_title']) < 3)
+			$proceed = true;
+
+			if(strlen($_POST['suite_title']) < 3 || pts_strings::keep_in_string($_POST['suite_title'], pts_strings::CHAR_LETTER | pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DASH) != $_POST['suite_title'])
 			{
-				echo '<h2>Suite title must be at least three characters.</h2>';
+				echo '<h2>Suite title must be at least three characters and contain just alpha-numeric characters and dashes allowed.</h2>';
+				$proceed = false;
+			}
+			if(!isset($_POST['suite_version']) || empty($_POST['suite_version']) || !pts_strings::is_version($_POST['suite_version']))
+			{
+				echo '<h2>Suite version must be valid numeric version format X.Y.Z.</h2>';
+				$proceed = false;
 			}
 
-			//echo 'TEST SUITE: ' . $_POST['suite_title'] . '<br />';
-			//echo 'TEST SUITE: ' . $_POST['suite_description'] . '<br />';
 			$tests = array();
 
 			foreach($_POST['test_add'] as $i => $test_identifier)
@@ -95,37 +101,41 @@ class phoromatic_build_suite implements pts_webui_interface
 			if(count($tests) < 1)
 			{
 				echo '<h2>You must add at least one test to the suite.</h2>';
+				$proceed = false;
 			}
 
-			$new_suite = new pts_test_suite();
-			$version_bump = 0;
-
-		//	do
-		//	{
-				//$suite_version = '1.' . $version_bump . '.0';
-				$suite_version = $_POST['suite_version'];
-				$suite_id = $new_suite->clean_save_name_string($_POST['suite_title']) . '-' . $suite_version;
-				$suite_dir = phoromatic_server::phoromatic_account_suite_path($_SESSION['AccountID'], $suite_id);
-		//		$version_bump++;
-		//	}
-		//	while(is_dir($suite_dir));
-			pts_file_io::mkdir($suite_dir);
-			$save_to = $suite_dir . '/suite-definition.xml';
-
-			$new_suite->set_title($_POST['suite_title']);
-			$new_suite->set_version($suite_version); // $suite_version
-			$new_suite->set_maintainer($_SESSION['UserName']);
-			$new_suite->set_suite_type('System');
-			$new_suite->set_description($_POST['suite_description']);
-
-			foreach($tests as $m)
+			if($proceed)
 			{
-				$new_suite->add_to_suite($m['test'], $m['args'], $m['description']);
-			}
+				$new_suite = new pts_test_suite();
+				$version_bump = 0;
 
-			$new_suite->save_xml(null, $save_to);
-			echo '<h2>Saved As ' . $suite_id . '</h2>';
-			phoromatic_add_activity_stream_event('suite', $suite_id, 'added');
+			//	do
+			//	{
+					//$suite_version = '1.' . $version_bump . '.0';
+					$suite_version = $_POST['suite_version'];
+					$suite_id = $new_suite->clean_save_name_string($_POST['suite_title']) . '-' . $suite_version;
+					$suite_dir = phoromatic_server::phoromatic_account_suite_path($_SESSION['AccountID'], $suite_id);
+			//		$version_bump++;
+			//	}
+			//	while(is_dir($suite_dir));
+				pts_file_io::mkdir($suite_dir);
+				$save_to = $suite_dir . '/suite-definition.xml';
+
+				$new_suite->set_title($_POST['suite_title']);
+				$new_suite->set_version($suite_version); // $suite_version
+				$new_suite->set_maintainer($_SESSION['UserName']);
+				$new_suite->set_suite_type('System');
+				$new_suite->set_description($_POST['suite_description']);
+
+				foreach($tests as $m)
+				{
+					$new_suite->add_to_suite($m['test'], $m['args'], $m['description']);
+				}
+
+				$new_suite->save_xml(null, $save_to);
+				echo '<h2>Saved As ' . $suite_id . '</h2>';
+				phoromatic_add_activity_stream_event('suite', $suite_id, 'added');
+			}
 		}
 		echo phoromatic_webui_header_logged_in();
 		$main = '<h1>Local Suites</h1><p>Find already created local test suites by your account/group via the <a href="/?local_suites">local suites</a> page.</p>';

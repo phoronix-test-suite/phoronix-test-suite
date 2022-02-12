@@ -82,6 +82,12 @@ class phoromatic_results implements pts_webui_interface
 
 		if($main == null)
 		{
+			if(isset($_POST) && !empty($_POST) && !verify_submission_token())
+			{
+				echo '<h2>Invalid Form Submission.</h2>';
+				exit;
+			}
+
 			phoromatic_quit_if_invalid_input_found(array('result_limit', 'containing_tests', 'time_end', 'time_start', 'search', 'containing_hardware', 'containing_software'));
 			if(isset($_POST['result_limit']))
 			{
@@ -111,7 +117,7 @@ class phoromatic_results implements pts_webui_interface
 			{
 				$time_end = strtotime(date('Y-m-d') . ' 23:59:59');
 			}
-			$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" method="post"><div style="text-align: left; font-weight: bold;">Results From <input id="time_start" name="time_start" type="date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" min="' . $min_date . '" value="' . (isset($_POST['time_start']) ? $_POST['time_start'] : date('Y-m-d', $default_start_date)) . '" max="' . date('Y-m-d') . '" /> To  <input id="time_end" name="time_end" type="date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" min="' . $min_date . '" value="' . (isset($_POST['time_end']) ? $_POST['time_end'] : date('Y-m-d')) . '" max="' . date('Y-m-d') . '" /> &nbsp; With Tests: <input type="text" name="containing_tests" id="containing_tests" value="' . (isset($_POST['containing_tests']) ? $_POST['containing_tests'] : null) . '" /> With Hardware: <input type="text" name="containing_hardware" id="containing_hardware" value="' . (isset($_POST['containing_hardware']) ? $_POST['containing_hardware'] : null) . '" /> With System Software: <input type="text" name="containing_software" id="containing_software" value="' . (isset($_POST['containing_software']) ? $_POST['containing_software'] : null) . '" /> Search For <input type="text" name="search" id="search_for" value="' . (isset($_POST['search']) ? $_POST['search'] : null) . '" /> Limit Results To <select id="result_limit" name="result_limit">';
+			$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" method="post">' . write_token_in_form() . '<div style="text-align: left; font-weight: bold;">Results From <input id="time_start" name="time_start" type="date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" min="' . $min_date . '" value="' . (isset($_POST['time_start']) ? $_POST['time_start'] : date('Y-m-d', $default_start_date)) . '" max="' . date('Y-m-d') . '" /> To  <input id="time_end" name="time_end" type="date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" min="' . $min_date . '" value="' . (isset($_POST['time_end']) ? $_POST['time_end'] : date('Y-m-d')) . '" max="' . date('Y-m-d') . '" /> &nbsp; With Tests: <input type="text" name="containing_tests" id="containing_tests" value="' . (isset($_POST['containing_tests']) ? $_POST['containing_tests'] : null) . '" /> With Hardware: <input type="text" name="containing_hardware" id="containing_hardware" value="' . (isset($_POST['containing_hardware']) ? $_POST['containing_hardware'] : null) . '" /> With System Software: <input type="text" name="containing_software" id="containing_software" value="' . (isset($_POST['containing_software']) ? $_POST['containing_software'] : null) . '" /> Search For <input type="text" name="search" id="search_for" value="' . (isset($_POST['search']) ? $_POST['search'] : null) . '" /> Limit Results To <select id="result_limit" name="result_limit">';
 			for($i = 100; $i <= 500; $i += 100)
 			{
 				$main .= '<option value="' . $i . '"' . ($result_limit == $i ? ' selected="selected"' : null) . '>' . $i . '</option>';

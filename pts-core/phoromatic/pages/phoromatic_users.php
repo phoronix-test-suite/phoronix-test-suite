@@ -50,7 +50,7 @@ class phoromatic_users implements pts_webui_interface
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 			$result = $stmt->execute();
 		}
-		if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['confirm_password']) && isset($_POST['email']))
+		if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['confirm_password']) && isset($_POST['email']) && verify_submission_token())
 		{
 			phoromatic_quit_if_invalid_input_found(array('username', 'email'));
 			// REGISTER NEW USER
@@ -81,7 +81,7 @@ class phoromatic_users implements pts_webui_interface
 			}
 
 			$valid_user_name_chars = '1234567890-_.abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-			for($i = 0; $i < count($_POST['username']); $i++)
+			for($i = 0; $i < strlen($_POST['username']); $i++)
 			{
 				if(strpos($valid_user_name_chars, substr($_POST['username'], $i, 1)) === false)
 				{
@@ -131,7 +131,7 @@ class phoromatic_users implements pts_webui_interface
 
 			phoromatic_add_activity_stream_event('users', $_POST['username'], 'added');
 		}
-		if($_SESSION['AdminLevel'] == 1 && isset($_POST['update_user_levels']))
+		if($_SESSION['AdminLevel'] == 1 && isset($_POST['update_user_levels']) && verify_submission_token())
 		{
 			foreach(explode(',', $_POST['update_user_levels']) as $user_id)
 			{
@@ -198,7 +198,7 @@ class phoromatic_users implements pts_webui_interface
 						{
 							$main .= '<select name="admin_level_' . $row['UserID'] . '">';
 
-							foreach(array(($row['AdminLevel'] * -1) => 'Disabled', 2 => 'Administrator', 3 => 'Power User', 10 => 'Viewer') as $level_id => $level_string)
+							foreach(array(-1 => 'Disabled', 2 => 'Administrator', 3 => 'Power User', 10 => 'Viewer') as $level_id => $level_string)
 							{
 								$main .= '<option value="' . $level_id . '"' . ($row['AdminLevel'] == $level_id ? ' selected="selected"' : null) . '>' . $level_string . '</option>';
 							}
@@ -211,11 +211,11 @@ class phoromatic_users implements pts_webui_interface
 					while($row = $result->fetchArray());
 
 
-			$main .= '</ul> &nbsp; <input type="hidden" name="update_user_levels" value="' . implode(',', $user_ids) . '" /> <input name="submit" value="Update User Levels" type="submit" /></form>
+			$main .= '</ul> &nbsp; <input type="hidden" name="update_user_levels" value="' . implode(',', $user_ids) . '" />' . write_token_in_form() . ' <input name="submit" value="Update User Levels" type="submit" /></form>
 				</div>
 			</div>';
 
-		$main .= '<hr /><form action="' . $_SERVER['REQUEST_URI'] . '" name="add_user" id="add_user" method="post" onsubmit="return validate_new_user();"><h2>Create Additional Account</h2>
+		$main .= '<hr /><form action="' . $_SERVER['REQUEST_URI'] . '" name="add_user" id="add_user" method="post" onsubmit="return validate_new_user();"><h2>Create Additional Account</h2>' . write_token_in_form() . '
 			<p>Administrators can create extra accounts to be associated with this account\'s systems, schedules, and test data.</p>
 			<h3>User</h3>
 			<p><input type="text" name="username" /></p>
