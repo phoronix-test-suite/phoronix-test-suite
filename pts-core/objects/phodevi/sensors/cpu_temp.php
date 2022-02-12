@@ -134,7 +134,13 @@ class cpu_temp extends phodevi_sensor
 
 		if($raw_temp == -1)
 		{
+			// Raspberry Pi's Broadcom SoC
 			$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/temp*_input', 'POSITIVE_NUMERIC', array('temp1_label' => 'SoC Temperature'));
+		}
+
+		if($raw_temp == -1)
+		{
+			$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/temp*_input', 'POSITIVE_NUMERIC', array('name' => 'cpu_thermal'));
 		}
 
 		if($raw_temp == -1)

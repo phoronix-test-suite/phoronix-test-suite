@@ -1113,7 +1113,10 @@ class pts_result_file
 		{
 			foreach($ro->get_run_times() as $si => $elapsed_time)
 			{
-				$run_times[$si] += $elapsed_time;
+				if(isset($run_times[$si]) && $elapsed_time > 0)
+				{
+					$run_times[$si] += $elapsed_time;
+				}
 			}
 		}
 
