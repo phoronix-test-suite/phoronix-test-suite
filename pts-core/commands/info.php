@@ -213,7 +213,7 @@ class info implements pts_option_interface
 						echo pts_client::cli_just_bold('[Run-Time Requirements] Average Run-Time: ')  . pts_client::cli_just_italic(pts_strings::format_time($d['run_time_avg'], 'SECONDS', true, 60)) . ' ';
 						$result_object = false;
 						$d['unit'] = 'Seconds';
-						pts_result_file_output::text_box_plut_from_ae($d, -1, array(), $result_object,  $d['run_time_percentiles'], $d['timing_samples']);
+						pts_result_file_output::text_box_plut_from_ae($d, -1, array(), $result_object,  $d['run_time_percentiles'], (isset($d['timing_samples']) ? $d['timing_samples'] : array()));
 						echo PHP_EOL;
 						if(isset($d['tested_archs']) && !empty($d['tested_archs']))
 						{

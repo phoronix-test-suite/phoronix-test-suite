@@ -33,7 +33,7 @@ function phoromatic_quit_if_invalid_input_found($input_keys = null)
 	// backup as to sanitization and stripping elsewhere, safeguard namely check for things like < for fields that shouldn't have it
 	// plus a few simple backups as safeguards for words that really have no legit relevance within Phoromatic...
 
-	foreach(array('<', '>', 'document.write', '../', 'onerror', 'onload', 'alert(', 'String.', 'confirm(', 'focus=', '&lt', '&gt', '&#') as $invalid_string)
+	foreach(pts_strings::safety_strings_to_reject() as $invalid_string)
 	{
 		foreach($input_keys as $key)
 		{

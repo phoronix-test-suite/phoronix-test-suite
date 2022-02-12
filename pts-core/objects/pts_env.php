@@ -645,8 +645,21 @@ class pts_env
 				}
 				else
 				{
-					// TODO add more validation handling checks... then again, PTS client has its own validation of the env vars
-					$v = strip_tags($_REQUEST[$var]);
+					$v = $_REQUEST[$var];
+					if(!empty($v))
+					{
+						$invalid = false;
+						foreach(pts_strings::safety_strings_to_reject() as $invalid_string)
+						{
+							if(stripos($v, $invalid_string) !== false)
+							{
+								$v = '';
+								break;
+							}
+						}
+
+						$v = strip_tags($v);
+					}
 				}
 				if(!empty($v) && $v !== 0)
 				{

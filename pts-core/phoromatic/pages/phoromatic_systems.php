@@ -48,7 +48,7 @@ class phoromatic_systems implements pts_webui_interface
 			$stmt->bindValue(':system_id', $PATH[0]);
 			$stmt->bindValue(':title', pts_strings::simple($_POST['system_title']));
 			$stmt->bindValue(':description', pts_strings::sanitize($_POST['system_description']));
-			$stmt->bindValue(':state', $_POST['system_state']);
+			$stmt->bindValue(':state', pts_strings::simple($_POST['system_state']));
 			$stmt->bindValue(':block_power_offs', $_POST['block_power_offs']);
 			$stmt->execute();
 		}
@@ -57,7 +57,7 @@ class phoromatic_systems implements pts_webui_interface
 			$stmt = phoromatic_server::$db->prepare('UPDATE phoromatic_systems SET MaintenanceMode = :maintenance_mode WHERE AccountID = :account_id AND SystemID = :system_id');
 			$stmt->bindValue(':account_id', $_SESSION['AccountID']);
 			$stmt->bindValue(':system_id', $PATH[0]);
-			$stmt->bindValue(':maintenance_mode', $_POST['maintenance_mode']);
+			$stmt->bindValue(':maintenance_mode', pts_strings::simple($_POST['maintenance_mode']));
 			$stmt->execute();
 		}
 		if(!PHOROMATIC_USER_IS_VIEWER && !empty($PATH[0]) && isset($_GET['clear_system_warnings']))
@@ -471,7 +471,7 @@ class phoromatic_systems implements pts_webui_interface
 
 		if($main == null)
 		{
-			if(!PHOROMATIC_USER_IS_VIEWER && isset($_POST['new_group']) && !empty($_POST['new_group']))
+			if(!PHOROMATIC_USER_IS_VIEWER && isset($_POST['new_group']) && !empty($_POST['new_group']) && verify_submission_token())
 			{
 				$group = trim($_POST['new_group']);
 
@@ -507,7 +507,7 @@ class phoromatic_systems implements pts_webui_interface
 					}
 				}
 			}
-			else if(!PHOROMATIC_USER_IS_VIEWER && isset($_POST['system_group_update']))
+			else if(!PHOROMATIC_USER_IS_VIEWER && isset($_POST['system_group_update']) && verify_submission_token())
 			{
 				$stmt = phoromatic_server::$db->prepare('SELECT SystemID FROM phoromatic_systems WHERE AccountID = :account_id');
 				$stmt->bindValue(':account_id', $_SESSION['AccountID']);
@@ -535,7 +535,7 @@ class phoromatic_systems implements pts_webui_interface
 					}
 				}
 			}
-			else if(!PHOROMATIC_USER_IS_VIEWER && isset($_POST['remove_group']))
+			else if(!PHOROMATIC_USER_IS_VIEWER && isset($_POST['remove_group']) && verify_submission_token())
 			{
 				$remove_group = pts_strings::sanitize($_POST['remove_group']);
 				$stmt = phoromatic_server::$db->prepare('DELETE FROM phoromatic_groups WHERE AccountID = :account_id AND GroupName = :group_name');
@@ -657,7 +657,7 @@ class phoromatic_systems implements pts_webui_interface
 				<p>System groups make it very easy to organize multiple test systems for targeting by test schedules. You can always add/remove systems to groups, create new groups, and add systems to multiple groups. After creating a group and adding systems to the group, you can begin targeting tests against a particular group of systems. Systems can always be added/removed from groups later and a system can belong to multiple groups.</p>';
 
 
-				$main .= '<div style="float: left;"><form name="new_group_form" id="new_group_form" action="?systems" method="post" onsubmit="return phoromatic_new_group(this);">
+				$main .= '<div style="float: left;"><form name="new_group_form" id="new_group_form" action="?systems" method="post" onsubmit="return phoromatic_new_group(this);">' . write_token_in_form() . '
 				<p><div style="width: 200px; font-weight: bold; float: left;">New Group Name:</div> <input type="text" style="width: 300px;" name="new_group" value="" /></p>
 				<p><div style="width: 200px; font-weight: bold; float: left;">Select System(s) To Add To Group:</div><select name="systems_for_group[]" multiple="multiple" style="width: 300px;">';
 
@@ -703,7 +703,7 @@ class phoromatic_systems implements pts_webui_interface
 
 					$main .= '</div>';
 
-					$main .= '<hr /><a name="group_edit"></a><h2>System Group Editing</h2><div style="text-align: center;"><form action="' . $_SERVER['REQUEST_URI'] . '" name="update_groups" method="post"><input type="hidden" name="system_group_update"  value="1" />';
+					$main .= '<hr /><a name="group_edit"></a><h2>System Group Editing</h2><div style="text-align: center;"><form action="' . $_SERVER['REQUEST_URI'] . '" name="update_groups" method="post">' . write_token_in_form() . '<input type="hidden" name="system_group_update"  value="1" />';
 					$main .= '<table style="margin: 5px auto; overflow: auto;">';
 					$main .= '<tr>';
 					$main .= '<th></th>';
@@ -739,7 +739,7 @@ class phoromatic_systems implements pts_webui_interface
 
 					$main .= '</table><p><input name="submit" value="Update Groups" type="submit" /></p></form></div>';
 					$main .= '<hr /><h2>Remove A Group</h2><p>Removing a group is a permanent action that cannot be undone.</p>';
-					$main .= '<p><form action="' . $_SERVER['REQUEST_URI'] . '" name="remove_group" method="post"><select name="remove_group" id="remove_group">';
+					$main .= '<p><form action="' . $_SERVER['REQUEST_URI'] . '" name="remove_group" method="post">' . write_token_in_form() . '<select name="remove_group" id="remove_group">';
 
 					foreach($all_groups as $group)
 					{
