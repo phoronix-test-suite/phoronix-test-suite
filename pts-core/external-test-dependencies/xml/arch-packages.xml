@@ -190,7 +190,7 @@
 		</Package>
 		<Package>
 			<GenericName>common-dependencies</GenericName>
-			<PackageName>unzip mesa-demos</PackageName>
+			<PackageName>unzip mesa-utils</PackageName>
 			<FileCheck>unzip, glxinfo</FileCheck>
 		</Package>
 		<Package>
@@ -284,7 +284,7 @@
 		</Package>
                 <Package>
 			<GenericName>golang</GenericName>
-			<PackageName>go OR gcc-go</PackageName>
+			<PackageName>go</PackageName>
 		</Package>
 		<Package>
 			<GenericName>python-scipy</GenericName>

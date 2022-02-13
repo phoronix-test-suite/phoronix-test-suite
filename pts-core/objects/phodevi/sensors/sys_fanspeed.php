@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2015, Phoronix Media
-	Copyright (C) 2009 - 2015, Michael Larabel
+	Copyright (C) 2009 - 2022, Phoronix Media
+	Copyright (C) 2009 - 2022, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -40,17 +40,7 @@ class sys_fanspeed extends phodevi_sensor
 	private function sys_fanspeed_linux()
 	{
 		$fan_speed = -1;
-		$raw_fan = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/fan2_input', 'POSITIVE_NUMERIC');
-
-		if($raw_fan == -1)
-		{
-			$raw_fan = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/fan3_input', 'POSITIVE_NUMERIC');
-		}
-
-		if($raw_fan == -1)
-		{
-			$raw_fan = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/fan4_input', 'POSITIVE_NUMERIC');
-		}
+		$raw_fan = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/fan*_input', 'POSITIVE_NUMERIC');
 
 		if($raw_fan == -1)
 		{
