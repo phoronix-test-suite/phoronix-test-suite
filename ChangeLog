@@ -1,13 +1,16 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 10.8.2
+13 February 2022
 
+pts-core: Arch Linux external dependency updates
 pts-core: Workaround/fix PHP 5.4 usage with RHEL7-based distributions
 pts-core: Convert compiler / multicore / single-threaded test suites into virtual test suites since their properties can be auto-determined based on OB metadata to avoid manually maintaining them
 pts-core: Add virtual test suites for "riscv" and "aarch64" to make it easy to show test profiles that can run successfully on RISC-V and 64-bit Arm hardware
+phodevi: Improved detection for components found on the Steam Deck and other hardware
 phodevi: Add Arm Cortex-X1C detection
-phodevi: CPU temperature reporting for additional SoCs
-phoromatic: Additional input sanitization
+phodevi: CPU temperature reporting for additional SoCs such as the Raspberry Pi 400
+phoromatic: Additional input sanitization and validation improvements
 
 Phoronix Test Suite 10.8.1
 23 January 2022

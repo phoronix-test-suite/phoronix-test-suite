@@ -1575,7 +1575,10 @@ Virtual test suites can be installed and run just like a normal XML test suite a
 
 
 ---
-#### All Tests In Pts  pts/all
+#### 64-bit Arm / AArch64 Tests In pts  pts/aarch64
+This is a collection of test profiles where there have been successful benchmark results submitted to OpenBenchmarking.org from 64-bit Arm / AArch64 CPU architecture hardware, i.e. these tests are proven to be 64-bit Arm / AArch64 compatible though not necessarily all compatible test profiles for the given architecture - just those with submitted public results previously on OpenBenchmarking.org.
+
+#### All Tests in pts  pts/all
 This is a collection of all supported test profiles found within the specified OpenBenchmarking.org repository.
 
 #### Application Tests  pts/application
@@ -1590,16 +1593,16 @@ This is a collection of test profiles having an external dependency on BLAS (Bas
 #### C++ Boost Tests  pts/boost
 This is a collection of test profiles having an external dependency on C++ Boost
 
-#### Bsd Operating System Tests  pts/bsd
+#### BSD Operating System Tests  pts/bsd
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the bsd Operating System.
 
-#### C/C++ Compiler Benchmark Workloads In Pts  pts/compiler
+#### C/C++ Compiler Benchmark Workloads In pts  pts/compiler
 This is a collection of test profiles often useful for C/C++ compiler benchmarks and where the test profiles will respect CFLAGS/CXXFLAGS environment variables.
 
 #### Disk Subsystem Tests  pts/disk
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the disk sub-system.
 
-#### Everything In Pts  pts/everything
+#### Everything in pts  pts/everything
 This is a collection of all test profiles found within the specified OpenBenchmarking.org repository, including unsupported tests, etc.
 
 #### Fortran Tests  pts/fortran
@@ -1632,7 +1635,7 @@ This is a collection of test profiles found within the specified OpenBenchmarkin
 #### Memory Subsystem Tests  pts/memory
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the memory sub-system.
 
-#### Multi-Core/Multi-Threaded Workloads In Pts  pts/multicore
+#### Multi-Core/Multi-Threaded Workloads In pts  pts/multicore
 This is a collection of test profiles that have been detected to be CPU multi-threaded capable.
 
 #### Network Subsystem Tests  pts/network
@@ -1647,7 +1650,7 @@ This is a collection of test profiles having an external dependency on OpenCV
 #### Openmpi Tests  pts/openmpi
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing openmpi.
 
-#### Os Subsystem Tests  pts/os
+#### OS Subsystem Tests  pts/os
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the os sub-system.
 
 #### Processor Subsystem Tests  pts/processor
@@ -1655,6 +1658,9 @@ This is a collection of test profiles found within the specified OpenBenchmarkin
 
 #### Python Tests  pts/python
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing python.
+
+#### RISC-V Tests In pts  pts/riscv
+This is a collection of test profiles where there have been successful benchmark results submitted to OpenBenchmarking.org from RISC-V CPU architecture hardware, i.e. these tests are proven to be RISC-V compatible though not necessarily all compatible test profiles for the given architecture - just those with submitted public results previously on OpenBenchmarking.org.
 
 #### Ruby Tests  pts/ruby
 This is a collection of test profiles having an external dependency on Ruby
@@ -1668,7 +1674,7 @@ This is a collection of test profiles found within the specified OpenBenchmarkin
 #### Simulator Tests  pts/simulator
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a simulator software test.
 
-#### Single-Threaded Workloads In Pts  pts/single-threaded
+#### Single-Threaded Workloads In pts  pts/single-threaded
 This is a collection of test profiles that have been detected to be single-threaded or only very poorly CPU threaded.
 
 #### Solaris Operating System Tests  pts/solaris
@@ -1719,7 +1725,10 @@ This is a collection of test profiles found within the specified OpenBenchmarkin
 #### Responsiveness Tests  pts/responsiveness
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing responsiveness.
 
-#### All Tests In System  system/all
+#### 64-bit Arm / AArch64 Tests In system  system/aarch64
+This is a collection of test profiles where there have been successful benchmark results submitted to OpenBenchmarking.org from 64-bit Arm / AArch64 CPU architecture hardware, i.e. these tests are proven to be 64-bit Arm / AArch64 compatible though not necessarily all compatible test profiles for the given architecture - just those with submitted public results previously on OpenBenchmarking.org.
+
+#### All Tests in system  system/all
 This is a collection of all supported test profiles found within the specified OpenBenchmarking.org repository.
 
 #### Application Tests  system/application
@@ -1734,13 +1743,13 @@ This is a collection of test profiles having an external dependency on BLAS (Bas
 #### C++ Boost Tests  system/boost
 This is a collection of test profiles having an external dependency on C++ Boost
 
-#### Bsd Operating System Tests  system/bsd
+#### BSD Operating System Tests  system/bsd
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the bsd Operating System.
 
 #### Disk Subsystem Tests  system/disk
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the disk sub-system.
 
-#### Everything In System  system/everything
+#### Everything in system  system/everything
 This is a collection of all test profiles found within the specified OpenBenchmarking.org repository, including unsupported tests, etc.
 
 #### Game Tests  system/game
@@ -1770,6 +1779,9 @@ This is a collection of test profiles found within the specified OpenBenchmarkin
 #### Python Tests  system/python
 This is a collection of test profiles having an external dependency on Python
 
+#### RISC-V Tests In system  system/riscv
+This is a collection of test profiles where there have been successful benchmark results submitted to OpenBenchmarking.org from RISC-V CPU architecture hardware, i.e. these tests are proven to be RISC-V compatible though not necessarily all compatible test profiles for the given architecture - just those with submitted public results previously on OpenBenchmarking.org.
+
 #### Scientific Tests  system/scientific
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a scientific software test.
 
@@ -1794,13 +1806,13 @@ This is a collection of test profiles found within the specified OpenBenchmarkin
 #### Smp Tests  system/smp
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing smp.
 
-#### All Tests In Git  git/all
+#### All Tests in git  git/all
 This is a collection of all supported test profiles found within the specified OpenBenchmarking.org repository.
 
-#### Bsd Operating System Tests  git/bsd
+#### BSD Operating System Tests  git/bsd
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the bsd Operating System.
 
-#### Everything In Git  git/everything
+#### Everything in git  git/everything
 This is a collection of all test profiles found within the specified OpenBenchmarking.org repository, including unsupported tests, etc.
 
 #### Linux Operating System Tests  git/linux

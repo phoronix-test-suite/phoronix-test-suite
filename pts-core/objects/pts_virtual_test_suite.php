@@ -258,7 +258,7 @@ class pts_virtual_test_suite extends pts_test_suite
 		}
 		else if(self::is_selector_os($this->virtual))
 		{
-			$this->set_title($this->virtual . ' Operating System Tests');
+			$this->set_title((strlen($this->virtual) < 4 ? strtoupper($this->virtual) : ucwords($this->virtual)) . ' Operating System Tests');
 			$this->set_description('This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being compatible with the ' . $this->virtual . ' Operating System.');
 			foreach($repo_index['tests'] as $test_identifier => &$test)
 			{
@@ -286,7 +286,7 @@ class pts_virtual_test_suite extends pts_test_suite
 		}
 		else if(self::is_selector_subsystem($this->virtual))
 		{
-			$this->set_title($this->virtual . ' Subsystem Tests');
+			$this->set_title((strlen($this->virtual) < 4 ? strtoupper($this->virtual) : ucwords($this->virtual)) . ' Subsystem Tests');
 			$this->set_description('This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a test of the ' . $this->virtual . ' sub-system.');
 			foreach($repo_index['tests'] as $test_identifier => &$test)
 			{
@@ -314,7 +314,7 @@ class pts_virtual_test_suite extends pts_test_suite
 		}
 		else if(self::is_selector_software_type($this->virtual))
 		{
-			$this->set_title($this->virtual . ' Tests');
+			$this->set_title(ucwords($this->virtual) . ' Tests');
 			$this->set_description('This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified as being a ' . $this->virtual . ' software test.');
 			foreach($repo_index['tests'] as $test_identifier => &$test)
 			{
@@ -342,7 +342,7 @@ class pts_virtual_test_suite extends pts_test_suite
 		}
 		else if(self::is_selector_internal_tag($this->repo, $this->virtual))
 		{
-			$this->set_title($this->virtual . ' Tests');
+			$this->set_title(ucwords($this->virtual) . ' Tests');
 			$this->set_description('This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing ' . $this->virtual . '.');
 			foreach($repo_index['tests'] as $test_identifier => &$test)
 			{

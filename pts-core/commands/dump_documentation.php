@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2021, Phoronix Media
-	Copyright (C) 2010 - 2021, Michael Larabel
+	Copyright (C) 2010 - 2022, Phoronix Media
+	Copyright (C) 2010 - 2022, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -212,7 +212,7 @@ class dump_documentation implements pts_option_interface
 
 		foreach(pts_virtual_test_suite::available_virtual_suites() as $virtual_suite)
 		{
-			$sub_header = $dom->createElement('h3', ucwords($virtual_suite->get_title()));
+			$sub_header = $dom->createElement('h3', $virtual_suite->get_title());
 			$em = $dom->CreateElement('em', '  ' . $virtual_suite->get_identifier());
 			$sub_header->appendChild($em);
 			$body->appendChild($sub_header);
