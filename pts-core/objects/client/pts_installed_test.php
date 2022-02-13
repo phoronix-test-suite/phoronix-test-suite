@@ -114,6 +114,12 @@ class pts_installed_test
 		// Refresh/generate an PTS install file
 		if($this->install_path)
 		{
+			if(!defined('JSON_PRETTY_PRINT'))
+			{
+				// PHP 5.3 warning fix
+				define('JSON_PRETTY_PRINT', 0);
+			}
+
 			file_put_contents($this->install_path . 'pts-install.json', json_encode($this->get_array(), JSON_PRETTY_PRINT));
 		}
 	}

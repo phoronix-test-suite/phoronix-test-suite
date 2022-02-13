@@ -285,12 +285,10 @@ class check_tests implements pts_option_interface
 				$packages[0] =
 					array(
 						"identifier" => $identifier,	// repeated for front end
-						"mirror" => [					// keep format consistent for json parsing in frontend
-							[
+						"mirror" => array(
 								"status" => 'Not Tested',
 								"failures" => "downloads.xml file not found",
-							]
-						]
+							),
 					);
 			}
 			foreach ($xmlFile as $checks) {
