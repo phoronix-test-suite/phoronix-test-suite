@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Compile	   2.2 +/- 6.7      #_RESULT_#		97.8</OutputTemplate>
+    <LineBeforeHint>Max Latency</LineBeforeHint>
+  </ResultsParser>
+</PhoronixTestSuite>

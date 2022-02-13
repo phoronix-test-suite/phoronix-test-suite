@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>dav1d</Title>
+    <AppVersion>0.9.2</AppVersion>
+    <Description>Dav1d is an open-source, speedy AV1 video decoder. This test profile times how long it takes to decode sample AV1 video content.</Description>
+    <ResultScale>FPS</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.11.2</Version>
+    <SupportedPlatforms>Linux, BSD, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, yasm, meson</ExternalDependencies>
+    <EnvironmentSize>1200</EnvironmentSize>
+    <ProjectURL>https://www.videolan.org/projects/dav1d.html</ProjectURL>
+    <RepositoryURL>http://code.videolan.org/videolan/dav1d</RepositoryURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments> </Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Video Input</DisplayName>
+      <Identifier>video</Identifier>
+      <ArgumentPrefix>-i </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>Summer Nature 1080p</Name>
+          <Value>summer_nature_1080p.ivf</Value>
+        </Entry>
+        <Entry>
+          <Name>Summer Nature 4K</Name>
+          <Value>summer_nature_4k.ivf</Value>
+        </Entry>
+        <Entry>
+          <Name>Chimera 1080p</Name>
+          <Value>chimera_8b_1080p.ivf</Value>
+        </Entry>
+        <Entry>
+          <Name>Chimera 1080p 10-bit</Name>
+          <Value>chimera_10b_1080p.ivf</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

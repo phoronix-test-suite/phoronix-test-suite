@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://sourceware.org/pub/bzip2/bzip2-1.0.8.tar.gz, https://sources.openwrt.org/bzip2-1.0.8.tar.gz</URL>
+      <MD5>67e051268d0c475ea773822f7500d0e5</MD5>
+      <SHA256>ab5a03176ee106d3f0fa90e381da478ddae405918153cca248e682cd0c4a2269</SHA256>
+      <FileName>bzip2-1.0.8.tar.gz</FileName>
+      <FileSize>810029</FileSize>
+    </Package>
+    <Package>
+      <URL>https://launchpad.net/pbzip2/1.1/1.1.13/+download/pbzip2-1.1.13.tar.gz</URL>
+      <MD5>4cb87da2dba05540afce162f34b3a9a6</MD5>
+      <SHA256>8fd13eaaa266f7ee91f85c1ea97c86d9c9cc985969db9059cdebcb1e1b7bdbe6</SHA256>
+      <FileName>pbzip2-1.1.13.tar.gz</FileName>
+      <FileSize>48015</FileSize>
+    </Package>
+    <Package>
+      <URL>https://download.freebsd.org/releases/amd64/amd64/ISO-IMAGES/13.0/FreeBSD-13.0-RELEASE-amd64-memstick.img, http://ftp.at.freebsd.org/pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES/13.0/FreeBSD-13.0-RELEASE-amd64-memstick.img</URL>
+      <MD5>e0e21f7421e26f1da29b723895f42bb8</MD5>
+      <SHA256>3a1b0ef1e2211f03980eb00fdeedeb3cd9ead03f1bfcd9f6a1eb335c3b994377</SHA256>
+      <FileName>FreeBSD-13.0-RELEASE-amd64-memstick.img</FileName>
+      <FileSize>1090900480</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

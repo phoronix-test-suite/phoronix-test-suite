@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ck.kolivas.org/apps/interbench/interbench-0.31.tar.bz2</URL>
+      <MD5>832254d7fd1255c548ebea7b97f01015</MD5>
+      <FileName>interbench-0.31.tar.bz2</FileName>
+      <FileSize>86776</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

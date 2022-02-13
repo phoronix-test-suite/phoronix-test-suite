@@ -3,7 +3,7 @@
 <PhoronixTestSuite>
   <SuiteInformation>
     <Title>HPC - High Performance Computing</Title>
-    <Version>1.1.4</Version>
+    <Version>1.1.5</Version>
     <TestType>System</TestType>
     <Description>A collection of common HPC (High Performance Computing) benchmarks.</Description>
     <Maintainer>Michael Larabel</Maintainer>
@@ -111,6 +111,10 @@
   </Execute>
   <Execute>
     <Test>pts/wrf</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/graph500</Test>
     <Mode>BATCH</Mode>
   </Execute>
   <Execute>

@@ -3,7 +3,7 @@
 <PhoronixTestSuite>
   <SuiteInformation>
     <Title>Steam</Title>
-    <Version>1.0.5</Version>
+    <Version>1.0.6</Version>
     <TestType>Graphics</TestType>
     <Description>A collection of test profiles / benchmarks that make use of Valve's Steam platform.</Description>
     <Maintainer>Michael Larabel</Maintainer>
@@ -152,6 +152,26 @@
     <Test>pts/f12020</Test>
     <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT ultra_settings.xml</Arguments>
     <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: Ultra</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/f12021</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT hardware_settings_low.xml</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: Low</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/f12021</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT hardware_settings_medium.xml</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: Medium</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/f12021</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT hardware_settings_high.xml</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: High</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/f12021</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT hardware_settings_ultra.xml</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: Ultra High</Description>
   </Execute>
   <Execute>
     <Test>pts/hitman</Test>

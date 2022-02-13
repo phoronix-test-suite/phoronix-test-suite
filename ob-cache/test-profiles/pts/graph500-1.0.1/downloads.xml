@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/graph500/graph500/archive/graph500-3.0.0.tar.gz</URL>
+      <MD5>a2ebb4783b21e2d86387a217776395e3</MD5>
+      <SHA256>887dcff56999987fba4953c1c5696d50e52265fe61b6ffa8bb14cc69ff27e8a0</SHA256>
+      <FileName>graph500-graph500-3.0.0.tar.gz</FileName>
+      <FileSize>340551</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

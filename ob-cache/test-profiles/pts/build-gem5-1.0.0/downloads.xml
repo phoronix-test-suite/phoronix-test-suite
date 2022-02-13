@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/gem5/gem5/archive/refs/tags/v21.2.0.0.tar.gz</URL>
+      <MD5>dca444f93d861689d80c8e8373e67c40</MD5>
+      <SHA256>87d8e5140c3e37949e73ca96936d91599f1ead3e87af1b4d81b8bb36791d685d</SHA256>
+      <FileName>gem5-21.2.0.0.tar.gz</FileName>
+      <FileSize>14967066</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>
