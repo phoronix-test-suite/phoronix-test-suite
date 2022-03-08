@@ -501,7 +501,7 @@
             <GenericName>perl-digest-md5</GenericName>
             <Title>Perl Interface to the MD5 Algorithm</Title>
             <PossibleNames>perl-Digest-MD5, perl-Digest-Perl-MD5, libdigest-md5</PossibleNames>
-            <FileCheck>Digest/MD5.pm OR /usr/share/doc/perl-Digest-MD5 OR /usr/share/perl5/Digest/</FileCheck>
+            <FileCheck>Digest/MD5.pm OR /usr/share/doc/perl-Digest-MD5 OR /usr/share/perl5/Digest/ OR /usr/lib64/perl5/vendor_perl/Digest/MD5.pm</FileCheck>
         </Package>
 		<Package>
 			<GenericName>python-scipy</GenericName>
