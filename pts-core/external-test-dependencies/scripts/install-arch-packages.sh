@@ -2,7 +2,7 @@
 
 # Arch package installation
 
-echo "Checking for root availability, please enter your sudo passowrd below:" 1>&2
+echo "Checking for root availability, please enter your sudo password below:" 1>&2
 if sudo passwd -S root | grep -q 'L' 1>&2; then
     echo "Root account locked, using sudo to install packages" 1>&2
     #echo "Please enter your sudo password below:" 1>&2
