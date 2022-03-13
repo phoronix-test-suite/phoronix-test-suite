@@ -244,10 +244,12 @@ class pts_openbenchmarking_client
 		}
 
 		list($repo, $tp) = explode('/', $test_profile);
-		if(($x = strrpos($tp, '-')))
+		if(($x = strrpos($tp, '-')) && pts_strings::is_version(substr($tp, ($x + 1))))
 		{
+			// Remove version postfix if appended
 			$tp = substr($tp, 0, $x);
 		}
+
 		$repo_index = pts_openbenchmarking::read_repository_index($repo);
 
 		return isset($repo_index['tests'][$tp][$attribute]) ? $repo_index['tests'][$tp][$attribute] : null;
