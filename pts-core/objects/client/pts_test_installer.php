@@ -580,7 +580,7 @@ class pts_test_installer
 		}
 		if(!pts_client::executable_in_path('python'))
 		{
-			$compilers['PY2'] = array('python2', 'python2.7', 'python2.6');
+			//$compilers['PY2'] = array('python2', 'python2.7', 'python2.6');
 		}
 		if(!pts_client::executable_in_path('python3'))
 		{
