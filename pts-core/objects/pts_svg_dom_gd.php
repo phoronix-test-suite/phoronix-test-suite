@@ -97,6 +97,7 @@ class pts_svg_dom_gd
 				'/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf',
 				'/usr/share/fonts/truetype/freefont/FreeSans.ttf',
 				'/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf',
+				'/usr/share/fonts/dejavu-sans-fonts/DejaVuSans.ttf',
 				);
 
 				foreach($possible_fonts as $font_file)
