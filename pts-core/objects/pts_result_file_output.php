@@ -1093,7 +1093,7 @@ class pts_result_file_output
 							break;
 					}
 
-					if($normalize_against != -1)
+					if($normalize_against != -1 && is_numeric($normalize_against) && is_numeric($value))
 					{
 						$extra_rows[0][0] = 'Normalized';
 						$extra_rows[0][$x] = round(($hib ? ($value / $normalize_against) : ($normalize_against / $value)) * 100, 2) . '%';

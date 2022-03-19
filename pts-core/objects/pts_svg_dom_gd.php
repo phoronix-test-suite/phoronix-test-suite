@@ -67,44 +67,56 @@ class pts_svg_dom_gd
 	{
 		if(!defined('BILDE_DEFAULT_FONT'))
 		{
+			$default_font = false;
+
 			if($find_font != null && is_readable($find_font))
 			{
 				$default_font = $find_font;
-			}/*
-			else if(ini_get('open_basedir'))
-			{
-				$default_font = false;
-			}*/
+			}
 			else
 			{
-				$default_font = false;
-				$possible_fonts = array(
-				'/usr/share/fonts/truetype/ttf-dejavu/DejaVuSans.ttf',
-				'/usr/share/fonts/truetype/freefont/FreeSans.ttf',
-				'/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf',
-				'/usr/share/fonts/dejavu/DejaVuSans.ttf',
-				'/usr/share/fonts/liberation/LiberationSans-Regular.ttf',
-				'/usr/share/fonts/truetype/DejaVuSans.ttf',
-				'/usr/share/fonts/truetype/LiberationSans-Regular.ttf',
-				'/usr/share/fonts/TTF/dejavu/DejaVuSans.ttf',
-				'/usr/share/fonts/TTF/liberation/LiberationSans-Regular.ttf',
-				'/usr/X11/lib/X11/fonts/TrueType/arphic/uming.ttf',
-				'/usr/local/lib/X11/fonts/bitstream-vera/Vera.ttf',
-				'/usr/share/fonts/aajohan-comfortaa/Comfortaa-Regular.ttf',
-				'/Library/Fonts/Courier New.ttf',
-				'/Library/Fonts/Trebuchet MS.ttf',
-				'/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf',
-				'/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf',
-				'/usr/share/fonts/truetype/freefont/FreeSans.ttf',
-				'/usr/share/fonts/truetype/liberation/LiberationSans-Regular.ttf',
-				);
-
-				foreach($possible_fonts as $font_file)
+				$font_dir = false;
+				foreach(array('/usr/share/fonts/', '/Library/Fonts', 'C:/Windows/Fonts/') as $font_dir_check)
 				{
-					if(is_readable($font_file))
+					if(is_dir($font_dir_check))
 					{
-						$default_font = $font_file;
+						$font_dir = $font_dir_check;
 						break;
+					}
+				}
+
+				if($font_dir)
+				{
+					$backup_font = false;
+					$preferred_fonts = array('DejaVuSans.ttf', 'LiberationSans-Regular.ttf', 'Vera.ttf', 'FreeSans.ttf', 'verdana.ttf', 'calibri.ttf', 'Courier New.ttf');
+					$backup_fonts = array('Sans.ttf', 'Sans-Regular.ttf', '-Regular.ttf', 'Trebuchet MS.ttf');
+
+					foreach(array_merge(pts_file_io::glob($font_dir . '*/*/*.ttf'), pts_file_io::glob($font_dir . '*/*.ttf'), pts_file_io::glob($font_dir . '*.ttf')) as $ttf_font_check)
+					{
+						foreach($preferred_fonts as $pf)
+						{
+							if(stripos($ttf_font_check, $pf) !== false)
+							{
+								$default_font = $ttf_font_check;
+								break;
+							}
+						}
+						if(!empty($default_font))
+						{
+							break;
+						}
+						foreach($backup_fonts as $bf)
+						{
+							if(stripos($ttf_font_check, $bf) !== false)
+							{
+								$backup_font = $ttf_font_check;
+								break;
+							}
+						}
+					}
+					if(empty($default_font) && !empty($backup_font))
+					{
+						$default_font = $backup_font;
 					}
 				}
 			}
