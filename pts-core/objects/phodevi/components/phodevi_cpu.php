@@ -552,10 +552,13 @@ class phodevi_cpu extends phodevi_device_interface
 						}
 						break;
 					default:
-						$info = str_replace(': ', ' ', $info);
+						if(!empty($info))
+						{
+							$info = str_replace(': ', ' ', $info);
+						}
 						break;
 				}
-				if(strpos($info, 'ARM') !== false)
+				if(!empty($info) && strpos($info, 'ARM') !== false)
 				{
 					if(is_dir('/sys/devices/system/exynos-core/') && stripos($info, 'Exynos') === false)
 					{
@@ -767,6 +770,18 @@ class phodevi_cpu extends phodevi_device_interface
 							$new_info .= ' Cortex-M33';
 							break;
 					}
+				}
+				else if($implementer == '0x61')
+				{
+						$new_info = 'Apple';
+						$part = phodevi_linux_parser::read_cpuinfo_single('CPU part');
+						switch($part)
+						{
+							case '0x022':
+							case '0x023':
+								$new_info .= ' M1';
+								break;
+						}
 				}
 
 				if(strpos(phodevi::$vfs->dmesg, 'Ampere eMAG') !== false || stripos(pts_file_io::file_get_contents_if_exists('/sys/devices/virtual/dmi/id/sys_vendor'), 'Ampere') !== false || stripos(pts_file_io::file_get_contents_if_exists('/sys/devices/virtual/dmi/id/bios_vendor'), 'Ampere') !== false)
@@ -1256,6 +1271,7 @@ class phodevi_cpu extends phodevi_device_interface
 				167 => 'Rocket Lake',
 				168 => 'Rocket Lake',
 				183 => 'Raptor Lake',
+				190 => 'Alder Lake',
 				),
 			15 => array(
 				1 => 'Clarksfield',

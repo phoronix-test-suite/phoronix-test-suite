@@ -107,6 +107,16 @@ class sys_temp extends phodevi_sensor
 			}
 		}
 
+		if(pts_client::executable_in_path('ipmitool'))
+		{
+			$ipmi = phodevi_linux_parser::read_ipmitool_sensor(array('MB Temp'));
+
+			if($ipmi > 0 && is_numeric($ipmi))
+			{
+				$temp_c = $ipmi;
+			}
+		}
+
 		return $temp_c;
 	}
 

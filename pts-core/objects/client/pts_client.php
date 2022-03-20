@@ -375,7 +375,7 @@ class pts_client
 			'OS_VERSION' => phodevi::read_property('system', 'os-version'),
 			'OS_ARCH' => phodevi::read_property('system', 'kernel-architecture'),
 			'OS_TYPE' => phodevi::os_under_test(),
-			'CPU_FAMILY' => str_replace(' ', '', strtolower(phodevi::read_property('cpu', 'core-family-name'))),
+			'CPU_FAMILY' => (($family = phodevi::read_property('cpu', 'core-family-name')) != '' ? str_replace(' ', '', strtolower($family)) : ''),
 			'THIS_RUN_TIME' => PTS_INIT_TIME,
 			'DEBUG_REAL_HOME' => pts_core::user_home_directory(),
 			'DEBUG_PATH' => pts_client::get_path(),
