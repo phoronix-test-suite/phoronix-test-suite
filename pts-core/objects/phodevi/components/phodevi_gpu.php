@@ -545,8 +545,6 @@ class phodevi_gpu extends phodevi_device_interface
 
 		foreach($available_modes as $mode_index => $mode)
 		{
-			$this_ratio = pts_math::set_precision($mode[0] / $mode[1], 2);
-
 			if($override_check && !in_array($mode, $override_modes))
 			{
 				// Using override modes and this mode is not present
