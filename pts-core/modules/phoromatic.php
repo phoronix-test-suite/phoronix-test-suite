@@ -69,19 +69,19 @@ class phoromatic extends pts_module_interface
 			if(pts_types::is_result_file($arg))
 			{
 				$uploads++;
-				echo PHP_EOL . 'Uploading: ' . $arg . PHP_EOL;
+				pts_client::$display->generic_message(PHP_EOL . 'Uploading: ' . $arg . PHP_EOL);
 				$result_file = pts_types::identifier_to_object($arg);
 				$server_response = self::upload_test_result($result_file);
 				$server_response = json_decode($server_response, true);
 				if(isset($server_response['phoromatic']['response']))
-					echo '   Result Uploaded' . PHP_EOL;
+					pts_client::$display->generic_message('   Result Uploaded' . PHP_EOL);
 				else
-					echo '   Upload Failed' . PHP_EOL;
+					pts_client::$display->generic_message('   Upload Failed' . PHP_EOL);
 			}
 		}
 
 		if($uploads == 0)
-			echo PHP_EOL . 'No Result Files Found To Upload.' . PHP_EOL;
+			pts_client::$display->generic_message(PHP_EOL . 'No Result Files Found To Upload.' . PHP_EOL);
 	}
 	public static function set_root_admin_password()
 	{
@@ -98,7 +98,7 @@ class phoromatic extends pts_module_interface
 			while(hash('sha256', 'PTS' . $check_root_pw) != $root_admin_pw);
 		}
 
-		echo PHP_EOL . 'The new root-admin password must be at least six characters long.' . PHP_EOL;
+		pts_client::$display->generic_message(PHP_EOL . 'The new root-admin password must be at least six characters long.' . PHP_EOL);
 		do
 		{
 			$new_root_pw = pts_user_io::prompt_user_input('Please enter the new root-admin password');
@@ -145,12 +145,12 @@ class phoromatic extends pts_module_interface
 				if($response && isset($response['pts']))
 				{
 					$server_count++;
-					echo PHP_EOL . 'IP: ' . $archived_server['ip'] . PHP_EOL;
-					echo 'HTTP PORT: ' . $archived_server['http_port'] . PHP_EOL;
-					echo 'PROTOCOL: ' . ($supports_https ? 'HTTPS': 'HTTP') . PHP_EOL;
-					echo 'WEBSOCKET PORT: ' . $response['ws_port'] . PHP_EOL;
-					echo 'SERVER: ' . $response['http_server'] . PHP_EOL;
-					echo 'PHORONIX TEST SUITE: ' . $response['pts'] . ' [' . $response['pts_core'] . ']' . PHP_EOL;
+					pts_client::$display->generic_message( PHP_EOL . 'IP: ' . $archived_server['ip'] . PHP_EOL);
+					pts_client::$display->generic_message( 'HTTP PORT: ' . $archived_server['http_port'] . PHP_EOL);
+					pts_client::$display->generic_message( 'PROTOCOL: ' . ($supports_https ? 'HTTPS': 'HTTP') . PHP_EOL);
+					pts_client::$display->generic_message( 'WEBSOCKET PORT: ' . $response['ws_port'] . PHP_EOL);
+					pts_client::$display->generic_message( 'SERVER: ' . $response['http_server'] . PHP_EOL);
+					pts_client::$display->generic_message( 'PHORONIX TEST SUITE: ' . $response['pts'] . ' [' . $response['pts_core'] . ']' . PHP_EOL);
 
 					// TODO XXX fix/finish below code...
 					if(false && ($ws = new phoromatic_client_comm_ws($archived_server['ip'], $response['ws_port'])))
@@ -167,7 +167,7 @@ class phoromatic extends pts_module_interface
 						// Provide some other server info via HTTP
 
 						$repo = pts_network::http_get_contents(($supports_https ? 'https://' : 'http://') . $archived_server['ip'] . ':' . $archived_server['http_port'] . '/download-cache.php?repo');
-						echo 'DOWNLOAD CACHE: ';
+						pts_client::$display->generic_message( 'DOWNLOAD CACHE: ');
 						if(!empty($repo))
 						{
 							$repo = json_decode($repo, true);
@@ -178,19 +178,19 @@ class phoromatic extends pts_module_interface
 								{
 									$total_file_size += $repo['phoronix-test-suite']['download-cache'][$file_name]['file_size'];
 								}
-								echo count($repo['phoronix-test-suite']['download-cache']) . ' FILES / ' . round($total_file_size / 1000000) . ' MB CACHE SIZE';
+								pts_client::$display->generic_message(count($repo['phoronix-test-suite']['download-cache']) . ' FILES / ' . round($total_file_size / 1000000) . ' MB CACHE SIZE');
 							}
 						}
 						else
 						{
-							echo 'N/A';
+							pts_client::$display->generic_message('N/A');
 						}
 					}
 
-					echo PHP_EOL;
+					pts_client::$display->generic_message(PHP_EOL);
 
 					$repo = pts_network::http_get_contents(($supports_https ? 'https://' : 'http://') . $archived_server['ip'] . ':' . $archived_server['http_port'] . '/openbenchmarking-cache.php?repos');
-					echo 'SUPPORTED OPENBENCHMARKING.ORG REPOSITORIES:' . PHP_EOL;
+					pts_client::$display->generic_message('SUPPORTED OPENBENCHMARKING.ORG REPOSITORIES:' . PHP_EOL);
 					if(!empty($repo))
 					{
 						$repo = json_decode($repo, true);
@@ -198,13 +198,13 @@ class phoromatic extends pts_module_interface
 						{
 							foreach($repo['repos'] as $data)
 							{
-								echo '      ' . $data['title'] . ' - Last Generated: ' . date('d M Y H:i', $data['generated']) . PHP_EOL;
+								pts_client::$display->generic_message( '      ' . $data['title'] . ' - Last Generated: ' . date('d M Y H:i', $data['generated']) . PHP_EOL);
 							}
 						}
 					}
 					else
 					{
-						echo '      N/A' . PHP_EOL;
+						pts_client::$display->generic_message(  '      N/A' . PHP_EOL);
 					}
 				}
 			}
@@ -212,7 +212,7 @@ class phoromatic extends pts_module_interface
 
 		if($server_count == 0)
 		{
-			echo PHP_EOL . 'No Phoromatic Servers detected.' . PHP_EOL . PHP_EOL;
+			pts_client::$display->generic_message(PHP_EOL . 'No Phoromatic Servers detected.' . PHP_EOL . PHP_EOL);
 		}
 	}
 	protected static function tick_thread($force_manual_poll = false)
@@ -413,11 +413,11 @@ class phoromatic extends pts_module_interface
 		if(self::$server_address == null || self::$server_http_port == null || self::$account_id == null)
 		{
 			pts_client::$pts_logger && pts_client::$pts_logger->log('Phoromatic Server connection setup failed');
-			echo PHP_EOL . 'You must pass the Phoromatic Server information as an argument to phoromatic.connect, or otherwise configure your network setup.' . PHP_EOL . '      e.g. phoronix-test-suite phoromatic.connect 192.168.1.2:5555/I0SSJY' . PHP_EOL . PHP_EOL;
+			pts_client::$display->generic_message(  PHP_EOL . 'You must pass the Phoromatic Server information as an argument to phoromatic.connect, or otherwise configure your network setup.' . PHP_EOL . '      e.g. phoronix-test-suite phoromatic.connect 192.168.1.2:5555/I0SSJY' . PHP_EOL . PHP_EOL);
 
 			if(PTS_IS_DAEMONIZED_SERVER_PROCESS && !empty($archived_servers))
 			{
-				echo 'The Phoromatic client appears to be running as a system service/daemon so will attempt to continue auto-polling to find the Phoromatic Server.' . PHP_EOL . PHP_EOL;
+				pts_client::$display->generic_message(  'The Phoromatic client appears to be running as a system service/daemon so will attempt to continue auto-polling to find the Phoromatic Server.' . PHP_EOL . PHP_EOL);
 
 				$success = false;
 				do
@@ -480,7 +480,7 @@ class phoromatic extends pts_module_interface
 
 		if(phodevi::system_uptime() < 60)
 		{
-			echo 'PHOROMATIC: Sleeping for 60 seconds as system freshly started.' . PHP_EOL;
+			pts_client::$display->generic_message( 'PHOROMATIC: Sleeping for 60 seconds as system freshly started.' . PHP_EOL);
 			pts_client::$pts_logger->log('Sleeping for 60 seconds as system freshly started');
 			sleep(60);
 		}
@@ -541,7 +541,7 @@ class phoromatic extends pts_module_interface
 			else if(substr($server_response, 0, 1) == '[')
 			{
 				// Likely a notice/warning from server
-				echo PHP_EOL . substr($server_response, 0, strpos($server_response, PHP_EOL)) . PHP_EOL;
+				pts_client::$display->generic_message( PHP_EOL . substr($server_response, 0, strpos($server_response, PHP_EOL)) . PHP_EOL);
 			}
 			else if(substr($server_response, 0, 1) == '{')
 			{
@@ -562,7 +562,7 @@ class phoromatic extends pts_module_interface
 					}
 					if(isset($json['phoromatic']['response']) && !empty($json['phoromatic']['response']))
 					{
-						echo PHP_EOL . $json['phoromatic']['response'] . PHP_EOL;
+						pts_client::$display->generic_message(PHP_EOL . $json['phoromatic']['response'] . PHP_EOL);
 					}
 					if(isset($json['phoromatic']['system_id']) && !empty($json['phoromatic']['system_id']))
 					{
@@ -788,7 +788,7 @@ class phoromatic extends pts_module_interface
 						pts_module_manager::detach_extra_modules($original_pts_modules);
 						break;
 					case 'reboot':
-						echo PHP_EOL . 'Phoromatic received a remote command to reboot.' . PHP_EOL;
+						pts_client::$display->generic_message(PHP_EOL . 'Phoromatic received a remote command to reboot.' . PHP_EOL);
 						phoromatic::update_system_status('Attempting System Reboot');
 						self::tick_thread(true);
 						phodevi::reboot();
@@ -812,13 +812,13 @@ class phoromatic extends pts_module_interface
 							sleep(10);
 						}
 
-						echo PHP_EOL . 'Phoromatic received a remote command to shutdown.' . PHP_EOL;
+						pts_client::$display->generic_message(PHP_EOL . 'Phoromatic received a remote command to shutdown.' . PHP_EOL);
 						phoromatic::update_system_status('Attempting System Shutdown');
 						self::tick_thread(true);
 						phodevi::shutdown();
 						break;
 					case 'maintenance':
-						echo PHP_EOL . 'Idling, system maintenance mode set by Phoromatic Server.' . PHP_EOL;
+						pts_client::$display->generic_message(PHP_EOL . 'Idling, system maintenance mode set by Phoromatic Server.' . PHP_EOL);
 						phoromatic::update_system_status('Maintenance Mode' . self::check_for_separate_pts_thread_process());
 						sleep(60);
 						break;
@@ -831,7 +831,7 @@ class phoromatic extends pts_module_interface
 						phoromatic::update_system_status('Idling, Waiting For Task' . self::check_for_separate_pts_thread_process());
 						break;
 					case 'exit':
-						echo PHP_EOL . 'Phoromatic received a remote command to exit.' . PHP_EOL;
+						pts_client::$display->generic_message(PHP_EOL . 'Phoromatic received a remote command to exit.' . PHP_EOL);
 						phoromatic::update_system_status('Exiting Phoromatic');
 						self::tick_thread(true);
 						$do_exit = true;
@@ -1093,15 +1093,15 @@ class phoromatic extends pts_module_interface
 		{
 			foreach($server_response['phoromatic']['results'] as $pprid => $result)
 			{
-				echo pts_client::cli_just_bold($result['Title']) . ' ' . $pprid . ' ' . date('j M H:i', strtotime($result['UploadTime'])) . PHP_EOL;
-				echo '   ' . $result['SystemName'] . ' ' . $result['GroupName'];
-				echo PHP_EOL . PHP_EOL;
+				pts_client::$display->generic_message(pts_client::cli_just_bold($result['Title']) . ' ' . $pprid . ' ' . date('j M H:i', strtotime($result['UploadTime'])) . PHP_EOL);
+				pts_client::$display->generic_message('   ' . $result['SystemName'] . ' ' . $result['GroupName']);
+				pts_client::$display->generic_message(PHP_EOL . PHP_EOL);
 			}
 		}
 		else
-			echo PHP_EOL . 'No Phoromatic Server results discovered.';
+			pts_client::$display->generic_message (PHP_EOL . 'No Phoromatic Server results discovered.');
 
-		echo PHP_EOL;
+		pts_client::$display->generic_message (PHP_EOL);
 	}
 	public static function clone_phoromatic_server_result($args)
 	{
@@ -1117,10 +1117,10 @@ class phoromatic extends pts_module_interface
 			$result_file = new pts_result_file($composite_xml);
 			// TODO XXX: Add system log downloading support
 			pts_client::save_test_result($id . '/composite.xml', $result_file->get_xml(), true);
-			echo PHP_EOL . 'Result File Saved As: ' . $id . PHP_EOL . PHP_EOL;
+			pts_client::$display->generic_message(PHP_EOL . 'Result File Saved As: ' . $id . PHP_EOL . PHP_EOL);
 		}
 		else
-			echo PHP_EOL . 'No Phoromatic result found.' . PHP_EOL;
+			pts_client::$display->generic_message(PHP_EOL . 'No Phoromatic result found.' . PHP_EOL);
 	}
 	private static function run_client_update_script($update_script)
 	{

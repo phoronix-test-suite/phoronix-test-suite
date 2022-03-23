@@ -270,8 +270,8 @@ class pts_openbenchmarking
 			{
 				$test_versions_count += count($t['versions']);
 			}
-			echo pts_client::cli_colored_text('Updated OpenBenchmarking.org Repository Index', 'green', true) . PHP_EOL;
-			echo pts_client::cli_colored_text($repo . ': ' . pts_strings::plural_handler(count($new_index['tests']), 'Distinct Test') . ', ' . pts_strings::plural_handler($test_versions_count, 'Test Version') . (count($new_index['suites']) > 0 ? ', ' . pts_strings::plural_handler(count($new_index['suites']), 'Suite') : null), 'green', true) . PHP_EOL;
+			pts_client::$display->generic_message(pts_client::cli_colored_text('Updated OpenBenchmarking.org Repository Index', 'green', true) . PHP_EOL);
+			pts_client::$display->generic_message(pts_client::cli_colored_text($repo . ': ' . pts_strings::plural_handler(count($new_index['tests']), 'Distinct Test') . ', ' . pts_strings::plural_handler($test_versions_count, 'Test Version') . (count($new_index['suites']) > 0 ? ', ' . pts_strings::plural_handler(count($new_index['suites']), 'Suite') : null), 'green', true) . PHP_EOL);
 			$table = array();
 			foreach(array_keys($new_index['tests']) as $test)
 			{
@@ -310,8 +310,8 @@ class pts_openbenchmarking
 			}
 			if(!empty($table))
 			{
-				echo pts_client::cli_just_italic('Available Changes From ' . date('j F' . (date('Y') != date('Y', $old_index['main']['generated']) ? ' Y' : ''), $old_index['main']['generated']) . ' To ' . date('j F', $new_index['main']['generated'])) . PHP_EOL;
-				echo pts_user_io::display_text_table($table) . PHP_EOL;
+				pts_client::$display->generic_message(pts_client::cli_just_italic('Available Changes From ' . date('j F' . (date('Y') != date('Y', $old_index['main']['generated']) ? ' Y' : ''), $old_index['main']['generated']) . ' To ' . date('j F', $new_index['main']['generated'])) . PHP_EOL);
+				pts_client::$display->generic_message(pts_user_io::display_text_table($table) . PHP_EOL);
 			}
 		}
 	}
