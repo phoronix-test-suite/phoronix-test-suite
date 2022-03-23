@@ -775,6 +775,9 @@ class pts_client
 
 		switch(strtoupper($env_mode))
 		{
+			case 'LOGGING':
+				self::$display = new pts_logging_display_mode();
+				break;
 			case 'BASIC':
 				self::$display = new pts_basic_display_mode();
 				break;

@@ -45,8 +45,8 @@ class pts_logger
 			}
 		}
 
-	//	if(file_exists($log_file))
-	//		unlink($log_file);
+		//	if(file_exists($log_file))
+		//		unlink($log_file);
 
 		if($flush_log_if_present || !file_exists($log_file))
 		{
@@ -77,7 +77,7 @@ class pts_logger
 	}
 	public static function is_debug_mode()
 	{
-		return PTS_IS_DEV_BUILD || getenv('PTS_DEBUG_LOG');
+		return PTS_IS_DEV_BUILD || getenv('PTS_DEBUG_LOG') || getenv('PTS_DISPLAY_MODE');
 	}
 	public function debug_log($message, $date_prefix = true)
 	{
@@ -86,21 +86,43 @@ class pts_logger
 			$this->log($message, $date_prefix);
 		}
 	}
-	public function log($message, $date_prefix = true)
+	public function log($message, $date_prefix = true, $extra_fudge = 0)
 	{
+		$fudge = (integer) $extra_fudge;
+		$offset = 0;
+
 		if($this->log_file == null)
 			return;
 
-		$traces = pts_client::is_debug_mode() ? debug_backtrace() : false;
-		if($traces && isset($traces[0]))
-    		{
-		        $caller = $traces[1]['function'];
-		        $line = $traces[0]['line'];
-		        $file = basename($traces[0]['file']);
+			$traces = pts_client::is_debug_mode() ? debug_backtrace() : false;
+			if($traces && isset($traces[0]))
+		{
+			$caller = $traces[1]['function'];
+			// if we are calling the static add_to_log method, go one more level up
+			// and fudge the other calls accordingly.
+			if ($caller == "add_to_log") {
+				$fudge ++;
+				$offset = ($fudge) + 1;
+				$caller = $traces[$offset]['function'];
+			}
+			$line_no = $traces[0 + $fudge + 1]['line'];
+			$file = basename($traces[0 + $fudge + 1]['file']);
 		}
 
 		$message = pts_user_io::strip_ansi_escape_sequences($message);
-		file_put_contents($this->log_file, ($date_prefix ? '[' . date('Y-m-d\TH:i:sO') . '] ' : '') . ($traces ? '[' . $caller . '('. $file . ':' . $line . ')] ' : '') . $message . PHP_EOL, FILE_APPEND);
+
+		if (!is_array($message)) {
+			$message  = [$message];
+		}
+
+		foreach ($message as $message_line) {
+			$lines = explode(PHP_EOL, $message_line);
+
+			foreach ($lines as $line) {
+				if ($line != PHP_EOL)
+					file_put_contents($this->log_file, ($date_prefix ? '[' . date('Y-m-d\TH:i:sO') . '] ' : '') . ($traces ? '[' . $caller . '(' . $file . ':' . $line_no . ')] ' : '') . $line . PHP_EOL, FILE_APPEND);
+			}
+		}
 	}
 	public function get_log_file_size()
 	{
@@ -121,14 +143,14 @@ class pts_logger
 	{
 		return file_get_contents($this->get_log_file_location());
 	}
-	public static function add_to_log($message)
+	public static function add_to_log($message, $extra_fudge=0)
 	{
 		static $logger = null;
 
 		if($logger == null)
 			$logger = new pts_logger();
 
-		$logger->log($message);
+		$logger->log($message, true, $extra_fudge);
 	}
 	public function report_error($level, $message, $file, $line)
 	{

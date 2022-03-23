@@ -54,7 +54,8 @@ class pts_env
 			'default' => '',
 			'usage' => array('all'),
 			'value_type' => 'enum',
-			'enum' => array('BASIC', 'BATCH', 'CONCISE', 'SHORT', 'DEFAULT'),
+			'advertise_in_phoromatic' => true,
+			'enum' => array('BASIC', 'BATCH', 'CONCISE', 'SHORT', 'DEFAULT',"LOGGING"),
 			),
 		'NO_PHODEVI_CACHE' => array(
 			'description' => 'This option will disable use of the built-in Phodevi (Phoronix Device Interface) cache of system software/hardware details. When enabled, the information is not cached and will be re-computed on each query. This is mainly useful for debugging purposes.',
