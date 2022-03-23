@@ -727,6 +727,7 @@ class pts_client
 
 				if(($extra_logs_dir = pts_env::read('PTS_EXTRA_SYSTEM_LOGS_DIR')) != false && is_dir($extra_logs_dir))
 				{
+					pts_client::$display->generic_message("Including files from ".$extra_logs_dir." in upload");
 					// Allow extra arbitrary system logs to be collected within PTS_EXTRA_SYSTEM_LOGS_DIR
 					foreach(pts_file_io::glob($extra_logs_dir . '/*') as $extra_log)
 					{
@@ -735,6 +736,7 @@ class pts_client
 						// Don't overwrite existing auto-generated system log files + also ensure log file is text and not binary etc payload
 						if(!is_file($system_log_dir . $extra_log_basename) && (self::$skip_log_file_type_checks || pts_file_io::is_text_file($extra_log)))
 						{
+							pts_client::$display->generic_message("  Copying ".$extra_log);
 							copy($extra_log, $system_log_dir . $extra_log_basename);
 						}
 					}
