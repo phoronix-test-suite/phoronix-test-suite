@@ -409,5 +409,15 @@
 			<GenericName>libconfigpp</GenericName>
 			<PackageName>libconfig-devel</PackageName>
 		</Package>
+		<Package>
+			<GenericName>python-numpy</GenericName>
+			<PackageName>python3-numpy</PackageName>
+			<FileCheck>/usr/lib*/python*/site-packages/numpy</FileCheck>
+		</Package>
+		<Package>
+			<GenericName>python-scipy</GenericName>
+			<PackageName>python3-scipy</PackageName>
+			<FileCheck>/usr/lib*/python*/site-packages/scipy</FileCheck>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
