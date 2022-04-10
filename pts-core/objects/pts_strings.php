@@ -781,7 +781,7 @@ class pts_strings
 	}
 	public static function sanitize($input)
 	{
-		return htmlspecialchars($input, ENT_NOQUOTES, 'UTF-8');
+		return empty($input) ? '' : htmlspecialchars($input, ENT_NOQUOTES, 'UTF-8');
 	}
 	public static function simple($input)
 	{

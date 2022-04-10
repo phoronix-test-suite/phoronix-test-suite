@@ -1010,9 +1010,13 @@ class pts_result_file_analyzer
 				continue;
 			}
 
-			$tests_counted++;
 			$winner = $result->get_result_first();
 			$loser = $result->get_result_last();
+
+			if($winner == null || $loser == null)
+			{
+				continue;
+			}
 
 			if(!isset($wins[$winner]))
 			{
@@ -1031,6 +1035,7 @@ class pts_result_file_analyzer
 			{
 				$losses[$loser]++;
 			}
+			$tests_counted++;
 		}
 
 		if(empty($wins) || empty($losses))

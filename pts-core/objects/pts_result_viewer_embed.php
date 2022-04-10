@@ -300,7 +300,7 @@ class pts_result_viewer_embed
 				if(is_file(PTS_INTERNAL_OB_CACHE . 'test-profiles/' . $result_object->test_profile->get_identifier() . '/test-definition.xml'))
 				{
 					$tp = new pts_test_profile(PTS_INTERNAL_OB_CACHE . 'test-profiles/' . $result_object->test_profile->get_identifier() . '/test-definition.xml');
-					$PAGE .= '<p class="mini">' . $tp->get_description() . ' <a href="https://openbenchmarking.org/test/' . $result_object->test_profile->get_identifier(false) . '"><em class="hide_on_print">Learn more via the OpenBenchmarking.org test page</em></a>.</p>';
+					$PAGE .= '<p class="mini">' . $tp->get_description() . ' <a href="https://openbenchmarking.org/test/' . $result_object->test_profile->get_identifier(false) . '"><em class="hide_on_print">Learn more via the OpenBenchmarking.org test page.</em></a></p>';
 
 				/*	$suites_containing_test = pts_test_suites::suites_containing_test_profile($result_object->test_profile);
 					if(!empty($suites_containing_test))
@@ -1359,6 +1359,18 @@ class pts_result_viewer_embed
 				}
 			}
 		}
+		if(($rmm = self::check_request_for_var($request, 'rmm')))
+		{
+			if(!is_array($rmm))
+			{
+				$rmm = explode(',', $rmm);
+			}
+
+			foreach($rmm as $rm)
+			{
+				$result_file->remove_run($rm);
+			}
+		}
 
 		if(self::check_request_for_var($request, 'grs'))
 		{
@@ -1465,18 +1477,6 @@ class pts_result_viewer_embed
 		else if(self::check_request_for_var($request, 'hgv_base64'))
 		{
 			$extra_attributes['highlight_graph_values'] = explode(',', base64_decode(self::check_request_for_var($request, 'hgv_base64')));
-		}
-		if(($rmm = self::check_request_for_var($request, 'rmm')))
-		{
-			if(!is_array($rmm))
-			{
-				$rmm = explode(',', $rmm);
-			}
-
-			foreach($rmm as $rm)
-			{
-				$result_file->remove_run($rm);
-			}
 		}
 		if(self::check_request_for_var($request, 'scalar'))
 		{

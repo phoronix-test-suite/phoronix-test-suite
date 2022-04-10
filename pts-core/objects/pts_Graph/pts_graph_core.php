@@ -983,7 +983,7 @@ abstract class pts_graph_core
 
 		$this->i['key_line_height'] = 16;
 		$ak = array_keys($this->results);
-		$this->i['key_item_width'] = 8 + ceil(self::text_string_width(pts_strings::find_longest_string($ak), self::$c['size']['key']) * 1.4);
+		$this->i['key_item_width'] = 2 + ceil(self::text_string_width(pts_strings::find_longest_string($ak), self::$c['size']['key']) * 1.3);
 		$this->i['keys_per_line'] = max(1, floor(($this->i['graph_left_end'] - $this->i['left_start']) / $this->i['key_item_width']));
 
 		return ceil(count($this->results) / $this->i['keys_per_line']) * $this->i['key_line_height'];
