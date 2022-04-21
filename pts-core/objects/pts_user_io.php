@@ -305,6 +305,9 @@ class pts_user_io
 
 			foreach(($allow_multi_select ? pts_strings::comma_explode($select_choice) : array($select_choice)) as $choice)
 			{
+				// sanitize the input against extra spaces (that may be added from the autocompletion)
+				$choice = pts_strings::trim_spaces($choice);
+
 				if(isset($key_index[$choice]))
 				{
 					$select[] = $key_index[$choice];
