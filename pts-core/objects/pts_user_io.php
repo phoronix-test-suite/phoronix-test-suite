@@ -305,13 +305,14 @@ class pts_user_io
 
 			foreach(($allow_multi_select ? pts_strings::comma_explode($select_choice) : array($select_choice)) as $choice)
 			{
-				if(isset($key_index[$choice]))
+				$choice_trimmed = pts_strings::trim_spaces($choice);
+				if(isset($key_index[($c = $choice)]) || isset($key_index[($c = $choice_trimmed)]))
 				{
-					$select[] = $key_index[$choice];
+					$select[] = $key_index[$c];
 				}
-				else if(in_array($choice, $options_r))
+				else if(in_array(($c = $choice), $options_r) || in_array(($c = $choice_trimmed), $options_r))
 				{
-					$select[] = array_search($choice, $options_r);
+					$select[] = array_search($c, $options_r);
 				}
 				else if($allow_multi_select && strpos($choice, '-') !== false)
 				{
