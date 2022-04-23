@@ -86,12 +86,15 @@ class arch_dependency_handler implements pts_dependency_handler
 	{
 		$pkgfile_output = shell_exec('pkgfile ' . $arg . ' 2>/dev/null');
 
-		foreach(explode(PHP_EOL, $pkgfile_output) as $line)
+		if(!empty($pkgfile_output))
 		{
-			$line = trim($line);
-			if(!empty($line))
+			foreach(explode(PHP_EOL, $pkgfile_output) as $line)
 			{
-				return $line;
+				$line = trim($line);
+				if(!empty($line))
+				{
+					return $line;
+				}
 			}
 		}
 
