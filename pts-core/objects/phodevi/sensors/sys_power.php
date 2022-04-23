@@ -317,6 +317,7 @@ class sys_power extends phodevi_sensor
 				}
 			}
 
+			// TODO add glob or BATT at least
 			if($rate == -1 && is_file('/sys/class/power_supply/BAT0/voltage_now') && is_file('/sys/class/power_supply/BAT0/current_now'))
 			{
 				$voltage_now = pts_file_io::file_get_contents('/sys/class/power_supply/BAT0/voltage_now');

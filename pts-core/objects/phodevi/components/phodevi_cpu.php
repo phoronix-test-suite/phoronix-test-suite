@@ -266,12 +266,16 @@ class phodevi_cpu extends phodevi_device_interface
 			{
 					$lscpu = substr(phodevi::$vfs->lscpu, $t + strlen('L3 cache:') + 1);
 					$lscpu = substr($lscpu, 0, strpos($lscpu, PHP_EOL));
+					if(!empty($lscpu) && ($x = stripos($lscpu, ' (')) !== false)
+					{
+						$lscpu = substr($lscpu, 0, $x);
+					}
 					$lscpu = trim($lscpu);
 					$cache_size = pts_math::number_with_unit_to_mb($lscpu);
 			}
 			if(empty($cache_size) || !is_numeric($cache_size))
 			{
-				$cache_size = self::cpuinfo_cache_size();
+				$cache_size = pts_math::unit_to_mb(self::cpuinfo_cache_size(), 'K');
 			}
 		}
 		else if(phodevi::is_macos())
@@ -742,11 +746,23 @@ class phodevi_cpu extends phodevi_device_interface
 						case '0xd40':
 							$new_info .= ' Neoverse-V1';
 							break;
+						case '0xd41':
+							$new_info .= ' Cortex-A78';
+							break;
+						case '0xd42':
+							$new_info .= ' Cortex-A78E';
+							break;
 						case '0xd44':
 							$new_info .= ' Cortex-X1';
 							break;
+						case '0xd4b':
+							$new_info .= ' Cortex-A78C';
+							break;
 						case '0xd4c':
 							$new_info .= ' Cortex-X1C';
+							break;
+						case '0xd46':
+							$new_info .= ' Cortex-A510';
 							break;
 						case '0xd47':
 							$new_info .= ' Cortex-A710';
@@ -1271,6 +1287,7 @@ class phodevi_cpu extends phodevi_device_interface
 				167 => 'Rocket Lake',
 				168 => 'Rocket Lake',
 				183 => 'Raptor Lake',
+				186 => 'Raptor Lake',
 				190 => 'Alder Lake',
 				),
 			15 => array(
@@ -1493,7 +1510,7 @@ class phodevi_cpu extends phodevi_device_interface
 	public static function cpu_cache_size_string()
 	{
 		$cache_size = phodevi::read_property('cpu', 'cache-size');
-		if($cache_size > 1)
+		if($cache_size > 0.1)
 		{
 			$cache_size .= ' MB';
 		}
