@@ -1,5 +1,13 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite 10.8.3
+23 April 2022
+
+pts-core: Workaround Ubuntu 22.04 apt-get crashing the entire process on dependency installation
+pts-core: Improved TTF font file detection
+pts-core: Minor random fixes
+phodevi: Apple M1 detection on Linux
+
 Phoronix Test Suite 10.8.2
 13 February 2022
 

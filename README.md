@@ -1,4 +1,4 @@
-# Phoronix Test Suite 10.8.2
+# Phoronix Test Suite 10.8.3
 ![Phoronix Test Suite](pts-core/static/images/pts-308x160.png)
 
 The **Phoronix Test Suite** is the most comprehensive testing and benchmarking

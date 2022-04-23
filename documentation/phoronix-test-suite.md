@@ -686,15 +686,18 @@ Supported Options:
   - all.hdd
   - hdd.read-speed
   - all.hdd.read-speed
-  - hdd.read-speed.md127
+  - hdd.read-speed.sda
+  - hdd.read-speed.sdb
   - hdd.read-speed.nvme0n1
   - hdd.temp
   - all.hdd.temp
-  - hdd.temp.md127
+  - hdd.temp.sda
+  - hdd.temp.sdb
   - hdd.temp.nvme0n1
   - hdd.write-speed
   - all.hdd.write-speed
-  - hdd.write-speed.md127
+  - hdd.write-speed.sda
+  - hdd.write-speed.sdb
   - hdd.write-speed.nvme0n1
   - all.memory
   - memory.temp
@@ -1805,6 +1808,9 @@ This is a collection of test profiles found within the specified OpenBenchmarkin
 
 #### Smp Tests  system/smp
 This is a collection of test profiles found within the specified OpenBenchmarking.org repository where the test profile is specified via an internal tag as testing smp.
+
+#### 64-bit Arm / AArch64 Tests In git  git/aarch64
+This is a collection of test profiles where there have been successful benchmark results submitted to OpenBenchmarking.org from 64-bit Arm / AArch64 CPU architecture hardware, i.e. these tests are proven to be 64-bit Arm / AArch64 compatible though not necessarily all compatible test profiles for the given architecture - just those with submitted public results previously on OpenBenchmarking.org.
 
 #### All Tests in git  git/all
 This is a collection of all supported test profiles found within the specified OpenBenchmarking.org repository.
