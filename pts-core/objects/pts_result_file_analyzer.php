@@ -1572,6 +1572,11 @@ class pts_result_file_analyzer
 				$report[] = 'BAR1 / Visible vRAM Size: ' . $json['bar1-visible-vram'];
 				unset($json['bar1-visible-vram']);
 			}
+			if(isset($json['vbios-version']))
+			{
+				$report[] = 'vBIOS Version: ' . $json['vbios-version'];
+				unset($json['vbios-version']);
+			}
 			$system_attributes['Graphics'][$identifier] = implode(' - ' , $report);
 		}
 		if(isset($json['graphics-compute-cores']))

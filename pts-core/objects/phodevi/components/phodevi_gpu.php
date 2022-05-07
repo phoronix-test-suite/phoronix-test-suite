@@ -40,6 +40,7 @@ class phodevi_gpu extends phodevi_device_interface
 			'screen-resolution-string' => new phodevi_device_property('gpu_screen_resolution_string', phodevi::std_caching),
 			'2d-acceleration' => new phodevi_device_property('gpu_2d_acceleration', phodevi::std_caching),
 			'bar1-visible-vram' => new phodevi_device_property('bar1_visible_vram', phodevi::smart_caching),
+			'vbios-version' => new phodevi_device_property('vbios_version', phodevi::smart_caching),
 			'device-id' => new phodevi_device_property('gpu_pci_device_id', phodevi::smart_caching),
 			);
 	}
@@ -75,6 +76,32 @@ class phodevi_gpu extends phodevi_device_interface
 		}
 
 		return $rebar_size;
+	}
+	public static function vbios_version()
+	{
+		$vbios_version = '';
+		if(phodevi::is_nvidia_graphics())
+		{
+			foreach(pts_file_io::glob('/proc/driver/nvidia/gpus/*/information') as $nvidia_info)
+			{
+				$nvidia_info = file_get_contents($nvidia_info);
+				if(($vbios_line = strpos($nvidia_info, 'Video BIOS')) !== false)
+				{
+					$nvidia_info = substr($nvidia_info, $vbios_line + 12);
+					if(($vbios_line = strpos($nvidia_info, PHP_EOL)) !== false)
+					{
+						$nvidia_info = trim(substr($nvidia_info, 0, $vbios_line));
+						$vbios_version = $nvidia_info;
+					}
+				}
+			}
+		}
+		else if(is_file('/sys/class/drm/card0/device/vbios_version'))
+		{
+			$vbios_version = pts_file_io::file_get_contents('/sys/class/drm/card0/device/vbios_version');
+		}
+
+		return $vbios_version;
 	}
 	public static function gpu_pci_device_id()
 	{

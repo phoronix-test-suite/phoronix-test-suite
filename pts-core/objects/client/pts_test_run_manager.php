@@ -1065,6 +1065,12 @@ class pts_test_run_manager
 			{
 				$notes['bar1-visible-vram'] = $bar1_visible_vram_rebar;
 			}
+
+			$vbios_version = phodevi::read_property('gpu', 'vbios-version');
+			if(!empty($vbios_version))
+			{
+				$notes['vbios-version'] = $vbios_version;
+			}
 		}
 
 		if($show_all || phodevi::read_property('system', 'kernel-parameters'))
