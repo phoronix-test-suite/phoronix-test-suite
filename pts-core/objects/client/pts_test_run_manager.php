@@ -644,8 +644,8 @@ class pts_test_run_manager
 		pts_client::$display->test_run_process_start($this);
 
 		$total_loop_count = (($t = pts_env::read('TOTAL_LOOP_COUNT')) && is_numeric($t) && $t > 0) ? $t : 1;
-		$total_loop_time = (($t = pts_env::read('TOTAL_LOOP_TIME')) && is_numeric($t) && $t > 9) ? ($t * 60) : -1;
-		$loop_end_time = $total_loop_time != -1 ? (time() + $total_loop_time) : false;
+		$total_loop_time = (($t = pts_env::read('TOTAL_LOOP_TIME')) && is_numeric($t) && $t > 1) ? ($t * 60) : -1;
+		$loop_end_time = $total_loop_time > 0 ? (time() + $total_loop_time) : false;
 		$this->test_run_count = ($tests_to_run_count * $total_loop_count);
 
 		for($loop = 1; $loop <= $total_loop_count && $continue_test_flag; $loop++)
@@ -688,9 +688,10 @@ class pts_test_run_manager
 					{
 						$continue_test_flag = false;
 					}
-					else if($this->test_run_count == ($i + 1))
+					else if($tests_to_run_count == ($i + 1))
 					{
 						// There's still time remaining so increase the run count....
+						$total_loop_count++;
 						$this->test_run_count += $tests_to_run_count;
 					}
 				}
