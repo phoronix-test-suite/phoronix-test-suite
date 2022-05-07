@@ -728,14 +728,32 @@ class pts_client
 				if(($extra_logs_dir = pts_env::read('PTS_EXTRA_SYSTEM_LOGS_DIR')) != false && is_dir($extra_logs_dir))
 				{
 					// Allow extra arbitrary system logs to be collected within PTS_EXTRA_SYSTEM_LOGS_DIR
-					foreach(pts_file_io::glob($extra_logs_dir . '/*') as $extra_log)
+					if(self::$skip_log_file_type_checks)
 					{
-						$extra_log_basename = basename($extra_log);
-
-						// Don't overwrite existing auto-generated system log files + also ensure log file is text and not binary etc payload
-						if(!is_file($system_log_dir . $extra_log_basename) && (self::$skip_log_file_type_checks || pts_file_io::is_text_file($extra_log)))
+						// If not bound to just text file backups, just recursive copy directory
+						pts_client::$pts_logger && pts_client::$pts_logger->log('Recursively backing up PTS_EXTRA_SYSTEM_LOGS_DIR: ' . $extra_logs_dir);
+						pts_file_io::copy($extra_logs_dir, $system_log_dir, true);
+					}
+					else
+					{
+						pts_client::$pts_logger && pts_client::$pts_logger->log('Backing up PTS_EXTRA_SYSTEM_LOGS_DIR: ' . $extra_logs_dir);
+						foreach(pts_file_io::glob($extra_logs_dir . '/*') as $extra_log)
 						{
-							copy($extra_log, $system_log_dir . $extra_log_basename);
+							$extra_log_basename = basename($extra_log);
+
+							// Don't overwrite existing auto-generated system log files + also ensure log file is text and not binary etc payload (unless override)
+							if(!is_file($system_log_dir . $extra_log_basename))
+							{
+								if(self::$skip_log_file_type_checks || pts_file_io::is_text_file($extra_log))
+								{
+									copy($extra_log, $system_log_dir . $extra_log_basename);
+									pts_client::$pts_logger && pts_client::$pts_logger->log('Backing up: ' . $extra_log);
+								}
+								else
+								{
+									pts_client::$pts_logger && pts_client::$pts_logger->log('Ignoring log file due to non-text file / no override: ' . $extra_log);
+								}
+							}
 						}
 					}
 				}

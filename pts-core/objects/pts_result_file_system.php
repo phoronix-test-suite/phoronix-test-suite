@@ -196,6 +196,35 @@ class pts_result_file_system
 
 		return $this->has_log_files;
 	}
+	protected function recursive_glob_dir($dir, $root_dir, &$files, $read_file = false, $cleanse_file = true)
+	{
+		if(empty($dir))
+		{
+			return;
+		}
+
+		foreach(pts_file_io::glob($dir . '/*') as $file)
+		{
+			if(is_file($file))
+			{
+				$basename_file = substr($file, strlen($root_dir) + 1);
+				if($read_file !== false && $basename_file == $read_file)
+				{
+					$file = file_get_contents($file);
+					return $cleanse_file ? phodevi_vfs::cleanse_file($file, $basename_file) : $file;
+				}
+				$files[] = $basename_file;
+			}
+			else if(is_dir($file))
+			{
+				$ret = $this->recursive_glob_dir($file, $root_dir, $files, $read_file, $cleanse_file);
+				if(!empty($ret))
+				{
+					return $ret;
+				}
+			}
+		}
+	}
 	public function log_files($read_file = false, $cleanse_file = true)
 	{
 		$files = array();
@@ -203,15 +232,10 @@ class pts_result_file_system
 		{
 			if(($d = $this->parent_result_file->get_system_log_dir($this->get_identifier(), true)) || (($this->get_identifier() != $this->get_original_identifier() && ($d = $this->parent_result_file->get_system_log_dir($this->get_original_identifier(), true)))))
 			{
-				foreach(pts_file_io::glob($d . '/*') as $file)
+				$ret = $this->recursive_glob_dir($d, $d, $files, $read_file, $cleanse_file);
+				if(!empty($ret))
 				{
-					$basename_file = basename($file);
-					if($read_file !== false && $basename_file == $read_file)
-					{
-						$file = file_get_contents($file);
-						return $cleanse_file ? phodevi_vfs::cleanse_file($file, $basename_file) : $file;
-					}
-					$files[] = $basename_file;
+					return $ret;
 				}
 			}
 			else if($this->parent_result_file->get_result_dir() && is_file($this->parent_result_file->get_result_dir() . 'system-logs.zip') && extension_loaded('zip'))
