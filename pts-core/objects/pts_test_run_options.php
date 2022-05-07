@@ -792,6 +792,11 @@ class pts_test_run_options
 			$error = 'Linux support is not available.';
 			return false;
 		}
+		if(stripos($test_args, 'x86_64') !== false && phodevi::read_property('system', 'kernel-architecture') != 'x86_64')
+		{
+			$error = 'x86_64 option unavailable for non-x86_64 architecture.';
+			return false;
+		}
 
 		return true;
 	}
