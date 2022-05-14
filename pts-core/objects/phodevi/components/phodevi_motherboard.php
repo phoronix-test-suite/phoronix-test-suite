@@ -445,7 +445,11 @@ class phodevi_motherboard extends phodevi_device_interface
 		}
 		else if(phodevi::is_windows())
 		{
-			$bios_version = trim(str_ireplace(array('smbiosbiosversion', "\n"), '', shell_exec('wmic bios get smbiosbiosversion')));
+			$bios_version = trim(phodevi_windows_parser::get_wmi_object('win32_bios', 'SMBIOSBIOSVersion'));
+			if(empty($bios_version))
+			{
+				$bios_version = trim(phodevi_windows_parser::get_wmi_object('win32_bios', 'Name'));
+			}
 		}
 
 		if($bios_version == 'Google')
@@ -616,22 +620,18 @@ class phodevi_motherboard extends phodevi_device_interface
 			{
 				if(stripos($info, $vend . ' ') !== false)
 				{
-					$wmi = shell_exec('wmic csproduct get name');
-					if(($x = strpos($wmi, 'Name')) !== false)
+					$wmi = trim(phodevi_windows_parser::get_wmi_object('win32_computersystemproduct', 'Name'));
+
+					if(!empty($wmi) && stripos($wmi, 'System Product') === false)
 					{
-						$wmi = trim(substr($wmi, $x + 4));
-
-						if(!empty($wmi) && stripos($wmi, 'System Product') === false)
+						if(stripos($wmi, $vend . ' ') === false)
 						{
-							if(stripos($wmi, $vend . ' ') === false)
-							{
-								$wmi = $vend . ' ' . $wmi;
-							}
-
-							$old_info = trim(str_ireplace(array($vend . ' ', 'Inc.'), '', $info));
-							$info = $wmi . (!empty($old_info) && strpos($wmi, $old_info) === false ? ' [' . $old_info . ']' : '');
-							break;
+							$wmi = $vend . ' ' . $wmi;
 						}
+
+						$old_info = trim(str_ireplace(array($vend . ' ', 'Inc.'), '', $info));
+						$info = $wmi . (!empty($old_info) && strpos($wmi, $old_info) === false ? ' [' . $old_info . ']' : '');
+						break;
 					}
 				}
 			}
