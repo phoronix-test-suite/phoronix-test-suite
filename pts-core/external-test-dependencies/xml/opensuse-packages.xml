@@ -29,7 +29,7 @@
 		</Package>
 		<Package>
 			<GenericName>expat</GenericName>
-			<PackageName>expat</PackageName>
+			<PackageName>expat libexpat-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>openssl-development</GenericName>

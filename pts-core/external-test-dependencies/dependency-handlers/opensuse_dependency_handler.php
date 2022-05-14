@@ -34,6 +34,26 @@ class opensuse_dependency_handler implements pts_dependency_handler
 			if(pts_client::executable_in_path('zypper'))
 			{
 				$zypper_provides = self::run_zypper_provides($file);
+				if($zypper_provides == null && strlen($file) > 3)
+				{
+					if(substr($file, -2) == '.h')
+					{
+						$zypper_provides = self::run_zypper_provides('/usr/include/' . $file);
+					}
+					else if(substr($file, -3) == '.so')
+					{
+						$zypper_provides = self::run_zypper_provides('/usr/lib64/' . $file);
+					}
+					else
+					{
+						foreach(array('/usr/bin/', '/usr/sbin/', '/sbin/') as $b_path)
+						{
+							$zypper_provides = self::run_zypper_provides($b_path . $file);
+							if($zypper_provides != null)
+								break;
+						}
+					}
+				}
 				if($zypper_provides != null)
 				{
 					$packages_needed[$file] = $zypper_provides;
