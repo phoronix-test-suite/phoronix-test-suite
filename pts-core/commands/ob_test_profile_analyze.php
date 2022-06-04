@@ -381,7 +381,7 @@ class ob_test_profile_analyze implements pts_option_interface
 
 		// Look for zmm register use to also find AVX-512 use by a binary
 		$zmm_usage = shell_exec('objdump -d ' . $binary . ' 2>1 | grep %zmm0');
-		if(strpos($zmm_usage, 'zmm0') !== false)
+		if(!empty($zmm_usage) && strpos($zmm_usage, 'zmm0') !== false)
 		{
 			$instruction_usage['AVX512'][] = '(zmm register use)';
 		}

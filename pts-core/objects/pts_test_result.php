@@ -360,6 +360,10 @@ class pts_test_result
 		if(($value_count = count($values)) > 3)
 		{
 			$values_no_o = pts_math::remove_outliers($values, 1.5);
+			if(empty($values_no_o))
+			{
+				return true;
+			}
 			$avg = array_sum($values_no_o) / count($values_no_o);
 			$upper_threshold = $avg * (1 + $distance);
 			$lower_threshold = $avg * (1 - $distance);

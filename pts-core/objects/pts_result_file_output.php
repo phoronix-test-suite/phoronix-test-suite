@@ -212,7 +212,7 @@ class pts_result_file_output
 
 		foreach($result_file->get_result_objects() as $result_object)
 		{
-			$csv_output .= '"' . $result_object->test_profile->get_title() . $result_object->test_profile->get_app_version() . ' - ' . $result_object->get_arguments_description() . '"' . $delimiter . PHP_EOL;
+			$csv_output .= '"' . $result_object->test_profile->get_title() . ' ' . $result_object->test_profile->get_app_version() . ' - ' . $result_object->get_arguments_description() . '"' . $delimiter . PHP_EOL;
 
 			switch($result_object->test_profile->get_result_proportion())
 			{
