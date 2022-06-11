@@ -280,7 +280,8 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		else
 		{
 			define('TITLE', 'Phoronix Test Suite ' . PTS_VERSION . ' Result Portal');
-			$PAGE .= '<form name="search_results" id="search_results" action="' . CURRENT_URI . '" method="post"><input type="text" name="search" id="u_search" placeholder="Search Test Results" value="' . (isset($_POST['search']) ? $_POST['search'] : null) . '" /> <select name="sort_results_by"><option value="date">Sort By Date</option><option value="title">Sort By Title</option><option value="test_count">Sort By Test Count</option><option value="system_count">Sort By System Count</option></select> <input class="primary-button" type="submit" value="Update" />
+			$search_query = isset($_POST['search']) ? pts_strings::simple($_POST['search']) : null;
+			$PAGE .= '<form name="search_results" id="search_results" action="' . CURRENT_URI . '" method="post"><input type="text" name="search" id="u_search" placeholder="Search Test Results" value="' . $search_query . '" /> <select name="sort_results_by"><option value="date">Sort By Date</option><option value="title">Sort By Title</option><option value="test_count">Sort By Test Count</option><option value="system_count">Sort By System Count</option></select> <input class="primary-button" type="submit" value="Update" />
 	</form>';
 			$leading_msg = null;
 			if(VIEWER_CAN_DELETE_RESULTS && isset($_GET['remove_result']) && $_GET['remove_result'] && pts_results::is_saved_result_file($_GET['remove_result']))
@@ -292,7 +293,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 				}
 			}
 
-			$results = pts_results::query_saved_result_files((isset($_POST['search']) ? $_POST['search'] : null), (isset($_REQUEST['sort_results_by']) ? $_REQUEST['sort_results_by'] : null));
+			$results = pts_results::query_saved_result_files($search_query, (isset($_REQUEST['sort_results_by']) ? $_REQUEST['sort_results_by'] : null));
 
 			$total_result_points = 0;
 			foreach($results as $id => $result_file)
