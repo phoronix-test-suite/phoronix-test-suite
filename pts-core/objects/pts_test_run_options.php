@@ -768,6 +768,12 @@ class pts_test_run_options
 			$error = 'NVIDIA support is not available.';
 			return false;
 		}
+		if((stripos($test_args, 'Radeon ') !== false || stripos($test_args . ' ', 'ROCm ') !== false) && stripos(phodevi::read_property('gpu', 'model'), 'AMD') === false && stripos(phodevi::read_property('gpu', 'model'), 'Radeon') === false)
+		{
+			// Only show Radeon GPU options with AMD GPUs / ROCm (such as Blender's HIP support)
+			$error = 'AMD Radeon support is not available.';
+			return false;
+		}
 		if(stripos($test_args, 'OpenCL') !== false && phodevi::opencl_support_detected() === false)
 		{
 			// Try to only show OpenCL configurations if known to be working
@@ -790,6 +796,12 @@ class pts_test_run_options
 		{
 			// Do not show options mentioning Linux if not on Linux
 			$error = 'Linux support is not available.';
+			return false;
+		}
+		if(stripos($test_args, 'macOS ') !== false && !phodevi::is_macos())
+		{
+			// Do not show options mentioning macOS if not on macOS
+			$error = 'Apple macOS support is not available.';
 			return false;
 		}
 		if(stripos($test_args, 'x86_64') !== false && phodevi::read_property('system', 'kernel-architecture') != 'x86_64')
