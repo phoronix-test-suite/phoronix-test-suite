@@ -860,6 +860,8 @@ class pts_result_viewer_embed
 				$si = $sys->get_identifier();
 				$ppdx = rtrim(base64_encode($si), '=');
 				$ppd = self::check_request_for_var($request, 'ppd_' . $ppdx);
+				$ppd = is_numeric($ppd) && $ppd > 0 ? $ppd : 0;
+
 			$t .= '
 				<div id="table-line-' . $ppdx . '" class="div_table_row">';
 				if($system_count > 1)
@@ -1225,6 +1227,15 @@ class pts_result_viewer_embed
 			$ret = str_replace('_DD_', '.', $ret);
 		}
 
+		foreach(pts_strings::safety_strings_to_reject() as $invalid_string)
+		{
+			if(stripos($ret, $invalid_string) !== false)
+			{
+				echo '<strong>Exited due to invalid input ( ' . $invalid_string . ') attempted:</strong> ' . htmlspecialchars($ret);
+				exit;
+			}
+		}
+
 		return $ret;
 	}
 	public static function process_request_to_attributes(&$request, &$result_file, &$extra_attributes)
@@ -1531,7 +1542,7 @@ class pts_result_viewer_embed
 	}
 	public static function html_input_field($name, $id, $on_change = null)
 	{
-		return '<input type="text" name="' . $name . '" id="' . $id . '" onclick="" value="' . (isset($_REQUEST[$name]) ? strip_tags($_REQUEST[$name]) : null) . '">';
+		return '<input type="text" name="' . pts_strings::simple($name) . '" id="' . pts_strings::simple($id) . '" onclick="" value="' . (isset($_REQUEST[$name]) ? pts_strings::sanitize(strip_tags($_REQUEST[$name])) : null) . '">';
 	}
 	public static function html_select_menu($name, $id, $on_change, $elements, $use_index = true, $other_attributes = array(), $selected = false)
 	{
