@@ -1571,6 +1571,7 @@ class phodevi_system extends phodevi_device_interface
 		{
 			// Budgie
 			$desktop_environment = 'Budgie';
+			$desktop_version = pts_strings::last_in_string(trim(shell_exec('budgie-desktop --version 2> /dev/null | grep desktop')));
 		}
 
 		if(!empty($desktop_environment))
