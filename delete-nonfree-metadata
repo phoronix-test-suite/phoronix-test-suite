@@ -1,0 +1,195 @@
+#!/usr/bin/env python3
+
+# Copyright (C) 2022, Maxim Cournoyer
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+# Commentary:
+#
+# This script prunes the 'ob-cache' test metadata cache from any
+# nonfree test.  This is useful for users who concerned with running
+# only free software or distributions complying with the Free Software
+# Distribution Guidelines (GNU FSDG,
+# https://www.gnu.org/distros/free-system-distribution-guidelines.html).
+import argparse
+import json
+import logging
+import pathlib
+import pprint
+import re
+import shutil
+import xml.etree.ElementTree as ET
+
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(level='INFO', format='%(levelname)s: %(message)s')
+
+
+DEFAULT_ROOT_DIR = pathlib.Path(__file__).parent.resolve()
+# Global cache used to keep the test/suite definition licenses, keyed
+# by their test name key (e.g., 'caffe').
+TEST_DEFINITION_LICENSES = {}
+
+
+def get_test_definitions(root_dir=DEFAULT_ROOT_DIR):
+    """Return the list of all test definition XML files."""
+    return sorted(pathlib.Path(root_dir).glob('**/test-definition.xml'))
+
+
+def get_suite_definitions(root_dir=DEFAULT_ROOT_DIR):
+    return sorted(pathlib.Path(root_dir).glob('**/suite-definition.xml'))
+
+
+def get_index_files(root_dir=DEFAULT_ROOT_DIR):
+    return sorted(pathlib.Path(root_dir).glob('**/*.index'))
+
+
+def sanitize_index_files(index_files, nonfree_test_names):
+    """Remove non free test entries from `index_files`."""
+    for index_file in index_files:
+        with index_file.open() as f:
+            index = json.load(f)
+        filtered_tests = {k: v for k, v in index['tests'].items()
+                          if k not in nonfree_test_names}
+        index['tests'] = filtered_tests
+        if index['suites']:
+            filtered_suites = {k: v for k, v in index['suites'].items()
+                               if k not in nonfree_test_names}
+            index['suites'] = filtered_suites
+
+        with index_file.open('w') as f:
+            json.dump(index, f)
+
+
+def get_test_definition_license(test_definition_file,
+                                root_dir=DEFAULT_ROOT_DIR):
+    """Return the licenses from `test_definition_file`, or None."""
+    name = get_name_from_definition_file(test_definition_file)
+    if name in TEST_DEFINITION_LICENSES:
+        return TEST_DEFINITION_LICENSES[name]
+
+    root = ET.parse(test_definition_file)
+    try:
+        license = next(root.iter('License')).text
+    except StopIteration:
+        # No license field; check if it extends another test.
+        try:
+            extended_test = next(root.iter('Extends')).text  # e.g. 'pts/caffe'
+            extended_name = extended_test.split('/')[-1]
+            if extended_name in TEST_DEFINITION_LICENSES:
+                license = TEST_DEFINITION_LICENSES[extended_name]
+            else:
+                extended_definition_file = sorted(
+                    pathlib.Path(root_dir).glob(
+                        '**/test-profiles/' + extended_test
+                        + '-*/test-definition.xml'))[-1]
+                license = get_test_definition_license(extended_definition_file,
+                                                      root_dir)
+        except StopIteration:
+            logger.warning('could not find license for %s',
+                           test_definition_file)
+            return None
+
+    TEST_DEFINITION_LICENSES[name] = license
+    return license
+
+
+def is_test_definition_free(test_definition_file):
+    """True if `test_definition_file` has its license tag set to 'Free'."""
+    license = get_test_definition_license(test_definition_file)
+    return license == 'Free'
+
+
+def is_suite_definition_free(suite_definition_file, nonfree_test_names):
+    """True if `suite_definition_file` is free.
+
+    The suite definition is considered free when it doesn't reference
+    any test part of `nonfree_test_names`.
+    """
+    root = ET.parse(suite_definition_file)
+    for test in root.iter('Test'):
+        test_name = test.text
+        name = test_name.split('/')[-1]  # strip any prefix
+        if name in nonfree_test_names:
+            return False
+
+    return True
+
+
+def get_name_from_definition_file(definition_file):
+    """Return the parent directory name of a definition file.
+
+    The version information in stripped from the name."""
+    parent_dir_name = pathlib.Path(definition_file).parent.name
+    # Strip the version from the name.
+    return re.search(r'^(.*)-', parent_dir_name).group(1)
+
+
+def get_default_user_config_file(root_dir):
+    return next(pathlib.Path(root_dir).glob('**/user-config-defaults.xml'))
+
+
+def disallow_refreshing_repositories(user_config_file):
+    """Set the 'AllowRefreshingRepositoryLists' option to FALSE."""
+    config = ET.parse(user_config_file)
+    for option in config.iter('AllowRefreshingRepositoryLists'):
+        option.text = 'FALSE'
+    config.write(user_config_file)
+
+
+def main(root_dir):
+    # Gather data.
+    test_definitions = get_test_definitions(root_dir)
+    suite_definitions = get_suite_definitions(root_dir)
+    nonfree_test_definitions = [d for d in test_definitions
+                                if not is_test_definition_free(d)]
+    nonfree_test_names = [get_name_from_definition_file(t)
+                          for t in nonfree_test_definitions]
+    nonfree_suite_definitions = [
+        s for s in suite_definitions
+        if not is_suite_definition_free(s, nonfree_test_names)]
+    nonfree_suite_names = [get_name_from_definition_file(s)
+                           for s in nonfree_suite_definitions]
+    nonfree_definitions = nonfree_test_definitions + nonfree_suite_definitions
+    nonfree_definition_names = sorted(set(nonfree_test_names
+                                          + nonfree_suite_names))
+
+    # Delete nonfree definitions.
+    for nonfree_definition in nonfree_definitions:
+        shutil.rmtree(nonfree_definition.parent)
+
+    # Delete nonfree entries in index files.
+    indexes = get_index_files(root_dir)
+    sanitize_index_files(indexes, nonfree_definition_names)
+
+    logger.info('The following nonfree test suites were deleted:\n%s',
+                pprint.pformat([str(d) for d in nonfree_definitions]))
+
+    # This is necessary to avoid downloading the
+    # OpenBenchmarking-provided tests metadata which includes all the
+    # tests, including teh proprietary ones.
+    user_config_file = get_default_user_config_file(root_dir)
+    disallow_refreshing_repositories(user_config_file)
+    logger.info('Disabled test metadata updates in default user config')
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(
+        description='Remove nonfree cached metadata')
+    parser.add_argument('--root-dir', type=str,
+                        help='the Phoronix Test Suite root directory',
+                        default=DEFAULT_ROOT_DIR)
+    args = parser.parse_args()
+
+    main(args.root_dir)
