@@ -330,6 +330,11 @@ class pts_openbenchmarking
 	}
 	public static function refresh_repository_lists($repos = null, $force_refresh = false)
 	{
+        if(!pts_config::read_bool_config('PhoronixTestSuite/Options/OpenBenchmarking/AllowRefreshingRepositoryLists', true))
+        {
+            return true;
+        }
+
 		if($repos == null)
 		{
 			if($force_refresh == false)

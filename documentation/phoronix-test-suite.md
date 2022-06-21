@@ -937,6 +937,11 @@ If this option is set to *TRUE* , the system logs (i.e. dmesg, lspci, lsusb, Xor
 #### AllowResultUploadsToOpenBenchmarking
 This option defines whether to allow/support result uploads to OpenBenchmarking.org. If set to *FALSE* , the user will not be prompted to allow uploading of test results to the public site.
 
+#### AllowRefreshingRepositoryLists
+This option defines whether to allow refreshing the test profiles
+(metadata) content from OpenBenchmarking.org.  If set to *FALSE* ,
+only the locally available test profiles will be used, and no updates
+will made to it.
 
 ## General Options
 #### DefaultBrowser

@@ -6,6 +6,7 @@
 			<IndexCacheTTL>3</IndexCacheTTL>
 			<AlwaysUploadSystemLogs>FALSE</AlwaysUploadSystemLogs>
 			<AllowResultUploadsToOpenBenchmarking>TRUE</AllowResultUploadsToOpenBenchmarking>
+                        <AllowRefreshingRepositoryLists>TRUE</AllowRefreshingRepositoryLists>
 		</OpenBenchmarking>
 		<General>
 			<DefaultBrowser></DefaultBrowser>
