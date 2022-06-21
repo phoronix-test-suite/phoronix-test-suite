@@ -817,7 +817,18 @@ The Phoronix Test Suite can be simply extracted from the downloaded *.tar.gz* or
 
 
 ### Generic Installation
-Running *install-sh* from the root directory of the Phoronix Test Suite will install the software for system-wide access. By default the *phoronix-test-suite* executable is in */usr/bin/* , the Phoronix Test Suite files in */usr/share/phoronix-test-suite/* , and the documentation in / *usr/share/doc/phoronix-test-suite/* . Root access is required. The default installation prefix is /usr/ but can be adjusted as the first argument (example: *install-sh /home/user/* to install the Phoronix Test Suite in your home directory).
+Running *install-sh* from the root directory of the Phoronix Test
+Suite will install the software for system-wide access. By default the
+*phoronix-test-suite* executable is in */usr/bin/* , the Phoronix Test
+Suite files in */usr/share/phoronix-test-suite/* , and the
+documentation in / *usr/share/doc/phoronix-test-suite/* . Root access
+is required. The default installation prefix is /usr/ but can be
+adjusted as the first argument (example: *install-sh /home/user/* to
+install the Phoronix Test Suite in your home directory).  Use the
+`--free-software-only` option of the `install-sh` script if you'd like
+to be offered only test profiles and suites relying on free software
+only.  Note that this option disables the automatic fetching of new
+tests definitions from OpenBenchmarking.org.
 
 
 ### Debian/Ubuntu Installation

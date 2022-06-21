@@ -28,6 +28,13 @@ else
 	INSTALL_PREFIX="$1"
 fi
 
+# XXX: Perhaps this should be the default?
+for arg in "$@"; do
+    if [ "$arg" = "--free-software-only" ]; then
+        FREE_SOFTWARE_ONLY=yes
+    fi
+done
+
 # Ensure the user is in the correct directory
 if [ ! -f pts-core/phoronix-test-suite.php ]
 then
@@ -114,6 +121,11 @@ else
 
 fi
 
+# Post-installation process.
+if [ -n FREE_SOFTWARE_ONLY ]; then
+    ./delete-nonfree-metadata --root-dir="$DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/"
+fi
+
 echo -e "\nPhoronix Test Suite Installation Completed\n
 Executable File: $INSTALL_PREFIX/bin/phoronix-test-suite
 Documentation: $INSTALL_PREFIX/share/doc/phoronix-test-suite/
@@ -124,4 +136,3 @@ then
 	echo "Installed to chroot: $DESTDIR"
 	echo "Please update your desktop and mime-database manually"
 fi
-
