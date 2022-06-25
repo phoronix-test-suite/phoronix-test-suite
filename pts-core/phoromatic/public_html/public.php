@@ -178,7 +178,7 @@ else
 
 	$result_limit = isset($_POST['result_limit']) && is_numeric($_POST['result_limit']) && $_POST['result_limit'] > 9 ? $_POST['result_limit'] : 50;
 	$main .= '<br /><br /><br />';
-	$main .= '<form action="' . $_SERVER['REQUEST_URI'] . '" method="post"><div style="text-align: left; font-weight: bold;">Show Results For <select id="result_time_limit" name="time">';
+	$main .= '<form method="post"><div style="text-align: left; font-weight: bold;">Show Results For <select id="result_time_limit" name="time">';
 	$results_for_length = array(
 		'24 hours' => '24 Hours',
 		'3 days' => '3 Days',

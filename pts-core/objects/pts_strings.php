@@ -791,6 +791,22 @@ class pts_strings
 	{
 		return array('<', '>', 'document.write', '../', 'onerror', 'onload', 'alert(', 'String.', 'confirm(', 'focus=', '&lt', '&gt', '&#');
 	}
+	public static function exit_if_contains_unsafe_data($check, $exit_msg = 'Exited due to suspicious URL.')
+	{
+		if(empty($check))
+		{
+			return;
+		}
+
+		foreach(pts_strings::safety_strings_to_reject() as $invalid_string)
+		{
+			if(stripos($check, $invalid_string) !== false)
+			{
+				echo '<strong>' . $exit_msg . '</strong>';
+				exit;
+			}
+		}
+	}
 }
 
 ?>

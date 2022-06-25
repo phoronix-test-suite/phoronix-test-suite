@@ -87,6 +87,11 @@ function phoromatic_init_web_page_setup()
 
 	include('../../pts-core.php');
 	pts_core::init();
+
+	if(isset($_SERVER['REQUEST_URI']) && !empty($_SERVER['REQUEST_URI']))
+	{
+		pts_strings::exit_if_contains_unsafe_data($_SERVER['REQUEST_URI']);
+	}
 }
 function phoromatic_webui_header($left_items, $right = null)
 {

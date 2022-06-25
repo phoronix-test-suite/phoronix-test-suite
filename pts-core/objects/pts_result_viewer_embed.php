@@ -36,6 +36,11 @@ class pts_result_viewer_embed
 	{
 		$this->result_file = &$result_file;
 		$this->result_public_id = $public_id;
+
+		if(isset($_SERVER['REQUEST_URI']) && !empty($_SERVER['REQUEST_URI']))
+		{
+			pts_strings::exit_if_contains_unsafe_data($_SERVER['REQUEST_URI']);
+		}
 	}
 	public function allow_modifying_results($can_modify)
 	{
