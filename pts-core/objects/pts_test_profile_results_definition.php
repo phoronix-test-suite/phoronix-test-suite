@@ -58,9 +58,9 @@ class pts_test_profile_results_definition
 	{
 		return $this->image_parsers;
 	}
-	public function add_result_parser_definition($ot, $mtta, $rk, $lh, $lbh, $lah, $rbs, $ras, $sfr, $srp, $mm, $drb, $mrb, $rs, $rpro, $rpre, $ad, $atad, $ff, $tcts, $dob, $doa, $df, $drd)
+	public function add_result_parser_definition($ot, $mtta, $rk, $lh, $lbh, $lah, $rbs, $ras, $sfr, $srp, $mm, $drb, $mrb, $rs, $rpro, $rpre, $ad, $atad, $ff, $tcts, $dob, $doa, $df, $drd, $ri)
 	{
-		$this->result_parsers[] = new pts_test_profile_results_definition_result_parser($ot, $mtta, $rk, $lh, $lbh, $lah, $rbs, $ras, $sfr, $srp, $mm, $drb, $mrb, $rs, $rpro, $rpre, $ad, $atad, $ff, $tcts, $dob, $doa, $df, $drd);
+		$this->result_parsers[] = new pts_test_profile_results_definition_result_parser($ot, $mtta, $rk, $lh, $lbh, $lah, $rbs, $ras, $sfr, $srp, $mm, $drb, $mrb, $rs, $rpro, $rpre, $ad, $atad, $ff, $tcts, $dob, $doa, $df, $drd, $ri);
 	}
 	public function get_result_parser_definitions()
 	{
@@ -174,8 +174,9 @@ class pts_test_profile_results_definition_result_parser
 	private $delete_output_before;
 	private $delete_output_after;
 	private $display_format;
+	private $result_importance;
 
-	public function __construct($ot, $mtta, $rk, $lh, $lbh, $lah, $rbs, $ras, $sfr, $srp, $mm, $drb, $mrb, $rs, $rpro, $rpre, $ad, $atad, $ff, $tcts, $dob, $doa, $df, $drd)
+	public function __construct($ot, $mtta, $rk, $lh, $lbh, $lah, $rbs, $ras, $sfr, $srp, $mm, $drb, $mrb, $rs, $rpro, $rpre, $ad, $atad, $ff, $tcts, $dob, $doa, $df, $drd, $ri)
 	{
 		$this->output_template = $ot;
 		$this->match_to_test_args = $mtta;
@@ -201,6 +202,7 @@ class pts_test_profile_results_definition_result_parser
 		$this->delete_output_before = $dob;
 		$this->delete_output_after = $doa;
 		$this->display_format = $df;
+		$this->result_importance = $ri;
 	}
 	public function get_output_template()
 	{
@@ -293,6 +295,10 @@ class pts_test_profile_results_definition_result_parser
 	public function get_delete_output_after()
 	{
 		return $this->delete_output_after;
+	}
+	public function get_result_importance()
+	{
+		return $this->result_importance;
 	}
 	public function get_display_format()
 	{

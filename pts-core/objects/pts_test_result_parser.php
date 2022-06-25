@@ -450,6 +450,7 @@ class pts_test_result_parser
 		$definitions = $test_run_request->test_profile->get_results_definition('ResultsParser');
 		$all_parser_entries = $definitions->get_result_parser_definitions();
 		$avoid_duplicates = array();
+		$primary_result = null;
 		foreach($all_parser_entries as $entry)
 		{
 			$tr = clone $test_run_request;
@@ -463,7 +464,7 @@ class pts_test_result_parser
 			$max_result = null;
 			$min_test_result = false;
 			$max_test_result = false;
-			$test_result = self::parse_result_process_entry($tr, $log_file, $pts_test_arguments, $extra_arguments, $prefix, $entry, $is_pass_fail_test, $is_numeric_check, $all_parser_entries, $min_test_result, $max_test_result);
+			$test_result = self::parse_result_process_entry($tr, $log_file, $pts_test_arguments, $extra_arguments, $prefix, $entry, $is_pass_fail_test, $is_numeric_check, $all_parser_entries, $min_test_result, $max_test_result, $primary_result);
 			if($test_result != false)
 			{
 				// Result found
@@ -482,12 +483,16 @@ class pts_test_result_parser
 				}
 				self::gen_result_active_handle($test_run_request, $tr)->add_trial_run_result($test_result, $min_result, $max_result);
 				$produced_result = true;
+				if($primary_result == null)
+				{
+					$primary_result = $tr;
+				}
 			}
 		}
 
 		return $produced_result;
 	}
-	protected static function parse_result_process_entry(&$test_run_request, $log_file, $pts_test_arguments, $extra_arguments, $prefix, &$e, $is_pass_fail_test, $is_numeric_check, &$all_parser_entries, &$min_test_result = false, &$max_test_result = false)
+	protected static function parse_result_process_entry(&$test_run_request, $log_file, $pts_test_arguments, $extra_arguments, $prefix, &$e, $is_pass_fail_test, $is_numeric_check, &$all_parser_entries, &$min_test_result = false, &$max_test_result = false, $primary_result = null)
 	{
 		$test_result = false;
 		$match_test_arguments = $e->get_match_to_test_args();
@@ -903,6 +908,10 @@ class pts_test_result_parser
 			if($e->get_arguments_description() != null)
 			{
 				$test_run_request->set_used_arguments_description($e->get_arguments_description());
+			}
+			if($e->get_result_importance() != null && strtolower($e->get_result_importance()) == 'secondary' && !empty($primary_result))
+			{
+				$test_run_request->set_parent_hash_from_result($primary_result);
 			}
 			if($e->get_append_to_arguments_description() != null)
 			{

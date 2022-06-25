@@ -270,6 +270,16 @@
 					<xs:documentation>If wishing to trim the log file that will be parsed for the test result, a unique string can be specified here and the result parser will drop any text after the match.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element name="Importance" type="xs:string" minOccurs="0" maxOccurs="1">
+				<xs:annotation>
+					<xs:appinfo>
+						<get>get_result_importance</get>
+						<set></set>
+						<default></default>
+					</xs:appinfo>
+					<xs:documentation>If the result is less important, the Importance can be set to 'Secondary' to indicate it is of less importance / subordinate to other result metrics. Otherwise it's assumed to be a 'Primary' result. This can affect how 'secondary' results are shown on the result viewer such as behind a tabbed view or shown in a smaller manner than the main results.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:sequence>
 		</xs:complexType>
 		</xs:element>
