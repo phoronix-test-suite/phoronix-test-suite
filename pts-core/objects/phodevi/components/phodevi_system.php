@@ -656,7 +656,11 @@ class phodevi_system extends phodevi_device_interface
 			$mds_tool = microsoft_dependency_handler::file_download_location() . 'mdstool-cli.exe';
 			if(is_file($mds_tool))
 			{
-				$mds_output = preg_replace('#\\x1b[[][^A-Za-z]*[A-Za-z]#', '', shell_exec($mds_tool));
+				$mds_output = shell_exec($mds_tool);
+				if(!empty($mds_output))
+				{
+					$mds_output = preg_replace('#\\x1b[[][^A-Za-z]*[A-Za-z]#', '', $mds_output);
+				}
 				//echo PHP_EOL;
 				foreach(array('__user pointer sanitization: Disabled', 'Retpoline: Full', 'IBPB: Always', 'IBRS: Enabled', 'STIBP: Enabled', 'KPTI Enabled: Yes', 'PTE Inversion: Yes') as $check)
 				{

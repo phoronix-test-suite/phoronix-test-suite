@@ -799,6 +799,17 @@ class phodevi_cpu extends phodevi_device_interface
 								break;
 						}
 				}
+				else if($implementer == '0xc0')
+				{
+						$new_info = 'Ampere';
+						$part = phodevi_linux_parser::read_cpuinfo_single('CPU part');
+						switch($part)
+						{
+							case '0xac3':
+								$new_info .= 'One';
+								break;
+						}
+				}
 
 				if(strpos(phodevi::$vfs->dmesg, 'Ampere eMAG') !== false || stripos(pts_file_io::file_get_contents_if_exists('/sys/devices/virtual/dmi/id/sys_vendor'), 'Ampere') !== false || stripos(pts_file_io::file_get_contents_if_exists('/sys/devices/virtual/dmi/id/bios_vendor'), 'Ampere') !== false)
 				{
@@ -1153,6 +1164,7 @@ class phodevi_cpu extends phodevi_device_interface
 				104 => 'Zen 2',
 				113 => 'Zen 2',
 				144 => 'Zen 2',
+				160 => 'Zen 2',
 				),
 			25 => array(
 				0 => 'Zen 3',
@@ -1195,6 +1207,8 @@ class phodevi_cpu extends phodevi_device_interface
 				78 => 'Zen 3',
 				79 => 'Zen 3', // end of Yellow Carp
 				80 => 'Zen 3',
+				96 => 'Zen 4',
+				112 => 'Zen 4',
 				160 => 'Zen 4',
 				161 => 'Zen 4',
 				162 => 'Zen 4',
