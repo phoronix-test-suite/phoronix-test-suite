@@ -44,7 +44,7 @@
 		</Package>
 		<Package>
 			<GenericName>xorg-development</GenericName>
-			<PackageName>devpkg-xorg-server</PackageName>
+			<PackageName>devpkg-xorg-server devpkg-libXcursor devpkg-libXrandr devpkg-libXinput</PackageName>
 		</Package>
 		<Package>
 			<GenericName>tiff</GenericName>

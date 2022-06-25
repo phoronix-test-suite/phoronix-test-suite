@@ -152,7 +152,7 @@ if [ -x /usr/bin/zypper ]
 then
 	# SUSE / OpenSUSE
 	echo "The command to likely run for your operating system is: "
-	echo "# zypper install php7 php7-zip php7-openssl"
+	echo "# zypper install php8 php8-zip php8-openssl"
 	echo " "
 elif [ -x /usr/bin/apt-get ]
 then

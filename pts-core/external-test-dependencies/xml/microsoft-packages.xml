@@ -22,12 +22,12 @@
 		</Package>
 		<Package>
 			<GenericName>golang</GenericName>
-			<PackageName>https://dl.google.com/go/go1.13.7.windows-amd64.msi</PackageName>
+			<PackageName>https://go.dev/dl/go1.18.3.windows-amd64.msi</PackageName>
 			<FileCheck>C:\Go</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>perl</GenericName>
-			<PackageName>http://strawberryperl.com/download/5.30.1.1/strawberry-perl-5.30.1.1-64bit.msi</PackageName>
+			<PackageName>https://strawberryperl.com/download/5.32.1.1/strawberry-perl-5.32.1.1-64bit.msi</PackageName>
 			<FileCheck>C:\Strawberry\perl\bin</FileCheck>
 		</Package>
 		<Package>
@@ -37,12 +37,12 @@
 		</Package>
 		<Package>
 			<GenericName>python</GenericName>
-			<PackageName>https://www.python.org/ftp/python/3.7.1/python-3.7.1-amd64.exe https://www.python.org/ftp/python/2.7.15/python-2.7.15.amd64.msi python2 python37 python37-pip</PackageName>
+			<PackageName>https://www.python.org/ftp/python/3.7.9/python-3.7.9-amd64.exe https://www.python.org/ftp/python/2.7.15/python-2.7.15.amd64.msi python2 python37 python37-pip</PackageName>
 			<FileCheck>C:\Python27</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>git</GenericName>
-			<PackageName>https://github.com/git-for-windows/git/releases/download/v2.25.0.windows.1/Git-2.25.0-64-bit.exe</PackageName>
+			<PackageName>https://github.com/git-for-windows/git/releases/download/v2.36.1.windows.1/Git-2.36.1-64-bit.exe</PackageName>
 			<FileCheck>C:\Program Files\Git</FileCheck>
 		</Package>
 		<Package>
@@ -82,7 +82,7 @@
 		</Package>
 		<Package>
 			<GenericName>firefox</GenericName>
-			<PackageName>https://ftp.mozilla.org/pub/firefox/releases/65.0.2/win64/en-US/Firefox%20Setup%2065.0.2.exe</PackageName>
+			<PackageName>https://ftp.mozilla.org/pub/firefox/releases/101.0.1/win64/en-US/Firefox%20Setup%20101.0.1.exe</PackageName>
 			<FileCheck>C:\Program Files\Mozilla Firefox</FileCheck>
 		</Package>
 		<Package>
@@ -92,7 +92,7 @@
 		</Package>
 		<Package>
 			<GenericName>rust</GenericName>
-			<PackageName>https://static.rust-lang.org/dist/rust-beta-x86_64-pc-windows-msvc.msi</PackageName>
+			<PackageName>https://static.rust-lang.org/dist/rust-1.61.0-x86_64-pc-windows-msvc.msi</PackageName>
 			<FileCheck>rustc.exe</FileCheck>
 		</Package>
 		<Package>

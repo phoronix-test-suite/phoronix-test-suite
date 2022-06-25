@@ -634,6 +634,7 @@ class pts_client
 					'glxinfo',
 					'clinfo',
 					'vulkaninfo',
+					'rocminfo',
 					// 'udisks --dump',
 					//'upower --dump',
 					'dmidecode',
@@ -1783,6 +1784,8 @@ class pts_client
 				'C:\Users\\' . $username . '\AppData\Local\Programs\Python\Python37',
 				'C:\Users\\' . $username . '\AppData\Local\Programs\Python\Python38',
 				'C:\Users\\' . $username . '\AppData\Local\Programs\Python\Python39',
+				'C:\Users\\' . $username . '\AppData\Local\Programs\Python\Python310',
+				'C:\Users\\' . $username . '\AppData\Local\Programs\Python\Python311',
 				'C:\Python27',
 				'C:\Go\bin',
 				'C:\Strawberry\perl\bin',
@@ -1817,7 +1820,8 @@ class pts_client
 		{
 			// Fedora OpenMPI path not often in PATH by default
 			$ds = array('/usr/lib64/openmpi/bin',
-				'/usr/local/mpi/openmpi/bin'
+				'/usr/local/mpi/openmpi/bin',
+				'/usr/lib64/mpi/gcc/openmpi/bin'
 				);
 			foreach($ds as $d)
 			{

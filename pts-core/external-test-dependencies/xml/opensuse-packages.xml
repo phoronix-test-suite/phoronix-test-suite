@@ -2,8 +2,8 @@
 <PhoronixTestSuite>
 	<ExternalDependencies>
 		<Information>
-			<Name>OpenSuSE</Name>
-			<Aliases>SUSE Linux, SUSE</Aliases>
+			<Name>openSUSE</Name>
+			<Aliases>SUSE Linux, openSUSE Leap, SUSE Enterprise Linux, openSUSE Tumbleweed</Aliases>
 			<PackageManager>zypper</PackageManager>
 		</Information>
 		<Package>
@@ -58,7 +58,7 @@
 		</Package>
 		<Package>
 			<GenericName>xorg-development</GenericName>
-			<PackageName>xorg-x11-server-sdk</PackageName>
+			<PackageName>xorg-x11-server-sdk libXrandr-devel libXinerama-devel libXcursor-devel libXi-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>cairo-development</GenericName>
@@ -323,7 +323,7 @@
                 </Package>
 		<Package>
 			<GenericName>python-scipy</GenericName>
-			<PackageName>python2-scipy python3-scipy</PackageName>
+			<PackageName>python3-scipy</PackageName>
 		</Package>
 		<Package>
 			<GenericName>V8</GenericName>
