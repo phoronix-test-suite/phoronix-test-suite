@@ -1,5 +1,15 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
+Phoronix Test Suite (Git)
+
+pts-core: Allow sub-folders within PTS_EXTRA_SYSTEM_LOGS_DIR when uploading to Phoromatic server
+pts-core: Fix TOTAL_LOOP_TIME handling
+pts-core: openSUSE external dependency handling fixes
+phodevi: Support for reporting video BIOS version
+phodevi: Budgie desktop version detection
+phodevi: Avoid deprecated wmic usage on Windows
+phoromatic: Input sanitization updates in the result viewer
+
 Phoronix Test Suite 10.8.3
 23 April 2022
 
