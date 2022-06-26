@@ -42,6 +42,12 @@ if(($x = strpos($uri_stripped, '&')) !== false)
 
 if(isset($_REQUEST['checkbox_compare_results']))
 {
+	foreach($_REQUEST['checkbox_compare_results'] as &$inp)
+	{
+		// Remove any possible garbage since the result identifiers should just have alpha num and dashes anyhow...
+		$inp = preg_replace('/[^\w-]/', '', $inp);
+	}
+
 	echo '<script> window.location.href = "http://' . $_SERVER['HTTP_HOST'] . WEB_URL_PATH . 'result/' . implode(',', $_REQUEST['checkbox_compare_results']) . '"; </script>';
 	exit;
 }
