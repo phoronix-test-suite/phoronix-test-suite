@@ -1,6 +1,7 @@
 PHORONIX TEST SUITE CHANGE-LOG
 
-Phoronix Test Suite (Git)
+Phoronix Test Suite 10.8.4
+3 July 2022
 
 pts-core: Allow sub-folders within PTS_EXTRA_SYSTEM_LOGS_DIR when uploading to Phoromatic server
 pts-core: Fix TOTAL_LOOP_TIME handling
