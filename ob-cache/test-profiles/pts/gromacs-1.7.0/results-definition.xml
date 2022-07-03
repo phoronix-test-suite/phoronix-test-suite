@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.3-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Performance:        #_RESULT_#        3.682</OutputTemplate>
+    <LineHint>Performance:</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

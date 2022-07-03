@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://fr2.rpmfind.net/linux/kernel/v5.x/linux-5.18.tar.xz, https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.18.tar.xz, http://ftp.jaist.ac.jp/pub/Linux/kernel.org/linux/kernel/v5.x/linux-5.18.tar.xz, https://mirror.clarkson.edu/linux/linux/kernel/v5.x/linux-5.18.tar.xz, https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.18.tar.xz</URL>
+      <MD5>58e80452e2d8e1993cd7ec95e697ab5a</MD5>
+      <SHA256>51f3f1684a896e797182a0907299cc1f0ff5e5b51dd9a55478ae63a409855cee</SHA256>
+      <FileName>linux-5.18.tar.xz</FileName>
+      <FileSize>129790264</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

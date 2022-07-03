@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.3-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Etcpak</Title>
+    <AppVersion>1.0</AppVersion>
+    <Description>Etcpack is the self-proclaimed "fastest ETC compressor on the planet" with focused on providing open-source, very fast ETC and S3 texture compression support. The test profile uses a 8K x 8K game texture as a sample input.</Description>
+    <ResultScale>Mpx/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux, MacOSX</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>39</EnvironmentSize>
+    <ProjectURL>https://github.com/wolfpld/etcpak</ProjectURL>
+    <RepositoryURL>https://github.com/wolfpld/etcpak</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Benchmark</DisplayName>
+      <Identifier>benchmark</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Single-Threaded</Name>
+          <Value>-b </Value>
+        </Entry>
+        <Entry>
+          <Name>Multi-Threaded</Name>
+          <Value>-b -M </Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Configuration</DisplayName>
+      <Identifier>configuration</Identifier>
+      <Menu>
+        <Entry>
+          <Name>ETC2</Name>
+          <Value>--rgba</Value>
+        </Entry>
+        <Entry>
+          <Name>DXT1</Name>
+          <Value>--rgba --dxtc</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

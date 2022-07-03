@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/sivel/speedtest-cli/archive/refs/tags/v2.1.3.tar.gz</URL>
+      <MD5>08c431f2f398880745c4f0564962b9e2</MD5>
+      <SHA256>45e3ca21c3ce3c339646100de18db8a26a27d240c29f1c9e07b6c13995a969be</SHA256>
+      <FileName>speedtest-cli-2.1.3.tar.gz</FileName>
+      <FileSize>24771</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

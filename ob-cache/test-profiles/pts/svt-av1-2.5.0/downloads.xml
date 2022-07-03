@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ultravideo.cs.tut.fi/video/Bosphorus_1920x1080_120fps_420_8bit_YUV_RAW.7z</URL>
+      <MD5>db7c7ff09acd5d7820cc4d1eb0939cf9</MD5>
+      <SHA256>e73a54088e88e6465f578625d185933e85c3209ab7105deb755a8b8918b78cab</SHA256>
+      <FileName>Bosphorus_1920x1080_120fps_420_8bit_YUV_RAW.7z</FileName>
+      <FileSize>680772328</FileSize>
+    </Package>
+    <Package>
+      <URL>http://ultravideo.cs.tut.fi/video/Bosphorus_3840x2160_120fps_420_8bit_YUV_Y4M.7z</URL>
+      <MD5>815ca5830c8ea2f95545429817b96b1f</MD5>
+      <SHA256>d0fcb7d8cfc6e51c47ce8b427dab41ce38300c4b1a51a1903ddd5d86067c4c79</SHA256>
+      <FileName>Bosphorus_3840x2160_120fps_420_8bit_YUV_Y4M.7z</FileName>
+      <FileSize>2804470345</FileSize>
+    </Package>
+    <Package>
+      <URL>https://gitlab.com/AOMediaCodec/SVT-AV1/-/archive/v1.0.0/SVT-AV1-v1.0.0.tar.bz2</URL>
+      <MD5>049186d0b4eb39664f6b2735ea30e3e9</MD5>
+      <SHA256>0a7893b041735e603d7fc4979d46088327e2716946b70764d3408193a1f1b55e</SHA256>
+      <FileName>SVT-AV1-v1.0.0.tar.bz2</FileName>
+      <FileSize>9250549</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/SVT-AV1-v1.0.0-win64.zip</URL>
+      <MD5>525396fdcf5bd5b26a9eea7dc2045b3b</MD5>
+      <SHA256>a91c91ccd1ca853e91e650b71aa762c8d9e98c70cbdd797b8043002da3f78ce6</SHA256>
+      <FileName>SVT-AV1-v1.0.0-win64.zip</FileName>
+      <FileSize>8594305</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/SVT-AV1-v1.0.0-macos.zip</URL>
+      <MD5>4f5b7b2724009a1b138fcf40fc8d033d</MD5>
+      <SHA256>e6ad97bf2f4d8c694c6449fe316934d6c1271e378a4873e9e121f9f6bf93e85a</SHA256>
+      <FileName>SVT-AV1-v1.0.0-macos.zip</FileName>
+      <FileSize>37070177</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

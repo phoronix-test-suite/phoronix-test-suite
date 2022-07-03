@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>readrandom   :       0.336 micros/op #_RESULT_# ops/sec; (0 of 175049999 found)</OutputTemplate>
+    <LineHint> ops/sec</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

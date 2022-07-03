@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Internet Speed</Title>
+    <Version>1.0.0</Version>
+    <TestType>System</TestType>
+    <Description>This test suite consists of benchmark test profiles for measuring your Internet connect's upload/download speed and latency performance.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/fast-cli</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/speedtest-cli</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+</PhoronixTestSuite>

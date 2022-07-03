@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.3-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>dotty #_RESULT_# 4739901008 1625685340738</OutputTemplate>
+    <LineHint>1</LineHint>
+    <MultiMatch>GEOMETRIC_MEAN</MultiMatch>
+    <DivideResultBy>1000000</DivideResultBy>
+    <ResultPrecision>1</ResultPrecision>
+    <FileFormat>CSV</FileFormat>
+  </ResultsParser>
+</PhoronixTestSuite>

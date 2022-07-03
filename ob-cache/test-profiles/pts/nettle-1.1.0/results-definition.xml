@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.3-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>            sha512       update  #_RESULT_#</OutputTemplate>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>      poly1305-aes       update #_RESULT_#</OutputTemplate>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>            chacha      decrypt  #_RESULT_#</OutputTemplate>
+    <LineHint>chacha</LineHint>
+    <MultiMatch>AVERAGE</MultiMatch>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>            aes256  ECB decrypt  #_RESULT_#</OutputTemplate>
+    <LineHint>aes256</LineHint>
+    <MultiMatch>AVERAGE</MultiMatch>
+  </ResultsParser>
+</PhoronixTestSuite>

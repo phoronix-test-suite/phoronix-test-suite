@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Download: #_RESULT_# Mbit/s</OutputTemplate>
+    <ResultScale>Mbit/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <ArgumentsDescription>Internet Download Speed</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Upload: #_RESULT_# Mbit/s</OutputTemplate>
+    <ResultScale>Mbit/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <ArgumentsDescription>Internet Upload Speed</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Hosted by Enzu Inc. (Chicago, IL) [42.90 km]: #_RESULT_# ms</OutputTemplate>
+    <LineHint>Hosted by</LineHint>
+    <ResultBeforeString>ms</ResultBeforeString>
+    <ResultScale>ms</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+    <ArgumentsDescription>Internet Latency</ArgumentsDescription>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.3-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Time: 27512 ms; n_slow: 1139; speed: #_RESULT_# ips</OutputTemplate>
+    <LineHint>speed:</LineHint>
+    <ResultAfterString>speed:</ResultAfterString>
+  </ResultsParser>
+</PhoronixTestSuite>

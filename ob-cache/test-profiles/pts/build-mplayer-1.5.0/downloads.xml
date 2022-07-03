@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.mplayerhq.hu/MPlayer/releases/MPlayer-1.5.tar.xz</URL>
+      <MD5>0419b64db24b6db0943dbc6afece7c44</MD5>
+      <SHA256>650cd55bb3cb44c9b39ce36dac488428559799c5f18d16d98edb2b7256cbbf85</SHA256>
+      <FileName>MPlayer-1.5.tar.xz</FileName>
+      <FileSize>15379972</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

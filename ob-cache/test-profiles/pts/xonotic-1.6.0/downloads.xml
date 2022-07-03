@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://dl.xonotic.org/xonotic-0.8.5.zip, https://dl.unvanquished.net/share/xonotic/release/xonotic-0.8.5.zip, https://xonotic.antzucaro.com/xonotic-0.8.5.zip</URL>
+      <MD5>bc82a061ceb33319d8496a8212502893</MD5>
+      <SHA256>0f92aa238362aeb059b9d9026a9bd38d6217423a35c19f126fb39e38736e37e5</SHA256>
+      <FileName>xonotic-0.8.5.zip</FileName>
+      <FileSize>1228561792</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

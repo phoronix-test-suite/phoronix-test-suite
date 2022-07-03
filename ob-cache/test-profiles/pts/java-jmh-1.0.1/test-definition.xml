@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Java JMH</Title>
+    <Description>This very basic test profile runs the stock benchmark of the Java JMH benchmark via Maven.</Description>
+    <ResultScale>Ops/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <SubTitle>Throughput</SubTitle>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>java, maven</ExternalDependencies>
+    <EnvironmentSize>1.3</EnvironmentSize>
+    <ProjectURL>http://openjdk.java.net/projects/code-tools/jmh/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/ospray/ospray/releases/download/v2.10.0/ospray-2.10.0.x86_64.linux.tar.gz</URL>
+      <MD5>e6c3ce503d3ade36992e3ab041c4462c</MD5>
+      <SHA256>1dfdabf2971c279d1a1047a5baf61f9c8c57a063ae3535c72319493a3a27a428</SHA256>
+      <FileName>ospray-2.10.0.x86_64.linux.tar.gz</FileName>
+      <FileSize>84315427</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/ospray/ospray/releases/download/v2.10.0/ospray-2.10.0.x86_64.windows.zip</URL>
+      <MD5>a5e0039658fefbeb6c017df3135e525e</MD5>
+      <SHA256>4405315b683d5ee929a0b9cf2bde148838e8b7d30be90d374da7f62898eb40e6</SHA256>
+      <FileName>ospray-2.10.0.x86_64.windows.zip</FileName>
+      <FileSize>80762342</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/ospray/ospray/releases/download/v2.10.0/ospray-2.10.0.x86_64.macosx.zip</URL>
+      <MD5>e6432d7289ef06e7aaffacaa0a787cd3</MD5>
+      <SHA256>ac4aeeb1d53a31dad90164b50bd33d174e9126801f449a92f6061f74e8798f2a</SHA256>
+      <FileName>ospray-2.10.0.x86_64.macosx.zip</FileName>
+      <FileSize>78866932</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

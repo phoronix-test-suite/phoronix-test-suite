@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://ftp.gnu.org/gnu/glibc/glibc-2.35.tar.xz</URL>
+      <MD5>dd571c67d85d89d7f60b854a4e207423</MD5>
+      <SHA256>5123732f6b67ccd319305efd399971d58592122bcc2a6518a1bd2510dd0cf52e</SHA256>
+      <FileName>glibc-2.35.tar.xz</FileName>
+      <FileSize>18165952</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

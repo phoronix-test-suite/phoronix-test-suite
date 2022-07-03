@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.3-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Inference timings in us: Init: 317, First inference: 269835, Warmup (avg): 241235, Inference (avg): #_RESULT_#</OutputTemplate>
+    <LineHint>Inference timings in us</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.3-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>7-Zip Compression</Title>
+    <AppVersion>22.00</AppVersion>
+    <Description>This is a test of 7-Zip compression/decompression with its integrated benchmark feature.</Description>
+    <ResultScale>MIPS</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.9.0</Version>
+    <SupportedPlatforms>Linux, BSD, Solaris, MacOSX, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, p7zip</ExternalDependencies>
+    <EnvironmentSize>16</EnvironmentSize>
+    <ProjectURL>http://www.7-zip.org/</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

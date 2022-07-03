@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>  Reqs/sec    #_RESULT_#   25659.25  589863.96</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

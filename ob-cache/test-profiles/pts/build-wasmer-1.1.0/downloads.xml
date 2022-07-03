@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/wasmerio/wasmer/archive/refs/tags/2.2.0.tar.gz</URL>
+      <MD5>16ee2eaebe68488b8c5c4eaddaaf80f1</MD5>
+      <SHA256>86d742a59025c4fe49838e8fb98aec754315cb9e0710c1b793e16f8caa566cfb</SHA256>
+      <FileName>wasmer-2.2.0.tar.gz</FileName>
+      <FileSize>4963171</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

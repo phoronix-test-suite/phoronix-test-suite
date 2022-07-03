@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/official-stockfish/Stockfish/archive/refs/tags/sf_15.tar.gz</URL>
+      <MD5>ae6dbd6362c4879b43882d7133e323ff</MD5>
+      <SHA256>0553fe53ea57ce6641048049d1a17d4807db67eecd3531a3749401362a27c983</SHA256>
+      <FileName>Stockfish-sf_15.tar.gz</FileName>
+      <FileSize>189578</FileSize>
+    </Package>
+    <Package>
+      <URL>https://stockfishchess.org/files/stockfish_15_win_x64_avx2.zip</URL>
+      <MD5>8626105c8e29b060124824269af7fe4d</MD5>
+      <SHA256>26d76538ffe90efaecabd4abf512b49877c3fee294aef226317c8dc1fc1d1806</SHA256>
+      <FileName>stockfish_15_win_x64_avx2.zip</FileName>
+      <FileSize>26804059</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

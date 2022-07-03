@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/OpenFOAM/OpenFOAM-9/archive/refs/tags/20220602.tar.gz</URL>
+      <MD5>d3130138327b8cf74afab2729718f3f8</MD5>
+      <SHA256>02c48af7244e6182fdf4b4e226a166bc57131241e86e8427cfa236d5c972de21</SHA256>
+      <FileName>OpenFOAM-9-20220602.tar.gz</FileName>
+      <FileSize>44964690</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.3-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>   mean    #_RESULT_#
+   min     #_MIN_RESULT_#
+   max     #_MAX_RESULT_#</OutputTemplate>
+    <DeleteOutputBefore>frames per second:</DeleteOutputBefore>
+    <DeleteOutputAfter>frame times (ms):</DeleteOutputAfter>
+  </ResultsParser>
+  <ExtraData>
+    <Identifier>csv-individual-frame-times</Identifier>
+  </ExtraData>
+</PhoronixTestSuite>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>	"downloadSpeed": #_RESULT_#</OutputTemplate>
+    <StripFromResult>,</StripFromResult>
+    <ResultScale>Mbit/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <ArgumentsDescription>Internet Download Speed</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>	"uploadSpeed": #_RESULT_#</OutputTemplate>
+    <StripFromResult>,</StripFromResult>
+    <ResultScale>Mbit/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <ArgumentsDescription>Internet Upload Speed</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>	"latency": #_RESULT_#</OutputTemplate>
+    <StripFromResult>,</StripFromResult>
+    <ResultScale>ms</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+    <ArgumentsDescription>Internet Latency</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>	"bufferBloat": #_RESULT_#</OutputTemplate>
+    <StripFromResult>,</StripFromResult>
+    <ResultScale>ms</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+    <ArgumentsDescription>Internet Loaded Latency (Bufferbloat)</ArgumentsDescription>
+  </ResultsParser>
+</PhoronixTestSuite>

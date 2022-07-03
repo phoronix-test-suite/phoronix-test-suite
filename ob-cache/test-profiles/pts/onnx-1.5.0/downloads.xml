@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/onnx/models/blob/main/vision/object_detection_segmentation/yolov4/model/yolov4.tar.gz</URL>
+      <FileName>yolov4.tar.gz</FileName>
+      <FileSize>248665735</FileSize>
+      <Optional>TRUE</Optional>
+    </Package>
+    <Package>
+      <URL>https://github.com/onnx/models/raw/main/vision/object_detection_segmentation/fcn/model/fcn-resnet101-11.tar.gz</URL>
+      <FileName>fcn-resnet101-11.tar.gz</FileName>
+      <FileSize>294729465</FileSize>
+      <Optional>TRUE</Optional>
+    </Package>
+    <Package>
+      <URL>https://github.com/onnx/models/raw/main/vision/super_resolution/sub_pixel_cnn_2016/model/super-resolution-10.tar.gz</URL>
+      <FileName>super-resolution-10.tar.gz</FileName>
+      <FileSize>1815286</FileSize>
+      <Optional>TRUE</Optional>
+    </Package>
+    <Package>
+      <URL>https://github.com/onnx/models/raw/main/text/machine_comprehension/bert-squad/model/bertsquad-12.tar.gz</URL>
+      <FileName>bertsquad-12.tar.gz</FileName>
+      <FileSize>403082198</FileSize>
+      <Optional>TRUE</Optional>
+    </Package>
+    <Package>
+      <URL>https://github.com/onnx/models/raw/main/text/machine_comprehension/gpt-2/model/gpt2-10.tar.gz</URL>
+      <FileName>gpt2-10.tar.gz</FileName>
+      <FileSize>463131530</FileSize>
+      <Optional>TRUE</Optional>
+    </Package>
+    <Package>
+      <URL>https://github.com/onnx/models/raw/main/vision/body_analysis/arcface/model/arcfaceresnet100-8.tar.gz</URL>
+      <FileName>arcfaceresnet100-8.tar.gz</FileName>
+      <FileSize>237564370</FileSize>
+      <Optional>TRUE</Optional>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.17.tar.xz, http://ftp.jaist.ac.jp/pub/Linux/kernel.org/linux/kernel/v5.x/linux-5.17.tar.xz</URL>
+      <MD5>07321a70a48d062cebd0358132f11771</MD5>
+      <SHA256>555fef61dddb591a83d62dd04e252792f9af4ba9ef14683f64840e46fa20b1b1</SHA256>
+      <FileName>linux-5.17.tar.xz</FileName>
+      <FileSize>128399340</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.3-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>V-Ray GPU RTX score: #_RESULT_# vrays</OutputTemplate>
+    <LineHint>V-Ray GPU RTX score:</LineHint>
+    <ResultScale>vrays</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>V-Ray GPU CUDA score: #_RESULT_# vpaths</OutputTemplate>
+    <LineHint>V-Ray GPU CUDA score:</LineHint>
+    <ResultScale>vpaths</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>V-Ray score: #_RESULT_# vsamples</OutputTemplate>
+    <LineHint>V-Ray score:</LineHint>
+    <ResultScale>vsamples</ResultScale>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/Chia-Network/chiavdf/archive/refs/tags/1.0.7.tar.gz</URL>
+      <MD5>b40a156a07a21c825905ab72a0ccd645</MD5>
+      <SHA256>41db620b40db424ebda68461735cbfab25faa43d932696cecd68edca7e4824c1</SHA256>
+      <FileName>chiavdf-1.0.7.tar.gz</FileName>
+      <FileSize>636141</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

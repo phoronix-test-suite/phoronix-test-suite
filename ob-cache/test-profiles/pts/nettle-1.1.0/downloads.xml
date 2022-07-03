@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://ftp.gnu.org/gnu/nettle/nettle-3.8.tar.gz, http://ftp.vim.org/ftp/gnu/nettle/nettle-3.8.tar.gz</URL>
+      <MD5>77eca50d6bb7c6ed34275466f669f62e</MD5>
+      <SHA256>7576c68481c198f644b08c160d1a4850ba9449e308069455b5213319f234e8e6</SHA256>
+      <FileName>nettle-3.8.tar.gz</FileName>
+      <FileSize>2404258</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://www.paraview.org/files/v5.10/ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz</URL>
+      <MD5>fa3068b69021cb6af30558c0a3784a97</MD5>
+      <SHA256>af2453b9803ddde1cd17f4caad04bcc19ea953fb197aab9899932eee93fa17df</SHA256>
+      <FileName>ParaView-5.10.1-MPI-Linux-Python3.9-x86_64.tar.gz</FileName>
+      <FileSize>734085033</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://www.paraview.org/files/v5.10/ParaView-5.10.1-Windows-Python3.9-msvc2017-AMD64.zip</URL>
+      <MD5>bae6ee1afb6441b3b684ad96ca9a431f</MD5>
+      <SHA256>7b1511a7e6a515ccad26571e2e04a23f9fa04fbd46774dfcd99af4aef8299818</SHA256>
+      <FileName>ParaView-5.10.1-Windows-Python3.9-msvc2017-AMD64.zip</FileName>
+      <FileSize>588456567</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://www.paraview.org/files/v5.10/ParaView-5.10.1-MPI-OSX10.13-Python3.9-x86_64.dmg</URL>
+      <MD5>6b63581a0be96fada36665b676d9ad43</MD5>
+      <SHA256>21d28f0bfd4129a5e394990e981ad79d27c4613f3da9f171417c17af785ebcba</SHA256>
+      <FileName>ParaView-5.10.1-MPI-OSX10.13-Python3.9-x86_64.dmg</FileName>
+      <FileSize>403026085</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

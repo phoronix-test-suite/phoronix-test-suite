@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/ospray/ospray_studio/archive/refs/tags/v0.11.0.tar.gz</URL>
+      <MD5>a60b3855f212147fc75b1abe83d6281d</MD5>
+      <SHA256>fc25d181e8e5d7bf4b2f699652c33fa4dedfbaf38d87d24a0af1f8fccd8b2ed5</SHA256>
+      <FileName>ospray_studio-0.11.0.tar.gz</FileName>
+      <FileSize>1583409</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/OSPRayStudio-Room-Scene-2.zip</URL>
+      <MD5>3174279cb05abe626a819560a7a17a43</MD5>
+      <SHA256>59549ebf656519f0604a2c5cf3f4479575fb7f978bfe225a7c2c10ab4adbf056</SHA256>
+      <FileName>OSPRayStudio-Room-Scene-2.zip</FileName>
+      <FileSize>292645205</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Average Speed:		#_RESULT_# fps</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

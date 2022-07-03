@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.3-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Timed Linux Kernel Compilation</Title>
+    <AppVersion>5.18</AppVersion>
+    <Description>This test times how long it takes to build the Linux kernel in a default configuration (defconfig) for the architecture being tested or alternatively an allmodconfig for building all possible kernel modules for the build.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Time To Compile</SubTitle>
+    <Executable>time-compile-kernel</Executable>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.14.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, bc, bison, flex, openssl-development</ExternalDependencies>
+    <EnvironmentSize>982</EnvironmentSize>
+    <ProjectURL>http://www.kernel.org/</ProjectURL>
+    <RepositoryURL>https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git</RepositoryURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>libelf.h</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Build</DisplayName>
+      <Identifier>build</Identifier>
+      <Menu>
+        <Entry>
+          <Name>defconfig</Name>
+          <Value>defconfig</Value>
+          <Message>Default Kernel Build</Message>
+        </Entry>
+        <Entry>
+          <Name>allmodconfig</Name>
+          <Value>allmodconfig</Value>
+          <Message>This option is *much* more time consuming...</Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

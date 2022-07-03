@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.3-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>random_spheres/pathtracer/real_time                                25.2 ms         25.1 ms           28 items_per_second #_RESULT_#</OutputTemplate>
+    <LineHint>items_per_second</LineHint>
+    <StripFromResult>/s</StripFromResult>
+  </ResultsParser>
+</PhoronixTestSuite>

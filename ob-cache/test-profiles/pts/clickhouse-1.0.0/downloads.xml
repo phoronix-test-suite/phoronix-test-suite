@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://builds.clickhouse.com/master/amd64/clickhouse</URL>
+      <FileName>clickhouse_linux_amd64</FileName>
+      <ArchitectureSpecific>x86_64</ArchitectureSpecific>
+    </Package>
+    <Package>
+      <URL>https://builds.clickhouse.com/master/aarch64/clickhouse</URL>
+      <FileName>clickhouse_linux_aarch64</FileName>
+      <ArchitectureSpecific>AArch64</ArchitectureSpecific>
+    </Package>
+    <Package>
+      <URL>https://raw.githubusercontent.com/ClickHouse/ClickHouse/v22.3.7.28-lts/benchmark/clickhouse/queries.sql</URL>
+      <MD5>f1acbd265ff945b7d678ebf87d6dce6c</MD5>
+      <SHA256>2164b9759dd796a7718ef9ac03a0031422c1948343de7417bfd385350cff0fb1</SHA256>
+      <FileName>clickhouse_queries.sql</FileName>
+      <FileSize>8074</FileSize>
+    </Package>
+    <Package>
+      <URL>https://datasets.clickhouse.com/hits/partitions/hits_100m_obfuscated_v1.tar.xz</URL>
+      <MD5>40200a88cbd311918bcd597333aa1912</MD5>
+      <SHA256>972553f570405a6a632e95ccba057fdf264ca75771ba02de70b6cc6b24e52a0b</SHA256>
+      <FileName>hits_100m_obfuscated_v1.tar.xz</FileName>
+      <FileSize>9722280160</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

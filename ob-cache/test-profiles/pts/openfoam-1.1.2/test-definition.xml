@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.3-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>OpenFOAM</Title>
+    <AppVersion>9</AppVersion>
+    <Description>OpenFOAM is the leading free, open-source software for computational fluid dynamics (CFD). This test profile currently uses the drivaerFastback test case for analyzing automotive aerodynamics or alternatively the older motorBike input.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.2</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Scientific</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>openmpi-development, boost-development, zlib-development, fftw3-development, build-utilities, flex, bison, ncurses-development</ExternalDependencies>
+    <EnvironmentSize>1700</EnvironmentSize>
+    <ProjectURL>https://openfoam.org/</ProjectURL>
+    <RepositoryURL>https://github.com/OpenFOAM/OpenFOAM-9</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>scotch/scotch.h, scotch/ptscotch.h</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Input</DisplayName>
+      <Identifier>input</Identifier>
+      <Menu>
+        <Entry>
+          <Name>motorBike</Name>
+          <Value>incompressible/simpleFoam/motorBike/</Value>
+          <Message>Simple, not as demanding as drivaerFastback</Message>
+        </Entry>
+        <Entry>
+          <Name>drivaerFastback, Small Mesh Size</Name>
+          <Value>incompressible/simpleFoam/drivaerFastback/ -m S</Value>
+          <Message>Less time consuming, still needs a powerful CPU</Message>
+        </Entry>
+        <Entry>
+          <Name>drivaerFastback, Medium Mesh Size</Name>
+          <Value>incompressible/simpleFoam/drivaerFastback/ -m M</Value>
+          <Message>3M Cells</Message>
+        </Entry>
+        <Entry>
+          <Name>drivaerFastback, Large Mesh Size</Name>
+          <Value>incompressible/simpleFoam/drivaerFastback/ -m L</Value>
+          <Message>22.5M Cells, most time consuming</Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

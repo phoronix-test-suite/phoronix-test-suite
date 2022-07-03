@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Timed MPlayer Compilation</Title>
+    <AppVersion>1.5</AppVersion>
+    <Description>This test times how long it takes to build the MPlayer open-source media player program.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Time To Compile</SubTitle>
+    <Executable>time-compile-mplayer</Executable>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.5.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <ProjectURL>http://www.mplayerhq.hu/</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

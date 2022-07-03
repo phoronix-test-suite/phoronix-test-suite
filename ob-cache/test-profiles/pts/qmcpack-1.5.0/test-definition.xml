@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>QMCPACK</Title>
+    <AppVersion>3.13</AppVersion>
+    <Description>QMCPACK is a modern high-performance open-source Quantum Monte Carlo (QMC) simulation code making use of MPI for this benchmark of the H20 example code. QMCPACK is an open-source production level many-body ab initio Quantum Monte Carlo code for computing the electronic structure of atoms, molecules, and solids. QMCPACK is supported by the U.S. Department of Energy.</Description>
+    <ResultScale>Total Execution Time - Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.5.0</Version>
+    <SupportedPlatforms>Linux, BSD</SupportedPlatforms>
+    <SoftwareType>Scientific</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>openmpi-development, fftw3-development, build-utilities, boost-development, cmake, hdf5, libxml2, blas-development, lapack-development, python</ExternalDependencies>
+    <EnvironmentSize>1200</EnvironmentSize>
+    <ProjectURL>http://qmcpack.org/</ProjectURL>
+    <InternalTags>SMP, MPI</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Input</DisplayName>
+      <Identifier>input</Identifier>
+      <Menu>
+        <Entry>
+          <Name>simple-H2O</Name>
+          <Value>H2O/example_H2O-1-1 simple-H2O.xml</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/game_textures_1.tar.xz</URL>
+      <MD5>c3366280058343d55330445e9fc46895</MD5>
+      <SHA256>74d9a3f0772d6b5c15396d0bcdb9b9b6b39343b7aa3f3e132420b1319f7a4927</SHA256>
+      <FileName>game_textures_1.tar.xz</FileName>
+      <FileSize>75007432</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/wolfpld/etcpak/archive/refs/tags/1.0.tar.gz</URL>
+      <MD5>557028d46ffaf0dd8e80498c10376e60</MD5>
+      <SHA256>b54fa7a34dd60932892d65ffc9e67d0c1b936a96127aab211ef5b6bf3cf7bfc9</SHA256>
+      <FileName>etcpak-1.0.tar.gz</FileName>
+      <FileSize>529428</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/wolfpld/tracy/archive/refs/tags/v0.8.1.tar.gz</URL>
+      <MD5>86cd391594cea90e607e0c7a581e8ad3</MD5>
+      <SHA256>004992012b2dc879a9f6d143cbf94d7ea30e88135db3ef08951605d214892891</SHA256>
+      <FileName>tracy-0.8.1.tar.gz</FileName>
+      <FileSize>5171278</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

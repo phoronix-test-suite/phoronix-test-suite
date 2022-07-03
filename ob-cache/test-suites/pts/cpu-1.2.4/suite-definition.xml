@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>CPU / Processor Suite</Title>
+    <Version>1.2.4</Version>
+    <TestType>Processor</TestType>
+    <Description>This test suite contains tests designed to test the system's CPU / processor. This test suite is deprecated and not maintained due to the collection of test profiles now so diverse that such a large test suite is not really practical. Use another suite(s) more narrowily focused on your interests/needs.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+	<Status>Deprecated</Status>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/rodinia</Test>
+    <Arguments>OMP_CFD</Arguments>
+    <Description>Test: OpenMP CFD Solver</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/rodinia</Test>
+    <Arguments>OMP_LAVAMD</Arguments>
+    <Description>Test: OpenMP LavaMD</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/namd</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/stockfish</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/x264</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/x265</Test>
+    <Arguments>Bosphorus_1920x1080_120fps_420_8bit_YUV.y4m</Arguments>
+    <Description>Video Input: Bosphorus 1080p</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/x265</Test>
+    <Arguments>Bosphorus_3840x2160.y4m</Arguments>
+    <Description>Video Input: Bosphorus 4K</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/kvazaar</Test>
+    <Arguments>-i Bosphorus_1920x1080_120fps_420_8bit_YUV.y4m --preset slow</Arguments>
+    <Description>Video Input: Bosphorus 1080p - Video Preset: Slow</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/kvazaar</Test>
+    <Arguments>-i Bosphorus_1920x1080_120fps_420_8bit_YUV.y4m --preset medium</Arguments>
+    <Description>Video Input: Bosphorus 1080p - Video Preset: Medium</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/kvazaar</Test>
+    <Arguments>-i Bosphorus_1920x1080_120fps_420_8bit_YUV.y4m --preset veryfast</Arguments>
+    <Description>Video Input: Bosphorus 1080p - Video Preset: Very Fast</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/kvazaar</Test>
+    <Arguments>-i Bosphorus_1920x1080_120fps_420_8bit_YUV.y4m --preset ultrafast</Arguments>
+    <Description>Video Input: Bosphorus 1080p - Video Preset: Ultra Fast</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/kvazaar</Test>
+    <Arguments>-i Bosphorus_3840x2160.y4m --preset slow</Arguments>
+    <Description>Video Input: Bosphorus 4K - Video Preset: Slow</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/kvazaar</Test>
+    <Arguments>-i Bosphorus_3840x2160.y4m --preset medium</Arguments>
+    <Description>Video Input: Bosphorus 4K - Video Preset: Medium</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/kvazaar</Test>
+    <Arguments>-i Bosphorus_3840x2160.y4m --preset veryfast</Arguments>
+    <Description>Video Input: Bosphorus 4K - Video Preset: Very Fast</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/kvazaar</Test>
+    <Arguments>-i Bosphorus_3840x2160.y4m --preset ultrafast</Arguments>
+    <Description>Video Input: Bosphorus 4K - Video Preset: Ultra Fast</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/compress-7zip</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/blender</Test>
+    <Arguments>-b ../barbershop_interior_gpu.blend -o output.test -x 1 -F JPEG -f 1  NONE</Arguments>
+    <Description>Blend File: Barbershop - Compute: CPU-Only</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/asmfish</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/build-linux-kernel</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/build-gcc</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/radiance</Test>
+    <Arguments>make all</Arguments>
+    <Description>Test: Serial</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/radiance</Test>
+    <Arguments>make smp</Arguments>
+    <Description>Test: SMP Parallel</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/openssl</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/ctx-clock</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/sysbench</Test>
+    <Arguments>cpu run</Arguments>
+    <Description>Test: CPU</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/povray</Test>
+  </Execute>
+</PhoronixTestSuite>

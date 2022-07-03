@@ -1,0 +1,1 @@
+{"1.1.0":{"last_updated":"1646264066","commit_description":"Update against Wasmer 2.2 to fix building on newer distros."},"1.0.0":{"last_updated":"1614699623","commit_description":"Initial commit of Wasmer compilation benchmark for more Rust coverage."}}
