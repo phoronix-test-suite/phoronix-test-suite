@@ -578,7 +578,7 @@ class phodevi_system extends phodevi_device_interface
 			{
 				foreach($check_variables as $var)
 				{
-					if(stripos($name, $var) !== false && $name != '__GL_SYNC_TO_VBLANK' && strpos($name, 'GJS') === false)
+					if(stripos($name, $var) !== false && $name != '__GL_SYNC_TO_VBLANK' && strpos($name, 'GJS') === false && strpos($name, 'DEBUGINFO') === false)
 					{
 						$value = trim($value);
 						if(strpos($value, ' ') !== false)
@@ -660,13 +660,13 @@ class phodevi_system extends phodevi_device_interface
 				if(!empty($mds_output))
 				{
 					$mds_output = preg_replace('#\\x1b[[][^A-Za-z]*[A-Za-z]#', '', $mds_output);
-				}
-				//echo PHP_EOL;
-				foreach(array('__user pointer sanitization: Disabled', 'Retpoline: Full', 'IBPB: Always', 'IBRS: Enabled', 'STIBP: Enabled', 'KPTI Enabled: Yes', 'PTE Inversion: Yes') as $check)
-				{
-					if(stripos($mds_output, $check) !== false)
+
+					foreach(array('__user pointer sanitization: Disabled', 'Retpoline: Full', 'IBPB: Always', 'IBRS: Enabled', 'STIBP: Enabled', 'KPTI Enabled: Yes', 'PTE Inversion: Yes') as $check)
 					{
-						$security[] = $check;
+						if(stripos($mds_output, $check) !== false)
+						{
+							$security[] = $check;
+						}
 					}
 				}
 			}

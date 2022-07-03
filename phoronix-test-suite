@@ -67,12 +67,12 @@ fi
 if [ ! "X$PHP_BIN" = "X" ] && [ -x $PHP_BIN ]
 then
 	export PHP_BIN=$PHP_BIN
-elif [ -x /usr/bin/php7 ] || [ -x /usr/local/bin/php7 ] || [ -x /usr/pkg/bin/php7 ]
-then
-	export PHP_BIN="php7"
 elif [ -x /usr/bin/php8 ] || [ -x /usr/local/bin/php8 ] || [ -x /usr/pkg/bin/php8 ]
 then
 	export PHP_BIN="php8"
+elif [ -x /usr/bin/php7 ] || [ -x /usr/local/bin/php7 ] || [ -x /usr/pkg/bin/php7 ]
+then
+	export PHP_BIN="php7"
 elif [ -x /usr/bin/php ] || [ -x /usr/pkg/bin/php ]
 then
 	export PHP_BIN="php"
@@ -106,6 +106,12 @@ then
 elif [ -x /usr/local/bin/php-8.0 ]
 then
 	export PHP_BIN="/usr/local/bin/php-8.0"
+elif [ -x /usr/local/bin/php-8.1 ]
+then
+	export PHP_BIN="/usr/local/bin/php-8.1"
+elif [ -x /usr/local/bin/php-8.2 ]
+then
+	export PHP_BIN="/usr/local/bin/php-8.2"
 elif [ -x /opt/bin/php ]
 then
 	export PHP_BIN="/opt/bin/php"
@@ -127,6 +133,12 @@ then
 elif [ -x /usr/bin/php5 ] || [ -x /usr/local/bin/php5 ] || [ -x /usr/pkg/bin/php5 ]
 then
 	export PHP_BIN="php5"
+elif which php8 >/dev/null 2>&1 ;
+then
+	export PHP_BIN="php8"
+elif which php7 >/dev/null 2>&1 ;
+then
+	export PHP_BIN="php7"
 elif which php5 >/dev/null 2>&1 ;
 then
 	export PHP_BIN="php5"
@@ -144,7 +156,8 @@ then
 
 PHP must be installed for the Phoronix Test Suite
 The PHP command-line package is commonly called php-cli, php7-cli, php8-cli, or php.
-For more information visit: https://www.phoronix-test-suite.com/
+For more information, see the included documentation or online via:
+	https://github.com/phoronix-test-suite/phoronix-test-suite/tree/master/documentation
 
 EOT
 
@@ -282,7 +295,7 @@ then
 	echo " "
 fi
 
-exit
+exit 1
 fi
 
 if [ ! -f pts-core/phoronix-test-suite.php ] && [ -f `dirname $0`/pts-core/phoronix-test-suite.php ]

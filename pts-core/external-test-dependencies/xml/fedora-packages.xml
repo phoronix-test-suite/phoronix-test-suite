@@ -166,6 +166,7 @@
 		<Package>
 			<GenericName>qt5-development</GenericName>
 			<PackageName>qt5-qtbase-devel</PackageName>
+			<FileCheck>/usr/include/qt5/QtCore/qfile.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>autoconf</GenericName>

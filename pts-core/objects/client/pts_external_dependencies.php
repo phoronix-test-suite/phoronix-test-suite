@@ -255,6 +255,12 @@ class pts_external_dependencies
 						self::remove_tests_with_missing_dependencies($test_profiles, $generic_packages_needed, $required_external_dependencies);
 						break;
 					case 'REATTEMPT_DEP_INSTALL':
+						// Recalculate needed system dependencies too
+						$system_dependencies = self::check_for_missing_system_files($required_system_files, false);
+						if(!empty($system_dependencies))
+						{
+							$dependencies_to_install = array_merge($dependencies_to_install, $system_dependencies);
+						}
 						self::install_packages_on_system($dependencies_to_install);
 						break;
 					case 'QUIT':
