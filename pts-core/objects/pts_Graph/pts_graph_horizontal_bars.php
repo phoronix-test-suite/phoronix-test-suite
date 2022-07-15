@@ -51,7 +51,7 @@ class pts_graph_horizontal_bars extends pts_graph_core
 		}
 		$middle_of_vert = round($this->i['top_start'] + ($this->i['is_multi_way_comparison'] ? 5 : 0) - ($this->i['identifier_height'] * 0.5) - 2);
 
-		$g = array('font-size' => $this->i['identifier_size'] + 1, 'fill' => self::$c['color']['headers'], 'font-weight' => 'bold');
+		$g = array('font-size' => $this->i['identifier_size'] + 1, 'fill' => self::$c['color']['headers'], 'font-weight' => 'bold', 'text-anchor' => 'end');
 		if($this->i['is_multi_way_comparison'])
 		{
 			$g['font-size']--;
@@ -71,7 +71,7 @@ class pts_graph_horizontal_bars extends pts_graph_core
 			}
 			else
 			{
-				$attrs = array('x' => ($this->i['left_start'] - 5), 'y' => $middle_of_vert, 'text-anchor' => 'end');
+				$attrs = array('y' => $middle_of_vert, 'x' => ($this->i['left_start'] - 5));
 				if($this->make_identifiers_web_links)
 				{
 					$attrs['xlink:href'] = $this->make_identifiers_web_links . $identifier;

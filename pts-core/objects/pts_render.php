@@ -303,6 +303,10 @@ class pts_render
 	{
 		static $cache;
 
+		if(empty($identifier))
+		{
+			return $fallback_color;
+		}
 		if(isset($cache[$identifier]))
 		{
 			return $cache[$identifier] != null ? $cache[$identifier] : $fallback_color;

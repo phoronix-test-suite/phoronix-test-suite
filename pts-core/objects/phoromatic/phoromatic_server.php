@@ -800,6 +800,11 @@ class phoromatic_server
 				$sys_result = $stmt->execute();
 				$sys_row = $sys_result ? $sys_result->fetchArray() : null;
 
+				if(!isset($sys_row['Groups']) || empty($sys_row['Groups']))
+				{
+					continue;
+				}
+
 				$matches_to_group = false;
 				foreach(explode(',', $row['RunTargetGroups']) as $group)
 				{

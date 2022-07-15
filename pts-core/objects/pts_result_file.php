@@ -153,6 +153,8 @@ class pts_result_file
 		{
 			return PTS_SAVE_RESULTS_PATH . $this->save_identifier . '/composite.xml';
 		}
+
+		return '';
 	}
 	public function get_result_dir()
 	{

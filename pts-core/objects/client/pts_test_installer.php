@@ -779,7 +779,7 @@ class pts_test_installer
 			{
 				$compiler_line = array_pop($compiler_lines);
 
-				if(strpos($compiler_line, '-O') === false && strpos($compiler_line, '-f') === false && (strpos($compiler_backup_line, '-f') !== false || strpos($compiler_backup_line, '-O')))
+				if((empty($compiler_line) || (strpos($compiler_line, '-O') === false && strpos($compiler_line, '-f') === false)) && (!empty($compiler_backup_line) && (strpos($compiler_backup_line, '-f') !== false || strpos($compiler_backup_line, '-O'))))
 				{
 					$compiler_line .= ' ' . $compiler_backup_line;
 				}

@@ -392,6 +392,11 @@ class pts_result_file_analyzer
 		}
 
 		$wins_result = pts_result_file_analyzer::generate_wins_losses_results($result_file, true);
+		if(empty($wins_result->test_result_buffer))
+		{
+			$error = 'Not enough results to analyze...';
+			return $summary;
+		}
 		$first_place_buffer = $wins_result->test_result_buffer->get_max_value(2);
 
 		if($selected_result && ($sw = $wins_result->test_result_buffer->find_buffer_item($selected_result)))

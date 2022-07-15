@@ -203,6 +203,11 @@ class pts_svg_dom
 	}
 	public function add_text_element($text_string, $attributes, $append_to = false)
 	{
+		if(empty($text_string))
+		{
+			return;
+		}
+
 		$el = $this->dom->createElement('text');
 		$text_node = $this->dom->createTextNode($text_string);
 		$el->appendChild($text_node);
@@ -344,5 +349,4 @@ class pts_svg_dom
 		return array($box_width, $box_height);
 	}
 }
-
 ?>
