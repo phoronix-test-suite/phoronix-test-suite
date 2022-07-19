@@ -13,7 +13,7 @@ unzip -o svg-test-files-1.zip
 echo "#!/bin/sh
 for i in *.svg
 do
-	inkscape -z -e output.png \$i
+	inkscape --export-filename=output.png \$i
 	echo \$? > ~/test-exit-status
 done
 
