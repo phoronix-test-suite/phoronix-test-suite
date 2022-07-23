@@ -37,9 +37,20 @@ function phoromatic_quit_if_invalid_input_found($input_keys = null)
 	{
 		foreach($input_keys as $key)
 		{
-			if(isset($_REQUEST[$key]) && !empty($_REQUEST[$key]))
+			if(isset($_GET[$key]) && !empty($_GET[$key]))
 			{
-				foreach(pts_arrays::to_array($_REQUEST[$key]) as $val_to_check)
+				foreach(pts_arrays::to_array($_GET[$key]) as $val_to_check)
+				{
+					if(stripos($val_to_check, $invalid_string) !== false)
+					{
+						echo '<strong>Exited due to invalid input ( ' . $invalid_string . ') attempted:</strong> ' . htmlspecialchars($val_to_check);
+						exit;
+					}
+				}
+			}
+			if(isset($_POST[$key]) && !empty($_POST[$key]))
+			{
+				foreach(pts_arrays::to_array($_POST[$key]) as $val_to_check)
 				{
 					if(stripos($val_to_check, $invalid_string) !== false)
 					{
