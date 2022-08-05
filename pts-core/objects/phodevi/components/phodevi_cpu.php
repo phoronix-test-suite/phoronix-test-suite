@@ -791,11 +791,23 @@ class phodevi_cpu extends phodevi_device_interface
 				{
 						$new_info = 'Apple';
 						$part = phodevi_linux_parser::read_cpuinfo_single('CPU part');
+						// https://github.com/AsahiLinux/linux/blob/asahi/arch/arm64/include/asm/cputype.h
 						switch($part)
 						{
 							case '0x022':
 							case '0x023':
 								$new_info .= ' M1';
+								break;
+							case '0x024':
+							case '0x025':
+								$new_info .= ' M1 Pro';
+								break;
+							case '0x028':
+							case '0x029':
+								$new_info .= ' M1 Max';
+								break;
+							case '0x033':
+								$new_info .= ' M2';
 								break;
 						}
 				}
@@ -1169,6 +1181,7 @@ class phodevi_cpu extends phodevi_device_interface
 			25 => array(
 				0 => 'Zen 3',
 				1 => 'Zen 3',
+				8 => 'Zen 3',
 				16 => 'Zen 4',
 				17 => 'Zen 4',
 				18 => 'Zen 4',

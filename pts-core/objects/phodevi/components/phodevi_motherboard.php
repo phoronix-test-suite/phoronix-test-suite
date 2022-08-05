@@ -419,6 +419,10 @@ class phodevi_motherboard extends phodevi_device_interface
 			{
 				$serial = phodevi_linux_parser::read_sys_dmi('product_uuid');
 			}
+			if($serial == null && is_file('/proc/device-tree/serial-number'))
+			{
+				$serial = pts_file_io::file_get_contents('/proc/device-tree/serial-number');
+			}
 		}
 		else if(phodevi::is_windows())
 		{

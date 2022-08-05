@@ -35,6 +35,10 @@ class phodevi_bsd_parser
 			for($i = 0; $i < count($desc) && empty($info); $i++)
 			{
 				$output = shell_exec('sysctl ' . $desc[$i] . ' 2>&1');
+				if(empty($output))
+				{
+					continue;
+				}
 
 				if((($point = strpos($output, ':')) > 0 || ($point = strpos($output, '=')) > 0) && strpos($output, 'unknown oid') === false && strpos($output, 'is invalid') === false && strpos($output, 'not available') === false)
 				{
