@@ -690,7 +690,7 @@ class pts_test_execution
 		{
 			$test_run_request->test_result_buffer = new pts_test_result_buffer();
 			$rid = $test_run_manager->get_results_identifier() != null ? $test_run_manager->get_results_identifier() : 'Result';
-			$test_run_request->test_result_buffer->add_test_result($rid, '', '', pts_test_run_manager::process_json_report_attributes($test_run_request, (!empty(self::$test_run_error_collection) ? implode(' ', self::$test_run_error_collection) : '')), '', '');
+			$test_run_request->test_result_buffer->add_test_result($rid, '', '', pts_test_run_manager::process_json_report_attributes($test_run_request, (!empty(self::$test_run_error_collection) ? implode(' ', array_unique(self::$test_run_error_collection)) : '')), '', '');
 			$test_run_manager->result_file->add_result($test_run_request);
 		}
 
