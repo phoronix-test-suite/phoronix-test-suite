@@ -1245,7 +1245,7 @@ class pts_result_viewer_embed
 	}
 	public static function process_request_to_attributes(&$request, &$result_file, &$extra_attributes)
 	{
-		if(($oss = self::check_request_for_var($request, 'oss')))
+		if(($oss = self::check_request_for_var($request, 'oss')) && strlen($oss) > 1)
 		{
 			$oss = pts_strings::comma_explode($oss);
 			foreach($result_file->get_result_objects() as $i => $result_object)
@@ -1549,7 +1549,7 @@ class pts_result_viewer_embed
 	{
 		return '<input type="text" name="' . pts_strings::simple($name) . '" id="' . pts_strings::simple($id) . '" onclick="" value="' . (isset($_REQUEST[$name]) ? pts_strings::sanitize(strip_tags($_REQUEST[$name])) : null) . '">';
 	}
-	public static function html_select_menu($name, $id, $on_change, $elements, $use_index = true, $other_attributes = array(), $selected = false)
+	public static function html_select_menu($name, $id, $on_change, $elements, $use_index = true, $other_attributes = array(), $selected = -1)
 	{
 		$tag = null;
 		foreach($other_attributes as $i => $v)
@@ -1559,9 +1559,9 @@ class pts_result_viewer_embed
 
 		$html_menu = '<select name="' . $name . '" id="' . $id . '" onchange="' . $on_change . '"' . $tag . '>' . PHP_EOL;
 
-		if($selected === false)
+		if($selected === -1)
 		{
-			$selected = isset($_REQUEST[$name]) ? $_REQUEST[$name] : false;
+			$selected = isset($_REQUEST[$name]) && !empty($_REQUEST[$name]) ? $_REQUEST[$name] : false;
 		}
 
 		$force_select = isset($other_attributes['multiple']);
