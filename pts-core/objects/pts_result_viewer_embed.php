@@ -1245,7 +1245,7 @@ class pts_result_viewer_embed
 	}
 	public static function process_request_to_attributes(&$request, &$result_file, &$extra_attributes)
 	{
-		if(($oss = self::check_request_for_var($request, 'oss')))
+		if(($oss = self::check_request_for_var($request, 'oss')) && gettype($oss) == "string")
 		{
 			$oss = pts_strings::comma_explode($oss);
 			foreach($result_file->get_result_objects() as $i => $result_object)
