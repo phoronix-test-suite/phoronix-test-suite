@@ -1,4 +1,4 @@
-#!/bin/s
+#!/bin/sh
 h
 tar -xf Natron-2.4.0-Linux-64-no-installer.tar.xz
 unzip -o Natron_2.3.12_Spaceship.zip
