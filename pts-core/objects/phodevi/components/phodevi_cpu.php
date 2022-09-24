@@ -1221,6 +1221,7 @@ class phodevi_cpu extends phodevi_device_interface
 				79 => 'Zen 3', // end of Yellow Carp
 				80 => 'Zen 3',
 				96 => 'Zen 4',
+				97 => 'Zen 4',
 				112 => 'Zen 4',
 				160 => 'Zen 4',
 				161 => 'Zen 4',
@@ -1313,9 +1314,12 @@ class phodevi_cpu extends phodevi_device_interface
 				166 => 'Comet Lake',
 				167 => 'Rocket Lake',
 				168 => 'Rocket Lake',
+				170 => 'Meteor Lake',
+				172 => 'Meteor Lake',
 				183 => 'Raptor Lake',
 				186 => 'Raptor Lake',
 				190 => 'Alder Lake',
+				191 => 'Raptor Lake',
 				),
 			15 => array(
 				1 => 'Clarksfield',

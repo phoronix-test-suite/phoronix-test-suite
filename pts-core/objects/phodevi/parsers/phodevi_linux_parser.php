@@ -470,6 +470,11 @@ class phodevi_linux_parser
 		$lspci = shell_exec('lspci -v 2> /dev/null');
 		$subsystem = null;
 
+		if(empty($lspci))
+		{
+			return null;
+		}
+
 		foreach(pts_arrays::to_array($desc) as $check)
 		{
 			if(($hit = strpos($lspci, $check)) !== false)
