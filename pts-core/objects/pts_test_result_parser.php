@@ -680,10 +680,7 @@ class pts_test_result_parser
 						pts_test_result_parser::debug_message('No Result Parsing Hint, Including Entire Result Output');
 						$line = trim($output);
 					}
-					if($e->get_turn_chars_to_space() != null && $line != null)
-					{
-						$line = str_replace($e->get_turn_chars_to_space(), ' ', $line);
-					}
+					pts_test_result_parser::clean_result_line($e, $line);
 					pts_test_result_parser::debug_message('Result Line: ' . $line);
 
 					// FALLBACK HELPERS FOR BELOW
@@ -753,6 +750,7 @@ class pts_test_result_parser
 						if($try_again == false && empty($test_results) && !empty($possible_lines))
 						{
 							$line = array_shift($possible_lines);
+							pts_test_result_parser::clean_result_line($e, $line);
 							pts_test_result_parser::debug_message('Trying Backup Result Line: ' . $line);
 							$try_again = true;
 						}
@@ -929,6 +927,14 @@ class pts_test_result_parser
 
 		pts_test_result_parser::debug_message('Test Result Parser Returning: ' . $test_result);
 		return $test_result;
+	}
+	protected static function clean_result_line(&$e, &$line)
+	{
+		// Any post-processing to clean-up / prepare the (possible) line of text where the result can be found
+		if($e->get_turn_chars_to_space() != null && $line != null)
+		{
+			$line = str_replace($e->get_turn_chars_to_space(), ' ', $line);
+		}
 	}
 	protected static function valid_numeric_input_handler(&$numeric_input, $line)
 	{
