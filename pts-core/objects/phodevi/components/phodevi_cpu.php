@@ -776,6 +776,9 @@ class phodevi_cpu extends phodevi_device_interface
 						case '0xd4a':
 							$new_info .= ' Neoverse-E1';
 							break;
+						case '0xd4f':
+							$new_info .= ' Neoverse-V2';
+							break;
 						case '0xd13':
 							$new_info .= ' Cortex-R52';
 							break;

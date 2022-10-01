@@ -336,6 +336,14 @@ class pts_graph_lines extends pts_graph_core
 	}
 	private static function calc_min_avg_max(&$data_set)
 	{
+		foreach($data_set as $i => $v)
+		{
+			if($v === NULL || !is_numeric($v))
+			{
+				unset($data_set[$i]);
+			}
+		}
+
 		if(empty($data_set))
 		{
 			return array(0, 0, 0);

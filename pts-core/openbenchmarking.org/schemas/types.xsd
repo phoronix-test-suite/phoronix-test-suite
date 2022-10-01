@@ -80,6 +80,7 @@
 		<xs:enumeration value="HIB" />
 		<xs:enumeration value="ABSTRACT" />
 		<xs:enumeration value="" />
+		<xs:enumeration value=" " />
 	</xs:restriction>
 </xs:simpleType>
 <xs:simpleType name="VersionString">

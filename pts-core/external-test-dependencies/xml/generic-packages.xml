@@ -507,7 +507,7 @@
 			<GenericName>python-scipy</GenericName>
 			<Title>Python Scipy</Title>
 			<PossibleNames>python-scipy</PossibleNames>
-			<FileCheck>/usr/lib/python*/dist-packages/scipy</FileCheck>
+			<FileCheck>/usr/lib/python*/dist-packages/scipy OR /usr/lib/python*/site-packages/scipy</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>python-sklearn</GenericName>
