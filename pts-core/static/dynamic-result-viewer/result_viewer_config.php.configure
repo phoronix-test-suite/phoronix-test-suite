@@ -9,4 +9,7 @@ define('PTS_SAVE_RESULTS_PATH', '');
 // Path to phoronix-test-suite installation
 define('VIEWER_PHORONIX_TEST_SUITE_PATH', '');
 
+// If wanting to watermark protect the webpages, e.g. 'CONFIDENTIAL - ' . date('Y-m-d H:i') . ' - ' . $_SERVER['REMOTE_ADDR']
+define('PTS_RESULT_VIEWER_WATERMARK',  '');
+
 ?>

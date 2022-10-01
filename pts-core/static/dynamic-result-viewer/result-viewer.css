@@ -227,6 +227,31 @@ div#results svg
 	min-width: 50%;
 	height: auto;
 }
+div#results section
+{
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+div#results_sidebar
+{
+	width: 300px;
+	position: fixed;
+	z-index: 1;
+	top: 120px;
+	left: 0;
+	bottom: 0;
+	background: #efefef;
+	padding: 2px 4px;
+	font-size: 12px;
+	overflow: scroll;
+	display: none;
+}
+div#results_sidebar a.active
+{
+	font-weight: bold;
+	color: red;
+}
 div.geo_bg_graph
 {
 	background: #CCC;
@@ -449,7 +474,6 @@ p#result_file_system_table
 	width: 100%;
 	display: none;
 	padding: 1rem;
-	background: #fff;
 }
 .tabs input[type="radio"]
 {

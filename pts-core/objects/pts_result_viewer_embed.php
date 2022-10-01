@@ -31,11 +31,13 @@ class pts_result_viewer_embed
 	protected $show_html_table_when_relevant = true;
 	protected $show_test_metadata_helper = true;
 	protected $include_page_print_only_helpers = true;
+	protected $show_result_sidebar = false;
 
 	public function __construct(&$result_file, $public_id = null)
 	{
 		$this->result_file = &$result_file;
 		$this->result_public_id = $public_id;
+		$this->show_result_sidebar = !defined('PHOROMATIC_SERVER_WEB_INTERFACE');
 
 		if(isset($_SERVER['REQUEST_URI']) && !empty($_SERVER['REQUEST_URI']))
 		{
@@ -210,7 +212,6 @@ class pts_result_viewer_embed
 			$PAGE .= $this->graph_export_handler($rendered);
 		}
 		$PAGE .= '</div>';
-
 		$PAGE .= '<a id="table"></a><div id="results">';
 		$prev_title = null;
 
@@ -281,6 +282,7 @@ class pts_result_viewer_embed
 		//
 		// SHOW THE RESULTS
 		//
+		$sidebar_list = array();
 		$skip_ros = array();
 		foreach($result_file->get_result_objects() as $i => $result_object)
 		{
@@ -294,7 +296,7 @@ class pts_result_viewer_embed
 			$ro = clone $result_object;
 			$res_desc_shortened = $result_object->get_arguments_description_shortened(false);
 			$res = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
-			$PAGE .= '<a id="r-' . $i . '"></a><div style="text-align: center;" id="result-' . $i . '">';
+			$PAGE .= '<section id="r-' . $i . '" style="text-align: center;" id="result-' . $i . '">';
 
 			//
 			// DISPLAY TEST PORIFLE METADATA HELPER
@@ -427,6 +429,10 @@ class pts_result_viewer_embed
 						}
 						$PAGE .= '</div>';
 				}
+				if($this->show_result_sidebar)
+				{
+					$sidebar_list[] = &$result_object;
+				}
 			}
 
 			//
@@ -478,8 +484,14 @@ class pts_result_viewer_embed
 				$PAGE .= '<p>' . $button_area . '</p>';
 			}
 
-			$PAGE .= '</div>';
+			$PAGE .= '</section>';
 			unset($result_object);
+		}
+
+		if($this->show_result_sidebar && count($sidebar_list) > 6)
+		{
+			// show result sidebar
+			$PAGE .= $this->add_result_sidebar($sidebar_list);
 		}
 
 		if($this->include_page_print_only_helpers)
@@ -489,6 +501,82 @@ class pts_result_viewer_embed
 		$PAGE .= '</div>';
 
 		return $PAGE;
+	}
+	public function add_result_sidebar(&$sidebar_list)
+	{
+		$sidebar_count = count($sidebar_list);
+		$html = '<div id="results_sidebar">
+		<h3>' . $sidebar_count . ' Results Shown</h3>';
+		$current_test = false;
+		$show_units = false;
+		foreach($sidebar_list as $sidebar_pos => &$result_object)
+		{
+			if(($sidebar_pos + 1) < $sidebar_count && $sidebar_list[($sidebar_pos + 1)]->test_profile->get_identifier() == $result_object->test_profile->get_identifier())
+			{
+				if($sidebar_pos == 0 || $sidebar_list[($sidebar_pos - 1)]->test_profile->get_identifier() != $result_object->test_profile->get_identifier())
+				{
+					// Make it nested for first occurence
+					$html .= '<strong>' . $result_object->test_profile->get_title() . ':</strong><br />';
+					$show_units = $sidebar_list[($sidebar_pos + 1)]->get_arguments_description_shortened(false) == $result_object->get_arguments_description_shortened(false) ? $result_object->get_arguments_description_shortened(false) : false;
+					$current_test = &$result_object->test_profile;
+				}
+			}
+			if($current_test && $current_test->get_identifier() == $result_object->test_profile->get_identifier())
+			{
+				// show nested multi conf
+				if($show_units)
+				{
+					if(!isset($current_unit) || $current_unit != $result_object->get_arguments_description_shortened(false))
+					{
+						$current_unit = $result_object->get_arguments_description_shortened(false);
+						$html .= ' &nbsp; <strong>' . $current_unit . ':</strong><br />';
+					}
+				$html .= ' &nbsp; &nbsp; <a href="#r-' . $result_object->get_comparison_hash(true, false) . '">' . $result_object->test_profile->get_result_scale() . '</a><br />';
+				}
+				else
+				{
+					$html .= ' &nbsp; <a href="#r-' . $result_object->get_comparison_hash(true, false) . '">' . $result_object->get_arguments_description_shortened(false) . '</a><br />';
+				}
+			}
+			else
+			{
+				$html .= '<a href="#r-' . $result_object->get_comparison_hash(true, false) . '">' . $result_object->test_profile->get_title() . '</a><br />';
+			}
+			$current_test = &$result_object->test_profile;
+		}
+		$html .= '</div>
+		<script type="text/javascript">
+		 document.getElementById("results").style.marginLeft = "300px";
+		var sections = document.querySelectorAll("section[id]");
+		window.addEventListener("scroll", highlight_results_sidebar);
+		function highlight_results_sidebar() {
+		  var did_highlight = false;
+		  let scroll_y = window.pageYOffset;
+		  sections.forEach(current => {
+		  const section_top = current.offsetTop - 50;
+		  sectionId = current.getAttribute("id");
+		  if(scroll_y >= section_top && scroll_y <= section_top + current.offsetHeight && document.querySelector("#results_sidebar a[href*=" + sectionId + "]"))
+		  {
+		    document.querySelector("#results_sidebar a[href*=" + sectionId + "]").classList.add("active");
+		    document.querySelector("#results_sidebar a[href*=" + sectionId + "]").scrollIntoView({behavior: "smooth", block: "center", inline: "center"});
+		    did_highlight = true;
+		  }
+		  else if(document.querySelector("#results_sidebar a[href*=" + sectionId + "]"))
+		  {
+		    document.querySelector("#results_sidebar a[href*=" + sectionId + "]").classList.remove("active");
+		  }
+		});
+		if(did_highlight)
+		{
+			document.getElementById("results_sidebar").style.display = "block";
+		}
+		else
+		{
+			document.getElementById("results_sidebar").style.display = "none";
+		}
+		}
+		</script>';
+		return $html;
 	}
 	public static function html_template_log_viewer($html_to_show, &$result_file)
 	{

@@ -368,6 +368,28 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 var WEB_URL_PATH = "<?php echo WEB_URL_PATH; ?>";
 </script>
 <link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<?php
+if(defined('PTS_RESULT_VIEWER_WATERMARK') && PTS_RESULT_VIEWER_WATERMARK != '') { ?>
+<style>
+body:before{
+	content: "<?php echo PTS_RESULT_VIEWER_WATERMARK; ?>";
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: -1;
+	color: #3e3e3e;
+	font-size: 89px;
+	font-weight: 500;
+	display: grid;
+	justify-content: center;
+	align-content: center;
+	opacity: 0.1;
+	transform: rotate(-35deg);
+}
+</style>
+<?php } ?>
 </head>
 <body>
 <div id="header">
