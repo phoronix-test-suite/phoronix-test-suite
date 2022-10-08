@@ -638,6 +638,8 @@ class pts_client
 					// 'udisks --dump',
 					//'upower --dump',
 					'dmidecode',
+					'hwloc-ls',
+					'numactl -H',
 					);
 
 				if(!phodevi::is_windows())
@@ -678,7 +680,7 @@ class pts_client
 							$cmd_output = null;
 							continue;
 						}
-						if(strpos($cmd_output, 'read kernel buffer failed: Operation not permitted') !== false || strpos($cmd_output, 'Error: unable to open display') !== false || strpos($cmd_output, 'not recognized as an internal or external command') !== false)
+						if(strpos($cmd_output, 'read kernel buffer failed: Operation not permitted') !== false || strpos($cmd_output, 'Error: unable to open display') !== false || strpos($cmd_output, 'not recognized as an internal or external command') !== false|| strpos($cmd_output, 'permission denied') !== false)
 						{
 							continue;
 						}

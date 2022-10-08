@@ -505,10 +505,12 @@ p#result_file_system_table
 	div.pts_result_table { display: none; }
 	.print_notes { display: block !important; }
 	p#result_file_system_table { display: none; }
+	div#results { margin: 0; }
 	div#results svg { width: 100%; }
 	div#main_area { padding: 5px; }
 	#result_overview_area { display: none !important; }
 	div#header ul li { padding: 0 5px; }
+	div#results_sidebar { display: none; }
 }
 
 @media print
@@ -518,4 +520,6 @@ p#result_file_system_table
 	#main_area, #main_area p, #result_file_desc { font-size: 12px; }
 	#main_area h1, #main_area h2 { font-size: 16px; }
 	.print_notes { display: block !important; }
+	div#results_sidebar { display: none; }
+	div#results { margin: 0; }
 }

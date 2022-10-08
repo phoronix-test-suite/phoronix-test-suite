@@ -14,6 +14,17 @@ function edit_result_file_meta()
 	 document.getElementById("edit_result_file_meta_button").style.display = "none";
 	 document.getElementById("save_result_file_meta_button").style.display = "inline";
 }
+function get_current_url()
+{
+	var current_url = window.location.href;
+	var hash_pos = current_url.indexOf('#');
+	if(hash_pos > 0)
+	{
+		current_url = current_url.substring(0, hash_pos);
+	}
+
+	return current_url;
+}
 function save_result_file_meta(id)
 {
 	var title = document.getElementById("result_file_title").textContent;
@@ -24,7 +35,7 @@ function save_result_file_meta(id)
 		location.reload();
 		}
 	};
-	xhttp.open("POST", window.location.href + "&modify=update-result-file-meta", true);
+	xhttp.open("POST", get_current_url() + "&modify=update-result-file-meta", true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.send("&result_title=" + title + "&result_desc=" + description);
 }
@@ -32,14 +43,14 @@ function delete_result_from_result_file(result_file, result_hash)
 {
 	if(confirm("Permanently delete this result graph?"))
 	{
-		document.getElementById("result-" + result_hash).style.display = "none";
+		document.getElementById("r-" + result_hash).style.display = "none";
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function() {
 		if(this.readyState == 4 && this.status == 200) {
 
 			}
 		};
-		xhttp.open("POST", window.location.href + "&modify=remove-result-object", true);
+		xhttp.open("POST", get_current_url() + "&modify=remove-result-object", true);
 		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xhttp.send("&result_object=" + result_hash);
 	}
@@ -47,7 +58,7 @@ function delete_result_from_result_file(result_file, result_hash)
 }
 function hide_result_in_result_file(result_file, result_hash)
 {
-	document.getElementById("result-" + result_hash).style.display = "none";
+	document.getElementById("r-" + result_hash).style.display = "none";
 }
 function delete_run_from_result_file(result_file, system_identifier, ppd)
 {
@@ -60,7 +71,7 @@ function delete_run_from_result_file(result_file, system_identifier, ppd)
 
 			}
 		};
-		xhttp.open("POST", window.location.href + "&modify=remove-result-run", true);
+		xhttp.open("POST", get_current_url() + "&modify=remove-result-run", true);
 		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xhttp.send("&result_run=" + encodeURIComponent(system_identifier));
 		setTimeout(function(){window.location.reload(1);}, 2500);
@@ -82,7 +93,7 @@ function rename_run_in_result_file(result_file, system_identifier)
 
 			}
 		};
-		xhttp.open("POST", window.location.href + "&modify=rename-result-run", true);
+		xhttp.open("POST", get_current_url() + "&modify=rename-result-run", true);
 		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xhttp.send("result_file_id=" + result_file + "&result_run=" + encodeURIComponent(system_identifier) + "&new_result_run=" + encodeURIComponent(new_system_identifier));
 		setTimeout(function(){window.location.reload(1);}, 1500);
@@ -103,7 +114,7 @@ function add_annotation_for_result_object(result_file, result_hash, form)
 		location.reload();
 		}
 	};
-	xhttp.open("POST", window.location.href + "&modify=add-annotation-to-result-object", true);
+	xhttp.open("POST", get_current_url() + "&modify=add-annotation-to-result-object", true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.send("&result_object=" + result_hash + "&annotation=" + form.annotation.value);
 }
@@ -116,25 +127,25 @@ function update_annotation_for_result_object(result_file, result_hash)
 		location.reload();
 		}
 	};
-	xhttp.open("POST", window.location.href + "&modify=add-annotation-to-result-object", true);
+	xhttp.open("POST", get_current_url() + "&modify=add-annotation-to-result-object", true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.send("&result_object=" + result_hash + "&annotation=" + annotation_updated);
 }
 function display_test_logs_for_result_object(result_file, result_hash, select_identifier)
 {
-	window.open(window.location.href + "&export=view_test_logs&result_file_id=" + result_file + "&result_object=" + result_hash + "&log_select=" + select_identifier, "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=100,left=100,width=800,height=600,location=no,menubar=no");
+	window.open(get_current_url() + "&export=view_test_logs&result_file_id=" + result_file + "&result_object=" + result_hash + "&log_select=" + select_identifier, "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=100,left=100,width=800,height=600,location=no,menubar=no");
 }
 function display_install_logs_for_result_object(result_file, result_hash, select_identifier)
 {
-	window.open(window.location.href + "&export=view_install_logs&result_file_id=" + result_file + "&result_object=" + result_hash + "&log_select=" + select_identifier, "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=100,left=100,width=800,height=600,location=no,menubar=no");
+	window.open(get_current_url() + "&export=view_install_logs&result_file_id=" + result_file + "&result_object=" + result_hash + "&log_select=" + select_identifier, "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=100,left=100,width=800,height=600,location=no,menubar=no");
 }
 function display_system_logs_for_result(result_file, system_id)
 {
-	window.open(window.location.href + "&export=view_system_logs&result_file_id=" + result_file + "&system_id=" + btoa(system_id), "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=100,left=100,width=800,height=600,location=no,menubar=no");
+	window.open(get_current_url() + "&export=view_system_logs&result_file_id=" + result_file + "&system_id=" + btoa(system_id), "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=100,left=100,width=800,height=600,location=no,menubar=no");
 }
 function reorder_result_file(result_file)
 {
-	window.open(window.location.href + "&modify=reorder_result_file", "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=100,left=100,width=600,height=400,location=no,menubar=no");
+	window.open(get_current_url() + "&modify=reorder_result_file", "_blank", "toolbar=no,scrollbars=yes,resizable=yes,top=100,left=100,width=600,height=400,location=no,menubar=no");
 }
 function invert_hide_all_results_checkboxes()
 {

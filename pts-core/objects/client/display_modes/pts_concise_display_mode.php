@@ -478,7 +478,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 				$best_result = $test_result->active->get_min_value();
 				$worst_result = $test_result->active->get_max_value();
 			}
-			else if($test_result->test_profile->get_result_proportion() == 'HIB')
+			else
 			{
 				$best_result = $test_result->active->get_max_value();
 				$worst_result = $test_result->active->get_min_value();
