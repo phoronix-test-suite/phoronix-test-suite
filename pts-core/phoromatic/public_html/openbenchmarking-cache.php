@@ -35,7 +35,7 @@ if(isset($_GET['index']))
 	$requested_repo = str_replace(array('..', '/'), '', $_GET['repo']);
 	$repo_index = pts_openbenchmarking::read_repository_index($requested_repo, false);
 	echo $repo_index;
-		pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' downloaded a copy of the ' . $requested_repo . ' OpenBenchmarking.org repository index');
+	pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' downloaded a copy of the ' . $requested_repo . ' OpenBenchmarking.org repository index');
 }
 else if(isset($_GET['repos']))
 {
@@ -51,6 +51,7 @@ else if(isset($_GET['repos']))
 			);
 	}
 	echo json_encode($json_repos);
+	pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' downloaded a copy of the linked repositories');
 }
 else if(isset($_GET['suite']))
 {
@@ -70,7 +71,9 @@ else if(isset($_GET['suite']))
 }
 else if(isset($_GET['is_test']))
 {
-	echo pts_test_profile::is_test_profile($_GET['test']);
+	$is_test = pts_test_profile::is_test_profile($_GET['test']);
+	pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' checked to see if "' . $_GET['test'] . '" is a test: ' . ($is_test ? 'YES' : 'NO'));
+	echo $is_test;
 }
 else if(isset($_GET['test']))
 {
@@ -109,7 +112,9 @@ else if(isset($_GET['test']))
 
 			echo base64_encode(file_get_contents($zip_file));
 			pts_file_io::unlink($zip_file);
+			exit;
 		}
 	}
+	pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' requested a copy of the ' . $repo . '/' . $test . ' test profile but failed to serve.');
 }
 ?>
