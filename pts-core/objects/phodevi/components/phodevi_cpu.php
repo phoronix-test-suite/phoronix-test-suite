@@ -1319,6 +1319,8 @@ class phodevi_cpu extends phodevi_device_interface
 				168 => 'Rocket Lake',
 				170 => 'Meteor Lake',
 				172 => 'Meteor Lake',
+				175 => 'Sierra Forest',
+				181 => 'Meteor Lake',
 				183 => 'Raptor Lake',
 				186 => 'Raptor Lake',
 				190 => 'Alder Lake',
@@ -1510,7 +1512,7 @@ class phodevi_cpu extends phodevi_device_interface
 
 		if(pts_client::executable_in_path('lscpu'))
 		{
-			$lscpu = trim(shell_exec('lscpu -p | egrep -v \'^#\' | sort -u -t, -k 2,4 | wc -l'));
+			$lscpu = trim(shell_exec('lscpu -p | grep -E -v \'^#\' | sort -u -t, -k 2,4 | wc -l'));
 			if(is_numeric($lscpu) && $lscpu > $core_count)
 			{
 				$core_count = $lscpu;
