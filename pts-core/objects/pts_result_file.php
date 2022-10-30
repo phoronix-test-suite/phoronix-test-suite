@@ -1078,6 +1078,44 @@ class pts_result_file
 	{
 		return strcmp($a->get_spread(), $b->get_spread());
 	}
+	public function sort_result_object_order_by_common_suites_workloads()
+	{
+		uasort($this->result_objects, array('pts_result_file', 'result_common_suite_comparison'));
+		foreach($this->result_objects as $i => $ro)
+		{
+			if($ro->test_profile->get_identifier() == null || $ro->get_parent_hash() != null)
+			{
+				$v = $ro;
+				unset($this->result_objects[$i]);
+				$this->result_objects[$i] = $v;
+			}
+		}
+	}
+	public static function result_common_suite_comparison($a, $b)
+	{
+		if($a->test_profile->get_identifier() == null)
+		{
+			return $b->test_profile->get_identifier() == null ? 0 : -1;
+		}
+		$a_suites = pts_test_suites::test_to_common_suites($a->test_profile);
+		$b_suites = pts_test_suites::test_to_common_suites($b->test_profile);
+		if(empty($a_suites))
+		{
+			return 999;
+		}
+		else if($a_suites == $b_suites)
+		{
+			return strnatcmp(strtolower($a->test_profile->get_title()) . ' ' . $a->test_profile->get_app_version(), strtolower($b->test_profile->get_title()) . ' ' . $b->test_profile->get_app_version());
+		}
+		else
+		{
+			return strnatcmp($a_suites, $b_suites);
+			$a_suites .= ' ';
+			$b_suites .= ' ';
+			$first_suite_cmp = strcmp(substr($a_suites, 0, strpos($a_suites, ' ')), substr($b_suites, 0, strpos($b_suites, ' ')));
+			return $first_suite_cmp != 0 ? $first_suite_cmp : strcmp($a_suites, $b_suites);
+		}
+	}
 	public function sort_result_object_order_by_title($asc = true)
 	{
 		uasort($this->result_objects, array('pts_result_file', 'result_title_comparison'));

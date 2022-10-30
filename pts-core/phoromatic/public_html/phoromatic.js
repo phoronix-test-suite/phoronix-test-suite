@@ -420,7 +420,6 @@ function delete_result_from_result_file(result_file, result_hash)
 {
 	if(confirm("Permanently delete this result graph?"))
 	{
-		document.getElementById("result-" + result_hash).style.display = "none";
 		var xhttp = new XMLHttpRequest();
 		xhttp.onreadystatechange = function() {
 		if(this.readyState == 4 && this.status == 200) {
@@ -430,6 +429,7 @@ function delete_result_from_result_file(result_file, result_hash)
 		xhttp.open("POST", window.location.href + "&modify=remove-result-object", true);
 		xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xhttp.send("&result_object=" + result_hash);
+		document.getElementById("r-" + result_hash).style.display = "none";
 	}
 	return false;
 }

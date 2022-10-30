@@ -1378,7 +1378,7 @@ class pts_result_file_output
 					// Try to shorten up some components/identifiers if terminal narrow to fit in more data
 					$component = str_replace(array('AMD ', 'Intel ', 'NVIDIA ', 'Radeon ', 'GeForce ', '  '), ' ', str_replace(' x ', ' x  ', $component));
 					$component = str_replace('Ryzen Threadripper', 'Threadripper', $component);
-					$component = trim($component);
+					$component = trim(str_replace('  ', ' ', $component));
 				}
 
 				foreach(array('-Core', ' with ') as $cutoff)

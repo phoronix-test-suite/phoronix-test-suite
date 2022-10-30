@@ -296,7 +296,7 @@ class pts_result_viewer_embed
 			$ro = clone $result_object;
 			$res_desc_shortened = $result_object->get_arguments_description_shortened(false);
 			$res = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
-			$PAGE .= '<section id="r-' . $i . '" style="text-align: center;" id="result-' . $i . '">';
+			$PAGE .= '<section id="r-' . $i . '" style="text-align: center;">';
 
 			//
 			// DISPLAY TEST PORIFLE METADATA HELPER
@@ -516,7 +516,7 @@ class pts_result_viewer_embed
 				if($sidebar_pos == 0 || $sidebar_list[($sidebar_pos - 1)]->test_profile->get_identifier() != $result_object->test_profile->get_identifier())
 				{
 					// Make it nested for first occurence
-					$html .= '<strong>' . $result_object->test_profile->get_title() . ':</strong><br />';
+					$html .= $result_object->test_profile->get_title() . ':<br />';
 					$show_units = $sidebar_list[($sidebar_pos + 1)]->get_arguments_description_shortened(false) == $result_object->get_arguments_description_shortened(false) ? $result_object->get_arguments_description_shortened(false) : false;
 					$current_test = &$result_object->test_profile;
 				}
@@ -660,6 +660,7 @@ class pts_result_viewer_embed
 		{
 			$drop_down_menus['Sort Graph Order'] = array(
 				'grs' => 'By Result Spread',
+				'grw' => 'By Common Workloads',
 				'gru' => 'By Result Unit',
 				'grt' => 'By Test Title',
 				'grr' => 'By Test Length/Time'
@@ -1475,7 +1476,6 @@ class pts_result_viewer_embed
 				$result_file->remove_run($rm);
 			}
 		}
-
 		if(self::check_request_for_var($request, 'grs'))
 		{
 			$result_file->sort_result_object_order_by_spread();
@@ -1483,6 +1483,10 @@ class pts_result_viewer_embed
 		else if(self::check_request_for_var($request, 'grt'))
 		{
 			$result_file->sort_result_object_order_by_title();
+		}
+		else if(self::check_request_for_var($request, 'grw'))
+		{
+			$result_file->sort_result_object_order_by_common_suites_workloads();
 		}
 		else if(self::check_request_for_var($request, 'gru'))
 		{

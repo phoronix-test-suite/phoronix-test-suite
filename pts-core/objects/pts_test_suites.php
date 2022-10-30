@@ -52,7 +52,7 @@ class pts_test_suites
 
 		return $local_suites;
 	}
-	public static function suites_on_disk($return_object = false, $skip_deprecated = true)
+	public static function suites_on_disk($return_object = false, $skip_deprecated = true, $sort_by_size = false)
 	{
 		if(defined('PTS_TEST_SUITE_PATH') && is_dir(PTS_TEST_SUITE_PATH))
 		{
@@ -67,7 +67,9 @@ class pts_test_suites
 			return array();
 		}
 
-
+		static $cache;
+		if(!isset($cache[$suite_dir][$return_object][$skip_deprecated][$sort_by_size]))
+		{
 		$local_suites = array();
 		$suite_xml_files = pts_file_io::glob($suite_dir . '*/*/suite-definition.xml');
 		sort($suite_xml_files);
@@ -105,7 +107,14 @@ class pts_test_suites
 			}
 		}
 
-		return $local_suites;
+		if($return_object && !empty($local_suites) && $sort_by_size)
+		{
+			uasort($local_suites, function ($a, $b) { $a = $a->get_test_count(); $b = $b->get_test_count(); if($a == $b) return 0; return $a < $b ? 1 : -1;});
+		}
+		$cache[$suite_dir][$return_object][$skip_deprecated][$sort_by_size] = &$local_suites;
+		}
+
+		return $cache[$suite_dir][$return_object][$skip_deprecated][$sort_by_size];
 	}
 	public static function suites_in_result_file(&$result_file, $allow_partial = false, $upper_limit = 0)
 	{
@@ -181,7 +190,7 @@ class pts_test_suites
 	{
 		$suites_containing_test = array();
 
-		foreach(pts_test_suites::suites_on_disk(true, true) as $suite)
+		foreach(pts_test_suites::suites_on_disk(true, true, true) as $suite)
 		{
 			$contained_tests = $suite->get_contained_test_identifiers(false);
 			if(in_array($test_profile->get_identifier(false), $contained_tests))
@@ -191,6 +200,24 @@ class pts_test_suites
 		}
 
 		return $suites_containing_test;
+	}
+	public static function test_to_common_suites(&$test_profile)
+	{
+		static $tests_to_suite_map = array();
+		$test_identifier = $test_profile->get_identifier();
+		if(!isset($tests_to_suite_map[$test_identifier]))
+		{
+			$suites_containing_test = empty($test_identifier) ? array() : pts_test_suites::suites_containing_test_profile($test_profile);
+			if(!empty($suites_containing_test))
+			{
+				foreach($suites_containing_test as &$sct)
+				{
+					$sct = $sct->get_identifier(false);
+				}
+			}
+			$tests_to_suite_map[$test_identifier] = implode(' ', $suites_containing_test);
+		}
+		return $tests_to_suite_map[$test_identifier];
 	}
 }
 
