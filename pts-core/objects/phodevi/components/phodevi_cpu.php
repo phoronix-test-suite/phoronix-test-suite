@@ -792,38 +792,76 @@ class phodevi_cpu extends phodevi_device_interface
 				}
 				else if($implementer == '0x61')
 				{
-						$new_info = 'Apple';
-						$part = phodevi_linux_parser::read_cpuinfo_single('CPU part');
-						// https://github.com/AsahiLinux/linux/blob/asahi/arch/arm64/include/asm/cputype.h
-						switch($part)
-						{
-							case '0x022':
-							case '0x023':
-								$new_info .= ' M1';
-								break;
-							case '0x024':
-							case '0x025':
-								$new_info .= ' M1 Pro';
-								break;
-							case '0x028':
-							case '0x029':
-								$new_info .= ' M1 Max';
-								break;
-							case '0x033':
-								$new_info .= ' M2';
-								break;
-						}
+					$new_info = 'Apple';
+					$part = phodevi_linux_parser::read_cpuinfo_single('CPU part');
+					// https://github.com/AsahiLinux/linux/blob/asahi/arch/arm64/include/asm/cputype.h
+					switch($part)
+					{
+						case '0x022':
+						case '0x023':
+							$new_info .= ' M1';
+							break;
+						case '0x024':
+						case '0x025':
+							$new_info .= ' M1 Pro';
+							break;
+						case '0x028':
+						case '0x029':
+							$new_info .= ' M1 Max';
+							break;
+						case '0x033':
+							$new_info .= ' M2';
+							break;
+					}
+				}
+				else if($implementer == '0x46')
+				{
+					$new_info = 'Fujitsu';
+					$part = phodevi_linux_parser::read_cpuinfo_single('CPU part');
+					switch($part)
+					{
+						case '0x001':
+							$new_info .= ' A64FX';
+							break;
+					}
+				}
+				else if($implementer == '0x48')
+				{
+					$new_info = 'HiSilicon';
+					$part = phodevi_linux_parser::read_cpuinfo_single('CPU part');
+					switch($part)
+					{
+						case '0xd01':
+							$new_info .= ' TSV110';
+							break;
+					}
+				}
+				else if($implementer == '0x51')
+				{
+					$new_info = 'Qualcomm';
+					$part = phodevi_linux_parser::read_cpuinfo_single('CPU part');
+					switch($part)
+					{
+						case '0x804':
+						case '0x805':
+							$new_info .= ' Cortex-A76';
+							break;
+					}
+				}
+				else if($implementer == '0x53')
+				{
+					$new_info = 'Samsung';
 				}
 				else if($implementer == '0xc0')
 				{
-						$new_info = 'Ampere';
-						$part = phodevi_linux_parser::read_cpuinfo_single('CPU part');
-						switch($part)
-						{
-							case '0xac3':
-								$new_info .= 'One';
-								break;
-						}
+					$new_info = 'Ampere';
+					$part = phodevi_linux_parser::read_cpuinfo_single('CPU part');
+					switch($part)
+					{
+						case '0xac3':
+							$new_info .= 'One';
+							break;
+					}
 				}
 
 				if(strpos(phodevi::$vfs->dmesg, 'Ampere eMAG') !== false || stripos(pts_file_io::file_get_contents_if_exists('/sys/devices/virtual/dmi/id/sys_vendor'), 'Ampere') !== false || stripos(pts_file_io::file_get_contents_if_exists('/sys/devices/virtual/dmi/id/bios_vendor'), 'Ampere') !== false)
