@@ -409,7 +409,7 @@ class phodevi extends phodevi_base
 				}
 				else
 				{
-					if(($x = strpos($in, ' (')))
+					if(!empty($in) && ($x = strpos($in, ' (')))
 					{
 						$in = substr($in, 0, $x);
 					}

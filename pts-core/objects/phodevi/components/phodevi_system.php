@@ -805,7 +805,7 @@ class phodevi_system extends phodevi_device_interface
 		{
 			// Clang
 			$compiler_info = shell_exec(escapeshellarg($clang) . ' --version');
-			if(($cv_pos = stripos($compiler_info, 'clang version')) !== false)
+			if(!empty($compiler_info) && ($cv_pos = stripos($compiler_info, 'clang version')) !== false)
 			{
 				// With Clang 3.0 and prior, the --version produces output where the first line is:
 				// e.g. clang version 3.0 (branches/release_30 142590)
@@ -838,7 +838,7 @@ class phodevi_system extends phodevi_device_interface
 					$compiler_info = null;
 				}
 			}
-			else
+			else if(!empty($compiler_info))
 			{
 				$compiler_info = substr($compiler_info, 0, strpos($compiler_info, PHP_EOL));
 			}

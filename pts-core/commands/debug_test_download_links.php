@@ -44,7 +44,6 @@ class debug_test_download_links implements pts_option_interface
 				foreach($test_file_download->get_download_url_array() as $url)
 				{
 					$stream_context = pts_network::stream_context_create();
-					stream_context_set_params($stream_context, array('notification' => 'pts_stream_status_callback'));
 					$file_pointer = @fopen($url, 'r', false, $stream_context);
 					//fread($file_pointer, 1024);
 

@@ -710,33 +710,6 @@ class phodevi_gpu extends phodevi_device_interface
 			}
 		}
 
-		// Disabling 27 Nov 2016 as seems to cause problems with AMDGPU-0PRO but falls back gracefully outside of this xorg-log parsing for correct amount
-		/*
-		if($video_ram == -1 && isset(phodevi::$vfs->xorg_log))
-		{
-			// Attempt Video RAM detection using X log
-			// fglrx driver reports video memory to: (--) fglrx(0): VideoRAM: XXXXXX kByte, Type: DDR
-			// xf86-video-ati, xf86-video-intel, and xf86-video-radeonhd also report their memory information in a similar format
-			$info = phodevi::$vfs->xorg_log;
-
-			if(($pos = stripos($info, 'RAM:') + 5) > 5 || ($pos = strpos($info, 'RAM=') + 4) > 4)
-			{
-				$info = substr($info, $pos);
-				$info = substr($info, 0, strpos($info, ' '));
-
-				if(!is_numeric($info) && ($cut = strpos($info, ',')))
-				{
-					$info = substr($info, 0, $cut);
-				}
-
-				if(is_numeric($info) && $info > 65535)
-				{
-					$video_ram = intval($info) / 1024;
-				}
-			}
-		}
-		*/
-
 		if($video_ram == -1 && isset(phodevi::$vfs->dmesg))
 		{
 			// Fallback to try to find vRAM from dmesg
@@ -1431,56 +1404,59 @@ class phodevi_gpu extends phodevi_device_interface
 			}
 		}
 
-		if(($bracket_open = strpos($info, '[')) !== false)
+		if(!empty($info))
 		{
-			// Report only the information inside the brackets if it's more relevant...
-			// Mainly with Linux systems where the PCI information is reported like 'nVidia GF104 [GeForce GTX 460]'
-
-			if(($bracket_close = strpos($info, ']', ($bracket_open + 1))) !== false)
+			if(($bracket_open = strpos($info, '[')) !== false)
 			{
-				$inside_bracket = substr($info, ($bracket_open + 1), ($bracket_close - $bracket_open - 1));
+				// Report only the information inside the brackets if it's more relevant...
+				// Mainly with Linux systems where the PCI information is reported like 'nVidia GF104 [GeForce GTX 460]'
 
-				if(stripos($inside_bracket, 'Quadro') !== false || stripos($inside_bracket, 'GeForce') !== false)
+				if(($bracket_close = strpos($info, ']', ($bracket_open + 1))) !== false)
 				{
-					$info = $inside_bracket . ' ' . substr($info, ($bracket_close + 1));
-				}
-				else if(stripos($inside_bracket, 'Radeon') !== false || stripos($inside_bracket, 'Fire') !== false || stripos($inside_bracket, 'Fusion') !== false)
-				{
-					$info = $inside_bracket . ' ' . substr($info, ($bracket_close + 1));
+					$inside_bracket = substr($info, ($bracket_open + 1), ($bracket_close - $bracket_open - 1));
+
+					if(stripos($inside_bracket, 'Quadro') !== false || stripos($inside_bracket, 'GeForce') !== false)
+					{
+						$info = $inside_bracket . ' ' . substr($info, ($bracket_close + 1));
+					}
+					else if(stripos($inside_bracket, 'Radeon') !== false || stripos($inside_bracket, 'Fire') !== false || stripos($inside_bracket, 'Fusion') !== false)
+					{
+						$info = $inside_bracket . ' ' . substr($info, ($bracket_close + 1));
+					}
 				}
 			}
-		}
 
-		if(stripos($info, 'NVIDIA') === false && (stripos($info, 'Quadro') !== false || stripos($info, 'Titan ') !== false ||  stripos($info, ' Tesla') !== false || stripos($info, 'GeForce') !== false || substr($info, 0, 2) == 'NV'))
-		{
-			$info = 'NVIDIA' . ' ' . $info;
-		}
-		else if((stripos($info, 'ATI') === false && stripos($info, 'AMD') === false) && (stripos($info, 'Radeon') !== false || stripos($info, 'Fire') !== false || stripos($info, 'Fusion') !== false))
-		{
-			// Fire would be for FireGL or FirePro hardware
-			$info = 'AMD ' . $info;
-		}
-
-		if(phodevi::is_linux() && ($vendor = phodevi_linux_parser::read_pci_subsystem_value('VGA compatible controller')) != null && stripos($info, $vendor) === false && (stripos($info, 'AMD') !== false || stripos($info, 'NVIDIA') !== false || stripos($info, 'Intel') !== false))
-		{
-			$info = $vendor . ' ' . $info;
-		}
-
-		$clean_phrases = array('OpenGL Engine');
-		$info = str_replace($clean_phrases, '', $info);
-
-		if(!empty($info) && $video_ram > 64 && strpos($info, $video_ram) == false && stripos($info, 'llvmpipe') === false) // assume more than 64MB of vRAM
-		{
-			if($video_ram < 1024)
+			if(stripos($info, 'NVIDIA') === false && (stripos($info, 'Quadro') !== false || stripos($info, 'Titan ') !== false ||  stripos($info, ' Tesla') !== false || stripos($info, 'GeForce') !== false || substr($info, 0, 2) == 'NV'))
 			{
-				$info .= ' ' . $video_ram . 'MB';
+				$info = 'NVIDIA' . ' ' . $info;
 			}
-			else
+			else if((stripos($info, 'ATI') === false && stripos($info, 'AMD') === false) && (stripos($info, 'Radeon') !== false || stripos($info, 'Fire') !== false || stripos($info, 'Fusion') !== false))
 			{
-				$video_ram = round($video_ram / 1024) . 'GB';
-				if(strpos($info, $video_ram) == false)
+				// Fire would be for FireGL or FirePro hardware
+				$info = 'AMD ' . $info;
+			}
+
+			if(phodevi::is_linux() && ($vendor = phodevi_linux_parser::read_pci_subsystem_value('VGA compatible controller')) != null && stripos($info, $vendor) === false && (stripos($info, 'AMD') !== false || stripos($info, 'NVIDIA') !== false || stripos($info, 'Intel') !== false))
+			{
+				$info = $vendor . ' ' . $info;
+			}
+
+			$clean_phrases = array('OpenGL Engine');
+			$info = str_replace($clean_phrases, '', $info);
+
+			if(!empty($info) && $video_ram > 64 && strpos($info, $video_ram) == false && stripos($info, 'llvmpipe') === false) // assume more than 64MB of vRAM
+			{
+				if($video_ram < 1024)
 				{
-					$info .= ' ' . $video_ram;
+					$info .= ' ' . $video_ram . 'MB';
+				}
+				else
+				{
+					$video_ram = round($video_ram / 1024) . 'GB';
+					if(strpos($info, $video_ram) == false)
+					{
+						$info .= ' ' . $video_ram;
+					}
 				}
 			}
 		}

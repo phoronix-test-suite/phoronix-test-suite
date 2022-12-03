@@ -56,7 +56,7 @@ class upload_test_suite implements pts_option_interface
 					return false;
 				}
 
-				$commit_description = pts_user_io::prompt_user_input('Enter a test commit description', false);
+				$commit_description = pts_user_io::prompt_user_input('Enter a suite commit description', false);
 
 				echo PHP_EOL;
 				$server_response = pts_openbenchmarking::make_openbenchmarking_request('upload_test_suite', array(

@@ -244,11 +244,11 @@ class check_tests implements pts_option_interface
 			$secs = floor($secs);
 
 		if ($hours == 0 && $mins == 0)
-			return "${secs}s";
+			return $secs . 's';
 		else if ($hours == 0)
-			return "${mins}m ${secs}s";
+			return $mins . 'm ' . $secs . 's';
 		else
-			return "${hours}h ${mins}m ${secs}s";
+			return $hours . 'h ' . $mins . 'm ' . $secs . 's';
 	}
 
 	/**

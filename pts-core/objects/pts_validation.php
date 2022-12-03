@@ -199,7 +199,6 @@ class pts_validation
 				foreach($download->get_download_url_array() as $url)
 				{
 					$stream_context = pts_network::stream_context_create();
-					stream_context_set_params($stream_context, array('notification' => 'pts_stream_status_callback'));
 					$file_pointer = fopen($url, 'r', false, $stream_context);
 
 					if($file_pointer == false)
@@ -220,7 +219,6 @@ class pts_validation
 				return false;
 			}
 		}
-
 
 		// Validate the parser file
 		$parser_file = $test_profile->get_file_parser_spec();

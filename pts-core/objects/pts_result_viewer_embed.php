@@ -1458,7 +1458,7 @@ class pts_result_viewer_embed
 			$system_count = $result_file->get_system_count();
 			foreach($result_file->get_result_objects() as $i => $result_object)
 			{
-				if($result_object->test_result_buffer->get_count() < $system_count)
+				if($result_object->test_result_buffer->get_count() < $system_count || $result_object->test_result_buffer->has_incomplete_result())
 				{
 					$result_file->remove_result_object_by_id($i);
 				}

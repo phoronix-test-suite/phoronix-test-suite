@@ -115,7 +115,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	public function test_run_instance_header(&$test_result)
 	{
 		$this->trial_run_count_current++;
-		echo self::string_header($test_result->test_profile->get_title() . ' (Run ' . $this->trial_run_count_current . ' of ' . $this->expected_trial_run_count . ')' . PHP_EOL . $test_result->get_arguments_description());
+		echo self::string_header($test_result->test_profile->get_title() . ' (Run ' . $this->trial_run_count_current . ' of ' . $this->expected_trial_run_count . ')' . ($test_result->get_arguments_description() != '' ? PHP_EOL . $test_result->get_arguments_description() : ''));
 	}
 	public function display_interrupt_message($message)
 	{
