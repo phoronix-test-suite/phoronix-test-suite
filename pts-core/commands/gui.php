@@ -50,20 +50,8 @@ class gui implements pts_option_interface
 		// SERVER JUST RUNNING FOR LOCAL SYSTEM, SO ALSO COME UP WITH RANDOM FREE PORT
 		$server_ip = 'localhost';
 		// Randomly choose a port and ensure it's not being used...
-		$fp = false;
-		$errno = null;
-		$errstr = null;
-		do
-		{
-			if($fp != false)
-			{
-				fclose($fp);
-			}
-
-			$web_port = rand(2000, 5999);
-			$web_socket_port = $web_port - 1;
-		}
-		while(($fp = fsockopen('127.0.0.1', $web_port, $errno, $errstr, 5)) != false || ($fp = fsockopen('127.0.0.1', $web_socket_port, $errno, $errstr, 5)) != false || in_array($web_port, $blocked_ports) || in_array($web_socket_port, $blocked_ports));
+		$web_port = pts_network::find_available_port();
+		$web_socket_port = pts_network::find_available_port();
 
 		// Check if we are running on Windows or a *nix.
 		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')

@@ -68,20 +68,9 @@ class start_phoromatic_server implements pts_option_interface
 			$remote_access = pts_config::read_user_config('PhoronixTestSuite/Options/Server/RemoteAccessPort', 'RANDOM');
 		}
 
-		$fp = false;
-		$errno = null;
-		$errstr = null;
-
 		if($remote_access == 'RANDOM')
 		{
-			do
-			{
-				if($fp)
-					fclose($fp);
-
-				$remote_access = rand(8000, 8999);
-			}
-			while(($fp = fsockopen('127.0.0.1', $remote_access, $errno, $errstr, 5)) != false);
+			$remote_access = pts_network::find_available_port();
 			echo 'Port ' . $remote_access . ' chosen as random port for this instance. Change the default port via the Phoronix Test Suite user configuration file.' . PHP_EOL;
 		}
 
@@ -92,6 +81,8 @@ class start_phoromatic_server implements pts_option_interface
 		{
 			// ALLOWING SERVER TO BE REMOTELY ACCESSIBLE
 			$server_ip = '0.0.0.0';
+			$errno = null;
+			$errstr = null;
 
 			if(($fp = fsockopen('127.0.0.1', $remote_access, $errno, $errstr, 5)) != false)
 			{
@@ -112,11 +103,9 @@ class start_phoromatic_server implements pts_option_interface
 					$web_socket_port = pts_config::read_user_config('PhoronixTestSuite/Options/Server/WebSocketPort', '');
 				}
 
-				while($web_socket_port == null || !is_numeric($web_socket_port) || (($fp = fsockopen('127.0.0.1', $web_socket_port, $errno, $errstr, 5)) != false))
+				if($web_socket_port == null || !is_numeric($web_socket_port))
 				{
-					if($fp)
-						fclose($fp);
-					$web_socket_port = rand(8000, 8999);
+					$web_socket_port = pts_network::find_available_port();
 				}
 			}
 		}

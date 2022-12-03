@@ -299,6 +299,7 @@ class pts_tests
 		$extra_vars['LC_MESSAGES'] = '';
 		$extra_vars['LANG'] = 'en_US.utf8';
 		$extra_vars['PHP_BIN'] = PHP_BIN;
+		$extra_vars['RANDOM_AVAILABLE_PORT'] = pts_network::find_available_port();
 
 		// Safe-guards to try to ensure more accurate testing
 		$extra_vars['vblank_mode'] = '0'; // Avoid sync to vblank with the open-source drivers
@@ -307,7 +308,6 @@ class pts_tests
 		$extra_vars['CCACHE_DISABLE'] = '1'; // Should avoid ccache being used in compiler tests
 		$extra_vars['OMPI_ALLOW_RUN_AS_ROOT'] = '1'; // Tests with mpirun should use --allow-run-as-root but otherwise this fallback
 		$extra_vars['OMPI_ALLOW_RUN_AS_ROOT_CONFIRM'] = '1'; // Tests with mpirun should use --allow-run-as-root but otherwise this fallback
-
 
 		foreach($test_profile->extended_test_profiles() as $i => $this_test_profile)
 		{

@@ -575,6 +575,27 @@ class pts_network
 
 		return $ip;
 	}
+	public static function find_available_port($lower_range = 6000, $upper_range = 8999)
+	{
+		$errno = null;
+		$errstr = null;
+		$fp = false;
+		$ignore_ports = array(2049, 2077, 2086, 2087, 2095, 2096, 3659, 4045, 5060, 5061, 6000, 9000);
+		do
+		{
+			if($fp)
+				fclose($fp);
+
+			do
+			{
+				$available_port = rand($lower_range, $upper_range);
+			}
+			while(in_array($available_port, $ignore_ports));
+		}
+		while(($fp = fsockopen('127.0.0.1', $available_port, $errno, $errstr, 3)) != false);
+
+		return $available_port;
+	}
 }
 
 ?>

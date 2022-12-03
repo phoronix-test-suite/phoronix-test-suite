@@ -137,25 +137,16 @@ class load_dynamic_result_viewer extends pts_module_interface
 	public static function start_result_viewer()
 	{
 		$remote_access = pts_config::read_user_config('PhoronixTestSuite/Options/ResultViewer/WebPort', 'RANDOM');
-		$fp = false;
 		$errno = null;
 		$errstr = null;
 
 		if($remote_access == 'RANDOM' || !is_numeric($remote_access))
 		{
-			do
-			{
-				if($fp)
-					fclose($fp);
-
-				$remote_access = rand(8000, 8999);
-			}
-			while(($fp = fsockopen('127.0.0.1', $remote_access, $errno, $errstr, 3)) != false);
+			$remote_access = pts_network::find_available_port();
 		//	echo 'Port ' . $remote_access . ' chosen as random port for this instance. Change the default port via the Phoronix Test Suite user configuration file.' . PHP_EOL;
 		}
 
 		$remote_access = is_numeric($remote_access) && $remote_access > 1 ? $remote_access : false;
-		$blocked_ports = array(2049, 3659, 4045, 5060, 5061, 6000, 9000);
 
 		$access_limited_to_localhost = true;
 		if(pts_config::read_bool_config('PhoronixTestSuite/Options/ResultViewer/LimitAccessToLocalHost', 'TRUE'))
