@@ -194,6 +194,12 @@ class pts_test_run_options
 		self::compute_all_combinations($test_args, null, $user_args, 0);
 		self::compute_all_combinations($test_args_description, null, $text_args, 0, ' - ');
 
+		if(count($test_args) == 1 && isset($test_args[0]) && $test_args[0] == '' && count($test_args_description) == 1 && isset($test_args_description[0]) && $test_args_description[0] == '' && $test_profile->get_test_subtitle() != '')
+		{
+			// Fill in the descriptuon now so comparison hashes will match sooner than just post-testing
+			$test_args_description[0] = $test_profile->get_test_subtitle();
+		}
+
 		return array($test_args, $test_args_description);
 	}
 	public static function default_user_options(&$test_profile)

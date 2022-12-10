@@ -37,63 +37,25 @@ class finish_run implements pts_option_interface
 	}
 	public static function run($args)
 	{
-		$save_name = $args[0];
 		$result_file = new pts_result_file($args[0]);
-
-		$system_identifiers = $result_file->get_system_identifiers();
-		$test_positions = array();
-
-		foreach($result_file->get_result_objects() as $pos => $result_object)
+		$incomplete_identifiers = array();
+		foreach($result_file->get_system_identifiers() as $si)
 		{
-			// Don't load null test profile identifier tests into the run queue
-			if($result_object->test_profile->get_identifier() == null)
+			if($result_file->has_missing_or_incomplete_data($si))
 			{
-				continue;
-			}
-
-			$this_result_object_identifiers = $result_object->test_result_buffer->get_identifiers();
-
-			foreach($system_identifiers as $system_identifier)
-			{
-				if(!in_array($system_identifier, $this_result_object_identifiers) || $result_object->test_result_buffer->get_result_from_identifier($system_identifier) == '')
-				{
-					if(!isset($test_positions[$system_identifier]))
-					{
-						$test_positions[$system_identifier] = array();
-					}
-
-					$test_positions[$system_identifier][] = $pos;
-				}
+				$incomplete_identifiers[] = $si;
 			}
 		}
-		$incomplete_identifiers = array_keys($test_positions);
-
 		if(count($incomplete_identifiers) == 0)
 		{
 			echo PHP_EOL . 'It appears that there are no incomplete test results within this saved file.' . PHP_EOL . PHP_EOL;
 			return false;
 		}
-
 		$selected = pts_user_io::prompt_text_menu('Select which incomplete test run you would like to finish', $incomplete_identifiers);
-		$test_run_manager = new pts_test_run_manager();
-
-		// Now run it
-		if($test_run_manager->initial_checks($args[0]) == false)
-		{
-			return false;
-		}
-
-		// Load the tests to run
-		if($test_run_manager->load_result_file_to_run($save_name, $selected, $result_file, $test_positions[$selected]) == false)
-		{
-			return false;
-		}
-
-		// Run the actual tests
-		$test_run_manager->pre_execution_process();
-		$test_run_manager->call_test_runs();
-		$test_run_manager->post_execution_process();
+		pts_env::set('TEST_RESULTS_IDENTIFIER', $selected);
+		$run_manager = new pts_test_run_manager();
+		$run_manager->standard_run($args[0]);
+		pts_env::remove('TEST_RESULTS_IDENTIFIER');
 	}
 }
-
 ?>

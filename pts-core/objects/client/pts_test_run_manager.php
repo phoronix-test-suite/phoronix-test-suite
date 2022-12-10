@@ -455,8 +455,6 @@ class pts_test_run_manager
 
 		// Prompt for a results identifier
 		$results_identifier = null;
-		$show_identifiers = array();
-		$no_repeated_tests = true;
 
 		if(!$this->is_new_result_file)
 		{
@@ -470,20 +468,6 @@ class pts_test_run_manager
 				$current_hardware[] = $s->get_hardware();
 				$current_software[] = $s->get_software();
 				$current_identifiers[] = $s->get_identifier();
-			}
-
-			$hashes = array();
-			foreach($this->result_file->get_result_objects() as $result)
-			{
-				$hashes[] = $result->get_comparison_hash(true, false);
-			}
-			foreach($this->tests_to_run as &$run_request)
-			{
-				if($run_request instanceof pts_test_result && in_array($run_request->get_comparison_hash(true, false), $hashes))
-				{
-					$no_repeated_tests = false;
-					break;
-				}
 			}
 		}
 		else
@@ -529,8 +513,47 @@ class pts_test_run_manager
 				$times_tried++;
 
 				$identifier_pos = (($p = array_search($results_identifier, $current_identifiers)) !== false ? $p : -1);
+				$do_repeat_prompt = false;
+				if($identifier_pos != -1)
+				{
+					// Identifier already used in this result file...
+					$do_repeat_prompt = true;
+
+					if(isset($current_hardware[$identifier_pos]) && $current_hardware[$identifier_pos] != phodevi::system_hardware(true))
+					{
+						pts_client::$display->generic_prompt(pts_client::cli_just_bold('Current hardware does not match the saved data matching this result identifier.'));
+					}
+					else if(isset($current_software[$identifier_pos]) && $current_software[$identifier_pos] != phodevi::system_software(true))
+					{
+						pts_client::$display->generic_prompt(pts_client::cli_just_bold('Current software does not match the saved data matching this result identifier.'));
+					}
+					else
+					{
+						// See if any missing runs to complete, etc
+						// finish up the tests in queue...
+						$tests_not_yet_run = array();
+						foreach($this->tests_to_run as &$test_to_run)
+						{
+							if(!$this->result_file->has_matching_test_and_run_identifier($test_to_run, $results_identifier))
+							{
+								$tests_not_yet_run[] = $test_to_run;
+							}
+						}
+						if(!empty($tests_not_yet_run))
+						{
+							pts_client::$display->generic_prompt(pts_client::cli_just_bold('Resuming run; ' . pts_strings::plural_handler(count($tests_not_yet_run), 'test') . ' to run.'));
+							$this->tests_to_run = $tests_not_yet_run;
+							$do_repeat_prompt = false;
+						}
+						if($do_repeat_prompt)
+						{
+							pts_client::$display->generic_prompt(pts_client::cli_just_bold('This result identifier has already completed all tests.'));
+						}
+					}
+				}
+				echo PHP_EOL;
 			}
-			while((!$no_repeated_tests && $identifier_pos != -1) || (isset($current_hardware[$identifier_pos]) && $current_hardware[$identifier_pos] != phodevi::system_hardware(true)) || (isset($current_software[$identifier_pos]) && $current_software[$identifier_pos] != phodevi::system_software(true)));
+			while($do_repeat_prompt);
 		}
 		else if(($env_identifier = pts_env::read('TEST_RESULTS_IDENTIFIER')))
 		{

@@ -456,22 +456,24 @@ class pts_result_file
 	}
 	public function has_matching_test_and_run_identifier(&$test_result, $run_identifier_to_check)
 	{
-		$found_match = false;
-		$hash_to_check = $test_result->get_comparison_hash();
-
-		foreach($this->get_result_objects() as $result_object)
+		$result_object = $this->get_result($test_result->get_comparison_hash(true, false));
+		if($result_object && in_array($run_identifier_to_check, $result_object->test_result_buffer->get_identifiers()) && $result_object->test_result_buffer->get_result_from_identifier($run_identifier_to_check) != '')
 		{
-			if($hash_to_check == $result_object->get_comparison_hash())
-			{
-				if(in_array($run_identifier_to_check, $result_object->test_result_buffer->get_identifiers()) && $result_object->test_result_buffer->get_result_from_identifier($run_identifier_to_check) != '')
-				{
-					$found_match = true;
-				}
-				break;
-			}
+			return true;
 		}
 
-		return $found_match;
+		return false;
+	}
+	public function has_missing_or_incomplete_data($run_identifier_to_check)
+	{
+		foreach($this->get_result_objects() as $result_object)
+		{
+			if(!in_array($run_identifier_to_check, $result_object->test_result_buffer->get_identifiers()) || $result_object->test_result_buffer->get_result_from_identifier($run_identifier_to_check) == '')
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 	public function get_contained_tests_hash($raw_output = true)
 	{
