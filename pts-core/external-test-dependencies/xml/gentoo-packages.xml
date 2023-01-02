@@ -379,5 +379,9 @@
 			<GenericName>libconfigpp</GenericName>
 			<PackageName>dev-libs/libconfig</PackageName>
 		</Package>
+		<Package>
+			<GenericName>google-benchmark</GenericName>
+			<PackageName>dev-cpp/benchmark</PackageName>
+		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
