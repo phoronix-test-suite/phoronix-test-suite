@@ -216,7 +216,7 @@
 		</Package>
 		<Package>
 			<GenericName>blas-development</GenericName>
-			<PackageName>libblas-dev libopenblas-base libopenblas-dev</PackageName>
+			<PackageName>libblas-dev libopenblas-dev</PackageName>
 			<FileCheck>/usr/include/x86_64-linux-gnu/openblas_config.h OR /usr/include/aarch64-linux-gnu/openblas_config.h OR /usr/include/openblas/openblas_config.h</FileCheck>
 		</Package>
 		<Package>

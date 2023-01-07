@@ -24,11 +24,17 @@ class microsoft_dependency_handler implements pts_dependency_handler
 {
 	public static function startup_handler()
 	{
-		// Ensure OpenSSL support is enabled otherwise HTTPS downloads will fail
-		$likely_php_openssl_dll = dirname(getenv('PHP_BIN')) . '\ext\php_openssl.dll';
-		if(!extension_loaded('openssl') && is_file($likely_php_openssl_dll) && ini_get('enable_dl'))
+		if(ini_get('enable_dl'))
 		{
-			dl('php_openssl.dll');
+			// Ensure needed extensions are loaded
+			$php_bin_dir = dirname(getenv('PHP_BIN'));
+			foreach(array('openssl', 'zip') as $needed_ext)
+			{
+				if(!extension_loaded($needed_ext) && is_file($php_bin_dir . '\ext\php_' . $needed_ext . '.dll'))
+				{
+					dl('php_' . $needed_ext . '.dll');
+				}
+			}
 		}
 		if(!is_file('C:\cygwin64\bin\bash.exe') || !is_file('C:\cygwin64\bin\unzip.exe') || !is_file('C:\cygwin64\bin\which.exe'))
 		{
@@ -37,7 +43,7 @@ class microsoft_dependency_handler implements pts_dependency_handler
 			$cygwin_location = self::get_cygwin();
 			chdir(dirname($cygwin_location));
 			echo PHP_EOL . 'Configuring Cygwin for handling of some portable test scripts, extracting .tar.gz/xz files, and other script helpers... More details on the Phoronix Test Suite for Windows @ https://github.com/phoronix-test-suite/phoronix-test-suite/blob/master/documentation/ ' . PHP_EOL;
-			shell_exec(basename($cygwin_location) . ' -q -P unzip -P wget -P bc -P which -W -s https://cygwin.osuosl.org/');
+			shell_exec(basename($cygwin_location) . ' -q -P unzip -P wget -P psmisc -P procps-ng -P bc -P which -W -s https://cygwin.osuosl.org/');
 			chdir($cwd);
 		}
 

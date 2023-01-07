@@ -7,7 +7,7 @@
 		</Information>
 		<Package>
 			<GenericName>build-utilities</GenericName>
-			<PackageName>gcc-fortran gcc-c++ openmp mpi make automake autoconf gcc-core gcc-g++ libiconv-devel</PackageName>
+			<PackageName>gcc-fortran gcc-c++ openmp mpi make automake autoconf gcc-core gcc-g++ libiconv-devel psmisc</PackageName>
 			<FileCheck>C:\cygwin64\bin\gcc.exe</FileCheck>
 		</Package>
 		<Package>

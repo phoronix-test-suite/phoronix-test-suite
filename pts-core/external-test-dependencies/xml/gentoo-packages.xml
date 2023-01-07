@@ -23,7 +23,7 @@
 		</Package>
 		<Package>
 			<GenericName>vulkan-development</GenericName>
-			<PackageName>media-libs/vulkan-loader</PackageName>
+			<PackageName>dev-util/vulkan-tools dev-util/vulkan-headers</PackageName>
 		</Package>
 		<Package>
 			<GenericName>openssl-development</GenericName>
@@ -378,6 +378,30 @@
 		<Package>
 			<GenericName>libconfigpp</GenericName>
 			<PackageName>dev-libs/libconfig</PackageName>
+		</Package>
+		<Package>
+			<GenericName>clang</GenericName>
+			<PackageName>sys-devel/clang</PackageName>
+		</Package>
+		<Package>
+			<GenericName>node-npm</GenericName>
+			<PackageName>net-libs/nodejs</PackageName>
+		</Package>
+		<Package>
+			<GenericName>darktable</GenericName>
+			<PackageName>media-gfx/darktable</PackageName>
+		</Package>
+		<Package>
+			<GenericName>gimp</GenericName>
+			<PackageName>media-gfx/gimp</PackageName>
+		</Package>
+		<Package>
+			<GenericName>google-benchmark</GenericName>
+			<PackageName>dev-cpp/benchmark</PackageName>
+		</Package>
+		<Package>
+			<GenericName>python-numpy</GenericName>
+			<PackageName>dev-python/numpy</PackageName>
 		</Package>
 	</ExternalDependencies>
 </PhoronixTestSuite>
