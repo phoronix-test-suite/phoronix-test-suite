@@ -2243,6 +2243,7 @@ class pts_client
 				else
 				{
 					$ignore_errors = array(
+						'Using empty file',
 						'Name or service not known',
 						'HTTP request failed',
 						'fopen',

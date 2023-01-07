@@ -107,8 +107,8 @@ class pts_graph_box_plot extends pts_graph_horizontal_bars
 					$p_75 =  $values[75];
 
 					$unique_values = array();
-					$min_value = round(min($values), 2);
-					$max_value = round(max($values), 2);
+					$min_value = min($values);
+					$max_value = max($values);
 				}
 				else
 				{
@@ -123,9 +123,17 @@ class pts_graph_box_plot extends pts_graph_horizontal_bars
 					$p_75 = pts_math::find_percentile($values, 0.75, true);
 
 					$unique_values = array_unique($values);
-					$min_value = round(min($unique_values), 2);
-					$max_value = round(max($unique_values), 2);
+					$min_value = min($unique_values);
+					$max_value = max($unique_values);
 				}
+
+				if(!is_numeric($min_value) || !is_numeric($max_value))
+				{
+					continue;
+				}
+				$min_value = round($min_value, 2);
+				$max_value = round($max_value, 2);
+
 				$value_end_left = $this->i['left_start'] + max(1, round(($whisker_bottom / $this->i['graph_max_value']) * $work_area_width));
 				$value_end_right = $this->i['left_start'] + round(($whisker_top / $this->i['graph_max_value']) * $work_area_width);
 				// if identifier is 0, not a multi-way comparison or anything special

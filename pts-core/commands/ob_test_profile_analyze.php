@@ -61,7 +61,7 @@ class ob_test_profile_analyze implements pts_option_interface
 			$shared_library_dependencies = array();
 			$instruction_usage = array();
 
-			if(is_executable($test_binary))
+			if(!empty($test_binary) && is_executable($test_binary))
 			{
 				$ldd = trim(shell_exec('ldd ' . $test_binary));
 

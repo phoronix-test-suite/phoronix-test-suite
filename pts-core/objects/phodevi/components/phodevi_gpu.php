@@ -125,6 +125,18 @@ class phodevi_gpu extends phodevi_device_interface
 				}
 			}
 		}
+		else if(phodevi::is_windows())
+		{
+			$pnputil = shell_exec('pnputil /enum-devices /bus PCI /deviceids /class "Display"');
+			if(($x = strpos($pnputil, '&DEV_')) !== false)
+			{
+				$pnputil = substr($pnputil, $x + 5);
+				if(is_numeric(substr($pnputil, 0, 4)))
+				{
+					$device_id = substr($pnputil, 0, 4);
+				}
+			}
+		}
 
 		return $device_id;
 	}
