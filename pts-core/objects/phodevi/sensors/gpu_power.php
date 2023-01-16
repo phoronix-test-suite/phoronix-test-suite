@@ -51,6 +51,25 @@ class gpu_power extends phodevi_sensor
 			}
 
 		}
+		else if(!empty($en1_input_files = glob('/sys/class/drm/card0/device/hwmon/hwmon*/energy1_input')))
+		{
+			// Intel dGPU energy input of device in microjoules
+			$en1_input_file = array_shift($en1_input_files);
+			$energy1_input_1 = file_get_contents($en1_input_file);
+			sleep(1);
+			$energy1_input_2 = file_get_contents($en1_input_file);
+
+			if(is_numeric($energy1_input_1) && is_numeric($energy1_input_2) && $energy1_input_2 > $energy1_input_1)
+			{
+				$energy_diff = $energy1_input_2 - $energy1_input_1;
+				$joules = $energy_diff / 1000000;
+				if(is_numeric($joules) && $joules > 1)
+				{
+					self::$unit = 'Watts';
+					$gpu_power = round($joules, 1);
+				}
+			}
+		}
 		else if($power1_average = phodevi_linux_parser::read_sysfs_node('/sys/class/drm/card0/device/hwmon/hwmon*/power1_average', 'POSITIVE_NUMERIC'))
 		{
 			// AMDGPU path
