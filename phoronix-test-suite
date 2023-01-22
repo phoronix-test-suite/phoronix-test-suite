@@ -201,7 +201,7 @@ elif [ -x /usr/local/sbin/pkg ] || [ -x /usr/sbin/pkg ]
 then
 	# DragonFlyBSD and others
 	echo "The command to likely run for your operating system is: "
-	echo "# pkg install php80 php80-dom php80-zip php80-simplexml php80-openssl"
+	echo "# pkg install php82 php82-dom php82-zip php82-simplexml"
 	echo " "
 elif [ -x /usr/bin/swupd ]
 then

@@ -25,7 +25,7 @@
 		</Package>
 		<Package>
 			<GenericName>freetype</GenericName>
-			<PackageName>freetype</PackageName>
+			<PackageName>freetype2</PackageName>
 		</Package>
 		<Package>
 			<GenericName>eigen</GenericName>
@@ -174,7 +174,7 @@
 		</Package>
 		<Package>
 			<GenericName>p7zip</GenericName>
-			<PackageName>p7zip</PackageName>
+			<PackageName>7-zip</PackageName>
 		</Package>
 		<Package>
 			<GenericName>autoconf</GenericName>
@@ -214,7 +214,7 @@
 		</Package>
 		<Package>
 			<GenericName>python</GenericName>
-			<PackageName>python3 python py38-pip</PackageName>
+			<PackageName>python3 python</PackageName>
 		</Package>
 		<Package>
 			<GenericName>yasm</GenericName>

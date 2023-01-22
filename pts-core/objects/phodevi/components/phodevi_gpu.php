@@ -1236,22 +1236,25 @@ class phodevi_gpu extends phodevi_device_interface
 
 		if(empty($info) || strpos($info, 'Mesa ') !== false || strpos($info, 'Gallium ') !== false || strpos($info, 'DRM ') !== false)
 		{
-			if(($x = strpos($info, ' on ')) !== false)
+			if(!empty($info))
 			{
-				// to remove section like "Gallium 0.4 on AMD POLARIS"
-				$info = substr($info, $x + 4);
-			}
-			if(strpos($info, 'Intel ') !== false)
-			{
-				// Intel usually has e.g. TGL GT2 or other info within
-				$info = str_replace(array('(', ')'), '', $info);
-			}
-			if(($x = strpos($info, ' (')) !== false)
-			{
-				$info = substr($info, 0, $x);
+				if(($x = strpos($info, ' on ')) !== false)
+				{
+					// to remove section like "Gallium 0.4 on AMD POLARIS"
+					$info = substr($info, $x + 4);
+				}
+				if(strpos($info, 'Intel ') !== false)
+				{
+					// Intel usually has e.g. TGL GT2 or other info within
+					$info = str_replace(array('(', ')'), '', $info);
+				}
+				if(($x = strpos($info, ' (')) !== false)
+				{
+					$info = substr($info, 0, $x);
+				}
 			}
 
-			if(phodevi::is_windows() == false && strpos($info, 'Intel ') === false && !pts_strings::string_contains($info, pts_strings::CHAR_NUMERIC))
+			if(phodevi::is_windows() == false && (empty($info) || (strpos($info, 'Intel ') === false && !pts_strings::string_contains($info, pts_strings::CHAR_NUMERIC))))
 			{
 				$info_pci = phodevi_linux_parser::read_pci('VGA compatible controller', false);
 
@@ -1332,7 +1335,7 @@ class phodevi_gpu extends phodevi_device_interface
 				}
 			}
 
-			if(($start_pos = strpos($info, ' DRI ')) > 0)
+			if(!empty($info) && ($start_pos = strpos($info, ' DRI ')) > 0)
 			{
 				$info = substr($info, $start_pos + 5);
 			}
