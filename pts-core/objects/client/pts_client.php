@@ -1763,7 +1763,22 @@ class pts_client
 		}
 		$var_string .= ' ';
 
-		return shell_exec($var_string . $exec);
+		while (@ ob_end_flush());
+
+		$proc = popen($var_string . $exec, 'r');
+		$live_output     = "";
+		$complete_output = "";
+
+		while (!feof($proc))
+		{
+			$live_output     = fread($proc, 4096);
+			$complete_output = $complete_output . $live_output;
+			echo "$live_output";
+			@ flush();
+		}
+
+		pclose($proc);
+		return $complete_output;
 	}
 	public static function get_path()
 	{
