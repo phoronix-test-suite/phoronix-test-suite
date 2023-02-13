@@ -36,7 +36,7 @@ fi
 
 cd comm_startup_lat
 ./comm_startup_lat.sh \"\" \$mix seq 3 \"\$comm\" >> \$mylog
-egrep \"Latency statistics\" -A 2 \$mylog | tail -n 1 | awk \"{ printf \\\"Average start-up time: %g\\n\\\",  \\\$3 }\" | tail -n 1 > \$LOG_FILE
+grep -E \"Latency statistics\" -A 2 \$mylog | tail -n 1 | awk \"{ printf \\\"Average start-up time: %g\\n\\\",  \\\$3 }\" | tail -n 1 > \$LOG_FILE
 rm \$mylog
 " > startuptime-run
 chmod +x startuptime-run
