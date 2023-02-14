@@ -51,7 +51,7 @@ rm -rf "$DESTDIR$INSTALL_PREFIX"/share/phoronix-test-suite/
 rm -rf "$DESTDIR$INSTALL_PREFIX"/share/doc/phoronix-test-suite/
 
 mkdir -p "$DESTDIR$INSTALL_PREFIX"/bin/
-mkdir -p "$DESTDIR$INSTALL_PREFIX"/share/appdata/
+mkdir -p "$DESTDIR$INSTALL_PREFIX"/share/metainfo/
 mkdir -p "$DESTDIR$INSTALL_PREFIX"/share/applications/
 mkdir -p "$DESTDIR$INSTALL_PREFIX"/share/icons/hicolor/48x48/apps/
 mkdir -p "$DESTDIR$INSTALL_PREFIX"/share/man/man1/
@@ -75,7 +75,7 @@ cp pts-core/static/bash_completion "$DESTDIR$INSTALL_PREFIX"/../etc/bash_complet
 cp pts-core/static/images/phoronix-test-suite.png "$DESTDIR$INSTALL_PREFIX"/share/icons/hicolor/48x48/apps/phoronix-test-suite.png
 cp pts-core/static/phoronix-test-suite.desktop "$DESTDIR$INSTALL_PREFIX"/share/applications/
 cp pts-core/static/phoronix-test-suite-launcher.desktop "$DESTDIR$INSTALL_PREFIX"/share/applications/
-cp pts-core/static/phoronix-test-suite.appdata.xml "$DESTDIR$INSTALL_PREFIX"/share/appdata/
+cp pts-core/static/phoronix-test-suite.metainfo.xml "$DESTDIR$INSTALL_PREFIX"/share/metainfo/
 
 mkdir -p "$DESTDIR$INSTALL_PREFIX"/../usr/lib/systemd/system/
 cp deploy/*-systemd/*.service "$DESTDIR$INSTALL_PREFIX"/../usr/lib/systemd/system/
