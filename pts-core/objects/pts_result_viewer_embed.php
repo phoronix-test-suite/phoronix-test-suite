@@ -59,11 +59,11 @@ class pts_result_viewer_embed
 			$this->graph_export_handler = $handler;
 		}
 	}
-	public function graph_export_handler(&$raw)
+	public function graph_export_handler(&$raw, &$result_file = null, &$result_object = null)
 	{
 		if($this->graph_export_handler)
 		{
-			return call_user_func($this->graph_export_handler, $raw);
+			return call_user_func($this->graph_export_handler, $raw, $result_file, $result_object);
 		}
 	}
 	public function set_post_description_message($msg)
@@ -160,7 +160,7 @@ class pts_result_viewer_embed
 
 		$rendered = pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes);
 		$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object" id="result_file_system_table">' . $rendered . '</p>';
-		$PAGE .= $this->graph_export_handler($rendered);
+		$PAGE .= $this->graph_export_handler($rendered, $result_file);
 
 		if($result_file->get_system_count() == 2)
 		{
@@ -170,7 +170,7 @@ class pts_result_viewer_embed
 			{
 				$rendered = pts_render::render_graph_inline_embed($graph, $result_file, $extra_attributes);
 				$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object">' . $rendered . '</p>';
-				$PAGE .= $this->graph_export_handler($rendered);
+				$PAGE .= $this->graph_export_handler($rendered, $result_file);
 			}
 		}
 		else if($result_file->get_system_count() > 12 && false) // TODO determine when this is sane enough to enable
@@ -181,7 +181,7 @@ class pts_result_viewer_embed
 			{
 				$rendered = pts_render::render_graph_inline_embed($graph, $result_file, $extra_attributes);
 				$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object">' . $rendered . '</p>';
-				$PAGE .= $this->graph_export_handler($rendered);
+				$PAGE .= $this->graph_export_handler($rendered, $result_file);
 			}
 		}
 		else if(!$result_file->is_multi_way_comparison())
@@ -194,7 +194,7 @@ class pts_result_viewer_embed
 				{
 					$rendered = pts_render::render_graph_inline_embed($graph, $result_file, $extra_attributes);
 					$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object">' . $rendered . '</p>';
-					$PAGE .= $this->graph_export_handler($rendered);
+					$PAGE .= $this->graph_export_handler($rendered, $result_file);
 				}
 			}
 		}
@@ -209,7 +209,7 @@ class pts_result_viewer_embed
 			$table = new pts_ResultFileTable($result_file, $intent);
 			$rendered = pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes);
 			$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object">' . $rendered . '</p>';
-			$PAGE .= $this->graph_export_handler($rendered);
+			$PAGE .= $this->graph_export_handler($rendered, $result_file);
 		}
 		$PAGE .= '</div>';
 		$PAGE .= '<a id="table"></a><div id="results">';
@@ -414,7 +414,7 @@ class pts_result_viewer_embed
 						continue 2;
 					case 1:
 						$PAGE .= $res . '<br />';
-						$PAGE .= $this->graph_export_handler($res);
+						$PAGE .= $this->graph_export_handler($res, $result_file, $ro);
 						break;
 					default:
 						$PAGE .= '<div class="tabs">';
@@ -424,7 +424,7 @@ class pts_result_viewer_embed
 							$PAGE .= '<input type="radio" name="tabs_' . $i . '" id="' . $tab_id . '"' . ($title == 'Result' ? ' checked="checked"' : '') . '>
 							  <label for="' . $tab_id . '">' . $title . '</label>
 							  <div class="tab' . (in_array($title, $show_on_print) ? ' print_notes' : '') . '">
-							    ' . $rendered . $this->graph_export_handler($rendered) . '
+							    ' . $rendered . $this->graph_export_handler($rendered, $result_file, $ro) . '
 							  </div>';
 						}
 						$PAGE .= '</div>';
