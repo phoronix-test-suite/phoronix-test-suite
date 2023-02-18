@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/Norne-4C.tar.gz</URL>
+      <MD5>959a9b3bba0bb9460b664d9050f04733</MD5>
+      <SHA256>77fded959718348695f9ee257c2e2b83ba7f211c83f181f67cac008554a6bcd2</SHA256>
+      <FileName>Norne-4C.tar.gz</FileName>
+      <FileSize>4363239</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/opm-benchmark-extras-1.tar.xz</URL>
+      <MD5>51bd346d03c2ac5089f82833c25a4abf</MD5>
+      <SHA256>e1f501bd109363797f6b7ea9dc6db02e01a7d84bb6594e3294fd97735d7e4818</SHA256>
+      <FileName>opm-benchmark-extras-1.tar.xz</FileName>
+      <FileSize>1216</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.coventry.ac.uk/contentassets/21d815453cff43a686f9f84596c2fac6/punqs3.zip</URL>
+      <FileName>punqs3.zip</FileName>
+      <FileSize>76280</FileSize>
+      <Optional>TRUE</Optional>
+    </Package>
+    <Package>
+      <FileName>omega-opm-2.tar.gz</FileName>
+      <FileSize>440350494</FileSize>
+      <Optional>TRUE</Optional>
+    </Package>
+    <Package>
+      <FileName>Smeaheia_Simulation_Models.tar.xz</FileName>
+      <FileSize>21451388</FileSize>
+      <Optional>TRUE</Optional>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/cyperpunk2077-settings-1.zip</URL>
+      <MD5>a49b71c4dfacc5ecf3f9b0f96baf17f0</MD5>
+      <SHA256>787f41e2538ead699b95e61a63c21fdbbdb60e434f95aec5ee212119a2e36193</SHA256>
+      <FileName>cyperpunk2077-settings-1.zip</FileName>
+      <FileSize>20987</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

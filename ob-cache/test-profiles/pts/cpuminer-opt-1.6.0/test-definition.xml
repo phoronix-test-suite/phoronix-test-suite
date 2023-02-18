@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Cpuminer-Opt</Title>
+    <AppVersion>3.20.3</AppVersion>
+    <Description>Cpuminer-Opt is a fork of cpuminer-multi that carries a wide range of CPU performance optimizations for measuring the potential cryptocurrency mining performance of the CPU/processor with a wide variety of cryptocurrencies. The benchmark reports the hash speed for the CPU mining performance for the selected cryptocurrency.</Description>
+    <ResultScale>kH/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.6.0</Version>
+    <SupportedPlatforms>Linux, BSD, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <ExternalDependencies>curl, build-utilities, gmp-library, openssl-development</ExternalDependencies>
+    <EnvironmentSize>34</EnvironmentSize>
+    <ProjectURL>https://github.com/JayDDee/cpuminer-opt/</ProjectURL>
+    <RepositoryURL>https://github.com/JayDDee/cpuminer-opt</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Algorithm</DisplayName>
+      <Identifier>algo</Identifier>
+      <ArgumentPrefix>-a </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>scrypt</Name>
+          <Value>scrypt</Value>
+        </Entry>
+        <Entry>
+          <Name>Triple SHA-256, Onecoin</Name>
+          <Value>sha256t</Value>
+        </Entry>
+        <Entry>
+          <Name>Quad SHA-256, Pyrite</Name>
+          <Value>sha256q</Value>
+        </Entry>
+        <Entry>
+          <Name>Myriad-Groestl</Name>
+          <Value>myr-gr</Value>
+        </Entry>
+        <Entry>
+          <Name>Magi (XMG)</Name>
+          <Value>m7m</Value>
+        </Entry>
+        <Entry>
+          <Name>Blake-2 S</Name>
+          <Value>blake2s</Value>
+        </Entry>
+        <Entry>
+          <Name>x25x</Name>
+          <Value>x25x</Value>
+        </Entry>
+        <Entry>
+          <Name>Garlicoin</Name>
+          <Value>allium</Value>
+        </Entry>
+        <Entry>
+          <Name>Ringcoin (RNG)</Name>
+          <Value>minotaur</Value>
+        </Entry>
+        <Entry>
+          <Name>Deepcoin</Name>
+          <Value>deep</Value>
+        </Entry>
+        <Entry>
+          <Name>Skeincoin</Name>
+          <Value>skein</Value>
+        </Entry>
+        <Entry>
+          <Name>LBC, LBRY Credits</Name>
+          <Value>lbry</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

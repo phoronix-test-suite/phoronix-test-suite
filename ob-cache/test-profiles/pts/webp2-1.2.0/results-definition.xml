@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Time to encode picture: #_RESULT_#</OutputTemplate>
+    <StripFromResult>s</StripFromResult>
+    <DivideResultDivisor>24</DivideResultDivisor>
+  </ResultsParser>
+</PhoronixTestSuite>

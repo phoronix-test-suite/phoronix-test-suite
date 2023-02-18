@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/stargatedaw/stargate/archive/refs/tags/release-22.11.5.tar.gz</URL>
+      <MD5>377948c44b91588465cfc542fd6d2521</MD5>
+      <SHA256>2b4f3df3601fee9c5bceb9a34c69966a260c80460c7d8cc14095ad57a7fbc6dc</SHA256>
+      <FileName>stargate-release-22.11.5.tar.gz</FileName>
+      <FileSize>26679985</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/stargate-benchmark-project-1.zip</URL>
+      <MD5>80810c29b24439bfbfc6e2aa46d27a8e</MD5>
+      <SHA256>ff3719ec0f0a995240ad216df5ad2511091191839980c7bb64baea0a376cfd0f</SHA256>
+      <FileName>stargate-benchmark-project-1.zip</FileName>
+      <FileSize>136140</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

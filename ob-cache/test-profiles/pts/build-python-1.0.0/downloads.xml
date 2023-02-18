@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://www.python.org/ftp/python/3.10.6/Python-3.10.6.tgz</URL>
+      <MD5>d76638ca8bf57e44ef0841d2cde557a0</MD5>
+      <SHA256>848cb06a5caa85da5c45bd7a9221bb821e33fc2bdcba088c127c58fad44e6343</SHA256>
+      <FileName>Python-3.10.6.tgz</FileName>
+      <FileSize>25986768</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

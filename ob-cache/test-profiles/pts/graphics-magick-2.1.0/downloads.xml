@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://versaweb.dl.sourceforge.net/project/graphicsmagick/graphicsmagick/1.3.38/GraphicsMagick-1.3.38.tar.bz2, https://gigenet.dl.sourceforge.net/project/graphicsmagick/graphicsmagick/1.3.38/GraphicsMagick-1.3.38.tar.bz2, https://ixpeering.dl.sourceforge.net/project/graphicsmagick/graphicsmagick/1.3.38/GraphicsMagick-1.3.38.tar.bz2</URL>
+      <MD5>ad1659099f1a93c98174053d737e72e2</MD5>
+      <SHA256>040ff30a2a9decc44ba67eb70da66b688841fc95fa9de9fcd3f41083378864ff</SHA256>
+      <FileName>GraphicsMagick-1.3.38.tar.bz2</FileName>
+      <FileSize>8117675</FileSize>
+      <PlatformSpecific>Linux, Solaris, BSD, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://ftp.icm.edu.pl/pub/unix/graphics/GraphicsMagick/1.3/windows/GraphicsMagick-1.3.33-Q16-win64-dll.exe</URL>
+      <MD5>53b25d8ab1f36315bd2e4fcff48a12db</MD5>
+      <SHA256>b7133b1ada51743b65d09f7f973efd8049e29257906da15d09134df69d260579</SHA256>
+      <FileName>GraphicsMagick-1.3.33-Q16-win64-dll.exe</FileName>
+      <FileSize>5662684</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/sample-photo-6000x4000-1.zip</URL>
+      <MD5>3da40124023e94f63d96c22c07e7e9c2</MD5>
+      <SHA256>cadcd434abcdc82a220e7022c749b6fa5f46bb7a32ec14423ca8aab067b0e989</SHA256>
+      <FileName>sample-photo-6000x4000-1.zip</FileName>
+      <FileSize>7824306</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

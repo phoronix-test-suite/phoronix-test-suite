@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>  Requests/sec:	#_RESULT_#</OutputTemplate>
+    <LineHint>Requests/sec</LineHint>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>  Average:	#_RESUT_# secs.</OutputTemplate>
+    <LineHint>Average:</LineHint>
+    <MultiplyResultBy>1000</MultiplyResultBy>
+    <ResultScale>ms</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+    <AppendToArgumentsDescription>Average Latency</AppendToArgumentsDescription>
+  </ResultsParser>
+</PhoronixTestSuite>

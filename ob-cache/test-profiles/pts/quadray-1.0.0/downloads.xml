@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/QuadRay-engine-20220525.tar.xz</URL>
+      <MD5>beb798214f42931d7041a2f4b27424dc</MD5>
+      <SHA256>9cb6804f6d156c30cfe6e50f8bcf4a137a6379f874c8c2d7204ba0ba4263b966</SHA256>
+      <FileName>QuadRay-engine-20220525.tar.xz</FileName>
+      <FileSize>526908</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

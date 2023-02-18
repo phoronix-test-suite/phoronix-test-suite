@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://datasets.clickhouse.com/hits_compatible/hits.tsv.gz</URL>
+      <MD5>de2f86030d1c86fd39d03468bd90a911</MD5>
+      <SHA256>bd500f777ef0eb55dc9d4f0eb245870351cc44a44d72a56395048d5c15f09fe2</SHA256>
+      <FileName>hits.tsv.gz</FileName>
+      <FileSize>16298506510</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/ClickHouse/ClickBench/archive/d9a1281ca7d2dd6c5144bd801a5ce493c0fe6fa0.zip</URL>
+      <MD5>c9e554e017403f399f3175258e12befa</MD5>
+      <SHA256>6ab8955c8fc0af8946f2b6d5dfdef708eafd89826e3ffa7204f664f256240238</SHA256>
+      <FileName>ClickBench-d9a1281ca7d2dd6c5144bd801a5ce493c0fe6fa0.zip</FileName>
+      <FileSize>627752</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

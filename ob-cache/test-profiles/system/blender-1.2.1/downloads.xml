@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://download.blender.org/demo/test/cycles_benchmark_20160228.zip, http://ftp.vim.org/ftp/pub/ftp/graphics/blender/demo/test/cycles_benchmark_20160228.zip, http://ftp.nl.freebsd.org/ftp/graphics/blender/demo/test/cycles_benchmark_20160228.zip</URL>
+      <MD5>61dabc9cc92dec9549f73f7453d9a875</MD5>
+      <SHA256>026e7499a7bd9e0d41fe4d43e611a145a62d8d5df4fe347a6a08c6f0e98cf0c6</SHA256>
+      <FileName>cycles_benchmark_20160228.zip</FileName>
+      <FileSize>530883683</FileSize>
+    </Package>
+    <Package>
+      <URL>https://svn.blender.org/svnroot/bf-blender/tags/blender-2.92-release/lib/benchmarks/cycles/barbershop_interior/barbershop_interior_cpu.blend</URL>
+      <MD5>2b1cb4c2f4f1813ab7a8d95dceabf48d</MD5>
+      <SHA256>95972b56180462cac47ec82f3a755bd9111ec18ca37a6196a319c013db994130</SHA256>
+      <FileName>barbershop_interior_cpu.blend</FileName>
+      <FileSize>287574804</FileSize>
+      <Optional>TRUE</Optional>
+    </Package>
+    <Package>
+      <URL>https://svn.blender.org/svnroot/bf-blender/tags/blender-2.92-release/lib/benchmarks/cycles/barbershop_interior/barbershop_interior_gpu.blend</URL>
+      <MD5>10e5a559064df9f1da9dd43bef3f4523</MD5>
+      <SHA256>4a79ec95e7d96602ab16d475370f6b765a713a546edfa420dd53a4c25e464417</SHA256>
+      <FileName>barbershop_interior_gpu.blend</FileName>
+      <FileSize>287594564</FileSize>
+      <Optional>TRUE</Optional>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

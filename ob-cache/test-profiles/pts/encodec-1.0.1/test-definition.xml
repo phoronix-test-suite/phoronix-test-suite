@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>EnCodec</Title>
+    <AppVersion>0.1.1</AppVersion>
+    <Description>EnCodec is a Facebook/Meta developed AI means of compressing audio files using High Fidelity Neural Audio Compression. EnCodec is designed to provide codec compression at 6 kbps using their novel AI-powered compression technique. The test profile uses a lengthy JFK speech as the audio input for benchmarking and the performance measurement is measuring the time to encode the EnCodec file from WAV.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <ExternalDependencies>python</ExternalDependencies>
+    <InstallRequiresInternet>TRUE</InstallRequiresInternet>
+    <EnvironmentSize>5500</EnvironmentSize>
+    <ProjectURL>https://ai.facebook.com/blog/ai-powered-audio-compression-technique/</ProjectURL>
+    <RepositoryURL>https://github.com/facebookresearch/encodec</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <PostArguments> -f jfk.wav</PostArguments>
+    </Default>
+    <Option>
+      <DisplayName>Target Bandwidth</DisplayName>
+      <Identifier>target-bandwidth</Identifier>
+      <ArgumentPrefix>-b </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>1.5 kbps</Name>
+          <Value>1.5</Value>
+        </Entry>
+        <Entry>
+          <Name>3 kbps</Name>
+          <Value>3</Value>
+        </Entry>
+        <Entry>
+          <Name>6 kbps</Name>
+          <Value>6</Value>
+        </Entry>
+        <Entry>
+          <Name>24 kbps</Name>
+          <Value>24</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

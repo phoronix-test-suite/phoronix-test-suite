@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/OpenFOAM/OpenFOAM-10/archive/refs/tags/20220831.tar.gz</URL>
+      <MD5>51e74ce28c90ca29cefb43fdf6fb857a</MD5>
+      <SHA256>ad76efd85761cc4e65a539eb2a09b14681132b6e5d0eb642102f90e3ac469bdc</SHA256>
+      <FileName>OpenFOAM-10-20220831.tar.gz</FileName>
+      <FileSize>56318092</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.1-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Electronic Design</Title>
+    <Version>1.0.1</Version>
+    <TestType>System</TestType>
+    <Description>Electronic design automation and electronic circuit simulation benchmarks.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/ngspice</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/openems</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+</PhoronixTestSuite>

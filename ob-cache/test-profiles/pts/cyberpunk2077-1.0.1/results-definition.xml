@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>        "averageFps": #_RESULT_#
+        "minFps": #_MIN_RESULT_#
+        "maxFps": #_MAX_RESULT_#</OutputTemplate>
+    <StripFromResult>,</StripFromResult>
+  </ResultsParser>
+</PhoronixTestSuite>

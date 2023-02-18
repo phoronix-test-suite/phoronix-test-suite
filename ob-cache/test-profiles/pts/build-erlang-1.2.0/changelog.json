@@ -1,0 +1,1 @@
+{"1.2.0":{"last_updated":"1662053800","commit_description":"Update against Erlang 25 upstream to address GCC 12 build issue."},"1.1.0":{"last_updated":"1614695147","commit_description":"Initial commit of Erlang\/OTP timed compilation."}}

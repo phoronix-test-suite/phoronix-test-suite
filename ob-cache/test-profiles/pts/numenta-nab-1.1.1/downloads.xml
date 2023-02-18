@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/numenta/NAB/archive/v1.1.tar.gz</URL>
+      <MD5>5f65942ee7dc0c5d65d391d058a684d5</MD5>
+      <SHA256>eac5ae2e3032d411b8049f9db9e4bca7f6af06634f6f6200b680b057b0d462b4</SHA256>
+      <FileName>NAB-1.1.tar.gz</FileName>
+      <FileSize>44069451</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Pass 2, #_MIN_RESULT_# #_MAX_RESULT_# #_RESULT_#</OutputTemplate>
+    <LineHint>Pass </LineHint>
+    <StripFromResult>,</StripFromResult>
+    <MultiMatch>GEOMETRIC_MEAN</MultiMatch>
+    <DeleteOutputAfter>Time in milliseconds(ms).</DeleteOutputAfter>
+  </ResultsParser>
+</PhoronixTestSuite>

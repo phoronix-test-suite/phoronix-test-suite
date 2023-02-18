@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>   90.0s        0          16325          #_RESULT_#      3.7      0.6     10.0     65.0    125.8  
+</OutputTemplate>
+    <LineHint>90.0s</LineHint>
+    <DeleteOutputBefore>_elapsed___errors_____ops(total)___ops/sec(cum)__avg(ms)__p50(ms)__p95(ms)__p99(ms)_pMax(ms)__result</DeleteOutputBefore>
+  </ResultsParser>
+</PhoronixTestSuite>

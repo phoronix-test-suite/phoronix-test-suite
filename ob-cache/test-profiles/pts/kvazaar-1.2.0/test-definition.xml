@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Kvazaar</Title>
+    <AppVersion>2.2</AppVersion>
+    <Description>This is a test of Kvazaar as a CPU-based H.265/HEVC video encoder written in the C programming language and optimized in Assembly. Kvazaar is the winner of the 2016 ACM Open-Source Software Competition and developed at the Ultra Video Group, Tampere University, Finland.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.0</Version>
+    <SupportedPlatforms>Linux, MacOSX, BSD, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, p7zip, libtool, yasm</ExternalDependencies>
+    <EnvironmentSize>3400</EnvironmentSize>
+    <ProjectURL>http://ultravideo.cs.tut.fi/#encoder</ProjectURL>
+    <RepositoryURL>https://github.com/ultravideo/kvazaar</RepositoryURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Video Input</DisplayName>
+      <Identifier>video</Identifier>
+      <ArgumentPrefix>-i </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>Bosphorus 1080p</Name>
+          <Value>Bosphorus_1920x1080_120fps_420_8bit_YUV.y4m</Value>
+        </Entry>
+        <Entry>
+          <Name>Bosphorus 4K</Name>
+          <Value>Bosphorus_3840x2160.y4m</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Video Preset</DisplayName>
+      <Identifier>preset</Identifier>
+      <ArgumentPrefix>--preset </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>Slow</Name>
+          <Value>slow</Value>
+        </Entry>
+        <Entry>
+          <Name>Medium</Name>
+          <Value>medium</Value>
+          <Message>Default</Message>
+        </Entry>
+        <Entry>
+          <Name>Very Fast</Name>
+          <Value>veryfast</Value>
+        </Entry>
+        <Entry>
+          <Name>Super Fast</Name>
+          <Value>superfast</Value>
+        </Entry>
+        <Entry>
+          <Name>Ultra Fast</Name>
+          <Value>ultrafast</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/etcd-io/etcd/archive/refs/tags/v3.5.4.tar.gz</URL>
+      <MD5>226a6e4af42d01d94eb2fc30cbb5a2c5</MD5>
+      <SHA256>10e8c1604578d4a8557263d61d4fbbd2428c8cd8dda3c8a23a8755314af6ef10</SHA256>
+      <FileName>etcd-3.5.4.tar.gz</FileName>
+      <FileSize>4036526</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

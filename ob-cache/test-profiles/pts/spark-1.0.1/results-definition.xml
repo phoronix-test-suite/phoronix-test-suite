@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>22/08/03 15:39:58 INFO __main__: SHA-512 benchmark time                 = #_RESULT_# seconds for 1,000,000 hashes</OutputTemplate>
+    <LineHint>SHA-512 benchmark time</LineHint>
+    <ResultBeforeString>seconds</ResultBeforeString>
+    <AppendToArgumentsDescription>SHA-512 Benchmark Time</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>22/08/03 15:39:58 INFO __main__: Calculate Pi benchmark                 = #_RESULT_# seconds with pi = 3.1416092936, samples = 5,000,000,000</OutputTemplate>
+    <LineHint>Calculate Pi benchmark                 =</LineHint>
+    <ResultBeforeString>seconds</ResultBeforeString>
+    <AppendToArgumentsDescription>Calculate Pi Benchmark</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>22/08/03 15:39:58 INFO __main__: Calculate Pi benchmark using dataframe = #_RESULT_# seconds with pi = 3.1416040392, samples = 5,000,000,000</OutputTemplate>
+    <LineHint>Calculate Pi benchmark using dataframe</LineHint>
+    <ResultBeforeString>seconds</ResultBeforeString>
+    <AppendToArgumentsDescription>Calculate Pi Benchmark Using Dataframe</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>22/08/03 18:06:24 INFO __main__: Group By test time         = #_RESULT_# seconds</OutputTemplate>
+    <LineHint>Group By test time</LineHint>
+    <ResultBeforeString>seconds</ResultBeforeString>
+    <AppendToArgumentsDescription>Group By Test Time</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>22/08/03 18:06:24 INFO __main__: Repartition test time      = #_RESULT_# seconds (200 partitions)</OutputTemplate>
+    <LineHint>Repartition test time</LineHint>
+    <ResultBeforeString>seconds</ResultBeforeString>
+    <AppendToArgumentsDescription>Repartition Test Time</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>22/08/03 18:06:24 INFO __main__: Inner join test time       = #_RESULT_# seconds</OutputTemplate>
+    <LineHint>: Inner join test time</LineHint>
+    <ResultBeforeString>seconds</ResultBeforeString>
+    <AppendToArgumentsDescription>Inner Join Test Time</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>22/08/03 18:06:24 INFO __main__: Broadcast inner join time  = #_RESULT_# seconds </OutputTemplate>
+    <LineHint>Broadcast inner join time</LineHint>
+    <ResultBeforeString>seconds</ResultBeforeString>
+    <AppendToArgumentsDescription>Broadcast Inner Join Test Time</AppendToArgumentsDescription>
+  </ResultsParser>
+</PhoronixTestSuite>

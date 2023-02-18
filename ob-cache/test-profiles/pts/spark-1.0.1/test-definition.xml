@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Apache Spark</Title>
+    <AppVersion>3.3</AppVersion>
+    <Description>This is a benchmark of Apache Spark with its PySpark interface. Apache Spark is an open-source unified analytics engine for large-scale data processing and dealing with big data. This test profile benchmars the Apache Spark in a single-system configuration using spark-submit.   The test makes use of DIYBigData's pyspark-benchmark (https://github.com/DIYBigData/pyspark-benchmark/) for generating of test data and various Apache Spark operations.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Application</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>java, python</ExternalDependencies>
+    <EnvironmentSize>2100</EnvironmentSize>
+    <ProjectURL>https://spark.apache.org/</ProjectURL>
+    <RepositoryURL>https://github.com/apache/spark</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Row Count</DisplayName>
+      <Identifier>rows</Identifier>
+      <ArgumentPrefix>-r </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>1000000</Name>
+          <Value>1000000</Value>
+        </Entry>
+        <Entry>
+          <Name>10000000</Name>
+          <Value>10000000</Value>
+        </Entry>
+        <Entry>
+          <Name>20000000</Name>
+          <Value>20000000</Value>
+        </Entry>
+        <Entry>
+          <Name>40000000</Name>
+          <Value>40000000</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Partitions</DisplayName>
+      <Identifier>partitions</Identifier>
+      <ArgumentPrefix>-p </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>100</Name>
+          <Value>100</Value>
+        </Entry>
+        <Entry>
+          <Name>500</Name>
+          <Value>500</Value>
+        </Entry>
+        <Entry>
+          <Name>1000</Name>
+          <Value>1000</Value>
+        </Entry>
+        <Entry>
+          <Name>2000</Name>
+          <Value>2000</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

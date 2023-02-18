@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/xmrig/xmrig/archive/refs/tags/v6.18.1.tar.gz</URL>
+      <MD5>3da4008a1e8fd3a63b36b4c07c58ec42</MD5>
+      <SHA256>f97fe20248e0eb452f77e9b69f2fb1510b852152b3af4f9a8b20680c854888d1</SHA256>
+      <FileName>xmrig-6.18.1.tar.gz</FileName>
+      <FileSize>2394259</FileSize>
+      <PlatformSpecific>Linux, BSD</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/xmrig/xmrig/releases/download/v6.18.1/xmrig-6.18.1-msvc-win64.zip</URL>
+      <MD5>e964cf8ca5f46aeadc32acce401caa7f</MD5>
+      <SHA256>8c231f2ebe719066ad3c85b8bea98e1a867af85643d4285c7d33f890d1d22338</SHA256>
+      <FileName>xmrig-6.18.1-msvc-win64.zip</FileName>
+      <FileSize>2292252</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

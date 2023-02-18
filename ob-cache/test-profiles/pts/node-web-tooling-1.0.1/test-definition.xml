@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Node.js V8 Web Tooling Benchmark</Title>
+    <Description>Running the V8 project's Web-Tooling-Benchmark under Node.js. The Web-Tooling-Benchmark stresses JavaScript-related workloads common to web developers like Babel and TypeScript and Babylon. This test profile can test the system's JavaScript performance with Node.js.</Description>
+    <ResultScale>runs/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux, BSD, Solaris, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>node-npm</ExternalDependencies>
+    <EnvironmentSize>236</EnvironmentSize>
+    <ProjectURL>https://v8.github.io/web-tooling-benchmark/</ProjectURL>
+    <RepositoryURL>https://github.com/v8/web-tooling-benchmark</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>webpack</SystemDependencies>
+  </TestProfile>
+</PhoronixTestSuite>

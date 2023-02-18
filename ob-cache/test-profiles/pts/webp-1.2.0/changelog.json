@@ -1,0 +1,1 @@
+{"1.2.0":{"last_updated":"1662716569","commit_description":"Update against webp 1.2.4 upstream, switch to MP\/s reporting, build from source on macOS. Takes care of the WebP issue in: https:\/\/github.com\/phoronix-test-suite\/phoronix-test-suite\/issues\/668"},"1.0.0":{"last_updated":"1600803391","commit_description":"Initial libwebp cwebp benchmark."}}

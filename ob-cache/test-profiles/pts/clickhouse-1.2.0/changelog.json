@@ -1,0 +1,1 @@
+{"1.2.0":{"last_updated":"1673458542","commit_description":"Update against ClickHouse 22.12.3.5 upstream."},"1.1.0":{"last_updated":"1660917413","commit_description":"Update against upstream, fix aarch64 usage."},"1.0.0":{"last_updated":"1656179844","commit_description":"Initial commit of ClickHouse benchmark."}}

@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>etcd</Title>
+    <AppVersion>3.5.4</AppVersion>
+    <Description>Etcd is a distributed, reliable key-value store intended for critical data of a distributed system. Etcd is written in Golang and part of the Cloud Native Computing Foundation (CNCF) and used by Kubernetes, Rook, CoreDNS, and other open-source software. This test profile uses Etcd's built-in benchmark to stress the PUT and RANGE performance of a single node / local system.</Description>
+    <ResultScale>Requests/sec</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Application</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>golang</ExternalDependencies>
+    <EnvironmentSize>2500</EnvironmentSize>
+    <ProjectURL>https://etcd.io/</ProjectURL>
+    <RepositoryURL>https://github.com/etcd-io/etcd</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>put --total=4000000 --val-size=256 --key-size=8 </Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test</Identifier>
+      <Menu>
+        <Entry>
+          <Name>PUT</Name>
+          <Value>put --total=4000000 --val-size=256 --key-size=8</Value>
+        </Entry>
+        <Entry>
+          <Name>RANGE</Name>
+          <Value>range KEY --total=4000000</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Connections</DisplayName>
+      <Identifier>Connections</Identifier>
+      <ArgumentPrefix>--conns </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>50</Name>
+          <Value>50</Value>
+        </Entry>
+        <Entry>
+          <Name>100</Name>
+          <Value>100</Value>
+        </Entry>
+        <Entry>
+          <Name>500</Name>
+          <Value>500</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Clients</DisplayName>
+      <Identifier>clients</Identifier>
+      <ArgumentPrefix>--clients </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>100</Name>
+          <Value>100</Value>
+        </Entry>
+        <Entry>
+          <Name>1000</Name>
+          <Value>1000</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

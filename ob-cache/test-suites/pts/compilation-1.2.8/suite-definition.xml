@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Timed Code Compilation</Title>
+    <Version>1.2.8</Version>
+    <TestType>System</TestType>
+    <Description>This test suite consists of tests that measure the amount of time needed to build common open-source software packages. These tests will use your default compiler and will adjust the number of compiling jobs based upon the number of detected CPU cores in your system. This suite is good for testing the system's processor, memory, and overall system performance.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/build-apache</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/build-php</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/build-eigen</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/build-linux-kernel</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/build-imagemagick</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/build-gcc</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/build-gdb</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/build-llvm</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/build-ffmpeg</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/build-mplayer</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/build2</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/build-python</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/build-godot</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/build-erlang</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/build-wasmer</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/build-nodejs</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/build-mesa</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/build-gem5</Test>
+  </Execute>
+</PhoronixTestSuite>

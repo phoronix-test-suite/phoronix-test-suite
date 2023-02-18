@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/jfk-long-audio-sample-wav-1.tar.xz</URL>
+      <MD5>2f51e7a0c8fd2afb543494331f4ef8f8</MD5>
+      <SHA256>600ee5557319ef0875b9d978020915d3cc60db91e1ddcd9b0e6b49a372d1603d</SHA256>
+      <FileName>jfk-long-audio-sample-wav-1.tar.xz</FileName>
+      <FileSize>51390208</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

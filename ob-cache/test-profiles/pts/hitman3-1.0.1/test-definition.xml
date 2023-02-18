@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>HITMAN 3</Title>
+    <Description>This is a benchmark of HITMAN 3 on Steam running on Linux under Steam Play. The test profile assumes you have a Steam account, have Steam installed for the system, and that you own a copy of this game. This automates the process of executing the game and using its built-in benchmark mode.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+    <PreInstallMessage>This test will attempt to install the necessary game using your Steam account. If the test appears hung you may need to manually exit the Steam client.</PreInstallMessage>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
+    <SoftwareType>Game</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Retail</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <ExternalDependencies>steam</ExternalDependencies>
+    <RequiresDisplay>TRUE</RequiresDisplay>
+    <EnvironmentSize>2</EnvironmentSize>
+    <ProjectURL>https://store.steampowered.com/app/1659040/HITMAN_3/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-SKIP_LAUNCHER -ao START_BENCHMARK true -ao BENCHMARK_SCENE_INDEX 1 -ao AUTO_QUIT_ENGINE 120 ConsoleCmd UI_ShowProfileData 1 ConsoleCmd EnableFPSLimiter 0 -ao FullScreen 1 ConsoleCmd settings_vsync 0 ConsoleCmd settings_SetHDR  0 </Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>-ao RESOLUTION $VIDEO_WIDTHx$VIDEO_HEIGHT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Quality Level</DisplayName>
+      <Identifier>quality</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Low</Name>
+          <Value>ConsoleCmd settings_SetDetailLOD 0 ConsoleCmd settings_SetAntialiasing 0 ConsoleCmd settings_SetTextureQuality 0 ConsoleCmd settings_SetTextureFilter 0 ConsoleCmd settings_SetSSAO 0 ConsoleCmd settings_SetShadowResolution 0</Value>
+        </Entry>
+        <Entry>
+          <Name>Medium</Name>
+          <Value>ConsoleCmd settings_SetDetailLOD 1 ConsoleCmd settings_SetAntialiasing 2 ConsoleCmd settings_SetTextureQuality 1 ConsoleCmd settings_SetTextureFilter 1 ConsoleCmd settings_SetSSAO 1 ConsoleCmd settings_SetShadowResolution 1</Value>
+        </Entry>
+        <Entry>
+          <Name>Ultra</Name>
+          <Value>ConsoleCmd settings_SetDetailLOD 3 ConsoleCmd settings_SetAntialiasing 2 ConsoleCmd settings_SetTextureQuality 2 ConsoleCmd settings_SetTextureFilter 3 ConsoleCmd settings_SetSSAO 1 ConsoleCmd settings_SetShadowResolution 2</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

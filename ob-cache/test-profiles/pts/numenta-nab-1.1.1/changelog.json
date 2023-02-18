@@ -1,0 +1,1 @@
+{"1.1.1":{"last_updated":"1671044645","commit_description":"Fixes for running on modern Linux distributions."},"1.1.0":{"last_updated":"1582909457","commit_description":"Update against NAB 1.1 upstream for Python 3 compatibility."},"1.0.0":{"last_updated":"1541782556","commit_description":"Initial commit of Numenta Anomaly Benchmark"}}

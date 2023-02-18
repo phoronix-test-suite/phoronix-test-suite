@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.2-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <FileName>viewperf2020_3.0_amd64.deb</FileName>
+      <FileSize>86410904</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+      <Optional>TRUE</Optional>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

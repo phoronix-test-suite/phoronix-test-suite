@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Composites
+catia-06 #_RESULT_#</OutputTemplate>
+    <LineBeforeHint>LineBeforeHint</LineBeforeHint>
+    <TurnCharsToSpace>,</TurnCharsToSpace>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Finished meshing in = #_RESULT_# s.</OutputTemplate>
+    <AppendToArgumentsDescription>Mesh Time</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>ExecutionTime = #_RESULT_# s  ClockTime = 136 s</OutputTemplate>
+    <AppendToArgumentsDescription>Execution Time</AppendToArgumentsDescription>
+  </ResultsParser>
+</PhoronixTestSuite>

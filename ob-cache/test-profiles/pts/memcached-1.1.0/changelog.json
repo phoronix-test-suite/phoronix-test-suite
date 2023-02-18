@@ -1,0 +1,1 @@
+{"1.1.0":{"last_updated":"1675282570","commit_description":"Pull in fixes from https:\/\/github.com\/phoronix-test-suite\/test-profiles\/pull\/266 Closes: https:\/\/github.com\/phoronix-test-suite\/test-profiles\/pull\/266"},"1.0.0":{"last_updated":"1660934580","commit_description":"Add memcached benchmark using memtier_benchmark."}}

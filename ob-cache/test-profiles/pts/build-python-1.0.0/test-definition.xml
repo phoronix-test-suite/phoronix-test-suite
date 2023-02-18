@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Timed CPython Compilation</Title>
+    <AppVersion>3.10.6</AppVersion>
+    <Description>This test times how long it takes to build the reference Python implementation, CPython, with optimizations and LTO enabled for a release build.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux, MacOSX, Solaris, BSD</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, libxml2, uuid, bzip2-development, zlib-development</ExternalDependencies>
+    <EnvironmentSize>250</EnvironmentSize>
+    <ProjectURL>https://www.python.org/</ProjectURL>
+    <RepositoryURL>https://github.com/python/cpython</RepositoryURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>lzma.h, sqlite3.h, readline/readline.h</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Build Configuration</DisplayName>
+      <Identifier>build</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Default</Name>
+        </Entry>
+        <Entry>
+          <Name>Released Build, PGO + LTO Optimized</Name>
+          <Value>--enable-optimizations --with-lto</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

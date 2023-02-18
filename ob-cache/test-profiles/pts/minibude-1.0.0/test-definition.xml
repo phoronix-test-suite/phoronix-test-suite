@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>miniBUDE</Title>
+    <AppVersion>20210901</AppVersion>
+    <Description>MiniBUDE is a mini application for the the core computation of the Bristol University Docking Engine (BUDE). This test profile currently makes use of the OpenMP implementation of miniBUDE for CPU benchmarking.</Description>
+    <ResultScale>GFInst/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>150</EnvironmentSize>
+    <ProjectURL>https://github.com/UoB-HPC/miniBUDE/</ProjectURL>
+    <RepositoryURL>https://github.com/UoB-HPC/miniBUDE</RepositoryURL>
+    <InternalTags>SMP, OpenMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Implementation</DisplayName>
+      <Identifier>implementation</Identifier>
+      <Menu>
+        <Entry>
+          <Name>OpenMP</Name>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Input Deck</DisplayName>
+      <Identifier>size</Identifier>
+      <Menu>
+        <Entry>
+          <Name>BM1</Name>
+          <Value>--deck ../data/bm1 --iterations 500</Value>
+          <Message>Smaller problem size.</Message>
+        </Entry>
+        <Entry>
+          <Name>BM2</Name>
+          <Value>--deck ../data/bm2 --iterations 10</Value>
+          <Message>Intended for larger servers.</Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

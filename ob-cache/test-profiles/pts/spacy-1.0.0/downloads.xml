@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/spacy_benchmarks-1.tar.xz</URL>
+      <MD5>32bb6932275fbfb15657cf1f9a3a4337</MD5>
+      <SHA256>c479a02da711113bd4b4b0a97d07474e22ac722def1760400a8002bd2014fd73</SHA256>
+      <FileName>spacy_benchmarks-1.tar.xz</FileName>
+      <FileSize>5400</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

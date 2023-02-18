@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>ALL Reads        :	#_RESULT_#</OutputTemplate>
+    <LineHint>ALL Reads</LineHint>
+    <ResultScale>MB/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <AppendToArgumentsDescription>All Reads</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>3:1 Reads-Writes :	#_RESULT_#</OutputTemplate>
+    <LineHint>3:1 Reads-Writes</LineHint>
+    <ResultScale>MB/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <AppendToArgumentsDescription>3:1 Reads-Writes</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>2:1 Reads-Writes :	#_RESULT_#</OutputTemplate>
+    <LineHint>2:1 Reads-Writes</LineHint>
+    <ResultScale>MB/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <AppendToArgumentsDescription>2:1 Reads-Writes</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>1:1 Reads-Writes :	#_RESULT_#</OutputTemplate>
+    <LineHint>1:1 Reads-Writes</LineHint>
+    <ResultScale>MB/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <AppendToArgumentsDescription>1:1 Reads-Writes</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Stream-triad like:	#_RESULT_#</OutputTemplate>
+    <LineHint>Stream-triad like</LineHint>
+    <ResultScale>MB/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <AppendToArgumentsDescription>Stream-Triad Like</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Each iteration took 286.0 base frequency clocks (	#_RESULT_#	ns)</OutputTemplate>
+    <LineHint>Each iteration took </LineHint>
+    <ResultScale>ns</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+  </ResultsParser>
+</PhoronixTestSuite>

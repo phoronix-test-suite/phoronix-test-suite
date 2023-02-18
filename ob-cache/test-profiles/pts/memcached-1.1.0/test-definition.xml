@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Memcached</Title>
+    <AppVersion>1.6.18</AppVersion>
+    <Description>Memcached is a high performance, distributed memory object caching system. This Memcached test profiles makes use of memtier_benchmark for excuting this CPU/memory-focused server benchmark.</Description>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Application</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, libevent, pcre, zlib-development, openssl-development, libtool</ExternalDependencies>
+    <EnvironmentSize>64</EnvironmentSize>
+    <ProjectURL>https://memcached.org/</ProjectURL>
+    <RepositoryURL>https://github.com/memcached/memcached</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>pkg-config</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-P memcache_text -c 1 -p 11211 --pipeline=16 --test-time=60</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Set To Get Ratio</DisplayName>
+      <Identifier>ratio</Identifier>
+      <ArgumentPrefix>--ratio=</ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>1:100</Name>
+          <Value>1:100</Value>
+        </Entry>
+        <Entry>
+          <Name>1:10</Name>
+          <Value>1:10</Value>
+        </Entry>
+        <Entry>
+          <Name>1:5</Name>
+          <Value>1:5</Value>
+        </Entry>
+        <Entry>
+          <Name>1:1</Name>
+          <Value>1:1</Value>
+        </Entry>
+        <Entry>
+          <Name>5:1</Name>
+          <Value>5:1</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

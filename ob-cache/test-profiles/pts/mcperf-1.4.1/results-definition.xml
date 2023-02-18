@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Request rate: #_RESULT_# req/s (0.0 ms/req)</OutputTemplate>
+    <LineHint>Request rate:</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

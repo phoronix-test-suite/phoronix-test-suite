@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>CloudSuite Graph Analytics</Title>
+    <AppVersion>4.0</AppVersion>
+    <Description>CloudSuite Graph Analytics uses Apache GraphX + Spark to perform graph analytics (PageRank) on sample Twitter data.</Description>
+    <ResultScale>ms</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <RequiresInternet>TRUE</RequiresInternet>
+    <EnvironmentSize>700</EnvironmentSize>
+    <ProjectURL>https://github.com/parsa-epfl/cloudsuite/blob/master/docs/benchmarks/graph-analytics.md</ProjectURL>
+    <RepositoryURL>https://github.com/parsa-epfl/cloudsuite</RepositoryURL>
+    <InternalTags>Cloud, Docker</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>docker</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>GraphX Algorithm</DisplayName>
+      <Identifier>algo</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Page Rank</Name>
+          <Value>pr</Value>
+        </Entry>
+        <Entry>
+          <Name>Connected Components</Name>
+          <Value>cc</Value>
+        </Entry>
+        <Entry>
+          <Name>Triangle Count</Name>
+          <Value>tc</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

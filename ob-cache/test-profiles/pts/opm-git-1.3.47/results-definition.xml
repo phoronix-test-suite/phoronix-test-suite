@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Total wallclock time:       #_RESULT_# sec  (52 min 59.02 sec)</OutputTemplate>
+    <MatchToTestArguments>upscale_relperm_benchmark</MatchToTestArguments>
+    <LineHint>Total wallclock time</LineHint>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Total time (seconds):  #_RESULT_#</OutputTemplate>
+    <LineHint>Total time</LineHint>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>FOPT - Total Oil Production At End Of Run:    #_RESULT_#</OutputTemplate>
+    <ResultScale> </ResultScale>
+    <ResultProportion> </ResultProportion>
+    <AppendToArgumentsDescription>FOPT (Total Oil Production At End Of Run)</AppendToArgumentsDescription>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>FGPT - Total Gas Production At End Of Run:    #_RESULT_#</OutputTemplate>
+    <ResultScale> </ResultScale>
+    <ResultProportion> </ResultProportion>
+    <AppendToArgumentsDescription>FGPT (Total Gas Production At End Of Run)</AppendToArgumentsDescription>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>FWPT - Total Water Production At End Of Run:    #_RESULT_#</OutputTemplate>
+    <ResultScale> </ResultScale>
+    <ResultProportion> </ResultProportion>
+    <AppendToArgumentsDescription>FWPT (Total Water Production At End Of Run)</AppendToArgumentsDescription>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>FOIT - Total Oil Injection At End Of Run:    #_RESULT_#</OutputTemplate>
+    <ResultScale> </ResultScale>
+    <ResultProportion> </ResultProportion>
+    <AppendToArgumentsDescription>FOIT (Total Oil Injection At End Of Run)</AppendToArgumentsDescription>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>FGIT - Total Gas Injection At End Of Run:    #_RESULT_#</OutputTemplate>
+    <ResultScale> </ResultScale>
+    <ResultProportion> </ResultProportion>
+    <AppendToArgumentsDescription>FGIT (Total Gas Injection At End Of Run)</AppendToArgumentsDescription>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>FWIT - Total Water Injection At End Of Run:    #_RESULT_#</OutputTemplate>
+    <ResultScale> </ResultScale>
+    <ResultProportion> </ResultProportion>
+    <AppendToArgumentsDescription>FWIT (Total Water Injection At End Of Run)</AppendToArgumentsDescription>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>FPR - Final Reservoir Pressure At End Of Run:    #_RESULT_#</OutputTemplate>
+    <ResultScale> </ResultScale>
+    <ResultProportion> </ResultProportion>
+    <AppendToArgumentsDescription>FPR (Final Reservoir Pressure At End Of Run)</AppendToArgumentsDescription>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>FOILMBE:    #_RESULT_#</OutputTemplate>
+    <ResultScale> </ResultScale>
+    <ResultProportion> </ResultProportion>
+    <AppendToArgumentsDescription>FOILMBE</AppendToArgumentsDescription>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>FGASMBE:    #_RESULT_#</OutputTemplate>
+    <ResultScale> </ResultScale>
+    <ResultProportion> </ResultProportion>
+    <AppendToArgumentsDescription>FGASMBE</AppendToArgumentsDescription>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>FWATMBE:    #_RESULT_#</OutputTemplate>
+    <ResultScale> </ResultScale>
+    <ResultProportion> </ResultProportion>
+    <AppendToArgumentsDescription>FWATMBE</AppendToArgumentsDescription>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <FileName>SPECjbb2015-1.02.iso</FileName>
+      <FileSize>25419776</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

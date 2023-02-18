@@ -1,0 +1,1 @@
+{"1.0.1":{"last_updated":"1658057641","commit_description":"Fixes for running on newer Linux distros like Ubuntu 22.04 LTS. Closes: https:\/\/github.com\/phoronix-test-suite\/phoronix-test-suite\/issues\/647"},"1.0.0":{"last_updated":"1607969573","commit_description":"Initial commit of V8 Web-Tooling-Benchmark run under Node.js."}}

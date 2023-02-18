@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>2020-03-05 18:05:33,739 INFO  [main] hbase.PerformanceEvaluation: [ Avg TPS/QPS]	#_RESULT_#	 row per second</OutputTemplate>
+    <LineHint> row per second</LineHint>
+    <ResultBeforeString>row</ResultBeforeString>
+    <ResultScale>Rows Per Second</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>2022-10-09T08:57:02,579 INFO  [main] hbase.PerformanceEvaluation: [ Avg latency (us)]	#_RESULT_#</OutputTemplate>
+    <LineHint>Avg latency</LineHint>
+    <ResultScale>Microseconds - Average Latency</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+  </ResultsParser>
+</PhoronixTestSuite>

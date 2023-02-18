@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>stress-ng: info: [2271] cpu             103656     30.03    596.91      0.00      #_RESULT_#       173.65</OutputTemplate>
+    <ResultScale>Bogo Ops/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+</PhoronixTestSuite>

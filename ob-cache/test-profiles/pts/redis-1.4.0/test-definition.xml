@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Redis</Title>
+    <AppVersion>7.0.4</AppVersion>
+    <Description>Redis is an open-source in-memory data structure store, used as a database, cache, and message broker.</Description>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.4.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Application</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>64</EnvironmentSize>
+    <ProjectURL>https://redis.io/</ProjectURL>
+    <RepositoryURL>https://github.com/redis/redis</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-n 50000000 -P 1024 -q -d 4 --csv</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test</Identifier>
+      <ArgumentPrefix>-t </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>SET</Name>
+          <Value>set</Value>
+        </Entry>
+        <Entry>
+          <Name>GET</Name>
+          <Value>get</Value>
+        </Entry>
+        <Entry>
+          <Name>LPUSH</Name>
+          <Value>lpush</Value>
+        </Entry>
+        <Entry>
+          <Name>LPOP</Name>
+          <Value>lpop</Value>
+        </Entry>
+        <Entry>
+          <Name>SADD</Name>
+          <Value>sadd</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Parallel Connections</DisplayName>
+      <Identifier>connections</Identifier>
+      <ArgumentPrefix>-c </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>50</Name>
+          <Value>50</Value>
+        </Entry>
+        <Entry>
+          <Name>500</Name>
+          <Value>500</Value>
+        </Entry>
+        <Entry>
+          <Name>1000</Name>
+          <Value>1000</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

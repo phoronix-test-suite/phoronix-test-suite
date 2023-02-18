@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/GFXSettings-Batman-Knight-1.zip</URL>
+      <MD5>5b2721dc91fe787dab57f7061e3f8728</MD5>
+      <SHA256>9e10c5861cd07120f80026cc03719d8d7356d6081254a454bf416ab9c58a43f5</SHA256>
+      <FileName>GFXSettings-Batman-Knight-1.zip</FileName>
+      <FileSize>2011</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

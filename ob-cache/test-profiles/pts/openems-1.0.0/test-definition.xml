@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>OpenEMS</Title>
+    <AppVersion>0.0.35-86</AppVersion>
+    <Description>OpenEMS is a free and open electromagnetic field solver using the FDTD method. This test profile runs OpenEMS and pyEMS benchmark demos.</Description>
+    <ResultScale>MCells/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux, MacOSX, BSD</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>python, build-utilities, cmake, boost-development, tinyxml, hdf5</ExternalDependencies>
+    <InstallRequiresInternet>TRUE</InstallRequiresInternet>
+    <EnvironmentSize>149</EnvironmentSize>
+    <ProjectURL>https://www.openems.de/</ProjectURL>
+    <RepositoryURL>https://github.com/thliebig/openEMS-Project</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>vtk-7.1/PyVTKObject.h, CGAL/AABB_tree.h, /usr/bin/cython, octave-config, /usr/share/doc/octave-dev/, paraview, /usr/lib/python3/dist-packages/CSXCAD/CSXCAD.pxd</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test</Identifier>
+      <Menu>
+        <Entry>
+          <Name>pyEMS Coupler</Name>
+          <Value>pyems/examples/coupler.py</Value>
+        </Entry>
+        <Entry>
+          <Name>openEMS MSL_NotchFilter</Name>
+          <Value>openEMS-Project/openEMS/python/Tutorials/MSL_NotchFilter.py</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

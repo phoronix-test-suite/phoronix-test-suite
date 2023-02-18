@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://nodejs.org/download/release/v18.8.0/node-v18.8.0.tar.xz</URL>
+      <MD5>c2eb6ae08bfdd66a25a0499d23c7a09a</MD5>
+      <SHA256>2b5d9825d05ede6614f1668a8d97d774fe92ebc81088ec5fdf58184dce3c86b9</SHA256>
+      <FileName>node-v18.8.0.tar.xz</FileName>
+      <FileSize>38285796</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

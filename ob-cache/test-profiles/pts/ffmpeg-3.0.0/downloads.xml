@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ffmpeg.org/releases/ffmpeg-5.1.2.tar.xz</URL>
+      <MD5>fa847c43407315c27231b9f883e62c0e</MD5>
+      <SHA256>619e706d662c8420859832ddc259cd4d4096a48a2ce1eefd052db9e440eef3dc</SHA256>
+      <FileName>ffmpeg-5.1.2.tar.xz</FileName>
+      <FileSize>10004956</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/x264-20221005.tar.xz</URL>
+      <MD5>83131e9a2fb99947327ec94d883be4f6</MD5>
+      <SHA256>1198aaa2da451d3783a10f61f2a85c1e8a7dbfa64637cd874f2375080067faa4</SHA256>
+      <FileName>x264-20221005.tar.xz</FileName>
+      <FileSize>687692</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/x265-20221028.tar.xz</URL>
+      <MD5>3ce797fe9ecdae60e55838c6c8649996</MD5>
+      <SHA256>6cb0cc07e21118636b16a9f0b90e4e70e03a4c76971d899f950449f7864610f9</SHA256>
+      <FileName>x265-20221028.tar.xz</FileName>
+      <FileSize>1034640</FileSize>
+    </Package>
+    <Package>
+      <URL>http://arcade.cs.columbia.edu/vbench/data/vbench.zip</URL>
+      <MD5>f7f5217fbcaabc17363d99a1559800f8</MD5>
+      <SHA256>c34b873a18b151322483ca460fcf9ed6a5dbbc2bb74934c57927b88ee1de3472</SHA256>
+      <FileName>vbench-01.zip</FileName>
+      <FileSize>874958969</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

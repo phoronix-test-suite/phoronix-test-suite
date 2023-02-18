@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>jbb2015.result.metric.max-jOPS = #_RESULT_#</OutputTemplate>
+    <LineHint>jbb2015.result.metric.max-jOPS</LineHint>
+    <ArgumentsDescription>SPECjbb2015-Composite max-jOPS Estimated</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>jbb2015.result.metric.critical-jOPS = #_RESULT_#</OutputTemplate>
+    <LineHint>jbb2015.result.metric.critical-jOPS</LineHint>
+    <ArgumentsDescription>SPECjbb2015-Composite critical-jOPS Estimated</ArgumentsDescription>
+  </ResultsParser>
+</PhoronixTestSuite>

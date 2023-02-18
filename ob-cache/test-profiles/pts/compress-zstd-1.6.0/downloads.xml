@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://wanos.co/assets/silesia.tar</URL>
+      <MD5>860ad8e1581f5bbc977d8ead770eefb1</MD5>
+      <SHA256>ea122ed051dc7a6c58d2bb56bb05b34d9f1537c4dc9e71519142e2ca8cd6338d</SHA256>
+      <FileName>silesia.tar</FileName>
+      <FileSize>211948544</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/facebook/zstd/archive/refs/tags/v1.5.4.tar.gz</URL>
+      <MD5>02b49acde4ebb35f7e47a2a41032ffa8</MD5>
+      <SHA256>35ad983197f8f8eb0c963877bf8be50490a0b3df54b4edeb8399ba8a8b2f60a4</SHA256>
+      <FileName>zstd-1.5.4.tar.gz</FileName>
+      <FileSize>2178759</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/facebook/zstd/releases/download/v1.5.4/zstd-v1.5.4-win64.zip</URL>
+      <MD5>b11a0f1e9e05f8ce756194b8693f3fbe</MD5>
+      <SHA256>aa8fab85842f28986df9f34043cbb36305b43d104b13ad560cca82d0b6599fee</SHA256>
+      <FileName>zstd-v1.5.4-win64.zip</FileName>
+      <FileSize>1445937</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

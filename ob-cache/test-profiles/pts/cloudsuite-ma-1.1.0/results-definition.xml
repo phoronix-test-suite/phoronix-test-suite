@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Benchmark execution time: #_RESULT_#</OutputTemplate>
+    <StripFromResult>ms</StripFromResult>
+  </ResultsParser>
+</PhoronixTestSuite>

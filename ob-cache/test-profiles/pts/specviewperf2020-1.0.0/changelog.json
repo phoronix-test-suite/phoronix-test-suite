@@ -1,0 +1,1 @@
+{"1.0.0":{"last_updated":"1646352631","commit_description":"Add SPECViewPerf 2020 v3.0 Linux support for automating the benchmark assuming the user either has the Deb package already downloaded and in the cache or the user has already installed it to \/opt."}}

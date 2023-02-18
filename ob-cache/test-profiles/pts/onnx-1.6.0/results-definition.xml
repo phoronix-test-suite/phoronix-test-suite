@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Number of inferences per second: #_RESULT_#</OutputTemplate>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Average inference time cost: #_RESULT_# ms</OutputTemplate>
+    <ResultScale>Inference Time Cost (ms)</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+</PhoronixTestSuite>

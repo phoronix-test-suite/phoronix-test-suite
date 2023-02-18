@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/svg-test-files-1.zip</URL>
+      <MD5>71078eed11f2ed6e46f0ad109767e0e8</MD5>
+      <SHA256>c373998bebff0a88f0c4e6fec383eaa62690f544c6eb2b1ad7c55b1547e4db08</SHA256>
+      <FileName>svg-test-files-1.zip</FileName>
+      <FileSize>206358</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

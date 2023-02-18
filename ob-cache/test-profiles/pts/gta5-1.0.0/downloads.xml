@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/gta5-settings-1.zip</URL>
+      <MD5>e6a99dff7a00dd6a1fb345bdaca7b5c9</MD5>
+      <SHA256>396399d36679ea39424ab66c800491cbfb8f2e56c362735377481f7eb48e722b</SHA256>
+      <FileName>gta5-settings-1.zip</FileName>
+      <FileSize>2887</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/erlang/otp/archive/refs/tags/OTP-25.0.4.tar.gz</URL>
+      <MD5>da75ddd69ec17c54a8b2101468a4fe3f</MD5>
+      <SHA256>05878cb51a64b33c86836b12a21903075c300409b609ad5e941ddb0feb8c2120</SHA256>
+      <FileName>otp-OTP-25.0.4.tar.gz</FileName>
+      <FileSize>59812650</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

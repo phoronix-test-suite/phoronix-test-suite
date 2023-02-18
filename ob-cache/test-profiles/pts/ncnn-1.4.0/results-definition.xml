@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>           mobilenet  min =    #_MIN_RESULT_#  max =   #_MAX_RESULT_#  avg =    #_RESULT_#</OutputTemplate>
+    <LineHint>           mobilenet  </LineHint>
+    <AppendToArgumentsDescription>Model: mobilenet</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>        mobilenet_v2  min =    #_MIN_RESULT_#  max =   #_MAX_RESULT_#  avg =    #_RESULT_#</OutputTemplate>
+    <LineHint>        mobilenet_v2  </LineHint>
+    <AppendToArgumentsDescription>Model: mobilenet-v2</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>        mobilenet_v3  min =    #_MIN_RESULT_#  max =   #_MAX_RESULT_#  avg =    #_RESULT_#</OutputTemplate>
+    <LineHint>        mobilenet_v3  </LineHint>
+    <AppendToArgumentsDescription>Model: mobilenet-v3</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>       shufflenet_v2  min =    #_MIN_RESULT_#  max =   #_MAX_RESULT_#  avg =    #_RESULT_#</OutputTemplate>
+    <LineHint>       shufflenet_v2  </LineHint>
+    <AppendToArgumentsDescription>Model: shufflenet-v2</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>             mnasnet  min =    #_MIN_RESULT_#  max =   #_MAX_RESULT_#  avg =    #_RESULT_#</OutputTemplate>
+    <LineHint>             mnasnet  </LineHint>
+    <AppendToArgumentsDescription>Model: mnasnet</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>     efficientnet_b0  min =    #_MIN_RESULT_#  max =   #_MAX_RESULT_#  avg =    #_RESULT_#</OutputTemplate>
+    <LineHint>     efficientnet_b0  </LineHint>
+    <AppendToArgumentsDescription>Model: efficientnet-b0</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>           blazeface  min =    #_MIN_RESULT_#  max =   #_MAX_RESULT_#  avg =    #_RESULT_#</OutputTemplate>
+    <LineHint>           blazeface  </LineHint>
+    <AppendToArgumentsDescription>Model: blazeface</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>           googlenet  min =    #_MIN_RESULT_#  max =   #_MAX_RESULT_#  avg =    #_RESULT_#</OutputTemplate>
+    <LineHint>           googlenet  </LineHint>
+    <AppendToArgumentsDescription>Model: googlenet</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>               vgg16  min =    #_MIN_RESULT_#  max =   #_MAX_RESULT_#  avg =    #_RESULT_#</OutputTemplate>
+    <LineHint>               vgg16  </LineHint>
+    <AppendToArgumentsDescription>Model: vgg16</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>            resnet18  min =    #_MIN_RESULT_#  max =   #_MAX_RESULT_#  avg =    #_RESULT_#</OutputTemplate>
+    <LineHint>            resnet18  </LineHint>
+    <AppendToArgumentsDescription>Model: resnet18</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>             alexnet  min =    #_MIN_RESULT_#  max =   #_MAX_RESULT_#  avg =    #_RESULT_#</OutputTemplate>
+    <LineHint>             alexnet  </LineHint>
+    <AppendToArgumentsDescription>Model: alexnet</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>            resnet50  min =    #_MIN_RESULT_#  max =   #_MAX_RESULT_#  avg =    #_RESULT_#</OutputTemplate>
+    <LineHint>            resnet50  </LineHint>
+    <AppendToArgumentsDescription>Model: resnet50</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>  mobilenetv2_yolov3  min =    #_MIN_RESULT_#  max =   #_MAX_RESULT_#  avg =    #_RESULT_#</OutputTemplate>
+    <LineHint>  mobilenetv2_yolov3  </LineHint>
+    <AppendToArgumentsDescription>Model: mobilenetv2-yolov3</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>         yolov4-tiny  min =    #_MIN_RESULT_#  max =   #_MAX_RESULT_#  avg =    #_RESULT_#</OutputTemplate>
+    <LineHint>         yolov4-tiny  </LineHint>
+    <AppendToArgumentsDescription>Model: yolov4-tiny</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>          squeezenet_ssd  min =    #_MIN_RESULT_#  max =   #_MAX_RESULT_#  avg =    #_RESULT_#</OutputTemplate>
+    <LineHint>          squeezenet_ssd  </LineHint>
+    <AppendToArgumentsDescription>Model: squeezenet_ssd</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>          regnety_400m  min =    #_MIN_RESULT_#  max =   #_MAX_RESULT_#  avg =    #_RESULT_#</OutputTemplate>
+    <LineHint>          regnety_400m  </LineHint>
+    <AppendToArgumentsDescription>Model: regnety_400m</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>          vision_transformer  min =    #_MIN_RESULT_#  max =   #_MAX_RESULT_#  avg =    #_RESULT_#</OutputTemplate>
+    <LineHint>          vision_transformer  </LineHint>
+    <AppendToArgumentsDescription>Model: vision_transformer</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>          FastestDet  min =    #_MIN_RESULT_#  max =   #_MAX_RESULT_#  avg =    #_RESULT_#</OutputTemplate>
+    <LineHint>          FastestDet  </LineHint>
+    <AppendToArgumentsDescription>Model: FastestDet</AppendToArgumentsDescription>
+  </ResultsParser>
+</PhoronixTestSuite>

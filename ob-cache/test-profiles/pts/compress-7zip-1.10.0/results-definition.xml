@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>                       Compressing  |                  Decompressing
+Dict     Speed Usage    R/U Rating  |      Speed Usage    R/U Rating
+         KiB/s     %   MIPS   MIPS  |      KiB/s     %   MIPS   MIPS
+
+22:      86245  1486   5647  83899  |     707548  1557   3875  60332
+23:      76951  1468   5341  78404  |     661060  1474   3880  57186
+24:      69190  1442   5160  74394  |     660976  1499   3870  57995
+25:      67706  1486   5204  77305  |     662163  1538   3831  58913
+----------------------------------  | ------------------------------
+Avr:     75023  1470   5338  #_RESULT_#  |     672937  1517   3864  58607
+Tot:            1494   4601  68554</OutputTemplate>
+    <ArgumentsDescription>Test: Compression Rating</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>                       Compressing  |                  Decompressing
+Dict     Speed Usage    R/U Rating  |      Speed Usage    R/U Rating
+         KiB/s     %   MIPS   MIPS  |      KiB/s     %   MIPS   MIPS
+
+22:      86245  1486   5647  83899  |     707548  1557   3875  60332
+23:      76951  1468   5341  78404  |     661060  1474   3880  57186
+24:      69190  1442   5160  74394  |     660976  1499   3870  57995
+25:      67706  1486   5204  77305  |     662163  1538   3831  58913
+----------------------------------  | ------------------------------
+Avr:     75023  1470   5338  5555  |     672937  1517   3864  #_RESULT_#
+Tot:            1494   4601  68554</OutputTemplate>
+    <ArgumentsDescription>Test: Decompression Rating</ArgumentsDescription>
+  </ResultsParser>
+</PhoronixTestSuite>

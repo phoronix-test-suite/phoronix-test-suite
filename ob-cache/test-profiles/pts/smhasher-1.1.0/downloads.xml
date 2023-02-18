@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/smhasher-20220822.tar.xz</URL>
+      <MD5>23c4b6924c7542cda03eb01547ca5efc</MD5>
+      <SHA256>8dfbf00df05408fce97190ffdd78fe3a53e83a231dc9c0c2487c91a3b16db037</SHA256>
+      <FileName>smhasher-20220822.tar.xz</FileName>
+      <FileSize>6145456</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

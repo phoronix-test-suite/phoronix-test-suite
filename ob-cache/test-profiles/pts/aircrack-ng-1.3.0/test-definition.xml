@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Aircrack-ng</Title>
+    <AppVersion>1.7</AppVersion>
+    <Description>Aircrack-ng is a tool for assessing WiFi/WLAN network security.</Description>
+    <ResultScale>k/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.3.0</Version>
+    <SupportedPlatforms>Linux, BSD, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, openssl-development, libtool</ExternalDependencies>
+    <EnvironmentSize>25</EnvironmentSize>
+    <ProjectURL>https://www.aircrack-ng.org/</ProjectURL>
+    <RepositoryURL>https://github.com/aircrack-ng/aircrack-ng</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>libnl-genl-3.so</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-S -Z 30</Arguments>
+    </Default>
+  </TestSettings>
+</PhoronixTestSuite>

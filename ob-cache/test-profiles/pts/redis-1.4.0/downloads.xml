@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://download.redis.io/releases/redis-7.0.4.tar.gz</URL>
+      <MD5>02ced01528cf578af926c3d2ae2923e0</MD5>
+      <SHA256>f0e65fda74c44a3dd4fa9d512d4d4d833dd0939c934e946a5c622a630d057f2f</SHA256>
+      <FileName>redis-7.0.4.tar.gz</FileName>
+      <FileSize>2963216</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

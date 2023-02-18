@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>CockroachDB</Title>
+    <AppVersion>22.2</AppVersion>
+    <Description>CockroachDB is a cloud-native, distributed SQL database for data intensive applications. This test profile uses a server-less CockroachDB configuration to test various Coackroach workloads on the local host with a single node.</Description>
+    <ResultScale>ops/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.2</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Application</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64, aarch64</SupportedArchitectures>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>1500</EnvironmentSize>
+    <ProjectURL>https://www.cockroachlabs.com/</ProjectURL>
+    <RepositoryURL>https://github.com/cockroachdb/cockroach</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <PostArguments>--duration 90s --drop</PostArguments>
+    </Default>
+    <Option>
+      <DisplayName>Workload</DisplayName>
+      <Identifier>workload</Identifier>
+      <Menu>
+        <Entry>
+          <Name>KV, 95% Reads</Name>
+          <Value>kv --ramp 10s --read-percent 95</Value>
+        </Entry>
+        <Entry>
+          <Name>KV, 50% Reads</Name>
+          <Value>kv --ramp 10s --read-percent 50</Value>
+        </Entry>
+        <Entry>
+          <Name>KV, 60% Reads</Name>
+          <Value>kv --ramp 10s --read-percent 60</Value>
+        </Entry>
+        <Entry>
+          <Name>KV, 10% Reads</Name>
+          <Value>kv --ramp 10s --read-percent 10</Value>
+        </Entry>
+        <Entry>
+          <Name>MoVR</Name>
+          <Value>movr</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Concurrency</DisplayName>
+      <Identifier>concurrency</Identifier>
+      <ArgumentPrefix>--concurrency </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>128</Name>
+          <Value>128</Value>
+        </Entry>
+        <Entry>
+          <Name>256</Name>
+          <Value>256</Value>
+        </Entry>
+        <Entry>
+          <Name>512</Name>
+          <Value>512</Value>
+        </Entry>
+        <Entry>
+          <Name>1024</Name>
+          <Value>1024</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

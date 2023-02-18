@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>libframetime-output-no-limit</OutputTemplate>
+  </ResultsParser>
+  <ExtraData>
+    <Identifier>libframetime-output-no-limit</Identifier>
+  </ExtraData>
+</PhoronixTestSuite>

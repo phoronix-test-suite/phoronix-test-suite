@@ -1,0 +1,1 @@
+{"overview":[],"capabilities":{"shared_libraries":["libhwloc.so.15","libc.so.6","libm.so.6","libudev.so.1"],"default_instructions":["MMX","SSE","SSE2"],"max_instructions":["MMX","SSE","SSE2"],"honors_cflags":"0","scales_cpu_cores":null}}

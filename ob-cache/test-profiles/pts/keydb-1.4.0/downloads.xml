@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/Snapchat/KeyDB/archive/refs/tags/v6.3.2.tar.gz</URL>
+      <MD5>4103634349ab95a35dc2357547481438</MD5>
+      <SHA256>2fdbdf2f0126bf973f8a56ef8777b7471a828df1a2f3555d5c96104a211582e7</SHA256>
+      <FileName>KeyDB-6.3.2.tar.gz</FileName>
+      <FileSize>11539114</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

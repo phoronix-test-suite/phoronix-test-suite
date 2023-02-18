@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.memcached.org/files/memcached-1.6.18.tar.gz</URL>
+      <MD5>afddef72d2109619b89e482c2d6a4a4f</MD5>
+      <SHA256>cbdd6ab8810649ac5d92fcd0fcb0ca931d8a9dbd0ad8cc575b47222eedd64158</SHA256>
+      <FileName>memcached-1.6.18.tar.gz</FileName>
+      <FileSize>1081928</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/RedisLabs/memtier_benchmark/archive/refs/tags/1.4.0.tar.gz</URL>
+      <MD5>536666de87f3db01bd83181d3cd2cea8</MD5>
+      <SHA256>e154e1cc2e8bc99634c3a947a4dfad885de9d28a78e3cc18bcec6254f1aa4992</SHA256>
+      <FileName>memtier_benchmark-1.4.0.tar.gz</FileName>
+      <FileSize>315519</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

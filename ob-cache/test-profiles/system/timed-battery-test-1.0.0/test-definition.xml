@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Timed Battery Test</Title>
+    <AppVersion>1.0.0</AppVersion>
+    <Description>A test profile that keeps carrying out the same operation until the battery is exhausted. When running PTS a second time with that configuration it will then parse the result and save it. The result is the reported Linux system uptime. This test profile is currently tentative/experimental for selected use-cases.</Description>
+    <ResultScale>System Uptime - Seconds</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Experimental</Status>
+    <EnvironmentSize>1</EnvironmentSize>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>google-chrome</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Task</DisplayName>
+      <Identifier>task</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Google Chrome YouTube Playback</Name>
+          <Value>GOOGLE_CHROME_YOUTUBE</Value>
+        </Entry>
+        <Entry>
+          <Name>Idle</Name>
+          <Value>IDLE</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

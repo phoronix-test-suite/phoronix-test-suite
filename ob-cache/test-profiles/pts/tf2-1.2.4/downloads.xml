@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/pts4-tf2-aug15.zip</URL>
+      <MD5>de5125002d59d2022e23f46a63cc1563</MD5>
+      <SHA256>f997759b929e0a384060f8295d4f413cafa516caa302f1191dc98e4e43123b9d</SHA256>
+      <FileName>pts4-tf2-aug15.zip</FileName>
+      <FileSize>986038</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

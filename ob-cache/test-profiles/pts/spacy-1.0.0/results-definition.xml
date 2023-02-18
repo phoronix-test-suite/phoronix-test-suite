@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>en_core_web_lg - token/sec: #_RESULT_#</OutputTemplate>
+    <ArgumentsDescription>Model: en_core_web_lg</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>en_core_web_trf - token/sec: #_RESULT_#</OutputTemplate>
+    <ArgumentsDescription>Model: en_core_web_trf</ArgumentsDescription>
+  </ResultsParser>
+</PhoronixTestSuite>

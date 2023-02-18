@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Average      -  5.967 bytes/cycle - #_RESULT_# MiB/sec @ 3 ghz</OutputTemplate>
+    <LineHint>Average      -</LineHint>
+    <ResultScale>MiB/sec</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Average                                    #_RESULT_# cycles/hash</OutputTemplate>
+    <ResultScale>cycles/hash</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+</PhoronixTestSuite>

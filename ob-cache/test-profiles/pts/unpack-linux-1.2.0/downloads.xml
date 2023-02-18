@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://mirror.us.oneandone.net/linux/kernel/v5.x/linux-5.19.tar.xz, https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.19.tar.xz</URL>
+      <MD5>f91bfe133d2cb1692f705947282e123a</MD5>
+      <SHA256>ff240c579b9ee1affc318917de07394fc1c3bb49dac25ec1287370c2e15005a8</SHA256>
+      <FileName>linux-5.19.tar.xz</FileName>
+      <FileSize>131581464</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

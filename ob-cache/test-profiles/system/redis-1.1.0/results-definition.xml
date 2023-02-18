@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.6.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Totals     #_RESULT_#    184908.78    277582.59      0.05300    324790.15</OutputTemplate>
+    <LineHint>Totals</LineHint>
+    <ResultScale>Operations Per Second</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>LPUSH , #_RESULT_#</OutputTemplate>
+    <LineHint>LPUSH ,</LineHint>
+    <ResultAfterString>LPUSH</ResultAfterString>
+    <ResultScale>Requests Per Second</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>LPOP , #_RESULT_#</OutputTemplate>
+    <LineHint>LPOP ,</LineHint>
+    <ResultAfterString>LPOP</ResultAfterString>
+    <ResultScale>Requests Per Second</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+</PhoronixTestSuite>

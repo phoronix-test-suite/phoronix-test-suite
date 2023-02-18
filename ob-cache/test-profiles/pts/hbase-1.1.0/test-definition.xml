@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Apache HBase</Title>
+    <AppVersion>2.5.0</AppVersion>
+    <Description>This is a benchmark of the Apache HBase non-relational distributed database system inspired from Google's Bigtable.</Description>
+    <ResultScale>Rows Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>java</ExternalDependencies>
+    <EnvironmentSize>2100</EnvironmentSize>
+    <ProjectURL>https://hbase.apache.org/</ProjectURL>
+    <RepositoryURL>https://github.com/apache/hbase</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>--nomapred</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Rows</DisplayName>
+      <Identifier>rows</Identifier>
+      <ArgumentPrefix>--rows=</ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>10000</Name>
+          <Value>10000</Value>
+          <Message>Quickest</Message>
+        </Entry>
+        <Entry>
+          <Name>1000000</Name>
+          <Value>1000000</Value>
+          <Message>Hbase Default</Message>
+        </Entry>
+        <Entry>
+          <Name>2000000</Name>
+          <Value>2000000</Value>
+        </Entry>
+        <Entry>
+          <Name>10000000</Name>
+          <Value>10000000</Value>
+          <Message>Longest / most time consuming</Message>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Random Write</Name>
+          <Value>randomWrite</Value>
+        </Entry>
+        <Entry>
+          <Name>Async Random Write</Name>
+          <Value>asyncRandomWrite</Value>
+        </Entry>
+        <Entry>
+          <Name>Random Read</Name>
+          <Value>randomRead</Value>
+        </Entry>
+        <Entry>
+          <Name>Async Random Read</Name>
+          <Value>asyncRandomRead</Value>
+        </Entry>
+        <Entry>
+          <Name>Sequential Write</Name>
+          <Value>sequentialWrite</Value>
+        </Entry>
+        <Entry>
+          <Name>Sequential Read</Name>
+          <Value>sequentialRead</Value>
+        </Entry>
+        <Entry>
+          <Name>Scan</Name>
+          <Value>scan</Value>
+        </Entry>
+        <Entry>
+          <Name>Increment</Name>
+          <Value>increment</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Clients</DisplayName>
+      <Identifier>clients</Identifier>
+      <Menu>
+        <Entry>
+          <Name>1</Name>
+          <Value>1</Value>
+        </Entry>
+        <Entry>
+          <Name>4</Name>
+          <Value>4</Value>
+        </Entry>
+        <Entry>
+          <Name>16</Name>
+          <Value>16</Value>
+        </Entry>
+        <Entry>
+          <Name>32</Name>
+          <Value>32</Value>
+        </Entry>
+        <Entry>
+          <Name>64</Name>
+          <Value>64</Value>
+        </Entry>
+        <Entry>
+          <Name>128</Name>
+          <Value>128</Value>
+        </Entry>
+        <Entry>
+          <Name>256</Name>
+          <Value>256</Value>
+        </Entry>
+        <Entry>
+          <Name>500</Name>
+          <Value>500</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

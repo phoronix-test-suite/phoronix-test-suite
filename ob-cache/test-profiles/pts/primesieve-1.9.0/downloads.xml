@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/kimwalisch/primesieve/archive/refs/tags/v8.0.tar.gz</URL>
+      <MD5>9c6cc6d25dcc8ba85369bd29761512b5</MD5>
+      <SHA256>9fba723221535dbf1e30c582c5009eeb032464704da01a0c8541d8cf2a698803</SHA256>
+      <FileName>primesieve-8.0.tar.gz</FileName>
+      <FileSize>119635</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/kimwalisch/primesieve/releases/download/v8.0/primesieve-8.0-win-x64.zip</URL>
+      <MD5>07d8bbda98a38f389732e38d238c0c3f</MD5>
+      <SHA256>2c1fbcc2db1f5e4b264bea57b2d36226b4977ab4186dfa5a3ae2051a00e3da37</SHA256>
+      <FileName>primesieve-8.0-win-x64.zip</FileName>
+      <FileSize>234044</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

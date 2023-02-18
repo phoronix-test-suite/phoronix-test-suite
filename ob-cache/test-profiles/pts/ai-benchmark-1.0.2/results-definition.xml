@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Device Inference Score: #_RESULT_#</OutputTemplate>
+    <ArgumentsDescription>Device Inference Score</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Device Training Score: #_RESULT_#</OutputTemplate>
+    <ArgumentsDescription>Device Training Score</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Device AI Score: #_RESULT_#</OutputTemplate>
+    <ArgumentsDescription>Device AI Score</ArgumentsDescription>
+  </ResultsParser>
+</PhoronixTestSuite>

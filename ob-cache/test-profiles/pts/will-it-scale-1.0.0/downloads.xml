@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/antonblanchard/will-it-scale/archive/a34a85cc1e9b9b74e94fdd3ecc479019da610e6a.zip</URL>
+      <MD5>21dcfb5e89e94311dc171fe8ca247916</MD5>
+      <SHA256>161458ea42eaa59de473052742c94c2fb4d3bec2eec695ba9fd884639b93da67</SHA256>
+      <FileName>will-it-scale-1.0.0.zip</FileName>
+      <FileSize>43989</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

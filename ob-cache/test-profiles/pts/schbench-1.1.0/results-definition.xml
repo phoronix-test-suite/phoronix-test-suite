@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>	50.0th: #_RESULT_# (57 samples)</OutputTemplate>
+    <ResultScale>usec, 50.0th Latency Percentile</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>	75.0th: #_RESULT_# (57 samples)</OutputTemplate>
+    <ResultScale>usec, 75.0th Latency Percentile</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>	90.0th: #_RESULT_# (57 samples)</OutputTemplate>
+    <ResultScale>usec, 90.0th Latency Percentile</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>	99.9th: #_RESULT_# (57 samples)</OutputTemplate>
+    <ResultScale>usec, 99.9th Latency Percentile</ResultScale>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,1 @@
+{"1.0.2":{"last_updated":"1658252311","commit_description":"Update tensorflow pip dependency so it works on newer distributuions."},"1.0.1":{"last_updated":"1605138215","commit_description":"Fix for macOS support."},"1.0.0":{"last_updated":"1594232753","commit_description":"Initial commit of AI Benchmark Alpha."}}

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>nekRS</Title>
+    <AppVersion>22.0</AppVersion>
+    <Description>nekRS is an open-source Navier Stokes solver based on the spectral element method. NekRS supports both CPU and GPU/accelerator support though this test profile is currently configured for CPU execution. NekRS is part of Nek5000 of the Mathematics and Computer Science MCS at Argonne National Laboratory. This nekRS benchmark is primarily relevant to large core count HPC servers and otherwise may be very time consuming.</Description>
+    <ResultScale>FLOP/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Scientific</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>openmpi-development, cmake, build-utilities</ExternalDependencies>
+    <EnvironmentSize>611</EnvironmentSize>
+    <ProjectURL>https://nek5000.mcs.anl.gov/</ProjectURL>
+    <RepositoryURL>https://github.com/Nek5000/nekRS</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Input</DisplayName>
+      <Identifier>input</Identifier>
+      <Menu>
+        <Entry>
+          <Name>TurboPipe Periodic</Name>
+          <Value>turbPipePeriodic turbPipe.par</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

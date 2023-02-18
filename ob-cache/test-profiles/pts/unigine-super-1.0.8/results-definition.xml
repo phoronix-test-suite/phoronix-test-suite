@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>FPS:	#_RESULT_#
+Min FPS:	#_MIN_RESULT_#
+Max FPS:	#_MAX_RESULT_#
+Score:	10213.3
+</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>JPEG XL libjxl</Title>
+    <AppVersion>0.7</AppVersion>
+    <Description>The JPEG XL Image Coding System is designed to provide next-generation JPEG image capabilities with JPEG XL offering better image quality and compression over legacy JPEG. This test profile is currently focused on the multi-threaded JPEG XL image encode performance using the reference libjxl library.</Description>
+    <ResultScale>MP/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.5.0</Version>
+    <SupportedPlatforms>Linux, MacOSX, BSD, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, jpeg-development, cmake, curl</ExternalDependencies>
+    <EnvironmentSize>126</EnvironmentSize>
+    <ProjectURL>http://jpegxl.info/</ProjectURL>
+    <RepositoryURL>https://github.com/libjxl/libjxl</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>gif_lib.h, pkg-config, gtest/gtest.h, brotli/encode.h</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Input</DisplayName>
+      <Identifier>input-type</Identifier>
+      <Menu>
+        <Entry>
+          <Name>JPEG</Name>
+          <Value>--lossless_jpeg=0 sample-photo-6000x4000.JPG out.jxl</Value>
+        </Entry>
+        <Entry>
+          <Name>PNG</Name>
+          <Value>sample-4.png out.jxl</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Quality</DisplayName>
+      <Identifier>quality</Identifier>
+      <Menu>
+        <Entry>
+          <Name>80</Name>
+          <Value>-q 80 --num_reps 50</Value>
+        </Entry>
+        <Entry>
+          <Name>90</Name>
+          <Value>-q 90 --num_reps 40</Value>
+          <Message>Default</Message>
+        </Entry>
+        <Entry>
+          <Name>100</Name>
+          <Value>-q 100 --num_reps 10</Value>
+          <Message>Lossless</Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

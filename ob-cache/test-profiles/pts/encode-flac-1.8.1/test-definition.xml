@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>FLAC Audio Encoding</Title>
+    <AppVersion>1.4</AppVersion>
+    <Description>This test times how long it takes to encode a sample WAV file to FLAC audio format ten times using the --best preset settings.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>WAV To FLAC</SubTitle>
+    <TimesToRun>5</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.8.1</Version>
+    <SupportedPlatforms>Linux, MacOSX, BSD, Solaris, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <Extends>pts/timed-audio-encode</Extends>
+    <ProjectURL>https://xiph.org/flac/</ProjectURL>
+    <RepositoryURL>https://github.com/xiph/flac</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>ogg/ogg.h</SystemDependencies>
+  </TestProfile>
+</PhoronixTestSuite>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>[ INFO ] Throughput: #_RESULT_# FPS</OutputTemplate>
+    <ResultScale>FPS</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>[ INFO ] 	Average:    #_RESULT_# ms
+[ INFO ] 	Min:        #_MIN_RESULT_# ms
+[ INFO ] 	Max:        #_MAX_RESULT_# ms</OutputTemplate>
+    <ResultScale>ms</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+  </ResultsParser>
+</PhoronixTestSuite>

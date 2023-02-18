@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>uvg266</Title>
+    <AppVersion>0.4.1</AppVersion>
+    <Description>uvg266 is an open-source VVC/H.266 (Versatile Video Coding) encoder based on Kvazaar as part of the Ultra Video Group, Tampere University, Finland.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux, MacOSX, BSD</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, p7zip, libtool, yasm, cmake</ExternalDependencies>
+    <EnvironmentSize>3400</EnvironmentSize>
+    <ProjectURL>https://github.com/ultravideo/uvg266/</ProjectURL>
+    <RepositoryURL>https://github.com/ultravideo/uvg266</RepositoryURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Video Input</DisplayName>
+      <Identifier>video</Identifier>
+      <ArgumentPrefix>-i </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>Bosphorus 1080p</Name>
+          <Value>Bosphorus_1920x1080_120fps_420_8bit_YUV.y4m</Value>
+        </Entry>
+        <Entry>
+          <Name>Bosphorus 4K</Name>
+          <Value>Bosphorus_3840x2160.y4m</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Video Preset</DisplayName>
+      <Identifier>preset</Identifier>
+      <ArgumentPrefix>--preset </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>Slow</Name>
+          <Value>slow</Value>
+        </Entry>
+        <Entry>
+          <Name>Medium</Name>
+          <Value>medium</Value>
+          <Message>Default</Message>
+        </Entry>
+        <Entry>
+          <Name>Very Fast</Name>
+          <Value>veryfast</Value>
+        </Entry>
+        <Entry>
+          <Name>Super Fast</Name>
+          <Value>superfast</Value>
+        </Entry>
+        <Entry>
+          <Name>Ultra Fast</Name>
+          <Value>ultrafast</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

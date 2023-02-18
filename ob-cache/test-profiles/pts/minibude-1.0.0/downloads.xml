@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/miniBUDE-20210901.tar.xz</URL>
+      <MD5>6cb1c14967f20d7f09cfe4567a0da22b</MD5>
+      <SHA256>b38898b2714bf43972d2886e1f71428198240f150b1e0d115e40de1e15fea94f</SHA256>
+      <FileName>miniBUDE-20210901.tar.xz</FileName>
+      <FileSize>14726244</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

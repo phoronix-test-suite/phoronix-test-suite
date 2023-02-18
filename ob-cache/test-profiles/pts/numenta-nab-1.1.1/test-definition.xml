@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Numenta Anomaly Benchmark</Title>
+    <AppVersion>1.1</AppVersion>
+    <Description>Numenta Anomaly Benchmark (NAB) is a benchmark for evaluating algorithms for anomaly detection in streaming, real-time applications. It is comprised of over 50 labeled real-world and artificial time-series data files plus a novel scoring mechanism designed for real-time applications. This test profile currently measures the time to run various detectors.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Time To Completion</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.1</Version>
+    <SupportedPlatforms>Linux, Solaris, MacOSX, BSD</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>python</ExternalDependencies>
+    <EnvironmentSize>749</EnvironmentSize>
+    <ProjectURL>https://github.com/numenta/NAB/</ProjectURL>
+    <RepositoryURL>https://github.com/numenta/NAB</RepositoryURL>
+    <InternalTags>Python</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>cython3</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <PostArguments> --detect --skipConfirmation --score</PostArguments>
+    </Default>
+    <Option>
+      <DisplayName>Detector</DisplayName>
+      <Identifier>detector</Identifier>
+      <ArgumentPrefix>-d </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>Bayesian Changepoint</Name>
+          <Value>bayesChangePt</Value>
+        </Entry>
+        <Entry>
+          <Name>Windowed Gaussian</Name>
+          <Value>windowedGaussian</Value>
+        </Entry>
+        <Entry>
+          <Name>Relative Entropy</Name>
+          <Value>relativeEntropy</Value>
+        </Entry>
+        <Entry>
+          <Name>Earthgecko Skyline</Name>
+          <Value>earthgeckoSkyline</Value>
+        </Entry>
+        <Entry>
+          <Name>KNN CAD</Name>
+          <Value>knncad</Value>
+        </Entry>
+        <Entry>
+          <Name>Contextual Anomaly Detector OSE</Name>
+          <Value>contextOSE</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

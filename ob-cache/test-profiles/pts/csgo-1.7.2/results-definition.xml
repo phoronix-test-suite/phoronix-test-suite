@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>pts10.dem UNKNOWN #_RESULT_# </OutputTemplate>
+    <LineHint>.dem</LineHint>
+    <FileFormat>CSV</FileFormat>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>5393 frames 15.102 seconds #_RESULT_# fps ( 2.80 ms/f) 49.225 fps variability</OutputTemplate>
+    <LineHint>fps (</LineHint>
+  </ResultsParser>
+  <ExtraData>
+    <Identifier>valve-source-frame-times</Identifier>
+  </ExtraData>
+</PhoronixTestSuite>

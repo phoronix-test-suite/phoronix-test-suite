@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/portal2-demo-pts3.zip</URL>
+      <MD5>b439949cf8bfe9daa9c494a6bb95a115</MD5>
+      <SHA256>05bc5fb86d43f51e085e7579184a5975b42a92201d62f78d211f20ec1474c950</SHA256>
+      <FileName>portal2-demo-pts3.zip</FileName>
+      <FileSize>941850</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

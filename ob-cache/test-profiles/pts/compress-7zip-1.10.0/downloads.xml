@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://www.7-zip.org/a/7z2201-src.tar.xz, http://www.phoronix-test-suite.com/benchmark-files/7z2201-src.tar.xz</URL>
+      <MD5>9f73c107ac964fcec381f0c176aa8fdc</MD5>
+      <SHA256>393098730c70042392af808917e765945dc2437dee7aae3cfcc4966eb920fbc5</SHA256>
+      <FileName>7z2201-src.tar.xz</FileName>
+      <FileSize>1291560</FileSize>
+      <PlatformSpecific>Linux, BSD, Solaris, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://www.7-zip.org/a/7z2201-extra.7z, http://www.phoronix-test-suite.com/benchmark-files/7z2201-extra.7z</URL>
+      <MD5>36eb2173af4c2b6b07a336eaf1681fc8</MD5>
+      <SHA256>fb776489799cd5ca0e151830cf2e6a9819c5c16c8e7571ff706aeeee07da2883</SHA256>
+      <FileName>7z2201-extra.7z</FileName>
+      <FileSize>1018450</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

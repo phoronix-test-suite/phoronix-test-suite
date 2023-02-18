@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v3.0.0a3 (Iveland) [ http://www.phoronix-test-suite.com/ ]-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>OpenCL</Title>
+    <Version>1.1.1</Version>
+    <TestType>System</TestType>
+    <Description>A collection of OpenCL tests.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/juliagpu</Test>
+    <Arguments>0 1 rendering_kernel.cl $VIDEO_WIDTH $VIDEO_HEIGHT</Arguments>
+    <Description>OpenCL Device: GPU - Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/mandelgpu</Test>
+    <Arguments>0 1 rendering_kernel_float4.cl $VIDEO_WIDTH $VIDEO_HEIGHT 4096</Arguments>
+    <Description>OpenCL Device: GPU - Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/smallpt-gpu</Test>
+    <Arguments>1 256 rendering_kernel.cl $VIDEO_WIDTH $VIDEO_HEIGHT scenes/caustic.scn</Arguments>
+    <Description>OpenCL Device: GPU - Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Scene: Caustic</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/smallpt-gpu</Test>
+    <Arguments>1 256 rendering_kernel.cl $VIDEO_WIDTH $VIDEO_HEIGHT scenes/caustic3.scn</Arguments>
+    <Description>OpenCL Device: GPU - Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Scene: Caustic3</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/smallpt-gpu</Test>
+    <Arguments>1 256 rendering_kernel.cl $VIDEO_WIDTH $VIDEO_HEIGHT scenes/cornell.scn</Arguments>
+    <Description>OpenCL Device: GPU - Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Scene: Cornell</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/mandelbulbgpu</Test>
+    <Arguments>0 1 rendering_kernel.cl $VIDEO_WIDTH $VIDEO_HEIGHT</Arguments>
+    <Description>OpenCL Device: GPU - Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/luxmark</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/shoc</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/cl-mem</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/opendwarfs</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/clpeak</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/rodinia</Test>
+    <Arguments>OCL_LAVAMD</Arguments>
+    <Description>Test: OpenCL LavaMD</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/rodinia</Test>
+    <Arguments>OCL_LEUKOCYTE</Arguments>
+    <Description>Test: OpenCL Leukocyte</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/rodinia</Test>
+    <Arguments>OCL_HEARTWALL</Arguments>
+    <Description>Test: OpenCL Heartwall</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/rodinia</Test>
+    <Arguments>OCL_MYOCYTE</Arguments>
+    <Description>Test: OpenCL Myocyte</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/rodinia</Test>
+    <Arguments>OCL_PARTICLEFILTER</Arguments>
+    <Description>Test: OpenCL Particle Filter</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/parboil</Test>
+    <Arguments>bfs opencl_base 1M</Arguments>
+    <Description>Test: OpenCL BFS</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/parboil</Test>
+    <Arguments>tpacf opencl_base large</Arguments>
+    <Description>Test: OpenCL TPACF</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/parboil</Test>
+    <Arguments>lbm opencl_base long</Arguments>
+    <Description>Test: OpenCL LBM</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/parboil</Test>
+    <Arguments>mri-gridding opencl_base small</Arguments>
+    <Description>Test: OpenCL MRI Gridding</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/parboil</Test>
+    <Arguments>histo opencl_base large</Arguments>
+    <Description>Test: OpenCL Histo</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>system/darktable</Test>
+    <Arguments>bench.SRW output.jpg --core -d opencl -d perf</Arguments>
+    <Description>Test: Boat - Acceleration: OpenCL</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>system/darktable</Test>
+    <Arguments>masskrug.NEF output.jpg --core -d opencl -d perf</Arguments>
+    <Description>Test: Masskrug - Acceleration: OpenCL</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>system/darktable</Test>
+    <Arguments>server_room.NEF output.jpg --core -d opencl -d perf</Arguments>
+    <Description>Test: Server Room - Acceleration: OpenCL</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>system/darktable</Test>
+    <Arguments>server-rack.dng output.jpg --core -d opencl -d perf</Arguments>
+    <Description>Test: Server Rack - Acceleration: OpenCL</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/fluidx3d</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/xsbench-cl</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/lulesh-cl</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/viennacl</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+</PhoronixTestSuite>

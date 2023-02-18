@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://download.aircrack-ng.org/aircrack-ng-1.7.tar.gz</URL>
+      <MD5>a918ea7146f91d8c799fb770c38f4bec</MD5>
+      <SHA256>05a704e3c8f7792a17315080a21214a4448fd2452c1b0dd5226a3a55f90b58c3</SHA256>
+      <FileName>aircrack-ng-1.7.tar.gz</FileName>
+      <FileSize>7740634</FileSize>
+      <PlatformSpecific>Linux, BSD</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://download.aircrack-ng.org/aircrack-ng-1.7-win.zip</URL>
+      <MD5>37af71e78813e897297cca59cc0f70b7</MD5>
+      <SHA256>767a456bf0675032d37d3c8caf05e2e5dcb105c218614b2e4e42b51370d05205</SHA256>
+      <FileName>aircrack-ng-1.7-win.zip</FileName>
+      <FileSize>12187975</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

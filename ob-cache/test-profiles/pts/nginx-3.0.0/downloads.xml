@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://nginx.org/download/nginx-1.23.2.tar.gz</URL>
+      <MD5>131948d88349e20afd69a1b43b3c1d47</MD5>
+      <SHA256>a80cc272d3d72aaee70aa8b517b4862a635c0256790434dbfc4d618a999b0b46</SHA256>
+      <FileName>nginx-1.23.2.tar.gz</FileName>
+      <FileSize>1108243</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/wg/wrk/archive/refs/tags/4.2.0.tar.gz</URL>
+      <MD5>bd3ee6407b1aa8b66abfa6ee2c166849</MD5>
+      <SHA256>e255f696bff6e329f5d19091da6b06164b8d59d62cb9e673625bdcd27fe7bdad</SHA256>
+      <FileName>wrk-4.2.0.tar.gz</FileName>
+      <FileSize>10973405</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/http-test-files-1.tar.xz</URL>
+      <MD5>b86f3e8f5bc9d0014818c5122a6f784d</MD5>
+      <SHA256>9d6eace9544c59b910ea403a4693338efc12a6b0915fe227aed86c971b82d3dd</SHA256>
+      <FileName>http-test-files-1.tar.xz</FileName>
+      <FileSize>2346324</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

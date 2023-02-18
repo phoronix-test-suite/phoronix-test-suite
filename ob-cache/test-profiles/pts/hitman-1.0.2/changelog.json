@@ -1,0 +1,1 @@
+{"1.0.2":{"last_updated":"1668861345","commit_description":"Fix License field, other trivial updates to work nicely on modern Linux distros. Fixes: https:\/\/github.com\/phoronix-test-suite\/phoronix-test-suite\/issues\/666"},"1.0.1":{"last_updated":"1554735459","commit_description":"Set TimesToRun = 3"},"1.0.0":{"last_updated":"1487685591","commit_description":"Initial commit"}}

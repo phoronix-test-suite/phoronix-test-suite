@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/NatronGitHub/Natron/releases/download/v2.4.3/Natron-2.4.3-Linux-x86_64-no-installer.tar.xz</URL>
+      <MD5>aa3af7bbd9cd75b4dc6944076c091d4a</MD5>
+      <SHA256>ae880afedde2af68a6b9eab87545470438e1aa02a1972051ddbaf76e4e9bc6d1</SHA256>
+      <FileName>Natron-2.4.3-Linux-x86_64-no-installer.tar.xz</FileName>
+      <FileSize>144704560</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://cytranet.dl.sourceforge.net/project/natron/Examples/Natron_2.3.12_Spaceship.zip, https://versaweb.dl.sourceforge.net/project/natron/Examples/Natron_2.3.12_Spaceship.zip</URL>
+      <MD5>73420df1ccf7eb697d87b287fa8e44f4</MD5>
+      <SHA256>ac9dd07388f911a6f2981cbf03e8b3612b17ec58d52aafc7400f4243a4f93314</SHA256>
+      <FileName>Natron_2.3.12_Spaceship.zip</FileName>
+      <FileSize>195484232</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

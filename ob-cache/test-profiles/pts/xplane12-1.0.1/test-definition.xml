@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>X-Plane</Title>
+    <AppVersion>12</AppVersion>
+    <Description>This is a test of X-Plane, a realistic multi-platform flight simulator designed for personal computers. This is commercial closed-source software and relies upon owning the Steam version. This test profile simply automates the execution for your own copy of X-Plane 12.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
+    <SoftwareType>Simulator</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Retail</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <ExternalDependencies>steam</ExternalDependencies>
+    <RequiresDisplay>TRUE</RequiresDisplay>
+    <EnvironmentSize>1</EnvironmentSize>
+    <ProjectURL>http://www.x-plane.com/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>--no_workarounds --verbose --no_sound --pref:_prefs_found=0 --pref:_is_full_ALL=1 --load_smo=Output/replays/test_flight_737.fps</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>--pref:_x_res_full_ALL=$VIDEO_WIDTH --pref:_y_res_full_ALL=$VIDEO_HEIGHT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Quality</DisplayName>
+      <Identifier>quality-setting</Identifier>
+      <ArgumentPrefix>--fps_test=</ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>Low</Name>
+          <Value>11</Value>
+        </Entry>
+        <Entry>
+          <Name>Medium</Name>
+          <Value>12</Value>
+        </Entry>
+        <Entry>
+          <Name>High</Name>
+          <Value>13</Value>
+        </Entry>
+        <Entry>
+          <Name>High, Rainy + Overcast Weather</Name>
+          <Value>73</Value>
+        </Entry>
+        <Entry>
+          <Name>Extreme</Name>
+          <Value>15</Value>
+        </Entry>
+        <Entry>
+          <Name>Extreme, Rainy + Overcast Weather</Name>
+          <Value>75</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

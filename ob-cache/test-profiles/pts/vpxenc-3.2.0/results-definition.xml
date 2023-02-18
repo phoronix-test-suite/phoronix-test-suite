@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Pass 1/2 frame  600/601   125008B    1666b/f   50003b/s   35453 ms (#_RESULT_# fps)</OutputTemplate>
+    <LineHint> fps</LineHint>
+    <ResultBeforeString>fps</ResultBeforeString>
+    <StripFromResult>(</StripFromResult>
+    <DeleteOutputBefore>600/600</DeleteOutputBefore>
+    <DeleteOutputAfter>Pass 2</DeleteOutputAfter>
+  </ResultsParser>
+</PhoronixTestSuite>

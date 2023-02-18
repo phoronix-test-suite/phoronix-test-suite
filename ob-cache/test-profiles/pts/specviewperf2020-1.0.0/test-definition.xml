@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>SPECViewPerf 2020</Title>
+    <AppVersion>3.0</AppVersion>
+    <Description>This test runs SPECViewPerf 2020 if available on your system. SPECViewPerf is made up of real-world OpenGL workstation tests such as CATIA and SolidWorks.</Description>
+    <ResultScale>Composite Score</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+    <PreInstallMessage>This test will only work if you have a local copy of SPECViewPerf 2020 v3.0. Downloads/details @ https://gwpg.spec.org/bench-marks/specviewperf-2020v3-0-linux-edition/ This test profile simply automates the installation if finding viewperf2020_3.0_amd64.deb in your download cache otherwise checks to see if the test is already installed to /opt/SPEC/SPECviewperf2020 and then executing SPECViewPerf using the built-in ViewPerf CLI controls.</PreInstallMessage>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <RequiresRootInstall>TRUE</RequiresRootInstall>
+    <RequiresDisplay>TRUE</RequiresDisplay>
+    <EnvironmentSize>1600</EnvironmentSize>
+    <ProjectURL>https://gwpg.spec.org/bench-marks/specviewperf-2020v3-0-linux-edition/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <ArgumentPrefix>-resolution </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>$VIDEO_WIDTHx$VIDEO_HEIGHT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Viewset</DisplayName>
+      <Identifier>run-test</Identifier>
+      <ArgumentPrefix>-viewset </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>CATIA-06</Name>
+          <Value>catia-06</Value>
+        </Entry>
+        <Entry>
+          <Name>CREO-03</Name>
+          <Value>creo-03</Value>
+        </Entry>
+        <Entry>
+          <Name>ENERGY-03</Name>
+          <Value>energy-03</Value>
+        </Entry>
+        <Entry>
+          <Name>MAYA-06</Name>
+          <Value>maya-06</Value>
+        </Entry>
+        <Entry>
+          <Name>MEDICAL-O3</Name>
+          <Value>medical-03</Value>
+        </Entry>
+        <Entry>
+          <Name>SNX-04</Name>
+          <Value>snx-04</Value>
+        </Entry>
+        <Entry>
+          <Name>SOLIDWORKS-07</Name>
+          <Value>sw</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

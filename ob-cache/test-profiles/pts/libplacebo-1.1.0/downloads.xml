@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/haasn/libplacebo/archive/refs/tags/v5.229.1.tar.gz</URL>
+      <MD5>7301a834b9c739398a97192723dcc127</MD5>
+      <SHA256>f861336cf789eebdf1ac0e8db5822cfff07eb96675ffcf84911ff6b1f431d309</SHA256>
+      <FileName>libplacebo-5.229.1.tar.gz</FileName>
+      <FileSize>673096</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

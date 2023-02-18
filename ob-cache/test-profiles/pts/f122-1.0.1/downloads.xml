@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/f1-2022-prefs-1.zip</URL>
+      <MD5>d013f0fa6c1557281287239fa3a5c15c</MD5>
+      <SHA256>d91caaaea749081914c9cfdb9ba0e4407f22d0084a07ce4e95f04adb35413bd9</SHA256>
+      <FileName>f1-2022-prefs-1.zip</FileName>
+      <FileSize>6748</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>VVenC</Title>
+    <AppVersion>1.7</AppVersion>
+    <Description>VVenC is the Fraunhofer Versatile Video Encoder as a fast/efficient H.266/VVC encoder. The vvenc encoder makes use of SIMD Everywhere (SIMDe). The vvenc software is published under The Clear BSD License.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, p7zip, cmake</ExternalDependencies>
+    <EnvironmentSize>9400</EnvironmentSize>
+    <ProjectURL>https://www.hhi.fraunhofer.de/en/departments/vca/technologies-and-solutions/h266-vvc.html</ProjectURL>
+    <RepositoryURL>https://github.com/fraunhoferhhi/vvenc</RepositoryURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Video Input</DisplayName>
+      <Identifier>video</Identifier>
+      <ArgumentPrefix>-i </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>Bosphorus 1080p</Name>
+          <Value>Bosphorus_1920x1080_120fps_420_8bit_YUV.y4m</Value>
+        </Entry>
+        <Entry>
+          <Name>Bosphorus 4K</Name>
+          <Value>Bosphorus_3840x2160.y4m</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Video Preset</DisplayName>
+      <Identifier>preset</Identifier>
+      <ArgumentPrefix>--preset </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>Fast</Name>
+          <Value>fast</Value>
+        </Entry>
+        <Entry>
+          <Name>Faster</Name>
+          <Value>faster</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

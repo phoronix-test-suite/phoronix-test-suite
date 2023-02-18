@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/openvino-2022.3.tar.xz</URL>
+      <MD5>46374f1f4d8e9d5dc4c3b24684f90fa4</MD5>
+      <SHA256>0e4e96c70b0fe37ef48e76dbb55984e14fbe925db9883215c3e0c8860dfcd861</SHA256>
+      <FileName>openvino-2022.3.tar.xz</FileName>
+      <FileSize>142737880</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>
