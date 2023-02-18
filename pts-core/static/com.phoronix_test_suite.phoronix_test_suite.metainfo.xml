@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="console-application">
+  <id>com.phoronix_test_suite.phoronix_test_suite</id>
+  <name>Phoronix Test Suite</name>
+  <summary>The Phoronix Test Suite is an open-source, cross-platform automated benchmarking utility</summary>
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>GPL-3.0-only</project_license>
+  <content_rating>none</content_rating>
+  <description>
+    <p>
+      The Phoronix Test Suite is the most comprehensive testing and benchmarking platform available for the Linux operating system. This software is designed to effectively carry out both qualitative and quantitative benchmarks in a clean, reproducible, and easy-to-use manner.
+    </p>
+    <p>
+      The Phoronix Test Suite consists of a lightweight processing core (pts-core) with each benchmark consisting of an XML-based profile with related resource scripts. The process from the benchmark installation, to the actual benchmarking, to the parsing of important hardware and software components is heavily automated and completely repeatable, asking users only for confirmation of actions.
+    </p>
+    <p>
+      Phoronix Test Suite tests and suites are obtained via OpenBenchmarking.org and there exists support for optionally sharing your results via OpenBenchmarking.org.
+    </p>
+  </description>
+  <icon type="stock">phoronix-test-suite</icon>
+  <categories>
+    <category>System</category>
+    <category>Monitor</category>
+  </categories>
+  <provides>
+    <binary>phoronix-test-suite</binary>
+  </provides>
+</component>
