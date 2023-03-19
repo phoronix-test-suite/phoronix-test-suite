@@ -672,6 +672,7 @@ class phodevi_cpu extends phodevi_device_interface
 			{
 				$new_info = null;
 				$implementer = phodevi_linux_parser::read_cpuinfo_single('CPU implementer');
+				$part = phodevi_linux_parser::read_cpuinfo_single('CPU part');
 				if($implementer == '0x41' || $implementer == '0x50')
 				{
 					$architecture = phodevi_linux_parser::read_cpuinfo_single('CPU architecture');
@@ -685,7 +686,6 @@ class phodevi_cpu extends phodevi_device_interface
 							$new_info = 'ARMv8';
 							break;
 					}
-					$part = phodevi_linux_parser::read_cpuinfo_single('CPU part');
 					// parts listed @ https://gcc.gnu.org/git/?p=gcc.git;a=blob;f=gcc/config/arm/arm-cpus.in
 					switch($part)
 					{
@@ -719,6 +719,9 @@ class phodevi_cpu extends phodevi_device_interface
 						case '0xd06':
 							$new_info .= ' Cortex-A65';
 							break;
+						case '0xd23':
+							$new_info .= ' Cortex-M85';
+							break;
 						case '0xd43':
 							$new_info .= ' Cortex-A65AE';
 							break;
@@ -749,6 +752,9 @@ class phodevi_cpu extends phodevi_device_interface
 						case '0xd41':
 							$new_info .= ' Cortex-A78';
 							break;
+						case '0xd4d':
+							$new_info .= ' Cortex-A715';
+							break;
 						case '0xd42':
 							$new_info .= ' Cortex-A78E';
 							break;
@@ -776,6 +782,9 @@ class phodevi_cpu extends phodevi_device_interface
 						case '0xd4a':
 							$new_info .= ' Neoverse-E1';
 							break;
+						case '0xd4e':
+							$new_info .= ' Cortex-X3';
+							break;
 						case '0xd4f':
 							$new_info .= ' Neoverse-V2';
 							break;
@@ -793,7 +802,6 @@ class phodevi_cpu extends phodevi_device_interface
 				else if($implementer == '0x61')
 				{
 					$new_info = 'Apple';
-					$part = phodevi_linux_parser::read_cpuinfo_single('CPU part');
 					// https://github.com/AsahiLinux/linux/blob/asahi/arch/arm64/include/asm/cputype.h
 					switch($part)
 					{
@@ -817,7 +825,6 @@ class phodevi_cpu extends phodevi_device_interface
 				else if($implementer == '0x46')
 				{
 					$new_info = 'Fujitsu';
-					$part = phodevi_linux_parser::read_cpuinfo_single('CPU part');
 					switch($part)
 					{
 						case '0x001':
@@ -828,7 +835,6 @@ class phodevi_cpu extends phodevi_device_interface
 				else if($implementer == '0x48')
 				{
 					$new_info = 'HiSilicon';
-					$part = phodevi_linux_parser::read_cpuinfo_single('CPU part');
 					switch($part)
 					{
 						case '0xd01':
@@ -839,7 +845,6 @@ class phodevi_cpu extends phodevi_device_interface
 				else if($implementer == '0x51')
 				{
 					$new_info = 'Qualcomm';
-					$part = phodevi_linux_parser::read_cpuinfo_single('CPU part');
 					switch($part)
 					{
 						case '0x804':
@@ -855,11 +860,24 @@ class phodevi_cpu extends phodevi_device_interface
 				else if($implementer == '0xc0')
 				{
 					$new_info = 'Ampere';
-					$part = phodevi_linux_parser::read_cpuinfo_single('CPU part');
 					switch($part)
 					{
 						case '0xac3':
+						case '0xac4':
 							$new_info .= 'One';
+							break;
+					}
+				}
+				else if($implementer == '0x70')
+				{
+					$new_info = 'Phytium';
+					switch($part)
+					{
+						case '0x303':
+							$new_info .= ' E2000';
+							break;
+						case '0x663':
+							$new_info .= ' FT2000A';
 							break;
 					}
 				}
@@ -1357,12 +1375,17 @@ class phodevi_cpu extends phodevi_device_interface
 				168 => 'Rocket Lake',
 				170 => 'Meteor Lake',
 				172 => 'Meteor Lake',
+				173 => 'Granite Rapids',
+				174 => 'Granite Rapids',
 				175 => 'Sierra Forest',
 				181 => 'Meteor Lake',
+				182 => 'Grand Ridge',
 				183 => 'Raptor Lake',
 				186 => 'Raptor Lake',
+				189 => 'Lunar Lake',
 				190 => 'Alder Lake',
 				191 => 'Raptor Lake',
+				207 => 'Emerald Rapids',
 				),
 			15 => array(
 				1 => 'Clarksfield',
@@ -1482,7 +1505,7 @@ class phodevi_cpu extends phodevi_device_interface
 		}
 
 		// Check for other instruction sets
-		foreach(array('avx512_vnni', 'avx512cd', 'avx2', 'avx', 'xop', 'fma3', 'fma4', 'rdrand', 'fsgsbase') as $instruction_set)
+		foreach(array('avx512_vnni', 'avx512cd', 'avx2', 'avx', 'xop', 'fma3', 'fma4', 'rdrand', 'fsgsbase', 'amx_tile') as $instruction_set)
 		{
 			if(($cpu_flags & self::get_cpu_feature_constant($instruction_set)))
 			{
