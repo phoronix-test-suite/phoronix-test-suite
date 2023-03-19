@@ -388,7 +388,32 @@ class pts_result_viewer_embed
 					{
 						$desc = str_replace(array(' Monitor', $res_desc_shortened ,'()' ,')', ' - '), '', $c_ro->get_arguments_description_shortened(false));
 						$dindex = $desc == $res_desc_shortened || empty($desc) ? $c_ro->test_profile->get_result_scale() : $desc;
-						$tabs[$dindex] = pts_render::render_graph_inline_embed($c_ro, $result_file, $extra_attributes);
+						$graph = pts_render::render_graph_process($c_ro, $result_file, $extra_attributes);
+						if($c_ro->test_profile->get_result_scale() == 'Watts')
+						{
+							$run_counts_for_identifier = array();
+							foreach($result_object->test_result_buffer->buffer_items as $bi)
+							{
+								if($bi->get_sample_count() > 0 && $bi->get_result_value() != '')
+								{
+									$run_counts_for_identifier[$bi->get_result_identifier()] = $bi->get_sample_count();
+								}
+							}
+							foreach($c_ro->test_result_buffer->buffer_items as $bi)
+							{
+								$res_tally = $bi->get_result_value();
+								if(!is_array($res_tally))
+								{
+									$res_tally = explode(',', $res_tally);
+								}
+								if(is_array($res_tally) && !empty($res_tally) && isset($run_counts_for_identifier[$bi->get_result_identifier()]))
+								{
+									$res_tally = array_sum($res_tally);
+									$graph->addTestNote($bi->get_result_identifier() . ': Approximate power consumption of ' . round($res_tally / $run_counts_for_identifier[$bi->get_result_identifier()]) . ' Joules per run.');
+								}
+							}
+						}
+						$tabs[$dindex] = pts_render::render_graph_inline_embed($graph, $result_file, $extra_attributes);
 						$show_on_print[] = $dindex;
 						$result_file->remove_result_object_by_id($child_ro);
 						$skip_ros[] = $child_ro;

@@ -34,7 +34,7 @@
 			<GenericName>glut</GenericName>
 			<Title>OpenGL Utility Kit (GLUT)</Title>
 			<PossibleNames>freeglut3-dev, freeglut-devel</PossibleNames>
-			<FileCheck>libglut.so.3, GL/glut.h</FileCheck>
+			<FileCheck>libglut.so.3 OR libglut.so, GL/glut.h</FileCheck>
 		</Package>
 		<Package>
 			<GenericName>vulkan-development</GenericName>

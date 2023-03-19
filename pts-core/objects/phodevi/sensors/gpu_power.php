@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2018, Phoronix Media
-	Copyright (C) 2009 - 2018, Michael Larabel
+	Copyright (C) 2009 - 2023, Phoronix Media
+	Copyright (C) 2009 - 2023, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ class gpu_power extends phodevi_sensor
 	public function read_sensor()
 	{
 		$gpu_power = -1;
-
+		$en1_input_files = glob('/sys/class/drm/card0/device/hwmon/hwmon*/energy1_input');
 		if(($nvidia_smi = pts_client::executable_in_path('nvidia-smi')))
 		{
 			$smi_output = shell_exec(escapeshellarg($nvidia_smi) . ' -q -d POWER');
@@ -51,7 +51,7 @@ class gpu_power extends phodevi_sensor
 			}
 
 		}
-		else if(!empty($en1_input_files = glob('/sys/class/drm/card0/device/hwmon/hwmon*/energy1_input')))
+		else if(!empty($en1_input_files))
 		{
 			// Intel dGPU energy input of device in microjoules
 			$en1_input_file = array_shift($en1_input_files);

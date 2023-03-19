@@ -283,14 +283,15 @@ class pts_graph_lines extends pts_graph_core
 		$g_rect = $this->svg_dom->make_g(array('stroke' => self::$c['color']['notches'], 'stroke-width' => 1));
 		for($i = 0, $x = $x_start; $x <= $x_end; $x += $this->i['key_item_width'])
 		{
-			for ($y = $y_start; $y <= $y_end; $y += $this->i['key_line_height'], ++$i)
+			for($y = $y_start; $y <= $y_end; $y += $this->i['key_line_height'], ++$i)
 			{
-				if(!isset($this->test_result->test_result_buffer->buffer_items[$i]))
+				$ak = array_keys($this->test_result->test_result_buffer->buffer_items);
+				if(!isset($this->test_result->test_result_buffer->buffer_items[$ak[$i]]))
 				{
 					break;
 				}
 
-				$identifier_title = $this->test_result->test_result_buffer->buffer_items[$i]->get_result_identifier();
+				$identifier_title = $this->test_result->test_result_buffer->buffer_items[$ak[$i]]->get_result_identifier();
 				$this_color = $this->get_paint_color($identifier_title);
 
 				// draw square
@@ -304,7 +305,7 @@ class pts_graph_lines extends pts_graph_core
 
 				// draw min/avg/max
 				$x_stat_loc = $x + $square_length + $this->i['key_longest_string_width'] + 10;
-				$vals = $this->test_result->test_result_buffer->buffer_items[$i]->get_result_value();
+				$vals = $this->test_result->test_result_buffer->buffer_items[$ak[$i]]->get_result_value();
 				$attributes = array('y' => $y);
 
 				$stat_word_width = $this->get_stat_word_width();

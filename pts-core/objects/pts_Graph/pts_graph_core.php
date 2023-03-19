@@ -111,7 +111,7 @@ abstract class pts_graph_core
 		{
 			if(!isset($extra_attributes['skip_graph_version']))
 			{
-				$this->i['graph_version'] = 'Phoronix Test Suite ' . PTS_VERSION;
+				$this->i['graph_version'] = 'Phoronix Test Suite';
 			}
 			$this->i['watermark'] = self::$c['text']['watermark'];
 		}
@@ -328,7 +328,7 @@ abstract class pts_graph_core
 		}
 		else
 		{
-			$config['text']['watermark'] = 'Phoronix Test Suite ' . PTS_VERSION;
+			$config['text']['watermark'] = 'Phoronix Test Suite';
 			$config['text']['watermark_url'] = '';
 		}
 

@@ -4,8 +4,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2022, Phoronix Media
-	Copyright (C) 2008 - 2022, Michael Larabel
+	Copyright (C) 2008 - 2023, Phoronix Media
+	Copyright (C) 2008 - 2023, Michael Larabel
 	phodevi_system.php: The PTS Device Interface object for the system software
 
 	This program is free software; you can redistribute it and/or modify
@@ -262,7 +262,12 @@ class phodevi_system extends phodevi_device_interface
 		}
 		else if(phodevi::is_linux() || phodevi::is_solaris())
 		{
-			$fs = trim(shell_exec('stat ' . pts_client::test_install_root_path() . ' -L -f -c %T 2> /dev/null'));
+			$fs = shell_exec('stat ' . pts_client::test_install_root_path() . ' -L -f -c %T 2> /dev/null');
+
+			if(!empty($fs))
+			{
+				$fs = trim($fs);
+			}
 
 			switch($fs)
 			{
