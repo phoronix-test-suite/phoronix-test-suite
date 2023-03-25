@@ -537,6 +537,10 @@ class phodevi_linux_parser
 
 			$pci_info = shell_exec($lspci_cmd . ' 2> /dev/null');
 		}
+		if(empty($pci_info))
+		{
+			return false;
+		}
 
 		for($i = 0; $i < count($desc) && empty($info); $i++)
 		{

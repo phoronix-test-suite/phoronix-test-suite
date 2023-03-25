@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2021, Phoronix Media
-	Copyright (C) 2009 - 2021, Michael Larabel
+	Copyright (C) 2009 - 2023, Phoronix Media
+	Copyright (C) 2009 - 2023, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -131,30 +131,29 @@ class cpu_temp extends phodevi_sensor
 		{
 			$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/temp*_input', 'POSITIVE_NUMERIC', array('name' => 'k10temp'));
 		}
-
 		if($raw_temp == -1)
 		{
 			// Raspberry Pi's Broadcom SoC
 			$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/temp*_input', 'POSITIVE_NUMERIC', array('temp1_label' => 'SoC Temperature'));
 		}
-
 		if($raw_temp == -1)
 		{
 			$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/temp*_input', 'POSITIVE_NUMERIC', array('name' => 'cpu_thermal'));
 		}
-
+		if($raw_temp == -1)
+		{
+			$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/temp*_input', 'POSITIVE_NUMERIC', array('name' => 'soc_thermal'));
+		}
 		if($raw_temp == -1)
 		{
 			// Try ACPI thermal
 			$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/thermal/thermal_zone*/temp', 'POSITIVE_NUMERIC', array('type' => 'cpu_thermal'));
 		}
-
 		if($raw_temp == -1)
 		{
 			// Try ACPI thermal (Tegra works here)
 			$raw_temp = phodevi_linux_parser::read_sysfs_node('/sys/class/thermal/thermal_zone*/temp', 'POSITIVE_NUMERIC', array('type' => 'CPU-therm'));
 		}
-
 		if($raw_temp != -1)
 		{
 			if($raw_temp > 1000)
@@ -176,7 +175,7 @@ class cpu_temp extends phodevi_sensor
 			}
 		}
 
-		if(pts_client::executable_in_path('ipmitool'))
+		if($temp_c == -1 && pts_client::executable_in_path('ipmitool'))
 		{
 			foreach(array('CPU Core Temp 1', 'CPU Core Temp 2',
 					'CPU Core Temp 3', 'Temp 0') as $s) {
