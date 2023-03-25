@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2021, Phoronix Media
-	Copyright (C) 2010 - 2021, Michael Larabel
+	Copyright (C) 2010 - 2023, Phoronix Media
+	Copyright (C) 2010 - 2023, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -556,6 +556,40 @@ class pts_test_installer
 
 		return !$fail_if_no_downloads || $objects_completed > 0;
 	}
+	public static function create_python_workarounds(&$test_install_request)
+	{
+		// Workarounds for Python i.e. 2023 Debian/Ubuntu screw around with "externally managed" crap that breaks pip user usage...
+		// Thereby breaking existing scripts just doing pip user installs... So inject a "--break-system-packages" workaround, since only doing user package installs into test's home directory, should be fine
+
+		if($test_install_request == false)
+		{
+			return false;
+		}
+
+		if(in_array('python', $test_install_request->test_profile->get_external_dependencies()))
+		{
+			$is_externally_managed = glob('/usr/lib*/py*/EXTERNALLY-MANAGED');
+			if(!empty($is_externally_managed))
+			{
+				$python_override_dir = pts_client::temporary_directory() . '/pts-python-override/';
+				pts_file_io::mkdir($python_override_dir);
+				foreach(array('pip', 'pip3') as $cmd_check)
+				{
+					// TODO can avoid repeating this on a per-test basis...
+					if(($cmd_path = pts_client::executable_in_path($cmd_check)))
+					{
+						$cmd_override = $python_override_dir . $cmd_check;
+						file_put_contents($cmd_override,
+						'#!/bin/sh' . PHP_EOL .
+						$cmd_path . ' $@ --break-system-packages' . PHP_EOL .
+						'exit $?' . PHP_EOL);
+						chmod($cmd_override, 0755); //executable
+					}
+				}
+				$test_install_request->special_environment_vars['PATH'] = $python_override_dir . (!empty($test_install_request->special_environment_vars['PATH']) ? ':' . $test_install_request->special_environment_vars['PATH'] : '');
+			}
+		}
+	}
 	public static function create_compiler_mask(&$test_install_request)
 	{
 		if(pts_env::read('NO_COMPILER_MASK'))
@@ -851,6 +885,7 @@ class pts_test_installer
 			{
 				pts_module_manager::module_process('__pre_test_install', $test_install_request);
 				self::create_compiler_mask($test_install_request);
+				self::create_python_workarounds($test_install_request);
 				pts_client::$display->test_install_begin($test_install_request);
 
 				$pre_install_message = $test_install_request->test_profile->get_pre_install_message();
