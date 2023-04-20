@@ -8,8 +8,8 @@ phoronix-test-suite \- The Phoronix Test Suite is an extensible open-source plat
 .SH DESCRIPTION
 The **Phoronix Test Suite** is the most comprehensive testing and benchmarking platform available for Linux, Solaris, macOS, Windows, and BSD operating systems. The Phoronix Test Suite allows for carrying out tests in a fully automated manner from test installation to execution and reporting. All tests are meant to be easily reproducible, easy-to-use, and support fully automated execution. The Phoronix Test Suite is open-source under the GNU GPLv3 license and is developed by Phoronix Media in cooperation with partners.
 .SH OPTIONS
+.SS System
 .TP
-.SH SYSTEM
 .B interactive
 A simple text-driven interactive interface to the Phoronix Test Suite.
 .TP
@@ -27,8 +27,8 @@ Display various hardware/software system properties detected by the Phoronix Dev
 .TP
 .B system-sensors
 Display the installed system hardware and software sensors in real-time as detected by the Phoronix Test Suite Phodevi Library.
+.SS Test Installation
 .TP
-.SH TEST INSTALLATION
 .B force-install [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option will force the installation (or re-installation) of a test or suite. The arguments and process is similar to the install option but even if the test is installed, the entire installation process will automatically be executed. This option is generally used when debugging a test installation problem or wishing to re-install test(s) due to compiler or other environmental changes.
 .TP
@@ -43,8 +43,8 @@ This option will create a download cache for use by the Phoronix Test Suite. The
 .TP
 .B remove-installed-test [Test]
 This option will permanently remove a installed test by the Phoronix Test Suite.
+.SS Testing
 .TP
-.SH TESTING
 .B benchmark [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option will install the selected test(s) (if needed) and will proceed to run the test(s). This option is equivalent to running phoronix-test-suite with the install option followed by the run option. Multiple arguments can be supplied to run additional tests at the same time and save the results into one file.
 .TP
@@ -80,8 +80,8 @@ This option is equivalent to the `benchmark` option except it enables various op
 .TP
 .B strict-run [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option is equivalent to the `run` option except it enables various options to run benchmarks an extended number of times for ensuring better statistical accuracy if enforcing strict controls over the data quality, in some cases running the benchmarks for 20+ times.
+.SS Batch Testing
 .TP
-.SH BATCH TESTING
 .B batch-benchmark [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option and its arguments are equivalent to the benchmark option, but the process will be run in the Phoronix Test Suite batch mode.
 .TP
@@ -105,8 +105,8 @@ This option and its arguments pre-set the Phoronix Test Suite batch run mode wit
 .TP
 .B internal-run [Test | Suite | OpenBenchmarking ID | Test Result]  ...
 This option and its arguments pre-set the Phoronix Test Suite batch run mode with sane values for carrying out benchmarks in a semi-automated manner and without uploading any of the result data to the public OpenBenchmarking.org.
+.SS OpenBenchmarking.org
 .TP
-.SH OPENBENCHMARKING.ORG
 .B clone-result [OpenBenchmarking ID]  ...
 This option will download a local copy of a file that was saved to OpenBenchmarking.org, as long as a valid public ID is supplied.
 .TP
@@ -154,8 +154,8 @@ This option can be used for uploading a test profile to your account on OpenBenc
 .TP
 .B upload-test-suite [Suite]
 This option can be used for uploading a test suite to your account on OpenBenchmarking.org. By uploading your test suite to OpenBenchmarking.org, others are then able to browse and access this test suite for easy distribution.
+.SS Information
 .TP
-.SH INFORMATION
 .B info [Test | Suite | OpenBenchmarking ID | Test Result]
 This option will show details about the supplied test, suite, virtual suite, or result file.
 .TP
@@ -209,8 +209,8 @@ This option provides command-line searching abilities for test profiles / test s
 .TP
 .B test-to-suite-map
 This option will list all test profiles and any test suites each test belongs to.
+.SS Asset Creation
 .TP
-.SH ASSET CREATION
 .B build-suite
 This option will guide the user through the process of generating their own test suite, which they can then run. Optionally, passed as arguments can be the test(s) or suite(s) to add to the suite to be created, instead of being prompted through the process.
 .TP
@@ -249,8 +249,8 @@ This option can be used for validating a Phoronix Test Suite test profile as bei
 .TP
 .B validate-test-suite [Suite]
 This option can be used for validating a Phoronix Test Suite test suite as being compliant against the OpenBenchmarking.org specification.
+.SS Result Management
 .TP
-.SH RESULT MANAGEMENT
 .B auto-sort-result-file [Test Result]
 This option is used if you wish to automatically attempt to sort the results by their result identifier string. Alternatively, if using the environment variable "SORT_BY" other sort modes can be used, such as SORT_BY=date / SORT_BY=date-desc for sorting by the test run-time/date.
 .TP
@@ -298,8 +298,8 @@ This option is used if you wish to manually change the order in which test resul
 .TP
 .B show-result [Test Result]
 Open up the test results in the Phoronix Test Suite Result Viewer or on OpenBenchmarking.org.
+.SS Other
 .TP
-.SH OTHER
 .B commands
 This option will display a short list of possible Phoronix Test Suite commands.
 .TP
@@ -317,8 +317,8 @@ This option will display a list of available Phoronix Test Suite commands and po
 .TP
 .B version
 This option will display the Phoronix Test Suite client version.
+.SS Result Analysis
 .TP
-.SH RESULT ANALYSIS
 .B analyze-run-times [Test Result]
 This option will read a saved test results file and print the statistics about how long the testing took to complete.
 .TP
@@ -336,8 +336,8 @@ This option is used if you wish to analyze a result file to see which runs produ
 .TP
 .B workload-topology [Test Result]
 This option will read a saved test results file and print the test profiles contained within and their arrangement within different test suites for getting an idea as to the workload topology/make-up / logical groupings of the benchmarks being run.
+.SS Modules
 .TP
-.SH MODULES
 .B auto-load-module
 This option can be used for easily adding a module to the AutoLoadModules list in the Phoronix Test Suite user configuration file. That list controls what PTS modules are automatically loaded on start-up of the Phoronix Test Suite.
 .TP
@@ -355,8 +355,8 @@ This option can be used for debugging a Phoronix Test Suite module.
 .TP
 .B unload-module
 This option can be used for easily removing a module from the AutoLoadModules list in the Phoronix Test Suite user configuration file. That list controls what modules are automatically loaded on start-up of the Phoronix Test Suite.
+.SS Debugging
 .TP
-.SH DEBUGGING
 .B check-tests [Test]
 This option will perform a check on one or more test profiles to determine if there have been any vendor changes to the filename, filesize, url location, md5 and sha256 checksums.
 .TP
@@ -386,8 +386,8 @@ This sub-command is complementary to list-failed-installs. Rather than listing t
 .TP
 .B list-unsupported-tests
 This option will list all available test profiles that are available from the enabled OpenBenchmarking.org repositories but are NOT SUPPORTED on the given hardware/software platform. This is mainly a debugging option for those looking for test profiles to potentially port to new platforms, etc.
+.SS User Configuration
 .TP
-.SH USER CONFIGURATION
 .B enterprise-setup
 This option can be run by enterprise users immediately after package installation or as part of an in-house setup script. Running this command will ensure the phoronix-test-suite program is never interrupted on new runs to accept user agreement changes and defaults the anonymous usage reporting to being disabled and other conservative defaults.
 .TP
@@ -405,8 +405,8 @@ This option can be used for setting an XML value in the Phoronix Test Suite user
 .TP
 .B variables
 This option will print all of the official environment variables supported by the Phoronix Test Suite for user configuration purposes. These environment variables are also listed as part of the official Phoronix Test Suite documentation while this command will also show the current value of the variables if currently set.
+.SS Result Export
 .TP
-.SH RESULT EXPORT
 .B result-file-raw-to-csv [Test Result]
 This option will read a saved test results file and output the raw result file run data to a CSV file. This raw (individual) result file output is intended for data analytic purposes where the result-file-to-csv is more end-user-ready.
 .TP
@@ -427,16 +427,16 @@ This option will guide the user through the process of generating their own test
 .TP
 .B result-file-to-text [Test Result]
 This option will read a saved test results file and output the system hardware and software information to the terminal. The test results are also outputted.
+.SS Phoromatic
 .TP
-.SH PHOROMATIC
 .B start-phoromatic-server
 Start the Phoromatic web server for controlling local Phoronix Test Suite client systems to facilitate automated and repeated test orchestration and other automated features targeted at the enterprise.
+.SS Result Viewer
 .TP
-.SH RESULT VIEWER
 .B n
 _
-.TP
 .SH SEE ALSO
+.TP
 .B Websites:
 .br
 https://www.phoronix-test-suite.com/
