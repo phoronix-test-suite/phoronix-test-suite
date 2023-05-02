@@ -3,9 +3,9 @@
 rm -rf RayTracingInVulkan-r6
 
 tar -xf RayTracingInVulkan-r6.tar.gz
-tar -xf vulkansdk-linux-x86_64-1.2.162.1.tar.gz
+tar -xf vulkansdk-linux-x86_64-1.3.243.0.tar.gz
 
-cd 1.2.162.1/
+cd 1.3.243.0/
 source setup-env.sh 
 ./vulkansdk
 
