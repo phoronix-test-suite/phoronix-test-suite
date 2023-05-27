@@ -243,12 +243,16 @@ class phoromatic_result implements pts_webui_interface
 					{
 						$system_name = str_replace('.GROUP', $replacement, $system_name);
 					}
-					foreach(explode(';', phoromatic_server::system_id_variables($row['SystemID'], $row['AccountID'])) as $var)
+					$system_vars = phoromatic_server::system_id_variables($row['SystemID'], $row['AccountID']);
+					if(!empty($system_vars))
 					{
-						$var = explode('=', $var);
-						if(count($var) == 2)
+						foreach(explode(';', $system_vars) as $var)
 						{
-							$system_name = str_replace('.' . $var[0], $var[1], $system_name);
+							$var = explode('=', $var);
+							if(count($var) == 2)
+							{
+								$system_name = str_replace('.' . $var[0], $var[1], $system_name);
+							}
 						}
 					}
 

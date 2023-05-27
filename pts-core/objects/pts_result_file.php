@@ -158,13 +158,13 @@ class pts_result_file
 	}
 	public function get_result_dir()
 	{
-		$composite_xml_dir = dirname($this->get_file_location());
+		$composite_xml_dir = $this->get_file_location() != null ? dirname($this->get_file_location()) : '';
 		return empty($composite_xml_dir) || !is_dir($composite_xml_dir) ? false : $composite_xml_dir . '/';
 	}
 	public function get_system_log_dir($result_identifier = null, $dir_check = true)
 	{
-		$log_dir = dirname($this->get_file_location());
-		if(empty($log_dir) || !is_dir($log_dir))
+		$log_dir = $this->get_result_dir();
+		if($log_dir == false)
 		{
 			return false;
 		}
@@ -183,8 +183,8 @@ class pts_result_file
 	}
 	public function get_test_log_dir(&$result_object = null)
 	{
-		$log_dir = $this->get_file_location() != null ? dirname($this->get_file_location()) : '';
-		if(empty($log_dir) || !is_dir($log_dir))
+		$log_dir = $this->get_result_dir();
+		if($log_dir == false)
 		{
 			return false;
 		}
@@ -193,8 +193,8 @@ class pts_result_file
 	}
 	public function get_test_installation_log_dir()
 	{
-		$log_dir = dirname($this->get_file_location());
-		if(empty($log_dir) || !is_dir($log_dir))
+		$log_dir = $this->get_result_dir();
+		if($log_dir == false)
 		{
 			return false;
 		}
