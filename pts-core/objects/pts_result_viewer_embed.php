@@ -388,7 +388,7 @@ class pts_result_viewer_embed
 					{
 						$desc = str_replace(array(' Monitor', $res_desc_shortened ,'()' ,')', ' - '), '', $c_ro->get_arguments_description_shortened(false));
 						$dindex = $desc == $res_desc_shortened || empty($desc) ? $c_ro->test_profile->get_result_scale() : $desc;
-						$graph = pts_render::render_graph_process($c_ro, $result_file, $extra_attributes);
+						$graph = pts_render::render_graph_process($c_ro, $result_file, false, $extra_attributes);
 						if($c_ro->test_profile->get_result_scale() == 'Watts')
 						{
 							$run_counts_for_identifier = array();
@@ -571,7 +571,6 @@ class pts_result_viewer_embed
 		}
 		$html .= '</div>
 		<script type="text/javascript">
-		 document.getElementById("results").style.marginLeft = "300px";
 		var sections = document.querySelectorAll("section[id]");
 		window.addEventListener("scroll", highlight_results_sidebar);
 		function highlight_results_sidebar() {
@@ -594,6 +593,7 @@ class pts_result_viewer_embed
 		if(did_highlight)
 		{
 			document.getElementById("results_sidebar").style.display = "block";
+			document.getElementById("results").style.marginLeft = "300px";
 		}
 		else
 		{

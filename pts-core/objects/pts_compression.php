@@ -163,6 +163,11 @@ class pts_compression
 		$zip = new ZipArchive();
 
 		// Avoid "using empty file as ZipArchive is deprecated"
+		if(is_file($zip_file))
+		{
+			// Avoid PHP8 warning on line below like when empty file made by tempnam
+			unlink($zip_file);
+		}
 		if($zip->open($zip_file, ZIPARCHIVE::CREATE) !== true)
 		{
 			$success = false;

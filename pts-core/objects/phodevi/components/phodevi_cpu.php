@@ -817,8 +817,17 @@ class phodevi_cpu extends phodevi_device_interface
 						case '0x029':
 							$new_info .= ' M1 Max';
 							break;
+						case '0x032':
 						case '0x033':
 							$new_info .= ' M2';
+							break;
+						case '0x034':
+						case '0x035':
+							$new_info .= ' M2 Pro';
+							break;
+						case '0x038':
+						case '0x039':
+							$new_info .= ' M2 Max';
 							break;
 					}
 				}
@@ -1282,6 +1291,7 @@ class phodevi_cpu extends phodevi_device_interface
 				96 => 'Zen 4',
 				97 => 'Zen 4',
 				112 => 'Zen 4',
+				116 => 'Zen 4', // Ryzen Z1 Extreme
 				160 => 'Zen 4',
 				161 => 'Zen 4',
 				162 => 'Zen 4',
@@ -1385,6 +1395,7 @@ class phodevi_cpu extends phodevi_device_interface
 				189 => 'Lunar Lake',
 				190 => 'Alder Lake',
 				191 => 'Raptor Lake',
+				198 => 'Arrow Lake',
 				207 => 'Emerald Rapids',
 				),
 			15 => array(
