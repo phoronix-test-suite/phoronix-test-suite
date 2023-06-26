@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Performance:  #_RESULT_# GFlops/s</OutputTemplate>
+    <TurnCharsToSpace>=</TurnCharsToSpace>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,1 @@
+{"overview":[],"capabilities":{"shared_libraries":["libnekrs.so","libmpi.so.40","libm.so.6","libc.so.6","libocca.so","libgomp.so.1","libgfortran.so.5","libopen-pal.so.40","libopen-rte.so.40","libhwloc.so.15","libquadmath.so.0","libz.so.1","libudev.so.1"],"default_instructions":[],"max_instructions":["MMX","AVX","AVX2","FMA","AVX512"],"honors_cflags":"0","scales_cpu_cores":"1"}}

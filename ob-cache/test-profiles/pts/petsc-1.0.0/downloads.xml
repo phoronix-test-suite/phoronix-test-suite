@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-3.19.0.tar.gz</URL>
+      <MD5>3d8820670f0d67aa04ce41b91f8eae62</MD5>
+      <SHA256>8ced753e4d2fb6565662b2b1fbba75a426cbf8438203f82717ce270f0591322c</SHA256>
+      <FileName>petsc-3.19.0.tar.gz</FileName>
+      <FileSize>16612219</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

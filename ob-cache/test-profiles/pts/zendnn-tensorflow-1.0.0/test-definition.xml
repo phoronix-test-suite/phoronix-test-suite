@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>AMD ZenDNN TensorFlow</Title>
+    <AppVersion>2.10 ZenDNN 4.0</AppVersion>
+    <Description>AMD ZenDNN optimized version of TensorFlow with various AMD UIF models. For this test profile to work you must first download TF_v2.10_ZenDNN_v4.0_Python_v3.10.zip from https://www.amd.com/en/developer/zendnn.html and put it in your Phoronix Test Suite download cache.</Description>
+    <ResultScale>images/sec</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>python, build-utilities</ExternalDependencies>
+    <EnvironmentSize>1800</EnvironmentSize>
+    <ProjectURL>https://www.amd.com/en/developer/zendnn.html</ProjectURL>
+    <RepositoryURL>https://github.com/amd/UIF</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>numactl</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Model</DisplayName>
+      <Identifier>model</Identifier>
+      <Menu>
+        <Entry>
+          <Name>tf_resnetv1_50_imagenet_224_224_6.97G_1.1_Z4.0</Name>
+          <Value>tf_resnetv1_50_imagenet_224_224_6.97G_1.1_Z4.0</Value>
+        </Entry>
+        <Entry>
+          <Name>tf_inceptionv4_imagenet_299_299_24.55G_1.1_Z4.0</Name>
+          <Value>tf_inceptionv4_imagenet_299_299_24.55G_1.1_Z4.0</Value>
+        </Entry>
+        <Entry>
+          <Name>tf_mobilenetv1_1.0_imagenet_224_224_1.14G_1.1_Z4.0</Name>
+          <Value>tf_mobilenetv1_1.0_imagenet_224_224_1.14G_1.1_Z4.0</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Batch Size</DisplayName>
+      <Identifier>batch-size</Identifier>
+      <Menu>
+        <Entry>
+          <Name>1</Name>
+          <Value>1</Value>
+        </Entry>
+        <Entry>
+          <Name>16</Name>
+          <Value>16</Value>
+        </Entry>
+        <Entry>
+          <Name>32</Name>
+          <Value>32</Value>
+        </Entry>
+        <Entry>
+          <Name>64</Name>
+          <Value>64</Value>
+        </Entry>
+        <Entry>
+          <Name>96</Name>
+          <Value>96</Value>
+        </Entry>
+        <Entry>
+          <Name>256</Name>
+          <Value>256</Value>
+        </Entry>
+        <Entry>
+          <Name>512</Name>
+          <Value>512</Value>
+        </Entry>
+        <Entry>
+          <Name>960</Name>
+          <Value>960</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

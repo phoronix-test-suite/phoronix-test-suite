@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>libxsmm</Title>
+    <AppVersion>2-1.17-3645</AppVersion>
+    <Description>Libxsmm is an open-source library for specialized dense and sparse matrix operations and deep learning primitives. Libxsmm supports making use of Intel AMX, AVX-512, and other modern CPU instruction set capabilities.</Description>
+    <ResultScale>GFLOPS/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Scientific</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>314</EnvironmentSize>
+    <ProjectURL>https://libxsmm.readthedocs.io/en/latest/</ProjectURL>
+    <RepositoryURL>https://github.com/libxsmm/libxsmm</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>M N K</DisplayName>
+      <Identifier>mnk</Identifier>
+      <Menu>
+        <Entry>
+          <Name>32</Name>
+          <Value>32 32 32</Value>
+        </Entry>
+        <Entry>
+          <Name>64</Name>
+          <Value>64 64 64</Value>
+        </Entry>
+        <Entry>
+          <Name>128</Name>
+          <Value>128 128 128</Value>
+        </Entry>
+        <Entry>
+          <Name>256</Name>
+          <Value>256 256 256</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

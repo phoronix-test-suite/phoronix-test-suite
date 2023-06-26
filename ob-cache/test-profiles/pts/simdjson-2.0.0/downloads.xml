@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/simdjson/simdjson/archive/refs/tags/v2.0.0.tar.gz</URL>
+      <MD5>b1219420b7042286db2591a0eedb3e06</MD5>
+      <SHA256>1ae950cdb5f1db756468f06f0158a7492778b09d821747de826332b3ca88fec9</SHA256>
+      <FileName>simdjson-2.0.0.tar.gz</FileName>
+      <FileSize>1607351</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

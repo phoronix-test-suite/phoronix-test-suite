@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>srsRAN Project</Title>
+    <AppVersion>23.5</AppVersion>
+    <Description>srsRAN Project is a complete ORAN-native 5G RAN solution created by Software Radio Systems (SRS). The srsRAN Project radio suite was formerly known as srsLTE and can be used for building your own software-defined radio (SDR) 4G/5G mobile network.</Description>
+    <ResultScale>Mb/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>2.1.0</Version>
+    <SupportedPlatforms>Linux, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, fftw3-development, cmake, boost-development, libconfigpp</ExternalDependencies>
+    <EnvironmentSize>294</EnvironmentSize>
+    <ProjectURL>https://www.srsran.com/</ProjectURL>
+    <RepositoryURL>https://github.com/srsran/srsRAN_Project</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>libbladeRF.h, mbedtls/aes.h, libmbedtls.so, libboost_program_options.so, /usr/include/libconfig.h++, libconfig++.so, netinet/sctp.h, libsctp.so, yaml-cpp/yaml.h, libgtest.a, gtest/gtest.h</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test</Identifier>
+      <Menu>
+        <Entry>
+          <Name>PUSCH Processor Benchmark, Throughput Total</Name>
+          <Value>tests/benchmarks/phy/upper/channel_processors/pusch_processor_benchmark -m throughput_total -R 100 -P pusch_scs15_50MHz_256qam_max</Value>
+        </Entry>
+        <Entry>
+          <Name>PUSCH Processor Benchmark, Throughput Thread</Name>
+          <Value>tests/benchmarks/phy/upper/channel_processors/pusch_processor_benchmark -m throughput_thread -R 100 -P pusch_scs15_50MHz_256qam_max -T 1</Value>
+        </Entry>
+        <Entry>
+          <Name>Downlink Processor Benchmark</Name>
+          <Value>tests/benchmarks/phy/upper/downlink_processor_benchmark -R 50000 -P pdsch_scs15_50MHz_256qam_max</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

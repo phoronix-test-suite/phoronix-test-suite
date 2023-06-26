@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/LLNL/Kripke/releases/download/v1.2.6/kripke-v1.2.6-1-g0d24be5.tar.gz</URL>
+      <MD5>2700e072a39de24216c1cbb04d65b075</MD5>
+      <SHA256>b98119008d64c1dbc3649a614b1ca3ebb1453b1bcf20045d32b400dea6524ff4</SHA256>
+      <FileName>kripke-v1.2.6-1-g0d24be5.tar.gz</FileName>
+      <FileSize>24222444</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

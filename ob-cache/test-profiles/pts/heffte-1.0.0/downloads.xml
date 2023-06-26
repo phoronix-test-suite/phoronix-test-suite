@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/icl-utk-edu/heffte/archive/refs/tags/v2.3.0.tar.gz</URL>
+      <MD5>64bf2a8ca8f586a1ea731980e9a1d0a0</MD5>
+      <SHA256>63db8c9a8822211d23e29f7adf5aa88bb462c91d7a18c296c3ef3a06be8d6171</SHA256>
+      <FileName>heffte-2.3.0.tar.gz</FileName>
+      <FileSize>268045</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

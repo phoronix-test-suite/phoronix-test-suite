@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>931 frames 8.3999500 seconds #_RESULT_# fps, one-second fps min/avg/max: #_MIN_RESULT_# 119 #_MAX_RESULT_# (44 seconds)</OutputTemplate>
+    <LineHint>fps</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>  Single-Core Score             #_RESULT_#</OutputTemplate>
+    <ResultScale>Score</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>  Multi-Core Score             #_RESULT_#</OutputTemplate>
+    <ResultScale>Score</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>  OpenCL Score                  #_RESULT_#</OutputTemplate>
+    <ResultScale>Score</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>  Metal Score                  #_RESULT_#</OutputTemplate>
+    <ResultScale>Score</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>  CUDA Score                  #_RESULT_#</OutputTemplate>
+    <ResultScale>Score</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>  Vulkan Score                  #_RESULT_#</OutputTemplate>
+    <ResultScale>Score</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>    Integer Score                 #_RESULT_#</OutputTemplate>
+    <ResultScale>Integer Score</ResultScale>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>    Floating Point Score          #_RESULT_#</OutputTemplate>
+    <ResultScale>Floating Point Score</ResultScale>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+</PhoronixTestSuite>

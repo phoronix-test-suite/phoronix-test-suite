@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/liquid-dsp-20210131.tar.xz</URL>
+      <MD5>e55ba39f9d6ce3b935860bcd7b233452</MD5>
+      <SHA256>ae36274d588c3f9451d9c82f0162162bdccf819dfc4c7d3785afdf1bc507a7c4</SHA256>
+      <FileName>liquid-dsp-20210131.tar.xz</FileName>
+      <FileSize>777736</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/jgaeddert/liquid-dsp/archive/refs/tags/v1.6.0.tar.gz</URL>
+      <MD5>3a88c49e6066bc701e7d15da7a567120</MD5>
+      <SHA256>6ee6a5dfb48e047b118cf613c0b9f43e34356a5667a77a72a55371d2c8c53bf5</SHA256>
+      <FileName>liquid-dsp-1.6.0.tar.gz</FileName>
+      <FileSize>1243435</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

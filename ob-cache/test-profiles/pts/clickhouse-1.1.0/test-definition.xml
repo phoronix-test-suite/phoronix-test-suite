@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>ClickHouse</Title>
+    <AppVersion>22.5.4.19</AppVersion>
+    <Description>ClickHouse is an open-source, high performance OLAP data management system. This test profile uses ClickHouse's standard benchmark recommendations per https://clickhouse.com/docs/en/operations/performance-test/ with the 100 million rows web analytics dataset. The reported value is the query processing time using the geometric mean of all queries performed.</Description>
+    <ResultScale>Queries Per Minute, Geo Mean</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Application</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64, aarch64</SupportedArchitectures>
+    <EnvironmentSize>26900</EnvironmentSize>
+    <ProjectURL>https://clickhouse.com/</ProjectURL>
+    <RepositoryURL>https://github.com/ClickHouse/ClickHouse</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

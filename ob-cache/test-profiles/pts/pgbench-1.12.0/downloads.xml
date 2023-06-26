@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ftp.postgresql.org/pub/source/v15.0/postgresql-15.0.tar.bz2</URL>
+      <MD5>9516690cc6554dacc4a4d0920834a623</MD5>
+      <SHA256>72ec74f4a7c16e684f43ea42e215497fcd4c55d028a68fb72e99e61ff40da4d6</SHA256>
+      <FileName>postgresql-15.0.tar.bz2</FileName>
+      <FileSize>22403741</FileSize>
+      <PlatformSpecific>Linux, BSD, Solaris, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://get.enterprisedb.com/postgresql/postgresql-15.0-1-windows-x64-binaries.zip</URL>
+      <MD5>cf7bc7f9a3288795b6c4b0aeae6014c9</MD5>
+      <SHA256>935bfddf4ca8e2a97a467fe70f14ca6cf86b61667d0e1189e7977e4c0d27b836</SHA256>
+      <FileName>postgresql-15.0-1-windows-x64-binaries.zip</FileName>
+      <FileSize>294361608</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

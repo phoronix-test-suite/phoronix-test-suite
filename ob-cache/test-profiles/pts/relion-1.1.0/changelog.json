@@ -1,0 +1,1 @@
+{"1.1.0":{"last_updated":"1687194760","commit_description":"Update against Relion 4.0.1 upstream."},"1.0.1":{"last_updated":"1610572458","commit_description":"Build without the GUI to avoid fltk dependency and since GUI isn't used anyway..."},"1.0.0":{"last_updated":"1610551895","commit_description":"Initial commit of RELION Cryo-EM benchmarks."}}

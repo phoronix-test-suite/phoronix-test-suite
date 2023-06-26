@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>      float   : #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>--global-bandwidth</MatchToTestArguments>
+    <ResultScale>GBPS</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>      float   : #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>--compute-sp</MatchToTestArguments>
+    <ResultScale>GFLOPS</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>      double   : #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>--compute-dp</MatchToTestArguments>
+    <ResultScale>GFLOPS</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>      int   : #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>--compute-integer</MatchToTestArguments>
+    <ResultScale>GIOPS</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>      int   : #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>--compute-intfast</MatchToTestArguments>
+    <ResultScale>GIOPS</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>      enqueueWriteBuffer              : #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>--transfer-bandwidth #write</MatchToTestArguments>
+    <ResultScale>GBPS</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>      enqueueReadBuffer               : #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>--transfer-bandwidth #read</MatchToTestArguments>
+    <ResultScale>GBPS</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>    Kernel launch latency : #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>--kernel-latency</MatchToTestArguments>
+    <ResultScale>us</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+  </ResultsParser>
+</PhoronixTestSuite>

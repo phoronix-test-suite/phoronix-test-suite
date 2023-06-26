@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/OpenImageDenoise/oidn/releases/download/v2.0.0/oidn-2.0.0.x86_64.linux.tar.gz</URL>
+      <MD5>0ecb3e00f3138a1d0b183b441d07b8cd</MD5>
+      <SHA256>8de608405ab4e687a154560245a4520cf44a5a917f7fa2ec2b53e885638e2865</SHA256>
+      <FileName>oidn-2.0.0.x86_64.linux.tar.gz</FileName>
+      <FileSize>32555139</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/OpenImageDenoise/oidn/releases/download/v2.0.0/oidn-2.0.0.x64.windows.zip</URL>
+      <MD5>7de185ac08a8a970c572242cc2bc2e2e</MD5>
+      <SHA256>df0c6bf8185f9736dd10eb07e4bf1c68c6ef28c0cddd42a9555f9e8435a24e40</SHA256>
+      <FileName>oidn-2.0.0.x64.windows.zip</FileName>
+      <FileSize>29669048</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/OpenImageDenoise/oidn/releases/download/v2.0.0/oidn-2.0.0.x86_64.macos.tar.gz</URL>
+      <MD5>cab4da5dd833c459bf5d65ac456f6714</MD5>
+      <SHA256>44055036c5ee3cfc26057d4ad3b6e7f0cbd1feb4230386a30eca115004308c9a</SHA256>
+      <FileName>oidn-2.0.0.x86_64.macos.tar.gz</FileName>
+      <FileSize>26032919</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Clickhouse Query Time 1: #_RESULT_#</OutputTemplate>
+    <LineHint>Clickhouse Query Time 1:</LineHint>
+    <MultiMatch>GEOMETRIC_MEAN</MultiMatch>
+    <DivideResultDivisor>60</DivideResultDivisor>
+    <ArgumentsDescription>100M Rows Web Analytics Dataset, First Run / Cold Cache</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Clickhouse Query Time 2: #_RESULT_#</OutputTemplate>
+    <LineHint>Clickhouse Query Time 2:</LineHint>
+    <MultiMatch>GEOMETRIC_MEAN</MultiMatch>
+    <DivideResultDivisor>60</DivideResultDivisor>
+    <ArgumentsDescription>100M Rows Web Analytics Dataset, Second Run</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Clickhouse Query Time 3: #_RESULT_#</OutputTemplate>
+    <LineHint>Clickhouse Query Time 3:</LineHint>
+    <MultiMatch>GEOMETRIC_MEAN</MultiMatch>
+    <DivideResultDivisor>60</DivideResultDivisor>
+    <ArgumentsDescription>100M Rows Web Analytics Dataset, Third Run</ArgumentsDescription>
+  </ResultsParser>
+</PhoronixTestSuite>

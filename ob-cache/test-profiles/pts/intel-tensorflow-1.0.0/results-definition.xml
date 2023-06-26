@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Throughput: #_RESULT_# images/sec</OutputTemplate>
+    <LineHint>Throughput:</LineHint>
+    <ResultScale>images/sec</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Summary total images/sec:
+#_RESULT_#</OutputTemplate>
+    <LineBeforeHint>Summary total images/sec</LineBeforeHint>
+    <ResultScale>images/sec</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>steps = 50, #_RESULT_# images/sec</OutputTemplate>
+    <MatchToTestArguments>inception</MatchToTestArguments>
+    <ResultScale>images/sec</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Latency: #_RESULT_# sec</OutputTemplate>
+    <LineHint>Latency:</LineHint>
+    <ResultScale>ms</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+  </ResultsParser>
+</PhoronixTestSuite>

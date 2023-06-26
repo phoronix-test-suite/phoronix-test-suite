@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/glmark2/glmark2/archive/refs/tags/2023.01.tar.gz</URL>
+      <MD5>f6f20b4cb95aa40a446e8637115c7138</MD5>
+      <SHA256>8fece3fc323b643644a525be163dc4931a4189971eda1de8ad4c1712c5db3d67</SHA256>
+      <FileName>glmark2-2023.01.tar.gz</FileName>
+      <FileSize>9366116</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

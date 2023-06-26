@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://archive.apache.org/dist/httpd/httpd-2.4.56.tar.bz2, https://ftp.osuosl.org/pub/blfs/conglomeration/httpd/httpd-2.4.56.tar.bz2</URL>
+      <MD5>67f3c04a28df1ad36ff6ea55df010869</MD5>
+      <SHA256>d8d45f1398ba84edd05bb33ca7593ac2989b17cb9c7a0cafe5442d41afdb2d7c</SHA256>
+      <FileName>httpd-2.4.56.tar.bz2</FileName>
+      <FileSize>7456418</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/http-test-files-1.tar.xz</URL>
+      <MD5>b86f3e8f5bc9d0014818c5122a6f784d</MD5>
+      <SHA256>9d6eace9544c59b910ea403a4693338efc12a6b0915fe227aed86c971b82d3dd</SHA256>
+      <FileName>http-test-files-1.tar.xz</FileName>
+      <FileSize>2346324</FileSize>
+    </Package>
+    <Package>
+      <URL>https://ftp.osuosl.org/pub/blfs/conglomeration/apr/apr-1.7.2.tar.bz2, http://archive.apache.org/dist/apr/apr-1.7.2.tar.bz2</URL>
+      <MD5>9a00835e4da8c215348e263b550fc130</MD5>
+      <SHA256>75e77cc86776c030c0a5c408dfbd0bf2a0b75eed5351e52d5439fa1e5509a43e</SHA256>
+      <FileName>apr-1.7.2.tar.bz2</FileName>
+      <FileSize>890218</FileSize>
+    </Package>
+    <Package>
+      <URL>https://downloads.apache.org/apr/apr-util-1.6.3.tar.bz2, http://apache.cs.utah.edu//apr/apr-util-1.6.3.tar.bz2, http://archive.apache.org/dist/apr/apr-util-1.6.3.tar.bz2</URL>
+      <MD5>b6e8c9b31d938fe5797ceb0d1ff2eb69</MD5>
+      <SHA256>a41076e3710746326c3945042994ad9a4fcac0ce0277dd8fea076fec3c9772b5</SHA256>
+      <FileName>apr-util-1.6.3.tar.bz2</FileName>
+      <FileSize>432692</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/wg/wrk/archive/refs/tags/4.2.0.tar.gz</URL>
+      <MD5>bd3ee6407b1aa8b66abfa6ee2c166849</MD5>
+      <SHA256>e255f696bff6e329f5d19091da6b06164b8d59d62cb9e673625bdcd27fe7bdad</SHA256>
+      <FileName>wrk-4.2.0.tar.gz</FileName>
+      <FileSize>10973405</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

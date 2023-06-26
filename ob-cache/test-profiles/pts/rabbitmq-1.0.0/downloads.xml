@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/rabbitmq/rabbitmq-perf-test/releases/download/v2.19.0/rabbitmq-perf-test-2.19.0-bin.tar.gz</URL>
+      <MD5>19b70893133fe126555f6b0b47683792</MD5>
+      <SHA256>5fb6d00584eea0fec5ae4cdb0e3ebaf3093b4edfdd266a0f6a1f79412cc2e4a1</SHA256>
+      <FileName>rabbitmq-perf-test-2.19.0-bin.tar.gz</FileName>
+      <FileSize>3724085</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/rabbitmq/rabbitmq-server/releases/download/v3.11.16/rabbitmq-server-generic-unix-3.11.16.tar.xz</URL>
+      <MD5>130cbc7ff51ce9b6405ac88c49bcc108</MD5>
+      <SHA256>8aac5faa36e17a6c088e35cf721f4ed4a7546250c64a000c2b29b85e5549125b</SHA256>
+      <FileName>rabbitmq-server-generic-unix-3.11.16.tar.xz</FileName>
+      <FileSize>20920832</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

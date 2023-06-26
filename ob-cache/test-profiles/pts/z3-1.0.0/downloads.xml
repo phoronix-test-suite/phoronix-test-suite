@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/Z3Prover/z3/archive/refs/tags/z3-4.12.1.tar.gz</URL>
+      <MD5>faca55780446b99a4de22aa9753bbd39</MD5>
+      <SHA256>a3735fabf00e1341adcc70394993c05fd3e2ae167a3e9bb46045e33084eb64a3</SHA256>
+      <FileName>z3-4.12.1.tar.gz</FileName>
+      <FileSize>5470095</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://clc-gitlab.cs.uiowa.edu:2443/SMT-LIB-benchmarks/QF_UFBV/-/raw/master/calc2/calc2_sec2_shifter_mult_bmc30.smt2?inline=false</URL>
+      <MD5>24d4b83d66709c8a9a9a6f13aecbce6d</MD5>
+      <SHA256>33e688c7195c3d486f264774ec1758613330d099a55e6a452e9b3968c8f28a60</SHA256>
+      <FileName>1.smt2</FileName>
+      <FileSize>581726</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://clc-gitlab.cs.uiowa.edu:2443/SMT-LIB-benchmarks/UFBV/-/raw/master/20210301-Alive2/gcc/108_gcc.smt2?inline=false</URL>
+      <MD5>690720236953e12fdfbbab698f519976</MD5>
+      <SHA256>e4c8701b4e454ca12a9a00d969a2f663bfbbe587327b055ec0a1c2065ee3f9ea</SHA256>
+      <FileName>2.smt2</FileName>
+      <FileSize>80692</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/Z3Prover/z3/releases/download/z3-4.12.1/z3-4.12.1-x64-win.zip</URL>
+      <MD5>9c968fc2580a1084e820e039cd2c1771</MD5>
+      <SHA256>ce2d658d007c4f5873d2279bd031d4e72500b388e1ef2d716bd5f86af19b20d2</SHA256>
+      <FileName>z3-4.12.1-x64-win.zip</FileName>
+      <FileSize>56321060</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

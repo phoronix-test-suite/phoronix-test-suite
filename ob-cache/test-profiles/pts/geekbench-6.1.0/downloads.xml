@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://cdn.geekbench.com/Geekbench-6.1.0-Linux.tar.gz</URL>
+      <MD5>34713b843d5ce533aebd60c097341258</MD5>
+      <SHA256>1812479d3ead7cb759b9a6b0c2112fa8e158726338d836714719bb709362d1a0</SHA256>
+      <FileName>Geekbench-6.1.0-Linux.tar.gz</FileName>
+      <FileSize>227951888</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://cdn.geekbench.com/Geekbench-6.1.0-WindowsSetup.exe</URL>
+      <MD5>7e3cc23b55a4bd16213843392b95f193</MD5>
+      <SHA256>43543bf8a2594f0f46747f0cbd2102e8927fe92f96c14f27c80dfecffcf9ccbb</SHA256>
+      <FileName>Geekbench-6.1.0-WindowsSetup.exe</FileName>
+      <FileSize>245361336</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://cdn.geekbench.com/Geekbench-6.1.0-Mac.zip</URL>
+      <MD5>c9c73e408aa3ae8bf1210d6f6deec7e3</MD5>
+      <SHA256>ffd90bdfdd307352a9e4d4d20cbc36e1fbb7a8911d521cbeb03d7b1ab9819068</SHA256>
+      <FileName>Geekbench-6.1.0-Mac.zip</FileName>
+      <FileSize>338572778</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

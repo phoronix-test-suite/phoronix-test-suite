@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>3DMark Wild Life Extreme</Title>
+    <AppVersion>1.1.2.1</AppVersion>
+    <Description>This test profile only automates the vendor build of 3DMark with its command-line / JSON support. If you do not have a licensed copy of the necessary 3DMark binaries in your Phoronix Test Suite download cache on your system, this test profile will not do anything and simply fail. You must have already obtained the proper licensed binaries from UL for this test profile to work -- this test profile simply automates the firing of the 3DMark benchmark at your desired resolution and capturing the results within the Phoronix Test Suite while you must already have the necessary 3DMark files on your system.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+    <PreInstallMessage>This test profile only automates the vendor build of 3DMark with its command-line / JSON support. If you do not have a licensed copy of the necessary 3DMark binaries in your Phoronix Test Suite download cache on your system, this test profile will not do anything and simply fail. You must have already obtained the proper licensed binaries from UL for this test profile to work -- this test profile simply automates the firing of the 3DMark benchmark at your desired resolution and capturing the results within the Phoronix Test Suite while you must already have the necessary 3DMark files on your system.</PreInstallMessage>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
+    <SoftwareType>Game</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Restricted</License>
+    <Status>Experimental</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <RequiresDisplay>TRUE</RequiresDisplay>
+    <EnvironmentSize>598</EnvironmentSize>
+    <ProjectURL>https://www.3dmark.com/</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>$VIDEO_WIDTH $VIDEO_HEIGHT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

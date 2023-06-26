@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>OpenCV</Title>
+    <AppVersion>4.7</AppVersion>
+    <Description>This is a benchmark of the OpenCV (Computer Vision) library's built-in performance tests.</Description>
+    <ResultScale>ms</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.3.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, jpeg-development, libpng-development, cmake, opencl, vulkan-development</ExternalDependencies>
+    <EnvironmentSize>1400</EnvironmentSize>
+    <ProjectURL>https://opencv.org/</ProjectURL>
+    <RepositoryURL>https://github.com/opencv/opencv</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>libavcodec/avcodec.h, libavformat/avformat.h</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test</Identifier>
+      <Menu>
+        <Entry>
+          <Name>DNN - Deep Neural Network</Name>
+          <Value>dnn</Value>
+        </Entry>
+        <Entry>
+          <Name>Features 2D</Name>
+          <Value>features2d</Value>
+        </Entry>
+        <Entry>
+          <Name>Object Detection</Name>
+          <Value>objdetect</Value>
+        </Entry>
+        <Entry>
+          <Name>Core</Name>
+          <Value>core</Value>
+        </Entry>
+        <Entry>
+          <Name>Graph API</Name>
+          <Value>gapi</Value>
+        </Entry>
+        <Entry>
+          <Name>Image Processing</Name>
+          <Value>imgproc</Value>
+        </Entry>
+        <Entry>
+          <Name>Stitching</Name>
+          <Value>stitching</Value>
+        </Entry>
+        <Entry>
+          <Name>Video</Name>
+          <Value>video</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://raw.githubusercontent.com/krai/axs2mlperf/812f7be11e47227457ed279bd1fb2e3129008642/demo/Dockerfile</URL>
+      <MD5>abee1068b5994f73619a0e1fbd747469</MD5>
+      <SHA256>92acc4c403268d96f6e6c33d604c309fee4ab43db062106a8c5756170671dcf1</SHA256>
+      <FileName>Axs_Dockerfile_mlperf_20230505</FileName>
+      <FileSize>2080</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

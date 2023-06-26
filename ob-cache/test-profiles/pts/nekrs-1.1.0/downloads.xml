@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/Nek5000/nekRS/archive/refs/tags/v23.0.tar.gz</URL>
+      <MD5>475131966c187ccfda72f1a8a20ef36f</MD5>
+      <SHA256>2cb4ded69551b9614036e1a9d5ac54c8535826eae8f8b6a00ddb89043b2c392a</SHA256>
+      <FileName>nekRS-23.0.tar.gz</FileName>
+      <FileSize>48808996</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

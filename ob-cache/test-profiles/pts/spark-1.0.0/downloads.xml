@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://downloads.apache.org/spark/spark-3.3.0/spark-3.3.0-bin-hadoop3.tgz</URL>
+      <MD5>735173ca7be2e5e55715499fbc719022</MD5>
+      <SHA256>306b550f42ce1b06772d6084c545ef8448414f2bf451e0b1175405488f2a322f</SHA256>
+      <FileName>spark-3.3.0-bin-hadoop3.tgz</FileName>
+      <FileSize>299321244</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/DIYBigData/pyspark-benchmark/archive/3bbf3e521763517bc9aa73504dd66a5bdeb5b6af.zip</URL>
+      <MD5>82e9dac0213fe5a331d47358e8e754f3</MD5>
+      <SHA256>149e7d5dd2c86111cf94a9299ef1da1bd1c4a136486b1115a4314dda7304ec55</SHA256>
+      <FileName>pyspark-benchmark-3bbf3e521763517bc9aa73504dd66a5bdeb5b6af.zip</FileName>
+      <FileSize>299321244</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

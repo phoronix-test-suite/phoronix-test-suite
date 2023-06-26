@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/krrishnarraj/clpeak/archive/refs/tags/1.1.2.tar.gz</URL>
+      <MD5>a627b36fd07676b4c18f809f6374be08</MD5>
+      <SHA256>7bc7beba6b3307290650abc4f13fe9389b271c1a64601fa333461516950d745b</SHA256>
+      <FileName>clpeak-1.1.2.tar.gz</FileName>
+      <FileSize>295735</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

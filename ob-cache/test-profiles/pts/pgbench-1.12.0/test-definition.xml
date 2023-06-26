@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>PostgreSQL</Title>
+    <AppVersion>15</AppVersion>
+    <Description>This is a benchmark of PostgreSQL using the integrated pgbench for facilitating the database benchmarks.</Description>
+    <ResultScale>TPS</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.12.0</Version>
+    <SupportedPlatforms>Linux, MacOSX, BSD, Solaris, Windows</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, bc</ExternalDependencies>
+    <EnvironmentSize>1500</EnvironmentSize>
+    <ProjectURL>https://www.postgresql.org/</ProjectURL>
+    <RepositoryURL>https://github.com/postgres/postgres</RepositoryURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>bc</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Scaling Factor</DisplayName>
+      <Identifier>scaling-factor</Identifier>
+      <ArgumentPrefix>-s </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>1</Name>
+          <Value>1</Value>
+        </Entry>
+        <Entry>
+          <Name>100</Name>
+          <Value>100</Value>
+        </Entry>
+        <Entry>
+          <Name>1000</Name>
+          <Value>1000</Value>
+        </Entry>
+        <Entry>
+          <Name>10000</Name>
+          <Value>10000</Value>
+        </Entry>
+        <Entry>
+          <Name>25000</Name>
+          <Value>25000</Value>
+          <Message>Intended for very large servers.</Message>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Clients</DisplayName>
+      <Identifier>clients</Identifier>
+      <ArgumentPrefix>-c </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>1</Name>
+          <Value>1</Value>
+        </Entry>
+        <Entry>
+          <Name>50</Name>
+          <Value>50</Value>
+        </Entry>
+        <Entry>
+          <Name>100</Name>
+          <Value>100</Value>
+        </Entry>
+        <Entry>
+          <Name>250</Name>
+          <Value>250</Value>
+        </Entry>
+        <Entry>
+          <Name>500</Name>
+          <Value>500</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Mode</DisplayName>
+      <Identifier>run-mode</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Read Write</Name>
+          <Value> </Value>
+        </Entry>
+        <Entry>
+          <Name>Read Only</Name>
+          <Value>-S </Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

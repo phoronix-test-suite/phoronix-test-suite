@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>TensorFlow</Title>
+    <AppVersion>2.12</AppVersion>
+    <Description>This is a benchmark of the TensorFlow deep learning framework using the TensorFlow reference benchmarks (tensorflow/benchmarks with tf_cnn_benchmarks.py). Note with the Phoronix Test Suite there is also pts/tensorflow-lite for benchmarking the TensorFlow Lite binaries if desired for complementary metrics.</Description>
+    <ResultScale>images/sec</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>2.1.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>python</ExternalDependencies>
+    <EnvironmentSize>1300</EnvironmentSize>
+    <ProjectURL>https://www.tensorflow.org/</ProjectURL>
+    <RepositoryURL>https://github.com/tensorflow/tensorflow</RepositoryURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>pip3</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>--data_format=NHWC </Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Device</DisplayName>
+      <Identifier>device</Identifier>
+      <ArgumentPrefix>--device </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>CPU</Name>
+          <Value>cpu</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Batch Size</DisplayName>
+      <Identifier>batch-size</Identifier>
+      <ArgumentPrefix>--batch_size=</ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>16</Name>
+          <Value>16</Value>
+        </Entry>
+        <Entry>
+          <Name>32</Name>
+          <Value>32</Value>
+        </Entry>
+        <Entry>
+          <Name>64</Name>
+          <Value>64</Value>
+        </Entry>
+        <Entry>
+          <Name>256</Name>
+          <Value>256</Value>
+        </Entry>
+        <Entry>
+          <Name>512</Name>
+          <Value>512</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Model</DisplayName>
+      <Identifier>Model</Identifier>
+      <ArgumentPrefix>--model=</ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>VGG-16</Name>
+          <Value>vgg16</Value>
+        </Entry>
+        <Entry>
+          <Name>ResNet-50</Name>
+          <Value>resnet50</Value>
+        </Entry>
+        <Entry>
+          <Name>AlexNet</Name>
+          <Value>alexnet</Value>
+        </Entry>
+        <Entry>
+          <Name>GoogLeNet</Name>
+          <Value>googlenet</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

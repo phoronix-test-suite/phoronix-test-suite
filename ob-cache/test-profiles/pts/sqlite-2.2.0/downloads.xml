@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://sqlite.org/2023/sqlite-autoconf-3410200.tar.gz</URL>
+      <MD5>862075fd1c38324878ef809eda39edfe</MD5>
+      <SHA256>e98c100dd1da4e30fa460761dab7c0b91a50b785e167f8c57acc46514fae9499</SHA256>
+      <FileName>sqlite-autoconf-3410200.tar.gz</FileName>
+      <FileSize>3125545</FileSize>
+    </Package>
+    <Package>
+      <URL>http://sqlite.org/2023/sqlite-tools-win32-x86-3410200.zip</URL>
+      <MD5>21cc89a2f1e4ec0dcb05a74386052e4e</MD5>
+      <SHA256>1d0720c3a4c4619a91eb97f52931e3485f92b53d89e76b335c69c4d8c644c006</SHA256>
+      <FileName>sqlite-tools-win32-x86-3410200.zip</FileName>
+      <FileSize>1999045</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/pts-sqlite-tests-1.tar.gz</URL>
+      <MD5>153e725642619e38766ddf8359f65cfe</MD5>
+      <SHA256>1067f047461e21fd56e2a6ae03043c687047d00192ffdbe5b52271cd39de442f</SHA256>
+      <FileName>pts-sqlite-tests-1.tar.gz</FileName>
+      <FileSize>42835</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

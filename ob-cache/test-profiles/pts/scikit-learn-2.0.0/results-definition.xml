@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>logistic_regression  #_RESULT_#   0.0136s     0.7266</OutputTemplate>
+    <LineHint>Train Time, Seconds</LineHint>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>logistic_regression  22.5031s   #_RESULT_#     0.7266  </OutputTemplate>
+    <LineHint>Test Time, Seconds</LineHint>
+  </ResultsParser>
+  <SystemMonitor>
+    <Sensor>sys.time</Sensor>
+  </SystemMonitor>
+</PhoronixTestSuite>

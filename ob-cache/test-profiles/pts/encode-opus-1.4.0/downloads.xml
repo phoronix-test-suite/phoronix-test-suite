@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://ftp.osuosl.org/pub/xiph/releases/opus/opus-1.4.tar.gz, https://downloads.xiph.org/releases/opus/opus-1.4.tar.gz</URL>
+      <MD5>0d89c15268c5c5984f583d7997d2a148</MD5>
+      <SHA256>c9b32b4253be5ae63d1ff16eea06b94b5f0f2951b7a02aceef58e3a3ce49c51f</SHA256>
+      <FileName>opus-1.4.tar.gz</FileName>
+      <FileSize>1063408</FileSize>
+    </Package>
+    <Package>
+      <URL>https://archive.mozilla.org/pub/opus/opus-tools-0.2.tar.gz, https://ftp.osuosl.org/pub/xiph/releases/opus/opus-tools-0.2.tar.gz</URL>
+      <MD5>ff2d0536e960cabbfb8ca7c8c1759b6c</MD5>
+      <SHA256>b4e56cb00d3e509acfba9a9b627ffd8273b876b4e2408642259f6da28fa0ff86</SHA256>
+      <FileName>opus-tools-0.2.tar.gz</FileName>
+      <FileSize>457680</FileSize>
+    </Package>
+    <Package>
+      <URL>https://ftp.osuosl.org/pub/xiph/releases/opus/opusfile-0.12.tar.gz</URL>
+      <MD5>45e8c62f6cd413395223c82f06bfa8ec</MD5>
+      <SHA256>118d8601c12dd6a44f52423e68ca9083cc9f2bfe72da7a8c1acb22a80ae3550b</SHA256>
+      <FileName>opusfile-0.12.tar.gz</FileName>
+      <FileSize>471354</FileSize>
+    </Package>
+    <Package>
+      <URL>https://ftp.osuosl.org/pub/xiph/releases/opus/libopusenc-0.2.tar.gz</URL>
+      <MD5>6307af3b94bb35742c1f57d3c2fcc657</MD5>
+      <SHA256>c79e95eeee43a0b965e9b2c59a243763a8f8b0a7e71441df2aa9084f6171c73a</SHA256>
+      <FileName>libopusenc-0.2.tar.gz</FileName>
+      <FileSize>388027</FileSize>
+    </Package>
+    <Package>
+      <URL>https://ftp.osuosl.org/pub/xiph/releases/flac/flac-1.4.2.tar.xz</URL>
+      <MD5>ca9140f37b286d2571e37d66aae50f92</MD5>
+      <SHA256>e322d58a1f48d23d9dd38f432672865f6f79e73a6f9cc5a5f57fcaa83eb5a8e4</SHA256>
+      <FileName>flac-1.4.2.tar.xz</FileName>
+      <FileSize>1013700</FileSize>
+    </Package>
+    <Package>
+      <URL>https://archive.org/download/jfks19620912/jfk_1962_0912_spaceeffort.flac</URL>
+      <MD5>017265cfcf2a76a5d48583651d8fc4af</MD5>
+      <SHA256>a3735ae6f0680c8b4b737eefd78541790dce96dc965ca2722631ec9c04dcbda0</SHA256>
+      <FileName>jfk_1962_0912_spaceeffort.flac</FileName>
+      <FileSize>40176720</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

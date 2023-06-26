@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/godotengine/godot/releases/download/4.0.1-stable/godot-4.0.1-stable.tar.xz</URL>
+      <MD5>9313493c4b9d4c73b8f49dd303b96ac4</MD5>
+      <SHA256>4a9725224f47cfb202d14ac5306eea475b2e4864780022a3df21d0cfffcd0fe1</SHA256>
+      <FileName>godot-4.0.1-stable.tar.xz</FileName>
+      <FileSize>29626604</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

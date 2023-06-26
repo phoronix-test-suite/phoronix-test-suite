@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>#_RESULT_# s] Compute recalls
+</OutputTemplate>
+    <LineHint>Compute recalls</LineHint>
+    <StripFromResult>[</StripFromResult>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>PQ baseline 	   #_RESULT_# ms per query, R@1 0.4462</OutputTemplate>
+    <LineHint>PQ baseline</LineHint>
+    <ResultScale>ms per query</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+    <AppendToArgumentsDescription>PQ baseline</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Polysemous 64 	   #_RESULT_# ms per query, R@1 0.4462</OutputTemplate>
+    <LineHint>Polysemous 64</LineHint>
+    <ResultScale>ms per query</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+    <AppendToArgumentsDescription>Polysemous 64</AppendToArgumentsDescription>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Polysemous 62 	   #_RESULT_# ms per query, R@1 0.4462</OutputTemplate>
+    <LineHint>Polysemous 62</LineHint>
+    <ResultScale>ms per query</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+    <AppendToArgumentsDescription>Polysemous 62</AppendToArgumentsDescription>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Polysemous 58 	   #_RESULT_# ms per query, R@1 0.4462</OutputTemplate>
+    <LineHint>Polysemous 58</LineHint>
+    <ResultScale>ms per query</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+    <AppendToArgumentsDescription>Polysemous 58</AppendToArgumentsDescription>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Polysemous 54 	   #_RESULT_# ms per query, R@1 0.4462</OutputTemplate>
+    <LineHint>Polysemous 54</LineHint>
+    <ResultScale>ms per query</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+    <AppendToArgumentsDescription>Polysemous 54</AppendToArgumentsDescription>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Polysemous 50 	   #_RESULT_# ms per query, R@1 0.4462</OutputTemplate>
+    <LineHint>Polysemous 50</LineHint>
+    <ResultScale>ms per query</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+    <AppendToArgumentsDescription>Polysemous 50</AppendToArgumentsDescription>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Polysemous 46 	   #_RESULT_# ms per query, R@1 0.4462</OutputTemplate>
+    <LineHint>Polysemous 46</LineHint>
+    <ResultScale>ms per query</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+    <AppendToArgumentsDescription>Polysemous 46</AppendToArgumentsDescription>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Polysemous 42 	   #_RESULT_# ms per query, R@1 0.4462</OutputTemplate>
+    <LineHint>Polysemous 42</LineHint>
+    <ResultScale>ms per query</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+    <AppendToArgumentsDescription>Polysemous 42</AppendToArgumentsDescription>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Polysemous 38 	   #_RESULT_# ms per query, R@1 0.4462</OutputTemplate>
+    <LineHint>Polysemous 38</LineHint>
+    <ResultScale>ms per query</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+    <AppendToArgumentsDescription>Polysemous 38</AppendToArgumentsDescription>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Polysemous 34 	   #_RESULT_# ms per query, R@1 0.4462</OutputTemplate>
+    <LineHint>Polysemous 34</LineHint>
+    <ResultScale>ms per query</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+    <AppendToArgumentsDescription>Polysemous 34</AppendToArgumentsDescription>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Polysemous 30 	   #_RESULT_# ms per query, R@1 0.4462</OutputTemplate>
+    <LineHint>Polysemous 30</LineHint>
+    <ResultScale>ms per query</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+    <AppendToArgumentsDescription>Polysemous 30</AppendToArgumentsDescription>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+</PhoronixTestSuite>

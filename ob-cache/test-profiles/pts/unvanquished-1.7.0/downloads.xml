@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/Unvanquished/Unvanquished/releases/download/v0.53.0/unvanquished_0.53.0.zip</URL>
+      <MD5>a49465201f60f368270ee31e35c2532f</MD5>
+      <SHA256>f5bd069442c58622814aa41e355d3a656f36581a5682eb8f359ba2b05f66e8d2</SHA256>
+      <FileName>unvanquished_0.53.0.zip</FileName>
+      <FileSize>535433852</FileSize>
+    </Package>
+    <Package>
+      <URL>https://dl.unvanquished.net/benchmark/demos/unvanquished-benchmark_0.53.0.dm_86.xz</URL>
+      <MD5>1dda48820468712c2a0446ad66319119</MD5>
+      <SHA256>b6ed99132199343584356207f200bbd2c7d84b61093d1100afd964441cbc1aae</SHA256>
+      <FileName>unvanquished-benchmark_0.53.0.dm_86.xz</FileName>
+      <FileSize>3482024</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

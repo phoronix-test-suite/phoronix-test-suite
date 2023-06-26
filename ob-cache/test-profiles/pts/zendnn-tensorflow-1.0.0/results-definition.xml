@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>resnet50v1_5: Throughput: #_RESULT_# images/sec</OutputTemplate>
+    <LineHint>Throughput:</LineHint>
+    <ResultScale>images/sec</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>resnet50v1_5: Latency: #_RESULT_# ms</OutputTemplate>
+    <LineHint>Latency:</LineHint>
+    <ResultScale>ms</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+  </ResultsParser>
+</PhoronixTestSuite>

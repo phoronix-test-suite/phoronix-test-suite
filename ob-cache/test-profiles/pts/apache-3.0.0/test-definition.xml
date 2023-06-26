@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Apache HTTP Server</Title>
+    <AppVersion>2.4.56</AppVersion>
+    <Description>This is a test of the Apache HTTPD web server. This Apache HTTPD web server benchmark test profile makes use of the wrk program for facilitating the HTTP requests over a fixed period time with a configurable number of concurrent clients.</Description>
+    <ResultScale>Requests Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>3.0.0</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, zlib-development, perl, pcre, expat</ExternalDependencies>
+    <EnvironmentSize>208</EnvironmentSize>
+    <ProjectURL>https://httpd.apache.org/</ProjectURL>
+    <RepositoryURL>https://github.com/apache/httpd</RepositoryURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-d 90s </Arguments>
+      <PostArguments> http://127.0.0.1:8088/test.html</PostArguments>
+    </Default>
+    <Option>
+      <DisplayName>Concurrent Requests</DisplayName>
+      <Identifier>concurrent</Identifier>
+      <ArgumentPrefix>-c </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>4</Name>
+          <Value>4</Value>
+        </Entry>
+        <Entry>
+          <Name>20</Name>
+          <Value>20</Value>
+        </Entry>
+        <Entry>
+          <Name>100</Name>
+          <Value>100</Value>
+        </Entry>
+        <Entry>
+          <Name>200</Name>
+          <Value>200</Value>
+        </Entry>
+        <Entry>
+          <Name>500</Name>
+          <Value>500</Value>
+        </Entry>
+        <Entry>
+          <Name>1000</Name>
+          <Value>1000</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

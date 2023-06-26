@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/rwesson/mocassin/archive/refs/tags/mocassin.2.02.73.3.tar.gz</URL>
+      <MD5>ed7f2d8070da83fd525f72ab9e20b007</MD5>
+      <SHA256>2bdc32b8e75247ecd7a5c83dfd65a5d01d1c362bff3173af237befd983952667</SHA256>
+      <FileName>mocassin-mocassin.2.02.73.3.tar.gz</FileName>
+      <FileSize>14270682</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

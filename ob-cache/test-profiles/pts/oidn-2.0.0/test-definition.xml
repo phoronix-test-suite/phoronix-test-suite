@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Intel Open Image Denoise</Title>
+    <AppVersion>2.0</AppVersion>
+    <Description>Open Image Denoise is a denoising library for ray-tracing and part of the Intel oneAPI rendering toolkit.</Description>
+    <ResultScale>Images / Sec</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>2.0.0</Version>
+    <SupportedPlatforms>Linux, Windows, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <EnvironmentSize>82</EnvironmentSize>
+    <ProjectURL>https://www.openimagedenoise.org/</ProjectURL>
+    <RepositoryURL>https://github.com/OpenImageDenoise/oidn</RepositoryURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <PostArguments> -n 20 </PostArguments>
+    </Default>
+    <Option>
+      <DisplayName>Run</DisplayName>
+      <Identifier>Run</Identifier>
+      <ArgumentPrefix>-r </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>RT.hdr_alb_nrm.3840x2160</Name>
+          <Value>RT.hdr_alb_nrm.3840x2160</Value>
+        </Entry>
+        <Entry>
+          <Name>RT.ldr_alb_nrm.3840x2160</Name>
+          <Value>RT.ldr_alb_nrm.3840x2160</Value>
+        </Entry>
+        <Entry>
+          <Name>RTLightmap.hdr.4096x4096</Name>
+          <Value>RTLightmap.hdr.4096x4096</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Device</DisplayName>
+      <Identifier>device</Identifier>
+      <ArgumentPrefix>-d </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>CPU-Only</Name>
+          <Value>cpu</Value>
+        </Entry>
+        <Entry>
+          <Name>NVIDIA CUDA</Name>
+          <Value>cuda</Value>
+        </Entry>
+        <Entry>
+          <Name>Radeon HIP</Name>
+          <Value>hip</Value>
+        </Entry>
+        <Entry>
+          <Name>Intel oneAPI SYCL</Name>
+          <Value>sycl</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

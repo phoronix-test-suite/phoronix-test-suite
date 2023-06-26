@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>T=00000031 50000000 points written (100%). Total throughput: 1585731.2 pt/sec | #_RESULT_# val/sec. Current throughput: 840000 val/sec. Errors: 0 | &#x3BC;: 29.96246ms, 90%: 39.065164ms, 95%: 43.578238ms, 99%: 62.113066ms</OutputTemplate>
+    <LineHint>Total throughput</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

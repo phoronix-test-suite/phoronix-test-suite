@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>    flops/rank          #_RESULT_#</OutputTemplate>
+    <LineHint>flops</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

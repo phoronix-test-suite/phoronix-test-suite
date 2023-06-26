@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>     	    DeepRec	 FP32      	 0.688399  	 0.763288	      89.70	   #_RESULT_#</OutputTemplate>
+    <LineHint>DeepRec</LineHint>
+    <ResultScale>Throughput</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>     	    DeepRec	 FP32      	 0.688399  	 0.763288	      #_RESULT_#	   45925.12</OutputTemplate>
+    <LineHint>DeepRec</LineHint>
+    <ResultScale>Gstep / sec</ResultScale>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/opencv/opencv/archive/refs/tags/4.7.0.tar.gz</URL>
+      <MD5>13e13244cb0cc6ec4f01eacd38d05d17</MD5>
+      <SHA256>8df0079cdbe179748a18d44731af62a245a45ebf5085223dc03133954c662973</SHA256>
+      <FileName>opencv-4.7.0.tar.gz</FileName>
+      <FileSize>91027497</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/opencv/opencv_extra/archive/refs/tags/4.7.0.tar.gz</URL>
+      <MD5>051564e9b2b59b01fe93d9ec12525556</MD5>
+      <SHA256>835420bbd625ba73ac892bdadf247a52ac42fa26f24c2f3752f63dbb3487bbb5</SHA256>
+      <FileName>opencv_extra-4.7.0.tar.gz</FileName>
+      <FileSize>500181420</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

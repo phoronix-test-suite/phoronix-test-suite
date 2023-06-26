@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>VKMark</Title>
+    <AppVersion>2022-05-16</AppVersion>
+    <Description>VKMark is a collection of open-source Vulkan tests / rendering benchmarks.</Description>
+    <ResultScale>VKMark Score</ResultScale>
+    <Proportion>HIB</Proportion>
+    <Executable>vkmark-run</Executable>
+    <TimesToRun>3</TimesToRun>
+    <PreInstallMessage>Some external dependencies needed for this test may not be currently covered by all operating systems - depending upon distribution/version. You might need to manually install extra packages; on an Ubuntu system it may include - sudo apt install libvulkan-dev libglm-dev libassimp-dev libxcb1-dev libxcb-icccm4-dev libwayland-dev libdrm-dev libgbm-dev.</PreInstallMessage>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.3.2</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, vulkan-development, meson, xorg-development</ExternalDependencies>
+    <RequiresDisplay>TRUE</RequiresDisplay>
+    <EnvironmentSize>122</EnvironmentSize>
+    <ProjectURL>https://github.com/vkmark/vkmark/</ProjectURL>
+    <RepositoryURL>https://github.com/vkmark/vkmark</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>/usr/share/pkgconfig/wayland-protocols.pc, vulkan/vk_icd.h, glm/simd/common.h, assimp/defs.h, xcb/xcb.h, xcb/xcb_icccm.h, wayland-client.h, libdrm/drm.h, gbm.h</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>--winsys-dir=build/src --data-dir=data</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>auto-resolution</Identifier>
+      <Menu>
+        <Entry>
+          <Name>$VIDEO_WIDTH x $VIDEO_HEIGHT</Name>
+          <Value>--size $VIDEO_WIDTHx$VIDEO_HEIGHT</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Present Mode</DisplayName>
+      <Identifier>present-mode</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Mailbox</Name>
+          <Value>-p mailbox</Value>
+        </Entry>
+        <Entry>
+          <Name>Immediate</Name>
+          <Value>-p immediate</Value>
+          <Message>Useful for NVIDIA driver compatibility</Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

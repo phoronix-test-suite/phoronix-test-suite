@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://hessenbox.tu-darmstadt.de/dl/fiLRpW1WMphF9EmUrF387uVe/daphne-data-full.zip</URL>
+      <MD5>a0a439ffcf4942efc8fa42a134789089</MD5>
+      <SHA256>64a5f11f65ad6e00dfeaf753e84015bbe5f6e4e65ec9823a3f2aaf79bb428545</SHA256>
+      <FileName>daphne-data-full.zip</FileName>
+      <FileSize>4919472349</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/esa-tu-darmstadt/daphne-benchmark/archive/6df0108efa43971e89ad105a86a28c0349f5d54d.zip</URL>
+      <MD5>828b153798eabd4b13c01e949a28c071</MD5>
+      <SHA256>4bb4c9c1a3fd7965792b62fd8c8ed54ba4ca79dc953ca0391d3bb36b0891c1d1</SHA256>
+      <FileName>daphne-benchmark-6df0108efa43971e89ad105a86a28c0349f5d54d.zip</FileName>
+      <FileSize>19046395</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

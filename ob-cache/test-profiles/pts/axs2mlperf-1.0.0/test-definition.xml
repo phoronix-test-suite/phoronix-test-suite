@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>axs2mlperf</Title>
+    <Description>This is a facilitator for the MLPerf Inference Benchmark Suite leveraging the axs2mlperf Docker container build and testing for currently facilitating ResNwt-50 reference model inference CPU benchmarks. See reference information at https://github.com/krai/axs2mlperf/blob/master/demo/README.md</Description>
+    <ResultScale>Samples Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>python</ExternalDependencies>
+    <InstallRequiresInternet>TRUE</InstallRequiresInternet>
+    <EnvironmentSize>1000</EnvironmentSize>
+    <ProjectURL>https://mlcommons.org/en/</ProjectURL>
+    <RepositoryURL>https://github.com/krai/axs2mlperf</RepositoryURL>
+    <InternalTags>Docker, AI</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>docker, bc</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>Test</Identifier>
+      <Menu>
+        <Entry>
+          <Name>ResNet50 MLPerf Reference Model</Name>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

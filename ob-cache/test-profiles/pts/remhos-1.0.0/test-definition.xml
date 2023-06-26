@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Remhos</Title>
+    <AppVersion>1.0</AppVersion>
+    <Description>Remhos (REMap High-Order Solver) is a miniapp that solves the pure advection equations that are used to perform monotonic and conservative discontinuous field interpolation (remap) as part of the Eulerian phase in Arbitrary Lagrangian Eulerian (ALE) simulations.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Scientific</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>openmpi-development, cmake, build-utilities</ExternalDependencies>
+    <EnvironmentSize>226</EnvironmentSize>
+    <ProjectURL>https://ceed.exascaleproject.org/miniapps/</ProjectURL>
+    <RepositoryURL>https://github.com/CEED/Remhos</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Sample Remap Example</Name>
+          <Value>-m ./data/inline-quad.mesh -p 14 -rs 2 -rp 1 -dt 0.0005 -tf 0.6 -ho 1 -lo 2 -fct 3</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

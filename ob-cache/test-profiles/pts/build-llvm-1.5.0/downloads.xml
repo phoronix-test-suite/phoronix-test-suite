@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/llvm/llvm-project/releases/download/llvmorg-16.0.0/llvm-16.0.0.src.tar.xz</URL>
+      <MD5>c465413aa9ab18837f40cc5750d39a33</MD5>
+      <SHA256>bce6fc19c48501546097e7b839c9ee376ea23b5cfd09199de8e42d5a5b5d4aae</SHA256>
+      <FileName>llvm-16.0.0.src.tar.xz</FileName>
+      <FileSize>56086164</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/llvm/llvm-project/releases/download/llvmorg-16.0.0/cmake-16.0.0.src.tar.xz</URL>
+      <MD5>b2103df1421f7bcc271fcacec27a24bb</MD5>
+      <SHA256>04e62ab7d0168688d9102680adf8eabe7b04275f333fe20eef8ab5a3a8ea9fcc</SHA256>
+      <FileName>cmake-16.0.0.src.tar.xz</FileName>
+      <FileSize>9004</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

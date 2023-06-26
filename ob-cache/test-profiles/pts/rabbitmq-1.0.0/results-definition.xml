@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>id: test 2, sending rate avg: #_RESULT_# msg/s</OutputTemplate>
+    <LineHint>sending rate avg</LineHint>
+    <ResultAfterString>avg:</ResultAfterString>
+    <ResultScale>Sending Messages/s</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>id: test 2, receiving rate avg: #_RESULT_# msg/s</OutputTemplate>
+    <LineHint>receiving rate avg</LineHint>
+    <ResultAfterString>avg:</ResultAfterString>
+    <ResultScale>Receiving Messages/s</ResultScale>
+  </ResultsParser>
+</PhoronixTestSuite>

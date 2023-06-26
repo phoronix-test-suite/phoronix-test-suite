@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Neural Magic DeepSparse</Title>
+    <AppVersion>1.5</AppVersion>
+    <Description>This is a benchmark of Neural Magic's DeepSparse using its built-in deepsparse.benchmark utility and various models from their SparseZoo (https://sparsezoo.neuralmagic.com/).</Description>
+    <ResultScale>items/sec</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.5.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>python</ExternalDependencies>
+    <InstallRequiresInternet>TRUE</InstallRequiresInternet>
+    <EnvironmentSize>9200</EnvironmentSize>
+    <ProjectURL>https://neuralmagic.com/deepsparse-engine/</ProjectURL>
+    <RepositoryURL>https://github.com/neuralmagic/deepsparse</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>pip3</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <PostArguments> -t 30 -w 5</PostArguments>
+    </Default>
+    <Option>
+      <DisplayName>Model</DisplayName>
+      <Identifier>model</Identifier>
+      <Menu>
+        <Entry>
+          <Name>NLP Text Classification, BERT base uncased SST2</Name>
+          <Value>zoo:nlp/text_classification/bert-base/pytorch/huggingface/sst2/base-none</Value>
+        </Entry>
+        <Entry>
+          <Name>NLP Text Classification, DistilBERT mnli</Name>
+          <Value>zoo:nlp/text_classification/distilbert-none/pytorch/huggingface/mnli/base-none</Value>
+        </Entry>
+        <Entry>
+          <Name>CV Classification, ResNet-50 ImageNet</Name>
+          <Value>zoo:cv/classification/resnet_v1-50/pytorch/sparseml/imagenet/base-none</Value>
+        </Entry>
+        <Entry>
+          <Name>NLP Token Classification, BERT base uncased conll2003</Name>
+          <Value>zoo:nlp/token_classification/bert-base/pytorch/huggingface/conll2003/base-none</Value>
+        </Entry>
+        <Entry>
+          <Name>NLP Question Answering, BERT base uncased SQuaD 12layer Pruned90</Name>
+          <Value>zoo:nlp/question_answering/bert-base/pytorch/huggingface/squad/12layer_pruned90-none</Value>
+        </Entry>
+        <Entry>
+          <Name>CV Detection, YOLOv5s COCO</Name>
+          <Value>zoo:cv/detection/yolov5-s/pytorch/ultralytics/coco/base-none</Value>
+        </Entry>
+        <Entry>
+          <Name>NLP Document Classification, oBERT base uncased on IMDB</Name>
+          <Value>zoo:nlp/document_classification/obert-base/pytorch/huggingface/imdb/base-none</Value>
+        </Entry>
+        <Entry>
+          <Name>NLP Sentiment Analysis, 80% Pruned Quantized BERT Base Uncased</Name>
+          <Value>zoo:nlp/sentiment_analysis/bert-base/pytorch/huggingface/sst2/12layer_pruned90-none</Value>
+        </Entry>
+        <Entry>
+          <Name>CV Segmentation, 90% Pruned YOLACT Pruned</Name>
+          <Value>zoo:cv/segmentation/yolact-darknet53/pytorch/dbolya/coco/pruned90-none</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Scenario</DisplayName>
+      <Identifier>scenario</Identifier>
+      <ArgumentPrefix>--scenario </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>Synchronous Single-Stream</Name>
+          <Value>sync</Value>
+        </Entry>
+        <Entry>
+          <Name>Asynchronous Multi-Stream</Name>
+          <Value>async</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

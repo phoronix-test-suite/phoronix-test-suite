@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.5-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>	results samples= 6934  total_time= 90  min_fps= #_MIN_RESULT_#  max_fps= #_MAX_RESULT_#  min_frame_time_ms= 10.615730  max_frame_time_ms= 17.337458  avg_fps= #_RESULT_#  avg_frame_time_ms= 13.126434  /&gt;</OutputTemplate>
+    <LineHint>results </LineHint>
+  </ResultsParser>
+  <ExtraData>
+    <Identifier>csv-f1-frame-times</Identifier>
+  </ExtraData>
+</PhoronixTestSuite>

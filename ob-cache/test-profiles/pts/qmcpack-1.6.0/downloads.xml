@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/QMCPACK/qmcpack/archive/refs/tags/v3.16.0.tar.gz</URL>
+      <MD5>eff42c556f3869e2b21ea2ac8a018352</MD5>
+      <SHA256>0d415e23eb62069b0d3ecc50b5e2df5d921c7c7ad2d996a1fccb2f28b3aaf904</SHA256>
+      <FileName>qmcpack-3.16.0.tar.gz</FileName>
+      <FileSize>121234019</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>             6          256           57      15.0000           4936711680   #_RESULT_#</OutputTemplate>
+    <LineBeforeHint>samples/s</LineBeforeHint>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Total Time: 26.993 sec. Fps(avg): #_RESULT_# encoded Frames 600</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

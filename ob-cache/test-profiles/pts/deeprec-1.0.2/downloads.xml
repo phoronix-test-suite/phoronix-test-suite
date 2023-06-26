@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/deeprec-cpu-benchmark-run-1.tar.xz</URL>
+      <MD5>76e7ee3b7435feb3b590406df3aecd2b</MD5>
+      <SHA256>61fdadfd080e551274ce76af958c1d3d7e6f6187854635ab7b88fa4a38e00c37</SHA256>
+      <FileName>deeprec-cpu-benchmark-run-1.tar.xz</FileName>
+      <FileSize>5472</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

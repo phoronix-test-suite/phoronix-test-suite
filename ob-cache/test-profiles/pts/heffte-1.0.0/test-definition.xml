@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>HeFFTe - Highly Efficient FFT for Exascale</Title>
+    <AppVersion>2.3</AppVersion>
+    <Description>HeFFTe is the Highly Efficient FFT for Exascale software developed as part of the Exascale Computing Project. This test profile uses HeFFTe's built-in speed benchmarks under a variety of configuration options and currently catering to CPU/processor testing.</Description>
+    <ResultScale>GFLOP/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Scientific</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, fortran-compiler, openmpi-development, cmake, fftw3-development</ExternalDependencies>
+    <EnvironmentSize>35</EnvironmentSize>
+    <ProjectURL>https://icl.utk.edu/fft/</ProjectURL>
+    <RepositoryURL>https://github.com/icl-utk-edu/heffte</RepositoryURL>
+    <InternalTags>SMP, MPI</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test</Identifier>
+      <Menu>
+        <Entry>
+          <Name>r2c</Name>
+          <Value>r2c</Value>
+        </Entry>
+        <Entry>
+          <Name>c2c</Name>
+          <Value>c2c</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Backend</DisplayName>
+      <Identifier>backend</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Stock</Name>
+          <Value>stock</Value>
+        </Entry>
+        <Entry>
+          <Name>FFTW</Name>
+          <Value>fftw</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Precision</DisplayName>
+      <Identifier>precision</Identifier>
+      <Menu>
+        <Entry>
+          <Name>float</Name>
+          <Value>float</Value>
+        </Entry>
+        <Entry>
+          <Name>float-long</Name>
+          <Value>float-long</Value>
+        </Entry>
+        <Entry>
+          <Name>double</Name>
+          <Value>double</Value>
+        </Entry>
+        <Entry>
+          <Name>double-long</Name>
+          <Value>double-long</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>X Y Z</DisplayName>
+      <Identifier>size</Identifier>
+      <Menu>
+        <Entry>
+          <Name>128</Name>
+          <Value>128 128 128</Value>
+        </Entry>
+        <Entry>
+          <Name>256</Name>
+          <Value>256 256 256</Value>
+        </Entry>
+        <Entry>
+          <Name>512</Name>
+          <Value>512 512 512</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

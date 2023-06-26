@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/xianyi/OpenBLAS/archive/437c0bf2b4697339d96c7bd0bb0bcdac09eccba1.zip</URL>
+      <MD5>622ddcb999fe99aec08f350eac316ffd</MD5>
+      <SHA256>48261b648e3c726e1689e89fc8f2440a00624f35b07b4a0134f1a97fd4eddc30</SHA256>
+      <FileName>OpenBLAS-437c0bf2b4697339d96c7bd0bb0bcdac09eccba1.zip</FileName>
+      <FileSize>42119973</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/facebookresearch/faiss/archive/refs/tags/v1.7.4.tar.gz</URL>
+      <MD5>e1f96b228ec6a0819bc65efb9d196ec6</MD5>
+      <SHA256>d9a7b31bf7fd6eb32c10b7ea7ff918160eed5be04fe63bb7b4b4b5f2bbde01ad</SHA256>
+      <FileName>faiss-1.7.4.tar.gz</FileName>
+      <FileSize>909408</FileSize>
+    </Package>
+    <Package>
+      <URL>ftp://ftp.irisa.fr/local/texmex/corpus/sift.tar.gz</URL>
+      <MD5>b23d1b3b2ee8469d819b61ca900ef0ed</MD5>
+      <SHA256>92f1270c5e3a0cb46b89983e72b0511e4df065c31a9fa0276d8c9b1fca5bc81a</SHA256>
+      <FileName>sift.tar.gz</FileName>
+      <FileSize>168280445</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

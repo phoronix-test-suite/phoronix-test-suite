@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/lballabio/QuantLib/releases/download/QuantLib-v1.30/QuantLib-1.30.tar.gz</URL>
+      <MD5>d2d41da8aa2c177aa0420981b0647baa</MD5>
+      <SHA256>10159054b68cb9a39480d9000b87851f49e6f42474a4cb9367e934bece2363f3</SHA256>
+      <FileName>QuantLib-1.30.tar.gz</FileName>
+      <FileSize>9365725</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

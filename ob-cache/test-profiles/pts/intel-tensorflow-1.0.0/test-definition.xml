@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Intel TensorFlow</Title>
+    <AppVersion>2.12</AppVersion>
+    <Description>Intel optimized version of TensorFlow with benchmarks of Intel AI models and configurable batch sizes.</Description>
+    <ResultScale>images/sec</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>python, build-utilities</ExternalDependencies>
+    <EnvironmentSize>1800</EnvironmentSize>
+    <ProjectURL>https://pypi.org/project/intel-tensorflow/</ProjectURL>
+    <RepositoryURL>https://github.com/IntelAI/models</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <RemoveInstallDirectoryOnReinstall>FALSE</RemoveInstallDirectoryOnReinstall>
+    <SystemDependencies>numactl</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Model</DisplayName>
+      <Identifier>model</Identifier>
+      <Menu>
+        <Entry>
+          <Name>resnet50_fp32_pretrained_model</Name>
+          <Value>resnet50_fp32_pretrained_model.pb</Value>
+        </Entry>
+        <Entry>
+          <Name>resnet50_int8_pretrained_model</Name>
+          <Value>resnet50_int8_pretrained_model.pb</Value>
+        </Entry>
+        <Entry>
+          <Name>inceptionv4_fp32_pretrained_model</Name>
+          <Value>inceptionv4_fp32_pretrained_model.pb</Value>
+        </Entry>
+        <Entry>
+          <Name>inceptionv4_int8_pretrained_model</Name>
+          <Value>inceptionv4_int8_pretrained_model.pb</Value>
+        </Entry>
+        <Entry>
+          <Name>mobilenetv1_fp32_pretrained_model</Name>
+          <Value>mobilenetv1_fp32_pretrained_model.pb</Value>
+        </Entry>
+        <Entry>
+          <Name>mobilenetv1_int8_pretrained_model</Name>
+          <Value>mobilenetv1_int8_pretrained_model.pb</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Batch Size</DisplayName>
+      <Identifier>batch-size</Identifier>
+      <Menu>
+        <Entry>
+          <Name>1</Name>
+          <Value>1</Value>
+        </Entry>
+        <Entry>
+          <Name>16</Name>
+          <Value>16</Value>
+        </Entry>
+        <Entry>
+          <Name>32</Name>
+          <Value>32</Value>
+        </Entry>
+        <Entry>
+          <Name>64</Name>
+          <Value>64</Value>
+        </Entry>
+        <Entry>
+          <Name>96</Name>
+          <Value>96</Value>
+        </Entry>
+        <Entry>
+          <Name>256</Name>
+          <Value>256</Value>
+        </Entry>
+        <Entry>
+          <Name>512</Name>
+          <Value>512</Value>
+        </Entry>
+        <Entry>
+          <Name>960</Name>
+          <Value>960</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

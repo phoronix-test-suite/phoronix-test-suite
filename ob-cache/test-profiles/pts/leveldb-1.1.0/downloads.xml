@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/google/leveldb/archive/refs/tags/1.23.tar.gz</URL>
+      <MD5>afbde776fb8760312009963f09a586c7</MD5>
+      <SHA256>9a37f8a6174f09bd622bc723b55881dc541cd50747cbd08831c2a82d620f6d76</SHA256>
+      <FileName>leveldb-1.23.tar.gz</FileName>
+      <FileSize>242925</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

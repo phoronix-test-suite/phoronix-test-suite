@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Major kernels total rate (megadofs x time steps / second): #_RESULT_#</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ffmpeg.org/releases/ffmpeg-6.0.tar.xz</URL>
+      <MD5>47b6c5d930937413c3e308e2fdb3dfb5</MD5>
+      <SHA256>57be87c22d9b49c112b6d24bc67d42508660e6b718b3db89c44e47e289137082</SHA256>
+      <FileName>ffmpeg-6.0.tar.xz</FileName>
+      <FileSize>10234012</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

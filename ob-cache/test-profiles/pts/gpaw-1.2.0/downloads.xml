@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://pypi.org/packages/source/g/gpaw/gpaw-23.6.0.tar.gz</URL>
+      <MD5>90e885902c78ad647f0ed95574dbda92</MD5>
+      <SHA256>cceb2bbec137e756c975507a3da6720d72562b214aaf27867972a119bc45a4fa</SHA256>
+      <FileName>gpaw-23.6.0.tar.gz</FileName>
+      <FileSize>1802719</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/mlouhivu/gpaw-benchmarks/archive/5786f2f09f35a01e938323eb0fe32490e0763aef.zip</URL>
+      <MD5>012ce85047b16e5c22436e93837337d9</MD5>
+      <SHA256>a9db35df3bcf5aad1a1f1e471a7e5f155f75a5099031ccd2ae3ea1180a5f11b3</SHA256>
+      <FileName>gpaw-benchmarks-5786f2f09f35a01e938323eb0fe32490e0763aef.zip</FileName>
+      <FileSize>12810</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

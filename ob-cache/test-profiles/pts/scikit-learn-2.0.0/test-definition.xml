@@ -1,0 +1,194 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Scikit-Learn</Title>
+    <AppVersion>1.2.2</AppVersion>
+    <Description>Scikit-learn is a Python module for machine learning built on NumPy, SciPy, and is BSD-licensed.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+    <IgnoreRuns>1</IgnoreRuns>
+  </TestInformation>
+  <TestProfile>
+    <Version>2.0.0</Version>
+    <SupportedPlatforms>Linux, BSD</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>python, build-utilities, cmake, fortran-compiler, meson</ExternalDependencies>
+    <ProjectURL>https://scikit-learn.org/</ProjectURL>
+    <RepositoryURL>https://github.com/scikit-learn/scikit-learn</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>pkg-config, python3-config</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Benchmark</DisplayName>
+      <Identifier>benchmark</Identifier>
+      <Menu>
+        <Entry>
+          <Name>20 Newsgroups / Logistic Regression</Name>
+          <Value>20newsgroups.py -e logistic_regression</Value>
+        </Entry>
+        <Entry>
+          <Name>Covertype Dataset Benchmark</Name>
+          <Value>covertype.py</Value>
+        </Entry>
+        <Entry>
+          <Name>Feature Expansions</Name>
+          <Value>feature_expansions.py</Value>
+        </Entry>
+        <Entry>
+          <Name>GLM</Name>
+          <Value>glm.py</Value>
+        </Entry>
+        <Entry>
+          <Name>Glmnet</Name>
+          <Value>glmnet.py</Value>
+        </Entry>
+        <Entry>
+          <Name>Hist Gradient Boosting</Name>
+          <Value>hist_gradient_boosting.py</Value>
+        </Entry>
+        <Entry>
+          <Name>Hist Gradient Boosting Adult</Name>
+          <Value>hist_gradient_boosting_adult.py</Value>
+        </Entry>
+        <Entry>
+          <Name>Hist Gradient Boosting Categorical Only</Name>
+          <Value>hist_gradient_boosting_categorical_only.py</Value>
+        </Entry>
+        <Entry>
+          <Name>Hist Gradient Boosting Higgs Boson</Name>
+          <Value>hist_gradient_boosting_higgsboson.py</Value>
+        </Entry>
+        <Entry>
+          <Name>Hist Gradient Boosting Threading</Name>
+          <Value>hist_gradient_boosting_threading.py</Value>
+        </Entry>
+        <Entry>
+          <Name>Isolation Forest</Name>
+          <Value>isolation_forest.py</Value>
+        </Entry>
+        <Entry>
+          <Name>Isotonic / Perturbed Logarithm</Name>
+          <Value>isotonic.py --iterations 100 --log_min_problem_size 1 --log_max_problem_size 10 --dataset perturbed_logarithm</Value>
+        </Entry>
+        <Entry>
+          <Name>Isotonic / Logistic</Name>
+          <Value>isotonic.py --iterations 100 --log_min_problem_size 1 --log_max_problem_size 10 --dataset logistic</Value>
+        </Entry>
+        <Entry>
+          <Name>Isotonic / Pathological</Name>
+          <Value>isotonic.py --iterations 100 --log_min_problem_size 1 --log_max_problem_size 10 --dataset pathological</Value>
+        </Entry>
+        <Entry>
+          <Name>Kernel PCA Solvers / Time vs. N Components</Name>
+          <Value>kernel_pca_solvers_time_vs_n_components.py</Value>
+        </Entry>
+        <Entry>
+          <Name>Kernel PCA Solvers / Time vs. N Samples</Name>
+          <Value>kernel_pca_solvers_time_vs_n_samples.py</Value>
+        </Entry>
+        <Entry>
+          <Name>Lasso</Name>
+          <Value>lasso.py</Value>
+        </Entry>
+        <Entry>
+          <Name>LocalOutlierFactor</Name>
+          <Value>lof.py</Value>
+        </Entry>
+        <Entry>
+          <Name>SGDOneClassSVM</Name>
+          <Value>online_ocsvm.py</Value>
+        </Entry>
+        <Entry>
+          <Name>Plot Fast KMeans</Name>
+          <Value>plot_fastkmeans.py</Value>
+        </Entry>
+        <Entry>
+          <Name>Plot Hierarchical</Name>
+          <Value>plot_hierarchical.py</Value>
+        </Entry>
+        <Entry>
+          <Name>Plot Incremental PCA</Name>
+          <Value>plot_incremental_pca.py</Value>
+        </Entry>
+        <Entry>
+          <Name>Plot Lasso Path</Name>
+          <Value>plot_lasso_path.py</Value>
+        </Entry>
+        <Entry>
+          <Name>Plot Neighbors</Name>
+          <Value>plot_neighbors.py</Value>
+        </Entry>
+        <Entry>
+          <Name>Plot Non-Negative Matrix Factorization</Name>
+          <Value>plot_nmf.py</Value>
+        </Entry>
+        <Entry>
+          <Name>Plot OMP vs. LARS</Name>
+          <Value>plot_omp_lars.py</Value>
+        </Entry>
+        <Entry>
+          <Name>Plot Parallel Pairwise</Name>
+          <Value>plot_parallel_pairwise.py</Value>
+        </Entry>
+        <Entry>
+          <Name>Plot Polynomial Kernel Approximation</Name>
+          <Value>plot_polynomial_kernel_approximation.py</Value>
+        </Entry>
+        <Entry>
+          <Name>Plot Singular Value Decomposition</Name>
+          <Value>plot_svd.py</Value>
+        </Entry>
+        <Entry>
+          <Name>Plot Ward</Name>
+          <Value>plot_ward.py</Value>
+        </Entry>
+        <Entry>
+          <Name>Sparse Random Projections / 100 Iterations</Name>
+          <Value>random_projections.py --n-times 100</Value>
+        </Entry>
+        <Entry>
+          <Name>RCV1 Logreg Convergencet</Name>
+          <Value>rcv1_logreg_convergence.py</Value>
+        </Entry>
+        <Entry>
+          <Name>SAGA</Name>
+          <Value>saga.py</Value>
+        </Entry>
+        <Entry>
+          <Name>Sample Without Replacement</Name>
+          <Value>sample_without_replacement.py</Value>
+        </Entry>
+        <Entry>
+          <Name>SGD Regression</Name>
+          <Value>sgd_regression.py</Value>
+        </Entry>
+        <Entry>
+          <Name>Sparsify</Name>
+          <Value>sparsify.py</Value>
+        </Entry>
+        <Entry>
+          <Name>Text Vectorizers</Name>
+          <Value>text_vectorizers.py</Value>
+        </Entry>
+        <Entry>
+          <Name>Tree</Name>
+          <Value>tree.py</Value>
+        </Entry>
+        <Entry>
+          <Name>MNIST Dataset</Name>
+          <Value>mnist.py</Value>
+        </Entry>
+        <Entry>
+          <Name>TSNE MNIST Dataset</Name>
+          <Value>tsne_mnist.py</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

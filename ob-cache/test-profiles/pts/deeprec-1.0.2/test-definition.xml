@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>DeepRec</Title>
+    <Description>DeepRec is a recommendation AI engine based on TensorFlow. This test profile is currently configured just for CPU-based execution.</Description>
+    <ResultScale>Throughput</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.2</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>python</ExternalDependencies>
+    <RequiresInternet>TRUE</RequiresInternet>
+    <EnvironmentSize>7000</EnvironmentSize>
+    <ProjectURL>https://deeprec.readthedocs.io/en/latest/</ProjectURL>
+    <RepositoryURL>https://github.com/DeepRec-AI/DeepRec</RepositoryURL>
+    <InternalTags>Cloud, Docker, AI</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>docker</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Model</DisplayName>
+      <Identifier>model</Identifier>
+      <Menu>
+        <Entry>
+          <Name>DIN</Name>
+          <Value>din</Value>
+        </Entry>
+        <Entry>
+          <Name>DLRM</Name>
+          <Value>dlrm</Value>
+        </Entry>
+        <Entry>
+          <Name>MMOE</Name>
+          <Value>mmoe</Value>
+        </Entry>
+        <Entry>
+          <Name>BST</Name>
+          <Value>bst</Value>
+        </Entry>
+        <Entry>
+          <Name>PLE</Name>
+          <Value>ple</Value>
+        </Entry>
+        <Entry>
+          <Name>DCNv2</Name>
+          <Value>dcnv2</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Data Type</DisplayName>
+      <Identifier>data-type</Identifier>
+      <Menu>
+        <Entry>
+          <Name>BF16</Name>
+          <Value>bf16</Value>
+        </Entry>
+        <Entry>
+          <Name>FP32</Name>
+          <Value>fp32</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

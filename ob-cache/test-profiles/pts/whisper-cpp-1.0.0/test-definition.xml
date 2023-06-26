@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Whisper.cpp</Title>
+    <AppVersion>1.4</AppVersion>
+    <Description>Whisper.cpp is a port of OpenAI's Whisper model in C/C++. Whisper.cpp is developed by Georgi Gerganov for transcribing WAV audio files to text / speech recognition. Whisper.cpp supports ARM NEON, x86 AVX, and other advanced CPU features.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <InstallRequiresInternet>TRUE</InstallRequiresInternet>
+    <EnvironmentSize>558</EnvironmentSize>
+    <ProjectURL>https://github.com/ggerganov/whisper.cpp/</ProjectURL>
+    <RepositoryURL>https://github.com/ggerganov/whisper.cpp</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>ffmpeg</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Model</DisplayName>
+      <Identifier>model</Identifier>
+      <ArgumentPrefix>-m models/</ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>ggml-base.en</Name>
+          <Value>ggml-base.en.bin</Value>
+        </Entry>
+        <Entry>
+          <Name>ggml-small.en</Name>
+          <Value>ggml-small.en.bin</Value>
+        </Entry>
+        <Entry>
+          <Name>ggml-medium.en</Name>
+          <Value>ggml-medium.en.bin</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Input</DisplayName>
+      <Identifier>input</Identifier>
+      <ArgumentPrefix>-f ../</ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>2016 State of the Union</Name>
+          <Value>2016-state-of-the-union.wav</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://www.xilinx.com/bin/public/openDownload?filename=tf_resnetv1_50_imagenet_224_224_6.97G_1.1_Z4.0.zip</URL>
+      <MD5>2d9f3456e7e510e24ee8a42619f619df</MD5>
+      <SHA256>ac93a6be5956aa863ff07fa7fc45927e6f33afb7daadc35922425ef3e4e2a57c</SHA256>
+      <FileName>tf_resnetv1_50_imagenet_224_224_6.97G_1.1_Z4.0.zip</FileName>
+      <FileSize>190235494</FileSize>
+    </Package>
+    <Package>
+      <URL>https://www.xilinx.com/bin/public/openDownload?filename=tf_inceptionv4_imagenet_299_299_24.55G_1.1_Z4.0.zip</URL>
+      <MD5>2a053598830417af4628cca4ffcd60e5</MD5>
+      <SHA256>615779bd3fda004c59085692ed5ac0dea2ade9ca3c827f38f8d13451d020fd1b</SHA256>
+      <FileName>tf_inceptionv4_imagenet_299_299_24.55G_1.1_Z4.0.zip</FileName>
+      <FileSize>317362920</FileSize>
+    </Package>
+    <Package>
+      <URL>https://www.xilinx.com/bin/public/openDownload?filename=tf_mobilenetv1_1.0_imagenet_224_224_1.14G_1.1_Z4.0.zip</URL>
+      <MD5>a60a31eb39484b971bb3583ab8121540</MD5>
+      <SHA256>0d4d28c01098c9ae79d5a884494d7db90b8a850581b83472e6dbbb4f6243a7f8</SHA256>
+      <FileName>tf_mobilenetv1_1.0_imagenet_224_224_1.14G_1.1_Z4.0.zip</FileName>
+      <FileSize>31519212</FileSize>
+    </Package>
+    <Package>
+      <MD5>d0b17b669fe9385bc643d988fd075598</MD5>
+      <SHA256>2c9778612f000afc2c00e05fd5b1f68c9517b77702aef8076570a064ff2a94c8</SHA256>
+      <FileName>TF_v2.10_ZenDNN_v4.0_Python_v3.10.zip</FileName>
+      <FileSize>252041594</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

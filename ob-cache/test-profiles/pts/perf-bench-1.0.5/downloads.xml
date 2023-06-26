@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-6.2.6.tar.xz, http://ftp.jaist.ac.jp/pub/Linux/kernel.org/linux/kernel/v6.x/linux-6.2.6.tar.xz</URL>
+      <MD5>b1e4f3e49a05c6e26c0e18e363a3dc9a</MD5>
+      <SHA256>1fe2f1d7ceb7129c111159d8efd361971dbf212206f81e7078b98df8b00b3d9d</SHA256>
+      <FileName>linux-6.2.6.tar.xz</FileName>
+      <FileSize>136460416</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://nodejs.org/dist/v19.8.1/node-v19.8.1.tar.xz</URL>
+      <MD5>75344f2a61c0737194f8b9d76dfaef92</MD5>
+      <SHA256>2411e58e1d4644c4d4a82bcf3061b95e672c9f214de017d42f032cfae07461cb</SHA256>
+      <FileName>node-v19.8.1.tar.xz</FileName>
+      <FileSize>40987420</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

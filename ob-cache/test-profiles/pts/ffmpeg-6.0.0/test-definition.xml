@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>FFmpeg</Title>
+    <AppVersion>6.0</AppVersion>
+    <Description>This is a benchmark of the FFmpeg multimedia framework. The FFmpeg test profile is making use of a modified version of vbench from Columbia University's Architecture and Design Lab (ARCADE) [http://arcade.cs.columbia.edu/vbench/] that is a benchmark for video-as-a-service workloads. The test profile offers the options of a range of vbench scenarios based on freely distributable video content and offers the options of using the x264 or x265 video encoders for transcoding.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>6.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, yasm, nasm, python, cmake</ExternalDependencies>
+    <EnvironmentSize>1300</EnvironmentSize>
+    <ProjectURL>https://ffmpeg.org/</ProjectURL>
+    <RepositoryURL>https://github.com/FFmpeg/FFmpeg</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Encoder</DisplayName>
+      <Identifier>encoder</Identifier>
+      <ArgumentPrefix>--encoder=</ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>libx264</Name>
+          <Value>libx264</Value>
+        </Entry>
+        <Entry>
+          <Name>libx265</Name>
+          <Value>libx265</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Scenario</DisplayName>
+      <Identifier>scenario</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Live</Name>
+          <Value>live</Value>
+        </Entry>
+        <Entry>
+          <Name>Upload</Name>
+          <Value>upload</Value>
+        </Entry>
+        <Entry>
+          <Name>Platform</Name>
+          <Value>platform</Value>
+        </Entry>
+        <Entry>
+          <Name>Video On Demand</Name>
+          <Value>vod</Value>
+        </Entry>
+        <Entry>
+          <Name>Upload</Name>
+          <Value>upload</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

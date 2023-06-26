@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ffmpeg.org/releases/ffmpeg-6.0.tar.xz</URL>
+      <MD5>47b6c5d930937413c3e308e2fdb3dfb5</MD5>
+      <SHA256>57be87c22d9b49c112b6d24bc67d42508660e6b718b3db89c44e47e289137082</SHA256>
+      <FileName>ffmpeg-6.0.tar.xz</FileName>
+      <FileSize>10234012</FileSize>
+      <PlatformSpecific>Linux, BSD</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://downloads.videolan.org/pub/videolan/dav1d/1.2.1/dav1d-1.2.1.tar.xz</URL>
+      <MD5>bc10a9a4e2d63bf22a6b9277f83cf9c1</MD5>
+      <SHA256>4e33eb61ec54c768a16da0cf8fa0928b4c4593f5f804a3c887d4a21c318340b2</SHA256>
+      <FileName>dav1d-1.2.1.tar.xz</FileName>
+      <FileSize>873008</FileSize>
+      <PlatformSpecific>Linux, BSD</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/Stream2_AV1_HD_6.8mbps.webm</URL>
+      <MD5>5e4c83cf494cbe6dc1668cbbd7ff774c</MD5>
+      <SHA256>2f23d29750a0663a6df656e8137cf934bddfc96b31e5088db2c3624f19ed14d4</SHA256>
+      <FileName>Stream2_AV1_HD_6.8mbps.webm</FileName>
+      <FileSize>122378926</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/Stream2_AV1_4K_22.7mbps.webm</URL>
+      <MD5>8acc9c60c10a37bf4e568b465b03e35a</MD5>
+      <SHA256>52f3aa1d4b4487af62d37b0f295aabbc4b57f03fdc4c76402c6358193e4aa490</SHA256>
+      <FileName>Stream2_AV1_4K_22.7mbps.webm</FileName>
+      <FileSize>409458359</FileSize>
+    </Package>
+    <Package>
+      <URL>http://download.opencontent.netflix.com.s3.amazonaws.com/AV1/Chimera/Old/Chimera-AV1-8bit-1920x1080-6736kbps.mp4</URL>
+      <MD5>d444e11f8b049de2a9739899a9c0b4f6</MD5>
+      <SHA256>d566d294e2c18bb274a54aad03352c92312a62c393656d38e1f7dda10c0bf10c</SHA256>
+      <FileName>Chimera-AV1-8bit-1920x1080-6736kbps.mp4</FileName>
+      <FileSize>313490236</FileSize>
+    </Package>
+    <Package>
+      <URL>http://download.opencontent.netflix.com.s3.amazonaws.com/AV1/Chimera/Old/Chimera-AV1-10bit-1920x1080-6191kbps.mp4</URL>
+      <MD5>4c0f24bac42ddcda3d46087a36492ce4</MD5>
+      <SHA256>df2080fd77e0dbd9138bd4f172bf008d2ade17da7ab4532fba54ceccf40a9439</SHA256>
+      <FileName>Chimera-AV1-10bit-1920x1080-6191kbps.mp4</FileName>
+      <FileSize>288122748</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/GyanD/codexffmpeg/releases/download/6.0/ffmpeg-6.0-full_build.zip</URL>
+      <MD5>208027a45fe91e6af125020d8b7dea9b</MD5>
+      <SHA256>f5df7a970919aa0df2a4f6df4ef0bbe85e6b7c41d343556e7210837a63b3133c</SHA256>
+      <FileName>ffmpeg-6.0-full_build.zip</FileName>
+      <FileSize>157599465</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/dav1d-build-win64-1-2-1.zip</URL>
+      <MD5>d2b6102a5d69a4d417e4b0836cdfc980</MD5>
+      <SHA256>dc2e8dd1e8bde6bff411ae22afeda0c7f120efece8e5c54910a36423769bee76</SHA256>
+      <FileName>dav1d-build-win64-1-2-1.zip</FileName>
+      <FileSize>2368857</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

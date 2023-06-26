@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.2-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>OSPray Studio</Title>
+    <AppVersion>0.10</AppVersion>
+    <Description>Intel OSPray Studio is an open-source, interactive visualization and ray-tracing software package. OSPray Studio makes use of Intel OSPray, a portable ray-tracing engine for high-performance, high-fidelity visualizations. OSPray builds off Intel's Embree and Intel SPMD Program Compiler (ISPC) components as part of the oneAPI rendering toolkit.</Description>
+    <ResultScale>ms</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, cmake, xorg-development, glew</ExternalDependencies>
+    <InstallRequiresInternet>TRUE</InstallRequiresInternet>
+    <EnvironmentSize>645</EnvironmentSize>
+    <ProjectURL>http://www.ospray.org/ospray_studio/</ProjectURL>
+    <RepositoryURL>https://github.com/ospray/ospray_studio/</RepositoryURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <PostArguments> --benchmark_min_time=60</PostArguments>
+    </Default>
+    <Option>
+      <DisplayName>Camera</DisplayName>
+      <Identifier>camera</Identifier>
+      <ArgumentPrefix>--cameras </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>1</Name>
+          <Value>1 1</Value>
+        </Entry>
+        <Entry>
+          <Name>2</Name>
+          <Value>2 2</Value>
+        </Entry>
+        <Entry>
+          <Name>3</Name>
+          <Value>3 3</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Resolution</DisplayName>
+      <Identifier>resolution</Identifier>
+      <ArgumentPrefix>--resolution </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>1080p</Name>
+          <Value>1920 1080</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Samples Per Pixel</DisplayName>
+      <Identifier>spp</Identifier>
+      <ArgumentPrefix>--spp </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>1</Name>
+          <Value>1</Value>
+        </Entry>
+        <Entry>
+          <Name>16</Name>
+          <Value>16</Value>
+        </Entry>
+        <Entry>
+          <Name>32</Name>
+          <Value>32</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Renderer</DisplayName>
+      <Identifier>renderer</Identifier>
+      <ArgumentPrefix>--renderer </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>Path Tracer</Name>
+          <Value>pathtracer</Value>
+          <Message>Supports soft shadows, indirect illumination and realistic materials.</Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

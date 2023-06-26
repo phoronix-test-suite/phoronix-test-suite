@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/libxsmm/libxsmm/archive/29504031f7234b412e6a5079d826ab1375f11408.zip</URL>
+      <MD5>e12af91c1bc8f38374714916e371c7b2</MD5>
+      <SHA256>ac4ad7c1910cc42bece203a9699c0207805a38f8bda7ea0fc6607644cf41014b</SHA256>
+      <FileName>libxsmm-29504031f7234b412e6a5079d826ab1375f11408.zip</FileName>
+      <FileSize>5889895</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>
