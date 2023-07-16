@@ -165,7 +165,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 		$this->sensor_data_archived = array();
 		$this->sensor_data_archived_units = array();
 		$this->sensor_data_archived_identifiers = array();
-		$this->stress_logger = new pts_logger(null, 'phoronix-test-suite-stress-' . date('ymdHi') . '.log');
+		$this->stress_logger = new pts_logger(null, 'phoronix-test-suite-stress-' . date('ymdHi') . '.log', true, true);
 		$this->stress_logger->log('Log Initialized');
 		pts_env::set('FORCE_TIMES_TO_RUN', 1);
 

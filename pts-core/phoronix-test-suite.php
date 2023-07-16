@@ -86,7 +86,7 @@ setlocale(LC_ALL, 'C');
 // Needed for shutdown functions
 // declare(ticks = 1);
 
-$sent_command = strtolower(str_replace('-', '_', (isset($argv[1]) ? $argv[1] : null)));
+$sent_command = isset($argv[1]) && !empty($argv[1]) ? strtolower(str_replace('-', '_', $argv[1])) : '';
 $quick_start_options = array('dump_possible_options');
 pts_define('QUICK_START', in_array($sent_command, $quick_start_options));
 

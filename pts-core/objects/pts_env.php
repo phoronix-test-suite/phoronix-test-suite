@@ -383,6 +383,14 @@ class pts_env
 			'value_type' => 'bool',
 			'advertise_in_phoromatic' => true,
 			),
+		'LOG_CLI_OUTPUT' => array(
+			'description' => '[EXPERIMENTAL] When this option is enabled, the Phoronix Test Suite standard output from the terminal will be logged to any relevant Phoronix Test Suite / Phoromatic log file. This is mainly useful for debugging purposes and if wishing to always archive the standard output as part of Phoronix Test Suite logs.',
+			'default' => false,
+			'usage' => array('all'),
+			'value_type' => 'bool',
+			'advertise_in_phoromatic' => true,
+			'onchange' => 'pts_logger::update_log_cli_output_state',
+			),
 		);
 
 	public static function read($name, &$overrides = null, $fallback_value = false)

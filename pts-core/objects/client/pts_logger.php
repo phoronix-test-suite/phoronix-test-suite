@@ -25,7 +25,7 @@ class pts_logger
 {
 	private $log_file = null;
 
-	public function __construct($log_file = null, $file_name = null, $flush_log_if_present = true)
+	public function __construct($log_file = null, $file_name = null, $flush_log_if_present = true, $allow_including_std_output = false)
 	{
 		if($log_file == null)
 		{
@@ -45,9 +45,6 @@ class pts_logger
 			}
 		}
 
-	//	if(file_exists($log_file))
-	//		unlink($log_file);
-
 		if($flush_log_if_present || !file_exists($log_file))
 		{
 			// Flush log
@@ -59,6 +56,32 @@ class pts_logger
 
 		if(is_writable($log_file))
 			$this->log_file = $log_file;
+
+		if($allow_including_std_output && pts_client::$display)
+		{
+			// Add to list of loggers indicating interest/relevance for possibly including std/cli output
+			pts_logger_intercept_display::$loggers_interested_in_std_output[$this->log_file] = &$this;
+			self::update_log_cli_output_state();
+		}
+	}
+	public static function update_log_cli_output_state()
+	{
+		if(pts_env::read('LOG_CLI_OUTPUT'))
+		{
+			// enable
+			if(pts_client::$display instanceof pts_display_mode_interface && !empty(pts_logger_intercept_display::$loggers_interested_in_std_output))
+			{
+				pts_client::$display = new pts_logger_intercept_display(pts_client::$display);
+			}
+		}
+		else
+		{
+			// disable/restore to original
+			if(pts_client::$display instanceof pts_logger_intercept_display && pts_client::$display->underlying_display instanceof pts_display_mode_interface)
+			{
+				pts_client::$display = pts_client::$display->underlying_display;
+			}
+		}
 	}
 	public static function default_log_file_path()
 	{
@@ -155,6 +178,68 @@ class pts_logger
 		}
 
 		$this->log($error_string);
+	}
+}
+
+class pts_logger_intercept_display
+{
+	public $underlying_display;
+	public static $loggers_interested_in_std_output = array();
+
+	public function __construct($display)
+	{
+		$this->underlying_display = $display;
+	}
+	public function __call($method, $args)
+	{
+		$intercepted_text = '';
+		static $line_queued = '';
+
+		if($this->underlying_display instanceof pts_display_mode_interface)
+		{
+			foreach($args as &$arg)
+			{
+				// Workaround PHP warning for pts_display_mode_interface args that expect refs passed
+				$arg = &$arg;
+			}
+			ob_start();
+			call_user_func_array(array($this->underlying_display, $method), $args);
+			$intercepted_text = ob_get_contents();
+			ob_end_clean();
+			echo $intercepted_text;
+		}
+		if(!empty($intercepted_text) && !empty(pts_logger_intercept_display::$loggers_interested_in_std_output))
+		{
+			$line_queued .= pts_user_io::strip_ansi_escape_sequences($intercepted_text);
+
+			// Wait until a line is printed in full before flushing to log due to how the display mode interface can build up strings
+			if(substr($line_queued, -1) == "\n")
+			{
+				$lq_rebuild = '';
+				foreach(explode(PHP_EOL, $line_queued) as $line)
+				{
+					if(function_exists('preg_replace'))
+					{
+						$line = preg_replace('/\s+/', ' ', $line);
+					}
+					// Trim excess gunk not useful for log
+					$line = trim(rtrim(trim($line), '.'), '=');
+
+					if(!empty($line))
+					{
+						$lq_rebuild .= $line  . PHP_EOL . str_repeat(' ', 27);
+					}
+				}
+				foreach(pts_logger_intercept_display::$loggers_interested_in_std_output as &$logger)
+				{
+					if($logger)
+					{
+						$logger->log(trim($lq_rebuild));
+					}
+				}
+				$line_queued = '';
+			}
+		}
 	}
 }
 

@@ -474,7 +474,7 @@ class phoromatic extends pts_module_interface
 
 		if(pts_client::$pts_logger == false)
 		{
-			pts_client::$pts_logger = new pts_logger();
+			pts_client::$pts_logger = new pts_logger(null, null, true, true);
 		}
 		pts_client::$pts_logger->log(pts_core::program_title() . ' [' . PTS_CORE_VERSION . '] starting Phoromatic client');
 

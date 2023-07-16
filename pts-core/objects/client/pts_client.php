@@ -809,6 +809,7 @@ class pts_client
 				self::$display = new pts_concise_display_mode();
 				break;
 		}
+		pts_logger::update_log_cli_output_state();
 	}
 	public static function program_requirement_checks($only_show_required = false, $always_report = false)
 	{

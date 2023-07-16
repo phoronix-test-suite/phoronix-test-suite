@@ -80,7 +80,7 @@ class pts_test_run_manager
 
 		// 1/true is normal auto mode, 2 = auto + default benchmark mode
 		$this->auto_mode = $auto_mode;
-		$this->benchmark_log = new pts_logger(null, 'phoronix-test-suite-benchmark.log');
+		$this->benchmark_log = new pts_logger(null, 'phoronix-test-suite-benchmark.log', true, true);
 		$this->test_run_success_counter = 0;
 		$this->remove_tests_on_completion = pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/RemoveTestInstallOnCompletion', 'FALSE') || pts_env::read('REMOVE_TESTS_ON_COMPLETION');
 
