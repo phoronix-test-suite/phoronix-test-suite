@@ -797,6 +797,9 @@ class phodevi_cpu extends phodevi_device_interface
 						case '0xd21':
 							$new_info .= ' Cortex-M33';
 							break;
+						case '0xd82':
+							$new_info .= ' Cortex-X4';
+							break;
 					}
 				}
 				else if($implementer == '0x61')
@@ -1395,6 +1398,7 @@ class phodevi_cpu extends phodevi_device_interface
 				189 => 'Lunar Lake',
 				190 => 'Alder Lake',
 				191 => 'Raptor Lake',
+				197 => 'Arrow Lake',
 				198 => 'Arrow Lake',
 				207 => 'Emerald Rapids',
 				),

@@ -353,7 +353,7 @@ class phodevi_gpu extends phodevi_device_interface
 			{
 				$info = shell_exec('xrandr 2>&1 | grep "*"');
 
-				if(strpos($info, '*') !== false)
+				if(!empty($info) && strpos($info, '*') !== false)
 				{
 					$res = pts_strings::trim_explode('x', $info);
 

@@ -810,6 +810,59 @@ class pts_test_result
 
 		return $points_of_interest;
 	}
+	public function is_last_result_worse_than_prior($threshold_level = 0.05)
+	{
+		if($this->test_profile->get_display_format() != 'BAR_GRAPH') // BAR_ANALYZE_GRAPH is currently unsupported
+		{
+			return false;
+		}
+
+		$is_multi_way = pts_render::multi_way_identifier_check($this->test_result_buffer->get_identifiers());
+		$keys = array_keys($this->test_result_buffer->buffer_items);
+
+		if($is_multi_way)
+		{
+			$key_sets = array();
+			foreach($keys as $k)
+			{
+				$identifier_r = pts_strings::trim_explode(': ', $this->test_result_buffer->buffer_items[$k]->get_result_identifier());
+				if(!isset($key_sets[$identifier_r[0]]))
+				{
+					$key_sets[$identifier_r[0]] = array();
+				}
+				$key_sets[$identifier_r[0]][] = $k;
+			}
+		}
+		else
+		{
+			$key_sets = array($keys);
+		}
+
+		foreach($key_sets as $keys)
+		{
+			$prev_value = -1;
+			$prev_id = -1;
+			foreach($keys as $k)
+			{
+				$first_value = pts_arrays::first_element($this->test_result_buffer->buffer_items)->get_result_value();
+				$last_value = pts_arrays::last_element($this->test_result_buffer->buffer_items)->get_result_value();
+				//echo 'first: ' . $first_value . ' last: ' . $last_value . '<br />';
+
+				if($this->test_profile->get_result_proportion() == 'HIB')
+				{
+					if($last_value < $first_value * (1 - $threshold_level))
+						return true;
+				}
+				else if($this->test_profile->get_result_proportion() == 'LIB')
+				{
+					if($last_value > $first_value * (1 + $threshold_level))
+						return true;
+				}
+			}
+		}
+
+		return false;
+	}
 }
 
 ?>

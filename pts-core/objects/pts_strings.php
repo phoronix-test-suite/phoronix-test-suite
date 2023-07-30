@@ -484,7 +484,7 @@ class pts_strings
 	}
 	public static function remove_from_string($string, $attributes)
 	{
-		$string_r = str_split($string);
+		$string_r = empty($string) ? array() : str_split($string);
 		$new_string = null;
 
 		foreach($string_r as $char)
@@ -499,7 +499,7 @@ class pts_strings
 	}
 	public static function keep_in_string($string, $attributes)
 	{
-		$string_r = str_split($string);
+		$string_r = empty($string) ? array() : str_split($string);
 		$new_string = null;
 
 		foreach($string_r as $char)
@@ -514,7 +514,7 @@ class pts_strings
 	}
 	public static function string_only_contains($string, $attributes)
 	{
-		$string_r = str_split($string);
+		$string_r = empty($string) ? array() : str_split($string);
 
 		foreach($string_r as $char)
 		{
@@ -528,7 +528,7 @@ class pts_strings
 	}
 	public static function string_contains($string, $attributes)
 	{
-		$string_r = str_split($string);
+		$string_r = empty($string) ? array() : str_split($string);
 
 		foreach($string_r as $char)
 		{
@@ -542,7 +542,7 @@ class pts_strings
 	}
 	public static function times_occurred($string, $attributes)
 	{
-		$string_r = str_split($string);
+		$string_r = empty($string) ? array() : str_split($string);
 		$times_matched = 0;
 
 		foreach($string_r as $char)
