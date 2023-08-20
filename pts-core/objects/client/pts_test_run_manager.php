@@ -63,6 +63,7 @@ class pts_test_run_manager
 	public $benchmark_log = null;
 	public $test_run_success_counter = 0;
 	public $remove_tests_on_completion = false;
+	public $sleep_time_between_tests = 6;
 
 	public function __construct($batch_mode = false, $auto_mode = false)
 	{
@@ -83,6 +84,7 @@ class pts_test_run_manager
 		$this->benchmark_log = new pts_logger(null, 'phoronix-test-suite-benchmark.log', true, true);
 		$this->test_run_success_counter = 0;
 		$this->remove_tests_on_completion = pts_config::read_bool_config('PhoronixTestSuite/Options/Testing/RemoveTestInstallOnCompletion', 'FALSE') || pts_env::read('REMOVE_TESTS_ON_COMPLETION');
+		$this->sleep_time_between_tests = pts_config::read_user_config('PhoronixTestSuite/Options/Testing/SleepTimeBetweenTests', $this->sleep_time_between_tests);
 
 		pts_module_manager::module_process('__run_manager_setup', $this);
 	}
@@ -803,8 +805,7 @@ class pts_test_run_manager
 		}
 		if(($run_index != 0 && count(pts_file_io::glob($test_run_request->test_profile->get_install_dir() . 'cache-share-*.pt2so')) == 0))
 		{
-			// Sleep for six seconds between tests by default
-			sleep(6);
+			sleep($this->sleep_time_between_tests);
 		}
 
 		$this->benchmark_log->log('Executing Test: ' . $test_run_request->test_profile->get_identifier());

@@ -123,6 +123,7 @@ class pts_config
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Testing/SaveSystemLogs', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Testing/SaveInstallationLogs', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Testing/SaveTestLogs', $read_config);
+		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Testing/SleepTimeBetweenTests', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Testing/RemoveTestInstallOnCompletion', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Testing/ResultsDirectory', $read_config);
 		$config->addXmlNodeFromReader('PhoronixTestSuite/Options/Testing/AlwaysUploadResultsToOpenBenchmarking', $read_config);
