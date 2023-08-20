@@ -364,7 +364,7 @@ class pts_test_execution
 					}
 				}
 			}
-			if(in_array(($i + 1), $ignore_runs))
+			if($defined_times_to_run > 1 && in_array(($i + 1), $ignore_runs))
 			{
 				pts_client::$display->test_run_instance_error('Ignoring this run result per test profile definition.');
 			}
