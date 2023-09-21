@@ -93,7 +93,7 @@ rm -f "$DESTDIR$INSTALL_PREFIX"/share/phoronix-test-suite/pts-core/static/images
 rm -f "$DESTDIR$INSTALL_PREFIX"/share/phoronix-test-suite/pts-core/static/images/%phoronix-test-suite.png
 
 
-sed -e 's:export PTS_DIR=$(actualpath "$(dirname "$0")"):export PTS_DIR='"$INSTALL_PREFIX"'\/share\/phoronix-test-suite:g'
+sed -e 's:export PTS_DIR=$(actualpath "$(dirname "$0")"):export PTS_DIR='"$INSTALL_PREFIX"'\/share\/phoronix-test-suite:g' phoronix-test-suite > $DESTDIR$INSTALL_PREFIX/bin/phoronix-test-suite
 chmod +x "$DESTDIR$INSTALL_PREFIX"/bin/phoronix-test-suite
 
 # sed 's:\$url = PTS_PATH . \"documentation\/index.html\";:\$url = \"'"$INSTALL_PREFIX"'\/share\/doc\/packages\/phoronix-test-suite\/index.html\";:g' pts-core/commands/gui_gtk.php > $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/pts-core/commands/gui_gtk.php
