@@ -33,7 +33,7 @@ class network_info implements pts_option_interface
 		$table[] = array('Network MAC: ', phodevi::read_property('network', 'mac-address'));
 		$table[] = array('Wake On LAN: ', implode(' ', pts_network::get_network_wol()));
 
-		if(pts_network::get_network_proxy() != false)
+		if(pts_network::is_proxy_setup())
 		{
 			foreach(pts_network::get_network_proxy() as $item => $val)
 				$table[] = array('Proxy ' . $item, $val);
