@@ -326,6 +326,7 @@ class pts_network
 			// e.g. https://www.phoronix.com/forums/forum/phoronix/phoronix-test-suite/905211-problem-network-support-is-needed-to-obtain-package
 			$proxy_address = str_replace(array('http://', 'https://'), '', $proxy_address);
 
+			self::$network_proxy = array();
 			self::$network_proxy['proxy'] = $proxy_address . ':' . $proxy_port;
 			self::$network_proxy['address'] = $proxy_address;
 			self::$network_proxy['port'] = $proxy_port;
@@ -334,6 +335,7 @@ class pts_network
 		}
 		else if(($env_proxy = getenv('http_proxy')) != false && count($env_proxy = pts_strings::colon_explode($env_proxy)) == 2)
 		{
+			self::$network_proxy = array();
 			self::$network_proxy['proxy'] = $env_proxy[0] . ':' . $env_proxy[1];
 			self::$network_proxy['address'] = $env_proxy[0];
 			self::$network_proxy['port'] = $env_proxy[1];
