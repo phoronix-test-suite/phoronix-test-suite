@@ -29,7 +29,7 @@ class pts_network
 
 	public static function is_proxy_setup()
 	{
-		return self::$network_proxy == false;
+		return self::$network_proxy !== false;
 	}
 	public static function get_network_proxy()
 	{
