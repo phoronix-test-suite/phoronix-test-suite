@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2019 - 2022, Phoronix Media
-	Copyright (C) 2019 - 2022, Michael Larabel
+	Copyright (C) 2019 - 2023, Phoronix Media
+	Copyright (C) 2019 - 2023, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -190,12 +190,11 @@ class dump_ob_to_ae_db implements pts_option_interface
 						$system_identifier = $buffer_item->get_result_identifier();
 						$system_layer = isset($system_data[$system_identifier]['System Layer']) ? $system_data[$system_identifier]['System Layer'] : null;
 
-
 						$hw_type = $ro->test_profile->get_test_hardware_type();
 						$args_desc = $ro->get_arguments_description();
 
 						// Since some tests could stress multiple subsystems, see what the argument descriptions string says
-						if(strpos($args_desc, ' GPU') || strpos($args_desc, ' CUDA') || strpos($args_desc, ' OptiX') || strpos($args_desc, ' OpenCL'))
+						if(strpos($args_desc, ' GPU') || strpos($args_desc, 'GPU ') || strpos($args_desc, ' CUDA') || strpos($args_desc, ' OptiX') || strpos($args_desc, ' OpenCL') || strpos($args_desc, 'SYCL'))
 						{
 							$hw_type = 'Graphics';
 						}

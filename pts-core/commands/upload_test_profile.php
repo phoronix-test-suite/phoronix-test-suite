@@ -30,7 +30,7 @@ class upload_test_profile implements pts_option_interface
 		if(pts_openbenchmarking_client::user_name() == false)
 		{
 			echo PHP_EOL . 'You must first be logged into an OpenBenchmarking.org account.' . PHP_EOL;
-			echo PHP_EOL . 'Create An Account: http://openbenchmarking.org/';
+			echo PHP_EOL . 'Create An Account: https://openbenchmarking.org/';
 			echo PHP_EOL . 'Log-In Command: phoronix-test-suite openbenchmarking-setup' . PHP_EOL . PHP_EOL;
 			return false;
 		}

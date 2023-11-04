@@ -539,6 +539,11 @@ class phodevi_cpu extends phodevi_device_interface
 			if($physical_cpu_count == 1 || empty($physical_cpu_count))
 			{
 				// Just one processor
+				if(isset($cpu_strings[0]) && !empty($cpu_strings[0]))
+				{
+					// This fixes some Intel CPUs only displaying "Intel" for model due to " (R) " in strings with below check
+					$cpu_strings[0] = str_replace(' (R)', ' ', $cpu_strings[0]);
+				}
 				if(isset($cpu_strings[0]) && ($cut = strpos($cpu_strings[0], ' (')) !== false)
 				{
 					$cpu_strings[0] = substr($cpu_strings[0], 0, $cut);
