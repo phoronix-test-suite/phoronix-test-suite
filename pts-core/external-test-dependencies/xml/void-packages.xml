@@ -41,7 +41,7 @@
 		</Package>
 		<Package>
 			<GenericName>openssl-development</GenericName>
-			<PackageName>libressl-devel</PackageName>
+			<PackageName>openssl-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>build-utilities</GenericName>
