@@ -122,7 +122,7 @@ class pts_tests
 			return $error;
 		}
 
-		foreach(array('fatal error', 'error while loading', 'undefined reference', 'cannot find -l', 'error:', 'returned 1 exit status', 'not found', 'child process excited with status', 'error opening archive', 'failed to load', 'fatal', 'illegal argument', 'is required to build', 'or higher is required', ': No such file or directory', 'not enough slots', 'mpirun noticed that process', 'permission denied', 'connection refused', 'MPI_ABORT was invoked', 'mpirun was unable to launch', 'error adding symbols:') as $error_string)
+		foreach(array('fatal error', 'error while loading', 'undefined reference', 'cannot find -l', 'error:', 'returned 1 exit status', 'not found', 'child process excited with status', 'error opening archive', 'failed to load', 'fatal', 'illegal argument', 'is required to build', 'or higher is required', ': No such file or directory', 'not enough slots', 'mpirun noticed that process', 'permission denied', 'connection refused', 'MPI_ABORT was invoked', 'mpirun was unable to launch', 'error adding symbols:', 'not set and cannot find', 'please set JAVA', '/usr/bin/which: no ') as $error_string)
 		{
 			$lf = $log_file;
 			if(($e = strripos($lf, $error_string)) !== false)

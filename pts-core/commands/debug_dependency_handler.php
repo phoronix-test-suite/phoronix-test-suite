@@ -31,6 +31,10 @@ class debug_dependency_handler implements pts_option_interface
 		foreach($exdep_parser->get_available_packages() as $pkg)
 		{
 			$pkg_data = $exdep_parser->get_package_data($pkg);
+			if(!isset($pkg_data['file_check']) || empty($pkg_data['file_check']))
+			{
+				continue;
+			}
 			$files = explode(' ', str_replace(array(' OR ', ', '), ' ', $pkg_data['file_check']));
 			foreach($files as $file)
 			{

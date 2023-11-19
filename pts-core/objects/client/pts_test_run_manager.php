@@ -1884,13 +1884,15 @@ class pts_test_run_manager
 		if($a_comp == $b_comp)
 		{
 			// So it's the same test being compared... try to sort in ascending order (such that 800 x 600 resolution comes before 1024 x 768), below way is an attempt to recognize such in weird manner
-			if(strlen($a->get_arguments_description()) == strlen($b->get_arguments_description()))
+			$ac = $a->get_arguments_description() != null ? $a->get_arguments_description() : '';
+			$bc = $b->get_arguments_description() != null ? $b->get_arguments_description() : '';
+			if(strlen($ac) == strlen($bc))
 			{
-				return strcmp($a->get_arguments_description(), $b->get_arguments_description());
+				return strcmp($ac, $bc);
 			}
 			else
 			{
-				return strcmp(strlen($a->get_arguments_description()), strlen($b->get_arguments_description()));
+				return strcmp(strlen($ac), strlen($bc));
 			}
 		}
 
