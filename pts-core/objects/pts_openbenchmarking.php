@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2021, Phoronix Media
-	Copyright (C) 2010 - 2021, Michael Larabel
+	Copyright (C) 2010 - 2023, Phoronix Media
+	Copyright (C) 2010 - 2023, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -619,6 +619,10 @@ class pts_openbenchmarking
 					if($test_profile != null &&  $hash_check == sha1($test_profile))
 					{
 						// save it
+						if(!is_dir(dirname($file)))
+						{
+							mkdir(dirname($file));
+						}
 						file_put_contents($file, $test_profile);
 
 						if(isset($acquire_test_json['openbenchmarking']['test']['changes']))

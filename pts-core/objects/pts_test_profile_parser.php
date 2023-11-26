@@ -251,6 +251,10 @@ class pts_test_profile_parser
 	}
 	public function get_app_version()
 	{
+		if(isset($_GET['merge_mismatched_test_versions']) && $_GET['merge_mismatched_test_versions'] == 'i-understand-the-risks')
+		{
+			return '';
+		}
 		return $this->xg('TestInformation/AppVersion');
 	}
 	public function get_project_url()

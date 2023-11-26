@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2020, Phoronix Media
-	Copyright (C) 2009 - 2020, Michael Larabel
+	Copyright (C) 2009 - 2023, Phoronix Media
+	Copyright (C) 2009 - 2023, Michael Larabel
 	pts_concise_display_mode.php: The batch / concise display mode
 
 	This program is free software; you can redistribute it and/or modify
@@ -319,7 +319,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	}
 	public function test_run_configure(&$test_profile)
 	{
-		echo PHP_EOL . PHP_EOL . $test_profile->get_title() . ($test_profile->get_app_version() != null ? ' ' . $test_profile->get_app_version() : null) . ':' . PHP_EOL . $this->tab . $test_profile->get_identifier() . PHP_EOL;
+		echo PHP_EOL . PHP_EOL . trim($test_profile->get_title() . ($test_profile->get_app_version() != null ? ' ' . $test_profile->get_app_version() : null)) . ':' . PHP_EOL . $this->tab . $test_profile->get_identifier() . PHP_EOL;
 		echo $this->tab . $test_profile->get_test_hardware_type() . ' Test Configuration';
 		//echo PHP_EOL;
 		//echo $this->tab . 'Test ' . $test_run_manager->get_test_run_position() . ' of ' . $test_run_manager->get_test_run_count_reported() . PHP_EOL;

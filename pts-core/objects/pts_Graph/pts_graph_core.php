@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2021, Phoronix Media
-	Copyright (C) 2008 - 2021, Michael Larabel
+	Copyright (C) 2008 - 2023, Phoronix Media
+	Copyright (C) 2008 - 2023, Michael Larabel
 	pho_graph.php: The core graph object that is used by the different graphing objects.
 
 	This program is free software; you can redistribute it and/or modify
@@ -472,8 +472,8 @@ abstract class pts_graph_core
 	protected function update_graph_dimensions($width = -1, $height = -1, $recalculate_offsets = false)
 	{
 		// Allow render area to be increased, but not decreased
-		$this->i['graph_width'] = max($this->i['graph_width'], $width);
-		$this->i['graph_height'] = max($this->i['graph_height'], $height);
+		$this->i['graph_width'] = intval(max($this->i['graph_width'], $width));
+		$this->i['graph_height'] = intval(max($this->i['graph_height'], $height));
 
 		if($recalculate_offsets)
 		{

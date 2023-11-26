@@ -892,6 +892,10 @@ class pts_result_viewer_embed
 		{
 			$analyze_checkboxes['Graph Settings'][] = array('nbp', 'No Box Plots');
 		}
+		if($has_line_graph || $is_multi_way)
+		{
+			$analyze_checkboxes['Graph Settings'][] = array('clg', 'On Line Graphs With Missing Data, Connect The Line Gaps');
+		}
 
 		if($is_multi_way && $system_count > 1)
 		{
@@ -1053,6 +1057,7 @@ class pts_result_viewer_embed
 		if($result_file->get_test_count() > 1)
 		{
 			$analyze_options .= '<div>Only show results matching title/arguments (delimit multiple options with a comma): ' . self::html_input_field('oss', 'oss') . '</div>';
+			$analyze_options .= '<div>Do not show results matching title/arguments (delimit multiple options with a comma): ' . self::html_input_field('noss', 'noss') . '</div>';
 		}
 
 		$analyze_options .= '<br /><input style="clear: both;" name="submit" value="Refresh Results" type="submit" /></form>';
@@ -1384,6 +1389,31 @@ class pts_result_viewer_embed
 				}
 			}
 		}
+		if(($noss = self::check_request_for_var($request, 'noss')) && strlen($noss) > 1)
+		{
+			$noss = pts_strings::comma_explode($noss);
+			foreach($result_file->get_result_objects() as $i => $result_object)
+			{
+				$matched = false;
+				foreach($noss as $search_check)
+				{
+					if(stripos($result_object->get_arguments_description(), $search_check) === false && stripos($result_object->test_profile->get_identifier(), $search_check) === false && stripos($result_object->test_profile->get_title(), $search_check) === false)
+					{
+						// Not found
+						$matched = false;
+					}
+					else
+					{
+						$matched = true;
+						break;
+					}
+				}
+				if($matched)
+				{
+					$result_file->remove_result_object_by_id($i);
+				}
+			}
+		}
 		if(self::check_request_for_var($request, 'ftt') && self::check_request_for_var($request, 'ftt'))
 		{
 			$ftt = self::check_request_for_var($request, 'ftt');
@@ -1622,6 +1652,10 @@ class pts_result_viewer_embed
 		if(self::check_request_for_var($request, 'nbp'))
 		{
 			$extra_attributes['no_box_plots'] = true;
+		}
+		if(self::check_request_for_var($request, 'clg'))
+		{
+			$extra_attributes['on_zero_plot_connect'] = true;
 		}
 		if(self::check_request_for_var($request, 'vb'))
 		{

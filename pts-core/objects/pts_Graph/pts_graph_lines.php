@@ -286,7 +286,7 @@ class pts_graph_lines extends pts_graph_core
 			for($y = $y_start; $y <= $y_end; $y += $this->i['key_line_height'], ++$i)
 			{
 				$ak = array_keys($this->test_result->test_result_buffer->buffer_items);
-				if(!isset($this->test_result->test_result_buffer->buffer_items[$ak[$i]]))
+				if(!isset($ak[$i]) || !isset($this->test_result->test_result_buffer->buffer_items[$ak[$i]]))
 				{
 					break;
 				}
@@ -314,7 +314,7 @@ class pts_graph_lines extends pts_graph_core
 				$precise_stat_array = array();
 				foreach($stat_array as $stat_value)
 				{
-					if(is_string($stat_value))
+					if(!is_numeric($stat_value))
 					{
 						// TODO investigate this case...
 						// sometimes $stat_value is string of comma separated values
@@ -469,7 +469,7 @@ class pts_graph_lines extends pts_graph_core
 				$this->svg_dom->draw_svg_line($x_y_pair[0], $x_y_pair[1] + 6, $x_y_pair[0], $x_y_pair[1] - 6, self::$c['color']['alert'], 4, array('xlink:title' => $regression_plots[$i]));
 			}
 
-			if($point_counter < 6 || $plotted_error_bar || $i == 0 || $i == ($poly_points_count  - 1))
+			if($point_counter < 6 || $plotted_error_bar || $i == 0 || $i == ($poly_points_count  - 1) || $this->i['on_zero_plot_connect'])
 			{
 				$this->svg_dom->add_element('ellipse', array('cx' => $x_y_pair[0], 'cy' => $x_y_pair[1], 'rx' => 3, 'ry' => 3), $g);
 			}
@@ -495,7 +495,7 @@ class pts_graph_lines extends pts_graph_core
 		$this->i['key_line_height'] = 16;
 		$this->i['key_longest_string_width'] = self::text_string_width($this->test_result->test_result_buffer->get_longest_identifier(), self::$c['size']['key']) + 6;
 
-		$item_width_spacing = 32;
+		$item_width_spacing = 36;
 		$this->i['key_item_width'] = $this->i['key_longest_string_width'] + $this->get_stat_word_width() * 3 + $item_width_spacing;
 
 		// if there are <=4 data sets, then use a single column, otherwise, try and multi-col it
@@ -515,7 +515,7 @@ class pts_graph_lines extends pts_graph_core
 	}
 	private function get_stat_word_width()
 	{
-		return ceil(2.6 * self::text_string_width($this->i['graph_max_value'] + 0.1, $this->i['min_identifier_size'] + 0.5));
+		return ceil(2.6 * self::text_string_width($this->i['graph_max_value'] + 0.001, $this->i['min_identifier_size'] + 0.5));
 	}
 	private function getStatisticsHeaderHeight()
 	{
