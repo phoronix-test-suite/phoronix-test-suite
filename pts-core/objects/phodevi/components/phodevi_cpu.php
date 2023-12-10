@@ -978,7 +978,7 @@ class phodevi_cpu extends phodevi_device_interface
 			$info = pts_strings::strip_string($info);
 
 			// It seems Intel doesn't report its name when reporting Pentium hardware
-			if(strpos($info, 'Pentium') !== false && strpos($info, 'Intel') === false)
+			if(strpos($info, 'Pentium') !== false && stripos($info, 'Intel') === false)
 			{
 				$info = 'Intel ' . $info;
 			}
@@ -996,7 +996,7 @@ class phodevi_cpu extends phodevi_device_interface
 					$info = implode(' ', $cpu_words);
 				}
 			}
-			else if(($gen = strpos($info, ' Gen')) !== false && ($intel = strpos($info, 'Intel ')) !== false && $gen < $intel)
+			else if(($gen = strpos($info, ' Gen')) !== false && ($intel = stripos($info, 'Intel ')) !== false && $gen < $intel)
 			{
 				// Tiger Lake reports "11th Gen Intel" as CPU string
 				$info = substr($info, $intel);
@@ -1443,7 +1443,7 @@ class phodevi_cpu extends phodevi_device_interface
 		{
 			return $amd_map[$family][$model];
 		}
-		if(($cpu_string == null || strpos($cpu_string, 'Intel') !== false) && isset($intel_map[$family][$model]))
+		if(($cpu_string == null || stripos($cpu_string, 'Intel') !== false) && isset($intel_map[$family][$model]))
 		{
 			return $intel_map[$family][$model];
 		}
