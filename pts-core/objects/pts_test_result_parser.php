@@ -23,6 +23,7 @@
 class pts_test_result_parser
 {
 	private static $monitoring_sensors = array();
+	private static $did_dynamic_append_to_test_args = false;
 
 	protected static function gen_result_active_handle(&$root_result, $test_result = null)
 	{
@@ -450,6 +451,7 @@ class pts_test_result_parser
 		$definitions = $test_run_request->test_profile->get_results_definition('ResultsParser');
 		$all_parser_entries = $definitions->get_result_parser_definitions();
 		$avoid_duplicates = array();
+		self::$did_dynamic_append_to_test_args = false;
 		$primary_result = null;
 		foreach($all_parser_entries as $entry)
 		{
@@ -468,9 +470,10 @@ class pts_test_result_parser
 			if($test_result != false)
 			{
 				// Result found
-				if(in_array($test_result, $avoid_duplicates))
+				if(in_array($test_result, $avoid_duplicates) && self::$did_dynamic_append_to_test_args == false)
 				{
 					// Workaround for some tests like FIO that have test result parsers that could generate duplicates in handling old PTS versions while newer ones have K conversion, etc
+					pts_test_result_parser::debug_message('Dropping Duplicate Test Result Match: ' . $test_result);
 					continue;
 				}
 				$avoid_duplicates[] = $test_result;
@@ -922,6 +925,7 @@ class pts_test_result_parser
 				}
 
 				$test_run_request->append_to_arguments_description(' - ' . $e->get_append_to_arguments_description());
+				self::$did_dynamic_append_to_test_args = true;
 			}
 		}
 

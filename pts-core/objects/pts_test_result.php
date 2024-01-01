@@ -847,7 +847,10 @@ class pts_test_result
 				$first_value = pts_arrays::first_element($this->test_result_buffer->buffer_items)->get_result_value();
 				$last_value = pts_arrays::last_element($this->test_result_buffer->buffer_items)->get_result_value();
 				//echo 'first: ' . $first_value . ' last: ' . $last_value . '<br />';
-
+				if(!is_numeric($first_value) || !is_numeric($last_value))
+				{
+					continue;
+				}
 				if($this->test_profile->get_result_proportion() == 'HIB')
 				{
 					if($last_value < $first_value * (1 - $threshold_level))
