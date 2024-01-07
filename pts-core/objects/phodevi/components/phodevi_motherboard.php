@@ -524,7 +524,7 @@ class phodevi_motherboard extends phodevi_device_interface
 				if((phodevi::is_root() || is_readable('/dev/mem')) && pts_client::executable_in_path('dmidecode'))
 				{
 					// For some vendors, it's better to read system-product-name
-					// Unfortunately other vendors report garbage here, also demidecode only works as root on Linux
+					// Unfortunately other vendors report garbage here, also dmidecode only works as root on Linux
 					foreach(array('Dell', 'Apple') as $vend)
 					{
 						if(stripos($info, $vend . ' ') !== false)

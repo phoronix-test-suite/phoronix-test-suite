@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2021, Phoronix Media
-	Copyright (C) 2008 - 2021, Michael Larabel
+	Copyright (C) 2008 - 2024, Phoronix Media
+	Copyright (C) 2008 - 2024, Michael Larabel
 	phodevi_memory.php: The PTS Device Interface object for system memory
 
 	This program is free software; you can redistribute it and/or modify
@@ -34,11 +34,11 @@ class phodevi_memory extends phodevi_device_interface
 	{
 		$mem_string = null;
 		$mem_prefix = null;
-		$mem_size = false;
-		$mem_speed = false;
-		$mem_type = false;
-		$mem_manufacturer = false;
-		$mem_part = false;
+		$mem_size = array();
+		$mem_speed = array();
+		$mem_type = array();
+		$mem_manufacturer = array();
+		$mem_part = array();
 
 		if(phodevi::is_macos())
 		{
@@ -75,35 +75,77 @@ class phodevi_memory extends phodevi_device_interface
 		}
 		else if(phodevi::is_linux())
 		{
-			$mem_size = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Size', false, array('Not Installed', 'No Module Installed', 'Undefined', 'Not Specified'));
-			$mem_speed = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Configured Clock Speed', true, array('Unknown', 'Undefined', 'Not Specified'));
-
-			if($mem_speed == false)
+			if((phodevi::is_root() || is_readable('/dev/mem')) && pts_client::executable_in_path('dmidecode'))
 			{
-				$mem_speed = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Configured Memory Speed', true, array('Unknown', 'Undefined', 'Not Specified'));
-			}
+				$mem_size = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Size', false, array('Not Installed', 'No Module Installed', 'Undefined', 'Not Specified'));
+				$mem_speed = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Configured Clock Speed', true, array('Unknown', 'Undefined', 'Not Specified'));
 
-			if($mem_speed == false)
-			{
-				// "Speed" only reports stock frequency where "Configured Clock Speed" should report the over/underclocked memory
-				$mem_speed = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Speed', true, array('Unknown', 'Undefined', 'Not Specified'));
+				if($mem_speed == false)
+				{
+					$mem_speed = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Configured Memory Speed', true, array('Unknown', 'Undefined', 'Not Specified'));
+				}
+
+				if($mem_speed == false)
+				{
+					// "Speed" only reports stock frequency where "Configured Clock Speed" should report the over/underclocked memory
+					$mem_speed = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Speed', true, array('Unknown', 'Undefined', 'Not Specified'));
+				}
+				$mem_type = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Type', true, array('Unknown', 'Other', 'Flash', 'Undefined', 'Not Specified'));
+				$mem_manufacturer = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Manufacturer', true, array('Unknown', 'Undefined', 'Not Specified'));
+				$mem_part = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Part Number', true, array('Unknown', 'Undefined', 'Not Specified'));
 			}
-			$mem_type = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Type', true, array('Unknown', 'Other', 'Flash', 'Undefined', 'Not Specified'));
-			$mem_manufacturer = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Manufacturer', true, array('Unknown', 'Undefined', 'Not Specified'));
-			$mem_part = phodevi_linux_parser::read_dmidecode('memory', 'Memory Device', 'Part Number', true, array('Unknown', 'Undefined', 'Not Specified'));
+			else if(pts_client::executable_in_path('udevadm'))
+			{
+				$memory_device_data = phodevi_linux_parser::read_udevadm_info(array('MEMORY_DEVICE', 'MEMORY_ARRAY'));
+				if(isset($memory_device_data['MEMORY_ARRAY_NUM_DEVICES']) && is_numeric($memory_device_data['MEMORY_ARRAY_NUM_DEVICES']) && $memory_device_data['MEMORY_ARRAY_NUM_DEVICES'] > 0)
+				{
+					for($i = 0; $i < $memory_device_data['MEMORY_ARRAY_NUM_DEVICES']; $i++)
+					{
+						if(isset($memory_device_data['MEMORY_DEVICE_' . $i . '_SIZE']) && is_numeric($memory_device_data['MEMORY_DEVICE_' . $i . '_SIZE']) && $memory_device_data['MEMORY_DEVICE_' . $i . '_SIZE'] > 1073741824)
+						{
+							$mem_size[] = round($memory_device_data['MEMORY_DEVICE_' . $i . '_SIZE'] / 1073741824); // byte to GB
+						}
+						if(isset($memory_device_data['MEMORY_DEVICE_' . $i . '_SPEED_MTS']) && is_numeric($memory_device_data['MEMORY_DEVICE_' . $i . '_SPEED_MTS']) && $memory_device_data['MEMORY_DEVICE_' . $i . '_SPEED_MTS'] > 1000)
+						{
+							$mem_speed[] = $memory_device_data['MEMORY_DEVICE_' . $i . '_SPEED_MTS'] . 'MT/s';
+						}
+						if(isset($memory_device_data['MEMORY_DEVICE_' . $i . '_MEMORY_TYPE']))
+						{
+							$mem_type[] = $memory_device_data['MEMORY_DEVICE_' . $i . '_MEMORY_TYPE'];
+						}
+						else if(isset($memory_device_data['MEMORY_DEVICE_' . $i . '_MEMORY_TECHNOLOGY']))
+						{
+							$mem_type[] = $memory_device_data['MEMORY_DEVICE_' . $i . '_MEMORY_TECHNOLOGY'];
+						}
+						if(isset($memory_device_data['MEMORY_DEVICE_' . $i . '_MANUFACTURER']))
+						{
+							$mem_manufacturer[] = $memory_device_data['MEMORY_DEVICE_' . $i . '_MANUFACTURER'];
+						}
+						if(isset($memory_device_data['MEMORY_DEVICE_' . $i . '_PART_NUMBER']))
+						{
+							$mem_part[] = $memory_device_data['MEMORY_DEVICE_' . $i . '_PART_NUMBER'];
+						}
+					}
+
+				}
+			}
 		}
 
-		if(is_array($mem_type))
+		if(is_array($mem_type) && !empty($mem_type))
 		{
 			$mem_type = array_pop($mem_type);
 		}
-		if(is_array($mem_part))
+		if(is_array($mem_part)&& !empty($mem_part))
 		{
 			$mem_part = array_pop($mem_part);
 		}
-		if(is_array($mem_manufacturer))
+		if(is_array($mem_manufacturer) && !empty($mem_manufacturer))
 		{
 			$mem_manufacturer = array_pop($mem_manufacturer);
+		}
+		if(is_array($mem_speed) && !empty($mem_speed))
+		{
+			$mem_speed = array_pop($mem_speed);
 		}
 
 		if($mem_size != false && (!is_array($mem_size) || count($mem_size) != 0))
@@ -197,18 +239,18 @@ class phodevi_memory extends phodevi_device_interface
 
 					if(is_numeric($mem_size[0]))
 					{
-						if($mem_size[0] < 1024)
-						{
-							$mem_size[0] *= 1024;
-						}
-
-						$mem_count = phodevi::read_property('memory', 'capacity') / $mem_size[0];
+						$mem_mb = $mem_size[0] < 1024 ? $mem_size[0] * 1024 : $mem_size[0];
+						$mem_count = ceil(phodevi::read_property('memory', 'capacity') / $mem_mb);
 					}
 				}
 
 				$product_string = null;
 
-				if(isset($mem_manufacturer[2]) && pts_strings::is_alpha($mem_manufacturer[0]) && stripos($mem_manufacturer, 'manufacturer') === false  && stripos($mem_manufacturer, 'part') === false && stripos($mem_manufacturer, 'module') === false && stripos($mem_manufacturer, 'dimm') === false && isset($mem_manufacturer[2]) && pts_strings::is_alpha($mem_manufacturer))
+				if(!empty($mem_manufacturer))
+				{
+					$mem_manufacturer = str_ireplace(' Technology', '', $mem_manufacturer);
+				}
+				if(isset($mem_manufacturer[2]) && pts_strings::is_alpha($mem_manufacturer[0]) && stripos($mem_manufacturer, 'manufacturer') === false  && stripos($mem_manufacturer, 'part') === false && stripos($mem_manufacturer, 'module') === false && stripos($mem_manufacturer, 'dimm') === false && pts_strings::is_alpha($mem_manufacturer))
 				{
 					$product_string .= ' ' . $mem_manufacturer;
 				}
@@ -218,14 +260,14 @@ class phodevi_memory extends phodevi_device_interface
 					// Cleanup/shorten strings like KHX2133C13S4/4G
 					$mem_part = substr($mem_part, 0, $x);
 				}
-				if(isset($mem_part[2]) && stripos($mem_part, 'part') === false && stripos($mem_part, 'module') === false && stripos($mem_part, 'dimm') === false && substr($mem_part, 0, 2) != '0x' && !isset($mem_part[24]) && pts_strings::is_alnum(str_replace(array('-'), '', $mem_part)))
+				if(isset($mem_part[2]) && stripos($mem_part, 'part') === false && stripos($mem_part, 'module') === false && stripos($mem_part, 'dimm') === false && substr($mem_part, 0, 2) != '0x' && !isset($mem_part[24]) && pts_strings::is_alnum(str_replace(array('-', ' '), '', $mem_part)))
 				{
 					$product_string .= ' ' . $mem_part;
 				}
 
 				if(is_numeric($mem_size[0]) && stripos($mem_size[0], 'b') === false)
 				{
-					if($mem_size >= 1024)
+					if($mem_size[0] >= 1024)
 					{
 						$mem_size[0] .= ' MB';
 					}

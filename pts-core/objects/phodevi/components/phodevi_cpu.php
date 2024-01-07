@@ -1323,6 +1323,24 @@ class phodevi_cpu extends phodevi_device_interface
 				174 => 'Zen 4',
 				175 => 'Zen 4',
 				),
+			26 => array(
+				0 => 'Zen 5',
+				1 => 'Zen 5',
+				2 => 'Zen 5',
+				3 => 'Zen 5',
+				4 => 'Zen 5',
+				5 => 'Zen 5',
+				6 => 'Zen 5',
+				7 => 'Zen 5',
+				8 => 'Zen 5',
+				9 => 'Zen 5',
+				10 => 'Zen 5',
+				11 => 'Zen 5',
+				12 => 'Zen 5',
+				13 => 'Zen 5',
+				14 => 'Zen 5',
+				15 => 'Zen 5',
+				),
 			);
 
 		$intel_map = array(

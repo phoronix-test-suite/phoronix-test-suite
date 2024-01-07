@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2020, Phoronix Media
-	Copyright (C) 2008 - 2020, Michael Larabel
+	Copyright (C) 2008 - 2024, Phoronix Media
+	Copyright (C) 2008 - 2024, Michael Larabel
 	phodevi_linux_parser.php: General parsing functions specific to Linux
 
 	This program is free software; you can redistribute it and/or modify
@@ -180,6 +180,23 @@ class phodevi_linux_parser
 		}
 
 		return $sysfs_file_cache[$arg_hash] == false ? -1 : pts_file_io::file_get_contents($sysfs_file_cache[$arg_hash]);
+	}
+	public static function read_udevadm_info($data_r)
+	{
+		$device_data = array();
+
+		if(pts_client::executable_in_path('udevadm'))
+		{
+			foreach(explode(PHP_EOL, shell_exec('udevadm info -e 2>/dev/null | grep -e ' . implode(' -e ', $data_r))) as $line)
+			{
+				$line = explode('=', str_replace(array('E: ', '<OUT OF SPEC>', '00000000', 'Not Specified', 'Unknown', 'None'), '', $line));
+				if(count($line) == 2 && !empty($line[0]) && !empty($line[1]))
+				{
+					$device_data[$line[0]] = $line[1];
+				}
+			}
+		}
+		return $device_data;
 	}
 	public static function read_dmidecode($type, $sub_type, $object, $find_once = false, $ignore = null)
 	{

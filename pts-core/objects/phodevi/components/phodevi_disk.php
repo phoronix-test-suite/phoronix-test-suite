@@ -289,6 +289,11 @@ class phodevi_disk extends phodevi_device_interface
 					}
 					*/
 
+					if($disk_size == 0)
+					{
+						continue;
+					}
+
 					$disk_size = round($disk_size * 512 / 1000000000) . 'GB';
 					$disk_model = self::prepend_disk_vendor($disk_model);
 
@@ -297,10 +302,7 @@ class phodevi_disk extends phodevi_device_interface
 						$disk_model = $disk_size . ' ' . $disk_model;
 					}
 
-					if($disk_size > 0)
-					{
-						array_push($disks, $disk_model);
-					}
+					array_push($disks, $disk_model);
 				}
 			}
 		}
