@@ -284,7 +284,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 					unlink($pid_file);
 					if(isset($pid_files_to_test_identifier[$pid]))
 					{
-						unset($pid_files_to_test_identifier[$pid]);
+						unset($pid_files_to_test_identifier[intval($pid)]);
 					}
 					continue;
 				}

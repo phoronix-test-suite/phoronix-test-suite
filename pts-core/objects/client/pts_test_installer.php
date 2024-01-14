@@ -464,7 +464,8 @@ class pts_test_installer
 							}
 							else if($download_package->is_optional())
 							{
-								self::test_install_error(null, $test_install_request, 'File failed to download, but package is optional.');
+								self::test_install_error(null, $test_install_request, 'File failed to download, but package may be optional.');
+								self::helper_on_failed_download($test_install_request, $download_package);
 								$objects_completed++;
 								break;
 							}
@@ -486,6 +487,7 @@ class pts_test_installer
 									self::test_install_error(null, $test_install_request, 'Download Failed: ' . $url);
 									$checksum_failed = false;
 								}
+								self::helper_on_failed_download($test_install_request, $download_package);
 
 								pts_openbenchmarking_client::upload_usage_data('download_failure', array($test_install_request, $url));
 
@@ -555,6 +557,13 @@ class pts_test_installer
 		pts_module_manager::module_process('__post_test_download', $identifier);
 
 		return !$fail_if_no_downloads || $objects_completed > 0;
+	}
+	public static function helper_on_failed_download(&$test_install_request, &$download_package)
+	{
+		if($download_package->get_filesize() > 2147483648 && !function_exists('curl_init'))
+		{
+			self::test_install_error(null, $test_install_request, 'File is large, you may want to install PHP CURL (php-curl) support.');
+		}
 	}
 	public static function create_python_workarounds(&$test_install_request)
 	{

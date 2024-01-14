@@ -31,11 +31,11 @@ class list_test_errors implements pts_option_interface
 			$runtime_errors = $test_profile->test_installation->get_runtime_errors();
 			if(!empty($runtime_errors))
 			{
-				echo pts_client::cli_just_bold(sprintf('%-36ls - %-30ls' . PHP_EOL, $test_profile->get_identifier(), $test_profile->get_title()));
+				echo pts_client::cli_just_bold($test_profile->get_identifier()) . ': ' . $test_profile->get_title();
 				foreach($runtime_errors as $e)
 				{
 					echo trim((empty($e['description']) ? '' : pts_client::cli_just_italic($e['description']) . ' - ') . $e['date_time']) . PHP_EOL;
-					foreach($e['errors'] as $error)
+					foreach(array_unique($e['errors']) as $error)
 					{
 						echo pts_client::cli_colored_text('    ' . $error, 'red', true) . PHP_EOL;
 					}

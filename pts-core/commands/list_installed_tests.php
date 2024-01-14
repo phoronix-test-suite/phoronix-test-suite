@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2016, Phoronix Media
-	Copyright (C) 2008 - 2016, Michael Larabel
+	Copyright (C) 2008 - 2024, Phoronix Media
+	Copyright (C) 2008 - 2024, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -28,19 +28,21 @@ class list_installed_tests implements pts_option_interface
 	public static function run($r)
 	{
 		$installed_tests = pts_tests::installed_tests(true);
-		pts_client::$display->generic_heading(count($installed_tests) . ' Tests Installed');
 
 		if(count($installed_tests) > 0)
 		{
+			$installed = array();
 			foreach($installed_tests as $test_profile)
 			{
 				$name = $test_profile->get_title();
 
 				if($name != false)
 				{
-					echo sprintf('%-36ls - %-30ls' . PHP_EOL, $test_profile->get_identifier(), $name);
+					$installed[] = array($test_profile->get_identifier(), pts_client::cli_just_bold($name));
 				}
 			}
+			pts_client::$display->generic_heading(count($installed) . ' Tests Installed');
+			echo pts_user_io::display_text_table($installed) . PHP_EOL;
 		}
 	}
 }

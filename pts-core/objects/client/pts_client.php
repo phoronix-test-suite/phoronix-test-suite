@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2022, Phoronix Media
-	Copyright (C) 2008 - 2022, Michael Larabel
+	Copyright (C) 2008 - 2024, Phoronix Media
+	Copyright (C) 2008 - 2024, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -453,7 +453,8 @@ class pts_client
 			}
 			else
 			{
-				$config_color_option = pts_config::read_user_config('PhoronixTestSuite/Options/General/ColoredConsole', 'AUTO');
+				// early init process check with PTS_IS_DAEMONIZED_SERVER_PROCESS guard
+				$config_color_option = !defined('PTS_IS_DAEMONIZED_SERVER_PROCESS') ? 'AUTO' : pts_config::read_user_config('PhoronixTestSuite/Options/General/ColoredConsole', 'AUTO');
 
 				switch(strtoupper($config_color_option))
 				{
@@ -814,56 +815,43 @@ class pts_client
 	public static function program_requirement_checks($only_show_required = false, $always_report = false)
 	{
 		$extension_checks = pts_needed_extensions();
-
-		$printed_required_header = false;
-		$printed_optional_header = false;
+		$exts = array();
+		$do_exit = false;
 		foreach($extension_checks as $extension)
 		{
 			if($extension[1] == false || $always_report)
 			{
-				if($always_report)
+				if($extension[0] == 1 && $extension[1] == false)
 				{
-					$printed_required_header = true;
-					$printed_optional_header = true;
-					echo ($extension[1] == false ? 'MISSING' : 'PRESENT') . ' - ';
+					$do_exit = true;
 				}
-
-				if($extension[0] == 1)
+				else if($extension[0] != 1)
 				{
-					// Oops, this extension is required
-					if($printed_required_header == false)
-					{
-						echo PHP_EOL . 'The following PHP extensions are REQUIRED:' . PHP_EOL . PHP_EOL;
-						$printed_required_header = true;
-					}
-				}
-				else
-				{
-					if(($only_show_required || PTS_IS_DAEMONIZED_SERVER_PROCESS) && $printed_required_header == false)
+					if(($only_show_required || PTS_IS_DAEMONIZED_SERVER_PROCESS))
 					{
 						continue;
 					}
-
-					// This extension is missing but optional
-					if($printed_optional_header == false)
-					{
-						echo PHP_EOL . ($printed_required_header ? null : 'NOTICE: ') . 'The following PHP extensions are OPTIONAL but recommended:' . PHP_EOL . PHP_EOL;
-						$printed_optional_header = true;
-					}
 				}
 
-				echo sprintf('%-9ls %-30ls' . PHP_EOL, $extension[2], $extension[3]);
+				$exts[] = array($extension[1] == false ? pts_client::cli_colored_text('MISSING', 'red', true) : pts_client::cli_colored_text('PRESENT', 'green') . '  ', pts_client::cli_just_bold($extension[2]) . '  ', ($extension[0] == 1 ? pts_client::cli_just_underline('REQUIRED') : pts_client::cli_just_italic('OPTIONAL')) . ' - ', $extension[3]);
 			}
 		}
-
-		if($printed_required_header || $printed_optional_header)
+		if(!empty($exts))
 		{
-			echo PHP_EOL;
-
-			if($printed_required_header && !$always_report)
+			if($only_show_required)
 			{
-				exit;
+				echo  pts_client::cli_just_italic('PHP extensions required to run the Phoronix Test Suite:') . PHP_EOL;
 			}
+			else if($always_report)
+			{
+				echo  pts_client::cli_just_italic('Recommended PHP extensions for the Phoronix Test Suite:') . PHP_EOL;
+			}
+			echo pts_user_io::display_text_table($exts) . PHP_EOL . PHP_EOL;
+		}
+
+		if($do_exit)
+		{
+			exit;
 		}
 	}
 	private static function core_storage_init_process()

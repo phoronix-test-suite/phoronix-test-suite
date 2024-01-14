@@ -105,18 +105,28 @@ class phodevi_memory extends phodevi_device_interface
 						{
 							$mem_size[] = round($memory_device_data['MEMORY_DEVICE_' . $i . '_SIZE'] / 1073741824); // byte to GB
 						}
-						if(isset($memory_device_data['MEMORY_DEVICE_' . $i . '_SPEED_MTS']) && is_numeric($memory_device_data['MEMORY_DEVICE_' . $i . '_SPEED_MTS']) && $memory_device_data['MEMORY_DEVICE_' . $i . '_SPEED_MTS'] > 1000)
+						if(isset($memory_device_data['MEMORY_DEVICE_' . $i . '_CONFIGURED_SPEED_MTS']) && is_numeric($memory_device_data['MEMORY_DEVICE_' . $i . '_CONFIGURED_SPEED_MTS']) && $memory_device_data['MEMORY_DEVICE_' . $i . '_CONFIGURED_SPEED_MTS'] > 1000)
+						{
+							$mem_speed[] = $memory_device_data['MEMORY_DEVICE_' . $i . '_CONFIGURED_SPEED_MTS'] . 'MT/s';
+						}
+						else if(isset($memory_device_data['MEMORY_DEVICE_' . $i . '_SPEED_MTS']) && is_numeric($memory_device_data['MEMORY_DEVICE_' . $i . '_SPEED_MTS']) && $memory_device_data['MEMORY_DEVICE_' . $i . '_SPEED_MTS'] > 1000)
 						{
 							$mem_speed[] = $memory_device_data['MEMORY_DEVICE_' . $i . '_SPEED_MTS'] . 'MT/s';
 						}
+
 						if(isset($memory_device_data['MEMORY_DEVICE_' . $i . '_MEMORY_TYPE']))
 						{
 							$mem_type[] = $memory_device_data['MEMORY_DEVICE_' . $i . '_MEMORY_TYPE'];
+						}
+						else if(isset($memory_device_data['MEMORY_DEVICE_' . $i . '_TYPE']))
+						{
+							$mem_type[] = $memory_device_data['MEMORY_DEVICE_' . $i . '_TYPE'];
 						}
 						else if(isset($memory_device_data['MEMORY_DEVICE_' . $i . '_MEMORY_TECHNOLOGY']))
 						{
 							$mem_type[] = $memory_device_data['MEMORY_DEVICE_' . $i . '_MEMORY_TECHNOLOGY'];
 						}
+
 						if(isset($memory_device_data['MEMORY_DEVICE_' . $i . '_MANUFACTURER']))
 						{
 							$mem_manufacturer[] = $memory_device_data['MEMORY_DEVICE_' . $i . '_MANUFACTURER'];
@@ -248,14 +258,14 @@ class phodevi_memory extends phodevi_device_interface
 
 				if(!empty($mem_manufacturer))
 				{
-					$mem_manufacturer = str_ireplace(' Technology', '', $mem_manufacturer);
+					$mem_manufacturer = str_ireplace(array(' Technology', ' Intl'), '', $mem_manufacturer);
 				}
-				if(isset($mem_manufacturer[2]) && pts_strings::is_alpha($mem_manufacturer[0]) && stripos($mem_manufacturer, 'manufacturer') === false  && stripos($mem_manufacturer, 'part') === false && stripos($mem_manufacturer, 'module') === false && stripos($mem_manufacturer, 'dimm') === false && pts_strings::is_alpha($mem_manufacturer))
+				if(isset($mem_manufacturer[2]) && pts_strings::is_alpha($mem_manufacturer[0]) && stripos($mem_manufacturer, 'manufacturer') === false  && stripos($mem_manufacturer, 'part') === false && stripos($mem_manufacturer, 'module') === false && stripos($mem_manufacturer, 'dimm') === false && pts_strings::is_alpha(str_replace(' ', '', $mem_manufacturer)))
 				{
 					$product_string .= ' ' . $mem_manufacturer;
 				}
 
-				if(($x = strpos($mem_part, '/')) !== false)
+				if(!empty($mem_part) && ($x = strpos($mem_part, '/')) !== false)
 				{
 					// Cleanup/shorten strings like KHX2133C13S4/4G
 					$mem_part = substr($mem_part, 0, $x);

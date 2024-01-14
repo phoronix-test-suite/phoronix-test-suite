@@ -33,7 +33,7 @@ class list_failed_installs implements pts_option_interface
 		{
 			foreach($failed_installs as $test_profile)
 			{
-				echo pts_client::cli_just_bold(sprintf('%-36ls - %-30ls' . PHP_EOL, $test_profile->get_identifier(), $test_profile->get_title()));
+				echo pts_client::cli_just_bold(sprintf('%s-36ls - %s-30ls' . PHP_EOL, $test_profile->get_identifier(), $test_profile->get_title()));
 				$install_errors = $test_profile->test_installation->get_install_errors();
 				if(!empty($install_errors))
 				{

@@ -31,14 +31,13 @@ class list_test_status implements pts_option_interface
 			$status = $test_profile->test_installation->get_install_status();
 			if($status == 'INSTALLED')
 			{
-				$status = pts_client::cli_colored_text($status, 'green', false);
+				$status = pts_client::cli_colored_text($status . ' @ ' . $test_profile->test_installation->get_install_date(), 'green', false);
 			}
 			else if($status == 'INSTALL_FAILED')
 			{
 				$status = pts_client::cli_colored_text('INSTALL FAILED', 'red', true);
 			}
-			echo pts_client::cli_just_bold(sprintf('%-36ls %-20ls' . PHP_EOL, $test_profile->get_identifier(), $status));
-			echo sprintf('%-36ls %-20ls' . PHP_EOL, 'Installed: ' . $test_profile->test_installation->get_install_date(), ($test_profile->test_installation->get_run_count() > 0 ? 'Times Run: ' . $test_profile->test_installation->get_run_count() : ''));
+			echo pts_client::cli_just_bold($test_profile->get_identifier() . str_repeat(' ' , 32 - strlen($test_profile->get_identifier())) . $status) . '  ' .  pts_strings::plural_handler($test_profile->test_installation->get_run_count(), 'Time') . ' Run' . PHP_EOL;
 			$runtime_errors = $test_profile->test_installation->get_runtime_errors();
 			$install_errors = $test_profile->test_installation->get_install_errors();
 			if(!empty($runtime_errors))
@@ -46,7 +45,7 @@ class list_test_status implements pts_option_interface
 				foreach($runtime_errors as $e)
 				{
 					echo '    ' . trim((empty($e['description']) ? '' : pts_client::cli_just_italic($e['description']) . ' - ') . 'Last Attempted: ' . $e['date_time']) . PHP_EOL;
-					foreach($e['errors'] as $error)
+					foreach(array_unique($e['errors']) as $error)
 					{
 						echo pts_client::cli_colored_text('    ' . $error, 'red', true) . PHP_EOL;
 					}

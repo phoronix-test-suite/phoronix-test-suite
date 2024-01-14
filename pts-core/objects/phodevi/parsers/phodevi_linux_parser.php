@@ -181,18 +181,22 @@ class phodevi_linux_parser
 
 		return $sysfs_file_cache[$arg_hash] == false ? -1 : pts_file_io::file_get_contents($sysfs_file_cache[$arg_hash]);
 	}
-	public static function read_udevadm_info($data_r)
+	public static function read_udevadm_info($data_r, $node = '/sys/devices/virtual/dmi/id')
 	{
 		$device_data = array();
 
 		if(pts_client::executable_in_path('udevadm'))
 		{
-			foreach(explode(PHP_EOL, shell_exec('udevadm info -e 2>/dev/null | grep -e ' . implode(' -e ', $data_r))) as $line)
+			$udev_output = shell_exec('udevadm info ' . $node . ' 2>/dev/null | grep -e ' . implode(' -e ', $data_r));
+			if(!empty($udev_output))
 			{
-				$line = explode('=', str_replace(array('E: ', '<OUT OF SPEC>', '00000000', 'Not Specified', 'Unknown', 'None'), '', $line));
-				if(count($line) == 2 && !empty($line[0]) && !empty($line[1]))
+				foreach(explode(PHP_EOL, $udev_output) as $line)
 				{
-					$device_data[$line[0]] = $line[1];
+					$line = explode('=', str_replace(array('E: ', '<OUT OF SPEC>', '00000000', 'Not Specified', 'Unknown', 'None'), '', $line));
+					if(count($line) == 2 && !empty($line[0]) && !empty($line[1]))
+					{
+						$device_data[$line[0]] = $line[1];
+					}
 				}
 			}
 		}

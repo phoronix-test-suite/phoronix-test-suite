@@ -509,40 +509,27 @@ class phodevi_motherboard extends phodevi_device_interface
 		{
 			$vendor = phodevi_linux_parser::read_sys_dmi(array('board_vendor', 'sys_vendor'));
 			$name = phodevi_linux_parser::read_sys_dmi(array('board_name', 'product_name'));
-			$version = phodevi_linux_parser::read_sys_dmi(array('board_version', 'product_version'));
+			$product_name = phodevi_linux_parser::read_sys_dmi(array('product_name'));
+			$board_version = phodevi_linux_parser::read_sys_dmi(array('board_version'));
+			$product_version = phodevi_linux_parser::read_sys_dmi(array('product_version'));
 
-			if($vendor != false && $name != false)
+			if($vendor != false && ($name != false || $product_name != false))
 			{
 				$info = strpos($name . ' ', $vendor . ' ') === false ? $vendor . ' ' : null;
 				$info .= $name;
 
-				if($version != false && strpos($info, $version) === false && pts_strings::string_only_contains($version, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL))
+				if(strtolower($vendor) == 'lenovo' && strpos($info, $product_version) === false)
 				{
-					$info .= (substr($version, 0, 1) == 'v' ? ' ' : ' v') . $version;
+					$info =  str_replace($vendor . ' ', $vendor . ' ' . $product_version . ' ', $info);
+				}
+				else if($product_name != null && stripos($info, $product_name) === false)
+				{
+					$info = str_replace($vendor . ' ', $vendor . ' ' . str_ireplace(array('Desktop PC'), '', $product_name) . ' ', $info);
 				}
 
-				if((phodevi::is_root() || is_readable('/dev/mem')) && pts_client::executable_in_path('dmidecode'))
+				if($board_version != false && stripos($info, $board_version) === false && pts_strings::string_only_contains($board_version, pts_strings::CHAR_NUMERIC | pts_strings::CHAR_DECIMAL))
 				{
-					// For some vendors, it's better to read system-product-name
-					// Unfortunately other vendors report garbage here, also dmidecode only works as root on Linux
-					foreach(array('Dell', 'Apple') as $vend)
-					{
-						if(stripos($info, $vend . ' ') !== false)
-						{
-							$dmi_output = shell_exec('dmidecode -s system-product-name 2>&1');
-							if($dmi_output != null && stripos($dmi_output, ' ') !== false && stripos($dmi_output, 'invalid') === false && stripos($dmi_output, 'System Product') === false && stripos($dmi_output, 'not ') === false)
-							{
-								$old_info = trim(str_ireplace(array($vend . ' ', 'Inc.'), '', $info));
-								$info = trim($dmi_output) . (!empty($old_info) && strpos($dmi_output, $old_info) === false ? ' [' . $old_info . ']' : '');
-							}
-
-							if($info != null && stripos($info, $vend) === false)
-							{
-								$info = $vend . ' ' . $info;
-								break;
-							}
-						}
-					}
+					$info .= (substr($board_version, 0, 1) == 'v' ? ' ' : ' v') . $board_version;
 				}
 			}
 

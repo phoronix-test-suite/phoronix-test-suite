@@ -33,6 +33,7 @@ class list_available_suites implements pts_option_interface
 	{
 		$available_suites = pts_test_suites::all_suites(true, true);
 		pts_client::$display->generic_heading('Available Suites');
+		$suites = array();
 
 		if(count($available_suites) > 0)
 		{
@@ -53,14 +54,14 @@ class list_available_suites implements pts_option_interface
 
 					if($suite_info->get_title() != null && !$suite_info->is_deprecated())
 					{
-						echo sprintf('%-34ls - %-32ls %s' . PHP_EOL, $identifier_prefix . ' ' . $identifier, $suite_info->get_title(), $suite_info->get_suite_type());
+						$suites[] = array($identifier_prefix . ' ' . $identifier, pts_client::cli_just_bold($suite_info->get_title()), $suite_info->get_suite_type());
 					}
 				}
 			}
-			echo PHP_EOL;
+			echo pts_user_io::display_text_table($suites) . PHP_EOL . PHP_EOL;
 			if($has_partially_supported_suite)
 			{
-				echo '* Indicates a partially supported suite.' . PHP_EOL . PHP_EOL;
+				echo pts_client::cli_just_italic('* Indicates a partially supported suite.') . PHP_EOL;
 			}
 		}
 		else

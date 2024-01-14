@@ -626,6 +626,7 @@ class pts_validation
 			$set_api = null;
 			$default_value = null;
 			$flags = null;
+			$class = null;
 			$dynamic_list_multi = '';
 			$nodes_to_match = array('set' => 'set_api', 'get' => 'get_api', 'default' => 'default_value', 'flags' => 'flags', 'dynamic_list_multi' => 'dynamic_list_multi');
 			$cnodes = $el->getElementsByTagName('*');

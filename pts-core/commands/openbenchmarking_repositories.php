@@ -28,6 +28,7 @@ class openbenchmarking_repositories implements pts_option_interface
 	public static function run($r)
 	{
 		echo PHP_EOL . 'Linked OpenBenchmarking.org Repositories:' . PHP_EOL . PHP_EOL;
+		$repos = array();
 		foreach(pts_openbenchmarking::linked_repositories() as $repo)
 		{
 			if($repo == 'local')
@@ -40,12 +41,9 @@ class openbenchmarking_repositories implements pts_option_interface
 			$test_count = count($repo_index['tests']);
 			$suite_count = count($repo_index['suites']);
 			$generated_time = date('F d H:i', $repo_index['main']['generated']);
-
-			echo sprintf('    REPO: %-20ls WEB: %-35ls' . PHP_EOL, $repo, 'http://openbenchmarking.org/user/' . $repo);
-			echo sprintf('        LAST GENERATED:  %-3ls' . PHP_EOL, $generated_time);
-			echo sprintf('        TEST COUNT:      %-3ls    SUITE COUNT: %-3ls' . PHP_EOL, $test_count, $suite_count);
-			echo PHP_EOL;
+			$repos[] = array(pts_client::cli_just_bold($repo), pts_strings::plural_handler($test_count, 'Test'), pts_strings::plural_handler($suite_count, 'Suite'), $generated_time, 'https://openbenchmarking.org/user/' . $repo);
 		}
+		echo pts_user_io::display_text_table($repos) . PHP_EOL;
 	}
 }
 
