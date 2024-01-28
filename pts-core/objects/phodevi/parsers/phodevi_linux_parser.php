@@ -54,7 +54,7 @@ class phodevi_linux_parser
 		$value = false;
 		$ipmitool = shell_exec('ipmitool dcmi power reading 2>&1');
 
-		$sensor = "Instantaneous power reading:";
+		$sensor = 'Instantaneous power reading:';
 		$hit = stripos($ipmitool, $sensor);
 
 		if($hit !== false)

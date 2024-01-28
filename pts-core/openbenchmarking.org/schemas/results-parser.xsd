@@ -157,7 +157,7 @@
 						<set></set>
 						<default></default>
 					</xs:appinfo>
-					<xs:documentation>DivideResultDivisor allows for specifying a divisor for dviding the test result as a multiple.</xs:documentation>
+					<xs:documentation>DivideResultDivisor allows for specifying a divisor for dividing the test result as a multiple.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element name="MultiplyResultBy" type="PositiveInteger" minOccurs="0" maxOccurs="1">

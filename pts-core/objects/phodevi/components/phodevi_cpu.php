@@ -904,6 +904,16 @@ class phodevi_cpu extends phodevi_device_interface
 							break;
 					}
 				}
+				else if($implementer == '0x6d')
+				{
+					$new_info = 'Microsoft';
+					switch($part)
+					{
+						case '0xd49':
+							$new_info .= ' Azure Cobalt 100';
+							break;
+					}
+				}
 
 				if(strpos(phodevi::$vfs->dmesg, 'Ampere eMAG') !== false || stripos(pts_file_io::file_get_contents_if_exists('/sys/devices/virtual/dmi/id/sys_vendor'), 'Ampere') !== false || stripos(pts_file_io::file_get_contents_if_exists('/sys/devices/virtual/dmi/id/bios_vendor'), 'Ampere') !== false)
 				{
@@ -1306,6 +1316,7 @@ class phodevi_cpu extends phodevi_device_interface
 				97 => 'Zen 4',
 				112 => 'Zen 4',
 				116 => 'Zen 4', // Ryzen Z1 Extreme
+				117 => 'Zen 4',
 				160 => 'Zen 4',
 				161 => 'Zen 4',
 				162 => 'Zen 4',
@@ -1430,6 +1441,7 @@ class phodevi_cpu extends phodevi_device_interface
 				197 => 'Arrow Lake',
 				198 => 'Arrow Lake',
 				207 => 'Emerald Rapids',
+				221 => 'Clearwater Forest',
 				),
 			15 => array(
 				1 => 'Clarksfield',

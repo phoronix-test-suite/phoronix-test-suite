@@ -343,6 +343,10 @@ class system_monitor extends pts_module_interface
 		foreach($sensor_list as $sensor)
 		{
 			$sensor_split = pts_strings::trim_explode('.', $sensor);
+			if(!isset($sensor_split[1]))
+			{
+				continue;
+			}
 
 			// Set 'all' from the beginning (eg. all.cpu.frequency) as the last
 			// element (cpu.frequency.all). As sensor parameters are also supported

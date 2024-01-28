@@ -260,7 +260,7 @@ class phodevi_memory extends phodevi_device_interface
 				{
 					$mem_manufacturer = str_ireplace(array(' Technology', ' Intl'), '', $mem_manufacturer);
 				}
-				if(isset($mem_manufacturer[2]) && pts_strings::is_alpha($mem_manufacturer[0]) && stripos($mem_manufacturer, 'manufacturer') === false  && stripos($mem_manufacturer, 'part') === false && stripos($mem_manufacturer, 'module') === false && stripos($mem_manufacturer, 'dimm') === false && pts_strings::is_alpha(str_replace(' ', '', $mem_manufacturer)))
+				if(isset($mem_manufacturer[2]) && pts_strings::is_alpha(str_replace('-', '', $mem_manufacturer[0])) && stripos($mem_manufacturer, 'manufacturer') === false  && stripos($mem_manufacturer, 'part') === false && stripos($mem_manufacturer, 'module') === false && stripos($mem_manufacturer, 'dimm') === false && pts_strings::is_alpha(str_replace(array(' ', '-'), '', $mem_manufacturer)))
 				{
 					$product_string .= ' ' . $mem_manufacturer;
 				}
@@ -279,11 +279,11 @@ class phodevi_memory extends phodevi_device_interface
 				{
 					if($mem_size[0] >= 1024)
 					{
-						$mem_size[0] .= ' MB';
+						$mem_size[0] .= 'MB';
 					}
 					else
 					{
-						$mem_size[0] .= ' GB';
+						$mem_size[0] .= 'GB';
 					}
 				}
 

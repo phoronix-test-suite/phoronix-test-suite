@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2021, Phoronix Media
-	Copyright (C) 2008 - 2021, Michael Larabel
+	Copyright (C) 2008 - 2024, Phoronix Media
+	Copyright (C) 2008 - 2024, Michael Larabel
 	phodevi_gpu.php: The PTS Device Interface object for the graphics processor
 
 	This program is free software; you can redistribute it and/or modify
@@ -1256,7 +1256,14 @@ class phodevi_gpu extends phodevi_device_interface
 
 			if(phodevi::is_windows() == false && (empty($info) || (strpos($info, 'Intel ') === false && !pts_strings::string_contains($info, pts_strings::CHAR_NUMERIC))))
 			{
+				$controller_3d = phodevi_linux_parser::read_pci('3D controller', false);
 				$info_pci = phodevi_linux_parser::read_pci('VGA compatible controller', false);
+
+				if((empty($info_pci) || strpos($info_pci, ' ') === false) && !empty($controller_3d))
+				{
+					// e.g. NVIDIA GH200 is 3D controller while VGA is ASpeed
+					$info_pci = $controller_3d;
+				}
 
 				if(!empty($info_pci) && strpos($info_pci, 'Device ') === false)
 				{
