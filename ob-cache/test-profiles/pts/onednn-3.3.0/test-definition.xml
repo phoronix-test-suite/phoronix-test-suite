@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>oneDNN</Title>
+    <AppVersion>3.3</AppVersion>
+    <Description>This is a test of the Intel oneDNN as an Intel-optimized library for Deep Neural Networks and making use of its built-in benchdnn functionality. The result is the total perf time reported. Intel oneDNN was formerly known as DNNL (Deep Neural Network Library) and MKL-DNN before being rebranded as part of the Intel oneAPI toolkit.</Description>
+    <ResultScale>ms</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>3.3.0</Version>
+    <SupportedPlatforms>Linux, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, cmake</ExternalDependencies>
+    <EnvironmentSize>287</EnvironmentSize>
+    <ProjectURL>https://www.intel.com/content/www/us/en/developer/tools/oneapi/onednn.html</ProjectURL>
+    <RepositoryURL>https://github.com/oneapi-src/oneDNN</RepositoryURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Harness</DisplayName>
+      <Identifier>harness</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Convolution Batch Shapes Auto</Name>
+          <Value>--conv --batch=inputs/conv/shapes_auto</Value>
+        </Entry>
+        <Entry>
+          <Name>Deconvolution Batch shapes_1d</Name>
+          <Value>--deconv --batch=inputs/deconv/shapes_1d</Value>
+        </Entry>
+        <Entry>
+          <Name>Deconvolution Batch shapes_3d</Name>
+          <Value>--deconv --batch=inputs/deconv/shapes_3d</Value>
+        </Entry>
+        <Entry>
+          <Name>IP Shapes 1D</Name>
+          <Value>--ip --batch=inputs/ip/shapes_1d</Value>
+        </Entry>
+        <Entry>
+          <Name>IP Shapes 3D</Name>
+          <Value>--ip --batch=inputs/ip/shapes_3d</Value>
+        </Entry>
+        <Entry>
+          <Name>Recurrent Neural Network Training</Name>
+          <Value>--rnn --batch=inputs/rnn/perf_rnn_training</Value>
+        </Entry>
+        <Entry>
+          <Name>Recurrent Neural Network Inference</Name>
+          <Value>--rnn --batch=inputs/rnn/perf_rnn_inference_lb</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Data Type</DisplayName>
+      <Identifier>data-type</Identifier>
+      <ArgumentPrefix>--cfg=</ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>f32</Name>
+          <Value>f32</Value>
+        </Entry>
+        <Entry>
+          <Name>u8s8f32</Name>
+          <Value>u8s8f32</Value>
+          <Message>Optimized For AVX-512</Message>
+        </Entry>
+        <Entry>
+          <Name>bf16bf16bf16</Name>
+          <Value>bf16bf16bf16</Value>
+          <Message>Optimized For AVX-512 + VNNI</Message>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Engine</DisplayName>
+      <Identifier>engine</Identifier>
+      <Menu>
+        <Entry>
+          <Name>CPU</Name>
+          <Value>--engine=cpu</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

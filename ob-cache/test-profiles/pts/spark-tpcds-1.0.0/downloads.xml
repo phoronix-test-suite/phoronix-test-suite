@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://archive.apache.org/dist/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz</URL>
+      <MD5>4a3b0cfc251827d78ff468db7016f2ee</MD5>
+      <SHA256>ac064ec620129b4b9630e180e25ac2b71a8ccd4c6912bf5b5631943b742f0379</SHA256>
+      <FileName>spark-3.5.0-bin-hadoop3.tgz</FileName>
+      <FileSize>400395283</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/databricks/tpcds-kit/archive/1b7fb7529edae091684201fab142d956d6afd881.zip</URL>
+      <MD5>1d4e34383cdc1aad9699a6b3921a71f0</MD5>
+      <SHA256>a831a41ba2486b43e3bbf7005d9f3a32ca66cf409094f341855885b65b1172ca</SHA256>
+      <FileName>tpcds-kit-1b7fb7529edae091684201fab142d956d6afd881.zip</FileName>
+      <FileSize>5260976</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/IBM/spark-tpc-ds-performance-test/archive/e01345571d8dc1f746bbbfc306d7578d24c87907.zip</URL>
+      <MD5>5eb71c8dc6a4083534776fd88338ee3c</MD5>
+      <SHA256>c33b522ed47a16e39c72fb658b3ee08c3fbe0eb07616361e681769aaded5952d</SHA256>
+      <FileName>spark-tpc-ds-performance-test-e01345571d8dc1f746bbbfc306d7578d24c87907.zip</FileName>
+      <FileSize>371145855</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://download.redis.io/releases/redis-7.0.12.tar.gz</URL>
+      <MD5>7a67f0819ad61779a1bf3db9c70dff06</MD5>
+      <SHA256>9dd83d5b278bb2bf0e39bfeb75c3e8170024edbaf11ba13b7037b2945cf48ab7</SHA256>
+      <FileName>redis-7.0.12.tar.gz</FileName>
+      <FileSize>2992216</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/RedisLabs/memtier_benchmark/archive/refs/tags/2.0.0.tar.gz</URL>
+      <MD5>0b65ac8c9ef13a41128ed36e5c5f4aab</MD5>
+      <SHA256>554d53701f595c280e1f78229d5ac3c5c84390fa4b856cf326d23af0d2dbf9d8</SHA256>
+      <FileName>memtier_benchmark-2.0.0.tar.gz</FileName>
+      <FileSize>321262</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

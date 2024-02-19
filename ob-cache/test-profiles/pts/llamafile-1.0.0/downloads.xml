@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://huggingface.co/jartine/Mistral-7B-Instruct-v0.2-llamafile/resolve/afe7a20630a30479686529d8ff878772cc04ddde/mistral-7b-instruct-v0.2.Q8_0.llamafile?download=true</URL>
+      <MD5>1b141d44fbabc994c1c734c01e62b4e7</MD5>
+      <SHA256>ea074763987d7e550b386d0b0e92ab441c05bb48fa0fed91db78c69a9a8c0adf</SHA256>
+      <FileName>mistral-7b-instruct-v0.2.Q8_0.llamafile</FileName>
+      <FileSize>7726305670</FileSize>
+      <Optional>TRUE</Optional>
+    </Package>
+    <Package>
+      <URL>https://huggingface.co/jartine/llava-v1.5-7B-GGUF/resolve/675a459780ff40b1c406f9760956ff5e2248d0d1/llava-v1.5-7b-q4.llamafile?download=true</URL>
+      <MD5>282ea2378a02491f8e0ac1df280a5561</MD5>
+      <SHA256>9c37a9a8e3f067dea8c028db9525b399fc53b267667ed9c2a60155b1aa7589de</SHA256>
+      <FileName>llava-v1.5-7b-q4.llamafile</FileName>
+      <FileSize>4288952500</FileSize>
+      <Optional>TRUE</Optional>
+    </Package>
+    <Package>
+      <URL>https://huggingface.co/jartine/WizardCoder-Python-34B-V1.0-llamafile/resolve/780ff2983b49772ef9482e60e11cc4de5fbd0d88/wizardcoder-python-34b-v1.0.Q6_K.llamafile?download=true</URL>
+      <MD5>3c3f2bb47522892b2dea8963c44b17de</MD5>
+      <SHA256>a5f96429b3831f5d665ce7e01be2b9037572ce527dde6159adf2c2398d3cc827</SHA256>
+      <FileName>wizardcoder-python-34b-v1.0.Q6_K.llamafile</FileName>
+      <FileSize>27714326924</FileSize>
+      <Optional>TRUE</Optional>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/pts-sample-photos-2.tar.bz2, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/pts-sample-photos-2.tar.bz2</URL>
+      <MD5>7ff2870cf3fa2299ea5f4e77e5a8535f</MD5>
+      <SHA256>e8597d7d5910a709985bffae490dfa9490483eb7838b351191156f027d9b5272</SHA256>
+      <FileName>pts-sample-photos-2.tar.bz2</FileName>
+      <FileSize>29599729</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

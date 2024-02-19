@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Apache Spark TPC-DS</Title>
+    <AppVersion>3.5</AppVersion>
+    <Description>This is a benchmark of Apache Spark using the TPC-DS data-set. Apache Spark is an open-source unified analytics engine for large-scale data processing and dealing with big data. This test profile benchmarks the Apache Spark in a single-system configuration and leverages the https://github.com/databricks/tpcds-kit and https://github.com/IBM/spark-tpc-ds-performance-test/ projects for testing.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Application</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Experimental</Status>
+    <ExternalDependencies>java, python, build-utilities, git, bison, flex</ExternalDependencies>
+    <EnvironmentSize>50000</EnvironmentSize>
+    <ProjectURL>https://spark.apache.org/</ProjectURL>
+    <RepositoryURL>https://github.com/IBM/spark-tpc-ds-performance-test/</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>byacc, sed, git</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Scale Factor</DisplayName>
+      <Identifier>scale</Identifier>
+      <Menu>
+        <Entry>
+          <Name>1</Name>
+          <Value>1</Value>
+          <Message>About 1GB of data</Message>
+        </Entry>
+        <Entry>
+          <Name>10</Name>
+          <Value>10</Value>
+          <Message>About 10GB of data</Message>
+        </Entry>
+        <Entry>
+          <Name>50</Name>
+          <Value>50</Value>
+          <Message>About 50GB of data</Message>
+        </Entry>
+        <Entry>
+          <Name>100</Name>
+          <Value>100</Value>
+          <Message>About 100GB of data</Message>
+        </Entry>
+        <Entry>
+          <Name>500</Name>
+          <Value>500</Value>
+          <Message>About 500GB of data</Message>
+        </Entry>
+        <Entry>
+          <Name>3000</Name>
+          <Value>3000</Value>
+          <Message>About 3TB of data; many hours of testing</Message>
+        </Entry>
+        <Entry>
+          <Name>10000</Name>
+          <Value>10000</Value>
+          <Message>About 10TB of data, extremely time consuming!</Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

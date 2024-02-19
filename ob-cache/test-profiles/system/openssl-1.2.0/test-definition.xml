@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>OpenSSL</Title>
+    <AppVersion> </AppVersion>
+    <Description>OpenSSL is an open-source toolkit that implements SSL (Secure Sockets Layer) and TLS (Transport Layer Security) protocols. The system/openssl test profiles relies on benchmarking the system/OS-supplied openssl binary rather than the pts/openssl test profile that uses the locally-built OpenSSL for benchmarking.</Description>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.0</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <Extends>pts/openssl</Extends>
+    <EnvironmentSize>3010</EnvironmentSize>
+    <ProjectURL>http://www.openssl.org/</ProjectURL>
+    <RepositoryURL>https://github.com/openssl/openssl</RepositoryURL>
+    <RequiresCoreVersionMin>6100</RequiresCoreVersionMin>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>openssl</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Algorithm</DisplayName>
+      <Identifier>algo</Identifier>
+      <Menu>
+        <Entry>
+          <Name>RSA4096</Name>
+          <Value>rsa4096</Value>
+        </Entry>
+        <Entry>
+          <Name>SHA256</Name>
+          <Value>sha256</Value>
+        </Entry>
+        <Entry>
+          <Name>SHA512</Name>
+          <Value>sha512</Value>
+        </Entry>
+        <Entry>
+          <Name>AES-128-GCM</Name>
+          <Value>-evp aes-128-gcm</Value>
+        </Entry>
+        <Entry>
+          <Name>AES-256-GCM</Name>
+          <Value>-evp aes-256-gcm</Value>
+        </Entry>
+        <Entry>
+          <Name>ChaCha20</Name>
+          <Value>-evp chacha20</Value>
+        </Entry>
+        <Entry>
+          <Name>ChaCha20-Poly1305</Name>
+          <Value>-evp chacha20-poly1305</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

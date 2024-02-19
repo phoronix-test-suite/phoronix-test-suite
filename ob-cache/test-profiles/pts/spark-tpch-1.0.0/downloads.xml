@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://archive.apache.org/dist/spark/spark-3.5.0/spark-3.5.0-bin-hadoop3.tgz</URL>
+      <MD5>4a3b0cfc251827d78ff468db7016f2ee</MD5>
+      <SHA256>ac064ec620129b4b9630e180e25ac2b71a8ccd4c6912bf5b5631943b742f0379</SHA256>
+      <FileName>spark-3.5.0-bin-hadoop3.tgz</FileName>
+      <FileSize>400395283</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/ssavvides/tpch-spark/archive/7d64aa57368f092969a855fdd10781c00813c9c4.zip</URL>
+      <MD5>1f981d33ba100fc31c51204156037bab</MD5>
+      <SHA256>55a82833b0e76e77c1d0bc95ff3a04f5c9bee9b8bc02a5c64193ad4cbc9e4a0b</SHA256>
+      <FileName>tpch-spark-7d64aa57368f092969a855fdd10781c00813c9c4.zip</FileName>
+      <FileSize>1705811</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/sbt/sbt/releases/download/v1.9.7/sbt-1.9.7.zip</URL>
+      <MD5>9e4cdee25e6076a78810f02f0bda77ef</MD5>
+      <SHA256>74f36c2b044b63f3a24300b8e32eea20afc462b16974bf13f6e393a64530116d</SHA256>
+      <FileName>sbt-1.9.7.zip</FileName>
+      <FileSize>47154988</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

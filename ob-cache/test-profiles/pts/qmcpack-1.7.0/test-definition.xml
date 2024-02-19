@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>QMCPACK</Title>
+    <AppVersion>3.17.1</AppVersion>
+    <Description>QMCPACK is a modern high-performance open-source Quantum Monte Carlo (QMC) simulation code making use of MPI for this benchmark of the H20 example code. QMCPACK is an open-source production level many-body ab initio Quantum Monte Carlo code for computing the electronic structure of atoms, molecules, and solids. QMCPACK is supported by the U.S. Department of Energy.</Description>
+    <ResultScale>Total Execution Time - Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.7.0</Version>
+    <SupportedPlatforms>Linux, BSD</SupportedPlatforms>
+    <SoftwareType>Scientific</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>openmpi-development, fftw3-development, build-utilities, boost-development, cmake, hdf5, libxml2, blas-development, lapack-development, python</ExternalDependencies>
+    <EnvironmentSize>1200</EnvironmentSize>
+    <ProjectURL>https://qmcpack.org/</ProjectURL>
+    <RepositoryURL>https://github.com/QMCPACK/qmcpack</RepositoryURL>
+    <InternalTags>SMP, MPI</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Input</DisplayName>
+      <Identifier>input</Identifier>
+      <Menu>
+        <Entry>
+          <Name>simple-H2O</Name>
+          <Value>build/examples/molecules/H2O/example_H2O-1-1 simple-H2O.xml</Value>
+        </Entry>
+        <Entry>
+          <Name>Li2_STO_ae</Name>
+          <Value>tests/molecules/Li2_STO_ae Li2.STO.long.in.xml</Value>
+        </Entry>
+        <Entry>
+          <Name>FeCO6_b3lyp_gms</Name>
+          <Value>tests/molecules/FeCO6_b3lyp_gms vmc_long_noj.in.xml</Value>
+        </Entry>
+        <Entry>
+          <Name>O_ae_pyscf_UHF</Name>
+          <Value>tests/molecules/O_ae_pyscf_UHF vmc_long_noj.in.xml</Value>
+        </Entry>
+        <Entry>
+          <Name>LiH_ae_MSD</Name>
+          <Value>tests/molecules/LiH_ae_MSD vmc_long_opt_CI.in.xml</Value>
+        </Entry>
+        <Entry>
+          <Name>H4_ae</Name>
+          <Value>tests/molecules/H4_ae optm-linear-linemin.xml</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>RabbitMQ</Title>
+    <AppVersion>3.12.7</AppVersion>
+    <Description>RabbitMQ is an open-source message broker. This test profile makes use of the RabbitMQ PerfTest with the RabbitMQ server and PerfTest client running on the same host namely as a system/CPU performance benchmark.</Description>
+    <ResultScale>Messages/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Application</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>java</ExternalDependencies>
+    <EnvironmentSize>60</EnvironmentSize>
+    <ProjectURL>https://www.rabbitmq.com/</ProjectURL>
+    <RepositoryURL>https://github.com/rabbitmq/rabbitmq-server</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>erl, inets.beam, make.beam, xmerl.beam, os_mon.beam, eldap.appup, xref_compiler.beam, javac</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Scenario</DisplayName>
+      <Identifier>scenario</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Simple 2 Publishers + 4 Consumers</Name>
+          <Value>-x 2 -y 4 -u "throughput-test-2" -a --id "test 2" -s 8000</Value>
+        </Entry>
+        <Entry>
+          <Name>10 Queues, 100 Producers, 100 Consumers</Name>
+          <Value>--queue-pattern 'perf-test-%d'  --queue-pattern-from 1 --queue-pattern-to 10 --producers 100 --consumers 100 -s 8000</Value>
+        </Entry>
+        <Entry>
+          <Name>60 Queues, 100 Producers, 100 Consumers</Name>
+          <Value>--queue-pattern 'perf-test-%d'  --queue-pattern-from 1 --queue-pattern-to 60 --producers 100 --consumers 100 -s 8000</Value>
+        </Entry>
+        <Entry>
+          <Name>120 Queues, 400 Producers, 400 Consumers</Name>
+          <Value>--queue-pattern 'perf-test-%d'  --queue-pattern-from 1 --queue-pattern-to 120 --producers 400 --consumers 400 -s 8000</Value>
+        </Entry>
+        <Entry>
+          <Name>200 Queues, 400 Producers, 400 Consumers</Name>
+          <Value>--queue-pattern 'perf-test-%d'  --queue-pattern-from 1 --queue-pattern-to 200 --producers 400 --consumers 400 -s 8000</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

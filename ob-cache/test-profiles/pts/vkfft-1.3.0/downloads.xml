@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/DTolm/VkFFT/archive/refs/tags/v1.3.4.tar.gz</URL>
+      <MD5>4e5d0f2465e5599b8e55466c59cc97f4</MD5>
+      <SHA256>b61055393adb3adc79009fe12401cbfbbdfba584e665e9c35fcbf4b32fb31f30</SHA256>
+      <FileName>VkFFT-1.3.4.tar.gz</FileName>
+      <FileSize>6135651</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/DTolm/VkFFT/releases/download/v1.3.4/VkFFT_Vulkan_v1.3.4.zip</URL>
+      <MD5>a55f23e80d33ef34c80160a8395cc036</MD5>
+      <SHA256>f72b5cf6d4f6bd2cd1744b871f0a5ece8e1b10566b1ea0706ffc02b450d99edf</SHA256>
+      <FileName>VkFFT_Vulkan_v1.3.4.zip</FileName>
+      <FileSize>2045024</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

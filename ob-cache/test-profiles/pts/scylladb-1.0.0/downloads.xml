@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://archive.apache.org/dist/cassandra/4.1.3/apache-cassandra-4.1.3-bin.tar.gz</URL>
+      <MD5>f2f148d0c7af65375caedb074dde93d1</MD5>
+      <SHA256>da014999723f4e1e2c15775dac6aaa9ff69a48f6df6465740fcd52ca9d19ea88</SHA256>
+      <FileName>apache-cassandra-4.1.3-bin.tar.gz</FileName>
+      <FileSize>49955565</FileSize>
+    </Package>
+    <Package>
+      <URL>https://downloads.scylladb.com/downloads/scylla/relocatable/scylladb-5.2/scylla-5.2.9-0.20230920.5709d0043978.x86_64.tar.gz</URL>
+      <MD5>0d5175fdd91f421c037c3c56cef66ab0</MD5>
+      <SHA256>bcbd7ea8bf5dc81ff7e9330222c0379f0526b73a559c6c6dfdadd92248cd4a19</SHA256>
+      <FileName>scylla-5.2.9-0.20230920.5709d0043978.x86_64.tar.gz</FileName>
+      <FileSize>92721758</FileSize>
+      <ArchitectureSpecific>x86_64</ArchitectureSpecific>
+    </Package>
+    <Package>
+      <URL>https://downloads.scylladb.com/downloads/scylla/relocatable/scylladb-5.2/scylla-5.2.9-0.20230920.5709d0043978.aarch64.tar.gz</URL>
+      <MD5>b214be552ace1f5915e2514b1da44fe8</MD5>
+      <SHA256>f6a52721d804c5c48a6981ead87359fd74347653d9998e7b73b5c4c9222b7913</SHA256>
+      <FileName>scylla-5.2.9-0.20230920.5709d0043978.aarch64.tar.gz</FileName>
+      <FileSize>75476351</FileSize>
+      <ArchitectureSpecific>aarch64</ArchitectureSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

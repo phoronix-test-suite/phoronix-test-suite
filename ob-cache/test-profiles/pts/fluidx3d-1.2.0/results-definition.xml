@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>| Info: Peak MLUPs/s = #_RESULT_#                                                   |</OutputTemplate>
+    <LineHint>Peak MLUPs/s</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

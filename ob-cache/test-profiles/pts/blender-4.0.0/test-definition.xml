@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Blender</Title>
+    <AppVersion>4.0</AppVersion>
+    <Description>Blender is an open-source 3D creation and modeling software project. This test is of Blender's Cycles performance with various sample files. GPU computing via NVIDIA OptiX and NVIDIA CUDA is currently supported as well as HIP for AMD Radeon GPUs and Intel oneAPI for Intel Graphics.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>4.0.0</Version>
+    <SupportedPlatforms>Linux, Windows, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <EnvironmentSize>1500</EnvironmentSize>
+    <ProjectURL>https://www.blender.org/</ProjectURL>
+    <RepositoryURL>https://git.blender.org/gitweb/gitweb.cgi/blender.git</RepositoryURL>
+    <InternalTags>CUDA</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-noaudio --enable-autoexec</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Blend File</DisplayName>
+      <Identifier>blend</Identifier>
+      <ArgumentPrefix>-b </ArgumentPrefix>
+      <ArgumentPostfix> -o output.test -x 1 -F JPEG -f 1</ArgumentPostfix>
+      <Menu>
+        <Entry>
+          <Name>BMW27</Name>
+          <Value>../bmw27_gpu.blend</Value>
+        </Entry>
+        <Entry>
+          <Name>Classroom</Name>
+          <Value>../classroom_gpu.blend</Value>
+        </Entry>
+        <Entry>
+          <Name>Fishy Cat</Name>
+          <Value>../fishy_cat_gpu.blend</Value>
+        </Entry>
+        <Entry>
+          <Name>Pabellon Barcelona</Name>
+          <Value>../pavillon_barcelone_gpu.blend</Value>
+        </Entry>
+        <Entry>
+          <Name>Barbershop</Name>
+          <Value>../barbershop_interior_gpu.blend</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Compute</DisplayName>
+      <Identifier>compute</Identifier>
+      <ArgumentPrefix>-- --cycles-device </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>CPU-Only</Name>
+          <Value>CPU</Value>
+        </Entry>
+        <Entry>
+          <Name>NVIDIA CUDA</Name>
+          <Value>CUDA</Value>
+        </Entry>
+        <Entry>
+          <Name>NVIDIA OptiX</Name>
+          <Value>OPTIX</Value>
+        </Entry>
+        <Entry>
+          <Name>Radeon HIP</Name>
+          <Value>HIP</Value>
+        </Entry>
+        <Entry>
+          <Name>macOS Metal</Name>
+          <Value>METAL</Value>
+        </Entry>
+        <Entry>
+          <Name>Intel oneAPI</Name>
+          <Value>ONEAPI</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

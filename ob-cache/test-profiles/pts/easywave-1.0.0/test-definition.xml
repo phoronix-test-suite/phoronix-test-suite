@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>easyWave</Title>
+    <AppVersion>r34</AppVersion>
+    <Description>The easyWave software allows simulating tsunami generation and propagation in the context of early warning systems. EasyWave supports making use of OpenMP for CPU multi-threading and there are also GPU ports available but not currently incorporated as part of this test profile. The easyWave tsunami generation software is run with one of the example/reference input files for measuring the CPU execution time.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities</ExternalDependencies>
+    <EnvironmentSize>3400</EnvironmentSize>
+    <ProjectURL>https://git.gfz-potsdam.de/id2/geoperil/easyWave/</ProjectURL>
+    <RepositoryURL>https://git.gfz-potsdam.de/id2/geoperil/easyWave</RepositoryURL>
+    <InternalTags>SMP, OpenMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Input</DisplayName>
+      <Identifier>input</Identifier>
+      <Menu>
+        <Entry>
+          <Name>e2Asean Grid + BengkuluSept2007 Source</Name>
+          <Value>-grid examples/e2Asean.grd -source examples/BengkuluSept2007.flt</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Time</DisplayName>
+      <Identifier>time</Identifier>
+      <ArgumentPrefix>-time </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>240</Name>
+          <Value>240</Value>
+          <Message>Intended for very slow systems or just a quick reference run.</Message>
+        </Entry>
+        <Entry>
+          <Name>1200</Name>
+          <Value>1200</Value>
+        </Entry>
+        <Entry>
+          <Name>2400</Name>
+          <Value>2400</Value>
+          <Message>Just intended for very large core count servers / HPC</Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

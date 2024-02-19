@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>WebP2 Image Encode</Title>
+    <AppVersion>20220823</AppVersion>
+    <Description>This is a test of Google's libwebp2 library with the WebP2 image encode utility and using a sample 6000x4000 pixel JPEG image as the input, similar to the WebP/libwebp test profile. WebP2 is currently experimental and under heavy development as ultimately the successor to WebP. WebP2 supports 10-bit HDR, more efficienct lossy compression, improved lossless compression, animation support, and full multi-threading support compared to WebP.</Description>
+    <ResultScale>MP/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.1</Version>
+    <SupportedPlatforms>Linux, MacOSX, BSD</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, jpeg-development, cmake</ExternalDependencies>
+    <EnvironmentSize>79</EnvironmentSize>
+    <ProjectURL>https://chromium.googlesource.com/codecs/libwebp2/</ProjectURL>
+    <RepositoryURL>https://chromium.googlesource.com/codecs/libwebp2</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-v -info</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Encode Settings</DisplayName>
+      <Identifier>encode</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Default</Name>
+          <Value> </Value>
+        </Entry>
+        <Entry>
+          <Name>Quality 75, Compression Effort 7</Name>
+          <Value>-q 75 -effort 7</Value>
+        </Entry>
+        <Entry>
+          <Name>Quality 95, Compression Effort 7</Name>
+          <Value>-q 95 -effort 7</Value>
+        </Entry>
+        <Entry>
+          <Name>Quality 100, Compression Effort 5</Name>
+          <Value>-q 100 -effort 5</Value>
+        </Entry>
+        <Entry>
+          <Name>Quality 100, Lossless Compression</Name>
+          <Value>-q 100 -effort 9</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

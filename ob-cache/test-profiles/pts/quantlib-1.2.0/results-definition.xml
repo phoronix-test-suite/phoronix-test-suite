@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>QuantLib Benchmark Index                  #_RESULT_# mflops</OutputTemplate>
+    <LineHint>Benchmark Index</LineHint>
+    <StripFromResult>:</StripFromResult>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>QuantLib Benchmark Index                :  #_RESULT_# mflops</OutputTemplate>
+    <LineHint>Benchmark Index</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

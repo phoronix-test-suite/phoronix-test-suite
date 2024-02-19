@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>FluidX3D</Title>
+    <AppVersion>2.9</AppVersion>
+    <Description>FluidX3D is a speedy and memory efficient Boltzmann CFD (Computational Fluid Dynamics) software package implemented using OpenCL and intended for GPU acceleration. FluidX3D is developed by Moritz Lehmann and written free for non-commercial use. This is a test profile measuring the system OpenCL performance using the FluidX3D benchmark.</Description>
+    <ResultScale>MLUPs/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.0</Version>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <ExternalDependencies>opencl</ExternalDependencies>
+    <EnvironmentSize>4</EnvironmentSize>
+    <ProjectURL>https://github.com/ProjectPhysX/FluidX3D/</ProjectURL>
+    <RepositoryURL>https://github.com/ProjectPhysX/FluidX3D</RepositoryURL>
+    <InternalTags>OpenCL</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test</Identifier>
+      <Menu>
+        <Entry>
+          <Name>FP32-FP32</Name>
+          <Value>FP32-FP32</Value>
+        </Entry>
+        <Entry>
+          <Name>FP32-FP16S</Name>
+          <Value>FP32-FP16S</Value>
+        </Entry>
+        <Entry>
+          <Name>FP32-FP16C</Name>
+          <Value>FP32-FP16C</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

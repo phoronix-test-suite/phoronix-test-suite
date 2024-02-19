@@ -1,0 +1,499 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate> query01           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query01</LineHint>
+    <AppendToArgumentsDescription>Q01</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query02           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query02</LineHint>
+    <AppendToArgumentsDescription>Q02</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query03           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query03</LineHint>
+    <AppendToArgumentsDescription>Q03</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query04           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query04</LineHint>
+    <AppendToArgumentsDescription>Q04</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query05           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query05</LineHint>
+    <AppendToArgumentsDescription>Q05</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query06           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query06</LineHint>
+    <AppendToArgumentsDescription>Q06</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query07           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query07</LineHint>
+    <AppendToArgumentsDescription>Q07</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query08           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query08</LineHint>
+    <AppendToArgumentsDescription>Q08</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query09           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query09</LineHint>
+    <AppendToArgumentsDescription>Q09</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query10           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query10</LineHint>
+    <AppendToArgumentsDescription>Q10</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query11           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query11</LineHint>
+    <AppendToArgumentsDescription>Q11</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query12           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query12</LineHint>
+    <AppendToArgumentsDescription>Q12</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query13           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query13</LineHint>
+    <AppendToArgumentsDescription>Q13</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query14           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query14</LineHint>
+    <AppendToArgumentsDescription>Q14</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query15           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query15</LineHint>
+    <AppendToArgumentsDescription>Q15</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query16           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query16</LineHint>
+    <AppendToArgumentsDescription>Q16</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query17           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query17</LineHint>
+    <AppendToArgumentsDescription>Q17</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query18           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query18</LineHint>
+    <AppendToArgumentsDescription>Q18</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query19           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query19</LineHint>
+    <AppendToArgumentsDescription>Q19</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query20           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query20</LineHint>
+    <AppendToArgumentsDescription>Q20</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query21           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query21</LineHint>
+    <AppendToArgumentsDescription>Q21</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query22           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query22</LineHint>
+    <AppendToArgumentsDescription>Q22</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query23           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query23</LineHint>
+    <AppendToArgumentsDescription>Q23</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query24           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query24</LineHint>
+    <AppendToArgumentsDescription>Q24</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query25           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query25</LineHint>
+    <AppendToArgumentsDescription>Q25</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query26           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query26</LineHint>
+    <AppendToArgumentsDescription>Q26</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query27           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query27</LineHint>
+    <AppendToArgumentsDescription>Q27</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query28           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query28</LineHint>
+    <AppendToArgumentsDescription>Q28</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query29           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query29</LineHint>
+    <AppendToArgumentsDescription>Q29</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query30           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query30</LineHint>
+    <AppendToArgumentsDescription>Q30</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query31           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query31</LineHint>
+    <AppendToArgumentsDescription>Q31</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query32           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query32</LineHint>
+    <AppendToArgumentsDescription>Q32</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query33           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query33</LineHint>
+    <AppendToArgumentsDescription>Q33</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query34           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query34</LineHint>
+    <AppendToArgumentsDescription>Q34</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query35           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query35</LineHint>
+    <AppendToArgumentsDescription>Q35</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query36           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query36</LineHint>
+    <AppendToArgumentsDescription>Q36</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query37           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query37</LineHint>
+    <AppendToArgumentsDescription>Q37</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query38           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query38</LineHint>
+    <AppendToArgumentsDescription>Q38</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query39           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query39</LineHint>
+    <AppendToArgumentsDescription>Q39</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query40           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query40</LineHint>
+    <AppendToArgumentsDescription>Q40</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query41           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query41</LineHint>
+    <AppendToArgumentsDescription>Q41</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query42           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query42</LineHint>
+    <AppendToArgumentsDescription>Q42</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query43           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query43</LineHint>
+    <AppendToArgumentsDescription>Q43</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query44           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query44</LineHint>
+    <AppendToArgumentsDescription>Q44</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query45           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query45</LineHint>
+    <AppendToArgumentsDescription>Q45</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query46           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query46</LineHint>
+    <AppendToArgumentsDescription>Q46</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query47           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query47</LineHint>
+    <AppendToArgumentsDescription>Q47</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query48           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query48</LineHint>
+    <AppendToArgumentsDescription>Q48</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query49           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query49</LineHint>
+    <AppendToArgumentsDescription>Q49</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query50           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query50</LineHint>
+    <AppendToArgumentsDescription>Q50</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query51           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query51</LineHint>
+    <AppendToArgumentsDescription>Q51</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query52           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query52</LineHint>
+    <AppendToArgumentsDescription>Q52</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query53           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query53</LineHint>
+    <AppendToArgumentsDescription>Q53</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query54           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query54</LineHint>
+    <AppendToArgumentsDescription>Q54</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query55           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query55</LineHint>
+    <AppendToArgumentsDescription>Q55</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query56           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query56</LineHint>
+    <AppendToArgumentsDescription>Q56</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query57           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query57</LineHint>
+    <AppendToArgumentsDescription>Q57</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query58           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query58</LineHint>
+    <AppendToArgumentsDescription>Q58</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query59           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query59</LineHint>
+    <AppendToArgumentsDescription>Q59</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query60           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query60</LineHint>
+    <AppendToArgumentsDescription>Q60</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query61           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query61</LineHint>
+    <AppendToArgumentsDescription>Q61</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query62           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query62</LineHint>
+    <AppendToArgumentsDescription>Q62</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query63           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query63</LineHint>
+    <AppendToArgumentsDescription>Q63</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query64           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query64</LineHint>
+    <AppendToArgumentsDescription>Q64</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query65           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query65</LineHint>
+    <AppendToArgumentsDescription>Q65</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query66           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query66</LineHint>
+    <AppendToArgumentsDescription>Q66</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query67           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query67</LineHint>
+    <AppendToArgumentsDescription>Q67</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query68           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query68</LineHint>
+    <AppendToArgumentsDescription>Q68</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query69           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query69</LineHint>
+    <AppendToArgumentsDescription>Q69</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query70           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query70</LineHint>
+    <AppendToArgumentsDescription>Q70</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query71           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query71</LineHint>
+    <AppendToArgumentsDescription>Q71</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query72           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query72</LineHint>
+    <AppendToArgumentsDescription>Q72</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query73           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query73</LineHint>
+    <AppendToArgumentsDescription>Q73</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query74           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query74</LineHint>
+    <AppendToArgumentsDescription>Q74</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query75           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query75</LineHint>
+    <AppendToArgumentsDescription>Q75</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query76           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query76</LineHint>
+    <AppendToArgumentsDescription>Q76</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query77           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query77</LineHint>
+    <AppendToArgumentsDescription>Q77</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query78           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query78</LineHint>
+    <AppendToArgumentsDescription>Q78</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query79           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query79</LineHint>
+    <AppendToArgumentsDescription>Q79</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query80           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query80</LineHint>
+    <AppendToArgumentsDescription>Q80</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query81           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query81</LineHint>
+    <AppendToArgumentsDescription>Q81</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query82           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query82</LineHint>
+    <AppendToArgumentsDescription>Q82</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query83           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query83</LineHint>
+    <AppendToArgumentsDescription>Q83</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query84           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query84</LineHint>
+    <AppendToArgumentsDescription>Q84</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query85           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query85</LineHint>
+    <AppendToArgumentsDescription>Q85</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query86           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query86</LineHint>
+    <AppendToArgumentsDescription>Q86</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query87           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query87</LineHint>
+    <AppendToArgumentsDescription>Q87</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query88           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query88</LineHint>
+    <AppendToArgumentsDescription>Q88</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query89           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query89</LineHint>
+    <AppendToArgumentsDescription>Q89</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query90           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query90</LineHint>
+    <AppendToArgumentsDescription>Q90</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query91           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query91</LineHint>
+    <AppendToArgumentsDescription>Q91</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query92           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query92</LineHint>
+    <AppendToArgumentsDescription>Q92</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query93           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query93</LineHint>
+    <AppendToArgumentsDescription>Q93</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query94           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query94</LineHint>
+    <AppendToArgumentsDescription>Q94</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query95           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query95</LineHint>
+    <AppendToArgumentsDescription>Q95</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query96           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query96</LineHint>
+    <AppendToArgumentsDescription>Q96</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query97           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query97</LineHint>
+    <AppendToArgumentsDescription>Q97</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query98           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query98</LineHint>
+    <AppendToArgumentsDescription>Q98</AppendToArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> query99           #_RESULT_#             100</OutputTemplate>
+    <LineHint>query99</LineHint>
+    <AppendToArgumentsDescription>Q99</AppendToArgumentsDescription>
+  </ResultsParser>
+</PhoronixTestSuite>

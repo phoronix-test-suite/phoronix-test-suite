@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Info: Benchmark time: 64 CPUs 0.0232228 s/step #_RESULT_# days/ns 4678.59 MB memory</OutputTemplate>
+    <LineHint>Benchmark time</LineHint>
+    <DivideResultDivisor>1</DivideResultDivisor>
+    <ResultPrecision>5</ResultPrecision>
+  </ResultsParser>
+</PhoronixTestSuite>

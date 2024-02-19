@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>ArrayFire</Title>
+    <AppVersion>3.9</AppVersion>
+    <Description>ArrayFire is an GPU and CPU numeric processing library, this test uses the built-in CPU and OpenCL ArrayFire benchmarks.</Description>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, boost-development, cmake, blas-development, atlas-development, lapack-development, fftw3-development, opencl</ExternalDependencies>
+    <EnvironmentSize>775</EnvironmentSize>
+    <ProjectURL>https://arrayfire.com/</ProjectURL>
+    <RepositoryURL>https://github.com/arrayfire/arrayfire</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>lapacke.h</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test</Identifier>
+      <Menu>
+        <Entry>
+          <Name>BLAS CPU FP32</Name>
+          <Value>blas_cpu</Value>
+        </Entry>
+        <Entry>
+          <Name>BLAS CPU FP16</Name>
+          <Value>blas_cpu 0 f16</Value>
+        </Entry>
+        <Entry>
+          <Name>Conjugate Gradient CPU</Name>
+          <Value>cg_cpu</Value>
+        </Entry>
+        <Entry>
+          <Name>BLAS OpenCL FP32</Name>
+          <Value>blas_opencl</Value>
+        </Entry>
+        <Entry>
+          <Name>BLAS OpenCL FP16</Name>
+          <Value>blas_opencl 0 f16</Value>
+        </Entry>
+        <Entry>
+          <Name>Conjugate Gradient OpenCL</Name>
+          <Value>cg_opencl</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

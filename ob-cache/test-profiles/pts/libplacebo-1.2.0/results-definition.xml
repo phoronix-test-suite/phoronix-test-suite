@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>'deband_heavy':	 224 frames in 6.772675 seconds =&gt; 30.235155 ms/frame #_RESULT_# FPS), gpu time: 54.681012 ms</OutputTemplate>
+    <LineHint>deband_heavy</LineHint>
+    <StripFromResult>(</StripFromResult>
+    <ArgumentsDescription>Test: deband_heavy</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>'polar_nocompute':	 224 frames in 6.772675 seconds =&gt; 30.235155 ms/frame #_RESULT_# FPS), gpu time: 54.681012 ms</OutputTemplate>
+    <LineHint>polar_nocompute</LineHint>
+    <StripFromResult>(</StripFromResult>
+    <ArgumentsDescription>Test: polar_nocompute</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>'hdr_peakdetect':	 848 frames in 2.883823 seconds =&gt; 3.400735 ms/frame #_RESULT_# FPS), gpu time: 6.578456 ms</OutputTemplate>
+    <LineHint>hdr_peakdetect</LineHint>
+    <StripFromResult>(</StripFromResult>
+    <ArgumentsDescription>Test: hdr_peakdetect</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>'hdr_lut':	 848 frames in 2.883823 seconds =&gt; 3.400735 ms/frame #_RESULT_# FPS), gpu time: 6.578456 ms</OutputTemplate>
+    <LineHint>hdr_lut</LineHint>
+    <StripFromResult>(</StripFromResult>
+    <ArgumentsDescription>Test: hdr_lut</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>'av1_grain_lap':	 384 frames in 2.550219 seconds =&gt; 6.641195 ms/frame #_RESULT_# FPS), gpu time: 9.800420 ms</OutputTemplate>
+    <LineHint>av1_grain_lap</LineHint>
+    <StripFromResult>(</StripFromResult>
+    <ArgumentsDescription>Test: av1_grain_lap</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>'gaussian':	2228 frames in 1.007563 seconds =&gt; 0.452227 ms/frame #_RESULT_# FPS), gpu time: 0.353893 ms
+</OutputTemplate>
+    <LineHint>gaussian</LineHint>
+    <StripFromResult>(</StripFromResult>
+    <ArgumentsDescription>Test: gaussian</ArgumentsDescription>
+  </ResultsParser>
+</PhoronixTestSuite>

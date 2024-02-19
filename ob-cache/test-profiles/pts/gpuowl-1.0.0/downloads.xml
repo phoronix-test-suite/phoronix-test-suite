@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/preda/gpuowl/archive/3567e66f82801d87adfca4d50c6ad3bb6c84a904.zip</URL>
+      <MD5>387455e7a0cc8d154a7d43569c87203b</MD5>
+      <SHA256>72d67856f92aaf23aeab2d3e1423246e2f85806ea9339d5f2f3aeb645e66b812</SHA256>
+      <FileName>gpuowl-3567e66f82801d87adfca4d50c6ad3bb6c84a904.zip</FileName>
+      <FileSize>224382</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

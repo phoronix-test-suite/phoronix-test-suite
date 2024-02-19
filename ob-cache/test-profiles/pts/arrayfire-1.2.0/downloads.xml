@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/arrayfire/arrayfire/releases/download/v3.9.0/arrayfire-full-3.9.0.tar.bz2</URL>
+      <MD5>9056b605f87ab30f81d0f792e417a036</MD5>
+      <SHA256>8356c52bf3b5243e28297f4b56822191355216f002f3e301d83c9310a4b22348</SHA256>
+      <FileName>arrayfire-full-3.9.0.tar.bz2</FileName>
+      <FileSize>65330143</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

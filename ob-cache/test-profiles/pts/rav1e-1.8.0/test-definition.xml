@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>rav1e</Title>
+    <AppVersion>0.7</AppVersion>
+    <Description>Xiph rav1e is a Rust-written AV1 video encoder that claims to be the fastest and safest AV1 encoder.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.8.0</Version>
+    <SupportedPlatforms>Linux, Windows, MacOSX, BSD</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>rust, yasm, perl, cmake, p7zip</ExternalDependencies>
+    <EnvironmentSize>3000</EnvironmentSize>
+    <ProjectURL>https://docs.rs/rav1e/latest/rav1e/</ProjectURL>
+    <RepositoryURL>https://github.com/xiph/rav1e</RepositoryURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Speed</DisplayName>
+      <Identifier>s</Identifier>
+      <Menu>
+        <Entry>
+          <Name>10</Name>
+          <Value>-s 10 -l 600</Value>
+          <Message>Fastest</Message>
+        </Entry>
+        <Entry>
+          <Name>6</Name>
+          <Value>-s 6 -l 200</Value>
+          <Message>Default</Message>
+        </Entry>
+        <Entry>
+          <Name>5</Name>
+          <Value>-s 5 -l 200</Value>
+          <Message>Mid-Speed</Message>
+        </Entry>
+        <Entry>
+          <Name>1</Name>
+          <Value>-s 1 -l 80</Value>
+          <Message>Slowest / Best Quality</Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

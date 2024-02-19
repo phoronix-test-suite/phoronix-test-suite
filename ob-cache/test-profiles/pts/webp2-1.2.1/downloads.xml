@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/libwebp2-20220823.tar.xz</URL>
+      <MD5>8185f7ca968486f98a708942052bad34</MD5>
+      <SHA256>4bcb7193d4993bf1e50e1172c368ecf2319a440ca1e94338c3766e13840c681b</SHA256>
+      <FileName>libwebp2-20220823.tar.xz</FileName>
+      <FileSize>8071852</FileSize>
+      <PlatformSpecific>Linux, Solaris, BSD</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/sample-photo-6000x4000-1.zip</URL>
+      <MD5>3da40124023e94f63d96c22c07e7e9c2</MD5>
+      <SHA256>cadcd434abcdc82a220e7022c749b6fa5f46bb7a32ec14423ca8aab067b0e989</SHA256>
+      <FileName>sample-photo-6000x4000-1.zip</FileName>
+      <FileSize>7824306</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

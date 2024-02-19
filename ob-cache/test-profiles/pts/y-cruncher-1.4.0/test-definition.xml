@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Y-Cruncher</Title>
+    <AppVersion>0.8.3</AppVersion>
+    <Description>Y-Cruncher is a multi-threaded Pi benchmark capable of computing Pi to trillions of digits.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Calculating 500M Pi Digits</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.4.0</Version>
+    <SupportedPlatforms>Linux, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Non-Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <EnvironmentSize>150</EnvironmentSize>
+    <ProjectURL>http://www.numberworld.org/y-cruncher/</ProjectURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>skip-warnings bench </Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Pi Digits To Calculate</DisplayName>
+      <Identifier>pi-length</Identifier>
+      <Menu>
+        <Entry>
+          <Name>500M</Name>
+          <Value>500m</Value>
+        </Entry>
+        <Entry>
+          <Name>1B</Name>
+          <Value>1b</Value>
+        </Entry>
+        <Entry>
+          <Name>5B</Name>
+          <Value>5b</Value>
+        </Entry>
+        <Entry>
+          <Name>10B</Name>
+          <Value>10b</Value>
+        </Entry>
+        <Entry>
+          <Name>25B</Name>
+          <Value>25b</Value>
+          <Message>This is very time consuming except for very high core count server CPUs.</Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

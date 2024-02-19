@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Apache Hadoop</Title>
+    <AppVersion>3.3.6</AppVersion>
+    <Description>This is a benchmark of the Apache Hadoop making use of its built-in name-node throughput benchmark (NNThroughputBenchmark).</Description>
+    <ResultScale>Ops per sec</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>java</ExternalDependencies>
+    <EnvironmentSize>2100</EnvironmentSize>
+    <ProjectURL>https://hadoop.apache.org/</ProjectURL>
+    <RepositoryURL>https://github.com/apache/hadoop</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>org.apache.hadoop.hdfs.server.namenode.NNThroughputBenchmark </Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Operation</DisplayName>
+      <Identifier>op</Identifier>
+      <ArgumentPrefix>-op </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>Create</Name>
+          <Value>create</Value>
+        </Entry>
+        <Entry>
+          <Name>Open</Name>
+          <Value>open</Value>
+        </Entry>
+        <Entry>
+          <Name>Delete</Name>
+          <Value>delete</Value>
+        </Entry>
+        <Entry>
+          <Name>File Status</Name>
+          <Value>fileStatus</Value>
+        </Entry>
+        <Entry>
+          <Name>Rename</Name>
+          <Value>rename</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Threads</DisplayName>
+      <Identifier>threads</Identifier>
+      <ArgumentPrefix>-threads </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>20</Name>
+          <Value>20</Value>
+        </Entry>
+        <Entry>
+          <Name>50</Name>
+          <Value>50</Value>
+        </Entry>
+        <Entry>
+          <Name>100</Name>
+          <Value>100</Value>
+        </Entry>
+        <Entry>
+          <Name>500</Name>
+          <Value>500</Value>
+        </Entry>
+        <Entry>
+          <Name>1000</Name>
+          <Value>1000</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Files</DisplayName>
+      <Identifier>files</Identifier>
+      <ArgumentPrefix>-files </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>100000</Name>
+          <Value>100000</Value>
+        </Entry>
+        <Entry>
+          <Name>1000000</Name>
+          <Value>1000000</Value>
+        </Entry>
+        <Entry>
+          <Name>10000000</Name>
+          <Value>10000000</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

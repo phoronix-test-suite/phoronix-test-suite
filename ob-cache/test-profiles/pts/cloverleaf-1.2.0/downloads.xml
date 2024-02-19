@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://phoronix-test-suite.com/benchmark-files/CloverLeaf_OpenMP-20181012.zip</URL>
+      <MD5>bb20e694fc8e33347a1ee71acd8a8d57</MD5>
+      <SHA256>dadbcd7ae23aa714700fa3107c19a0e3d7e4cf06c811fe28fc5ee48d1a37a682</SHA256>
+      <FileName>CloverLeaf_OpenMP-20181012.zip</FileName>
+      <FileSize>115805</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

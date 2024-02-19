@@ -1,0 +1,34 @@
+#!/bin/sh
+tar -xzf redis-7.0.12.tar.gz
+cd ~/redis-7.0.12/deps
+make hiredis jemalloc linenoise lua hdr_histogram
+
+cd ~/redis-7.0.12
+make MALLOC=libc -j $NUM_CPU_CORES
+retVal=$?
+if [ $retVal -ne 0 ]; then
+	echo $retVal > ~/install-exit-status
+	exit $retVal
+fi
+
+cd ~
+tar -xf memtier_benchmark-2.0.0.tar.gz
+cd memtier_benchmark-2.0.0
+autoreconf -ivf
+./configure
+make -j $NUM_CPU_CORES
+echo $? > ~/install-exit-status
+
+cd ~
+echo "#!/bin/sh
+cd ~/redis-7.0.12/
+echo \"io-threads \$NUM_CPU_PHYSICAL_CORES
+io-threads-do-reads yes
+tcp-keepalive 0\" > redis.conf
+./src/redis-server redis.conf &
+REDIS_SERVER_PID=\$!
+sleep 5
+cd ~/memtier_benchmark-2.0.0
+./memtier_benchmark -s 127.0.0.1 --hide-histogram -t \$NUM_CPU_PHYSICAL_CORES \$@ > \$LOG_FILE
+kill \$REDIS_SERVER_PID" > memtier-benchmark
+chmod +x memtier-benchmark

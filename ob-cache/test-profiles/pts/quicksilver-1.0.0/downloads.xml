@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/LLNL/Quicksilver/archive/eb68bb8d6fc53de1f65011d4e79ff2ed0dd60f3b.zip</URL>
+      <MD5>ee4235bd57737a7a9ef4e0c7e0bcb3d8</MD5>
+      <SHA256>99f37473022cbc859c50aebf805c3c3f51ec7303e96a769d8e63c7d25080b153</SHA256>
+      <FileName>Quicksilver-eb68bb8d6fc53de1f65011d4e79ff2ed0dd60f3b.zip</FileName>
+      <FileSize>204019</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

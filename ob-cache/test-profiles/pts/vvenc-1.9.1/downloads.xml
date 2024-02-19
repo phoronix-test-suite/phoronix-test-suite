@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/fraunhoferhhi/vvenc/archive/refs/tags/v1.9.0.tar.gz</URL>
+      <MD5>3aa7e332c20b4c16da6941643ce71415</MD5>
+      <SHA256>4ddb365dfc21bbbb7ed54655c7630ae3e8e977af31f22b28195e720215b1072d</SHA256>
+      <FileName>vvenc-1.9.0.tar.gz</FileName>
+      <FileSize>2013238</FileSize>
+    </Package>
+    <Package>
+      <URL>http://ultravideo.cs.tut.fi/video/Bosphorus_3840x2160_120fps_420_8bit_YUV_Y4M.7z</URL>
+      <MD5>815ca5830c8ea2f95545429817b96b1f</MD5>
+      <SHA256>d0fcb7d8cfc6e51c47ce8b427dab41ce38300c4b1a51a1903ddd5d86067c4c79</SHA256>
+      <FileName>Bosphorus_3840x2160_120fps_420_8bit_YUV_Y4M.7z</FileName>
+      <FileSize>2804470345</FileSize>
+    </Package>
+    <Package>
+      <URL>http://ultravideo.cs.tut.fi/video/Bosphorus_1920x1080_120fps_420_8bit_YUV_Y4M.7z</URL>
+      <MD5>84ae521c95aa2537e16b34bbf72f2def</MD5>
+      <SHA256>e2f60b904789a60f6d1edc194d8540d401dd882e3ee3605b9b1de8feacc72133</SHA256>
+      <FileName>Bosphorus_1920x1080_120fps_420_8bit_YUV_Y4M.7z</FileName>
+      <FileSize>676792531</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

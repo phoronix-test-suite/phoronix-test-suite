@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>OSPRay Studio Benchmark       #_RESULT_# ms         7082 ms            1</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

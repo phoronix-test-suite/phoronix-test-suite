@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Model time = 20:00:00,   elapsed: #_RESULT_# msec</OutputTemplate>
+    <LineHint>elapsed</LineHint>
+    <DivideResultBy>1000</DivideResultBy>
+  </ResultsParser>
+</PhoronixTestSuite>

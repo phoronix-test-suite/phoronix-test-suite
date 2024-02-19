@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/ProjectPhysX/OpenCL-Benchmark/archive/refs/tags/v1.2.tar.gz</URL>
+      <MD5>cda56529f18cb373c76880bb528d5633</MD5>
+      <SHA256>caaa9748186362f64d5af5930fd0d5ff1e1d04a188aaec11fd04e4cd17c5836d</SHA256>
+      <FileName>OpenCL-Benchmark-1.2.tar.gz</FileName>
+      <FileSize>96270</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

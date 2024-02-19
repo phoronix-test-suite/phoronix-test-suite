@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>llama_print_timings:        eval time =   18329.86 ms /   399 runs   (   45.94 ms per token,    #_RESULT_# tokens per second)</OutputTemplate>
+    <ResultBeforeString>tokens</ResultBeforeString>
+  </ResultsParser>
+</PhoronixTestSuite>

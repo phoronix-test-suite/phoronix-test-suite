@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Composite Score: #_TEST_COMPOSITE_#
+FFT (1048576): #_TEST_FFT_#
+SOR (1000 x 1000): #_TEST_SOR_#
+Monte Carlo: #_TEST_MONTE_#
+Sparse matmult (N=100000, nz=1000000): #_TEST_SPARSE_#
+LU (1000 x 1000 ): #_TEST_DENSE_#</OutputTemplate>
+    <ResultKey>PTS_TEST_ARGUMENTS</ResultKey>
+  </ResultsParser>
+</PhoronixTestSuite>

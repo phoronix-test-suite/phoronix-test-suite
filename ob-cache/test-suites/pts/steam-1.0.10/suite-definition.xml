@@ -1,0 +1,534 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.2.0-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Steam</Title>
+    <Version>1.0.10</Version>
+    <TestType>Graphics</TestType>
+    <Description>A collection of test profiles / benchmarks that make use of Valve's Steam platform.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/ashes-escalation</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/batman-knight</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT Low</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Quality: Low</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/batman-knight</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT High</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Quality: High</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/batman-origins</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/bioshock-infinite</Test>
+    <Arguments>-resx=$VIDEO_WIDTH -resy=$VIDEO_HEIGHT -ForceCompatLevel=3</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Effects Quality: Medium</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/bioshock-infinite</Test>
+    <Arguments>-resx=$VIDEO_WIDTH -resy=$VIDEO_HEIGHT -ForceCompatLevel=5</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Effects Quality: Very High</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/bioshock-infinite</Test>
+    <Arguments>-resx=$VIDEO_WIDTH -resy=$VIDEO_HEIGHT -ForceCompatLevel=7</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Effects Quality: Ultra</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/civbe</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/civilization-vi</Test>
+    <Arguments>LOW $VIDEO_WIDTH $VIDEO_HEIGHT</Arguments>
+    <Description>Quality: Lowest - Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/civilization-vi</Test>
+    <Arguments>HIGH $VIDEO_WIDTH $VIDEO_HEIGHT</Arguments>
+    <Description>Quality: Highest - Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/coh2</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT LOW</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: Low</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/coh2</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT HIGH</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: High</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/csgo</Test>
+    <Arguments>-w $VIDEO_WIDTH -h $VIDEO_HEIGHT</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/cs2</Test>
+    <Arguments>-w $VIDEO_WIDTH -h $VIDEO_HEIGHT</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/cstrike</Test>
+    <Arguments>-w $VIDEO_WIDTH -h $VIDEO_HEIGHT</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/dirt-rally</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT prefs-high</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: High</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/dirt-rally</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT prefs-ultra</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: Ultra</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/dirt-rally2</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT high_settings.xml</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: High</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/dirt-rally2</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT ultra_settings.xml</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: Ultra</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/dirt-showdown</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT 2 2xmsaa</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: High - Multi-Sampling: 2x MSAA</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/dirt-showdown</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT 3 2xmsaa</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: Ultra - Multi-Sampling: 2x MSAA</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/dota2</Test>
+    <Arguments>-w $VIDEO_WIDTH -h $VIDEO_HEIGHT -gl</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Renderer: OpenGL</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/dota2</Test>
+    <Arguments>-w $VIDEO_WIDTH -h $VIDEO_HEIGHT -vulkan</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Renderer: Vulkan</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/dow3</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT hig VULKAN</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: High - Renderer: Vulkan</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/dow3</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT hig OPENGL</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: High - Renderer: OpenGL</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/f12017</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT medium taa+checkerboard</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: Medium - Anti Aliasing: TAA Checkerboard</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/f12017</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT ultrahigh taa+checkerboard</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: Ultra High - Anti Aliasing: TAA Checkerboard</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/f12020</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT low_settings.xml</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: Low</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/f12020</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT high_settings.xml</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: High</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/f12020</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT ultra_settings.xml</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: Ultra</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/f12021</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT hardware_settings_low.xml</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: Low</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/f12021</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT hardware_settings_medium.xml</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: Medium</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/f12021</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT hardware_settings_high.xml</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: High</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/f12021</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT hardware_settings_ultra.xml</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: Ultra High</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/hitman</Test>
+    <Arguments>-ao RESOLUTION $VIDEO_WIDTHx$VIDEO_HEIGHT ConsoleCmd settings_SetDetailLOD 1 ConsoleCmd settings_SetAntialiasing 2 ConsoleCmd settings_SetTextureQuality 1 ConsoleCmd settings_SetTextureFilter 1 ConsoleCmd settings_SetSSAO 1 ConsoleCmd settings_SetShadowResolution 1</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Quality Level: Medium</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/hitman</Test>
+    <Arguments>-ao RESOLUTION $VIDEO_WIDTHx$VIDEO_HEIGHT ConsoleCmd settings_SetDetailLOD 3 ConsoleCmd settings_SetAntialiasing 2 ConsoleCmd settings_SetTextureQuality 2 ConsoleCmd settings_SetTextureFilter 3 ConsoleCmd settings_SetSSAO 1 ConsoleCmd settings_SetShadowResolution 2</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Quality Level: Ultra</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/hitman2</Test>
+    <Arguments>-ao RESOLUTION $VIDEO_WIDTHx$VIDEO_HEIGHT ConsoleCmd settings_SetDetailLOD 1 ConsoleCmd settings_SetAntialiasing 2 ConsoleCmd settings_SetTextureQuality 1 ConsoleCmd settings_SetTextureFilter 1 ConsoleCmd settings_SetSSAO 1 ConsoleCmd settings_SetShadowResolution 1</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Quality Level: Medium</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/hitman2</Test>
+    <Arguments>-ao RESOLUTION $VIDEO_WIDTHx$VIDEO_HEIGHT ConsoleCmd settings_SetDetailLOD 3 ConsoleCmd settings_SetAntialiasing 2 ConsoleCmd settings_SetTextureQuality 2 ConsoleCmd settings_SetTextureFilter 3 ConsoleCmd settings_SetSSAO 1 ConsoleCmd settings_SetShadowResolution 2</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Quality Level: Ultra</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/hitman3</Test>
+    <Arguments>-ao RESOLUTION $VIDEO_WIDTHx$VIDEO_HEIGHT ConsoleCmd settings_SetDetailLOD 0 ConsoleCmd settings_SetAntialiasing 0 ConsoleCmd settings_SetTextureQuality 0 ConsoleCmd settings_SetTextureFilter 0 ConsoleCmd settings_SetSSAO 0 ConsoleCmd settings_SetShadowResolution 0</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Quality Level: Low</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/hitman3</Test>
+    <Arguments>-ao RESOLUTION $VIDEO_WIDTHx$VIDEO_HEIGHT ConsoleCmd settings_SetDetailLOD 1 ConsoleCmd settings_SetAntialiasing 2 ConsoleCmd settings_SetTextureQuality 1 ConsoleCmd settings_SetTextureFilter 1 ConsoleCmd settings_SetSSAO 1 ConsoleCmd settings_SetShadowResolution 1</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Quality Level: Medium</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/hitman3</Test>
+    <Arguments>-ao RESOLUTION $VIDEO_WIDTHx$VIDEO_HEIGHT ConsoleCmd settings_SetDetailLOD 3 ConsoleCmd settings_SetAntialiasing 2 ConsoleCmd settings_SetTextureQuality 2 ConsoleCmd settings_SetTextureFilter 3 ConsoleCmd settings_SetSSAO 1 ConsoleCmd settings_SetShadowResolution 2</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Quality Level: Ultra</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/hl2lostcoast</Test>
+    <Arguments>-w $VIDEO_WIDTH -h $VIDEO_HEIGHT</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/insurgency</Test>
+    <Arguments>-w $VIDEO_WIDTH -h $VIDEO_HEIGHT</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/metro2033-redux</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/metroll-redux</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/portal</Test>
+    <Arguments>-w $VIDEO_WIDTH -h $VIDEO_HEIGHT</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/portal2</Test>
+    <Arguments>-w $VIDEO_WIDTH -h $VIDEO_HEIGHT -gl</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Renderer: OpenGL</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/portal2</Test>
+    <Arguments>-w $VIDEO_WIDTH -h $VIDEO_HEIGHT -vulkan</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Renderer: Vulkan</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/riseofthetombraider</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT Medium 1</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: Medium - Anti Aliasing: FXAA</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/riseofthetombraider</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT VeryHigh 1</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: Very High - Anti Aliasing: FXAA</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/sam2017</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT High OpenGL</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Quality: High - Renderer: OpenGL</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/sam2017</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT High Vulkan</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Quality: High - Renderer: Vulkan</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/sam2017</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT Ultra OpenGL</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Quality: Ultra - Renderer: OpenGL</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/sam2017</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT Ultra Vulkan</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Quality: Ultra - Renderer: Vulkan</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/shadowofthetombraider</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT Medium 1</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: Medium - Anti Aliasing: SMAA</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/shadowofthetombraider</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT Highest 1</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: Highest - Anti Aliasing: SMAA</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/ss3bfe</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT High Vulkan</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Quality: High - Renderer: Vulkan</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/ss3bfe</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT Ultra Vulkan</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Quality: Ultra - Renderer: Vulkan</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/strange-brigade</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT 2</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Setting: High</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/strange-brigade</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT 3</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Setting: Ultra</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/talos-principle</Test>
+    <Arguments>+gfx_strAPI "VLK" +gfx_pixResWidth $VIDEO_WIDTH +gfx_pixResHeight $VIDEO_HEIGHT</Arguments>
+    <Description>Renderer: Vulkan - Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/tf2</Test>
+    <Arguments>-w $VIDEO_WIDTH -h $VIDEO_HEIGHT</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/thronesofbritannia</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT 2</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: High</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/thronesofbritannia</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT 4</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: Extreme</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/tomb-raider</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT prefs-normal</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Quality: Normal</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/tomb-raider</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT prefs-ultra</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Quality: Ultra</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/twtk</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT 2 battle_benchmark/battle_benchmark.xml</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: High - Scenario: Battle Benchmark</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/twtk</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT 3 battle_benchmark/battle_benchmark.xml</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: Ultra - Scenario: Battle Benchmark</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/tww2</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT 2 fallen_gates/battle_benchmark.xml</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: High - Scenario: Fallen Gates Battle</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/tww2</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT 3 fallen_gates/battle_benchmark.xml</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: Ultra - Scenario: Fallen Gates Battle</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/tww3</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT 1 battle_benchmark/battle_benchmark.xml</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: Medium - Scenario: Battle Benchmark</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/tww3</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT 2 battle_benchmark/battle_benchmark.xml</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: High - Scenario: Battle Benchmark</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/tww3</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT 3 battle_benchmark/battle_benchmark.xml</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: Ultra - Scenario: Battle Benchmark</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/xplane11</Test>
+    <Arguments>--pref:_x_res_full_ALL=$VIDEO_WIDTH --pref:_y_res_full_ALL=$VIDEO_HEIGHT --fps_test=3 --vulkan</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Quality: High - Renderer: Vulkan</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/xplane11</Test>
+    <Arguments>--pref:_x_res_full_ALL=$VIDEO_WIDTH --pref:_y_res_full_ALL=$VIDEO_HEIGHT --fps_test=5 --vulkan</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Quality: Extreme - Renderer: Vulkan</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/deus-exmd</Test>
+    <Arguments>prefs-1080p-low</Arguments>
+    <Description>Preset: 1920 x 1080 - Low Quality</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/f12015</Test>
+    <Arguments>preferences_1920x1080_high</Arguments>
+    <Description>Test: 1920 x 1080 - High Quality</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/f12018</Test>
+    <Arguments>hardware_settings_1920x1080_ultra_high</Arguments>
+    <Description>Configuration: 1920 x 1080 - Ultra High Quality</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/quake2rtx</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT 0 1 pipeline</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Global Illumination: Off - Denoiser: On - Ray Tracing API: VK_KHR_ray_tracing_pipeline</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/quake2rtx</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT 0 1 query</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Global Illumination: Off - Denoiser: On - Ray Tracing API: VK_KHR_ray_query</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/quake2rtx</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT 0.5 1 pipeline</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Global Illumination: Low - Denoiser: On - Ray Tracing API: VK_KHR_ray_tracing_pipeline</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/quake2rtx</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT 0.5 1 query</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Global Illumination: Low - Denoiser: On - Ray Tracing API: VK_KHR_ray_query</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/quake2rtx</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT 1 1 pipeline</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Global Illumination: Medium - Denoiser: On - Ray Tracing API: VK_KHR_ray_tracing_pipeline</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/quake2rtx</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT 1 1 query</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Global Illumination: Medium - Denoiser: On - Ray Tracing API: VK_KHR_ray_query</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/quake2rtx</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT 2 1 pipeline</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Global Illumination: High - Denoiser: On - Ray Tracing API: VK_KHR_ray_tracing_pipeline</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/quake2rtx</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT 2 1 query</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Global Illumination: High - Denoiser: On - Ray Tracing API: VK_KHR_ray_query</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/l4d2</Test>
+    <Arguments>-w $VIDEO_WIDTH -h $VIDEO_HEIGHT -gl</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Renderer: OpenGL</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/l4d2</Test>
+    <Arguments>-w $VIDEO_WIDTH -h $VIDEO_HEIGHT -vulkan</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Renderer: Vulkan</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/hl2-ep2</Test>
+    <Arguments>-w $VIDEO_WIDTH -h $VIDEO_HEIGHT -gl</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Renderer: OpenGL</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/hl2-ep2</Test>
+    <Arguments>-w $VIDEO_WIDTH -h $VIDEO_HEIGHT -vulkan</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Renderer: Vulkan</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/cyberpunk2077</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT low</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Setting: Low</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/cyberpunk2077</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT medium</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Setting: Medium</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/cyberpunk2077</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT high</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Setting: High</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/cyberpunk2077</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT ultra</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Setting: Ultra</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/f122</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT hardware_settings_low.xml</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: Low</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/f122</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT hardware_settings_medium.xml</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: Medium</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/f122</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT hardware_settings_high.xml</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: High</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/f122</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT hardware_settings_ultrahigh.xml</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Graphics Preset: Ultra High</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/gta5</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT settings_normal.xml</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Quality: Normal</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/gta5</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT settings_high.xml</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Quality: High</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/gta5</Test>
+    <Arguments>$VIDEO_WIDTH $VIDEO_HEIGHT settings_very_high.xml</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Quality: Very High</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/xplane12</Test>
+    <Arguments>--pref:_x_res_full_ALL=$VIDEO_WIDTH --pref:_y_res_full_ALL=$VIDEO_HEIGHT --fps_test=11</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Quality: Low</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/xplane12</Test>
+    <Arguments>--pref:_x_res_full_ALL=$VIDEO_WIDTH --pref:_y_res_full_ALL=$VIDEO_HEIGHT --fps_test=12</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Quality: Medium</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/xplane12</Test>
+    <Arguments>--pref:_x_res_full_ALL=$VIDEO_WIDTH --pref:_y_res_full_ALL=$VIDEO_HEIGHT --fps_test=15</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Quality: Extreme</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/xplane12</Test>
+    <Arguments>--pref:_x_res_full_ALL=$VIDEO_WIDTH --pref:_y_res_full_ALL=$VIDEO_HEIGHT --fps_test=75</Arguments>
+    <Description>Resolution: $VIDEO_WIDTH x $VIDEO_HEIGHT - Quality: Extreme, Rainy + Overcast Weather</Description>
+  </Execute>
+</PhoronixTestSuite>

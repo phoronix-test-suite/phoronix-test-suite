@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>YugabyteDB</Title>
+    <AppVersion>2.19</AppVersion>
+    <Description>YugabyteDB is a high performance, cloud-native and transactional distributed SQL database. This test profile uses a single node of YugabyteDB on the local host.</Description>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Application</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64, aarch64</SupportedArchitectures>
+    <ExternalDependencies>python, openssl-development, java</ExternalDependencies>
+    <EnvironmentSize>3700</EnvironmentSize>
+    <ProjectURL>https://www.yugabyte.com/</ProjectURL>
+    <RepositoryURL>https://github.com/yugabyte/yugabyte-db</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Workload</DisplayName>
+      <Identifier>workload</Identifier>
+      <ArgumentPrefix>--workload </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>CassandraKeyValue</Name>
+          <Value>CassandraKeyValue --nouuid --value_size 256</Value>
+        </Entry>
+        <Entry>
+          <Name>CassandraBatchKeyValue, Batch 10</Name>
+          <Value>CassandraBatchKeyValue --nouuid --value_size 256 --batch_size 10</Value>
+        </Entry>
+        <Entry>
+          <Name>CassandraBatchKeyValue, Batch 25</Name>
+          <Value>CassandraBatchKeyValue --nouuid --value_size 256 --batch_size 25</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Num Threads Write</DisplayName>
+      <Identifier>num-threads-write</Identifier>
+      <ArgumentPrefix>--num_threads_write </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>0</Name>
+          <Value>0</Value>
+        </Entry>
+        <Entry>
+          <Name>1</Name>
+          <Value>1</Value>
+        </Entry>
+        <Entry>
+          <Name>16</Name>
+          <Value>16</Value>
+        </Entry>
+        <Entry>
+          <Name>32</Name>
+          <Value>32</Value>
+        </Entry>
+        <Entry>
+          <Name>64</Name>
+          <Value>64</Value>
+        </Entry>
+        <Entry>
+          <Name>128</Name>
+          <Value>128</Value>
+        </Entry>
+        <Entry>
+          <Name>256</Name>
+          <Value>256</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Num Threads Read</DisplayName>
+      <Identifier>num-threads-read</Identifier>
+      <ArgumentPrefix>--num_threads_read </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>0</Name>
+          <Value>0</Value>
+        </Entry>
+        <Entry>
+          <Name>1</Name>
+          <Value>1</Value>
+        </Entry>
+        <Entry>
+          <Name>16</Name>
+          <Value>16</Value>
+        </Entry>
+        <Entry>
+          <Name>32</Name>
+          <Value>32</Value>
+        </Entry>
+        <Entry>
+          <Name>128</Name>
+          <Value>128</Value>
+        </Entry>
+        <Entry>
+          <Name>256</Name>
+          <Value>256</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://dlcdn.apache.org/hadoop/common/hadoop-3.3.6/hadoop-3.3.6.tar.gz, http://archive.apache.org/dist/hadoop/core/hadoop-3.3.6/hadoop-3.3.6.tar.gz</URL>
+      <MD5>1cbe1214299cd3bd282d33d3934b5cbd</MD5>
+      <SHA256>f5195059c0d4102adaa7fff17f7b2a85df906bcb6e19948716319f9978641a04</SHA256>
+      <FileName>hadoop-3.3.6.tar.gz</FileName>
+      <FileSize>730107476</FileSize>
+      <ArchitectureSpecific>x86, x86_64</ArchitectureSpecific>
+    </Package>
+    <Package>
+      <URL>http://archive.apache.org/dist/hadoop/core/hadoop-3.3.6/hadoop-3.3.6-aarch64.tar.gz</URL>
+      <MD5>369f899194a920e0d1c3c3bc1718b3b5</MD5>
+      <SHA256>e4bbf6b80ef604912f6b9bf6ca77323dee6028d08d38f36ca077df56de8a5d0d</SHA256>
+      <FileName>hadoop-3.3.6-aarch64.tar.gz</FileName>
+      <FileSize>744905783</FileSize>
+      <ArchitectureSpecific>aarch64</ArchitectureSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

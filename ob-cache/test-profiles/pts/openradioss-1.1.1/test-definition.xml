@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>OpenRadioss</Title>
+    <AppVersion>2023.09.15</AppVersion>
+    <Description>OpenRadioss is an open-source AGPL-licensed finite element solver for dynamic event analysis OpenRadioss is based on Altair Radioss and open-sourced in 2022. This open-source finite element solver is benchmarked with various example models available from https://www.openradioss.org/models/ and https://github.com/OpenRadioss/ModelExchange/tree/main/Examples. This test is currently using a reference OpenRadioss binary build offered via GitHub.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.1</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Scientific</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <ExternalDependencies>openmpi-development</ExternalDependencies>
+    <EnvironmentSize>2200</EnvironmentSize>
+    <ProjectURL>https://www.openradioss.org/</ProjectURL>
+    <RepositoryURL>https://github.com/OpenRadioss/OpenRadioss</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Model</DisplayName>
+      <Identifier>model</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Bird Strike on Windshield</Name>
+          <Value>BIRD_WINDSHIELD_v1_0000.rad BIRD_WINDSHIELD_v1_0001.rad</Value>
+        </Entry>
+        <Entry>
+          <Name>Rubber O-Ring Seal Installation</Name>
+          <Value>RUBBER_SEAL_IMPDISP_GEOM_0000.rad RUBBER_SEAL_IMPDISP_GEOM_0001.rad</Value>
+        </Entry>
+        <Entry>
+          <Name>Cell Phone Drop Test</Name>
+          <Value>Cell_Phone_Drop_0000.rad Cell_Phone_Drop_0001.rad</Value>
+          <Message>Least time consuming model.</Message>
+        </Entry>
+        <Entry>
+          <Name>Bumper Beam</Name>
+          <Value>Bumper_Beam_AP_meshed_0000.rad Bumper_Beam_AP_meshed_0001.rad</Value>
+        </Entry>
+        <Entry>
+          <Name>INIVOL and Fluid Structure Interaction Drop Container</Name>
+          <Value>fsi_drop_container_0000.rad fsi_drop_container_0001.rad</Value>
+          <Message>Very time consuming model.</Message>
+        </Entry>
+        <Entry>
+          <Name>Chrysler Neon 1M</Name>
+          <Value>NEON1M11_0000.rad  NEON1M11_0001.rad</Value>
+          <Message>Very time consuming model for HPC.</Message>
+        </Entry>
+        <Entry>
+          <Name>Ford Taurus 10M</Name>
+          <Value>TAURUS_A05_FFB50_0000.rad TAURUS_A05_FFB50_0001.rad</Value>
+          <Message>The most time consuming model for HPC.</Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

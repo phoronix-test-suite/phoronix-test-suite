@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://downloads.yugabyte.com/releases/2.19.0.0/yugabyte-2.19.0.0-b190-linux-x86_64.tar.gz</URL>
+      <MD5>2ce8c66356c777b434929e55193371bd</MD5>
+      <SHA256>24ccb3b04e94f27813f2a22d07407f073eea30282956ad8b9bc372080b5b1921</SHA256>
+      <FileName>yugabyte-2.19.0.0-b190-linux-x86_64.tar.gz</FileName>
+      <FileSize>370056508</FileSize>
+      <ArchitectureSpecific>x86_64</ArchitectureSpecific>
+    </Package>
+    <Package>
+      <URL>https://downloads.yugabyte.com/releases/2.19.0.0/yugabyte-2.19.0.0-b190-el8-aarch64.tar.gz</URL>
+      <MD5>296d02b97e750a5ed8a8ab189bc81547</MD5>
+      <SHA256>cc8f81dd9cdcc478bb5a65d46e26424e611ae69ee9ac75388fe046654f521a5b</SHA256>
+      <FileName>yugabyte-2.19.0.0-b190-el8-aarch64.tar.gz</FileName>
+      <FileSize>342104539</FileSize>
+      <ArchitectureSpecific>aarch64</ArchitectureSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/yugabyte/yb-sample-apps/releases/download/v1.4.1/yb-sample-apps.jar</URL>
+      <MD5>8154fb330c4a98e26d49a0e2088c195a</MD5>
+      <SHA256>c0a320164dee78ecfda79b92a321065c10b0c9b3b73d8259afaaf8a9de4bd1e2</SHA256>
+      <FileName>yb-sample-apps-141.jar</FileName>
+      <FileSize>15637355</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

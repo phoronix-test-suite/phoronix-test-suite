@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/Tencent/ncnn/archive/refs/tags/20230517.tar.gz</URL>
+      <MD5>550763a952f072d1d261d32bd031c424</MD5>
+      <SHA256>71c1960e5fbbe68d2c3cf572cbf4dd08bb387ef20d2c560c074c5969c6b44bde</SHA256>
+      <FileName>ncnn-20230517.tar.gz</FileName>
+      <FileSize>12569535</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/KhronosGroup/glslang/archive/refs/tags/12.3.1.tar.gz</URL>
+      <MD5>0d453bdb40e79948bd05aa3910fdec56</MD5>
+      <SHA256>a57836a583b3044087ac51bb0d5d2d803ff84591d55f89087fc29ace42a8b9a8</SHA256>
+      <FileName>glslang-12.3.1.tar.gz</FileName>
+      <FileSize>3718998</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

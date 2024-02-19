@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>2023-09-06 09:10:09,168 INFO namenode.NNThroughputBenchmark:  Ops per sec: #_RESULT_#</OutputTemplate>
+    <LineHint>Ops per sec</LineHint>
+    <ResultScale>Ops per sec</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <ResultPrecision>0</ResultPrecision>
+  </ResultsParser>
+</PhoronixTestSuite>

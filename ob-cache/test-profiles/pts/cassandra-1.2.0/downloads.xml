@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://archive.apache.org/dist/cassandra/4.1.3/apache-cassandra-4.1.3-bin.tar.gz</URL>
+      <MD5>f2f148d0c7af65375caedb074dde93d1</MD5>
+      <SHA256>da014999723f4e1e2c15775dac6aaa9ff69a48f6df6465740fcd52ca9d19ea88</SHA256>
+      <FileName>apache-cassandra-4.1.3-bin.tar.gz</FileName>
+      <FileSize>49955565</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

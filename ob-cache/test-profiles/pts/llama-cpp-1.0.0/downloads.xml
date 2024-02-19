@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/ggerganov/llama.cpp/archive/refs/tags/b1808.tar.gz</URL>
+      <MD5>3a659d857520ca4d95f81f1fd03c4bca</MD5>
+      <SHA256>f17b18178d7174d9659df74e5832285ccf5dad0c759627500f35aab0aa5ca14f</SHA256>
+      <FileName>llama.cpp-b1808.tar.gz</FileName>
+      <FileSize>7896552</FileSize>
+    </Package>
+    <Package>
+      <URL>https://huggingface.co/TheBloke/Llama-2-13B-GGUF/resolve/50b3e202c3df49b96551490582cd234472c5eb23/llama-2-13b.Q4_0.gguf</URL>
+      <MD5>5bd7db6ab9d3b2c312e46738e89090b3</MD5>
+      <SHA256>283fc12bcea5638fc82bcd038f0d19eaf0ebdc7fec9e4536d3e8063c1cc84548</SHA256>
+      <FileName>llama-2-13b.Q4_0.gguf</FileName>
+      <FileSize>7365834624</FileSize>
+      <Optional>TRUE</Optional>
+    </Package>
+    <Package>
+      <URL>https://huggingface.co/TheBloke/Llama-2-70B-Chat-GGUF/resolve/96fbf8c3617a084d06d6947e98e0194aa818e5e8/llama-2-70b-chat.Q5_0.gguf</URL>
+      <MD5>49dd1daed8811dc92c60952954d1e4a9</MD5>
+      <SHA256>65a8fda53f4c7c6470fd3a4b8e798b80e8b1b7d6be34cd6b521a9a251eeb9c1a</SHA256>
+      <FileName>llama-2-70b-chat.Q5_0.gguf</FileName>
+      <FileSize>47461397408</FileSize>
+      <Optional>TRUE</Optional>
+    </Package>
+    <Package>
+      <URL>https://huggingface.co/TheBloke/Llama-2-7B-GGUF/resolve/b4e04e128f421c93a5f1e34ac4d7ca9b0af47b80/llama-2-7b.Q4_0.gguf</URL>
+      <MD5>4344ea31374d6fd63023ee035c9f95ae</MD5>
+      <SHA256>78b8f9777dd620ad29cd2cffb6653b17fa8a5b1fddc1b8821180d60eedd24d48</SHA256>
+      <FileName>llama-2-7b.Q4_0.gguf</FileName>
+      <FileSize>3825807040</FileSize>
+      <Optional>TRUE</Optional>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

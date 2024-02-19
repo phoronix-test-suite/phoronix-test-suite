@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.5-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Large Language Models</Title>
+    <Version>1.0.0</Version>
+    <TestType>System</TestType>
+    <Description>Various large language model (LLM) AI benchmarks, complementing other AI / machine learning benchmarks within the Phoronix Test Suite / OpenBenchmarking.org.</Description>
+    <Maintainer>Michael Larabel</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/llama-cpp</Test>
+    <Arguments>-m ../llama-2-7b.Q4_0.gguf</Arguments>
+    <Description>Model: llama-2-7b.Q4_0.gguf</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/llama-cpp</Test>
+    <Arguments>-m ../llama-2-13b.Q4_0.gguf</Arguments>
+    <Description>Model: llama-2-13b.Q4_0.gguf</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/llama-cpp</Test>
+    <Arguments>-m ../llama-2-70b-chat.Q5_0.gguf</Arguments>
+    <Description>Model: llama-2-70b-chat.Q5_0.gguf</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/llamafile</Test>
+    <Arguments>run-mistral --gpu DISABLE</Arguments>
+    <Description>Test: mistral-7b-instruct-v0.2.Q8_0 - Acceleration: CPU</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/llamafile</Test>
+    <Arguments>run-llava --gpu DISABLE</Arguments>
+    <Description>Test: llava-v1.5-7b-q4 - Acceleration: CPU</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/llamafile</Test>
+    <Arguments>run-wizardcoder --gpu DISABLE</Arguments>
+    <Description>Test: wizardcoder-python-34b-v1.0.Q6_K - Acceleration: CPU</Description>
+  </Execute>
+</PhoronixTestSuite>

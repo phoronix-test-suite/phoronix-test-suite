@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>AOM AV1</Title>
+    <AppVersion>3.7</AppVersion>
+    <Description>This is a test of the AOMedia AV1 encoder (libaom) developed by AOMedia and Google as the AV1 Codec Library.</Description>
+    <ResultScale>Frames Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>3.7.0</Version>
+    <SupportedPlatforms>Linux, MacOSX, BSD</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, p7zip, cmake, perl, yasm</ExternalDependencies>
+    <EnvironmentSize>1950</EnvironmentSize>
+    <ProjectURL>https://aomedia.googlesource.com/aom/</ProjectURL>
+    <RepositoryURL>https://aomedia.googlesource.com/aom</RepositoryURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>--tile-columns=4 --tile-rows=2 --row-mt=1 --fp-mt=1</Arguments>
+    </Default>
+    <Option>
+      <DisplayName>Encoder Mode</DisplayName>
+      <Identifier>enc-mode</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Speed 11 Realtime</Name>
+          <Value>--cpu-used=11 --rt</Value>
+          <Message>Fastest</Message>
+        </Entry>
+        <Entry>
+          <Name>Speed 10 Realtime</Name>
+          <Value>--cpu-used=10 --rt</Value>
+        </Entry>
+        <Entry>
+          <Name>Speed 9 Realtime</Name>
+          <Value>--cpu-used=9 --rt</Value>
+        </Entry>
+        <Entry>
+          <Name>Speed 8 Realtime</Name>
+          <Value>--cpu-used=8 --rt</Value>
+        </Entry>
+        <Entry>
+          <Name>Speed 6 Realtime</Name>
+          <Value>--cpu-used=6 --rt</Value>
+        </Entry>
+        <Entry>
+          <Name>Speed 6 Two-Pass</Name>
+          <Value>--cpu-used=6</Value>
+        </Entry>
+        <Entry>
+          <Name>Speed 4 Two-Pass</Name>
+          <Value>--cpu-used=4</Value>
+        </Entry>
+        <Entry>
+          <Name>Speed 0 Two-Pass</Name>
+          <Value>--cpu-used=0 --limit=20</Value>
+          <Message>Slowest</Message>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Input</DisplayName>
+      <Identifier>input</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Bosphorus 1080p</Name>
+          <Value>Bosphorus_1920x1080_120fps_420_8bit_YUV.y4m</Value>
+        </Entry>
+        <Entry>
+          <Name>Bosphorus 4K</Name>
+          <Value>Bosphorus_3840x2160.y4m</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

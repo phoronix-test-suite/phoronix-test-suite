@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/mork-optimization/scimark/releases/download/scimark-2.2/scimark-2.2.jar</URL>
+      <MD5>37d81f5d016f45ba3f6c362028b36a46</MD5>
+      <SHA256>3c8dc0faeebb0435bd8033aea5a1f3abd7252aa0befd3b43cb5e37625d6d3774</SHA256>
+      <FileName>scimark-2.2.jar</FileName>
+      <FileSize>22619</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>    queries:                             10276880 #_RESULT_# per sec.)</OutputTemplate>
+    <StripFromResult>(</StripFromResult>
+    <ResultPrecision>0</ResultPrecision>
+  </ResultsParser>
+</PhoronixTestSuite>

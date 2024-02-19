@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>  TCP      012-013 sec     #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>-t c</MatchToTestArguments>
+    <LineHint>sec</LineHint>
+    <MultiMatch>AVERAGE</MultiMatch>
+    <ResultScale>Connections/sec</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate> #_RESULT_#  #_MIN_RESULT_#  41.988us  55.815us  63.720us  89.819us 168.958us 168.958us #_MAX_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>-t l</MatchToTestArguments>
+    <LineHint>us</LineHint>
+    <StripFromResult>us</StripFromResult>
+    <MultiMatch>AVERAGE</MultiMatch>
+    <ResultScale>us</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>[  SUM]     UDP      027-028 sec   #_RESULT_#     1.67M</OutputTemplate>
+    <MatchToTestArguments>-p udp -t b</MatchToTestArguments>
+    <LineHint>SUM</LineHint>
+    <MultiMatch>AVERAGE</MultiMatch>
+    <ResultScale>Bits/sec</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>[  9]     UDP      027-028 sec   #_RESULT_#     1.67M</OutputTemplate>
+    <MatchToTestArguments>-p udp -t b -n 1</MatchToTestArguments>
+    <LineHint>UDP</LineHint>
+    <MultiMatch>AVERAGE</MultiMatch>
+    <ResultScale>Bits/sec</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>[  SUM]     UDP      000-001 sec   106.93G   #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>-p udp -t b</MatchToTestArguments>
+    <LineHint>SUM</LineHint>
+    <MultiMatch>AVERAGE</MultiMatch>
+    <ResultScale>Packets/sec</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>[  9]     UDP      000-001 sec   106.93G   #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>-p udp -t b -n 1</MatchToTestArguments>
+    <LineHint>UDP</LineHint>
+    <MultiMatch>AVERAGE</MultiMatch>
+    <ResultScale>Packets/sec</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>[   SUM]     TCP      007-008 sec    #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>-p tcp -t b</MatchToTestArguments>
+    <LineHint>SUM</LineHint>
+    <StripFromResult>G</StripFromResult>
+    <MultiMatch>AVERAGE</MultiMatch>
+    <ResultScale>Gbits/sec</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>[   9]     TCP      007-008 sec    #_RESULT_#</OutputTemplate>
+    <MatchToTestArguments>-p tcp -t b -n 1</MatchToTestArguments>
+    <LineHint>TCP</LineHint>
+    <StripFromResult>G</StripFromResult>
+    <MultiMatch>AVERAGE</MultiMatch>
+    <ResultScale>Gbits/sec</ResultScale>
+  </ResultsParser>
+</PhoronixTestSuite>

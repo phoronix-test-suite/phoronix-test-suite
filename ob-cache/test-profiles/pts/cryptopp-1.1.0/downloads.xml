@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.cryptopp.com/cryptopp880.zip, https://github.com/weidai11/cryptopp/releases/download/CRYPTOPP_8_8_0/cryptopp880.zip</URL>
+      <MD5>5a23c630d8ccfee7554ab24d2ab306f7</MD5>
+      <SHA256>ace1c7b010a409eba5e86c4fd5a8845c43a6ac39bb6110e64ca5d7fea08583f4</SHA256>
+      <FileName>cryptopp880.zip</FileName>
+      <FileSize>9279806</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://downloads.es.net/pub/iperf/iperf-3.14.tar.gz</URL>
+      <MD5>2fcf9691a062e905204c1868686cb051</MD5>
+      <SHA256>723fcc430a027bc6952628fa2a3ac77584a1d0bd328275e573fc9b206c155004</SHA256>
+      <FileName>iperf-3.14.tar.gz</FileName>
+      <FileSize>647944</FileSize>
+      <PlatformSpecific>Linux, BSD, Solaris, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://iperf.fr/download/windows/iperf-3.1.3-win64.zip</URL>
+      <MD5>c0239bfae22d15010f02bf23160d51fe</MD5>
+      <SHA256>3c3db693c1bdcc902ca9198fc716339373658233b3392ffe3d467f7695762cd1</SHA256>
+      <FileName>iperf-3.1.3-win64.zip</FileName>
+      <FileSize>1397048</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

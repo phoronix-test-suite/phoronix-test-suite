@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://mirrorservice.org/sites/sourceware.org/pub/gcc/releases/gcc-13.2.0/gcc-13.2.0.tar.xz, https://ftp.gwdg.de/pub/misc/gcc/releases/gcc-13.2.0/gcc-13.2.0.tar.xz, https://ftp.fu-berlin.de/unix/languages/gcc/releases/gcc-13.2.0/gcc-13.2.0.tar.xz</URL>
+      <MD5>e0e48554cc6e4f261d55ddee9ab69075</MD5>
+      <SHA256>e275e76442a6067341a27f04c5c6b83d8613144004c0413528863dc6b5c743da</SHA256>
+      <FileName>gcc-13.2.0.tar.xz</FileName>
+      <FileSize>87858592</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

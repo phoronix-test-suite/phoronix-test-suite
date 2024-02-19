@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>        batches_per_second_max: #_MAX_RESULT_#
+        batches_per_second_mean: #_RESULT_#
+        batches_per_second_min: #_MIN_RESULT_#
+        batches_per_second_std: 0.2647488016338466</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

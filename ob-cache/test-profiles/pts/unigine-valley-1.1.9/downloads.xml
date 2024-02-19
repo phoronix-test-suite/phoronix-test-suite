@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://assets.unigine.com/d/Unigine_Valley-1.0.run</URL>
+      <MD5>186268c769db82f51a01cc8e0810752f</MD5>
+      <SHA256>5f0c8bd2431118551182babbf5f1c20fb14e7a40789697240dcaf546443660f4</SHA256>
+      <FileName>Unigine_Valley-1.0.run</FileName>
+      <FileSize>412652951</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://assets.unigine.com/d/Unigine_Valley-1.0.exe</URL>
+      <MD5>0e1c8c1179e97e9723e334ab061fa868</MD5>
+      <SHA256>312b2a4363da3e7e4401ab97a3329d656cb0c00a9ae4e84b189653676c5eed75</SHA256>
+      <FileName>Unigine_Valley-1.0.exe</FileName>
+      <FileSize>359278792</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/oneapi-src/oneDNN/archive/refs/tags/v3.3.tar.gz</URL>
+      <MD5>5acbe7eb86000fa1148735d830ba8409</MD5>
+      <SHA256>8d150a77025f38bff182aaef4dd643625563b2f311c635f86cf4b769b04d7b48</SHA256>
+      <FileName>oneDNN-3.3.tar.gz</FileName>
+      <FileSize>11573780</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

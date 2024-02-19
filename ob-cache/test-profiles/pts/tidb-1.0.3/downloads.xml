@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://download.pingcap.org/tidb-community-server-v7.3.0-linux-amd64.tar.gz</URL>
+      <MD5>51d222db90a8a1f5023b54db51d98fa2</MD5>
+      <SHA256>6491d1269932e20d496a5020eb491eada9cb8b2e0493e2886ba58580cb856615</SHA256>
+      <FileName>tidb-community-server-v7.3.0-linux-amd64.tar.gz</FileName>
+      <FileSize>1421799028</FileSize>
+      <ArchitectureSpecific>x86_64</ArchitectureSpecific>
+    </Package>
+    <Package>
+      <URL>https://download.pingcap.org/tidb-community-server-v7.3.0-linux-arm64.tar.gz</URL>
+      <MD5>bf1a75515fdaf473981c56d2a325be57</MD5>
+      <SHA256>8a54f4feb85228816eda1cbef8195962269637655100ce64dc1db5319640b804</SHA256>
+      <FileName>tidb-community-server-v7.3.0-linux-arm64.tar.gz</FileName>
+      <FileSize>1376926349</FileSize>
+      <ArchitectureSpecific>aarch64</ArchitectureSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

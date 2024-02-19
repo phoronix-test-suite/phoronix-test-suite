@@ -1,0 +1,165 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Q05 #_RESULT_#</OutputTemplate>
+    <LineHint>Q</LineHint>
+    <MultiMatch>GEOMETRIC_MEAN</MultiMatch>
+    <AppendToArgumentsDescription>Geometric Mean Of All Queries</AppendToArgumentsDescription>
+    <DeleteOutputBefore>Query	Time (seconds)</DeleteOutputBefore>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Q01 #_RESULT_#</OutputTemplate>
+    <LineHint>Q01</LineHint>
+    <AppendToArgumentsDescription>Q01</AppendToArgumentsDescription>
+    <DeleteOutputBefore>Query	Time (seconds)</DeleteOutputBefore>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Q02 #_RESULT_#</OutputTemplate>
+    <LineHint>Q02</LineHint>
+    <AppendToArgumentsDescription>Q02</AppendToArgumentsDescription>
+    <DeleteOutputBefore>Query	Time (seconds)</DeleteOutputBefore>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Q03 #_RESULT_#</OutputTemplate>
+    <LineHint>Q03</LineHint>
+    <AppendToArgumentsDescription>Q03</AppendToArgumentsDescription>
+    <DeleteOutputBefore>Query	Time (seconds)</DeleteOutputBefore>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Q04 #_RESULT_#</OutputTemplate>
+    <LineHint>Q04</LineHint>
+    <AppendToArgumentsDescription>Q04</AppendToArgumentsDescription>
+    <DeleteOutputBefore>Query	Time (seconds)</DeleteOutputBefore>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Q05 #_RESULT_#</OutputTemplate>
+    <LineHint>Q05</LineHint>
+    <AppendToArgumentsDescription>Q05</AppendToArgumentsDescription>
+    <DeleteOutputBefore>Query	Time (seconds)</DeleteOutputBefore>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Q06 #_RESULT_#</OutputTemplate>
+    <LineHint>Q06</LineHint>
+    <AppendToArgumentsDescription>Q06</AppendToArgumentsDescription>
+    <DeleteOutputBefore>Query	Time (seconds)</DeleteOutputBefore>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Q07 #_RESULT_#</OutputTemplate>
+    <LineHint>Q07</LineHint>
+    <AppendToArgumentsDescription>Q07</AppendToArgumentsDescription>
+    <DeleteOutputBefore>Query	Time (seconds)</DeleteOutputBefore>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Q08 #_RESULT_#</OutputTemplate>
+    <LineHint>Q08</LineHint>
+    <AppendToArgumentsDescription>Q08</AppendToArgumentsDescription>
+    <DeleteOutputBefore>Query	Time (seconds)</DeleteOutputBefore>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Q09 #_RESULT_#</OutputTemplate>
+    <LineHint>Q09</LineHint>
+    <AppendToArgumentsDescription>Q09</AppendToArgumentsDescription>
+    <DeleteOutputBefore>Query	Time (seconds)</DeleteOutputBefore>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Q10 #_RESULT_#</OutputTemplate>
+    <LineHint>Q10</LineHint>
+    <AppendToArgumentsDescription>Q10</AppendToArgumentsDescription>
+    <DeleteOutputBefore>Query	Time (seconds)</DeleteOutputBefore>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Q11 #_RESULT_#</OutputTemplate>
+    <LineHint>Q11</LineHint>
+    <AppendToArgumentsDescription>Q11</AppendToArgumentsDescription>
+    <DeleteOutputBefore>Query	Time (seconds)</DeleteOutputBefore>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Q12 #_RESULT_#</OutputTemplate>
+    <LineHint>Q12</LineHint>
+    <AppendToArgumentsDescription>Q12</AppendToArgumentsDescription>
+    <DeleteOutputBefore>Query	Time (seconds)</DeleteOutputBefore>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Q13 #_RESULT_#</OutputTemplate>
+    <LineHint>Q13</LineHint>
+    <AppendToArgumentsDescription>Q13</AppendToArgumentsDescription>
+    <DeleteOutputBefore>Query	Time (seconds)</DeleteOutputBefore>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Q14 #_RESULT_#</OutputTemplate>
+    <LineHint>Q14</LineHint>
+    <AppendToArgumentsDescription>Q14</AppendToArgumentsDescription>
+    <DeleteOutputBefore>Query	Time (seconds)</DeleteOutputBefore>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Q15 #_RESULT_#</OutputTemplate>
+    <LineHint>Q15</LineHint>
+    <AppendToArgumentsDescription>Q15</AppendToArgumentsDescription>
+    <DeleteOutputBefore>Query	Time (seconds)</DeleteOutputBefore>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Q16 #_RESULT_#</OutputTemplate>
+    <LineHint>Q16</LineHint>
+    <AppendToArgumentsDescription>Q16</AppendToArgumentsDescription>
+    <DeleteOutputBefore>Query	Time (seconds)</DeleteOutputBefore>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Q17 #_RESULT_#</OutputTemplate>
+    <LineHint>Q17</LineHint>
+    <AppendToArgumentsDescription>Q17</AppendToArgumentsDescription>
+    <DeleteOutputBefore>Query	Time (seconds)</DeleteOutputBefore>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Q18 #_RESULT_#</OutputTemplate>
+    <LineHint>Q18</LineHint>
+    <AppendToArgumentsDescription>Q18</AppendToArgumentsDescription>
+    <DeleteOutputBefore>Query	Time (seconds)</DeleteOutputBefore>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Q19 #_RESULT_#</OutputTemplate>
+    <LineHint>Q19</LineHint>
+    <AppendToArgumentsDescription>Q19</AppendToArgumentsDescription>
+    <DeleteOutputBefore>Query	Time (seconds)</DeleteOutputBefore>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Q20 #_RESULT_#</OutputTemplate>
+    <LineHint>Q20</LineHint>
+    <AppendToArgumentsDescription>Q20</AppendToArgumentsDescription>
+    <DeleteOutputBefore>Query	Time (seconds)</DeleteOutputBefore>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Q21 #_RESULT_#</OutputTemplate>
+    <LineHint>Q21</LineHint>
+    <AppendToArgumentsDescription>Q21</AppendToArgumentsDescription>
+    <DeleteOutputBefore>Query	Time (seconds)</DeleteOutputBefore>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Q22 #_RESULT_#</OutputTemplate>
+    <LineHint>Q22</LineHint>
+    <AppendToArgumentsDescription>Q22</AppendToArgumentsDescription>
+    <DeleteOutputBefore>Query	Time (seconds)</DeleteOutputBefore>
+    <Importance>Secondary</Importance>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/ospray/ospray_studio/releases/download/v0.13.0/ospray_studio-0.13.0.x86_64.linux.tar.gz</URL>
+      <MD5>a57490d7bbbbcb3c47c756a994496d25</MD5>
+      <SHA256>302595397ed20974ba9461da82b37d4d3ca05072baf22b867f3a26d1b5c7de0d</SHA256>
+      <FileName>ospray_studio-0.13.0.x86_64.linux.tar.gz</FileName>
+      <FileSize>98393901</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/ospray/ospray_studio/releases/download/v0.13.0/ospray_studio-0.13.0.x86_64.macosx.zip</URL>
+      <MD5>ddc73e36c94a506a525991d637fb4d54</MD5>
+      <SHA256>b5d2d3c575c5b89ce61cfae15da0f3a97f127b2b02031b0eb6d6adf5012a6877</SHA256>
+      <FileName>ospray_studio-0.13.0.x86_64.macosx.zip</FileName>
+      <FileSize>52990606</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/ospray/ospray_studio/releases/download/v0.13.0/ospray_studio-0.13.0.x86_64.windows.zip</URL>
+      <MD5>0d71757843fd6a6129fdcfbcfa627762</MD5>
+      <SHA256>4e086fa36c26d5609fba76da816b80f01ec0b554600e709df810c380097688e5</SHA256>
+      <FileName>ospray_studio-0.13.0.x86_64.windows.zip</FileName>
+      <FileSize>95577319</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/OSPRayStudio-Room-Scene-2.zip</URL>
+      <MD5>3174279cb05abe626a819560a7a17a43</MD5>
+      <SHA256>59549ebf656519f0604a2c5cf3f4479575fb7f978bfe225a7c2c10ab4adbf056</SHA256>
+      <FileName>OSPRayStudio-Room-Scene-2.zip</FileName>
+      <FileSize>292645205</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

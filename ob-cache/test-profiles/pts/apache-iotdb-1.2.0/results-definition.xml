@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>INGESTION                20000                    400000000                0                        0                        #_RESULT_#              </OutputTemplate>
+    <LineBeforeHint>throughput</LineBeforeHint>
+    <ResultScale>point/sec</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <ResultPrecision>0</ResultPrecision>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>INGESTION                #_RESULT_#      #_MIN_RESUL_#        7.48        76.01       211.56      354.41      559.62      713.79      1019.90     1197.63     #_MAX_RESULT_#     26974.07    
+</OutputTemplate>
+    <LineBeforeHint>SLOWEST_THREAD</LineBeforeHint>
+    <ResultScale>Average Latency</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+  </ResultsParser>
+</PhoronixTestSuite>

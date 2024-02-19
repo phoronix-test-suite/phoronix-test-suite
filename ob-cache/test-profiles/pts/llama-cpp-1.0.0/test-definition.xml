@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Llama.cpp</Title>
+    <AppVersion>b1808</AppVersion>
+    <Description>Llama.cpp is a port of Facebook's LLaMA model in C/C++ developed by Georgi Gerganov. Llama.cpp allows the inference of LLaMA and other supported models in C/C++. For CPU inference Llama.cpp supports AVX2/AVX-512, ARM NEON, and other modern ISAs along with features like OpenBLAS usage.</Description>
+    <ResultScale>Tokens Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <ExternalDependencies>build-utilities, blas-development</ExternalDependencies>
+    <InstallRequiresInternet>TRUE</InstallRequiresInternet>
+    <EnvironmentSize>58700</EnvironmentSize>
+    <ProjectURL>https://github.com/ggerganov/llama.cpp/</ProjectURL>
+    <RepositoryURL>https://github.com/ggerganov/llama.cpp</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>pkgconf</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Model</DisplayName>
+      <Identifier>model</Identifier>
+      <ArgumentPrefix>-m ../</ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>llama-2-7b.Q4_0.gguf</Name>
+          <Value>llama-2-7b.Q4_0.gguf</Value>
+        </Entry>
+        <Entry>
+          <Name>llama-2-13b.Q4_0.gguf</Name>
+          <Value>llama-2-13b.Q4_0.gguf</Value>
+        </Entry>
+        <Entry>
+          <Name>llama-2-70b-chat.Q5_0.gguf</Name>
+          <Value>llama-2-70b-chat.Q5_0.gguf</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

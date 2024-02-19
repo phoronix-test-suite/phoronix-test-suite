@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://download.dacapobench.org/chopin/dacapo-23.11-chopin.zip</URL>
+      <MD5>aa97c5c1db889e8376b2d94d628602d1</MD5>
+      <SHA256>51321e57f90d312c2fa0516d13116423bdebb357534f2c9e20d0adcf30a23e69</SHA256>
+      <FileName>dacapo-23.11-chopin.zip</FileName>
+      <FileSize>6336639757</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

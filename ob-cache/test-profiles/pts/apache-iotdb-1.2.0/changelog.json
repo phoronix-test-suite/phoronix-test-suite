@@ -1,0 +1,1 @@
+{"1.2.0":{"last_updated":"1694962312","commit_description":"Update against Apache IotDB 1.2 uostream."},"1.0.1":{"last_updated":"1691282308","commit_description":"Fix lower-is-better indicator for latency metrics."},"1.0.0":{"last_updated":"1690646920","commit_description":"Add Apache IotDB Benchmark."}}

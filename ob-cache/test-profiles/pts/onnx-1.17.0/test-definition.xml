@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>ONNX Runtime</Title>
+    <AppVersion>1.17</AppVersion>
+    <Description>ONNX Runtime is developed by Microsoft and partners as a open-source, cross-platform, high performance machine learning inferencing and training accelerator. This test profile runs the ONNX Runtime with various models available from the ONNX Model Zoo.</Description>
+    <ResultScale>Inferences Per Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.17.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>python, git, build-utilities, cmake</ExternalDependencies>
+    <InstallRequiresInternet>TRUE</InstallRequiresInternet>
+    <EnvironmentSize>4900</EnvironmentSize>
+    <ProjectURL>https://www.onnxruntime.ai/</ProjectURL>
+    <RepositoryURL>https://github.com/microsoft/onnxruntime</RepositoryURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>gmock/gmock.h</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <PostArguments>-t 60 </PostArguments>
+    </Default>
+    <Option>
+      <DisplayName>Model</DisplayName>
+      <Identifier>model</Identifier>
+      <Menu>
+        <Entry>
+          <Name>yolov4</Name>
+          <Value>yolov4/yolov4.onnx</Value>
+        </Entry>
+        <Entry>
+          <Name>fcn-resnet101-11</Name>
+          <Value>fcn-resnet101-11/model.onnx</Value>
+        </Entry>
+        <Entry>
+          <Name>super-resolution-10</Name>
+          <Value>super_resolution/super_resolution.onnx</Value>
+        </Entry>
+        <Entry>
+          <Name>bertsquad-12</Name>
+          <Value>bertsquad-12/bertsquad-12.onnx</Value>
+        </Entry>
+        <Entry>
+          <Name>GPT-2</Name>
+          <Value>GPT2/model.onnx</Value>
+        </Entry>
+        <Entry>
+          <Name>ArcFace ResNet-100</Name>
+          <Value>resnet100/resnet100.onnx</Value>
+        </Entry>
+        <Entry>
+          <Name>ResNet50 v1-12-int8</Name>
+          <Value>resnet50-v1-12-int8/resnet50-v1-12-int8.onnx</Value>
+        </Entry>
+        <Entry>
+          <Name>CaffeNet 12-int8</Name>
+          <Value>caffenet-12-int8/caffenet-12-int8.onnx</Value>
+        </Entry>
+        <Entry>
+          <Name>Faster R-CNN R-50-FPN-int8</Name>
+          <Value>FasterRCNN-12-int8/FasterRCNN-12-int8.onnx</Value>
+        </Entry>
+        <Entry>
+          <Name>T5 Encoder</Name>
+          <Value>t5-encoder/t5-encoder.onnx</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Device</DisplayName>
+      <Identifier>device</Identifier>
+      <ArgumentPrefix>-e </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>CPU</Name>
+          <Value>cpu</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Executor</DisplayName>
+      <Identifier>executor</Identifier>
+      <ArgumentPrefix> </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>Standard</Name>
+        </Entry>
+        <Entry>
+          <Name>Parallel</Name>
+          <Value>-P</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

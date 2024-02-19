@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>===== DaCapo 9.12-MR1 tradebeans PASSED in #_RESULT_# msec =====</OutputTemplate>
+    <LineHint>PASSED in </LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

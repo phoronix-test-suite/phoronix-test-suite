@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Apache IoTDB</Title>
+    <AppVersion>1.2</AppVersion>
+    <Description>Apache IotDB is a time series database and this benchmark is facilitated using the IoT Benchmaark [https://github.com/thulab/iot-benchmark/].</Description>
+    <TimesToRun>3</TimesToRun>
+    <IgnoreRuns>1</IgnoreRuns>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.2.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Application</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>java</ExternalDependencies>
+    <EnvironmentSize>312</EnvironmentSize>
+    <ProjectURL>https://iotdb.apache.org/</ProjectURL>
+    <RepositoryURL>https://github.com/apache/iotdb</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Device Count</DisplayName>
+      <Identifier>devices</Identifier>
+      <Menu>
+        <Entry>
+          <Name>100</Name>
+          <Value>100</Value>
+        </Entry>
+        <Entry>
+          <Name>200</Name>
+          <Value>200</Value>
+        </Entry>
+        <Entry>
+          <Name>500</Name>
+          <Value>500</Value>
+        </Entry>
+        <Entry>
+          <Name>800</Name>
+          <Value>800</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Batch Size Per Write</DisplayName>
+      <Identifier>batch-size</Identifier>
+      <Menu>
+        <Entry>
+          <Name>1</Name>
+          <Value>1</Value>
+        </Entry>
+        <Entry>
+          <Name>100</Name>
+          <Value>100</Value>
+          <Message>Recommended</Message>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Sensor Count</DisplayName>
+      <Identifier>sensor-count</Identifier>
+      <Menu>
+        <Entry>
+          <Name>200</Name>
+          <Value>200</Value>
+        </Entry>
+        <Entry>
+          <Name>500</Name>
+          <Value>500</Value>
+        </Entry>
+        <Entry>
+          <Name>800</Name>
+          <Value>800</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Client Number</DisplayName>
+      <Identifier>client-number</Identifier>
+      <Menu>
+        <Entry>
+          <Name>100</Name>
+          <Value>100</Value>
+        </Entry>
+        <Entry>
+          <Name>400</Name>
+          <Value>400</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

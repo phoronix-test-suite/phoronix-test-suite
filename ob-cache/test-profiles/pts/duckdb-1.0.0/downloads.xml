@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/duckdb/duckdb/archive/refs/tags/v0.9.1.tar.gz</URL>
+      <MD5>ffd2c72f3a0feab6fb831b88deec6052</MD5>
+      <SHA256>37a43188d9354ce3ca101b2b118d867f5f76d04c3b83c09d86fd7508351a631b</SHA256>
+      <FileName>duckdb-0.9.1.tar.gz</FileName>
+      <FileSize>75277378</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/dragonflydb/dragonfly/releases/download/v1.6.2/dragonfly-x86_64.tar.gz</URL>
+      <MD5>715c7f9f5a499dab4446d33624439902</MD5>
+      <SHA256>9d572b17cc3a769aa09dd87f5c65a7f7161b0cfd89498a0fb86b67c6640c86ec</SHA256>
+      <FileName>dragonfly-1.6.2-x86_64.tar.gz</FileName>
+      <FileSize>10968796</FileSize>
+      <ArchitectureSpecific>x86_64</ArchitectureSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/dragonflydb/dragonfly/releases/download/v1.6.2/dragonfly-aarch64.tar.gz</URL>
+      <MD5>c69c578e141013ccae7eef40d6d25761</MD5>
+      <SHA256>3d58e3d1463a497032324773585e2ef122d446fa84c6497704eb39eb109577e7</SHA256>
+      <FileName>dragonfly-1.6.2-aarch64.tar.gz</FileName>
+      <FileSize>10718910</FileSize>
+      <ArchitectureSpecific>aarch64</ArchitectureSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/RedisLabs/memtier_benchmark/archive/refs/tags/2.0.0.tar.gz</URL>
+      <MD5>0b65ac8c9ef13a41128ed36e5c5f4aab</MD5>
+      <SHA256>554d53701f595c280e1f78229d5ac3c5c84390fa4b856cf326d23af0d2dbf9d8</SHA256>
+      <FileName>memtier_benchmark-2.0.0.tar.gz</FileName>
+      <FileSize>321262</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

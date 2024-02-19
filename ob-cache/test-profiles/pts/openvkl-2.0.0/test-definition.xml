@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>OpenVKL</Title>
+    <AppVersion>2.0.0</AppVersion>
+    <Description>OpenVKL is the Intel Open Volume Kernel Library that offers high-performance volume computation kernels and part of the Intel oneAPI rendering toolkit.</Description>
+    <ResultScale>Items / Sec</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>2.0.0</Version>
+    <SupportedPlatforms>Linux, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <SupportedArchitectures>x86_64</SupportedArchitectures>
+    <EnvironmentSize>560</EnvironmentSize>
+    <ProjectURL>https://www.openvkl.org/</ProjectURL>
+    <RepositoryURL>https://github.com/openvkl/openvkl/</RepositoryURL>
+    <InternalTags>SMP</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <PostArguments>--benchmark_min_time=20</PostArguments>
+    </Default>
+    <Option>
+      <DisplayName>Benchmark</DisplayName>
+      <Identifier>benchmark</Identifier>
+      <Menu>
+        <Entry>
+          <Name>vklBenchmarkCPU Scalar</Name>
+          <Value>vklBenchmarkCPU --benchmark_filter=scalar</Value>
+        </Entry>
+        <Entry>
+          <Name>vklBenchmarkCPU ISPC</Name>
+          <Value>vklBenchmarkCPU --benchmark_filter=ispc</Value>
+        </Entry>
+        <Entry>
+          <Name>vklBenchmarkGPU Intel oneAPI SYCL</Name>
+          <Value>vklBenchmarkGPU --benchmark_filter=gpu</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

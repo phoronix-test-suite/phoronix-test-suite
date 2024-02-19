@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/easywave_r34_src.tar.gz</URL>
+      <MD5>2974a3eebac5dd51ffacbdf760e910e4</MD5>
+      <SHA256>046521ba79f0aee4ef9d45b537c7a14d68a4c846d444b95bc1380715871cf9cd</SHA256>
+      <FileName>easywave_r34_src.tar.gz</FileName>
+      <FileSize>3995705</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/easywave_examples_1.tar.gz</URL>
+      <MD5>f4c0ef9786f9797e4afc468aa61ddd2e</MD5>
+      <SHA256>8048d7b782f2678464169138733cb1f5636cca55f2416f3376d23f9e4da967f3</SHA256>
+      <FileName>easywave_examples_1.tar.gz</FileName>
+      <FileSize>48632405</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>25598 [Thread-1] INFO com.yugabyte.sample.common.metrics.MetricsTracker  - Read: #_RESULT_# ops/sec (1.01 ms/op), 1500226 total ops  |  Write: 0.00 ops/sec (0.00 ms/op), 2000255 total ops  |  Uptime: 25023 ms | maxWrittenKey: 2000254 | maxGeneratedKey: 2000254 | </OutputTemplate>
+    <LineHint>ops/sec</LineHint>
+    <ResultScale>Read Ops/sec</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>25598 [Thread-1] INFO com.yugabyte.sample.common.metrics.MetricsTracker  - Read: 222 ops/sec (1.01 ms/op), 1500226 total ops  |  Write: #_RESULT_# ops/sec (0.00 ms/op), 2000255 total ops  |  Uptime: 25023 ms | maxWrittenKey: 2000254 | maxGeneratedKey: 2000254 | </OutputTemplate>
+    <LineHint>ops/sec</LineHint>
+    <ResultScale>Write Ops/sec</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+</PhoronixTestSuite>

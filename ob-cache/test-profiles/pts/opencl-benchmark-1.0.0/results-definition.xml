@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>| FP64  compute                                         #_RESULT_# TFLOPs/s (1/64) |</OutputTemplate>
+    <LineHint>FP64</LineHint>
+    <ResultBeforeString>TFLOPs/s</ResultBeforeString>
+    <ResultScale>TFLOPs/s</ResultScale>
+    <ArgumentsDescription>Operation: FP64 Compute</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>| FP32  compute                                        #_RESULT_# TFLOPs/s ( 1x ) |</OutputTemplate>
+    <LineHint>FP32</LineHint>
+    <ResultBeforeString>TFLOPs/s</ResultBeforeString>
+    <ResultScale>TFLOPs/s</ResultScale>
+    <ArgumentsDescription>Operation: FP32 Compute</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>| FP16  compute                                         #_RESULT_# TFLOPs/s (1/64) |</OutputTemplate>
+    <LineHint>FP16</LineHint>
+    <ResultBeforeString>TFLOPs/s</ResultBeforeString>
+    <ResultScale>TFLOPs/s</ResultScale>
+    <ArgumentsDescription>Operation: FP16 Compute</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>| INT64  compute                                         #_RESULT_# TIOPs/s (1/64) |</OutputTemplate>
+    <LineHint>INT64</LineHint>
+    <ResultBeforeString>TIOPs/s</ResultBeforeString>
+    <ResultScale>TIOPs/s</ResultScale>
+    <ArgumentsDescription>Operation: INT64 Compute</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>| INT32  compute                                         #_RESULT_# TIOPs/s (1/64) |</OutputTemplate>
+    <LineHint>INT32</LineHint>
+    <ResultBeforeString>TIOPs/s</ResultBeforeString>
+    <ResultScale>TIOPs/s</ResultScale>
+    <ArgumentsDescription>Operation: INT32 Compute</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>| INT16  compute                                         #_RESULT_# TIOPs/s (1/64) |</OutputTemplate>
+    <LineHint>INT16</LineHint>
+    <ResultBeforeString>TIOPs/s</ResultBeforeString>
+    <ResultScale>TIOPs/s</ResultScale>
+    <ArgumentsDescription>Operation: INT16 Compute</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>| INT8  compute                                         #_RESULT_# TIOPs/s (1/64) |</OutputTemplate>
+    <LineHint>INT8</LineHint>
+    <ResultBeforeString>TIOPs/s</ResultBeforeString>
+    <ResultScale>TIOPs/s</ResultScale>
+    <ArgumentsDescription>Operation: INT8 Compute</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>| Memory Bandwidth ( coalesced read      )                        #_RESULT_# GB/s |</OutputTemplate>
+    <LineHint>coalesced read</LineHint>
+    <ResultBeforeString>GB/s</ResultBeforeString>
+    <ResultScale>GB/s</ResultScale>
+    <ArgumentsDescription>Operation: Memory Bandwidth Coalesced Read</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>| Memory Bandwidth ( coalesced      write)                        #_RESULT_# GB/s |</OutputTemplate>
+    <LineHint>coalesced      write</LineHint>
+    <ResultBeforeString>GB/s</ResultBeforeString>
+    <ResultScale>GB/s</ResultScale>
+    <ArgumentsDescription>Operation: Memory Bandwidth Coalesced Write</ArgumentsDescription>
+  </ResultsParser>
+</PhoronixTestSuite>

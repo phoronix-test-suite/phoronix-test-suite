@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/microsoft/ethr/releases/download/v1.0.0/ethr_linux.zip</URL>
+      <MD5>dccdf267a03ca749fe70bd913590fd55</MD5>
+      <SHA256>781f48294b6623ef22fd95b432e1c9c113acc4c45cd223d538da2e6976783721</SHA256>
+      <FileName>ethr_linux_100.zip</FileName>
+      <FileSize>2633470</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/microsoft/ethr/releases/download/v1.0.0/ethr_windows.zip</URL>
+      <MD5>13c8a01e523aef1da8903f25a902cad5</MD5>
+      <SHA256>a3fa54c49e67b920ee0ac158f59f48cd18b93b2c5f8e829c52d8ce2bcc803b70</SHA256>
+      <FileName>ethr_windows_100.zip</FileName>
+      <FileSize>2365455</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/microsoft/ethr/releases/download/v1.0.0/ethr_osx.zip</URL>
+      <MD5>a61009d88f87099bc460013263f0bbb9</MD5>
+      <SHA256>debbaf0dc4437d9d14f9de613abe58ca4074814f1f77345697e924bd29e9a47f</SHA256>
+      <FileName>ethr_osx_100.zip</FileName>
+      <FileSize>2534338</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

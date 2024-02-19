@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>DaCapo Benchmark</Title>
+    <AppVersion>23.11</AppVersion>
+    <Description>This test runs the DaCapo Benchmarks written in Java and intended to test system/CPU performance of various popular real-world Java workloads.</Description>
+    <ResultScale>msec</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux, Solaris, BSD, MacOSX, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>java</ExternalDependencies>
+    <EnvironmentSize>15900</EnvironmentSize>
+    <ProjectURL>https://www.dacapobench.org/</ProjectURL>
+    <RepositoryURL>https://github.com/dacapobench/dacapobench</RepositoryURL>
+    <InternalTags>Java</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Java Test</DisplayName>
+      <Identifier>test</Identifier>
+      <Menu>
+        <Entry>
+          <Name>Eclipse</Name>
+          <Value>eclipse</Value>
+        </Entry>
+        <Entry>
+          <Name>Avrora AVR Simulation Framework</Name>
+          <Value>avrora</Value>
+        </Entry>
+        <Entry>
+          <Name>Batik SVG Toolkit</Name>
+          <Value>batik</Value>
+        </Entry>
+        <Entry>
+          <Name>FOP Print Formatter</Name>
+          <Value>fop</Value>
+        </Entry>
+        <Entry>
+          <Name>PMD Source Code Analyzer</Name>
+          <Value>pmd</Value>
+        </Entry>
+        <Entry>
+          <Name>Apache Tomcat</Name>
+          <Value>tomcat</Value>
+        </Entry>
+        <Entry>
+          <Name>Apache Xalan XSLT</Name>
+          <Value>xalan</Value>
+        </Entry>
+        <Entry>
+          <Name>Apache Lucene Search Index</Name>
+          <Value>luindex</Value>
+        </Entry>
+        <Entry>
+          <Name>Apache Lucene Search Engine</Name>
+          <Value>lusearch</Value>
+        </Entry>
+        <Entry>
+          <Name>H2 Database Engine</Name>
+          <Value>h2</Value>
+        </Entry>
+        <Entry>
+          <Name>Jython</Name>
+          <Value>jython</Value>
+        </Entry>
+        <Entry>
+          <Name>Tradebeans</Name>
+          <Value>tradebeans</Value>
+        </Entry>
+        <Entry>
+          <Name>Tradesoap</Name>
+          <Value>tradesoap</Value>
+        </Entry>
+        <Entry>
+          <Name>BioJava Biological Data Framework</Name>
+          <Value>biojava</Value>
+        </Entry>
+        <Entry>
+          <Name>Apache Cassandra</Name>
+          <Value>cassandra</Value>
+        </Entry>
+        <Entry>
+          <Name>GraphChi</Name>
+          <Value>graphchi</Value>
+        </Entry>
+        <Entry>
+          <Name>H2O In-Memory Platform For Machine Learning</Name>
+          <Value>h2o</Value>
+        </Entry>
+        <Entry>
+          <Name>jMonkeyEngine</Name>
+          <Value>jme</Value>
+        </Entry>
+        <Entry>
+          <Name>Apache Kafka</Name>
+          <Value>kafka</Value>
+        </Entry>
+        <Entry>
+          <Name>Spring Boot</Name>
+          <Value>spring</Value>
+        </Entry>
+        <Entry>
+          <Name>Zxing 1D/2D Barcode Image Processing</Name>
+          <Value>zxing</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

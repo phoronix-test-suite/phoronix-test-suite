@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate> ELAPSED TIME     =        #_RESULT_# s</OutputTemplate>
+  </ResultsParser>
+</PhoronixTestSuite>

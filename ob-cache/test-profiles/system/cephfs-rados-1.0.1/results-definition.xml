@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>Bandwidth (MB/sec):     #_RESULT_#
+Stddev Bandwidth:       2112.99
+Max bandwidth (MB/sec): #_MAX_RESULT_#
+Min bandwidth (MB/sec): 0</OutputTemplate>
+    <ResultScale>MB/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Average IOPS:           #_RESULT_#
+Stddev IOPS:            528.278
+Max IOPS:               #_MAX_RESULT_#
+Min IOPS:               0</OutputTemplate>
+    <ResultScale>IOPS</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Average Latency(s):     #_RESULT_#
+Stddev Latency(s):      0.179085
+Max latency(s):         #_MAX_RESULT_#
+Min latency(s):         #_MIN_RESULT_#</OutputTemplate>
+    <ResultScale>Seconds (Latency)</ResultScale>
+    <ResultProportion>LIB</ResultProportion>
+  </ResultsParser>
+</PhoronixTestSuite>

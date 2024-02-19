@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Apache CouchDB</Title>
+    <AppVersion>3.3.2</AppVersion>
+    <Description>This is a bulk insertion benchmark of Apache CouchDB. CouchDB is a document-oriented NoSQL database implemented in Erlang.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.3.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Application</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, curl, erlang</ExternalDependencies>
+    <EnvironmentSize>275</EnvironmentSize>
+    <ProjectURL>https://couchdb.apache.org/</ProjectURL>
+    <RepositoryURL>https://github.com/apache/couchdb</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>erl, unicode/utf8.h, mozjs-78/jsapi.h, jsapi.h</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <MinimumLength>20</MinimumLength>
+    </Default>
+    <Option>
+      <DisplayName>Bulk Size</DisplayName>
+      <Identifier>bulk-size</Identifier>
+      <Menu>
+        <Entry>
+          <Name>100</Name>
+          <Value>100</Value>
+        </Entry>
+        <Entry>
+          <Name>300</Name>
+          <Value>300</Value>
+        </Entry>
+        <Entry>
+          <Name>500</Name>
+          <Value>500</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Inserts</DisplayName>
+      <Identifier>inserts</Identifier>
+      <Menu>
+        <Entry>
+          <Name>1000</Name>
+          <Value>1000</Value>
+        </Entry>
+        <Entry>
+          <Name>3000</Name>
+          <Value>3000</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Rounds</DisplayName>
+      <Identifier>rounds</Identifier>
+      <Menu>
+        <Entry>
+          <Name>30</Name>
+          <Value>30</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>
