@@ -101,6 +101,17 @@ class pts_test_result_buffer
 		}
 		return false;
 	}
+	public function has_successful_run()
+	{
+		foreach($this->buffer_items as &$buffer_item)
+		{
+			if($buffer_item->get_result_value() != '')
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 	public function recalculate_buffer_items_min_max()
 	{
 		$this->min_value = 0;

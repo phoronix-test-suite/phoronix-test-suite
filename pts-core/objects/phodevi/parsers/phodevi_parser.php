@@ -32,6 +32,11 @@ class phodevi_parser
 		{
 			$info = shell_exec('nvidia-settings --query ' . $attribute . ' 2> /dev/null');
 
+			if(empty($info))
+			{
+				return false;
+			}
+
 			if(($pos = strpos($info, pts_strings::last_in_string($attribute, '/'))) > 0 && strpos($info, 'ERROR:') === false)
 			{
 				$nv_info = substr($info, strpos($info, '):') + 3);

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2022, Phoronix Media
-	Copyright (C) 2008 - 2022, Michael Larabel
+	Copyright (C) 2008 - 2024, Phoronix Media
+	Copyright (C) 2008 - 2024, Michael Larabel
 	phodevi_cpu.php: The PTS Device Interface object for the CPU / processor
 
 	This program is free software; you can redistribute it and/or modify
@@ -887,6 +887,7 @@ class phodevi_cpu extends phodevi_device_interface
 					{
 						case '0xac3':
 						case '0xac4':
+						case '0xac5':
 							$new_info .= 'One';
 							break;
 					}
@@ -1317,6 +1318,7 @@ class phodevi_cpu extends phodevi_device_interface
 				112 => 'Zen 4',
 				116 => 'Zen 4', // Ryzen Z1 Extreme
 				117 => 'Zen 4',
+				120 => 'Zen 4',
 				160 => 'Zen 4',
 				161 => 'Zen 4',
 				162 => 'Zen 4',
@@ -1335,24 +1337,16 @@ class phodevi_cpu extends phodevi_device_interface
 				175 => 'Zen 4',
 				),
 			26 => array(
-				0 => 'Zen 5',
-				1 => 'Zen 5',
-				2 => 'Zen 5',
-				3 => 'Zen 5',
-				4 => 'Zen 5',
-				5 => 'Zen 5',
-				6 => 'Zen 5',
-				7 => 'Zen 5',
-				8 => 'Zen 5',
-				9 => 'Zen 5',
-				10 => 'Zen 5',
-				11 => 'Zen 5',
-				12 => 'Zen 5',
-				13 => 'Zen 5',
-				14 => 'Zen 5',
-				15 => 'Zen 5',
+				// 1Ah for Zen 5 so far
+				// Auto-populated below due to wide span
 				),
 			);
+
+		for($i = 0; $i < 128; $i++)
+		{
+			// Based on GCC patch and other Linux patches
+			$amd_map[26][$i] = 'Zen 5';
+		}
 
 		$intel_map = array(
 			5 => array(

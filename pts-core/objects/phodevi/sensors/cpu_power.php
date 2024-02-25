@@ -195,6 +195,25 @@ class cpu_power extends phodevi_sensor
 				$cpu_power = $cpu_power / 100000;
 			}
 		}
+		else if(($power_oem_info = pts_file_io::glob('/sys/class/hwmon/hwmon*/device/power1_oem_info')) && !empty($power_oem_info))
+		{
+			// Grace https://docs.nvidia.com/grace-performance-tuning-guide.pdf
+			foreach($power_oem_info as $info_file)
+			{
+				if(stripos(pts_file_io::file_get_contents($info_file), 'CPU Power') !== false)
+				{
+					$bdir = dirname($info_file);
+					if(is_file($bdir . '/power1_average'))
+					{
+						$this_power = pts_file_io::file_get_contents($bdir . '/power1_average');
+						if(is_numeric($this_power) && $this_power > 1000000)
+						{
+							$cpu_power += round($this_power / 1000000, 2);
+						}
+					}
+				}
+			}
+		}
 
 		return round($cpu_power, 2);
 	}

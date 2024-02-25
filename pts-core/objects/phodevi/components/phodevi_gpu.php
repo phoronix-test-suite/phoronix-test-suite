@@ -1259,10 +1259,33 @@ class phodevi_gpu extends phodevi_device_interface
 				$controller_3d = phodevi_linux_parser::read_pci('3D controller', false);
 				$info_pci = phodevi_linux_parser::read_pci('VGA compatible controller', false);
 
-				if((empty($info_pci) || strpos($info_pci, ' ') === false) && !empty($controller_3d))
+				if((empty($info_pci) || strpos($info_pci, ' ') === false || stripos($info_pci, 'aspeed') !== false) && !empty($controller_3d))
 				{
 					// e.g. NVIDIA GH200 is 3D controller while VGA is ASpeed
-					$info_pci = $controller_3d;
+					if(stripos($controller_3d, 'nvidia') !== false && ($nvidia_smi = pts_client::executable_in_path('nvidia-smi')))
+					{
+						// This works for some headless configurations
+						$nvidia_smi = shell_exec($nvidia_smi . ' -L 2>&1');
+						if(($x = strpos($nvidia_smi, 'GPU 0: ')) !== false)
+						{
+							$nvidia_smi = substr($nvidia_smi, $x + 7);
+
+							if(($x = strpos($nvidia_smi, PHP_EOL)) !== false)
+							{
+								$nvidia_smi = substr($nvidia_smi, 0, $x);
+							}
+
+							$nvidia_smi = trim($nvidia_smi);
+							if(!empty($nvidia_smi))
+							{
+								$info_pci = $nvidia_smi;
+							}
+						}
+					}
+					else
+					{
+						$info_pci = $controller_3d;
+					}
 				}
 
 				if(!empty($info_pci) && strpos($info_pci, 'Device ') === false)
@@ -1466,7 +1489,7 @@ class phodevi_gpu extends phodevi_device_interface
 			$clean_phrases = array('OpenGL Engine');
 			$info = str_replace($clean_phrases, '', $info);
 
-			if(!empty($info) && $video_ram > 64 && strpos($info, $video_ram) == false && stripos($info, 'llvmpipe') === false) // assume more than 64MB of vRAM
+			if(!empty($info) && $video_ram > 64 && strpos($info, $video_ram) == false && stripos($info, 'llvmpipe') === false && substr($info, -2) != 'GB') // assume more than 64MB of vRAM
 			{
 				if($video_ram < 1024)
 				{
