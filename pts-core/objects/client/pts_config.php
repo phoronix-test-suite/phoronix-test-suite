@@ -200,7 +200,7 @@ class pts_config
 			$read_value = str_replace('~/.phoronix-test-suite/', PTS_USER_PATH, $read_value);
 		}
 
-		return !empty($read_value) ? $read_value : $predefined_value;
+		return (!empty($read_value) || is_numeric($read_value)) ? $read_value : $predefined_value;
 	}
 	public static function read_bool_config($xml_pointer, $predefined_value = false, &$nye_xml = null)
 	{

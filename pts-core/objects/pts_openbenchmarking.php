@@ -378,14 +378,14 @@ class pts_openbenchmarking
 					$index_cache_ttl = defined('OPENBENCHMARKING_BUILD') ? (1 / 24) : 1;
 					if(PTS_IS_CLIENT && ($config_ttl = pts_config::read_user_config('PhoronixTestSuite/Options/OpenBenchmarking/IndexCacheTTL')))
 					{
-						if($config_ttl === 0)
-						{
-							// if the value is 0, only rely upon manual refreshes
-							continue;
-						}
-						else if(is_numeric($config_ttl) && $config_ttl >= 1)
+						if(is_numeric($config_ttl) && $config_ttl >= 1)
 						{
 							$index_cache_ttl = $config_ttl;
+						}
+						else
+						{
+							// if the value is 0 or garbage, only rely upon manual refreshes
+							continue;
 						}
 					}
 
