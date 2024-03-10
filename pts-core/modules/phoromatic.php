@@ -838,6 +838,10 @@ class phoromatic extends pts_module_interface
 						break;
 				}
 			}
+			else
+			{
+				pts_client::$pts_logger->log("Server response doesn't start with '[' or '{'");
+			}
 
 			if(!$do_exit)
 			{
