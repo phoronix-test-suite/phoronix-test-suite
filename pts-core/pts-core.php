@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2022, Phoronix Media
-	Copyright (C) 2008 - 2022, Michael Larabel
+	Copyright (C) 2008 - 2024, Phoronix Media
+	Copyright (C) 2008 - 2024, Michael Larabel
 	pts-core.php: To boot-strap the Phoronix Test Suite start-up
 
 	This program is free software; you can redistribute it and/or modify
@@ -211,16 +211,16 @@ function pts_needed_extensions()
 		// Required? - The Check If In Place - Name - Description
 		// Required extesnions denoted by 1 at [0]
 		array(1, extension_loaded('dom'), 'DOM', 'The Document Object Model is required for XML operations.'),
-		array(1, extension_loaded('zip') || extension_loaded('zlib'), 'ZIP', 'ZIP support is required for file compression.'),
+		array(1, extension_loaded('zip') || extension_loaded('zlib'), 'ZIP', 'ZIP support is required for file (de)compression.'),
 		array(1, function_exists('json_decode'), 'JSON', 'JSON support is required for OpenBenchmarking.org.'),
 		array(1, function_exists('simplexml_load_string'), 'SimpleXML', 'SimpleXML is required for XML operations.'),
 		// Optional but recommended extensions
-		array(0, extension_loaded('openssl'), 'OpenSSL', 'OpenSSL support is recommended to support HTTPS traffic.'),
+		array(0, extension_loaded('openssl'), 'OpenSSL', 'OpenSSL support is highly recommended to support HTTPS traffic.'),
 		array(0, extension_loaded('gd'), 'GD', 'The GD library is recommended for improved graph rendering.'),
 		array(0, extension_loaded('zlib'), 'Zlib', 'The Zlib extension can be used for greater file compression.'),
 		array(0, function_exists('bzcompress'), 'Bzip2', 'The bzcompress/bzip2 support can be used for greater file compression.'),
 		array(0, extension_loaded('sqlite3'), 'SQLite3', 'SQLite3 is required when running a Phoromatic server.'),
-		array(0, function_exists('pcntl_fork'), 'PCNTL', 'PCNTL is highly recommended as it is required by some tests.'),
+		array(0, function_exists('pcntl_fork'), 'PCNTL', 'PCNTL is highly recommended as it is required by some tests and for threading features.'),
 		array(0, function_exists('posix_getpwuid'), 'POSIX', 'POSIX support is highly recommended.'),
 		array(0, function_exists('curl_init'), 'CURL', 'CURL is recommended for an enhanced download experience.'),
 		array(0, function_exists('socket_create_listen'), 'Sockets', 'Sockets is needed when running the Phoromatic Server.'),
@@ -228,9 +228,9 @@ function pts_needed_extensions()
 		);
 }
 
-pts_define('PTS_VERSION', '10.8.4');
-pts_define('PTS_CORE_VERSION', 10840);
-pts_define('PTS_RELEASE_DATE', '20220703');
+pts_define('PTS_VERSION', '10.8.5');
+pts_define('PTS_CORE_VERSION', 10850);
+pts_define('PTS_RELEASE_DATE', '20240324');
 pts_define('PTS_CODENAME', 'Nesseby');
 
 pts_define('PTS_IS_CLIENT', (defined('PTS_MODE') && strstr(PTS_MODE, 'CLIENT') !== false));

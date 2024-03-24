@@ -66,6 +66,10 @@ The variable is relevant for: test execution / benchmarking.
 The variable is relevant for: test execution / benchmarking.
 The variable depends upon functionality provided by the Phoronix Test Suite module: linux_perf.
 </p>
+<h2>LOG_CLI_OUTPUT</h2>
+<p><em>[EXPERIMENTAL] When this option is enabled, the Phoronix Test Suite standard output from the terminal will be logged to any relevant Phoronix Test Suite / Phoromatic log file. This is mainly useful for debugging purposes and if wishing to always archive the standard output as part of Phoronix Test Suite logs.</em></p>
+<p>The value can be of type: boolean (TRUE / FALSE).
+</p>
 <h2>MONITOR</h2>
 <p><em>This option can be used for system sensor monitoring during test execution. The Phoronix Test Suite system_monitor module can monitor various exposed sensors and record them as part of the result file and present them as additional graphs / metrics in the result viewer. The exposed sensors varies by platform hardware/software. This functionality also requires PHP PCNTL support and thus is not available for some platforms (i.e. Windows).</em></p>
 <p>The value can be of type: enumeration (all, cpu.peak-freq, cpu.temp, cpu.power, cpu.usage, gpu.freq, gpu.power, gpu.temp, hdd.temp, memory.usage, swap.usage, sys.power, sys.temp)
