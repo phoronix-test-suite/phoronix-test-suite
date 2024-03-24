@@ -811,6 +811,12 @@ class phodevi_cpu extends phodevi_device_interface
 						case '0xd82':
 							$new_info .= ' Cortex-X4';
 							break;
+						case '0xd88':
+							$new_info .= ' Cortex-A520E';
+							break;
+						case '0xd89':
+							$new_info .= ' Cortex-A720E';
+							break;
 					}
 				}
 				else if($implementer == '0x61')
@@ -1425,7 +1431,7 @@ class phodevi_cpu extends phodevi_device_interface
 				173 => 'Granite Rapids',
 				174 => 'Granite Rapids',
 				175 => 'Sierra Forest',
-				181 => 'Meteor Lake',
+				181 => 'Arrow Lake',
 				182 => 'Grand Ridge',
 				183 => 'Raptor Lake',
 				186 => 'Raptor Lake',

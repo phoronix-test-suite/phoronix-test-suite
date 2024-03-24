@@ -231,7 +231,7 @@ class phoromatic extends pts_module_interface
 				$j['phoromatic']['client-log'] = $phoromatic_log;
 			}
 
-			foreach(phodevi::supported_sensors() as $sensor)
+			foreach(phodevi::query_sensors() as $sensor)
 			{
 				$j['phoromatic']['stats']['sensors'][phodevi::sensor_name($sensor)] = array('value' => phodevi::read_sensor($sensor), 'unit' => phodevi::read_sensor_unit($sensor));
 			}

@@ -1002,7 +1002,7 @@ class pts_result_viewer_embed
 				$stime = strtotime($sys->get_timestamp());
 				$t .= '<div class="div_table_cell"><input type="number" min="0" step="0.001" name="ppd_' . $ppdx . '" value="' . ($ppd && $ppd !== true ? strip_tags($ppd) : '0') . '" /></div>
 			<div class="div_table_cell">' . date(($stime > $start_of_year ? 'F d' : 'F d Y'), $stime) . '</div>
-			<div class="div_table_cell"> &nbsp; ' . (isset($test_run_times[$si]) && $test_run_times[$si] > 0 ? pts_strings::format_time($test_run_times[$si], 'SECONDS', true, 60) : ' ') . '</div>';
+			<div class="div_table_cell"> &nbsp; ' . (isset($test_run_times[$si]) && $test_run_times[$si] > 0 && $test_run_times[$si] < 604800 ? pts_strings::format_time($test_run_times[$si], 'SECONDS', true, 60) : ' ') . '</div>';
 
 				if($can_delete_results && !empty($public_id))
 				{
@@ -1030,9 +1030,10 @@ class pts_result_viewer_embed
 					$t .= '<div class="div_table_cell"> </div>';
 				}
 
+				$avg_run_time = array_sum($test_run_times) / count($test_run_times);
 				$t .= '<div class="div_table_cell">' . self::html_select_menu('ppt', 'ppt', null, array('D' => 'Dollar', 'DPH' => 'Dollar / Hour'), true) . '</div>
 				<div class="div_table_cell"> </div>
-				<div class="div_table_cell"> &nbsp; <em>' . pts_strings::format_time(array_sum($test_run_times) / count($test_run_times), 'SECONDS', true, 60) . '</em></div>
+				<div class="div_table_cell"> &nbsp; <em>' . ($avg_run_time > 0 && $avg_run_time < 604800 ? pts_strings::format_time($avg_run_time, 'SECONDS', true, 60) : '') . '</em></div>
 				<div class="div_table_cell">';
 
 				if($can_delete_results)

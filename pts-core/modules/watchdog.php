@@ -57,7 +57,7 @@ class watchdog extends pts_module_interface
 				$to_monitor[$type][$name][] = $parameter;
 			}
 		}
-		foreach(phodevi::supported_sensors() as $sensor)
+		foreach(phodevi::query_sensors() as $sensor)
 		{
 			if(array_key_exists($sensor[0], $to_monitor) && array_key_exists($sensor[1], $to_monitor[$sensor[0]]))
 			{

@@ -29,7 +29,7 @@ class system_sensors implements pts_option_interface
 	{
 		pts_client::$display->generic_heading('Supported Sensors For This System');
 		$tabled = array();
-		foreach(phodevi::supported_sensors() as $sensor)
+		foreach(phodevi::query_sensors() as $sensor)
 		{
 			$supported_devices = call_user_func(array($sensor[2], 'get_supported_devices'));
 
@@ -52,13 +52,6 @@ class system_sensors implements pts_option_interface
 			}
 		}
 		echo pts_user_io::display_text_table($tabled) . PHP_EOL;
-
-		pts_client::$display->generic_heading('Unsupported Sensors For This System');
-		foreach(phodevi::unsupported_sensors() as $sensor)
-		{
-			echo '- ' . phodevi::sensor_name($sensor) . PHP_EOL;
-		}
-		echo PHP_EOL;
 	}
 }
 

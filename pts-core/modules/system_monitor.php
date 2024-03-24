@@ -420,7 +420,7 @@ class system_monitor extends pts_module_interface
 	private static function process_sensor_list(&$sensor_parameters)
 	{
 		$monitor_all = array_key_exists('all', $sensor_parameters);
-		foreach(phodevi::supported_sensors() as $sensor)
+		foreach(phodevi::query_sensors() as $sensor)
 		{
 			// instantiate sensor class if:
 			// a) we want to monitor all the available sensors,

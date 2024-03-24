@@ -212,7 +212,7 @@ class pts_stress_run_manager extends pts_test_run_manager
 		// SENSOR SETUP WORK
 		$sensor_interval_frequency = is_numeric($total_loop_time) && $total_loop_time > 1 ? max($total_loop_time / 1000, 3) : 6;
 		$sensor_time_since_last_poll = time();
-		foreach(phodevi::supported_sensors(array('cpu_temp', 'cpu_usage', 'gpu_usage', 'gpu_temp', 'hdd_read_speed', 'hdd_write_speed', 'memory_usage', 'swap_usage', 'sys_temp')) as $sensor)
+		foreach(phodevi::query_sensors(array('cpu_temp', 'cpu_usage', 'gpu_usage', 'gpu_temp', 'hdd_read_speed', 'hdd_write_speed', 'memory_usage', 'swap_usage', 'sys_temp')) as $sensor)
 		{
 			$supported_devices = call_user_func(array($sensor[2], 'get_supported_devices'));
 

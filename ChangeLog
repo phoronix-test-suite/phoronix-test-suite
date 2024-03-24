@@ -3,7 +3,7 @@ PHORONIX TEST SUITE CHANGE-LOG
 Phoronix Test Suite 10.8.5
 [GIT]
 
-pts-core: PHP 8.2 warning fixes
+pts-core: PHP 8.2/8.3 warning fixes
 pts-core: Various bug fixes
 phodevi: Hardware/software detection updates
 

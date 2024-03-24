@@ -105,7 +105,7 @@ class shell implements pts_option_interface
 		// SENSORS
 		$terminal_width = pts_client::terminal_width();
 		$sensors = array();
-		foreach(phodevi::supported_sensors(array('cpu_usage', 'cpu_temp', 'sys_temp', 'sys_power', 'gpu_usage', 'gpu_temp', 'memory_usage')) as $sensor)
+		foreach(phodevi::query_sensors(array('cpu_usage', 'cpu_temp', 'sys_temp', 'sys_power', 'gpu_usage', 'gpu_temp', 'memory_usage')) as $sensor)
 		{
 			$supported_devices = call_user_func(array($sensor[2], 'get_supported_devices'));
 

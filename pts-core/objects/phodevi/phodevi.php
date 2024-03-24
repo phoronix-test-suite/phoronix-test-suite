@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2019, Phoronix Media
-	Copyright (C) 2009 - 2019, Michael Larabel
+	Copyright (C) 2009 - 2024, Phoronix Media
+	Copyright (C) 2009 - 2024, Michael Larabel
 	phodevi.php: The object for interacting with the PTS device framework
 
 	This program is free software; you can redistribute it and/or modify
@@ -84,15 +84,11 @@ class phodevi extends phodevi_base
 			}
 		}
 	}
-	public static function available_sensors($limit_sensors = false)
+	public static function available_sensors()
 	{
 		static $available_sensors = null;
 
-		if($limit_sensors != false)
-		{
-			return self::select_sensors($limit_sensors);
-		}
-		else if($available_sensors == null)
+		if($available_sensors == null)
 		{
 			$available_sensors = array();
 
@@ -107,29 +103,10 @@ class phodevi extends phodevi_base
 
 		return $available_sensors;
 	}
-	public static function select_sensors($limit_sensors = false)
-	{
-		if(!defined('PHP_VERSION_ID') || PHP_VERSION_ID < 50300)
-		{
-			// Phodevi sensors don't work prior to PHP 5.3
-			return array();
-		}
-
-		$selected = array();
-		foreach(self::available_sensors() as $sensor)
-		{
-			if($limit_sensors == false || (is_array($limit_sensors) && in_array($sensor[2], $limit_sensors)))
-			{
-				array_push($selected, $sensor);
-			}
-		}
-
-		return $selected;
-	}
 	public static function is_sensor_supported($sensor)
 	{
 		$supported = false;
-		$sensors = self::supported_sensors();
+		$sensors = self::query_sensors();
 		foreach($sensors as $s)
 		{
 			if($s[0] == $sensor[0] && $s[1] == $sensor[1])
@@ -141,18 +118,26 @@ class phodevi extends phodevi_base
 
 		return $supported;
 	}
-	public static function supported_sensors($limit_sensors = false)
+	public static function query_sensors($limit_sensor_selection = false)
 	{
 		static $supported_sensors = null;
 
-		if($limit_sensors != false)
+		if($limit_sensor_selection != false)
 		{
-			return self::select_sensors($limit_sensors);
+			$selected = array();
+			foreach(self::available_sensors() as $sensor)
+			{
+				if($limit_sensor_selection == false || (is_array($limit_sensor_selection) && in_array($sensor[2], $limit_sensor_selection)))
+				{
+					array_push($selected, $sensor);
+				}
+			}
+			return $selected;
 		}
 		else if($supported_sensors == null)
 		{
 			$supported_sensors = array();
-			foreach(self::available_sensors($limit_sensors) as $sensor)
+			foreach(self::available_sensors() as $sensor)
 			{
 				if(self::sensor_supported($sensor))
 				{
@@ -162,26 +147,6 @@ class phodevi extends phodevi_base
 		}
 
 		return $supported_sensors;
-	}
-	public static function unsupported_sensors()
-	{
-		static $unsupported_sensors = null;
-
-		if($unsupported_sensors == null)
-		{
-			$unsupported_sensors = array();
-			$supported_sensors = self::supported_sensors();
-
-			foreach(self::available_sensors() as $sensor)
-			{
-				if(!in_array($sensor, $supported_sensors))
-				{
-					array_push($unsupported_sensors, $sensor);
-				}
-			}
-		}
-
-		return $unsupported_sensors;
 	}
 	public static function read_sensor($sensor)
 	{

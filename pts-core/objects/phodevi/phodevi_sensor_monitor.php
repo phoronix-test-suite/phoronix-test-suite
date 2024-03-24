@@ -38,7 +38,7 @@ class phodevi_sensor_monitor
 
 			$monitor_all = in_array('all', $to_monitor);
 			$this->sensors_to_monitor = array();
-			foreach(phodevi::supported_sensors() as $sensor)
+			foreach(phodevi::query_sensors() as $sensor)
 			{
 				if($monitor_all || in_array(phodevi::sensor_identifier($sensor), $to_monitor) || in_array('all.' . $sensor[0], $to_monitor))
 				{
