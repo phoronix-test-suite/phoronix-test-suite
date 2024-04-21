@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v6.2.0m2-->
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>Machine Learning</Title>
+    <Version>1.3.5</Version>
+    <TestType>System</TestType>
+    <Description>The machine learning test suite helps to benchmark a system for the popular pattern recognition and computational learning algorithms. Mainly different machine learning / deep learning benchmarks.</Description>
+    <Maintainer>Victor Rodriguez</Maintainer>
+  </SuiteInformation>
+  <Execute>
+    <Test>pts/mnn</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/ncnn</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/tnn</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/opencv</Test>
+    <Arguments>dnn</Arguments>
+    <Description>Test: DNN - Deep Neural Network</Description>
+  </Execute>
+  <Execute>
+    <Test>pts/caffe</Test>
+    <Mode>BATCH</Mode>
+    <OptionSelect>accel = CPU</OptionSelect>
+  </Execute>
+  <Execute>
+    <Test>pts/shoc</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/rbenchmark</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/numpy</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/ai-benchmark</Test>
+  </Execute>
+  <Execute>
+    <Test>pts/deepspeech</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/ecp-candle</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/rnnoise</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/scikit-learn</Test>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/mlpack</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/numenta-nab</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/tensorflow</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/tensorflow-lite</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/numenta-nab</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/onednn</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/openvino</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/onnx</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/plaidml</Test>
+    <Arguments>--no-fp16 --no-train resnet50 CPU</Arguments>
+    <Description>FP16: No - Mode: Inference - Network: ResNet 50 - Device: CPU</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/plaidml</Test>
+    <Arguments>--no-fp16 --no-train vgg16 CPU</Arguments>
+    <Description>FP16: No - Mode: Inference - Network: VGG16 - Device: CPU</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/lczero</Test>
+    <Arguments>-b blas</Arguments>
+    <Description>Backend: BLAS</Description>
+    <OverrideTestOptions></OverrideTestOptions>
+  </Execute>
+  <Execute>
+    <Test>pts/spacy</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+  <Execute>
+    <Test>pts/deepsparse</Test>
+    <Mode>BATCH</Mode>
+  </Execute>
+</PhoronixTestSuite>

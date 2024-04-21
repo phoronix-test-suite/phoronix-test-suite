@@ -1,0 +1,1 @@
+{"1.0.2":{"last_updated":"1712400169","commit_description":"Fix with newer compilers."},"1.0.1":{"last_updated":"1643472362","commit_description":"Add PROCS_PER_NODE_NOT_POWER_OF_TWO handling to detect otherwise the program fails to run for non power of 2 CPU core counts."},"1.0.0":{"last_updated":"1643372169","commit_description":"Initial commit of Graph500, long overdue..."}}

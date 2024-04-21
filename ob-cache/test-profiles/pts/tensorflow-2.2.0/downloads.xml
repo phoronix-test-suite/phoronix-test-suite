@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/tensorflow/benchmarks/archive/8fb79079265933ad39bea628b777af662f5bf15d.zip</URL>
+      <MD5>96ac137706756a32155851a789bb355e</MD5>
+      <SHA256>cc1a136e503e4958431e622eb0125664fb6a3ee7d59501a456235b6617b10ad4</SHA256>
+      <FileName>tensorflow-benchmarks-8fb79079265933ad39bea628b777af662f5bf15d.zip</FileName>
+      <FileSize>1005010</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

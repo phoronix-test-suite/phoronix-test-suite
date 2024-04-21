@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.5-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ffmpeg.org/releases/ffmpeg-7.0.tar.xz</URL>
+      <MD5>d2edfc6ec6494c432828876e3102f740</MD5>
+      <SHA256>4426a94dd2c814945456600c8adfc402bee65ec14a70e8c531ec9a2cd651da7b</SHA256>
+      <FileName>ffmpeg-7.0.tar.xz</FileName>
+      <FileSize>10791240</FileSize>
+    </Package>
+    <Package>
+      <URL>https://code.videolan.org/videolan/x264/-/archive/7ed753b10a61d0be95f683289dfb925b800b0676/x264-7ed753b10a61d0be95f683289dfb925b800b0676.zip</URL>
+      <MD5>dec93f9a2fd2a91afff1e9d5fb2fea54</MD5>
+      <SHA256>48b9160177774f3efd29a60d722d9eddd6c023c0904a9a4f83377aa6e6845edb</SHA256>
+      <FileName>x264-7ed753b10a61d0be95f683289dfb925b800b0676.zip</FileName>
+      <FileSize>1222728</FileSize>
+    </Package>
+    <Package>
+      <URL>https://bitbucket.org/multicoreware/x265_git/downloads/x265_3.6.tar.gz</URL>
+      <MD5>99997ecc8ee4d3575ba7715c759ad3bb</MD5>
+      <SHA256>663531f341c5389f460d730e62e10a4fcca3428ca2ca109693867bc5fe2e2807</SHA256>
+      <FileName>x265_3.6.tar.gz</FileName>
+      <FileSize>1655889</FileSize>
+    </Package>
+    <Package>
+      <URL>http://arcade.cs.columbia.edu/vbench/data/vbench.zip</URL>
+      <MD5>f7f5217fbcaabc17363d99a1559800f8</MD5>
+      <SHA256>c34b873a18b151322483ca460fcf9ed6a5dbbc2bb74934c57927b88ee1de3472</SHA256>
+      <FileName>vbench-01.zip</FileName>
+      <FileSize>874958969</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

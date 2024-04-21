@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>GpuOwl</Title>
+    <AppVersion>7.5</AppVersion>
+    <Description>GpuOwl is a Mersenne primality tester leveraging OpenCL for cross-vendor GPU acceleration.</Description>
+    <ResultScale>Iterations / Second</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Graphics</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, opencl, cmake, gmp-library</ExternalDependencies>
+    <EnvironmentSize>2</EnvironmentSize>
+    <ProjectURL>https://github.com/preda/gpuowl/</ProjectURL>
+    <RepositoryURL>https://github.com/preda/gpuowl</RepositoryURL>
+    <InternalTags>OpenCL</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>pkg-config, gmp.h</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Exponent</DisplayName>
+      <Identifier>exp</Identifier>
+      <Menu>
+        <Entry>
+          <Name>57885161</Name>
+          <Value>-iters 100000 -prp 57885161</Value>
+        </Entry>
+        <Entry>
+          <Name>77936867</Name>
+          <Value>-iters 100000 -prp 77936867</Value>
+        </Entry>
+        <Entry>
+          <Name>332220523</Name>
+          <Value>-iters 20000 -prp 332220523</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

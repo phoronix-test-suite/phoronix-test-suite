@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.5-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>bfs  median_TEPS:               #_RESULT_#</OutputTemplate>
+    <LineHint>bfs  median_TEPS</LineHint>
+    <ResultScale>bfs median_TEPS</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>bfs  max_TEPS:               #_RESULT_#</OutputTemplate>
+    <LineHint>bfs  max_TEPS</LineHint>
+    <ResultScale>bfs max_TEPS</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>sssp median_TEPS:               #_RESULT_#</OutputTemplate>
+    <LineHint>sssp median_TEPS</LineHint>
+    <ResultScale>sssp median_TEPS</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>sssp max_TEPS:               #_RESULT_#</OutputTemplate>
+    <LineHint>sssp max_TEPS</LineHint>
+    <ResultScale>sssp max_TEPS</ResultScale>
+  </ResultsParser>
+</PhoronixTestSuite>

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>vvencapp [info]: Total Time: 150.910 sec. Fps(avg): #_RESULT_# encoded Frames 600</OutputTemplate>
+    <LineHint>Total Time</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

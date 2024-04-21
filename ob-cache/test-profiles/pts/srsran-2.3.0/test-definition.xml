@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.5-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>srsRAN Project</Title>
+    <AppVersion>23.10.1-20240325</AppVersion>
+    <Description>srsRAN Project is a complete ORAN-native 5G RAN solution created by Software Radio Systems (SRS). The srsRAN Project radio suite was formerly known as srsLTE and can be used for building your own software-defined radio (SDR) 4G/5G mobile network.</Description>
+    <ResultScale>Mb/s</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>2.3.0</Version>
+    <SupportedPlatforms>Linux, MacOSX</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, fftw3-development, cmake, boost-development, libconfigpp</ExternalDependencies>
+    <EnvironmentSize>294</EnvironmentSize>
+    <ProjectURL>https://www.srsran.com/</ProjectURL>
+    <RepositoryURL>https://github.com/srsran/srsRAN_Project</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>libbladeRF.h, mbedtls/aes.h, libmbedtls.so, libboost_program_options.so, /usr/include/libconfig.h++, libconfig++.so, netinet/sctp.h, libsctp.so, yaml-cpp/yaml.h, libgtest.a, gtest/gtest.h</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Test</DisplayName>
+      <Identifier>test</Identifier>
+      <Menu>
+        <Entry>
+          <Name>PUSCH Processor Benchmark, Throughput Total</Name>
+          <Value>tests/benchmarks/phy/upper/channel_processors/pusch/pusch_processor_benchmark -m throughput_total -R 100 -B 10 -P pusch_scs30_100MHz_256qam_max</Value>
+          <Message>May hang on some systems...</Message>
+        </Entry>
+        <Entry>
+          <Name>PUSCH Processor Benchmark, Throughput Thread</Name>
+          <Value>tests/benchmarks/phy/upper/channel_processors/pusch/pusch_processor_benchmark -m throughput_thread -R 350 -B 10 -T 1 -t 0 -P pusch_scs30_100MHz_256qam_max</Value>
+        </Entry>
+        <Entry>
+          <Name>PDSCH Processor Benchmark, Throughput Total</Name>
+          <Value>tests/benchmarks/phy/upper/channel_processors/pdsch_processor_benchmark -m throughput_total -R 350 -B 10 -P 4port_4layer_scs30_100MHz_256qam</Value>
+        </Entry>
+        <Entry>
+          <Name>PDSCH Processor Benchmark, Throughput Thread</Name>
+          <Value>tests/benchmarks/phy/upper/channel_processors/pdsch_processor_benchmark -m throughput_thread -R 350 -B 10 -T 1 -P 4port_4layer_scs30_100MHz_256qam</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

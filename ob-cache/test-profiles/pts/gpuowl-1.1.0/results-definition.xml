@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>20240105 16:41:55 NVIDIA RTX A4000-0 57885161 OK    100000   0.17% f1cbf8d474fd3237 #_RESULT_# us/it + check 0.88s + save 0.08s; ETA 1d 10:23</OutputTemplate>
+    <LineHint>us/it</LineHint>
+    <ResultBeforeString>us/it</ResultBeforeString>
+    <DivideResultDivisor>1000000</DivideResultDivisor>
+  </ResultsParser>
+</PhoronixTestSuite>

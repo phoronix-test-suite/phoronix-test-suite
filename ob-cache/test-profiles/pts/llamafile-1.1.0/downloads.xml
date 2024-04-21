@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://huggingface.co/jartine/Mistral-7B-Instruct-v0.2-llamafile/resolve/1b7651d5619e4f7410a4e0005d7118f848610ca5/mistral-7b-instruct-v0.2.Q8_0.llamafile?download=true</URL>
+      <MD5>02b4f43f579017bab7a6ce84034af58b</MD5>
+      <SHA256>dee9af5fdbfee17530e613060db8548ca9b3be0dff2d67476766dc0c0b730857</SHA256>
+      <FileName>mistral-7b-instruct-v0.2.Q8_0.llamafile.7</FileName>
+      <FileSize>7720145391</FileSize>
+      <Optional>TRUE</Optional>
+    </Package>
+    <Package>
+      <URL>https://huggingface.co/jartine/llava-v1.5-7B-GGUF/resolve/b0189a9d04ca084d8808cd74ee6c2c7839e1311c/llava-v1.5-7b-q4.llamafile?download=true</URL>
+      <MD5>5fde77da9ab80bded610097d2d1b213d</MD5>
+      <SHA256>8a92123c4114965cab4cb394cbbea2f5a0f64db0152ccc5c2aca2ad0cf14dca8</SHA256>
+      <FileName>llava-v1.5-7b-q4.llamafile.7</FileName>
+      <FileSize>4282782308</FileSize>
+      <Optional>TRUE</Optional>
+    </Package>
+    <Package>
+      <URL>https://huggingface.co/jartine/WizardCoder-Python-34B-V1.0-llamafile/resolve/2bf59460e11fe5f48204df385cd33570d782e18a/wizardcoder-python-34b-v1.0.Q6_K.llamafile?download=true</URL>
+      <MD5>6191ce33888e6d48ef9b54b66e6d6b2f</MD5>
+      <SHA256>c8c879e988459879ea0cfe13b951666cb6bda571845f24bd04df31652fd998d4</SHA256>
+      <FileName>wizardcoder-python-34b-v1.0.Q6_K.llamafile.7</FileName>
+      <FileSize>27708166645</FileSize>
+      <Optional>TRUE</Optional>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/pts-sample-photos-2.tar.bz2, http://www.phoronix.net/downloads/phoronix-test-suite/benchmark-files/pts-sample-photos-2.tar.bz2</URL>
+      <MD5>7ff2870cf3fa2299ea5f4e77e5a8535f</MD5>
+      <SHA256>e8597d7d5910a709985bffae490dfa9490483eb7838b351191156f027d9b5272</SHA256>
+      <FileName>pts-sample-photos-2.tar.bz2</FileName>
+      <FileSize>29599729</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

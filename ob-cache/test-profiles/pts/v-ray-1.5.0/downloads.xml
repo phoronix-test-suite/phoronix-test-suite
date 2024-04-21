@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://download.chaos.com/api/v1/builds/latest/download?productId=57&amp;platformId=47&amp;os=1</URL>
+      <MD5>6741094cd01213274531dddb24e572a9</MD5>
+      <SHA256>303b956e3de5d683922c4d8e70c49d98634d59e1c6ceba6af075ff21c92bca81</SHA256>
+      <FileName>vray-benchmark-6.00.00</FileName>
+      <FileSize>756404009</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://download.chaos.com/api/v1/builds/latest/download?productId=57&amp;platformId=47&amp;os=0&amp;filter=cli</URL>
+      <MD5>8d922a619880d8ca389a753c7148423c</MD5>
+      <SHA256>53a0285b0a18fc8b8fbe305ca0fce4ab21f7e88a7aa68597d0895e8f253d2037</SHA256>
+      <FileName>vray-benchmark-6.00.00-cli.exe</FileName>
+      <FileSize>654222144</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://download.chaos.com/api/v1/builds/latest/download?productId=57&amp;platformId=47&amp;os=2</URL>
+      <MD5>84bab942663703c260140742c91a315a</MD5>
+      <SHA256>184ff0b1fda03f63c76096ab7d0ecf3931e510108f8850b917acca2980b63fa7</SHA256>
+      <FileName>vray-benchmark-6.00.00.dmg</FileName>
+      <FileSize>934067137</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

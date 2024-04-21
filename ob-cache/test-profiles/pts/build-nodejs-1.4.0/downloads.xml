@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.5-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://nodejs.org/dist/v21.7.2/node-v21.7.2.tar.xz</URL>
+      <MD5>dcfdf215f9694560243bfaf1cfc9d8cd</MD5>
+      <SHA256>b4b1e2a07e96f85f6ce34a2fbfea348691aefe5cb219aa6951e23ccc991f9e2f</SHA256>
+      <FileName>node-v21.7.2.tar.xz</FileName>
+      <FileSize>42378944</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

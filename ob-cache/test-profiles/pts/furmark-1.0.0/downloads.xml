@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://gpumagick.com/downloads/files/2024/furmark2/FurMark_2.1.0.2_linux64.zip</URL>
+      <MD5>b431d63f8246fcbdc1f9785f189e2024</MD5>
+      <SHA256>970cfadadcf73ade2995000cfec415babd7c537da660a64cf7faf5faa15a803e</SHA256>
+      <FileName>FurMark_2.1.0.2_linux64.zip</FileName>
+      <FileSize>13388342</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://gpumagick.com/downloads/files/2024/furmark2/FurMark_2.1.0.2_win64.zip</URL>
+      <MD5>eaedce800b756b52e7eda5e93dac5828</MD5>
+      <SHA256>2b4c204d2a78d2bd77e13249ee63ed9525c5d4ff0e755a080bb68507a7512a59</SHA256>
+      <FileName>FurMark_2.1.0.2_win64.zip</FileName>
+      <FileSize>28226554</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

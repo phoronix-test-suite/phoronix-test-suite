@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.5-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/SPECFEM/specfem3d/archive/refs/tags/v4.1.1.tar.gz</URL>
+      <MD5>68670be498bbaab7e8b8ffea66bfc3c3</MD5>
+      <SHA256>cc950d76aa5f9deea72a263adbce6c4e77b6500f7c41eef5036f4dc882967e5f</SHA256>
+      <FileName>specfem3d-4.1.1.tar.gz</FileName>
+      <FileSize>351288513</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

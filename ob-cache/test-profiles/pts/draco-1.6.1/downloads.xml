@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/google/draco/archive/refs/tags/1.5.6.tar.gz</URL>
+      <MD5>dbe3a9e286ee5b79016470349d78b2a3</MD5>
+      <SHA256>0280888e5b8e4c4fb93bf40e65e4e8a1ba316a0456f308164fb5c2b2b0c282d6</SHA256>
+      <FileName>draco-1.5.6.tar.gz</FileName>
+      <FileSize>60386658</FileSize>
+    </Package>
+    <Package>
+      <URL>https://cdn.artec3d.com/content-hub-3dmodels/church-facade-ply.zip</URL>
+      <MD5>397ea673bf245456c925615a09295619</MD5>
+      <SHA256>d89b9efb2b5866c175b6d5b8a41acbc43e996829a3b5386b80216b30a0200744</SHA256>
+      <FileName>church-facade-ply.zip</FileName>
+      <FileSize>70130230</FileSize>
+    </Package>
+    <Package>
+      <URL>https://cdn.artec3d.com/content-hub-3dmodels/lion-statue_ply.zip</URL>
+      <MD5>4d7e19c974fb4cb1cf4a500729e107f2</MD5>
+      <SHA256>3704b1f75e5ca6eef3a53d247478336c10667f53879544ef3ea3ecc4cf2c8e06</SHA256>
+      <FileName>lion-statue_ply.zip</FileName>
+      <FileSize>49755877</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

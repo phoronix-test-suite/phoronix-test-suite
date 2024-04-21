@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/preda/gpuowl/archive/refs/tags/v7.5.tar.gz</URL>
+      <MD5>39bcdc1bcb68e29e1e7ae3c58d83d65b</MD5>
+      <SHA256>ae45a21e90dfc0a10eab44a8eeb9889d046320b81c88f3c4fb6181b4fee454ef</SHA256>
+      <FileName>gpuowl-7.5.tar.gz</FileName>
+      <FileSize>218421</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

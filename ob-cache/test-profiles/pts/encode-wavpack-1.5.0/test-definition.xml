@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>WavPack Audio Encoding</Title>
+    <AppVersion>5.7</AppVersion>
+    <Description>This test times how long it takes to encode a sample WAV file to WavPack format with very high quality settings.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>WAV To WavPack</SubTitle>
+    <TimesToRun>5</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.5.0</Version>
+    <SupportedPlatforms>Linux, MacOSX, Solaris, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, cmake</ExternalDependencies>
+    <EnvironmentSize>250</EnvironmentSize>
+    <ProjectURL>https://www.wavpack.com/</ProjectURL>
+    <RepositoryURL>https://github.com/dbry/WavPack</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+</PhoronixTestSuite>

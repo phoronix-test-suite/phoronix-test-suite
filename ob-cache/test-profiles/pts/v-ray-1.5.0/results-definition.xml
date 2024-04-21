@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>V-Ray GPU score: #_RESULT_# vpaths</OutputTemplate>
+    <LineHint>V-Ray GPU score:</LineHint>
+    <ResultScale>vpaths</ResultScale>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>V-Ray score: #_RESULT_# vsamples</OutputTemplate>
+    <LineHint>V-Ray score:</LineHint>
+    <ResultScale>vsamples</ResultScale>
+  </ResultsParser>
+</PhoronixTestSuite>

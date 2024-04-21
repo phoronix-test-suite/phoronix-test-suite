@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.5-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>RNNoise</Title>
+    <AppVersion>0.2</AppVersion>
+    <Description>RNNoise is a recurrent neural network for audio noise reduction developed by Mozilla and Xiph.Org. This test profile is a single-threaded test measuring the time to denoise a sample 26 minute long 16-bit RAW audio file using this recurrent neural network noise suppression library.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.1.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>Processor</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, libtool</ExternalDependencies>
+    <EnvironmentSize>157</EnvironmentSize>
+    <ProjectURL>https://jmvalin.ca/demo/rnnoise/</ProjectURL>
+    <RepositoryURL>https://github.com/xiph/rnnoise</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Input</DisplayName>
+      <Identifier>input</Identifier>
+      <Menu>
+        <Entry>
+          <Name>26 Minute Long Talking Sample</Name>
+          <Value>sample-audio-long.raw</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

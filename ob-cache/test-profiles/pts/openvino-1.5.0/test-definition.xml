@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>OpenVINO</Title>
+    <AppVersion>2024.0</AppVersion>
+    <Description>This is a test of the Intel OpenVINO, a toolkit around neural networks, using its built-in benchmarking support and analyzing the throughput and latency for various models.</Description>
+    <ResultScale>FPS</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.5.0</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>python, build-utilities, cmake</ExternalDependencies>
+    <InstallRequiresInternet>TRUE</InstallRequiresInternet>
+    <EnvironmentSize>3500</EnvironmentSize>
+    <ProjectURL>https://www.openvino.ai/</ProjectURL>
+    <RepositoryURL>https://github.com/openvinotoolkit/openvino</RepositoryURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>usb.h, libusb-1.0/libusb.h, opencv_version, opencv4/opencv2/cvdef.h, python2</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Model</DisplayName>
+      <Identifier>model</Identifier>
+      <ArgumentPrefix>-m </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>Face Detection FP16</Name>
+          <Value>models/intel/face-detection-0206/FP16/face-detection-0206.xml</Value>
+        </Entry>
+        <Entry>
+          <Name>Face Detection FP16-INT8</Name>
+          <Value>models/intel/face-detection-0206/FP16-INT8/face-detection-0206.xml</Value>
+        </Entry>
+        <Entry>
+          <Name>Age Gender Recognition Retail 0013 FP16</Name>
+          <Value>models/intel/age-gender-recognition-retail-0013/FP16/age-gender-recognition-retail-0013.xml</Value>
+        </Entry>
+        <Entry>
+          <Name>Age Gender Recognition Retail 0013 FP16-INT8</Name>
+          <Value>models/intel/age-gender-recognition-retail-0013/FP16-INT8/age-gender-recognition-retail-0013.xml</Value>
+        </Entry>
+        <Entry>
+          <Name>Person Detection FP16</Name>
+          <Value>models/intel/person-detection-0303/FP16/person-detection-0303.xml</Value>
+        </Entry>
+        <Entry>
+          <Name>Person Detection FP32</Name>
+          <Value>models/intel/person-detection-0303/FP32/person-detection-0303.xml</Value>
+        </Entry>
+        <Entry>
+          <Name>Weld Porosity Detection FP16-INT8</Name>
+          <Value>models/intel/weld-porosity-detection-0001/FP16-INT8/weld-porosity-detection-0001.xml</Value>
+        </Entry>
+        <Entry>
+          <Name>Weld Porosity Detection FP16</Name>
+          <Value>models/intel/weld-porosity-detection-0001/FP16/weld-porosity-detection-0001.xml</Value>
+        </Entry>
+        <Entry>
+          <Name>Vehicle Detection FP16-INT8</Name>
+          <Value>models/intel/vehicle-detection-0202/FP16-INT8/vehicle-detection-0202.xml</Value>
+        </Entry>
+        <Entry>
+          <Name>Vehicle Detection FP16</Name>
+          <Value>models/intel/vehicle-detection-0202/FP16/vehicle-detection-0202.xml</Value>
+        </Entry>
+        <Entry>
+          <Name>Person Vehicle Bike Detection FP16</Name>
+          <Value>models/intel/person-vehicle-bike-detection-2004/FP16/person-vehicle-bike-detection-2004.xml</Value>
+        </Entry>
+        <Entry>
+          <Name>Machine Translation EN To DE FP16</Name>
+          <Value>models/intel/machine-translation-nar-en-de-0002/FP16/machine-translation-nar-en-de-0002.xml</Value>
+        </Entry>
+        <Entry>
+          <Name>Face Detection Retail FP16</Name>
+          <Value>models/intel/face-detection-retail-0005/FP16/face-detection-retail-0005.xml</Value>
+        </Entry>
+        <Entry>
+          <Name>Face Detection Retail FP16-INT8</Name>
+          <Value>models/intel/face-detection-retail-0005/FP16-INT8/face-detection-retail-0005.xml</Value>
+        </Entry>
+        <Entry>
+          <Name>Handwritten English Recognition FP16</Name>
+          <Value>models/intel/handwritten-english-recognition-0001/FP16/handwritten-english-recognition-0001.xml</Value>
+        </Entry>
+        <Entry>
+          <Name>Handwritten English Recognition FP16-INT8</Name>
+          <Value>models/intel/handwritten-english-recognition-0001/FP16-INT8/handwritten-english-recognition-0001.xml</Value>
+        </Entry>
+        <Entry>
+          <Name>Road Segmentation ADAS FP16</Name>
+          <Value>models/intel/road-segmentation-adas-0001/FP16/road-segmentation-adas-0001.xml</Value>
+        </Entry>
+        <Entry>
+          <Name>Road Segmentation ADAS FP16-INT8</Name>
+          <Value>models/intel/road-segmentation-adas-0001/FP16-INT8/road-segmentation-adas-0001.xml</Value>
+        </Entry>
+        <Entry>
+          <Name>Person Re-Identification Retail FP16</Name>
+          <Value>models/intel/person-reidentification-retail-0277/FP16/person-reidentification-retail-0277.xml</Value>
+        </Entry>
+        <Entry>
+          <Name>Noise Suppression Poconet-Like FP16</Name>
+          <Value>models/intel/noise-suppression-poconetlike-0001/FP16/noise-suppression-poconetlike-0001.xml</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Device</DisplayName>
+      <Identifier>Device</Identifier>
+      <ArgumentPrefix>-d </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>CPU</Name>
+          <Value>CPU</Value>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

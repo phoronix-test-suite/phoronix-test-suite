@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.5-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/sample-audio-long-1.tar.xz</URL>
+      <MD5>7009308d604b7f093eddcf1d66be7765</MD5>
+      <SHA256>55edc8460fc23085bdc0745ff92233a8e975f4928010bdd9db4a7aa1e9e3c1bf</SHA256>
+      <FileName>sample-audio-long-1.tar.xz</FileName>
+      <FileSize>110304308</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/xiph/rnnoise/releases/download/v0.2/rnnoise-0.2.tar.gz</URL>
+      <MD5>0e795b2d2b4730fc5ee6e38b77699e91</MD5>
+      <SHA256>90fce4b00b9ff24c08dbfe31b82ffd43bae383d85c5535676d28b0a2b11c0d37</SHA256>
+      <FileName>rnnoise-0.2.tar.gz</FileName>
+      <FileSize>2294308</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

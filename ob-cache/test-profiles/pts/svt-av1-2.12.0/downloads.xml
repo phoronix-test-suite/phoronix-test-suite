@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://ultravideo.cs.tut.fi/video/Bosphorus_1920x1080_120fps_420_8bit_YUV_RAW.7z</URL>
+      <MD5>db7c7ff09acd5d7820cc4d1eb0939cf9</MD5>
+      <SHA256>e73a54088e88e6465f578625d185933e85c3209ab7105deb755a8b8918b78cab</SHA256>
+      <FileName>Bosphorus_1920x1080_120fps_420_8bit_YUV_RAW.7z</FileName>
+      <FileSize>680772328</FileSize>
+    </Package>
+    <Package>
+      <URL>http://ultravideo.cs.tut.fi/video/Bosphorus_3840x2160_120fps_420_8bit_YUV_Y4M.7z</URL>
+      <MD5>815ca5830c8ea2f95545429817b96b1f</MD5>
+      <SHA256>d0fcb7d8cfc6e51c47ce8b427dab41ce38300c4b1a51a1903ddd5d86067c4c79</SHA256>
+      <FileName>Bosphorus_3840x2160_120fps_420_8bit_YUV_Y4M.7z</FileName>
+      <FileSize>2804470345</FileSize>
+    </Package>
+    <Package>
+      <URL>http://gitlab.com/AOMediaCodec/SVT-AV1/-/archive/v2.0.0/SVT-AV1-v2.0.0.tar.bz2</URL>
+      <MD5>c2997034a5bff3eec4c885adf27e152f</MD5>
+      <SHA256>f9c076c377e504be15e195db8dd36d91233bc37cb8e82530382f38bc1926df02</SHA256>
+      <FileName>SVT-AV1-v2.0.0.tar.bz2</FileName>
+      <FileSize>9565222</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/SVT-AV1-v2.0.0-win64.zip</URL>
+      <MD5>66eec3fc7163c1a53069e726cfeabb49</MD5>
+      <SHA256>3d4a757a2c34ea941ba774c47fb8c77387a3bd5254760c357b8c254a76614aea</SHA256>
+      <FileName>SVT-AV1-v2.0.0-win64.zip</FileName>
+      <FileSize>5539467</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

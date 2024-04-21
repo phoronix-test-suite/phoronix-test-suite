@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://archive.mesa3d.org/mesa-24.0.3.tar.xz</URL>
+      <MD5>fb1794acf5f714e4835be3bf2ab010fe</MD5>
+      <SHA256>77aec9a2a37b7d3596ea1640b3cc53d0b5d9b3b52abed89de07e3717e91bfdbe</SHA256>
+      <FileName>mesa-24.0.3.tar.xz</FileName>
+      <FileSize>20021264</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

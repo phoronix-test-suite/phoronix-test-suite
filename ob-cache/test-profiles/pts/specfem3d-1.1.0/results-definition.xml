@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.5-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate> Total elapsed time in seconds =    #_RESULT_#</OutputTemplate>
+    <LineHint>Total elapsed time in seconds</LineHint>
+  </ResultsParser>
+</PhoronixTestSuite>

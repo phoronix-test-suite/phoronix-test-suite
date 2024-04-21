@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.5-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/aom-350.tar.xz</URL>
+      <MD5>4bad477efe71208b0a190efd1fc5da8b</MD5>
+      <SHA256>7d4d88d2b0cea58243aa422f5ee4656a676b8a74170fbc29a2f36eb310446740</SHA256>
+      <FileName>aom-350.tar.xz</FileName>
+      <FileSize>3690192</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/AOMediaCodec/libavif/archive/refs/tags/v1.0.4.tar.gz</URL>
+      <MD5>8c786fd21f8757ace8cc011401e4d420</MD5>
+      <SHA256>dc56708c83a4b934a8af2b78f67f866ba2fb568605c7cf94312acf51ee57d146</SHA256>
+      <FileName>libavif-1.0.4.tar.gz</FileName>
+      <FileSize>10575992</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/AOMediaCodec/libavif/releases/download/v1.0.4/libavif-v1.0.4-avifenc-avifdec-windows.zip</URL>
+      <MD5>25492f3db250e0af46b80ab12352e717</MD5>
+      <SHA256>bb9d6adb68f4f11ba9524613bd5984eaecd2f425a686e3c5b0ed51293b5f41ea</SHA256>
+      <FileName>libavif-v1.0.4-avifenc-avifdec-windows.zip</FileName>
+      <FileSize>9991626</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://upload.wikimedia.org/wikipedia/commons/2/2c/Mars_topography_%28MOLA_dataset%29_with_poles_HiRes.jpg</URL>
+      <MD5>033f3dfec0031912d39bcfb48679ae85</MD5>
+      <SHA256>21aaf7b1b7d324cc4e79f779de4e277d861e4dbd445a08846cd13dd3c81ed345</SHA256>
+      <FileName>sample-photo-mars.jpg</FileName>
+      <FileSize>20369694</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.5-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://versaweb.dl.sourceforge.net/project/graphicsmagick/graphicsmagick/1.3.43/GraphicsMagick-1.3.43.tar.xz, https://gigenet.dl.sourceforge.net/project/graphicsmagick/graphicsmagick/1.3.43/GraphicsMagick-1.3.43.tar.xz, https://ixpeering.dl.sourceforge.net/project/graphicsmagick/graphicsmagick/1.3.43/GraphicsMagick-1.3.43.tar.xz</URL>
+      <MD5>ffcd558899aff408b9073c2d48539e22</MD5>
+      <SHA256>2b88580732cd7e409d9e22c6116238bef4ae06fcda11451bf33d259f9cbf399f</SHA256>
+      <FileName>GraphicsMagick-1.3.43.tar.xz</FileName>
+      <FileSize>5657460</FileSize>
+      <PlatformSpecific>Linux, Solaris, BSD, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://versaweb.dl.sourceforge.net/project/graphicsmagick/graphicsmagick/1.3.43/GraphicsMagick-1.3.43-windows.7z, https://gigenet.dl.sourceforge.net/project/graphicsmagick/graphicsmagick/1.3.43/GraphicsMagick-1.3.43-windows.7z, https://ixpeering.dl.sourceforge.net/project/graphicsmagick/graphicsmagick/1.3.43/GraphicsMagick-1.3.43-windows.7z</URL>
+      <MD5>dd110c952c5e7a58e24fdc6d97652a42</MD5>
+      <SHA256>44386bf492d5ea6d8ceed60053a96de7ff99c6704a51f2918af8e320aaf61e39</SHA256>
+      <FileName>GraphicsMagick-1.3.43-windows.7z</FileName>
+      <FileSize>23977316</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://upload.wikimedia.org/wikipedia/commons/2/2c/Mars_topography_%28MOLA_dataset%29_with_poles_HiRes.jpg</URL>
+      <MD5>033f3dfec0031912d39bcfb48679ae85</MD5>
+      <SHA256>21aaf7b1b7d324cc4e79f779de4e277d861e4dbd445a08846cd13dd3c81ed345</SHA256>
+      <FileName>sample-photo-mars.jpg</FileName>
+      <FileSize>20369694</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

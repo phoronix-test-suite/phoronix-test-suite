@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.5-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Graph500</Title>
+    <AppVersion>3.0</AppVersion>
+    <Description>This is a benchmark of the reference implementation of Graph500, an HPC benchmark focused on data intensive loads and commonly tested on supercomputers for complex data problems. Graph500 primarily stresses the communication subsystem of the hardware under test.</Description>
+    <ResultScale>BFS median_TEPS</ResultScale>
+    <Proportion>HIB</Proportion>
+    <TimesToRun>1</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.2</Version>
+    <SupportedPlatforms>Linux</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <ExternalDependencies>build-utilities, openmpi-development</ExternalDependencies>
+    <EnvironmentSize>3</EnvironmentSize>
+    <ProjectURL>http://graph500.org/</ProjectURL>
+    <RepositoryURL>https://github.com/graph500/graph500</RepositoryURL>
+    <InternalTags>SMP, MPI</InternalTags>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>awk</SystemDependencies>
+  </TestProfile>
+  <TestSettings>
+    <Option>
+      <DisplayName>Scale</DisplayName>
+      <Identifier>scale</Identifier>
+      <Menu>
+        <Entry>
+          <Name>26</Name>
+          <Value>26</Value>
+          <Message>Smallest, requires ~18GB of RAM</Message>
+        </Entry>
+        <Entry>
+          <Name>29</Name>
+          <Value>29</Value>
+          <Message>Requires ~138GB of RAM</Message>
+        </Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

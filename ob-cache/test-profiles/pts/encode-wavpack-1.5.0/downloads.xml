@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.4-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/dbry/WavPack/archive/refs/tags/5.7.0.tar.gz</URL>
+      <MD5>eb724cc592da3c37cc57591968420ddb</MD5>
+      <SHA256>c5742ba1054d36ff3d22f0101a9be066f55f6becb9b2a7352c79fa362f2d3d76</SHA256>
+      <FileName>WavPack-5.7.0.tar.gz</FileName>
+      <FileSize>2015172</FileSize>
+    </Package>
+    <Package>
+      <URL>https://github.com/dbry/WavPack/releases/download/5.7.0/wavpack-5.7.0-x64.zip</URL>
+      <MD5>037986228ecf4c7061123bad491c9225</MD5>
+      <SHA256>1e2cf9dfd51548d54f7b69020151c3f872de2773f21bea604977451b724c5623</SHA256>
+      <FileName>wavpack-5.7.0-x64.zip</FileName>
+      <FileSize>418755</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://upload.wikimedia.org/wikipedia/commons/f/fb/1971_Interview%2C_Bobbie_R._Allen%2C_Staff_Breakfast.wav</URL>
+      <MD5>4e83d6f36b321b9182ecf4bdfbe28fff</MD5>
+      <SHA256>2c2a69ecccdc4f0dfc6311f72abffa4b77dca55ee910ac8f6d0184eeb29fa2f4</SHA256>
+      <FileName>large-wav-audio-file-speech-sample.wav</FileName>
+      <FileSize>240414546</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>
