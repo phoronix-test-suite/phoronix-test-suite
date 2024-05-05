@@ -63,7 +63,11 @@ class ob_test_profile_analyze implements pts_option_interface
 
 			if(!empty($test_binary) && is_executable($test_binary))
 			{
-				$ldd = trim(shell_exec('ldd ' . $test_binary));
+				$ldd = shell_exec('ldd ' . $test_binary);
+				if(!empty($ldd))
+				{
+					$ldd = trim($ldd);
+				}
 
 				foreach(explode(PHP_EOL, $ldd) as $line)
 				{

@@ -811,11 +811,20 @@ class phodevi_cpu extends phodevi_device_interface
 						case '0xd82':
 							$new_info .= ' Cortex-X4';
 							break;
+						case '0xd83':
+							$new_info .= ' Neoverse-V3AE';
+							break;
+						case '0xd84':
+							$new_info .= ' Neoverse-V3';
+							break;
 						case '0xd88':
 							$new_info .= ' Cortex-A520E';
 							break;
 						case '0xd89':
 							$new_info .= ' Cortex-A720E';
+							break;
+						case '0xd8e':
+							$new_info .= ' Neoverse-N3';
 							break;
 					}
 				}

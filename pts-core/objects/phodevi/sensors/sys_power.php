@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2021, Phoronix Media
-	Copyright (C) 2009 - 2021, Michael Larabel
+	Copyright (C) 2009 - 2024, Phoronix Media
+	Copyright (C) 2009 - 2024, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -210,14 +210,23 @@ class sys_power extends phodevi_sensor
 	}
 	private static function watts_up_power_meter()
 	{
-		$output = trim(shell_exec('wattsup -c 1 ttyUSB0 watts 2>&1'));
-		$output = explode(PHP_EOL, $output);
-
-		do
+		// Sometimes Wattsup have read failures returning 0....
+		for($i = 0; $i < 3; $i++)
 		{
-			$value = array_pop($output);
+			$output = trim(shell_exec('wattsup -c 1 ttyUSB0 watts 2>&1'));
+			$output = explode(PHP_EOL, $output);
+
+			do
+			{
+				$value = array_pop($output);
+			}
+			while(!is_numeric($value) && count($output) > 0);
+
+			if(is_numeric($value) && $value > 0)
+			{
+				break;
+			}
 		}
-		while(!is_numeric($value) && count($output) > 0);
 
 		return is_numeric($value) ? $value : -1;
 	}
