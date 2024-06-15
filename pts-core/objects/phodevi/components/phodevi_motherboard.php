@@ -628,13 +628,13 @@ class phodevi_motherboard extends phodevi_device_interface
 			}
 		}
 
-		if((strpos($info, 'Mac ') !== false || strpos($info, 'MacBook') !== false) && strpos($info, 'Apple') === false)
+		if(!empty($info) && (strpos($info, 'Mac ') !== false || strpos($info, 'MacBook') !== false) && strpos($info, 'Apple') === false)
 		{
 			$info = 'Apple ' . $info;
 		}
 
 		// ensure words aren't repeated (e.g. VMware VMware Virtual and MSI MSI X58M (MS-7593))
-		$info = implode(' ', array_unique(explode(' ', $info)));
+		$info = empty($info) ? '' : implode(' ', array_unique(explode(' ', $info)));
 
 		if($info == 'Google Compute Engine')
 		{

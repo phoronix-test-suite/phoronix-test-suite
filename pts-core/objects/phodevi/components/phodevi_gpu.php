@@ -1218,7 +1218,7 @@ class phodevi_gpu extends phodevi_device_interface
 				$info = phodevi_bsd_parser::read_pciconf_by_class('display');
 
 
-				if(strlen($info) > 60)
+				if(empty($info) || strlen($info) > 60)
 				{
 					$info = null;
 				}
@@ -1405,7 +1405,7 @@ class phodevi_gpu extends phodevi_device_interface
 
 			}
 
-			if(substr($info, -1) == ')' && ($open_p = strrpos($info, '(')) != false)
+			if(!empty($info) && substr($info, -1) == ')' && ($open_p = strrpos($info, '(')) != false)
 			{
 				$end_check = strpos($info, ' ', $open_p);
 				$to_check = substr($info, ($open_p + 1), ($end_check - $open_p - 1));
@@ -1435,7 +1435,7 @@ class phodevi_gpu extends phodevi_device_interface
 			}
 		}
 
-		if(($x = strpos($info, ' (')) !== false)
+		if(!empty($info) && ($x = strpos($info, ' (')) !== false)
 		{
 			$info = substr($info, 0, $x);
 		}
@@ -1516,8 +1516,11 @@ class phodevi_gpu extends phodevi_device_interface
 			$info = str_replace(' FB', '', pts_file_io::file_get_contents('/sys/class/graphics/fb0/name'));
 		}
 
-		// Happens with Intel Iris Gallium3D
-		$info = str_replace('Mesa ', ' ', $info);
+		if(!empty($info))
+		{
+			// Happens with Intel Iris Gallium3D
+			$info = str_replace('Mesa ', ' ', $info);
+		}
 		/*if(empty($info))
 		{
 			$info = 'Unknown';

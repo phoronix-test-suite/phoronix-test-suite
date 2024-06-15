@@ -270,7 +270,7 @@ class phodevi_memory extends phodevi_device_interface
 					// Cleanup/shorten strings like KHX2133C13S4/4G
 					$mem_part = substr($mem_part, 0, $x);
 				}
-				if(isset($mem_part[2]) && stripos($mem_part, 'part') === false && stripos($mem_part, 'module') === false && stripos($mem_part, 'dimm') === false && substr($mem_part, 0, 2) != '0x' && !isset($mem_part[24]) && pts_strings::is_alnum(str_replace(array('-', ' '), '', $mem_part)))
+				if(isset($mem_part[2]) && stripos($mem_part, 'part') === false && stripos($mem_part, 'module') === false && stripos($mem_part, 'dimm') === false && substr($mem_part, 0, 2) != '0x' && !isset($mem_part[24]) && pts_strings::is_alnum(str_replace(array('-', ' ', '.'), '', $mem_part)))
 				{
 					$product_string .= ' ' . $mem_part;
 				}
@@ -318,7 +318,7 @@ class phodevi_memory extends phodevi_device_interface
 			}
 		}
 
-		return trim(str_replace(array('Unknown ', 'Undefined'), '', $mem_string));
+		return empty($mem_string) ? '' : trim(str_replace(array('Unknown ', 'Undefined'), '', $mem_string));
 	}
 	public static function memory_capacity()
 	{

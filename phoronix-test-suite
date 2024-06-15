@@ -213,7 +213,7 @@ elif [ -x /usr/pkg/bin/pkgin ]
 then
 	# NetBSD
 	echo "The command to likely run for your operating system is: "
-	echo "# pkgin php php-zip"
+	echo "# pkgin install php php-zip"
 	echo " "
 elif [ -x /usr/sbin/pkg_add ]
 then
