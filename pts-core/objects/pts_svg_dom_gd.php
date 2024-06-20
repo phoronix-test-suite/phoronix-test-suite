@@ -140,6 +140,11 @@ class pts_svg_dom_gd
 			if(extension_loaded('gd') && function_exists('imagettftext') && $width > 1 && $height > 1)
 			{
 				$gd = imagecreatetruecolor($width, $height);
+				# Make the background transparent; otherwise it's black
+				imagesavealpha($gd, true);
+				$alp_clr = imagecolorallocatealpha($gd, 0, 0, 0, 127);
+				imagefill($gd, 0, 0, $alp_clr);
+
 				if(function_exists('imageresolution'))
 				{
 					imageresolution($gd, 200);
