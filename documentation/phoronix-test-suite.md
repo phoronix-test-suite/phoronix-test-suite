@@ -287,10 +287,10 @@ This option can be used for validating a Phoronix Test Suite test suite as being
 This option is used if you wish to automatically attempt to sort the results by their result identifier string. Alternatively, if using the environment variable "SORT_BY" other sort modes can be used, such as SORT_BY=date / SORT_BY=date-desc for sorting by the test run-time/date.
 
 #### compare-results-to-baseline  [Test Result] [Test Result]
-This option will allows you to specify a result as a baseline (first parameter) and a second result file (second parameter) that will offer some analysis for showing how the second result compares to the first in matching tests.
+This option allows you to specify a result as a baseline (first parameter) and a second result file (second parameter) that will offer some analysis for showing how the second result compares to the first in matching tests.
 
 #### compare-results-two-way  [Test Result]
-This option will allows you to specify a result file and from there to compare two individual runs within that result file for looking at wins/losses and other metrics in a head-to-head type comparison.
+This option allows you to specify a result file and from there to compare two individual runs within that result file for looking at wins/losses and other metrics in a head-to-head type comparison.
 
 #### edit-result-file  [Test Result]
 This option is used if you wish to edit the title and description of an existing result file.
