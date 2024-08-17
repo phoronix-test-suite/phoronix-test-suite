@@ -343,7 +343,7 @@ This option will display a short list of possible Phoronix Test Suite commands.
 This option is used for testing the distribution-specific dependency handler for external dependencies.
 
 #### debug-render-test
-This option is used during the development of the Phoronix Test Suite software for testing of the result and graph rendering code-paths This option will download a large number of reference test results from LinuxBenchmarking.com.
+This option is used during the development of the Phoronix Test Suite software for testing of the result and graph rendering code paths. This option will download a large number of reference test results from LinuxBenchmarking.com.
 
 #### debug-self-test
 This option is used during the development of the Phoronix Test Suite software for testing of internal interfaces, commands, and other common code-paths. The produced numbers should only be comparable for the same version of the Phoronix Test Suite, on the same hardware/software system, conducted on the same day of testing. This isn't intended as any scientific benchmark but simply to stress common PHP code-paths and looking for hot areas to optimize, etc.
