@@ -346,7 +346,7 @@ This option is used for testing the distribution-specific dependency handler for
 This option is used during the development of the Phoronix Test Suite software for testing of the result and graph rendering code paths. This option will download a large number of reference test results from LinuxBenchmarking.com.
 
 #### debug-self-test
-This option is used during the development of the Phoronix Test Suite software for testing of internal interfaces, commands, and other common code-paths. The produced numbers should only be comparable for the same version of the Phoronix Test Suite, on the same hardware/software system, conducted on the same day of testing. This isn't intended as any scientific benchmark but simply to stress common PHP code-paths and looking for hot areas to optimize, etc.
+This option is used during the development of the Phoronix Test Suite software for testing of internal interfaces, commands, and other common code paths. The produced numbers should only be comparable for the same version of the Phoronix Test Suite, on the same hardware/software system, conducted on the same day of testing. This isn't intended as any scientific benchmark but simply to stress common PHP code paths and looking for hot areas to optimize, etc.
 
 #### help
 This option will display a list of available Phoronix Test Suite commands and possible parameter types.
@@ -372,7 +372,7 @@ This option is used if you wish to analyze a result file by seeing various stati
 This option is used if you wish to analyze a result file to see which runs produced the most wins/losses of those result identifiers in the saved file.
 
 #### workload-topology  [Test Result]
-This option will read a saved test results file and print the test profiles contained within and their arrangement within different test suites for getting an idea as to the workload topology/make-up / logical groupings of the benchmarks being run.
+This option will read a saved test results file and print the test profiles contained within and their arrangement within different test suites for getting an idea as to the workload topology / make-up / logical groupings of the benchmarks being run.
 
 
 ## Modules
@@ -397,13 +397,13 @@ This option can be used for easily removing a module from the AutoLoadModules li
 
 ## Debugging
 #### check-tests  [Test]
-This option will perform a check on one or more test profiles to determine if there have been any vendor changes to the filename, filesize, url location, md5 and sha256 checksums.
+This option will perform a check on one or more test profiles to determine if there have been any vendor changes to the filename, filesize, URL location, MD5 and SHA256 checksums.
 
 #### diagnostics
 This option will print information that is useful to developers when debugging problems with the Phoronix Test Suite and/or test profiles and test suites.
 
 #### dump-file-info
-This option will dump the MD5 / SHA256 hashes and file size for a given file.
+This option will dump the MD5 / SHA256 checksums and file size for a given file.
 
 #### dump-openbenchmarking-indexes
 This option is used for dumping the parsed output of OpenBenchmarking.org index files (metadata).
@@ -429,7 +429,7 @@ This option will list all available test profiles that are available from the en
 
 ## User Configuration
 #### enterprise-setup
-This option can be run by enterprise users immediately after package installation or as part of an in-house setup script. Running this command will ensure the phoronix-test-suite program is never interrupted on new runs to accept user agreement changes and defaults the anonymous usage reporting to being disabled and other conservative defaults.
+This option can be run by enterprise users immediately after package installation or as part of an in-house setup script. Running this command will ensure the phoronix-test-suite program is never interrupted on new runs to accept user agreement changes. It also defaults the anonymous usage reporting to being disabled, along with other conservative settings.
 
 #### network-info
 This option will print information detected by the Phoronix Test Suite around the system's network configuration.
@@ -452,7 +452,7 @@ This option will print all of the official environment variables supported by th
 This option will read a saved test results file and output the raw result file run data to a CSV file. This raw (individual) result file output is intended for data analytic purposes where the result-file-to-csv is more end-user-ready.
 
 #### result-file-to-csv  [Test Result]
-This option will read a saved test results file and output the system hardware and software information along with the results to a CSV output. The CSV (Comma Separated Values) output can then be loaded into a spreadsheet for easy viewing. The outputted file appears in the user home directory or can otherwise be controlled via the OUTPUT_DIR and OUTPUT_FILE environment variables.
+This option will read a saved test results file and output the system hardware and software information along with the results to a CSV (Comma Separated Values) file. This file can then be loaded into a spreadsheet for easy viewing. The outputted file appears in the user home directory or can otherwise be controlled via the OUTPUT_DIR and OUTPUT_FILE environment variables.
 
 #### result-file-to-html  [Test Result]
 This option will read a saved test results file and output the system hardware and software information along with the results to pure HTML file. No external files are required for CSS/JavaScript or other assets. The graphs are rendered as inline SVG. This is a pure HTML-only representation of the results for emailing or other easy analysis outside of the Phoronix Test Suite. The outputted file appears in the user home directory or can otherwise be controlled via the OUTPUT_DIR and OUTPUT_FILE environment variables.
@@ -487,7 +487,7 @@ The following list is the modules included with the Phoronix Test Suite that are
 ---
 
 ### Backup Creation + Restore
-This is a module for creating backups of the Phoronix Test Suite / Phoromatic and allows for restoring of created backups. The backup will be in ZIP or TAR format. If only a path is specified, the file-name will be auto-generated with a current time-stamp.
+This is a module for creating backups of the Phoronix Test Suite / Phoromatic and allows for restoring of created backups. The backup will be in ZIP or TAR format. If only a path is specified, the filename will be auto-generated with a current timestamp.
 
 **phoronix-test-suite backup.create**
 
