@@ -296,7 +296,7 @@ This option allows you to specify a result file and from there to compare two in
 This option is used if you wish to edit the title and description of an existing result file.
 
 #### extract-from-result-file  [Test Result]
-This option will extract a single set of test results from a saved results file that contains multiple test results that have been merged. The user is the prompted to specify a new result file name and select which result identifier to extract.
+This option will extract a single set of test results from a saved results file that contains multiple test results that have been merged. The user is then prompted to specify a new result file name and select which result identifier to extract.
 
 #### keep-results-in-result-file  [Test Result]
 This option is the inverse of the remove-results-from-result-file sub-command. If you wish to remove all results but those listed from a given result file, this option can be used. The user must specify a saved results file and then they will be prompted to provide a string to search for in keeping those results in that given result file but removing all other data.
