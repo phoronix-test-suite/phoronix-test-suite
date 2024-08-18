@@ -78,11 +78,12 @@ class sys_power extends phodevi_sensor
 		}
 		if(pts_client::executable_in_path('wattsup'))
 		{
-			$wattsup = self::watts_up_power_meter();
+			$meters = false;
+			$wattsup = self::watts_up_power_meter($meters);
 
 			if($wattsup > 0.5 && is_numeric($wattsup))
 			{
-				self::$wattsup_meter = true;
+				self::$wattsup_meter = $meters;
 				return true;
 			}
 		}
@@ -161,7 +162,7 @@ class sys_power extends phodevi_sensor
 		}
 		else if(self::$wattsup_meter)
 		{
-			return self::watts_up_power_meter();
+			return self::watts_up_power_meter(self::$wattsup_meter);
 		}
 		else if(self::$tegra_power)
 		{
@@ -208,23 +209,44 @@ class sys_power extends phodevi_sensor
 			return -1;
 		}
 	}
-	private static function watts_up_power_meter()
+	private static function watts_up_power_meter(&$meters = false)
 	{
-		// Sometimes Wattsup have read failures returning 0....
-		for($i = 0; $i < 3; $i++)
+		if($meters == false)
 		{
-			$output = trim(shell_exec('wattsup -c 1 ttyUSB0 watts 2>&1'));
-			$output = explode(PHP_EOL, $output);
-
-			do
+			$meters = pts_file_io::glob('/dev/ttyUSB*');
+			foreach($meters as &$meter)
 			{
-				$value = array_pop($output);
+				$meter = basename($meter);
 			}
-			while(!is_numeric($value) && count($output) > 0);
+		}
 
-			if(is_numeric($value) && $value > 0)
+		$value = 0;
+		// Allow reading multiple meters
+		foreach($meters as $meter)
+		{
+			// Sometimes Wattsup have read failures returning 0....
+			// try reading up to 3 times...
+			for($i = 0; $i < 3; $i++)
 			{
-				break;
+				$output = trim(shell_exec('wattsup -c 1 ' . $meter . ' watts 2>&1'));
+				$output = explode(PHP_EOL, $output);
+
+				do
+				{
+					$this_value = array_pop($output);
+				}
+				while(!is_numeric($this_value) && count($output) > 0);
+
+				if(is_numeric($this_value) && $this_value > 0)
+				{
+					$value += $this_value;
+					break;
+				}
+			}
+			if(!is_numeric($this_value) || $this_value <= 0)
+			{
+				// Avoid case of one meter failing to read but other one reporting....
+				return -1;
 			}
 		}
 

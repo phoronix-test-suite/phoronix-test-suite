@@ -33,7 +33,7 @@ class gpu_power extends phodevi_sensor
 	public function read_sensor()
 	{
 		$gpu_power = -1;
-		$en1_input_files = glob('/sys/class/drm/card0/device/hwmon/hwmon*/energy1_input');
+		$en1_input_files = glob('/sys/class/drm/card*/device/hwmon/hwmon*/energy1_input');
 		if(($nvidia_smi = pts_client::executable_in_path('nvidia-smi')))
 		{
 			$smi_output = shell_exec(escapeshellarg($nvidia_smi) . ' -q -d POWER');
@@ -70,13 +70,13 @@ class gpu_power extends phodevi_sensor
 				}
 			}
 		}
-		else if($power1_average = phodevi_linux_parser::read_sysfs_node('/sys/class/drm/card0/device/hwmon/hwmon*/power1_average', 'POSITIVE_NUMERIC'))
+		else if($power1_average = phodevi_linux_parser::read_sysfs_node('/sys/class/drm/card*/device/hwmon/hwmon*/power1_average', 'POSITIVE_NUMERIC'))
 		{
 			// AMDGPU path
 			if(is_numeric($power1_average))
 			{
 				$power1_average = $power1_average / 1000000;
-				if($power1_average > 1 && $power1_average < 600)
+				if($power1_average > 0 && $power1_average < 900)
 				{
 					self::$unit = 'Watts';
 					$gpu_power = $power1_average;

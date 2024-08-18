@@ -341,8 +341,11 @@ class phodevi_gpu extends phodevi_device_interface
 			// First try reading "current" screen 0 as it should better handle multiple monitors, etc.
 			// e.g. Screen 0: minimum 1 x 1, current 2560 x 1341, maximum 8192 x 8192
 			$info = shell_exec('xrandr 2>&1');
-			$info = substr($info, strpos($info, 'current ') + 8);
-			$info = explode(' x ', trim(substr($info, 0, strpos($info, ','))));
+			if(!empty($info))
+			{
+				$info = substr($info, strpos($info, 'current ') + 8);
+				$info = explode(' x ', trim(substr($info, 0, strpos($info, ','))));
+			}
 
 			if(count($info) == 2 && is_numeric($info[0]) && is_numeric($info[1]))
 			{

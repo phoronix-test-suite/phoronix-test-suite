@@ -1406,16 +1406,6 @@ class phodevi_system extends phodevi_device_interface
 				$desktop_version = pts_strings::last_in_string(trim(shell_exec('gnome-session --version 2> /dev/null')));
 			}
 		}
-		else if(pts_client::is_process_running('unity-2d-panel') || $desktop_session == 'ubuntu-2d')
-		{
-			// Canonical / Ubuntu Unity 2D Desktop
-			$desktop_environment = 'Unity 2D';
-
-			if(pts_client::executable_in_path('unity'))
-			{
-				$desktop_version = pts_strings::last_in_string(trim(shell_exec('unity --version 2> /dev/null')));
-			}
-		}
 		else if(pts_client::is_process_running('unity-panel-service') || $desktop_session == 'ubuntu')
 		{
 			// Canonical / Ubuntu Unity Desktop
@@ -1514,12 +1504,6 @@ class phodevi_system extends phodevi_device_interface
 			$desktop_environment = 'LXDE';
 			$desktop_version = $version;
 		}
-		else if(pts_client::is_process_running('lumina-desktop'))
-		{
-			// Lumina Desktop Environment
-			$desktop_environment = 'Lumina';
-			$desktop_version = str_replace('"', '', trim(shell_exec('lumina-desktop --version 2>&1')));
-		}
 		else if(pts_client::is_process_running('xfce4-session') || pts_client::is_process_running('xfce-mcs-manager') || $desktop_session == 'xfce')
 		{
 			// Xfce 4.x
@@ -1531,12 +1515,6 @@ class phodevi_system extends phodevi_device_interface
 				$xfce_output = substr($xfce_output, strpos($xfce_output, ' ', $open) + 1);
 				$desktop_version = substr($xfce_output, 0, strpos($xfce_output, ')'));
 			}
-		}
-		else if(pts_client::is_process_running('sugar-session'))
-		{
-			// Sugar Desktop Environment (namely for OLPC)
-			$desktop_environment = 'Sugar';
-			$desktop_version = null; // TODO: where can the Sugar version be figured out?
 		}
 		else if(pts_client::is_process_running('openbox'))
 		{
@@ -1564,16 +1542,6 @@ class phodevi_system extends phodevi_device_interface
 			$desktop_environment = 'Enlightenment';
 			$desktop_version = null; // No known -v / --version command on any Enlightenment component
 		}
-		else if(pts_client::is_process_running('consort-panel'))
-		{
-			$desktop_environment = 'Consort';
-			$desktop_version = null; // TODO: Haven't tested Consort Desktop yet
-		}
-		else if(pts_client::is_process_running('razor-desktop'))
-		{
-			$desktop_environment = 'Razor-qt';
-			$desktop_version = null; // TODO: Figure out how to determine razor version
-		}
 		else if(pts_client::is_process_running('icewm'))
 		{
 			$desktop_environment = 'IceWM';
@@ -1584,6 +1552,15 @@ class phodevi_system extends phodevi_device_interface
 			// Budgie
 			$desktop_environment = 'Budgie';
 			$desktop_version = pts_strings::last_in_string(trim(shell_exec('budgie-desktop --version 2> /dev/null | grep desktop')));
+		}
+		else if(pts_client::is_process_running('cosmic-comp') && pts_client::is_process_running('cosmic-panel'))
+		{
+			// Pop OS COSMIC
+			$desktop_environment = 'COSMIC';
+			if(pts_client::executable_in_path('cosmic-launcher'))
+			{
+				$desktop_version = pts_strings::last_in_string(trim(shell_exec('cosmic-launcher -V 2> /dev/null')));
+			}
 		}
 
 		if(!empty($desktop_environment))

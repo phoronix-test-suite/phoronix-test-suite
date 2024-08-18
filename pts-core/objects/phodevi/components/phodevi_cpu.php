@@ -817,6 +817,9 @@ class phodevi_cpu extends phodevi_device_interface
 						case '0xd84':
 							$new_info .= ' Neoverse-V3';
 							break;
+						case '0xd85':
+							$new_info .= ' Cortex-X925';
+							break;
 						case '0xd88':
 							$new_info .= ' Cortex-A520E';
 							break;
