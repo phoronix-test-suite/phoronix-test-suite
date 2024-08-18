@@ -23,7 +23,7 @@
 class dump_file_info implements pts_option_interface
 {
 	const doc_section = 'Debugging';
-	const doc_description = 'This option will dump the MD5 / SHA256 hashes and file size for a given file.';
+	const doc_description = 'This option will dump the MD5 / SHA256 checksums and file size for a given file.';
 	public static function run($r)
 	{
 		pts_client::$display->generic_heading('File Information');

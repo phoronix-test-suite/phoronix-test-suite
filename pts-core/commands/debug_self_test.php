@@ -23,7 +23,7 @@
 class debug_self_test implements pts_option_interface
 {
 	const doc_section = 'Other';
-	const doc_description = 'This option is used during the development of the Phoronix Test Suite software for testing of internal interfaces, commands, and other common code-paths. The produced numbers should only be comparable for the same version of the Phoronix Test Suite, on the same hardware/software system, conducted on the same day of testing. This isn\'t intended as any scientific benchmark but simply to stress common PHP code-paths and looking for hot areas to optimize, etc.';
+	const doc_description = 'This option is used during the development of the Phoronix Test Suite software for testing of internal interfaces, commands, and other common code paths. The produced numbers should only be comparable for the same version of the Phoronix Test Suite, on the same hardware/software system, conducted on the same day of testing. This isn\'t intended as any scientific benchmark but simply to stress common PHP code paths and looking for hot areas to optimize, etc.';
 
 	public static function run($r)
 	{

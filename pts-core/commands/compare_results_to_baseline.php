@@ -23,7 +23,7 @@
 class compare_results_to_baseline implements pts_option_interface
 {
 	const doc_section = 'Result Management';
-	const doc_description = 'This option will allows you to specify a result as a baseline (first parameter) and a second result file (second parameter) that will offer some analysis for showing how the second result compares to the first in matching tests.';
+	const doc_description = 'This option allows you to specify a result as a baseline (first parameter) and a second result file (second parameter) that will offer some analysis for showing how the second result compares to the first in matching tests.';
 
 	public static function argument_checks()
 	{

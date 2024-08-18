@@ -23,7 +23,7 @@
 class debug_render_test implements pts_option_interface
 {
 	const doc_section = 'Other';
-	const doc_description = 'This option is used during the development of the Phoronix Test Suite software for testing of the result and graph rendering code-paths This option will download a large number of reference test results from LinuxBenchmarking.com.';
+	const doc_description = 'This option is used during the development of the Phoronix Test Suite software for testing of the result and graph rendering code paths. This option will download a large number of reference test results from LinuxBenchmarking.com.';
 
 	public static function run($r)
 	{

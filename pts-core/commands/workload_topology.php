@@ -23,7 +23,7 @@
 class workload_topology implements pts_option_interface
 {
 	const doc_section = 'Result Analysis';
-	const doc_description = 'This option will read a saved test results file and print the test profiles contained within and their arrangement within different test suites for getting an idea as to the workload topology/make-up / logical groupings of the benchmarks being run.';
+	const doc_description = 'This option will read a saved test results file and print the test profiles contained within and their arrangement within different test suites for getting an idea as to the workload topology / make-up / logical groupings of the benchmarks being run.';
 
 	public static function argument_checks()
 	{

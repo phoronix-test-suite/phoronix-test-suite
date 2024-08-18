@@ -24,7 +24,7 @@ class backup extends pts_module_interface
 {
 	const module_name = 'Backup Creation + Restore';
 	const module_version = '1.0.0';
-	const module_description = 'This is a module for creating backups of the Phoronix Test Suite / Phoromatic and allows for restoring of created backups. The backup will be in ZIP or TAR format. If only a path is specified, the file-name will be auto-generated with a current time-stamp.';
+	const module_description = 'This is a module for creating backups of the Phoronix Test Suite / Phoromatic and allows for restoring of created backups. The backup will be in ZIP or TAR format. If only a path is specified, the filename will be auto-generated with a current timestamp.';
 	const module_author = 'Phoronix Media';
 
 	public static function user_commands()

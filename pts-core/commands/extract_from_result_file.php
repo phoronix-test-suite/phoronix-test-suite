@@ -23,7 +23,7 @@
 class extract_from_result_file implements pts_option_interface
 {
 	const doc_section = 'Result Management';
-	const doc_description = 'This option will extract a single set of test results from a saved results file that contains multiple test results that have been merged. The user is the prompted to specify a new result file name and select which result identifier to extract.';
+	const doc_description = 'This option will extract a single set of test results from a saved results file that contains multiple test results that have been merged. The user is then prompted to specify a new result file name and select which result identifier to extract.';
 
 	public static function argument_checks()
 	{

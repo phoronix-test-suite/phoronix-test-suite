@@ -23,7 +23,7 @@
 class enterprise_setup implements pts_option_interface
 {
 	const doc_section = 'User Configuration';
-	const doc_description = 'This option can be run by enterprise users immediately after package installation or as part of an in-house setup script. Running this command will ensure the phoronix-test-suite program is never interrupted on new runs to accept user agreement changes and defaults the anonymous usage reporting to being disabled and other conservative defaults.';
+	const doc_description = 'This option can be run by enterprise users immediately after package installation or as part of an in-house setup script. Running this command will ensure the phoronix-test-suite program is never interrupted on new runs to accept user agreement changes. It also defaults the anonymous usage reporting to being disabled, along with other conservative settings.';
 
 	public static function run($r)
 	{
