@@ -132,11 +132,35 @@ class pts_result_file
 			$this->result_objects[$i] = clone $this->result_objects[$i];
 		}
 	}
-	public function get_relation_map($parent = null)
+	public function get_relation_map($parent = null, $relations_recurse = true)
 	{
 		if($parent)
 		{
-			return isset($this->ro_relation_map[$parent]) ? $this->ro_relation_map[$parent] : array();
+			if(!$relations_recurse)
+			{
+				return isset($this->ro_relation_map[$parent]) ? $this->ro_relation_map[$parent] : array();
+			}
+			else
+			{
+				$children = array();
+				if(isset($this->ro_relation_map[$parent]))
+				{
+					$children = $this->ro_relation_map[$parent];
+					foreach($children as $child)
+					{
+						$sub_child = $this->get_relation_map($child, true);
+						if(!empty($sub_child))
+						{
+							foreach($sub_child as $sc)
+							{
+								$children[] = $sc;
+							}
+						}
+					}
+				}
+
+				return $children;
+			}
 		}
 		else
 		{
@@ -440,12 +464,12 @@ class pts_result_file
 	}
 	public function get_test_count()
 	{
-		return count($this->get_result_objects());
+		return count($this->result_objects);
 	}
 	public function get_qualified_test_count()
 	{
 		$q_count = 0;
-		foreach($this->get_result_objects() as $ro)
+		foreach($this->result_objects as &$ro)
 		{
 			if($ro->test_profile->get_identifier() != null)
 			{
@@ -466,7 +490,7 @@ class pts_result_file
 	}
 	public function has_missing_or_incomplete_data($run_identifier_to_check)
 	{
-		foreach($this->get_result_objects() as $result_object)
+		foreach($this->result_objects as &$result_object)
 		{
 			if(!in_array($run_identifier_to_check, $result_object->test_result_buffer->get_identifiers()) || $result_object->test_result_buffer->get_result_from_identifier($run_identifier_to_check) == '')
 			{
@@ -485,7 +509,7 @@ class pts_result_file
 	{
 		$object_hashes = array();
 
-		foreach($this->get_result_objects() as $result_object)
+		foreach($this->result_objects as &$result_object)
 		{
 			$object_hashes[] = $result_object->get_comparison_hash();
 		}
@@ -580,7 +604,7 @@ class pts_result_file
 	{
 		$test_profiles = array();
 
-		foreach($this->get_result_objects() as $object)
+		foreach($this->result_objects as $object)
 		{
 			$test_profiles[] = $object->test_profile;
 		}
@@ -633,6 +657,13 @@ class pts_result_file
 			}
 		}
 	}
+	public function normalize_results($normalize_against = false)
+	{
+		foreach($this->result_objects as $i => &$ro)
+		{
+			$ro->normalize_buffer_values($normalize_against);
+		}
+	}
 	public function reduce_precision()
 	{
 		foreach($this->result_objects as $i => &$ro)
@@ -648,6 +679,10 @@ class pts_result_file
 			return true;
 		}
 		return false;
+	}
+	public function get_result_object_keys()
+	{
+		return array_keys($this->result_objects);
 	}
 	public function get_result_object_by_hash($h)
 	{
@@ -931,7 +966,7 @@ class pts_result_file
 		}
 
 		// Write the results
-		foreach($this->get_result_objects() as $result_object)
+		foreach($this->result_objects as $result_object)
 		{
 			$buffer_items = $result_object->test_result_buffer->get_buffer_items();
 

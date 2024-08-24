@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2018 - 2022, Phoronix Media
-	Copyright (C) 2018 - 2022, Michael Larabel
+	Copyright (C) 2018 - 2024, Phoronix Media
+	Copyright (C) 2018 - 2024, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -32,12 +32,14 @@ class pts_result_viewer_embed
 	protected $show_test_metadata_helper = true;
 	protected $include_page_print_only_helpers = true;
 	protected $show_result_sidebar = false;
+	protected $print_html_immediately = false;
 
 	public function __construct(&$result_file, $public_id = null)
 	{
 		$this->result_file = &$result_file;
 		$this->result_public_id = $public_id;
 		$this->show_result_sidebar = !defined('PHOROMATIC_SERVER_WEB_INTERFACE');
+		$this->print_html_immediately = defined('OPENBENCHMARKING_BUILD') || (defined('RESULT_VIEWER_VERSION') && RESULT_VIEWER_VERSION > 2);
 
 		if(isset($_SERVER['REQUEST_URI']) && !empty($_SERVER['REQUEST_URI']))
 		{
@@ -116,6 +118,17 @@ class pts_result_viewer_embed
 
 		return $html;
 	}
+	public function print_handler(&$html, $str)
+	{
+		if($this->print_html_immediately)
+		{
+			echo $str;
+		}
+		else
+		{
+			$html .= $str;
+		}
+	}
 	public function get_html()
 	{
 		$PAGE = null;
@@ -125,29 +138,29 @@ class pts_result_viewer_embed
 		$extra_attributes = null;
 		$html_options = self::get_html_options_markup($result_file, $_REQUEST, $this->result_public_id, $this->can_delete_results);
 		self::process_request_to_attributes($_REQUEST, $result_file, $extra_attributes);
-		$PAGE .= self::get_html_sort_bar($result_file, $_REQUEST);
-		$PAGE .= '<h1 id="result_file_title" placeholder="Title">' . pts_strings::sanitize($result_file->get_title()) . '</h1>';
-		$PAGE .= '<p id="result_file_desc" placeholder="Description">' . str_replace(PHP_EOL, '<br />', pts_strings::sanitize($result_file->get_description())) . '</p>';
-		$PAGE .= '<div id="result-settings">';
+		$this->print_handler($PAGE, self::get_html_sort_bar($result_file, $_REQUEST));
+		$this->print_handler($PAGE, '<h1 id="result_file_title" placeholder="Title">' . pts_strings::sanitize($result_file->get_title()) . '</h1>');
+		$this->print_handler($PAGE, '<p id="result_file_desc" placeholder="Description">' . str_replace(PHP_EOL, '<br />', pts_strings::sanitize($result_file->get_description())) . '</p>');
+		$this->print_handler($PAGE, '<div id="result-settings">');
 		if($this->can_modify_results)
 		{
-			$PAGE .= ' <input type="submit" id="save_result_file_meta_button" value="Save" onclick="javascript:save_result_file_meta(\'' . $this->result_public_id . '\'); return false;" style="display: none;">';
-			$PAGE .= ' <input type="submit" id="edit_result_file_meta_button" value="Edit" onclick="javascript:edit_result_file_meta(); return false;">';
+			$this->print_handler($PAGE, ' <input type="submit" id="save_result_file_meta_button" value="Save" onclick="javascript:save_result_file_meta(\'' . $this->result_public_id . '\'); return false;" style="display: none;">');
+			$this->print_handler($PAGE, ' <input type="submit" id="edit_result_file_meta_button" value="Edit" onclick="javascript:edit_result_file_meta(); return false;">');
 		}
 		if($this->can_delete_results && !defined('PHOROMATIC_SERVER'))
 		{
-			$PAGE .= ' <input type="submit" value="Delete Result File" onclick="javascript:delete_result_file(\'' . $this->result_public_id . '\'); return false;">';
+			$this->print_handler($PAGE, ' <input type="submit" value="Delete Result File" onclick="javascript:delete_result_file(\'' . $this->result_public_id . '\'); return false;">');
 		}
-		$PAGE .= $this->post_description_message;
-		$PAGE .= '<div style="text-align: center;">Jump To <a href="#table">Table</a> - <a href="#results">Results</a></div>';
-		$PAGE .= '<hr /><div style="font-size: 12pt;">' . $html_options . '</div><hr style="clear: both;" />';
-		$PAGE .= self::process_helper_html($_REQUEST, $result_file, $extra_attributes, $this->can_modify_results, $this->can_delete_results);
-		$PAGE .= '</div>';
+		$this->print_handler($PAGE, $this->post_description_message);
+		$this->print_handler($PAGE, '<div style="text-align: center;">Jump To <a href="#table">Table</a> - <a href="#results">Results</a></div>');
+		$this->print_handler($PAGE, '<hr /><div style="font-size: 12pt;">' . $html_options . '</div><hr style="clear: both;" />');
+		$this->print_handler($PAGE, self::process_helper_html($_REQUEST, $result_file, $extra_attributes, $this->can_modify_results, $this->can_delete_results));
+		$this->print_handler($PAGE, '</div>');
 		if($this->include_page_print_only_helpers)
 		{
-			$PAGE .= '<div class="print_notes">' . pts_result_file_output::result_file_to_system_html($result_file) . '</div>';
+			$this->print_handler($PAGE, '<div class="print_notes">' . pts_result_file_output::result_file_to_system_html($result_file) . '</div>');
 		}
-		$PAGE .= '<div id="result_overview_area">';
+		$this->print_handler($PAGE, '<div id="result_overview_area">');
 		$intent = -1;
 		if($result_file->get_system_count() == 1 || ($intent = pts_result_file_analyzer::analyze_result_file_intent($result_file, $intent, true)))
 		{
@@ -159,8 +172,8 @@ class pts_result_viewer_embed
 		}
 
 		$rendered = pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes);
-		$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object" id="result_file_system_table">' . $rendered . '</p>';
-		$PAGE .= $this->graph_export_handler($rendered, $result_file);
+		$this->print_handler($PAGE, '<p style="text-align: center; overflow: auto;" class="result_object" id="result_file_system_table">' . $rendered . '</p>');
+		$this->print_handler($PAGE, $this->graph_export_handler($rendered, $result_file));
 
 		if($result_file->get_system_count() == 2)
 		{
@@ -169,8 +182,8 @@ class pts_result_viewer_embed
 			if($graph->renderGraph())
 			{
 				$rendered = pts_render::render_graph_inline_embed($graph, $result_file, $extra_attributes);
-				$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object">' . $rendered . '</p>';
-				$PAGE .= $this->graph_export_handler($rendered, $result_file);
+				$this->print_handler($PAGE, '<p style="text-align: center; overflow: auto;" class="result_object">' . $rendered . '</p>');
+				$this->print_handler($PAGE, $this->graph_export_handler($rendered, $result_file));
 			}
 		}
 		else if($result_file->get_system_count() > 12 && false) // TODO determine when this is sane enough to enable
@@ -180,8 +193,8 @@ class pts_result_viewer_embed
 			if($graph->renderGraph())
 			{
 				$rendered = pts_render::render_graph_inline_embed($graph, $result_file, $extra_attributes);
-				$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object">' . $rendered . '</p>';
-				$PAGE .= $this->graph_export_handler($rendered, $result_file);
+				$this->print_handler($PAGE, '<p style="text-align: center; overflow: auto;" class="result_object">' . $rendered . '</p>');
+				$this->print_handler($PAGE, $this->graph_export_handler($rendered, $result_file));
 			}
 		}
 		else if(!$result_file->is_multi_way_comparison())
@@ -193,26 +206,26 @@ class pts_result_viewer_embed
 				if($graph->renderGraph())
 				{
 					$rendered = pts_render::render_graph_inline_embed($graph, $result_file, $extra_attributes);
-					$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object">' . $rendered . '</p>';
-					$PAGE .= $this->graph_export_handler($rendered, $result_file);
+					$this->print_handler($PAGE, '<p style="text-align: center; overflow: auto;" class="result_object">' . $rendered . '</p>');
+					$this->print_handler($PAGE, $this->graph_export_handler($rendered, $result_file));
 				}
 			}
 		}
-		//$PAGE .= '<a id="table"></a>';
+		//$this->print_handler($PAGE, '<a id="table"></a>');
 		if(!$result_file->is_multi_way_comparison() && $this->show_html_table_when_relevant)
 		{
-			$PAGE .= '<div class="pts_result_table">' . pts_result_file_output::result_file_to_detailed_html_table($result_file, 'grid', $extra_attributes, self::check_request_for_var($_REQUEST, 'sdt')) . '</div>';
+			$this->print_handler($PAGE, '<div class="pts_result_table">' . pts_result_file_output::result_file_to_detailed_html_table($result_file, 'grid', $extra_attributes, self::check_request_for_var($_REQUEST, 'sdt')) . '</div>');
 		}
 		else if($result_file->get_test_count() > 3)
 		{
 			$intent = null;
 			$table = new pts_ResultFileTable($result_file, $intent);
 			$rendered = pts_render::render_graph_inline_embed($table, $result_file, $extra_attributes);
-			$PAGE .= '<p style="text-align: center; overflow: auto;" class="result_object">' . $rendered . '</p>';
-			$PAGE .= $this->graph_export_handler($rendered, $result_file);
+			$this->print_handler($PAGE, '<p style="text-align: center; overflow: auto;" class="result_object">' . $rendered . '</p>');
+			$this->print_handler($PAGE, $this->graph_export_handler($rendered, $result_file));
 		}
-		$PAGE .= '</div>';
-		$PAGE .= '<a id="table"></a><div id="results">';
+		$this->print_handler($PAGE, '</div>');
+		$this->print_handler($PAGE, '<a id="table"></a><div id="results">');
 		$prev_title = null;
 
 		$identifier_mapping_to_cores = array();
@@ -284,37 +297,38 @@ class pts_result_viewer_embed
 		//
 		$sidebar_list = array();
 		$skip_ros = array();
-		foreach($result_file->get_result_objects() as $i => $result_object)
+		foreach($result_file->get_result_object_keys() as $i)
 		{
+			$result_object = $result_file->get_result_object_by_hash($i);
 			//
 			// RENDER TEST AND ANCHOR
 			//
-			if(in_array($i, $skip_ros))
+			if(in_array($i, $skip_ros) || $result_object == false)
 			{
 				continue;
 			}
 			$ro = clone $result_object;
 			$res_desc_shortened = $result_object->get_arguments_description_shortened(false);
 			$res = pts_render::render_graph_inline_embed($ro, $result_file, $extra_attributes);
-			$PAGE .= '<section id="r-' . $i . '" style="text-align: center;">';
+			$this->print_handler($PAGE, '<section id="r-' . $i . '" style="text-align: center;">');
 
 			//
 			// DISPLAY TEST PORIFLE METADATA HELPER
 			//
 			if($this->show_test_metadata_helper && $result_object->test_profile->get_title() != $prev_title)
 			{
-				$PAGE .= '<h2>' . $result_object->test_profile->get_title() . '</h2>';
+				$this->print_handler($PAGE, '<h2>' . $result_object->test_profile->get_title() . '</h2>');
 				if(is_file(PTS_INTERNAL_OB_CACHE . 'test-profiles/' . $result_object->test_profile->get_identifier() . '/test-definition.xml'))
 				{
 					$tp = new pts_test_profile(PTS_INTERNAL_OB_CACHE . 'test-profiles/' . $result_object->test_profile->get_identifier() . '/test-definition.xml');
-					$PAGE .= '<p class="mini">' . $tp->get_description() . ' <a href="https://openbenchmarking.org/test/' . $result_object->test_profile->get_identifier(false) . '"><em class="hide_on_print">Learn more via the OpenBenchmarking.org test page.</em></a></p>';
+					$this->print_handler($PAGE, '<p class="mini">' . $tp->get_description() . ' <a href="https://openbenchmarking.org/test/' . $result_object->test_profile->get_identifier(false) . '"><em class="hide_on_print">Learn more via the OpenBenchmarking.org test page.</em></a></p>');
 
 				/*	$suites_containing_test = pts_test_suites::suites_containing_test_profile($result_object->test_profile);
 					if(!empty($suites_containing_test))
 					{
 						foreach($suites_containing_test as $suite)
 						{
-							$PAGE .= $suite->get_title() . ' ' . $suite->get_identifier();
+							$this->print_handler($PAGE, $suite->get_title() . ' ' . $suite->get_identifier());
 						}
 					}  */
 				}
@@ -333,7 +347,7 @@ class pts_result_viewer_embed
 				$res_per_ram = false;
 				$res_variability = false;
 
-				if(!in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'BOX_PLOT')) && $result_object->test_result_buffer->detected_multi_sample_result() && $result_object->test_result_buffer->get_count() > 1)
+				if(self::check_request_for_var($_REQUEST, 'src') && !in_array($result_object->test_profile->get_display_format(), array('LINE_GRAPH', 'BOX_PLOT')) && $result_object->test_result_buffer->detected_multi_sample_result() && $result_object->test_result_buffer->get_count() > 1)
 				{
 					$extra_attributes['graph_render_type'] = 'HORIZONTAL_BOX_PLOT';
 					$ro = clone $result_object;
@@ -415,7 +429,7 @@ class pts_result_viewer_embed
 						}
 						$tabs[$dindex] = pts_render::render_graph_inline_embed($graph, $result_file, $extra_attributes);
 						$show_on_print[] = $dindex;
-						$result_file->remove_result_object_by_id($child_ro);
+						$result_file->remove_result_object_by_id($child_ro, false);
 						$skip_ros[] = $child_ro;
 					}
 				}
@@ -438,21 +452,20 @@ class pts_result_viewer_embed
 					case 0:
 						continue 2;
 					case 1:
-						$PAGE .= $res . '<br />';
-						$PAGE .= $this->graph_export_handler($res, $result_file, $ro);
+						$this->print_handler($PAGE, $res . '<br />' . $this->graph_export_handler($res, $result_file, $ro));
 						break;
 					default:
-						$PAGE .= '<div class="tabs">';
+						$this->print_handler($PAGE, '<div class="tabs">');
 						foreach($tabs as $title => &$rendered)
 						{
 							$tab_id = strtolower(str_replace(' ', '_', $title)) . '_' . $i;
-							$PAGE .= '<input type="radio" name="tabs_' . $i . '" id="' . $tab_id . '"' . ($title == 'Result' ? ' checked="checked"' : '') . '>
+							$this->print_handler($PAGE, '<input type="radio" name="tabs_' . $i . '" id="' . $tab_id . '"' . ($title == 'Result' ? ' checked="checked"' : '') . '>
 							  <label for="' . $tab_id . '">' . $title . '</label>
 							  <div class="tab' . (in_array($title, $show_on_print) ? ' print_notes' : '') . '">
 							    ' . $rendered . $this->graph_export_handler($rendered, $result_file, $ro) . '
-							  </div>';
+							  </div>');
 						}
-						$PAGE .= '</div>';
+						$this->print_handler($PAGE, '</div>');
 				}
 				if($this->show_result_sidebar)
 				{
@@ -463,7 +476,7 @@ class pts_result_viewer_embed
 			//
 			// DISPLAY LOGS
 			//
-			$PAGE .= $this->result_object_to_error_report($result_file, $result_object, $i);
+			$this->print_handler($PAGE, $this->result_object_to_error_report($result_file, $result_object, $i));
 			$button_area = null;
 
 			if($result_file->get_test_run_log_for_result($result_object, -2))
@@ -493,37 +506,37 @@ class pts_result_viewer_embed
 				if($result_object->get_annotation() == null)
 				{
 					$button_area .= ' <button onclick="javascript:display_add_annotation_for_result_object(\'' . $this->result_public_id . '\', \'' . $i . '\', this); return false;">Add Annotation</button> ';
-					$PAGE .= ' <div id="annotation_area_' . $i . '" style="display: none;"> <form action="#" onsubmit="javascript:add_annotation_for_result_object(\'' . $this->result_public_id . '\', \'' . $i . '\', this); return false;"><textarea rows="4" cols="50" placeholder="Add Annotation..." name="annotation"></textarea><br /><input type="submit" value="Add Annotation"></form></div>';
+					$this->print_handler($PAGE, ' <div id="annotation_area_' . $i . '" style="display: none;"> <form action="#" onsubmit="javascript:add_annotation_for_result_object(\'' . $this->result_public_id . '\', \'' . $i . '\', this); return false;"><textarea rows="4" cols="50" placeholder="Add Annotation..." name="annotation"></textarea><br /><input type="submit" value="Add Annotation"></form></div>');
 				}
 				else
 				{
-					$PAGE .= '<div id="update_annotation_' . $i . '" contentEditable="true">' . pts_strings::sanitize($result_object->get_annotation()) . '</div> <input type="submit" value="Update Annotation" onclick="javascript:update_annotation_for_result_object(\'' . $this->result_public_id . '\', \'' . $i . '\'); return false;">';
+					$this->print_handler($PAGE, '<div id="update_annotation_' . $i . '" contentEditable="true">' . pts_strings::sanitize($result_object->get_annotation()) . '</div> <input type="submit" value="Update Annotation" onclick="javascript:update_annotation_for_result_object(\'' . $this->result_public_id . '\', \'' . $i . '\'); return false;">');
 				}
 			}
 			else
 			{
-				$PAGE .= '<p class="mini">' . pts_strings::sanitize($result_object->get_annotation()) . '</p>';
+				$this->print_handler($PAGE, '<p class="mini">' . pts_strings::sanitize($result_object->get_annotation()) . '</p>');
 			}
 			if($button_area != null)
 			{
-				$PAGE .= '<p>' . $button_area . '</p>';
+				$this->print_handler($PAGE, '<p>' . $button_area . '</p>');
 			}
 
-			$PAGE .= '</section>';
+			$this->print_handler($PAGE, '</section>');
 			unset($result_object);
 		}
 
 		if($this->show_result_sidebar && count($sidebar_list) > 6)
 		{
 			// show result sidebar
-			$PAGE .= $this->add_result_sidebar($sidebar_list);
+			$this->print_handler($PAGE, $this->add_result_sidebar($sidebar_list));
 		}
 
 		if($this->include_page_print_only_helpers)
 		{
-			$PAGE .= '<div class="print_notes mini" style="font-size: 10px !important;">' . pts_result_file_output::result_file_to_system_html($result_file, true) . '</div>';
+			$this->print_handler($PAGE, '<div class="print_notes mini" style="font-size: 10px !important;">' . pts_result_file_output::result_file_to_system_html($result_file, true) . '</div>');
 		}
-		$PAGE .= '</div>';
+		$this->print_handler($PAGE, '</div>');
 
 		return $PAGE;
 	}
@@ -739,8 +752,13 @@ class pts_result_viewer_embed
 		$tests_with_multiple_versions = array();
 		$has_test_with_multiple_options = false;
 		$has_test_with_multiple_versions = false;
-		foreach($result_file->get_result_objects() as $i => $result_object)
+		foreach($result_file->get_result_object_keys() as $ro_key)
 		{
+			$result_object = $result_file->get_result_object_by_hash($ro_key);
+			if($result_object == false)
+			{
+				continue;
+			}
 			if(!$has_box_plot && $result_object->test_profile->get_display_format() == 'HORIZONTAL_BOX_PLOT')
 			{
 				$has_box_plot = true;
@@ -812,6 +830,7 @@ class pts_result_viewer_embed
 			$analyze_checkboxes['View'][] = array('hni', 'Do Not Show Results With Incomplete Data');
 			$analyze_checkboxes['View'][] = array('hlc', 'Do Not Show Results With Little Change/Spread');
 			$analyze_checkboxes['View'][] = array('spr', 'List Notable Results');
+			$analyze_checkboxes['View'][] = array('src', 'Show Result Confidence Charts');
 
 			if($has_identifier_with_color_brand)
 			{
@@ -1309,21 +1328,24 @@ class pts_result_viewer_embed
 		$html = null;
 		if(self::check_request_for_var($request, 'spr'))
 		{
-			$results = $result_file->get_result_objects();
 			$spreads = array();
-			foreach($results as $i => &$result_object)
+			foreach($result_file->get_result_object_keys() as $ro_key)
 			{
-				$spreads[$i] = $result_object->get_spread();
+				$result_object = $result_file->get_result_object_by_hash($ro_key);
+				if($result_object)
+				{
+					$spreads[$ro_key] = $result_object->get_spread();
+				}
 			}
 			arsort($spreads);
-			$spreads = array_slice($spreads, 0, min((int)(count($results) / 4), 10), true);
+			$spreads = array_slice($spreads, 0, min((int)($result_file->get_test_count() / 4), 10), true);
 
 			if(!empty($spreads))
 			{
 				$html .= '<h3>Notable Results</h3>';
 				foreach($spreads as $result_key => $spread)
 				{
-					$ro = $result_file->get_result_objects($result_key);
+					$ro = $result_file->get_result_object_by_hash($result_key);
 					if(!is_object($ro[0]))
 					{
 						continue;
@@ -1368,8 +1390,13 @@ class pts_result_viewer_embed
 		if(($oss = self::check_request_for_var($request, 'oss')) && strlen($oss) > 1)
 		{
 			$oss = pts_strings::comma_explode($oss);
-			foreach($result_file->get_result_objects() as $i => $result_object)
+			foreach($result_file->get_result_object_keys() as &$ro_key)
 			{
+				$result_object = $result_file->get_result_object_by_hash($ro_key);
+				if($result_object == false)
+				{
+					continue;
+				}
 				$matched = false;
 				foreach($oss as $search_check)
 				{
@@ -1386,15 +1413,20 @@ class pts_result_viewer_embed
 				}
 				if(!$matched)
 				{
-					$result_file->remove_result_object_by_id($i);
+					$result_file->remove_result_object_by_id($ro_key);
 				}
 			}
 		}
 		if(($noss = self::check_request_for_var($request, 'noss')) && strlen($noss) > 1)
 		{
 			$noss = pts_strings::comma_explode($noss);
-			foreach($result_file->get_result_objects() as $i => $result_object)
+			foreach($result_file->get_result_object_keys() as &$ro_key)
 			{
+				$result_object = $result_file->get_result_object_by_hash($ro_key);
+				if($result_object == false)
+				{
+					continue;
+				}
 				$matched = false;
 				foreach($noss as $search_check)
 				{
@@ -1411,7 +1443,7 @@ class pts_result_viewer_embed
 				}
 				if($matched)
 				{
-					$result_file->remove_result_object_by_id($i);
+					$result_file->remove_result_object_by_id($ro_key);
 				}
 			}
 		}
@@ -1421,8 +1453,13 @@ class pts_result_viewer_embed
 			$ftb = self::check_request_for_var($request, 'ftb');
 			if(!empty($ftt) && !empty($ftb) && $ftt !== true && $ftb !== true)
 			{
-				foreach($result_file->get_result_objects() as $i => $result_object)
+				foreach($result_file->get_result_object_keys() as &$ro_key)
 				{
+					$result_object = $result_file->get_result_object_by_hash($ro_key);
+					if($result_object == false)
+					{
+						continue;
+					}
 					$ftt_result = $result_object->test_result_buffer->get_result_from_identifier($ftt);
 					$ftb_result = $result_object->test_result_buffer->get_result_from_identifier($ftb);
 
@@ -1447,12 +1484,12 @@ class pts_result_viewer_embed
 
 						if(!$ftt_wins)
 						{
-							$result_file->remove_result_object_by_id($i);
+							$result_file->remove_result_object_by_id($ro_key);
 						}
 					}
 					else
 					{
-						$result_file->remove_result_object_by_id($i);
+						$result_file->remove_result_object_by_id($ro_key);
 					}
 				}
 			}
@@ -1479,29 +1516,39 @@ class pts_result_viewer_embed
 
 			if(!empty($tests_to_show))
 			{
-				foreach($result_file->get_result_objects() as $i => $result_object)
+				foreach($result_file->get_result_object_keys() as &$ro_key)
 				{
+					$result_object = $result_file->get_result_object_by_hash($ro_key);
+					if($result_object == false)
+					{
+						continue;
+					}
 					if($result_object->get_parent_hash())
 					{
 						if(!$result_file->get_result_object_by_hash($result_object->get_parent_hash()) || !in_array($result_file->get_result_object_by_hash($result_object->get_parent_hash())->test_profile->get_identifier(false), $tests_to_show))
 						{
-							$result_file->remove_result_object_by_id($i);
+							$result_file->remove_result_object_by_id($ro_key);
 						}
 					}
 					else if(!in_array($result_object->test_profile->get_identifier(false), $tests_to_show))
 					{
-						$result_file->remove_result_object_by_id($i);
+						$result_file->remove_result_object_by_id($ro_key);
 					}
 				}
 			}
 		}
 		if(self::check_request_for_var($request, 'hlc'))
 		{
-			foreach($result_file->get_result_objects() as $i => $result_object)
+			foreach($result_file->get_result_object_keys() as &$ro_key)
 			{
+				$result_object = $result_file->get_result_object_by_hash($ro_key);
+				if($result_object == false)
+				{
+					continue;
+				}
 				if($result_object->result_flat())
 				{
-					$result_file->remove_result_object_by_id($i);
+					$result_file->remove_result_object_by_id($ro_key);
 				}
 			}
 		}
@@ -1512,11 +1559,16 @@ class pts_result_viewer_embed
 		if(self::check_request_for_var($request, 'hni'))
 		{
 			$system_count = $result_file->get_system_count();
-			foreach($result_file->get_result_objects() as $i => $result_object)
+			foreach($result_file->get_result_object_keys() as $ro_key)
 			{
+				$result_object = $result_file->get_result_object_by_hash($ro_key);
+				if($result_object == false)
+				{
+					continue;
+				}
 				if($result_object->test_result_buffer->get_count() < $system_count || $result_object->test_result_buffer->has_incomplete_result())
 				{
-					$result_file->remove_result_object_by_id($i);
+					$result_file->remove_result_object_by_id($ro_key);
 				}
 			}
 		}
@@ -1675,9 +1727,13 @@ class pts_result_viewer_embed
 		*/
 		if(self::check_request_for_var($request, 'rol'))
 		{
-			foreach($result_file->get_result_objects() as $i => $result_object)
+			foreach($result_file->get_result_object_keys() as $ro_key)
 			{
-				$result_object->recalculate_averages_without_outliers(1.5);
+				$result_object = $result_file->get_result_object_by_hash($ro_key);
+				if($result_object)
+				{
+					$result_object->recalculate_averages_without_outliers(1.5);
+				}
 			}
 		}
 

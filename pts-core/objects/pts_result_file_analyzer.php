@@ -401,21 +401,13 @@ class pts_result_file_analyzer
 
 		if($selected_result && ($sw = $wins_result->test_result_buffer->find_buffer_item($selected_result)))
 		{
-			if($do_html)
-			{
-				$selected_result = '<strong>' . $selected_result . '</strong>';
-			}
-			$summary[] = $selected_result . ' came in first place for ' . floor($sw->get_result_value() / $wins_result->test_result_buffer->get_total_value_sum() * 100) . '% of the tests.';
+			$summary[] = '<strong>' . $selected_result . '</strong> came in first place for ' . floor($sw->get_result_value() / $wins_result->test_result_buffer->get_total_value_sum() * 100) . '% of the tests.';
 		}
-		else if($first_place_buffer->get_result_identifier() != $selected_result)
+		if($first_place_buffer->get_result_identifier() != $selected_result)
 		{
 			// Most wins
 			$selected_result = $first_place_buffer->get_result_identifier();
-			if($do_html)
-			{
-				$selected_result = '<strong>' . $selected_result . '</strong>';
-			}
-			$summary[] = $first_place_buffer->get_result_identifier() . ' had the most wins, coming in first place for ' . floor($first_place_buffer->get_result_value() / $wins_result->test_result_buffer->get_total_value_sum() * 100) . '% of the tests.';
+			$summary[] = '<strong>' . $first_place_buffer->get_result_identifier() . '</strong> had the most wins, coming in first place for ' . floor($first_place_buffer->get_result_value() / $wins_result->test_result_buffer->get_total_value_sum() * 100) . '% of the tests.';
 		}
 
 		$geo_mean_result = pts_result_file_analyzer::generate_geometric_mean_result($result_file, true);
@@ -473,9 +465,8 @@ class pts_result_file_analyzer
 
 		if($result_file->get_test_count() > 16)
 		{
-			$results = $result_file->get_result_objects();
 			$spreads = array();
-			foreach($results as $i => &$result_object)
+			foreach($result_file->get_result_objects() as $i => &$result_object)
 			{
 				$spreads[$i] = $result_object->get_spread();
 			}
@@ -503,8 +494,16 @@ class pts_result_file_analyzer
 				}
 				if(!empty($spread_text))
 				{
-					$summary[] = 'The results with the greatest spread from best to worst included: ' . PHP_EOL . PHP_EOL . implode($separator, $spread_text) . '.';
+					$summary[] = 'The results with the greatest spread from best to worst included: ' . PHP_EOL . $separator . implode($separator, $spread_text) . '.';
 				}
+			}
+		}
+
+		if(!$do_html)
+		{
+			foreach($summary as &$s)
+			{
+				$s = strip_tags($s);
 			}
 		}
 

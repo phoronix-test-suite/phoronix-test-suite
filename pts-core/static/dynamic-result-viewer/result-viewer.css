@@ -3,8 +3,6 @@ body
 	margin: 0;
 	padding: 0;
 	font-family: 'Roboto', sans-serif;
-
-
 }
 div#header
 {
@@ -526,4 +524,18 @@ p#result_file_system_table
 	.print_notes { display: block !important; }
 	div#results_sidebar { display: none; width: 0; height: 0; }
 	div#results { margin: 0; margin-left: 0px; padding: 0; }
+}
+@media (prefers-color-scheme: dark) {
+svg {
+	filter: invert(.895) hue-rotate(180deg)
+}
+body, div#main_area, div#results_sidebar
+{
+	color: #efefef;
+	background: #1c1c1c;
+}
+div#results_sidebar
+{
+	border: 1px solid #fff;
+}
 }

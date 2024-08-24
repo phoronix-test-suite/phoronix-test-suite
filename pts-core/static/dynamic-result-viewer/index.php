@@ -27,7 +27,7 @@ if(function_exists('session_start'))
 
 define('CURRENT_URI', $_SERVER['REQUEST_URI']);
 define('WEB_URL_PATH', rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'])), '/') . '/');
-define('RESULT_VIEWER_VERSION', 2);
+define('RESULT_VIEWER_VERSION', 3);
 define('PTS_AUTO_LOAD_ALL_OBJECTS', true);
 
 $uri_stripped = CURRENT_URI;
@@ -180,6 +180,7 @@ if(VIEWER_ACCESS_KEY != null && (!isset($_SESSION['AccessKey']) || $_SESSION['Ac
 </body>
 <?php } else {
 $PAGE = null;
+$call_get_result_html = false;
 switch(isset($_GET['page']) ? $_GET['page'] : null)
 {
 	case 'test':
@@ -275,7 +276,8 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		$embed = new pts_result_viewer_embed($result_file, $results_viewing[0]);
 		$embed->allow_modifying_results(VIEWER_CAN_MODIFY_RESULTS && count($results_viewing) == 1);
 		$embed->allow_deleting_results(VIEWER_CAN_DELETE_RESULTS && count($results_viewing) == 1);
-		$PAGE = $embed->get_html();
+		$call_get_result_html = true;
+		//$PAGE = $embed->get_html();
 		break;
 	case 'index':
 	default:
@@ -413,7 +415,7 @@ if((!isset($leading_msg) || empty($leading_msg)) && defined('PTS_CORE_STORAGE') 
 }
 if(isset($leading_msg) && $leading_msg) { echo '<div id="leading_message">' . $leading_msg . '</div>'; } ?>
 <div id="main_area">
-<?php echo $PAGE; ?>
+<?php echo $call_get_result_html ? $embed->get_html() : $PAGE; ?>
 </div>
 <div id="footer"><hr /><br /><a href="https://www.phoronix-test-suite.com/">Phoronix Test Suite</a> <?php echo PTS_VERSION; ?> - Generated <?php echo date('j F Y H:i:s'); ?></div>
 </body>

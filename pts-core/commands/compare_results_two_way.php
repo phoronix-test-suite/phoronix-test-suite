@@ -23,7 +23,7 @@
 class compare_results_two_way implements pts_option_interface
 {
 	const doc_section = 'Result Management';
-	const doc_description = 'This option will allows you to specify a result file and from there to compare two individual runs within that result file for looking at wins/losses and other metrics in a head-to-head type comparison.';
+	const doc_description = 'This option allows you to specify a result file and from there to compare two individual runs within that result file for looking at wins/losses and other metrics in a head-to-head type comparison.';
 	static $longest_identifier = 0;
 
 	public static function argument_checks()
