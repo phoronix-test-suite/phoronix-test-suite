@@ -836,7 +836,7 @@ class phodevi extends phodevi_base
 		{
 			$this_arch = 'x86';
 		}
-		if(!in_array($this_arch, $check_against))
+		if(!in_array($this_arch, $check_against) && !in_array(pts_env::read('HOST_EXTRA_COMPATIBLE_ARCH'), $check_against))
 		{
 			$compatible = false;
 		}
