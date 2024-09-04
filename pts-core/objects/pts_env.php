@@ -391,6 +391,13 @@ class pts_env
 			'advertise_in_phoromatic' => true,
 			'onchange' => 'pts_logger::update_log_cli_output_state',
 			),
+		'HOST_EXTRA_COMPATIBLE_ARCH' => array(
+			'description' => 'This option allows to specify additional architecture support from host machine to being able to install tests that supports specific architectures only. It can be useful in systems where is available an user-space emulator (e.g. FEX-EMU for x86_64 applications on aarch64) to run binary tests that cannot be compiled natively.',
+			'default' => false,
+			'usage' => array('all'),
+			'value_type' => 'string',
+			),
+
 		);
 
 	public static function read($name, &$overrides = null, $fallback_value = false)
