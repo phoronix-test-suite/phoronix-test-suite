@@ -24,7 +24,7 @@
 interface pts_display_mode_interface
 {
 	public function __construct();
-	public function test_install_process($test_install_manager);
+	public function test_install_process(&$test_install_manager);
 	public function test_install_begin($test_install_request);
 	public function test_install_downloads($test_install_request);
 	public function test_install_download_file($process, &$pts_test_file_download);

@@ -39,7 +39,7 @@ class pts_result_viewer_embed
 		$this->result_file = &$result_file;
 		$this->result_public_id = $public_id;
 		$this->show_result_sidebar = !defined('PHOROMATIC_SERVER_WEB_INTERFACE');
-		$this->print_html_immediately = defined('OPENBENCHMARKING_BUILD') || (defined('RESULT_VIEWER_VERSION') && RESULT_VIEWER_VERSION > 2);
+		$this->print_html_immediately = (defined('OPENBENCHMARKING_BUILD') || (defined('RESULT_VIEWER_VERSION') && RESULT_VIEWER_VERSION > 2)) && !isset($_REQUEST['export']);
 
 		if(isset($_SERVER['REQUEST_URI']) && !empty($_SERVER['REQUEST_URI']))
 		{

@@ -1385,7 +1385,8 @@ class pts_result_file_output
 				{
 					// On AMD product strings, trip the XX-Core from string to save space...
 					// Similarly some "APU with Radeon" text also chop off
-					if(($cc = strpos($component, $cutoff)) !== false)
+					// Except if only one space in string it's likely significant to include "-Core" or so...
+					if(($cc = strpos($component, $cutoff)) !== false && strpos($component, ' ') != strrpos($component, ' '))
 					{
 						$component = substr($component, 0, $cc);
 						$component = substr($component, 0, strrpos($component, ' '));

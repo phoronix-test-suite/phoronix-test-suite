@@ -131,7 +131,7 @@ class pts_websocket_display_mode implements pts_display_mode_interface
 		// LATEST RESULT
 		$this->web_socket_respond($j);
 	}
-	public function test_install_process($test_install_manager)
+	public function test_install_process(&$test_install_manager)
 	{
 		$this->test_install_pos = 0;
 		$this->test_install_count = $test_install_manager->tests_to_install_count();

@@ -35,7 +35,7 @@ class pts_basic_display_mode implements pts_display_mode_interface
 	{
 		echo PHP_EOL . $msg_string . PHP_EOL;
 	}
-	public function test_install_process($test_install_manager)
+	public function test_install_process(&$test_install_manager)
 	{
 		return;
 	}

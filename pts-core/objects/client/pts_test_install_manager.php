@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2018, Phoronix Media
-	Copyright (C) 2010 - 2018, Michael Larabel
+	Copyright (C) 2010 - 2024, Phoronix Media
+	Copyright (C) 2010 - 2024, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -167,6 +167,16 @@ class pts_test_install_manager
 	public function next_in_install_queue()
 	{
 		return count($this->tests_to_install) > 0 ? array_shift($this->tests_to_install) : false;
+	}
+	public function estimated_install_time_remaining()
+	{
+		$install_time = 0;
+
+		foreach($this->tests_to_install as &$test_run_request)
+		{
+			$install_time += $test_run_request->test_profile->get_estimated_install_time();
+		}
+		return $install_time;
 	}
 	public static function download_cache_locations()
 	{

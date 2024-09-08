@@ -36,6 +36,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	// Test install bits
 	private $test_install_pos = 0;
 	private $test_install_count = 0;
+	private $test_install_manager = null;
 
 	// Run bits
 	protected $expected_trial_run_count = 0;
@@ -58,10 +59,11 @@ class pts_concise_display_mode implements pts_display_mode_interface
 
 		return $mb;
 	}
-	public function test_install_process($test_install_manager)
+	public function test_install_process(&$test_install_manager)
 	{
 		$this->test_install_pos = 0;
 		$this->test_install_count = $test_install_manager->tests_to_install_count();
+		$this->test_install_manager = &$test_install_manager;
 
 		echo PHP_EOL;
 		echo $this->tab . pts_strings::plural_handler($this->test_install_count, 'Test') . ' To Install' . PHP_EOL;
@@ -71,12 +73,11 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		$cache_total = 0;
 		$cache_size = 0;
 		$install_size = 0;
-		$install_time = 0;
+		$install_time = $test_install_manager->estimated_install_time_remaining();
 
 		foreach($test_install_manager->get_test_run_requests() as $test_run_request)
 		{
 			$install_size += $test_run_request->test_profile->get_environment_size();
-			$install_time += $test_run_request->test_profile->get_estimated_install_time();
 
 			foreach($test_run_request->get_download_objects() as $test_file_download)
 			{
@@ -291,9 +292,12 @@ class pts_concise_display_mode implements pts_display_mode_interface
 		}
 		if(($time = $test_install_request->test_profile->get_estimated_install_time()) > 1)
 		{
-			echo $this->tab . $this->tab . pts_client::cli_just_bold('Estimated Install Time: ') . pts_strings::format_time($time) . PHP_EOL;
+			echo $this->tab . $this->tab . pts_client::cli_just_bold('Estimated Test Install Time: ') . pts_strings::format_time($time) . PHP_EOL;
 		}
-
+		if($this->test_install_manager && $this->test_install_manager->tests_to_install_count() > 1 && ($total_time = $this->test_install_manager->estimated_install_time_remaining()) > 1)
+		{
+			echo $this->tab . $this->tab . pts_client::cli_just_bold('Total Install Time Remaining: ') . pts_strings::format_time(($total_time + $time)) . PHP_EOL;
+		}
 		echo $this->tab . $this->tab . 'Installing Test' . ' @ ' . date('H:i:s') . PHP_EOL;
 		return;
 	}

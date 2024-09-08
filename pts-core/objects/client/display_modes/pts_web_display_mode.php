@@ -64,7 +64,7 @@ class pts_web_display_mode implements pts_display_mode_interface
 	{
 		return;
 	}
-	public function test_install_process($test_install_manager)
+	public function test_install_process(&$test_install_manager)
 	{
 		$this->test_install_pos = 0;
 		$this->test_install_count = $test_install_manager->tests_to_install_count();
