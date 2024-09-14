@@ -66,7 +66,7 @@
 		</Package>
 		<Package>
 			<GenericName>p7zip</GenericName>
-			<PackageName>p7zip-full</PackageName>
+			<PackageName>7zip</PackageName>
 		</Package>
 		<Package>
 			<GenericName>bison</GenericName>

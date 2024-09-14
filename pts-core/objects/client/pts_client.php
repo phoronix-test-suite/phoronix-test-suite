@@ -1821,6 +1821,11 @@ class pts_client
 					$path .= ':' . $d;
 				}
 			}
+			foreach(pts_file_io::glob('/usr/lib*/mpi/*/*/bin/') as $mpi_bin_path)
+			{
+				// openSUSE has e.g. /usr/lib64/mpi/gcc/openmpi4/bin for mpicxx that otherwise is not appearing in default PATH on modern Tumbleweed
+				$path .= ':' . $mpi_bin_path;
+			}
 		}
 
 		return $path;
