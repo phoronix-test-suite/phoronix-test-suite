@@ -134,6 +134,11 @@ class pts_test_execution
 		{
 			$execute_binary_prepend = $test_run_request->exec_binary_prepend;
 		}
+		else if(pts_env::read('EXECUTE_BINARY_PREPEND') != false)
+		{
+			// This should be very similar behavior to the TEST_EXEC_PREPEND env var, but bug 807 raised that it was dropped
+			$execute_binary_prepend = pts_env::read('EXECUTE_BINARY_PREPEND') . ' ';
+		}
 
 		if(!$cache_share_present && !$test_run_manager->DEBUG_no_test_execution_just_result_parse && $test_run_request->test_profile->is_root_required())
 		{
