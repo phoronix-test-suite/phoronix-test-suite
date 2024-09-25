@@ -115,6 +115,13 @@ class cpu_power extends phodevi_sensor
 				$rapl_base_path_1 = $rapl_base_path . $x;
 				if(is_readable($rapl_base_path_1))
 				{
+					$domain_name = pts_file_io::file_get_contents($rapl_base_path_1 . '/name');
+					if (strncmp($domain_name, "psys", 4) === 0)
+					{
+						// Ignore psys domain
+						continue;
+					}
+
 					$energy_uj = pts_file_io::file_get_contents($rapl_base_path_1 . '/energy_uj');
 					if(is_numeric($energy_uj))
 					{
