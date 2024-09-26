@@ -16,7 +16,7 @@
     <TestType>System</TestType>
     <License>Free</License>
     <Status>Verified</Status>
-    <ExternalDependencies>build-utilities, bc</ExternalDependencies>
+    <ExternalDependencies>build-utilities, bc, libicu-dev</ExternalDependencies>
     <EnvironmentSize>1500</EnvironmentSize>
     <ProjectURL>https://www.postgresql.org/</ProjectURL>
     <RepositoryURL>https://github.com/postgres/postgres</RepositoryURL>
