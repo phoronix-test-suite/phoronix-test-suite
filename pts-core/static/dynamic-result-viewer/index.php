@@ -276,8 +276,14 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		$embed = new pts_result_viewer_embed($result_file, $results_viewing[0]);
 		$embed->allow_modifying_results(VIEWER_CAN_MODIFY_RESULTS && count($results_viewing) == 1);
 		$embed->allow_deleting_results(VIEWER_CAN_DELETE_RESULTS && count($results_viewing) == 1);
-		$call_get_result_html = true;
-		//$PAGE = $embed->get_html();
+		if(!isset($_REQUEST['export']))
+		{
+			$call_get_result_html = true;
+		}
+		else
+		{
+			$PAGE = $embed->get_html();
+		}
 		break;
 	case 'index':
 	default:

@@ -32,6 +32,7 @@ class sys_power extends phodevi_sensor
 	private static $wattsup_meter_raw = false;
 	private static $ipmitool = false;
 	private static $ipmitool_ps = false;
+	private static $ipmitool_platform = false;
 	private static $ipmitool_dcmi = false;
 	private static $windows_battery = false;
 	private static $hwmon_power_meter = false;
@@ -121,6 +122,7 @@ class sys_power extends phodevi_sensor
 		}
 		if(pts_client::executable_in_path('ipmitool'))
 		{
+			// TODO add check for Platform Power A like on AvenueCity
 			$ipmi_read = phodevi_linux_parser::read_ipmitool_sensor('Node Power');
 
 			if($ipmi_read > 0 && is_numeric($ipmi_read))
@@ -142,6 +144,14 @@ class sys_power extends phodevi_sensor
 			if(is_numeric($ipmi_ps1) && $ipmi_ps1 > 1)
 			{
 				self::$ipmitool_ps = true;
+				return true;
+			}
+			
+			$ipmi_ps1 = phodevi_linux_parser::read_ipmitool_sensor('PSU1 Input Power');
+			//$ipmi_ps2 = phodevi_linux_parser::read_ipmitool_sensor('PS2_Input_Power');
+			if(is_numeric($ipmi_ps1) && $ipmi_ps1 > 1)
+			{
+				self::$ipmitool_platform = true;
 				return true;
 			}
 		}
@@ -178,6 +188,10 @@ class sys_power extends phodevi_sensor
 		else if(self::$ipmitool_ps)
 		{
 			return phodevi_linux_parser::read_ipmitool_sensor('PS1_Input_Power', 0) + phodevi_linux_parser::read_ipmitool_sensor('PS2_Input_Power', 0);
+		}
+		else if(self::$ipmitool_platform)
+		{
+			return phodevi_linux_parser::read_ipmitool_sensor('PSU1 Input Power', 0) + phodevi_linux_parser::read_ipmitool_sensor('PSU2 Input Power', 0);
 		}
 		else if(self::$ipmitool_dcmi)
 		{

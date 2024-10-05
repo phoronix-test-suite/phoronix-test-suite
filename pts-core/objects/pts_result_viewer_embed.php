@@ -1092,7 +1092,7 @@ class pts_result_viewer_embed
 		}
 
 		// Result export?
-		$result_title = (isset($_GET['result']) ? $_GET['result'] : 'result');
+		$result_title = (isset($_GET['result']) ? str_replace(',', '_', $_GET['result']) : 'result');
 		switch(isset($_REQUEST['export']) ? $_REQUEST['export'] : '')
 		{
 			case '':
