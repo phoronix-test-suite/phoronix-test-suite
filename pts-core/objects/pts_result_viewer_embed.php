@@ -969,7 +969,7 @@ class pts_result_viewer_embed
 			if($system_count > 1)
 			{
 				$t .= '<div class="div_table_cell">Highlight<br />Result</div>
-			<div class="div_table_cell">Hide<br />Result</div>';
+			<div class="div_table_cell">Toggle/Hide<br />Result</div>';
 			}
 
 			$t .= '<div class="div_table_cell">Result<br />Identifier</div>';
@@ -991,9 +991,10 @@ class pts_result_viewer_embed
 				$hgv = explode(',', $hgv);
 			}
 			$rmm = self::check_request_for_var($request, 'rmm');
-			if(!is_array($rmm))
+			$rmm_is_array = is_array($rmm);
+			if(!$rmm_is_array)
 			{
-				$rmm = explode(',', $rmm);
+				$rmm .= ',';
 			}
 			$start_of_year = strtotime(date('Y-01-01'));
 			$test_run_times = $result_file->get_test_run_times();
@@ -1009,7 +1010,7 @@ class pts_result_viewer_embed
 				if($system_count > 1)
 				{
 					$t .= '<div class="div_table_cell"><input type="checkbox" name="hgv[]" value="' . $si . '"' . (is_array($hgv) && in_array($si, $hgv) ? ' checked="checked"' : null) . ' /></div>
-				<div class="div_table_cell"><input type="checkbox" name="rmm[]" value="' . $si . '"' . (is_array($rmm) && in_array($si, $rmm) ? ' checked="checked"' : null) . ' /></div>';
+				<div class="div_table_cell"><input type="checkbox" name="rmm[]" value="' . $si . '"' . (($rmm_is_array && in_array($si, $rmm)) || (!$rmm_is_array && strpos($rmm, $si . ',') !== false) ? ' checked="checked"' : null) . ' /></div>';
 				}
 
 				$t .= '<div class="div_table_cell"><strong>' . $si . '</strong></div>';
@@ -1041,8 +1042,8 @@ class pts_result_viewer_embed
 				$t .= '
 				<div class="div_table_row">
 				<div class="div_table_cell"> </div>
-				<div class="div_table_cell"><input type="checkbox" onclick="javascript:invert_hide_all_results_checkboxes();" /></div>
-				<div class="div_table_cell"><em>Invert Hiding All Results Option</em></div>';
+				<div class="div_table_cell"><input type="checkbox" name="rmmi" value="1"' . (self::check_request_for_var($request, 'rmmi') ? ' checked="checked"' : null) . ' /></div>
+				<div class="div_table_cell"><em>Invert Behavior (Only Show Selected Data)</em></div>';
 
 				if($has_system_logs)
 				{
@@ -1574,14 +1575,33 @@ class pts_result_viewer_embed
 		}
 		if(($rmm = self::check_request_for_var($request, 'rmm')))
 		{
-			if(!is_array($rmm))
+			if(self::check_request_for_var($request, 'rmmi'))
 			{
-				$rmm = explode(',', $rmm);
-			}
+				// Invert behavior
+				$rmm_is_array = is_array($rmm);
+				if(!$rmm_is_array)
+				{
+					$rmm .= ',';
+				}
 
-			foreach($rmm as $rm)
+				foreach($result_file->get_system_identifiers() as $si)
+				{
+					if(($rmm_is_array && !in_array($si, $rmm)) || (!$rmm_is_array && strpos($rmm, $si . ',') === false))
+					{
+						$result_file->remove_run($si);
+					}
+				}
+			}
+			else
 			{
-				$result_file->remove_run($rm);
+				if(!is_array($rmm))
+				{
+					$rmm = explode(',', $rmm);
+				}
+				foreach($rmm as $rm)
+				{
+					$result_file->remove_run($rm);
+				}
 			}
 		}
 		if(self::check_request_for_var($request, 'grs'))

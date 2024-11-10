@@ -229,21 +229,36 @@ class cpu_power extends phodevi_sensor
 		$watts = 0;
 		if(pts_client::executable_in_path('powermetrics'))
 		{
+            // Unfortunately needs sudo so for most uses /etc/sudoers :
+            // username ALL = (ALL) NOPASSWD: /usr/bin/powermetrics
 			$powermetrics = shell_exec("sudo -n powermetrics -n 1 -i 1 --samplers cpu_power 2>&1");
+            if(($x = strpos($powermetrics, 'Combined Power ')) !== false)
+            {
+                $powermetrics = substr($powermetrics, $x);
+                $powermetrics = substr($powermetrics, strpos($powermetrics, ': ') + 2);
+                if(($x = strpos($powermetrics, ' mW')) !== false)
+                {
+                    $powermetrics = substr($powermetrics, 0, $x);
 
-			if(($x = strpos($powermetrics, 'Package Power: ')) !== false)
-			{
-				$powermetrics = substr($powermetrics, $x + strlen('Package Power: '));
-				if(($x = strpos($powermetrics, ' mW')) !== false)
-				{
-					$powermetrics = substr($powermetrics, 0, $x);
+                    if(is_numeric($powermetrics) && $powermetrics > 0)
+                    {
+                        $watts = $powermetrics / 1000;
+                    }
+                }
+            }
+            else if(($x = strpos($powermetrics, 'Package Power: ')) !== false)
+            {
+                $powermetrics = substr($powermetrics, $x + strlen('Package Power: '));
+                if(($x = strpos($powermetrics, ' mW')) !== false)
+                {
+                    $powermetrics = substr($powermetrics, 0, $x);
 
-					if(is_numeric($powermetrics) && $powermetrics > 0)
-					{
-						$watts = $powermetrics / 1000;
-					}
-				}
-			}
+                    if(is_numeric($powermetrics) && $powermetrics > 0)
+                    {
+                        $watts = $powermetrics / 1000;
+                    }
+                }
+            }
 		}
 
 		return $watts;

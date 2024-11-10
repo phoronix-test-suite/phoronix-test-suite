@@ -136,7 +136,7 @@ class pts_result_file_output
 	{
 		$csv_output = null;
 
-		$csv_output .= $result_file->get_title() . PHP_EOL . $result_file->get_description() . PHP_EOL . PHP_EOL;
+		$csv_output .= $delimiter . $result_file->get_title() . $delimiter . PHP_EOL . PHP_EOL;
 
 		$columns = array();
 		$hw = array();

@@ -796,6 +796,12 @@ class phodevi_cpu extends phodevi_device_interface
 						case '0xd13':
 							$new_info .= ' Cortex-R52';
 							break;
+						case '0xd14':
+							$new_info .= ' Cortex-R82AE';
+							break;
+						case '0xd15':
+							$new_info .= ' Cortex-R82';
+							break;
 						case '0xd20':
 							$new_info .= ' Cortex-M23';
 							break;
@@ -870,6 +876,9 @@ class phodevi_cpu extends phodevi_device_interface
 					{
 						case '0x001':
 							$new_info .= ' A64FX';
+							break;
+						case '0x003':
+							$new_info .= ' MONAKA';
 							break;
 					}
 				}

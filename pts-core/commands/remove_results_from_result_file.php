@@ -36,6 +36,8 @@ class remove_results_from_result_file implements pts_option_interface
 		$result_file = new pts_result_file($r[0]);
 
 		$remove_query = pts_user_io::prompt_user_input('Enter the title / arguments to search for to remove from this result file');
+		$select_results_only = false;
+		//$select_results_only = pts_user_io::prompt_user_input('Limit result removal to only select runs');
 		$remove_count = 0;
 		$table = array();
 		foreach($result_file->get_result_objects() as $id => $result)
@@ -43,7 +45,26 @@ class remove_results_from_result_file implements pts_option_interface
 			if(stripos($result->test_profile->get_title(), $remove_query) !== false || stripos($result->test_profile->get_result_scale(), $remove_query) !== false || stripos($result->get_arguments_description(), $remove_query) !== false)
 			{
 				$table[] = array($result->test_profile->get_title(), $result->get_arguments_description(), $result->test_profile->get_result_scale());
-				$result_file->remove_result_object_by_id($id);
+				if($select_results_only && !empty($select_results_only))
+				{
+					foreach($result->test_result_buffer as &$buffers)
+					{
+						if(empty($buffers))
+							continue;
+
+						foreach($buffers as &$buffer_item)
+						{
+							if(stripos($buffer_item->get_result_identifier(), $select_results_only) !== false)
+							{
+								$result->test_result_buffer->remove($buffer_item->get_result_identifier());
+							}
+						}
+					}
+				}
+				else
+				{
+					$result_file->remove_result_object_by_id($id);
+				}
 				$remove_count++;
 			}
 		}
