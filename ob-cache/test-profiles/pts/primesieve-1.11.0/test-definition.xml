@@ -19,7 +19,7 @@
     <Status>Verified</Status>
     <ExternalDependencies>build-utilities, cmake</ExternalDependencies>
     <EnvironmentSize>3</EnvironmentSize>
-    <ProjectURL>https://primesieve.org/</ProjectURL>
+    <ProjectURL>https://github.com/kimwalisch/primesieve</ProjectURL>
     <RepositoryURL>https://github.com/kimwalisch/primesieve</RepositoryURL>
     <InternalTags>SMP</InternalTags>
     <Maintainer>Kim Walisch</Maintainer>
