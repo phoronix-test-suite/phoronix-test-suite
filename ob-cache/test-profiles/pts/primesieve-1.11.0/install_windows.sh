@@ -1,5 +1,5 @@
 #!/bin/sh
-unzip -o primesieve-12.5-win-x64.zip
+unzip -o primesieve-12.6-win-x64.zip
 chmod +x primesieve.exe
 echo "#!/bin/sh
 ./primesieve.exe \$@ > \$LOG_FILE" > primesieve-test

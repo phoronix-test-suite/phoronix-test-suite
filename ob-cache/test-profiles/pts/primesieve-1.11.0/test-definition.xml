@@ -3,7 +3,7 @@
 <PhoronixTestSuite>
   <TestInformation>
     <Title>Primesieve</Title>
-    <AppVersion>12.5</AppVersion>
+    <AppVersion>12.6</AppVersion>
     <Description>Primesieve generates prime numbers using a highly optimized sieve of Eratosthenes implementation. Primesieve primarily benchmarks the CPU's L1/L2 cache performance.</Description>
     <ResultScale>Seconds</ResultScale>
     <Proportion>LIB</Proportion>

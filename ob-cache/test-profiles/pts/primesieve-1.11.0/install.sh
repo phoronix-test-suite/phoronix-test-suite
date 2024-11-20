@@ -1,5 +1,5 @@
 #!/bin/sh
-version=12.5
+version=12.6
 tar xvf primesieve-$version.tar.gz
 cd primesieve-$version
 cmake . -DBUILD_SHARED_LIBS=OFF
