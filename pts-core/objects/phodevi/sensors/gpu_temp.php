@@ -38,7 +38,7 @@ class gpu_temp extends phodevi_sensor
 
 		if($temp_c == -1 || empty($temp_c))
 		{
-			foreach(array_merge(array('/sys/class/drm/card0/device/temp1_input'), pts_file_io::glob('/sys/class/drm/card0/device/hwmon/hwmon*/temp1_input')) as $temp_input)
+			foreach(array_merge(array('/sys/class/drm/card0/device/temp1_input'), pts_file_io::glob('/sys/class/drm/card*/device/hwmon/hwmon*/temp1_input')) as $temp_input)
 			{
 				// This works for at least Nouveau driver with Linux 2.6.37 era DRM
 				if(is_readable($temp_input) == false)

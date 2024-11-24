@@ -413,6 +413,7 @@ class pts_result_viewer_embed
 									$run_counts_for_identifier[$bi->get_result_identifier()] = $bi->get_sample_count();
 								}
 							}
+							/*
 							foreach($c_ro->test_result_buffer->buffer_items as $bi)
 							{
 								$res_tally = $bi->get_result_value();
@@ -425,7 +426,7 @@ class pts_result_viewer_embed
 									$res_tally = array_sum($res_tally);
 									$graph->addTestNote($bi->get_result_identifier() . ': Approximate power consumption of ' . round($res_tally / $run_counts_for_identifier[$bi->get_result_identifier()]) . ' Joules per run.');
 								}
-							}
+							}*/
 						}
 						$tabs[$dindex] = pts_render::render_graph_inline_embed($graph, $result_file, $extra_attributes);
 						$show_on_print[] = $dindex;
@@ -934,6 +935,18 @@ class pts_result_viewer_embed
 		}
 
 		$analyze_checkboxes['Table'][] = array('sdt', 'Show Detailed System Result Table');
+
+		$result_file_env_vars = pts_strings::parse_value_string_vars($result_file->get_preset_environment_variables());
+		if(isset($result_file_env_vars['MONITOR']))
+		{
+			$analyze_checkboxes['Sensor Monitoring'] = array(
+				array('asm', 'Show Accumulated Sensor Monitoring Data For Displayed Results')
+				);
+			if(stripos($result_file_env_vars['MONITOR'], '.power') !== false)
+			{
+				$analyze_checkboxes['Sensor Monitoring'][] = array('ppw', 'Generate Power Efficiency / Performance Per Watt Results');
+			}
+		}
 
 		$t = null;
 		foreach($analyze_checkboxes as $title => $group)
@@ -1601,6 +1614,18 @@ class pts_result_viewer_embed
 				foreach($rmm as $rm)
 				{
 					$result_file->remove_run($rm);
+				}
+			}
+		}
+
+		if(self::check_request_for_var($request, 'asm') || self::check_request_for_var($request, 'ppw'))
+		{
+			$results = pts_result_file_analyzer::generate_composite_for_sensors($result_file, false, (self::check_request_for_var($request, 'ppw') ? 'Power' : false), (self::check_request_for_var($request, 'asm') ? true : false));
+			if($results)
+			{
+				foreach($results as $result)
+				{
+					$result_file->add_result($result);
 				}
 			}
 		}

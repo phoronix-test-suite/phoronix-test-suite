@@ -104,6 +104,10 @@ class dummy_module extends pts_module_interface
 	{
 		echo PHP_EOL . 'We\'re about to run a test! Any pre-run processing?' . PHP_EOL . 'Called: __pre_test_run()' . PHP_EOL;
 	}
+	public static function __calling_test_script()
+	{
+		echo PHP_EOL . 'We\'re about to call the test script! Any pre-execution processing or bits to set?' . PHP_EOL . 'Called: __calling_test_script()' . PHP_EOL;
+	}
 	public static function __test_running()
 	{
 		echo PHP_EOL . 'We just started running a test! Want to tap the PID or anything?' . PHP_EOL . 'Called: __test_running()' . PHP_EOL;

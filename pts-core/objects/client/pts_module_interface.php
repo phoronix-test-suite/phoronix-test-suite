@@ -146,6 +146,11 @@ class pts_module_interface
 		// Passed is a read-only copy of the current pts_test_result for the given test
 		return;
 	}
+	public static function __calling_test_script($obj = null)
+	{
+		// Passed is a read-only copy of the current pts_test_result for the given test
+		return;
+	}
 	public static function __test_running($obj = null)
 	{
 		// This is called after proc_open() on the test and passed is the proc_open()'s resource, to obtain the PID, etc.

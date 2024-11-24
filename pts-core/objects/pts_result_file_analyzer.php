@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2021, Phoronix Media
-	Copyright (C) 2010 - 2021, Michael Larabel
+	Copyright (C) 2010 - 2024, Phoronix Media
+	Copyright (C) 2010 - 2024, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -757,6 +757,179 @@ class pts_result_file_analyzer
 		}
 
 		return false;
+	}
+	public static function generate_composite_for_sensors($result_file, $do_sort = false, $do_perf_per_sensor = 'Power', $gen_composite_results = true)
+	{
+		$sensor_types = array(
+			'cpu.power' => 'CPU Power Consumption',
+			'gpu.power' => 'GPU Power Consumption',
+			'sys.power' => 'System Power Consumption',
+			'cpu.peak-freq' => 'CPU Peak Freq',
+			'cpu.temp' => 'CPU Temp',
+			'gpu.temp' => 'GPU Temp',
+			);
+		$results = array();
+		foreach($result_file->get_result_objects() as &$result)
+		{
+			if(stripos($result->get_arguments_description(), ' Monitor') === false  || $result->test_profile->get_display_format() != 'LINE_GRAPH')
+			{
+				continue;
+			}
+			$this_sensor = null;
+			foreach($sensor_types as $sensor_check)
+			{
+				if(stripos($result->get_arguments_description(), $sensor_check) !== false)
+				{
+					$this_sensor = $sensor_check;
+				}
+			}
+			if($this_sensor == null)
+			{
+				continue;
+			}
+
+			$this_round = array();
+			foreach($result->test_result_buffer->get_buffer_items() as $buffer_item)
+			{
+				$r = explode(',', $buffer_item->get_result_value());
+				$skip = false;
+				for($i = 0; $i < count($r); $i++)
+				{
+					if(!is_numeric($r[$i]))
+					{
+						$skip = true;
+						break;
+					}
+				}
+				if($i < 3)
+				{
+					$skip = true;
+				}
+				if($skip)
+				{
+					continue;
+				}
+
+				$ri = $buffer_item->get_result_identifier();
+				$this_round[$ri] = $r;
+
+				if(!isset($results[$this_sensor][$ri]))
+				{
+					$results[$this_sensor][$ri] = array();
+				}
+				$results[$this_sensor][$ri]= array_merge($results[$this_sensor][$ri], $r);
+			}
+
+			if($do_perf_per_sensor != false && stripos($this_sensor, $do_perf_per_sensor) !== false && $result->get_parent_hash() != '' && !empty($this_round))
+			{
+				$perf_per_result = clone $result_file->get_result($result->get_parent_hash());
+				if($perf_per_result && $perf_per_result->test_profile->get_display_format() == 'BAR_GRAPH')
+				{
+					$perf_per_result->test_profile->set_identifier(null);
+					//$perf_per_result->set_used_arguments(' xxx s');
+					$orig_result_buffer = $perf_per_result->test_result_buffer;
+					$perf_per_result->test_result_buffer = new pts_test_result_buffer();
+					$perf_per_result->set_parent_hash($result->get_parent_hash());
+					$sensor_scale = $result->test_profile->get_result_scale();
+					if(substr($sensor_scale, -1) == 's')
+					{
+						$sensor_scale = substr($sensor_scale, 0, -1);
+					}
+
+					if($perf_per_result->test_profile->get_result_proportion() == 'HIB')
+					{
+						$perf_per_result->append_to_arguments_description(' [Perf Per ' . $sensor_scale . ' Using ' . str_replace(array(' Monitor', ' Consumption'), '', $result->get_arguments_description()) . ']');
+						$perf_per_result->test_profile->set_result_scale($perf_per_result->test_profile->get_result_scale() . ' Per ' . $sensor_scale);
+						foreach($this_round as $identifier => $all_results_array)
+						{
+							$perf_result = $orig_result_buffer->get_result_from_identifier($identifier);
+							if($perf_result != false && is_numeric($perf_result))
+							{
+								$perf_per_result->test_result_buffer->add_test_result($identifier, round($perf_result / pts_math::arithmetic_mean($all_results_array), 3));
+							}
+						}
+						$result_file->add_result($perf_per_result);
+					}
+					else if($perf_per_result->test_profile->get_result_proportion() == 'LIB' && $sensor_scale == 'Watt')
+					{
+						$multiplier = -1;
+						switch($perf_per_result->test_profile->get_result_scale())
+						{
+							case 'Seconds':
+								$multiplier = 1;
+								break;
+							case 'msec':
+							case 'ms':
+								$multiplier = 0.001;
+								break;
+							case 'Microseconds':
+							case 'us':
+								$multiplier = 0.000001;
+								break;
+						}
+						if($multiplier != -1)
+						{
+							$perf_per_result->append_to_arguments_description(' [Power Efficiency Using ' . str_replace(array(' Monitor', ' Consumption'), '', $result->get_arguments_description()) . ']');
+							$perf_per_result->test_profile->set_result_scale('Joules Per Run Average');
+							foreach($this_round as $identifier => $all_results_array)
+							{
+								$perf_result = $orig_result_buffer->get_result_from_identifier($identifier);
+								if($perf_result != false && is_numeric($perf_result))
+								{
+									$perf_per_result->test_result_buffer->add_test_result($identifier, round(($perf_result * $multiplier) * pts_math::arithmetic_mean($all_results_array), 3));
+								}
+							}
+							$result_file->add_result($perf_per_result);
+						}
+					}
+				}
+			}
+		}
+		foreach($results as $identifier_set => $result_set)
+		{
+			foreach($reset_set as $identifier => $values)
+			{
+				if(count($values) < 2)
+				{
+					// If small result file with not a lot of data, don't bother showing...
+					unset($results[$identifier_set][$identifier]);
+				}
+			}
+		}
+
+		$return_result_objects = array();
+		if($gen_composite_results && !empty($results))
+		{
+			foreach($results as $set_identifier => $result_set)
+			{
+				$test_profile = new pts_test_profile();
+				$test_result = new pts_test_result($test_profile);
+				$test_result->test_profile->set_test_title($set_identifier . ' Monitoring Overview');
+				$test_result->test_profile->set_identifier(null);
+				$test_result->test_profile->set_version(null);
+				$test_result->test_profile->set_result_proportion(null);
+				$test_result->test_profile->set_display_format('LINE_GRAPH');
+				$test_result->test_profile->set_result_scale('Watts');
+				//$test_result->test_profile->set_result_proportion('HIB');
+				$test_result->set_used_arguments_description('Accumulated ' . $set_identifier . ' Monitoring');
+				$test_result->set_used_arguments('Result Composite ' . $set_identifier);
+				$test_result->test_result_buffer = new pts_test_result_buffer();
+
+				foreach($result_set as $identifier => $values)
+				{
+					$test_result->test_result_buffer->add_test_result($identifier, implode(',', $values));
+				}
+
+				if(!$result_file->is_multi_way_comparison() && $do_sort)
+				{
+					$test_result->sort_results_by_performance();
+				}
+				$test_result->dynamically_generated = true;
+				$return_result_objects[] = $test_result;
+			}
+		}
+
+		return $return_result_objects;
 	}
 	public static function generate_geometric_mean_result_per_test($result_file, $do_sort = false, $selector = null, $best_is_last = false)
 	{

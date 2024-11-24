@@ -294,6 +294,7 @@ class pts_test_execution
 					}
 				}
 
+				pts_module_manager::module_process('__calling_test_script', $test_run_request);
 				$test_process = proc_open($test_prepend . $to_exec . ' ' . $execute_binary_prepend . $execute_binary_prepend_final . $execute_binary . ' ' . $pts_test_arguments . $post_test_args, $descriptorspec, $pipes, $to_execute, array_merge($host_env, pts_client::environment_variables(), $terv));
 
 				if(is_resource($test_process))
