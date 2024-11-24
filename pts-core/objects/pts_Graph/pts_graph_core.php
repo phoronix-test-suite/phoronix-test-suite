@@ -314,7 +314,12 @@ abstract class pts_graph_core
 		$config['size']['tick_mark'] = 10;
 		$config['size']['key'] = 9;
 
-		if(defined('OPENBENCHMARKING_BUILD'))
+		if(isset($_REQUEST['phoronix_export']))
+		{
+			$config['text']['watermark'] = 'Phoronix.com';
+			$config['text']['watermark_url'] = 'https://www.phoronix.com/';
+		}
+		else if(defined('OPENBENCHMARKING_BUILD'))
 		{
 			$config['text']['watermark'] = 'OpenBenchmarking.org';
 			if(defined('OPENBENCHMARKING_WATERMARK_URL'))

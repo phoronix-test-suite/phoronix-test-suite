@@ -59,7 +59,7 @@ class system_monitor extends pts_module_interface
 			$info .= '  - ' . $arg . PHP_EOL;
 		}
 
-        $info .= PHP_EOL . 'NOTE: Use the "system-sensors" command to see what sensors are available for monitoring on the system.' . PHP_EOL;
+        $info .= PHP_EOL . 'NOTE: Use the "phoronix-test-suite system-sensors" command to see what sensors are available for monitoring on the system.' . PHP_EOL;
 
 		return $info;
 	}
@@ -86,11 +86,6 @@ class system_monitor extends pts_module_interface
 			self::create_monitoring_cgroups();
 			self::print_monitored_sensors();
 			self::set_monitoring_interval();
-
-			// Pad some idling sensor results at the start
-			//sleep((self::$sensor_monitoring_frequency * 8));
-
-			//self::pts_start_monitoring();
 		}
 		catch(Exception $e)
 		{
@@ -419,8 +414,7 @@ class system_monitor extends pts_module_interface
 			$sensor_type_exists = array_key_exists($sensor[0], $sensor_parameters);
 			$sensor_name_exists = $sensor_type_exists && array_key_exists($sensor[1], $sensor_parameters[$sensor[0]]);
 			$monitor_all_of_this_type = $sensor_type_exists && array_key_exists('all', $sensor_parameters[$sensor[0]]);
-			$monitor_all_of_this_sensor = $sensor_type_exists && $sensor_name_exists
-					&& in_array('all', $sensor_parameters[$sensor[0]][$sensor[1]]);
+			$monitor_all_of_this_sensor = $sensor_type_exists && $sensor_name_exists && in_array('all', $sensor_parameters[$sensor[0]][$sensor[1]]);
 			$is_cgroup_sensor = $sensor[0] === 'cgroup';
 
 			if(($monitor_all && !$is_cgroup_sensor) || $monitor_all_of_this_type || $sensor_name_exists )

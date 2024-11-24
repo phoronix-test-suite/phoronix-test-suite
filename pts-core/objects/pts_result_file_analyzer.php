@@ -769,8 +769,10 @@ class pts_result_file_analyzer
 			'gpu.power' => 'GPU Power Consumption',
 			'sys.power' => 'System Power Consumption',
 			'cpu.peak-freq' => 'CPU Peak Freq',
+			'cpu.usage' => 'CPU Usage',
 			'cpu.temp' => 'CPU Temp',
 			'gpu.temp' => 'GPU Temp',
+			'hdd.temp' => 'Drive Temp',
 			);
 		$results = array();
 		foreach($result_file->get_result_objects() as &$result)
@@ -891,7 +893,7 @@ class pts_result_file_analyzer
 		}
 		foreach($results as $identifier_set => $result_set)
 		{
-			foreach($reset_set as $identifier => $values)
+			foreach($result_set as $identifier => $values)
 			{
 				if(count($values) < 2)
 				{
