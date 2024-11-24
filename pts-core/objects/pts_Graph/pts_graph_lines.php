@@ -114,7 +114,7 @@ class pts_graph_lines extends pts_graph_core
 	protected function render_graph_pre_init()
 	{
 		// Do some common work to this object
-		$this->i['identifier_width'] = $this->max_count > 0 ? (($this->i['graph_left_end'] - $this->i['left_start']) / $this->max_count) : 1;
+		$this->i['identifier_width'] = $this->max_count > 0 ? round(($this->i['graph_left_end'] - $this->i['left_start']) / $this->max_count) : 1;
 
 		if(!$this->i['hide_graph_identifiers'])
 		{
@@ -159,10 +159,10 @@ class pts_graph_lines extends pts_graph_core
 			else
 			{
 				$max_v = max($v);
-				if(!is_numeric($max_v))
+				/*if(!is_numeric($max_v))
 				{
 					continue;
-				}
+				}*/
 				$max_value = max($max_value,  $max_v);
 				if($min_value == -1)
 					$min_value = $max_value;
@@ -339,7 +339,7 @@ class pts_graph_lines extends pts_graph_core
 	{
 		foreach($data_set as $i => $v)
 		{
-			if($v === NULL || !is_numeric($v))
+			if($v === null) // 2024 XXX dropped: || !is_numeric($v)
 			{
 				unset($data_set[$i]);
 			}
@@ -380,7 +380,7 @@ class pts_graph_lines extends pts_graph_core
 				{
 					$value = 0;
 				}
-				else if($value < 0 || !is_numeric($value))
+				else if($value < 0) // XXX 2024 removed: || !is_numeric($value)
 				{
 					// Draw whatever is needed of the line so far, since there is no result here
 					if(!$this->i['on_zero_plot_connect'])
@@ -394,8 +394,8 @@ class pts_graph_lines extends pts_graph_core
 				$std_error = isset($raw_array[$i]) ? pts_math::standard_error(pts_strings::colon_explode($raw_array[$i])) : 0;
 				$data_string = $identifier . ': ' . $value;
 
-				$value_plot_top = $this->i['graph_top_end'] + 1 - ($this->i['graph_max_value'] == 0 ? 0 : round((($value - $this->i['graph_min_value']) / ($this->i['graph_max_value'] - $this->i['graph_min_value'])) * ($this->i['graph_top_end'] - $this->i['top_start'])));
-				$px_from_left = round($this->i['left_start'] + ($this->i['identifier_width'] * ($i + (count($this->graph_identifiers) > 1 ? 1 : 0))));
+				$value_plot_top = round($this->i['graph_top_end'] + 1 - ($this->i['graph_max_value'] == 0 ? 0 : (($value - $this->i['graph_min_value']) / ($this->i['graph_max_value'] - $this->i['graph_min_value'])) * ($this->i['graph_top_end'] - $this->i['top_start'])));
+				$px_from_left = $this->i['left_start'] + ($this->i['identifier_width'] * ($i + (count($this->graph_identifiers) > 1 ? 1 : 0)));
 
 				if($px_from_left > $this->i['graph_left_end'])
 				{
@@ -432,13 +432,12 @@ class pts_graph_lines extends pts_graph_core
 			return;
 		}
 
-		$svg_poly = array();
+		$svg_poly_str = '';
 		foreach($poly_points as $x_y)
 		{
-			$svg_poly[] = round($x_y[0]) . ',' . round($x_y[1]);
+			$svg_poly_str .= $x_y[0] . ',' . $x_y[1] . ' ';
 		}
-		$svg_poly = implode(' ', $svg_poly);
-		$this->svg_dom->add_element('polyline', array('points' => $svg_poly, 'fill' => 'none', 'stroke-width' => 2), $g);
+		$this->svg_dom->add_element('polyline', array('points' => substr($svg_poly_str, 0, -1), 'fill' => 'none', 'stroke-width' => 2), $g);
 
 		// plot error bars if needed
 		foreach($poly_points as $i => $x_y_pair)

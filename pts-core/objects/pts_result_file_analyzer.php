@@ -249,7 +249,7 @@ class pts_result_file_analyzer
 				}
 			}
 
-			if($added_count > 1)
+			if($added_count > 1 && isset($scale))
 			{
 				$test_result->test_profile->set_result_scale($scale);
 				return $test_result;
@@ -269,6 +269,10 @@ class pts_result_file_analyzer
 		{
 			$result_file = false;
 			$ros = array($input);
+		}
+		else
+		{
+			return false;
 		}
 
 		foreach($ros as &$result_object)
@@ -984,11 +988,11 @@ class pts_result_file_analyzer
 		{
 			foreach($test_results as $identifier => $values)
 			{
-				if(false && count($values) < 4)
+				/*if(count($values) < 4)
 				{
 					// If small result file with not a lot of data, don't bother showing...
 					unset($results[$test][$identifier]);
-				}
+				}*/
 			}
 
 			if(empty($results[$test]))

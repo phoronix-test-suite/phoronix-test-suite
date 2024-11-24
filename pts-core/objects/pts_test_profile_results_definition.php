@@ -48,7 +48,7 @@ class pts_test_profile_results_definition
 	}
 	public function get_extra_data_definitions()
 	{
-		return $this->system_monitors;
+		return $this->extra_data;
 	}
 	public function add_image_parser_definition($s, $m, $x, $y, $w, $h)
 	{

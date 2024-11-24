@@ -97,7 +97,7 @@ else if(isset($_GET['test']))
 	{
 		// Object is a test
 		$test_profile = new pts_test_profile($tp_identifier);
-		if(true || pts_validation::validate_test_profile($test_profile)) // TODO decide whether validate_test_profile is really desired for local tests where they might be sloppy
+		if(true) // previously had pts_validation::validate_test_profile($test_profile) TODO decide whether validate_test_profile is really desired for local tests where they might be sloppy
 		{
 			pts_logger::add_to_log($_SERVER['REMOTE_ADDR'] . ' requested a fallback copy of the ' . $test_profile->get_identifier() . ' test profile');
 			$zip_file = tempnam(sys_get_temp_dir(), 'phoromatic-zip') . '.zip';

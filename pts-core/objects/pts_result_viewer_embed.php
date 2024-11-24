@@ -802,7 +802,7 @@ class pts_result_viewer_embed
 				break;
 			}
 		}
-		$suites_in_result_file = $system_count > 1 ? pts_test_suites::suites_in_result_file($result_file, true, 0) : array();
+		$suites_in_result_file = $system_count > 1 && self::check_request_for_var($request, 'lcs') ? pts_test_suites::suites_in_result_file($result_file, true, 0) : array();
 		// END OF CHECKS
 
 		$analyze_options .= '<form action="' . $_SERVER['REQUEST_URI'] . '" method="post">';
@@ -832,6 +832,7 @@ class pts_result_viewer_embed
 			$analyze_checkboxes['View'][] = array('hlc', 'Do Not Show Results With Little Change/Spread');
 			$analyze_checkboxes['View'][] = array('spr', 'List Notable Results');
 			$analyze_checkboxes['View'][] = array('src', 'Show Result Confidence Charts');
+			$analyze_checkboxes['View'][] = array('lcs', 'Allow Limiting Results To Certain Suite(s)');
 
 			if($has_identifier_with_color_brand)
 			{

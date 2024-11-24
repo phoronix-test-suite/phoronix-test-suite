@@ -293,7 +293,7 @@ class pts_module_manager
 	}
 	public static function clean_module_list()
 	{
-		array_unique(self::$modules);
+		self::$modules = array_unique(self::$modules);
 
 		foreach(self::$modules as $i => $module)
 		{

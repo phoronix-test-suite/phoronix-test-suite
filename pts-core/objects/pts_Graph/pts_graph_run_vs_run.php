@@ -29,8 +29,6 @@ class pts_graph_run_vs_run extends pts_graph_core
 	public static function cmp_result_object_sort($a, $b)
 	{
 		return strcmp($b->get_spread(false), $a->get_spread(false));
-
-		return strcmp($a, $b);
 	}
 	public function __construct($result_file)
 	{

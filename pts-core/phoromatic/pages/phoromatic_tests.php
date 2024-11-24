@@ -60,7 +60,7 @@ class phoromatic_tests implements pts_webui_interface
 			{
 				$main .= '<p>No results found on this Phoromatic Server for the ' . $tp->get_title() . ' test profile.</p>';
 			}
-			else if(false && $recent_result_count > 5)
+			else if(false) // previously: $recent_result_count > 5 TODO broken
 			{
 				// TODO XXX below code is borked
 				$stmt = phoromatic_server::$db->prepare('SELECT UploadID, SystemID, UploadTime FROM phoromatic_results WHERE AccountID = :account_id AND UploadID IN (SELECT DISTINCT UploadID FROM phoromatic_results_results WHERE AccountID = :account_id AND TestProfile LIKE :tp) ORDER BY UploadTime DESC LIMIT 1000');

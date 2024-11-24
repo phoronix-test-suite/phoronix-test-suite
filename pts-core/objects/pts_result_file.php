@@ -590,7 +590,7 @@ class pts_result_file
 			{
 				$identifiers = $this->get_system_identifiers();
 			}
-			$is_multi_way = count($identifiers) < 2 ? false : pts_render::multi_way_identifier_check($identifiers, $hw, $this);
+			$is_multi_way = count($identifiers) < 2 ? false : pts_render::multi_way_identifier_check($identifiers);
 			$this->is_multi_way_inverted = $is_multi_way && $is_multi_way[1];
 		}
 
@@ -1147,10 +1147,10 @@ class pts_result_file
 		else
 		{
 			return strnatcmp($a_suites, $b_suites);
-			$a_suites .= ' ';
+			/*$a_suites .= ' ';
 			$b_suites .= ' ';
 			$first_suite_cmp = strcmp(substr($a_suites, 0, strpos($a_suites, ' ')), substr($b_suites, 0, strpos($b_suites, ' ')));
-			return $first_suite_cmp != 0 ? $first_suite_cmp : strcmp($a_suites, $b_suites);
+			return $first_suite_cmp != 0 ? $first_suite_cmp : strcmp($a_suites, $b_suites);*/
 		}
 	}
 	public function sort_result_object_order_by_title($asc = true)

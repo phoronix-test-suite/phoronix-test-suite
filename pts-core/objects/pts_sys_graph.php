@@ -56,7 +56,6 @@ class pts_sys_graph
 
 	public function __construct($data)
 	{
-		$this->plot_data = array();
 		foreach($data as $name => $value)
 		{
 		   $this->__set($name, $value);

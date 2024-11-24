@@ -210,7 +210,7 @@ class pts_test_run_options
 
 		$error_handle = null;
 		$option_objects = $test_profile->get_test_option_objects(true, $error_handle);
-		if($error_handle)
+		if(!empty($error_handle))
 		{
 			echo PHP_EOL . pts_client::$display->get_tab() . pts_client::cli_just_italic($error_handle) . PHP_EOL;
 			return false;
@@ -256,7 +256,7 @@ class pts_test_run_options
 
 		$error_handle = null;
 		$option_objects = $test_profile->get_test_option_objects(true, $error_handle, $validate_options_now);
-		if($error_handle)
+		if(!empty($error_handle))
 		{
 			echo PHP_EOL . pts_client::$display->get_tab() . pts_client::cli_just_italic($error_handle) . PHP_EOL;
 			return false;
