@@ -532,7 +532,7 @@ class phodevi_cpu extends phodevi_device_interface
 			$physical_cpu_ids = phodevi_linux_parser::read_cpuinfo('physical id');
 			$physical_cpu_count = count(array_unique($physical_cpu_ids));
 
-			$cpu_strings = phodevi_linux_parser::read_cpuinfo(array('model name', 'Processor', 'cpu', 'cpu model'));
+			$cpu_strings = phodevi_linux_parser::read_cpuinfo(array('model name', 'Processor', 'cpu', 'cpu model', 'Model Name'));
 
 			$cpu_strings_unique = array_unique($cpu_strings);
 
