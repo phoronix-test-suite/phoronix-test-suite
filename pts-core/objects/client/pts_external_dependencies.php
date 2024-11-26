@@ -499,7 +499,7 @@ class pts_external_dependencies
 					if(substr($file[$i], -2) == '.h' || substr($file[$i], -4) == '.hpp')
 					{
 						// May just be a relative header file to look for...
-						$possible_paths = array_merge(array('/usr/local/include/', '/usr/target/include/', '/usr/include/'), pts_file_io::glob('/usr/include/*-linux-gnu/'));
+						$possible_paths = array_merge(array('/usr/local/include/', '/usr/target/include/', '/usr/include/',  '/opt/homebrew/include/', '/opt/homebrew/opt', '/opt/homebrew/'), pts_file_io::glob('/usr/include/*-linux-gnu/'));
 						foreach($possible_paths as $path)
 						{
 							if(self::is_present($path . '/' . $file[$i]))
@@ -511,7 +511,7 @@ class pts_external_dependencies
 					else if(strpos($file[$i], '.so') !== false || substr($file[$i], -2) == '.a')
 					{
 						// May just be a relative shared library to look for...
-						$possible_paths = array_merge(array('/usr/local/lib/', '/usr/lib/', '/usr/lib64/', '/usr/lib/arm-linux-gnueabihf/'), pts_file_io::glob('/usr/lib/*-linux-gnu/'));
+						$possible_paths = array_merge(array('/usr/local/lib/', '/usr/lib/', '/usr/lib64/', '/usr/lib/arm-linux-gnueabihf/',  '/opt/homebrew/include/', '/opt/homebrew/opt', '/opt/homebrew/'), pts_file_io::glob('/usr/lib/*-linux-gnu/'));
 
 						if(getenv('LD_LIBRARY_PATH'))
 						{
