@@ -330,7 +330,7 @@ class phodevi_system extends phodevi_device_interface
 					}
 					break;
 				default:
-					if(substr($fs, 0, 9) == 'UNKNOWN (')
+					if(!empty($fs) && substr($fs, 0, 9) == 'UNKNOWN (')
 					{
 						$magic_block = substr($fs, 9, -1);
 						$known_magic_blocks = array(

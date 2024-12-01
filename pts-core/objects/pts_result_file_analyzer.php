@@ -773,8 +773,10 @@ class pts_result_file_analyzer
 			'cpu.temp' => 'CPU Temp',
 			'gpu.temp' => 'GPU Temp',
 			'hdd.temp' => 'Drive Temp',
+			'memory.temp' => 'Memory Temp',
 			);
 		$results = array();
+		$results_units = array();
 		foreach($result_file->get_result_objects() as &$result)
 		{
 			if(stripos($result->get_arguments_description(), ' Monitor') === false  || $result->test_profile->get_display_format() != 'LINE_GRAPH')
@@ -822,6 +824,7 @@ class pts_result_file_analyzer
 				if(!isset($results[$this_sensor][$ri]))
 				{
 					$results[$this_sensor][$ri] = array();
+					$results_units[$this_sensor] = $result->test_profile->get_result_scale();
 				}
 				$results[$this_sensor][$ri]= array_merge($results[$this_sensor][$ri], $r);
 			}
@@ -915,7 +918,7 @@ class pts_result_file_analyzer
 				$test_result->test_profile->set_version(null);
 				$test_result->test_profile->set_result_proportion(null);
 				$test_result->test_profile->set_display_format('LINE_GRAPH');
-				$test_result->test_profile->set_result_scale('Watts');
+				$test_result->test_profile->set_result_scale($results_units[$set_identifier]);
 				//$test_result->test_profile->set_result_proportion('HIB');
 				$test_result->set_used_arguments_description('Accumulated ' . $set_identifier . ' Monitoring');
 				$test_result->set_used_arguments('Result Composite ' . $set_identifier);
