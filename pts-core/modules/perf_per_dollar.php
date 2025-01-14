@@ -126,10 +126,10 @@ class perf_per_dollar extends pts_module_interface
 			{
 				// Cost-perf-per-hour calculation, e.g. cloud costs...
 				// self::$TEST_RUN_TIME_ELAPSED is seconds run.....
-				$cost_to_run_test = round((self::$COST_PERF_PER_HOUR / 60 / 60) * self::$TEST_RUN_TIME_ELAPSED, 2);
+				$cost_to_run_test = round((self::$COST_PERF_PER_HOUR / 60 / 60) * self::$TEST_RUN_TIME_ELAPSED, 11);
 
-				if($cost_to_run_test < 0.01)
-					return;
+				//if($cost_to_run_test < 0.01)
+				//	return;
 
 				$cost_perf_value = $cost_to_run_test;
 				$footnote = '$' . self::$COST_PERF_PER_HOUR . ' reported cost per hour, test consumed ' . pts_strings::format_time(self::$TEST_RUN_TIME_ELAPSED) . ': cost approximately ' . $cost_perf_value . ' ' . strtolower(self::$COST_PERF_PER_UNIT) . '.';
@@ -187,10 +187,11 @@ class perf_per_dollar extends pts_module_interface
 			if(self::$COST_PERF_PER_HOUR > 0)
 			{
 				// Cost-perf-per-hour calculation, e.g. cloud costs...
-				$cost_to_run_test = round((self::$COST_PERF_PER_HOUR / 60 / 60) * $total_elapsed_test_time, 2);
+				$cost_to_run_test = round((self::$COST_PERF_PER_HOUR / 60 / 60) * $total_elapsed_test_time, 11);
 
-				if($cost_to_run_test < 0.01)
-					return;
+				//if($cost_to_run_test < 0.01)
+				//	return;
+
 				$footnote = '$' . self::$COST_PERF_PER_HOUR . ' reported cost per hour, running tests consumed ' . pts_strings::format_time($total_elapsed_test_time) . ': cost approximately ' . $cost_to_run_test . ' ' . strtolower(self::$COST_PERF_PER_UNIT) . '.';
 				$test_profile = new pts_test_profile();
 				$test_result = new pts_test_result($test_profile);
