@@ -4,7 +4,7 @@
   <TestInformation>
     <Title>CloudSuite Data Analytics</Title>
     <AppVersion>4.0</AppVersion>
-    <Description>CloudSuite Data Analytics is a Docker-based benchmark and runs a Naive Bayes classifier on a Wikimedia dataset with Hadoop and Mahout.</Description>
+    <Description>CloudSuite Data Analytics is a Podman-based benchmark and runs a Naive Bayes classifier on a Wikimedia dataset with Hadoop and Mahout.</Description>
     <ResultScale>ms</ResultScale>
     <Proportion>LIB</Proportion>
     <TimesToRun>1</TimesToRun>
@@ -20,9 +20,9 @@
     <EnvironmentSize>700</EnvironmentSize>
     <ProjectURL>https://github.com/parsa-epfl/cloudsuite/blob/master/docs/benchmarks/data-analytics.md</ProjectURL>
     <RepositoryURL>https://github.com/parsa-epfl/cloudsuite/</RepositoryURL>
-    <InternalTags>Cloud, Docker</InternalTags>
-    <Maintainer>Michael Larabel</Maintainer>
-    <SystemDependencies>docker</SystemDependencies>
+    <InternalTags>Cloud, Podman</InternalTags>
+    <Maintainer>Ahmed Eleliemy</Maintainer>
+    <SystemDependencies>podman</SystemDependencies>
   </TestProfile>
   <TestSettings>
     <Option>
