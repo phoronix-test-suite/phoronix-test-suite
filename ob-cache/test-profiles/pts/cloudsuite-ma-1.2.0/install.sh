@@ -13,11 +13,11 @@ echo $? > ~/install-exit-status
 echo "#!/bin/bash
 export HOME=\$DEBUG_REAL_HOME
 # Start
-podman run --privileged --name movielens-data docker.io/cloudsuite/movielens-dataset
+podman run --privileged --name movielens-data docker.io/cloudsuite3/movielens-dataset
 # Run in-memory analytics benchmark
 MEMORY_LIMIT=\`echo \"scale=0;\$SYS_MEMORY / 1024 * 0.91\" |bc -l | cut -d'.' -f1\`
 echo \"Memory Limit is \${MEMORY_LIMIT}g\"
-podman run --privileged --rm --volumes-from movielens-data docker.io/cloudsuite/in-memory-analytics \"\$1\" /data/myratings.csv --driver-memory \${MEMORY_LIMIT}g --executor-memory \${MEMORY_LIMIT}g > \$LOG_FILE 2>&1
+podman run --privileged --rm --volumes-from movielens-data docker.io/cloudsuite3/in-memory-analytics \"\$1\" /data/myratings.csv --driver-memory \${MEMORY_LIMIT}g --executor-memory \${MEMORY_LIMIT}g > \$LOG_FILE 2>&1
 echo \$? > ~/test-exit-status
 # Stop them
 podman stop movielens-data
