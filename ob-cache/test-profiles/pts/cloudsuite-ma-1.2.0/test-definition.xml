@@ -10,7 +10,7 @@
     <TimesToRun>3</TimesToRun>
   </TestInformation>
   <TestProfile>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <SupportedPlatforms>Linux</SupportedPlatforms>
     <SoftwareType>Utility</SoftwareType>
     <TestType>System</TestType>
