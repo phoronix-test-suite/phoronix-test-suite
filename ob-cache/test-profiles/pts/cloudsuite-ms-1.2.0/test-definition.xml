@@ -20,7 +20,7 @@
     <ProjectURL>https://github.com/parsa-epfl/cloudsuite/blob/master/docs/benchmarks/media-streaming.md</ProjectURL>
     <RepositoryURL>https://github.com/parsa-epfl/cloudsuite/</RepositoryURL>
     <InternalTags>Cloud, podman</InternalTags>
-    <Maintainer>Michael Larabel</Maintainer>
+    <Maintainer>Ahmed Eleliemy</Maintainer>
     <SystemDependencies>podman</SystemDependencies>
   </TestProfile>
 </PhoronixTestSuite>
