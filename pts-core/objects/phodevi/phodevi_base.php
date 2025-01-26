@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2018, Phoronix Media
-	Copyright (C) 2009 - 2018, Michael Larabel
+	Copyright (C) 2009 - 2025, Phoronix Media
+	Copyright (C) 2009 - 2025, Michael Larabel
 	phodevi_base.php: The base object for interacting with the Phoronix Device Interface
 
 	This program is free software; you can redistribute it and/or modify
@@ -34,7 +34,8 @@ class phodevi_base
 		'Graphics' => 'gpu',
 		'Audio' => 'audio',
 		'Monitor' => 'monitor',
-		'Network' => 'network'
+		'Network' => 'network',
+		'npu' => array('system', 'npu'),
 		);
 	}
 	public static function available_software_components()

@@ -114,7 +114,7 @@ class pts_graph_lines extends pts_graph_core
 	protected function render_graph_pre_init()
 	{
 		// Do some common work to this object
-		$this->i['identifier_width'] = $this->max_count > 0 ? round(($this->i['graph_left_end'] - $this->i['left_start']) / $this->max_count) : 1;
+		$this->i['identifier_width'] = $this->max_count > 0 ? (($this->i['graph_left_end'] - $this->i['left_start']) / $this->max_count) : 1;
 
 		if(!$this->i['hide_graph_identifiers'])
 		{

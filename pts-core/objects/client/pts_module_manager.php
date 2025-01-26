@@ -134,7 +134,10 @@ class pts_module_manager
 				{
 					list($var, $value) = pts_strings::trim_explode('=', $ev);
 					putenv($var . '=' . $value);
-					pts_env::set($var, $value);
+					if(pts_env::read($var) == false)
+					{
+						pts_env::set($var, $value);
+					}
 					pts_module_manager::var_store_add($var, $value);
 				}
 			}

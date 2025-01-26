@@ -3,8 +3,8 @@
 #
 #	Phoronix Test Suite
 #	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-#	Copyright (C) 2008 - 2021, Phoronix Media
-#	Copyright (C) 2008 - 2021, Michael Larabel
+#	Copyright (C) 2008 - 2025, Phoronix Media
+#	Copyright (C) 2008 - 2025, Michael Larabel
 #	phoronix-test-suite: The Phoronix Test Suite is an extensible open-source testing / benchmarking platform
 #
 #	This program is free software; you can redistribute it and/or modify
@@ -76,12 +76,12 @@ then
 elif [ -x /usr/bin/php ] || [ -x /usr/pkg/bin/php ]
 then
 	export PHP_BIN="php"
-elif [ -x /usr/php7/bin/php ]
-then
-	export PHP_BIN="/usr/php7/bin/php"
 elif [ -x /usr/php8/bin/php ]
 then
 	export PHP_BIN="/usr/php8/bin/php"
+elif [ -x /usr/php7/bin/php ]
+then
+	export PHP_BIN="/usr/php7/bin/php"
 elif [ -x /usr/php/bin/php ]
 then
 	export PHP_BIN="/usr/php/bin/php"
@@ -189,7 +189,7 @@ elif [ -x /usr/bin/pkg_radd ]
 then
 	# BSD
 	echo "The command to likely run for your operating system is: "
-	echo "# pkg_radd php7 php7-json php7-zip php7-dom"
+	echo "# pkg_radd php8 php8-json php8-zip php8-dom"
 	echo " "
 elif [ -x /usr/bin/pacman ]
 then

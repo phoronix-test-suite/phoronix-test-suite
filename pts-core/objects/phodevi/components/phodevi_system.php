@@ -59,6 +59,7 @@ class phodevi_system extends phodevi_device_interface
 			'kernel-extra-details' => new phodevi_device_property('sw_kernel_extra_details', phodevi::std_caching),
 			'battery' => new phodevi_device_property('battery', phodevi::smart_caching),
 			'platform-profile' => new phodevi_device_property('sw_platform_profile', phodevi::std_caching),
+			'npu' => new phodevi_device_property('npu', phodevi::std_caching),
 			);
 	}
 	public static function sw_username()
@@ -89,6 +90,29 @@ class phodevi_system extends phodevi_device_interface
 		}
 
 		return $platform_profile;
+	}
+	public static function npu()
+	{
+		$npus = array();
+		foreach(pts_file_io::glob('/sys/class/accel/accel*/device/enable') as $accel_device)
+		{
+			$enable = pts_file_io::file_get_contents($accel_device);
+			if($enable == '1')
+			{
+				$accel_dir = dirname($accel_device);
+				$vendor = pts_file_io::file_get_contents($accel_dir . '/vendor');
+				if($vendor == '0x8086')
+				{
+					$npus[] = 'Intel NPU';
+				}
+			}
+		}
+		if(count(pts_file_io::glob('/sys/memx*/verinfo')) > 0)
+		{
+			// Unfortunately no better name reporting...
+			$npus[] = 'MemryX NPU';
+		}
+		return implode(' + ', $npus);
 	}
 	public static function sw_kernel_extra_details()
 	{
