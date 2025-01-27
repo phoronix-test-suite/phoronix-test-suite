@@ -28,7 +28,7 @@ class merge_results implements pts_option_interface
 	public static function argument_checks()
 	{
 		return array(
-		new pts_argument_check('VARIABLE_LENGTH', array('pts_types', 'is_result_file'), null)
+		//new pts_argument_check('VARIABLE_LENGTH', array('pts_types', 'is_result_file'), null)
 		);
 	}
 	public static function run($result_files_to_merge)
