@@ -31,6 +31,7 @@ class perf_per_dollar extends pts_module_interface
 	private static $COST_PERF_PER_DOLLAR = 0;
 	private static $COST_PERF_PER_HOUR = 0;
 	private static $COST_PERF_PER_UNIT = 'Dollar';
+	private static $COST_PERF_PRECISION = 2;
 	private static $successful_test_run_request = null;
 	private static $perf_per_dollar_collection;
 	private static $result_identifier;
@@ -40,7 +41,7 @@ class perf_per_dollar extends pts_module_interface
 
 	public static function module_environment_variables()
 	{
-		return array('COST_PERF_PER_DOLLAR', 'COST_PERF_PER_UNIT', 'COST_PERF_PER_HOUR');
+		return array('COST_PERF_PER_DOLLAR', 'COST_PERF_PER_UNIT', 'COST_PERF_PER_HOUR', 'COST_PERF_PRECISION');
 	}
 	public static function module_info()
 	{
@@ -85,6 +86,11 @@ class perf_per_dollar extends pts_module_interface
 			echo PHP_EOL . 'The Phoronix Test Suite will generate performance-per-dollar graphs with an assumed value of $' . $d . ' per hour.' . PHP_EOL;
 			self::$perf_per_dollar_collection = array();
 		}
+		else if(($d = getenv('COST_PERF_PRECISION')) > 0)
+		{
+			self::$COST_PERF_PRECISION = $d;
+			echo PHP_EOL . 'The Phoronix Test Suite will generate performance-per-dollar calculations with a precision of' . $d . PHP_EOL;
+		}
 		else
 		{
 			return pts_module::MODULE_UNLOAD; // This module doesn't have anything else to do
@@ -126,10 +132,11 @@ class perf_per_dollar extends pts_module_interface
 			{
 				// Cost-perf-per-hour calculation, e.g. cloud costs...
 				// self::$TEST_RUN_TIME_ELAPSED is seconds run.....
-				$cost_to_run_test = round((self::$COST_PERF_PER_HOUR / 60 / 60) * self::$TEST_RUN_TIME_ELAPSED, 11);
+				$cost_to_run_test = round((self::$COST_PERF_PER_HOUR / 60 / 60) * self::$TEST_RUN_TIME_ELAPSED, self::$COST_PERF_PRECISION);
 
-				//if($cost_to_run_test < 0.01)
-				//	return;
+				$min = pow(10, self::$COST_PERF_PRECISION*-1);
+				if($cost_to_run_test < $min)
+					return;
 
 				$cost_perf_value = $cost_to_run_test;
 				$footnote = '$' . self::$COST_PERF_PER_HOUR . ' reported cost per hour, test consumed ' . pts_strings::format_time(self::$TEST_RUN_TIME_ELAPSED) . ': cost approximately ' . $cost_perf_value . ' ' . strtolower(self::$COST_PERF_PER_UNIT) . '.';
@@ -142,12 +149,12 @@ class perf_per_dollar extends pts_module_interface
 
 			if(self::$successful_test_run_request->test_profile->get_result_proportion() == 'HIB')
 			{
-				$result = pts_math::set_precision(self::$successful_test_run_request->active->get_result() / $cost_perf_value);
+				$result = pts_math::set_precision(self::$successful_test_run_request->active->get_result() / $cost_perf_value, self::$COST_PERF_PRECISION);
 				$scale = self::$successful_test_run_request->test_profile->get_result_scale() . ' Per ' . self::$COST_PERF_PER_UNIT;
 			}
 			else if(self::$successful_test_run_request->test_profile->get_result_proportion() == 'LIB')
 			{
-				$result = pts_math::set_precision(self::$successful_test_run_request->active->get_result() * $cost_perf_value);
+				$result = pts_math::set_precision(self::$successful_test_run_request->active->get_result() * $cost_perf_value, self::$COST_PERF_PRECISION);
 				$scale = self::$successful_test_run_request->test_profile->get_result_scale() . ' x ' . self::$COST_PERF_PER_UNIT;
 			}
 
@@ -180,17 +187,18 @@ class perf_per_dollar extends pts_module_interface
 				$test_result->set_used_arguments_description('Performance Per Dollar');
 				$test_result->set_used_arguments('Per-Per-Dollar');
 				$test_result->test_result_buffer = new pts_test_result_buffer();
-				$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision($avg_perf_dollar), null, array('install-footnote' => '$' . self::$COST_PERF_PER_DOLLAR . ' reported value. Average value: ' . pts_math::set_precision($avg) . '.'));
+				$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision($avg_perf_dollar, self::$COST_PERF_PRECISION), null, array('install-footnote' => '$' . self::$COST_PERF_PER_DOLLAR . ' reported value. Average value: ' . pts_math::set_precision($avg, self::$COST_PERF_PRECISION) . ' per hour' . '.'));
 				$test_run_manager->result_file->add_result($test_result);
 			}
 
 			if(self::$COST_PERF_PER_HOUR > 0)
 			{
 				// Cost-perf-per-hour calculation, e.g. cloud costs...
-				$cost_to_run_test = round((self::$COST_PERF_PER_HOUR / 60 / 60) * $total_elapsed_test_time, 11);
+				$cost_to_run_test = round((self::$COST_PERF_PER_HOUR / 60 / 60) * $total_elapsed_test_time, self::$COST_PERF_PRECISION);
 
-				//if($cost_to_run_test < 0.01)
-				//	return;
+				$min = pow(10, self::$COST_PERF_PRECISION*-1);
+				if($cost_to_run_test < $min)
+					return;
 
 				$footnote = '$' . self::$COST_PERF_PER_HOUR . ' reported cost per hour, running tests consumed ' . pts_strings::format_time($total_elapsed_test_time) . ': cost approximately ' . $cost_to_run_test . ' ' . strtolower(self::$COST_PERF_PER_UNIT) . '.';
 				$test_profile = new pts_test_profile();
@@ -204,7 +212,7 @@ class perf_per_dollar extends pts_module_interface
 				$test_result->set_used_arguments_description('Cost / Price Per Hour');
 				$test_result->set_used_arguments('Cost Price Per Hour');
 				$test_result->test_result_buffer = new pts_test_result_buffer();
-				$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision($cost_to_run_test), null, array('install-footnote' => $footnote));
+				$test_result->test_result_buffer->add_test_result(self::$result_identifier, pts_math::set_precision($cost_to_run_test, self::$COST_PERF_PRECISION), null, array('install-footnote' => $footnote));
 				$test_run_manager->result_file->add_result($test_result);
 			}
 		}
