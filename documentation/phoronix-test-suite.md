@@ -562,7 +562,7 @@ Setting the COST_PERF_PER_DOLLAR= environment variable to whatever value of the 
 
 **phoronix-test-suite perf_per_dollar.add**
 
-This module utilizes the following environment variables: COST_PERF_PER_DOLLAR, COST_PERF_PER_UNIT, COST_PERF_PER_HOUR.
+This module utilizes the following environment variables: COST_PERF_PER_DOLLAR, COST_PERF_PER_UNIT, COST_PERF_PER_HOUR, COST_PERF_PRECISION.
 
 
 ### Performance Tip Prompts
