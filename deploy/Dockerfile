@@ -1,9 +1,9 @@
 FROM ubuntu:latest
 ARG DEBIAN_FRONTEND=noninteractive
-RUN apt update
+RUN apt-update
 RUN apt-get install -y unzip php-cli apt-utils mesa-utils php-xml git-core apt-file sudo vim 
 RUN apt-get install -y podman
-RUN apt-get install -y shadow-utils fuse-overlayfs; rm -rf /var/cache /var/log/dnf* /var/log/yum.*
+RUN apt-get install -y shadow-utils fuse-overlayfs
 
 RUN useradd podman; \
 echo podman:10000:5000 > /etc/subuid; \
