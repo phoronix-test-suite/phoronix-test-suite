@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <Downloads>
+     <Package>
+      <URL>https://www.ks.uiuc.edu/Research/namd/3.0.1/download/453167/NAMD_3.0.1_Linux-x86_64-multicore-CUDA.tar.gz</URL>
+      <MD5>c47d7aab89361f2fd6cf9328d2af9c81</MD5>
+      <SHA256>ff712dc8e2ceda8f5b76cf059edfce147886e7a082590ac0dd6638c25b0299b0</SHA256>
+      <FileName>NAMD_3.0.1_Linux-x86_64-multicore-CUDA.tar.gz</FileName>
+      <FileSize>257278276</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://www.ks.uiuc.edu/Research/namd/2.14/download/946183/NAMD_2.14_Linux-x86_64-multicore-CUDA.tar.gz</URL>
+      <MD5>d267b77d4c1d40ba43862a4673675c31</MD5>
+      <SHA256>f1516c79b8d6ba72f34f1a2c0b1d09b4eafd4e2f7bb1fc585fd9fe418d141976</SHA256>
+      <FileName>NAMD_2.14_Linux-x86_64-multicore-CUDA.tar.gz</FileName>
+      <FileSize>169669114</FileSize>
+    </Package>
+    <Package>
+      <URL>https://www.ks.uiuc.edu/Research/namd/utilities/f1atpase.zip</URL>
+      <MD5>bec570545a4297dc89ac402b8a59753a</MD5>
+      <SHA256>26b37eb20ad532238a85724c43cbaedd58a507ec71ad8a40aff20b98da949fa8</SHA256>
+      <FileName>f1atpase.zip</FileName>
+      <FileSize>28241682</FileSize>
+    </Package>
+    <Package>
+      <URL>http://www.ks.uiuc.edu/Research/namd/utilities/stmv.zip</URL>
+      <MD5>f360f4e1eec9ce0a0108d18656e03681</MD5>
+      <SHA256>eefdc1909c1c7e1cc2af70286000856387e59e7ad0c7f267460fea2d681e5a49</SHA256>
+      <FileName>stmv.zip</FileName>
+      <FileSize>28789057</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>
