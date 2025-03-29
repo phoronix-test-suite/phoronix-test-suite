@@ -23,6 +23,7 @@
 include('../phoromatic_functions.php');
 phoromatic_init_web_page_setup();
 phoromatic_server::prepare_database();
+phoromatic_quit_if_invalid_input_found();
 
 ?>
 

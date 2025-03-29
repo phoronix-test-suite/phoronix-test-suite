@@ -156,13 +156,13 @@ class pts_openbenchmarking_upload extends pts_openbenchmarking
 
 		if(!is_array($json_response))
 		{
-			trigger_error('Unhandled Exception', E_USER_ERROR);
+			trigger_error('Unhandled Exception', E_USER_WARNING);
 			return false;
 		}
 
 		if(isset($json_response['openbenchmarking']['upload']['error']))
 		{
-			trigger_error($json_response['openbenchmarking']['upload']['error'], E_USER_ERROR);
+			trigger_error($json_response['openbenchmarking']['upload']['error'], E_USER_WARNING);
 		}
 		if(isset($json_response['openbenchmarking']['upload']['url']))
 		{

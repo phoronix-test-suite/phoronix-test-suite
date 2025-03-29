@@ -28,6 +28,9 @@ class start_ws_server implements pts_option_interface
 
 	public static function run($r)
 	{
+		// Unused / hasn't been finished in a decade... So don't bother trying for now.
+		return;
+
 		if(getenv('PTS_WEBSOCKET_PORT') !== false)
 		{
 			$web_socket_port = getenv('PTS_WEBSOCKET_PORT');

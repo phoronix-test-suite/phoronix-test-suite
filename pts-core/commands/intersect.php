@@ -35,7 +35,7 @@ class intersect implements pts_option_interface
 	{
 		if(count($to_union) < 2)
 		{
-			trigger_error('Two or more results/suites must be passed to this sub-command.', E_USER_ERROR);
+			trigger_error('Two or more results/suites must be passed to this sub-command.', E_USER_WARNING);
 			return false;
 		}
 		$tests = array();

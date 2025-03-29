@@ -1291,11 +1291,11 @@ class pts_client
 
 					if((isset($pass_args[$argument_check->get_argument_index()]) && !empty($pass_args[$argument_check->get_argument_index()])) || ($argument_check->get_argument_index() == 'VARIABLE_LENGTH' && !empty($pass_args)))
 					{
-						trigger_error('Invalid Argument: ' . implode(' ', $pass_args), E_USER_ERROR);
+						trigger_error('Invalid Argument: ' . implode(' ', $pass_args), E_USER_WARNING);
 					}
 					else
 					{
-						trigger_error('Phoronix Test Suite Argument Missing', E_USER_ERROR);
+						trigger_error('Phoronix Test Suite Argument Missing', E_USER_WARNING);
 					}
 
 					echo PHP_EOL . pts_client::cli_just_bold('CORRECT SYNTAX:') . PHP_EOL . 'phoronix-test-suite ' . str_replace('_', '-', $command_alias) . ' ' . pts_client::cli_just_italic(implode(' ', $argument_checks)) . PHP_EOL . PHP_EOL;
@@ -2098,7 +2098,7 @@ class pts_client
 
 			if($pid == -1)
 			{
-				trigger_error('Could not fork ' . $function . '.', E_USER_ERROR);
+				trigger_error('Could not fork ' . $function . '.', E_USER_WARNING);
 			}
 			else if($pid)
 			{
@@ -2140,7 +2140,7 @@ class pts_client
 				$function = implode(':', $function);
 			}
 
-			trigger_error('php-pcntl and php-posix must be installed for calling ' . $function . '.', E_USER_ERROR);
+			trigger_error('php-pcntl and php-posix must be installed for calling ' . $function . '.', E_USER_WARNING);
 		}
 	}
 	public static function fork($fork_function, $fork_function_parameters = null)
@@ -2157,7 +2157,7 @@ class pts_client
 
 			if($pid == -1)
 			{
-				trigger_error('Could not fork ' . $fork_function . '.', E_USER_ERROR);
+				trigger_error('Could not fork ' . $fork_function . '.', E_USER_WARNING);
 			}
 			else if($pid)
 			{
@@ -2194,14 +2194,6 @@ class pts_client
 
 		switch($error_code)
 		{
-			case E_USER_ERROR:
-				$error_type = 'PROBLEM';
-				if(pts_client::is_debug_mode() == false)
-				{
-					$error_file = null;
-					$error_line = 0;
-				}
-				break;
 			case E_USER_NOTICE:
 				if(pts_client::is_debug_mode() == false)
 				{

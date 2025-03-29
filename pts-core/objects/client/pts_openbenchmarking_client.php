@@ -214,7 +214,7 @@ class pts_openbenchmarking_client
 				else
 				{
 					pts_storage_object::set_in_file(PTS_CORE_STORAGE, 'openbenchmarking', false);
-					trigger_error('Invalid OpenBenchmarking.org account supplied, please re-login.', E_USER_ERROR);
+					trigger_error('Invalid OpenBenchmarking.org account supplied, please re-login.', E_USER_WARNING);
 				}
 			}
 			else

@@ -366,6 +366,15 @@ class phodevi_cpu extends phodevi_device_interface
 				$pm[] = 'INT340x Workload Type: ' . $workload_type;
 			}
 		}
+		if(is_file('/sys/bus/platform/drivers/amd_x3d_vcache/AMDI0101:00/amd_x3d_mode'))
+		{
+			// 3D V-Cache X3D mode
+			$amd_x3d_mode = pts_file_io::file_get_contents('/sys/bus/platform/drivers/amd_x3d_vcache/AMDI0101:00/amd_x3d_mode');
+			if(!empty($amd_x3d_mode))
+			{
+				$pm[] = 'amd_x3d_mode: ' . $amd_x3d_mode;
+			}
+		}
 
 		return implode(' - ', $pm);
 	}
@@ -866,6 +875,22 @@ class phodevi_cpu extends phodevi_device_interface
 						case '0x038':
 						case '0x039':
 							$new_info .= ' M2 Max';
+							break;
+					}
+				}
+				else if($implementer == '0x4e')
+				{
+					$new_info = 'NVIDIA';
+					switch($part)
+					{
+						case '0x004':
+							$new_info .= ' Carmel';
+							break;
+						case '0x10':
+							$new_info .= ' Olympus';
+							break;
+						case '0x010':
+							$new_info .= ' Olympus';
 							break;
 					}
 				}

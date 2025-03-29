@@ -235,7 +235,7 @@ class pts_module
 		}
 		else
 		{
-			trigger_error('php-pcntl must be installed for the ' . self::module_name() . ' module.', E_USER_ERROR);
+			trigger_error('php-pcntl must be installed for the ' . self::module_name() . ' module.', E_USER_WARNING);
 		}
 	}
 	private static function module_name()

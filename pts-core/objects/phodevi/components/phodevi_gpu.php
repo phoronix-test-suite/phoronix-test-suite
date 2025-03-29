@@ -1290,6 +1290,10 @@ class phodevi_gpu extends phodevi_device_interface
 						$info_pci = $controller_3d;
 					}
 				}
+				else if(stripos($info_pci, 'aspeed') !== false && phodevi_linux_parser::read_pci('Processing accelerators', true))
+				{
+					$info_pci = str_replace('Device ', '', phodevi_linux_parser::read_pci('Processing accelerators', true));
+				}
 
 				if(!empty($info_pci) && strpos($info_pci, 'Device ') === false)
 				{
