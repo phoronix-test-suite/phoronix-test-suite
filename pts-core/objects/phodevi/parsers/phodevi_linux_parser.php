@@ -26,7 +26,10 @@ class phodevi_linux_parser
 	public static function read_ipmitool_sensor($sensors, $default_value = false)
 	{
 		$value = $default_value;
-		$ipmitool = shell_exec('ipmitool sdr list 2>&1');
+		if(!file_exists('/tmp/.pts_sdr_cache')) {
+			$ipmitool = shell_exec('ipmitool sdr dump /tmp/.pts_sdr_cache 2>&1');
+		}
+		$ipmitool = shell_exec('ipmitool -S /tmp/.pts_sdr_cache sdr list 2>&1');
 
 		foreach(pts_arrays::to_array($sensors) as $sensor)
 		{
