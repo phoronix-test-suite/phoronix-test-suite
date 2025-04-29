@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m2-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>PERFORMANCE: 1000  averaging #_RESULT_# ns/day, 0.0294901 sec/step with standard deviation 0</OutputTemplate>
+    <LineHint>PERFORMANCE: 1000</LineHint>
+    <ResultPrecision>4</ResultPrecision>
+  </ResultsParser>
+</PhoronixTestSuite>
