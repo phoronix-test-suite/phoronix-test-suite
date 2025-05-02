@@ -68,6 +68,8 @@ needed, but merely the PHP command-line support, which is widely available from
 operating system package managers under the name `php`, `php7-cli`, `php5-cli`,
 `php7` or `php8`.
 
+See package name on system package managers on [Repology](https://repology.org/project/phoronix-test-suite/versions).
+
 ## Usage
 
 The process to download, install/setup, execute, and report the results of a
