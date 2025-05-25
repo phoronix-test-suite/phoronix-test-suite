@@ -730,6 +730,12 @@ class phodevi_cpu extends phodevi_device_interface
 						case '0xd07':
 							$new_info .= ' Cortex-A57';
 							break;
+						case '0xd04':
+							$new_info .= ' Cortex-A35';
+							break;
+						case '0xd8f':
+							$new_info .= ' Cortex-A320';
+							break;
 						case '0xd06':
 							$new_info .= ' Cortex-A65';
 							break;
@@ -922,6 +928,9 @@ class phodevi_cpu extends phodevi_device_interface
 					$new_info = 'Qualcomm';
 					switch($part)
 					{
+						case '0x001':
+							$new_info .= ' Oryon';
+							break;
 						case '0x804':
 						case '0x805':
 							$new_info .= ' Cortex-A76';
@@ -1399,6 +1408,18 @@ class phodevi_cpu extends phodevi_device_interface
 			// Based on GCC patch and other Linux patches
 			$amd_map[26][$i] = 'Zen 5';
 		}
+		for($i = 80; $i <= 95; $i++)
+		{
+			$amd_map[26][$i] = 'Zen 6';
+		}
+		for($i = 144; $i <= 175; $i++)
+		{
+			$amd_map[26][$i] = 'Zen 6';
+		}
+		for($i = 192; $i <= 207; $i++)
+		{
+			$amd_map[26][$i] = 'Zen 6';
+		}
 
 		$intel_map = array(
 			5 => array(
@@ -1488,6 +1509,7 @@ class phodevi_cpu extends phodevi_device_interface
 				198 => 'Arrow Lake',
 				204 => 'Panther Lake',
 				207 => 'Emerald Rapids',
+				215 => 'Bartlett Lake',
 				221 => 'Clearwater Forest',
 				),
 			15 => array(

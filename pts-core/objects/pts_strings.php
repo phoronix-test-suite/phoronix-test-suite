@@ -68,7 +68,7 @@ class pts_strings
 	}
 	public static function trim_search_query($value, $remove_multipliers = false, $keep_hdd_size = false)
 	{
-		$search_break_characters = array('@', '(', '/', '+', '[', '<', '*', '"');
+		$search_break_characters = array('@', '(', '/', ' + ', '[', '<', '*', '"');
 		for($i = 0, $x = strlen($value); $i < $x; $i++)
 		{
 			if(in_array($value[$i], $search_break_characters))
