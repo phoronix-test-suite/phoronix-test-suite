@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2019, Phoronix Media
-	Copyright (C) 2009 - 2019, Michael Larabel
+	Copyright (C) 2009 - 2025, Phoronix Media
+	Copyright (C) 2009 - 2025, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -84,12 +84,15 @@ class gpu_temp extends phodevi_sensor
 				{
 					// This works on the NVIDIA Jetson TX1
 					// On the TX1 the name = GPU-therm
-					if(is_readable($temp_name) == false || stripos(file_get_contents($temp_name), 'GPU') === false)
+					// Or on Intel Xe/Arc Graphics is "xe" name
+					$name_contents = file_get_contents($temp_name);
+					if(is_readable($temp_name) == false || (stripos($name_contents, 'GPU') === false && stripos($name_contents, 'xe') === false))
 					{
 						continue;
 					}
 
-					$temp_input_file = dirname($temp_name) . '/temp1_input';
+					$temp_input_files = pts_file_io::glob(dirname($temp_name) . '/temp*_input');
+					$temp_input_file = !empty($temp_input_files) ? $temp_input_files[0] : false;
 
 					if(!is_file($temp_input_file))
 					{
