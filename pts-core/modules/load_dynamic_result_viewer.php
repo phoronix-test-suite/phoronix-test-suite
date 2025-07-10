@@ -119,7 +119,7 @@ class load_dynamic_result_viewer extends pts_module_interface
 					return;
 				}
 			}
-			//trigger_error('The result viewer is already running.', E_USER_ERROR);
+			//trigger_error('The result viewer is already running.', E_USER_WARNING);
 			return false;
 		}
 		if(PHP_VERSION_ID < 50400)
@@ -162,7 +162,7 @@ class load_dynamic_result_viewer extends pts_module_interface
 		if(($fp = fsockopen('127.0.0.1', $remote_access, $errno, $errstr, 5)) != false)
 		{
 			fclose($fp);
-			//trigger_error('Port ' . $remote_access . ' is already in use by another server process. Close that process or change the Phoronix Test Suite server port via' . pts_config::get_config_file_location() . ' to proceed.', E_USER_ERROR);
+			//trigger_error('Port ' . $remote_access . ' is already in use by another server process. Close that process or change the Phoronix Test Suite server port via' . pts_config::get_config_file_location() . ' to proceed.', E_USER_WARNING);
 			return false;
 		}
 		else

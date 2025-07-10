@@ -1261,6 +1261,10 @@ class phodevi_gpu extends phodevi_device_interface
 			{
 				$controller_3d = phodevi_linux_parser::read_pci('3D controller', false);
 				$info_pci = phodevi_linux_parser::read_pci('VGA compatible controller', false);
+				if(empty($info_pci))
+				{
+					$info_pci = phodevi_linux_parser::read_pci('Display controller', false);
+				}
 
 				if((empty($info_pci) || strpos($info_pci, ' ') === false || stripos($info_pci, 'aspeed') !== false) && !empty($controller_3d))
 				{
@@ -1289,6 +1293,10 @@ class phodevi_gpu extends phodevi_device_interface
 					{
 						$info_pci = $controller_3d;
 					}
+				}
+				else if(stripos($info_pci, 'aspeed') !== false && phodevi_linux_parser::read_pci('Processing accelerators', true))
+				{
+					$info_pci = str_replace('Device ', '', phodevi_linux_parser::read_pci('Processing accelerators', true));
 				}
 
 				if(!empty($info_pci) && strpos($info_pci, 'Device ') === false)
@@ -1467,9 +1475,9 @@ class phodevi_gpu extends phodevi_device_interface
 					{
 						$info = $inside_bracket . ' ' . substr($info, ($bracket_close + 1));
 					}
-					else if(stripos($inside_bracket, 'Radeon') !== false || stripos($inside_bracket, 'Fire') !== false || stripos($inside_bracket, 'Fusion') !== false)
+					else if(stripos($info, 'Radeon') !== false)
 					{
-						$info = $inside_bracket . ' ' . substr($info, ($bracket_close + 1));
+						$info = str_replace('Radeon / ', '', $info);
 					}
 				}
 			}
@@ -1524,6 +1532,7 @@ class phodevi_gpu extends phodevi_device_interface
 			// Happens with Intel Iris Gallium3D
 			$info = str_replace('Mesa ', ' ', $info);
 		}
+		$info = str_replace(' ]', ']', $info);
 		/*if(empty($info))
 		{
 			$info = 'Unknown';

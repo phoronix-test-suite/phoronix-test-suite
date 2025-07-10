@@ -316,6 +316,8 @@ abstract class pts_graph_core
 
 		if(isset($_REQUEST['phoronix_export']))
 		{
+			array_unshift($config['color']['paint'], '#348755');
+			$config['color']['text'] = '#348755';
 			$config['text']['watermark'] = 'Phoronix.com';
 			$config['text']['watermark_url'] = 'https://www.phoronix.com/';
 		}

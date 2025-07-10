@@ -175,7 +175,7 @@ class pts_openbenchmarking
 		}
 		else if(PTS_IS_CLIENT && isset($json_response['openbenchmarking']['result']['error']))
 		{
-			trigger_error($json_response['openbenchmarking']['result']['error'], E_USER_ERROR);
+			trigger_error($json_response['openbenchmarking']['result']['error'], E_USER_WARNING);
 		}
 
 		return $valid;
@@ -654,7 +654,7 @@ class pts_openbenchmarking
 			{
 				if(!defined('PHOROMATIC_SERVER'))
 				{
-					trigger_error('Unable to obtain ' . $qualified_identifier . ' from OpenBenchmarking.org. ' . (!pts_network::internet_support_available() ? 'Internet connection disabled/unavailable.' : 'If this issue persists, file an issue @ https://github.com/phoronix-test-suite/phoronix-test-suite/issues') . PHP_EOL, E_USER_ERROR);
+					trigger_error('Unable to obtain ' . $qualified_identifier . ' from OpenBenchmarking.org. ' . (!pts_network::internet_support_available() ? 'Internet connection disabled/unavailable.' : 'If this issue persists, file an issue @ https://github.com/phoronix-test-suite/phoronix-test-suite/issues') . PHP_EOL, E_USER_WARNING);
 				}
 				return false;
 			}
@@ -682,7 +682,7 @@ class pts_openbenchmarking
 			else
 			{
 				unlink($file);
-				//trigger_error('Test definition not found for ' . $qualified_identifier . '.' . PHP_EOL, E_USER_ERROR);
+				//trigger_error('Test definition not found for ' . $qualified_identifier . '.' . PHP_EOL, E_USER_WARNING);
 				return false;
 			}
 		}
@@ -914,7 +914,7 @@ class pts_openbenchmarking
 			{
 				if(!defined('PHOROMATIC_SERVER'))
 				{
-					trigger_error('Unable to obtain ' . $qualified_identifier . ' from OpenBenchmarking.org. ' . (!pts_network::internet_support_available() ? 'Internet connection disabled/unavailable.' : 'If this issue persists, file an issue @ https://github.com/phoronix-test-suite/phoronix-test-suite/issues') . PHP_EOL, E_USER_ERROR);
+					trigger_error('Unable to obtain ' . $qualified_identifier . ' from OpenBenchmarking.org. ' . (!pts_network::internet_support_available() ? 'Internet connection disabled/unavailable.' : 'If this issue persists, file an issue @ https://github.com/phoronix-test-suite/phoronix-test-suite/issues') . PHP_EOL, E_USER_WARNING);
 				}
 				return false;
 			}

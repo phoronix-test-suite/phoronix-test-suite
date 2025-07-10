@@ -30,6 +30,9 @@ class update_checker extends pts_module_interface
 
 	public static function __pre_option_process()
 	{
+		// Disable module for wasting Phoronix resources with infrequent updates...
+		return pts_module::MODULE_UNLOAD;
+
 		// if first run of the day or if the PTS release build is more than 1 year old, start pestering user to upgrade...
 		$do_check = IS_FIRST_RUN_TODAY || (time() > strtotime(PTS_RELEASE_DATE) + (86400 * 30 * 13));
 

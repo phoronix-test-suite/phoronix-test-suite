@@ -29,13 +29,13 @@ class start_phoromatic_server implements pts_option_interface
 	{
 		if(pts_client::create_lock(PTS_USER_PATH . 'phoromatic_server_lock') == false)
 		{
-			trigger_error('The Phoromatic Server is already running.', E_USER_ERROR);
+			trigger_error('The Phoromatic Server is already running.', E_USER_WARNING);
 			return false;
 		}
 
 		if(phodevi::is_windows())
 		{
-			trigger_error('Running the Phoromatic Server on Windows is experimental and may have issues. Running the Phoromatic client and Phoronix Test Suite itself on Windows is supported but the Phoromatic Server is currently not engineered for Windows but can be under commercial engagement.', E_USER_ERROR);
+			trigger_error('Running the Phoromatic Server on Windows is experimental and may have issues. Running the Phoromatic client and Phoronix Test Suite itself on Windows is supported but the Phoromatic Server is currently not engineered for Windows but can be under commercial engagement.', E_USER_WARNING);
 		}
 
 		pts_file_io::unlink(getenv('PTS_EXT_LAUNCH_SCRIPT_DIR') . '/phoromatic-server-launcher');
@@ -87,7 +87,7 @@ class start_phoromatic_server implements pts_option_interface
 			if(($fp = fsockopen('127.0.0.1', $remote_access, $errno, $errstr, 5)) != false)
 			{
 				fclose($fp);
-				trigger_error('Port ' . $remote_access . ' is already in use by another server process. Close that process or change the Phoronix Test Suite server port via' . pts_config::get_config_file_location() . ' to proceed.', E_USER_ERROR);
+				trigger_error('Port ' . $remote_access . ' is already in use by another server process. Close that process or change the Phoronix Test Suite server port via' . pts_config::get_config_file_location() . ' to proceed.', E_USER_WARNING);
 				return false;
 			}
 			else
