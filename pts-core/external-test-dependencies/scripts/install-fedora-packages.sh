@@ -4,7 +4,7 @@
 if [ `whoami` = "root" ] && [ ! -w /usr/bin/sudo ]; then
 	yum -y install $*
 elif [ -x /usr/bin/dnf ]; then
-	sudo dnf -y install $*
+	sudo dnf -y --skip-unavailable install $*
 elif [ `whoami` = "ec2-user" ]; then
 	sudo yum -y --skip-broken install $*
 else

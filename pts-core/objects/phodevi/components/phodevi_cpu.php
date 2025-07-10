@@ -366,6 +366,15 @@ class phodevi_cpu extends phodevi_device_interface
 				$pm[] = 'INT340x Workload Type: ' . $workload_type;
 			}
 		}
+		if(is_file('/sys/bus/platform/drivers/amd_x3d_vcache/AMDI0101:00/amd_x3d_mode'))
+		{
+			// 3D V-Cache X3D mode
+			$amd_x3d_mode = pts_file_io::file_get_contents('/sys/bus/platform/drivers/amd_x3d_vcache/AMDI0101:00/amd_x3d_mode');
+			if(!empty($amd_x3d_mode))
+			{
+				$pm[] = 'amd_x3d_mode: ' . $amd_x3d_mode;
+			}
+		}
 
 		return implode(' - ', $pm);
 	}
@@ -721,6 +730,12 @@ class phodevi_cpu extends phodevi_device_interface
 						case '0xd07':
 							$new_info .= ' Cortex-A57';
 							break;
+						case '0xd04':
+							$new_info .= ' Cortex-A35';
+							break;
+						case '0xd8f':
+							$new_info .= ' Cortex-A320';
+							break;
 						case '0xd06':
 							$new_info .= ' Cortex-A65';
 							break;
@@ -869,6 +884,22 @@ class phodevi_cpu extends phodevi_device_interface
 							break;
 					}
 				}
+				else if($implementer == '0x4e')
+				{
+					$new_info = 'NVIDIA';
+					switch($part)
+					{
+						case '0x004':
+							$new_info .= ' Carmel';
+							break;
+						case '0x10':
+							$new_info .= ' Olympus';
+							break;
+						case '0x010':
+							$new_info .= ' Olympus';
+							break;
+					}
+				}
 				else if($implementer == '0x46')
 				{
 					$new_info = 'Fujitsu';
@@ -897,6 +928,9 @@ class phodevi_cpu extends phodevi_device_interface
 					$new_info = 'Qualcomm';
 					switch($part)
 					{
+						case '0x001':
+							$new_info .= ' Oryon';
+							break;
 						case '0x804':
 						case '0x805':
 							$new_info .= ' Cortex-A76';
@@ -1374,6 +1408,18 @@ class phodevi_cpu extends phodevi_device_interface
 			// Based on GCC patch and other Linux patches
 			$amd_map[26][$i] = 'Zen 5';
 		}
+		for($i = 80; $i <= 95; $i++)
+		{
+			$amd_map[26][$i] = 'Zen 6';
+		}
+		for($i = 144; $i <= 175; $i++)
+		{
+			$amd_map[26][$i] = 'Zen 6';
+		}
+		for($i = 192; $i <= 207; $i++)
+		{
+			$amd_map[26][$i] = 'Zen 6';
+		}
 
 		$intel_map = array(
 			5 => array(
@@ -1463,6 +1509,7 @@ class phodevi_cpu extends phodevi_device_interface
 				198 => 'Arrow Lake',
 				204 => 'Panther Lake',
 				207 => 'Emerald Rapids',
+				215 => 'Bartlett Lake',
 				221 => 'Clearwater Forest',
 				),
 			15 => array(

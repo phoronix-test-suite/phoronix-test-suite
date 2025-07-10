@@ -131,7 +131,7 @@ class pts_compression
 		}
 		else if(PTS_IS_CLIENT)
 		{
-			trigger_error('Failed to find ZIP support for extracting file: ' . $zip_file . '. Install PHP ZIP support or the unzip utility.', E_USER_ERROR);
+			trigger_error('Failed to find ZIP support for extracting file: ' . $zip_file . '. Install PHP ZIP support or the unzip utility.', E_USER_WARNING);
 		}
 
 		return $success;

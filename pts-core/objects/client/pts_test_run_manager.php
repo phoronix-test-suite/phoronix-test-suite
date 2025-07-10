@@ -899,20 +899,20 @@ class pts_test_run_manager
 
 		if($this->batch_mode && $this->batch_mode['Configured'] == false && !$this->auto_mode)
 		{
-			trigger_error('The batch mode must first be configured.' . PHP_EOL . 'To configure, run phoronix-test-suite batch-setup', E_USER_ERROR);
+			trigger_error('The batch mode must first be configured.' . PHP_EOL . 'To configure, run phoronix-test-suite batch-setup', E_USER_WARNING);
 			return false;
 		}
 
 		if(!is_writable(pts_client::test_install_root_path()))
 		{
-			trigger_error('The test installation directory is not writable.' . PHP_EOL . 'Location: ' . pts_client::test_install_root_path(), E_USER_ERROR);
+			trigger_error('The test installation directory is not writable.' . PHP_EOL . 'Location: ' . pts_client::test_install_root_path(), E_USER_WARNING);
 			return false;
 		}
 
 		$mount_options = phodevi::read_property('disk', 'mount-options');
 		if(isset($mount_options['mount-options']) && strpos($mount_options['mount-options'], 'noexec') !== false)
 		{
-			trigger_error('The test installation directory is on a file-system mounted with the \'noexec\' mount option. Re-mount the file-system appropriately or change the Phoronix Test Suite user configuration file to point to an alternative mount point.' . PHP_EOL . 'Location: ' . pts_client::test_install_root_path(), E_USER_ERROR);
+			trigger_error('The test installation directory is on a file-system mounted with the \'noexec\' mount option. Re-mount the file-system appropriately or change the Phoronix Test Suite user configuration file to point to an alternative mount point.' . PHP_EOL . 'Location: ' . pts_client::test_install_root_path(), E_USER_WARNING);
 			return false;
 		}
 
@@ -923,7 +923,7 @@ class pts_test_run_manager
 		}
 		else if(count($to_run) == 0)
 		{
-			//trigger_error('You must enter at least one test, suite, or result identifier to run.', E_USER_ERROR);
+			//trigger_error('You must enter at least one test, suite, or result identifier to run.', E_USER_WARNING);
 			return false;
 		}
 
@@ -1385,7 +1385,7 @@ class pts_test_run_manager
 
 			if(count($tests_missing) == 1)
 			{
-				trigger_error($tests_missing[0] . ' is not installed.', E_USER_ERROR);
+				trigger_error($tests_missing[0] . ' is not installed.', E_USER_WARNING);
 				// PHP_EOL . 'To install, run: phoronix-test-suite install ' . $tests_missing[0]
 			}
 			else
@@ -1718,7 +1718,7 @@ class pts_test_run_manager
 			}
 			else
 			{
-				trigger_error($run_object . ' is not recognized.', E_USER_ERROR);
+				trigger_error($run_object . ' is not recognized.', E_USER_WARNING);
 				continue;
 			}
 		}

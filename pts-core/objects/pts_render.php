@@ -322,7 +322,7 @@ class pts_render
 		{
 			$paint_color = '#f1052d';
 		}
-		else if(strpos($i, 'intel ') !== false || strpos($i, 'xeon ') !== false || strpos($i, 'core i') !== false || strpos($i, 'core ultra') !== false || strpos($i, 'pentium') !== false || strpos($i, 'celeron') !== false)
+		else if(strpos($i, 'intel ') !== false || strpos($i, 'xeon ') !== false || strpos($i, 'core i') !== false || strpos($i, 'core ultra') !== false || strpos($i, 'pentium') !== false || strpos($i, 'celeron') !== false || strpos($i, 'Arc ') !== false)
 		{
 			$paint_color = '#0b5997';
 		}

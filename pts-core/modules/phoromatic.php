@@ -467,7 +467,7 @@ class phoromatic extends pts_module_interface
 	{
 		if(pts_client::create_lock(PTS_USER_PATH . 'phoromatic_lock') == false)
 		{
-			trigger_error('Phoromatic is already running.', E_USER_ERROR);
+			trigger_error('Phoromatic is already running.', E_USER_WARNING);
 			return false;
 		}
 		define('PHOROMATIC_PROCESS', true);
@@ -523,7 +523,7 @@ class phoromatic extends pts_module_interface
 
 				if($times_failed >= 2)
 				{
-					trigger_error('Communication with server failed.', E_USER_ERROR);
+					trigger_error('Communication with server failed.', E_USER_WARNING);
 
 					if(PTS_IS_DAEMONIZED_SERVER_PROCESS == false && $times_failed > 5)
 					{
@@ -558,7 +558,7 @@ class phoromatic extends pts_module_interface
 				{
 					if(isset($json['phoromatic']['error']) && !empty($json['phoromatic']['error']))
 					{
-						trigger_error($json['phoromatic']['error'], E_USER_ERROR);
+						trigger_error($json['phoromatic']['error'], E_USER_WARNING);
 					}
 					if(isset($json['phoromatic']['response']) && !empty($json['phoromatic']['response']))
 					{

@@ -247,7 +247,7 @@ class pts_user_io
 		{
 			foreach(self::$readline_completion_possibilities as $possibility)
 			{
-				if(substr($possibility, 0, $input_length) == $input)
+				if(!empty($possibility) && substr($possibility, 0, $input_length) == $input)
 				{
 					$possibilities[] = $possibility;
 				}

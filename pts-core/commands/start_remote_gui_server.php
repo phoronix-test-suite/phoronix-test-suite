@@ -51,7 +51,7 @@ class start_remote_gui_server implements pts_option_interface
 
 			if(($fp = fsockopen('127.0.0.1', $remote_access, $errno, $errstr, 5)) != false)
 			{
-				trigger_error('Port ' . $remote_access . ' is already in use by another server process. Close that process or change the Phoronix Test Suite server port via ' . pts_config::get_config_file_location() . ' to proceed.', E_USER_ERROR);
+				trigger_error('Port ' . $remote_access . ' is already in use by another server process. Close that process or change the Phoronix Test Suite server port via ' . pts_config::get_config_file_location() . ' to proceed.', E_USER_WARNING);
 				fclose($fp);
 				return false;
 			}
