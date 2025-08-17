@@ -564,7 +564,10 @@ class check_tests implements pts_option_interface
 				echo pts_client::cli_colored_text($identifier . " Download Time: " . $download[self::V_DOWNLOAD_TIME] . " ERROR " . $errno . " " . $download[self::V_DOWNLOAD_ERROR] . PHP_EOL, 'red', false);
 			}
 
-			curl_close($ch);
+			if(PHP_MAJOR_VERSION < 8)
+			{
+				curl_close($ch);
+			}
 			fclose($fh);
 
 			$download[self::V_STATUS] = $info['http_code'];

@@ -554,7 +554,7 @@ class pts_result_file
 					// See if only numbers are changing between runs
 					foreach($identifiers as $i => &$identifier)
 					{
-						if(($x = strpos($identifier, ': ')) !== false)
+						if(!empty($identifier) && ($x = strpos($identifier, ': ')) !== false)
 						{
 							$identifier = substr($identifier, ($x + 2));
 						}

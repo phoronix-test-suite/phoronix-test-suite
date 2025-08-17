@@ -2035,7 +2035,7 @@ class pts_client
 				}
 				else
 				{
-					$possible_browsers = array('x-www-browser', 'firefox', 'mozilla', 'google-chrome', 'chromium', 'iceweasel', 'konqueror', 'epiphany', 'midori', 'epiphany-browser', 'epiphany', 'falkon', 'qupzilla', 'open', 'xdg-open');
+					$possible_browsers = array('x-www-browser', 'google-chrome', 'firefox', 'mozilla', 'chromium', 'iceweasel', 'konqueror', 'epiphany', 'midori', 'epiphany-browser', 'epiphany', 'falkon', 'qupzilla', 'open', 'xdg-open');
 
 					// First try to see if a browser is already running and use that
 					foreach($possible_browsers as &$b)

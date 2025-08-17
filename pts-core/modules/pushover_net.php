@@ -89,7 +89,10 @@ class pushover_net extends pts_module_interface
 			'message' => $message,
 			)));
 		curl_exec($ch);
-		curl_close($ch);
+		if(PHP_MAJOR_VERSION < 8)
+		{
+			curl_close($ch);
+		}
 	}
 }
 

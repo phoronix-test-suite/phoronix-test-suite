@@ -1509,6 +1509,7 @@ class phodevi_cpu extends phodevi_device_interface
 				198 => 'Arrow Lake',
 				204 => 'Panther Lake',
 				207 => 'Emerald Rapids',
+				213 => 'Wildcat Lake',
 				215 => 'Bartlett Lake',
 				221 => 'Clearwater Forest',
 				),
@@ -1518,6 +1519,10 @@ class phodevi_cpu extends phodevi_device_interface
 				3 => 'Prescott',
 				4 => 'Prescott',
 				6 => 'Cedar Mill',
+				),
+			18 => array(
+				1 => 'Nova Lake',
+				3 => 'Nova Lake',
 				),
 			19 => array(
 				1 => 'Diamond Rapids',

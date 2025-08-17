@@ -1237,7 +1237,7 @@ class phodevi_gpu extends phodevi_device_interface
 			$info = str_replace('(TM)', '', implode(' + ', $windows_gpu));
 		}
 
-		if(empty($info) || strpos($info, 'Mesa ') !== false || strpos($info, 'Gallium ') !== false || strpos($info, 'DRM ') !== false)
+		if(empty($info) || strpos($info, 'Mesa ') !== false || strpos($info, 'Gallium ') !== false || strpos($info, 'DRM ') !== false  || stripos($info, 'Zink ') !== false)
 		{
 			if(!empty($info))
 			{
@@ -1257,7 +1257,7 @@ class phodevi_gpu extends phodevi_device_interface
 				}
 			}
 
-			if(phodevi::is_windows() == false && (empty($info) || (strpos($info, 'Intel ') === false && !pts_strings::string_contains($info, pts_strings::CHAR_NUMERIC))))
+			if(phodevi::is_windows() == false && (empty($info) || stripos($info, 'Zink') !== false || (strpos($info, 'Intel ') === false && !pts_strings::string_contains($info, pts_strings::CHAR_NUMERIC))))
 			{
 				$controller_3d = phodevi_linux_parser::read_pci('3D controller', false);
 				$info_pci = phodevi_linux_parser::read_pci('VGA compatible controller', false);

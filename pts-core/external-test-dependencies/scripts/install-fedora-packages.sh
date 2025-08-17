@@ -5,6 +5,11 @@ if [ `whoami` = "root" ] && [ ! -w /usr/bin/sudo ]; then
 	yum -y install $*
 elif [ -x /usr/bin/dnf ]; then
 	sudo dnf -y --skip-unavailable install $*
+	command_status=$?
+	if [ $command_status -ne 0 ]; then
+		# RHEL 10 and older error out, Fedora ~42 and newer have --skip-unavailable
+		sudo dnf -y install $*
+	fi
 elif [ `whoami` = "ec2-user" ]; then
 	sudo yum -y --skip-broken install $*
 else

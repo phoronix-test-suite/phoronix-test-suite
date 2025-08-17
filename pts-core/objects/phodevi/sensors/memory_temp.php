@@ -49,6 +49,14 @@ class memory_temp extends phodevi_sensor
 				$temp_c = $temp_c / 1000;
 			}
 		}
+		if($temp_c == -1)
+		{
+			$temp_c = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/temp2_input', 'POSITIVE_NUMERIC', array('temp2_label' => 'mainboard_memory@4d'));
+			if($temp_c > 1000)
+			{
+				$temp_c = $temp_c / 1000;
+			}
+		}
 
 		if($temp_c > 1000 || $temp_c < 9)
 		{

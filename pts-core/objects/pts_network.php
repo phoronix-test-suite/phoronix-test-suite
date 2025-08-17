@@ -184,7 +184,10 @@ class pts_network
 		}
 
 		curl_exec($cr);
-		curl_close($cr);
+		if(PHP_MAJOR_VERSION < 8)
+		{
+			curl_close($cr);
+		}
 		fclose($fh);
 
 		return true;

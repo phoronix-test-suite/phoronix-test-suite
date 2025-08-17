@@ -188,6 +188,15 @@ class cpu_temp extends phodevi_sensor
 				}
 			}
 		}
+		if($temp_c == -1)
+		{
+			// Chrome OS EC Driver, tested on Framework Desktop
+			$temp_c = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/temp4_input', 'POSITIVE_NUMERIC', array('temp4_label' => 'cpu@4c'));
+			if($temp_c > 1000)
+			{
+				$temp_c = $temp_c / 1000;
+			}
+		}
 		
 		return $temp_c;
 	}

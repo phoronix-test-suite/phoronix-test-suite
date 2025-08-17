@@ -1361,11 +1361,11 @@ class pts_result_viewer_embed
 				foreach($spreads as $result_key => $spread)
 				{
 					$ro = $result_file->get_result_object_by_hash($result_key);
-					if(!is_object($ro[0]))
+					if(!is_object($ro))
 					{
 						continue;
 					}
-					$html .= '<a href="#r-' . $result_key . '">' . $ro[0]->test_profile->get_title() . ' - ' . $ro[0]->get_arguments_description() . '</a><br />';
+					$html .= '<a href="#r-' . $result_key . '">' . $ro->test_profile->get_title() . ' - ' . $ro->get_arguments_description() . '</a><br />';
 				}
 			}
 		}
