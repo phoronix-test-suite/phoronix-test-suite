@@ -1384,7 +1384,20 @@ class phodevi_system extends phodevi_device_interface
 		}
 		else if(phodevi::is_windows())
 		{
-			$os = $info = phodevi_windows_parser::get_wmi_object('win32_operatingsystem', 'caption') . ' Build ' . phodevi::read_property('system', 'os-version');
+			$windows_caption = phodevi_windows_parser::get_wmi_object('win32_operatingsystem', 'caption');
+			// Windows 10 20H2 and newer store the version (20H2, etc.) in 'DisplayVersion' registry value
+			// Earlier (now out-of-support) versions used 'ReleaseId' in the same key
+			$windows_display_version = trim(shell_exec('powershell -NoProfile "If (Get-ItemProperty -ErrorAction SilentlyContinue -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' DisplayVersion) { (Get-ItemProperty -Path \'Registry::HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\' DisplayVersion).DisplayVersion } Else { $null }"'));
+
+			$os_string = $windows_caption;
+
+			if ($windows_display_version !== null && $windows_display_version !== '') {
+				$os_string = $os_string . ' ' . $windows_display_version;
+			} else {
+				$os_string = $os_string . ' Build ' . phodevi::read_property('system', 'os-version');
+			}
+
+			$os = $info = $os_string;
 			if(strpos($os, 'Windows') === false)
 			{
 				$os = trim(exec('ver'));
