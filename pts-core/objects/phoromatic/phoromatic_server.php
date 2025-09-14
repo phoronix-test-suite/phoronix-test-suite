@@ -512,7 +512,7 @@ class phoromatic_server
 		$headers = "MIME-Version: 1.0\r\n";
 		$headers .= "Content-type:text/html;charset=UTF-8\r\n";
 		$headers .= "From: Phoromatic - Phoronix Test Suite <no-reply@phoromatic.com>\r\n";
-		$headers .= "Reply-To: " . $from . " <" . $from . ">\r\n";
+		$headers .= "Reply-To: " . $from . "\r\n";
 		mail($to, $subject, $msg, $headers);
 	}
 	protected static function rebuild_pprid_entries()

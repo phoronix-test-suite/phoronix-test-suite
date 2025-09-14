@@ -400,11 +400,6 @@ class phodevi_gpu extends phodevi_device_interface
 		}
 		else if(phodevi::is_linux() || phodevi::is_bsd() || phodevi::is_solaris())
 		{
-			if($resolution == false && pts_client::executable_in_path('xrandr'))
-			{
-				$resolution = self::gpu_xrandr_resolution();
-			}
-
 			if($resolution == false && phodevi::is_linux())
 			{
 				// Before calling xrandr first try to get the resolution through KMS path
@@ -424,6 +419,11 @@ class phodevi_gpu extends phodevi_device_interface
 						}
 					}
 				}
+			}
+
+			if($resolution == false && pts_client::executable_in_path('xrandr'))
+			{
+				$resolution = self::gpu_xrandr_resolution();
 			}
 
 			if($resolution == false && phodevi::is_nvidia_graphics())

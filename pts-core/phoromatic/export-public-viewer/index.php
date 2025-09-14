@@ -124,7 +124,7 @@ if(defined('PATH_TO_PHOROMATIC_ML_DB') && PATH_TO_PHOROMATIC_ML_DB != null)
 		$headers = "MIME-Version: 1.0\r\n";
 		$headers .= "Content-type:text/html;charset=UTF-8\r\n";
 		$headers .= "From: Phoromatic - Phoronix Test Suite <no-reply@phoromatic.com>\r\n";
-		$headers .= "Reply-To: " . $from . " <" . $from . ">\r\n";
+		$headers .= "Reply-To: " . $from . "\r\n";
 
 		mail($to, $subject, $msg, $headers);
 	}

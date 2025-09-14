@@ -831,7 +831,15 @@ class pts_result_file_analyzer
 
 			if($do_perf_per_sensor != false && stripos($this_sensor, $do_perf_per_sensor) !== false && $result->get_parent_hash() != '' && !empty($this_round))
 			{
-				$perf_per_result = clone $result_file->get_result($result->get_parent_hash());
+				if($result_file->get_result($result->get_parent_hash()))
+				{
+					$perf_per_result = clone $result_file->get_result($result->get_parent_hash());
+				}
+				else
+				{
+					$perf_per_result = false;
+				}
+
 				if($perf_per_result && $perf_per_result->test_profile->get_display_format() == 'BAR_GRAPH')
 				{
 					$perf_per_result->test_profile->set_identifier(null);

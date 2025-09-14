@@ -97,6 +97,18 @@ class phodevi_memory extends phodevi_device_interface
 			else if(pts_client::executable_in_path('udevadm'))
 			{
 				$memory_device_data = phodevi_linux_parser::read_udevadm_info(array('MEMORY_DEVICE', 'MEMORY_ARRAY'));
+				if(!isset($memory_device_data['MEMORY_ARRAY_NUM_DEVICES']))
+				{
+					$num_devices = 0;
+					while(isset($memory_device_data['MEMORY_DEVICE_' . $num_devices . '_SIZE']))
+					{
+						$num_devices++;
+					}
+					if($num_devices > 0)
+					{
+						$memory_device_data['MEMORY_ARRAY_NUM_DEVICES'] = $num_devices;
+					}
+				}
 				if(isset($memory_device_data['MEMORY_ARRAY_NUM_DEVICES']) && is_numeric($memory_device_data['MEMORY_ARRAY_NUM_DEVICES']) && $memory_device_data['MEMORY_ARRAY_NUM_DEVICES'] > 0)
 				{
 					for($i = 0; $i < $memory_device_data['MEMORY_ARRAY_NUM_DEVICES']; $i++)
@@ -241,7 +253,7 @@ class phodevi_memory extends phodevi_device_interface
 			}
 			else
 			{
-				$t = str_replace(array(' MB', ' GB'), '', $mem_size[0]);
+				$t = !isset($mem_size[0]) || empty($mem_size[0]) ? 0 : str_replace(array(' MB', ' GB'), '', $mem_size[0]);
 				if(($mem_count * $t) != phodevi::read_property('memory', 'capacity') && phodevi::read_property('memory', 'capacity') % $t == 0)
 				{
 					// This makes sure the correct number of RAM modules is reported...
