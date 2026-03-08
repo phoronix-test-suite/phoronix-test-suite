@@ -27,6 +27,10 @@ class pts_external_dependencies
 
 	public static function packages_that_provide($file)
 	{
+		if(strlen(str_replace(array(';', '&', ' ', '\'', '"', '`', '!'), '', $file)) != strlen($file))
+		{
+			return false;
+		}
 		$pkg_vendor = self::vendor_identifier('package-list');
 		$provides = false;
 		if($file != null && is_file(pts_exdep_generic_parser::get_external_dependency_path() . 'dependency-handlers/' . $pkg_vendor . '_dependency_handler.php'))
@@ -221,11 +225,7 @@ class pts_external_dependencies
 			if(count($to_report) > 0)
 			{
 				echo PHP_EOL . 'Some additional dependencies are required, but they could not be installed automatically for your operating system.' . PHP_EOL . 'Below are the software packages that must be installed.' . PHP_EOL . PHP_EOL;
-
-				foreach($to_report as $report)
-				{
-					pts_client::$display->generic_heading($report);
-				}
+				echo pts_user_io::display_text_list(self::generic_names_to_titles($to_report));
 
 				if(!$no_prompts)
 				{
@@ -251,7 +251,7 @@ class pts_external_dependencies
 
 				$actions = array(
 					'IGNORE' => 'Ignore missing dependencies and proceed with installation.',
-					'SKIP_TESTS_WITH_MISSING_DEPS' => 'Skip installing the tests with missing dependencies.',
+					'SKIP_TESTS_WITH_MISSING_DEPS' => 'Skip installing tests with missing dependencies.',
 					'REATTEMPT_DEP_INSTALL' => 'Re-attempt to install the missing dependencies.',
 					'QUIT' => 'Quit the current Phoronix Test Suite process.'
 					);
@@ -446,6 +446,10 @@ class pts_external_dependencies
 			{
 				$present = true;
 			}
+			else if(strpos($file, '.so') !== false && glob('/usr/lib*/*/*/' . $file) != false)
+			{
+				$present = true;
+			}
 			else if(pts_client::executable_in_path($file))
 			{
 				$present = true;
@@ -582,7 +586,7 @@ class pts_external_dependencies
 		}
 		else
 		{
-			echo 'Distribution install script not found!';
+			echo PHP_EOL . 'Distribution install script not found!' . PHP_EOL;
 		}
 	}
 	public static function vendor_identifier($type)

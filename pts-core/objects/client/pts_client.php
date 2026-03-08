@@ -347,7 +347,7 @@ class pts_client
 			while($physical_cores >= pow(($i + 1), 3));
 
 			$tpc = phodevi::read_property('cpu', 'core-count') / $physical_cores;
-			if($tpc < 1 || !is_integer($tpc))
+			if($tpc < 1 || !is_int($tpc))
 			{
 				$tpc = 1;
 			}
