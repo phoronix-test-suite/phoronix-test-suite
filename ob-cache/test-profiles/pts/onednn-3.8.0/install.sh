@@ -4,12 +4,12 @@ cd oneDNN-3.11.1
 mkdir build 
 cd build 
 CFLAGS="-O3 -march=native $CFLAGS" CXXFLAGS="-O3 -march=native $CXXFLAGS" cmake -DCMAKE_BUILD_TYPE=Release -DDNNL_GPU_RUNTIME=OCL MKLDNN_ARCH_OPT_FLAGS="-O3 -march=native $CFLAGS" $CMAKE_OPTIONS ..
-make -j $NUM_CPU_PHYSICAL_CORES
+make -j $NUM_CPU_CORES
 EXIT_STATUS=$?
 if [ $EXIT_STATUS -ne 0 ]; then
 	# For architectures not supporting -march=native compiler option...
 	CFLAGS="-O3 $CFLAGS" CXXFLAGS="-O3 $CXXFLAGS" cmake -DCMAKE_BUILD_TYPE=Release -DDNNL_GPU_RUNTIME=OCL MKLDNN_ARCH_OPT_FLAGS="-O3 $CFLAGS" $CMAKE_OPTIONS ..
-	make -j $NUM_CPU_PHYSICAL_CORES
+	make -j $NUM_CPU_CORES
 	EXIT_STATUS=$?
 fi
 echo $EXIT_STATUS > ~/install-exit-status
