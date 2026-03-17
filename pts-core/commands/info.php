@@ -194,7 +194,7 @@ class info implements pts_option_interface
 				if(!empty($dependencies) && !empty($dependencies[0]))
 				{
 					echo PHP_EOL . pts_client::cli_just_bold('Software Dependencies:') . PHP_EOL;
-					echo pts_user_io::display_text_list($o->get_dependency_names());
+					echo pts_user_io::display_text_list(pts_external_dependencies::dependencies_to_names($o));
 				}
 				echo PHP_EOL;
 

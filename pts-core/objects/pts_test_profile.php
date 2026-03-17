@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2022, Phoronix Media
-	Copyright (C) 2008 - 2022, Michael Larabel
+	Copyright (C) 2008 - 2026, Phoronix Media
+	Copyright (C) 2008 - 2026, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -26,14 +26,9 @@ class pts_test_profile extends pts_test_profile_parser
 	protected $overview = false;
 	protected static $test_installation_cache;
 
-	public function __construct($identifier = null, $override_values = null, $normal_init = true)
+	public function __construct($identifier = null, $normal_init = true, $no_fallbacks_on_null = false)
 	{
-		parent::__construct($identifier, $normal_init);
-
-		if($override_values != null && is_array($override_values))
-		{
-			$this->set_override_values($override_values);
-		}
+		parent::__construct($identifier, $normal_init, $no_fallbacks_on_null);
 
 		if($normal_init && PTS_IS_CLIENT && $this->identifier != null)
 		{
@@ -45,10 +40,19 @@ class pts_test_profile extends pts_test_profile_parser
 			$this->test_installation = &self::$test_installation_cache[$identifier];
 		}
 	}
-	public function validate()
+	public static function validate($to_validate)
 	{
+		if($to_validate instanceof pts_test_profile)
+		{
+			$test_profile_file = $to_validate->get_file_location();
+		}
+		else
+		{
+			return false;
+		}
+
 		$dom = new DOMDocument();
-		$dom->loadXML($this->get_xml());
+		$dom->load($test_profile_file);
 		return $dom->schemaValidate(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/test-profile.xsd');
 	}
 	public static function is_test_profile($identifier)
@@ -513,11 +517,8 @@ class pts_test_profile extends pts_test_profile_parser
 	}
 	public function to_json()
 	{
-		$file = $this->get_xml();
-		$file = str_replace(array("\n", "\r", "\t"), '', $file);
-		$file = trim(str_replace('"', "'", $file));
-		$simple_xml = simplexml_load_string($file);
-		return json_encode($simple_xml);
+		// TODO if there is ever a need if it's used...
+		return array();
 	}
 	public function get_downloads()
 	{

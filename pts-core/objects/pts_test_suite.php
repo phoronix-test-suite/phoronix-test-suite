@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2020, Phoronix Media
-	Copyright (C) 2008 - 2020, Michael Larabel
+	Copyright (C) 2008 - 2026, Phoronix Media
+	Copyright (C) 2008 - 2026, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -36,7 +36,6 @@ class pts_test_suite
 	private $post_run_message;
 	protected $tests_with_modes;
 	protected $test_objects;
-	protected $raw_xml;
 	protected $xml_file_location = false;
 
 	public function __construct($identifier = null)
@@ -87,7 +86,6 @@ class pts_test_suite
 		}
 
 		$xml_options = LIBXML_COMPACT | LIBXML_PARSEHUGE;
-		$this->raw_xml = $read;
 		if(is_file($read))
 		{
 			$this->xml_file_location = $read;
@@ -139,22 +137,6 @@ class pts_test_suite
 
 				if($obj instanceof pts_test_profile)
 				{
-					// Check for test profile values to override
-					$override_options = array();
-
-					if(isset($to_execute->OverrideTestOptions) && !empty($to_execute->OverrideTestOptions))
-					{
-						foreach(explode(';', self::clean_input($to_execute->OverrideTestOptions)) as $override_string)
-						{
-							$override_segments = pts_strings::trim_explode('=', $override_string);
-
-							if(count($override_segments) == 2 && !empty($override_segments[0]) && !empty($override_segments[1]))
-							{
-								$override_options[$override_segments[0]] = $override_segments[1];
-							}
-						}
-					}
-
 					$mode = isset($to_execute->Mode) ? self::clean_input($to_execute->Mode) : null;
 
 					if($mode == null && $obj->has_test_options() && (!isset($to_execute->Description) || empty($to_execute->Description)))
@@ -185,11 +167,6 @@ class pts_test_suite
 
 					foreach(array_keys($option_output[0]) as $x)
 					{
-						if($override_options != null)
-						{
-							$obj->set_override_values($override_options);
-						}
-
 						$this->add_to_suite($obj, $option_output[0][$x], $option_output[1][$x], $mode);
 					}
 				}
@@ -245,16 +222,25 @@ class pts_test_suite
 	{
 		return $this->xml_file_location;
 	}
-	public function validate()
+	public static function validate_test_suite_xml($xml_file)
 	{
-		$dom = new DOMDocument();
-		if(is_file($this->raw_xml))
+		if($xml_file === null)
 		{
-			$dom->load($this->raw_xml);
+			return false;
+		}
+		else if($xml_file instanceof pts_test_suite)
+		{
+			$xml_file = $xml_file->get_file_location();
+		}
+
+		$dom = new DOMDocument();
+		if(is_file($xml_file))
+		{
+			$dom->load($xml_file);
 		}
 		else
 		{
-			$dom->loadXML($this->raw_xml);
+			$dom->loadXML($xml_file);
 		}
 		return $dom->schemaValidate(pts_openbenchmarking::openbenchmarking_standards_path() . 'schemas/test-suite.xsd');
 	}
@@ -571,11 +557,6 @@ class pts_test_suite
 			}
 
 			$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/Mode', $mode);
-			$ov = $test->test_profile->get_override_values(true);
-			if($ov)
-			{
-				$xml_writer->addXmlNodeWNE('PhoronixTestSuite/Execute/OverrideTestOptions', $ov);
-			}
 		}
 		return $xml_writer->getXML();
 	}

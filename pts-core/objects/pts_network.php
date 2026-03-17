@@ -585,7 +585,7 @@ class pts_network
 		$errno = null;
 		$errstr = null;
 		$fp = false;
-		$ignore_ports = array(2049, 2077, 2086, 2087, 2095, 2096, 3659, 4045, 5060, 5061, 6000, 9000);
+		$ignore_ports = array(2049, 2077, 2086, 2087, 2095, 2096, 3659, 4045, 5060, 5061, 6000, 6665, 9000);
 		do
 		{
 			if($fp)

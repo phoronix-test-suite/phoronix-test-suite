@@ -539,3 +539,140 @@ div#results_sidebar
 	border: 1px solid #fff;
 }
 }
+
+
+
+
+label.btn-checkbox-selector-label input[type="checkbox"]
+{
+  -webkit-appearance: none;
+  appearance: none;
+  position: absolute;
+  opacity: 0;
+}
+div.category-header-bar
+{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 10px 0;
+	text-align: center;
+	color: #929292;
+	text-transform: uppercase;
+	vertical-align: middle;
+}
+div.category-side-column
+{
+	flex-grow: 1;
+	min-width: 240px;
+	max-width: 440px;
+	margin: 0 5px;
+}
+div.btn-checkbox-selector-header
+{
+	clear: both;
+	color: #929292;
+	font-weight: 500;
+	text-transform: uppercase;
+	text-align: left;
+}
+div.btn-checkbox-selector-footer
+{
+	clear: both;
+	color: #929292;
+	font-weight: 500;
+	text-transform: uppercase;
+	text-align: justify;
+	font-size: 60%;
+}
+label.btn-checkbox-selector-label
+{
+  display: block;
+  margin: 4px 0;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  background-color: #f2f2f2;
+  color: #333;
+  text-align: left;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+label.btn-checkbox-selector-label em
+{
+	text-decoration: none;
+	font-size: 70%;
+	text-transform: uppercase;
+	padding: 0;
+}
+label.btn-checkbox-selector-label:has(input[type="checkbox"]:checked), label.btn-checkbox-selector-label-checked
+{
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+
+label.btn-checkbox-selector-label:hover {
+  background-color: #ddd;
+}
+
+label.btn-checkbox-selector-label:has(input[type="checkbox"]:checked):hover {
+    background-color: #0056b3;
+}
+
+label.btn-checkbox-selector-label input[type="checkbox"]:focus + .btn-checkbox-selector-label {
+  outline: 2px solid blue;
+}
+
+div.category-header-bar label.btn-checkbox-selector-label, div.category-header-bar label.btn-checkbox-selector-label-checked
+{
+	margin: 0 5px;
+	display: inline-block;
+	width: auto;
+	height: 100%;
+	top: 0;
+	padding: 5px 10px;
+	vertical-align: center;
+	align-items: center;
+	text-align: center;
+	font-weight: bold;
+}
+div.category-header-bar label.btn-checkbox-selector-label em
+{
+	text-decoration: none;
+	color: #a2a2a2;
+	font-weight: normal;
+	font-size: 60%;
+}
+div.test-profile-header-flex-bar
+{
+	display: flex;
+	flex-direction: row;
+	border: 1px solid #000;
+	border-width: 0 0 3px 0;
+	align-items: center;
+	height: auto;
+	width: 50%;
+	margin: 5px auto;
+}
+div.test-profile-header-flex-bar div
+{
+	flex-basis: auto;
+	align-self: center;
+}
+div.test-profile-header-flex-bar p
+{
+	font-size: 14px;
+	margin: 4px 10px;
+	text-align: left;
+	align-self: center;
+}
+div.test-profile-header-flex-bar div h2
+{
+	text-transform: uppercase;
+	padding: 2px;
+	margin: 0;
+	color: #000 !important;
+	font-size: 1.6em;
+	font-weight: 1000;
+}

@@ -414,6 +414,7 @@
 			<Title>OpenCL</Title>
 			<PossibleNames>NVIDIA OpenCL, ATI Stream SDK, OpenCL SDK, opencl-headers</PossibleNames>
 			<FileCheck>CL/cl.h OR OpenCL/cl.h</FileCheck>
+			<VirtualSuite>TRUE</VirtualSuite>
 		</Package>
 		<Package>
 			<GenericName>subversion</GenericName>

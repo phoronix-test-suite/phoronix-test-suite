@@ -105,7 +105,7 @@ class pts_validation
 		libxml_clear_errors();
 
 		// First rewrite the main XML file to ensure it is properly formatted, elements are ordered according to the schema, etc...
-		$valid = $test_suite->validate();
+		$valid = pts_test_suite::validate_test_suite_xml($test_suite);
 
 		if($valid == false)
 		{
@@ -132,8 +132,8 @@ class pts_validation
 		libxml_clear_errors();
 
 		// Now re-create the pts_test_profile object around the rewritten XML
-		$test_profile = new pts_test_profile($test_profile->get_identifier());
-		$valid = $test_profile->validate();
+		$test_profile = new pts_test_profile($test_profile->get_identifier(), true, true);
+		$valid = pts_test_profile::validate($test_profile);
 
 		if($valid == false)
 		{
@@ -149,8 +149,8 @@ class pts_validation
 		$writer->saveXMLFile($test_profile->get_file_location());
 
 		// Now re-create the pts_test_profile object around the rewritten XML
-		$test_profile = new pts_test_profile($test_profile->get_identifier());
-		$valid = $test_profile->validate();
+		$test_profile = new pts_test_profile($test_profile->get_identifier(), true, true);
+		$valid = pts_test_profile::validate($test_profile);
 
 		if($valid == false)
 		{
@@ -563,7 +563,6 @@ class pts_validation
 	}
 	public static function xsd_to_rebuilt_xml($xsd_file, $types, &$test_profile, &$writer)
 	{
-		$test_profile->no_fallbacks_on_null = true;
 		foreach(self::generate_xsd_element_objects($xsd_file, $test_profile, $types) as $node)
 		{
 			$do_require = in_array('TEST_REQUIRES', $node->get_flags_array());
@@ -588,7 +587,6 @@ class pts_validation
 			//}
 			$writer->addXmlNodeWNE($path, $value);
 		}
-		$test_profile->no_fallbacks_on_null = false;
 
 		return true;
 	}

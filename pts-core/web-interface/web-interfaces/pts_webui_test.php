@@ -175,7 +175,7 @@ class pts_webui_test implements pts_webui_interface
 		echo '<h4>Installation Data</h4>';
 		echo pts_webui::r2d_array_to_table($tabular_info);
 
-		$dependencies = self::$test_profile->get_dependency_names();
+		$dependencies = pts_external_dependencies::dependencies_to_names(self::$test_profile);
 		if(!empty($dependencies) && !empty($dependencies[0]))
 		{
 			array_unshift($dependencies, 'Test Dependencies');

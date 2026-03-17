@@ -100,9 +100,13 @@ class phodevi_memory extends phodevi_device_interface
 				if(!isset($memory_device_data['MEMORY_ARRAY_NUM_DEVICES']))
 				{
 					$num_devices = 0;
-					while(isset($memory_device_data['MEMORY_DEVICE_' . $num_devices . '_SIZE']))
+					foreach(array_keys($memory_device_data) as $k)
 					{
-						$num_devices++;
+						// This way avoids unpopulated memory numbers in between entries, etc
+						if(strpos($k, '_SIZE'))
+						{
+							$num_devices++;
+						}
 					}
 					if($num_devices > 0)
 					{

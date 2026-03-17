@@ -24,10 +24,19 @@ class pts_user_io
 {
 	public static $readline_completion_possibilities = null;
 
-	public static function read_user_input($prompt = null)
+	public static function read_user_input($prompt = null, $completion_handler_elements = null)
 	{
-		echo $prompt;
-		return trim(fgets(STDIN));
+		if(!empty($completion_handler_elements) && is_array($completion_handler_elements) && function_exists('readline') && function_exists('readline_completion_function'))
+		{
+			pts_user_io::$readline_completion_possibilities = $completion_handler_elements;
+			readline_completion_function(array('pts_user_io', 'readline_completion_handler'));
+			return readline($prompt);
+		}
+		else
+		{
+			echo $prompt;
+			return trim(fgets(STDIN));
+		}
 	}
 	public static function strip_ansi_escape_sequences($output)
 	{

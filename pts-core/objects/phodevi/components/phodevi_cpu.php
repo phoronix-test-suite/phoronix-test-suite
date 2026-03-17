@@ -170,7 +170,7 @@ class phodevi_cpu extends phodevi_device_interface
 			if(empty($physical_cores) || $physical_cores == phodevi::read_property('cpu', 'thread-count'))
 			{
 				// Needed for POWER9 at least
-				if(isset(phodevi::$vfs->lscpu) && ($t = strpos(phodevi::$vfs->lscpu, 'Core(s) per socket:')))
+				if(isset(phodevi::$vfs->lscpu) && ($t = strpos(phodevi::$vfs->lscpu, 'Core(s) per socket:')) && strpos(phodevi::$vfs->lscpu, 'aarch64') == false)
 				{
 					$lscpu = substr(phodevi::$vfs->lscpu, $t + strlen('Core(s) per socket:') + 1);
 					$lscpu = substr($lscpu, 0, strpos($lscpu, PHP_EOL));
@@ -959,9 +959,16 @@ class phodevi_cpu extends phodevi_device_interface
 					switch($part)
 					{
 						case '0xac3':
-						case '0xac4':
-						case '0xac5':
 							$new_info .= 'One';
+							break;
+						case '0xac4':
+							$new_info .= 'One M';
+							break;
+						case '0xac5':
+							$new_info .= 'One MX';
+							break;
+						case '0xac7':
+							$new_info .= 'One Aurora';
 							break;
 					}
 				}
@@ -1567,7 +1574,7 @@ class phodevi_cpu extends phodevi_device_interface
 		{
 			return $intel_map[$family][$model];
 		}
-		if(isset($other_map[$family][$model]))
+		if($family != null && $model != null && isset($other_map[$family][$model]))
 		{
 			return $other_map[$family][$model];
 		}

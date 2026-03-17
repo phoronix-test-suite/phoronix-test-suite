@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2023, Phoronix Media
-	Copyright (C) 2008 - 2023, Michael Larabel
+	Copyright (C) 2008 - 2026, Phoronix Media
+	Copyright (C) 2008 - 2026, Michael Larabel
 	phodevi_system.php: The PTS Device Interface object for the system software
 
 	This program is free software; you can redistribute it and/or modify
@@ -104,6 +104,10 @@ class phodevi_system extends phodevi_device_interface
 				if($vendor == '0x8086')
 				{
 					$npus[] = 'Intel NPU';
+				}
+				else if($vendor == '0x1022')
+				{
+					$npus[] = 'AMD NPU';
 				}
 			}
 		}

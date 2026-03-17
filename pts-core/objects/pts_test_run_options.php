@@ -407,7 +407,10 @@ class pts_test_run_options
 						array(2560, 1080),
 						array(2560, 1440),
 						array(2880, 1620),
-						array(3840, 1600));
+						array(3840, 1600),
+						array(4096, 2304),
+						array(6144, 2560)
+						);
 					$available_modes = array();
 
 					for($i = 0; $i < count($stock_modes); $i++)

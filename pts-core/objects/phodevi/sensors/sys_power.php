@@ -33,6 +33,7 @@ class sys_power extends phodevi_sensor
 	private static $ipmitool = false;
 	private static $ipmitool_ps = false;
 	private static $ipmitool_platform = false;
+	private static $ipmitool_platform2 = false;
 	private static $ipmitool_dcmi = false;
 	private static $windows_battery = false;
 	private static $hwmon_power_meter = false;
@@ -154,7 +155,23 @@ class sys_power extends phodevi_sensor
 				self::$ipmitool_platform = true;
 				return true;
 			}
+			
+			$ipmi_ps1 = phodevi_linux_parser::read_ipmitool_sensor('Power_PSU0_In');
+			//$ipmi_ps2 = phodevi_linux_parser::read_ipmitool_sensor('Power_PSU1_In');
+			if(is_numeric($ipmi_ps1) && $ipmi_ps1 > 1)
+			{
+				self::$ipmitool_platform2 = true;
+				return true;
+			}
 		}
+		$corsairpsu_power = phodevi_linux_parser::read_sysfs_node('/sys/class/hwmon/hwmon*/power1_input', 'POSITIVE_NUMERIC', array('name' => 'corsairpsu'), 1, true);
+		if($corsairpsu_power != -1)
+		{
+			// Corsair PSU driver
+			self::$hwmon_power_meter = $corsairpsu_power;
+			return true;
+		}
+
 	}
 	public function read_sensor()
 	{
@@ -192,6 +209,10 @@ class sys_power extends phodevi_sensor
 		else if(self::$ipmitool_platform)
 		{
 			return phodevi_linux_parser::read_ipmitool_sensor('PSU1 Input Power', 0) + phodevi_linux_parser::read_ipmitool_sensor('PSU2 Input Power', 0);
+		}
+		else if(self::$ipmitool_platform2)
+		{
+			return phodevi_linux_parser::read_ipmitool_sensor('Power_PSU0_In', 0) + phodevi_linux_parser::read_ipmitool_sensor('Power_PSU1_In', 0);
 		}
 		else if(self::$ipmitool_dcmi)
 		{

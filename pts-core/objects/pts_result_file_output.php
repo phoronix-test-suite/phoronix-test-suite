@@ -736,6 +736,57 @@ class pts_result_file_output
 
 		return $html;
 	}
+	/*public static function result_file_to_vertical_html_side_by_side($result_file)
+	{
+		$rf = clone $result_file;
+		$system_identifiers = $rf->get_system_identifiers();
+		var_dump($system_identifiers);
+		if(count($system_identifiers) != 2 || $rf->get_test_count() < 20)
+		{
+			return;
+		}
+
+
+		$html_upper = '<div style="display: flex; flex-direction: row-reverse; height: 300px; align-items: flex-end; width: auto;">';
+		$html_lower = '<div style="display: flex; flex-direction: row-reverse; height: 300px; width: auto;">';
+		$rf->sort_result_object_order_by_spread();
+		$result_objects = $rf->get_result_objects();
+		$biggest_val = -1;
+		usort($result_objects, array('pts_graph_run_vs_run', 'cmp_result_object_sort'));
+
+		foreach($result_objects as &$r)
+		{
+			if($r->test_profile->get_identifier() == null || count($r->test_result_buffer->get_buffer_items()) != 2 || $r->normalize_buffer_values() == false)
+			{
+				continue;
+			}
+
+			$relative_win = $r->get_result_first(false);
+			$winner = $r->get_result_first(true);
+			if($biggest_val == -1)
+			{
+				$biggest_val = $relative_win;
+			}
+			if($winner == $system_identifiers[0])
+			{
+				$html_upper .= '<div style="height: ' . round($relative_win / $biggest_val, 2) * 300 . 'px; background: #000;">d</div>';
+				$html_lower .= '<div style=""></div>';
+			}
+			else if($winner == $system_identifiers[1])
+			{
+				$html_lower .= '<div style="height: ' . round($relative_win / $biggest_val, 2) * 300 . 'px; background: #000;">d</div>';
+				$html_upper .= '<div style=""></div>';
+			}
+		}
+
+			//$af = function(&$value) { $value = '<strong style="writing-mode: vertical-rl; text-orientation: mixed;">' . strtoupper($value) . '</strong>'; };
+			//$row[0] = '<span><strong><a href="#r-' . $ro->get_comparison_hash(true, false) . '">' . $r->test_profile->get_title() . '</a></strong><br />' . $ro->get_arguments_description_shortened(($systems_count > 11 ? true : false)) . ' (' . $ro->test_profile->get_result_scale_shortened() . ' ' . ($hib ? '&uarr;' : '&darr;') . ' )</span>';
+		
+		$html_upper .= '</div>';
+		$html_lower .= '</div>';
+
+		return $html_upper . $html_lower;
+	}*/
 	public static function diff_in_system($from, $to)
 	{
 		if($from == null)
@@ -857,7 +908,7 @@ class pts_result_file_output
 
 			if($footnote_mode)
 			{
-				$html .= '<p>Testing initiated at ' . date('j F Y H:i', strtotime($system->get_timestamp())) . ' by user ' . $system->get_username() . '.</p>';
+				$html .= '<p>Testing initiated on ' . date('j F Y \a\t H:i', strtotime($system->get_timestamp())) . '.</p>';
 			}
 		}
 

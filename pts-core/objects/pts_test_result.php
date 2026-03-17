@@ -521,11 +521,11 @@ class pts_test_result
 		$this->test_result_buffer->recalculate_buffer_items_min_max();
 		return true;
 	}
-	public function sort_results_by_performance()
+	public function sort_results_by_performance($reverse = true)
 	{
 		$this->test_result_buffer->buffer_values_sort();
 
-		if($this->test_profile->get_result_proportion() == 'HIB')
+		if($reverse && $this->test_profile->get_result_proportion() == 'HIB')
 		{
 			$this->test_result_buffer->buffer_values_reverse();
 		}

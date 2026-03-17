@@ -550,11 +550,6 @@ class pts_render
 	}
 	public static function multi_way_identifier_check($identifiers)
 	{
-		/*
-			Samples To Use For Testing:
-			1109026-LI-AMDRADEON57
-		*/
-
 		if(count($identifiers) < 2)
 		{
 			return false;
@@ -596,73 +591,7 @@ class pts_render
 	{
 		$user_agent .= ' ';
 		$selected_renderer = 'SVG';
-
-		// Yahoo Slurp, msnbot, and googlebot should always be served SVG so no problems there
-		// 2021: all relatively recent browsers of thep ast decade should be fine...
-		/*
-		if(($p = strpos($user_agent, 'Gecko/')) !== false)
-		{
-			// Mozilla Gecko-based browser (Firefox, etc)
-			$gecko_date = substr($user_agent, ($p + 6));
-			$gecko_date = substr($gecko_date, 0, 6);
-
-			// Around Firefox 3.0 era is best
-			// Firefox 2.0 mostly works except text might not show...
-			// With Firefox 17.0 it's now Gecko/17.0 rather than a date...
-			if(substr($gecko_date, 0, 3) == '200' && $gecko_date < 200702)
-			{
-				$selected_renderer = 'PNG';
-			}
-		}
-		else if(($p = strpos($user_agent, 'AppleWebKit/')) !== false && strpos($user_agent, 'Chrome/') === false)
-		{
-			// All modern versions of Chrome should work with SVG
-			// Safari, Google Chrome, Google Chromium, etc
-			// Any version of Chrome should be okay
-			$webkit_ver = substr($user_agent, ($p + 12));
-			$webkit_ver = substr($webkit_ver, 0, strpos($webkit_ver, ' '));
-
-			// Webkit 532.2 534.6 (WebOS 3.0.2) on WebOS is buggy for SVG
-			// iPhone OS is using 533 right now
-			if($webkit_ver < 533 || strpos($user_agent, 'hpwOS') !== false)
-			{
-				$selected_renderer = 'PNG';
-			}
-
-			if(($p = strpos($user_agent, 'Android ')) !== false)
-			{
-				$android_ver = substr($user_agent, ($p + 8), 3);
-
-				// Android browser doesn't support SVG.
-				// Google bug report 1376 for Android - http://code.google.com/p/android/issues/detail?id=1376
-				// Looks like it might work though in 3.0 Honeycomb
-				if($android_ver < 3.0)
-				{
-					$selected_renderer = 'PNG';
-				}
-			}
-		}
-		else if(($p = strpos($user_agent, 'KHTML/')) !== false)
-		{
-			// KDE Konqueror as of 4.7 is still broken for SVG
-			$selected_renderer = 'PNG';
-		}
-		else if(($p = strpos($user_agent, 'MSIE ')) !== false)
-		{
-			$ver = substr($user_agent, ($p + 5), 1);
-
-			// Microsoft Internet Explorer 9.0 finally seems to do SVG right
-			if($ver < 10 && $ver != 1)
-			{
-				$selected_renderer = 'PNG';
-			}
-		}
-		else if(strpos($user_agent, 'facebook') !== false)
-		{
-			// Facebook uses this string for its Like/Share crawler, so serve it a PNG so it can use it as an image
-			$selected_renderer = 'PNG';
-		}
-		*/
+		// 2026: all browsers should support SVG fine for years...
 
 		return $selected_renderer;
 	}

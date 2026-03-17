@@ -40,7 +40,7 @@ class test_to_suite_map implements pts_option_interface
 			{
 				foreach($suites_containing_test as $suite)
 				{
-					$table[] = array($suite->get_identifier(false), pts_client::cli_just_italic($suite->get_title()));
+					$table[] = array('   ' . $suite->get_identifier(false), pts_client::cli_just_italic($suite->get_title()));
 				}
 			}
 

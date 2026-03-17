@@ -76,7 +76,7 @@ class pts_result_file
 		{
 			foreach($xml->System as $s)
 			{
-				$this->systems[] = new pts_result_file_system(self::clean_input($s->Identifier->__toString()), self::clean_input($s->Hardware->__toString()), self::clean_input($s->Software->__toString()), json_decode(self::clean_input($s->JSON), true), self::clean_input($s->User->__toString()), self::clean_input($s->Notes->__toString()), self::clean_input($s->TimeStamp->__toString()), self::clean_input($s->TestClientVersion->__toString()), $this);
+				$this->systems[] = new pts_result_file_system(self::clean_input($s->Identifier->__toString()), self::clean_input($s->Hardware->__toString()), self::clean_input($s->Software->__toString()), json_decode(self::clean_input($s->JSON), true), self::clean_input($s->User->__toString()), self::clean_input($s->Notes->__toString()), self::clean_input($s->TimeStamp->__toString()), self::clean_input($s->TestClientVersion->__toString()), $this, (isset($s->CostValueForComparison) && $s->CostValueForComparison->__toString() > 0 && is_numeric($s->CostValueForComparison->__toString()) ? $s->CostValueForComparison->__toString()  : ''));
 			}
 		}
 
@@ -89,7 +89,7 @@ class pts_result_file
 					continue;
 				}
 
-				$test_profile = new pts_test_profile(($result->Identifier != null ? $result->Identifier->__toString() : null), null, !$read_only_result_objects);
+				$test_profile = new pts_test_profile(($result->Identifier != null ? $result->Identifier->__toString() : null), !$read_only_result_objects);
 				$test_profile->set_test_title($result->Title->__toString());
 				$test_profile->set_version($result->AppVersion->__toString());
 				$test_profile->set_result_scale($result->Scale->__toString());
@@ -466,16 +466,20 @@ class pts_result_file
 	{
 		return count($this->result_objects);
 	}
-	public function get_qualified_test_count()
+	public function get_qualified_test_count(&$unique_count = 0)
 	{
 		$q_count = 0;
+		$test_identifiers = array();
 		foreach($this->result_objects as &$ro)
 		{
-			if($ro->test_profile->get_identifier() != null)
+			$test_id = $ro->test_profile->get_identifier();
+			if($test_id != null)
 			{
+				$test_identifiers[$test_id] = 1;
 				$q_count++;
 			}
 		}
+		$unique_count = count($test_identifiers);
 		return $q_count;
 	}
 	public function has_matching_test_and_run_identifier(&$test_result, $run_identifier_to_check)
@@ -646,6 +650,39 @@ class pts_result_file
 			}
 		}
 		return $did_remove;
+	}
+	public function remove_result_objects_by_test($test_identifiers, $true_to_keep_tests_false_to_delete = false, $delete_child_objects = true)
+	{
+		$did_remove = false;
+		$test_identifiers = pts_arrays::to_array($test_identifiers);
+		foreach($this->result_objects as $i => &$ro)
+		{
+			$this_identifier = $ro->test_profile->get_identifier(false);
+			$is_in_list = in_array($this_identifier, $test_identifiers);
+
+			if(!$true_to_keep_tests_false_to_delete && $is_in_list)
+			{
+				$did_remove = true;
+				$this->remove_result_object_by_id($i, $delete_child_objects);
+			}
+			else if($true_to_keep_tests_false_to_delete && !$is_in_list && $ro->get_parent_hash() == null)
+			{
+				$did_remove = true;
+				$this->remove_result_object_by_id($i, $delete_child_objects);
+			}
+		}
+
+		return $did_remove;
+	}
+	public function remove_results_by_arguments_description($str_check)
+	{
+		foreach($this->result_objects as $i => &$ro)
+		{
+			if(stripos($ro->get_arguments_description(), $str_check) !== false)
+			{
+				$this->remove_result_object_by_id($i);
+			}
+		}
 	}
 	public function remove_noisy_results($noise_level_percent = 6)
 	{
@@ -962,6 +999,10 @@ class pts_result_file
 				// Ensure that a supported result file schema is being written...
 				// USER_PTS_CORE_VERSION is set by OpenBenchmarking.org so if the requested client is old, don't write this data to send back to their version
 				$xml_writer->addXmlNodeWNE('PhoronixTestSuite/System/JSON', ($s->get_json() ? json_encode($s->get_json()) : null));
+			}
+			if($s->get_cost_value_for_comparison() != false && is_numeric($s->get_cost_value_for_comparison()))
+			{
+				$xml_writer->addXmlNode('PhoronixTestSuite/System/CostValueForComparison', $s->get_cost_value_for_comparison());
 			}
 		}
 

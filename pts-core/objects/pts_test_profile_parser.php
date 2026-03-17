@@ -24,18 +24,18 @@ class pts_test_profile_parser
 {
 	protected $identifier;
 	private $xml;
-	private $raw_xml;
 	protected $overrides;
 	private $tp_extends;
 	protected $block_test_extension_support = false;
 	private $file_location = false;
-	public $no_fallbacks_on_null = false;
+	protected $no_fallbacks_on_null;
 	protected static $xml_file_cache;
 
-	public function __construct($read = null, $normal_init = true)
+	public function __construct($read = null, $normal_init = true, $no_fallbacks_on_null = false)
 	{
 		$original_read = $read;
 		$this->overrides = array();
+		$this->no_fallbacks_on_null = $no_fallbacks_on_null;
 		$this->tp_extends = null;
 
 		if($normal_init == false || $read == null)
@@ -113,21 +113,11 @@ class pts_test_profile_parser
 		}
 		else
 		{
-			$this->raw_xml = $read;
 			if(strpos($read, '<') !== false)
 			{
 				$this->xml = simplexml_load_string($read, 'SimpleXMLElement', $xml_options);
 			}
 		}
-	}
-	public function get_xml()
-	{
-		if($this->file_location)
-		{
-			return file_get_contents($this->file_location);
-		}
-
-		return $this->raw_xml;
 	}
 	public function get_file_location()
 	{
@@ -137,29 +127,9 @@ class pts_test_profile_parser
 	{
 		return $this->get_identifier();
 	}
-	public function block_test_extension_support()
-	{
-		$this->block_test_extension_support = true;
-	}
 	public function xs($xpath, &$value)
 	{
 		$this->overrides[$xpath] = $value;
-	}
-	public function get_dependency_names()
-	{
-		$dependency_names = array();
-		$exdep_generic_parser = new pts_exdep_generic_parser();
-
-		foreach($this->get_external_dependencies() as $dependency)
-		{
-			if($exdep_generic_parser->is_package($dependency))
-			{
-				$package_data = $exdep_generic_parser->get_package_data($dependency);
-				$dependency_names[] = $package_data['title'];
-			}
-		}
-
-		return $dependency_names;
 	}
 	public function xg($xpath, $default_on_null = null)
 	{

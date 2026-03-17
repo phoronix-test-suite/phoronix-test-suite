@@ -196,9 +196,6 @@ class pts_svg_dom_gd
 			{
 				return false;
 			}
-
-//foreach($dom->childNodes->item(2)->attributes  as $atrr)
-//	{ echo $atrr->name . ' ' . $atrr->value . PHP_EOL; }
 		}
 		else
 		{

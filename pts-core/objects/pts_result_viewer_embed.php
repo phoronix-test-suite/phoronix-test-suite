@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2018 - 2024, Phoronix Media
-	Copyright (C) 2018 - 2024, Michael Larabel
+	Copyright (C) 2018 - 2026, Phoronix Media
+	Copyright (C) 2018 - 2026, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -33,6 +33,8 @@ class pts_result_viewer_embed
 	protected $include_page_print_only_helpers = true;
 	protected $show_result_sidebar = false;
 	protected $print_html_immediately = false;
+	public $new_test_header_view = false;
+	protected $extra_attributes = false;
 
 	public function __construct(&$result_file, $public_id = null)
 	{
@@ -45,6 +47,14 @@ class pts_result_viewer_embed
 		{
 			pts_strings::exit_if_contains_unsafe_data($_SERVER['REQUEST_URI']);
 		}
+	}
+	public function print_output_directly($print_directly)
+	{
+		$this->print_html_immediately = $print_directly == true;
+	}
+	public function toggle_result_sidebar($show)
+	{
+		$this->show_result_sidebar = $show == true;
 	}
 	public function allow_modifying_results($can_modify)
 	{
@@ -135,8 +145,8 @@ class pts_result_viewer_embed
 		$result_file = &$this->result_file;
 		self::process_result_modify_pre_render($result_file, $this->can_modify_results, $this->can_delete_results);
 		$result_file->avoid_duplicate_identifiers();
-		$extra_attributes = null;
 		$html_options = self::get_html_options_markup($result_file, $_REQUEST, $this->result_public_id, $this->can_delete_results);
+		$extra_attributes = null;
 		self::process_request_to_attributes($_REQUEST, $result_file, $extra_attributes);
 		$this->print_handler($PAGE, self::get_html_sort_bar($result_file, $_REQUEST));
 		$this->print_handler($PAGE, '<h1 id="result_file_title" placeholder="Title">' . pts_strings::sanitize($result_file->get_title()) . '</h1>');
@@ -225,8 +235,32 @@ class pts_result_viewer_embed
 			$this->print_handler($PAGE, $this->graph_export_handler($rendered, $result_file));
 		}
 		$this->print_handler($PAGE, '</div>');
-		$this->print_handler($PAGE, '<a id="table"></a><div id="results">');
-		$prev_title = null;
+		// Results/graphs area
+		$PAGE .= $this->get_html_results_area($extra_attributes);
+		return $PAGE;
+	}
+	protected function obtain_extra_attributes(&$extra_attributes = false)
+	{
+		if($this->extra_attributes == false)
+		{
+			$extra_attributes = null;
+			self::process_request_to_attributes($_REQUEST, $this->result_file, $extra_attributes);
+			$this->extra_attributes = $extra_attributes;
+		}
+		else
+		{
+			$extra_attributes = $this->extra_attributes;
+		}
+	}
+	public function get_html_results_area($extra_attributes = false, $prepend_to_results_area = '')
+	{
+		$PAGE = null;
+		$result_file = &$this->result_file;
+		if($extra_attributes === false)
+		{
+			$this->obtain_extra_attributes($extra_attributes);
+		}
+		$this->print_handler($PAGE, '<a id="table"></a><div id="results">' . $prepend_to_results_area);
 
 		$identifier_mapping_to_cores = array();
 		$identifier_mapping_to_threads = array();
@@ -297,6 +331,7 @@ class pts_result_viewer_embed
 		//
 		$sidebar_list = array();
 		$skip_ros = array();
+		$prev_title = null;
 		foreach($result_file->get_result_object_keys() as $i)
 		{
 			$result_object = $result_file->get_result_object_by_hash($i);
@@ -317,11 +352,16 @@ class pts_result_viewer_embed
 			//
 			if($this->show_test_metadata_helper && $result_object->test_profile->get_title() != $prev_title)
 			{
-				$this->print_handler($PAGE, '<h2>' . $result_object->test_profile->get_title() . '</h2>');
-				if(is_file(PTS_INTERNAL_OB_CACHE . 'test-profiles/' . $result_object->test_profile->get_identifier() . '/test-definition.xml'))
+				if($this->new_test_header_view)
 				{
-					$tp = new pts_test_profile(PTS_INTERNAL_OB_CACHE . 'test-profiles/' . $result_object->test_profile->get_identifier() . '/test-definition.xml');
-					$this->print_handler($PAGE, '<p class="mini">' . $tp->get_description() . ' <a href="https://openbenchmarking.org/test/' . $result_object->test_profile->get_identifier(false) . '"><em class="hide_on_print">Learn more via the OpenBenchmarking.org test page.</em></a></p>');
+					$this->print_handler($PAGE, '<div class="test-profile-header-flex-bar"><div><a href="https://openbenchmarking.org/test/' . $result_object->test_profile->get_identifier(false) . '" target="_blank"><h2>' . $result_object->test_profile->get_title() . '</h2></a></div><p>' . $result_object->test_profile->get_description() . '</p></div>');
+				}
+				else
+				{
+					$this->print_handler($PAGE, '<h2>' . $result_object->test_profile->get_title() . '</h2>');
+					//$tp = new pts_test_profile(PTS_INTERNAL_OB_CACHE . 'test-profiles/' . $result_object->test_profile->get_identifier() . '/test-definition.xml');
+					$this->print_handler($PAGE, '<p class="mini">' . $result_object->test_profile->get_description() . ' <a href="https://openbenchmarking.org/test/' . $result_object->test_profile->get_identifier(false) . '" target="_blank"><em class="hide_on_print">Learn more</em></a></p>');
+				}
 
 				/*	$suites_containing_test = pts_test_suites::suites_containing_test_profile($result_object->test_profile);
 					if(!empty($suites_containing_test))
@@ -331,7 +371,6 @@ class pts_result_viewer_embed
 							$this->print_handler($PAGE, $suite->get_title() . ' ' . $suite->get_identifier());
 						}
 					}  */
-				}
 				$prev_title = $result_object->test_profile->get_title();
 			}
 			if($res != false)
@@ -538,6 +577,22 @@ class pts_result_viewer_embed
 			$this->print_handler($PAGE, '<div class="print_notes mini" style="font-size: 10px !important;">' . pts_result_file_output::result_file_to_system_html($result_file, true) . '</div>');
 		}
 		$this->print_handler($PAGE, '</div>');
+
+		return $PAGE;
+	}
+	public function print_single_result($test_result)
+	{
+		$PAGE = '';
+		$extra_attributes = false;
+		$this->obtain_extra_attributes($extra_attributes);
+		$res = pts_render::render_graph_inline_embed($test_result, $this->result_file, $extra_attributes);
+		$this->print_handler($PAGE, '<section style="text-align: center;">');
+		$this->print_handler($PAGE, $res . '<br />' . $this->graph_export_handler($res, $result_file, $test_result));
+		if($test_result->get_annotation() != null)
+		{
+			$this->print_handler($PAGE, '<p class="mini">' . pts_strings::sanitize($test_result->get_annotation()) . '</p>');
+		}
+		$this->print_handler($PAGE, '</section>');
 
 		return $PAGE;
 	}
@@ -1515,42 +1570,7 @@ class pts_result_viewer_embed
 			{
 				$stis = explode(',', $stis);
 			}
-			$suites_in_result_file = pts_test_suites::suites_in_result_file($result_file, true, 0);
-			$tests_to_show = array();
-			foreach($stis as $suite_to_show)
-			{
-				$suite_to_show = base64_decode($suite_to_show);
-				if(isset($suites_in_result_file[$suite_to_show]))
-				{
-					foreach($suites_in_result_file[$suite_to_show][1] as $test_to_show)
-					{
-						$tests_to_show[] = $test_to_show;
-					}
-				}
-			}
-
-			if(!empty($tests_to_show))
-			{
-				foreach($result_file->get_result_object_keys() as &$ro_key)
-				{
-					$result_object = $result_file->get_result_object_by_hash($ro_key);
-					if($result_object == false)
-					{
-						continue;
-					}
-					if($result_object->get_parent_hash())
-					{
-						if(!$result_file->get_result_object_by_hash($result_object->get_parent_hash()) || !in_array($result_file->get_result_object_by_hash($result_object->get_parent_hash())->test_profile->get_identifier(false), $tests_to_show))
-						{
-							$result_file->remove_result_object_by_id($ro_key);
-						}
-					}
-					else if(!in_array($result_object->test_profile->get_identifier(false), $tests_to_show))
-					{
-						$result_file->remove_result_object_by_id($ro_key);
-					}
-				}
-			}
+			self::remove_all_but_tests_in_suites($result_file, $stis);
 		}
 		if(self::check_request_for_var($request, 'hlc'))
 		{
@@ -1797,6 +1817,44 @@ class pts_result_viewer_embed
 		{
 			$perf_per_hour = self::check_request_for_var($request, 'ppt') == 'DPH';
 			pts_result_file_analyzer::generate_perf_per_dollar($result_file, $perf_per_dollar_values, 'Dollar', false, $perf_per_hour);
+		}
+	}
+	public static function remove_all_but_tests_in_suites(&$result_file, $suites_to_show)
+	{
+		$suites_in_result_file = pts_test_suites::suites_in_result_file($result_file, true, 0);
+		$tests_to_show = array();
+		foreach($suites_to_show as $suite_to_show)
+		{
+			$suite_to_show = base64_decode($suite_to_show);
+			if(isset($suites_in_result_file[$suite_to_show]))
+			{
+				foreach($suites_in_result_file[$suite_to_show][1] as $test_to_show)
+				{
+					$tests_to_show[] = $test_to_show;
+				}
+			}
+		}
+		if(!empty($tests_to_show))
+		{
+			foreach($result_file->get_result_object_keys() as &$ro_key)
+			{
+				$result_object = $result_file->get_result_object_by_hash($ro_key);
+				if($result_object == false)
+				{
+					continue;
+				}
+				if($result_object->get_parent_hash())
+				{
+					if(!$result_file->get_result_object_by_hash($result_object->get_parent_hash()) || !in_array($result_file->get_result_object_by_hash($result_object->get_parent_hash())->test_profile->get_identifier(false), $tests_to_show))
+					{
+						$result_file->remove_result_object_by_id($ro_key);
+					}
+				}
+				else if(!in_array($result_object->test_profile->get_identifier(false), $tests_to_show))
+				{
+					$result_file->remove_result_object_by_id($ro_key);
+				}
+			}
 		}
 	}
 	public static function html_input_field($name, $id, $on_change = null)

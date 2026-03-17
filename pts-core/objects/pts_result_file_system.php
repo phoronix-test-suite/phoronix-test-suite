@@ -33,8 +33,9 @@ class pts_result_file_system
 	protected $parent_result_file;
 	protected $has_log_files = -1;
 	protected $original_identifier;
+	protected $cost_value_for_comparison;
 
-	public function __construct($identifier, $hardware, $software, $json, $username, $notes, $timestamp, $client_version, &$result_file = null)
+	public function __construct($identifier, $hardware, $software, $json, $username, $notes, $timestamp, $client_version, &$result_file = null, $cost_value_for_comparison = false)
 	{
 		$this->identifier = $identifier;
 		$this->original_identifier = $identifier; // track if the run was later renamed (i.e. dynamically on page load)
@@ -46,6 +47,7 @@ class pts_result_file_system
 		$this->timestamp = $timestamp;
 		$this->client_version = $client_version;
 		$this->parent_result_file = &$result_file;
+		$this->cost_value_for_comparison = $cost_value_for_comparison;
 	}
 	public function __toString()
 	{
@@ -294,6 +296,10 @@ class pts_result_file_system
 		}
 
 		return $read_file !== false ? false : $files;
+	}
+	public function get_cost_value_for_comparison()
+	{
+		return $this->cost_value_for_comparison;
 	}
 }
 

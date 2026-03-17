@@ -2,8 +2,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2019 - 2021, Phoronix Media
-	Copyright (C) 2019 - 2021, Michael Larabel
+	Copyright (C) 2019 - 2026, Phoronix Media
+	Copyright (C) 2019 - 2026, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
 	You should have received a copy of the GNU General Public License
 	along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
-
+$page_start_time = microtime(true);
 error_reporting(E_ALL);
 if(function_exists('session_start'))
 {
@@ -250,11 +250,11 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 		$results_viewing = array();
 		foreach($possible_results as $rid)
 		{
-			if(pts_results::is_saved_result_file($rid))
+			if($result_file_path = pts_results::is_saved_result_file($rid))
 			{
 				if($result_file == null)
 				{
-					$result_file = new pts_result_file($rid);
+					$result_file = new pts_result_file($result_file_path);
 					$results_viewing[] = $rid;
 					/*if(count($possible_results) > 1)
 					{
@@ -263,7 +263,7 @@ switch(isset($_GET['page']) ? $_GET['page'] : null)
 				}
 				else
 				{
-					$rf = new pts_result_file($rid);
+					$rf = new pts_result_file($result_file_path);
 					$result_file->merge(array($rf), 0, $rf->get_title(), true, true);
 				}
 			}
@@ -423,7 +423,7 @@ if(isset($leading_msg) && $leading_msg) { echo '<div id="leading_message">' . $l
 <div id="main_area">
 <?php echo $call_get_result_html ? $embed->get_html() : $PAGE; ?>
 </div>
-<div id="footer"><hr /><br /><a href="https://www.phoronix-test-suite.com/">Phoronix Test Suite</a> <?php echo PTS_VERSION; ?> - Generated <?php echo date('j F Y H:i:s'); ?></div>
+<div id="footer"><hr /><br /><a href="https://www.phoronix-test-suite.com/">Phoronix Test Suite</a> <?php echo PTS_VERSION; ?> - Generated <?php echo date('j F Y H:i:s'); ?> - Page Generation Time: <?php echo round(microtime(true) - $page_start_time, 3); ?>s</div>
 </body>
 <?php }
 if(function_exists('session_start'))
