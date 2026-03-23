@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.1-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://github.com/microsoft/diskspd/releases/download/v2.2/DiskSpd.zip</URL>
+      <MD5>43f8360b6496945b68581af766e0642b</MD5>
+      <SHA256>496df11e6375c1d564af3f8f2990734d9afc2b558469fd57b1bffa9313a5a6ce</SHA256>
+      <FileName>DiskSpd-2.2.0.zip</FileName>
+      <FileSize>5141000</FileSize>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

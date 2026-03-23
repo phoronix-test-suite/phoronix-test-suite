@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.phoronix-test-suite.com/benchmark-files/x264-git-20220222.tar.bz2</URL>
+      <MD5>3b70be5c5f98372453480c5263513b22</MD5>
+      <SHA256>37caa704adb0fefd32da6ea6ebeef8e45bb1b84bf1b7f8a7a6f71cc79dd7baa3</SHA256>
+      <FileName>x264-git-20220222.tar.bz2</FileName>
+      <FileSize>777236</FileSize>
+    </Package>
+    <Package>
+      <URL>http://ultravideo.cs.tut.fi/video/Bosphorus_1920x1080_120fps_420_8bit_YUV_Y4M.7z</URL>
+      <MD5>84ae521c95aa2537e16b34bbf72f2def</MD5>
+      <SHA256>e2f60b904789a60f6d1edc194d8540d401dd882e3ee3605b9b1de8feacc72133</SHA256>
+      <FileName>Bosphorus_1920x1080_120fps_420_8bit_YUV_Y4M.7z</FileName>
+      <FileSize>676792531</FileSize>
+    </Package>
+    <Package>
+      <URL>http://ultravideo.cs.tut.fi/video/Bosphorus_3840x2160_120fps_420_8bit_YUV_Y4M.7z</URL>
+      <MD5>815ca5830c8ea2f95545429817b96b1f</MD5>
+      <SHA256>d0fcb7d8cfc6e51c47ce8b427dab41ce38300c4b1a51a1903ddd5d86067c4c79</SHA256>
+      <FileName>Bosphorus_3840x2160_120fps_420_8bit_YUV_Y4M.7z</FileName>
+      <FileSize>2804470345</FileSize>
+    </Package>
+    <Package>
+      <URL>https://artifacts.videolan.org/x264/release-win64/x264-r3094-bfc87b7.exe</URL>
+      <MD5>2871da3773fd381ae8a1f08207061bb0</MD5>
+      <SHA256>387db565229419c51cb7abcdb7df3d9635632e1fc79da6ac86a868c8706cb1df</SHA256>
+      <FileName>x264-r3094-bfc87b7.exe</FileName>
+      <FileSize>18190336</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://artifacts.videolan.org/x264/release-macos/x264-r3049-55d517b</URL>
+      <MD5>3dc1628b4586b7f34c2b9676fff35f5c</MD5>
+      <SHA256>98f008c42b3813edee2c8eef141e08f2ad504e25fe714b9eb181086591b10ffc</SHA256>
+      <FileName>x264-r3049-55d517b</FileName>
+      <FileSize>21848328</FileSize>
+      <PlatformSpecific>MacOSX</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

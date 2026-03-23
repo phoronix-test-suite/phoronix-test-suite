@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.0.0m3-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://www.openssl.org/source/old/1.0.1/openssl-1.0.1g.tar.gz</URL>
+      <MD5>de62b43dfcd858e66a74bee1c834e959</MD5>
+      <SHA256>53cb818c3b90e507a8348f4f5eaedb05d8bfe5358aabb508b7263cc670c3e028</SHA256>
+      <FileName>openssl-1.0.1g.tar.gz</FileName>
+      <FileSize>4509047</FileSize>
+      <PlatformSpecific>Linux, Solaris, BSD, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://github.com/IndySockets/OpenSSL-Binaries/raw/master/Archive/openssl-1.0.1g-x64_86-win64.zip</URL>
+      <MD5>28c7c2fcce2e78fe84aa76bdd19c44e0</MD5>
+      <SHA256>d0529a3861dcab95ba2dd793f22ff4323e967788598f5bbb6b96b2ec036ccdf5</SHA256>
+      <FileName>openssl-1.0.1g-x64_86-win64.zip</FileName>
+      <FileSize>1075268</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

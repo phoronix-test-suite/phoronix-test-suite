@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.1-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Diskspd</Title>
+    <AppVersion>2.2.0</AppVersion>
+    <Description>Diskspd is an open-source storage testing software developed by Microsoft that succeeds the SQLIO benchmark.</Description>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>2.2.0</Version>
+    <SupportedPlatforms>Windows</SupportedPlatforms>
+    <SoftwareType>Benchmark</SoftwareType>
+    <TestType>Disk</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <EnvironmentSize>53</EnvironmentSize>
+    <ProjectURL>https://github.com/microsoft/diskspd</ProjectURL>
+    <Maintainer>Local</Maintainer>
+  </TestProfile>
+  <TestSettings>
+    <Default>
+      <Arguments>-d30 -o2 </Arguments>
+      <PostArguments>1.dat</PostArguments>
+    </Default>
+    <Option>
+      <DisplayName>Threads Per Target</DisplayName>
+      <Identifier>threads-per-target</Identifier>
+      <ArgumentPrefix>-t</ArgumentPrefix>
+      <Menu>
+        <Entry><Name>1</Name><Value>1</Value></Entry>
+        <Entry><Name>2</Name><Value>2</Value></Entry>
+        <Entry><Name>3</Name><Value>3</Value></Entry>
+        <Entry><Name>4</Name><Value>4</Value></Entry>
+        <Entry><Name>5</Name><Value>5</Value></Entry>
+        <Entry><Name>6</Name><Value>6</Value></Entry>
+        <Entry><Name>7</Name><Value>7</Value></Entry>
+        <Entry><Name>8</Name><Value>8</Value></Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Write Requests (Percent)</DisplayName>
+      <Identifier>write-reqs-per</Identifier>
+      <ArgumentPrefix>-w</ArgumentPrefix>
+      <Menu>
+        <Entry><Name>0 - Read Only</Name><Value>0</Value></Entry>
+        <Entry><Name>10</Name><Value>10</Value></Entry>
+        <Entry><Name>20</Name><Value>20</Value></Entry>
+        <Entry><Name>40</Name><Value>40</Value></Entry>
+        <Entry><Name>50</Name><Value>50</Value></Entry>
+        <Entry><Name>60</Name><Value>60</Value></Entry>
+        <Entry><Name>80</Name><Value>80</Value></Entry>
+        <Entry><Name>100 - All Writes</Name><Value>100</Value></Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>File Size</DisplayName>
+      <Identifier>file-size</Identifier>
+      <ArgumentPrefix>-c</ArgumentPrefix>
+      <Menu>
+        <Entry><Name>1M</Name><Value>1M</Value></Entry>
+        <Entry><Name>10M</Name><Value>10M</Value></Entry>
+        <Entry><Name>50M</Name><Value>50M</Value></Entry>
+        <Entry><Name>100M</Name><Value>100M</Value></Entry>
+        <Entry><Name>500M</Name><Value>500M</Value></Entry>
+        <Entry><Name>1000M</Name><Value>1000M</Value></Entry>
+        <Entry><Name>2000M</Name><Value>2000M</Value></Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Block Size</DisplayName>
+      <Identifier>size</Identifier>
+      <ArgumentPrefix>-b</ArgumentPrefix>
+      <Menu>
+        <Entry><Name>4KB</Name><Value>4K</Value></Entry>
+        <Entry><Name>8KB</Name><Value>8K</Value></Entry>
+        <Entry><Name>16KB</Name><Value>16K</Value></Entry>
+        <Entry><Name>32KB</Name><Value>32K</Value></Entry>
+        <Entry><Name>64KB</Name><Value>64K</Value></Entry>
+        <Entry><Name>128KB</Name><Value>128K</Value></Entry>
+        <Entry><Name>256KB</Name><Value>256K</Value></Entry>
+        <Entry><Name>512KB</Name><Value>512K</Value></Entry>
+        <Entry><Name>1MB</Name><Value>1M</Value></Entry>
+        <Entry><Name>2MB</Name><Value>2M</Value></Entry>
+        <Entry><Name>4MB</Name><Value>4M</Value></Entry>
+        <Entry><Name>8MB</Name><Value>8M</Value></Entry>
+      </Menu>
+    </Option>
+  </TestSettings>
+</PhoronixTestSuite>

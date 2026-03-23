@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.2.0-->
+<PhoronixTestSuite>
+  <TestInformation>
+    <Title>Tesseract OCR</Title>
+    <Description>Tesseract-OCR is the open-source optical character recognition (OCR) engine for the conversion of text within images to raw text output. This test profile relies upon a system-supplied Tesseract installation.</Description>
+    <ResultScale>Seconds</ResultScale>
+    <Proportion>LIB</Proportion>
+    <SubTitle>Time To OCR 7 Images</SubTitle>
+    <TimesToRun>3</TimesToRun>
+  </TestInformation>
+  <TestProfile>
+    <Version>1.0.1</Version>
+    <SupportedPlatforms>Linux, BSD, Solaris, MacOSX, Windows</SupportedPlatforms>
+    <SoftwareType>Utility</SoftwareType>
+    <TestType>System</TestType>
+    <License>Free</License>
+    <Status>Verified</Status>
+    <EnvironmentSize>50</EnvironmentSize>
+    <ProjectURL>https://github.com/tesseract-ocr/tesseract</ProjectURL>
+    <Maintainer>Michael Larabel</Maintainer>
+    <SystemDependencies>tesseract</SystemDependencies>
+  </TestProfile>
+</PhoronixTestSuite>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.5-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>https://www.7-zip.org/a/7z2500-src.tar.xz</URL>
+      <MD5>2c7bb303d9220f8a2233c660b24f8032</MD5>
+      <SHA256>bff9e69b6ca73a5b8715d7623870a39dc90ad6ce1f4d1070685843987af1af9b</SHA256>
+      <FileName>7z2500-src.tar.xz</FileName>
+      <FileSize>1531036</FileSize>
+      <PlatformSpecific>Linux, BSD, Solaris, MacOSX</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>https://www.7-zip.org/a/7z2500-extra.7z</URL>
+      <MD5>1978ac8eb6be02e5873990bff493ebb7</MD5>
+      <SHA256>6376e5e79cef0b34f30f0710b36c4508a2df89c96ef5a2afb88ff8a76dafec11</SHA256>
+      <FileName>7z2500-extra.7z</FileName>
+      <FileSize>1630545</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

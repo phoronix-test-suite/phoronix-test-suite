@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v10.8.5-->
+<PhoronixTestSuite>
+  <Downloads>
+    <Package>
+      <URL>http://assets.unigine.com/d/Unigine_Heaven-4.0.run</URL>
+      <FileName>Unigine_Heaven-4.0.run</FileName>
+      <FileSize>286329188</FileSize>
+      <PlatformSpecific>Linux</PlatformSpecific>
+    </Package>
+    <Package>
+      <URL>http://assets.unigine.com/d/Unigine_Heaven-4.0.exe</URL>
+      <FileName>Unigine_Heaven-4.0.exe</FileName>
+      <FileSize>258728440</FileSize>
+      <PlatformSpecific>Windows</PlatformSpecific>
+    </Package>
+  </Downloads>
+</PhoronixTestSuite>

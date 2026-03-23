@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--Phoronix Test Suite v8.6.1-->
+<PhoronixTestSuite>
+  <ResultsParser>
+    <OutputTemplate>total: 11031019520 | 1315 | #_RESULT_# | 131.49</OutputTemplate>
+    <ResultScale>MB/s</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <DeleteOutputBefore>Total IO</DeleteOutputBefore>
+    <DeleteOutputAfter>Read IO</DeleteOutputAfter>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>total: 11031019520 | 1315 | 1051.89 | #_RESULT_#</OutputTemplate>
+    <ResultScale>IOPS</ResultScale>
+    <ResultProportion>HIB</ResultProportion>
+    <DeleteOutputBefore>Total IO</DeleteOutputBefore>
+    <DeleteOutputAfter>Read IO</DeleteOutputAfter>
+  </ResultsParser>
+</PhoronixTestSuite>

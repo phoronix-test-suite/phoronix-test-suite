@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<!DOCTYPE PhoronixTestSuite>
+<PhoronixTestSuite>
+  <SuiteInformation>
+    <Title>FirmwareCI Benchmark Suite (3D Acceleration)</Title>
+    <Description>CPU, Disk, System, and Graphics benchmarks for FirmwareCI Windows testing (requires 3D acceleration)</Description>
+    <Version>1.1.0</Version>
+    <TestType>System</TestType>
+    <Maintainer>firmwareci</Maintainer>
+  </SuiteInformation>
+
+  <!-- CPU Tests -->
+  <Execute>
+    <Test>local/smallpt-1.2.1</Test>
+    <Mode>BATCH</Mode>
+    <Description>SmallPT Global Illumination Renderer</Description>
+  </Execute>
+
+  <Execute>
+    <Test>local/openssl-1.9.3</Test>
+    <Mode>BATCH</Mode>
+    <Description>OpenSSL Cryptographic Benchmark</Description>
+  </Execute>
+
+  <Execute>
+    <Test>local/x264-2.7.0</Test>
+    <Arguments>--slow-firstpass Bosphorus_3840x2160.y4m</Arguments>
+    <Description>x264 H.264 Encoding - Bosphorus 4K</Description>
+  </Execute>
+
+  <Execute>
+    <Test>local/svt-av1-2.17.0</Test>
+    <Arguments>--preset 8 -i Bosphorus_3840x2160.y4m -w 3840 -h 2160 --frames 2400</Arguments>
+    <Description>SVT-AV1 Preset 8 - Bosphorus 4K</Description>
+  </Execute>
+
+  <Execute>
+    <Test>local/compress-7zip-1.12.0</Test>
+    <Mode>BATCH</Mode>
+    <Description>7-Zip Compression Benchmark</Description>
+  </Execute>
+
+  <Execute>
+    <Test>local/webp-1.4.0</Test>
+    <Arguments> </Arguments>
+    <Description>WebP Encoding - Default</Description>
+  </Execute>
+
+  <!-- Disk Tests -->
+  <Execute>
+    <Test>local/sqlite-2.3.0</Test>
+    <Arguments>1</Arguments>
+    <Description>SQLite - 1 Thread</Description>
+  </Execute>
+
+  <Execute>
+    <Test>local/sqlite-2.3.0</Test>
+    <Arguments>8</Arguments>
+    <Description>SQLite - 8 Threads</Description>
+  </Execute>
+
+  <Execute>
+    <Test>local/sqlite-2.3.0</Test>
+    <Arguments>32</Arguments>
+    <Description>SQLite - 32 Threads</Description>
+  </Execute>
+
+  <!-- DiskSpd CrystalDiskMark-equivalent profiles
+       NOTE: PTS diskspd profile max file size is 2000M (not 32GB as desired).
+             Queue depth is set via -o in Arguments below. -->
+  <Execute>
+    <Test>local/diskspd-2.2.0</Test>
+    <Arguments>-d30 -o8 -t1 -w0 -c2000M -b1M</Arguments>
+    <Description>DiskSpd SEQ1MQ8T1 Read</Description>
+  </Execute>
+
+  <Execute>
+    <Test>local/diskspd-2.2.0</Test>
+    <Arguments>-d30 -o1 -t1 -w0 -c2000M -b1M</Arguments>
+    <Description>DiskSpd SEQ1MQ1T1 Read</Description>
+  </Execute>
+
+  <Execute>
+    <Test>local/diskspd-2.2.0</Test>
+    <Arguments>-d30 -o8 -t1 -w0 -c2000M -b128K</Arguments>
+    <Description>DiskSpd SEQ128KQ8T1 Read</Description>
+  </Execute>
+
+  <Execute>
+    <Test>local/diskspd-2.2.0</Test>
+    <Arguments>-d30 -o32 -t1 -w0 -c2000M -b4K</Arguments>
+    <Description>DiskSpd RND4KQ32T1 Read</Description>
+  </Execute>
+
+  <Execute>
+    <Test>local/diskspd-2.2.0</Test>
+    <Arguments>-d30 -o1 -t1 -w0 -c2000M -b4K</Arguments>
+    <Description>DiskSpd RND4KQ1T1 Read</Description>
+  </Execute>
+
+  <!-- System Tests -->
+  <Execute>
+    <Test>local/gimp-1.1.3</Test>
+    <Arguments>unsharp-mask</Arguments>
+    <Description>GIMP - Unsharp Mask</Description>
+  </Execute>
+
+  <Execute>
+    <Test>local/gimp-1.1.3</Test>
+    <Arguments>resize</Arguments>
+    <Description>GIMP - Resize</Description>
+  </Execute>
+
+  <Execute>
+    <Test>local/gimp-1.1.3</Test>
+    <Arguments>rotate</Arguments>
+    <Description>GIMP - Rotate</Description>
+  </Execute>
+
+  <Execute>
+    <Test>local/gimp-1.1.3</Test>
+    <Arguments>auto-levels</Arguments>
+    <Description>GIMP - Auto Levels</Description>
+  </Execute>
+
+  <Execute>
+    <Test>local/tesseract-ocr-1.0.1</Test>
+    <Mode>BATCH</Mode>
+    <Description>Tesseract OCR</Description>
+  </Execute>
+
+  <Execute>
+    <Test>local/tjbench-1.2.0</Test>
+    <Mode>BATCH</Mode>
+    <Description>libjpeg-turbo tjbench</Description>
+  </Execute>
+
+  <Execute>
+    <Test>local/cinebench-1.2.0</Test>
+    <Arguments>g_CinebenchCpuXTest=true</Arguments>
+    <Description>Cinebench R23 - Multi-Core</Description>
+  </Execute>
+
+  <!-- Graphics -->
+  <Execute>
+    <Test>local/unigine-heaven-1.6.6</Test>
+    <Mode>BATCH</Mode>
+    <Description>Unigine Heaven</Description>
+  </Execute>
+
+</PhoronixTestSuite>

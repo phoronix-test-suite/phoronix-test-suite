@@ -1,0 +1,4 @@
+# Phoronix USB bundle build artifacts
+bundle-cache/
+bundle-stage/
+phoronix-bundle*.zip
