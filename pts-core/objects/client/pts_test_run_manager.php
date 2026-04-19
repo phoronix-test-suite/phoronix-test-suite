@@ -502,13 +502,13 @@ class pts_test_run_manager
 					// Identifier already used in this result file...
 					$do_repeat_prompt = true;
 
-					if(isset($current_hardware[$identifier_pos]) && $current_hardware[$identifier_pos] != phodevi::system_hardware(true))
+					if(isset($current_hardware[$identifier_pos]) && $current_hardware[$identifier_pos] != phodevi::system_hardware(true) && pts_env::read('IGNORE_HW_DIFFERENCE') == false)
 					{
-						pts_client::$display->generic_prompt(pts_client::cli_just_bold('Current hardware does not match the saved data matching this result identifier.'));
+						pts_client::$display->generic_prompt(pts_client::cli_just_bold('Current hardware does not match the saved data matching this result identifier. Ignore this check via the IGNORE_HW_DIFFERENCE=1 environment variable.'));
 					}
-					else if(isset($current_software[$identifier_pos]) && $current_software[$identifier_pos] != phodevi::system_software(true))
+					else if(isset($current_software[$identifier_pos]) && $current_software[$identifier_pos] != phodevi::system_software(true) && pts_env::read('IGNORE_SW_DIFFERENCE') == false)
 					{
-						pts_client::$display->generic_prompt(pts_client::cli_just_bold('Current software does not match the saved data matching this result identifier.'));
+						pts_client::$display->generic_prompt(pts_client::cli_just_bold('Current software does not match the saved data matching this result identifier. Ignore this check via the IGNORE_SW_DIFFERENCE=1 environment variable.'));
 					}
 					else
 					{

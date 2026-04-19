@@ -170,7 +170,8 @@ class phodevi_cpu extends phodevi_device_interface
 			if(empty($physical_cores) || $physical_cores == phodevi::read_property('cpu', 'thread-count'))
 			{
 				// Needed for POWER9 at least
-				if(isset(phodevi::$vfs->lscpu) && ($t = strpos(phodevi::$vfs->lscpu, 'Core(s) per socket:')) && strpos(phodevi::$vfs->lscpu, 'aarch64') == false)
+				// On AArch64, GB10 with different core layouts has issues with the core per sockets handling at least
+				if(isset(phodevi::$vfs->lscpu) && ($t = strpos(phodevi::$vfs->lscpu, 'Core(s) per socket:')) && (strpos(phodevi::$vfs->lscpu, 'aarch64') == false || strpos(phodevi::$vfs->lscpu, 'Core(s) per socket:') == strrpos(phodevi::$vfs->lscpu, 'Core(s) per socket:')))
 				{
 					$lscpu = substr(phodevi::$vfs->lscpu, $t + strlen('Core(s) per socket:') + 1);
 					$lscpu = substr($lscpu, 0, strpos($lscpu, PHP_EOL));

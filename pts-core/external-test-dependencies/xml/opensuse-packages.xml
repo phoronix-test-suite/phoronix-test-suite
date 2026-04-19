@@ -199,7 +199,7 @@
 		</Package>
 		<Package>
 			<GenericName>curl</GenericName>
-			<PackageName>curl</PackageName>
+			<PackageName>curl libcurl-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>fftw3-development</GenericName>
@@ -227,7 +227,7 @@
 		</Package>
 		<Package>
 			<GenericName>vulkan-development</GenericName>
-			<PackageName>vulkan-tools</PackageName>
+			<PackageName>vulkan-tools vulkan-devel</PackageName>
 		</Package>
 		<Package>
 			<GenericName>tcl</GenericName>
@@ -295,7 +295,7 @@
 		</Package>
 		<Package>
 			<GenericName>opencl</GenericName>
-			<PackageName>opencl-headers</PackageName>
+			<PackageName>clinfo sopencl-headers opencl-cpp-headers</PackageName>
 		</Package>
 		<Package>
 			<GenericName>attr</GenericName>

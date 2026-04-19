@@ -774,6 +774,7 @@ class pts_result_file_analyzer
 			'gpu.temp' => 'GPU Temp',
 			'hdd.temp' => 'Drive Temp',
 			'memory.temp' => 'Memory Temp',
+			'memory.usage' => 'Memory Usage',
 			);
 		$results = array();
 		$results_units = array();

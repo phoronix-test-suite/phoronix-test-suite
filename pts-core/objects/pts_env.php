@@ -2,8 +2,8 @@
 
 /*
 	Phoronix Test Suite
-	Copyright (C) 2021, Phoronix Media
-	Copyright (C) 2021, Michael Larabel
+	Copyright (C) 2021 - 2026, Phoronix Media
+	Copyright (C) 2021 - 2026, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -396,6 +396,18 @@ class pts_env
 			'default' => false,
 			'usage' => array('all'),
 			'value_type' => 'string',
+			),
+		'IGNORE_HW_DIFFERENCE' => array(
+			'description' => 'When finishing/restoring an existing saved test result run and hardware differences are detected against the saved run data, this option will allow overriding the behavior of halting the test executin due to the hardware mismatch.',
+			'default' => false,
+			'usage' => array('all'),
+			'value_type' => 'bool',
+			),
+		'IGNORE_SW_DIFFERENCE' => array(
+			'description' => 'When finishing/restoring an existing saved test result run and software differences are detected against the saved run data, this option will allow overriding the behavior of halting the test executin due to the software mismatch.',
+			'default' => false,
+			'usage' => array('all'),
+			'value_type' => 'bool',
 			),
 
 		);

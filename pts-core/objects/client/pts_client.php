@@ -639,7 +639,7 @@ class pts_client
 					// 'udisks --dump',
 					//'upower --dump',
 					'dmidecode',
-					'hwloc-ls',
+					//'hwloc-ls', // hanging on Ubuntu 26.04
 					'numactl -H',
 					);
 

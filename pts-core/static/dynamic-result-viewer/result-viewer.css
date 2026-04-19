@@ -522,8 +522,8 @@ p#result_file_system_table
 	#main_area, #main_area p, #result_file_desc { font-size: 12px; }
 	#main_area h1, #main_area h2 { font-size: 16px; }
 	.print_notes { display: block !important; }
-	div#results_sidebar { display: none; width: 0; height: 0; }
-	div#results { margin: 0; margin-left: 0px; padding: 0; }
+	div#results_sidebar { display: none; width: 0; height: 0; margin: 0; padding: 0; }
+	div#results { margin: 0; margin-left: 0; padding: 0; }
 }
 @media (prefers-color-scheme: dark) {
 svg {
