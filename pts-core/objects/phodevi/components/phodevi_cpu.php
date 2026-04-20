@@ -1728,7 +1728,7 @@ class phodevi_cpu extends phodevi_device_interface
 		if(pts_client::executable_in_path('lscpu'))
 		{
 			$lscpu = trim(shell_exec('lscpu -p | grep -E -v \'^#\' | sort -u -t, -k 2,4 | wc -l'));
-			if(is_numeric($lscpu) && $lscpu > $core_count)
+			if(is_numeric($lscpu))
 			{
 				$core_count = $lscpu;
 			}
