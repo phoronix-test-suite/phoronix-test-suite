@@ -175,7 +175,7 @@ class pts_math
 			return strlen(substr(strrchr($number, '.'), 1));
 		}
 	}
-	public static function set_precision($number, $precision = 2)
+	public static function set_precision($number, $precision = 11)
 	{
 		// This is better than using round() with precision because of the $precision is > than the current value, 0s will not be appended
 		return is_numeric($number) ? number_format($number, $precision, '.', '') : $number;
