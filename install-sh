@@ -21,12 +21,7 @@
 
 # To install into a chroot, set $DESTDIR to the corresponding directory.
 
-if [ "X$1" = "X" ]
-then
-	INSTALL_PREFIX="/usr"
-else
-	INSTALL_PREFIX="$1"
-fi
+INSTALL_PREFIX=${1:=/usr}
 
 # Ensure the user is in the correct directory
 if [ ! -f pts-core/phoronix-test-suite.php ]
