@@ -802,27 +802,16 @@ The Phoronix Test Suite does not need to be installed system-wide but can simply
 
 As part of the PHP requirement, the following PHP extensions are required and/or highly recommended in order to take advantage of the Phoronix Test Suite capabilities:
 
++ **PHP DOM** is needed for XML operations and must be installed for the Phoronix Test Suite to function.
++ **PHP ZIP** is needed for file compression and decompression and specifically dealing with test profiles and suites obtained via OpenBenchmarking.org or when uploading such tests and suites.
++ **PHP OpenSSL** is used for enabling HTTPS communication with Phoronix Test Suite / OpenBenchmarking.org servers.
++ **PHP GD** is highly recommended for rendering of test data to JPEG and PNG image formats and is selectively used in other image operations.
++ **PHP Zlib** is highly recommended for greater data compression when dealing with remote OpenBenchmarking.org assets.
++ **PHP PCNTL** is used for multi-threaded system sensor monitoring support during the testing process and other threaded tasks by the Phoronix Test Suite module framework.
++ **PHP POSIX** is used for reliably obtaining more system information in an efficient manner.
++ **PHP CURL** is supported as an alternative networking library for improved network performance in downloading test files and other operations.
++ **PHP FPDF** is used to generate PDF reports of test data.
 
-
-+
-+ PHP DOM is needed for XML operations and must be installed for the Phoronix Test Suite to function.
-+
-+ PHP ZIP is needed for file compression and decompression and specifically dealing with test profiles and suites obtained via OpenBenchmarking.org or when uploading such tests and suites.
-+
-+ PHP OpenSSL is used for enabling HTTPS communication with Phoronix Test Suite / OpenBenchmarking.org servers.
-+
-+ PHP GD is highly recommended for rendering of test data to JPEG and PNG image formats and is selectively used in other image operations.
-+
-+ PHP Zlib is highly recommended for greater data compression when dealing with remote OpenBenchmarking.org assets.
-+
-+ PHP PCNTL is used for multi-threaded system sensor monitoring support during the testing process and other threaded tasks by the Phoronix Test Suite module framework.
-+
-+ PHP POSIX is used for reliably obtaining more system information in an efficient manner.
-+
-+ PHP CURL is supported as an alternative networking library for improved network performance in downloading test files and other operations.
-+
-+ PHP FPDF is used to generate PDF reports of test data.
-+
 Without all of these extensions, some capabilities of the Phoronix Test Suite will not be available. Many of these packages are enabled by default and do not require any additional installation steps on most Linux distributions, otherwise they are often found in the package vendor's repository.
 
 
