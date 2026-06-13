@@ -141,7 +141,7 @@
 		</Package>
 		<Package>
 			<GenericName>pcre</GenericName>
-			<PackageName>libpcre3-dev</PackageName>
+			<PackageName>libpcre2-dev</PackageName>
 		</Package>
 		<Package>
 			<GenericName>perl</GenericName>

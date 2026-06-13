@@ -1437,7 +1437,7 @@ class phodevi_cpu extends phodevi_device_interface
 		{
 			$amd_map[26][$i] = 'Zen 6';
 		}
-		for($i = 192; $i <= 207; $i++)
+		for($i = 192; $i <= 239; $i++)
 		{
 			$amd_map[26][$i] = 'Zen 6';
 		}
@@ -1533,6 +1533,7 @@ class phodevi_cpu extends phodevi_device_interface
 				213 => 'Wildcat Lake',
 				215 => 'Bartlett Lake',
 				221 => 'Clearwater Forest',
+				221 => 'Panther Lake',
 				),
 			15 => array(
 				1 => 'Clarksfield',
