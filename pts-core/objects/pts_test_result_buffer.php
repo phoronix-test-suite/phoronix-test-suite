@@ -51,26 +51,23 @@ class pts_test_result_buffer
 	}
 	public function add_buffer_item($buffer_item)
 	{
-		if(isset($this->buffer_by_identifier[$buffer_item->get_result_identifier()]) && $this->buffer_items[$this->buffer_by_identifier[$buffer_item->get_result_identifier()]]->get_result_value() == '')
+		if(isset($this->buffer_by_identifier[$buffer_item->get_result_identifier()]))
 		{
-			// Overwrite the buffer item if there is a match but empty (incomplete) result
+			// Overwrite the buffer item if there is an existing match
 			$this->remove($buffer_item->get_result_identifier());
 		}
 
-		if(!$this->buffer_contained($buffer_item))
-		{
-			$this->buffer_items[] = $buffer_item;
-			$this->buffer_by_identifier[$buffer_item->get_result_identifier()] = (count($this->buffer_items) - 1);
-			$this->buffer_contains[$buffer_item->get_result_identifier() . $buffer_item->get_result_value()] = 1;
-			$this->check_buffer_item_for_min_max($buffer_item);
-		}
+		$this->buffer_items[] = $buffer_item;
+		$this->buffer_by_identifier[$buffer_item->get_result_identifier()] = (count($this->buffer_items) - 1);
+		$this->buffer_contains[$buffer_item->get_result_identifier() . $buffer_item->get_result_value()] = 1;
+		$this->check_buffer_item_for_min_max($buffer_item);
 	}
 	public function add_test_result($identifier, $value, $raw_value = null, $json = null, $min_value = null, $max_value = null)
 	{
 		$buffer_item = new pts_test_result_buffer_item($identifier, $value, $raw_value, $json, $min_value, $max_value);
-		if(isset($this->buffer_by_identifier[$buffer_item->get_result_identifier()]) && $this->buffer_items[$this->buffer_by_identifier[$buffer_item->get_result_identifier()]]->get_result_value() == '')
+		if(isset($this->buffer_by_identifier[$buffer_item->get_result_identifier()]))
 		{
-			// Overwrite the buffer item if there is a match but empty (incomplete) result
+			// Overwrite the buffer item if there is an existing match
 			$this->remove($buffer_item->get_result_identifier());
 		}
 

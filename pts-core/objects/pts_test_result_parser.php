@@ -382,7 +382,6 @@ class pts_test_result_parser
 				$tp->set_display_format('LINE_GRAPH');
 				$tp->set_identifier(null);
 				$extra_result = new pts_test_result($tp);
-				$extra_result->active = new pts_test_result_buffer_active();
 				$extra_result->set_used_arguments_description($test_result->get_arguments_description() . ' - Total Frame Time');
 				$extra_result->set_used_arguments($test_result->get_arguments() . ' - ' . $extra_result->get_arguments_description()); // this formatting is weird but to preserve pre-PTS7 comparsions of extra results
 				$extra_result->active->set_result(implode(',', $frame_all_times));

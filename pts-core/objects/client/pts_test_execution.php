@@ -68,8 +68,6 @@ class pts_test_execution
 			return false;
 		}
 
-		$test_run_request->active = new pts_test_result_buffer_active();
-		$test_run_request->generated_result_buffers = array();
 		$execute_binary = $test_run_request->test_profile->get_test_executable();
 		$times_to_run = $test_run_request->test_profile->get_times_to_run();
 		$ignore_runs = $test_run_request->test_profile->get_runs_to_ignore();
