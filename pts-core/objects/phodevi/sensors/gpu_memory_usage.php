@@ -25,10 +25,16 @@ class gpu_memory_usage extends phodevi_sensor
 	const SENSOR_TYPE = 'gpu';
 	const SENSOR_SENSES = 'memory-usage';
 	const SENSOR_UNIT = 'Megabytes';
+	const INPUT_PATH_ENV = 'PTS_GPU_MEMORY_USAGE_INPUT_PATH';
 
 	public function read_sensor()
 	{
-		$mem_usage = -1;
+		$mem_usage = self::read_memory_usage_input(pts_env::read(self::INPUT_PATH_ENV));
+
+		if($mem_usage != -1)
+		{
+			return $mem_usage;
+		}
 
 		if(($nvidia_smi = pts_client::executable_in_path('nvidia-smi')))
 		{
@@ -60,6 +66,22 @@ class gpu_memory_usage extends phodevi_sensor
 		}
 
 		return $mem_usage;
+	}
+
+	private static function read_memory_usage_input($memory_usage_input_file)
+	{
+		if($memory_usage_input_file == false || !is_readable($memory_usage_input_file))
+		{
+			return -1;
+		}
+
+		$memory_usage = pts_file_io::file_get_contents($memory_usage_input_file);
+		if(is_numeric($memory_usage) && $memory_usage >= 0)
+		{
+			return $memory_usage > 1000000 ? floor($memory_usage / 1000000) : $memory_usage;
+		}
+
+		return -1;
 	}
 }
 
