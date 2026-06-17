@@ -86,10 +86,29 @@ PGPORT=7777
 export PGDATA
 export PGPORT
 # start server
-SHARED_BUFFER_SIZE=\`echo \"\$SYS_MEMORY * 0.25 / 1\" | bc\`
-SHARED_BUFFER_SIZE=\$(( \$SHARED_BUFFER_SIZE < 8192 ? \$SHARED_BUFFER_SIZE : 8192 ))
-echo \"Buffer size is \${SHARED_BUFFER_SIZE}MB\" > \$LOG_FILE
-pg_/bin/pg_ctl start -o \"-c max_connections=6000 -c shared_buffers=\${SHARED_BUFFER_SIZE}MB\"
+# Since postgresql-18 does have very limited NUMA support and server uses 8 threads only in this run
+# There is no sense to run the SQL server on several NUMA nodes 
+# This _if_ handles both \"numactl not found\" and \"No NUMA available on this system\" errors
+if [ ! `numactl -H >/dev/null 2>&1` ] && [ `numactl -H | grep 'available:' | awk '{print \$2}'` -gt 1 ]
+then
+	LAUNCHING_NODE=0 # Universal, might be changed to the node where a disk controller is attached
+	# To avoid count nodes either without memory or with HBM memory counting memory on the launching node only
+	NODE_MEMORY=\`numactl -H | grep \"node \$LAUNCHING_NODE size\" | awk '{print \$4}'\`
+	# Recommended shared_buffers size is 25% of memory and bigger WAL buffer size, using 25% for each
+	# https://www.postgresql.org/docs/18/runtime-config-resource.html
+	SHARED_BUFFER_SIZE=\`echo \"\$NODE_MEMORY * 0.25 / 1\" | bc\`
+	WAL_BUFFER_SIZE=\${SHARED_BUFFER_SIZE}
+	echo \"Buffer size is \${SHARED_BUFFER_SIZE}MB\" > \$LOG_FILE
+	echo \"WAL Checkpoint buffer size is \${WAL_BUFFER_SIZE}MB\" >> \$LOG_FILE
+	# echo Starting SQL server on NUMA node \$LAUNCHING_NODE
+	numactl -N \$LAUNCHING_NODE pg_/bin/pg_ctl start -o \"-c max_connections=6000 -c shared_buffers=\${SHARED_BUFFER_SIZE}MB -c max_wal_size=\${WAL_BUFFER_SIZE}MB\"
+else
+	# echo No NUMA/numactl support found, starting server in older UMA way
+	SHARED_BUFFER_SIZE=\`echo \"\$SYS_MEMORY * 0.25 / 1\" | bc\`
+	SHARED_BUFFER_SIZE=\$(( \$SHARED_BUFFER_SIZE < 8192 ? \$SHARED_BUFFER_SIZE : 8192 ))
+	echo \"Buffer size is \${SHARED_BUFFER_SIZE}MB\" > \$LOG_FILE
+	pg_/bin/pg_ctl start -o \"-c max_connections=6000 -c shared_buffers=\${SHARED_BUFFER_SIZE}MB\"
+fi
 # wait for server to start
 sleep 10
 
