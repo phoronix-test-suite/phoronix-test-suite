@@ -16,11 +16,11 @@
     <TestType>System</TestType>
     <License>Free</License>
     <Status>Verified</Status>
-    <ExternalDependencies>python</ExternalDependencies>
+    <ExternalDependencies>python openmpi-development</ExternalDependencies>
     <EnvironmentSize>1300</EnvironmentSize>
     <ProjectURL>https://www.tensorflow.org/</ProjectURL>
     <RepositoryURL>https://github.com/tensorflow/tensorflow</RepositoryURL>
-    <InternalTags>SMP</InternalTags>
+    <InternalTags>SMP, MPI</InternalTags>
     <Maintainer>Michael Larabel</Maintainer>
     <SystemDependencies>pip3</SystemDependencies>
   </TestProfile>
@@ -49,20 +49,12 @@
       <ArgumentPrefix>--batch_size=</ArgumentPrefix>
       <Menu>
         <Entry>
-          <Name>1</Name>
-          <Value>1</Value>
-        </Entry>
-        <Entry>
-          <Name>16</Name>
-          <Value>16</Value>
-        </Entry>
-        <Entry>
-          <Name>32</Name>
-          <Value>32</Value>
-        </Entry>
-        <Entry>
           <Name>64</Name>
           <Value>64</Value>
+        </Entry>
+        <Entry>
+          <Name>128</Name>
+          <Value>128</Value>
         </Entry>
         <Entry>
           <Name>256</Name>
