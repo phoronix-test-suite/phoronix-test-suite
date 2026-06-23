@@ -23,8 +23,12 @@ then
     CC_EXIT_STATUS=$?
 fi
 echo $CC_EXIT_STATUS > ~/install-exit-status
-echo "#!/bin/sh
-export OMP_NUM_THREADS=\$NUM_CPU_CORES
-./stream-bin > \$LOG_FILE 2>&1
-echo \$? > ~/test-exit-status" > stream
+cat <<'EOF' > stream
+#!/bin/sh
+export OMP_NUM_THREADS=$NUM_CPU_CORES
+export OMP_SCHEDULE=STATIC
+export OMP_WAIT_POLICY=ACTIVE
+./stream-bin > $LOG_FILE 2>&1
+echo $? > ~/test-exit-status"
+EOF
 chmod +x stream
