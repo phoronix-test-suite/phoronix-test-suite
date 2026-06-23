@@ -6,20 +6,27 @@
     <LineHint>Clickhouse Query Time 1:</LineHint>
     <MultiMatch>GEOMETRIC_MEAN</MultiMatch>
     <DivideResultDivisor>60</DivideResultDivisor>
-    <ArgumentsDescription>100M Rows Hits Dataset, First Run / Cold Cache</ArgumentsDescription>
+    <ArgumentsDescription>100M Rows Hits Dataset, Latency, First Run / Cold Cache</ArgumentsDescription>
   </ResultsParser>
   <ResultsParser>
     <OutputTemplate>Clickhouse Query Time 2: #_RESULT_#</OutputTemplate>
     <LineHint>Clickhouse Query Time 2:</LineHint>
     <MultiMatch>GEOMETRIC_MEAN</MultiMatch>
     <DivideResultDivisor>60</DivideResultDivisor>
-    <ArgumentsDescription>100M Rows Hits Dataset, Second Run</ArgumentsDescription>
+    <ArgumentsDescription>100M Rows Hits Dataset, Latency, Second Run</ArgumentsDescription>
   </ResultsParser>
   <ResultsParser>
     <OutputTemplate>Clickhouse Query Time 3: #_RESULT_#</OutputTemplate>
     <LineHint>Clickhouse Query Time 3:</LineHint>
     <MultiMatch>GEOMETRIC_MEAN</MultiMatch>
     <DivideResultDivisor>60</DivideResultDivisor>
-    <ArgumentsDescription>100M Rows Hits Dataset, Third Run</ArgumentsDescription>
+    <ArgumentsDescription>100M Rows Hits Dataset, Latency, Third Run</ArgumentsDescription>
+  </ResultsParser>
+  <ResultsParser>
+    <OutputTemplate>Clickhouse Throughput Time: #_RESULT_#</OutputTemplate>
+    <LineHint>Clickhouse Throughput Time:</LineHint>
+    <MultiMatch>GEOMETRIC_MEAN</MultiMatch>
+    <DivideResultDivisor>60</DivideResultDivisor>
+    <ArgumentsDescription>100M Rows Hits Dataset, Throughput</ArgumentsDescription>
   </ResultsParser>
 </PhoronixTestSuite>
