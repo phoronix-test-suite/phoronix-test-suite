@@ -256,7 +256,8 @@ class pts_external_dependencies
 					'QUIT' => 'Quit the current Phoronix Test Suite process.'
 					);
 
-				$selected_action = pts_user_io::prompt_text_menu('Missing dependencies action', $actions, false, true);
+				// $selected_action = pts_user_io::prompt_text_menu('Missing dependencies action', $actions, false, true);
+				$selected_action = 'QUIT';
 
 				switch($selected_action)
 				{
