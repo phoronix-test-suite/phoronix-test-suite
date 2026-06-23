@@ -1,0 +1,4 @@
+*.sh text eol=lf
+install-sh text eol=lf
+install_macos text eol=lf
+phoronix-test-suite text eol=lf
