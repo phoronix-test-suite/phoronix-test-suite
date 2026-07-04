@@ -243,6 +243,7 @@ class powenetics extends pts_module_interface
 		}
 		$bucket_frames = 0;
 		$last_sequence = null;
+		$sequence_anomalies = 0;
 		$stop_file = $session_dir . 'stop';
 
 		while(true)
@@ -262,14 +263,12 @@ class powenetics extends pts_module_interface
 				}
 				$bucket_frames++;
 
-				// Sequence-gap diagnostics (no checksum in protocol)
-				if($last_sequence !== null)
+				// Sequence continuity diagnostics (no checksum in protocol); real
+				// firmware occasionally repeats a sequence number, so only a
+				// session summary is reported rather than a line per anomaly
+				if($last_sequence !== null && $frame['sequence'] != (($last_sequence + 1) & 0xFFFF))
 				{
-					$expected = ($last_sequence + 1) & 0xFFFF;
-					if($frame['sequence'] != $expected)
-					{
-						fwrite(STDERR, 'powenetics.logger sequence gap: expected ' . $expected . ', got ' . $frame['sequence'] . PHP_EOL);
-					}
+					$sequence_anomalies++;
 				}
 				$last_sequence = $frame['sequence'];
 			}
@@ -309,6 +308,10 @@ class powenetics extends pts_module_interface
 			fclose($h);
 		}
 		$pw->close();
+		if($sequence_anomalies > 0)
+		{
+			fwrite(STDERR, 'powenetics.logger: ' . $sequence_anomalies . ' sequence anomalies (repeated/dropped packets) across the session.' . PHP_EOL);
+		}
 		touch($session_dir . 'logger-done');
 	}
 	public static function write_simulated_stream($args)

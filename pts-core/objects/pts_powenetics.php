@@ -152,17 +152,30 @@ class pts_powenetics
 			$reg = shell_exec('reg query HKLM\\HARDWARE\\DEVICEMAP\\SERIALCOMM 2>&1');
 			if(!empty($reg))
 			{
+				// Probe USB serial devices first and Bluetooth modem ports last;
+				// probing an idle Bluetooth port wastes seconds per port
+				$usb = array();
+				$bluetooth = array();
+				$other = array();
 				foreach(explode("\n", $reg) as $line)
 				{
-					if(($p = strpos($line, 'COM')) !== false)
+					if(preg_match('/(\\\\Device\\\\[^\s]+)\s+REG_SZ\s+(COM[0-9]+)/', $line, $m))
 					{
-						$com = trim(substr($line, $p));
-						if(preg_match('/^COM[0-9]+/', $com, $m))
+						if(stripos($m[1], 'USBSER') !== false || stripos($m[1], 'VCP') !== false)
 						{
-							$candidates[] = $m[0];
+							$usb[] = $m[2];
+						}
+						else if(stripos($m[1], 'BthModem') !== false)
+						{
+							$bluetooth[] = $m[2];
+						}
+						else
+						{
+							$other[] = $m[2];
 						}
 					}
 				}
+				$candidates = array_merge($usb, $other, $bluetooth);
 			}
 		}
 		else
