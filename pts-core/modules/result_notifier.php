@@ -102,15 +102,31 @@ class result_notifier extends pts_module_interface
 
 			if($passed_obj instanceof pts_test_result)
 			{
+				// test_result_buffer is not always populated when this hook fires: at
+				// __pre_test_run() time no trial has been recorded yet for this test, and
+				// even at __post_test_run() time it can still be null for a single-way
+				// test result (only entries under generated_result_buffers necessarily get
+				// their own test_result_buffer set, not $passed_obj itself). Guard against
+				// it instead of fataling on a null method call (Call to a member function
+				// get_count() on null) as soon as any real hook script is configured.
+				$has_result_buffer = $passed_obj->test_result_buffer instanceof pts_test_result_buffer;
+				// pts_test_result itself has no get_result() method (that lived on
+				// pts_test_result_buffer_active, ->active below) -- calling it here fataled
+				// with "Call to undefined method" as soon as the test_result_buffer crash
+				// above was fixed, so this hook script has apparently never successfully
+				// run to completion before. ->active is set unconditionally at the very
+				// start of run_test(), before __pre_test_run fires, so it's safe here.
+				$has_active = $passed_obj->active instanceof pts_test_result_buffer_active;
+
 				$env_vars['PTS_EXTERNAL_TEST_IDENTIFIER'] = $passed_obj->test_profile->get_identifier();
-				$env_vars['PTS_EXTERNAL_TEST_RUN_POSITION'] = $passed_obj->test_result_buffer->get_count() + 1;
+				$env_vars['PTS_EXTERNAL_TEST_RUN_POSITION'] = $has_result_buffer ? ($passed_obj->test_result_buffer->get_count() + 1) : 1;
 				$env_vars['PTS_EXTERNAL_TEST_RUN_COUNT'] = $passed_obj->test_profile->get_times_to_run();
 				$env_vars['PTS_EXTERNAL_TEST_ARGS'] = $passed_obj->get_arguments();
 				$env_vars['PTS_EXTERNAL_TEST_DESCRIPTION'] = $passed_obj->get_arguments_description();
-				$env_vars['PTS_EXTERNAL_TEST_RESULT_SET'] = $passed_obj->test_result_buffer->get_values_as_string();
-				$env_vars['PTS_EXTERNAL_TEST_RESULT'] = $passed_obj->get_result() != 0 ? $passed_obj->get_result() : pts_arrays::last_element($passed_obj->test_result_buffer->get_values());
+				$env_vars['PTS_EXTERNAL_TEST_RESULT_SET'] = $has_result_buffer ? $passed_obj->test_result_buffer->get_values_as_string() : '';
+				$env_vars['PTS_EXTERNAL_TEST_RESULT'] = ($has_active && $passed_obj->active->get_result() != 0) ? $passed_obj->active->get_result() : ($has_result_buffer ? pts_arrays::last_element($passed_obj->test_result_buffer->get_values()) : 0);
 				$env_vars['PTS_EXTERNAL_TEST_HASH'] = bin2hex($passed_obj->get_comparison_hash());
-				$env_vars['PTS_EXTERNAL_TEST_STD_DEV_PERCENT'] = pts_math::percent_standard_deviation($passed_obj->test_result_buffer->get_values());
+				$env_vars['PTS_EXTERNAL_TEST_STD_DEV_PERCENT'] = $has_result_buffer ? pts_math::percent_standard_deviation($passed_obj->test_result_buffer->get_values()) : 0;
 
 				if(is_file($passed_obj->test_profile->get_install_dir() . 'cache-share-' . PTS_INIT_TIME . '.pt2so'))
 				{
