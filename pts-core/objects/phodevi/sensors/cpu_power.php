@@ -202,12 +202,13 @@ class cpu_power extends phodevi_sensor
 				$cpu_power = $cpu_power / 100000;
 			}
 		}
-		else if(($power_oem_info = pts_file_io::glob('/sys/class/hwmon/hwmon*/device/power1_oem_info')) && !empty($power_oem_info))
+		else if(($power_oem_info = array_merge(pts_file_io::glob('/sys/class/hwmon/hwmon*/power1_oem_info'), pts_file_io::glob('/sys/class/hwmon/hwmon*/device/power1_oem_info'))) && !empty($power_oem_info))
 		{
-			// Grace https://docs.nvidia.com/grace-performance-tuning-guide.pdf
+			// NVIDIA Vera / Grace https://docs.nvidia.com/dccpu/grace-perf-tuning-guide/power-thermals.html
 			foreach($power_oem_info as $info_file)
 			{
-				if(stripos(pts_file_io::file_get_contents($info_file), 'CPU Power') !== false)
+				$pwr_oem_info = pts_file_io::file_get_contents($info_file);
+				if(stripos($pwr_oem_info, 'CPU Power') !== false || stripos($pwr_oem_info, 'AP Output Power (TDP)') !== false)
 				{
 					$bdir = dirname($info_file);
 					if(is_file($bdir . '/power1_average'))

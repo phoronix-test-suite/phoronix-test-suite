@@ -163,7 +163,12 @@ class phodevi_cpu extends phodevi_device_interface
 	{
 		$physical_cores = null;
 
-		if(phodevi::is_linux())
+		if(($n = getenv('NUM_CPU_PHYSICAL_CORES')) && is_numeric($n) && $n > 0)
+		{
+			// NUM_CPU_PHYSICAL_CORES can be used for overriding the number of exposed cores/threads to tests, matches the name of the env var set by PTS to test scripts
+			$physical_cores = $n;
+		}
+		else if(phodevi::is_linux())
 		{
 			$physical_cores = phodevi_cpu::cpuinfo_core_count();
 
@@ -1536,7 +1541,7 @@ class phodevi_cpu extends phodevi_device_interface
 				213 => 'Wildcat Lake',
 				215 => 'Bartlett Lake',
 				221 => 'Clearwater Forest',
-				221 => 'Panther Lake',
+				//221 => 'Panther Lake',
 				),
 			15 => array(
 				1 => 'Clarksfield',

@@ -2201,6 +2201,7 @@ class pts_client
 		{
 			return;
 		}*/
+		static $too_much_socket_transport_garbage = 0;
 
 		switch($error_code)
 		{
@@ -2232,7 +2233,17 @@ class pts_client
 				}
 				else if(strpos($error_string, 'Unable to find the socket transport') !== false || strpos($error_string, 'SSL: Connection reset') !== false)
 				{
-					$error_string = 'PHP OpenSSL support is needed to handle HTTPS downloads.';
+					if($too_much_socket_transport_garbage > 10)
+					{
+						return;
+					}
+
+					$error_string = 'PHP OpenSSL support is needed to handle HTTPS downloads or your Internet connection is otherwise blocking access.';
+					$too_much_socket_transport_garbage++;
+					if($too_much_socket_transport_garbage == 10)
+					{
+						$error_string .= ' Suppressing future occurrences of this frequent warning.';
+					}
 					$error_file = null;
 					$error_line = null;
 				}

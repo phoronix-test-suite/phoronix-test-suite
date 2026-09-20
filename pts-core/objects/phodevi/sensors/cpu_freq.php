@@ -101,8 +101,19 @@ class cpu_freq extends phodevi_sensor
 	private function cpu_freq_linux()
 	{
 		$frequency = -1;
-
-		// First, the ideal way, with modern CPUs using CnQ or EIST and cpuinfo reporting the current frequency.
+		
+		if(is_file('/sys/devices/system/cpu/' . $this->cpu_to_monitor . '/cpufreq/cpuinfo_avg_freq'))
+		{
+			$frequency = @pts_file_io::file_get_contents('/sys/devices/system/cpu/' . $this->cpu_to_monitor . '/cpufreq/cpuinfo_avg_freq');
+			if($frequency !== false && is_numeric($frequency))
+			{
+				$frequency = intval($frequency) / 1000;
+				if($frequency > 0)
+				{
+					return $frequency;
+				}
+			}
+		}
 		if(is_file('/sys/devices/system/cpu/' . $this->cpu_to_monitor . '/cpufreq/scaling_cur_freq'))
 		{
 			$frequency = pts_file_io::file_get_contents('/sys/devices/system/cpu/' . $this->cpu_to_monitor . '/cpufreq/scaling_cur_freq');

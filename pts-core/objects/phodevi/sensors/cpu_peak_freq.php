@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2015, Phoronix Media
-	Copyright (C) 2009 - 2015, Michael Larabel
+	Copyright (C) 2009 - 2026, Phoronix Media
+	Copyright (C) 2009 - 2026, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -58,13 +58,18 @@ class cpu_peak_freq extends phodevi_sensor
 	private function cpu_freq_linux()
 	{
 		$peak_frequency = -1;
-
-		foreach(pts_file_io::glob('/sys/devices/system/cpu/*/cpufreq/scaling_cur_freq') as $scaling_cur_freq)
+		$freq_files = pts_file_io::glob('/sys/devices/system/cpu/*/cpufreq/cpuinfo_avg_freq');
+		if(empty($freq_files))
 		{
-			$scaling_cur_freq = pts_file_io::file_get_contents($scaling_cur_freq);
-			if(is_numeric($scaling_cur_freq) && $scaling_cur_freq > $peak_frequency)
+			$freq_files = pts_file_io::glob('/sys/devices/system/cpu/*/cpufreq/scaling_cur_freq');
+		}
+
+		foreach($freq_files as $cur_freq)
+		{
+			$cur_freq = @pts_file_io::file_get_contents($cur_freq);
+			if($cur_freq !== false && is_numeric($cur_freq) && $cur_freq > $peak_frequency)
 			{
-				$peak_frequency = $scaling_cur_freq;
+				$peak_frequency = $cur_freq;
 			}
 		}
 
