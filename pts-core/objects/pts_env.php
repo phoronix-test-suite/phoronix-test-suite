@@ -93,6 +93,42 @@ class pts_env
 			'value_type' => 'string',
 			'advertise_in_phoromatic' => true,
 			),
+		'PTS_GPU_FREQ_INPUT_PATH' => array(
+			'description' => 'This option can be used for overriding the Linux sysfs file used for the GPU frequency sensor. Set it to an absolute readable GPU frequency path, such as a gt_cur_freq_mhz or pp_dpm_sclk sysfs file, when the default GPU frequency paths are not detected. The value is expected to report Megahertz or use the active pp_dpm_sclk line format.',
+			'default' => '',
+			'usage' => array('all'),
+			'value_type' => 'string',
+			),
+		'PTS_GPU_MEMORY_USAGE_INPUT_PATH' => array(
+			'description' => 'This option can be used for overriding the Linux sysfs file used for the GPU memory usage sensor. Set it to an absolute readable memory usage path, such as /sys/class/drm/card0/device/mem_info_vram_used, when the default GPU memory usage paths are not detected. Values greater than 1000000 are treated as bytes and converted to Megabytes.',
+			'default' => '',
+			'usage' => array('all'),
+			'value_type' => 'string',
+			),
+		'PTS_GPU_POWER_INPUT_PATH' => array(
+			'description' => 'This option can be used for overriding the Linux sysfs file used for the GPU power sensor. Set it to an absolute readable hwmon power input path, such as /sys/class/drm/card1/device/hwmon/hwmon4/power1_input, when the default GPU power paths are not detected. The value is expected to report microwatts as Linux hwmon power*_input and power*_average files do.',
+			'default' => '',
+			'usage' => array('all'),
+			'value_type' => 'string',
+			),
+		'PTS_GPU_TEMP_INPUT_PATH' => array(
+			'description' => 'This option can be used for overriding the Linux sysfs file used for the GPU temperature sensor. Set it to an absolute readable hwmon temperature input path, such as a temp*_input file, when the default GPU temperature paths are not detected. Values greater than 1000 are treated as millidegrees Celsius and converted to Celsius.',
+			'default' => '',
+			'usage' => array('all'),
+			'value_type' => 'string',
+			),
+		'PTS_GPU_USAGE_INPUT_PATH' => array(
+			'description' => 'This option can be used for overriding the Linux sysfs file used for the GPU usage sensor. Set it to an absolute readable GPU usage path, such as /sys/class/drm/card0/device/gpu_busy_percent, when the default GPU usage paths are not detected. The value is expected to report a percentage from 0 to 100.',
+			'default' => '',
+			'usage' => array('all'),
+			'value_type' => 'string',
+			),
+		'PTS_GPU_VOLTAGE_INPUT_PATH' => array(
+			'description' => 'This option can be used for overriding the Linux sysfs file used for the GPU voltage sensor. Set it to an absolute readable hwmon voltage input path, such as an in*_input file, when the default GPU voltage paths are not detected. The value is expected to report millivolts.',
+			'default' => '',
+			'usage' => array('all'),
+			'value_type' => 'string',
+			),
 		'TEST_EXECUTION_SORT' => array(
 			'description' => 'This option can be used for controlling the sort order that the test profiles / benchmarks are run in, whether sorted or not and in what manner.',
 			'default' => '',

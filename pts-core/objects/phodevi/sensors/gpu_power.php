@@ -24,16 +24,47 @@ class gpu_power extends phodevi_sensor
 {
 	const SENSOR_TYPE = 'gpu';
 	const SENSOR_SENSES = 'power';
+	const INPUT_PATH_ENV = 'PTS_GPU_POWER_INPUT_PATH';
 	private static $unit = 'Milliwatts';
 
 	public static function get_unit()
 	{
 		return self::$unit;
 	}
+	private static function read_hwmon_power_input($power_input_file)
+	{
+		if($power_input_file == false || !is_readable($power_input_file))
+		{
+			return -1;
+		}
+
+		$power_input = pts_file_io::file_get_contents($power_input_file);
+		return self::micro_watts_to_watts($power_input);
+	}
+	private static function micro_watts_to_watts($power_input)
+	{
+		if(is_numeric($power_input))
+		{
+			$power_input = $power_input / 1000000;
+			if($power_input > 0 && $power_input < 900)
+			{
+				self::$unit = 'Watts';
+				return $power_input;
+			}
+		}
+
+		return -1;
+	}
 	public function read_sensor()
 	{
+		self::$unit = 'Milliwatts';
 		$gpu_power = -1;
-		$en1_input_files = glob('/sys/class/drm/card*/device/hwmon/hwmon*/energy1_input');
+		if(($gpu_power = self::read_hwmon_power_input(pts_env::read(self::INPUT_PATH_ENV))) != -1)
+		{
+			return $gpu_power;
+		}
+
+		$en1_input_files = pts_file_io::glob('/sys/class/drm/card*/device/hwmon/hwmon*/energy1_input');
 		if(($nvidia_smi = pts_client::executable_in_path('nvidia-smi')))
 		{
 			$smi_output = shell_exec(escapeshellarg($nvidia_smi) . ' -q -d POWER');
@@ -73,15 +104,7 @@ class gpu_power extends phodevi_sensor
 		else if($power1_average = phodevi_linux_parser::read_sysfs_node('/sys/class/drm/card*/device/hwmon/hwmon*/power1_average', 'POSITIVE_NUMERIC'))
 		{
 			// AMDGPU path
-			if(is_numeric($power1_average))
-			{
-				$power1_average = $power1_average / 1000000;
-				if($power1_average > 0 && $power1_average < 900)
-				{
-					self::$unit = 'Watts';
-					$gpu_power = $power1_average;
-				}
-			}
+			$gpu_power = self::micro_watts_to_watts($power1_average);
 		}
 		else if(is_readable('/sys/kernel/debug/dri/0/i915_emon_status'))
 		{
