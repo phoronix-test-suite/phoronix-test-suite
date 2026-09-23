@@ -3,14 +3,14 @@
 <PhoronixTestSuite>
   <TestInformation>
     <Title>oneDNN</Title>
-    <AppVersion>3.8.1</AppVersion>
+    <AppVersion>3.11</AppVersion>
     <Description>This is a test of the Intel oneDNN as an Intel-optimized library for Deep Neural Networks and making use of its built-in benchdnn functionality. The result is the total perf time reported. Intel oneDNN was formerly known as DNNL (Deep Neural Network Library) and MKL-DNN before being rebranded as part of the Intel oneAPI toolkit and since part of the UXL Foundation.</Description>
-    <ResultScale>ms</ResultScale>
-    <Proportion>LIB</Proportion>
+    <ResultScale>GFLOPS</ResultScale>
+    <Proportion>HIB</Proportion>
     <TimesToRun>3</TimesToRun>
   </TestInformation>
   <TestProfile>
-    <Version>3.8.0</Version>
+    <Version>3.11.0</Version>
     <SupportedPlatforms>Linux, MacOSX</SupportedPlatforms>
     <SoftwareType>Utility</SoftwareType>
     <TestType>Processor</TestType>
@@ -29,32 +29,34 @@
       <Identifier>harness</Identifier>
       <Menu>
         <Entry>
-          <Name>Convolution Batch Shapes Auto</Name>
-          <Value>--conv --batch=inputs/conv/shapes_auto</Value>
+          <Name>Convolution Batch Shapes</Name>
+          <Value>--conv --batch=inputs/conv/shapes_perf_basic</Value>
         </Entry>
         <Entry>
-          <Name>Deconvolution Batch shapes_1d</Name>
-          <Value>--deconv --batch=inputs/deconv/shapes_1d</Value>
+          <Name>Matmul Batch Shapes</Name>
+          <Value>--matmul --batch=inputs/matmul/shapes_perf_basic</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
+      <DisplayName>Data Type</DisplayName>
+      <Identifier>data_type</Identifier>
+      <Menu>
+        <Entry>
+          <Name>FP32</Name>
+          <Value>--dt=f32</Value>
         </Entry>
         <Entry>
-          <Name>Deconvolution Batch shapes_3d</Name>
-          <Value>--deconv --batch=inputs/deconv/shapes_3d</Value>
+          <Name>FP16</Name>
+          <Value>--dt=f16</Value>
         </Entry>
         <Entry>
-          <Name>IP Shapes 1D</Name>
-          <Value>--ip --batch=inputs/ip/shapes_1d</Value>
+          <Name>BF16</Name>
+          <Value>--dt=bf16</Value>
         </Entry>
         <Entry>
-          <Name>IP Shapes 3D</Name>
-          <Value>--ip --batch=inputs/ip/shapes_3d</Value>
-        </Entry>
-        <Entry>
-          <Name>Recurrent Neural Network Training</Name>
-          <Value>--rnn --batch=inputs/rnn/perf_rnn_training</Value>
-        </Entry>
-        <Entry>
-          <Name>Recurrent Neural Network Inference</Name>
-          <Value>--rnn --batch=inputs/rnn/perf_rnn_inference_lb</Value>
+          <Name>INT8</Name>
+          <Value>--dt=s8</Value>
         </Entry>
       </Menu>
     </Option>
