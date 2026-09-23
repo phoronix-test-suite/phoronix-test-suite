@@ -4,10 +4,10 @@
   <Downloads>
     <Package>
       <URL>https://github.com/openwall/john/archive/c7cacb14f5ed20aca56a52f1ac0cd4d5035084b6.zip</URL>
-      <MD5>82a589813382dd301bab77bae0204ad8</MD5>
-      <SHA256>2452cdc582b1b15a410becb9bbbde906a898d50dc8526120c0ded7686e3dd33a</SHA256>
+      <MD5>1f78deb1e64e21511eac9c4aa556274d</MD5>
+      <SHA256>ae7813ec8e249be35f1d1cd47d250e82e1865b16a5502a773f24031113c7eda5</SHA256>
       <FileName>john-c7cacb14f5ed20aca56a52f1ac0cd4d5035084b6.zip</FileName>
-      <FileSize>57970886</FileSize>
+      <FileSize>57970888</FileSize>
       <PlatformSpecific>Linux, Solaris, BSD, MacOSX</PlatformSpecific>
     </Package>
     <Package>
