@@ -60,9 +60,8 @@ mkdir -p $DESTDIR$INSTALL_PREFIX/../etc/bash_completion.d/
 #mkdir -p $DESTDIR$INSTALL_PREFIX/../usr/lib/systemd/system/
 #mkdir -p $DESTDIR$INSTALL_PREFIX/../etc/init/
 
-cp ChangeLog $DESTDIR$INSTALL_PREFIX/share/doc/phoronix-test-suite/
-cp COPYING $DESTDIR$INSTALL_PREFIX/share/doc/phoronix-test-suite/
-cp AUTHORS $DESTDIR$INSTALL_PREFIX/share/doc/phoronix-test-suite/
+cp ChangeLog COPYING AUTHORS \
+	$DESTDIR$INSTALL_PREFIX/share/doc/phoronix-test-suite/
 
 cd documentation/
 cp -r * $DESTDIR$INSTALL_PREFIX/share/doc/phoronix-test-suite/
