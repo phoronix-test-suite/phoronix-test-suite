@@ -1752,7 +1752,22 @@ class pts_client
 		}
 		$var_string .= ' ';
 
-		return shell_exec($var_string . $exec);
+		while (@ ob_end_flush());
+
+		$proc = popen($var_string . $exec, 'r');
+		$live_output     = "";
+		$complete_output = "";
+
+		while (!feof($proc))
+		{
+			$live_output     = fread($proc, 4096);
+			$complete_output = $complete_output . $live_output;
+			echo "$live_output";
+			@ flush();
+		}
+
+		pclose($proc);
+		return $complete_output;
 	}
 	public static function get_path()
 	{
@@ -1913,7 +1928,8 @@ class pts_client
 		if(!phodevi::is_display_server_active())
 		{
 			$prompt_text = !empty($prompt_text) ? $prompt_text : 'Do you want to view the test results?';
-			$txt_results = $auto_open || pts_user_io::prompt_bool_input($prompt_text, true);
+			// $txt_results = $auto_open || pts_user_io::prompt_bool_input($prompt_text, true);
+			$txt_results = false;
 			if($txt_results)
 			{
 				echo pts_result_file_output::result_file_to_text($result_file, pts_client::terminal_width());
@@ -1959,7 +1975,7 @@ class pts_client
 			}
 		}
 	}
-	public static function display_web_page($URL, $alt_text = null, $default_open = true, $auto_open = false)
+	public static function display_web_page($URL, $alt_text = null, $default_open = true, $auto_open = true)
 	{
 		if(!phodevi::is_display_server_active() || defined('PHOROMATIC_PROCESS'))
 		{
@@ -1968,7 +1984,8 @@ class pts_client
 
 		if($auto_open == false)
 		{
-			$view_results = pts_user_io::prompt_bool_input(($alt_text == null ? 'Do you want to view the results in your web browser' : $alt_text), $default_open);
+			// $view_results = pts_user_io::prompt_bool_input(($alt_text == null ? 'Do you want to view the results in your web browser' : $alt_text), $default_open);
+			$view_results = false;
 		}
 		else
 		{
