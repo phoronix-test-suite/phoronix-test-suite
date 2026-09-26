@@ -1,4 +1,3 @@
-have phoronix-test-suite &&
 _phoronix_test_suite_show()
 {
         local cur
