@@ -1,0 +1,5 @@
+deploy/**
+.git/**
+Dockerfile
+.devcontainer/**
+.github/**
