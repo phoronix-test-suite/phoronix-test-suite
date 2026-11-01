@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2024, Phoronix Media
-	Copyright (C) 2008 - 2024, Michael Larabel
+	Copyright (C) 2008 - 2026, Phoronix Media
+	Copyright (C) 2008 - 2026, Michael Larabel
 	phodevi_memory.php: The PTS Device Interface object for system memory
 
 	This program is free software; you can redistribute it and/or modify
@@ -45,6 +45,7 @@ class phodevi_memory extends phodevi_device_interface
 			$mem_size = phodevi_osx_parser::read_osx_system_profiler('SPMemoryDataType', 'Size', true, array('Empty'));
 			$mem_speed = phodevi_osx_parser::read_osx_system_profiler('SPMemoryDataType', 'Speed');
 			$mem_type = phodevi_osx_parser::read_osx_system_profiler('SPMemoryDataType', 'Type');
+			$mem_manufacturer = phodevi_osx_parser::read_osx_system_profiler('SPMemoryDataType', 'Manufacturer');
 		}
 		else if(phodevi::is_solaris())
 		{
@@ -257,7 +258,7 @@ class phodevi_memory extends phodevi_device_interface
 			}
 			else
 			{
-				$t = !isset($mem_size[0]) || empty($mem_size[0]) ? 0 : str_replace(array(' MB', ' GB'), '', $mem_size[0]);
+				$t = !isset($mem_size[0]) || empty($mem_size[0]) ? 0 : str_replace(array(' MB', ' GB', ' TB'), '', $mem_size[0]);
 				if(($mem_count * $t) != phodevi::read_property('memory', 'capacity') && phodevi::read_property('memory', 'capacity') % $t == 0)
 				{
 					// This makes sure the correct number of RAM modules is reported...
@@ -330,6 +331,17 @@ class phodevi_memory extends phodevi_device_interface
 					{
 						$mem_string = $ram_in_gb . 'GB';
 					}
+				}
+			}
+			if(!empty($mem_string))
+			{
+				if(!empty($mem_manufacturer))
+				{
+					$mem_string .= ' ' . $mem_manufacturer;
+				}
+				if(!empty($mem_type))
+				{
+					$mem_string .= ' ' . $mem_type;
 				}
 			}
 		}

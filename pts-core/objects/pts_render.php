@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2024, Phoronix Media
-	Copyright (C) 2008 - 2024, Michael Larabel
+	Copyright (C) 2008 - 2026, Phoronix Media
+	Copyright (C) 2008 - 2026, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -322,7 +322,7 @@ class pts_render
 		{
 			$paint_color = '#f1052d';
 		}
-		else if(strpos($i, 'intel ') !== false || strpos($i, 'xeon ') !== false || strpos($i, 'core i') !== false || strpos($i, 'core ultra') !== false || strpos($i, 'pentium') !== false || strpos($i, 'celeron') !== false || strpos($i, 'arc ') !== false)
+		else if(strpos($i, 'intel ') !== false || strpos($i, 'xeon ') !== false || strpos($i, 'core i') !== false || strpos($i, 'core ultra') !== false || strpos($i, 'pentium') !== false || strpos($i, 'celeron') !== false || strpos($i, 'arc ') !== false || strpos($i, 'core 3') !== false || strpos($i, 'core 5') !== false  || strpos($i, 'core 7') !== false)
 		{
 			$paint_color = '#0b5997';
 		}

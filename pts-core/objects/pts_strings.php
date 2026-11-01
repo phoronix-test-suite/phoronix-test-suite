@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2022, Phoronix Media
-	Copyright (C) 2010 - 2022, Michael Larabel
+	Copyright (C) 2010 - 2026, Phoronix Media
+	Copyright (C) 2010 - 2026, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -789,7 +789,7 @@ class pts_strings
 	}
 	public static function safety_strings_to_reject()
 	{
-		return array('<', '>', 'document.write', '../', 'onerror', 'onload', 'alert(', 'String.', 'confirm(', 'focus=', '&lt', '&gt', '&#');
+		return array('<', '>', 'document.', '../', 'onerror', 'onload', 'alert(', 'String.', 'confirm(', 'prompt(', 'focus=', '&lt', '&gt', '&#');
 	}
 	public static function exit_if_contains_unsafe_data($check, $exit_msg = 'Exited due to suspicious URL.')
 	{

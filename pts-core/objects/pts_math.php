@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2009 - 2021, Phoronix Media
-	Copyright (C) 2009 - 2021, Michael Larabel
+	Copyright (C) 2009 - 2026, Phoronix Media
+	Copyright (C) 2009 - 2026, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -80,7 +80,9 @@ class pts_math
 	}
 	public static function max_number($a, $b, $fallback_on_no_number = 1)
 	{
-		if(($an = is_numeric($a)) && ($bn = is_numeric($b)))
+		$an = is_numeric($a);
+		$bn = is_numeric($b);
+		if($an && $bn)
 		{
 			return max($a, $b);
 		}
@@ -88,7 +90,7 @@ class pts_math
 		{
 			return $a;
 		}
-		else if(isset($bn) && $bn)
+		else if($bn)
 		{
 			return $b;
 		}

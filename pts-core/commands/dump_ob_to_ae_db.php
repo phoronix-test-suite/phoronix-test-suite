@@ -194,7 +194,7 @@ class dump_ob_to_ae_db implements pts_option_interface
 						$args_desc = $ro->get_arguments_description();
 
 						// Since some tests could stress multiple subsystems, see what the argument descriptions string says
-						if(strpos($args_desc, ' GPU') || strpos($args_desc, 'GPU ') || strpos($args_desc, ' CUDA') || strpos($args_desc, ' ROCm HIP') || strpos($args_desc, ' OptiX') || strpos($args_desc, ' OpenCL') || strpos($args_desc, 'SYCL'))
+						if(strpos($args_desc, ' GPU') || strpos($args_desc, 'GPU ') || strpos($args_desc, ' CUDA') || strpos($args_desc, ' ROCm HIP') || strpos($args_desc, ' ROCm') || strpos($args_desc, ' OptiX') || strpos($args_desc, ' OpenCL') || strpos($args_desc, 'SYCL')  || stripos($args_desc, 'Vulkan'))
 						{
 							$hw_type = 'Graphics';
 						}

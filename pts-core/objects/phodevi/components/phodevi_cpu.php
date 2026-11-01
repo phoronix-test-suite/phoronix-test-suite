@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2008 - 2024, Phoronix Media
-	Copyright (C) 2008 - 2024, Michael Larabel
+	Copyright (C) 2008 - 2026, Phoronix Media
+	Copyright (C) 2008 - 2026, Michael Larabel
 	phodevi_cpu.php: The PTS Device Interface object for the CPU / processor
 
 	This program is free software; you can redistribute it and/or modify
@@ -900,6 +900,22 @@ class phodevi_cpu extends phodevi_device_interface
 						case '0x039':
 							$new_info .= ' M2 Max';
 							break;
+						case '0x042':
+						case '0x043':
+							$new_info .= ' M3';
+							break;
+						case '0x044':
+						case '0x045':
+							$new_info .= ' M3 Pro';
+							break;
+						case '0x048':
+						case '0x049':
+							$new_info .= ' M3 Max';
+							break;
+						case '0x052':
+						case '0x053':
+							$new_info .= ' M4';
+							break;
 					}
 				}
 				else if($implementer == '0x4e')
@@ -1251,6 +1267,10 @@ class phodevi_cpu extends phodevi_device_interface
 		else if(phodevi::is_macos())
 		{
 			$family = phodevi_bsd_parser::read_sysctl(array('machdep.cpu.family'));
+			if(empty($family))
+			{
+				$family = phodevi_bsd_parser::read_sysctl(array('machdep.cpu.brand_string'));
+			}
 		}
 
 		return $family;
