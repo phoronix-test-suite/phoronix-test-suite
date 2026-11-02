@@ -223,7 +223,7 @@
 		</Package>
 		<Package>
 			<GenericName>tinyxml</GenericName>
-			<PackageName>libtinyxml tinyxml2</PackageName>
+			<PackageName>tinyxml2</PackageName>
 		</Package>
 		<Package>
 			<GenericName>opencl</GenericName>
