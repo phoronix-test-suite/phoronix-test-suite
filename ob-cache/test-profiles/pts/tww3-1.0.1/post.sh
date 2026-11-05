@@ -1,4 +1,4 @@
-#!/bin/bash -e
+#!/bin/sh -e
 GAME_PREFS="$DEBUG_REAL_HOME/.local/share/feral-interactive/Total War WARHAMMER III"
 
 GAME_PREFS_BKP="${GAME_PREFS}.pts-bkp"
