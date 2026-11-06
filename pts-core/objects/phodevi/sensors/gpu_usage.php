@@ -27,6 +27,7 @@ class gpu_usage extends phodevi_sensor
 	const SENSOR_TYPE = 'gpu';
 	const SENSOR_SENSES = 'usage';
 	const SENSOR_UNIT = 'Percent';
+	const INPUT_PATH_ENV = 'PTS_GPU_USAGE_INPUT_PATH';
 
 	private $probe_radeontop = false;
 	private $probe_nvidia_smi = false;
@@ -36,7 +37,10 @@ class gpu_usage extends phodevi_sensor
 	{
 		parent::__construct($instance, $parameter);
 
+		if(self::read_usage_input(pts_env::read(self::INPUT_PATH_ENV)) == -1)
+		{
 		$this->set_probe_mode();
+		}
 	}
 
 	public function support_check()
@@ -47,7 +51,16 @@ class gpu_usage extends phodevi_sensor
 
 	public function read_sensor()
 	{
-		$gpu_usage = -1;
+		$gpu_usage = self::read_usage_input(pts_env::read(self::INPUT_PATH_ENV));
+
+		if($gpu_usage != -1)
+		{
+			return $gpu_usage;
+		}
+		if(!$this->probe_nvidia_settings && !$this->probe_nvidia_smi && !$this->probe_radeontop)
+		{
+			$this->set_probe_mode();
+		}
 
 		if($this->probe_nvidia_settings)
 		{
@@ -67,6 +80,17 @@ class gpu_usage extends phodevi_sensor
 		}
 
 		return $gpu_usage;
+	}
+
+	private static function read_usage_input($usage_input_file)
+	{
+		if($usage_input_file == false || !is_readable($usage_input_file))
+		{
+			return -1;
+		}
+
+		$usage = pts_file_io::file_get_contents($usage_input_file);
+		return is_numeric($usage) && $usage >= 0 && $usage <= 100 ? $usage : -1;
 	}
 
 	private function set_probe_mode()

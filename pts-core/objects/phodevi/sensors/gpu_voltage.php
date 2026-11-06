@@ -25,10 +25,16 @@ class gpu_voltage extends phodevi_sensor
 	const SENSOR_TYPE = 'gpu';
 	const SENSOR_SENSES = 'voltage';
 	const SENSOR_UNIT = 'Millivolts';
+	const INPUT_PATH_ENV = 'PTS_GPU_VOLTAGE_INPUT_PATH';
 
 	public function read_sensor()
 	{
-		$sensor = -1;
+		$sensor = self::read_voltage_input(pts_env::read(self::INPUT_PATH_ENV));
+
+		if($sensor != -1)
+		{
+			return $sensor;
+		}
 
 		// TODO XXX: Nouveau driver exposes GPU voltage on at least some cards via performance_level
 		if(is_file('/sys/class/drm/card0/device/hwmon/hwmon1/in0_label') && pts_file_io::file_get_contents('/sys/class/drm/card0/device/hwmon/hwmon1/in0_label') == 'vddgfx' && is_file('/sys/class/drm/card0/device/hwmon/hwmon1/in0_input'))
@@ -74,6 +80,17 @@ class gpu_voltage extends phodevi_sensor
 		}
 
 		return $sensor;
+	}
+
+	private static function read_voltage_input($voltage_input_file)
+	{
+		if($voltage_input_file == false || !is_readable($voltage_input_file))
+		{
+			return -1;
+		}
+
+		$voltage = pts_file_io::file_get_contents($voltage_input_file);
+		return is_numeric($voltage) ? $voltage : -1;
 	}
 }
 
