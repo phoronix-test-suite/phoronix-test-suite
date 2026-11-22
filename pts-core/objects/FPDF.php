@@ -715,6 +715,7 @@ function MultiCell($w, $h, $txt, $border=0, $align='J', $fill=false)
 	$l = 0;
 	$ns = 0;
 	$nl = 1;
+	$ls = 0;
 	while($i<$nb)
 	{
 		// Get next character
@@ -1099,9 +1100,6 @@ function _dochecks()
 	// Check availability of %F
 	if(sprintf('%.1F',1.0)!='1.0')
 		$this->Error('This version of PHP is not supported');
-	// Check mbstring overloading
-	if(ini_get('mbstring.func_overload') & 2)
-		$this->Error('mbstring overloading must be disabled');
 }
 
 function _checkoutput()
@@ -1399,6 +1397,7 @@ function _parsepngstream($f, $file)
 	$w = $this->_readint($f);
 	$h = $this->_readint($f);
 	$bpc = ord($this->_readstream($f,1));
+	$colspace = null;
 	if($bpc>8)
 		$this->Error('16-bit depth not supported: '.$file);
 	$ct = ord($this->_readstream($f,1));
@@ -1553,7 +1552,8 @@ function _parsegif($file)
 		ob_start();
 		imagepng($im);
 		$data = ob_get_clean();
-		imagedestroy($im);
+		if(PHP_VERSION_ID < 80000)
+			imagedestroy($im);
 		fwrite($f,$data);
 		rewind($f);
 		$info = $this->_parsepngstream($f,$file);
@@ -1567,7 +1567,8 @@ function _parsegif($file)
 			$this->Error('Unable to create a temporary file');
 		if(!imagepng($im,$tmp))
 			$this->Error('Error while saving to temporary file');
-		imagedestroy($im);
+		if(PHP_VERSION_ID < 80000)
+			imagedestroy($im);
 		$info = $this->_parsepng($tmp);
 		unlink($tmp);
 	}
@@ -1943,6 +1944,7 @@ function Row($data, $widths, &$row_num = -1, $hints = null)
 	}
 
 	$row_is_divider = false;
+	$did_reset_colors = false;
 	for($i=0;$i<count($data);$i++)
 	{
 		$w=$widths[$i];

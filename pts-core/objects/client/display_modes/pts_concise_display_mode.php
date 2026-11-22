@@ -180,6 +180,7 @@ class pts_concise_display_mode implements pts_display_mode_interface
 	{
 		$expected_time = 0;
 		$progress_prefix = null;
+		$process_string = null;
 
 		switch($process)
 		{

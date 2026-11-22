@@ -1573,9 +1573,14 @@ class phodevi_cpu extends phodevi_device_interface
 			18 => array(
 				1 => 'Nova Lake',
 				3 => 'Nova Lake',
+				6 => 'Razor Lake',
+				7 => 'Razor Lake',
+				9 => 'Razor Lake',
+				10 => 'Razor Lake',
 				),
 			19 => array(
 				1 => 'Diamond Rapids',
+				8 => 'Coral Rapids',
 				),
 			);
 

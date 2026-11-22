@@ -43,7 +43,8 @@ class pts_graph_radar_chart extends pts_graph_core
 
 		if($system_count < 2)
 		{
-			return false;
+			$this->failed_init = true;
+			return;
 		}
 
 		$result_object = null;
@@ -125,7 +126,8 @@ class pts_graph_radar_chart extends pts_graph_core
 		if(count($this->result_objects) < 3)
 		{
 			// No point in generating this if there aren't many valid tests
-			return false;
+			$this->failed_init = true;
+			return;
 		}
 
 		if($this->i['graph_max_value'] > 4 && pts_math::arithmetic_mean($all_max) < ($this->i['graph_max_value'] * 0.48))
@@ -166,7 +168,6 @@ class pts_graph_radar_chart extends pts_graph_core
 		$this->i['graph_height'] = $this->i['graph_width'] + $this->i['top_start'] + (count($this->result_objects) > 14 ? 50 : 0);
 		$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'], true);
 		//$this->results = $this->systems;
-		return true;
 	}
 	protected function render_graph_heading($with_version = true)
 	{
@@ -176,7 +177,7 @@ class pts_graph_radar_chart extends pts_graph_core
 	}
 	public function renderGraph()
 	{
-		if(count($this->result_objects) < 3)
+		if(count($this->result_objects) < 3 || $this->failed_init)
 		{
 			// No point in generating this if there aren't many valid tests
 			return false;

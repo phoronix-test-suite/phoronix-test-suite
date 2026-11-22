@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2012 - 2016, Phoronix Media
-	Copyright (C) 2012 - 2016, Michael Larabel
+	Copyright (C) 2012 - 2026, Phoronix Media
+	Copyright (C) 2012 - 2026, Michael Larabel
 	pts_DetailedSystemComponentTable.php: The detailed system component table
 
 	This program is free software; you can redistribute it and/or modify
@@ -27,7 +27,8 @@ class pts_DetailedSystemComponentTable extends pts_SideViewTable
 	{
 		if(!is_readable($log_location))
 		{
-			return false;
+			$this->failed_init = true;
+			return;
 		}
 		if($intent == false)
 		{
@@ -37,7 +38,8 @@ class pts_DetailedSystemComponentTable extends pts_SideViewTable
 
 		if(!isset($intent[0]))
 		{
-			return false;
+			$this->failed_init = true;
+			return;
 		}
 
 		if(is_array($intent[0]) && in_array('Processor', $intent[0]))
@@ -50,7 +52,8 @@ class pts_DetailedSystemComponentTable extends pts_SideViewTable
 		}
 		else
 		{
-			return false;
+			$this->failed_init = true;
+			return;
 		}
 
 		$this->rows = array();
@@ -102,7 +105,8 @@ class pts_DetailedSystemComponentTable extends pts_SideViewTable
 
 		if(empty($this->rows))
 		{
-			return false;
+			$this->failed_init = true;
+			return;
 		}
 
 		foreach(array(array('Processor', 'Flags', 'Common CPU Flags'), array('Graphics', 'OpenGL Extensions', 'Common OpenGL Extensions')) as $set)

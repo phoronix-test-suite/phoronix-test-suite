@@ -45,7 +45,7 @@ class pts_web_socket_client
 		$this->connect($this->socket_master);
 		//echo 'WebSocket Client Connected: ' . $address . ':' . $port . PHP_EOL;
 		$p = $this->send('ping');
-		return $sc && $p != null;
+		//return $sc && $p != null;
 	}
 	public function send($msg)
 	{

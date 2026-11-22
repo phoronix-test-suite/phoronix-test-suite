@@ -55,7 +55,7 @@ class pts_SideViewTable extends pts_graph_core
 	}
 	public function renderChart($save_as = null)
 	{
-		if(empty($this->rows) || empty($this->columns))
+		if(empty($this->rows) || empty($this->columns) || $this->failed_init)
 		{
 			return false;
 		}

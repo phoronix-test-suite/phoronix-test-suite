@@ -39,6 +39,7 @@ abstract class pts_graph_core
 	protected $graph_sub_titles = array();
 	protected $test_result;
 	protected $results;
+	protected $failed_init = false;
 
 	public function __construct(&$result_object = null, &$result_file = null, $extra_attributes = null)
 	{

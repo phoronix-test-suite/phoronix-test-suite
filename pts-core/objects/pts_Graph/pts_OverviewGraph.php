@@ -94,8 +94,6 @@ class pts_OverviewGraph extends pts_graph_core
 
 		$this->update_graph_dimensions($this->i['graph_width'], $height, true);
 		$this->result_file = $result_file;
-
-		return true;
 	}
 	public function renderGraph()
 	{

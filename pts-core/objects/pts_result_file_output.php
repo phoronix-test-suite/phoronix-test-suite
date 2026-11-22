@@ -1189,32 +1189,6 @@ class pts_result_file_output
 
 		$pdf->AddPage();
 
-		/*
-		if($result_file->get_system_count() == 2)
-		{
-			$graph = new pts_graph_run_vs_run($result_file);
-
-			if($graph)
-			{
-				//$graph = pts_render::render_graph_process($graph, $result_file, $extra_attributes);
-				self::add_graph_result_object_to_pdf($pdf, $graph);
-			}
-		}
-		else if(!$result_file->is_multi_way_comparison())
-		{
-			foreach(array('', 'Per Watt', 'Per Dollar') as $selector)
-			{
-				$graph = new pts_graph_radar_chart($result_file, $selector);
-
-				if($graph)
-				{
-					//$graph = pts_render::render_graph_process($graph, $result_file, $extra_attributes);
-					self::add_graph_result_object_to_pdf($pdf, $graph);
-				}
-			}
-		}
-		*/
-
 		$last_result_title = null;
 		$extra_attributes['pdf_generation'] = true;
 		foreach($result_file->get_result_objects() as $key => $result_object)

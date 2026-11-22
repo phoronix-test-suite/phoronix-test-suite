@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2010 - 2021, Phoronix Media
-	Copyright (C) 2010 - 2021, Michael Larabel
+	Copyright (C) 2010 - 2026, Phoronix Media
+	Copyright (C) 2010 - 2026, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -35,7 +35,8 @@ class pts_graph_run_vs_run extends pts_graph_core
 		$rf = clone $result_file;
 		if($rf->get_system_count() != 2)
 		{
-			return false;
+			$this->failed_init = true;
+			return;
 		}
 
 		$systems = $rf->get_systems();
@@ -77,7 +78,8 @@ class pts_graph_run_vs_run extends pts_graph_core
 		if(count($this->result_objects) < 3)
 		{
 			// No point in generating this if there aren't many valid tests
-			return false;
+			$this->failed_init = true;
+			return;
 		}
 
 		$this->i['identifier_size'] = 6.5;
@@ -92,8 +94,6 @@ class pts_graph_run_vs_run extends pts_graph_core
 		$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'] + $this->i['top_start'], true);
 		$this->get_paint_color($this->system_left, true);
 		$this->get_paint_color($this->system_right, true);
-
-		return true;
 	}
 	protected function render_graph_heading($with_version = true)
 	{
@@ -103,7 +103,7 @@ class pts_graph_run_vs_run extends pts_graph_core
 	}
 	public function renderGraph()
 	{
-		if(count($this->result_objects) < 3)
+		if(count($this->result_objects) < 3 || $this->failed_init)
 		{
 			// No point in generating this if there aren't many valid tests
 			return false;

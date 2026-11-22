@@ -42,7 +42,7 @@ class pts_web_socket
 			if($this->socket_master === false)
 			{
 				echo PHP_EOL . 'WebSocket create_listen failed:' . socket_last_error() . PHP_EOL . PHP_EOL;
-				return false;
+				return;
 			}
 			socket_set_option($this->socket_master, SOL_SOCKET, SO_REUSEADDR, 1);
 		}

@@ -140,7 +140,7 @@ class pts_image
 			if($img)
 			{
 				imagepng($img, $png_file, $compression_level);
-				imagedestroy($img);
+				unset($img);
 				return true;
 			}
 		}

@@ -3,8 +3,8 @@
 /*
 	Phoronix Test Suite
 	URLs: http://www.phoronix.com, http://www.phoronix-test-suite.com/
-	Copyright (C) 2014 - 2019, Phoronix Media
-	Copyright (C) 2014 - 2019, Michael Larabel
+	Copyright (C) 2014 - 2026, Phoronix Media
+	Copyright (C) 2014 - 2026, Michael Larabel
 
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License as published by
@@ -43,14 +43,14 @@ class rename_result_file implements pts_option_interface
 				$clean_result_name = pts_test_run_manager::clean_save_name($new_result_name, true);
 			}
 			while($clean_result_name == null || is_dir(PTS_SAVE_RESULTS_PATH . $clean_result_name));
-		}
 
-		if(rename(PTS_SAVE_RESULTS_PATH . $result, PTS_SAVE_RESULTS_PATH . $clean_result_name))
-		{
-			echo PHP_EOL . 'Renamed ' . $result . ' to ' . $clean_result_name . '.' . PHP_EOL . PHP_EOL;
-		}
+			if(rename(PTS_SAVE_RESULTS_PATH . $result, PTS_SAVE_RESULTS_PATH . $clean_result_name))
+			{
+				echo PHP_EOL . 'Renamed ' . $result . ' to ' . $clean_result_name . '.' . PHP_EOL . PHP_EOL;
+			}
 
-		pts_client::display_result_view($clean_result_name, false);
+			pts_client::display_result_view($clean_result_name, false);
+		}
 	}
 }
 

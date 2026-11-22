@@ -751,7 +751,7 @@ class pts_test_execution
 
 					if(is_file($iqc_image_png))
 					{
-						$img_file_64 = base64_encode(file_get_contents($iqc_image_png, FILE_BINARY));
+						$img_file_64 = base64_encode(file_get_contents($iqc_image_png));
 						$END_RESULT = $img_file_64;
 						unlink($iqc_image_png);
 					}

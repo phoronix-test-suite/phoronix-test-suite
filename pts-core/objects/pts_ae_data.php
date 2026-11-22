@@ -32,12 +32,12 @@ class pts_ae_data
 		if(!is_dir($output_dir))
 		{
 			echo 'valid directory needed!';
-			return false;
+			return;
 		}
 		if(!extension_loaded('sqlite3'))
 		{
 			echo PHP_EOL . PHP_EOL . pts_client::cli_just_bold('PHP SQLite3') . ' support must first be enabled.' . PHP_EOL . PHP_EOL;
-			return false;
+			return;
 		}
 
 		$this->ae_dir = $output_dir . '/';
@@ -86,7 +86,7 @@ class pts_ae_data
 		}
 
 		$this->cpu_index = json_decode(file_get_contents('http://openbenchmarking.org/extern/cpu-trans-index.php'), true);
-		return true;
+		return;
 	}
 	public function insert_composite_hash_entry_by_result_object($comparison_hash, &$result_object)
 	{

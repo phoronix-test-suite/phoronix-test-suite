@@ -181,6 +181,7 @@ class ob_test_profile_analyze implements pts_option_interface
 			return false;
 		}
 		$original_launcher_contents = file_get_contents($test_profile_launcher);
+		$launcher_contents = null;
 		$test_binary = false;
 
 		if(($s = strpos($original_launcher_contents, '$LOG_FILE')))

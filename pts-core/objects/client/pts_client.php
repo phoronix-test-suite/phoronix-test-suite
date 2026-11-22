@@ -2399,7 +2399,7 @@ set_error_handler(array('pts_client', 'code_error_handler'));
 if(PTS_IS_CLIENT && (PTS_IS_DEV_BUILD || pts_client::is_debug_mode()))
 {
 	// Enable more verbose error reporting only when PTS is in development with milestone (alpha/beta) releases but no release candidate (r) or gold versions
-	error_reporting(E_ALL | E_NOTICE | E_STRICT);
+	error_reporting(E_ALL | E_NOTICE);
 }
 
 ?>

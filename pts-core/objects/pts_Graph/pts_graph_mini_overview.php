@@ -37,7 +37,8 @@ class pts_graph_mini_overview extends pts_graph_core
 
 		if($system_count < 2)
 		{
-			return false;
+			$this->failed_init = true;
+			return;
 		}
 
 		$result_object = null;
@@ -104,9 +105,9 @@ class pts_graph_mini_overview extends pts_graph_core
 		if(count($this->result_objects) < 12)
 		{
 			// No point in generating this if there aren't many valid tests
-			return false;
+			$this->failed_init = true;
+			return;
 		}
-
 
 		foreach($this->systems as $system)
 		{
@@ -131,7 +132,6 @@ class pts_graph_mini_overview extends pts_graph_core
 		$this->i['graph_height'] = $this->i['top_start'] + (ceil(count($this->result_objects) / $this->i['graphs_per_row']) * ($this->i['per_graph_height']));
 		$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'], true);
 		//$this->results = $this->systems;
-		return true;
 	}
 	protected function render_graph_heading($with_version = true)
 	{
@@ -141,6 +141,10 @@ class pts_graph_mini_overview extends pts_graph_core
 	}
 	public function renderGraph()
 	{
+		if($this->failed_init)
+		{
+			return false;
+		}
 		//$this->update_graph_dimensions($this->i['graph_width'], $this->i['graph_height'] + $this->i['top_start'], true);
 		$this->render_graph_init();
 		//$this->graph_key_height();
