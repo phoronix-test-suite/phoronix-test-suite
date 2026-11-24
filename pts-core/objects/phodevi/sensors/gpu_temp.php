@@ -25,13 +25,35 @@ class gpu_temp extends phodevi_sensor
 	const SENSOR_TYPE = 'gpu';
 	const SENSOR_SENSES = 'temp';
 	const SENSOR_UNIT = 'Celsius';
+	const INPUT_PATH_ENV = 'PTS_GPU_TEMP_INPUT_PATH';
+
+	private static function read_temp_input($temp_input_file)
+	{
+		if($temp_input_file == false || !is_readable($temp_input_file))
+		{
+			return -1;
+		}
+
+		$temp_input = pts_file_io::file_get_contents($temp_input_file);
+		if(is_numeric($temp_input))
+		{
+			if($temp_input > 1000)
+			{
+				$temp_input /= 1000;
+			}
+
+			return $temp_input;
+		}
+
+		return -1;
+	}
 
 	public function read_sensor()
 	{
 		// Report graphics processor temperature
-		$temp_c = -1;
+		$temp_c = self::read_temp_input(pts_env::read(self::INPUT_PATH_ENV));
 
-		if(phodevi::is_nvidia_graphics())
+		if($temp_c == -1 && phodevi::is_nvidia_graphics())
 		{
 			$temp_c = phodevi_parser::read_nvidia_extension('GPUCoreTemp');
 		}
@@ -46,16 +68,8 @@ class gpu_temp extends phodevi_sensor
 					continue;
 				}
 
-				$temp_input = pts_file_io::file_get_contents($temp_input);
-
-				if(is_numeric($temp_input))
-				{
-					if($temp_input > 1000)
+				if(($temp_c = self::read_temp_input($temp_input)) != -1)
 					{
-						$temp_input /= 1000;
-					}
-
-					$temp_c = $temp_input;
 					break;
 				}
 			}
@@ -99,16 +113,8 @@ class gpu_temp extends phodevi_sensor
 						continue;
 					}
 
-					$temp_input = pts_file_io::file_get_contents($temp_input_file);
-
-					if(is_numeric($temp_input))
-					{
-						if($temp_input > 1000)
+					if(($temp_c = self::read_temp_input($temp_input_file)) != -1)
 						{
-							$temp_input /= 1000;
-						}
-
-						$temp_c = $temp_input;
 						break;
 					}
 				}

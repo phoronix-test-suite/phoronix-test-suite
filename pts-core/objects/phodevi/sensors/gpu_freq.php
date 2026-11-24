@@ -26,13 +26,20 @@ class gpu_freq extends phodevi_sensor
 	const SENSOR_TYPE = 'gpu';
 	const SENSOR_SENSES = 'freq';
 	const SENSOR_UNIT = 'Megahertz';
+	const INPUT_PATH_ENV = 'PTS_GPU_FREQ_INPUT_PATH';
 
 	public function read_sensor()
 	{
 		// Graphics processor real/current frequency
 		$show_memory = false;
-		$core_freq = 0;
+		$core_freq = self::read_freq_input(pts_env::read(self::INPUT_PATH_ENV));
 		$mem_freq = 0;
+
+		if($core_freq > 0)
+		{
+			return $core_freq;
+		}
+		$core_freq = 0;
 
 		if(phodevi::is_nvidia_graphics()) // NVIDIA GPU
 		{
@@ -199,6 +206,34 @@ class gpu_freq extends phodevi_sensor
 		}
 
 		return $show_memory ? array($core_freq, $mem_freq) : $core_freq;
+	}
+
+	private static function read_freq_input($freq_input_file)
+	{
+		if($freq_input_file == false || !is_readable($freq_input_file))
+		{
+			return -1;
+		}
+
+		$freq = pts_file_io::file_get_contents($freq_input_file);
+		if(is_numeric($freq))
+		{
+			return $freq > 0 ? $freq : -1;
+		}
+
+		$freq = PHP_EOL . $freq;
+		if(strpos($freq, '*') !== false)
+		{
+			$freq = substr($freq, 0, strpos($freq, '*'));
+			$freq = substr($freq, strrpos($freq, PHP_EOL));
+			if(($x = strpos($freq, ': ')) !== false)
+			{
+				$freq = substr($freq, $x + 2);
+			}
+			$freq = trim(str_ireplace(array('*', 'Mhz'), '', $freq));
+		}
+
+		return is_numeric($freq) && $freq > 0 ? $freq : -1;
 	}
 }
 
