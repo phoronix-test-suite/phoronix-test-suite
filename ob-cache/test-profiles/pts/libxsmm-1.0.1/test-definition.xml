@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
-<!--Phoronix Test Suite v10.8.4-->
+<!--Phoronix Test Suite v10.8.6-->
 <PhoronixTestSuite>
   <TestInformation>
     <Title>libxsmm</Title>
-    <AppVersion>2-1.17-3645</AppVersion>
+    <AppVersion>2.1.0</AppVersion>
     <Description>Libxsmm is an open-source library for specialized dense and sparse matrix operations and deep learning primitives. Libxsmm supports making use of Intel AMX, AVX-512, and other modern CPU instruction set capabilities.</Description>
     <ResultScale>GFLOPS/s</ResultScale>
     <Proportion>HIB</Proportion>
     <TimesToRun>3</TimesToRun>
   </TestInformation>
   <TestProfile>
-    <Version>1.0.1</Version>
+    <Version>1.2.0</Version>
     <SupportedPlatforms>Linux</SupportedPlatforms>
     <SoftwareType>Scientific</SoftwareType>
     <TestType>Processor</TestType>
@@ -24,24 +24,38 @@
   </TestProfile>
   <TestSettings>
     <Option>
+      <DisplayName>Data Type</DisplayName>
+      <Identifier>datatype</Identifier>
+      <Menu>
+        <Entry>
+          <Name>INT8</Name>
+          <Value>I8 I8 I32 I32</Value>
+        </Entry>
+        <Entry>
+          <Name>BF16</Name>
+          <Value>BF16 BF16 F32 F32</Value>
+        </Entry>
+        <Entry>
+          <Name>FP32</Name>
+          <Value>F32 F32 F32 F32</Value>
+        </Entry>
+        <Entry>
+          <Name>FP64</Name>
+          <Value>F64 F64 F64 F64</Value>
+        </Entry>
+      </Menu>
+    </Option>
+    <Option>
       <DisplayName>M N K</DisplayName>
       <Identifier>mnk</Identifier>
       <Menu>
         <Entry>
           <Name>32</Name>
-          <Value>32 32 32</Value>
+          <Value>32 32 32 32 32 32</Value>
         </Entry>
         <Entry>
           <Name>64</Name>
-          <Value>64 64 64</Value>
-        </Entry>
-        <Entry>
-          <Name>128</Name>
-          <Value>128 128 128</Value>
-        </Entry>
-        <Entry>
-          <Name>256</Name>
-          <Value>256 256 256</Value>
+          <Value>64 64 64 64 64 64</Value>
         </Entry>
       </Menu>
     </Option>
