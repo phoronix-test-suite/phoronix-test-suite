@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
-<!--Phoronix Test Suite v10.8.4-->
+<!--Phoronix Test Suite v10.8.6-->
 <PhoronixTestSuite>
   <TestInformation>
     <Title>libxsmm</Title>
-    <AppVersion>2-1.17-3645</AppVersion>
+    <AppVersion>2.1.0</AppVersion>
     <Description>Libxsmm is an open-source library for specialized dense and sparse matrix operations and deep learning primitives. Libxsmm supports making use of Intel AMX, AVX-512, and other modern CPU instruction set capabilities.</Description>
     <ResultScale>GFLOPS/s</ResultScale>
     <Proportion>HIB</Proportion>
     <TimesToRun>3</TimesToRun>
   </TestInformation>
   <TestProfile>
-    <Version>1.0.1</Version>
+    <Version>1.2.0</Version>
     <SupportedPlatforms>Linux</SupportedPlatforms>
     <SoftwareType>Scientific</SoftwareType>
     <TestType>Processor</TestType>
