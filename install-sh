@@ -64,9 +64,7 @@ cp ChangeLog $DESTDIR$INSTALL_PREFIX/share/doc/phoronix-test-suite/
 cp COPYING $DESTDIR$INSTALL_PREFIX/share/doc/phoronix-test-suite/
 cp AUTHORS $DESTDIR$INSTALL_PREFIX/share/doc/phoronix-test-suite/
 
-cd documentation/
-cp -r * $DESTDIR$INSTALL_PREFIX/share/doc/phoronix-test-suite/
-cd ..
+cp -r documentation/* $DESTDIR$INSTALL_PREFIX/share/doc/phoronix-test-suite/
 rm -rf $DESTDIR$INSTALL_PREFIX/share/doc/phoronix-test-suite/man-pages/
 
 cp documentation/man-pages/*.1 $DESTDIR$INSTALL_PREFIX/share/man/man1/
