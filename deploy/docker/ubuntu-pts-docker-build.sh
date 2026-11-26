@@ -41,9 +41,9 @@ FROM ubuntu:20.04
 MAINTAINER Phoronix Media <commercial@phoronix-test-suite.com>
 ADD base.tar.xz /
 ARG DEBIAN_FRONTEND=noninteractive
-RUN apt update
-RUN apt install -y unzip php-cli apt-utils mesa-utils php-xml git-core apt-file sudo
-RUN apt-file update
+RUN apt update \
+    && apt install -y unzip php-cli apt-utils mesa-utils php-xml git-core apt-file sudo \
+    && apt-file update
 CMD ["/phoronix-test-suite/phoronix-test-suite", "shell"]
 EOF
 
