@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 export TESTS_TO_PRECACHE=""
 
