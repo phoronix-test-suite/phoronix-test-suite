@@ -44,12 +44,25 @@ ARG DEBIAN_FRONTEND=noninteractive
 RUN apt update
 RUN apt install -y unzip php-cli apt-utils mesa-utils php-xml git-core apt-file sudo
 RUN apt-file update
-CMD ["/phoronix-test-suite/phoronix-test-suite", "shell"]
+ENTRYPOINT ["/phoronix-test-suite/phoronix-test-suite"]
 EOF
 
 docker build -t $DIR_NAME .
 
-# docker run -it phoronix-pts-docker
+# If no arguments are passed, default to 'shell'
+if [ $# -eq 0 ]; then
+    set -- "shell"
+fi
+
+# Run Docker with the provided script arguments or default to 'shell'
+docker run -it --rm \
+    --device /dev/dri:/dev/dri \
+    --volume /tmp/.X11-unix:/tmp/.X11-unix \
+    --volume $XDG_RUNTIME_DIR/$WAYLAND_DISPLAY:/run/user/$(id -u)/wayland-0 \
+    --env DISPLAY=$DISPLAY \
+    --env XDG_RUNTIME_DIR=$XDG_RUNTIME_DIR \
+    --env WAYLAND_DISPLAY=$WAYLAND_DISPLAY \
+    $DIR_NAME "$@"
 
 # docker tag phoronix-pts-docker phoronix/pts
 # docker push phoronix/pts
