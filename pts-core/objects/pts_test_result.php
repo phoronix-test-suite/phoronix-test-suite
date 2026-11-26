@@ -49,6 +49,9 @@ class pts_test_result
 	public function __construct($test_profile)
 	{
 		$this->test_profile = clone $test_profile;
+
+		$this->active = new pts_test_result_buffer_active();
+		$this->generated_result_buffers = array();
 		$this->test_run_times = array();
 	}
 	public function get_estimated_run_time()
