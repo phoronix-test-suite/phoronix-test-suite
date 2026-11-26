@@ -123,5 +123,20 @@
         </Entry>
       </Menu>
     </Option>
+    <Option>
+      <DisplayName>Benchmark Mode</DisplayName>
+      <Identifier>hints</Identifier>
+      <ArgumentPrefix>-hint </ArgumentPrefix>
+      <Menu>
+        <Entry>
+          <Name>Throughput</Name>
+          <Value>throughput</Value>
+        </Entry>
+        <Entry>
+          <Name>Latency</Name>
+          <Value>latency</Value>
+        </Entry>
+      </Menu>
+    </Option>
   </TestSettings>
 </PhoronixTestSuite>
