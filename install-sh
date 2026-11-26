@@ -21,16 +21,14 @@
 
 # To install into a chroot, set $DESTDIR to the corresponding directory.
 
-if [ "X$1" = "X" ]
-then
+if [ "X$1" = "X" ]; then
 	INSTALL_PREFIX="/usr"
 else
 	INSTALL_PREFIX="$1"
 fi
 
 # Ensure the user is in the correct directory
-if [ ! -f pts-core/phoronix-test-suite.php ]
-then
+if [ ! -f pts-core/phoronix-test-suite.php ]; then
 	cat <<'EOT'
 
 To install the Phoronix Test Suite you must first change directories to phoronix-test-suite/. For support visit: http://www.phoronix-test-suite.com/
@@ -40,8 +38,7 @@ exit
 fi
 
 mkdir -p $DESTDIR$INSTALL_PREFIX
-if [ ! -w $DESTDIR$INSTALL_PREFIX ]
-then
+if [ ! -w $DESTDIR$INSTALL_PREFIX ]; then
 	echo "ERROR: $DESTDIR$INSTALL_PREFIX is not writable. Run this installer as root or specify a different directory prefix as the first argument sent to this script."
 	exit
 fi
@@ -100,8 +97,7 @@ chmod +x $DESTDIR$INSTALL_PREFIX/bin/phoronix-test-suite
 # sed 's:\$url = PTS_PATH . \"documentation\/index.html\";:\$url = \"'"$INSTALL_PREFIX"'\/share\/doc\/packages\/phoronix-test-suite\/index.html\";:g' pts-core/commands/gui_gtk.php > $DESTDIR$INSTALL_PREFIX/share/phoronix-test-suite/pts-core/commands/gui_gtk.php
 
 # XDG MIME OpenBenchmarking support
-if [ "X$DESTDIR" = "X" ] && which xdg-mime >/dev/null && which xdg-icon-resource >/dev/null
-then
+if [ "X$DESTDIR" = "X" ] && which xdg-mime >/dev/null && which xdg-icon-resource >/dev/null; then
 	#No chroot
 	xdg-mime install pts-core/openbenchmarking.org/openbenchmarking-mime.xml
 	xdg-icon-resource install --context mimetypes --size 64 pts-core/static/images/openbenchmarking.png application-x-openbenchmarking
@@ -119,8 +115,7 @@ Executable File: $INSTALL_PREFIX/bin/phoronix-test-suite
 Documentation: $INSTALL_PREFIX/share/doc/phoronix-test-suite/
 Phoronix Test Suite Files: $INSTALL_PREFIX/share/phoronix-test-suite/\n"
 
-if [ "X$DESTDIR" != "X" ]
-then
+if [ "X$DESTDIR" != "X" ]; then
 	echo "Installed to chroot: $DESTDIR"
 	echo "Please update your desktop and mime-database manually"
 fi
