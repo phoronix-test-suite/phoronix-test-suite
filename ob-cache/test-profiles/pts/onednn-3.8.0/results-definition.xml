@@ -2,8 +2,7 @@
 <!--Phoronix Test Suite v10.8.5-->
 <PhoronixTestSuite>
   <ResultsParser>
-    <OutputTemplate>total perf  min(ms) #_MIN_RESULT_# avg(ms) #_RESULT_#</OutputTemplate>
-    <LineHint>total perf</LineHint>
-    <TurnCharsToSpace>:</TurnCharsToSpace>
+    <OutputTemplate>Result: #_RESULT_# GFLOPS</OutputTemplate>
+    <LineHint>Result:</LineHint>
   </ResultsParser>
 </PhoronixTestSuite>

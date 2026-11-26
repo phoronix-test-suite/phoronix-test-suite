@@ -3,11 +3,11 @@
 <PhoronixTestSuite>
   <Downloads>
     <Package>
-      <URL>https://github.com/uxlfoundation/oneDNN/archive/refs/tags/v3.8.1.tar.gz</URL>
-      <MD5>d4e445d00725f9aec490f10b3dddeda9</MD5>
-      <SHA256>4b0638061a789a1efbefdcd2e85eb257c7b432b3b6a71ba8909e19d75f50b163</SHA256>
-      <FileName>oneDNN-3.8.1.tar.gz</FileName>
-      <FileSize>12938751</FileSize>
+      <URL>https://github.com/uxlfoundation/oneDNN/archive/refs/tags/v3.11.1.tar.gz</URL>
+      <MD5>8ecbd32b9556feac8e8e35bc0b8b1c27</MD5>
+      <SHA256>0ed141ee3ecf2856aef4966154a19b408faac50234581aeed4bd6e9dad09de68</SHA256>
+      <FileName>oneDNN-3.11.1.tar.gz</FileName>
+      <FileSize>13772368</FileSize>
     </Package>
   </Downloads>
 </PhoronixTestSuite>
